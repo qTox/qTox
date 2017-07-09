@@ -264,6 +264,14 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <source>Input field for notes about the contact</source>
         <translation>Beviteli mező a partnerről való jegyzetek készítéséhez</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -629,6 +637,14 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Chat naplófájl mentése</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -676,28 +692,28 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>A qTox klienst használom</translation>
     </message>
     <message>
-        <source>Friend is already added</source>
-        <translation>A partner már hozzáadva</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me partnerséget ajánl.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me partnerséget ajánl, &quot;%1&quot;</translation>
     </message>
     <message>
+        <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>You need to write a message with your request</source>
-        <translation>Írjon egy üzenetet a kérelméhez</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Írjon egy üzenetet a kérelméhez</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
-        <translation>Az üzenet túl hosszú!</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Az üzenet túl hosszú!</translation>
     </message>
     <message>
-        <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">A partner már hozzáadva</translation>
     </message>
 </context>
 <context>
@@ -802,33 +818,27 @@ ami a videóhívások problémáihoz vezethet.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ma</translation>
+        <translation type="unfinished">Ma</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Tegnap</translation>
+        <translation type="unfinished">Tegnap</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Az utolsó 7 nap</translation>
+        <translation type="unfinished">Az utolsó 7 nap</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ebben a hónapban</translation>
+        <translation type="unfinished">Ebben a hónapban</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>6 hónapnál régebbi</translation>
+        <translation type="unfinished">6 hónapnál régebbi</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ismeretlen</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1520,6 +1530,10 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
         <source>Load history from:</source>
         <translation>Előzmény betöltése ettől:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1897,6 +1911,17 @@ Ha kéretlen partnerfelkérésekkel bombázzák, változtassa meg a NoSpam-ot.</
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Current profile: </source>
@@ -2038,12 +2063,6 @@ Válasszon egy másik képet.</translation>
         <translation>Adjon meg egy új jelszót.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Ez a csomó karakter megmondja más Tox kliensnek, hogyan találják meg.
-Ossza ezt meg a partnerével a kommunikációhoz.</translation>
-    </message>
-    <message>
         <source>Register (processing)</source>
         <translation>Regisztráció (feldolgozás)</translation>
     </message>
@@ -2088,6 +2107,17 @@ Ossza ezt meg a partnerével a kommunikációhoz.</translation>
     <message>
         <source>Current profile location: %1</source>
         <translation>Jelenlegi profil helye: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2174,10 +2204,6 @@ Ossza ezt meg a partnerével a kommunikációhoz.</translation>
         <translation type="unfinished">Helytelen Toxme cím: %1.</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation type="unfinished">Nem tudja hozzáadni önmagát partnerként!</translation>
@@ -2236,10 +2262,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>%1 vagyok! Beszélünk Toxon?</translation>
-    </message>
-    <message>
-        <source>Resizing</source>
-        <translation>Átméretezés</translation>
     </message>
     <message>
         <source>Version %1, %2</source>
@@ -2310,6 +2332,10 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Belső ToxMe hiba</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

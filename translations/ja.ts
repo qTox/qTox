@@ -264,6 +264,14 @@ which may lead to problems with video calls.</source>
         <source>Input field for notes about the contact</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -629,6 +637,14 @@ which may lead to problems with video calls.</source>
         <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">チャットログを保存</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -676,28 +692,28 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished">qToxでtox中</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation type="unfinished">あなたの要求にメッセージを添えないといけません</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation type="unfinished">メッセージ長すぎです！</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation type="unfinished">友達は既に追加されてます。</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation type="unfinished">/me 友達にならないか？</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation type="unfinished">/me 友達にならないか、&quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">あなたの要求にメッセージを添えないといけません</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">メッセージ長すぎです！</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">友達は既に追加されてます。</translation>
     </message>
 </context>
 <context>
@@ -802,33 +818,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished">今日</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished">昨日</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished">7日</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished">今月</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished">6ヶ月経過</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished">不明</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1517,6 +1527,10 @@ Profile does not contain your history.</source>
         <source>Load history from:</source>
         <translation type="unfinished">履歴を次から読み込む：</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1893,6 +1907,17 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Current profile: </source>
@@ -2019,12 +2044,6 @@ Please use another image.</source>
         <translation type="unfinished">新しいパスワードを入力してください。</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation type="unfinished">このIDには、他のToxクライアントに、どのように連絡するかが記載されています。
-このIDを友達に教えて、会話してください。</translation>
-    </message>
-    <message>
         <source>Register (processing)</source>
         <translation type="unfinished">登録 （処理中）</translation>
     </message>
@@ -2084,6 +2103,17 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Current profile location: %1</source>
         <translation type="unfinished">現在のプロファイル保存先: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2170,10 +2200,6 @@ Share it with your friends to communicate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation type="unfinished">自分を友達として登録することはできません</translation>
@@ -2181,10 +2207,6 @@ Share it with your friends to communicate.</source>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Resizing</source>
-        <translation type="unfinished">リサイズ中</translation>
-    </message>
     <message>
         <source>Tox URI to parse</source>
         <translation type="unfinished">解析するためのToxURI</translation>
@@ -2305,6 +2327,10 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
