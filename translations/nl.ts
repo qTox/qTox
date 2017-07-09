@@ -264,6 +264,14 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>Input field for notes about the contact</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -629,6 +637,14 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Sla chatgeschiedenis op</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -676,28 +692,28 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Toxt met qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Je vriendschapsverzoek moet een bericht bevatten</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Je bericht is te lang!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Vriend is al toegevoegd</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me biedt vriendschap aan.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me biedt vriendschap aan, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Je vriendschapsverzoek moet een bericht bevatten</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Je bericht is te lang!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Vriend is al toegevoegd</translation>
     </message>
 </context>
 <context>
@@ -802,33 +818,27 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Vandaag</translation>
+        <translation type="unfinished">Vandaag</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Gisteren</translation>
+        <translation type="unfinished">Gisteren</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Afgelopen 7 dagen</translation>
+        <translation type="unfinished">Afgelopen 7 dagen</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Deze maand</translation>
+        <translation type="unfinished">Deze maand</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ouder dan 6 maanden</translation>
+        <translation type="unfinished">Ouder dan 6 maanden</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Onbekend</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1521,6 +1531,10 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
         <source>Load history from:</source>
         <translation>Laad geschiedenis van:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1897,6 +1911,17 @@ Het is mogelijk dat er zich veranderingen in het formaat voordoen en dit kan lei
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Current profile: </source>
@@ -2019,12 +2044,6 @@ Gebruik alsjeblieft een andere foto.</translation>
         <translation>Vul alsjeblieft een nieuw wachtwoord in.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Deze combinatie van tekens vertelt andere Tox programmas hoe ze contact met je op moeten nemen.
-Deel dit met je vrienden om te communiceren.</translation>
-    </message>
-    <message>
         <source>Remove</source>
         <translation>Verwijderen</translation>
     </message>
@@ -2088,6 +2107,17 @@ Deel dit met je vrienden om te communiceren.</translation>
     <message>
         <source>Current profile location: %1</source>
         <translation type="unfinished">Huidige profiel locatie: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2174,10 +2204,6 @@ Deel dit met je vrienden om te communiceren.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation type="unfinished">Je kunt jezelf niet als vriend toevoegen!</translation>
@@ -2236,10 +2262,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>%1 hier! Tox met me!</translation>
-    </message>
-    <message>
-        <source>Resizing</source>
-        <translation>Bezig met herschalen</translation>
     </message>
     <message>
         <source>Version %1, %2</source>
@@ -2309,6 +2331,10 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

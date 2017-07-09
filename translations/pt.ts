@@ -263,6 +263,14 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <source>Input field for notes about the contact</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -628,6 +636,14 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Armazenar histórico da conversa</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -677,28 +693,28 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <translation>Toxing com qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Você deve escrever uma mensagem junto do pedido</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Sua mensagem é muito longa!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Contato já adicionado</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me oferece contato.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me oferece contato, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Você deve escrever uma mensagem junto do pedido</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Sua mensagem é muito longa!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Contato já adicionado</translation>
     </message>
 </context>
 <context>
@@ -803,33 +819,27 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Hoje</translation>
+        <translation type="unfinished">Hoje</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ontem</translation>
+        <translation type="unfinished">Ontem</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Últimos 7 dias</translation>
+        <translation type="unfinished">Últimos 7 dias</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Este mês</translation>
+        <translation type="unfinished">Este mês</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Mais de 6 Meses</translation>
+        <translation type="unfinished">Mais de 6 Meses</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Desconhecido</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1517,6 +1527,10 @@ Profile does not contain your history.</source>
         <source>Load history from:</source>
         <translation>Carregar histórico de:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1892,6 +1906,17 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -2010,12 +2035,6 @@ Por favor, escolha outra.</translation>
         <translation>Por favor, insira uma nova senha.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Este conjunto de caracteres informa a outros clientes Tox como contactar você.
-Compartilhe com seus contatos para se comunicar.</translation>
-    </message>
-    <message>
         <source>Current profile: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2082,6 +2101,17 @@ Compartilhe com seus contatos para se comunicar.</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2169,10 +2199,6 @@ Compartilhe com seus contatos para se comunicar.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation type="unfinished">Você não pode adicionar a si mesmo como contato!</translation>
@@ -2226,10 +2252,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     <message>
         <source>Incoming call...</source>
         <translation>Recebendo chamada...</translation>
-    </message>
-    <message>
-        <source>Resizing</source>
-        <translation>Redimensionando</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -2304,6 +2326,10 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

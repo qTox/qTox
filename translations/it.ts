@@ -264,6 +264,14 @@ questo può causare problemi con le chiamate video.</translation>
         <source>Input field for notes about the contact</source>
         <translation>Campo per le note sul contatto</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -629,6 +637,14 @@ questo può causare problemi con le chiamate video.</translation>
         <source>Sound can be disabled only during a call</source>
         <translation>Il suono può essere disabilitato solo durante una chiamata</translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Salva il log della chat</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -676,28 +692,28 @@ questo può causare problemi con le chiamate video.</translation>
         <translation>Discutendo su qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Devi scrivere un messaggio per la richiesta d&apos;amicizia</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Il messaggio è troppo lungo!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Questo contatto è già presente nella tua lista</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me ti ha aggiunto come contatto.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me ti ha aggiunto come contatto, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation>ID di Tox non valido</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">ID di Tox non valido</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Devi scrivere un messaggio per la richiesta d&apos;amicizia</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Il messaggio è troppo lungo!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Questo contatto è già presente nella tua lista</translation>
     </message>
 </context>
 <context>
@@ -802,33 +818,27 @@ questo può causare problemi con le chiamate video.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Oggi</translation>
+        <translation type="unfinished">Oggi</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ieri</translation>
+        <translation type="unfinished">Ieri</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ultimi 7 giorni</translation>
+        <translation type="unfinished">Ultimi 7 giorni</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Questo mese</translation>
+        <translation type="unfinished">Questo mese</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Più vecchi di 6 mesi</translation>
+        <translation type="unfinished">Più vecchi di 6 mesi</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Sconosciuto</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1521,6 +1531,10 @@ I profili non contengono la cronologia messaggi.</translation>
         <source>Load history from:</source>
         <translation>Carica cronologia chat dal giorno:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1899,6 +1913,17 @@ Se ricevi molte richieste di amicizia indesiderate cambia questo valore.</transl
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -2000,12 +2025,6 @@ Per favore scegli un&apos;immagine più piccola.</translation>
         <translation>Inserisci una nuova password.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Questo mucchio di caratteri serve agli altri client Tox per contattarti.
-Condividilo con chi vuoi comunicare.</translation>
-    </message>
-    <message>
         <source>Failed to copy file</source>
         <translation>Impossibile copiare il file</translation>
     </message>
@@ -2090,6 +2109,17 @@ Condividilo con chi vuoi comunicare.</translation>
     <message>
         <source>Current profile location: %1</source>
         <translation>Posizione del profilo attuale: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2176,10 +2206,6 @@ Condividilo con chi vuoi comunicare.</translation>
         <translation type="unfinished">%1 non è un indirizzo Toxme valido.</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Non puoi aggiungere te stesso come amico!</translation>
@@ -2238,10 +2264,6 @@ Verrà installata al riavvio del programma.</translation>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>Ciao, sono %1! Posso aggiungerti alla mia lista contatti?</translation>
-    </message>
-    <message>
-        <source>Resizing</source>
-        <translation>Ridimensiona</translation>
     </message>
     <message>
         <source>None</source>
@@ -2312,6 +2334,10 @@ Verrà installata al riavvio del programma.</translation>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Errore interno di ToxMe</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

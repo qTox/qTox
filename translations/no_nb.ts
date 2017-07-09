@@ -263,6 +263,14 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <source>Input field for notes about the contact</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -634,6 +642,14 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Lagre chat-logg</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -681,28 +697,28 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation>Toxer på qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Du må skrive en melding med din forespørsel</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Din melding er for lang!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Kontakt er allerede lagt til</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me tilbyr vennskap.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me tilbyr vennskap, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Du må skrive en melding med din forespørsel</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Din melding er for lang!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Kontakt er allerede lagt til</translation>
     </message>
 </context>
 <context>
@@ -807,33 +823,27 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>I dag</translation>
+        <translation type="unfinished">I dag</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>I går</translation>
+        <translation type="unfinished">I går</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Siste 7 dager</translation>
+        <translation type="unfinished">Siste 7 dager</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Denne måneden</translation>
+        <translation type="unfinished">Denne måneden</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Eldre enn 6 måneder</translation>
+        <translation type="unfinished">Eldre enn 6 måneder</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ukjent</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1523,6 +1533,10 @@ Profile does not contain your history.</source>
         <source>Load history from:</source>
         <translation>Last inn historikk fra:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1899,6 +1913,17 @@ Endringer av lagringsformat er mulig, som kan forårsake data tap.</translation>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -2002,12 +2027,6 @@ Velg et annet bilde.</translation>
         <translation>Skriv inn nytt passord.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation type="unfinished">Denne raden med tegn forteller andre Tox-klienter hvordan de skal kontakte deg.
-Del den med venner du vil kommunisere med.</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Er du sikker du vil slette denne profilen?</translation>
@@ -2089,6 +2108,17 @@ Del den med venner du vil kommunisere med.</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2176,10 +2206,6 @@ Del den med venner du vil kommunisere med.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation type="unfinished">Du kan ikke legge deg selv til som venn!</translation>
@@ -2197,10 +2223,6 @@ Del den med venner du vil kommunisere med.</translation>
 It will be installed when qTox restarts.</source>
         <translation>En oppdatering er tilgjengelig, vil du laste den ned nå?
 Den vil bli installert når qTox restarter.</translation>
-    </message>
-    <message>
-        <source>Resizing</source>
-        <translation>Reskaler</translation>
     </message>
     <message>
         <source>Tox URI to parse</source>
@@ -2311,6 +2333,10 @@ Den vil bli installert når qTox restarter.</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

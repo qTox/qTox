@@ -264,6 +264,14 @@ může způsobovat problémy během videohovorů.</translation>
         <source>Input field for notes about the contact</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -629,6 +637,14 @@ může způsobovat problémy během videohovorů.</translation>
         <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Uložit záznam z chatu</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -676,28 +692,28 @@ může způsobovat problémy během videohovorů.</translation>
         <translation>Toxuji na qToxe</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Musíte napsat svou zprávu spolu s požadavkem</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Vaše zpráva je příliš dlouhá!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Přítel už je znám</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>nabídnout přátelství.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>nabídnout přátelství, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Musíte napsat svou zprávu spolu s požadavkem</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Vaše zpráva je příliš dlouhá!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Přítel už je znám</translation>
     </message>
 </context>
 <context>
@@ -802,33 +818,27 @@ může způsobovat problémy během videohovorů.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Dnes</translation>
+        <translation type="unfinished">Dnes</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Včera</translation>
+        <translation type="unfinished">Včera</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Posledních 7 dní</translation>
+        <translation type="unfinished">Posledních 7 dní</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Tento měsíc</translation>
+        <translation type="unfinished">Tento měsíc</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Starší 6 měsícům</translation>
+        <translation type="unfinished">Starší 6 měsícům</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Neznámé</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1520,6 +1530,10 @@ Při exportu nebude nahrána vaše historie.</translation>
         <source>Load history from:</source>
         <translation>Zobrazit historii od:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1897,6 +1911,17 @@ Pokud jste obtěžován žádostni o přátelství měli byste si změnit vaše 
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -2015,12 +2040,6 @@ Prosím použijte jiný.</translation>
         <translation>Prosím zadejte nové heslo.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Identifiakční údaje které vás identifikují v síti.
-Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
-    </message>
-    <message>
         <source>Current profile: </source>
         <translation>Aktuální profil: </translation>
     </message>
@@ -2088,6 +2107,17 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
     <message>
         <source>Current profile location: %1</source>
         <translation>Aktuální umístění profilu: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2174,10 +2204,6 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
         <translation type="unfinished">%1 není platnou adresou Toxme.</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation type="unfinished">Nelze přidat sám sebe jako přítele!</translation>
@@ -2185,10 +2211,6 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Resizing</source>
-        <translation>Změnit velikost</translation>
-    </message>
     <message>
         <source>Tox URI to parse</source>
         <translation>Tox URI pro zpracování</translation>
@@ -2310,6 +2332,10 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Vnitřní chyba ToxMe</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

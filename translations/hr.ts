@@ -264,6 +264,14 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <source>Input field for notes about the contact</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -632,6 +640,14 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Spremi bilješku o razgovoru</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -679,28 +695,28 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation>Toksiram kroz qTox</translation>
     </message>
     <message>
-        <source>Friend is already added</source>
-        <translation>Prijatelj je već dodan</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/meni nudi prijateljstvo.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/meni nudi prijateljstvo, &quot;%1&quot;</translation>
     </message>
     <message>
+        <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Prijatelj je već dodan</translation>
     </message>
 </context>
 <context>
@@ -805,32 +821,26 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
+        <source>Never</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1523,6 +1533,10 @@ Profil ne sadrži vašu povijest.</translation>
         <source>Load history from:</source>
         <translation>Učitaj povijest od:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1895,6 +1909,17 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -2035,12 +2060,6 @@ Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation type="unfinished">Ova gomila znakova govori drugim Tox klijentima kako da vas kontaktiraju.
-Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
-    </message>
-    <message>
         <source>Register (processing)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2084,6 +2103,17 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2171,10 +2201,6 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation type="unfinished">Ne možete sami sebe dodati kao prijatelja!</translation>
@@ -2233,10 +2259,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>%1 ovdje! A da me toksiraš?</translation>
-    </message>
-    <message>
-        <source>Resizing</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Version %1, %2</source>
@@ -2306,6 +2328,10 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

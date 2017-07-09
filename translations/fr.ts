@@ -637,6 +637,14 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <source>Sound can be disabled only during a call</source>
         <translation>Le son ne peut être éteint que durant un appel</translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Sauvegarder l&apos;historique de conversation</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1523,6 +1531,10 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
         <source>Load history from:</source>
         <translation>Charger l&apos;historique du :</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -2038,12 +2050,6 @@ Veuillez utiliser une autre image.</translation>
         <translation>Veuillez entrer un nouveau mot de passe.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Cette suite de caractères permet à vos amis de vous contacter.
-Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
-    </message>
-    <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
         <translation>Les fichiers suivants n&apos;ont pas pu être supprimés :</translation>
@@ -2106,6 +2112,13 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2191,10 +2204,6 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation>%1 n&apos;est pas une adresse Toxme valide.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
