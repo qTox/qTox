@@ -49,8 +49,11 @@ bool ProfileImporter::importProfile()
     QString title = tr("Import profile", "import dialog title");
     QString filter = tr("Tox save file (*.tox)", "import dialog filter");
     QString dir = QDir::homePath();
-    QString path =
-        QFileDialog::getOpenFileName(this, title, dir, filter, 0, QFileDialog::DontUseNativeDialog);
+
+    // TODO: Change all QFileDialog instances across project to use
+    // this instead of Q_NULLPTR. Possibly requires >Qt 5.9 due to:
+    // https://bugreports.qt.io/browse/QTBUG-59184
+    QString path = QFileDialog::getOpenFileName(Q_NULLPTR, title, dir, filter, 0);
 
     return importProfile(path);
 }
