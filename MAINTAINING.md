@@ -171,6 +171,8 @@ Follow steps for adding translations from Weblate up to step 5. Next:
 
 # Releases
 
+## Tagging scheme
+
 - tag versions that are to be released, make sure that they are GPG-signed,
   i.e. `git tag -s v1.8.0`
 - use semantic versions for tags: `vMAJOR.MINOR.PATCH`
@@ -186,22 +188,30 @@ Follow steps for adding translations from Weblate up to step 5. Next:
     accordingly.
 - bumping a higher-level version "resets" lower-version numbers, e.g.
   `v1.7.1 → v2.0.0`
-- update version:
-  - bump version number in `cmake/Installation.cmake`
-  - for windows/osx packages use the [`./tools/update-versions.sh`] script,
-    e.g. `./tools/update-versions.sh 1.11.0`
-- before creating a `MAJOR`/`MINOR` release generate changelog with `clog`.
-  - in a `MAJOR`/`MINOR` release tag should include information that changelog
+
+## Steps for release
+
+### Before tagging
+
+- Update version number for windows/osx packages using the
+  [`./tools/update-versions.sh`] script, e.g. `./tools/update-versions.sh
+  1.11.0`
+- Generate changelog with `clog`.
+  - In a `MAJOR`/`MINOR` release tag should include information that changelog
     is located in the `CHANGELOG.md` file, e.g. `For details see CHANGELOG.md`
-- to release a `PATCH` version after non-fix changes have landed on `master`
+- To release a `PATCH` version after non-fix changes have landed on `master`
   branch, checkout latest `MAJOR`/`MINOR` version and `git cherry-pick -x`
   commits from `master` that you want `PATCH` release to include. Once
   cherry-picking has been done, tag HEAD of the branch.
-  - when making a `PATCH` tag, include in tag message short summary of what the
+  - When making a `PATCH` tag, include in tag message short summary of what the
     tag release fixes, and to whom it's interesting (often only some
     OSes/distributions would find given `PATCH` release interesting).
-- create and GPG-sign tarball using [`./tools/create-tarball.sh`] script, and
-  upload the tarball to a github release.
+
+### After tagging
+
+- Create and GPG-sign tarball using [`./tools/create-tarball.sh`] script, and
+  upload the tarball to the github release that was created by a Travis OSX
+  release job.
 
 
 # How to become a maintainer?
