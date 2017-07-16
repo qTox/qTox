@@ -189,10 +189,9 @@ void Settings::loadGlobal()
 
     s.beginGroup("Advanced");
     {
-        // TODO: Default values in this block should be changed @ v1.8
-        makeToxPortable = s.value("makeToxPortable", makeToxPortable).toBool();
-        enableIPv6 = s.value("enableIPv6", enableIPv6).toBool();
-        forceTCP = s.value("forceTCP", forceTCP).toBool();
+        makeToxPortable = s.value("makeToxPortable", false).toBool();
+        enableIPv6 = s.value("enableIPv6", true).toBool();
+        forceTCP = s.value("forceTCP", false).toBool();
     }
     s.endGroup();
 
@@ -206,13 +205,12 @@ void Settings::loadGlobal()
 
     s.beginGroup("GUI");
     {
-        // TODO: Default values in this block should be changed @ v1.8
-        showWindow = s.value("showWindow", showWindow).toBool();
-        showInFront = s.value("showInFront", showInFront).toBool();
-        groupAlwaysNotify = s.value("groupAlwaysNotify", groupAlwaysNotify).toBool();
-        groupchatPosition = s.value("groupchatPosition", groupchatPosition).toBool();
-        separateWindow = s.value("separateWindow", separateWindow).toBool();
-        dontGroupWindows = s.value("dontGroupWindows", dontGroupWindows).toBool();
+        showWindow = s.value("showWindow", true).toBool();
+        showInFront = s.value("showInFront", true).toBool();
+        groupAlwaysNotify = s.value("groupAlwaysNotify", true).toBool();
+        groupchatPosition = s.value("groupchatPosition", true).toBool();
+        separateWindow = s.value("separateWindow", false).toBool();
+        dontGroupWindows = s.value("dontGroupWindows", false).toBool();
 
         const QString DEFAULT_SMILEYS = ":/smileys/emojione/emoticons.xml";
         smileyPack = s.value("smileyPack", DEFAULT_SMILEYS).toString();
