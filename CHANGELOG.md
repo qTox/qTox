@@ -1,4 +1,87 @@
 <a name=""></a>
+## v1.11.0 (2017-07-16)
+
+The most interesting new features that were added in this release are export of
+history to plaintext file and outgoing call sound.
+
+#### Performance
+
+*   Optimize open/close device ([d704f5d2](https://github.com/qTox/qTox/commit/d704f5d21d7b33fbb52f89d9d2a5386015e6a3ce))
+*   Pass std::function by reference ([365d703e](https://github.com/qTox/qTox/commit/365d703e8ab57fff4930062e2ecf65420dccebec))
+
+#### Bug Fixes
+
+*   Invoke device methods in deviceThread ([d86912ea](https://github.com/qTox/qTox/commit/d86912eacd10f9c6472e1ef920a258f0e1ef3b83))
+*   Fix warning about stack protection ([efcad35f](https://github.com/qTox/qTox/commit/efcad35fd53279b32b7b169af256c0ac14d6e9d1))
+*   Using foreach to iterate through CFLAGS_OTHER ([9a0632b0](https://github.com/qTox/qTox/commit/9a0632b0cf8bc78d1aae0f2e75b26b73cdb98e52))
+*   Replace hardcored roaming path on QStandartPath ([f616ff36](https://github.com/qTox/qTox/commit/f616ff36b6db9142f6e49b2b8bc436b6652aa329))
+*   Fix freez on circle removing ([4d15aed5](https://github.com/qTox/qTox/commit/4d15aed53fa8986747b450b42d23befc92600986))
+*   gcc-7 build ([246e23ab](https://github.com/qTox/qTox/commit/246e23abf3aa64c494c6abf42c83944eb78f1b16))
+* **IPC:**  Add update profileId in to IPC ([c2f82f78](https://github.com/qTox/qTox/commit/c2f82f7808ed075c9c31813151d2cf001c4c7d10))
+* **bootstrap:**  qrencode url ([f90da3d0](https://github.com/qTox/qTox/commit/f90da3d07acdf25e7e871ee8447412bd315c5f02))
+* **build:**
+  *  disable linux specific stuff on windows ([a9d2b03c](https://github.com/qTox/qTox/commit/a9d2b03c7c8ea33e34c238e1079c66687a6e1ab0))
+  *  when building without XSS extension ([ab622213](https://github.com/qTox/qTox/commit/ab62221375281ca1320bc7b437cbf33766827f94))
+  *  add missing rcc options ([6b7c0c73](https://github.com/qTox/qTox/commit/6b7c0c738b8439df6d2966de4a1296d32805366f))
+* **chatform:**  add space for current copy link ([41a781d3](https://github.com/qTox/qTox/commit/41a781d3f875a0af51aaa4c727ce94c6115c48ad))
+* **cmake:**  fix icon for .exe file ([cf06cc7a](https://github.com/qTox/qTox/commit/cf06cc7a1d8c94965f6ed76ce3d499ce531d946e))
+* **core:**
+  *  use correct byte representation when bootstrapping ([4e5b1915](https://github.com/qTox/qTox/commit/4e5b191553d2dcd14e744aa4c9e81d8f4e5f66a7), closes [#4385](https://github.com/qTox/qTox/issues/4385))
+  *  Add action message with friend request text ([b25f5b5e](https://github.com/qTox/qTox/commit/b25f5b5ed69681a0549a7ff3377704536b34c19d))
+* **emojis:**  Add text variants for the blush emoji ([9a367ffb](https://github.com/qTox/qTox/commit/9a367ffbf010ad2698e32d2f1c24add9d6dbefb9))
+* **macro:**  Fixed clang warning about USING_V4L ([dd59f5ee](https://github.com/qTox/qTox/commit/dd59f5ee90b6b05bd810596cfa3ad55c9b449776))
+* **main:**  Use correct way to handle application quit ([0b5b3fcf](https://github.com/qTox/qTox/commit/0b5b3fcf1a91a8f163574a2650102fedead6431b))
+* **message size:**  Replaced TOX_MAX_*_LENGTH with API calls. ([3963d3c1](https://github.com/qTox/qTox/commit/3963d3c150fa4afe2fe69f493da6452c783a5655))
+* **profile:**  set maxLength on userName QLineEdit ([71a838b5](https://github.com/qTox/qTox/commit/71a838b53e75a239174a0de09988415f64325e36), closes [#4335](https://github.com/qTox/qTox/issues/4335))
+* **qtox.pro:**  add openal.h and openal.cpp ([d78a9790](https://github.com/qTox/qTox/commit/d78a979021578d6837f4ccb17a352b1ebfaeb8ff))
+* **settings:**
+  *  set default values for some important settings ([da4f6222](https://github.com/qTox/qTox/commit/da4f6222d806ff74f799a7e380eca20ab9ff3342))
+  *  compute toxcore version in runtime ([2d0a4e79](https://github.com/qTox/qTox/commit/2d0a4e794dd10818dc830c8384fc0f76f0184b7f))
+* **ui:**
+  *  Use native file picker dialog ([42a9534b](https://github.com/qTox/qTox/commit/42a9534b24fe789b23e2ab07e3c6963b503ea91a), closes [#3494](https://github.com/qTox/qTox/issues/3494))
+  *  wrong size of svg images on buttons ([5b0bf9fc](https://github.com/qTox/qTox/commit/5b0bf9fc9b31cedac5c8dccc51c96852a9a1e1ce))
+  *  add date message before info messages ([ed453598](https://github.com/qTox/qTox/commit/ed45359863cf617d94e8f39506971a515c495304), closes [#4388](https://github.com/qTox/qTox/issues/4388))
+  *  do not save splitter state in multiple windows mode ([7e5387ca](https://github.com/qTox/qTox/commit/7e5387cad283877c422b2e6d4a8bd9404fff67cd))
+  *  Set `Qt::Window` flag in multi windows mode ([6b767e47](https://github.com/qTox/qTox/commit/6b767e476551f9f7bb771803a3f356f3e45a8d9e))
+  *  switch to settings after multiple windows mode ([0c98f6a5](https://github.com/qTox/qTox/commit/0c98f6a5488cb8d8b27471f3cfecd6dd7f582300))
+  *  restore splitter state ([9d94cd0c](https://github.com/qTox/qTox/commit/9d94cd0c507afdbf4b69c8adcdd82546a6bc83b8), closes [#4387](https://github.com/qTox/qTox/issues/4387))
+* **v4l:**  Fixed CMakeLists.txt for v4l on FreeBSD ([dfe696e2](https://github.com/qTox/qTox/commit/dfe696e25a26a163430aefff3ba7a75428050598))
+
+#### Features
+
+*   Add message count in tooltip to LoadHistoryDialog ([bb65a18d](https://github.com/qTox/qTox/commit/bb65a18de59677cbbe3f1568380c9149b4939466))
+* **aboutform:**  Add OS name in issue template ([7b3bd45d](https://github.com/qTox/qTox/commit/7b3bd45d5089aacf3b72b4206dbff922cdef6dbb))
+* **audio:**
+  * OutgoingCallSound ([a06ad704](https://github.com/qTox/qTox/commit/a06ad7048e7f2a450da455e16b5d907566c3eedb))
+  *  split the audio interface from the backend library ([28c2298a](https://github.com/qTox/qTox/commit/28c2298ad97e8aec6097d63ead55214bac8152ba))
+* **chatform:**
+  *  Highlight chat history ([3257770b](https://github.com/qTox/qTox/commit/3257770bfa61838ab398a31de28f623f7b28d77a), closes [#2296](https://github.com/qTox/qTox/issues/2296))
+  *  Export chat history to file ([5e4ab769](https://github.com/qTox/qTox/commit/5e4ab76944ea5952b7123ca64102de4f50b4f4d3), closes [#4143](https://github.com/qTox/qTox/issues/4143))
+* **l10n:**
+  *  add Tamil translation ([37a93042](https://github.com/qTox/qTox/commit/37a93042601965e59c47adaad60598e3046808c3), [bf405e17](https://github.com/qTox/qTox/commit/bf405e17fb63036c23621b8abc96692fe813eb6b))
+  *  update Arabic translation from Weblate ([3ab423da](https://github.com/qTox/qTox/commit/3ab423dad25b185d8d8fefd5dae14c4acee05c62))
+  *  update Belarusian translation from Weblate ([0c95284e](https://github.com/qTox/qTox/commit/0c95284ecc5b05586915d1573184baa5a0b9872c))
+  *  update Bulgarian translation from Weblate ([79e00832](https://github.com/qTox/qTox/commit/79e00832f6c8ee1e700449a02ab8781ba27e4c06))
+  *  update Chinese (Simplified) translation from Weblate ([06519872](https://github.com/qTox/qTox/commit/065198724cc9cb6d9718b4f3ec2dfbd6f2a1eca0))
+  *  update Esperanto translation from Weblate ([dfdf11d1](https://github.com/qTox/qTox/commit/dfdf11d17d4a7b3957097fb14dd2a7469c28b5fb))
+  *  update Estonian translation from Weblate ([1d9e646b](https://github.com/qTox/qTox/commit/1d9e646b199fa615ebafdebdd2ba5b6014495bd5))
+  *  update Finnish translation from Weblate ([e10c5247](https://github.com/qTox/qTox/commit/e10c5247deadb85aed06c673e9d671918192e7d4))
+  *  update German translation from Weblate ([1196731f](https://github.com/qTox/qTox/commit/1196731fa1ef3ff79ad43faa5fe33ecbf5b6548f), [1ce73175](https://github.com/qTox/qTox/commit/1ce73175b3afa55cdd2d773bf18c29515bc0a6d0), [20d31c81](https://github.com/qTox/qTox/commit/20d31c81c9b9bf2f91f0e6a4cd0ec46fff6fea85), [32cd745a](https://github.com/qTox/qTox/commit/32cd745af62be64ab385a9aeb69d873431a5e14a), [d8cd871e](https://github.com/qTox/qTox/commit/d8cd871e7e8e57b8aab1d32d5502f7cdb5cc97ee))
+  *  update Greek translation from Weblate ([b2501ed1](https://github.com/qTox/qTox/commit/b2501ed114fdad88dbe64d2f2c346eab053584ea))
+  *  update Lithuanian translation from Weblate ([57f94139](https://github.com/qTox/qTox/commit/57f941398aac060c0fbb90ede1e80847905ff1c4))
+  *  update Polish translation from Weblate ([5e432c5e](https://github.com/qTox/qTox/commit/5e432c5ecfb23d9fb78a76c1291f2d7f08c727e1))
+  *  update Romanian translation from Weblate ([38374604](https://github.com/qTox/qTox/commit/383746043fa4c54a80769b2d57980e8785c5dda8))
+  *  update Russian translation from Weblate ([317f250e](https://github.com/qTox/qTox/commit/317f250e68524f68c5f15a68bb722e0fe88fc76d), [3a252c9e](https://github.com/qTox/qTox/commit/3a252c9e96568a537baa24997a017efa8d4424d6), [d5831060](https://github.com/qTox/qTox/commit/d583106008bceb1e42624bd0dba007de7966d6f9))
+  *  update Slovak translation from Weblate ([e8e1d41f](https://github.com/qTox/qTox/commit/e8e1d41ff56d45ae2e87961b19fe637aa561534f))
+  *  update Spanish translation from Weblate ([0cd34485](https://github.com/qTox/qTox/commit/0cd3448508d0839919c07a677f5b643d111607c3))
+  *  update Swedish translation from Weblate ([040f14b3](https://github.com/qTox/qTox/commit/040f14b38ee3b531b9e34ae0f50be1b93d3a247e))
+  *  update Turkish translation from Weblate ([fd8decd5](https://github.com/qTox/qTox/commit/fd8decd52e10c8b128a757e2034ebd1aa1a37f78))
+  *  update Ukrainian translation from Weblate ([bcc3c0ef](https://github.com/qTox/qTox/commit/bcc3c0ef92ef27c8dcd7284a6cfbf98cf6801c8f))
+* **toxid:**  Show NoSpam and checksum parts of ToxID in colors. ([c0951a56](https://github.com/qTox/qTox/commit/c0951a5675bf6c8f6d2c4b05d18f48b88adae6a5))
+
+
+
+<a name=""></a>
 ## v1.10.0 (2017-05-07)
 
 The more prominent new features are an option to autojoin groupchats and
