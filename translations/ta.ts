@@ -271,58 +271,58 @@ qTox இல் தாங்கள் சிக்கலோ பாதுகாப
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>குழு அழைப்புகளை தன்னிச்சையாக ஏற்க</translation>
     </message>
 </context>
 <context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">தோழர் சேர்க்கை</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tox அடையாளச்சரம்</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">76 அறுபதின்ம எழுத்துகள் அல்லது name@example.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">தவறான Tox அடையாளச்சர வடிவமைப்பு</translation>
     </message>
     <message>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
-        <translation type="unfinished"></translation>
+        <translation>செய்தி</translation>
     </message>
     <message>
         <source>Send friend request</source>
-        <translation type="unfinished"></translation>
+        <translation>தோழராக்க வேண்டுகோளை அனுப்புக</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">இது %1! Tox செய்வோமா?</translation>
     </message>
     <message>
         <source>Add a friend</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">தோழரைச் சேர்க</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>தோழராக்க வேண்டுகோள்கள்</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>ஏற்றுக்கொள்</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation type="unfinished"></translation>
+        <translation>நிராகரி</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
@@ -870,12 +870,12 @@ qTox இல் தாங்கள் சிக்கலோ பாதுகாப
     <message>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ஏற்றுக்கொள்</translation>
     </message>
     <message>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">நிராகரி</translation>
     </message>
 </context>
 <context>
@@ -1301,7 +1301,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tox அடையாளச்சரம்</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2261,7 +2261,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">இது %1! Tox செய்வோமா?</translation>
     </message>
     <message>
         <source>None</source>
@@ -2440,7 +2440,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">தோழரைச் சேர்க</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
