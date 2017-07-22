@@ -1,5 +1,5 @@
 /*
-    Copyright © 2016 by The qTox Project Contributors
+    Copyright © 2014 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,28 +17,34 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QtCore/qsystemdetection.h>
-#if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
-#include "src/platform/capslock.h"
-#include "src/platform/x11_display.h"
-#include <X11/XKBlib.h>
-#undef KeyPress
-#undef KeyRelease
-#undef FocusIn
-#undef FocusOut
+#ifdef QTOX_PLATFORM_EXT
 
-bool Platform::capsLockEnabled()
-{
-    Display* d = X11Display::lock();
-    bool caps_state = false;
-    if (d) {
-        unsigned n;
-        XkbGetIndicatorState(d, XkbUseCoreKbd, &n);
-        caps_state = (n & 0x01) == 1;
-    }
-    X11Display::unlock();
-    return caps_state;
+#ifndef PLATFORM_X11_DISPLAY_H
+#define PLATFORM_X11_DISPLAY_H
+
+#if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
+
+#include <X11/Xlib.h>
+#include <QMutex>
+
+namespace Platform {
+
+class X11Display {
+    Display*          display;
+    QMutex            mutex;
+    static X11Display singleInstance;
+
+    X11Display();
+    ~X11Display();
+public:
+    static Display* lock();
+    static void unlock();
+};
+
 }
 
+#endif // Q_OS_UNIX && !defined(__APPLE__) && !defined(__MACH__)
 
-#endif // defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
+#endif // PLATFORM_X11_DISPLAY_H
+
+#endif // QTOX_PLATFORM_EXT

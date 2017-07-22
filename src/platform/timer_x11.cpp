@@ -20,14 +20,16 @@
 #include "src/platform/timer.h"
 #include <QDebug>
 #include <X11/extensions/scrnsaver.h>
+#include "src/platform/x11_display.h"
 
 uint32_t Platform::getIdleTime()
 {
     uint32_t idleTime = 0;
 
-    Display* display = XOpenDisplay(NULL);
+    Display* display = X11Display::lock();
     if (!display) {
-        qDebug() << "XOpenDisplay(NULL) failed";
+        qDebug() << "XOpenDisplay failed";
+        X11Display::unlock();
         return 0;
     }
 
@@ -42,7 +44,7 @@ uint32_t Platform::getIdleTime()
         } else
             qDebug() << "XScreenSaverAllocInfo() failed";
     }
-    XCloseDisplay(display);
+    X11Display::unlock();
     return idleTime;
 }
 
