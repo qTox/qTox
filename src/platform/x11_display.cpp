@@ -1,4 +1,6 @@
 /*
+    Copyright © 2017 by The qTox Project Contributors
+
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     qTox is libre software: you can redistribute it and/or modify
@@ -17,35 +19,46 @@
 
 #include <QtCore/qsystemdetection.h>
 #if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
-#include "src/platform/timer.h"
 #include "src/platform/x11_display.h"
-#include <QDebug>
-#include <X11/extensions/scrnsaver.h>
+#include <QMutex>
+#include <X11/Xlib.h>
 
-uint32_t Platform::getIdleTime()
+namespace Platform {
+
+class X11DisplayPrivate
 {
-    uint32_t idleTime = 0;
+public:
+    Display* display;
+    QMutex mutex;
 
-    Display* display = X11Display::lock();
-    if (!display) {
-        qDebug() << "XOpenDisplay failed";
-        X11Display::unlock();
-        return 0;
+    X11DisplayPrivate()
+        : display(XOpenDisplay(nullptr))
+    {
     }
+    ~X11DisplayPrivate()
+    {
+        if (display)
+            XCloseDisplay(display);
+    }
+    static X11DisplayPrivate& getSingleInstance()
+    {
+        // object created on-demand
+        static X11DisplayPrivate singleInstance;
+        return singleInstance;
+    }
+};
 
-    int32_t x11event = 0, x11error = 0;
-    static int32_t hasExtension = XScreenSaverQueryExtension(display, &x11event, &x11error);
-    if (hasExtension) {
-        XScreenSaverInfo* info = XScreenSaverAllocInfo();
-        if (info) {
-            XScreenSaverQueryInfo(display, DefaultRootWindow(display), info);
-            idleTime = info->idle;
-            XFree(info);
-        } else
-            qDebug() << "XScreenSaverAllocInfo() failed";
-    }
-    X11Display::unlock();
-    return idleTime;
+Display* X11Display::lock()
+{
+    X11DisplayPrivate& singleInstance = X11DisplayPrivate::getSingleInstance();
+    singleInstance.mutex.lock();
+    return singleInstance.display;
 }
 
-#endif // Q_OS_UNIX
+void X11Display::unlock()
+{
+    X11DisplayPrivate::getSingleInstance().mutex.unlock();
+}
+}
+
+#endif // Q_OS_UNIX && !defined(__APPLE__) && !defined(__MACH__)
