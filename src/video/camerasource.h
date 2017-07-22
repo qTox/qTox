@@ -57,6 +57,8 @@ private:
     CameraSource();
     ~CameraSource();
     void stream();
+    static QThread* startDeviceThread();
+    static void stopDeviceThread(QThread* thread);
 
 private slots:
     void openDevice();

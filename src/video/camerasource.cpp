@@ -90,7 +90,7 @@ extern "C" {
 CameraSource* CameraSource::instance{nullptr};
 
 CameraSource::CameraSource()
-    : deviceThread{new QThread}
+    : deviceThread{startDeviceThread()}
     , deviceName{"none"}
     , device{nullptr}
     , mode(VideoMode())
@@ -104,8 +104,6 @@ CameraSource::CameraSource()
     , subscriptions{0}
 {
     qRegisterMetaType<VideoMode>("VideoMode");
-    deviceThread->setObjectName("Device thread");
-    deviceThread->start();
     moveToThread(deviceThread);
 
     subscriptions = 0;
@@ -195,6 +193,9 @@ CameraSource::~CameraSource()
     QWriteLocker locker{&streamMutex};
     QWriteLocker locker2{&deviceMutex};
 
+    // Stop the device thread
+    stopDeviceThread(deviceThread);
+
     if (_isNone) {
         return;
     }
@@ -223,10 +224,6 @@ CameraSource::~CameraSource()
     // Synchronize with our stream thread
     while (streamFuture.isRunning())
         QThread::yieldCurrentThread();
-
-    deviceThread->exit(0);
-    deviceThread->wait();
-    delete deviceThread;
 }
 
 void CameraSource::subscribe()
@@ -458,3 +455,17 @@ void CameraSource::stream()
         streamLoop();
     }
 }
+
+QThread* CameraSource::startDeviceThread() {
+    auto thread = new QThread;
+    thread->setObjectName("Device thread");
+    thread->start();
+    return thread;
+}
+
+void CameraSource::stopDeviceThread(QThread* thread) {
+    thread->exit(0);
+    thread->wait();
+    delete thread;
+}
+
