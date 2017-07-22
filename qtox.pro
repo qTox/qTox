@@ -123,6 +123,9 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
     SOURCES += src/platform/capslock_win.cpp \
                src/platform/capslock_x11.cpp \
                src/platform/capslock_osx.cpp
+
+    HEADERS += src/platform/x11_display.h
+    SOURCES += src/platform/x11_display.cpp
 }
 
 # Rules for Windows, Mac OSX, and Linux

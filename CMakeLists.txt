@@ -455,6 +455,7 @@ if (PLATFORM_EXTENSIONS)
     src/platform/timer_osx.cpp
     src/platform/timer_win.cpp
     src/platform/timer_x11.cpp
+    src/platform/x11_display.cpp
   )
 endif()
 
