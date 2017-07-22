@@ -175,7 +175,7 @@ are provided instructions.
 
 ----
 
-Most of the dependencies should be available through your package manger. You
+Most of the dependencies should be available through your package manager. You
 may either follow the directions below, or simply run `./simple_make.sh` after
 cloning this repository, which will attempt to automatically download
 dependencies followed by compilation.
