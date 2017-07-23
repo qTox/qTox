@@ -47,37 +47,24 @@ class OpenAL2 : public OpenAL
 
 public:
     OpenAL2();
-    ~OpenAL2();
-
-    void reinitInput(const QString& inDevDesc);
-    bool reinitOutput(const QString& outDevDesc);
-
-    void subscribeOutput(uint& sourceId);
-    void unsubscribeOutput(uint& sourceId);
-
-    void subscribeInput();
-    void unsubscribeInput();
 
     void playMono16Sound(const QByteArray& data);
-    void playMono16Sound(const QString& path);
 
     void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
                          int sampleRate);
+
+    void subscribeOutput(uint& sourceId);
 
 signals:
     void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
                         uint32_t sampling_rate);
 
 private:
-    bool autoInitInput();
-    bool autoInitOutput();
     bool initInput(const QString& deviceName);
     bool initOutput(const QString& outDevDescr);
-    void cleanupInput();
     void cleanupOutput();
     void playMono16SoundCleanup();
     void doAudio();
-    qreal inputGainFactor() const;
     void doInput();
     void doOutput();
     bool loadOpenALExtensions(ALCdevice* dev);
