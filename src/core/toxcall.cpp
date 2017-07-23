@@ -1,5 +1,7 @@
 #include "src/core/toxcall.h"
+#ifdef QTOX_ENABLE_AUDIO
 #include "src/audio/audio.h"
+#endif
 #include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 #include "src/video/camerasource.h"
@@ -37,9 +39,11 @@ ToxCall::ToxCall(uint32_t CallId)
     , muteMic{false}
     , muteVol{false}
 {
+#ifdef QTOX_ENABLE_AUDIO
     Audio& audio = Audio::getInstance();
     audio.subscribeInput();
     audio.subscribeOutput(alSource);
+#endif
 }
 
 ToxCall::ToxCall(ToxCall&& other) noexcept : audioInConn{other.audioInConn},
@@ -53,18 +57,22 @@ ToxCall::ToxCall(ToxCall&& other) noexcept : audioInConn{other.audioInConn},
     other.callId = numeric_limits<decltype(callId)>::max();
     other.alSource = 0;
 
+#ifdef QTOX_ENABLE_AUDIO
     // required -> ownership of audio input is moved to new instance
     Audio& audio = Audio::getInstance();
     audio.subscribeInput();
+#endif
 }
 
 ToxCall::~ToxCall()
 {
+#ifdef QTOX_ENABLE_AUDIO
     Audio& audio = Audio::getInstance();
 
     QObject::disconnect(audioInConn);
     audio.unsubscribeInput();
     audio.unsubscribeOutput(alSource);
+#endif
 }
 
 ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
@@ -79,9 +87,11 @@ ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
     alSource = other.alSource;
     other.alSource = 0;
 
+#ifdef QTOX_ENABLE_AUDIO
     // required -> ownership of audio input is moved to new instance
     Audio& audio = Audio::getInstance();
     audio.subscribeInput();
+#endif
 
     return *this;
 }
@@ -120,11 +130,13 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     , av{&av}
     , timeoutTimer{nullptr}
 {
+#ifdef QTOX_ENABLE_AUDIO
     audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
                                    [&av, FriendNum](const int16_t* pcm, size_t samples,
                                                     uint8_t chans, uint32_t rate) {
                                        av.sendCallAudio(FriendNum, pcm, samples, chans, rate);
                                    });
+#endif
 
     if (videoEnabled) {
         videoSource = new CoreVideoSource;
@@ -196,11 +208,13 @@ ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
         numeric_limits<decltype(callId)>::max() >= numeric_limits<decltype(GroupNum)>::max(),
         "The callId must be able to represent any group number, change its type if needed");
 
+#ifdef QTOX_ENABLE_AUDIO
     audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
                                    [&av, GroupNum](const int16_t* pcm, size_t samples,
                                                    uint8_t chans, uint32_t rate) {
                                        av.sendGroupCallAudio(GroupNum, pcm, samples, chans, rate);
                                    });
+#endif
 }
 
 ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept : ToxCall(move(other))
@@ -209,11 +223,13 @@ ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept : ToxCall(move(other))
 
 ToxGroupCall::~ToxGroupCall()
 {
+#ifdef QTOX_ENABLE_AUDIO
     Audio& audio = Audio::getInstance();
 
     for (quint32 v : peers) {
         audio.unsubscribeOutput(v);
     }
+#endif
 }
 
 ToxGroupCall& ToxGroupCall::operator=(ToxGroupCall&& other) noexcept

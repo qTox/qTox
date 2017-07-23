@@ -116,7 +116,9 @@ if (NOT TOXCORE_FOUND OR
     search_dependency(TOXAV           PACKAGE libtoxav)
 endif()
 
-search_dependency(OPENAL              PACKAGE openal FRAMEWORK OpenAL)
+if (ENABLE_AUDIO)
+  search_dependency(OPENAL              PACKAGE openal FRAMEWORK OpenAL)
+endif()
 
 if (PLATFORM_EXTENSIONS AND UNIX AND NOT APPLE)
   # Automatic auto-away support. (X11 also using for capslock detection)
@@ -202,6 +204,12 @@ if (PLATFORM_EXTENSIONS)
     message(WARNING "Not using platform extensions, dependencies not found")
     set(PLATFORM_EXTENSIONS OFF)
   endif()
+endif()
+
+if (ENABLE_AUDIO)
+  add_definitions(
+    -DQTOX_ENABLE_AUDIO
+  )
 endif()
 
 add_definitions(

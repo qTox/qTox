@@ -101,6 +101,12 @@ contains(DISABLE_PLATFORM_EXT, YES) {
     DEFINES += QTOX_PLATFORM_EXT
 }
 
+contains(DISABLE_AUDIO, YES) {
+
+} else {
+    DEFINES += QTOX_ENABLE_AUDIO
+}
+
 contains(JENKINS,YES) {
     INCLUDEPATH += ./libs/include/
     TOX_CMAKE = YES
@@ -123,6 +129,13 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
     SOURCES += src/platform/capslock_win.cpp \
                src/platform/capslock_x11.cpp \
                src/platform/capslock_osx.cpp
+}
+
+contains(DEFINES, QTOX_ENABLE_AUDIO) {
+    HEADERS += src/audio/audio.h \
+               src/audio/backend/openal.h
+    SOURCES += src/audio/audio.cpp \
+               src/audio/backend/openal.cpp
 }
 
 # Rules for Windows, Mac OSX, and Linux
@@ -242,7 +255,6 @@ win32 {
                 -ltoxencryptsave \
                 -lvpx \
                 -lsodium \
-                -lopenal \
                 -lavformat \
                 -lavdevice \
                 -lavcodec \
@@ -253,6 +265,10 @@ win32 {
     }
 
     contains(DEFINES, QTOX_PLATFORM_EXT) {
+        LIBS += -lopenal
+    }
+
+    contains(DEFINES, QTOX_ENABLE_AUDIO) {
         LIBS += -lX11 \
                 -lXss
     }
@@ -332,8 +348,6 @@ RESOURCES += res.qrc \
 }
 
 HEADERS  += \
-    src/audio/audio.h \
-    src/audio/backend/openal.h \
     src/chatlog/chatline.h \
     src/chatlog/chatlinecontent.h \
     src/chatlog/chatlinecontentproxy.h \
@@ -453,8 +467,6 @@ HEADERS  += \
     src/widget/widget.h
 
 SOURCES += \
-    src/audio/audio.cpp \
-    src/audio/backend/openal.cpp \
     src/chatlog/chatline.cpp \
     src/chatlog/chatlinecontent.cpp \
     src/chatlog/chatlinecontentproxy.cpp \

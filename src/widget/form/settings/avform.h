@@ -44,8 +44,10 @@ public:
     }
 
 private:
+#ifdef QTOX_ENABLE_AUDIO
     void getAudioInDevices();
     void getAudioOutDevices();
+#endif
     void getVideoDevices();
 
     static int getModeSize(VideoMode mode);
@@ -60,12 +62,14 @@ private:
     void retranslateUi();
 
 private slots:
+#ifdef QTOX_ENABLE_AUDIO
     // audio
     void on_inDevCombobox_currentIndexChanged(int deviceIndex);
     void on_outDevCombobox_currentIndexChanged(int deviceIndex);
     void on_playbackSlider_valueChanged(int value);
     void on_cbEnableTestSound_stateChanged();
     void on_microphoneSlider_valueChanged(int value);
+#endif
 
     // camera
     void on_videoDevCombobox_currentIndexChanged(int index);

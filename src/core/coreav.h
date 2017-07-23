@@ -54,12 +54,13 @@ public:
     bool isCallActive(const Friend* f) const;
     bool isCallActive(const Group* g) const;
     bool isCallVideoEnabled(const Friend* f) const;
+#ifdef QTOX_ENABLE_AUDIO
     bool sendCallAudio(uint32_t friendNum, const int16_t* pcm, size_t samples, uint8_t chans,
                        uint32_t rate);
-    void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
     bool sendGroupCallAudio(int groupNum, const int16_t* pcm, size_t samples, uint8_t chans,
                             uint32_t rate);
-
+#endif
+    void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
     VideoSource* getVideoSourceFromCall(int callNumber);
     void invalidateCallSources();
     void sendNoVideo();
@@ -103,15 +104,21 @@ private slots:
 
 private:
     void process();
+#ifdef QTOX_ENABLE_AUDIO
     static void audioFrameCallback(ToxAV* toxAV, uint32_t friendNum, const int16_t* pcm,
                                    size_t sampleCount, uint8_t channels, uint32_t samplingRate,
                                    void* self);
+#endif
     static void videoFrameCallback(ToxAV* toxAV, uint32_t friendNum, uint16_t w, uint16_t h,
                                    const uint8_t* y, const uint8_t* u, const uint8_t* v,
                                    int32_t ystride, int32_t ustride, int32_t vstride, void* self);
 
 private:
+#ifdef QTOX_ENABLE_AUDIO
     static constexpr uint32_t AUDIO_DEFAULT_BITRATE = 64;
+#else
+    static constexpr uint32_t AUDIO_DEFAULT_BITRATE = 0;
+#endif
     static constexpr uint32_t VIDEO_DEFAULT_BITRATE = 6144;
 
 private:
@@ -122,7 +129,9 @@ private:
     static IndexedList<ToxGroupCall> groupCalls;
     std::atomic_flag threadSwitchLock;
 
+#ifdef QTOX_ENABLE_AUDIO
     friend class Audio;
+#endif
 };
 
 #endif // COREAV_H

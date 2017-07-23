@@ -19,7 +19,9 @@
 
 #include "chatform.h"
 
+#ifdef QTOX_ENABLE_AUDIO
 #include "src/audio/audio.h"
+#endif
 #include "src/chatlog/chatlinecontentproxy.h"
 #include "src/chatlog/chatlog.h"
 #include "src/chatlog/chatmessage.h"
@@ -373,7 +375,9 @@ void ChatForm::onAvStart(uint32_t friendId, bool video)
         hideNetcam();
     }
 
+#ifdef QTOX_ENABLE_AUDIO
     Audio::getInstance().stopLoop();
+#endif
     updateCallButtons();
     startCounter();
 }
@@ -462,6 +466,11 @@ void ChatForm::updateCallButtons()
     CoreAV* av = Core::getInstance()->getAv();
     bool audio = av->isCallActive(f);
     bool video = av->isCallVideoEnabled(f);
+#ifdef QTOX_ENABLE_AUDIO
+    bool audioSupported = true;
+#else
+    bool audioSupported = false;
+#endif
     callButton->setEnabled(audio && !video);
     videoButton->setEnabled(video);
     if (audio) {
@@ -473,14 +482,13 @@ void ChatForm::updateCallButtons()
     } else {
         const Status fs = f->getStatus();
         bool online = fs != Status::Offline;
-        callButton->setEnabled(online);
+        callButton->setEnabled(audioSupported && online);
         videoButton->setEnabled(online);
 
-        QString color = online ? "green" : "";
-        callButton->setObjectName(color);
-        callButton->setToolTip(online ? tr("Start audio call") : tr("Can't start audio call"));
+        callButton->setObjectName(audioSupported && online ? "green" : "");
+        callButton->setToolTip(audioSupported ? (online ? tr("Start audio call") : tr("Can't start audio call")) : tr("Audio calls are disabled"));
 
-        videoButton->setObjectName(color);
+        videoButton->setObjectName(online ? "green" : "");
         videoButton->setToolTip(online ? tr("Start video call") : tr("Can't start video call"));
     }
 

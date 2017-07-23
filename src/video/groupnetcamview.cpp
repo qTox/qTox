@@ -18,7 +18,9 @@
 */
 
 #include "groupnetcamview.h"
+#ifdef QTOX_ENABLE_AUDIO
 #include "src/audio/audio.h"
+#endif
 #include "src/core/core.h"
 #include "src/friend.h"
 #include "src/friendlist.h"

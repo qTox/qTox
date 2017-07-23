@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION 2.8.11)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra dependencies" ON)
+option(ENABLE_AUDIO "Enable audio conversations" ON)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -181,10 +182,6 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
   ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
 
 set(${PROJECT_NAME}_SOURCES
-  src/audio/audio.cpp
-  src/audio/audio.h
-  src/audio/backend/openal.cpp
-  src/audio/backend/openal.h
   src/chatlog/chatlinecontent.cpp
   src/chatlog/chatlinecontent.h
   src/chatlog/chatlinecontentproxy.cpp
@@ -455,6 +452,15 @@ if (PLATFORM_EXTENSIONS)
     src/platform/timer_osx.cpp
     src/platform/timer_win.cpp
     src/platform/timer_x11.cpp
+  )
+endif()
+
+if (ENABLE_AUDIO)
+  set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+    src/audio/audio.cpp
+    src/audio/audio.h
+    src/audio/backend/openal.cpp
+    src/audio/backend/openal.h
   )
 endif()
 
