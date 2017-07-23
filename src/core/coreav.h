@@ -92,7 +92,7 @@ public slots:
 signals:
     void avInvite(uint32_t friendId, bool video);
     void avStart(uint32_t friendId, bool video);
-    void avEnd(uint32_t friendId);
+    void avEnd(uint32_t friendId, bool error = false);
 
 private slots:
     static void callCallback(ToxAV* toxAV, uint32_t friendNum, bool audio, bool video, void* self);
