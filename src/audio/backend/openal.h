@@ -76,7 +76,7 @@ public:
 
     void startLoop();
     void stopLoop();
-    virtual void playMono16Sound(const QByteArray& data);
+    void playMono16Sound(const QByteArray& data);
     void playMono16Sound(const QString& path);
 
     void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
