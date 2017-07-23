@@ -55,86 +55,6 @@ OpenAL2::OpenAL2()
 {
 }
 
-OpenAL2::~OpenAL2()
-{
-    audioThread->exit();
-    audioThread->wait();
-    cleanupInput();
-    cleanupOutput();
-}
-
-void OpenAL2::reinitInput(const QString& inDevDesc)
-{
-    QMutexLocker locker(&audioLock);
-    cleanupInput();
-    initInput(inDevDesc);
-}
-
-bool OpenAL2::reinitOutput(const QString& outDevDesc)
-{
-    QMutexLocker locker(&audioLock);
-    cleanupOutput();
-    return initOutput(outDevDesc);
-}
-
-/**
- * @brief Subscribe to capture sound from the opened input device.
- *
- * If the input device is not open, it will be opened before capturing.
- */
-void OpenAL2::subscribeInput()
-{
-    QMutexLocker locker(&audioLock);
-
-    if (!autoInitInput()) {
-        qWarning("Failed to subscribe to audio input device.");
-        return;
-    }
-
-    ++inSubscriptions;
-    qDebug() << "Subscribed to audio input device [" << inSubscriptions << "subscriptions ]";
-}
-
-/**
- * @brief Unsubscribe from capturing from an opened input device.
- *
- * If the input device has no more subscriptions, it will be closed.
- */
-void OpenAL2::unsubscribeInput()
-{
-    QMutexLocker locker(&audioLock);
-
-    if (!inSubscriptions)
-        return;
-
-    inSubscriptions--;
-    qDebug() << "Unsubscribed from audio input device [" << inSubscriptions
-             << "subscriptions left ]";
-
-    if (!inSubscriptions)
-        cleanupInput();
-}
-
-/**
- * @brief Initialize audio input device, if not initialized.
- *
- * @return true, if device was initialized; false otherwise
- */
-bool OpenAL2::autoInitInput()
-{
-    return alInDev ? true : initInput(Settings::getInstance().getInDev());
-}
-
-/**
- * @brief Initialize audio output device, if not initialized.
- *
- * @return true, if device was initialized; false otherwise
- */
-bool OpenAL2::autoInitOutput()
-{
-    return alOutDev ? true : initOutput(Settings::getInstance().getOutDev());
-}
-
 bool OpenAL2::initInput(const QString& deviceName)
 {
     if (!Settings::getInstance().getAudioInDevEnabled())
@@ -339,18 +259,6 @@ bool OpenAL2::initOutput(const QString& deviceName)
 }
 
 /**
- * @brief Play a 44100Hz mono 16bit PCM sound from a file
- *
- * @param[in] path the path to the sound file
- */
-void OpenAL2::playMono16Sound(const QString& path)
-{
-    QFile sndFile(path);
-    sndFile.open(QIODevice::ReadOnly);
-    playMono16Sound(QByteArray(sndFile.readAll()));
-}
-
-/**
  * @brief Play a 44100Hz mono 16bit PCM sound
  */
 void OpenAL2::playMono16Sound(const QByteArray& data)
@@ -422,22 +330,6 @@ void OpenAL2::playAudioBuffer(uint sourceId, const int16_t* data, int samples, u
 }
 
 /**
- * @brief Close active audio input device.
- */
-void OpenAL2::cleanupInput()
-{
-    if (!alInDev)
-        return;
-
-    qDebug() << "Closing audio input";
-    alcCaptureStop(alInDev);
-    if (alcCaptureCloseDevice(alInDev) == ALC_TRUE)
-        alInDev = nullptr;
-    else
-        qWarning() << "Failed to close input";
-}
-
-/**
  * @brief Close active audio output device
  */
 void OpenAL2::cleanupOutput()
@@ -478,25 +370,6 @@ void OpenAL2::cleanupOutput()
     } else {
         alOutContext = nullptr;
         alOutDev = nullptr;
-    }
-}
-
-/**
- * @brief Called after a mono16 sound stopped playing
- */
-void OpenAL2::playMono16SoundCleanup()
-{
-    QMutexLocker locker(&audioLock);
-
-    ALint state;
-    alGetSourcei(alMainSource, AL_SOURCE_STATE, &state);
-    if (state == AL_STOPPED) {
-        alSourcei(alMainSource, AL_BUFFER, AL_NONE);
-        alDeleteBuffers(1, &alMainBuffer);
-        alMainBuffer = 0;
-    } else {
-        // the audio didn't finish, try again later
-        playMono16Timer.start(10);
     }
 }
 
