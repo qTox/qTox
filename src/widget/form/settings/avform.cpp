@@ -27,7 +27,9 @@
 #include <QScreen>
 #include <QShowEvent>
 
+#ifdef QTOX_ENABLE_AUDIO
 #include "src/audio/audio.h"
+#endif
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/core/recursivesignalblocker.h"
@@ -53,7 +55,6 @@ AVForm::AVForm()
     // block all child signals during initialization
     const RecursiveSignalBlocker signalBlocker(this);
 
-    const Audio& audio = Audio::getInstance();
     const Settings& s = Settings::getInstance();
 
     cbEnableTestSound->setChecked(s.getEnableTestSound());
@@ -66,6 +67,8 @@ AVForm::AVForm()
     playbackSlider->setValue(s.getOutVolume());
     playbackSlider->installEventFilter(this);
 
+#ifdef QTOX_ENABLE_AUDIO
+    const Audio& audio = Audio::getInstance();
     microphoneSlider->setToolTip(tr("Use slider to set the gain of your input device ranging"
                                     " from %1dB to %2dB.")
                                      .arg(audio.minInputGain())
@@ -77,6 +80,10 @@ AVForm::AVForm()
         (qAbs(microphoneSlider->minimum()) + microphoneSlider->maximum()) / 4);
     microphoneSlider->setTracking(false);
     microphoneSlider->installEventFilter(this);
+#else
+    audioGroup->setDisabled(true);
+    audioGroup->setStyleSheet("QGroupBox {color: gray} QLabel {color: gray}");
+#endif
 
     eventsInit();
 
@@ -95,11 +102,13 @@ AVForm::~AVForm()
 
 void AVForm::hideEvent(QHideEvent* event)
 {
+#ifdef QTOX_ENABLE_AUDIO
     if (subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
         Audio::getInstance().unsubscribeInput();
         subscribedToAudioIn = false;
     }
+#endif
 
     if (camVideoSurface) {
         camVideoSurface->setSource(nullptr);
@@ -112,16 +121,19 @@ void AVForm::hideEvent(QHideEvent* event)
 
 void AVForm::showEvent(QShowEvent* event)
 {
+#ifdef QTOX_ENABLE_AUDIO
     getAudioOutDevices();
     getAudioInDevices();
-    createVideoSurface();
-    getVideoDevices();
 
     if (!subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
         Audio::getInstance().subscribeInput();
         subscribedToAudioIn = true;
     }
+#endif
+
+    createVideoSurface();
+    getVideoDevices();
 
     GenericForm::showEvent(event);
 }
@@ -136,8 +148,10 @@ void AVForm::open(const QString& devName, const VideoMode& mode)
 
 void AVForm::rescanDevices()
 {
+#ifdef QTOX_ENABLE_AUDIO
     getAudioInDevices();
     getAudioOutDevices();
+#endif
     getVideoDevices();
 }
 
@@ -421,6 +435,7 @@ int AVForm::getModeSize(VideoMode mode)
     return qRound(mode.height / 120.0) * 120;
 }
 
+#ifdef QTOX_ENABLE_AUDIO
 void AVForm::getAudioInDevices()
 {
     QStringList deviceNames;
@@ -521,6 +536,7 @@ void AVForm::on_microphoneSlider_valueChanged(int value)
     Settings::getInstance().setAudioInGainDecibel(dB);
     Audio::getInstance().setInputGain(dB);
 }
+#endif
 
 void AVForm::createVideoSurface()
 {

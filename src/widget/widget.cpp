@@ -48,7 +48,9 @@
 #include "splitterrestorer.h"
 #include "systemtrayicon.h"
 #include "form/groupchatform.h"
+#ifdef QTOX_ENABLE_AUDIO
 #include "src/audio/audio.h"
+#endif
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/friend.h"
@@ -929,33 +931,43 @@ void Widget::incomingNotification(uint32_t friendId)
 {
     newFriendMessageAlert(friendId, false);
 
+#ifdef QTOX_ENABLE_AUDIO
     Audio& audio = Audio::getInstance();
     audio.startLoop();
     audio.playMono16Sound(Audio::getSound(Audio::Sound::IncomingCall));
+#endif
 }
 
 void Widget::outgoingNotification()
 {
+#ifdef QTOX_ENABLE_AUDIO
     Audio& audio = Audio::getInstance();
     audio.startLoop();
     audio.playMono16Sound(Audio::getSound(Audio::Sound::OutgoingCall));
+#endif
 }
 
 void Widget::onRejectCall(uint32_t friendId)
 {
+#ifdef QTOX_ENABLE_AUDIO
     Audio::getInstance().stopLoop();
+#endif
     CoreAV* av = Core::getInstance()->getAv();
     av->cancelCall(friendId);
 }
 
 void Widget::onAcceptCall(uint32_t friendId)
 {
+#ifdef QTOX_ENABLE_AUDIO
     Audio::getInstance().stopLoop();
+#endif
 }
 
 void Widget::onCallEnd(uint32_t friendId)
 {
+#ifdef QTOX_ENABLE_AUDIO
     Audio::getInstance().stopLoop();
+#endif
 }
 
 void Widget::addFriend(int friendId, const ToxPk& friendPk)
@@ -1408,10 +1420,12 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
         bool busySound = Settings::getInstance().getBusySound();
         bool notifySound = Settings::getInstance().getNotifySound();
 
+#ifdef QTOX_ENABLE_AUDIO
         if (notifySound && sound && (!isBusy || busySound)) {
             QString soundPath = Audio::getSound(Audio::Sound::NewMessage);
             Audio::getInstance().playMono16Sound(soundPath);
         }
+#endif
     }
 
     return true;

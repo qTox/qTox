@@ -20,7 +20,9 @@
 
 #include "core.h"
 #include "coreav.h"
+#ifdef QTOX_ENABLE_AUDIO
 #include "src/audio/audio.h"
+#endif
 #include "src/friend.h"
 #include "src/group.h"
 #include "src/persistence/settings.h"
@@ -98,7 +100,9 @@ CoreAV::CoreAV(Tox* tox)
     toxav_callback_call(toxav, CoreAV::callCallback, this);
     toxav_callback_call_state(toxav, CoreAV::stateCallback, this);
     toxav_callback_bit_rate_status(toxav, CoreAV::bitrateCallback, this);
+#ifdef QTOX_ENABLE_AUDIO
     toxav_callback_audio_receive_frame(toxav, CoreAV::audioFrameCallback, this);
+#endif
     toxav_callback_video_receive_frame(toxav, CoreAV::videoFrameCallback, this);
 
     coreavThread->start();
@@ -332,6 +336,7 @@ void CoreAV::timeoutCall(uint32_t friendNum)
  * @param rate Audio sampling rate used in this frame.
  * @return False only on error, but not if there's nothing to send.
  */
+#ifdef QTOX_ENABLE_AUDIO
 bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, uint8_t chans,
                            uint32_t rate)
 {
@@ -362,6 +367,7 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, 
 
     return true;
 }
+#endif
 
 void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 {
@@ -461,11 +467,13 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
     if (call.muteVol || call.inactive)
         return;
 
+#ifdef QTOX_ENABLE_AUDIO
     Audio& audio = Audio::getInstance();
     if (!call.peers[peer])
         audio.subscribeOutput(call.peers[peer]);
 
     audio.playAudioBuffer(call.peers[peer], data, samples, channels, sample_rate);
+#endif
 }
 
 /**
@@ -475,8 +483,10 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
  */
 void CoreAV::invalidateGroupCallPeerSource(int group, int peer)
 {
+#ifdef QTOX_ENABLE_AUDIO
     Audio& audio = Audio::getInstance();
     audio.unsubscribeOutput(groupCalls[group].peers[peer]);
+#endif
     groupCalls[group].peers[peer] = 0;
 }
 
@@ -521,6 +531,7 @@ void CoreAV::leaveGroupCall(int groupId)
     groupCalls.remove(groupId);
 }
 
+#ifdef QTOX_ENABLE_AUDIO
 bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples, uint8_t chans,
                                 uint32_t rate)
 {
@@ -537,6 +548,7 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
 
     return true;
 }
+#endif
 
 /**
  * @brief Mutes or unmutes the group call's input (microphone).
@@ -777,6 +789,7 @@ void CoreAV::bitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t arate, u
              << ", ignoring it";
 }
 
+#ifdef QTOX_ENABLE_AUDIO
 void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, size_t sampleCount,
                                 uint8_t channels, uint32_t samplingRate, void* vSelf)
 {
@@ -795,6 +808,7 @@ void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, 
 
     audio.playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
 }
+#endif
 
 void CoreAV::videoFrameCallback(ToxAV*, uint32_t friendNum, uint16_t w, uint16_t h,
                                 const uint8_t* y, const uint8_t* u, const uint8_t* v,
