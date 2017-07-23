@@ -40,6 +40,30 @@ extern "C" {
  * @class OpenAL
  * @brief Provides the OpenAL audio backend
  *
+ * The following graphic describes the audio rendering pipeline with echo canceling
+ *
+ * |       alProxyContext       |               |        alOutContext        |
+ * peerSources[]                |               |                            |
+ *              \               |               |                            |
+ *               -> alProxyDev -> filter_audio -> alProxySource -> alOutDev -> Soundcard
+ *              /
+ * alMainSource
+ *
+ * Without echo cancelling the pipeline is simplified through alProxyDev = alOutDev
+ * and alProxyContext = alOutContext
+ *
+ * |      alProxyContext      |
+ * peerSources[]              |
+ *              \             |
+ *               -> alOutDev -> Soundcard
+ *              /
+ * alMainSource
+ *
+ * To keep all functions in writing to the correct context, all functions changing
+ * the context MUST exit with alProxyContext as active context and MUST not be
+ * interrupted. For this to work, all functions of the base class modifying the
+ * context have to be overriden.
+ *
  * @var BUFFER_COUNT
  * @brief Number of buffers to use per audio source
  */
@@ -254,79 +278,10 @@ bool OpenAL2::initOutput(const QString& deviceName)
         core->getAv()->invalidateCallSources();
     }
 
+    // ensure alProxyContext is active
+    alcMakeContextCurrent(alProxyContext);
     outputInitialized = true;
     return true;
-}
-
-/**
- * @brief Play a 44100Hz mono 16bit PCM sound
- */
-void OpenAL2::playMono16Sound(const QByteArray& data)
-{
-    QMutexLocker locker(&audioLock);
-
-    if (!autoInitOutput())
-        return;
-
-    alcMakeContextCurrent(alProxyContext);
-    if (!alMainBuffer)
-        alGenBuffers(1, &alMainBuffer);
-
-    ALint state;
-    alGetSourcei(alMainSource, AL_SOURCE_STATE, &state);
-    if (state == AL_PLAYING) {
-        alSourceStop(alMainSource);
-        alSourcei(alMainSource, AL_BUFFER, AL_NONE);
-    }
-
-    alBufferData(alMainBuffer, AL_FORMAT_MONO16, data.constData(), data.size(), 44100);
-    alSourcei(alMainSource, AL_BUFFER, static_cast<ALint>(alMainBuffer));
-    alSourcePlay(alMainSource);
-
-    int durationMs = data.size() * 1000 / 2 / 44100;
-    playMono16Timer.start(durationMs + 50);
-}
-
-void OpenAL2::playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
-                              int sampleRate)
-{
-    assert(channels == 1 || channels == 2);
-    QMutexLocker locker(&audioLock);
-
-    if (!(alOutDev && outputInitialized))
-        return;
-
-    alcMakeContextCurrent(alProxyContext);
-
-    ALuint bufids[BUFFER_COUNT];
-    ALint processed = 0, queued = 0;
-    alGetSourcei(sourceId, AL_BUFFERS_PROCESSED, &processed);
-    alGetSourcei(sourceId, AL_BUFFERS_QUEUED, &queued);
-    alSourcei(sourceId, AL_LOOPING, AL_FALSE);
-
-    if (processed == 0) {
-        if (queued >= BUFFER_COUNT) {
-            // reached limit, drop audio
-            return;
-        }
-        // create new buffer if none got free and we're below the limit
-        alGenBuffers(1, bufids);
-    } else {
-        // unqueue all processed buffers
-        alSourceUnqueueBuffers(sourceId, processed, bufids);
-        // delete all but the first buffer, reuse first for new data
-        alDeleteBuffers(processed - 1, bufids + 1);
-    }
-
-    alBufferData(bufids[0], (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data,
-                 samples * 2 * channels, sampleRate);
-    alSourceQueueBuffers(sourceId, 1, bufids);
-
-    ALint state;
-    alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
-    if (state != AL_PLAYING) {
-        alSourcePlay(sourceId);
-    }
 }
 
 /**
@@ -363,6 +318,7 @@ void OpenAL2::cleanupOutput()
         alcMakeContextCurrent(alOutContext);
         alSourceStop(alProxySource);
         // TODO: delete buffers
+        alcMakeContextCurrent(nullptr);
         alcDestroyContext(alOutContext);
         alOutContext = nullptr;
         alcCloseDevice(alOutDev);
@@ -393,6 +349,7 @@ void OpenAL2::doOutput()
         // create new buffer until the maximum is reached
         alGenBuffers(1, bufids);
     } else {
+        alcMakeContextCurrent(alProxyContext);
         return;
     }
 
@@ -428,6 +385,7 @@ void OpenAL2::doOutput()
         qDebug() << "Proxy source underflow detected";
         alSourcePlay(alProxySource);
     }
+    alcMakeContextCurrent(alProxyContext);
 }
 
 /**
@@ -480,56 +438,4 @@ void OpenAL2::doAudio()
     if (alInDev && inSubscriptions) {
         doInput();
     }
-}
-
-void OpenAL2::subscribeOutput(uint& sid)
-{
-    QMutexLocker locker(&audioLock);
-
-    if (!autoInitOutput()) {
-        qWarning("Failed to subscribe to audio output device.");
-        return;
-    }
-
-    if (!alcMakeContextCurrent(alProxyContext)) {
-        qWarning("Failed to activate output context.");
-        return;
-    }
-
-    alGenSources(1, &sid);
-    assert(sid);
-    peerSources << sid;
-
-    qDebug() << "Audio source" << sid << "created. Sources active:" << peerSources.size();
-}
-
-void OpenAL2::unsubscribeOutput(uint& sid)
-{
-    QMutexLocker locker(&audioLock);
-
-    peerSources.removeAll(sid);
-
-    if (sid) {
-        if (alIsSource(sid)) {
-            // stop playing, marks all buffers as processed
-            alSourceStop(sid);
-            // unqueue all buffers from the source
-            ALint processed = 0;
-            alGetSourcei(sid, AL_BUFFERS_PROCESSED, &processed);
-            ALuint* bufids = new ALuint[processed];
-            alSourceUnqueueBuffers(sid, processed, bufids);
-            // delete all buffers
-            alDeleteBuffers(processed, bufids);
-            delete[] bufids;
-            alDeleteSources(1, &sid);
-            qDebug() << "Audio source" << sid << "deleted. Sources active:" << peerSources.size();
-        } else {
-            qWarning() << "Trying to delete invalid audio source" << sid;
-        }
-
-        sid = 0;
-    }
-
-    if (peerSources.isEmpty())
-        cleanupOutput();
 }

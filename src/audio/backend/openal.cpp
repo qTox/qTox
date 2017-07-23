@@ -557,11 +557,6 @@ void OpenAL::subscribeOutput(uint& sid)
         return;
     }
 
-    if (!alcMakeContextCurrent(alOutContext)) {
-        qWarning("Failed to activate output context.");
-        return;
-    }
-
     alGenSources(1, &sid);
     assert(sid);
     peerSources << sid;

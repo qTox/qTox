@@ -48,13 +48,6 @@ class OpenAL2 : public OpenAL
 public:
     OpenAL2();
 
-    void playMono16Sound(const QByteArray& data);
-
-    void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
-                         int sampleRate);
-
-    void subscribeOutput(uint& sourceId);
-
 signals:
     void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
                         uint32_t sampling_rate);
