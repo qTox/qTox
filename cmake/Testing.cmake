@@ -4,8 +4,6 @@
 #
 ################################################################################
 
-include(CTest)
-
 enable_testing()
 
 function(auto_test subsystem module)
