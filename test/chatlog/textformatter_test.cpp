@@ -22,9 +22,9 @@
 #include <QtTest/QtTest>
 #include <QMap>
 #include <QString>
-#include <QVector>
 
 #include <ctime>
+#include <functional>
 
 #define PAIR_FORMAT(input, output) {QStringLiteral(input), QStringLiteral(output)}
 
@@ -163,7 +163,11 @@ static const StringToString urlCases{
 };
 
 using MarkdownFunction = QString (*)(const QString&, bool);
-using DataProcessor = QString (*)(const QString&, const QPair<QString, char>&, bool);
+using InputProcessor = std::function<QString(const QString&,
+                                             const QPair<QString, const StringPair&>&)>;
+using OutputProcessor = std::function<QString(const QString&,
+                                              const QPair<QString, const StringPair&>&,
+                                              bool)>;
 
 /**
  * @brief Testing cases where markdown must work
@@ -180,12 +184,12 @@ using DataProcessor = QString (*)(const QString&, const QPair<QString, char>&, b
 static void workCasesTest(MarkdownFunction applyMarkdown,
                           const QVector<StringPair>& pairs,
                           bool showSymbols,
-                          DataProcessor processInput = nullptr,
-                          DataProcessor processOutput = nullptr)
+                          InputProcessor processInput = nullptr,
+                          OutputProcessor processOutput = nullptr)
 {
     for (auto st : SEQUENCE_TO_TAG) {
         for (auto p : pairs) {
-            QString input = processInput != nullptr ? processInput(p.first, st, showSymbols)
+            QString input = processInput != nullptr ? processInput(p.first, st)
                                                     : p.first;
             qDebug() << "Input: " << input;
             QString output = processOutput != nullptr ? processOutput(p.second, st, showSymbols)
@@ -277,85 +281,79 @@ class TestTextFormatter : public QObject
 {
     Q_OBJECT
 private slots:
-    void singleSignNoSymbolsTest();
-    void slashNoSymbolsTest();
-    void doubleSignNoSymbolsTest();
-    void singleSignWithSymbolsTest();
-    void slashWithSymbolsTest();
-    void doubleSignWithSymbolsTest();
-    void singleSignExceptionsTest();
-    void slashExceptionsTest();
-    void doubleSignExceptionsTest();
-    void slashSpecialTest();
-    void doubleSignSpecialTest();
-    void mixedFormattingTest();
-    void multilineCodeTest();
+    void commonWorkCases();
+    void doubleSignWorkCases();
+    void commonExceptions();
+    void singleSignExceptions();
+    void singleSlashSpecialCases();
+    void multilineCodeSpecialCases();
+    void mixedFormattingSpecialCases();
     void urlTest();
+private:
+    MarkdownFunction markdownFunction;
 };
 
-void TestTextFormatter::singleSignNoSymbolsTest()
+void TestTextFormatter::commonWorkCases()
 {
-    commonTest(false, commonWorkCases, "*");
+    auto processInput = [] (const QString& str, const QPair<QString, const StringPair&>& pair)
+    {
+        return str.arg(pair.first);
+    };
+    auto processOutput = [] (const QString& str,
+                             const QPair<QString, const StringPair&>& pair,
+                             bool showSymbols)
+    {
+        StringPair tags = pair.second;
+        return str.arg(showSymbols ? pair.first : "").arg(tags.first).arg(tags.second);
+    };
+    workCasesTest(markdownFunction, COMMON_WORK_CASES, true, processInput, processOutput);
+    workCasesTest(markdownFunction, COMMON_WORK_CASES, false, processInput, processOutput);
 }
 
-void TestTextFormatter::slashNoSymbolsTest()
+void TestTextFormatter::doubleSignWorkCases()
 {
-    commonTest(false, commonWorkCases, "/");
+    auto processInput = [] (const QString& str, const QPair<QString, const StringPair&>& pair)
+    {
+        QString symbols = pair.first;
+        return str.arg(symbols).arg(symbols[0]);
+    };
+    auto processOutput = [] (const QString& str,
+                             const QPair<QString, const StringPair&>& pair,
+                             bool showSymbols)
+    {
+        QString symbols = pair.first;
+        StringPair tags = pair.second;
+        return str.arg(showSymbols ? symbols : "").arg(symbols[0]).arg(tags.first).arg(tags.second);
+    };
+    workCasesTest(markdownFunction, DOUBLE_SIGN_WORK_CASES, true, processInput, processOutput);
+    workCasesTest(markdownFunction, DOUBLE_SIGN_WORK_CASES, false, processInput, processOutput);
 }
 
-void TestTextFormatter::doubleSignNoSymbolsTest()
+void TestTextFormatter::commonExceptions()
 {
-    commonTest(false, commonWorkCases, "**");
+    exceptionsTest(markdownFunction, COMMON_EXCEPTIONS, true);
+    exceptionsTest(markdownFunction, COMMON_EXCEPTIONS, false);
 }
 
-void TestTextFormatter::singleSignWithSymbolsTest()
+void TestTextFormatter::singleSignExceptions()
 {
-    commonTest(true, commonWorkCases, "*");
+    exceptionsTest(markdownFunction, SINGLE_SIGN_EXCEPTIONS, true);
+    exceptionsTest(markdownFunction, SINGLE_SIGN_EXCEPTIONS, false);
 }
 
-void TestTextFormatter::slashWithSymbolsTest()
+void TestTextFormatter::singleSlashSpecialCases()
 {
-    commonTest(true, commonWorkCases, "/");
+    specialCasesTest(markdownFunction, SINGLE_SLASH_SPECIAL_CASES);
 }
 
-void TestTextFormatter::doubleSignWithSymbolsTest()
+void TestTextFormatter::multilineCodeSpecialCases()
 {
-    commonTest(true, commonWorkCases, "**");
+    specialCasesTest(markdownFunction, MULTILINE_CODE_SPECIAL_CASES);
 }
 
-void TestTextFormatter::singleSignExceptionsTest()
+void TestTextFormatter::mixedFormattingSpecialCases()
 {
-    commonExceptionsTest("*");
-}
-
-void TestTextFormatter::slashExceptionsTest()
-{
-    commonExceptionsTest("/");
-}
-
-void TestTextFormatter::doubleSignExceptionsTest()
-{
-    commonExceptionsTest("**");
-}
-
-void TestTextFormatter::slashSpecialTest()
-{
-    specialTest(singleSlash);
-}
-
-void TestTextFormatter::doubleSignSpecialTest()
-{
-    specialTest(doubleSign);
-}
-
-void TestTextFormatter::mixedFormattingTest()
-{
-    specialTest(mixedFormatting);
-}
-
-void TestTextFormatter::multilineCodeTest()
-{
-    specialTest(multilineCode);
+    specialCasesTest(markdownFunction, MIXED_FORMATTING_SPECIAL_CASES);
 }
 
 void TestTextFormatter::urlTest()
