@@ -34,6 +34,8 @@
   - [Compile qTox](#compile-qtox)
 - [OS X](#osx)
 - [Windows](#windows)
+  - [Cross-compile from Linux](#cross-compile-from-linux)
+  - [Native](#native)
 - [Compile-time switches](#compile-time-switches)
 
 ## Dependencies
@@ -762,7 +764,13 @@ becoming a hacker
 
 ## Windows
 
-### Qt
+### Cross-compile from Linux
+
+See [`windows/cross-compile`](windows/cross-compile).
+
+### Native
+
+#### Qt
 
 Download the Qt online installer for Windows from
 [qt.io](https://www.qt.io/download-open-source/). While installation you have
@@ -773,7 +781,7 @@ needed to compile and install OpenAL. Thus you can - if needed - deselect the
 tab `Tools`. The following steps assume that Qt is installed at `C:\Qt`. If you
 decided to choose another location, replace corresponding parts.
 
-### MinGW
+#### MinGW
 
 Download the MinGW installer for Windows from
 [sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/). Make
@@ -784,21 +792,21 @@ location, replace corresponding parts. Select `mingw-developer-toolkit`,
 packages using MinGW Installation Manager (`mingw-get.exe`). Check that the 
 version of MinGW, corresponds to the version of the QT component!
 
-### Wget
+#### Wget
 
 Download the Wget installer for Windows from
 http://gnuwin32.sourceforge.net/packages/wget.htm. Install them. The following
 steps assume that Wget is installed at `C:\Program Files (x86)\GnuWin32\`. If you
 decided to choose another location, replace corresponding parts.
 
-### UnZip
+#### UnZip
 
 Download the UnZip installer for Windows from
 http://gnuwin32.sourceforge.net/packages/unzip.htm. Install it. The following
 steps assume that UnZip is installed at `C:\Program Files (x86)\GnuWin32\`. If you
 decided to choose another location, replace corresponding parts.
 
-### Setting up Path
+#### Setting up Path
 
 Add MinGW/MSYS/CMake binaries to the system path to make them globally
 accessible. Open `Control Panel` -> `System and Security` -> `System` ->
@@ -813,7 +821,7 @@ by installer automatically. Make sure that paths containing alternative `sh`,
 `bash` implementations such as `C:\Program Files\OpenSSH\bin` are at the end of
 `PATH` or build may fail.
 
-### Cloning the Repository
+#### Cloning the Repository
 
 Clone the repository (https://github.com/qTox/qTox.git) with your preferred Git
 client. [SmartGit](http://www.syntevo.com/smartgit/) or
@@ -822,7 +830,7 @@ client. [SmartGit](http://www.syntevo.com/smartgit/) or
 following steps assume that you cloned the repository at `C:\qTox`. If you
 decided to choose another location, replace corresponding parts.
 
-### Getting dependencies
+#### Getting dependencies
 
 Run `bootstrap.bat` in the previously cloned `C:\qTox` repository. The script will
 download the other necessary dependencies, compile them and put them into their
