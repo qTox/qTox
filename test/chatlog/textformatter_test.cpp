@@ -273,44 +273,6 @@ static void specialCasesTest(MarkdownFunction applyMarkdown,
     }
 }
 
-/**
- * @brief Testing cases which are common for all types of formatting except multiline code
- * @param noSymbols True if it's not allowed to show formatting symbols
- * @param map Grouped cases
- * @param signs Combination of formatting symbols
- */
-static void commonTest(bool showSymbols, const StringToString map, const QString signs)
-{
-    for (QString key : map.keys()) {
-        QString source = key.arg(signs);
-        QString result = map[key].arg(showSymbols ? signs : "", signsToTags[signs]);
-        QVERIFY(applyMarkdown(source, showSymbols) == result);
-    }
-}
-
-/**
- * @brief Testing exception cases
- * @param signs Combination of formatting symbols
- */
-static void commonExceptionsTest(const QString signs)
-{
-    for (QString source : commonExceptions) {
-        QString message = source.arg(signs);
-        QVERIFY(applyMarkdown(message, false) == message);
-    }
-}
-
-/**
- * @brief Testing some uncommon, special cases
- * @param map Grouped cases
- */
-static void specialTest(const StringToString map)
-{
-    for (QString key : map.keys()) {
-        QVERIFY(applyMarkdown(key, false) == map[key]);
-    }
-}
-
 class TestTextFormatter : public QObject
 {
     Q_OBJECT
@@ -328,7 +290,6 @@ private slots:
     void singleAndDoubleMarkdownExceptionsShowSymbols();
     void singleAndDoubleMarkdownExceptionsHideSymbols();
     void mixedFormattingSpecialCases();
-    void urlTest();
 private:
     MarkdownFunction markdownFunction;
 };
@@ -477,11 +438,6 @@ void TestTextFormatter::singleAndDoubleMarkdownExceptionsHideSymbols()
 void TestTextFormatter::mixedFormattingSpecialCases()
 {
     specialCasesTest(markdownFunction, MIXED_FORMATTING_SPECIAL_CASES);
-}
-
-void TestTextFormatter::urlTest()
-{
-    specialTest(urlCases);
 }
 
 QTEST_GUILESS_MAIN(TestTextFormatter)
