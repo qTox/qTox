@@ -52,7 +52,7 @@ public:
     ContentDialog(SettingsWidget* settingsWidget, QWidget* parent = 0);
     ~ContentDialog();
 
-    FriendWidget* addFriend(int friendId, QString id);
+    FriendWidget* addFriend(Friend* f);
     GroupWidget* addGroup(int groupId, const QString& name);
     void removeFriend(int friendId);
     void removeGroup(int groupId);
