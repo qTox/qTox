@@ -87,6 +87,14 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
         <source>Test Sound</source>
         <translation>Testați sunetul</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -155,6 +163,102 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Dialog</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">nume de utilizator</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished">Mesaj de stare</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">Cheie publică:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">Aliasurile folosite:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished">ISTORIA ALIASELOR</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished">Acceptă automat fișiere din contact, dacă este setat</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">Acceptare automată de fișiere</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished">Directorul implicit pentru salvarea fișierelor:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished">Acceptarea automată pentru acest contact este dezactivată</translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">Auto-acceptare apel:</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished">Manual</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Audio</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">Audio + Video</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished">Acceptați automat invitațiile discuției de grup de la acest contact dacă este setat.</translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished">Acceptați automat invitații de grup</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished">Eliminați istoricul (operațiunea nu poate fi anulată!)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">Note</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished">Câmp de introducere pentru note despre contact</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished">Puteți să salvați comentariul despre acest contact aici.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">Istorie eliminată</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">Istoricul chat-urilor cu %1 eliminat!</translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -178,134 +282,18 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation>Dialog</translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>nume de utilizator</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation>Mesaj de stare</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Cheie publică:</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>Aliasurile folosite:</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation>ISTORIA ALIASELOR</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>Directorul implicit pentru salvarea fișierelor:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Acceptarea automată pentru acest contact este dezactivată</translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>Acceptare automată de fișiere</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation>Eliminați istoricul (operațiunea nu poate fi anulată!)</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Note</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Puteți să salvați comentariul despre acest contact aici.</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Alegeți un director de auto-acceptare</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>Istorie eliminată</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>Istoricul chat-urilor cu %1 eliminat!</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Auto-acceptare apel:</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Manual</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Audio</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>Audio + Video</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation>Acceptă automat fișiere din contact, dacă este setat</translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation>Câmp de introducere pentru note despre contact</translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation>Acceptați automat invitațiile discuției de grup de la acest contact dacă este setat.</translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation>Acceptați automat invitații de grup</translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
         <translation>Adăugați prieteni</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>ID-ul Tox</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>Fie 76 de caractere hexazecimale ori nume@exemplu.com</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID format</source>
         <translation>Formatul Tox ID este invalid</translation>
     </message>
     <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>Mesaj</translation>
-    </message>
-    <message>
         <source>Send friend request</source>
         <translation>Trimiteți cerere de prietenie</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>%1 aici! Tox cu mine poate?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -328,11 +316,6 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
         <translation>Nu s-a putut adăuga un prieten</translation>
     </message>
     <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Nu vă puteți adăuga ca prieten!</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation>Tox ID, fie 76 caractere hexazecimale ori nume@exemplu.com</translation>
     </message>
@@ -349,9 +332,81 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
         <translation>Introduceți mesajul pe care doriți să-l trimiteți cu solicitarea prietenului sau lăsați gol pentru a trimite un mesaj implicit</translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>Acest Tox ID este nevalid sau nu există</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">Fie 76 de caractere hexazecimale ori nume@exemplu.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Mesaj</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -645,6 +700,10 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>Save chat log</source>
         <translation>Salvați jurnalul de discuții</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1919,6 +1978,14 @@ Salvarea modificărilor formatelor este posibilă, ceea ce poate duce la pierder
         <source>Privacy</source>
         <translation>Confidențialitate</translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2128,7 +2195,7 @@ Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Această grămadă de caractere spune altor clienți Tox cum să vă contacteze.
-Împărtășiți-le prietenilor pentru a comunica.
+Împărtășiți prietenilor pentru a comunica.
 
 Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</translation>
     </message>
@@ -2349,6 +2416,10 @@ Va fi instalat când qTox repornește.</translation>
     <message>
         <source>Reformatting text in progress..</source>
         <translation>Reformarea textului în desfășurare..</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
