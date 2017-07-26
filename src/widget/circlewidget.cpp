@@ -119,7 +119,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                     qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr) {
-                    Friend* f = friendWidget->getFriend();
+                    const Friend* f = friendWidget->getFriend();
                     dialog->addFriend(f);
                 }
             }
@@ -128,7 +128,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                     qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr) {
-                    Friend* f = friendWidget->getFriend();
+                    const Friend* f = friendWidget->getFriend();
                     dialog->addFriend(f);
                 }
             }
@@ -200,7 +200,7 @@ void CircleWidget::onExpand()
 
 void CircleWidget::onAddFriendWidget(FriendWidget* w)
 {
-    Friend* f = w->getFriend();
+    const Friend* f = w->getFriend();
     ToxPk toxId = f->getPublicKey();
     Settings::getInstance().setFriendCircleID(toxId, id);
 }
