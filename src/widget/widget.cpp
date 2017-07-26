@@ -961,10 +961,9 @@ void Widget::onCallEnd(uint32_t friendId)
 void Widget::addFriend(int friendId, const ToxPk& friendPk)
 {
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
-    QString name = newfriend->getDisplayedName();
     bool compact = Settings::getInstance().getCompactLayout();
+    FriendWidget* widget = new FriendWidget(newfriend, compact);
 
-    FriendWidget* widget = new FriendWidget(friendId, name, compact);
     ChatForm* friendForm = newfriend->getChatForm();
 
     friendWidgets[friendId] = widget;
@@ -1120,7 +1119,7 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
     uint32_t id;
     GenericChatForm* form;
     if (widget->getFriend()) {
-        Friend* f = widget->getFriend();
+        const Friend* f = widget->getFriend();
         form = f->getChatForm();
         id = f->getFriendId();
     } else {
@@ -1147,7 +1146,7 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
         }
 
         dialog->show();
-        Friend* frnd = widget->getFriend();
+        const Friend* frnd = widget->getFriend();
 
         if (frnd != nullptr) {
             addFriendDialog(frnd, dialog);
@@ -1198,7 +1197,7 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
     f->getChatForm()->getOfflineMsgEngine()->dischargeReceipt(receipt);
 }
 
-void Widget::addFriendDialog(Friend* frnd, ContentDialog* dialog)
+void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 {
     ContentDialog* contentDialog = ContentDialog::getFriendDialog(frnd->getFriendId());
     bool isSeparate = Settings::getInstance().getSeparateWindow();
@@ -1425,7 +1424,7 @@ void Widget::onFriendRequestReceived(const ToxPk& friendPk, const QString& messa
     }
 }
 
-void Widget::updateFriendActivity(Friend* frnd)
+void Widget::updateFriendActivity(const Friend* frnd)
 {
     const ToxPk& pk = frnd->getPublicKey();
     QDate date = Settings::getInstance().getFriendActivity(pk);
@@ -1510,7 +1509,7 @@ void Widget::onDialogShown(GenericChatroomWidget* widget)
     resetIcon();
 }
 
-void Widget::onFriendDialogShown(Friend* f)
+void Widget::onFriendDialogShown(const Friend* f)
 {
     int friendId = f->getFriendId();
     onDialogShown(friendWidgets[friendId]);
@@ -2425,7 +2424,7 @@ void Widget::retranslateUi()
 void Widget::focusChatInput()
 {
     if (activeChatroomWidget) {
-        if (Friend* f = activeChatroomWidget->getFriend()) {
+        if (const Friend* f = activeChatroomWidget->getFriend()) {
             f->getChatForm()->focusInput();
         } else if (Group* g = activeChatroomWidget->getGroup()) {
             g->getChatForm()->focusInput();
