@@ -7,8 +7,9 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QComboBox>
 
-AboutUser::AboutUser(ToxPk& toxId, QWidget* parent)
+AboutUser::AboutUser(const Friend* f, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::AboutUser)
 {
@@ -23,65 +24,58 @@ AboutUser::AboutUser(ToxPk& toxId, QWidget* parent)
     connect(ui->selectSaveDir, &QPushButton::clicked, this, &AboutUser::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutUser::onRemoveHistoryClicked);
 
-    this->friendPk = toxId;
+    friendPk = f->getPublicKey();
     Settings& s = Settings::getInstance();
-    QString dir = s.getAutoAcceptDir(this->friendPk);
+    QString dir = s.getAutoAcceptDir(friendPk);
     ui->autoacceptfile->setChecked(!dir.isEmpty());
 
-    ui->autoacceptcall->setCurrentIndex(s.getAutoAcceptCall(this->friendPk));
+    ui->autoacceptcall->setCurrentIndex(s.getAutoAcceptCall(friendPk));
 
     ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
-    ui->autogroupinvite->setChecked(s.getAutoGroupInvite(this->friendPk));
+    ui->autogroupinvite->setChecked(s.getAutoGroupInvite(friendPk));
 
     if (ui->autoacceptfile->isChecked()) {
-        ui->selectSaveDir->setText(s.getAutoAcceptDir(this->friendPk));
+        ui->selectSaveDir->setText(s.getAutoAcceptDir(friendPk));
     }
-}
 
-void AboutUser::setFriend(Friend* f)
-{
-    this->setWindowTitle(f->getDisplayedName());
+    setWindowTitle(f->getDisplayedName());
     ui->userName->setText(f->getDisplayedName());
-    ui->publicKey->setText(QString(f->getPublicKey().toString()));
+    ui->publicKey->setText(friendPk.toString());
     ui->publicKey->setCursorPosition(0); // scroll textline to left
-    ui->note->setPlainText(Settings::getInstance().getContactNote(f->getPublicKey()));
+    ui->note->setPlainText(Settings::getInstance().getContactNote(friendPk));
 
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(f->getPublicKey().toString());
+    QPixmap avatar = Nexus::getProfile()->loadAvatar(friendPk.toString());
     ui->statusMessage->setText(f->getStatusMessage());
-    if (!avatar.isNull()) {
-        ui->avatar->setPixmap(avatar);
-    } else {
-        ui->avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
-    }
+    ui->avatar->setPixmap(avatar.isNull() ? QPixmap(":/img/contact_dark.svg") : avatar);
 }
 
 void AboutUser::onAutoAcceptDirClicked()
 {
-    QString dir;
     if (!ui->autoacceptfile->isChecked()) {
-        dir = QDir::homePath();
         ui->autoacceptfile->setChecked(false);
-        Settings::getInstance().setAutoAcceptDir(this->friendPk, "");
+        Settings::getInstance().setAutoAcceptDir(friendPk, "");
         ui->selectSaveDir->setText(tr("Auto accept for this contact is disabled"));
     } else if (ui->autoacceptfile->isChecked()) {
-        dir = QFileDialog::getExistingDirectory(Q_NULLPTR, tr("Choose an auto accept directory",
-                                                         "popup title"), dir);
+        QString dir = QFileDialog::getExistingDirectory(
+                    Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
+
         if (dir.isEmpty()) {
             ui->autoacceptfile->setChecked(false);
             return; // user canellced
         }
-        Settings::getInstance().setAutoAcceptDir(this->friendPk, dir);
-        ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->friendPk));
+
+        Settings::getInstance().setAutoAcceptDir(friendPk, dir);
+        ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(friendPk));
     }
+
     Settings::getInstance().saveGlobal();
     ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
 }
 
 void AboutUser::onAutoAcceptCallClicked()
 {
-    Settings::getInstance().setAutoAcceptCall(this->friendPk,
-                                              Settings::AutoAcceptCallFlags(
-                                                  QFlag(ui->autoacceptcall->currentIndex())));
+    QFlag flag = QFlag(ui->autoacceptcall->currentIndex());
+    Settings::getInstance().setAutoAcceptCall(friendPk, Settings::AutoAcceptCallFlags(flag));
     Settings::getInstance().savePersonal();
 }
 
@@ -90,18 +84,17 @@ void AboutUser::onAutoAcceptCallClicked()
  */
 void AboutUser::onAutoGroupInvite()
 {
-    Settings::getInstance().setAutoGroupInvite(this->friendPk, ui->autogroupinvite->isChecked());
+    Settings::getInstance().setAutoGroupInvite(friendPk, ui->autogroupinvite->isChecked());
     Settings::getInstance().savePersonal();
 }
 
 void AboutUser::onSelectDirClicked()
 {
-    QString dir;
-    dir = QFileDialog::getExistingDirectory(Q_NULLPTR,
-                                            tr("Choose an auto accept directory", "popup title"),
-                                            dir);
+    QString dir = QFileDialog::getExistingDirectory(
+                Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
+
     ui->autoacceptfile->setChecked(true);
-    Settings::getInstance().setAutoAcceptDir(this->friendPk, dir);
+    Settings::getInstance().setAutoAcceptDir(friendPk, dir);
     Settings::getInstance().savePersonal();
 }
 
@@ -117,11 +110,12 @@ void AboutUser::onAcceptedClicked()
 void AboutUser::onRemoveHistoryClicked()
 {
     History* history = Nexus::getProfile()->getHistory();
-    if (history)
+    if (history) {
         history->removeFriendHistory(friendPk.toString());
-    QMessageBox::information(this, tr("History removed"),
-                             tr("Chat history with %1 removed!").arg(ui->userName->text().toHtmlEscaped()),
-                             QMessageBox::Ok);
+    }
+
+    QMessageBox::information(this, tr("History removed"), tr("Chat history with %1 removed!")
+                             .arg(ui->userName->text().toHtmlEscaped()), QMessageBox::Ok);
 }
 
 AboutUser::~AboutUser()
