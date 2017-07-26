@@ -961,9 +961,9 @@ void Widget::onCallEnd(uint32_t friendId)
 void Widget::addFriend(int friendId, const ToxPk& friendPk)
 {
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
-
     QString name = newfriend->getDisplayedName();
     bool compact = Settings::getInstance().getCompactLayout();
+
     FriendWidget* widget = new FriendWidget(friendId, name, compact);
     ChatForm* friendForm = newfriend->getChatForm();
 
@@ -1208,7 +1208,7 @@ void Widget::addFriendDialog(Friend* frnd, ContentDialog* dialog)
         onAddClicked();
     }
 
-    FriendWidget* friendWidget = dialog->addFriend(frnd->getFriendId(), frnd->getDisplayedName());
+    FriendWidget* friendWidget = dialog->addFriend(frnd);
 
     friendWidget->setStatusMsg(widget->getStatusMsg());
 

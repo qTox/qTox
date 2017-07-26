@@ -120,7 +120,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
                 if (friendWidget != nullptr) {
                     Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
+                    dialog->addFriend(f);
                 }
             }
             for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
@@ -129,7 +129,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
                 if (friendWidget != nullptr) {
                     Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
+                    dialog->addFriend(f);
                 }
             }
 
