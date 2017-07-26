@@ -120,7 +120,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
                 if (friendWidget != nullptr) {
                     Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
+                    dialog->addFriend(f->getFriendId(), f->getDisplayedName());
                 }
             }
             for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
@@ -129,7 +129,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
                 if (friendWidget != nullptr) {
                     Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
+                    dialog->addFriend(f->getFriendId(), f->getDisplayedName());
                 }
             }
 
@@ -200,9 +200,8 @@ void CircleWidget::onExpand()
 
 void CircleWidget::onAddFriendWidget(FriendWidget* w)
 {
-    Friend* f = FriendList::findFriend(w->friendId);
-    ToxPk toxId = f->getPublicKey();
-    Settings::getInstance().setFriendCircleID(toxId, id);
+    ToxPk toxPk = w->getFriend()->getPublicKey();
+    Settings::getInstance().setFriendCircleID(toxPk, id);
 }
 
 void CircleWidget::updateID(int index)
@@ -220,16 +219,18 @@ void CircleWidget::updateID(int index)
         FriendWidget* friendWidget =
             qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
-        if (friendWidget != nullptr)
-            Settings::getInstance()
-                .setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
+        if (friendWidget != nullptr) {
+            ToxPk toxPk = friendWidget->getFriend()->getPublicKey();
+            Settings::getInstance().setFriendCircleID(toxPk, id);
+        }
     }
     for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
         FriendWidget* friendWidget =
             qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
-        if (friendWidget != nullptr)
-            Settings::getInstance()
-                .setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
+        if (friendWidget != nullptr) {
+            ToxPk toxPk = friendWidget->getFriend()->getPublicKey();
+            Settings::getInstance().setFriendCircleID(toxPk, id);
+        }
     }
 }
