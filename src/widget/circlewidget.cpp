@@ -200,7 +200,7 @@ void CircleWidget::onExpand()
 
 void CircleWidget::onAddFriendWidget(FriendWidget* w)
 {
-    Friend* f = FriendList::findFriend(w->friendId);
+    Friend* f = w->getFriend();
     ToxPk toxId = f->getPublicKey();
     Settings::getInstance().setFriendCircleID(toxId, id);
 }
@@ -210,26 +210,30 @@ void CircleWidget::updateID(int index)
     // For when a circle gets destroyed, another takes its id.
     // This function updates all friends widgets for this new id.
 
-    if (id == index)
+    if (id == index) {
         return;
+    }
 
     id = index;
     circleList[id] = this;
 
     for (int i = 0; i < friendOnlineLayout()->count(); ++i) {
-        FriendWidget* friendWidget =
-            qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
+        const QWidget* w = friendOnlineLayout()->itemAt(i)->widget();
+        const FriendWidget* friendWidget = qobject_cast<const FriendWidget*>(w);
 
-        if (friendWidget != nullptr)
-            Settings::getInstance()
-                .setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
+        if (friendWidget) {
+            const Friend* f = friendWidget->getFriend();
+            Settings::getInstance().setFriendCircleID(f->getPublicKey(), id);
+        }
     }
-    for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
-        FriendWidget* friendWidget =
-            qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
-        if (friendWidget != nullptr)
-            Settings::getInstance()
-                .setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
+    for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
+        const QWidget* w = friendOfflineLayout()->itemAt(i)->widget();
+        const FriendWidget* friendWidget = qobject_cast<const FriendWidget*>(w);
+
+        if (friendWidget) {
+            const Friend* f = friendWidget->getFriend();
+            Settings::getInstance().setFriendCircleID(f->getPublicKey(), id);
+        }
     }
 }
