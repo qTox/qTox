@@ -1,7 +1,29 @@
 #!/bin/bash
 
+# MIT License
+#
+# Copyright (c) 2017 Maxim Biro <nurupo.contributions@gmail.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
 # Known issues:
-# - Doesn't build qTox updater, because it wasn't ported to cmake yet and it
+# - Doesn't build qTox updater, because it wasn't ported to cmake yet and
 #   because it requires static Qt, which means we'd need to build Qt twice,
 #   and building Qt takes really long time.
 #
@@ -25,53 +47,122 @@
 #   until the next release. Once the next release occurs, we will be checking
 #   out that instead.
 
+
+set -euo pipefail
+
+
+# Common directory paths
+
+readonly WORKSPACE_DIR="/workspace"
+readonly SCRIPT_DIR="/script"
+readonly QTOX_SRC_DIR="/qtox"
+
+
+# Make sure we run in an expected environment
+
+if ! grep 'buntu 16\.04' /etc/lsb-release
+then
+    echo "Error: This script should be run on Ubuntu 16.04."
+    exit 1
+fi
+
+if [ ! -d "$WORKSPACE_DIR" ] || [ ! -d "$SCRIPT_DIR" ] || [ ! -d "$QTOX_SRC_DIR" ]
+then
+    echo "Error: At least one of $WORKSPACE_DIR, $SCRIPT_DIR or $QTOX_SRC_DIR directories is missing."
+    exit 1
+fi
+
+if [ ! -d "$QTOX_SRC_DIR/src" ]
+then
+    echo "Error: $QTOX_SRC_DIR/src directory is missing, make sure $QTOX_SRC_DIR contains qTox source code."
+    exit 1
+fi
+
+if [ "$(id -u)" != "0" ]
+then
+   echo "Error: This script must be run as root."
+   exit 1
+fi
+
+
 # Check arguments
 
-ARCH=${1}
-BUILD_TYPE=${2}
+readonly ARCH=$1
+readonly BUILD_TYPE=$2
 
-if [ -z "$ARCH" ]; then
+if [ -z "$ARCH" ]
+then
   echo "Error: No architecture was specified. Please specify either 'i686' or 'x86_64', case sensitive, as the first argument to the script."
   exit 1
 fi
 
-if [[ "$ARCH" != "i686" ]] && [[ "$ARCH" != "x86_64" ]]; then
+if [[ "$ARCH" != "i686" ]] && [[ "$ARCH" != "x86_64" ]]
+then
   echo "Error: Incorrect architecture was specified. Please specify either 'i686' or 'x86_64', case sensitive, as the first argument to the script."
   exit 1
 fi
 
-if [ -z "$BUILD_TYPE" ]; then
+if [ -z "$BUILD_TYPE" ]
+then
   echo "Error: No build type was specified. Please specify either 'release' or 'debug', case sensitive, as the second argument to the script."
   exit 1
 fi
 
-if [[ "$BUILD_TYPE" != "release" ]] && [[ "$BUILD_TYPE" != "debug" ]]; then
+if [[ "$BUILD_TYPE" != "release" ]] && [[ "$BUILD_TYPE" != "debug" ]]
+then
   echo "Error: Incorrect build type was specified. Please specify either 'release' or 'debug', case sensitive, as the second argument to the script."
   exit 1
 fi
 
 
-set -e -x
+# More directory variables
+
+readonly BUILD_DIR="/build"
+readonly DEP_DIR="$WORKSPACE_DIR/$ARCH/dep-cache"
+
+
+set -x
 
 
 # Get packages
 
 apt-get update
-apt-get install build-essential autoconf cmake libtool pkg-config yasm tclsh mingw-w64 wget git zip -y
+apt-get install -y --no-install-recommends \
+                   autoconf \
+                   automake \
+                   build-essential \
+                   ca-certificates \
+                   cmake \
+                   git \
+                   libtool \
+                   pkg-config \
+                   tclsh \
+                   unzip \
+                   wget \
+                   yasm
+if [[ "$ARCH" == "i686" ]]
+then
+  apt-get install -y --no-install-recommends \
+                    g++-mingw-w64-i686 \
+                    gcc-mingw-w64-i686
+elif [[ "$ARCH" == "x86_64" ]]
+then
+  apt-get install -y --no-install-recommends \
+                    g++-mingw-w64-x86-64 \
+                    gcc-mingw-w64-x86-64
+fi
 
 
 # Create the expected directory structure
 
-cd /workspace
+# Just make sure those exist
+mkdir -p "$WORKSPACE_DIR"
+mkdir -p "$DEP_DIR"
 
-mkdir -p $ARCH
-cd $ARCH
-
-mkdir -p deps
-
-rm -rf ./build
-mkdir -p build
-cd build
+# Build dir should be empty
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR"
+cd "$BUILD_DIR"
 
 
 # Use all cores for building
@@ -82,38 +173,42 @@ export MAKEFLAGS
 
 # OpenSSL
 
-OPENSSL_PREFIX_DIR="$PWD/../deps/libopenssl"
-if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]; then
+OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
+if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
+then
   rm -rf "$OPENSSL_PREFIX_DIR"
   mkdir -p "$OPENSSL_PREFIX_DIR"
 
   OPENSSL_VERSION=1.0.2l
   OPENSSL_SHA256_HASH=ce07195b659e75f4e1db43552860070061f156a98bb37b672b101ba6e3ddf30c
 
-  wget https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
+  wget https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
 
-  if ! ( echo "${OPENSSL_SHA256_HASH}  openssl-${OPENSSL_VERSION}.tar.gz" | sha256sum -c --status - ) ; then
-    echo "Error: sha256 of openssl-${OPENSSL_VERSION}.tar.gz doesn't match the known one"
+  if ! ( echo "$OPENSSL_SHA256_HASH  openssl-$OPENSSL_VERSION.tar.gz" | sha256sum -c --status - )
+  then
+    echo "Error: sha256 of openssl-$OPENSSL_VERSION.tar.gz doesn't match the known one"
     exit 1
   else
-    echo "sha256 matches the expected one: ${OPENSSL_SHA256_HASH}"
+    echo "sha256 matches the expected one: $OPENSSL_SHA256_HASH"
   fi
 
   tar -xf openssl*.tar.gz
   rm openssl*.tar.gz
   cd openssl*
 
-  CONFIGURE_OPTIONS="--prefix=${OPENSSL_PREFIX_DIR} shared"
-  if [[ "${ARCH}" == "x86_64"* ]]; then
-    CONFIGURE_OPTIONS="${CONFIGURE_OPTIONS} mingw64 --cross-compile-prefix=x86_64-w64-mingw32-"
-  elif [[ "${ARCH}" == "i686" ]]; then
-    CONFIGURE_OPTIONS="${CONFIGURE_OPTIONS} mingw --cross-compile-prefix=i686-w64-mingw32-"
+  CONFIGURE_OPTIONS="--prefix=$OPENSSL_PREFIX_DIR shared"
+  if [[ "$ARCH" == "x86_64" ]]
+  then
+    CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS mingw64 --cross-compile-prefix=x86_64-w64-mingw32-"
+  elif [[ "$ARCH" == "i686" ]]
+  then
+    CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS mingw --cross-compile-prefix=i686-w64-mingw32-"
   fi
 
-  ./Configure ${CONFIGURE_OPTIONS}
+  ./Configure $CONFIGURE_OPTIONS
   make
   make install
-  touch ${OPENSSL_PREFIX_DIR}/done
+  touch $OPENSSL_PREFIX_DIR/done
 
   cd ..
   rm -rf ./openssl*
@@ -122,8 +217,9 @@ fi
 
 # Qt
 
-QT_PREFIX_DIR="$PWD/../deps/libqt5"
-if [ ! -f "$QT_PREFIX_DIR/done" ]; then
+QT_PREFIX_DIR="$DEP_DIR/libqt5"
+if [ ! -f "$QT_PREFIX_DIR/done" ]
+then
   rm -rf "$QT_PREFIX_DIR"
   mkdir -p "$QT_PREFIX_DIR"
 
@@ -133,17 +229,17 @@ if [ ! -f "$QT_PREFIX_DIR/done" ]; then
   QT_MINOR=6
   QT_PATCH=2
 
-  QT_VERSION=${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}
-  wget ${QT_MIRROR}/official_releases/qt/${QT_MAJOR}.${QT_MINOR}/${QT_VERSION}/single/qt-everywhere-opensource-src-${QT_VERSION}.tar.xz
+  QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
+  wget $QT_MIRROR/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz
 
   tar -xf qt*.tar.xz
   rm qt*.tar.xz
   cd qt*
 
-  export PKG_CONFIG_PATH="${OPENSSL_PREFIX_DIR}/lib/pkgconfig"
+  export PKG_CONFIG_PATH="$OPENSSL_PREFIX_DIR/lib/pkgconfig"
   export OPENSSL_LIBS="$(pkg-config --libs openssl)"
 
-  ./configure -prefix ${QT_PREFIX_DIR} \
+  ./configure -prefix $QT_PREFIX_DIR \
     -release \
     -shared \
     -device-option CROSS_COMPILE=$ARCH-w64-mingw32- \
@@ -182,7 +278,7 @@ if [ ! -f "$QT_PREFIX_DIR/done" ]; then
 
   make
   make install
-  touch ${QT_PREFIX_DIR}/done
+  touch $QT_PREFIX_DIR/done
 
   unset PKG_CONFIG_PATH
   unset OPENSSL_LIBS
@@ -194,16 +290,19 @@ fi
 
 # SQLCipher
 
-SQLCIPHER_PREFIX_DIR="$PWD/../deps/libsqlcipher"
-if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]; then
+SQLCIPHER_PREFIX_DIR="$DEP_DIR/libsqlcipher"
+if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]
+then
   rm -rf "$SQLCIPHER_PREFIX_DIR"
   mkdir -p "$SQLCIPHER_PREFIX_DIR"
 
-  git clone https://github.com/sqlcipher/sqlcipher
+  git clone \
+    --branch v3.4.1 \
+    --depth 1 \
+    https://github.com/sqlcipher/sqlcipher \
+    sqlcipher
   cd sqlcipher
-  git checkout v3.4.1
 
-  # Why is everything always so broken.
   sed -i s/'LIBS="-lcrypto  $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
   sed -i s/'LIBS="-lcrypto $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
   sed -i s/'if test "$TARGET_EXEEXT" = ".exe"'/'if test ".exe" = ".exe"'/g configure
@@ -225,13 +324,18 @@ EOF
 
   patch -l < Makefile.in-patch
 
-  ./configure --host="$ARCH-w64-mingw32" --prefix="$SQLCIPHER_PREFIX_DIR" --enable-tempstore=yes CFLAGS="-O2 -g0 -DSQLITE_HAS_CODEC -I$OPENSSL_PREFIX_DIR/include/" LDFLAGS="$OPENSSL_PREFIX_DIR/lib/libcrypto.a -lcrypto -lgdi32 -L$OPENSSL_PREFIX_DIR/lib/" --disable-shared
+  ./configure --host="$ARCH-w64-mingw32" \
+              --prefix="$SQLCIPHER_PREFIX_DIR" \
+              --disable-shared \
+              --enable-tempstore=yes \
+              CFLAGS="-O2 -g0 -DSQLITE_HAS_CODEC -I$OPENSSL_PREFIX_DIR/include/" \
+              LDFLAGS="$OPENSSL_PREFIX_DIR/lib/libcrypto.a -lcrypto -lgdi32 -L$OPENSSL_PREFIX_DIR/lib/"
 
   sed -i s/"TEXE = $"/"TEXE = .exe"/ Makefile
 
   make
   make install
-  touch ${SQLCIPHER_PREFIX_DIR}/done
+  touch $SQLCIPHER_PREFIX_DIR/done
 
   cd ..
   rm -rf ./sqlcipher
@@ -240,8 +344,9 @@ fi
 
 # FFmpeg
 
-FFMPEG_PREFIX_DIR="$PWD/../deps/libffmpeg"
-if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]; then
+FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
+if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
+then
   rm -rf "$FFMPEG_PREFIX_DIR"
   mkdir -p "$FFMPEG_PREFIX_DIR"
 
@@ -249,9 +354,11 @@ if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]; then
   tar -xf ffmpeg*.tar.xz
   cd ffmpeg*
 
-  if [[ "${ARCH}" == "x86_64"* ]]; then
+  if [[ "$ARCH" == "x86_64"* ]]
+  then
     CONFIGURE_OPTIONS="--arch=x86_64"
-  elif [[ "${ARCH}" == "i686" ]]; then
+  elif [[ "$ARCH" == "i686" ]]
+  then
     CONFIGURE_OPTIONS="--arch=x86"
   fi
 
@@ -295,7 +402,7 @@ if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]; then
               --enable-memalign-hack
   make
   make install
-  touch ${FFMPEG_PREFIX_DIR}/done
+  touch $FFMPEG_PREFIX_DIR/done
 
   cd ..
   rm -rf ./ffmpeg*
@@ -304,12 +411,13 @@ fi
 
 # Openal-soft (irungentoo's fork)
 
-OPENAL_PREFIX_DIR="$PWD/../deps/libopenal"
-if [ ! -f "$OPENAL_PREFIX_DIR/done" ]; then
+OPENAL_PREFIX_DIR="$DEP_DIR/libopenal"
+if [ ! -f "$OPENAL_PREFIX_DIR/done" ]
+then
   rm -rf "$OPENAL_PREFIX_DIR"
   mkdir -p "$OPENAL_PREFIX_DIR"
 
-  git clone https://github.com/irungentoo/openal-soft-tox
+  git clone https://github.com/irungentoo/openal-soft-tox openal-soft-tox
   cd openal*
   git checkout b80570bed017de60b67c6452264c634085c3b148
 
@@ -339,7 +447,7 @@ if [ ! -f "$OPENAL_PREFIX_DIR/done" ]; then
 
   make
   make install
-  touch ${OPENAL_PREFIX_DIR}/done
+  touch $OPENAL_PREFIX_DIR/done
 
   cd ..
   rm -rf ./openal*
@@ -348,16 +456,17 @@ fi
 
 # Filteraudio
 
-FILTERAUDIO_PREFIX_DIR="$PWD/../deps/libfilteraudio"
-if [ ! -f "$FILTERAUDIO_PREFIX_DIR/done" ]; then
+FILTERAUDIO_PREFIX_DIR="$DEP_DIR/libfilteraudio"
+if [ ! -f "$FILTERAUDIO_PREFIX_DIR/done" ]
+then
   rm -rf "$FILTERAUDIO_PREFIX_DIR"
   mkdir -p "$FILTERAUDIO_PREFIX_DIR"
 
-  git clone https://github.com/irungentoo/filter_audio
+  git clone https://github.com/irungentoo/filter_audio filter_audio
   cd filter*
   git checkout ada2f4fdc04940cdeee47caffe43add4fa017096
 
-  ${ARCH}-w64-mingw32-gcc -O2 -g0 -c \
+  $ARCH-w64-mingw32-gcc -O2 -g0 -c \
                aec/aec_core.c \
                aec/aec_core_sse2.c \
                aec/aec_rdft.c \
@@ -463,7 +572,7 @@ if [ ! -f "$FILTERAUDIO_PREFIX_DIR/done" ]; then
   mkdir $FILTERAUDIO_PREFIX_DIR/lib
   cp filter_audio.h $FILTERAUDIO_PREFIX_DIR/include
   cp libfilteraudio.a $FILTERAUDIO_PREFIX_DIR/lib
-  touch ${FILTERAUDIO_PREFIX_DIR}/done
+  touch $FILTERAUDIO_PREFIX_DIR/done
 
   cd ..
   rm -rf ./filter*
@@ -472,8 +581,9 @@ fi
 
 # QREncode
 
-QRENCODE_PREFIX_DIR="$PWD/../deps/libqrencode"
-if [ ! -f "$QRENCODE_PREFIX_DIR/done" ]; then
+QRENCODE_PREFIX_DIR="$DEP_DIR/libqrencode"
+if [ ! -f "$QRENCODE_PREFIX_DIR/done" ]
+then
   rm -rf "$QRENCODE_PREFIX_DIR"
   mkdir -p "$QRENCODE_PREFIX_DIR"
 
@@ -482,10 +592,16 @@ if [ ! -f "$QRENCODE_PREFIX_DIR/done" ]; then
   rm qrencode*.tar.bz2
   cd qrencode*
 
-  CFLAGS="-O2 -g0" ./configure --host="${ARCH}-w64-mingw32" --prefix="${QRENCODE_PREFIX_DIR}" --disable-shared --enable-static --disable-sdltest --without-tools --without-debug
+  CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
+                               --prefix="$QRENCODE_PREFIX_DIR" \
+                               --disable-shared \
+                               --enable-static \
+                               --disable-sdltest \
+                               --without-tools \
+                               --without-debug
   make
   make install
-  touch ${QRENCODE_PREFIX_DIR}/done
+  touch $QRENCODE_PREFIX_DIR/done
 
   cd ..
   rm -rf ./qrencode*
@@ -494,20 +610,29 @@ fi
 
 # Opus
 
-OPUS_PREFIX_DIR="$PWD/../deps/libopus"
-if [ ! -f "$OPUS_PREFIX_DIR/done" ]; then
+OPUS_PREFIX_DIR="$DEP_DIR/libopus"
+if [ ! -f "$OPUS_PREFIX_DIR/done" ]
+then
   rm -rf "$OPUS_PREFIX_DIR"
   mkdir -p "$OPUS_PREFIX_DIR"
-
-  git clone git://git.opus-codec.org/opus.git
+  
+  git clone \
+    --branch v1.2.1 \
+    --depth 1 \
+    git://git.opus-codec.org/opus.git \
+    opus
   cd opus
-  git checkout v1.2.1
 
   ./autogen.sh
-  CFLAGS="-O2 -g0" ./configure --host="${ARCH}-w64-mingw32" --prefix="${OPUS_PREFIX_DIR}" --disable-shared --enable-static --disable-extra-programs --disable-doc
+  CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
+                               --prefix="$OPUS_PREFIX_DIR" \
+                               --disable-shared \
+                               --enable-static \
+                               --disable-extra-programs \
+                               --disable-doc
   make
   make install
-  touch ${OPUS_PREFIX_DIR}/done
+  touch $OPUS_PREFIX_DIR/done
 
   cd ..
   rm -rf ./opus
@@ -516,20 +641,28 @@ fi
 
 # Sodium
 
-SODIUM_PREFIX_DIR="$PWD/../deps/libsodium"
-if [ ! -f "$SODIUM_PREFIX_DIR/done" ]; then
+SODIUM_PREFIX_DIR="$DEP_DIR/libsodium"
+if [ ! -f "$SODIUM_PREFIX_DIR/done" ]
+then
   rm -rf "$SODIUM_PREFIX_DIR"
   mkdir -p "$SODIUM_PREFIX_DIR"
 
-  git clone https://github.com/jedisct1/libsodium
+  git clone \
+    --branch 1.0.13 \
+    --depth 1 \
+    https://github.com/jedisct1/libsodium \
+    libsodium
   cd libsodium
-  git checkout 1.0.13
 
   ./autogen.sh
-  ./configure --host="${ARCH}-w64-mingw32" --prefix="${SODIUM_PREFIX_DIR}" --disable-shared --enable-static --with-pic
+  ./configure --host="$ARCH-w64-mingw32" \
+              --prefix="$SODIUM_PREFIX_DIR" \
+              --disable-shared \
+              --enable-static \
+              --with-pic
   make
   make install
-  touch ${SODIUM_PREFIX_DIR}/done
+  touch $SODIUM_PREFIX_DIR/done
 
   cd ..
   rm -rf ./libsodium
@@ -538,25 +671,38 @@ fi
 
 # VPX
 
-VPX_PREFIX_DIR="$PWD/../deps/libvpx"
-if [ ! -f "$VPX_PREFIX_DIR/done" ]; then
+VPX_PREFIX_DIR="$DEP_DIR/libvpx"
+if [ ! -f "$VPX_PREFIX_DIR/done" ]
+then
   rm -rf "$VPX_PREFIX_DIR"
   mkdir -p "$VPX_PREFIX_DIR"
 
-  git clone https://github.com/webmproject/libvpx
+  git clone \
+    --branch v1.6.1 \
+    --depth 1 \
+    https://github.com/webmproject/libvpx \
+    libvpx
   cd libvpx
-  git checkout v1.6.1
 
-  if [[ "${ARCH}" == "x86_64"* ]]; then
+  if [[ "$ARCH" == "x86_64" ]]
+  then
     VPX_TARGET=x86_64-win64-gcc
-  elif [[ "${ARCH}" == "i686" ]]; then
+  elif [[ "$ARCH" == "i686" ]]
+  then
     VPX_TARGET=x86-win32-gcc
   fi
 
-  CROSS="${ARCH}-w64-mingw32-" ./configure --target="$VPX_TARGET" --prefix="${VPX_PREFIX_DIR}" --disable-shared --enable-static --disable-examples --disable-tools --disable-docs --disable-unit-tests
+  CROSS="$ARCH-w64-mingw32-" ./configure --target="$VPX_TARGET" \
+                                           --prefix="$VPX_PREFIX_DIR" \
+                                           --disable-shared \
+                                           --enable-static \
+                                           --disable-examples \
+                                           --disable-tools \
+                                           --disable-docs \
+                                           --disable-unit-tests
   make
   make install
-  touch ${VPX_PREFIX_DIR}/done
+  touch $VPX_PREFIX_DIR/done
 
   cd ..
   rm -rf ./libvpx
@@ -565,8 +711,9 @@ fi
 
 # Toxcore
 
-TOXCORE_PREFIX_DIR="$PWD/../deps/libtoxcore"
-if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]; then
+TOXCORE_PREFIX_DIR="$DEP_DIR/libtoxcore"
+if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]
+then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
@@ -587,7 +734,7 @@ if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]; then
       SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $OPUS_PREFIX_DIR $SODIUM_PREFIX_DIR $VPX_PREFIX_DIR)
   " > toolchain.cmake
 
-  cmake -DCMAKE_INSTALL_PREFIX=${TOXCORE_PREFIX_DIR} \
+  cmake -DCMAKE_INSTALL_PREFIX=$TOXCORE_PREFIX_DIR \
                -DBOOTSTRAP_DAEMON=OFF \
                -DWARNINGS=OFF \
                -DCMAKE_BUILD_TYPE=Release \
@@ -597,7 +744,7 @@ if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]; then
 
   make
   make install
-  touch ${TOXCORE_PREFIX_DIR}/done
+  touch $TOXCORE_PREFIX_DIR/done
 
   unset PKG_CONFIG_PATH
   unset PKG_CONFIG_LIBDIR
@@ -607,10 +754,11 @@ if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]; then
 fi
 
 
-# Strip
+# Strip to reduce file size, we don't need this information anyway.
 
 set +e
-for PREFIX_DIR in ../deps/*; do
+for PREFIX_DIR in $DEP_DIR/*; do
+    strip --strip-unneeded $PREFIX_DIR/bin/*
     $ARCH-w64-mingw32-strip --strip-unneeded $PREFIX_DIR/bin/*
     $ARCH-w64-mingw32-strip --strip-unneeded $PREFIX_DIR/lib/*
 done
@@ -619,20 +767,24 @@ set -e
 
 # qTox
 
-QTOX_PREFIX_DIR="/workspace/$ARCH/qtox/$BUILD_TYPE"
+QTOX_PREFIX_DIR="$WORKSPACE_DIR/$ARCH/qtox/$BUILD_TYPE"
 rm -rf "$QTOX_PREFIX_DIR"
 mkdir -p "$QTOX_PREFIX_DIR"
 
 rm -rf ./qtox
 mkdir -p qtox
 cd qtox
-cp -a /qtox/. .
+cp -a $QTOX_SRC_DIR/. .
 
 mkdir build
 cd build
 
-for PREFIX_DIR in `pwd`/../../../deps/*; do
-  if [ -d $PREFIX_DIR/lib/pkgconfig ]; then
+PKG_CONFIG_PATH=""
+PKG_CONFIG_LIBDIR=""
+CMAKE_FIND_ROOT_PATH=""
+for PREFIX_DIR in $DEP_DIR/*; do
+  if [ -d $PREFIX_DIR/lib/pkgconfig ]
+  then
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$PREFIX_DIR/lib/pkgconfig"
     export PKG_CONFIG_LIBDIR="$PKG_CONFIG_LIBDIR:$PREFIX_DIR/lib/pkgconfig"
     CMAKE_FIND_ROOT_PATH="$CMAKE_FIND_ROOT_PATH $PREFIX_DIR"
@@ -649,11 +801,13 @@ echo "
     SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $CMAKE_FIND_ROOT_PATH)
 " > toolchain.cmake
 
-if [[ "$BUILD_TYPE" == "release" ]]; then
+if [[ "$BUILD_TYPE" == "release" ]]
+then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Release \
         ..
-elif [[ "$BUILD_TYPE" == "debug" ]]; then
+elif [[ "$BUILD_TYPE" == "debug" ]]
+then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Debug \
         ..
@@ -686,10 +840,13 @@ cp /usr/$ARCH-w64-mingw32/lib/libwinpthread-1.dll $QTOX_PREFIX_DIR
 cd ..
 
 # Setup gdb
-if [[ "$BUILD_TYPE" == "debug" ]]; then
+if [[ "$BUILD_TYPE" == "debug" ]]
+then
+  # Copy over qTox source code so that dbg could pick it up
   mkdir -p "$QTOX_PREFIX_DIR/$PWD/src"
   cp -r "$PWD/src" "$QTOX_PREFIX_DIR/$PWD"
 
+  # Get dbg executable and the debug scripts
   git clone https://github.com/nurupo/mingw-w64-debug-scripts
   cd mingw-w64-debug-scripts
   git checkout 7341e1ffdea352e5557f3fcae51569f13e1ef270
@@ -698,8 +855,10 @@ if [[ "$BUILD_TYPE" == "debug" ]]; then
   cd ..
 fi
 
+# Strip
 set +e
-if [[ "$BUILD_TYPE" == "release" ]]; then
+if [[ "$BUILD_TYPE" == "release" ]]
+then
   $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*.exe
 fi
 $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*.dll
@@ -709,4 +868,5 @@ set -e
 cd ..
 rm -rf ./qtox
 
-chmod 777 -R /workspace
+# Chmod since everything is root:root
+chmod 777 -R "$WORKSPACE_DIR"
