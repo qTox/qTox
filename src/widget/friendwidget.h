@@ -46,8 +46,8 @@ signals:
     void contextMenuCalled(QContextMenuEvent* event);
 
 public slots:
-    void onAvatarChange(int FriendId, const QPixmap& pic);
-    void onAvatarRemoved(int FriendId);
+    void onAvatarChange(int friendId, const QPixmap& pic);
+    void onAvatarRemoved(int friendId);
     void setAlias(const QString& alias);
     void onContextMenuCalled(QContextMenuEvent* event);
 
@@ -57,7 +57,12 @@ protected:
     void setFriendAlias();
 
 public:
+<<<<<<< HEAD
     const Friend* frnd;
+||||||| merged common ancestors
+=======
+    Friend* frnd;
+>>>>>>> refactor(friendwidget): FriendWidget refactoring
     int friendId;
     bool isDefaultAvatar;
     bool historyLoaded;
