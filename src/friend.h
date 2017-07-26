@@ -45,7 +45,7 @@ public:
     bool hasAlias() const;
 
     void setStatusMessage(QString message);
-    QString getStatusMessage();
+    QString getStatusMessage() const;
 
     void setEventFlag(bool f);
     bool getEventFlag() const;
@@ -56,7 +56,7 @@ public:
     void setStatus(Status s);
     Status getStatus() const;
 
-    ChatForm* getChatForm();
+    ChatForm* getChatForm() const;
 
 signals:
     // TODO: move signals to DB object
