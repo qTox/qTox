@@ -86,7 +86,7 @@ void Friend::setStatusMessage(QString message)
     }
 }
 
-QString Friend::getStatusMessage()
+QString Friend::getStatusMessage() const
 {
     return statusMessage;
 }
@@ -138,7 +138,7 @@ Status Friend::getStatus() const
     return friendStatus;
 }
 
-ChatForm* Friend::getChatForm()
+ChatForm* Friend::getChatForm() const
 {
     return chatForm;
 }
