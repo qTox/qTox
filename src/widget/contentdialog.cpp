@@ -161,11 +161,12 @@ ContentDialog::~ContentDialog()
     Translator::unregister(this);
 }
 
-FriendWidget* ContentDialog::addFriend(int friendId, QString id)
+FriendWidget* ContentDialog::addFriend(Friend* frnd)
 {
     bool compact = Settings::getInstance().getCompactLayout();
-    FriendWidget* friendWidget = new FriendWidget(friendId, id, compact);
-    Friend* frnd = friendWidget->getFriend();
+    uint32_t friendId = frnd->getFriendId();
+    QString name = frnd->getDisplayedName();
+    FriendWidget* friendWidget = new FriendWidget(friendId, name, compact);
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
 
     ChatForm* form = frnd->getChatForm();
