@@ -80,7 +80,7 @@ Time getTime(const QDate& date)
     return Time::LongAgo;
 }
 
-QDate getDateFriend(Friend* contact)
+QDate getDateFriend(const Friend* contact)
 {
     return Settings::getInstance().getFriendActivity(contact->getPublicKey());
 }
@@ -260,8 +260,7 @@ void FriendListWidget::moveFriends(QLayout* layout)
         if (circleWidget) {
             circleWidget->moveFriendWidgets(this);
         } else if (friendWidget) {
-            int friendId = friendWidget->friendId;
-            Friend* contact = FriendList::findFriend(friendId);
+            const Friend* contact = friendWidget->getFriend();
             QDate activityDate = getDateFriend(contact);
             int time = static_cast<int>(getTime(activityDate));
 
@@ -294,7 +293,7 @@ void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleInde
 
 void FriendListWidget::removeFriendWidget(FriendWidget* w)
 {
-    Friend* contact = FriendList::findFriend(w->friendId);
+    const Friend* contact = w->getFriend();
     if (mode == Activity) {
         QDate activityDate = getDateFriend(contact);
         int time = static_cast<int>(getTime(activityDate));
@@ -322,7 +321,7 @@ void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
     CircleWidget* circleWidget = createCircleWidget();
     if (circleWidget != nullptr) {
         if (friendWidget != nullptr) {
-            Friend* f = FriendList::findFriend(friendWidget->friendId);
+            const Friend* f = friendWidget->getFriend();
             ToxPk toxPk = f->getPublicKey();
             int circleId = Settings::getInstance().getFriendCircleID(toxPk);
             CircleWidget* circleOriginal = CircleWidget::getFromID(circleId);
@@ -403,23 +402,26 @@ void FriendListWidget::onGroupchatPositionChanged(bool top)
 
 void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward)
 {
-    if (activeChatroomWidget == nullptr)
+    if (!activeChatroomWidget) {
         return;
+    }
 
     int index = -1;
     FriendWidget* friendWidget = qobject_cast<FriendWidget*>(activeChatroomWidget);
 
     if (mode == Activity) {
-        if (friendWidget == nullptr)
+        if (!friendWidget) {
             return;
+        }
 
-        QDate activityDate = getDateFriend(FriendList::findFriend(friendWidget->friendId));
+        QDate activityDate = getDateFriend(friendWidget->getFriend());
         index = static_cast<int>(getTime(activityDate));
         QWidget* widget = activityLayout->itemAt(index)->widget();
         CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
 
-        if (categoryWidget == nullptr || categoryWidget->cycleContacts(friendWidget, forward))
+        if (categoryWidget == nullptr || categoryWidget->cycleContacts(friendWidget, forward)) {
             return;
+        }
 
         index += forward ? 1 : -1;
 
@@ -454,11 +456,13 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
     CircleWidget* circleWidget = nullptr;
 
     if (friendWidget != nullptr) {
-        circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(
-            FriendList::findFriend(friendWidget->friendId)->getPublicKey()));
+        const ToxPk& pk = friendWidget->getFriend()->getPublicKey();
+        uint32_t circleId = Settings::getInstance().getFriendCircleID(pk);
+        circleWidget = CircleWidget::getFromID(circleId);
         if (circleWidget != nullptr) {
-            if (circleWidget->cycleContacts(friendWidget, forward))
+            if (circleWidget->cycleContacts(friendWidget, forward)) {
                 return;
+            }
 
             index = circleLayout->indexOfSortedWidget(circleWidget);
             currentLayout = circleLayout->getLayout();
@@ -566,7 +570,7 @@ void FriendListWidget::dayTimeout()
 void FriendListWidget::moveWidget(FriendWidget* widget, Status s, bool add)
 {
     if (mode == Name) {
-        Friend* f = FriendList::findFriend(widget->friendId);
+        const Friend* f = widget->getFriend();
         int circleId = Settings::getInstance().getFriendCircleID(f->getPublicKey());
         CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
 
@@ -580,7 +584,7 @@ void FriendListWidget::moveWidget(FriendWidget* widget, Status s, bool add)
 
         circleWidget->addFriendWidget(widget, s);
     } else {
-        Friend* contact = FriendList::findFriend(widget->friendId);
+        const Friend* contact = widget->getFriend();
         QDate activityDate = getDateFriend(contact);
         int time = static_cast<int>(getTime(activityDate));
         QWidget* w = activityLayout->itemAt(time)->widget();
