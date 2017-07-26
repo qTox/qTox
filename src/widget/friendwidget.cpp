@@ -58,7 +58,6 @@
 
 FriendWidget::FriendWidget(int friendId, const QString& id, bool compact)
     : GenericChatroomWidget(compact)
-    , friendId{friendId}
     , frnd{FriendList::findFriend(friendId)}
     , isDefaultAvatar{true}
     , historyLoaded{false}

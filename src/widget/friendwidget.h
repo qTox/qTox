@@ -58,7 +58,6 @@ protected:
 
 public:
     Friend* frnd;
-    int friendId;
     bool isDefaultAvatar;
     bool historyLoaded;
 };
