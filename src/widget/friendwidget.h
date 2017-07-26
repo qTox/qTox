@@ -57,13 +57,7 @@ protected:
     void setFriendAlias();
 
 public:
-<<<<<<< HEAD
     const Friend* frnd;
-||||||| merged common ancestors
-=======
-    Friend* frnd;
->>>>>>> refactor(friendwidget): FriendWidget refactoring
-    int friendId;
     bool isDefaultAvatar;
     bool historyLoaded;
 };
