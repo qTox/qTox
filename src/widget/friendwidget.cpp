@@ -56,16 +56,16 @@
  * When you click should open the chat with friend. Widget has a context menu.
  */
 
-FriendWidget::FriendWidget(int friendId, const QString& id, bool compact)
+FriendWidget::FriendWidget(const Friend* f, bool compact)
     : GenericChatroomWidget(compact)
-    , friendId(friendId)
+    , frnd{f}
     , isDefaultAvatar{true}
     , historyLoaded{false}
 {
     avatar->setPixmap(QPixmap(":/img/contact.svg"));
     statusPic.setPixmap(QPixmap(":/img/status/dot_offline.svg"));
     statusPic.setMargin(3);
-    nameLabel->setText(id);
+    nameLabel->setText(f->getDisplayedName());
     nameLabel->setTextFormat(Qt::PlainText);
     connect(nameLabel, &CroppingLabel::editFinished, this, &FriendWidget::setAlias);
     statusMessageLabel->setTextFormat(Qt::PlainText);
@@ -349,7 +349,7 @@ QString FriendWidget::getStatusString() const
     return QString::null;
 }
 
-Friend* FriendWidget::getFriend() const
+const Friend* FriendWidget::getFriend() const
 {
     return FriendList::findFriend(friendId);
 }
@@ -371,7 +371,8 @@ void FriendWidget::setChatForm(ContentLayout* contentLayout)
 
 void FriendWidget::resetEventFlags()
 {
-    Friend* f = FriendList::findFriend(friendId);
+    // Hack to avoid edit const Friend. TODO: Repalce on emit
+    Friend* f = FriendList::findFriend(frnd->getFriendId());
     f->setEventFlag(false);
 }
 
@@ -424,8 +425,9 @@ void FriendWidget::mouseMoveEvent(QMouseEvent* ev)
 void FriendWidget::setAlias(const QString& _alias)
 {
     QString alias = _alias.left(tox_max_name_length());
-    Friend* f = FriendList::findFriend(friendId);
+    // Hack to avoid edit const Friend. TODO: Repalce on emit
+    Friend* f = FriendList::findFriend(frnd->getFriendId());
     f->setAlias(alias);
-    Settings::getInstance().setFriendAlias(f->getPublicKey(), alias);
+    Settings::getInstance().setFriendAlias(frnd->getPublicKey(), alias);
     Settings::getInstance().savePersonal();
 }
