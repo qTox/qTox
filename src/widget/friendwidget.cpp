@@ -232,8 +232,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
             Settings::getInstance().setAutoAcceptDir(id, dir);
         }
     } else if (selectedItem == aboutWindow) {
-        AboutUser* aboutUser = new AboutUser(id, Widget::getInstance());
-        aboutUser->setFriend(FriendList::findFriend(friendId));
+        const Friend* f = FriendList::findFriend(friendId);
+        AboutUser* aboutUser = new AboutUser(f, Widget::getInstance());
         aboutUser->show();
     } else if (selectedItem == newGroupAction) {
         int groupId = Core::getInstance()->createGroup();
