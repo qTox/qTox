@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # MIT License
 #
@@ -60,7 +60,7 @@ readonly QTOX_SRC_DIR="/qtox"
 
 # Make sure we run in an expected environment
 
-if ! grep 'buntu 16\.04' /etc/lsb-release
+if ! grep -q 'buntu 16\.04' /etc/lsb-release
 then
     echo "Error: This script should be run on Ubuntu 16.04."
     exit 1
@@ -186,7 +186,7 @@ then
 
   if ! ( echo "$OPENSSL_SHA256_HASH  openssl-$OPENSSL_VERSION.tar.gz" | sha256sum -c --status - )
   then
-    echo "Error: sha256 of openssl-$OPENSSL_VERSION.tar.gz doesn't match the known one"
+    echo "Error: sha256 of openssl-$OPENSSL_VERSION.tar.gz doesn't match the known one."
     exit 1
   else
     echo "sha256 matches the expected one: $OPENSSL_SHA256_HASH"
@@ -209,6 +209,8 @@ then
   make
   make install
   touch $OPENSSL_PREFIX_DIR/done
+
+  CONFIGURE_OPTIONS=""
 
   cd ..
   rm -rf ./openssl*
@@ -403,6 +405,8 @@ then
   make
   make install
   touch $FFMPEG_PREFIX_DIR/done
+
+  CONFIGURE_OPTIONS=""
 
   cd ..
   rm -rf ./ffmpeg*
