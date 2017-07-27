@@ -197,6 +197,12 @@ ChatForm::ChatForm(const Friend* chatFriend)
     });
 
     updateCallButtons();
+
+    if (av->isCallStarted(f)) {
+        bool video = av->isCallVideoEnabled(f);
+        onAvStart(f->getId(), video);
+    }
+
     setAcceptDrops(true);
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
