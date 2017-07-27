@@ -1814,6 +1814,7 @@ proxy_cb (GObject *sce, GAsyncResult *result, gpointer data)
         /* (so dbus_free() from dbus_failed() doesn't unref) */
         priv->dbus_proxy = NULL;
         dbus_failed (sn, err, FALSE);
+        // cppcheck-suppress redundantAssignment
         priv->dbus_proxy = proxy;
 
         priv->dbus_sid = g_signal_connect (priv->dbus_proxy, "g-signal",
@@ -1877,6 +1878,7 @@ watcher_vanished (GDBusConnection   *conn,
             "No Watcher found");
     dbus_failed (sn, err, FALSE);
 
+    // cppcheck-suppress redundantAssignment
     priv->dbus_watch_id = id;
 }
 
