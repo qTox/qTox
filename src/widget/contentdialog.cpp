@@ -276,12 +276,12 @@ void ContentDialog::removeGroup(int groupId)
     }
 }
 
-bool ContentDialog::hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget)
+bool ContentDialog::hasFriendWidget(int friendId, const GenericChatroomWidget* chatroomWidget) const
 {
     return hasWidget(friendId, chatroomWidget, friendList);
 }
 
-bool ContentDialog::hasGroupWidget(int groupId, GenericChatroomWidget* chatroomWidget)
+bool ContentDialog::hasGroupWidget(int groupId, const GenericChatroomWidget* chatroomWidget) const
 {
     return hasWidget(groupId, chatroomWidget, groupList);
 }
@@ -811,8 +811,8 @@ void ContentDialog::saveSplitterState()
  * @param list List with contact info.
  * @return True, if chatroomWidget is pair for current instance.
  */
-bool ContentDialog::hasWidget(int id, GenericChatroomWidget* chatroomWidget,
-                              const QHash<int, ContactInfo>& list)
+bool ContentDialog::hasWidget(int id, const GenericChatroomWidget* chatroomWidget,
+                              const QHash<int, ContactInfo>& list) const
 {
     auto iter = list.find(id);
     if (iter == list.end()) {
