@@ -100,8 +100,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     QAction* openChatWindow = nullptr;
     QAction* removeChatWindow = nullptr;
 
-    uint32_t friendId = frnd->getFriendId();
-    ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
+    const uint32_t friendId = frnd->getFriendId();
+    const ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
 
     if (!contentDialog || contentDialog->chatroomWidgetCount() > 1) {
         openChatWindow = menu.addAction(tr("Open chat in new window"));
@@ -115,31 +115,30 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group",
                                         "Menu to invite a friend to a groupchat"));
     inviteMenu->setEnabled(frnd->getStatus() != Status::Offline);
-    QAction* newGroupAction = inviteMenu->addAction(tr("To new group"));
+    const QAction* newGroupAction = inviteMenu->addAction(tr("To new group"));
     inviteMenu->addSeparator();
-    QMap<QAction*, Group*> groupActions;
+    QMap<const QAction*, const Group*> groupActions;
 
-    for (Group* group : GroupList::getAllGroups()) {
-        int maxNameLen = 30;
-        QString name = group->getGroupWidget()->getName();
+    for (const Group* group : GroupList::getAllGroups()) {
+        const int maxNameLen = 30;
+        QString name = group->getName();
         if (name.length() > maxNameLen) {
             name = name.left(maxNameLen).trimmed() + "..";
         }
-        QAction* groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(name));
+        const QAction* groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(name));
         groupActions[groupAction] = group;
     }
 
     const Settings& s = Settings::getInstance();
-    int circleId = s.getFriendCircleID(frnd->getPublicKey());
+    const int circleId = s.getFriendCircleID(frnd->getPublicKey());
     CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
-
     QWidget* w = circleWidget ? circleWidget : static_cast<QWidget*>(this);
     FriendListWidget* friendList = qobject_cast<FriendListWidget*>(w->parentWidget());
 
     QMenu* circleMenu = menu.addMenu(tr("Move to circle...",
                                         "Menu to move a friend into a different circle"));
 
-    QAction* newCircleAction = circleMenu->addAction(tr("To new circle"));
+    const QAction* newCircleAction = circleMenu->addAction(tr("To new circle"));
 
     QAction* removeCircleAction = nullptr;
     if (circleId != -1) {
@@ -172,13 +171,13 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     circleMenu->addActions(circleActionList);
 
-    QAction* setAlias = menu.addAction(tr("Set alias..."));
+    const QAction* setAlias = menu.addAction(tr("Set alias..."));
 
     menu.addSeparator();
     QAction* autoAccept = menu.addAction(tr("Auto accept files from this friend",
                                             "context menu entry"));
-    ToxPk id = frnd->getPublicKey();
-    QString dir = s.getAutoAcceptDir(id);
+    const ToxPk id = frnd->getPublicKey();
+    const QString dir = s.getAutoAcceptDir(id);
     autoAccept->setCheckable(true);
     autoAccept->setChecked(!dir.isEmpty());
     menu.addSeparator();
@@ -191,9 +190,9 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     }
 
     menu.addSeparator();
-    QAction* aboutWindow = menu.addAction(tr("Show details"));
+    const QAction* aboutWindow = menu.addAction(tr("Show details"));
 
-    QPoint pos = event->globalPos();
+    const QPoint pos = event->globalPos();
     QAction* selectedItem = menu.exec(pos);
 
     removeEventFilter(this);
@@ -218,13 +217,11 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     } else if (selectedItem == autoAccept) {
         if (!autoAccept->isChecked()) {
             qDebug() << "not checked";
-            dir = QDir::homePath();
             autoAccept->setChecked(false);
             Settings::getInstance().setAutoAcceptDir(id, "");
         } else if (autoAccept->isChecked()) {
-            dir = QFileDialog::getExistingDirectory(Q_NULLPTR,
-                                                    tr("Choose an auto accept directory", "popup title"),
-                                                    dir);
+            const QString dir = QFileDialog::getExistingDirectory(
+                        Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
 
             autoAccept->setChecked(true);
             qDebug() << "Setting auto accept dir for" << friendId << "to" << dir;
@@ -235,24 +232,27 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
         aboutUser->setFriend(frnd);
         aboutUser->show();
     } else if (selectedItem == newGroupAction) {
-        int groupId = Core::getInstance()->createGroup();
+        const int groupId = Core::getInstance()->createGroup();
         Core::getInstance()->groupInviteFriend(friendId, groupId);
     } else if (selectedItem == newCircleAction) {
-        if (circleWidget != nullptr)
+        if (circleWidget != nullptr) {
             circleWidget->updateStatus();
+        }
 
-        if (friendList != nullptr)
+        if (friendList != nullptr) {
             friendList->addCircleWidget(this);
-        else
+        } else {
             Settings::getInstance().setFriendCircleID(id, Settings::getInstance().addCircle());
+        }
     } else if (groupActions.contains(selectedItem)) {
-        Group* group = groupActions[selectedItem];
+        const Group* group = groupActions[selectedItem];
         Core::getInstance()->groupInviteFriend(friendId, group->getGroupId());
     } else if (removeCircleAction != nullptr && selectedItem == removeCircleAction) {
-        if (friendList)
+        if (friendList) {
             friendList->moveWidget(this, frnd->getStatus(), true);
-        else
+        } else {
             Settings::getInstance().setFriendCircleID(id, -1);
+        }
 
         if (circleWidget) {
             circleWidget->updateStatus();
