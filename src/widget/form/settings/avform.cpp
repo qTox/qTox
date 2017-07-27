@@ -471,6 +471,7 @@ void AVForm::on_inDevCombobox_currentIndexChanged(int deviceIndex)
 
     Audio& audio = Audio::getInstance();
     audio.reinitInput(deviceName);
+    audio.setInputGain(Settings::getInstance().getAudioInGainDecibel());
     microphoneSlider->setEnabled(deviceIndex > 0);
     microphoneSlider->setSliderPosition(qRound(audio.inputGain() * 10.0));
 }
@@ -487,6 +488,7 @@ void AVForm::on_outDevCombobox_currentIndexChanged(int deviceIndex)
 
     Audio& audio = Audio::getInstance();
     audio.reinitOutput(deviceName);
+    audio.setOutputVolume(Settings::getInstance().getOutVolume() * 0.01f);
     playbackSlider->setEnabled(deviceIndex > 0);
     playbackSlider->setSliderPosition(qRound(audio.outputVolume() * 100.0));
 }
