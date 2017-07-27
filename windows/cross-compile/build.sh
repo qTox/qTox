@@ -401,6 +401,15 @@ then
               --disable-bzlib \
               --disable-lzma \
               --disable-encoders \
+              --disable-decoders \
+              --disable-demuxers \
+              --disable-parsers \
+              --enable-demuxer=h264 \
+              --enable-demuxer=mjpeg \
+              --enable-parser=h264 \
+              --enable-parser=mjpeg \
+              --enable-decoder=h264 \
+              --enable-decoder=mjpeg \
               --enable-memalign-hack
   make
   make install
