@@ -59,7 +59,6 @@ protected:
 public:
     const Friend* frnd;
     bool isDefaultAvatar;
-    bool historyLoaded;
 };
 
 #endif // FRIENDWIDGET_H

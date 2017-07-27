@@ -60,7 +60,6 @@ FriendWidget::FriendWidget(const Friend* f, bool compact)
     : GenericChatroomWidget(compact)
     , frnd{f}
     , isDefaultAvatar{true}
-    , historyLoaded{false}
 {
     avatar->setPixmap(QPixmap(":/img/contact.svg"));
     statusPic.setPixmap(QPixmap(":/img/status/dot_offline.svg"));
