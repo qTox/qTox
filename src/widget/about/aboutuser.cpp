@@ -8,7 +8,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-AboutUser::AboutUser(ToxPk& toxId, QWidget* parent)
+AboutUser::AboutUser(const ToxPk& toxId, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::AboutUser)
 {
