@@ -129,7 +129,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
         groupActions[groupAction] = group;
     }
 
-    int circleId = Settings::getInstance().getFriendCircleID(frnd->getPublicKey());
+    const Settings& s = Settings::getInstance();
+    int circleId = s.getFriendCircleID(frnd->getPublicKey());
     CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
 
     QWidget* w = circleWidget ? circleWidget : static_cast<QWidget*>(this);
@@ -142,7 +143,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     QAction* removeCircleAction = nullptr;
     if (circleId != -1) {
-        const QString circleName = Settings::getInstance().getCircleName(circleId);
+        const QString circleName = s.getCircleName(circleId);
         removeCircleAction = circleMenu->addAction(tr("Remove from circle '%1'").arg(circleName));
     }
 
@@ -151,12 +152,12 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     QList<QAction*> circleActionList;
     QMap<QAction*, int> circleActions;
 
-    for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i) {
+    for (int i = 0; i < s.getCircleCount(); ++i) {
         if (i == circleId) {
             continue;
         }
 
-        const QString name = Settings::getInstance().getCircleName(i);
+        const QString name = s.getCircleName(i);
         QAction* action = new QAction(tr("Move  to circle \"%1\"").arg(name), circleMenu);
         circleActionList.push_back(action);
         circleActions[circleActionList.back()] = i;
@@ -177,7 +178,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     QAction* autoAccept = menu.addAction(tr("Auto accept files from this friend",
                                             "context menu entry"));
     ToxPk id = frnd->getPublicKey();
-    QString dir = Settings::getInstance().getAutoAcceptDir(id);
+    QString dir = s.getAutoAcceptDir(id);
     autoAccept->setCheckable(true);
     autoAccept->setChecked(!dir.isEmpty());
     menu.addSeparator();
@@ -423,6 +424,8 @@ void FriendWidget::setAlias(const QString& _alias)
     // Hack to avoid edit const Friend. TODO: Repalce on emit
     Friend* f = FriendList::findFriend(frnd->getFriendId());
     f->setAlias(alias);
-    Settings::getInstance().setFriendAlias(frnd->getPublicKey(), alias);
-    Settings::getInstance().savePersonal();
+
+    Settings& s = Settings::getInstance();
+    s.setFriendAlias(frnd->getPublicKey(), alias);
+    s.savePersonal();
 }
