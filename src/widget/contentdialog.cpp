@@ -167,6 +167,7 @@ FriendWidget* ContentDialog::addFriend(const Friend* frnd)
     uint32_t friendId = frnd->getId();
     FriendWidget* friendWidget = new FriendWidget(frnd, compact);
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
+    chatForms[friendId] = new ChatForm(frnd);
 
     connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
@@ -219,6 +220,9 @@ void ContentDialog::removeFriend(int friendId)
     FriendWidget* chatroomWidget = static_cast<FriendWidget*>(std::get<1>(iter.value()));
     disconnect(chatroomWidget->getFriend(), &Friend::aliasChanged, this,
                &ContentDialog::updateFriendWidget);
+
+    delete chatForms[friendId];
+    chatForms.remove(friendId);
 
     // Need to find replacement to show here instead.
     if (activeChatroomWidget == chatroomWidget) {
@@ -728,7 +732,13 @@ void ContentDialog::activate(GenericChatroomWidget* widget)
 
     activeChatroomWidget = widget;
 
-    widget->setChatForm(contentLayout);
+    if (widget->getFriend()) {
+        ChatForm* form = chatForms[widget->getFriend()->getId()];
+        form->show(contentLayout);
+    } else {
+        widget->setChatForm(contentLayout);
+    }
+
     widget->setAsActiveChatroom();
     widget->resetEventFlags();
     widget->updateStatusLight();
