@@ -1893,20 +1893,16 @@ void Widget::onUserAwayCheck()
 {
 #ifdef QTOX_PLATFORM_EXT
     uint32_t autoAwayTime = Settings::getInstance().getAutoAwayTime() * 60 * 1000;
+    bool online = ui->statusButton->property("status").toString() == "online";
+    bool away = autoAwayTime && Platform::getIdleTime() >= autoAwayTime;
 
-    if (ui->statusButton->property("status").toString() == "online") {
-        if (autoAwayTime && Platform::getIdleTime() >= autoAwayTime) {
-            qDebug() << "auto away activated at" << QTime::currentTime().toString();
-            emit statusSet(Status::Away);
-            autoAwayActive = true;
-        }
-    } else if (ui->statusButton->property("status").toString() == "away") {
-        if (autoAwayActive && (!autoAwayTime || Platform::getIdleTime() < autoAwayTime)) {
-            qDebug() << "auto away deactivated at" << QTime::currentTime().toString();
-            emit statusSet(Status::Online);
-            autoAwayActive = false;
-        }
-    } else if (autoAwayActive) {
+    if (online && away) {
+        qDebug() << "auto away activated at" << QTime::currentTime().toString();
+        emit statusSet(Status::Away);
+        autoAwayActive = true;
+    } else if (autoAwayActive && !away) {
+        qDebug() << "auto away deactivated at" << QTime::currentTime().toString();
+        emit statusSet(Status::Online);
         autoAwayActive = false;
     }
 #endif
