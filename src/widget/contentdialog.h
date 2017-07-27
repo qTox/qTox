@@ -56,8 +56,8 @@ public:
     GroupWidget* addGroup(int groupId, const QString& name);
     void removeFriend(int friendId);
     void removeGroup(int groupId);
-    bool hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget);
-    bool hasGroupWidget(int groupId, GenericChatroomWidget* chatroomWidget);
+    bool hasFriendWidget(int friendId, const GenericChatroomWidget* chatroomWidget) const;
+    bool hasGroupWidget(int groupId, const GenericChatroomWidget* chatroomWidget) const;
     int chatroomWidgetCount() const;
     void ensureSplitterVisible();
     void updateTitleAndStatusIcon();
@@ -113,7 +113,8 @@ private:
     QLayout* nextLayout(QLayout* layout, bool forward) const;
     int getCurrentLayout(QLayout*& layout);
 
-    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, ContactInfo>& list);
+    bool hasWidget(int id, const GenericChatroomWidget* chatroomWidget,
+                   const QHash<int, ContactInfo>& list) const;
     void removeCurrent(QHash<int, ContactInfo>& infos);
     static bool existsWidget(int id, const QHash<int, ContactInfo>& list);
     static void focusDialog(int id, const QHash<int, ContactInfo>& list);
