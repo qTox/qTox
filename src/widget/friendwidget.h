@@ -56,10 +56,9 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent* ev) override;
     void setFriendAlias();
 
-public:
+private:
     Friend* frnd;
     bool isDefaultAvatar;
-    bool historyLoaded;
 };
 
 #endif // FRIENDWIDGET_H
