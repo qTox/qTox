@@ -28,7 +28,7 @@ class QPropertyAnimation;
 class FlyoutOverlayWidget : public QWidget
 {
     Q_OBJECT
-    Q_PROPERTY(qreal flyoutPercent READ flyoutPercent WRITE setFlyoutPercent)
+
 public:
     explicit FlyoutOverlayWidget(QWidget* parent = 0);
     ~FlyoutOverlayWidget();
@@ -47,12 +47,12 @@ public:
     void animateHide();
 
 signals:
-
     void hidden();
 
 private:
     void finishedAnimation();
     void startAnimation(bool forward);
+    Q_PROPERTY(qreal flyoutPercent READ flyoutPercent WRITE setFlyoutPercent)
 
     QWidget* container;
     QPropertyAnimation* animation;
