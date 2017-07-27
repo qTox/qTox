@@ -103,12 +103,12 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     uint32_t friendId = frnd->getFriendId();
     ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
 
-    bool notAlone = contentDialog != nullptr && contentDialog->chatroomWidgetCount() > 1;
+    bool notAlone = contentDialog && contentDialog->chatroomWidgetCount() > 1;
     if (!contentDialog || notAlone) {
         openChatWindow = menu.addAction(tr("Open chat in new window"));
     }
 
-    bool hasFriendWidget = contentDialog->hasFriendWidget(friendId, this);
+    bool hasFriendWidget = contentDialog && contentDialog->hasFriendWidget(friendId, this);
     if (contentDialog && hasFriendWidget) {
         removeChatWindow = menu.addAction(tr("Remove chat from this window"));
     }
