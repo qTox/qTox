@@ -266,8 +266,6 @@ bool OpenAL::initInput(const QString& deviceName)
         return false;
     }
 
-    setInputGain(Settings::getInstance().getAudioInGainDecibel());
-
     qDebug() << "Opened audio input" << deviceName;
     alcCaptureStart(alInDev);
 
@@ -307,10 +305,6 @@ bool OpenAL::initOutput(const QString& deviceName)
     }
 
     alGenSources(1, &alMainSource);
-    checkAlError();
-
-    // init master volume
-    alListenerf(AL_GAIN, Settings::getInstance().getOutVolume() * 0.01f);
     checkAlError();
 
     Core* core = Core::getInstance();
