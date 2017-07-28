@@ -25,6 +25,10 @@ void ChatLineContent::setIndex(int r, int c)
     col = c;
 }
 
+ChatLineContent::ChatLineContent()
+{
+}
+
 int ChatLineContent::getColumn() const
 {
     return col;
