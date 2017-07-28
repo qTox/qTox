@@ -69,6 +69,7 @@ int dataToVInt(const QByteArray& data)
     return num;
 }
 
+// cppcheck-suppress unusedFunction
 size_t dataToVUint(const QByteArray& data)
 {
     char num3;
@@ -111,6 +112,7 @@ QByteArray vintToData(int num)
     return data;
 }
 
+// cppcheck-suppress unusedFunction
 QByteArray vuintToData(size_t num)
 {
     QByteArray data(sizeof(size_t), 0);

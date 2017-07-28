@@ -209,15 +209,15 @@ void FileTransferWidget::paintEvent(QPaintEvent*)
 
     qreal ratio = static_cast<qreal>(geometry().height()) / static_cast<qreal>(geometry().width());
     const int r = 24;
-    const int buttonFieldWidth = 32;
-    const int lineWidth = 1;
-
     // Draw the widget background:
     painter.setClipRect(QRect(0, 0, width(), height()));
     painter.setBrush(QBrush(backgroundColor));
     painter.drawRoundRect(geometry(), r * ratio, r);
 
     if (drawButtonAreaNeeded()) {
+        const int buttonFieldWidth = 32;
+        const int lineWidth = 1;
+
         // Draw the button background:
         QPainterPath buttonBackground;
         buttonBackground.addRoundRect(width() - 2 * buttonFieldWidth - lineWidth * 2, 0,

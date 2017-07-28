@@ -70,8 +70,8 @@ public:
     VideoFrame(const VideoFrame& other) = delete;
     VideoFrame(VideoFrame&& other) = delete;
 
-    const VideoFrame& operator=(const VideoFrame& other) = delete;
-    const VideoFrame& operator=(VideoFrame&& other) = delete;
+    VideoFrame& operator=(const VideoFrame& other) = delete;
+    VideoFrame& operator=(VideoFrame&& other) = delete;
 
     bool isValid();
 
@@ -105,8 +105,8 @@ private:
 
         // Assignment operators are disabled for the FrameBufferKey
 
-        const FrameBufferKey& operator=(const FrameBufferKey&) = delete;
-        const FrameBufferKey& operator=(FrameBufferKey&&) = delete;
+        FrameBufferKey& operator=(const FrameBufferKey&) = delete;
+        FrameBufferKey& operator=(FrameBufferKey&&) = delete;
 
         bool operator==(const FrameBufferKey& other) const;
         bool operator!=(const FrameBufferKey& other) const;

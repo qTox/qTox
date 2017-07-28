@@ -88,20 +88,6 @@ protected:
 
 private:
     AutoUpdater() = delete;
-
-private:
-    static const QString updateServer;
-    static const QString platform;
-    static const QString checkURI;
-    static const QString flistURI;
-    static const QString filesURI;
-    static const QString updaterBin;
-    static unsigned char key[];
-    static std::atomic_bool abortFlag;
-    static std::atomic_bool isDownloadingUpdate;
-    static std::atomic<float> progressValue;
-    static QString progressVersion;
-    static QMutex progressVersionMutex;
 };
 
 #endif // AUTOUPDATE_H
