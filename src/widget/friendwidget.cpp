@@ -366,7 +366,10 @@ void FriendWidget::search(const QString& searchString, bool hide)
 void FriendWidget::setChatForm(ContentLayout* contentLayout)
 {
     Friend* f = FriendList::findFriend(friendId);
-    f->getChatForm()->show(contentLayout);
+    ChatForm* form = f->getChatForm();
+    if (form) {
+        form->show(contentLayout);
+    }
 }
 
 void FriendWidget::resetEventFlags()
