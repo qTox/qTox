@@ -208,9 +208,9 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
                            {message.toUtf8(), dispName.toUtf8()}, insertIdCallback);
 
     if (!isSent) {
-        queries += RawDatabase::Query{"INSERT INTO faux_offline_pending (id) VALUES ("
-                                      "    last_insert_rowid()"
-                                      ");"};
+        queries += RawDatabase::Query{QString("INSERT INTO faux_offline_pending (id) VALUES ("
+                                              "    last_insert_rowid()"
+                                              ");")};
     }
 
     return queries;
