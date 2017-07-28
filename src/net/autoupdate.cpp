@@ -54,37 +54,37 @@
 
 #ifdef Q_OS_WIN
 #ifdef Q_OS_WIN64
-const QString AutoUpdater::platform = "win64";
+const QString platform = "win64";
 #else
-const QString AutoUpdater::platform = "win32";
+const QString platform = "win32";
 #endif
-const QString AutoUpdater::updaterBin = "qtox-updater.exe";
-const QString AutoUpdater::updateServer = "https://qtox-win.pkg.tox.chat";
+const QString updaterBin = "qtox-updater.exe";
+const QString updateServer = "https://qtox-win.pkg.tox.chat";
 
-unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] = {0x20, 0x89, 0x39, 0xaa, 0x9a, 0xe8,
-                                                              0xb5, 0x21, 0x0e, 0xac, 0x02, 0xa9,
-                                                              0xc4, 0x92, 0xd9, 0xa2, 0x17, 0x83,
-                                                              0xbd, 0x78, 0x0a, 0xda, 0x33, 0xcd,
-                                                              0xa5, 0xc6, 0x44, 0xc7, 0xfc, 0xed,
-                                                              0x00, 0x13};
+unsigned char key[crypto_sign_PUBLICKEYBYTES] = {0x20, 0x89, 0x39, 0xaa, 0x9a, 0xe8,
+                                                 0xb5, 0x21, 0x0e, 0xac, 0x02, 0xa9,
+                                                 0xc4, 0x92, 0xd9, 0xa2, 0x17, 0x83,
+                                                 0xbd, 0x78, 0x0a, 0xda, 0x33, 0xcd,
+                                                 0xa5, 0xc6, 0x44, 0xc7, 0xfc, 0xed,
+                                                 0x00, 0x13};
 
 #elif defined(Q_OS_OSX)
-const QString AutoUpdater::platform = "osx";
-const QString AutoUpdater::updaterBin = "/Applications/qtox.app/Contents/MacOS/updater";
-const QString AutoUpdater::updateServer = "https://dist-build.tox.im";
+const QString platform = "osx";
+const QString updaterBin = "/Applications/qtox.app/Contents/MacOS/updater";
+const QString updateServer = "https://dist-build.tox.im";
 
-unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                              0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                              0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                              0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                              0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                              0x00, 0x00};
+unsigned char key[crypto_sign_PUBLICKEYBYTES] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                                 0x00, 0x00};
 
 #else
-const QString AutoUpdater::platform;
-const QString AutoUpdater::updaterBin;
-const QString AutoUpdater::updateServer;
-unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES];
+static const QString platform;
+static const QString updaterBin;
+static const QString updateServer;
+static unsigned char key[crypto_sign_PUBLICKEYBYTES];
 #endif
 
 /**
@@ -102,45 +102,42 @@ unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES];
  */
 
 /**
- * @var static const QString AutoUpdater::updateServer
+ * @var static const QString updateServer
  * @brief Hostname of the qTox update server
  *
- * @var static const QString AutoUpdater::platform
+ * @var static const QString platform
  * @brief Name of platform we're trying to get updates for
  *
- * @var static const QString AutoUpdater::checkURI
+ * @var static const QString checkURI
  * @brief URI of the file containing the latest version string
  *
- * @var static const QString AutoUpdater::flistURI
+ * @var static const QString flistURI
  * @brief URI of the file containing info on each file (hash, signature, size, name, ..)
  *
- * @var static const QString AutoUpdater::filesURI
+ * @var static const QString filesURI
  * @brief URI of the actual files of the latest version
  *
- * @var static const QString AutoUpdater::updaterBin
+ * @var static const QString updaterBin
  * @brief Path to the qtox-updater binary
  *
- * @var static std::atomic_bool AutoUpdater::abortFlag
+ * @var static std::atomic_bool abortFlag
  * @brief If true, try to abort everything.
  *
- * @var static std::atomic_bool AutoUpdater::isDownloadingUpdate
+ * @var static std::atomic_bool isDownloadingUpdate
  * @brief We'll pretend there's no new update available if we're already updating
  *
- * @var static QMutex AutoUpdater::progressVersionMutex
+ * @var static QMutex progressVersionMutex
  * @brief No, we can't just make the QString atomic
  */
 
-const QString AutoUpdater::checkURI =
-    AutoUpdater::updateServer + "/qtox/" + AutoUpdater::platform + "/version";
-const QString AutoUpdater::flistURI =
-    AutoUpdater::updateServer + "/qtox/" + AutoUpdater::platform + "/flist";
-const QString AutoUpdater::filesURI =
-    AutoUpdater::updateServer + "/qtox/" + AutoUpdater::platform + "/files/";
-std::atomic_bool AutoUpdater::abortFlag{false};
-std::atomic_bool AutoUpdater::isDownloadingUpdate{false};
-std::atomic<float> AutoUpdater::progressValue{0};
-QString AutoUpdater::progressVersion;
-QMutex AutoUpdater::progressVersionMutex;
+static const QString checkURI = updateServer + "/qtox/" + platform + "/version";
+static const QString flistURI = updateServer + "/qtox/" + platform + "/flist";
+static const QString filesURI = updateServer + "/qtox/" + platform + "/files/";
+static std::atomic_bool abortFlag{false};
+static std::atomic_bool isDownloadingUpdate{false};
+static std::atomic<float> progressValue{0};
+static QString progressVersion;
+static QMutex progressVersionMutex;
 
 /**
  * @class AutoUpdater
