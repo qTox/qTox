@@ -279,11 +279,11 @@ void Nexus::destroyInstance()
  */
 Core* Nexus::getCore()
 {
-    Nexus& nexus = getInstance();
-    if (!nexus.profile)
+    Profile* profile = getInstance().profile;
+    if (!profile)
         return nullptr;
 
-    return nexus.profile->getCore();
+    return profile->getCore();
 }
 
 /**
