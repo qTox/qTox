@@ -57,6 +57,7 @@ protected:
     void setFriendAlias();
 
 public:
+    const Friend* frnd;
     int friendId;
     bool isDefaultAvatar;
     bool historyLoaded;

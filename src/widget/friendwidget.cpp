@@ -58,7 +58,7 @@
 
 FriendWidget::FriendWidget(const Friend* f, bool compact)
     : GenericChatroomWidget(compact)
-    , friendId(f->getFriendId())
+    , frnd{f}
     , isDefaultAvatar{true}
     , historyLoaded{false}
 {
@@ -371,7 +371,8 @@ void FriendWidget::setChatForm(ContentLayout* contentLayout)
 
 void FriendWidget::resetEventFlags()
 {
-    Friend* f = FriendList::findFriend(friendId);
+    // Hack to avoid edit const Friend. TODO: Repalce on emit
+    Friend* f = FriendList::findFriend(frnd->getFriendId());
     f->setEventFlag(false);
 }
 
@@ -424,8 +425,9 @@ void FriendWidget::mouseMoveEvent(QMouseEvent* ev)
 void FriendWidget::setAlias(const QString& _alias)
 {
     QString alias = _alias.left(tox_max_name_length());
-    Friend* f = FriendList::findFriend(friendId);
+    // Hack to avoid edit const Friend. TODO: Repalce on emit
+    Friend* f = FriendList::findFriend(frnd->getFriendId());
     f->setAlias(alias);
-    Settings::getInstance().setFriendAlias(f->getPublicKey(), alias);
+    Settings::getInstance().setFriendAlias(frnd->getPublicKey(), alias);
     Settings::getInstance().savePersonal();
 }
