@@ -26,7 +26,7 @@
 #include <QRegExp>
 
 #include "src/core/core.h"
-#include "src/group.h"
+#include "src/model/group.h"
 #include "src/widget/tool/chattextedit.h"
 
 /**

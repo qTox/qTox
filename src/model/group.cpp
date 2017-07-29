@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -19,12 +19,12 @@
 
 #include "group.h"
 #include "friend.h"
-#include "friendlist.h"
+#include "src/friendlist.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
-#include "widget/form/groupchatform.h"
-#include "widget/groupwidget.h"
-#include "widget/gui.h"
+#include "src/widget/form/groupchatform.h"
+#include "src/widget/groupwidget.h"
+#include "src/widget/gui.h"
 #include <QDebug>
 #include <QTimer>
 
