@@ -52,6 +52,7 @@ public:
 
     void setMentionedFlag(bool f);
     bool getMentionedFlag() const;
+    void resetEventFlags() override;
 
     void updatePeer(int peerId, QString newName);
     void setName(const QString& name) override;

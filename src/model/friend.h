@@ -49,6 +49,7 @@ public:
 
     void setEventFlag(bool f) override;
     bool getEventFlag() const override;
+    void resetEventFlags() override;
 
     const ToxPk& getPublicKey() const;
     uint32_t getId() const override;

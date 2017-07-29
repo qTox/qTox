@@ -152,6 +152,7 @@ bool Group::getEventFlag() const
     return hasNewMessages;
 }
 
+// TODO: Add using or remove
 void Group::setMentionedFlag(bool f)
 {
     userWasMentioned = f;
@@ -160,6 +161,12 @@ void Group::setMentionedFlag(bool f)
 bool Group::getMentionedFlag() const
 {
     return userWasMentioned;
+}
+
+void Group::resetEventFlags()
+{
+    setEventFlag(false);
+    setMentionedFlag(false);
 }
 
 QString Group::resolveToxId(const ToxPk& id) const

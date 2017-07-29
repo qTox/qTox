@@ -124,6 +124,11 @@ bool Friend::getEventFlag() const
     return hasNewEvents;
 }
 
+void Friend::resetEventFlags()
+{
+    setEventFlag(false);
+}
+
 void Friend::setStatus(Status s)
 {
     if (friendStatus != s) {
