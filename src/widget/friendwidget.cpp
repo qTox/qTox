@@ -341,6 +341,11 @@ QString FriendWidget::getStatusString() const
     return event ? tr("New message") : names.value(status);
 }
 
+const Contact* FriendWidget::getContact() const
+{
+    return frnd;
+}
+
 const Friend* FriendWidget::getFriend() const
 {
     return frnd;

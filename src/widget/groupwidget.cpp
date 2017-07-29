@@ -196,6 +196,11 @@ QString GroupWidget::getStatusString() const
         return "New Message";
 }
 
+const Contact* GroupWidget::getContact() const
+{
+    return getGroup();
+}
+
 void GroupWidget::editName()
 {
     nameLabel->editBegin();
