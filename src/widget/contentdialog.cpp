@@ -165,8 +165,7 @@ FriendWidget* ContentDialog::addFriend(const Friend* frnd)
 {
     bool compact = Settings::getInstance().getCompactLayout();
     uint32_t friendId = frnd->getFriendId();
-    QString name = frnd->getDisplayedName();
-    FriendWidget* friendWidget = new FriendWidget(friendId, name, compact);
+    FriendWidget* friendWidget = new FriendWidget(frnd, compact);
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
 
     ChatForm* form = frnd->getChatForm();

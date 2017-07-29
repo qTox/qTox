@@ -56,16 +56,16 @@
  * When you click should open the chat with friend. Widget has a context menu.
  */
 
-FriendWidget::FriendWidget(int friendId, const QString& id, bool compact)
+FriendWidget::FriendWidget(const Friend* f, bool compact)
     : GenericChatroomWidget(compact)
-    , friendId(friendId)
+    , friendId(f->getFriendId())
     , isDefaultAvatar{true}
     , historyLoaded{false}
 {
     avatar->setPixmap(QPixmap(":/img/contact.svg"));
     statusPic.setPixmap(QPixmap(":/img/status/dot_offline.svg"));
     statusPic.setMargin(3);
-    nameLabel->setText(id);
+    nameLabel->setText(f->getDisplayedName());
     nameLabel->setTextFormat(Qt::PlainText);
     connect(nameLabel, &CroppingLabel::editFinished, this, &FriendWidget::setAlias);
     statusMessageLabel->setTextFormat(Qt::PlainText);

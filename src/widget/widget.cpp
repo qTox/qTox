@@ -961,10 +961,9 @@ void Widget::onCallEnd(uint32_t friendId)
 void Widget::addFriend(int friendId, const ToxPk& friendPk)
 {
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
-    QString name = newfriend->getDisplayedName();
     bool compact = Settings::getInstance().getCompactLayout();
+    FriendWidget* widget = new FriendWidget(newfriend, compact);
 
-    FriendWidget* widget = new FriendWidget(friendId, name, compact);
     ChatForm* friendForm = newfriend->getChatForm();
 
     friendWidgets[friendId] = widget;

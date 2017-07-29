@@ -27,7 +27,7 @@ class FriendWidget : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
-    FriendWidget(int friendId, const QString& id, bool compact);
+    FriendWidget(const Friend* f, bool compact);
     void contextMenuEvent(QContextMenuEvent* event) override final;
     void setAsActiveChatroom() override final;
     void setAsInactiveChatroom() override final;
