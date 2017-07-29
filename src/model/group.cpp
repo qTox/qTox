@@ -83,6 +83,11 @@ QString Group::getName() const
     return widget->getName();
 }
 
+QString Group::getDisplayedName() const
+{
+    return getName();
+}
+
 void Group::regeneratePeerList()
 {
     const Core* core = Core::getInstance();
@@ -121,6 +126,11 @@ bool Group::isAvGroupchat() const
 int Group::getGroupId() const
 {
     return groupId;
+}
+
+uint32_t Group::getId() const
+{
+    return getGroupId();
 }
 
 int Group::getPeersCount() const
