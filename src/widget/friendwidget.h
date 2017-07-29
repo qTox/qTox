@@ -35,7 +35,7 @@ public:
     void setChatForm(ContentLayout* contentLayout) override final;
     void resetEventFlags() override final;
     QString getStatusString() const override final;
-    Friend* getFriend() const override final;
+    const Friend* getFriend() const override final;
 
     void search(const QString& searchString, bool hide = false);
 

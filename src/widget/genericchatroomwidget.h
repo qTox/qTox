@@ -42,7 +42,7 @@ public:
     virtual void setChatForm(ContentLayout* contentLayout) = 0;
     virtual void resetEventFlags() = 0;
     virtual QString getStatusString() const = 0;
-    virtual Friend* getFriend() const
+    virtual const Friend* getFriend() const
     {
         return nullptr;
     }

@@ -349,7 +349,7 @@ QString FriendWidget::getStatusString() const
     return QString::null;
 }
 
-Friend* FriendWidget::getFriend() const
+const Friend* FriendWidget::getFriend() const
 {
     return FriendList::findFriend(friendId);
 }
