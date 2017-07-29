@@ -20,38 +20,39 @@
 #ifndef FRIEND_H
 #define FRIEND_H
 
+#include "contact.h"
 #include "src/core/toxid.h"
 #include "src/core/corestructs.h"
 #include <QObject>
 #include <QString>
 
-class FriendWidget;
 class ChatForm;
 
-class Friend : public QObject
+class Friend : public Contact
 {
     Q_OBJECT
 public:
-    Friend(uint32_t FriendId, const ToxPk& FriendPk, const QString& userAlias);
+    Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias);
     Friend(const Friend& other) = delete;
-    ~Friend();
+    ~Friend() override;
     Friend& operator=(const Friend& other) = delete;
 
     void loadHistory();
 
-    void setName(const QString& name);
+    void setName(const QString& name) override;
     void setAlias(const QString& name);
-    QString getDisplayedName() const;
+    QString getDisplayedName() const override;
     bool hasAlias() const;
 
     void setStatusMessage(const QString& message);
     QString getStatusMessage() const;
 
-    void setEventFlag(bool f);
-    bool getEventFlag() const;
+    void setEventFlag(bool f) override;
+    bool getEventFlag() const override;
 
     const ToxPk& getPublicKey() const;
     uint32_t getFriendId() const;
+    uint32_t getId() const override;
 
     void setStatus(Status s);
     Status getStatus() const;
