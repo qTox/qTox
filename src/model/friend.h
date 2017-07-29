@@ -39,12 +39,12 @@ public:
 
     void loadHistory();
 
-    void setName(QString name);
-    void setAlias(QString name);
+    void setName(const QString& name);
+    void setAlias(const QString& name);
     QString getDisplayedName() const;
     bool hasAlias() const;
 
-    void setStatusMessage(QString message);
+    void setStatusMessage(const QString& message);
     QString getStatusMessage() const;
 
     void setEventFlag(bool f);
