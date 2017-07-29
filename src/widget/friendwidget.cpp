@@ -309,7 +309,7 @@ void FriendWidget::updateStatusLight()
     };
 
     const bool event = frnd->getEventFlag();
-    const int index = static_cast<int>(frnd->getStatus()) + event;
+    const int index = static_cast<int>(frnd->getStatus()) * 2 + event;
     statusPic.setPixmap(QPixmap(statuses[index]));
 
     if (event) {
