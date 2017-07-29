@@ -243,18 +243,18 @@ set(${PROJECT_NAME}_SOURCES
   src/core/toxpk.h
   src/core/toxstring.cpp
   src/core/toxstring.h
-  src/friend.cpp
-  src/friend.h
   src/friendlist.cpp
   src/friendlist.h
-  src/group.cpp
-  src/group.h
   src/groupinvite.cpp
   src/groupinvite.h
   src/grouplist.cpp
   src/grouplist.h
   src/ipc.cpp
   src/ipc.h
+  src/model/friend.cpp
+  src/model/friend.h
+  src/model/group.cpp
+  src/model/group.h
   src/net/autoupdate.cpp
   src/net/autoupdate.h
   src/net/avatarbroadcaster.cpp

@@ -365,12 +365,12 @@ HEADERS  += \
     src/core/toxid.h \
     src/core/toxpk.h \
     src/core/toxstring.h \
-    src/friend.h \
     src/friendlist.h \
-    src/group.h \
     src/groupinvite.h \
     src/grouplist.h \
     src/ipc.h \
+    src/model/friend.h \
+    src/model/group.h \
     src/net/autoupdate.h \
     src/net/avatarbroadcaster.h \
     src/net/toxme.h \
@@ -486,13 +486,13 @@ SOURCES += \
     src/core/toxid.cpp \
     src/core/toxpk.cpp \
     src/core/toxstring.cpp \
-    src/friend.cpp \
     src/friendlist.cpp \
-    src/group.cpp \
     src/groupinvite.cpp \
     src/grouplist.cpp \
     src/ipc.cpp \
     src/main.cpp \
+    src/model/friend.cpp \
+    src/model/group.cpp \
     src/net/autoupdate.cpp \
     src/net/avatarbroadcaster.cpp \
     src/net/toxme.cpp \
