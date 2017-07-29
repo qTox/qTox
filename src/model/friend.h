@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -20,7 +20,7 @@
 #ifndef FRIEND_H
 #define FRIEND_H
 
-#include "core/toxid.h"
+#include "src/core/toxid.h"
 #include "src/core/corestructs.h"
 #include <QObject>
 #include <QString>

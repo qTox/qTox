@@ -24,9 +24,9 @@
 #include "maskablepixmapwidget.h"
 
 #include "src/core/core.h"
-#include "src/friend.h"
+#include "src/model/friend.h"
 #include "src/friendlist.h"
-#include "src/group.h"
+#include "src/model/group.h"
 #include "src/grouplist.h"
 #include "src/persistence/settings.h"
 #include "src/widget/about/aboutuser.h"

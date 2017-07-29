@@ -1,7 +1,7 @@
 #ifndef ABOUTUSER_H
 #define ABOUTUSER_H
 
-#include "src/friend.h"
+#include "src/model/friend.h"
 #include <QDialog>
 
 

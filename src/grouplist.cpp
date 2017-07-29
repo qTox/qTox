@@ -18,7 +18,7 @@
 */
 
 #include "grouplist.h"
-#include "group.h"
+#include "src/model/group.h"
 #include <QDebug>
 #include <QHash>
 
