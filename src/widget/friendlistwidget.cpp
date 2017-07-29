@@ -23,7 +23,7 @@
 #include "friendwidget.h"
 #include "groupwidget.h"
 #include "widget.h"
-#include "src/friend.h"
+#include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/persistence/settings.h"
 #include <QDragEnterEvent>
