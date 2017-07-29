@@ -161,11 +161,12 @@ ContentDialog::~ContentDialog()
     Translator::unregister(this);
 }
 
-FriendWidget* ContentDialog::addFriend(const Friend* frnd)
+FriendWidget* ContentDialog::addFriend(Friend* frnd)
 {
     bool compact = Settings::getInstance().getCompactLayout();
     uint32_t friendId = frnd->getFriendId();
-    FriendWidget* friendWidget = new FriendWidget(frnd, compact);
+    QString name = frnd->getDisplayedName();
+    FriendWidget* friendWidget = new FriendWidget(friendId, name, compact);
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
 
     ChatForm* form = frnd->getChatForm();
@@ -560,7 +561,7 @@ bool ContentDialog::event(QEvent* event)
 
             updateTitleAndStatusIcon();
 
-            const Friend* frnd = activeChatroomWidget->getFriend();
+            Friend* frnd = activeChatroomWidget->getFriend();
             Group* group = activeChatroomWidget->getGroup();
 
             if (frnd) {
