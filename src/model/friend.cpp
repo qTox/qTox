@@ -114,6 +114,11 @@ uint32_t Friend::getFriendId() const
     return friendId;
 }
 
+uint32_t Friend::getId() const
+{
+    return getFriendId() * 2;
+}
+
 void Friend::setEventFlag(bool flag)
 {
     hasNewEvents = flag;
