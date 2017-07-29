@@ -244,6 +244,8 @@ set(${PROJECT_NAME}_SOURCES
   src/grouplist.h
   src/ipc.cpp
   src/ipc.h
+  src/model/contact.cpp
+  src/model/contact.h
   src/model/friend.cpp
   src/model/friend.h
   src/model/group.cpp
