@@ -34,7 +34,7 @@ class OfflineMsgEngine : public QObject
 {
     Q_OBJECT
 public:
-    explicit OfflineMsgEngine(Friend*);
+    explicit OfflineMsgEngine(const Friend* f);
     virtual ~OfflineMsgEngine();
     static QMutex globalMutex;
 
@@ -55,7 +55,7 @@ private:
     };
 
     QMutex mutex;
-    Friend* f;
+    const Friend* f;
     QHash<int, int64_t> receipts;
     QMap<int64_t, MsgPtr> undeliveredMsgs;
 
