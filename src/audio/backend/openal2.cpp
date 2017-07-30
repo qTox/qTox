@@ -212,8 +212,9 @@ bool OpenAL2::initOutput(const QString& deviceName)
     peerSources.clear();
 
     outputInitialized = false;
-    if (!Settings::getInstance().getAudioOutDevEnabled())
+    if (!Settings::getInstance().getAudioOutDevEnabled()) {
         return false;
+    }
 
     qDebug() << "Opening audio output" << deviceName;
     assert(!alOutDev);
@@ -302,10 +303,8 @@ void OpenAL2::doOutput()
     alGetSourcei(alProxySource, AL_BUFFERS_PROCESSED, &processed);
     alGetSourcei(alProxySource, AL_BUFFERS_QUEUED, &queued);
 
-    // qDebug() << "Speedtest processed: " << processed << " queued: " << queued;
-
     if (processed > 0) {
-        // unqueue all processed buffers
+        // unqueue one processed buffer
         alSourceUnqueueBuffers(alProxySource, 1, bufids);
     } else if (queued < PROXY_BUFFER_COUNT) {
         // create new buffer until the maximum is reached
@@ -318,7 +317,6 @@ void OpenAL2::doOutput()
     ALdouble latency[2] = {0};
     alGetSourcedvSOFT(alProxySource, AL_SEC_OFFSET_LATENCY_SOFT, latency);
     checkAlError();
-    // qDebug() << "Playback latency: " << latency[1] << "offset: " << latency[0];
 
     ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT] = {0};
     alcMakeContextCurrent(alProxyContext);
@@ -339,7 +337,7 @@ void OpenAL2::doOutput()
     }
 
     // do echo cancel
-    int retVal = pass_audio_output(filterer, outBuf, AUDIO_FRAME_SAMPLE_COUNT);
+    pass_audio_output(filterer, outBuf, AUDIO_FRAME_SAMPLE_COUNT);
 
     ALint state;
     alGetSourcei(alProxySource, AL_SOURCE_STATE, &state);
