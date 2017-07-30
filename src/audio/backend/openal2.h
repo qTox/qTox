@@ -48,10 +48,6 @@ class OpenAL2 : public OpenAL
 public:
     OpenAL2();
 
-signals:
-    void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
-                        uint32_t sampling_rate);
-
 private:
     bool initInput(const QString& deviceName);
     bool initOutput(const QString& outDevDescr);
