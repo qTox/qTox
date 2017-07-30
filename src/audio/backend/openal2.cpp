@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2017 by The qTox Project Contributors
+    Copyright © 2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -71,6 +71,14 @@ extern "C" {
 static const unsigned int BUFFER_COUNT = 16;
 static const unsigned int PROXY_BUFFER_COUNT = 4;
 
+#define GET_PROC_ADDR(dev, name) name = reinterpret_cast<LP##name>(alcGetProcAddress(dev, #name))
+
+typedef LPALCLOOPBACKOPENDEVICESOFT LPalcLoopbackOpenDeviceSOFT;
+typedef LPALCISRENDERFORMATSUPPORTEDSOFT LPalcIsRenderFormatSupportedSOFT;
+typedef LPALGETSOURCEDVSOFT LPalGetSourcedvSOFT;
+typedef LPALCRENDERSAMPLESSOFT LPalcRenderSamplesSOFT;
+
+
 OpenAL2::OpenAL2()
     : alProxyDev{nullptr}
     , alProxyContext{nullptr}
@@ -81,30 +89,7 @@ OpenAL2::OpenAL2()
 
 bool OpenAL2::initInput(const QString& deviceName)
 {
-    if (!Settings::getInstance().getAudioInDevEnabled())
-        return false;
-
-    qDebug() << "Opening audio input" << deviceName;
-    assert(!alInDev);
-
-    const ALCsizei bufSize = AUDIO_FRAME_SAMPLE_COUNT * 4 * 2;
-
-    const QByteArray qDevName = deviceName.toUtf8();
-    const ALchar* tmpDevName = qDevName.isEmpty() ? nullptr : qDevName.constData();
-    alInDev = alcCaptureOpenDevice(tmpDevName, AUDIO_SAMPLE_RATE, AL_FORMAT_MONO16, bufSize);
-
-    // Restart the capture if necessary
-    if (!alInDev) {
-        qWarning() << "Failed to initialize audio input device:" << deviceName;
-        return false;
-    }
-
-    setInputGain(Settings::getInstance().getAudioInGainDecibel());
-
-    qDebug() << "Opened audio input" << deviceName;
-    alcCaptureStart(alInDev);
-
-    return true;
+    return OpenAL::initInput(deviceName, 1);
 }
 
 /**
@@ -115,32 +100,28 @@ bool OpenAL2::initInput(const QString& deviceName)
 bool OpenAL2::loadOpenALExtensions(ALCdevice* dev)
 {
     // load OpenAL extension functions
-    alcLoopbackOpenDeviceSOFT = reinterpret_cast<LPALCLOOPBACKOPENDEVICESOFT>(
-        alcGetProcAddress(dev, "alcLoopbackOpenDeviceSOFT"));
+    GET_PROC_ADDR(dev, alcLoopbackOpenDeviceSOFT);
     checkAlcError(dev);
     if (!alcLoopbackOpenDeviceSOFT) {
         qDebug() << "Failed to load alcLoopbackOpenDeviceSOFT function!";
         return false;
     }
 
-    alcIsRenderFormatSupportedSOFT = reinterpret_cast<LPALCISRENDERFORMATSUPPORTEDSOFT>(
-        alcGetProcAddress(dev, "alcIsRenderFormatSupportedSOFT"));
+    GET_PROC_ADDR(dev, alcIsRenderFormatSupportedSOFT);
     checkAlcError(dev);
     if (!alcIsRenderFormatSupportedSOFT) {
         qDebug() << "Failed to load alcIsRenderFormatSupportedSOFT function!";
         return false;
     }
 
-    alGetSourcedvSOFT =
-        reinterpret_cast<LPALGETSOURCEDVSOFT>(alcGetProcAddress(dev, "alGetSourcedvSOFT"));
+    GET_PROC_ADDR(dev, alGetSourcedvSOFT);
     checkAlcError(dev);
     if (!alGetSourcedvSOFT) {
         qDebug() << "Failed to load alGetSourcedvSOFT function!";
         return false;
     }
 
-    alcRenderSamplesSOFT = reinterpret_cast<LPALCRENDERSAMPLESSOFT>(
-        alcGetProcAddress(alOutDev, "alcRenderSamplesSOFT"));
+    GET_PROC_ADDR(dev, alcRenderSamplesSOFT);
     checkAlcError(dev);
     if (!alcRenderSamplesSOFT) {
         qDebug() << "Failed to load alcRenderSamplesSOFT function!";
@@ -289,30 +270,7 @@ bool OpenAL2::initOutput(const QString& deviceName)
  */
 void OpenAL2::cleanupOutput()
 {
-    outputInitialized = false;
-
-    if (alProxyDev) {
-        alSourcei(alMainSource, AL_LOOPING, AL_FALSE);
-        alSourceStop(alMainSource);
-        alDeleteSources(1, &alMainSource);
-
-        if (alMainBuffer) {
-            alDeleteBuffers(1, &alMainBuffer);
-            alMainBuffer = 0;
-        }
-
-        if (!alcMakeContextCurrent(nullptr))
-            qWarning("Failed to clear audio context.");
-
-        alcDestroyContext(alOutContext);
-        alProxyContext = nullptr;
-
-        qDebug() << "Closing audio output";
-        if (alcCloseDevice(alProxyDev))
-            alProxyDev = nullptr;
-        else
-            qWarning("Failed to close output.");
-    }
+    OpenAL::cleanupOutput();
 
     if (echoCancelSupported) {
         alcMakeContextCurrent(alOutContext);

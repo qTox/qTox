@@ -249,8 +249,14 @@ bool OpenAL::autoInitOutput()
 
 bool OpenAL::initInput(const QString& deviceName)
 {
-    if (!Settings::getInstance().getAudioInDevEnabled())
+    return initInput(deviceName, AUDIO_CHANNELS);
+}
+
+bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
+{
+    if (!Settings::getInstance().getAudioInDevEnabled()) {
         return false;
+    }
 
     qDebug() << "Opening audio input" << deviceName;
     assert(!alInDev);
@@ -260,7 +266,7 @@ bool OpenAL::initInput(const QString& deviceName)
     const uint32_t sampleRate = AUDIO_SAMPLE_RATE;
     const uint16_t frameDuration = AUDIO_FRAME_DURATION;
     const uint32_t chnls = AUDIO_CHANNELS;
-    const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
+    const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * channels;
 
     const QByteArray qDevName = deviceName.toUtf8();
     const ALchar* tmpDevName = qDevName.isEmpty() ? nullptr : qDevName.constData();
@@ -442,17 +448,19 @@ void OpenAL::cleanupOutput()
             alMainBuffer = 0;
         }
 
-        if (!alcMakeContextCurrent(nullptr))
+        if (!alcMakeContextCurrent(nullptr)) {
             qWarning("Failed to clear audio context.");
+        }
 
         alcDestroyContext(alOutContext);
         alOutContext = nullptr;
 
         qDebug() << "Closing audio output";
-        if (alcCloseDevice(alOutDev))
+        if (alcCloseDevice(alOutDev)) {
             alOutDev = nullptr;
-        else
+        } else {
             qWarning("Failed to close output.");
+        }
     }
 }
 
