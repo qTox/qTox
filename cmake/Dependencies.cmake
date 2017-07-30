@@ -179,6 +179,7 @@ if (NOT TIMESTAMP)
   execute_process(
     COMMAND date +%s
     OUTPUT_VARIABLE TIMESTAMP
+    OUTPUT_STRIP_TRAILING_WHITESPACE
   )
 endif()
 
