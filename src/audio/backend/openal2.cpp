@@ -275,7 +275,11 @@ void OpenAL2::cleanupOutput()
     if (echoCancelSupported) {
         alcMakeContextCurrent(alOutContext);
         alSourceStop(alProxySource);
-        // TODO: delete buffers
+        ALint processed = 0;
+        ALuint bufids[PROXY_BUFFER_COUNT];
+        alGetSourcei(alProxySource, AL_BUFFERS_PROCESSED, &processed);
+        alSourceUnqueueBuffers(alProxySource, processed, bufids);
+        alDeleteBuffers(processed, bufids);
         alcMakeContextCurrent(nullptr);
         alcDestroyContext(alOutContext);
         alOutContext = nullptr;
