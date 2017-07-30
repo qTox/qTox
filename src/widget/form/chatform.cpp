@@ -113,7 +113,7 @@ QString secondsToDHMS(quint32 duration)
 }
 
 
-ChatForm::ChatForm(Friend* chatFriend)
+ChatForm::ChatForm(const Friend* chatFriend)
     : f(chatFriend)
     , callDuration(new QLabel(this))
     , isTyping(false)

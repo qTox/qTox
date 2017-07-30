@@ -43,7 +43,7 @@ class ChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    explicit ChatForm(Friend* chatFriend);
+    explicit ChatForm(const Friend* chatFriend);
     ~ChatForm();
     void setStatusMessage(const QString& newMessage);
     void loadHistory(const QDateTime& since, bool processUndelivered = false);
@@ -121,7 +121,7 @@ protected:
     void showEvent(QShowEvent* event) final override;
 
 private:
-    Friend* f;
+    const Friend* f;
     CroppingLabel* statusMessageLabel;
     QMenu statusMessageMenu;
     QLabel* callDuration;
