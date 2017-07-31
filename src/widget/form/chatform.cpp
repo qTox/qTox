@@ -151,6 +151,10 @@ ChatForm::ChatForm(const Friend* chatFriend)
     exportChatAction =
         menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onExportChat()));
 
+    if (Nexus::getProfile()->isHistoryEnabled()) {
+        loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+    }
+
     const Core* core = Core::getInstance();
     connect(core, &Core::fileReceiveRequested, this, &ChatForm::onFileRecvRequest);
     connect(core, &Core::friendAvatarChanged, this, &ChatForm::onAvatarChange);

@@ -37,8 +37,6 @@ public:
     ~Friend() override;
     Friend& operator=(const Friend& other) = delete;
 
-    void loadHistory();
-
     void setName(const QString& name) override;
     void setAlias(const QString& name);
     QString getDisplayedName() const override;
@@ -64,7 +62,6 @@ signals:
     void aliasChanged(uint32_t friendId, QString alias);
     void statusChanged(uint32_t friendId, Status status);
     void statusMessageChanged(uint32_t friendId, const QString& message);
-    void loadChatHistory();
 
 public slots:
 
