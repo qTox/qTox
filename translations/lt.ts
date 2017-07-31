@@ -87,6 +87,14 @@ vaizdo skambučiais.</translation>
         <source>Test Sound</source>
         <translation>Išbandyti garsą</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -155,6 +163,102 @@ vaizdo skambučiais.</translation>
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Dialogas</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">Naudotojo vardas</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished">Būsena</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">Viešasis tox raktas:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">Naudoti slapyvardžiai:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished">SLAPYVARDŽIŲ ISTORIJA</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished">Jeigu nustatyta, automatiškai priimti failus iš šio kontakto</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">Automatiškai priimti failus</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished">Nuo šio kontakto failai automatiškai nepriimami</translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">Automatiškai atsiliepti į skambutį:</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished">Rankinis</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Garsas</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">Garsas + Vaizdas</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished">Jei nustatyta, automatiškai priimti grupės pokalbio pakvietimus nuo šio kontakto.</translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished">Automatiškai priimti grupės pakvietimus</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished">Išvalyti pokalbių žurnalą (operacija neatšaukiama!)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">Užrašai</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished">Įvesties laukas, skirtas pastaboms apie kontaktą</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished">Čia galite išsaugoti komentarus apie šį kontaktą.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">Žurnalas išvalytas</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">Pokalbių su %1 žurnalas išvalytas!</translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -178,143 +282,22 @@ vaizdo skambučiais.</translation>
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation>Dialogas</translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>Naudotojo vardas</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation>Būsena</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Viešasis tox raktas:</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>Naudoti slapyvardžiai:</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation>SLAPYVARDŽIŲ ISTORIJA</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>Numatytasis katalogas failams išsaugoti:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Nuo šio kontakto failai automatiškai nepriimami</translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>Automatiškai priimti failus</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation>Išvalyti pokalbių žurnalą (operacija neatšaukiama!)</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Užrašai</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Čia galite išsaugoti komentarus apie šį kontaktą.</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Pasirinkite katalogą priimamiems failams</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>Žurnalas išvalytas</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>Pokalbių su %1 žurnalas išvalytas!</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Automatiškai atsiliepti į skambutį:</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Rankinis</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Garsas</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>Garsas + Vaizdas</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation>Jeigu nustatyta, automatiškai priimti failus iš šio kontakto</translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation>Įvesties laukas, skirtas pastaboms apie kontaktą</translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation>Jei nustatyta, automatiškai priimti grupės pokalbio pakvietimus nuo šio kontakto.</translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation>Automatiškai priimti grupės pakvietimus</translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
         <translation>Pridėti kontaktą</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>76 šešioliktainės sistemos skaitmenys arba vardas@example.com</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID format</source>
         <translation>Tox ID neatitinka formato</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>Prisistatymo žinutė</translation>
     </message>
     <message>
         <source>Send friend request</source>
         <translation>Siųsti užklausą</translation>
     </message>
     <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Čia %1! Gal bendraujame per Tox?</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Nepavyko pridėti kontakto</translation>
-    </message>
-    <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Negalite pridėti savęs kaip kontakto!</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -349,9 +332,81 @@ vaizdo skambučiais.</translation>
         <translation>Parašykite žinutę, kurią siųsti kartu su kontakto užklausa arba palikite tuščią, kad būtų išsiųsta numatytoji žinutė</translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>Šis Tox ID yra neteisingas arba jo nėra</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished">Negalite pridėti savęs kaip kontakto!</translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished">Tox ID</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">76 šešioliktainės sistemos skaitmenys arba vardas@example.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Prisistatymo žinutė</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -639,11 +694,15 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuoti į failą</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished">Išsaugoti pokalbio žurnalą</translation>
+        <translation>Išsaugoti pokalbio žurnalą</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1532,7 +1591,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 žinučių</translation>
     </message>
 </context>
 <context>
@@ -1914,6 +1973,14 @@ Failo formatas dar gali pasikeisti, todėl galite prarasti sukauptus duomenis.</
         <source>Privacy</source>
         <translation>Privatumas</translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2122,7 +2189,10 @@ Pasirinkite kitą.</translation>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>Šis simbolių rinkinys nurodo kitiems Tox klientams kaip su jumis susisiekti.
+Norėdami bendrauti, pasidalinkite juo su savo draugais.
+
+Šiame ID yra NoSpam kodas (mėlynas) ir kontrolinė suma (pilka).</translation>
     </message>
 </context>
 <context>
@@ -2341,6 +2411,10 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Reformatting text in progress..</source>
         <translation>Teksto reformatavimas eigoje..</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
