@@ -74,7 +74,9 @@ private:
 #ifndef AL_SOFT_source_latency
 #define AL_SAMPLE_OFFSET_LATENCY_SOFT 0x1200
 #define AL_SEC_OFFSET_LATENCY_SOFT 0x1201
-    typedef void(AL_APIENTRY* LPALGETSOURCEDVSOFT)(ALuint, ALenum, const ALdouble*);
+    extern "C" {
+        typedef void(AL_APIENTRY* LPALGETSOURCEDVSOFT)(ALuint, ALenum, const ALdouble*);
+    }
 #endif
 
     LPALGETSOURCEDVSOFT alGetSourcedvSOFT = nullptr;
