@@ -23,8 +23,9 @@
 #include "friendwidget.h"
 #include "groupwidget.h"
 #include "widget.h"
-#include "src/model/friend.h"
 #include "src/friendlist.h"
+#include "src/model/friend.h"
+#include "src/model/group.h"
 #include "src/persistence/settings.h"
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
@@ -279,7 +280,11 @@ FriendListWidget::Mode FriendListWidget::getMode() const
 void FriendListWidget::addGroupWidget(GroupWidget* widget)
 {
     groupLayout.addSortedWidget(widget);
-    connect(widget, &GroupWidget::renameRequested, this, &FriendListWidget::renameGroupWidget);
+    Group* g = widget->getGroup();
+    connect(g, &Group::titleChanged, [=](uint32_t groupId, const QString& name) {
+        Q_UNUSED(groupId);
+        renameGroupWidget(widget, name);
+    });
 }
 
 void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleIndex)
