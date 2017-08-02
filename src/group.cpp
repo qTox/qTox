@@ -64,13 +64,13 @@ void Group::updatePeer(int peerId, QString name)
     } else {
         widget->onUserListChanged();
         chatForm->onUserListChanged();
-        emit userListChanged(getGroupWidget());
+        emit userListChanged(groupId, toxids);
     }
 }
 
 void Group::setName(const QString& name)
 {
-    emit titleChanged(this->getGroupWidget());
+    emit titleChanged(groupId, name);
 }
 
 QString Group::getName() const
@@ -105,7 +105,7 @@ void Group::regeneratePeerList()
 
     widget->onUserListChanged();
     chatForm->onUserListChanged();
-    emit userListChanged(getGroupWidget());
+    emit userListChanged(groupId, toxids);
 }
 
 bool Group::isAvGroupchat() const
