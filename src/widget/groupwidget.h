@@ -52,8 +52,9 @@ protected:
     void dragLeaveEvent(QDragLeaveEvent* ev) override;
     void dropEvent(QDropEvent* ev) override;
 
-private:
+private slots:
     void retranslateUi();
+    void setTitle(const QString& newName);
 
 public:
     int groupId;
