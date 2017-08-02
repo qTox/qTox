@@ -41,6 +41,13 @@ extern "C" {
 #include <filter_audio.h>
 }
 
+// needed because Ubuntu 14.04 lacks the AL_SOFT_source_latency extension
+#ifndef AL_SOFT_source_latency
+#define AL_SAMPLE_OFFSET_LATENCY_SOFT 0x1200
+#define AL_SEC_OFFSET_LATENCY_SOFT 0x1201
+extern "C" typedef void(AL_APIENTRY* LPALGETSOURCEDVSOFT)(ALuint, ALenum, const ALdouble*);
+#endif
+
 class OpenAL2 : public OpenAL
 {
     Q_OBJECT
@@ -69,16 +76,6 @@ private:
     Filter_Audio* filterer = nullptr;
     LPALCLOOPBACKOPENDEVICESOFT alcLoopbackOpenDeviceSOFT = nullptr;
     LPALCISRENDERFORMATSUPPORTEDSOFT alcIsRenderFormatSupportedSOFT = nullptr;
-
-// needed because Ubuntu 14.04 lacks the AL_SOFT_source_latency extension
-#ifndef AL_SOFT_source_latency
-#define AL_SAMPLE_OFFSET_LATENCY_SOFT 0x1200
-#define AL_SEC_OFFSET_LATENCY_SOFT 0x1201
-    extern "C" {
-        typedef void(AL_APIENTRY* LPALGETSOURCEDVSOFT)(ALuint, ALenum, const ALdouble*);
-    }
-#endif
-
     LPALGETSOURCEDVSOFT alGetSourcedvSOFT = nullptr;
     LPALCRENDERSAMPLESSOFT alcRenderSamplesSOFT = nullptr;
 };
