@@ -50,22 +50,25 @@ GroupWidget::GroupWidget(int groupId, const QString& name, bool compact)
     nameLabel->setText(name);
 
     onUserListChanged();
-
     setAcceptDrops(true);
 
-    connect(nameLabel, &CroppingLabel::editFinished, [=](const QString& newName) {
-        if (!newName.isEmpty()) {
-            Group* g = GroupList::findGroup(groupId);
-            emit renameRequested(this, newName);
-            emit g->getChatForm()->groupTitleChanged(groupId, newName.left(128));
-        }
-    });
+    connect(nameLabel, &CroppingLabel::editFinished, this, &GroupWidget::setTitle);
     Translator::registerHandler(std::bind(&GroupWidget::retranslateUi, this), this);
 }
 
 GroupWidget::~GroupWidget()
 {
     Translator::unregister(this);
+}
+
+void GroupWidget::setTitle(const QString& newName)
+{
+    if (!newName.isEmpty()) {
+        Group* g = GroupList::findGroup(groupId);
+        g->setName(newName);
+        emit renameRequested(this, newName);
+        emit g->getChatForm()->groupTitleChanged(groupId, newName.left(128));
+    }
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
