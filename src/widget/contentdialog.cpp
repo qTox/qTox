@@ -754,14 +754,15 @@ void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
 
 /**
  * @brief Update group widget name and 'status'.
- * @param w Group widget to update.
+ * @param groupId Id of group to update.
  */
-void ContentDialog::updateGroupWidget(GroupWidget* w)
+void ContentDialog::updateGroupWidget(uint32_t groupId)
 {
-    ContactInfo info = groupList.find(w->groupId).value();
-    GroupWidget* widget = static_cast<GroupWidget*>(std::get<1>(info));
+    Group* g = GroupList::findGroup(groupId);
+    QString name = g->getName();
 
-    QString name = w->getName();
+    ContactInfo info = groupList.find(groupId).value();
+    GroupWidget* widget = static_cast<GroupWidget*>(std::get<1>(info));
     widget->setName(name);
     widget->onUserListChanged();
 }

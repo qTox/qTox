@@ -63,8 +63,8 @@ public:
     QString resolveToxId(const ToxPk& id) const;
 
 signals:
-    void titleChanged(GroupWidget* widget);
-    void userListChanged(GroupWidget* widget);
+    void titleChanged(uint32_t groupId, const QString& title);
+    void userListChanged(uint32_t groupId, const QMap<QByteArray, QString>& toxids);
 
 private:
     GroupWidget* widget;
