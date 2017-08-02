@@ -1737,10 +1737,17 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
         g->getChatForm()->addSystemInfoMessage(message, ChatMessage::INFO, curTime);
     }
 
-    contactListWidget->renameGroupWidget(g->getGroupWidget(), title);
+    GroupWidget* widget = g->getGroupWidget();
+    contactListWidget->renameGroupWidget(widget, title);
+    g->getChatForm()->setName(title);
+
+    if (widget->isActive()) {
+        GUI::setWindowTitle(title);
+    }
+
     g->setName(title);
     FilterCriteria filter = getFilterCriteria();
-    g->getGroupWidget()->searchName(ui->searchContactText->text(), filterGroups(filter));
+    widget->searchName(ui->searchContactText->text(), filterGroups(filter));
 }
 
 void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
