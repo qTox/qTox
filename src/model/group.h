@@ -64,6 +64,8 @@ public:
 signals:
     void titleChanged(uint32_t groupId, const QString& title);
     void userListChanged(uint32_t groupId, const QMap<QByteArray, QString>& toxids);
+    void eventFlagChanged(bool flag);
+    void mentionFlagChanged(bool flag);
 
 private:
     QString title;

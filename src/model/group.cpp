@@ -144,7 +144,10 @@ bool Group::isSelfPeerNumber(int num) const
 
 void Group::setEventFlag(bool f)
 {
-    hasNewMessages = f;
+    if (f != hasNewMessages) {
+        hasNewMessages = f;
+        emit eventFlagChanged(f);
+    }
 }
 
 bool Group::getEventFlag() const
@@ -155,7 +158,10 @@ bool Group::getEventFlag() const
 // TODO: Add using or remove
 void Group::setMentionedFlag(bool f)
 {
-    userWasMentioned = f;
+    if (f != userWasMentioned) {
+        userWasMentioned = f;
+        emit mentionFlagChanged(f);
+    }
 }
 
 bool Group::getMentionedFlag() const

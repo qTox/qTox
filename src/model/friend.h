@@ -65,9 +65,8 @@ signals:
     void aliasChanged(uint32_t friendId, QString alias);
     void statusChanged(uint32_t friendId, Status status);
     void statusMessageChanged(uint32_t friendId, const QString& message);
+    void eventFlagChanged(bool flag);
     void loadChatHistory();
-
-public slots:
 
 private:
     QString userName;
