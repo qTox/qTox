@@ -1120,7 +1120,7 @@ void Widget::openNewDialog(GenericChatroomWidget* widget)
 
 void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
 {
-    widget->resetEventFlags();
+    widget->getContact()->resetEventFlags();
     widget->updateStatusLight();
 
     uint32_t id;
@@ -1515,7 +1515,7 @@ void Widget::clearContactsList()
 
 void Widget::onDialogShown(GenericChatroomWidget* widget)
 {
-    widget->resetEventFlags();
+    widget->getContact()->resetEventFlags();
     widget->updateStatusLight();
 
     ui->friendList->updateTracking(widget);
@@ -1889,7 +1889,7 @@ bool Widget::event(QEvent* e)
         break;
     case QEvent::WindowActivate:
         if (activeChatroomWidget) {
-            activeChatroomWidget->resetEventFlags();
+            activeChatroomWidget->getContact()->resetEventFlags();
             activeChatroomWidget->updateStatusLight();
             setWindowTitle(activeChatroomWidget->getTitle());
         }

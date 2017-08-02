@@ -217,13 +217,6 @@ void GroupWidget::setChatForm(ContentLayout* contentLayout)
     g->getChatForm()->show(contentLayout);
 }
 
-void GroupWidget::resetEventFlags()
-{
-    Group* g = GroupList::findGroup(groupId);
-    g->setEventFlag(false);
-    g->setMentionedFlag(false);
-}
-
 void GroupWidget::dragEnterEvent(QDragEnterEvent* ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());

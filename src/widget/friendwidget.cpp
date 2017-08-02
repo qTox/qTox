@@ -369,13 +369,6 @@ void FriendWidget::setChatForm(ContentLayout* contentLayout)
     }
 }
 
-void FriendWidget::resetEventFlags()
-{
-    // Hack to avoid edit const Friend. TODO: Repalce on emit
-    Friend* f = FriendList::findFriend(frnd->getId());
-    f->setEventFlag(false);
-}
-
 void FriendWidget::onAvatarChange(int friendId, const QPixmap& pic)
 {
     if (friendId != frnd->getId()) {
