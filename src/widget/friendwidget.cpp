@@ -100,7 +100,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     QAction* openChatWindow = nullptr;
     QAction* removeChatWindow = nullptr;
 
-    const uint32_t friendId = frnd->getFriendId();
+    const uint32_t friendId = frnd->getId();
     const ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
 
     if (!contentDialog || contentDialog->chatroomWidgetCount() > 1) {
@@ -246,7 +246,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
         }
     } else if (groupActions.contains(selectedItem)) {
         const Group* group = groupActions[selectedItem];
-        Core::getInstance()->groupInviteFriend(friendId, group->getGroupId());
+        Core::getInstance()->groupInviteFriend(friendId, group->getId());
     } else if (removeCircleAction != nullptr && selectedItem == removeCircleAction) {
         if (friendList) {
             friendList->moveWidget(this, frnd->getStatus(), true);
@@ -368,13 +368,13 @@ void FriendWidget::setChatForm(ContentLayout* contentLayout)
 void FriendWidget::resetEventFlags()
 {
     // Hack to avoid edit const Friend. TODO: Repalce on emit
-    Friend* f = FriendList::findFriend(frnd->getFriendId());
+    Friend* f = FriendList::findFriend(frnd->getId());
     f->setEventFlag(false);
 }
 
 void FriendWidget::onAvatarChange(int friendId, const QPixmap& pic)
 {
-    if (friendId != frnd->getFriendId()) {
+    if (friendId != frnd->getId()) {
         return;
     }
 
@@ -384,7 +384,7 @@ void FriendWidget::onAvatarChange(int friendId, const QPixmap& pic)
 
 void FriendWidget::onAvatarRemoved(int friendId)
 {
-    if (friendId != frnd->getFriendId()) {
+    if (friendId != frnd->getId()) {
         return;
     }
 
@@ -425,7 +425,7 @@ void FriendWidget::setAlias(const QString& _alias)
 {
     QString alias = _alias.left(tox_max_name_length());
     // Hack to avoid edit const Friend. TODO: Repalce on emit
-    Friend* f = FriendList::findFriend(frnd->getFriendId());
+    Friend* f = FriendList::findFriend(frnd->getId());
     f->setAlias(alias);
 
     Settings& s = Settings::getInstance();

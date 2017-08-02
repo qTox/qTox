@@ -40,7 +40,6 @@ public:
     ~Group() override;
 
     bool isAvGroupchat() const;
-    int getGroupId() const;
     uint32_t getId() const override;
     int getPeersCount() const;
     void regeneratePeerList();
