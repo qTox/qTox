@@ -1738,7 +1738,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
     }
 
     GroupWidget* widget = g->getGroupWidget();
-    contactListWidget->renameGroupWidget(widget, title);
+    contactListWidget->renameGroupWidget(groupnumber, title);
     g->getChatForm()->setName(title);
 
     if (widget->isActive())

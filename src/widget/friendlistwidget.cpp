@@ -25,6 +25,8 @@
 #include "widget.h"
 #include "src/friend.h"
 #include "src/friendlist.h"
+#include "src/group.h"
+#include "src/grouplist.h"
 #include "src/persistence/settings.h"
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
@@ -279,7 +281,8 @@ FriendListWidget::Mode FriendListWidget::getMode() const
 void FriendListWidget::addGroupWidget(GroupWidget* widget)
 {
     groupLayout.addSortedWidget(widget);
-    connect(widget, &GroupWidget::renameRequested, this, &FriendListWidget::renameGroupWidget);
+    Group* g = widget->getGroup();
+    connect(g, &Group::titleChanged, this, &FriendListWidget::renameGroupWidget);
 }
 
 void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleIndex)
@@ -369,8 +372,10 @@ void FriendListWidget::searchChatrooms(const QString& searchString, bool hideOnl
     }
 }
 
-void FriendListWidget::renameGroupWidget(GroupWidget* groupWidget, const QString& newName)
+void FriendListWidget::renameGroupWidget(uint32_t groupId, const QString& newName)
 {
+    Group* g = GroupList::findGroup(groupId);
+    GroupWidget* groupWidget = g->getGroupWidget();
     groupLayout.removeSortedWidget(groupWidget);
     groupWidget->setName(newName);
     groupLayout.addSortedWidget(groupWidget);
