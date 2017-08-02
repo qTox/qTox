@@ -304,8 +304,10 @@ void OpenAL2::doOutput()
     alGetSourcei(alProxySource, AL_BUFFERS_QUEUED, &queued);
 
     if (processed > 0) {
-        // unqueue one processed buffer
-        alSourceUnqueueBuffers(alProxySource, 1, bufids);
+        // unqueue all processed buffers
+        alSourceUnqueueBuffers(alProxySource, processed, bufids);
+        // delete all but the first buffer, reuse first for new data
+        alDeleteBuffers(processed - 1, bufids + 1);
     } else if (queued < PROXY_BUFFER_COUNT) {
         // create new buffer until the maximum is reached
         alGenBuffers(1, bufids);
