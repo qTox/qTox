@@ -179,7 +179,7 @@ bool CoreAV::anyActiveCalls() const
  */
 bool CoreAV::isCallStarted(const Friend* f) const
 {
-    return f && calls.contains(f->getFriendId());
+    return f && calls.contains(f->getId());
 }
 
 /**
@@ -189,7 +189,7 @@ bool CoreAV::isCallStarted(const Friend* f) const
  */
 bool CoreAV::isCallStarted(const Group* g) const
 {
-    return g && groupCalls.contains(g->getGroupId());
+    return g && groupCalls.contains(g->getId());
 }
 
 /**
@@ -199,7 +199,7 @@ bool CoreAV::isCallStarted(const Group* g) const
  */
 bool CoreAV::isCallActive(const Friend* f) const
 {
-    return isCallStarted(f) ? !(calls[f->getFriendId()].inactive) : false;
+    return isCallStarted(f) ? !(calls[f->getId()].inactive) : false;
 }
 
 /**
@@ -209,12 +209,12 @@ bool CoreAV::isCallActive(const Friend* f) const
  */
 bool CoreAV::isCallActive(const Group* g) const
 {
-    return isCallStarted(g) ? !(groupCalls[g->getGroupId()].inactive) : false;
+    return isCallStarted(g) ? !(groupCalls[g->getId()].inactive) : false;
 }
 
 bool CoreAV::isCallVideoEnabled(const Friend* f) const
 {
-    return isCallStarted(f) ? calls[f->getFriendId()].videoEnabled : false;
+    return isCallStarted(f) ? calls[f->getId()].videoEnabled : false;
 }
 
 bool CoreAV::answerCall(uint32_t friendNum)
@@ -412,8 +412,8 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
  */
 void CoreAV::toggleMuteCallInput(const Friend* f)
 {
-    if (f && calls.contains(f->getFriendId())) {
-        ToxCall& call = calls[f->getFriendId()];
+    if (f && calls.contains(f->getId())) {
+        ToxCall& call = calls[f->getId()];
         call.muteMic = !call.muteMic;
     }
 }
@@ -424,8 +424,8 @@ void CoreAV::toggleMuteCallInput(const Friend* f)
  */
 void CoreAV::toggleMuteCallOutput(const Friend* f)
 {
-    if (f && calls.contains(f->getFriendId())) {
-        ToxCall& call = calls[f->getFriendId()];
+    if (f && calls.contains(f->getId())) {
+        ToxCall& call = calls[f->getId()];
         call.muteVol = !call.muteVol;
     }
 }
@@ -545,8 +545,8 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
  */
 void CoreAV::muteCallInput(const Group* g, bool mute)
 {
-    if (g && groupCalls.contains(g->getGroupId()))
-        groupCalls[g->getGroupId()].muteMic = mute;
+    if (g && groupCalls.contains(g->getId()))
+        groupCalls[g->getId()].muteMic = mute;
 }
 
 /**
@@ -556,8 +556,8 @@ void CoreAV::muteCallInput(const Group* g, bool mute)
  */
 void CoreAV::muteCallOutput(const Group* g, bool mute)
 {
-    if (g && groupCalls.contains(g->getGroupId()))
-        groupCalls[g->getGroupId()].muteVol = mute;
+    if (g && groupCalls.contains(g->getId()))
+        groupCalls[g->getId()].muteVol = mute;
 }
 
 /**
@@ -567,7 +567,7 @@ void CoreAV::muteCallOutput(const Group* g, bool mute)
  */
 bool CoreAV::isGroupCallInputMuted(const Group* g) const
 {
-    return g && groupCalls.contains(g->getGroupId()) ? groupCalls[g->getGroupId()].muteMic : false;
+    return g && groupCalls.contains(g->getId()) ? groupCalls[g->getId()].muteMic : false;
 }
 
 /**
@@ -577,7 +577,7 @@ bool CoreAV::isGroupCallInputMuted(const Group* g) const
  */
 bool CoreAV::isGroupCallOutputMuted(const Group* g) const
 {
-    return g && groupCalls.contains(g->getGroupId()) ? groupCalls[g->getGroupId()].muteVol : false;
+    return g && groupCalls.contains(g->getId()) ? groupCalls[g->getId()].muteVol : false;
 }
 
 /**
@@ -610,7 +610,7 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
  */
 bool CoreAV::isCallInputMuted(const Friend* f) const
 {
-    return f && calls.contains(f->getFriendId()) ? calls[f->getFriendId()].muteMic : false;
+    return f && calls.contains(f->getId()) ? calls[f->getId()].muteMic : false;
 }
 
 /**
@@ -620,7 +620,7 @@ bool CoreAV::isCallInputMuted(const Friend* f) const
  */
 bool CoreAV::isCallOutputMuted(const Friend* f) const
 {
-    return f && calls.contains(f->getFriendId()) ? calls[f->getFriendId()].muteVol : false;
+    return f && calls.contains(f->getId()) ? calls[f->getId()].muteVol : false;
 }
 
 /**

@@ -123,14 +123,9 @@ bool Group::isAvGroupchat() const
     return avGroupchat;
 }
 
-int Group::getGroupId() const
-{
-    return groupId;
-}
-
 uint32_t Group::getId() const
 {
-    return getGroupId();
+    return groupId;
 }
 
 int Group::getPeersCount() const
