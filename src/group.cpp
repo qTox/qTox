@@ -70,11 +70,6 @@ void Group::updatePeer(int peerId, QString name)
 
 void Group::setName(const QString& name)
 {
-    chatForm->setName(name);
-
-    if (widget->isActive())
-        GUI::setWindowTitle(name);
-
     emit titleChanged(this->getGroupWidget());
 }
 
