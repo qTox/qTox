@@ -51,7 +51,6 @@ public:
     bool getEventFlag() const override;
 
     const ToxPk& getPublicKey() const;
-    uint32_t getFriendId() const;
     uint32_t getId() const override;
 
     void setStatus(Status s);

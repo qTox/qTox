@@ -107,7 +107,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(nameLabel, &CroppingLabel::editFinished, this, [=](const QString& newName) {
         if (!newName.isEmpty()) {
             nameLabel->setText(newName);
-            emit groupTitleChanged(group->getGroupId(), newName.left(128));
+            emit groupTitleChanged(group->getId(), newName.left(128));
         }
     });
 
@@ -147,9 +147,9 @@ void GroupChatForm::onSendTriggered()
     if (group->getPeersCount() != 1) {
         if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive)) {
             msg.remove(0, ChatForm::ACTION_PREFIX.length());
-            emit sendAction(group->getGroupId(), msg);
+            emit sendAction(group->getId(), msg);
         } else {
-            emit sendMessage(group->getGroupId(), msg);
+            emit sendMessage(group->getId(), msg);
         }
     } else {
         if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive))
@@ -224,7 +224,7 @@ void GroupChatForm::onUserListChanged()
         callButton->setObjectName("grey");
         callButton->style()->polish(callButton);
         callButton->setToolTip("");
-        Core::getInstance()->getAv()->leaveGroupCall(group->getGroupId());
+        Core::getInstance()->getAv()->leaveGroupCall(group->getId());
         hideNetcam();
     }
 }
@@ -270,8 +270,8 @@ void GroupChatForm::dropEvent(QDropEvent* ev)
     if (!frnd)
         return;
 
-    int friendId = frnd->getFriendId();
-    int groupId = group->getGroupId();
+    int friendId = frnd->getId();
+    int groupId = group->getId();
     if (frnd->getStatus() != Status::Offline) {
         Core::getInstance()->groupInviteFriend(friendId, groupId);
     }
@@ -316,7 +316,7 @@ void GroupChatForm::onVolMuteToggle()
 void GroupChatForm::onCallClicked()
 {
     if (!inCall) {
-        Core::getInstance()->getAv()->joinGroupCall(group->getGroupId());
+        Core::getInstance()->getAv()->joinGroupCall(group->getId());
         audioInputFlag = true;
         audioOutputFlag = true;
         callButton->setObjectName("red");
@@ -331,7 +331,7 @@ void GroupChatForm::onCallClicked()
         inCall = true;
         showNetcam();
     } else {
-        Core::getInstance()->getAv()->leaveGroupCall(group->getGroupId());
+        Core::getInstance()->getAv()->leaveGroupCall(group->getId());
         audioInputFlag = false;
         audioOutputFlag = false;
         callButton->setObjectName("green");
@@ -350,7 +350,7 @@ void GroupChatForm::onCallClicked()
 
 GenericNetCamView* GroupChatForm::createNetcam()
 {
-    GroupNetCamView* view = new GroupNetCamView(group->getGroupId(), this);
+    GroupNetCamView* view = new GroupNetCamView(group->getId(), this);
 
     QStringList names = group->getPeerList();
     for (int i = 0; i < names.size(); ++i) {

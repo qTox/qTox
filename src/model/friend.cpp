@@ -109,14 +109,9 @@ const ToxPk& Friend::getPublicKey() const
     return friendPk;
 }
 
-uint32_t Friend::getFriendId() const
-{
-    return friendId;
-}
-
 uint32_t Friend::getId() const
 {
-    return getFriendId();
+    return friendId;
 }
 
 void Friend::setEventFlag(bool flag)

@@ -235,7 +235,7 @@ void GroupWidget::dropEvent(QDropEvent* ev)
     if (!frnd)
         return;
 
-    int friendId = frnd->getFriendId();
+    int friendId = frnd->getId();
     if (frnd->getStatus() != Status::Offline) {
         Core::getInstance()->groupInviteFriend(friendId, groupId);
     }
