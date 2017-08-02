@@ -41,7 +41,6 @@ public:
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);
-    void renameRequested(GroupWidget* widget, const QString& newName);
     void removeGroup(int groupId);
 
 protected:
