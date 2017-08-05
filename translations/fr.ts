@@ -5,7 +5,7 @@
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>Audio/Vidéo</translation>
+        <translation>Audio / Vidéo</translation>
     </message>
     <message>
         <source>Default resolution</source>
@@ -17,11 +17,11 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation>Jouer un son de test en faisant varier le volume sonore.</translation>
+        <translation>Jouer un son de test lors de la modification du volume de sortie.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Utiliser le curseur pour mettre le gain du périphérique l&apos;entrée dans l’intervalle de %1dB à %2dB.</translation>
+        <translation>Utiliser le curseur afin de définir le gain de votre périphérique d&apos;entrée dans l’intervalle de %1dB à %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -33,11 +33,11 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Réglages audio</translation>
+        <translation>Paramètres sonores</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Gain</translation>
+        <translation>Gain sonore</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Utiliser le curseur pour régler le volume sonore de vos haut-parleurs.</translation>
+        <translation>Utiliser le curseur afin de régler le volume de vos haut-parleurs.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -53,15 +53,15 @@
     </message>
     <message>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>Niveau de volume</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Réglages vidéo</translation>
+        <translation>Paramètres vidéo</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Source vidéo</translation>
+        <translation>Périphérique vidéo</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -69,11 +69,11 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Définit la résolution de votre webcam/caméra.
-Plus la valeur est élevée plus la qualité de la vidéo sera bonne.
-Notez toutes fois qu&apos;une meilleure qualité vidéo nécessite une meilleure connexion Internet.
-Il se peut que votre connexion Internet ne supporte pas une qualité vidéo importante,
-ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
+        <translation>Définir la résolution de votre caméra.
+Plus la valeur sera élevée, plus la qualité de vidéo rendue à vos contacts sera bonne.
+Notez cependant qu&apos;une meilleure qualité vidéo nécessitera une meilleure connexion internet.
+Il se peut parfois que votre connexion internet ne puisse pas supporter une qualité vidéo supérieure,
+ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -87,6 +87,14 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <source>Test Sound</source>
         <translation>Son de test</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -96,7 +104,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation>Redémarrez qTox pour installer la version %1</translation>
+        <translation>Redémarrer qTox pour installer la version %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
@@ -105,15 +113,15 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation>Auteur original: %1</translation>
+        <translation>Auteur d&apos;origine : %1</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation>Vous utilisez qTox version %1.</translation>
+        <translation>Vous utilisez actuellement la version %1 de qTox.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation>Identifiant de changement : %1</translation>
+        <translation>Algorithme de sécurisation employé : %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
@@ -127,21 +135,21 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>Une liste de tous les problèmes connus peut être trouvée sur notre %1 sur Github. Si vous découvrez un plantage ou une faille de sécurité dans qTox, s&apos;il vous plaît reportez-la en suivant les règles décrites dans notre article wiki %2.</translation>
+        <translation>Une liste de tous les problèmes connus peut être trouvée sur notre %1 sur le site internet Github. Si vous découvrez un bogue ou une faille de sécurité dans qTox, merci de bien vouloir nous la reporter en suivant les règles décrites dans notre article wiki %2.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>logiciel de suivi de problèmes</translation>
+        <translation>logiciel de suivi de bogue</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Écrire des rapports de plantage utiles</translation>
+        <translation>Rédaction de rapports de bogues utiles</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation>Cliquez ici pour rapporter une erreur.</translation>
+        <translation>Cliquer ici afin de rapporter un bogue.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
@@ -152,6 +160,102 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation>contributeurs</translation>
+    </message>
+</context>
+<context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Discussion</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">nom d&apos;utilisateur</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished">état du message</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">Clé publique :</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">Alias utilisés :</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished">HISTORIQUE DES ALIAS</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished">Si activé, accepte automatiquement les fichiers du contact</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">Acceptation automatique des fichiers</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished">Répertoire par défaut d&apos;enregistrement des fichiers :</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished">L&apos;acceptation automatique est désactivée pour ce contact</translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">Acceptation automatique des appels :</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished">Manuel</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Audio</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">Audio + Vidéo</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished">Si défini, accepter automatiquement les invitations de discussions de groupe à partir de ce contact.</translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished">Acceptation automatique des invitations de groupe</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished">Effacer l&apos;historique (attention : l&apos;opération est irréversible !)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">Notes</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished">Champ de saisie des notes concernant le contact</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished">Vous pouvez enregistrer ici des commentaires sur ce contact.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Sélectionner un répertoire d&apos;acceptation automatique</translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">Historique effacé</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">Historique de discussion avec %1 effacé(s) !</translation>
     </message>
 </context>
 <context>
@@ -174,103 +278,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
-        <translation>Téléchargement de la mise à jour: %p%</translation>
-    </message>
-</context>
-<context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation>Discussion</translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>nom d&apos;utilisateur</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation>Message personnel</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Clé publique :</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>Alias utilisés :</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation>Historique des alias</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>Répertoire par défaut où enregistrer les fichiers :</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>L&apos;acceptation automatique pour ce contact est desactivé</translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>Acceptation automatique des fichiers</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation>Effacer l&apos;historique (l&apos;opération ne pas être annulée!)</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Notes</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Vous pouvez laisser un commentaire sur ce contact ici.</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Choisir un dossier pour les fichiers téléchargés automatiquement</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>Historique effacé</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>L&apos;historique de la dicussion avec %1 a été effacé !</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Accepter automatiquement les appels :</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Manuel</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Audio</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>Audio + Vidéo</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation>Si activé, accepte automatiquement les fichiers du contact</translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation>Champ de saisie pour des notes à propos du contact</translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléchargement de la mise à jour : %p%</translation>
     </message>
 </context>
 <context>
@@ -280,41 +288,16 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <translation>Ajouter des contacts</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>ID Tox</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>soit 76 caractères hexadécimaux, soit nom@example.com</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID format</source>
-        <translation>Format Tox ID invalide</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>Message</translation>
+        <translation>Le format de l&apos;identifiant Tox est invalide</translation>
     </message>
     <message>
         <source>Send friend request</source>
-        <translation>Envoyer la demande de contact</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Salut, c&apos;est %1. On se Toxe ?</translation>
+        <translation>Envoyer une demande de contact</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Impossible d&apos;ajouter le contact</translation>
-    </message>
-    <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Vous ne pouvez pas vous ajouter vous-même !</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -322,7 +305,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation>Demande de contact</translation>
+        <translation>Demandes de contact</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -334,24 +317,95 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>ID Tox, soit 76 caractères en hexadécimal, soit nom@example.com</translation>
+        <translation>Identifiant Tox : soit 76 caractères hexadécimaux, soit nom@exemple.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation>Entrez l&apos;ID Tox de votre ami</translation>
+        <translation>Renseignez l&apos;identifiant Tox de votre contact</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation>Message de demande d&apos;ami</translation>
+        <translation>Message de demande de contact</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation>Entrez un message à envoyer avec la demande d&apos;ami ou laissez vide pour envoyer le message par défaut</translation>
+        <translation>Renseignez un message à joindre à la demande de contact ou bien laissez le champ vide afin d&apos;envoyer le message type par défaut</translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>Cet identifiant Tox n&apos;existe pas ou est invalide</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished">Vous ne pouvez pas vous ajouter vous-même comme contact !</translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished">Identifiant Tox</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">soit 76 caractères hexadécimaux, soit nom@exemple.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Message</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished">Salut, c&apos;est %1. On se toxe ?</translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -362,7 +416,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>À moins que vous ne saviez %1 ce que vous faites, s&apos;il vous plaît ne changez %2 ici. Les changements effectués ici peuvent conduire à des problèmes avec qTox, et même à la perte de vos données, par exemple l&apos;historique.</translation>
+        <translation>À moins que vous ne sachiez %1 ce que vous faites, merci de ne rien modifier %2 ici. Les changements effectués ici peuvent conduire à des problèmes lors de l&apos;utilisation de qTox, même la perte de vos données, par exemple l&apos;historique.</translation>
     </message>
     <message>
         <source>really</source>
@@ -370,7 +424,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>not</source>
-        <translation>rien</translation>
+        <translation>ne pas</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
@@ -382,7 +436,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation>Tous les réglages seront réinitialisés. Êtes-vous sûr ?</translation>
+        <translation>Attention : tous les paramètres vont être réinitialisés ! Êtes-vous certain(e) ?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -400,7 +454,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Vous ne pouvez pas vous déconnecter pendant un appel !</translation>
+        <translation>Vous ne pouvez pas vous déconnecter durant un appel !</translation>
     </message>
     <message>
         <source>Save File</source>
@@ -408,7 +462,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation>Registres (*.log)</translation>
+        <translation>Journaux  (*.log)</translation>
     </message>
 </context>
 <context>
@@ -416,7 +470,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Sauvegarde les options dans le dossier courant au lieu du dossier de configuration habituel</translation>
+        <translation>Sauvegardera les paramètres dans le répertoire courant au lieu du répertoire habituel de configuration</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
@@ -424,7 +478,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation>Retour aux options par défaut</translation>
+        <translation>Réinitialiser vers les paramètres par défaut</translation>
     </message>
     <message>
         <source>Portable</source>
@@ -432,7 +486,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation>Options de connexion</translation>
+        <translation>Paramètres de connexion</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
@@ -442,7 +496,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Désactiver ceci permet par exemple d&apos;utiliser Tox à travers Tor. Désactiver seulement si nécessaire car ceci ajoute une charge additionnelle sur le réseau Tox.</translation>
+        <translation>Désactiver ceci permettra par exemple d&apos;utiliser Tox à travers Tor. Désactiver seulement si nécessaire, car cela ajoutera une charge supplémentaire au réseau Tox.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -465,7 +519,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Aucun</translation>
+        <translation>Aucun(e)</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -486,11 +540,11 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation>Exporter le régistre de déboggage</translation>
+        <translation>Exporter la journalisation de débogage</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation>Copier le registre de débogage</translation>
+        <translation>Copier le journal de débogage</translation>
     </message>
 </context>
 <context>
@@ -501,7 +555,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation>qTox n&apos;as pas pu ouvrir %1</translation>
+        <translation>qTox n&apos;a pas pu ouvrir %1</translation>
     </message>
     <message>
         <source>Calling %1</source>
@@ -509,15 +563,15 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation>Chargement de l&apos;historique...</translation>
+        <translation>Chargement de l&apos;historique de discussion...</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation>%1 appel</translation>
+        <translation>%1 appelle</translation>
     </message>
     <message>
         <source>Unable to open</source>
-        <translation>Ouverture impossible</translation>
+        <translation>Impossible d&apos;ouvrir</translation>
     </message>
     <message>
         <source>Bad idea</source>
@@ -565,7 +619,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Impossible d&apos;envoyer « %1 »</translation>
+        <translation>Impossible d&apos;envoyer le fichier &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -574,7 +628,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
-        <translation>qTox n&apos;a pas pu enregistrer la capture d&apos;écran</translation>
+        <translation>qTox n&apos;a pas pu sauvegarder la capture d&apos;écran</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
@@ -582,7 +636,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Call duration: </source>
-        <translation>Durée de l&apos;appel: </translation>
+        <translation>Durée de l&apos;appel : </translation>
     </message>
     <message>
         <source>%1 is typing</source>
@@ -599,12 +653,12 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation>absent</translation>
+        <translation>absent(e)</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation>occupé</translation>
+        <translation>occupé(e)</translation>
     </message>
     <message>
         <source>offline</source>
@@ -614,7 +668,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation>connecté</translation>
+        <translation>connecté(e)</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
@@ -631,19 +685,23 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation>Le micro ne peut être éteint que durant un appel</translation>
+        <translation>Le microphone ne peut être désactivé que lors d&apos;un appel</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation>Le son ne peut être éteint que durant un appel</translation>
+        <translation>Le son ne peut être désactivé que lors d&apos;un appel</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter vers le fichier</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished">Sauvegarder l&apos;historique de conversation</translation>
+        <translation>Sauvegarder le journal de discussion</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -682,45 +740,45 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation>Tous les ouvrir dans une nouvelle fenêtre</translation>
+        <translation>Tout ouvrir dans une nouvelle fenêtre</translation>
     </message>
 </context>
 <context>
     <name>Core</name>
     <message>
         <source>Toxing on qTox</source>
-        <translation>Je Tox sur qTox</translation>
+        <translation>Je toxe sur qTox</translation>
     </message>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation>/me souhaiterait vous ajouter dans sa liste d&apos;amis, « %1 »</translation>
+        <translation>/me souhaiterait vous ajouter à sa liste de contacts, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Identifiant Tox invalide</translation>
+        <translation>Identifiant Tox invalide</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Il faut que vous écriviez un message pour accompagner votre demande</translation>
+        <translation>Vous devez écrire un message avec votre demande</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Votre message est trop long !</translation>
+        <translation>Votre message est trop long !</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Ce contact est déjà dans vos contacts</translation>
+        <translation>Ce contact a déjà été ajouté</translation>
     </message>
 </context>
 <context>
     <name>FileTransferWidget</name>
     <message>
         <source>Form</source>
-        <translation>qTox</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <source>10Mb</source>
@@ -732,7 +790,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>ETA:10:10</source>
-        <translation>Temps restant : 10:10</translation>
+        <translation>Temps restant estimé : 10:10</translation>
     </message>
     <message>
         <source>Filename</source>
@@ -741,7 +799,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation>En attente...</translation>
+        <translation>En attente d&apos;envoi...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
@@ -751,12 +809,12 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Impossible d&apos;écrire ici</translation>
+        <translation>L&apos;emplacement n&apos;est pas accessible en écriture</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Vous n&apos;avez pas la permission d&apos;écrire ici. Choisissez un audre endroit, ou annulez.</translation>
+        <translation>Vous ne disposez pas des permissions nécessaires pour écrire à cet emplacement. Choisissez-en un autre ou annulez la boîte de dialogue de sauvegarde.</translation>
     </message>
     <message>
         <source>Resuming...</source>
@@ -778,11 +836,11 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Open file</source>
-        <translation>Sélectionner un fichier</translation>
+        <translation>Ouvrir un fichier</translation>
     </message>
     <message>
         <source>Open file directory</source>
-        <translation>Sélectionner un répertoire</translation>
+        <translation>Ouvrir le répertoire du fichier</translation>
     </message>
     <message>
         <source>Resume transfer</source>
@@ -818,27 +876,27 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Aujourd&apos;hui</translation>
+        <translation>Aujourd&apos;hui</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Hier</translation>
+        <translation>Hier</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">7 derniers jours</translation>
+        <translation>Ces 7 derniers jours</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">Ce mois-ci</translation>
+        <translation>Ce mois-ci</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Plus de 6 mois</translation>
+        <translation>Plus anciens que 6 mois</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Jamais</translation>
     </message>
 </context>
 <context>
@@ -850,11 +908,11 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
-        <translation>Quelqu&apos;un vient de vous ajouter dans sa liste de contacts</translation>
+        <translation>Quelqu&apos;un vient de vous ajouter à sa liste de contacts</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>ID utilisateur :</translation>
+        <translation>Identifiant d&apos;utilisateur :</translation>
     </message>
     <message>
         <source>Friend request message:</source>
@@ -885,24 +943,24 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>To new circle</source>
-        <translation>Créer un nouveau cercle</translation>
+        <translation>Vers un nouveau cercle</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Retirer du cercle « %1 »</translation>
+        <translation>Retirer du cercle &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Déplacer vers le cercle « %1 »</translation>
+        <translation>Déplacer vers le cercle &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Set alias...</source>
-        <translation>Utiliser un alias...</translation>
+        <translation>Définir un alias...</translation>
     </message>
     <message>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Automatiquement accepter les fichiers de ce contact</translation>
+        <translation>Acceptation automatique des fichiers de ce contact</translation>
     </message>
     <message>
         <source>New message</source>
@@ -910,15 +968,15 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation>Connecté</translation>
+        <translation>Connecté(e)</translation>
     </message>
     <message>
         <source>Away</source>
-        <translation>Absent</translation>
+        <translation>Absent(e)</translation>
     </message>
     <message>
         <source>Busy</source>
-        <translation>Occupé</translation>
+        <translation>Occupé(e)</translation>
     </message>
     <message>
         <source>Offline</source>
@@ -927,7 +985,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Choisir un dossier de téléchargement</translation>
+        <translation>Sélectionner un répertoire d&apos;acceptation automatique</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
@@ -944,7 +1002,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>To new group</source>
-        <translation>Créer un groupe</translation>
+        <translation>Vers un nouveau groupe</translation>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
@@ -952,7 +1010,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Show details</source>
-        <translation>Montrer les détails</translation>
+        <translation>Afficher les détails</translation>
     </message>
 </context>
 <context>
@@ -979,18 +1037,18 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Choisir un dossier de téléchargement</translation>
+        <translation>Sélectionner un répertoire d&apos;acceptation automatique</translation>
     </message>
 </context>
 <context>
     <name>GeneralSettings</name>
     <message>
         <source>General Settings</source>
-        <translation>Options générales</translation>
+        <translation>Paramètres généraux</translation>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>La traduction peut ne pas prendre effet immédiatement. Redémarrez qTox si ce n&apos;est pas le cas.</translation>
+        <translation>La traduction peut ne pas prendre effet tant que qTox n&apos;aura pas redémarrer.</translation>
     </message>
     <message>
         <source>Start in tray</source>
@@ -1014,15 +1072,15 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation>Montrer les changements d&apos;état des contacts</translation>
+        <translation>Afficher les changements d&apos;état des contacts</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation>Se rendre absent après (0 pour désactiver) :</translation>
+        <translation>Se rendre automatiquement absent(e) après (entrez 0 pour désactiver) :</translation>
     </message>
     <message>
         <source>Set to 0 to disable</source>
-        <translation>Mettre à 0 pour désactiver</translation>
+        <translation>Mettre 0 pour désactiver</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -1031,26 +1089,26 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation>Activer l&apos;icone claire.</translation>
+        <translation>Activer l’icône claire dans la barre d&apos;état.</translation>
     </message>
     <message>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>qTox démarrera minimisé dans le menu système.</translation>
+        <translation>qTox démarrera minimisé dans la barre d&apos;état.</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Après avoir cliqué sur quitter (X) qTox se minimisera dans le menu système,
-au lieu de se fermer.</translation>
+        <translation>Après avoir cliqué sur fermer (X), qTox se minimisera dans la barre d&apos;état,
+au lieu de se fermer lui-même.</translation>
     </message>
     <message>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Après avoir cliqué sur minimiser (_) qTox se minimisera dans le menu système,
-au lieu de se fermer.</translation>
+        <translation>Après avoir cliqué sur minimiser (_), qTox se minimisera lui-même dans la barre d&apos;état,
+au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>Autostart</source>
@@ -1066,7 +1124,7 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Votre état sera modifié en &quot;Absent&quot; après la période d&apos;inactivité que vous avez définit.</translation>
+        <translation>Votre état sera modifié en &quot;Absent(e)&quot; après la période d&apos;inactivité que vous avez définie.</translation>
     </message>
     <message>
         <source>On new message:</source>
@@ -1074,11 +1132,11 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Répertoire par défaut où enregistrer les fichiers :</translation>
+        <translation>Répertoire par défaut d&apos;enregistrement des fichiers :</translation>
     </message>
     <message>
         <source>Show system tray icon</source>
-        <translation>Montrer l&apos;icône de barre d&apos;état</translation>
+        <translation>Montrer l&apos;icône système dans la barre d&apos;état</translation>
     </message>
     <message>
         <source>Light icon</source>
@@ -1091,22 +1149,22 @@ au lieu de se fermer.</translation>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Vous pouvez regler ceci pour chaque contact avec un clique-droit sur leur nom.</translation>
+        <translation>Vous pouvez définir cela pour chaque contact en faisant un un clic-droit sur leur nom.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
-        <translation>Auto-accepter les fichiers</translation>
+        <translation>Acceptation automatique des fichiers</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Jouer un son en Occupé</translation>
+        <translation>Jouer un son lorsque vous êtes &quot;Occupé(e)&quot;</translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
         <source>Send message</source>
-        <translation>Envoyer un message</translation>
+        <translation>Envoyer le message</translation>
     </message>
     <message>
         <source>Smileys</source>
@@ -1114,11 +1172,11 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Send file(s)</source>
-        <translation>Envoyer des fichiers</translation>
+        <translation>Envoyer un ou des fichier(s)</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation>Sauvegarder l&apos;historique de conversation</translation>
+        <translation>Sauvegarder le journal de discussion</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -1177,7 +1235,7 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation>Montrer les messages</translation>
+        <translation>Afficher les messages</translation>
     </message>
     <message>
         <source>Hide Messages</source>
@@ -1197,7 +1255,7 @@ au lieu de se fermer.</translation>
     <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>1 personne</translation>
+        <translation>1 personne dans la messagerie instantanée</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -1226,7 +1284,7 @@ au lieu de se fermer.</translation>
     <message>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>%1 personnes</translation>
+        <translation>%1 personnes dans la discussion instantanée</translation>
     </message>
 </context>
 <context>
@@ -1241,14 +1299,14 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation>Invitations à un groupe</translation>
+        <translation>Invitations de groupe</translation>
     </message>
 </context>
 <context>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished">Invité par %1 sur %2 à %3</translation>
+        <translation>Invité(e) par %1 le %2 à %3.</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1263,7 +1321,7 @@ au lieu de se fermer.</translation>
     <name>GroupWidget</name>
     <message>
         <source>%1 users in chat</source>
-        <translation>%1 personnes</translation>
+        <translation>%1 personnes dans la discussion instantanée</translation>
     </message>
     <message>
         <source>Set title...</source>
@@ -1284,34 +1342,34 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>1 user in chat</source>
-        <translation>1 personne dans la discussion</translation>
+        <translation>1 personne dans la discussion instantanée</translation>
     </message>
 </context>
 <context>
     <name>IdentitySettings</name>
     <message>
         <source>Public Information</source>
-        <translation>Informations Publiques</translation>
+        <translation>Informations publiques</translation>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation>ID Tox</translation>
+        <translation>Identifiant Tox</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Cette suite de caractères permet à vos amis de vous contacter.
-Partagez le avec vos amis pour pouvoir communiquer avec eux.</translation>
+        <translation>Cette suite de caractères renseigne aux autres clients Tox la façon de vous contacter.
+Partagez-la avec vos contacts afin de pouvoir communiquer avec eux.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation>Votre Tox ID (cliquez pour copier)</translation>
+        <translation>Votre identifiant Tox (cliquer pour copier)</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Cette image est un QR code qui contient votre Tox ID.
-Vous pouvez la partager avec vos contacts.</translation>
+        <translation>Cette image est un QR code qui contient votre identifiant Tox.
+Vous pouvez aussi bien la partager avec vos contacts.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1368,7 +1426,7 @@ Vous pouvez la partager avec vos contacts.</translation>
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
         <translation>Vous permet d&apos;exporter votre profil Tox dans un fichier.
-Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
+Ce fichier ne contient pas votre historique de discussions.</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1402,17 +1460,17 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation>Nom sur le service ToxMe.</translation>
+        <translation>Votre nom sur le service ToxMe.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation>Facultatif. Écrivez quelque-chose à propos de vous. Ou votre chat.</translation>
+        <translation>Facultatif. Écrivez quelque-chose à propos de vous. Ou à propos de votre chat.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation>Facultatif. Écrivez quelque-chose à propos de vous. Ou votre chat.</translation>
+        <translation>Facultatif. Écrivez quelque-chose à propos de vous. Ou à propos de votre chat.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
@@ -1421,12 +1479,12 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation>Si non coché, votre nom sur ToxMe sera visible publiquement.</translation>
+        <translation>Si non cochée, votre nom sur ToxMe sera visible publiquement.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation>Effacer le mot de passe et le chiffrement de votre profil.</translation>
+        <translation>Supprimer le mot de passe et le chiffrement de votre profil.</translation>
     </message>
     <message>
         <source>Name input</source>
@@ -1434,7 +1492,7 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation>Nom visible pour les contacts</translation>
+        <translation>Nom visible par les contacts</translation>
     </message>
     <message>
         <source>Status message input</source>
@@ -1442,27 +1500,27 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation>Statut visible pour les contacts</translation>
+        <translation>Statut visible par les contacts</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation>Votre ID Tox</translation>
+        <translation>Votre identifiant Tox</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation>Sauvegarder l&apos;image du code QR dans un fichier</translation>
+        <translation>Sauvegarder l&apos;image QR code dans un fichier</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation>Copier l&apos;image du QR Code dans le presse-papier</translation>
+        <translation>Copier l&apos;image QR Code dans le presse-papier</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation>Nom d&apos;utilisateur ToxMe à exposer sur ToxMe</translation>
+        <translation>Nom d&apos;utilisateur ToxMe à montrer sur ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>Biographie falcutative de ToxMe à exposer sur ToxMe</translation>
+        <translation>Biographie facultative de ToxMe à montrer sur ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
@@ -1525,22 +1583,22 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation>Historique</translation>
+        <translation>Charger l’historique de discussions</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation>Charger l&apos;historique du :</translation>
+        <translation>Charger l&apos;historique de discussions du :</translation>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 messages</translation>
     </message>
 </context>
 <context>
     <name>LoginScreen</name>
     <message>
         <source>Username:</source>
-        <translation>Utilisateur :</translation>
+        <translation>Nom d&apos;utilisateur :</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -1552,7 +1610,7 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation>Robustesse : %p%</translation>
+        <translation>Robustesse du mot de passe : %p%</translation>
     </message>
     <message>
         <source>Create Profile</source>
@@ -1588,12 +1646,12 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>The password must be at least 6 characters long.</source>
-        <translation>Le mot de passe doit avoir au moins 6 caractères.</translation>
+        <translation>Le mot de passe doit contenir un minimum de 6 caractères.</translation>
     </message>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation>Les mots de passe que vous avez tapé sont différents.
+        <translation>Les mots de passe que vous avez saisis sont différents.
 Veuillez vous assurer d&apos;entrer deux fois le même mot de passe.</translation>
     </message>
     <message>
@@ -1603,12 +1661,12 @@ Veuillez vous assurer d&apos;entrer deux fois le même mot de passe.</translatio
     <message>
         <source>Unknown error: Couldn&apos;t create a new profile.
 If you encountered this error, please report it.</source>
-        <translation>Erreur inconnue : Impossible de créer un nouveau profil.
-Si vous obtenez cette erreur merci de la rapporter aux développeurs.</translation>
+        <translation>Erreur inconnue : impossible de créer un nouveau profil.
+Si vous obtenez cette erreur, merci de la rapporter aux développeurs du logiciel.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
-        <translation>Impossible de charger ce profil</translation>
+        <translation>Impossible de charger le profil</translation>
     </message>
     <message>
         <source>There is no selected profile.
@@ -1616,7 +1674,7 @@ Si vous obtenez cette erreur merci de la rapporter aux développeurs.</translati
 You may want to create one.</source>
         <translation>Aucun profil n&apos;est sélectionné.
 
-Vous souhaiteriez en créer un.</translation>
+Vous voudrez peut-être en créer un.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
@@ -1640,7 +1698,7 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation>Les profiles protégés par mot de passe ne peuvent pas être chargé automatiquement.</translation>
+        <translation>Les profils protégés par un mot de passe ne peuvent pas être chargés automatiquement.</translation>
     </message>
     <message>
         <source>Username input field</source>
@@ -1648,7 +1706,7 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation>Champ de saisie du mot de passe. Laissez le vide (pas de mot de passe) ou bien écrivez au moins 6 caractères</translation>
+        <translation>Champ de saisie du mot de passe. Vous pouvez le laisser vide (pas de mot de passe) ou bien saisir un minimum de 6 caractères</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
@@ -1656,7 +1714,7 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation>Bouton pour créer un nouveau profil</translation>
+        <translation>Créer un nouveau bouton de profil</translation>
     </message>
     <message>
         <source>Profile list</source>
@@ -1672,7 +1730,7 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation>Case à cocher pour se connecter automatiquement</translation>
+        <translation>Case à cocher pour un chargement automatique</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1699,7 +1757,7 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation>Votre état</translation>
+        <translation>Votre statut</translation>
     </message>
     <message>
         <source>...</source>
@@ -1711,15 +1769,15 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation>Créer un groupe</translation>
+        <translation>Créer un groupe de discussion instantanée</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation>Voir les transfers de fichiers terminés</translation>
+        <translation>Voir les transferts de fichiers terminés</translation>
     </message>
     <message>
         <source>Change your settings</source>
-        <translation>Changer les options</translation>
+        <translation>Changer vos paramètres</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1735,19 +1793,19 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Entrez un statut</translation>
+        <translation>Renseigner un statut</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation>Mettez votre message de statut qui sera affiché aux autres</translation>
+        <translation>Renseigner votre message de statut qui sera affiché aux autres</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>État</translation>
+        <translation>Statut</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation>Statut disponible</translation>
+        <translation>Définir le statut de disponibilité</translation>
     </message>
     <message>
         <source>Contact search</source>
@@ -1755,39 +1813,39 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation>Champ de recherche de contact pour les amis connus</translation>
+        <translation>Champ de saisie de recherche de contacts connus</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation>Ordre et visibilité</translation>
+        <translation>Tri et visibilité</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation>Régler l&apos;ordre et la visibilité des amis</translation>
+        <translation>Régler le tri et la visibilité de vos contacts</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation>Ouvrir la page Ajout d&apos;ami</translation>
+        <translation>Ouvrir la page ajout de contacts</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation>Chat de groupe</translation>
+        <translation>Discussion de groupe</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation>Ouvrir la page de gestion du chat de groupe</translation>
+        <translation>Ouvrir la page de gestion du groupe de discussion</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation>Historique des transferts de fichier</translation>
+        <translation>Historique de transferts de fichiers</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation>Ouvrir l&apos;historique des transferts de fichier</translation>
+        <translation>Ouvrir l&apos;historique de transferts de fichiers</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Options</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Open Settings</source>
@@ -1823,11 +1881,11 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
-        <translation>Sortir du plein écran</translation>
+        <translation>Quitter le plein écran</translation>
     </message>
     <message>
         <source>Enter Fullscreen</source>
-        <translation>Plein écran</translation>
+        <translation>Entrer en plein écran</translation>
     </message>
 </context>
 <context>
@@ -1835,7 +1893,7 @@ Vous souhaiteriez en créer un.</translation>
     <message numerus="yes">
         <source>Unread message(s)</source>
         <translation>
-            <numerusform>%n message non-lu</numerusform>
+            <numerusform>%n message(s) non-lu(s)</numerusform>
             <numerusform>%n messages non-lus</numerusform>
         </translation>
     </message>
@@ -1859,7 +1917,7 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation>Êtes-vous sûr de vouloir supprimer définitivement l&apos;intégralité de l&apos;historique de discussion ?</translation>
+        <translation>Êtes-vous certain(e) de vouloir supprimer définitivement l&apos;intégralité de l&apos;historique de discussions ?</translation>
     </message>
 </context>
 <context>
@@ -1867,24 +1925,24 @@ Vous souhaiteriez en créer un.</translation>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation>Vos amis pourront voir lorsque vous êtes en train d&apos;écrire.</translation>
+        <translation>Vos contacts pourront voir lorsque vous êtes en train d&apos;écrire.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation>Notifications de frappe</translation>
+        <translation>Envoyer les notifications de frappe</translation>
     </message>
     <message>
         <source>Keep chat history</source>
-        <translation>Conserver l&apos;historique de discussion</translation>
+        <translation>Conserver l&apos;historique des discussions</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>Le code anti-spam est une partie de votre Tox ID.
-Si vous êtes embêté avec des requêtes non sollicitées, remplacez le code anti-spam.
-Les gens ne seront plus capable de vous ajouter avec votre ancien identifiant mais vous conserverez vos contacts.</translation>
+        <translation>Le code anti-spam fait partie de votre identifiant Tox.
+Si vous êtes embêté(e) par des demandes de contacts non sollicitées, vous devriez changer votre code anti-spam.
+Les personnes ne seront plus en mesure de vous ajouter avec votre ancien identifiant, mais vous conserverez vos contacts actuels.</translation>
     </message>
     <message>
         <source>NoSpam</source>
@@ -1893,8 +1951,8 @@ Les gens ne seront plus capable de vous ajouter avec votre ancien identifiant ma
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>Le code anti-spam est une partie de votre identifiant qui peut être remplacé à la demande.
-Si vous êtes embêté avec des requêtes non sollicitées, remplacez le code anti-spam.</translation>
+        <translation>Le code anti-spam fait partie de votre identifiant et peut être remplacé à souhait.
+Si vous êtes embêté(e) par des demandes de contacts non sollicitées, changez votre code anti-spam.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
@@ -1904,23 +1962,31 @@ Si vous êtes embêté avec des requêtes non sollicitées, remplacez le code an
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation>Cette fonctionnalité est encore en cours de développement.
-Le format de sauvegarde peut changer, ce qui pourrait entrainer des pertes d&apos;historique.</translation>
+        <translation>La conservation de l&apos;historique de discussions est toujours en phase développement informatique.
+Les changements de format de sauvegarde sont possibles, ce qui pourrait entrainer des pertes de données.</translation>
     </message>
     <message>
         <source>Privacy</source>
         <translation>Vie privée</translation>
+    </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de dériver la clé du mot de passe, le profil n&apos;utilisera pas le nouveau mot de passe.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de modifier le mot de passe dans la base de données, il peut être endommagé ou utiliser l&apos;ancien mot de passe.</translation>
     </message>
 </context>
 <context>
@@ -1947,7 +2013,7 @@ Le format de sauvegarde peut changer, ce qui pourrait entrainer des pertes d&apo
     </message>
     <message>
         <source>Unable to read this image.</source>
-        <translation>Impossible d&apos;ouvrir cette image.</translation>
+        <translation>Impossible de lire cette image.</translation>
     </message>
     <message>
         <source>The supplied image is too large.
@@ -1958,7 +2024,7 @@ Veuillez utiliser une autre image.</translation>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation>Renommer « %1 »</translation>
+        <translation>Renommer &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -1968,7 +2034,7 @@ Veuillez utiliser une autre image.</translation>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
-        <translation>Un profil nommé « %1 » existe déjà.</translation>
+        <translation>Un profil nommé &quot;%1&quot; existe déjà.</translation>
     </message>
     <message>
         <source>Failed to rename</source>
@@ -1977,7 +2043,7 @@ Veuillez utiliser une autre image.</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>Impossible de renommer le profil en « %1 »</translation>
+        <translation>Impossible de renommer le profil en &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -1992,30 +2058,30 @@ Veuillez utiliser une autre image.</translation>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Impossible d&apos;écrire à cet emplacement</translation>
+        <translation>L&apos;emplacement n&apos;est pas inscriptible</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Vous n&apos;avez pas la permission d&apos;écrire à cet emplacement. Choisissez un autre endroit, ou annulez.</translation>
+        <translation>Vous n&apos;avez pas la permission d&apos;écrire à cet emplacement. Choisissez-en un autre ou bien décochez la boîte de dialogue de sauvegarde.</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation>Impossible de copier le fichier</translation>
+        <translation>Erreur lors de la copie du fichier</translation>
     </message>
     <message>
         <source>The file you chose could not be written to.</source>
-        <translation>Le fichier que vous avez choisi n&apos;es pas disponible en écriture.</translation>
+        <translation>Le fichier que vous avez choisi ne peut pas être inscris.</translation>
     </message>
     <message>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
-        <translation>Suppression du profil ?</translation>
+        <translation>Êtes-vous certain(e) de vouloir supprimer le profil ?</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Êtes-vous sûr de vouloir supprimer ce profil ?</translation>
+        <translation>Êtes-vous certain(e) de vouloir supprimer ce profil ?</translation>
     </message>
     <message>
         <source>Save</source>
@@ -2038,12 +2104,12 @@ Veuillez utiliser une autre image.</translation>
     <message>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation>Suppression du mot de passe ?</translation>
+        <translation>Êtes-vous certain(e) de vouloir supprimer le mot de passe ?</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Êtes-vous sûr de vouloir supprimer ce mot de passe ?</translation>
+        <translation>Êtes-vous certain(e) de vouloir supprimer ce mot de passe ?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
@@ -2052,12 +2118,12 @@ Veuillez utiliser une autre image.</translation>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation>Les fichiers suivants n&apos;ont pas pu être supprimés :</translation>
+        <translation>Les fichiers suivants ne peuvent pas être supprimés :</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <comment>deletion failed text part 2</comment>
-        <translation>Veuillez les supprimer manuellement.</translation>
+        <translation>Merci de bien vouloir les supprimer manuellement.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -2066,15 +2132,15 @@ Veuillez utiliser une autre image.</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation>Engistrement en cours</translation>
+        <translation>Inscription (en cours)</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation>Mise à jour en cours</translation>
+        <translation>Mise à jour (en cours)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation>Fini !</translation>
+        <translation>Terminé !</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
@@ -2082,7 +2148,7 @@ Veuillez utiliser une autre image.</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>%1@2 a été ajouté en base de donnée avec succès. Sauvegardez votre mot de passe</translation>
+        <translation>%1@2 a été ajouté avec succès dans la base de données. Sauvegardez votre mot de passe</translation>
     </message>
     <message>
         <source>Toxme error</source>
@@ -2104,7 +2170,7 @@ Veuillez utiliser une autre image.</translation>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation>Choix du mot de passe pour le profil</translation>
+        <translation>Choisir un mot de passe de profil</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
@@ -2112,14 +2178,17 @@ Veuillez utiliser une autre image.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de changer le mot de passe</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>Cette chaîne de caractères renseigne aux autres clients Tox la manière de vous contacter.
+Partagez-la avec vos contacts afin de communiquer.
+
+Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en gris).</translation>
     </message>
 </context>
 <context>
@@ -2142,17 +2211,17 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attention: Vous avez choisi un fichier de sauvegarde non-Tox; ignoré.</translation>
+        <translation>Attention : vous avez choisi un fichier de sauvegarde non-Tox; ignoré.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation>Ce profil existe déjà</translation>
+        <translation>Le profil existe déjà</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Un profil appelé « %1 » existe déjà. Voulez-vous le supprimer ?</translation>
+        <translation>Un profil nommé &quot;%1&quot; existe déjà. Voulez-vous le supprimer ?</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
@@ -2175,7 +2244,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation>D&apos;accord</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2199,7 +2268,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">Impossible d&apos;ajouter le contact</translation>
+        <translation>Impossible d&apos;ajouter le contact</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
@@ -2208,7 +2277,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Vous ne pouvez pas vous ajouter vous-même !</translation>
+        <translation>Vous ne pouvez pas vous ajouter vous-même comme contact !</translation>
     </message>
 </context>
 <context>
@@ -2221,12 +2290,12 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
-        <translation>Une mise à jour est disponible, voulez vous la télécharger maintenant ?
+        <translation>Une mise à jour est disponible. Voulez vous la télécharger maintenant ?
 Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Tox URI to parse</source>
-        <translation>URL Tox à utiliser</translation>
+        <translation>URI Tox à analyser</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
@@ -2263,7 +2332,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>Salut, c&apos;est %1. On se Toxe ?</translation>
+        <translation>Salut, c&apos;est %1. On se toxe ?</translation>
     </message>
     <message>
         <source>None</source>
@@ -2293,7 +2362,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>This Tox ID is already registered under another name</source>
-        <translation>Ce Tox ID est déjà enregistré sous un autre nom</translation>
+        <translation>Cet identifiant Tox est déjà inscrit sous un autre nom</translation>
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
@@ -2313,7 +2382,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation>ID Tox non envoyé</translation>
+        <translation>Identifiant Tox non envoyé</translation>
     </message>
     <message>
         <source>That user does not exist</source>
@@ -2325,18 +2394,22 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox ne peux pas ouvrir vos logs de discussion, ils seront desactivés.</translation>
+        <translation>qTox ne peux pas ouvrir vos journaux de discussions. Ils seront désactivés.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation>Problème avec la connection HTTPS</translation>
+        <translation>Problème avec la connexion HTTPS</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation>Erreur interne Toxme</translation>
+        <translation>Erreur interne de Toxme</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
+        <translation>Reformatage du texte en cours...</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2348,7 +2421,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation>Supprimer aussi l&apos;historique de discussion</translation>
+        <translation>Supprimer également l&apos;historique de discussions</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2356,11 +2429,11 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Êtes-vous sûr de vouloir supprimer %1 de votre liste de contacts ?</translation>
+        <translation>Êtes-vous certain(e) de vouloir supprimer %1 de votre liste de contacts ?</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Si activé, supprime tout l&apos;historique de conversation avec cet ami</translation>
+        <translation>Si défini, supprime tout l&apos;historique de discussions avec le contact</translation>
     </message>
 </context>
 <context>
@@ -2368,7 +2441,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Cliquez et tirez pour sélectionner une zone. Appuyez sur %1 pour masquer/afficher la fenêtre de qTox, ou %2 pour annuler.</translation>
+        <translation>Cliquez et faites glisser pour sélectionner une région. Appuyez sur %1 pour masquer / afficher la fenêtre qTox ou bien %2 pour annuler.</translation>
     </message>
     <message>
         <source>Space</source>
@@ -2378,12 +2451,12 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation>Echap</translation>
+        <translation>Échap</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Appuyer sur %1 pour envoyer une capture de la zone choisie, %2 pour masquer/afficher la fenêtre de qTox, ou %3 pour annuler.</translation>
+        <translation>Appuyer sur %1 pour envoyer une capture d&apos;écran de la sélection, %2 pour masquer / afficher la fenêtre qTox ou bien %3 pour annuler.</translation>
     </message>
     <message>
         <source>Enter</source>
@@ -2407,7 +2480,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation>Robustesse : %p%</translation>
+        <translation>Robustesse du mot de passe : %p%</translation>
     </message>
     <message>
         <source>The password is too short</source>
@@ -2423,7 +2496,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation>Confirmer le mot de passe</translation>
+        <translation>Champ de saisie pour confirmer le mot de passe</translation>
     </message>
     <message>
         <source>Password input</source>
@@ -2431,7 +2504,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation>Champ de saisie du mot de passe, au moins 6 caractères</translation>
+        <translation>Champ de saisie du mot de passe, d&apos;une longueur minimale de 6 caractères</translation>
     </message>
 </context>
 <context>
@@ -2454,11 +2527,11 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>ID d&apos;utilisateur :</translation>
+        <translation>Identifiant utilisateur :</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation>Associer un message à cette demande :</translation>
+        <translation>Joindre un message de demande :</translation>
     </message>
     <message>
         <source>Send</source>
@@ -2475,7 +2548,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation>Aucun</translation>
+        <translation>Aucun(e)</translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -2486,15 +2559,15 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation>Chat</translation>
+        <translation>Discussion instantanée</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation>Police de base :</translation>
+        <translation>Police de caractères de base :</translation>
     </message>
     <message>
         <source>px</source>
-        <translation>px</translation>
+        <translation>pixels</translation>
     </message>
     <message>
         <source>Size: </source>
@@ -2502,7 +2575,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Le nouveau choix de style de texte peut ne pas être chargé avant le redémarrage de qTox.</translation>
+        <translation>Le nouveau choix de style de texte peut ne pas être chargé avant un redémarrage de qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -2510,7 +2583,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation>Choisir une préférence du style de texte.</translation>
+        <translation>Choisir une préférence de style de texte.</translation>
     </message>
     <message>
         <source>Plaintext</source>
@@ -2518,11 +2591,11 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation>Montrer les charactères formatés</translation>
+        <translation>Afficher les caractères formatés</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation>Ne pas montrer les charactères formatés</translation>
+        <translation>Ne pas afficher les caractères formatés</translation>
     </message>
     <message>
         <source>New message</source>
@@ -2531,7 +2604,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Ouvrir la fenêtre de qTox quand vous recevez un nouveau message si aucune fenêtre n&apos;est ouverte.</translation>
+        <translation>Ouvrir la fenêtre qTox quand vous recevez un nouveau message et qu&apos;aucune fenêtre n&apos;est ouverte.</translation>
     </message>
     <message>
         <source>Open window</source>
@@ -2544,7 +2617,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation>Donner le focus à la fenêtre</translation>
+        <translation>Mettre le focus sur la fenêtre</translation>
     </message>
     <message>
         <source>Contact list</source>
@@ -2553,20 +2626,20 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation>Toujours m&apos;avertir des nouveaux messages dans les groupes de discussion.</translation>
+        <translation>Toujours m&apos;avertir des nouveaux messages dans les groupes de discussions.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation>Être averti des nouveaux messages dans les groupes de discussion</translation>
+        <translation>Toujours être averti(e) des nouveaux messages dans les groupes de discussions</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>Si coché, les groupes de discussion seront positionnés en haut de la liste de contacts, sinon ils se trouveront en dessous des contacts connectés.</translation>
+        <translation>Si coché, les groupes de discussions seront positionnés en haut de la liste de contacts. Sinon, ils seront positionnés en dessous des contacts connectés.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation>Groupes de discussion en haut de la liste de contacts</translation>
+        <translation>Positionner les groupes de discussions en haut de la liste des contacts</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
@@ -2579,11 +2652,11 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation>Mode fenêtres multiples</translation>
+        <translation>Mode multi-fenêtres</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation>Ouvrir chaque discussion dans une fenêtre séparée</translation>
+        <translation>Ouvrir chaque discussion instantanée dans une fenêtre individuelle</translation>
     </message>
     <message>
         <source>Emoticons</source>
@@ -2596,15 +2669,15 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Pack d&apos;émoticônes Smiley :</translation>
+        <translation>Pack d&apos;émoticônes :</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation>Taille des émoticônes :</translation>
+        <translation>Taille de l&apos;émoticône :</translation>
     </message>
     <message>
         <source> px</source>
-        <translation> px</translation>
+        <translation> pixels</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -2631,27 +2704,27 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <name>Widget</name>
     <message>
         <source>Online</source>
-        <translation>Connecté</translation>
+        <translation>Connecté(e)</translation>
     </message>
     <message>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation>Connecté</translation>
+        <translation>Connecté(e)</translation>
     </message>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Absent</translation>
+        <translation>Absent(e)</translation>
     </message>
     <message>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation>Occupé</translation>
+        <translation>Occupé(e)</translation>
     </message>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>ToxCore n&apos;as pas pu démarrer avec ces paramètres proxy. Merci de modifier ou désactiver vos paramètres et redémarrer l&apos;application.</translation>
+        <translation>ToxCore n&apos;a pas pu démarrer avec vos paramètres de proxy. qTox ne peut donc pas démarrer. Merci de modifier vos paramètres et de redémarrer l&apos;application.</translation>
     </message>
     <message>
         <source>File</source>
@@ -2663,7 +2736,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Change Status</source>
-        <translation>Modifier l&apos;état</translation>
+        <translation>Modifier le statut</translation>
     </message>
     <message>
         <source>Log out</source>
@@ -2671,11 +2744,11 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Édition</translation>
+        <translation>Éditer</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation>Filtre…</translation>
+        <translation>Filtrer…</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -2701,15 +2774,15 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation>Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous certain de vouloir ouvrir ce fichier ?</translation>
+        <translation>Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous certain(e) de vouloir ouvrir ce fichier ?</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
-        <translation>Impossible d&apos;envoyer la demande de contact</translation>
+        <translation>Impossible de demander l&apos;ajout du contact</translation>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>toxcore n&apos;a pas réussi à démarrer, l&apos;application s&apos;arrêtera quand vous fermerez ce message.</translation>
+        <translation>toxcore n&apos;a pas réussi à démarrer. L&apos;application s&apos;arrêtera quand vous fermerez ce message.</translation>
     </message>
     <message>
         <source>Your name</source>
@@ -2717,19 +2790,19 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation>Votre état</translation>
+        <translation>Votre statut</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation>%1 a changé le titre en %2</translation>
+        <translation>%1 a modifié le titre en %2</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>État</translation>
+        <translation>Statut</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation>Le message n&apos;as pu être envoyé</translation>
+        <translation>L&apos;envoi du message a échoué</translation>
     </message>
     <message>
         <source>Add new circle...</source>
@@ -2745,7 +2818,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>All</source>
-        <translation>Tout</translation>
+        <translation>Tous</translation>
     </message>
     <message>
         <source>Offline</source>
@@ -2761,7 +2834,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Search Contacts</source>
-        <translation>Chercher un contact</translation>
+        <translation>Recherche de contacts</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2780,7 +2853,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation>Discussion de groupe #%1</translation>
+        <translation>Groupe de discussion #%1</translation>
     </message>
     <message>
         <source>Create new group...</source>
@@ -2789,15 +2862,15 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
         <translation>
-            <numerusform>Nouvelle demande de contact</numerusform>
-            <numerusform>Nouvelles demandes de contact</numerusform>
+            <numerusform>%n nouvelle(s) demande(s) de contact</numerusform>
+            <numerusform>%n nouvelles demandes de contact</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
         <translation>
-            <numerusform>Nouvelle invitation de groupe</numerusform>
-            <numerusform>Nouvelles invitations de groupe</numerusform>
+            <numerusform>%n nouvelle(s) invitation(s) de groupe</numerusform>
+            <numerusform>%n nouvelles invitations de groupe</numerusform>
         </translation>
     </message>
     <message>
@@ -2813,17 +2886,17 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Invitations à un groupe</translation>
+        <translation>Invitations de groupe</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation>Transfert de fichiers</translation>
+        <translation>Transferts de fichiers</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Options</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>My profile</source>
