@@ -66,7 +66,6 @@ void GroupWidget::setTitle(const QString& newName)
     if (!newName.isEmpty()) {
         Group* g = GroupList::findGroup(groupId);
         g->setName(newName);
-        emit g->getChatForm()->groupTitleChanged(groupId, newName.left(128));
     }
 }
 
