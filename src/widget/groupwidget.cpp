@@ -63,10 +63,8 @@ GroupWidget::~GroupWidget()
 
 void GroupWidget::setTitle(const QString& newName)
 {
-    if (!newName.isEmpty()) {
-        Group* g = GroupList::findGroup(groupId);
-        g->setName(newName);
-    }
+    Group* g = GroupList::findGroup(groupId);
+    g->setName(newName);
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
