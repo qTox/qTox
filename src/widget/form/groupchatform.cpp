@@ -107,7 +107,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(nameLabel, &CroppingLabel::editFinished, this, [=](const QString& newName) {
         if (!newName.isEmpty()) {
             nameLabel->setText(newName);
-            emit groupTitleChanged(group->getGroupId(), newName.left(128));
+            chatGroup->setName(newName);
         }
     });
 

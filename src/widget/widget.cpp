@@ -1828,7 +1828,7 @@ Group* Widget::createGroup(int groupId)
     connect(widget, &GroupWidget::chatroomWidgetClicked, form, &ChatForm::focusInput);
     connect(form, &GroupChatForm::sendMessage, core, &Core::sendGroupMessage);
     connect(form, &GroupChatForm::sendAction, core, &Core::sendGroupAction);
-    connect(form, &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
+    connect(newgroup, &Group::titleChanged, core, &Core::changeGroupTitle);
 
     FilterCriteria filter = getFilterCriteria();
     widget->searchName(ui->searchContactText->text(), filterGroups(filter));
