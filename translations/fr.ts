@@ -222,7 +222,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished">Si défini, accepter automatiquement les invitations de discussions de groupe à partir de ce contact.</translation>
+        <translation>Accepter automatiquement les chats en groupe pour ce contact</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
