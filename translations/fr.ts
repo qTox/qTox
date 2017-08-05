@@ -1805,7 +1805,7 @@ Vous voudrez peut-être en créer un.</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation>Définir le statut de disponibilité</translation>
+        <translation>Régler votre disponibilité</translation>
     </message>
     <message>
         <source>Contact search</source>
@@ -1813,7 +1813,7 @@ Vous voudrez peut-être en créer un.</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation>Champ de saisie de recherche de contacts connus</translation>
+        <translation>Rechercher parmi les noms de contacts</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
