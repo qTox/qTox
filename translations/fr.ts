@@ -689,7 +689,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation>Le son ne peut être coupé que durant un appel</translation>
+        <translation>Le son ne peut être coupé que lors d&apos;un appel</translation>
     </message>
     <message>
         <source>Export to file</source>
