@@ -1805,7 +1805,7 @@ Vous voudrez peut-être en créer un.</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation>Régler votre disponibilité</translation>
+        <translation>Changer votre statut</translation>
     </message>
     <message>
         <source>Contact search</source>
