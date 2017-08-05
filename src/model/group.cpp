@@ -28,8 +28,11 @@
 #include <QDebug>
 #include <QTimer>
 
-Group::Group(int groupId, QString name, bool isAvGroupchat)
-    : groupId(groupId)
+static const int MAX_GROUP_TITLE_LENGTH = 128;
+
+Group::Group(int groupId, const QString& name, bool isAvGroupchat)
+    : title{name}
+    , groupId(groupId)
     , nPeers{0}
     , avGroupchat{isAvGroupchat}
 {
@@ -70,12 +73,15 @@ void Group::updatePeer(int peerId, QString name)
 
 void Group::setName(const QString& name)
 {
-    emit titleChanged(groupId, name);
+    if (!name.isEmpty() && title != name) {
+        title = name.left(MAX_GROUP_TITLE_LENGTH);
+        emit titleChanged(groupId, title);
+    }
 }
 
 QString Group::getName() const
 {
-    return widget->getName();
+    return title;
 }
 
 QString Group::getDisplayedName() const
