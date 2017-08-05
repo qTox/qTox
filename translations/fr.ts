@@ -2433,7 +2433,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Si défini, supprime tout l&apos;historique de discussions avec le contact</translation>
+        <translation>Si activé, efface tout l&apos;historique de discussions avec ce contact</translation>
     </message>
 </context>
 <context>
