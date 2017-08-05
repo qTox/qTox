@@ -28,8 +28,9 @@
 #include <QDebug>
 #include <QTimer>
 
-Group::Group(int groupId, QString name, bool isAvGroupchat)
-    : groupId(groupId)
+Group::Group(int groupId, const QString& name, bool isAvGroupchat)
+    : title{name}
+    , groupId(groupId)
     , nPeers{0}
     , avGroupchat{isAvGroupchat}
 {
@@ -70,12 +71,15 @@ void Group::updatePeer(int peerId, QString name)
 
 void Group::setName(const QString& name)
 {
-    emit titleChanged(groupId, name);
+    if (title != name) {
+        title = name.left(128);
+        emit titleChanged(groupId, title);
+    }
 }
 
 QString Group::getName() const
 {
-    return widget->getName();
+    return title;
 }
 
 void Group::regeneratePeerList()

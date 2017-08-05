@@ -35,7 +35,7 @@ class Group : public QObject
 {
     Q_OBJECT
 public:
-    Group(int GroupId, QString Name, bool IsAvGroupchat);
+    Group(int groupId, const QString& name, bool isAvGroupchat);
     virtual ~Group();
 
     bool isAvGroupchat() const;
@@ -65,6 +65,7 @@ signals:
     void userListChanged(uint32_t groupId, const QMap<QByteArray, QString>& toxids);
 
 private:
+    QString title;
     GroupWidget* widget;
     GroupChatForm* chatForm;
     QStringList peers;
