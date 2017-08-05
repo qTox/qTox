@@ -685,7 +685,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation>Le microphone ne peut être coupé que durant un appel</translation>
+        <translation>Le microphone ne peut être coupé que lors d&apos;un appel</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
