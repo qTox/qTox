@@ -36,8 +36,6 @@ Group::Group(int groupId, const QString& name, bool isAvGroupchat)
     , nPeers{0}
     , avGroupchat{isAvGroupchat}
 {
-    bool compact = Settings::getInstance().getCompactLayout();
-    widget = new GroupWidget(groupId, name, compact);
     chatForm = new GroupChatForm(this);
 
     // in groupchats, we only notify on messages containing your name <-- dumb
@@ -135,6 +133,11 @@ int Group::getPeersCount() const
 GroupChatForm* Group::getChatForm()
 {
     return chatForm;
+}
+
+void Group::setGroupWidget(GroupWidget* widget)
+{
+    this->widget = widget;
 }
 
 GroupWidget* Group::getGroupWidget()
