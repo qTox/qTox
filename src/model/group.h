@@ -47,6 +47,8 @@ public:
     bool isSelfPeerNumber(int peernumber) const;
 
     GroupChatForm* getChatForm();
+
+    void setGroupWidget(GroupWidget* widget);
     GroupWidget* getGroupWidget();
 
     void setEventFlag(bool f) override;
