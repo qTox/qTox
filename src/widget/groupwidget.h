@@ -36,7 +36,6 @@ public:
     QString getStatusString() const final override;
     Group* getGroup() const final override;
     void setName(const QString& name);
-    void onUserListChanged();
     void editName();
 
 signals:
@@ -54,6 +53,7 @@ protected:
 private slots:
     void retranslateUi();
     void setTitle(const QString& newName);
+    void updateUserCount();
 
 public:
     int groupId;

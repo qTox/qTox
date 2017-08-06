@@ -49,9 +49,11 @@ GroupWidget::GroupWidget(int groupId, const QString& name, bool compact)
     statusPic.setMargin(3);
     nameLabel->setText(name);
 
-    onUserListChanged();
+    updateUserCount();
     setAcceptDrops(true);
 
+    Group* g = GroupList::findGroup(groupId);
+    connect(g, &Group::userListChanged, this, &GroupWidget::updateUserCount);
     connect(nameLabel, &CroppingLabel::editFinished, this, &GroupWidget::setTitle);
     Translator::registerHandler(std::bind(&GroupWidget::retranslateUi, this), this);
 }
@@ -140,7 +142,7 @@ void GroupWidget::mouseMoveEvent(QMouseEvent* ev)
     }
 }
 
-void GroupWidget::onUserListChanged()
+void GroupWidget::updateUserCount()
 {
     Group* g = GroupList::findGroup(groupId);
     if (g) {
