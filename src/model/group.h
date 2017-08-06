@@ -28,7 +28,6 @@
 #define RETRY_PEER_INFO_INTERVAL 500
 
 class Friend;
-class GroupWidget;
 class GroupChatForm;
 class ToxPk;
 
@@ -47,9 +46,6 @@ public:
     bool isSelfPeerNumber(int peernumber) const;
 
     GroupChatForm* getChatForm();
-
-    void setGroupWidget(GroupWidget* widget);
-    GroupWidget* getGroupWidget();
 
     void setEventFlag(bool f) override;
     bool getEventFlag() const override;
@@ -70,7 +66,6 @@ signals:
 
 private:
     QString title;
-    GroupWidget* widget;
     GroupChatForm* chatForm;
     QStringList peers;
     QMap<QByteArray, QString> toxids;
