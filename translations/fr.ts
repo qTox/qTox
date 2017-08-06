@@ -174,7 +174,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">état du message</translation>
+        <translation>statut</translation>
     </message>
     <message>
         <source>Public key:</source>
@@ -904,7 +904,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Demande de contact</translation>
+        <translation>Demandes de contact</translation>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
@@ -1072,7 +1072,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation>Afficher les changements d&apos;état des contacts</translation>
+        <translation>Afficher les changements de statut des contacts</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
@@ -1124,7 +1124,7 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Votre état sera modifié en &quot;Absent(e)&quot; après la période d&apos;inactivité que vous avez définie.</translation>
+        <translation>Votre statut sera modifié en &quot;Absent(e)&quot; après la période d&apos;inactivité que vous avez définie.</translation>
     </message>
     <message>
         <source>On new message:</source>
@@ -2433,7 +2433,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Efface tout l&apos;historique du chat avec cet amis si activé</translation>
+        <translation>Si activé, efface tout l&apos;historique de discussions avec ce contact</translation>
     </message>
 </context>
 <context>
