@@ -103,7 +103,6 @@ private slots:
     void activate(GenericChatroomWidget* widget);
     void openNewDialog(GenericChatroomWidget* widget);
     void updateFriendWidget(uint32_t friendId, QString alias);
-    void updateGroupWidget(uint32_t groupId);
     void onGroupchatPositionChanged(bool top);
 
 private:

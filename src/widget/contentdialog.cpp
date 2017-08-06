@@ -191,8 +191,6 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
     groupLayout.addSortedWidget(groupWidget);
 
     Group* group = groupWidget->getGroup();
-    connect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
-    connect(group, &Group::userListChanged, this, &ContentDialog::updateGroupWidget);
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
     connect(groupWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDialog);
 
@@ -243,11 +241,6 @@ void ContentDialog::removeFriend(int friendId)
 void ContentDialog::removeGroup(int groupId)
 {
     Group* group = GroupList::findGroup(groupId);
-
-    if (group) {
-        disconnect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
-        disconnect(group, &Group::userListChanged, this, &ContentDialog::updateGroupWidget);
-    }
 
     auto iter = groupList.find(groupId);
     if (iter == groupList.end()) {
@@ -750,20 +743,6 @@ void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
 
     Status status = f->getStatus();
     friendLayout->addFriendWidget(friendWidget, status);
-}
-
-/**
- * @brief Update group widget name and 'status'.
- * @param groupId Id of group to update.
- */
-void ContentDialog::updateGroupWidget(uint32_t groupId)
-{
-    Group* g = GroupList::findGroup(groupId);
-    QString name = g->getName();
-
-    ContactInfo info = groupList.find(groupId).value();
-    GroupWidget* widget = static_cast<GroupWidget*>(std::get<1>(info));
-    widget->setName(name);
 }
 
 /**
