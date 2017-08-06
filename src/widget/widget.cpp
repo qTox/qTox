@@ -1824,7 +1824,6 @@ Group* Widget::createGroup(int groupId)
     bool compact = Settings::getInstance().getCompactLayout();
     GroupWidget* widget = new GroupWidget(groupId, groupName, compact);
     groupWidgets[groupId] = widget;
-    newgroup->setGroupWidget(widget);
 
     contactListWidget->addGroupWidget(widget);
     widget->updateStatusLight();

@@ -48,7 +48,6 @@ Group::Group(int groupId, const QString& name, bool isAvGroupchat)
 Group::~Group()
 {
     delete chatForm;
-    widget->deleteLater();
 }
 
 void Group::updatePeer(int peerId, QString name)
@@ -133,16 +132,6 @@ int Group::getPeersCount() const
 GroupChatForm* Group::getChatForm()
 {
     return chatForm;
-}
-
-void Group::setGroupWidget(GroupWidget* widget)
-{
-    this->widget = widget;
-}
-
-GroupWidget* Group::getGroupWidget()
-{
-    return widget;
 }
 
 QStringList Group::getPeerList() const
