@@ -1816,7 +1816,9 @@ Group* Widget::createGroup(int groupId)
 
     bool enabled = coreAv->isGroupAvEnabled(groupId);
     Group* newgroup = GroupList::addGroup(groupId, groupName, enabled);
-    GroupWidget* widget = newgroup->getGroupWidget();
+    bool compact = Settings::getInstance().getCompactLayout();
+    GroupWidget* widget = new GroupWidget(groupId, groupName, compact);
+    newgroup->setGroupWidget(widget);
 
     contactListWidget->addGroupWidget(widget);
     widget->updateStatusLight();
