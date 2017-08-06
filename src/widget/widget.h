@@ -41,6 +41,7 @@ class MainWindow;
 class ChatForm;
 class GenericChatroomWidget;
 class FriendWidget;
+class GroupWidget;
 class Group;
 class Friend;
 class QSplitter;
@@ -293,6 +294,7 @@ private:
     unsigned int unreadGroupInvites;
     int icon_size;
 
+    QMap<int, GroupWidget*> groupWidgets;
     QMap<int, FriendWidget*> friendWidgets;
     QMap<int, ChatForm*> chatForms;
 

@@ -1251,7 +1251,7 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
     int groupId = group->getId();
     ContentDialog* groupDialog = ContentDialog::getGroupDialog(groupId);
     bool separated = Settings::getInstance().getSeparateWindow();
-    GroupWidget* widget = group->getGroupWidget();
+    GroupWidget* widget = groupWidgets[groupId];
     bool isCurrentWindow = activeChatroomWidget == widget;
     if (!groupDialog && !separated && isCurrentWindow) {
         onAddClicked();
@@ -1338,13 +1338,14 @@ bool Widget::newGroupMessageAlert(int groupId, bool notify)
     QWidget* currentWindow;
     ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
     Group* g = GroupList::findGroup(groupId);
+    GroupWidget* widget = groupWidgets[groupId];
 
     if (contentDialog != nullptr) {
         currentWindow = contentDialog->window();
         hasActive = ContentDialog::isGroupWidgetActive(groupId);
     } else {
         currentWindow = window();
-        hasActive = g->getGroupWidget() == activeChatroomWidget;
+        hasActive = widget == activeChatroomWidget;
     }
 
     if (!newMessageAlert(currentWindow, hasActive, true, notify)) {
@@ -1352,11 +1353,11 @@ bool Widget::newGroupMessageAlert(int groupId, bool notify)
     }
 
     g->setEventFlag(true);
-    g->getGroupWidget()->updateStatusLight();
+    widget->updateStatusLight();
 
     if (contentDialog == nullptr) {
         if (hasActive) {
-            setWindowTitle(g->getGroupWidget()->getTitle());
+            setWindowTitle(widget->getTitle());
         }
     } else {
         ContentDialog::updateGroupStatus(groupId);
@@ -1473,6 +1474,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     FriendList::removeFriend(f->getId(), fake);
     Nexus::getCore()->removeFriend(f->getId(), fake);
 
+    friendWidgets.remove(f->getId());
     delete widget;
     delete f;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
@@ -1519,7 +1521,8 @@ void Widget::onFriendDialogShown(const Friend* f)
 
 void Widget::onGroupDialogShown(Group* g)
 {
-    onDialogShown(g->getGroupWidget());
+    uint32_t groupId = g->getId();
+    onDialogShown(groupWidgets[groupId]);
 }
 
 void Widget::toggleFullscreen()
@@ -1737,7 +1740,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
         g->getChatForm()->addSystemInfoMessage(message, ChatMessage::INFO, curTime);
     }
 
-    GroupWidget* widget = g->getGroupWidget();
+    GroupWidget* widget = groupWidgets[groupnumber];
     contactListWidget->renameGroupWidget(widget, title);
     g->getChatForm()->setName(title);
 
@@ -1762,22 +1765,24 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
 
 void Widget::removeGroup(Group* g, bool fake)
 {
-    g->getGroupWidget()->setAsInactiveChatroom();
-    if (static_cast<GenericChatroomWidget*>(g->getGroupWidget()) == activeChatroomWidget) {
+    GroupWidget* widget = groupWidgets[g->getId()];
+    widget->setAsInactiveChatroom();
+    if (static_cast<GenericChatroomWidget*>(widget) == activeChatroomWidget) {
         activeChatroomWidget = nullptr;
         onAddClicked();
     }
 
     int groupId = g->getId();
     GroupList::removeGroup(groupId, fake);
-
     ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
-
     if (contentDialog != nullptr) {
         contentDialog->removeGroup(groupId);
     }
 
+    groupWidgets.remove(groupId);
+
     Nexus::getCore()->removeGroup(groupId, fake);
+    delete widget;
     delete g;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
         onAddClicked();
@@ -1818,6 +1823,7 @@ Group* Widget::createGroup(int groupId)
     Group* newgroup = GroupList::addGroup(groupId, groupName, enabled);
     bool compact = Settings::getInstance().getCompactLayout();
     GroupWidget* widget = new GroupWidget(groupId, groupName, compact);
+    groupWidgets[groupId] = widget;
     newgroup->setGroupWidget(widget);
 
     contactListWidget->addGroupWidget(widget);
@@ -1848,7 +1854,7 @@ void Widget::onEmptyGroupCreated(int groupId)
 
     // Only rename group if groups are visible.
     if (Widget::getInstance()->groupsVisible()) {
-        group->getGroupWidget()->editName();
+        groupWidgets[groupId]->editName();
     }
 }
 
@@ -2130,12 +2136,13 @@ void Widget::reloadTheme()
     contactListWidget->reDraw();
 
     for (Friend* f : FriendList::getAllFriends()) {
-        int friendId = f->getId();
+        uint32_t friendId = f->getId();
         friendWidgets[friendId]->reloadTheme();
     }
 
     for (Group* g : GroupList::getAllGroups()) {
-        g->getGroupWidget()->reloadTheme();
+        uint32_t groupId = g->getId();
+        groupWidgets[groupId]->reloadTheme();
     }
 }
 
