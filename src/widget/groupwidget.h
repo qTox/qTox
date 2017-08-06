@@ -53,6 +53,7 @@ protected:
 private slots:
     void retranslateUi();
     void setTitle(const QString& newName);
+    void updateTitle(uint32_t groupId, const QString& newName);
     void updateUserCount();
 
 public:
