@@ -764,7 +764,6 @@ void ContentDialog::updateGroupWidget(uint32_t groupId)
     ContactInfo info = groupList.find(groupId).value();
     GroupWidget* widget = static_cast<GroupWidget*>(std::get<1>(info));
     widget->setName(name);
-    widget->onUserListChanged();
 }
 
 /**

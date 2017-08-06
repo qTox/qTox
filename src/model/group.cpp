@@ -65,7 +65,6 @@ void Group::updatePeer(int peerId, QString name)
         peers[peerId] = f->getDisplayedName();
         toxids[peerPk] = f->getDisplayedName();
     } else {
-        widget->onUserListChanged();
         chatForm->onUserListChanged();
         emit userListChanged(groupId, toxids);
     }
@@ -114,7 +113,6 @@ void Group::regeneratePeerList()
         }
     }
 
-    widget->onUserListChanged();
     chatForm->onUserListChanged();
     emit userListChanged(groupId, toxids);
 }
