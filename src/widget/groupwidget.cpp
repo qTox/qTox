@@ -53,6 +53,7 @@ GroupWidget::GroupWidget(int groupId, const QString& name, bool compact)
     setAcceptDrops(true);
 
     Group* g = GroupList::findGroup(groupId);
+    connect(g, &Group::titleChanged, this, &GroupWidget::updateTitle);
     connect(g, &Group::userListChanged, this, &GroupWidget::updateUserCount);
     connect(nameLabel, &CroppingLabel::editFinished, this, &GroupWidget::setTitle);
     Translator::registerHandler(std::bind(&GroupWidget::retranslateUi, this), this);
@@ -67,6 +68,12 @@ void GroupWidget::setTitle(const QString& newName)
 {
     Group* g = GroupList::findGroup(groupId);
     g->setName(newName);
+}
+
+void GroupWidget::updateTitle(uint32_t groupId, const QString& newName)
+{
+    Q_UNUSED(groupId);
+    nameLabel->setText(newName);
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
