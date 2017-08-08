@@ -87,6 +87,14 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <source>Test Sound</source>
         <translation>Testiääni</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -155,6 +163,102 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">Julkinen avain:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished">Oletushakemisto tiedostoille:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">Muistiinpanot</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Valitse hakemisto automaattisesti hyväksyttäville tiedostoille</translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">Historia poistettu</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">Käyttäjän %1 keskusteluhistoria poistettu!</translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -178,143 +282,22 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Julkinen avain:</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>Oletushakemisto tiedostoille:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Muistiinpanot</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Valitse hakemisto automaattisesti hyväksyttäville tiedostoille</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>Historia poistettu</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>Käyttäjän %1 keskusteluhistoria poistettu!</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
         <translation>Lisää kontakti</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Kontaktin lisääminen epäonnistui</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>joko 76 heksadesimaalimerkkiä tai nimi@esimerkki.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
         <translation>Virheellinen Tox ID</translation>
     </message>
     <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>Viesti</translation>
-    </message>
-    <message>
         <source>Send friend request</source>
         <translation>Lähetä kontaktipyyntö</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>%1 täällä! Lisää minut?</translation>
-    </message>
-    <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Et voi lisätä itseäsi kaveriksesi!</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -349,8 +332,79 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished">Et voi lisätä itseäsi kaveriksesi!</translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished">Tox ID</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">joko 76 heksadesimaalimerkkiä tai nimi@esimerkki.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Viesti</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -643,7 +697,11 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished">Tallenna keskustelu</translation>
+        <translation>Tallenna keskustelu</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -703,7 +761,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Sinun täytyy kirjoittaa pyynnön mukaan viesti</translation>
+        <translation>Sinun täytyy kirjoittaa pyynnön mukaan viesti</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
@@ -713,7 +771,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Kontakti on jo lisätty</translation>
+        <translation>Kontakti on jo lisätty</translation>
     </message>
 </context>
 <context>
@@ -834,7 +892,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Yli 6 kuukautta vanhat</translation>
+        <translation>Yli 6 kuukautta vanhat</translation>
     </message>
     <message>
         <source>Never</source>
@@ -1357,7 +1415,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Export</source>
         <comment>export profile button</comment>
-        <translation type="unfinished">Vie</translation>
+        <translation>Vie</translation>
     </message>
     <message>
         <source>Allows you to export your Tox profile to a file.
@@ -1477,7 +1535,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Uudelleennimeä profiili.</translation>
+        <translation>Nimeä profiili uudelleen.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
@@ -1485,7 +1543,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Vie profiili</translation>
+        <translation>Vie profiili</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
@@ -1520,7 +1578,7 @@ Profile does not contain your history.</source>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation type="unfinished">Lataa historia -dialogi</translation>
+        <translation>Lataa historia -dialogi</translation>
     </message>
     <message>
         <source>Load history from:</source>
@@ -1807,7 +1865,7 @@ Haluat ehkä luoda sellaisen.</translation>
     <message>
         <source>Minimize</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished">Pienennä</translation>
+        <translation>Pienennä</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
@@ -1898,7 +1956,15 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">Yksityisyys</translation>
+        <translation>Yksityisyys</translation>
+    </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1970,7 +2036,7 @@ Please use another image.</source>
     <message>
         <source>Export profile</source>
         <comment>save dialog title</comment>
-        <translation type="unfinished">Vie profiili</translation>
+        <translation>Vie profiili</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
@@ -2096,7 +2162,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation type="unfinished">Nykyisen profiilin sijainti: %1</translation>
+        <translation>Nykyisen profiilin sijainti: %1</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
@@ -2135,7 +2201,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished">Profiili on jo olemassa</translation>
+        <translation>Profiili on jo olemassa</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
@@ -2187,7 +2253,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">Kontaktin lisääminen epäonnistui</translation>
+        <translation>Kontaktin lisääminen epäonnistui</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
@@ -2326,6 +2392,10 @@ It will be installed when qTox restarts.</source>
         <source>Reformatting text in progress..</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2343,7 +2413,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Haluatko varmasti poistaa kontaktin %1 kontaktilistastasi?</translation>
+        <translation>Oletko varma, että haluat poistaa kontaktin %1 kontaktilistastasi?</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
@@ -2445,7 +2515,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation type="unfinished">Kontaktipyynnön viesti:</translation>
+        <translation>Kontaktipyynnön viesti:</translation>
     </message>
     <message>
         <source>Send</source>
@@ -2518,7 +2588,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">Avaa qTox-ikkuna kun saat uuden viestin eikä mikään ikkuna ole vielä auki.</translation>
+        <translation>Avaa qTox-ikkuna kun saat uuden viestin eikä mikään ikkuna ole vielä auki.</translation>
     </message>
     <message>
         <source>Open window</source>
@@ -2527,7 +2597,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Aktivoi qTox-ikkuna kun saat viestin.</translation>
+        <translation>Aktivoi qTox-ikkuna kun saat viestin.</translation>
     </message>
     <message>
         <source>Focus window</source>
@@ -2540,11 +2610,11 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished">Huomauta aina uusista viesteistä ryhmäkeskusteluissa.</translation>
+        <translation>Huomauta aina uusista viesteistä ryhmäkeskusteluissa.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished">Huomauta aina ryhmäkeskustelun viesteistä</translation>
+        <translation>Huomauta aina ryhmäkeskustelun viesteistä</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2553,12 +2623,12 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished">Näytä ryhmäkeskustelut kontaktilistan yläpäässä</translation>
+        <translation>Näytä ryhmäkeskustelut kontaktilistan yläpäässä</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished">Kontaktilistasi näytetään pienenä.</translation>
+        <translation>Kontaktilistasi näytetään pienenä.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
