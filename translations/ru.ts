@@ -87,6 +87,14 @@ which may lead to problems with video calls.</source>
         <source>Test Sound</source>
         <translation>Проверка звука</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -156,6 +164,102 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Диалог</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">имя пользователя</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished">статус</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">Публичный ключ:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">Используемый псевдоним:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished">ИСТОРИЯ ПСЕВДОНИМОВ</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished">Автоматически принимать файлы от контактов если установленo</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">Автоматически принимать файлы</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished">Принимать файлы от этого контакта автоматически</translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">Автоматический прием звонка:</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished">Ручной</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Аудио</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">Аудио + Видео</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished">Автоматически принимать приглашения в груповой чат от этого контакта.</translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished">Автоматически принимать приглашения в группу</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished">Удалить историю переписки (операцию нельзя отменить)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">Заметки</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished">Поле ввода для заметок о контакте</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished">Здесь вы можете сохранить заметки об этом контакте.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">История переписки удалена</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">История переписки с %1 была удалена!</translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -179,132 +283,15 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation>Диалог</translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>имя пользователя</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation>статус</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Публичный ключ:</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>Используемый псевдоним:</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation>ИСТОРИЯ ПСЕВДОНИМОВ</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>Папка сохранения файлов:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Принимать файлы от этого контакта автоматически</translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>Автоматически принимать файлы</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation>Удалить историю переписки (операцию нельзя отменить)</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Заметки</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Здесь вы можете сохранить заметки об этом контакте.</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Выбрать папку для автоматического приёма файлов</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>История переписки удалена</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>История переписки с %1 была удалена!</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Автоматический прием звонка:</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Ручной</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Аудио</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>Аудио + Видео</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation>Автоматически принимать файлы от контактов если установленo</translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation>Поле ввода для заметок о контакте</translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation>Автоматически принимать приглашения в груповой чат от этого контакта.</translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation>Автоматически принимать приглашения в группу</translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
         <translation>Добавить друзей</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>либо 76-ти значный шестнадцатеричный ключ или name@example.com</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>Сообщение</translation>
-    </message>
-    <message>
         <source>Send friend request</source>
         <translatorcomment>Мне не нравится, но другого не придумал, и фейсбук использует это</translatorcomment>
         <translation>Отправить запрос на добавление в друзья</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translatorcomment>Взял из старого пункта. Лучше, так, чем без перевода</translatorcomment>
-        <translation>Привет, это %1! Добавите меня в друзья?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -327,11 +314,6 @@ which may lead to problems with video calls.</source>
         <translation>Невозможно добавить друга</translation>
     </message>
     <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Вы не можете добавить самого себя в друзья!</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID format</source>
         <translation>Неправильный формат Tox ID</translation>
     </message>
@@ -352,9 +334,81 @@ which may lead to problems with video calls.</source>
         <translation>Введите сообщение, чтобы отправить с запросом на добавление в друзья или оставьте поле пустым, чтобы отправить сообщение по-умолчанию</translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>Этот Tox ID некорректен или не существует</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished">Tox ID</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">либо 76-ти значный шестнадцатеричный ключ или name@example.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Сообщение</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished">Привет, это %1! Добавите меня в друзья?</translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -643,11 +697,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт в файл</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished">Сохранить журнал чата</translation>
+        <translation>Сохранить журнал чата</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1539,7 +1597,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 сообщений</translation>
     </message>
 </context>
 <context>
@@ -1918,6 +1976,14 @@ Save format changes are possible, which may result in data loss.</source>
         <source>Privacy</source>
         <translation>Конфиденциальность</translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2126,7 +2192,10 @@ Please use another image.</source>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот набор символов позволит другим Tox клиентам связаться с вами.
+Поделитесь им со своими друзьями, чтобы начать общаться.
+
+Этот ID включает NoSpam код (синий), и контрольную сумму (серый).</translation>
     </message>
 </context>
 <context>
@@ -2348,6 +2417,10 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Reformatting text in progress..</source>
         <translation>Переформатирование текста..</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
