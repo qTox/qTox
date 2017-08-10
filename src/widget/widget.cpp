@@ -1443,6 +1443,7 @@ void Widget::updateFriendActivity(const Friend* frnd)
 
 void Widget::removeFriend(Friend* f, bool fake)
 {
+    const uint32_t friendId = f->getId();
     if (!fake) {
         RemoveFriendDialog ask(this, f);
         ask.exec();
@@ -1456,7 +1457,7 @@ void Widget::removeFriend(Friend* f, bool fake)
         }
     }
 
-    FriendWidget* widget = friendWidgets[f->getId()];
+    FriendWidget* widget = friendWidgets[friendId];
     widget->setAsInactiveChatroom();
     if (widget == activeChatroomWidget) {
         activeChatroomWidget = nullptr;
@@ -1465,16 +1466,16 @@ void Widget::removeFriend(Friend* f, bool fake)
 
     contactListWidget->removeFriendWidget(widget);
 
-    ContentDialog* lastDialog = ContentDialog::getFriendDialog(f->getId());
+    ContentDialog* lastDialog = ContentDialog::getFriendDialog(friendId);
 
     if (lastDialog != nullptr) {
-        lastDialog->removeFriend(f->getId());
+        lastDialog->removeFriend(friendId);
     }
 
-    FriendList::removeFriend(f->getId(), fake);
-    Nexus::getCore()->removeFriend(f->getId(), fake);
+    FriendList::removeFriend(friendId, fake);
+    Nexus::getCore()->removeFriend(friendId, fake);
 
-    friendWidgets.remove(f->getId());
+    friendWidgets.remove(friendId);
     delete widget;
     delete f;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
