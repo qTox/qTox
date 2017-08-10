@@ -509,6 +509,14 @@ Widget::~Widget()
         icon->hide();
     }
 
+    for (Group* g : GroupList::getAllGroups()) {
+        removeGroup(g, true);
+    }
+
+    for (Friend* f : FriendList::getAllFriends()) {
+        removeFriend(f, true);
+    }
+
     delete icon;
     delete profileForm;
     delete addFriendForm;
