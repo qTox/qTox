@@ -294,9 +294,9 @@ private:
     unsigned int unreadGroupInvites;
     int icon_size;
 
-    QMap<int, GroupWidget*> groupWidgets;
-    QMap<int, FriendWidget*> friendWidgets;
-    QMap<int, ChatForm*> chatForms;
+    QMap<uint32_t, GroupWidget*> groupWidgets;
+    QMap<uint32_t, FriendWidget*> friendWidgets;
+    QMap<uint32_t, ChatForm*> chatForms;
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;
