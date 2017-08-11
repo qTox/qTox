@@ -27,7 +27,7 @@ unix:!freebsd {
 }
 
 
-QT       += core gui network xml opengl sql svg widgets
+QT       += core gui network xml opengl svg widgets
 
 TARGET    = qtox
 TEMPLATE  = app
