@@ -266,11 +266,6 @@ Section "Install"
 	${SetOutPath} "$INSTDIR\bin\platforms"
 	File /nonfatal "qtox\platforms\*.*"
 	${SetOutPath} "$INSTDIR\bin"
-	
-	${CreateDirectory} "$INSTDIR\bin\sqldrivers"
-	${SetOutPath} "$INSTDIR\bin\sqldrivers"
-	File /nonfatal "qtox\sqldrivers\*.*"
-	${SetOutPath} "$INSTDIR\bin"
 
 	# Create shortcuts
 	${CreateDirectory} "$SMPROGRAMS\qTox"

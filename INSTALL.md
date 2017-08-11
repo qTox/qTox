@@ -40,18 +40,18 @@
 
 ## Dependencies
 
-| Name          | Version     | Modules                                           |
-|---------------|-------------|-------------------------------------------------- |
-| [Qt]          | >= 5.5.0    | core, gui, network, opengl, sql, svg, widget, xml |
-| [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                     |
-| [toxcore]     | = 0.1.\*    | core, av                                          |
-| [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
-| [CMake]       | >= 2.8.11   |                                                   |
-| [OpenAL Soft] | >= 1.16.0   |                                                   |
-| [qrencode]    | >= 3.0.3    |                                                   |
-| [sqlcipher]   | >= 3.2.0    |                                                   |
-| [pkg-config]  | >= 0.28     |                                                   |
-| [filteraudio] | >= 0.0.1    | optional dependency                               |
+| Name          | Version     | Modules                                      |
+|---------------|-------------|----------------------------------------------|
+| [Qt]          | >= 5.5.0    | core, gui, network, opengl, svg, widget, xml |
+| [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                |
+| [toxcore]     | = 0.1.\*    | core, av                                     |
+| [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale |
+| [CMake]       | >= 2.8.11   |                                              |
+| [OpenAL Soft] | >= 1.16.0   |                                              |
+| [qrencode]    | >= 3.0.3    |                                              |
+| [sqlcipher]   | >= 3.2.0    |                                              |
+| [pkg-config]  | >= 0.28     |                                              |
+| [filteraudio] | >= 0.0.1    | optional dependency                          |
 
 ## Optional dependencies
 
@@ -335,8 +335,6 @@ sudo zypper install \
     libQt5Concurrent-devel \
     libQt5Network-devel \
     libQt5OpenGL-devel \
-    libQt5Sql-devel \
-    libQt5Sql5-sqlite \
     libQt5Xml-devel \
     libXScrnSaver-devel \
     libffmpeg-devel \
