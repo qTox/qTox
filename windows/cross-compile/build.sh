@@ -270,6 +270,7 @@ then
     -skip qtimageformats \
     -skip webchannel \
     -skip multimedia \
+    -skip sql \
     -no-dbus \
     -no-icu \
     -no-qml-debug \
@@ -790,6 +791,7 @@ mkdir -p qtox
 cd qtox
 cp -a $QTOX_SRC_DIR/. .
 
+rm -rf ./build
 mkdir build
 cd build
 
