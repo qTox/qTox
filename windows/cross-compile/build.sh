@@ -790,6 +790,7 @@ mkdir -p qtox
 cd qtox
 cp -a $QTOX_SRC_DIR/. .
 
+rm -rf ./build
 mkdir build
 cd build
 
