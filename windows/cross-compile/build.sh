@@ -131,6 +131,7 @@ apt-get install -y --no-install-recommends \
                    autoconf \
                    automake \
                    build-essential \
+                   bsdtar \
                    ca-certificates \
                    cmake \
                    git \
@@ -192,7 +193,7 @@ then
     echo "sha256 matches the expected one: $OPENSSL_SHA256_HASH"
   fi
 
-  tar -xf openssl*.tar.gz
+  bsdtar -xf openssl*.tar.gz
   rm openssl*.tar.gz
   cd openssl*
 
@@ -234,7 +235,7 @@ then
   QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
   wget $QT_MIRROR/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz
 
-  tar -xf qt*.tar.xz
+  bsdtar -xf qt*.tar.xz
   rm qt*.tar.xz
   cd qt*
 
@@ -353,7 +354,7 @@ then
   mkdir -p "$FFMPEG_PREFIX_DIR"
 
   wget https://www.ffmpeg.org/releases/ffmpeg-3.2.6.tar.xz
-  tar -xf ffmpeg*.tar.xz
+  bsdtar -xf ffmpeg*.tar.xz
   cd ffmpeg*
 
   if [[ "$ARCH" == "x86_64"* ]]
@@ -601,7 +602,7 @@ then
   mkdir -p "$QRENCODE_PREFIX_DIR"
 
   wget https://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.bz2
-  tar -xf qrencode*.tar.bz2
+  bsdtar -xf qrencode*.tar.bz2
   rm qrencode*.tar.bz2
   cd qrencode*
 
@@ -832,14 +833,12 @@ cp qtox.exe $QTOX_PREFIX_DIR
 cp $QT_PREFIX_DIR/bin/Qt5Core.dll \
    $QT_PREFIX_DIR/bin/Qt5Gui.dll \
    $QT_PREFIX_DIR/bin/Qt5Network.dll \
-   $QT_PREFIX_DIR/bin/Qt5Sql.dll \
    $QT_PREFIX_DIR/bin/Qt5Svg.dll \
    $QT_PREFIX_DIR/bin/Qt5Widgets.dll \
    $QT_PREFIX_DIR/bin/Qt5Xml.dll \
    $QTOX_PREFIX_DIR
 cp -r $QT_PREFIX_DIR/plugins/imageformats \
       $QT_PREFIX_DIR/plugins/platforms \
-      $QT_PREFIX_DIR/plugins/sqldrivers \
       $QT_PREFIX_DIR/plugins/iconengines \
       $QTOX_PREFIX_DIR
 cp $OPENAL_PREFIX_DIR/bin/OpenAL32.dll $QTOX_PREFIX_DIR
