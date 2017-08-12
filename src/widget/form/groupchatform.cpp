@@ -168,55 +168,70 @@ void GroupChatForm::onSendTriggered()
     }
 }
 
+/**
+ * @brief This slot is intended to connect to Group::userListChanged signal.
+ * Brief list of actions made by slot:
+ *      1) sets text of how much people is in group;
+ *      2) creates lexicographically sorted comma-separated list of user names, each name in its own
+ *      label;
+ *      3) sets call button style depending on peers count and etc.
+ */
 void GroupChatForm::onUserListChanged()
 {
-    int peersCount = group->getPeersCount();
-    if (peersCount == 1)
+    const int peersCount = group->getPeersCount();
+    if (peersCount == 1) {
         nusersLabel->setText(tr("1 user in chat", "Number of users in chat"));
-    else
+    } else {
         nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
+    }
 
     QLayoutItem* child;
-    while ((child = namesListLayout->takeAt(0))) {
+    while (child = namesListLayout->takeAt(0)) {
         child->widget()->hide();
         delete child->widget();
         delete child;
     }
+
     peerLabels.clear();
+    peerLabels.reserve(peersCount);
+    QVector<QLabel*> nickLabelList(peersCount);
 
-    // the list needs peers in peernumber order, nameLayout needs alphabetical
-    QList<QLabel*> nickLabelList;
-
-    // first traverse in peer number order, storing the QLabels as necessary
-    QStringList names = group->getPeerList();
-    unsigned nNames = names.size();
-    for (unsigned i = 0; i < nNames; ++i) {
-        const QString editedName = editName(names[i]);
-        peerLabels.append(new QLabel(editedName));
-        if (editedName != names[i]) {
-            peerLabels[i]->setToolTip(names[i]);
+    /* the list needs peers in peernumber order, nameLayout needs alphabetical
+     * first traverse in peer number order, storing the QLabels as necessary */
+    const QStringList names = group->getPeerList();
+    int peerNumber = 0;
+    for (const QString fullName : names) {
+        const QString editedName = editName(fullName) + ", ";
+        QLabel* label = new QLabel(editedName);
+        if (editedName != fullName) {
+            label->setToolTip(fullName);
         }
-        peerLabels[i]->setTextFormat(Qt::PlainText);
-        nickLabelList.append(peerLabels[i]);
-        if (group->isSelfPeerNumber(i))
-            peerLabels[i]->setStyleSheet("QLabel {color : green;}");
-
-        if (netcam && !group->isSelfPeerNumber(i))
-            static_cast<GroupNetCamView*>(netcam)->addPeer(i, names[i]);
+        label->setTextFormat(Qt::PlainText);
+        if (group->isSelfPeerNumber(peerNumber)) {
+            label->setStyleSheet("QLabel {color : green;}");
+        } else if (netcam != nullptr) {
+            static_cast<GroupNetCamView*>(netcam)->addPeer(peerNumber, fullName);
+        }
+        peerLabels.append(label);
+        nickLabelList[peerNumber++] = label;
     }
 
-    if (netcam)
+    if (netcam != nullptr) {
         static_cast<GroupNetCamView*>(netcam)->clearPeers();
+    }
 
-    // now alphabetize and add to layout
-    qSort(nickLabelList.begin(), nickLabelList.end(),
-          [](QLabel* a, QLabel* b) { return a->text().toLower() < b->text().toLower(); });
-    for (unsigned i = 0; i < nNames; ++i) {
-        QLabel* label = nickLabelList.at(i);
-        if (i != nNames - 1)
-            label->setText(label->text() + ", ");
-
-        namesListLayout->addWidget(label);
+    auto comparator = [](const QLabel* a, const QLabel* b)
+    {
+        return a->text() < b->text();
+    };
+    qSort(nickLabelList.begin(), nickLabelList.end(), comparator);
+    // remove comma from last sorted label
+    QLabel* lastLabel = nickLabelList.last();
+    QString labelText = lastLabel->text();
+    labelText.chop(2);
+    lastLabel->setText(labelText);
+    for (QLabel* l : nickLabelList) {
+        namesListLayout->addWidget(l);
     }
 
     // Enable or disable call button
