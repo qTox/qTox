@@ -40,6 +40,26 @@
 #include "src/widget/translator.h"
 
 /**
+ * @brief Edit name for correct representation if it is needed
+ * @param name Editing string
+ * @return Source name if it does not contain any newline character, otherwise it chops characters
+ * starting with first newline character and appends "..."
+ */
+QString editName(const QString& name)
+{
+    const int pos = name.indexOf(QRegularExpression(QStringLiteral("[\n\r]")));
+    if (pos == -1) {
+        return name;
+    }
+
+    QString result = name;
+    const int len = result.length();
+    result.chop(len - pos);
+    result.append(QStringLiteral("…")); // \u2026 Unicode symbol, not just three separate dots
+    return result;
+}
+
+/**
  * @var QList<QLabel*> GroupChatForm::peerLabels
  * @brief Maps peernumbers to the QLabels in namesListLayout.
  *
@@ -77,15 +97,14 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     msgEdit->setObjectName("group");
 
     namesListLayout = new FlowLayout(0, 5, 0);
-    QStringList names(group->getPeerList());
 
-    for (QString& name : names) {
-        QLabel* l = new QLabel();
-        QString tooltip = correctNames(name);
-        if (tooltip.isNull()) {
-            l->setToolTip(tooltip);
+    const QStringList names(group->getPeerList());
+    for (const QString& fullName : names) {
+        const QString editedName = editName(fullName);
+        QLabel* l = new QLabel(editedName);
+        if (editedName != fullName) {
+            l->setToolTip(fullName);
         }
-        l->setText(name);
         l->setTextFormat(Qt::PlainText);
         namesListLayout->addWidget(l);
     }
@@ -114,21 +133,6 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
-}
-
-// Correct names with "\n" in NamesListLayout widget
-QString GroupChatForm::correctNames(QString& name)
-{
-    int pos = name.indexOf(QRegExp("\n|\r\n|\r"));
-    int len = name.length();
-    if ((pos < len) && (pos != -1)) {
-        QString tooltip = name;
-        name.remove(pos, len - pos);
-        name.append("...");
-        return tooltip;
-    } else {
-        return QString();
-    }
 }
 
 GroupChatForm::~GroupChatForm()
@@ -184,10 +188,11 @@ void GroupChatForm::onUserListChanged()
     QStringList names = group->getPeerList();
     unsigned nNames = names.size();
     for (unsigned i = 0; i < nNames; ++i) {
-        QString tooltip = correctNames(names[i]);
-        peerLabels.append(new QLabel(names[i]));
-        if (!tooltip.isEmpty())
-            peerLabels[i]->setToolTip(tooltip);
+        const QString editedName = editName(names[i]);
+        peerLabels.append(new QLabel(editedName));
+        if (editedName != names[i]) {
+            peerLabels[i]->setToolTip(names[i]);
+        }
         peerLabels[i]->setTextFormat(Qt::PlainText);
         nickLabelList.append(peerLabels[i]);
         if (group->isSelfPeerNumber(i))
