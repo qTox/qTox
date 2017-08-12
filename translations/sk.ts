@@ -87,6 +87,14 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <source>Test Sound</source>
         <translation>Test zvuku</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -155,6 +163,102 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">užívateľské meno</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">Verejný kľúč:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">Používané prezývky:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished">HISTÓRIA PREZÝVOK</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished">Automaticky prijímať súbory od tohto kontaktu</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">Automaticky prijímať súbory</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished">Predvolený adresár pre uloženie súborov:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished">Automatické prijímanie zakázené</translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">Automatické prijímanie hovorov:</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished">Ručne</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Audio hovory</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">Audio + Video hovory</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished">Automatické prijímanie pozvánok do skupín od tohto kontaktu.</translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished">Automaticky prijať pozvánky do skupín</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished">Odstrániť históriu (operácia sa nedá vrátiť späť!)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">Poznámky</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished">Pole na poznámky o kontakte</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished">Sem môžete vložiť poznámky o tomto kontakte.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Zvoľte adresár pre automatické prijímanie</translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">História bola odstránená</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">História chatu s %1 bola odstránená!</translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -178,134 +282,18 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>užívateľské meno</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Verejný kľúč:</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>Používané prezývky:</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation>HISTÓRIA PREZÝVOK</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>Predvolený adresár pre uloženie súborov:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Automatické prijímanie zakázené</translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>Automaticky prijímať súbory</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation>Odstrániť históriu (operácia sa nedá vrátiť späť!)</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Poznámky</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Sem môžete vložiť poznámky o tomto kontakte.</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Zvoľte adresár pre automatické prijímanie</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>História bola odstránená</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>História chatu s %1 bola odstránená!</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Automatické prijímanie hovorov:</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Ručne</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Audio hovory</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>Audio + Video hovory</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation>Automaticky prijímať súbory od tohto kontaktu</translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation>Pole na poznámky o kontakte</translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation>Automatické prijímanie pozvánok do skupín od tohto kontaktu.</translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation>Automaticky prijať pozvánky do skupín</translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
         <translation>Pridať priateľov</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>76 šestnástkových znakov alebo meno@priklad.com</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID format</source>
         <translation>Neplatný formát Tox ID</translation>
     </message>
     <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>Správa</translation>
-    </message>
-    <message>
         <source>Send friend request</source>
         <translation>Poslať žiadosť o priateľstvo</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Som %1! Zatoxujeme si?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -328,11 +316,6 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <translation>Nepodarilo sa pridať priateľa</translation>
     </message>
     <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Nemôžete pridať seba ako priateľa!</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation>Tox ID, 76 znakov šestnástkovej sústavy alebo meno@priklad.com</translation>
     </message>
@@ -349,9 +332,81 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <translation>Zadajte správu k žiadosti o priateľstvo, alebo nechajte prázdne, pre odoslanie predvolenej správy</translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>Zadané Tox ID je neplatné alebo neexistuje</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished">Nemôžete pridať seba ako priateľa!</translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished">Tox ID</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">76 šestnástkových znakov alebo meno@priklad.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Správa</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished">Som %1! Zatoxujeme si?</translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -640,10 +695,14 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Export do súboru</translation>
     </message>
     <message>
         <source>Save chat log</source>
+        <translation type="unfinished">Uložiť záznam chatu</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -801,7 +860,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uložiť súbor</translation>
     </message>
 </context>
 <context>
@@ -856,7 +915,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
-        <translation type="unfinished"></translation>
+        <translation>Niekto sa chce stať vašim priateľom</translation>
     </message>
     <message>
         <source>User ID:</source>
@@ -1129,7 +1188,7 @@ namiesto panelu úloh.</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložiť záznam chatu</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -1161,7 +1220,7 @@ namiesto panelu úloh.</translation>
     </message>
     <message>
         <source>Not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Neodoslané</translation>
     </message>
     <message>
         <source>Cleared</source>
@@ -1917,6 +1976,14 @@ Sú možné zmeny formátu, ktoré môžu spôsobiť stratu dát.</translation>
         <source>Privacy</source>
         <translation>Súkromie</translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2125,7 +2192,10 @@ Prosím, použite iný.</translation>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>Táto séria znakov vás umožní kontaktovať pomocou ostatných Tox klientov.
+Pre komunikáciu ju zdeľte vašim priateľom.
+
+Toto ID obsahuje NoSpam kód (modrou) a kontrolný súčet (šedou).</translation>
     </message>
 </context>
 <context>
@@ -2343,6 +2413,10 @@ Nainštaluje sa po reštarte qToxu.</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
