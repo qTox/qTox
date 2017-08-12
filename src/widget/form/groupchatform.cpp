@@ -110,6 +110,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
             chatGroup->setName(newName);
         }
     });
+    connect(group, &Group::userListChanged, this, &GroupChatForm::onUserListChanged);
 
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
