@@ -57,10 +57,12 @@ protected:
 
 private:
     void retranslateUi();
+    void updateUserCount();
+    void updateUserNames();
 
 private:
     Group* group;
-    QList<QLabel*> peerLabels;
+    QVector<QLabel*> peerLabels;
     QMap<int, QTimer*> peerAudioTimers;
     FlowLayout* namesListLayout;
     QLabel* nusersLabel;
