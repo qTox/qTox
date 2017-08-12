@@ -38,7 +38,6 @@ public:
     explicit GroupChatForm(Group* chatGroup);
     ~GroupChatForm();
 
-    void onUserListChanged();
     void peerAudioPlaying(int peer);
 
 private slots:
@@ -46,6 +45,7 @@ private slots:
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onCallClicked();
+    void onUserListChanged();
 
 protected:
     virtual GenericNetCamView* createNetcam() final override;
