@@ -110,6 +110,10 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
             chatGroup->setName(newName);
         }
     });
+    connect(group,
+            SIGNAL(userListChanged(uint32_t, const QMap<QByteArray, QString>&)),
+            this,
+            SLOT(onUserListChanged()));
 
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
