@@ -19,11 +19,6 @@
 
 #include "groupchatform.h"
 
-#include <QDragEnterEvent>
-#include <QMimeData>
-#include <QTimer>
-#include <QToolButton>
-
 #include "tabcompleter.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -38,6 +33,11 @@
 #include "src/widget/style.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
+
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include <QTimer>
+#include <QToolButton>
 
 /**
  * @brief Edit name for correct representation if it is needed
