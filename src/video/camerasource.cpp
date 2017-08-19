@@ -87,13 +87,10 @@ extern "C" {
  * @brief Remember how many times we subscribed for RAII
  */
 
-static QThread* startDeviceThread();
-static void stopDeviceThread(QThread* thread);
-
 CameraSource* CameraSource::instance{nullptr};
 
 CameraSource::CameraSource()
-    : deviceThread{startDeviceThread()}
+    : deviceThread{new QThread}
     , deviceName{"none"}
     , device{nullptr}
     , mode(VideoMode())
@@ -107,6 +104,8 @@ CameraSource::CameraSource()
     , subscriptions{0}
 {
     qRegisterMetaType<VideoMode>("VideoMode");
+    deviceThread->setObjectName("Device thread");
+    deviceThread->start();
     moveToThread(deviceThread);
 
     subscriptions = 0;
@@ -197,7 +196,9 @@ CameraSource::~CameraSource()
     QWriteLocker locker2{&deviceMutex};
 
     // Stop the device thread
-    stopDeviceThread(deviceThread);
+    deviceThread->exit(0);
+    deviceThread->wait();
+    delete deviceThread;
 
     if (_isNone) {
         return;
@@ -458,17 +459,3 @@ void CameraSource::stream()
         streamLoop();
     }
 }
-
-static QThread* startDeviceThread() {
-    auto thread = new QThread;
-    thread->setObjectName("Device thread");
-    thread->start();
-    return thread;
-}
-
-static void stopDeviceThread(QThread* thread) {
-    thread->exit(0);
-    thread->wait();
-    delete thread;
-}
-
