@@ -296,6 +296,12 @@ void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleInde
         circleWidget->addFriendWidget(w, s);
 }
 
+void FriendListWidget::removeGroupWidget(GroupWidget* w)
+{
+    groupLayout.removeSortedWidget(w);
+    w->deleteLater();
+}
+
 void FriendListWidget::removeFriendWidget(FriendWidget* w)
 {
     const Friend* contact = w->getFriend();

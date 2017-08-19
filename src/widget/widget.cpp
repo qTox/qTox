@@ -1791,7 +1791,8 @@ void Widget::removeGroup(Group* g, bool fake)
     groupWidgets.remove(groupId);
 
     Nexus::getCore()->removeGroup(groupId, fake);
-    delete widget;
+    contactListWidget->removeGroupWidget(widget);
+
     delete g;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
         onAddClicked();
