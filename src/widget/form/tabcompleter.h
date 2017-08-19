@@ -23,7 +23,7 @@
 #ifndef TABCOMPLETER_H
 #define TABCOMPLETER_H
 
-#include "src/group.h"
+#include "src/model/group.h"
 #include "src/widget/tool/chattextedit.h"
 #include <QMap>
 #include <QString>

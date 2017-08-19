@@ -60,6 +60,11 @@ AVForm::AVForm()
 
     cbEnableTestSound->setToolTip(tr("Play a test sound while changing the output volume."));
 
+#ifndef USE_FILTERAUDIO
+    cbEnableBackend2->setVisible(false);
+#endif
+    cbEnableBackend2->setChecked(s.getEnableBackend2());
+
     connect(rescanButton, &QPushButton::clicked, this, &AVForm::rescanDevices);
 
     playbackSlider->setTracking(false);
@@ -139,6 +144,11 @@ void AVForm::rescanDevices()
     getAudioInDevices();
     getAudioOutDevices();
     getVideoDevices();
+}
+
+void AVForm::on_cbEnableBackend2_stateChanged()
+{
+    Settings::getInstance().setEnableBackend2(cbEnableBackend2->isChecked());
 }
 
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)

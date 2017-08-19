@@ -41,9 +41,6 @@ public:
     void onUserListChanged();
     void peerAudioPlaying(int peer);
 
-signals:
-    void groupTitleChanged(int groupnum, const QString& name);
-
 private slots:
     void onSendTriggered();
     void onMicMuteToggle();

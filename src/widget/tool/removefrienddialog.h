@@ -3,7 +3,7 @@
 
 
 #include "ui_removefrienddialog.h"
-#include "src/friend.h"
+#include "src/model/friend.h"
 #include <QDialog>
 
 

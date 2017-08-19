@@ -52,12 +52,12 @@ public:
     ContentDialog(SettingsWidget* settingsWidget, QWidget* parent = 0);
     ~ContentDialog();
 
-    FriendWidget* addFriend(int friendId, QString id);
+    FriendWidget* addFriend(const Friend* f);
     GroupWidget* addGroup(int groupId, const QString& name);
     void removeFriend(int friendId);
     void removeGroup(int groupId);
-    bool hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget);
-    bool hasGroupWidget(int groupId, GenericChatroomWidget* chatroomWidget);
+    bool hasFriendWidget(int friendId, const GenericChatroomWidget* chatroomWidget) const;
+    bool hasGroupWidget(int groupId, const GenericChatroomWidget* chatroomWidget) const;
     int chatroomWidgetCount() const;
     void ensureSplitterVisible();
     void updateTitleAndStatusIcon();
@@ -80,7 +80,7 @@ public:
     static ContentDialog* getGroupDialog(int groupId);
 
 signals:
-    void friendDialogShown(Friend* f);
+    void friendDialogShown(const Friend* f);
     void groupDialogShown(Group* g);
     void activated();
 
@@ -103,7 +103,6 @@ private slots:
     void activate(GenericChatroomWidget* widget);
     void openNewDialog(GenericChatroomWidget* widget);
     void updateFriendWidget(uint32_t friendId, QString alias);
-    void updateGroupWidget(GroupWidget* w);
     void onGroupchatPositionChanged(bool top);
 
 private:
@@ -113,7 +112,8 @@ private:
     QLayout* nextLayout(QLayout* layout, bool forward) const;
     int getCurrentLayout(QLayout*& layout);
 
-    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, ContactInfo>& list);
+    bool hasWidget(int id, const GenericChatroomWidget* chatroomWidget,
+                   const QHash<int, ContactInfo>& list) const;
     void removeCurrent(QHash<int, ContactInfo>& infos);
     static bool existsWidget(int id, const QHash<int, ContactInfo>& list);
     static void focusDialog(int id, const QHash<int, ContactInfo>& list);

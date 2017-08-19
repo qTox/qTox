@@ -27,7 +27,7 @@ unix:!freebsd {
 }
 
 
-QT       += core gui network xml opengl sql svg widgets
+QT       += core gui network xml opengl svg widgets
 
 TARGET    = qtox
 TEMPLATE  = app
@@ -123,6 +123,9 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
     SOURCES += src/platform/capslock_win.cpp \
                src/platform/capslock_x11.cpp \
                src/platform/capslock_osx.cpp
+
+    HEADERS += src/platform/x11_display.h
+    SOURCES += src/platform/x11_display.cpp
 }
 
 # Rules for Windows, Mac OSX, and Linux
@@ -249,7 +252,8 @@ win32 {
                 -lavutil \
                 -lswscale \
                 -lqrencode \
-                -lsqlcipher
+                -lsqlcipher \
+                -lfilteraudio
     }
 
     contains(DEFINES, QTOX_PLATFORM_EXT) {
@@ -334,6 +338,7 @@ RESOURCES += res.qrc \
 HEADERS  += \
     src/audio/audio.h \
     src/audio/backend/openal.h \
+    src/audio/backend/openal2.h \
     src/chatlog/chatline.h \
     src/chatlog/chatlinecontent.h \
     src/chatlog/chatlinecontentproxy.h \
@@ -360,12 +365,13 @@ HEADERS  += \
     src/core/toxid.h \
     src/core/toxpk.h \
     src/core/toxstring.h \
-    src/friend.h \
     src/friendlist.h \
-    src/group.h \
     src/groupinvite.h \
     src/grouplist.h \
     src/ipc.h \
+    src/model/contact.h \
+    src/model/friend.h \
+    src/model/group.h \
     src/net/autoupdate.h \
     src/net/avatarbroadcaster.h \
     src/net/toxme.h \
@@ -455,6 +461,7 @@ HEADERS  += \
 SOURCES += \
     src/audio/audio.cpp \
     src/audio/backend/openal.cpp \
+    src/audio/backend/openal2.cpp \
     src/chatlog/chatline.cpp \
     src/chatlog/chatlinecontent.cpp \
     src/chatlog/chatlinecontentproxy.cpp \
@@ -480,13 +487,14 @@ SOURCES += \
     src/core/toxid.cpp \
     src/core/toxpk.cpp \
     src/core/toxstring.cpp \
-    src/friend.cpp \
     src/friendlist.cpp \
-    src/group.cpp \
     src/groupinvite.cpp \
     src/grouplist.cpp \
     src/ipc.cpp \
     src/main.cpp \
+    src/model/contact.cpp \
+    src/model/friend.cpp \
+    src/model/group.cpp \
     src/net/autoupdate.cpp \
     src/net/avatarbroadcaster.cpp \
     src/net/toxme.cpp \

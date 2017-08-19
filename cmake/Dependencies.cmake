@@ -11,7 +11,6 @@ find_package(Qt5Gui           REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 find_package(Qt5Network       REQUIRED)
 find_package(Qt5OpenGL        REQUIRED)
-find_package(Qt5Sql           REQUIRED)
 find_package(Qt5Svg           REQUIRED)
 find_package(Qt5Test          REQUIRED)
 find_package(Qt5Widgets       REQUIRED)
@@ -27,7 +26,6 @@ add_dependency(
   Qt5::Gui
   Qt5::Network
   Qt5::OpenGL
-  Qt5::Sql
   Qt5::Svg
   Qt5::Widgets
   Qt5::Xml)
@@ -116,7 +114,7 @@ if (NOT TOXCORE_FOUND OR
     search_dependency(TOXAV           PACKAGE libtoxav)
 endif()
 
-search_dependency(OPENAL              PACKAGE openal FRAMEWORK OpenAL)
+search_dependency(OPENAL              PACKAGE openal)
 
 if (PLATFORM_EXTENSIONS AND UNIX AND NOT APPLE)
   # Automatic auto-away support. (X11 also using for capslock detection)
@@ -179,6 +177,7 @@ if (NOT TIMESTAMP)
   execute_process(
     COMMAND date +%s
     OUTPUT_VARIABLE TIMESTAMP
+    OUTPUT_STRIP_TRAILING_WHITESPACE
   )
 endif()
 

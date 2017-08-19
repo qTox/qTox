@@ -31,9 +31,9 @@
 #include "maskablepixmapwidget.h"
 #include "form/groupchatform.h"
 #include "src/core/core.h"
-#include "src/friend.h"
+#include "src/model/friend.h"
 #include "src/friendlist.h"
-#include "src/group.h"
+#include "src/model/group.h"
 #include "src/grouplist.h"
 #include "src/widget/friendwidget.h"
 #include "src/widget/style.h"
@@ -49,23 +49,31 @@ GroupWidget::GroupWidget(int groupId, const QString& name, bool compact)
     statusPic.setMargin(3);
     nameLabel->setText(name);
 
-    onUserListChanged();
-
+    updateUserCount();
     setAcceptDrops(true);
 
-    connect(nameLabel, &CroppingLabel::editFinished, [=](const QString& newName) {
-        if (!newName.isEmpty()) {
-            Group* g = GroupList::findGroup(groupId);
-            emit renameRequested(this, newName);
-            emit g->getChatForm()->groupTitleChanged(groupId, newName.left(128));
-        }
-    });
+    Group* g = GroupList::findGroup(groupId);
+    connect(g, &Group::titleChanged, this, &GroupWidget::updateTitle);
+    connect(g, &Group::userListChanged, this, &GroupWidget::updateUserCount);
+    connect(nameLabel, &CroppingLabel::editFinished, this, &GroupWidget::setTitle);
     Translator::registerHandler(std::bind(&GroupWidget::retranslateUi, this), this);
 }
 
 GroupWidget::~GroupWidget()
 {
     Translator::unregister(this);
+}
+
+void GroupWidget::setTitle(const QString& newName)
+{
+    Group* g = GroupList::findGroup(groupId);
+    g->setName(newName);
+}
+
+void GroupWidget::updateTitle(uint32_t groupId, const QString& newName)
+{
+    Q_UNUSED(groupId);
+    nameLabel->setText(newName);
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
@@ -141,7 +149,7 @@ void GroupWidget::mouseMoveEvent(QMouseEvent* ev)
     }
 }
 
-void GroupWidget::onUserListChanged()
+void GroupWidget::updateUserCount()
 {
     Group* g = GroupList::findGroup(groupId);
     if (g) {
@@ -235,7 +243,7 @@ void GroupWidget::dropEvent(QDropEvent* ev)
     if (!frnd)
         return;
 
-    int friendId = frnd->getFriendId();
+    int friendId = frnd->getId();
     if (frnd->getStatus() != Status::Offline) {
         Core::getInstance()->groupInviteFriend(friendId, groupId);
     }

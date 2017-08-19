@@ -17,8 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "friend.h"
 #include "friendlist.h"
+#include "src/model/friend.h"
 #include "src/persistence/settings.h"
 #include <QDebug>
 #include <QHash>

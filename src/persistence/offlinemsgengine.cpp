@@ -19,7 +19,7 @@
 
 #include "offlinemsgengine.h"
 #include "src/core/core.h"
-#include "src/friend.h"
+#include "src/model/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
@@ -104,9 +104,9 @@ void OfflineMsgEngine::deliverOfflineMsgs()
         QString messageText = val.msg->toString();
         int rec;
         if (val.msg->isAction()) {
-            rec = Core::getInstance()->sendAction(f->getFriendId(), messageText);
+            rec = Core::getInstance()->sendAction(f->getId(), messageText);
         } else {
-            rec = Core::getInstance()->sendMessage(f->getFriendId(), messageText);
+            rec = Core::getInstance()->sendMessage(f->getId(), messageText);
         }
 
         registerReceipt(rec, key, val.msg);

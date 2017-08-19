@@ -19,6 +19,10 @@
 
 #include "audio.h"
 #include "src/audio/backend/openal.h"
+#ifdef USE_FILTERAUDIO
+#include "src/audio/backend/openal2.h"
+#endif
+#include "src/persistence/settings.h"
 
 #include <QDebug>
 
@@ -56,9 +60,6 @@
  *
  * @var Audio::AUDIO_FRAME_SAMPLE_COUNT
  * @brief Frame sample count
- *
- * @var Audio::AUDIO_CHANNELS
- * @brief Ideally, we'd auto-detect, but that's a sane default
  *
  * @fn qreal Audio::outputVolume() const
  * @brief Returns the current output volume (between 0 and 1)
@@ -168,6 +169,23 @@
  */
 Audio& Audio::getInstance()
 {
-    static OpenAL instance;
-    return instance;
+    // TODO: replace backend selection by inversion of control
+#ifdef USE_FILTERAUDIO
+    static bool initialized = false;
+    static bool Backend2 = false;
+
+    if (!initialized) {
+        Backend2 = Settings::getInstance().getEnableBackend2();
+        initialized = true;
+    }
+
+    if (Backend2) {
+        static OpenAL2 instance;
+        return instance;
+    } else
+#endif
+    {
+        static OpenAL instance;
+        return instance;
+    }
 }
