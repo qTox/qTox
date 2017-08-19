@@ -450,6 +450,13 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   )
 endif()
 
+if (UNIX)
+  set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+    src/platform/posixsignalnotifier.cpp
+    src/platform/posixsignalnotifier.h
+  )
+endif()
+
 if (PLATFORM_EXTENSIONS)
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
     src/platform/autorun.h
