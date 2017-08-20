@@ -29,6 +29,12 @@
 
 #include <QDebug>
 
+#include "src/core/core.h"
+#include "src/model/friend.h"
+#include "src/friendlist.h"
+#include "src/model/group.h"
+#include "src/grouplist.h"
+#include "src/model/message/textmessage.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
 
@@ -39,6 +45,43 @@ ChatMessage::ChatMessage()
 {
 }
 
+static QString getMsgAuthorDispName(const ToxPk& authorPk)
+{
+    const Core* core = Core::getInstance();
+    bool isSelf = authorPk == core->getSelfId().getPublicKey();
+
+    if (isSelf) {
+        return core->getUsername();
+    }
+
+    Friend* f = FriendList::findFriend(authorPk);
+    if (f) {
+        return f->getDisplayedName();
+    }
+
+    for (Group* it : GroupList::getAllGroups()) {
+        QString res = it->resolveToxId(authorPk);
+        if (!res.isEmpty()) {
+            return res;
+        }
+    }
+
+    return authorPk.toString();
+}
+
+ChatMessage::Ptr ChatMessage::createChatMessage(const TextMessage& message)
+{
+    const QString sender = getMsgAuthorDispName(message.getAuthor());
+    const QString& text = message.getText();
+    const MessageType type = message.isAction() ? MessageType::ACTION
+                                                : MessageType::NORMAL;
+    // TODO: Maybe extract Core dependency?
+    // For example add `ChatMessage::setSelf` or `ChatMessage::makeNameBold`
+    const bool isSelf = message.getAuthor() == Core::getInstance()->getSelfPublicKey();
+    const QDateTime& time = message.getTime();
+    return createChatMessage(sender, text, type, isSelf, time);
+}
+
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
                                                 MessageType type, bool isMe, const QDateTime& date)
 {
@@ -47,8 +90,8 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     QString text = rawMessage.toHtmlEscaped();
     QString senderText = sender;
 
-    const QColor actionColor =
-        QColor("#1818FF"); // has to match the color in innerStyle.css (div.action)
+    // has to match the color in innerStyle.css (div.action)
+    const QColor actionColor{"#1818FF"};
 
     // smileys
     if (Settings::getInstance().getUseEmoticons())
