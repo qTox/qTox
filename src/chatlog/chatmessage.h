@@ -25,6 +25,7 @@
 #include <QDateTime>
 
 class QGraphicsScene;
+class TextMessage;
 
 class ChatMessage : public ChatLine
 {
@@ -47,6 +48,7 @@ public:
 
     ChatMessage();
 
+    static ChatMessage::Ptr createChatMessage(const TextMessage& message);
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage,
                                               MessageType type, bool isMe,
                                               const QDateTime& date = QDateTime());

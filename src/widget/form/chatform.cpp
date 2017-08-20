@@ -731,19 +731,9 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         }
 
         // Show each messages
-        const Core* core = Core::getInstance();
         const ToxPk& authorPk = m.getAuthor();
-        const QString authorStr = getMsgAuthorDispName(authorPk);
-        const bool isSelf = authorPk == core->getSelfId().getPublicKey();
-
         const bool isAction = m.isAction();
-        const bool isSent = msgDateTime != QDateTime();
-        const bool needSending = !isSent && isSelf;
-
-        const QString messageText = isAction ? m.getText().mid(ACTION_PREFIX.length()) : m.getText();
-        const ChatMessage::MessageType type = isAction ? ChatMessage::ACTION : ChatMessage::NORMAL;
-        const QDateTime dateTime = needSending ? QDateTime() : msgDateTime;
-        auto msg = ChatMessage::createChatMessage(authorStr, messageText, type, isSelf, dateTime);
+        auto msg = ChatMessage::createChatMessage(m);
         if (!isAction && needsToHideName(authorPk)) {
             msg->hideSender();
         }
@@ -751,7 +741,8 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         previousId = authorPk;
         prevMsgDateTime = msgDateTime;
 
-        if (needSending && processUndelivered) {
+        const bool isSent = msgDateTime != QDateTime();
+        if (!isSent && processUndelivered) {
             Core* core = Core::getInstance();
             uint32_t friendId = f->getId();
             QString stringMsg = msg->toString();
