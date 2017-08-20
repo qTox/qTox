@@ -1989,7 +1989,7 @@ Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führ
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ableiten des Schlüssels vom Passwort fehlgeschlagen, das Profil wird das neue Passwort nicht verwenden.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
