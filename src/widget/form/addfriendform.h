@@ -75,7 +75,7 @@ private slots:
     void onCurrentChanged(int index);
 
 private:
-    static void addFriend(const QString& idText);
+    void addFriend(const QString& idText);
     void retranslateUi();
     void addFriendRequestWidget(const QString& friendAddress, const QString& message);
     void removeFriendRequestWidget(QWidget* friendWidget);
