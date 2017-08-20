@@ -673,7 +673,7 @@ void ChatForm::onLoadChatHistory()
     }
 }
 
-QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName)
+static QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName = "")
 {
     QString authorStr;
     const Core* core = Core::getInstance();
@@ -710,7 +710,7 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
 
     History* history = Nexus::getProfile()->getHistory();
     QString pk = f->getPublicKey().toString();
-    QList<History::HistMessage> msgs = history->getChatHistory(pk, since, now);
+    QList<TextMessage> msgs = history->getChatHistory(pk, since, now);
 
     ToxPk prevIdBackup = previousId;
     previousId = ToxPk{};
@@ -718,9 +718,9 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
     QList<ChatLine::Ptr> historyMessages;
 
     QDate lastDate(1, 0, 0);
-    for (const auto& it : msgs) {
+    for (const TextMessage& m : msgs) {
         // Show the date every new day
-        QDateTime msgDateTime = it.timestamp.toLocalTime();
+        QDateTime msgDateTime = m.getTime().toLocalTime();
         QDate msgDate = msgDateTime.date();
 
         if (msgDate > lastDate) {
@@ -732,14 +732,15 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
 
         // Show each messages
         const Core* core = Core::getInstance();
-        ToxPk authorPk(ToxId(it.sender).getPublicKey());
-        QString authorStr = getMsgAuthorDispName(authorPk, it.dispName);
+        const ToxPk& authorPk = m.getAuthor();
+        QString authorStr = getMsgAuthorDispName(authorPk);
         bool isSelf = authorPk == core->getSelfId().getPublicKey();
 
-        bool isAction = it.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
-        bool needSending = !it.isSent && isSelf;
+        bool isAction = m.isAction();
+        bool isSent = msgDateTime != QDateTime();
+        bool needSending = !isSent && isSelf;
 
-        QString messageText = isAction ? it.message.mid(ACTION_PREFIX.length()) : it.message;
+        QString messageText = isAction ? m.getText().mid(ACTION_PREFIX.length()) : m.getText();
         ChatMessage::MessageType type = isAction ? ChatMessage::ACTION : ChatMessage::NORMAL;
         QDateTime dateTime = needSending ? QDateTime() : msgDateTime;
         auto msg = ChatMessage::createChatMessage(authorStr, messageText, type, isSelf, dateTime);
@@ -756,7 +757,7 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
             QString stringMsg = msg->toString();
             int receipt = isAction ? core->sendAction(friendId, stringMsg)
                                    : core->sendMessage(friendId, stringMsg);
-            getOfflineMsgEngine()->registerReceipt(receipt, it.id, msg);
+            getOfflineMsgEngine()->registerReceipt(receipt, m.getId(), msg);
         }
 
         historyMessages.append(msg);
@@ -1025,7 +1026,7 @@ void ChatForm::onExportChat()
     QString pk = f->getPublicKey().toString();
     QDateTime epochStart = QDateTime::fromMSecsSinceEpoch(0);
     QDateTime now = QDateTime::currentDateTime();
-    QList<History::HistMessage> msgs = history->getChatHistory(pk, epochStart, now);
+    QList<TextMessage> msgs = history->getChatHistory(pk, epochStart, now);
 
     QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"), QString{}, QString{}, 0,
                                                 QFileDialog::DontUseNativeDialog);
@@ -1039,12 +1040,13 @@ void ChatForm::onExportChat()
     }
 
     QString buffer;
-    for (const auto& it : msgs) {
-        QString timestamp = it.timestamp.toString();
-        ToxPk authorPk(ToxId(it.sender).getPublicKey());
-        QString author = getMsgAuthorDispName(authorPk, it.dispName);
+    for (const TextMessage& m : msgs) {
+        QString timestamp = m.getTime().toString();
+        const ToxPk& authorPk = m.getAuthor();
+        QString author = getMsgAuthorDispName(authorPk);
+        const QString& text = m.getText();
 
-        QString line = QString("%1\t%2\t%3\n").arg(timestamp, author, it.message);
+        QString line = QString("%1\t%2\t%3\n").arg(timestamp, author, text);
         buffer = buffer % line;
     }
     file.write(buffer.toUtf8());
