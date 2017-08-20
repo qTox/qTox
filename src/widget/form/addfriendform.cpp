@@ -179,7 +179,7 @@ void AddFriendForm::onUsernameSet(const QString& username)
     retranslateUi();
 }
 
-static void AddFriendForm::addFriend(const QString& idText)
+void AddFriendForm::addFriend(const QString& idText)
 {
     ToxId friendId(idText);
 
@@ -268,20 +268,17 @@ void AddFriendForm::onImportOpenClicked()
 
 void AddFriendForm::onIdChanged(const QString& id)
 {
-    QString tId = id.trimmed();
-    bool isValidId = tId.isEmpty() || checkIsValidId(tId);
+    const QString tId = id.trimmed();
+    const bool isValidId = tId.isEmpty() || checkIsValidId(tId);
 
-    QString toxIdText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
-    QString toxIdComment(
-        tr("either 76 hexadecimal characters or name@example.com", "Tox ID format description"));
+    const QString toxIdText(tr("Tox ID",
+                               "Tox ID of the person you're sending a friend request to"));
+    const QString toxIdComment(tr("either 76 hexadecimal characters or name@example.com",
+                                  "Tox ID format description"));
 
-    if (isValidId) {
-        toxIdLabel.setText(toxIdText + QStringLiteral(" (") + toxIdComment + QStringLiteral(")"));
-    } else {
-        toxIdLabel.setText(toxIdText + QStringLiteral(" <font color='red'>(") + toxIdComment
-                           + QStringLiteral(")</font>"));
-    }
-
+    const QString labelText = isValidId ? QStringLiteral("%1 (%2)")
+                                        : QStringLiteral("%1 <font color='red'>(%2)</font>");
+    toxIdLabel.setText(labelText.arg(toxIdText, toxIdComment));
     toxId.setStyleSheet(isValidId ? QStringLiteral("")
                                   : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
     toxId.setToolTip(isValidId ? QStringLiteral("") : tr("Invalid Tox ID format"));
@@ -291,17 +288,18 @@ void AddFriendForm::onIdChanged(const QString& id)
 
 void AddFriendForm::setIdFromClipboard()
 {
-    QClipboard* clipboard = QApplication::clipboard();
-    QString id = clipboard->text().trimmed();
+    const QClipboard* clipboard = QApplication::clipboard();
+    const QString id = clipboard->text().trimmed();
     const Core* core = Core::getInstance();
-    if (core->isReady() && !id.isEmpty() && ToxId::isToxId(id) && ToxId(id) != core->getSelfId()) {
+    const bool isSelf = core->isReady() && ToxId(id) != core->getSelfId();
+    if (!id.isEmpty() && ToxId::isToxId(id) && isSelf) {
         toxId.setText(id);
     }
 }
 
 void AddFriendForm::deleteFriendRequest(const ToxId& toxId)
 {
-    int size = Settings::getInstance().getFriendRequestSize();
+    const int size = Settings::getInstance().getFriendRequestSize();
     for (int i = 0; i < size; ++i) {
         Settings::Request request = Settings::getInstance().getFriendRequest(i);
         if (toxId == ToxId(request.address)) {
@@ -315,12 +313,12 @@ void AddFriendForm::onFriendRequestAccepted()
 {
     QPushButton* acceptButton = static_cast<QPushButton*>(sender());
     QWidget* friendWidget = acceptButton->parentWidget();
-    int index = requestsLayout->indexOf(friendWidget);
+    const int index = requestsLayout->indexOf(friendWidget);
+    const int indexFromEnd = requestsLayout->count() - index - 1;
     removeFriendRequestWidget(friendWidget);
-    Settings::Request request =
-        Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1);
+    const Settings::Request request = Settings::getInstance().getFriendRequest(indexFromEnd);
     emit friendRequestAccepted(ToxId(request.address).getPublicKey());
-    Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
+    Settings::getInstance().removeFriendRequest(indexFromEnd);
     Settings::getInstance().savePersonal();
 }
 
@@ -328,9 +326,10 @@ void AddFriendForm::onFriendRequestRejected()
 {
     QPushButton* rejectButton = static_cast<QPushButton*>(sender());
     QWidget* friendWidget = rejectButton->parentWidget();
-    int index = requestsLayout->indexOf(friendWidget);
+    const int index = requestsLayout->indexOf(friendWidget);
+    const int indexFromEnd = requestsLayout->count() - index - 1;
     removeFriendRequestWidget(friendWidget);
-    Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
+    Settings::getInstance().removeFriendRequest(indexFromEnd);
     Settings::getInstance().savePersonal();
 }
 
