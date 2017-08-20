@@ -196,8 +196,8 @@ void AddFriendForm::addFriend(const QString& idText)
     deleteFriendRequest(friendId);
     if (friendId == Core::getInstance()->getSelfId()) {
         GUI::showWarning(tr("Couldn't add friend"),
-                         tr("You can't add yourself as a friend!",
-                            "When trying to add your own Tox ID as friend"));
+                         //: When trying to add your own Tox ID as friend
+                         tr("You can't add yourself as a friend!"));
     } else {
         emit friendRequested(friendId, getMessage());
     }
@@ -239,8 +239,8 @@ void AddFriendForm::onImportOpenClicked()
     QFile contactFile(path);
     if (!contactFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         GUI::showWarning(tr("Couldn't open file"),
-                         tr("Couldn't open the contact file",
-                            "Error message when trying to open a contact list file to import"));
+                         //: Error message when trying to open a contact list file to import
+                         tr("Couldn't open the contact file"));
         return;
     }
 
@@ -271,10 +271,10 @@ void AddFriendForm::onIdChanged(const QString& id)
     const QString tId = id.trimmed();
     const bool isValidId = tId.isEmpty() || checkIsValidId(tId);
 
-    const QString toxIdText(tr("Tox ID",
-                               "Tox ID of the person you're sending a friend request to"));
-    const QString toxIdComment(tr("either 76 hexadecimal characters or name@example.com",
-                                  "Tox ID format description"));
+    //: Tox ID of the person you're sending a friend request to
+    const QString toxIdText(tr("Tox ID"));
+    //: Tox ID format description
+    const QString toxIdComment(tr("either 76 hexadecimal characters or name@example.com"));
 
     const QString labelText = isValidId ? QStringLiteral("%1 (%2)")
                                         : QStringLiteral("%1 <font color='red'>(%2)</font>");
@@ -345,26 +345,23 @@ void AddFriendForm::onCurrentChanged(int index)
 void AddFriendForm::retranslateUi()
 {
     headLabel.setText(tr("Add Friends"));
-    static const QString messageLabelText = tr("Message",
-                                               "The message you send in friend requests");
+    //: The message you send in friend requests
+    static const QString messageLabelText = tr("Message");
     messageLabel.setText(messageLabelText);
     importMessageLabel.setText(messageLabelText);
-    importFileButton.setText(tr("Open", "Button to choose a file with a list of contacts to import"));
+    //: Button to choose a file with a list of contacts to import
+    importFileButton.setText(tr("Open"));
     importSendButton.setText(tr("Send friend requests"));
     sendButton.setText(tr("Send friend request"));
-    message.setPlaceholderText(tr("%1 here! Tox me maybe?", "Default message in friend requests if "
-                                                            "the field is left blank. Write "
-                                                            "something appropriate!")
-                                   .arg(lastUsername));
+    //: Default message in friend requests if the field is left blank. Write something appropriate!
+    message.setPlaceholderText(tr("%1 here! Tox me maybe?").arg(lastUsername));
     importMessage.setPlaceholderText(message.placeholderText());
 
-    if (contactsToImport.isEmpty()) {
-        importFileLabel.setText(tr("Import a list of contacts, one Tox ID per line"));
-    } else {
-        importFileLabel.setText(tr("Ready to import %n contact(s), click send to confirm",
-                                   "Shows the number of contacts we're about to import from a file"
-                                   " (at least one)", contactsToImport.size()));
-    }
+    importFileLabel.setText(contactsToImport.isEmpty()
+            ? tr("Import a list of contacts, one Tox ID per line")
+            //: Shows the number of contacts we're about to import from a file (at least one)
+            : tr("Ready to import %n contact(s), click send to confirm", "",
+                 contactsToImport.size()));
 
     onIdChanged(toxId.text());
 
