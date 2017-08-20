@@ -104,8 +104,7 @@ AddFriendForm::AddFriendForm()
     retranslateUi();
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
 
-    int size = Settings::getInstance().getFriendRequestSize();
-
+    const int size = Settings::getInstance().getFriendRequestSize();
     for (int i = 0; i < size; ++i) {
         Settings::Request request = Settings::getInstance().getFriendRequest(i);
         addFriendRequestWidget(request.address, request.message);
@@ -140,7 +139,7 @@ void AddFriendForm::show(ContentLayout* contentLayout)
 
     // Fix #3421
     // Needed to update tab after opening window
-    int index = tabWidget->currentIndex();
+    const int index = tabWidget->currentIndex();
     onCurrentChanged(index);
 }
 
@@ -180,16 +179,16 @@ void AddFriendForm::onUsernameSet(const QString& username)
     retranslateUi();
 }
 
-void AddFriendForm::onSendTriggered()
+static void AddFriendForm::addFriend(const QString& idText)
 {
-    QString idText = toxId.text().trimmed();
     ToxId friendId(idText);
 
     if (!friendId.isValid()) {
         friendId = Toxme::lookup(idText); // Try Toxme
         if (!friendId.isValid()) {
             GUI::showWarning(tr("Couldn't add friend"),
-                             tr("This Tox ID is invalid or does not exist", "Toxme error"));
+                             tr("%1 Tox ID is invalid or does not exist", "Toxme error")
+                             .arg(idText));
             return;
         }
     }
@@ -202,6 +201,12 @@ void AddFriendForm::onSendTriggered()
     } else {
         emit friendRequested(friendId, getMessage());
     }
+}
+
+void AddFriendForm::onSendTriggered()
+{
+    const QString idText = toxId.text().trimmed();
+    addFriend(idText);
 
     this->toxId.clear();
     this->message.clear();
@@ -209,26 +214,8 @@ void AddFriendForm::onSendTriggered()
 
 void AddFriendForm::onImportSendClicked()
 {
-    for (QString& idText : contactsToImport)
-    {
-        ToxId friendId(idText);
-
-        if (!friendId.isValid())
-        {
-            friendId = Toxme::lookup(idText); // Try Toxme
-            if (!friendId.isValid()) {
-                continue;
-            }
-        }
-
-        deleteFriendRequest(friendId);
-        if (friendId == Core::getInstance()->getSelfId()) {
-            GUI::showWarning(tr("Couldn't add friend"),
-                             tr("You can't add yourself as a friend!",
-                                "When trying to add your own Tox ID as friend"));
-        } else {
-            emit friendRequested(friendId, getImportMessage());
-        }
+    for (const QString& idText : contactsToImport) {
+        addFriend(idText);
     }
 
     contactsToImport.clear();
