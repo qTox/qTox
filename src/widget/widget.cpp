@@ -1677,7 +1677,7 @@ void Widget::onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray in
     }
 }
 
-void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QString& message,
+void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QString& text,
                                     bool isAction)
 {
     Group* g = GroupList::findGroup(groupnumber);
@@ -1689,12 +1689,12 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     ToxPk author = core->getGroupPeerPk(groupnumber, peernumber);
     bool isSelf = author == core->getSelfId().getPublicKey();
 
-    bool targeted =
-        !isSelf && (message.contains(nameMention) || message.contains(sanitizedNameMention));
+    bool targeted = !isSelf && (text.contains(nameMention) || text.contains(sanitizedNameMention));
+    TextMessage message { 0, author, text, QDateTime::currentDateTime(), isAction };
     if (targeted && !isAction) {
-        g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
+        g->getChatForm()->addAlertMessage(message);
     } else {
-        g->getChatForm()->addMessage(author, message, QDateTime::currentDateTime(), isAction);
+        g->getChatForm()->addMessage(message);
     }
 
     newGroupMessageAlert(g->getId(), targeted || Settings::getInstance().getGroupAlwaysNotify());
