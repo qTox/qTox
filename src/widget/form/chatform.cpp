@@ -553,14 +553,15 @@ void ChatForm::onFriendNameChanged(const QString& name)
     }
 }
 
-void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& message, bool isAction)
+void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& text, bool isAction)
 {
     if (friendId != f->getId()) {
         return;
     }
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    addMessage(f->getPublicKey(), message, timestamp, isAction);
+    TextMessage message { 0, f->getPublicKey(), text, timestamp, isAction };
+    addMessage(message);
 }
 
 void ChatForm::onStatusMessage(const QString& message)
@@ -955,32 +956,26 @@ void ChatForm::SendMessageStr(QString msg)
     }
 
     bool isAction = msg.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
-    if (isAction) {
-        msg.remove(0, ACTION_PREFIX.length());
-    }
-
     QStringList splittedMsg = Core::splitMessage(msg, tox_max_message_length());
     QDateTime timestamp = QDateTime::currentDateTime();
 
     for (const QString& part : splittedMsg) {
-        QString historyPart = part;
-        if (isAction) {
-            historyPart = ACTION_PREFIX + part;
-        }
-
         bool status = !Settings::getInstance().getFauxOfflineMessaging();
-        ChatMessage::Ptr ma = createSelfMessage(part, timestamp, isAction, false);
         Core* core = Core::getInstance();
-        uint32_t friendId = f->getId();
-        int rec = isAction ? core->sendAction(friendId, part) : core->sendMessage(friendId, part);
+        const uint32_t friendId = f->getId();
+        const ToxPk selfPk = Core::getInstance()->getSelfId().getPublicKey();
+        const TextMessage message { 0, selfPk, part, QDateTime() };
+        const int rec = isAction ? core->sendAction(friendId, message.getText())
+                                 : core->sendMessage(friendId, message.getText());
+        ChatMessage::Ptr ma = createSelfMessage(message, false);
 
         Profile* profile = Nexus::getProfile();
         if (profile->isHistoryEnabled()) {
             auto* offMsgEngine = getOfflineMsgEngine();
-            QString selfPk = Core::getInstance()->getSelfId().toString();
-            QString pk = f->getPublicKey().toString();
-            QString name = Core::getInstance()->getUsername();
-            profile->getHistory()->addNewMessage(pk, historyPart, selfPk, timestamp, status, name,
+            const QString selfPkStr = selfPk.toString();
+            const QString pk = f->getPublicKey().toString();
+            const QString name = Core::getInstance()->getUsername();
+            profile->getHistory()->addNewMessage(pk, part, selfPkStr, timestamp, status, name,
                                                  [offMsgEngine, rec, ma](int64_t id) {
                                                      offMsgEngine->registerReceipt(rec, id, ma);
                                                  });
