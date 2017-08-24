@@ -72,19 +72,14 @@ static QString getMsgAuthorDispName(const ToxPk& authorPk)
 ChatMessage::Ptr ChatMessage::createChatMessage(const TextMessage& message)
 {
     const QString sender = getMsgAuthorDispName(message.getAuthor());
-    const QString& text = message.getText();
+    const QString& rawMessage = message.getText();
     const MessageType type = message.isAction() ? MessageType::ACTION
                                                 : MessageType::NORMAL;
     // TODO: Maybe extract Core dependency?
     // For example add `ChatMessage::setSelf` or `ChatMessage::makeNameBold`
     const bool isSelf = message.getAuthor() == Core::getInstance()->getSelfPublicKey();
     const QDateTime& time = message.getTime();
-    return createChatMessage(sender, text, type, isSelf, time);
-}
 
-ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
-                                                MessageType type, bool isMe, const QDateTime& date)
-{
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
     QString text = rawMessage.toHtmlEscaped();
@@ -125,21 +120,21 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     // Note: Eliding cannot be enabled for RichText items. (QTBUG-17207)
     QFont baseFont = Settings::getInstance().getChatMessageFont();
     QFont authorFont = baseFont;
-    if (isMe)
+    if (isSelf)
         authorFont.setBold(true);
 
     msg->addColumn(new Text(senderText, authorFont, true, sender,
                             type == ACTION ? actionColor : Qt::black),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(text, baseFont, false, ((type == ACTION) && isMe)
+    msg->addColumn(new Text(text, baseFont, false, ((type == ACTION) && isSelf)
                                                        ? QString("%1 %2").arg(sender, rawMessage)
                                                        : rawMessage),
                    ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0 / 1.6),
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
-    if (!date.isNull())
-        msg->markAsSent(date);
+    if (!time.isNull())
+        msg->markAsSent(time);
 
     return msg;
 }
