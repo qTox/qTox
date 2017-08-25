@@ -153,46 +153,31 @@ static const QVector<StringPair> MIXED_FORMATTING_SPECIAL_CASES {
     PAIR_FORMAT("aaa *aaa /aaa* aaa/", "aaa *aaa <i>aaa* aaa</i>"),
 };
 
-static const StringToString urlCases{
-    {QStringLiteral("https://github.com/qTox/qTox/issues/4233"),
-     QStringLiteral("<a href=\"https://github.com/qTox/qTox/issues/4233\">"
-                    "https://github.com/qTox/qTox/issues/4233</a>")},
-    {QStringLiteral("No conflicts with /italic https://github.com/qTox/qTox/issues/4233 font/"),
-     QStringLiteral("No conflicts with <i>italic "
-                    "<a href=\"https://github.com/qTox/qTox/issues/4233\">"
-                    "https://github.com/qTox/qTox/issues/4233</a> font</i>")},
-    {QStringLiteral("www.youtube.com"),
-     QStringLiteral("<a href=\"http://www.youtube.com\">www.youtube.com</a>")},
-    {QStringLiteral("https://url.com/some*url/some*more*url/"),
-     QStringLiteral("<a href=\"https://url.com/some*url/some*more*url/\">"
-                    "https://url.com/some*url/some*more*url/</a>")},
-    {QStringLiteral("https://url.com/some_url/some_more_url/"),
-     QStringLiteral("<a href=\"https://url.com/some_url/some_more_url/\">"
-                    "https://url.com/some_url/some_more_url/</a>")},
-    {QStringLiteral("https://url.com/some~url/some~more~url/"),
-     QStringLiteral("<a href=\"https://url.com/some~url/some~more~url/\">"
-                    "https://url.com/some~url/some~more~url/</a>")},
-    {QStringLiteral("https://url.com/some`url/some`more`url/"),
-     QStringLiteral("<a href=\"https://url.com/some`url/some`more`url/\">"
-                    "https://url.com/some`url/some`more`url/</a>")},
+#define MAKE_LINK(url) "<a href=\"" url "\">" url "</a>"
+
+static const QVector<QPair<QString, QString>> URL_CASES {
+    PAIR_FORMAT("https://github.com/qTox/qTox/issues/4233",
+                MAKE_LINK("https://github.com/qTox/qTox/issues/4233")),
+    PAIR_FORMAT("www.youtube.com", MAKE_LINK("www.youtube.com")),
+    PAIR_FORMAT("https://url.com/some*url/some*more*url/",
+                MAKE_LINK("https://url.com/some*url/some*more*url/")),
+    PAIR_FORMAT("https://url.com/some_url/some_more_url/",
+                MAKE_LINK("https://url.com/some_url/some_more_url/")),
+    PAIR_FORMAT("https://url.com/some~url/some~more~url/",
+                MAKE_LINK("https://url.com/some~url/some~more~url/")),
     // Test case from issue #4275
-    {QStringLiteral("http://www.metacritic.com/game/pc/mass-effect-andromeda\n"
-                    "http://www.metacritic.com/game/playstation-4/mass-effect-andromeda\n"
-                    "http://www.metacritic.com/game/xbox-one/mass-effect-andromeda"),
-     QStringLiteral("<a href=\"http://www.metacritic.com/game/pc/mass-effect-andromeda\">"
-                    "http://www.metacritic.com/game/pc/mass-effect-andromeda</a>\n"
-                    "<a href=\"http://www.metacritic.com/game/playstation-4/mass-effect-andromeda\""
-                    ">http://www.metacritic.com/game/playstation-4/mass-effect-andromeda</a>\n"
-                    "<a href=\"http://www.metacritic.com/game/xbox-one/mass-effect-andromeda\">"
-                    "http://www.metacritic.com/game/xbox-one/mass-effect-andromeda</a>")},
-    {QStringLiteral("http://site.com/part1/part2 "
-                    "http://site.com/part3 "
-                    "and one more time "
-                    "www.site.com/part1/part2"),
-     QStringLiteral("<a href=\"http://site.com/part1/part2\">http://site.com/part1/part2</a> "
-                    "<a href=\"http://site.com/part3\">http://site.com/part3</a> "
-                    "and one more time "
-                    "<a href=\"http://www.site.com/part1/part2\">www.site.com/part1/part2</a>")},
+    PAIR_FORMAT("http://www.metacritic.com/game/pc/mass-effect-andromeda\n"
+                "http://www.metacritic.com/game/playstation-4/mass-effect-andromeda\n"
+                "http://www.metacritic.com/game/xbox-one/mass-effect-andromeda",
+                MAKE_LINK("http://www.metacritic.com/game/pc/mass-effect-andromeda") "\n"
+                MAKE_LINK("http://www.metacritic.com/game/playstation-4/mass-effect-andromeda") "\n"
+                MAKE_LINK("http://www.metacritic.com/game/xbox-one/mass-effect-andromeda")),
+    PAIR_FORMAT("http://site.com/part1/part2 "
+                "http://site.com/part3 and one more time "
+                "www.site.com/part1/part2",
+                MAKE_LINK("http://site.com/part1/part2") " "
+                MAKE_LINK("http://site.com/part3") " and one more time "
+                MAKE_LINK("www.site.com/part1/part2")),
 };
 
 #undef PAIR_FORMAT
@@ -276,6 +261,23 @@ static void specialCasesTest(MarkdownFunction applyMarkdown,
     }
 }
 
+using UrlHighlightFunction = QString(*)(const QString&);
+
+/**
+ * @brief Function for testing URL highlighting
+ * @param data Test data - map of "URL - HTML-wrapped URL"
+ */
+static void urlHighlightTest(UrlHighlightFunction function, const QVector<QPair<QString, QString>>& data)
+{
+    for (const QPair<QString, QString>& p : data) {
+        qDebug() << "Input:" << p.first;
+        qDebug() << "Output:" << p.second;
+        QString result = function(p.first);
+        qDebug() << "Observed output:" << result;
+        QVERIFY(p.second == result);
+    }
+}
+
 class TestTextFormatter : public QObject
 {
     Q_OBJECT
@@ -293,8 +295,10 @@ private slots:
     void singleAndDoubleMarkdownExceptionsShowSymbols();
     void singleAndDoubleMarkdownExceptionsHideSymbols();
     void mixedFormattingSpecialCases();
+    void urlTest();
 private:
-    MarkdownFunction markdownFunction;
+    const MarkdownFunction markdownFunction = applyMarkdown;
+    UrlHighlightFunction urlHighlightFunction = highlightURL;
 };
 
 static QString commonWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
@@ -441,6 +445,11 @@ void TestTextFormatter::singleAndDoubleMarkdownExceptionsHideSymbols()
 void TestTextFormatter::mixedFormattingSpecialCases()
 {
     specialCasesTest(markdownFunction, MIXED_FORMATTING_SPECIAL_CASES);
+}
+
+void TestTextFormatter::urlTest()
+{
+    urlHighlightTest(urlHighlightFunction, URL_CASES);
 }
 
 QTEST_GUILESS_MAIN(TestTextFormatter)
