@@ -27,16 +27,16 @@
 class GroupInvite
 {
 public:
-    GroupInvite(int32_t friendID, uint8_t inviteType, const QByteArray& data);
+    GroupInvite(uint32_t friendId, uint8_t inviteType, const QByteArray& data);
     bool operator==(const GroupInvite& other) const;
 
-    int32_t getFriendId() const;
+    uint32_t getFriendId() const;
     uint8_t getType() const;
     QByteArray getInvite() const;
     QDateTime getInviteDate() const;
 
 private:
-    int32_t friendId;
+    uint32_t friendId;
     uint8_t type;
     QByteArray invite;
     QDateTime date;
