@@ -25,8 +25,8 @@
  * @brief This class contains information needed to create a group invite
  */
 
-GroupInvite::GroupInvite(int32_t friendID, uint8_t inviteType, const QByteArray& data)
-    : friendId{friendID}
+GroupInvite::GroupInvite(uint32_t friendId, uint8_t inviteType, const QByteArray& data)
+    : friendId{friendId}
     , type{inviteType}
     , invite{data}
     , date{QDateTime::currentDateTime()}
@@ -39,7 +39,7 @@ bool GroupInvite::operator==(const GroupInvite& other) const
            && date == other.date;
 }
 
-int32_t GroupInvite::getFriendId() const
+uint32_t GroupInvite::getFriendId() const
 {
     return friendId;
 }
