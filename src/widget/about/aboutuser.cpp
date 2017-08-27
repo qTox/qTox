@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QPushButton>
 
 AboutUser::AboutUser(const Friend* f, QWidget* parent)
     : QDialog(parent)
@@ -48,27 +49,40 @@ AboutUser::AboutUser(const Friend* f, QWidget* parent)
     ui->avatar->setPixmap(avatar.isNull() ? QPixmap(":/img/contact_dark.svg") : avatar);
 }
 
-void AboutUser::onAutoAcceptDirClicked()
+/**
+ * @brief Show window for select auto accept directory
+ * @param friendPk
+ * @return
+ */
+static bool selectAutoAcceptDirectory(const ToxPk& friendPk, QPushButton* selectSaveDir)
 {
-    if (!ui->autoacceptfile->isChecked()) {
-        ui->autoacceptfile->setChecked(false);
-        Settings::getInstance().setAutoAcceptDir(friendPk, "");
-        ui->selectSaveDir->setText(tr("Auto accept for this contact is disabled"));
-    } else if (ui->autoacceptfile->isChecked()) {
-        QString dir = QFileDialog::getExistingDirectory(
-                    Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
+    QString dir = Settings::getInstance().getAutoAcceptDir(friendPk);
+    dir = QFileDialog::getExistingDirectory(
+                Q_NULLPTR, AboutUser::tr("Choose an auto accept directory", "popup title"), dir);
 
-        if (dir.isEmpty()) {
-            ui->autoacceptfile->setChecked(false);
-            return; // user canellced
-        }
-
-        Settings::getInstance().setAutoAcceptDir(friendPk, dir);
-        ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(friendPk));
+    if (dir.isEmpty()) {
+        return false; // user canellced
     }
 
-    Settings::getInstance().saveGlobal();
-    ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
+    Settings::getInstance().setAutoAcceptDir(friendPk, dir);
+    selectSaveDir->setText(dir);
+    return true;
+}
+
+void AboutUser::onAutoAcceptDirClicked()
+{
+    bool autoAccept = ui->autoacceptfile->isChecked();
+    if (autoAccept) {
+        if (!selectAutoAcceptDirectory(friendPk, ui->selectSaveDir)) {
+            ui->autoacceptfile->setChecked(false);
+        }
+    } else {
+        Settings::getInstance().setAutoAcceptDir(friendPk, "");
+        ui->selectSaveDir->setText(tr("Auto accept for this contact is disabled"));
+    }
+
+    Settings::getInstance().savePersonal();
+    ui->selectSaveDir->setEnabled(autoAccept);
 }
 
 void AboutUser::onAutoAcceptCallClicked()
@@ -89,11 +103,8 @@ void AboutUser::onAutoGroupInvite()
 
 void AboutUser::onSelectDirClicked()
 {
-    QString dir = QFileDialog::getExistingDirectory(
-                Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
+    selectAutoAcceptDirectory(friendPk, ui->selectSaveDir);
 
-    ui->autoacceptfile->setChecked(true);
-    Settings::getInstance().setAutoAcceptDir(friendPk, dir);
     Settings::getInstance().savePersonal();
 }
 
