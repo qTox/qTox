@@ -82,7 +82,9 @@ public:
 signals:
     void friendDialogShown(const Friend* f);
     void groupDialogShown(Group* g);
+#ifdef Q_OS_MAC
     void activated();
+#endif
 
 public slots:
     void reorderLayouts(bool newGroupOnTop);
