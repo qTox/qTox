@@ -33,7 +33,6 @@
 #include <cassert>
 #include <ctime>
 
-const QString Core::CONFIG_FILE_NAME = "data";
 const QString Core::TOX_EXT = ".tox";
 QThread* Core::coreThread{nullptr};
 

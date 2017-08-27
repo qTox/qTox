@@ -44,7 +44,6 @@ public:
     ~Core();
 
     static const QString TOX_EXT;
-    static const QString CONFIG_FILE_NAME;
     static QString sanitize(QString name);
     static QStringList splitMessage(const QString& message, int maxLen);
 
