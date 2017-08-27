@@ -245,8 +245,8 @@ set(${PROJECT_NAME}_SOURCES
   src/core/toxstring.h
   src/friendlist.cpp
   src/friendlist.h
-  src/groupinvite.cpp
-  src/groupinvite.h
+  src/model/groupinvite.cpp
+  src/model/groupinvite.h
   src/grouplist.cpp
   src/grouplist.h
   src/ipc.cpp

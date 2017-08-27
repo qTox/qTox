@@ -366,7 +366,7 @@ HEADERS  += \
     src/core/toxpk.h \
     src/core/toxstring.h \
     src/friendlist.h \
-    src/groupinvite.h \
+    src/model/groupinvite.h \
     src/grouplist.h \
     src/ipc.h \
     src/model/about/aboutfriend.h \
@@ -490,7 +490,7 @@ SOURCES += \
     src/core/toxpk.cpp \
     src/core/toxstring.cpp \
     src/friendlist.cpp \
-    src/groupinvite.cpp \
+    src/model/groupinvite.cpp \
     src/grouplist.cpp \
     src/ipc.cpp \
     src/main.cpp \
