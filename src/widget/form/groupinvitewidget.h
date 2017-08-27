@@ -20,7 +20,7 @@
 #ifndef GROUPINVITEWIDGET_H
 #define GROUPINVITEWIDGET_H
 
-#include "src/groupinvite.h"
+#include "src/model/groupinvite.h"
 
 #include <QWidget>
 
