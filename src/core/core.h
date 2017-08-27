@@ -30,6 +30,7 @@
 #include <QObject>
 
 class CoreAV;
+class GroupInvite;
 class Profile;
 class QTimer;
 
@@ -61,7 +62,8 @@ public:
 
     bool isFriendOnline(uint32_t friendId) const;
     bool hasFriendWithPublicKey(const ToxPk& publicKey) const;
-    uint32_t joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey, uint16_t length) const;
+    uint32_t joinGroupchat(const GroupInvite& inviteInfo) const;
+    void quitGroupChat(int groupId) const;
 
     QString getUsername() const;
     Status getStatus() const;
@@ -133,7 +135,7 @@ signals:
     void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
 
     void emptyGroupCreated(int groupnumber);
-    void groupInviteReceived(uint32_t friendId, uint8_t type, QByteArray publicKey);
+    void groupInviteReceived(const GroupInvite& inviteInfo);
     void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
@@ -189,7 +191,7 @@ private:
     static void onConnectionStatusChanged(Tox* tox, uint32_t friendId, TOX_CONNECTION status,
                                           void* core);
     static void onGroupInvite(Tox* tox, uint32_t friendId, TOX_CONFERENCE_TYPE type,
-                              const uint8_t* data, size_t length, void* vCore);
+                              const uint8_t* cookie, size_t length, void* vCore);
     static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_TYPE type,
                                const uint8_t* cMessage, size_t length, void* vCore);
     static void onGroupNamelistChange(Tox* tox, uint32_t groupId, uint32_t peerId,

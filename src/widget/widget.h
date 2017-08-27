@@ -43,6 +43,7 @@ class GenericChatroomWidget;
 class FriendWidget;
 class GroupWidget;
 class Group;
+class GroupInvite;
 class Friend;
 class QSplitter;
 class VideoSurface;
@@ -161,8 +162,8 @@ public slots:
     void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
     void onReceiptRecieved(int friendId, int receipt);
     void onEmptyGroupCreated(int groupId);
-    void onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite);
-    void onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite);
+    void onGroupInviteReceived(const GroupInvite& inviteInfo);
+    void onGroupInviteAccepted(const GroupInvite& inviteInfo);
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
