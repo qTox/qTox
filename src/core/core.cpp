@@ -1225,27 +1225,6 @@ uint32_t Core::joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* frie
     return std::numeric_limits<uint32_t>::max();
 }
 
-/**
- * @brief Quit a groupchat
- */
-void Core::quitGroupChat(int groupId) const
-{
-    TOX_ERR_CONFERENCE_DELETE error;
-    tox_conference_delete(tox, groupId, &error);
-
-    switch (error) {
-    case TOX_ERR_CONFERENCE_DELETE_OK:
-        return;
-
-    case TOX_ERR_CONFERENCE_DELETE_CONFERENCE_NOT_FOUND:
-        qCritical() << "Conference not found";
-        return;
-
-    default:
-        return;
-    }
-}
-
 void Core::groupInviteFriend(uint32_t friendId, int groupId)
 {
     TOX_ERR_CONFERENCE_INVITE error;

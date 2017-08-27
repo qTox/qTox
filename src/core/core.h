@@ -63,7 +63,6 @@ public:
     bool isFriendOnline(uint32_t friendId) const;
     bool hasFriendWithPublicKey(const ToxPk& publicKey) const;
     uint32_t joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey, uint16_t length) const;
-    void quitGroupChat(int groupId) const;
 
     QString getUsername() const;
     Status getStatus() const;
