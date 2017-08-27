@@ -25,6 +25,10 @@
  * @brief This class contains information needed to create a group invite
  */
 
+GroupInvite::GroupInvite()
+{
+}
+
 GroupInvite::GroupInvite(uint32_t friendId, uint8_t inviteType, const QByteArray& data)
     : friendId{friendId}
     , type{inviteType}

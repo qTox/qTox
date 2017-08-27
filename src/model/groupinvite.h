@@ -27,6 +27,7 @@
 class GroupInvite
 {
 public:
+    GroupInvite();
     GroupInvite(uint32_t friendId, uint8_t inviteType, const QByteArray& data);
     bool operator==(const GroupInvite& other) const;
 
