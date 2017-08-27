@@ -21,6 +21,7 @@
 
 #include "ui_mainwindow.h"
 #include "src/core/core.h"
+#include "src/model/groupinvite.h"
 #include "src/nexus.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
@@ -111,29 +112,29 @@ void GroupInviteForm::show(ContentLayout* contentLayout)
 
 /**
  * @brief Adds group invite
- * @param friendId Id of a friend that invited you
- * @param type Type of the invitation - text or AV
- * @param invite Information that invited person needs to see an invitation
+ * @param inviteInfo Object which contains info about group invitation
  * @return true if notification is needed, false otherwise
  */
-bool GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite)
+bool GroupInviteForm::addGroupInvite(const GroupInvite& inviteInfo)
 {
     // supress duplicate invite messages
     for (GroupInviteWidget* existing : invites) {
-        if (existing->getInviteInfo().getInvite() == invite) {
+        if (existing->getInviteInfo().getInvite() == inviteInfo.getInvite()) {
             return false;
         }
     }
-    GroupInviteWidget* widget = new GroupInviteWidget(this, GroupInvite(friendId, type, invite));
+
+    GroupInviteWidget* widget = new GroupInviteWidget(this, inviteInfo);
     scroll->widget()->layout()->addWidget(widget);
     invites.append(widget);
-    connect(widget, &GroupInviteWidget::accepted, [this](const GroupInvite& inviteInfo) {
+    connect(widget, &GroupInviteWidget::accepted, [this] (const GroupInvite& inviteInfo) {
         deleteInviteWidget(inviteInfo);
-        emit groupInviteAccepted(inviteInfo.getFriendId(), inviteInfo.getType(),
-                                 inviteInfo.getInvite());
+        emit groupInviteAccepted(inviteInfo);
     });
-    connect(widget, &GroupInviteWidget::rejected,
-            [this](const GroupInvite& inviteInfo) { deleteInviteWidget(inviteInfo); });
+
+    connect(widget, &GroupInviteWidget::rejected, [this] (const GroupInvite& inviteInfo) {
+        deleteInviteWidget(inviteInfo);
+    });
     if (isVisible()) {
         emit groupInvitesSeen();
         return false;
