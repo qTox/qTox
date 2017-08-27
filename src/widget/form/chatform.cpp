@@ -898,10 +898,10 @@ void ChatForm::stopCounter(bool error)
     }
     QString dhms = secondsToDHMS(timeElapsed.elapsed() / 1000);
     QString name = f->getDisplayedName();
-    QString mess = error ? "Call with %1 ended unexpectedly. %2" : "Call with %1 ended. %2";
+    QString mess = error ? tr("Call with %1 ended unexpectedly. %2") : tr("Call with %1 ended. %2");
     // TODO: add notification once notifications are implemented
 
-    addSystemInfoMessage(tr(mess.toStdString().c_str()).arg(name, dhms), ChatMessage::INFO,
+    addSystemInfoMessage(mess.arg(name, dhms), ChatMessage::INFO,
                          QDateTime::currentDateTime());
     callDurationTimer->stop();
     callDuration->setText("");
