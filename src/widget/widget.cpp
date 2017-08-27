@@ -44,6 +44,7 @@
 #include "friendlistwidget.h"
 #include "friendwidget.h"
 #include "groupwidget.h"
+#include "src/model/groupinvite.h"
 #include "maskablepixmapwidget.h"
 #include "splitterrestorer.h"
 #include "systemtrayicon.h"
@@ -1645,33 +1646,35 @@ void Widget::copyFriendIdToClipboard(int friendId)
     }
 }
 
-void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite)
+void Widget::onGroupInviteReceived(const GroupInvite& inviteInfo)
 {
-    Friend* f = FriendList::findFriend(friendId);
+    const uint32_t friendId = inviteInfo.getFriendId();
+    const Friend* f = FriendList::findFriend(friendId);
     updateFriendActivity(f);
 
-    if (type == TOX_CONFERENCE_TYPE_TEXT || type == TOX_CONFERENCE_TYPE_AV) {
+    const uint8_t confType = inviteInfo.getType();
+    if (confType == TOX_CONFERENCE_TYPE_TEXT || confType == TOX_CONFERENCE_TYPE_AV) {
         if (Settings::getInstance().getAutoGroupInvite(f->getPublicKey())) {
-            onGroupInviteAccepted(friendId, type, invite);
+            onGroupInviteAccepted(inviteInfo);
         } else {
-            if (!groupInviteForm->addGroupInvite(friendId, type, invite)) {
+            if (!groupInviteForm->addGroupInvite(inviteInfo)) {
                 return;
             }
+
             ++unreadGroupInvites;
             groupInvitesUpdate();
             newMessageAlert(window(), isActiveWindow(), true, true);
         }
     } else {
-        qWarning() << "onGroupInviteReceived: Unknown groupchat type:" << type;
+        qWarning() << "onGroupInviteReceived: Unknown groupchat type:" << confType;
         return;
     }
 }
 
-void Widget::onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite)
+void Widget::onGroupInviteAccepted(const GroupInvite& inviteInfo)
 {
-    int groupId =
-        Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
-    if (groupId < 0) {
+    const uint32_t groupId = Core::getInstance()->joinGroupchat(inviteInfo);
+    if (groupId == std::numeric_limits<uint32_t>::max()) {
         qWarning() << "onGroupInviteAccepted: Unable to accept group invite";
         return;
     }

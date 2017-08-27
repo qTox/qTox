@@ -20,12 +20,12 @@
 #ifndef GROUPINVITEFORM_H
 #define GROUPINVITEFORM_H
 
-#include "src/model/groupinvite.h"
 #include "src/widget/gui.h"
 
 #include <QWidget>
 
 class ContentLayout;
+class GroupInvite;
 class GroupInviteWidget;
 
 class QGroupBox;
@@ -46,12 +46,12 @@ public:
     ~GroupInviteForm();
 
     void show(ContentLayout* contentLayout);
-    bool addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite);
+    bool addGroupInvite(const GroupInvite& inviteInfo);
     bool isShown() const;
 
 signals:
     void groupCreate(uint8_t type);
-    void groupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite);
+    void groupInviteAccepted(const GroupInvite& inviteInfo);
     void groupInvitesSeen();
 
 protected:

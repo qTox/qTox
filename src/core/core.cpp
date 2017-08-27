@@ -22,6 +22,7 @@
 #include "corefile.h"
 #include "src/core/coreav.h"
 #include "src/core/toxstring.h"
+#include "src/model/groupinvite.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
@@ -490,20 +491,21 @@ void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, TOX_CONNECTION sta
     }
 }
 
-void Core::onGroupInvite(Tox*, uint32_t friendId, TOX_CONFERENCE_TYPE type, const uint8_t* data,
+void Core::onGroupInvite(Tox*, uint32_t friendId, TOX_CONFERENCE_TYPE type, const uint8_t* cookie,
                          size_t length, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
-    QByteArray pk((char*)data, length);
+    const QByteArray data(static_cast<const char*>(static_cast<const void*>(cookie)), length);
+    const GroupInvite inviteInfo(friendId, type, data);
     switch (type) {
     case TOX_CONFERENCE_TYPE_TEXT:
         qDebug() << QString("Text group invite by %1").arg(friendId);
-        emit core->groupInviteReceived(friendId, type, pk);
+        emit core->groupInviteReceived(inviteInfo);
         break;
 
     case TOX_CONFERENCE_TYPE_AV:
         qDebug() << QString("AV group invite by %1").arg(friendId);
-        emit core->groupInviteReceived(friendId, type, pk);
+        emit core->groupInviteReceived(inviteInfo);
         break;
 
     default:
@@ -1193,32 +1195,33 @@ bool Core::parseConferenceJoinError(TOX_ERR_CONFERENCE_JOIN error) const
 
 /**
  * @brief Accept a groupchat invite.
- * @param friendId Id of friend in friend list.
- * @param type Chat type (TEXT or AV).
- * @param friendGroupPK Received via the `conference_invite` event.
- * @param length The size of @friend_group_public_key.
+ * @param inviteInfo Object which contains info about group invitation
  *
  * @return Conference number on success, UINT32_MAX on failure.
  */
-uint32_t Core::joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* friendGroupPK,
-                             uint16_t length) const
+uint32_t Core::joinGroupchat(const GroupInvite& inviteInfo) const
 {
-    switch (type) {
+    const uint32_t friendId = inviteInfo.getFriendId();
+    const uint8_t confType = inviteInfo.getType();
+    const QByteArray invite = inviteInfo.getInvite();
+    const uint8_t* cookie = static_cast<const uint8_t*>(static_cast<const void*>(invite.data()));
+    const size_t cookieLength = invite.length();
+    switch (confType) {
     case TOX_CONFERENCE_TYPE_TEXT: {
         qDebug() << QString("Trying to join text groupchat invite sent by friend %1").arg(friendId);
         TOX_ERR_CONFERENCE_JOIN error;
-        uint32_t groupId = tox_conference_join(tox, friendId, friendGroupPK, length, &error);
+        uint32_t groupId = tox_conference_join(tox, friendId, cookie, cookieLength, &error);
         return parseConferenceJoinError(error) ? groupId : std::numeric_limits<uint32_t>::max();
     }
 
     case TOX_CONFERENCE_TYPE_AV: {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendId);
-        return toxav_join_av_groupchat(tox, friendId, friendGroupPK, length,
+        return toxav_join_av_groupchat(tox, friendId, cookie, cookieLength,
                                        CoreAV::groupCallCallback, const_cast<Core*>(this));
     }
 
     default:
-        qWarning() << "joinGroupchat: Unknown groupchat type " << type;
+        qWarning() << "joinGroupchat: Unknown groupchat type " << confType;
     }
 
     return std::numeric_limits<uint32_t>::max();
