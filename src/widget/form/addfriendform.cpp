@@ -314,8 +314,8 @@ void AddFriendForm::onFriendRequestAccepted()
     QPushButton* acceptButton = static_cast<QPushButton*>(sender());
     QWidget* friendWidget = acceptButton->parentWidget();
     const int index = requestsLayout->indexOf(friendWidget);
-    const int indexFromEnd = requestsLayout->count() - index - 1;
     removeFriendRequestWidget(friendWidget);
+    const int indexFromEnd = requestsLayout->count() - index - 1;
     const Settings::Request request = Settings::getInstance().getFriendRequest(indexFromEnd);
     emit friendRequestAccepted(ToxId(request.address).getPublicKey());
     Settings::getInstance().removeFriendRequest(indexFromEnd);
@@ -327,8 +327,8 @@ void AddFriendForm::onFriendRequestRejected()
     QPushButton* rejectButton = static_cast<QPushButton*>(sender());
     QWidget* friendWidget = rejectButton->parentWidget();
     const int index = requestsLayout->indexOf(friendWidget);
-    const int indexFromEnd = requestsLayout->count() - index - 1;
     removeFriendRequestWidget(friendWidget);
+    const int indexFromEnd = requestsLayout->count() - index - 1;
     Settings::getInstance().removeFriendRequest(indexFromEnd);
     Settings::getInstance().savePersonal();
 }
