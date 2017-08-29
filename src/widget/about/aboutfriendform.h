@@ -1,24 +1,23 @@
-#ifndef ABOUTUSER_H
-#define ABOUTUSER_H
+#ifndef ABOUT_USER_FORM_H
+#define ABOUT_USER_FORM_H
 
 #include "src/model/friend.h"
 #include <QDialog>
 
-
 namespace Ui {
-class AboutUser;
+class AboutFriendForm;
 }
 
-class AboutUser : public QDialog
+class AboutFriendForm : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit AboutUser(const Friend* f, QWidget* parent = 0);
-    ~AboutUser();
+    explicit AboutFriendForm(const Friend* f, QWidget* parent = 0);
+    ~AboutFriendForm();
 
 private:
-    Ui::AboutUser* ui;
+    Ui::AboutFriendForm* ui;
     ToxPk friendPk;
 
 private slots:
@@ -30,4 +29,4 @@ private slots:
     void onRemoveHistoryClicked();
 };
 
-#endif // ABOUTUSER_H
+#endif // ABOUT_USER_FORM_H
