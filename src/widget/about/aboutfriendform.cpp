@@ -1,5 +1,5 @@
-#include "aboutuser.h"
-#include "ui_aboutuser.h"
+#include "aboutfriendform.h"
+#include "ui_aboutfriendform.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
@@ -8,20 +8,20 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-AboutUser::AboutUser(const Friend* f, QWidget* parent)
+AboutFriendForm::AboutFriendForm(const Friend* f, QWidget* parent)
     : QDialog(parent)
-    , ui(new Ui::AboutUser)
+    , ui(new Ui::AboutFriendForm)
 {
     ui->setupUi(this);
     ui->label_4->hide();
     ui->aliases->hide();
 
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutUser::onAcceptedClicked);
-    connect(ui->autoacceptfile, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptDirClicked);
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutFriendForm::onAcceptedClicked);
+    connect(ui->autoacceptfile, &QCheckBox::clicked, this, &AboutFriendForm::onAutoAcceptDirClicked);
     connect(ui->autoacceptcall, SIGNAL(activated(int)), this, SLOT(onAutoAcceptCallClicked(void)));
-    connect(ui->autogroupinvite, &QCheckBox::clicked, this, &AboutUser::onAutoGroupInvite);
-    connect(ui->selectSaveDir, &QPushButton::clicked, this, &AboutUser::onSelectDirClicked);
-    connect(ui->removeHistory, &QPushButton::clicked, this, &AboutUser::onRemoveHistoryClicked);
+    connect(ui->autogroupinvite, &QCheckBox::clicked, this, &AboutFriendForm::onAutoGroupInvite);
+    connect(ui->selectSaveDir, &QPushButton::clicked, this, &AboutFriendForm::onSelectDirClicked);
+    connect(ui->removeHistory, &QPushButton::clicked, this, &AboutFriendForm::onRemoveHistoryClicked);
 
     friendPk = f->getPublicKey();
     Settings& s = Settings::getInstance();
@@ -48,7 +48,7 @@ AboutUser::AboutUser(const Friend* f, QWidget* parent)
     ui->avatar->setPixmap(avatar.isNull() ? QPixmap(":/img/contact_dark.svg") : avatar);
 }
 
-void AboutUser::onAutoAcceptDirClicked()
+void AboutFriendForm::onAutoAcceptDirClicked()
 {
     if (!ui->autoacceptfile->isChecked()) {
         ui->autoacceptfile->setChecked(false);
@@ -71,7 +71,7 @@ void AboutUser::onAutoAcceptDirClicked()
     ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
 }
 
-void AboutUser::onAutoAcceptCallClicked()
+void AboutFriendForm::onAutoAcceptCallClicked()
 {
     QFlag flag = QFlag(ui->autoacceptcall->currentIndex());
     Settings::getInstance().setAutoAcceptCall(friendPk, Settings::AutoAcceptCallFlags(flag));
@@ -81,13 +81,13 @@ void AboutUser::onAutoAcceptCallClicked()
 /**
  * @brief Sets the AutoGroupinvite status and saves the settings.
  */
-void AboutUser::onAutoGroupInvite()
+void AboutFriendForm::onAutoGroupInvite()
 {
     Settings::getInstance().setAutoGroupInvite(friendPk, ui->autogroupinvite->isChecked());
     Settings::getInstance().savePersonal();
 }
 
-void AboutUser::onSelectDirClicked()
+void AboutFriendForm::onSelectDirClicked()
 {
     QString dir = QFileDialog::getExistingDirectory(
                 Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
@@ -100,13 +100,13 @@ void AboutUser::onSelectDirClicked()
 /**
  * @brief Called when user clicks the bottom OK button, save all settings
  */
-void AboutUser::onAcceptedClicked()
+void AboutFriendForm::onAcceptedClicked()
 {
     Settings::getInstance().setContactNote(friendPk, ui->note->toPlainText());
     Settings::getInstance().saveGlobal();
 }
 
-void AboutUser::onRemoveHistoryClicked()
+void AboutFriendForm::onRemoveHistoryClicked()
 {
     History* history = Nexus::getProfile()->getHistory();
     if (history) {
@@ -117,7 +117,7 @@ void AboutUser::onRemoveHistoryClicked()
                              .arg(ui->userName->text().toHtmlEscaped()), QMessageBox::Ok);
 }
 
-AboutUser::~AboutUser()
+AboutFriendForm::~AboutFriendForm()
 {
     delete ui;
 }
