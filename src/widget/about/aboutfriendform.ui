@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AboutUser</class>
+ <class>AboutFriendForm</class>
  <widget class="QDialog" name="AboutUser">
   <property name="geometry">
    <rect>
