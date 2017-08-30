@@ -6,13 +6,14 @@
 #include <QObject>
 
 class Friend;
+class IFriendSettings;
 
 class AboutFriend : public IAboutFriend
 {
     Q_OBJECT
 
 public:
-    explicit AboutFriend(const Friend* f);
+    explicit AboutFriend(const Friend* f, IFriendSettings* settings);
 
     QString getName() const override;
     QString getStatusMessage() const override;
@@ -36,6 +37,7 @@ public:
 
 private:
     const Friend* f;
+    IFriendSettings* const settings;
 };
 
 #endif // ABOUT_FRIEND_H
