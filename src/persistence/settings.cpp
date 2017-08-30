@@ -2107,6 +2107,12 @@ void Settings::setFriendActivity(const ToxPk& id, const QDate& activity)
     }
 }
 
+void Settings::saveFriendSettings(const ToxPk& id)
+{
+    Q_UNUSED(id);
+    savePersonal();
+}
+
 void Settings::removeFriendSettings(const ToxPk& id)
 {
     QMutexLocker locker{&bigLock};
