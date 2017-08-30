@@ -880,6 +880,12 @@ QSplitter:handle{
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>15</height>
+                  </size>
+                 </property>
                  <property name="palette">
                   <palette>
                    <active>
