@@ -3,16 +3,19 @@
 
 #include "iaboutfriend.h"
 
+#include "src/persistence/ifriendsettings.h"
+
 #include <QObject>
 
 class Friend;
+class IFriendSettings;
 
 class AboutFriend : public IAboutFriend
 {
     Q_OBJECT
 
 public:
-    explicit AboutFriend(const Friend* f);
+    AboutFriend(const Friend* f, IFriendSettings* const settings);
 
     QString getName() const override;
     QString getStatusMessage() const override;
@@ -47,6 +50,7 @@ public:
 
 private:
     const Friend* const f;
+    IFriendSettings* const settings;
 };
 
 #endif // ABOUT_FRIEND_H

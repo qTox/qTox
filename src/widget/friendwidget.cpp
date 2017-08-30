@@ -230,7 +230,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
         }
     } else if (selectedItem == aboutWindow) {
         const Friend* const f = FriendList::findFriend(friendId);
-        const QPointer<IAboutFriend> about = new AboutFriend(f);
+        const QPointer<IAboutFriend> about = new AboutFriend(f, &Settings::getInstance());
         AboutFriendForm* aboutUser = new AboutFriendForm(about, Widget::getInstance());
         aboutUser->show();
     } else if (selectedItem == newGroupAction) {
