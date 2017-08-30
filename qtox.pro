@@ -369,6 +369,8 @@ HEADERS  += \
     src/groupinvite.h \
     src/grouplist.h \
     src/ipc.h \
+    src/model/about/aboutfriend.h \
+    src/model/about/iaboutfriend.h \
     src/model/contact.h \
     src/model/friend.h \
     src/model/group.h \
@@ -492,6 +494,7 @@ SOURCES += \
     src/grouplist.cpp \
     src/ipc.cpp \
     src/main.cpp \
+    src/model/about/aboutfriend.cpp \
     src/model/contact.cpp \
     src/model/friend.cpp \
     src/model/group.cpp \
