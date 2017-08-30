@@ -234,7 +234,7 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
         return;
     }
 
-    db->execLater(generateNewMessageQueries(friendPk, message, sender, time, isSent, dispName,
+    db->execNow(generateNewMessageQueries(friendPk, message, sender, time, isSent, dispName,
                                             insertIdCallback));
 }
 
