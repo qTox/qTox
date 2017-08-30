@@ -23,6 +23,7 @@ private:
     QPointer<IAboutFriend> about;
 
 private slots:
+    void onAutoAcceptDirChanged(const QString& path);
     void onAcceptedClicked();
     void onAutoAcceptDirClicked();
     void onAutoAcceptCallClicked();
