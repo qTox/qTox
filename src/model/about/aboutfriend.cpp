@@ -12,10 +12,9 @@ AboutFriend::AboutFriend(const Friend* f)
     connect(s, &Settings::contactNoteChanged, [=](const ToxPk& pk, const QString& note) {
         emit noteChanged(note);
     });
-    connect(s, &Settings::autoAcceptCallChanged, [=](const ToxPk& pk, Settings::AutoAcceptCallFlags flag) {
-        const int value = static_cast<int>(Settings::getInstance().getAutoAcceptCall(pk));
-        const AutoAcceptCallFlags sFlag = static_cast<IAboutFriend::AutoAcceptCall>(value);
-        emit autoAcceptCallChanged(sFlag);
+    connect(s, &Settings::autoAcceptCallChanged,
+            [=](const ToxPk& pk, IFriendSettings::AutoAcceptCallFlags flag) {
+        emit autoAcceptCallChanged(flag);
     });
     connect(s, &Settings::autoAcceptDirChanged, [=](const ToxPk& pk, const QString& dir) {
         emit autoAcceptDirChanged(dir);
@@ -74,19 +73,16 @@ void AboutFriend::setAutoAcceptDir(const QString& path)
     Settings::getInstance().savePersonal();
 }
 
-IAboutFriend::AutoAcceptCallFlags AboutFriend::getAutoAcceptCall() const
+IFriendSettings::AutoAcceptCallFlags AboutFriend::getAutoAcceptCall() const
 {
     const ToxPk pk = f->getPublicKey();
-    const int value = static_cast<int>(Settings::getInstance().getAutoAcceptCall(pk));
-    return static_cast<IAboutFriend::AutoAcceptCallFlags>(value);
+    return Settings::getInstance().getAutoAcceptCall(pk);
 }
 
-void AboutFriend::setAutoAcceptCall(AutoAcceptCallFlags flag)
+void AboutFriend::setAutoAcceptCall(IFriendSettings::AutoAcceptCallFlags flag)
 {
     const ToxPk pk = f->getPublicKey();
-    const int value = static_cast<int>(flag);
-    const Settings::AutoAcceptCallFlags sFlag(value);
-    Settings::getInstance().setAutoAcceptCall(pk, sFlag);
+    Settings::getInstance().setAutoAcceptCall(pk, flag);
     Settings::getInstance().savePersonal();
 }
 

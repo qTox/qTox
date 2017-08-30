@@ -19,7 +19,7 @@ AboutFriendForm::AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent)
     connect(ui->autogroupinvite, &QCheckBox::clicked, this, &AboutFriendForm::onAutoGroupInvite);
     connect(ui->selectSaveDir, &QPushButton::clicked, this, &AboutFriendForm::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutFriendForm::onRemoveHistoryClicked);
-    connect(about.data(), &IAboutFriend::autoAcceptDirChanged, this, &AboutFriendForm::onAutoAcceptDirChanged);
+    about.data()->connectTo_autoAcceptDirChanged([=](const QString& dir){ onAutoAcceptDirChanged(dir); });
 
     const QString dir = about->getAutoAcceptDir();
     ui->autoacceptfile->setChecked(!dir.isEmpty());
@@ -76,7 +76,7 @@ void AboutFriendForm::onAutoAcceptDirChanged(const QString& path)
 void AboutFriendForm::onAutoAcceptCallClicked()
 {
     const int index = ui->autoacceptcall->currentIndex();
-    const IAboutFriend::AutoAcceptCall flag = static_cast<IAboutFriend::AutoAcceptCall>(index);
+    const IFriendSettings::AutoAcceptCallFlags flag{index};
     about->setAutoAcceptCall(flag);
 }
 

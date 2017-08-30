@@ -21,6 +21,7 @@
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
+#include "src/persistence/ifriendsettings.h"
 #include "src/core/icoresettings.h"
 #include "src/core/toxencrypt.h"
 #include "src/core/toxfile.h"
@@ -34,14 +35,13 @@
 #include <QObject>
 #include <QPixmap>
 
-class ToxPk;
 class Profile;
 
 namespace Db {
 enum class syncType;
 }
 
-class Settings : public QObject, public ICoreSettings
+class Settings : public QObject, public ICoreSettings, public IFriendSettings
 {
     Q_OBJECT
 
@@ -120,14 +120,6 @@ public:
         WITH_CHARS = 1,
         WITHOUT_CHARS = 2
     };
-    enum class AutoAcceptCall
-    {
-        None = 0x00,
-        Audio = 0x01,
-        Video = 0x02,
-        AV = Audio | Video
-    };
-    Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall)
 
 public:
     static Settings& getInstance();
@@ -185,12 +177,6 @@ signals:
     void checkUpdatesChanged(bool enabled);
     void widgetDataChanged(const QString& key);
 
-    // Friend
-    void autoAcceptCallChanged(const ToxPk& id, AutoAcceptCallFlags accept);
-    void autoGroupInviteChanged(const ToxPk& id, bool accept);
-    void autoAcceptDirChanged(const ToxPk& id, const QString& dir);
-    void contactNoteChanged(const ToxPk& id, const QString& note);
-
     // GUI
     void autoLoginChanged(bool enabled);
     void separateWindowChanged(bool enabled);
@@ -241,6 +227,7 @@ signals:
     void screenRegionChanged(const QRect& region);
     void screenGrabbedChanged(bool enabled);
     void camVideoFPSChanged(quint16 fps);
+
 
 public:
     bool getMakeToxPortable() const;
@@ -410,20 +397,20 @@ public:
     int getEmojiFontPointSize() const;
     void setEmojiFontPointSize(int value);
 
-    QString getContactNote(const ToxPk& id) const;
-    void setContactNote(const ToxPk& id, const QString& note);
+    QString getContactNote(const ToxPk& id) const override;
+    void setContactNote(const ToxPk& id, const QString& note) override;
 
-    QString getAutoAcceptDir(const ToxPk& id) const;
-    void setAutoAcceptDir(const ToxPk& id, const QString& dir);
+    QString getAutoAcceptDir(const ToxPk& id) const override;
+    void setAutoAcceptDir(const ToxPk& id, const QString& dir) override;
 
-    AutoAcceptCallFlags getAutoAcceptCall(const ToxPk& id) const;
-    void setAutoAcceptCall(const ToxPk& id, AutoAcceptCallFlags accept);
+    AutoAcceptCallFlags getAutoAcceptCall(const ToxPk& id) const override;
+    void setAutoAcceptCall(const ToxPk& id, AutoAcceptCallFlags accept) override;
 
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
 
-    bool getAutoGroupInvite(const ToxPk& id) const;
-    void setAutoGroupInvite(const ToxPk& id, bool accept);
+    bool getAutoGroupInvite(const ToxPk& id) const override;
+    void setAutoGroupInvite(const ToxPk& id, bool accept) override;
 
     // ChatView
     const QFont& getChatMessageFont() const;
@@ -469,16 +456,23 @@ public:
     QString getFriendAddress(const QString& publicKey) const;
     void updateFriendAddress(const QString& newAddr);
 
-    QString getFriendAlias(const ToxPk& id) const;
-    void setFriendAlias(const ToxPk& id, const QString& alias);
+    QString getFriendAlias(const ToxPk& id) const override;
+    void setFriendAlias(const ToxPk& id, const QString& alias) override;
 
-    int getFriendCircleID(const ToxPk& id) const;
-    void setFriendCircleID(const ToxPk& id, int circleID);
+    int getFriendCircleID(const ToxPk& id) const override;
+    void setFriendCircleID(const ToxPk& id, int circleID) override;
 
-    QDate getFriendActivity(const ToxPk& id) const;
-    void setFriendActivity(const ToxPk& id, const QDate& date);
+    QDate getFriendActivity(const ToxPk& id) const override;
+    void setFriendActivity(const ToxPk& id, const QDate& date) override;
 
-    void removeFriendSettings(const ToxPk& id);
+    void saveFriendSettings(const ToxPk& id) override;
+    void removeFriendSettings(const ToxPk& id) override;
+
+    SIGNAL_IMPL(Settings, autoAcceptCallChanged,
+                const ToxPk& id, IFriendSettings::AutoAcceptCallFlags accept)
+    SIGNAL_IMPL(Settings, autoGroupInviteChanged, const ToxPk& id, bool accept)
+    SIGNAL_IMPL(Settings, autoAcceptDirChanged, const ToxPk& id, const QString& dir)
+    SIGNAL_IMPL(Settings, contactNoteChanged, const ToxPk& id, const QString& note)
 
     bool getFauxOfflineMessaging() const;
     void setFauxOfflineMessaging(bool value);
@@ -674,5 +668,4 @@ private:
     static QThread* settingsThread;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Settings::AutoAcceptCallFlags)
 #endif // SETTINGS_HPP
