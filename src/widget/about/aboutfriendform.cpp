@@ -50,7 +50,8 @@ void AboutFriendForm::onAutoAcceptDirClicked()
         about->setAutoAcceptDir("");
         ui->selectSaveDir->setText(tr("Auto accept for this contact is disabled"));
     } else if (ui->autoacceptfile->isChecked()) {
-        QString dir = QFileDialog::getExistingDirectory(
+        QString dir = about->getAutoAcceptDir();
+        dir = QFileDialog::getExistingDirectory(
                     Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
 
         if (dir.isEmpty()) {
@@ -82,7 +83,8 @@ void AboutFriendForm::onAutoGroupInvite()
 
 void AboutFriendForm::onSelectDirClicked()
 {
-    QString dir = QFileDialog::getExistingDirectory(
+    QString dir = about->getAutoAcceptDir();
+    dir = QFileDialog::getExistingDirectory(
                 Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
 
     about->setAutoAcceptDir(dir);
