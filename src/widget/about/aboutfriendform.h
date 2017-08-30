@@ -1,8 +1,10 @@
 #ifndef ABOUT_USER_FORM_H
 #define ABOUT_USER_FORM_H
 
-#include "src/model/friend.h"
+#include "src/model/about/iaboutfriend.h"
+
 #include <QDialog>
+#include <QPointer>
 
 namespace Ui {
 class AboutFriendForm;
@@ -13,12 +15,12 @@ class AboutFriendForm : public QDialog
     Q_OBJECT
 
 public:
-    explicit AboutFriendForm(const Friend* f, QWidget* parent = 0);
+    explicit AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent = 0);
     ~AboutFriendForm();
 
 private:
     Ui::AboutFriendForm* ui;
-    ToxPk friendPk;
+    QPointer<IAboutFriend> about;
 
 private slots:
     void onAcceptedClicked();
