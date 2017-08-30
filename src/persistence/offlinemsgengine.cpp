@@ -64,6 +64,8 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
             undeliveredMsgs.erase(msgIt);
         }
         receipts.erase(it);
+    } else {
+    	qWarning() << "Received receipt for unknown message";
     }
 }
 
