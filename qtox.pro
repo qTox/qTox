@@ -381,6 +381,7 @@ HEADERS  += \
     src/nexus.h \
     src/persistence/db/rawdatabase.h \
     src/persistence/history.h \
+    src/persistence/ifriendsettings.h \
     src/persistence/offlinemsgengine.h \
     src/persistence/profile.h \
     src/persistence/profilelocker.h \
