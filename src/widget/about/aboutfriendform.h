@@ -15,7 +15,7 @@ class AboutFriendForm : public QDialog
     Q_OBJECT
 
 public:
-    explicit AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent = 0);
+    AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent = 0);
     ~AboutFriendForm();
 
 private:
