@@ -2,9 +2,10 @@
 #define ABOUT_FRIEND_H
 
 #include "iaboutfriend.h"
-#include "src/model/friend.h"
 
 #include <QObject>
+
+class Friend;
 
 class AboutFriend : public IAboutFriend
 {
