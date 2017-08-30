@@ -251,6 +251,9 @@ set(${PROJECT_NAME}_SOURCES
   src/grouplist.h
   src/ipc.cpp
   src/ipc.h
+  src/model/about/aboutfriend.cpp
+  src/model/about/aboutfriend.h
+  src/model/about/iaboutfriend.h
   src/model/contact.cpp
   src/model/contact.h
   src/model/friend.cpp
