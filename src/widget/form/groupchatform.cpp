@@ -19,17 +19,12 @@
 
 #include "groupchatform.h"
 
-#include <QDragEnterEvent>
-#include <QMimeData>
-#include <QTimer>
-#include <QToolButton>
-
 #include "tabcompleter.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
-#include "src/friend.h"
+#include "src/model/friend.h"
 #include "src/friendlist.h"
-#include "src/group.h"
+#include "src/model/group.h"
 #include "src/video/groupnetcamview.h"
 #include "src/widget/flowlayout.h"
 #include "src/widget/form/chatform.h"
@@ -38,6 +33,32 @@
 #include "src/widget/style.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
+
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include <QRegularExpression>
+#include <QTimer>
+#include <QToolButton>
+
+/**
+ * @brief Edit name for correct representation if it is needed
+ * @param name Editing string
+ * @return Source name if it does not contain any newline character, otherwise it chops characters
+ * starting with first newline character and appends "..."
+ */
+QString editName(const QString& name)
+{
+    const int pos = name.indexOf(QRegularExpression(QStringLiteral("[\n\r]")));
+    if (pos == -1) {
+        return name;
+    }
+
+    QString result = name;
+    const int len = result.length();
+    result.chop(len - pos);
+    result.append(QStringLiteral("…")); // \u2026 Unicode symbol, not just three separate dots
+    return result;
+}
 
 /**
  * @var QList<QLabel*> GroupChatForm::peerLabels
@@ -66,7 +87,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
         micButton->setVisible(false);
     }
 
-    nameLabel->setText(group->getGroupWidget()->getName());
+    nameLabel->setText(group->getName());
 
     nusersLabel->setFont(Style::getFont(Style::Medium));
     nusersLabel->setObjectName("statusLabel");
@@ -77,19 +98,6 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     msgEdit->setObjectName("group");
 
     namesListLayout = new FlowLayout(0, 5, 0);
-    QStringList names(group->getPeerList());
-
-    for (QString& name : names) {
-        QLabel* l = new QLabel();
-        QString tooltip = correctNames(name);
-        if (tooltip.isNull()) {
-            l->setToolTip(tooltip);
-        }
-        l->setText(name);
-        l->setTextFormat(Qt::PlainText);
-        namesListLayout->addWidget(l);
-    }
-
     headTextLayout->addWidget(nusersLabel);
     headTextLayout->addLayout(namesListLayout);
     headTextLayout->addStretch();
@@ -107,27 +115,13 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(nameLabel, &CroppingLabel::editFinished, this, [=](const QString& newName) {
         if (!newName.isEmpty()) {
             nameLabel->setText(newName);
-            emit groupTitleChanged(group->getGroupId(), newName.left(128));
+            chatGroup->setName(newName);
         }
     });
+    connect(group, &Group::userListChanged, this, &GroupChatForm::onUserListChanged);
 
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
-}
-
-// Correct names with "\n" in NamesListLayout widget
-QString GroupChatForm::correctNames(QString& name)
-{
-    int pos = name.indexOf(QRegExp("\n|\r\n|\r"));
-    int len = name.length();
-    if ((pos < len) && (pos != -1)) {
-        QString tooltip = name;
-        name.remove(pos, len - pos);
-        name.append("...");
-        return tooltip;
-    } else {
-        return QString();
-    }
 }
 
 GroupChatForm::~GroupChatForm()
@@ -147,9 +141,9 @@ void GroupChatForm::onSendTriggered()
     if (group->getPeersCount() != 1) {
         if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive)) {
             msg.remove(0, ChatForm::ACTION_PREFIX.length());
-            emit sendAction(group->getGroupId(), msg);
+            emit sendAction(group->getId(), msg);
         } else {
-            emit sendMessage(group->getGroupId(), msg);
+            emit sendMessage(group->getId(), msg);
         }
     } else {
         if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive))
@@ -160,57 +154,21 @@ void GroupChatForm::onSendTriggered()
     }
 }
 
+/**
+ * @brief This slot is intended to connect to Group::userListChanged signal.
+ * Brief list of actions made by slot:
+ *      1) sets text of how many people are in the group;
+ *      2) creates lexicographically sorted comma-separated list of user names, each name in its own
+ *      label;
+ *      3) sets call button style depending on peer count and etc.
+ */
 void GroupChatForm::onUserListChanged()
 {
-    int peersCount = group->getPeersCount();
-    if (peersCount == 1)
-        nusersLabel->setText(tr("1 user in chat", "Number of users in chat"));
-    else
-        nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
-
-    QLayoutItem* child;
-    while ((child = namesListLayout->takeAt(0))) {
-        child->widget()->hide();
-        delete child->widget();
-        delete child;
-    }
-    peerLabels.clear();
-
-    // the list needs peers in peernumber order, nameLayout needs alphabetical
-    QList<QLabel*> nickLabelList;
-
-    // first traverse in peer number order, storing the QLabels as necessary
-    QStringList names = group->getPeerList();
-    unsigned nNames = names.size();
-    for (unsigned i = 0; i < nNames; ++i) {
-        QString tooltip = correctNames(names[i]);
-        peerLabels.append(new QLabel(names[i]));
-        if (!tooltip.isEmpty())
-            peerLabels[i]->setToolTip(tooltip);
-        peerLabels[i]->setTextFormat(Qt::PlainText);
-        nickLabelList.append(peerLabels[i]);
-        if (group->isSelfPeerNumber(i))
-            peerLabels[i]->setStyleSheet("QLabel {color : green;}");
-
-        if (netcam && !group->isSelfPeerNumber(i))
-            static_cast<GroupNetCamView*>(netcam)->addPeer(i, names[i]);
-    }
-
-    if (netcam)
-        static_cast<GroupNetCamView*>(netcam)->clearPeers();
-
-    // now alphabetize and add to layout
-    qSort(nickLabelList.begin(), nickLabelList.end(),
-          [](QLabel* a, QLabel* b) { return a->text().toLower() < b->text().toLower(); });
-    for (unsigned i = 0; i < nNames; ++i) {
-        QLabel* label = nickLabelList.at(i);
-        if (i != nNames - 1)
-            label->setText(label->text() + ", ");
-
-        namesListLayout->addWidget(label);
-    }
+    updateUserCount();
+    updateUserNames();
 
     // Enable or disable call button
+    const int peersCount = group->getPeersCount();
     if (peersCount > 1 && group->isAvGroupchat()) {
         // don't set button to green if call running
         if (!inCall) {
@@ -224,14 +182,69 @@ void GroupChatForm::onUserListChanged()
         callButton->setObjectName("grey");
         callButton->style()->polish(callButton);
         callButton->setToolTip("");
-        Core::getInstance()->getAv()->leaveGroupCall(group->getGroupId());
+        Core::getInstance()->getAv()->leaveGroupCall(group->getId());
         hideNetcam();
+    }
+}
+
+/**
+ * @brief Updates user names' labels at the top of group chat
+ */
+void GroupChatForm::updateUserNames()
+{
+    QLayoutItem* child;
+    while ((child = namesListLayout->takeAt(0))) {
+        child->widget()->hide();
+        delete child->widget();
+        delete child;
+    }
+
+    peerLabels.clear();
+    const int peersCount = group->getPeersCount();
+    peerLabels.reserve(peersCount);
+    QVector<QLabel*> nickLabelList(peersCount);
+
+    /* the list needs peers in peernumber order, nameLayout needs alphabetical
+     * first traverse in peer number order, storing the QLabels as necessary */
+    const QStringList names = group->getPeerList();
+    int peerNumber = 0;
+    for (const QString& fullName : names) {
+        const QString editedName = editName(fullName).append(QLatin1String(", "));
+        QLabel* const label = new QLabel(editedName);
+        if (editedName != fullName) {
+            label->setToolTip(fullName);
+        }
+        label->setTextFormat(Qt::PlainText);
+        if (group->isSelfPeerNumber(peerNumber)) {
+            label->setStyleSheet(QStringLiteral("QLabel {color : green;}"));
+        } else if (netcam != nullptr) {
+            static_cast<GroupNetCamView*>(netcam)->addPeer(peerNumber, fullName);
+        }
+        peerLabels.append(label);
+        nickLabelList[peerNumber++] = label;
+    }
+
+    if (netcam != nullptr) {
+        static_cast<GroupNetCamView*>(netcam)->clearPeers();
+    }
+
+    qSort(nickLabelList.begin(), nickLabelList.end(), [](const QLabel* a, const QLabel* b)
+    {
+        return a->text().toLower() < b->text().toLower();
+    });
+    // remove comma from last sorted label
+    QLabel* const lastLabel = nickLabelList.last();
+    QString labelText = lastLabel->text();
+    labelText.chop(2);
+    lastLabel->setText(labelText);
+    for (QLabel* l : nickLabelList) {
+        namesListLayout->addWidget(l);
     }
 }
 
 void GroupChatForm::peerAudioPlaying(int peer)
 {
-    peerLabels[peer]->setStyleSheet("QLabel {color : red;}");
+    peerLabels[peer]->setStyleSheet(QStringLiteral("QLabel {color : red;}"));
     if (!peerAudioTimers[peer]) {
         peerAudioTimers[peer] = new QTimer(this);
         peerAudioTimers[peer]->setSingleShot(true);
@@ -270,8 +283,8 @@ void GroupChatForm::dropEvent(QDropEvent* ev)
     if (!frnd)
         return;
 
-    int friendId = frnd->getFriendId();
-    int groupId = group->getGroupId();
+    int friendId = frnd->getId();
+    int groupId = group->getId();
     if (frnd->getStatus() != Status::Offline) {
         Core::getInstance()->groupInviteFriend(friendId, groupId);
     }
@@ -316,7 +329,7 @@ void GroupChatForm::onVolMuteToggle()
 void GroupChatForm::onCallClicked()
 {
     if (!inCall) {
-        Core::getInstance()->getAv()->joinGroupCall(group->getGroupId());
+        Core::getInstance()->getAv()->joinGroupCall(group->getId());
         audioInputFlag = true;
         audioOutputFlag = true;
         callButton->setObjectName("red");
@@ -331,7 +344,7 @@ void GroupChatForm::onCallClicked()
         inCall = true;
         showNetcam();
     } else {
-        Core::getInstance()->getAv()->leaveGroupCall(group->getGroupId());
+        Core::getInstance()->getAv()->leaveGroupCall(group->getId());
         audioInputFlag = false;
         audioOutputFlag = false;
         callButton->setObjectName("green");
@@ -350,7 +363,7 @@ void GroupChatForm::onCallClicked()
 
 GenericNetCamView* GroupChatForm::createNetcam()
 {
-    GroupNetCamView* view = new GroupNetCamView(group->getGroupId(), this);
+    GroupNetCamView* view = new GroupNetCamView(group->getId(), this);
 
     QStringList names = group->getPeerList();
     for (int i = 0; i < names.size(); ++i) {
@@ -395,11 +408,20 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
         return;
 }
 
+/**
+ * @brief Updates users' count label text
+ */
+void GroupChatForm::updateUserCount()
+{
+    const int peersCount = group->getPeersCount();
+    if (peersCount == 1) {
+        nusersLabel->setText(tr("1 user in chat", "Number of users in chat"));
+    } else {
+        nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
+    }
+}
+
 void GroupChatForm::retranslateUi()
 {
-    int peersCount = group->getPeersCount();
-    if (peersCount == 1)
-        nusersLabel->setText(tr("1 user in chat", "Number of users in chat"));
-    else
-        nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
+    updateUserCount();
 }

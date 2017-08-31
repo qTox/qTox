@@ -27,7 +27,7 @@ class FriendWidget : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
-    FriendWidget(int friendId, const QString& id, bool compact);
+    FriendWidget(const Friend* f, bool compact);
     void contextMenuEvent(QContextMenuEvent* event) override final;
     void setAsActiveChatroom() override final;
     void setAsInactiveChatroom() override final;
@@ -35,7 +35,7 @@ public:
     void setChatForm(ContentLayout* contentLayout) override final;
     void resetEventFlags() override final;
     QString getStatusString() const override final;
-    Friend* getFriend() const override final;
+    const Friend* getFriend() const override final;
 
     void search(const QString& searchString, bool hide = false);
 
@@ -46,8 +46,8 @@ signals:
     void contextMenuCalled(QContextMenuEvent* event);
 
 public slots:
-    void onAvatarChange(int FriendId, const QPixmap& pic);
-    void onAvatarRemoved(int FriendId);
+    void onAvatarChange(int friendId, const QPixmap& pic);
+    void onAvatarRemoved(int friendId);
     void setAlias(const QString& alias);
     void onContextMenuCalled(QContextMenuEvent* event);
 
@@ -57,9 +57,8 @@ protected:
     void setFriendAlias();
 
 public:
-    int friendId;
+    const Friend* frnd;
     bool isDefaultAvatar;
-    bool historyLoaded;
 };
 
 #endif // FRIENDWIDGET_H

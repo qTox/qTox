@@ -1,5 +1,5 @@
 /*
-    Copyright © 2016 by The qTox Project Contributors
+    Copyright © 2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,28 +17,24 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QtCore/qsystemdetection.h>
-#if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
-#include "src/platform/capslock.h"
-#include "src/platform/x11_display.h"
-#include <X11/XKBlib.h>
-#undef KeyPress
-#undef KeyRelease
-#undef FocusIn
-#undef FocusOut
+#ifndef CONTACT_H
+#define CONTACT_H
 
-bool Platform::capsLockEnabled()
+#include <QObject>
+#include <QString>
+
+class Contact : public QObject
 {
-    Display* d = X11Display::lock();
-    bool caps_state = false;
-    if (d) {
-        unsigned n;
-        XkbGetIndicatorState(d, XkbUseCoreKbd, &n);
-        caps_state = (n & 0x01) == 1;
-    }
-    X11Display::unlock();
-    return caps_state;
-}
+    Q_OBJECT
+public:
+    virtual ~Contact() = 0;
 
+    virtual void setName(const QString& name) = 0;
+    virtual QString getDisplayedName() const = 0;
+    virtual uint32_t getId() const = 0;
 
-#endif // defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
+    virtual void setEventFlag(bool flag) = 0;
+    virtual bool getEventFlag() const = 0;
+};
+
+#endif // CONTACT_H

@@ -38,17 +38,14 @@ public:
     explicit GroupChatForm(Group* chatGroup);
     ~GroupChatForm();
 
-    void onUserListChanged();
     void peerAudioPlaying(int peer);
-
-signals:
-    void groupTitleChanged(int groupnum, const QString& name);
 
 private slots:
     void onSendTriggered();
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onCallClicked();
+    void onUserListChanged();
 
 protected:
     virtual GenericNetCamView* createNetcam() final override;
@@ -60,16 +57,17 @@ protected:
 
 private:
     void retranslateUi();
+    void updateUserCount();
+    void updateUserNames();
 
 private:
     Group* group;
-    QList<QLabel*> peerLabels;
+    QVector<QLabel*> peerLabels;
     QMap<int, QTimer*> peerAudioTimers;
     FlowLayout* namesListLayout;
     QLabel* nusersLabel;
     TabCompleter* tabber;
     bool inCall;
-    QString correctNames(QString& name);
 };
 
 #endif // GROUPCHATFORM_H

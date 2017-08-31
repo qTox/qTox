@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -20,46 +20,46 @@
 #ifndef FRIEND_H
 #define FRIEND_H
 
-#include "core/toxid.h"
+#include "contact.h"
+#include "src/core/toxid.h"
 #include "src/core/corestructs.h"
 #include <QObject>
 #include <QString>
 
-class FriendWidget;
 class ChatForm;
 
-class Friend : public QObject
+class Friend : public Contact
 {
     Q_OBJECT
 public:
-    Friend(uint32_t FriendId, const ToxPk& FriendPk, const QString& userAlias);
+    Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias);
     Friend(const Friend& other) = delete;
-    ~Friend();
+    ~Friend() override;
     Friend& operator=(const Friend& other) = delete;
 
     void loadHistory();
 
-    void setName(QString name);
-    void setAlias(QString name);
-    QString getDisplayedName() const;
+    void setName(const QString& name) override;
+    void setAlias(const QString& name);
+    QString getDisplayedName() const override;
     bool hasAlias() const;
 
-    void setStatusMessage(QString message);
-    QString getStatusMessage();
+    void setStatusMessage(const QString& message);
+    QString getStatusMessage() const;
 
-    void setEventFlag(bool f);
-    bool getEventFlag() const;
+    void setEventFlag(bool f) override;
+    bool getEventFlag() const override;
 
     const ToxPk& getPublicKey() const;
-    uint32_t getFriendId() const;
+    uint32_t getId() const override;
 
     void setStatus(Status s);
     Status getStatus() const;
 
-    ChatForm* getChatForm();
+    ChatForm* getChatForm() const;
+    void setChatForm(ChatForm* form);
 
 signals:
-    // TODO: move signals to DB object
     void nameChanged(uint32_t friendId, const QString& name);
     void aliasChanged(uint32_t friendId, QString alias);
     void statusChanged(uint32_t friendId, Status status);

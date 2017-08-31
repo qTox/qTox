@@ -305,7 +305,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>%1 aici! Tox-uiți-mă poate?</translation>
+        <translation>%1 aici! Tox cu mine poate?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -640,11 +640,11 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportați în fișier</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished">Salvați jurnalul de discuții</translation>
+        <translation>Salvați jurnalul de discuții</translation>
     </message>
 </context>
 <context>
@@ -1539,7 +1539,7 @@ Profilul nu conține istoricul dvs.</translation>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 mesaje</translation>
     </message>
 </context>
 <context>
@@ -2127,7 +2127,10 @@ Utilizați o altă imagine.</translation>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>Această grămadă de caractere spune altor clienți Tox cum să vă contacteze.
+Împărtășiți-le prietenilor pentru a comunica.
+
+Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</translation>
     </message>
 </context>
 <context>

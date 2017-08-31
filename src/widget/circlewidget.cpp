@@ -33,7 +33,7 @@
 #include "widget.h"
 #include "tool/croppinglabel.h"
 
-#include "src/friend.h"
+#include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/persistence/settings.h"
 
@@ -119,8 +119,8 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                     qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr) {
-                    Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
+                    const Friend* f = friendWidget->getFriend();
+                    dialog->addFriend(f);
                 }
             }
             for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
@@ -128,8 +128,8 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                     qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr) {
-                    Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
+                    const Friend* f = friendWidget->getFriend();
+                    dialog->addFriend(f);
                 }
             }
 
@@ -200,7 +200,7 @@ void CircleWidget::onExpand()
 
 void CircleWidget::onAddFriendWidget(FriendWidget* w)
 {
-    Friend* f = FriendList::findFriend(w->friendId);
+    const Friend* f = w->getFriend();
     ToxPk toxId = f->getPublicKey();
     Settings::getInstance().setFriendCircleID(toxId, id);
 }
@@ -210,26 +210,30 @@ void CircleWidget::updateID(int index)
     // For when a circle gets destroyed, another takes its id.
     // This function updates all friends widgets for this new id.
 
-    if (id == index)
+    if (id == index) {
         return;
+    }
 
     id = index;
     circleList[id] = this;
 
     for (int i = 0; i < friendOnlineLayout()->count(); ++i) {
-        FriendWidget* friendWidget =
-            qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
+        const QWidget* w = friendOnlineLayout()->itemAt(i)->widget();
+        const FriendWidget* friendWidget = qobject_cast<const FriendWidget*>(w);
 
-        if (friendWidget != nullptr)
-            Settings::getInstance()
-                .setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
+        if (friendWidget) {
+            const Friend* f = friendWidget->getFriend();
+            Settings::getInstance().setFriendCircleID(f->getPublicKey(), id);
+        }
     }
-    for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
-        FriendWidget* friendWidget =
-            qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
-        if (friendWidget != nullptr)
-            Settings::getInstance()
-                .setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
+    for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
+        const QWidget* w = friendOfflineLayout()->itemAt(i)->widget();
+        const FriendWidget* friendWidget = qobject_cast<const FriendWidget*>(w);
+
+        if (friendWidget) {
+            const Friend* f = friendWidget->getFriend();
+            Settings::getInstance().setFriendCircleID(f->getPublicKey(), id);
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -20,6 +20,7 @@
 #ifndef GROUP_H
 #define GROUP_H
 
+#include "contact.h"
 #include <QMap>
 #include <QObject>
 #include <QStringList>
@@ -27,45 +28,44 @@
 #define RETRY_PEER_INFO_INTERVAL 500
 
 class Friend;
-class GroupWidget;
 class GroupChatForm;
 class ToxPk;
 
-class Group : public QObject
+class Group : public Contact
 {
     Q_OBJECT
 public:
-    Group(int GroupId, QString Name, bool IsAvGroupchat);
-    virtual ~Group();
+    Group(int groupId, const QString& name, bool isAvGroupchat);
+    ~Group() override;
 
     bool isAvGroupchat() const;
-    int getGroupId() const;
+    uint32_t getId() const override;
     int getPeersCount() const;
     void regeneratePeerList();
     QStringList getPeerList() const;
     bool isSelfPeerNumber(int peernumber) const;
 
     GroupChatForm* getChatForm();
-    GroupWidget* getGroupWidget();
 
-    void setEventFlag(bool f);
-    bool getEventFlag() const;
+    void setEventFlag(bool f) override;
+    bool getEventFlag() const override;
 
     void setMentionedFlag(bool f);
     bool getMentionedFlag() const;
 
     void updatePeer(int peerId, QString newName);
-    void setName(const QString& name);
+    void setName(const QString& name) override;
     QString getName() const;
+    QString getDisplayedName() const override;
 
     QString resolveToxId(const ToxPk& id) const;
 
 signals:
-    void titleChanged(GroupWidget* widget);
-    void userListChanged(GroupWidget* widget);
+    void titleChanged(uint32_t groupId, const QString& title);
+    void userListChanged(uint32_t groupId, const QMap<QByteArray, QString>& toxids);
 
 private:
-    GroupWidget* widget;
+    QString title;
     GroupChatForm* chatForm;
     QStringList peers;
     QMap<QByteArray, QString> toxids;

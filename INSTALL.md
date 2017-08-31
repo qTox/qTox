@@ -28,27 +28,29 @@
     - [openSUSE](#opensuse-toxcore)
     - [Slackware](#slackware-toxcore)
     - [Ubuntu >=15.04](#ubuntu-toxcore)
-  - [FFmpeg (Debian 8)](#ffmpeg)
   - [sqlcipher](#sqlcipher)
   - [Compile toxcore](#compile-toxcore)
   - [Compile qTox](#compile-qtox)
 - [OS X](#osx)
 - [Windows](#windows)
+  - [Cross-compile from Linux](#cross-compile-from-linux)
+  - [Native](#native)
 - [Compile-time switches](#compile-time-switches)
 
 ## Dependencies
 
-| Name          | Version     | Modules                                           |
-|---------------|-------------|-------------------------------------------------- |
-| [Qt]          | >= 5.5.0    | core, gui, network, opengl, sql, svg, widget, xml |
-| [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                     |
-| [toxcore]     | = 0.1.\*    | core, av                                          |
-| [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
-| [CMake]       | >= 2.8.11   |                                                   |
-| [OpenAL Soft] | >= 1.16.0   |                                                   |
-| [qrencode]    | >= 3.0.3    |                                                   |
-| [sqlcipher]   | >= 3.2.0    |                                                   |
-| [pkg-config]  | >= 0.28     |                                                   |
+| Name          | Version     | Modules                                      |
+|---------------|-------------|----------------------------------------------|
+| [Qt]          | >= 5.5.0    | core, gui, network, opengl, svg, widget, xml |
+| [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                |
+| [toxcore]     | = 0.1.\*    | core, av                                     |
+| [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale |
+| [CMake]       | >= 2.8.11   |                                              |
+| [OpenAL Soft] | >= 1.16.0   |                                              |
+| [qrencode]    | >= 3.0.3    |                                              |
+| [sqlcipher]   | >= 3.2.0    |                                              |
+| [pkg-config]  | >= 0.28     |                                              |
+| [filteraudio] | >= 0.0.1    | optional dependency                          |
 
 ## Optional dependencies
 
@@ -175,7 +177,7 @@ are provided instructions.
 
 ----
 
-Most of the dependencies should be available through your package manger. You
+Most of the dependencies should be available through your package manager. You
 may either follow the directions below, or simply run `./simple_make.sh` after
 cloning this repository, which will attempt to automatically download
 dependencies followed by compilation.
@@ -257,11 +259,7 @@ sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 
 #### Debian
 
-**Note that only Debian >=8 stable (jessie) is supported.**
-
-If you use Debian 8, you have to compile FFmpeg manually and add backports to
-your `sources.list`. Adding backports:
-http://backports.debian.org/Instructions/
+**Note that only Debian >=9 stable (stretch) is supported.**
 
 ```bash
 sudo apt-get install \
@@ -285,9 +283,6 @@ sudo apt-get install \
     qttools5-dev-tools \
     yasm
 ```
-
-**Go to [FFmpeg](#ffmpeg) section to compile it.**
-
 
 <a name="fedora-other-deps" />
 
@@ -332,8 +327,6 @@ sudo zypper install \
     libQt5Concurrent-devel \
     libQt5Network-devel \
     libQt5OpenGL-devel \
-    libQt5Sql-devel \
-    libQt5Sql5-sqlite \
     libQt5Xml-devel \
     libXScrnSaver-devel \
     libffmpeg-devel \
@@ -410,69 +403,6 @@ sudo apt-get install \
     qt5-qmake \
     qttools5-dev-tools
 ```
-
-### FFmpeg
-
-If you have installed FFmpeg earlier (i.e. you don't run Debian 8), skip this
-section, and go directly to installing [**toxcore**](#toxcore-dependencies).
-
-To get ffmpeg compiled and put in directory `libs`, run this script in qTox
-directory:
-
-```bash
-[ ! -e "libs" ] && mkdir libs   # create directory libs if doesn't exist
-[ ! -e "ffmpeg" ] && mkdir ffmpeg
-
-cd libs/
-export PREFIX_DIR="$PWD"
-
-cd ../ffmpeg
-wget http://ffmpeg.org/releases/ffmpeg-3.2.2.tar.bz2
-tar xf ffmpeg*
-cd ffmpeg*/
-
-
-./configure --prefix="$PREFIX_DIR" \
-            --enable-shared \
-            --disable-static \
-            --disable-programs \
-            --disable-protocols \
-            --disable-doc \
-            --disable-sdl \
-            --disable-avfilter \
-            --disable-avresample \
-            --disable-filters \
-            --disable-iconv \
-            --disable-network \
-            --disable-muxers \
-            --disable-postproc \
-            --disable-swresample \
-            --disable-swscale-alpha \
-            --disable-dct \
-            --disable-dwt \
-            --disable-lsp \
-            --disable-lzo \
-            --disable-mdct \
-            --disable-rdft \
-            --disable-fft \
-            --disable-faan \
-            --disable-vaapi \
-            --disable-vdpau \
-            --disable-zlib \
-            --disable-xlib \
-            --disable-bzlib \
-            --disable-lzma \
-            --disable-encoders
-
-
-make -j$(nproc)
-make install
-
-cd ../../
-
-export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
-```
-
 
 ### toxcore dependencies
 
@@ -581,15 +511,6 @@ Run in qTox directory to compile:
 ```bash
 cmake .
 make
-```
-
-If you had to compile [FFmpeg](#ffmpeg) manually, run this script from qTox
-directory before starting qTox:
-
-```bash
-cd libs/lib
-export LD_LIBRARY_PATH="$PWD"
-cd ../../
 ```
 
 Now you can start compiled qTox with `./qtox`
@@ -762,7 +683,13 @@ becoming a hacker
 
 ## Windows
 
-### Qt
+### Cross-compile from Linux
+
+See [`windows/cross-compile`](windows/cross-compile).
+
+### Native
+
+#### Qt
 
 Download the Qt online installer for Windows from
 [qt.io](https://www.qt.io/download-open-source/). While installation you have
@@ -773,7 +700,7 @@ needed to compile and install OpenAL. Thus you can - if needed - deselect the
 tab `Tools`. The following steps assume that Qt is installed at `C:\Qt`. If you
 decided to choose another location, replace corresponding parts.
 
-### MinGW
+#### MinGW
 
 Download the MinGW installer for Windows from
 [sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/). Make
@@ -784,21 +711,21 @@ location, replace corresponding parts. Select `mingw-developer-toolkit`,
 packages using MinGW Installation Manager (`mingw-get.exe`). Check that the 
 version of MinGW, corresponds to the version of the QT component!
 
-### Wget
+#### Wget
 
 Download the Wget installer for Windows from
 http://gnuwin32.sourceforge.net/packages/wget.htm. Install them. The following
 steps assume that Wget is installed at `C:\Program Files (x86)\GnuWin32\`. If you
 decided to choose another location, replace corresponding parts.
 
-### UnZip
+#### UnZip
 
 Download the UnZip installer for Windows from
 http://gnuwin32.sourceforge.net/packages/unzip.htm. Install it. The following
 steps assume that UnZip is installed at `C:\Program Files (x86)\GnuWin32\`. If you
 decided to choose another location, replace corresponding parts.
 
-### Setting up Path
+#### Setting up Path
 
 Add MinGW/MSYS/CMake binaries to the system path to make them globally
 accessible. Open `Control Panel` -> `System and Security` -> `System` ->
@@ -813,7 +740,7 @@ by installer automatically. Make sure that paths containing alternative `sh`,
 `bash` implementations such as `C:\Program Files\OpenSSH\bin` are at the end of
 `PATH` or build may fail.
 
-### Cloning the Repository
+#### Cloning the Repository
 
 Clone the repository (https://github.com/qTox/qTox.git) with your preferred Git
 client. [SmartGit](http://www.syntevo.com/smartgit/) or
@@ -822,7 +749,7 @@ client. [SmartGit](http://www.syntevo.com/smartgit/) or
 following steps assume that you cloned the repository at `C:\qTox`. If you
 decided to choose another location, replace corresponding parts.
 
-### Getting dependencies
+#### Getting dependencies
 
 Run `bootstrap.bat` in the previously cloned `C:\qTox` repository. The script will
 download the other necessary dependencies, compile them and put them into their
@@ -873,3 +800,4 @@ Switches:
 [Qt]: https://www.qt.io/
 [sqlcipher]: https://www.zetetic.net/sqlcipher/
 [toxcore]: https://github.com/TokTok/c-toxcore/
+[filteraudio]: https://github.com/irungentoo/filter_audio

@@ -68,7 +68,7 @@ public slots:
     void onFileRecvRequest(ToxFile file);
     void onAvInvite(uint32_t friendId, bool video);
     void onAvStart(uint32_t friendId, bool video);
-    void onAvEnd(uint32_t friendId);
+    void onAvEnd(uint32_t friendId, bool error);
     void onAvatarChange(uint32_t friendId, const QPixmap& pic);
     void onAvatarRemoved(uint32_t friendId);
 
@@ -108,7 +108,7 @@ private:
     void retranslateUi();
     void showOutgoingCall(bool video);
     void startCounter();
-    void stopCounter();
+    void stopCounter(bool error = false);
     void updateCallButtons();
     void SendMessageStr(QString msg);
 

@@ -34,7 +34,7 @@
 #define SQLITE_HAS_CODEC
 #define SQLITE_TEMP_STORE 2
 
-#include <sqlcipher/sqlite3.h>
+#include <sqlite3.h>
 
 
 /**

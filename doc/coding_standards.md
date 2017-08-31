@@ -489,23 +489,23 @@ temporary QString and thus avoids malloc:
         handleToxSave(firstParam.toUtf8());
 ```
 
-* Use `QLatin1String` when appending to string, joining two strings.
+* Use `QStringBuilder` and `QLatin1String` when joining strings (and chars)
+together.
 
-QLatin1String is literal type and knows string length at compile time
+`QLatin1String` is literal type and knows string length at compile time
 (compared to `QString(const char*)` run-time cost with plain C++
 string literal). Also, copying 8-bit latin string requires less memory
 bandwith compared to 16-bit `QStringLiteral` mentioned earlier, and
-copying here is unavoidable (and thus `QStringLiteral` loses it's purpose):
-```
-        if (!dir.rename(logFileDir + QLatin1String("qtox.log"),
-                        logFileDir + QLatin1String("qtox.log.1")))
-            qCritical() << "Unable to move logs";
-```
-
-* Use `QStringBuilder` when joining more than two strings (and chars) together.
+copying here is unavoidable (and thus `QStringLiteral` loses it's purpose).
 
 Include `<QStringBuilder>` and use `%` operator for optimized single-pass
-concatination with help of expression template's lazy evaluation:
+concatenation with help of expression template's lazy evaluation:
+
+```
+        if (!dir.rename(logFileDir % QLatin1String("qtox.log"),
+                        logFileDir % QLatin1String("qtox.log.1")))
+            qCritical() << "Unable to move logs";
+```
 ```
     QCommandLineParser parser;
     parser.setApplicationDescription(QLatin1String("qTox, version: ")
@@ -513,7 +513,8 @@ concatination with help of expression template's lazy evaluation:
     % QLatin1String(__TIME__) % QLatin1Char(' ') % QLatin1String(__DATE__));
 ```
 
-* Use `QLatin1Char` to avoid UTF-16-char handling (same as in previous example):
+* Use `QLatin1Char` to avoid UTF-16-char handling (same as in previous
+example):
 ```
     QString path = QString(__FILE__);
     path = path.left(path.lastIndexOf(QLatin1Char('/')) + 1);

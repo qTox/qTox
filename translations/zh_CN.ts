@@ -639,11 +639,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>导出到文件</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished">保存聊天记录</translation>
+        <translation>保存聊天记录</translation>
     </message>
 </context>
 <context>
@@ -944,7 +944,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>从圈子 &apos;%1&apos; 中删除</translation>
+        <translation>从圈子 &apos;%1&apos; 中移除</translation>
     </message>
     <message>
         <source>Move  to circle &quot;%1&quot;</source>
@@ -998,7 +998,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation>从状态栏关闭</translation>
+        <translation>关闭到状态栏</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
@@ -1532,7 +1532,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 条消息</translation>
     </message>
 </context>
 <context>
@@ -1687,7 +1687,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation>正在加载已有的个人档案页面</translation>
+        <translation>正在加载现有的个人档案页面</translation>
     </message>
 </context>
 <context>
@@ -1826,7 +1826,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Enter Fullscreen</source>
-        <translation>进入全屏</translation>
+        <translation>进入全屏模式</translation>
     </message>
 </context>
 <context>
@@ -2117,7 +2117,10 @@ Please use another image.</source>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>这些字符告诉其它 Tox 客户端如何联系您。
+将它分享给您的朋友们来开始通信。
+
+该 ID 包含 NoSpam 代码 (蓝色字体部分)，和校验码 (灰色字体部分)。</translation>
     </message>
 </context>
 <context>
@@ -2504,11 +2507,11 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation>文本样式的格式：</translation>
+        <translation>文本样式格式：</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation>选择文本样式设置首选项。</translation>
+        <translation>选择文本样式首选项。</translation>
     </message>
     <message>
         <source>Plaintext</source>

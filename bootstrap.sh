@@ -19,14 +19,6 @@
 
 set -eu -o pipefail
 
-# windows check
-if cmd.exe /c ver 2>/dev/null
-then
-    cd windows
-    ./bootstrap.sh
-    exit $?
-fi
-
 
 ################ parameters ################
 # directory where the script is located

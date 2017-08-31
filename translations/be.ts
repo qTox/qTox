@@ -640,11 +640,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Экпартаваць у файл</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished">Захаваць журнал чату</translation>
+        <translation>Захаваць журнал чату</translation>
     </message>
 </context>
 <context>
@@ -1537,7 +1537,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 паведамленняў</translation>
     </message>
 </context>
 <context>
@@ -2125,7 +2125,10 @@ Please use another image.</source>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>Гэтая паслядоўнасць сімвалаў кажа ішным Tox-кліентам як зкантактавацца з табой.
+Падзяліся гэтым з сябрамі каб мець зносіны.
+
+Гэты ID уключае NoSpam-код (сіні) і кантрольную суму (шэрую).</translation>
     </message>
 </context>
 <context>

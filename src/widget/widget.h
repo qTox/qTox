@@ -38,8 +38,10 @@ namespace Ui {
 class MainWindow;
 }
 
+class ChatForm;
 class GenericChatroomWidget;
 class FriendWidget;
+class GroupWidget;
 class Group;
 class Friend;
 class QSplitter;
@@ -103,7 +105,7 @@ public:
     Camera* getCamera();
     static Widget* getInstance();
     void showUpdateDownloadProgress();
-    void addFriendDialog(Friend* frnd, ContentDialog* dialog);
+    void addFriendDialog(const Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
     bool newFriendMessageAlert(int friendId, bool sound = true);
     bool newGroupMessageAlert(int groupId, bool notify);
@@ -155,7 +157,7 @@ public slots:
     void onFriendAliasChanged(uint32_t friendId, const QString& alias);
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const ToxPk& friendPk, const QString& message);
-    void updateFriendActivity(Friend* frnd);
+    void updateFriendActivity(const Friend* frnd);
     void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
     void onReceiptRecieved(int friendId, int receipt);
     void onEmptyGroupCreated(int groupId);
@@ -169,7 +171,7 @@ public slots:
     void onFriendTypingChanged(int friendId, bool isTyping);
     void nextContact();
     void previousContact();
-    void onFriendDialogShown(Friend* f);
+    void onFriendDialogShown(const Friend* f);
     void onGroupDialogShown(Group* g);
     void toggleFullscreen();
 
@@ -182,14 +184,6 @@ signals:
     void statusMessageChanged(const QString& statusMessage);
     void resized();
     void windowStateChanged(Qt::WindowStates states);
-
-protected:
-    virtual bool eventFilter(QObject* obj, QEvent* event) final override;
-    virtual bool event(QEvent* e) final override;
-    virtual void closeEvent(QCloseEvent* event) final override;
-    virtual void changeEvent(QEvent* event) final override;
-    virtual void resizeEvent(QResizeEvent* event) final override;
-    virtual void moveEvent(QMoveEvent* event) final override;
 
 private slots:
     void onAddClicked();
@@ -224,6 +218,14 @@ private slots:
     void onCallEnd(uint32_t friendId);
 
 private:
+    // QMainWindow overrides
+    bool eventFilter(QObject* obj, QEvent* event) final override;
+    bool event(QEvent* e) final override;
+    void closeEvent(QCloseEvent* event) final override;
+    void changeEvent(QEvent* event) final override;
+    void resizeEvent(QResizeEvent* event) final override;
+    void moveEvent(QMoveEvent* event) final override;
+
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
     void hideMainForms(GenericChatroomWidget* chatroomWidget);
@@ -292,7 +294,9 @@ private:
     unsigned int unreadGroupInvites;
     int icon_size;
 
-    QMap<int, FriendWidget*> friendWidgets;
+    QMap<uint32_t, GroupWidget*> groupWidgets;
+    QMap<uint32_t, FriendWidget*> friendWidgets;
+    QMap<uint32_t, ChatForm*> chatForms;
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;

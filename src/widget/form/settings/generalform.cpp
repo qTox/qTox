@@ -76,46 +76,6 @@ static QStringList locales = {
     "zh_CN",
     "zh_TW"
 };
-static QStringList langs = {
-    "Arabic",
-    "Беларуская",
-    "Български",
-    "Čeština",
-    "Dansk",
-    "Deutsch",
-    "Eesti",
-    "Ελληνικά",
-    "English",
-    "Español",
-    "Esperanto",
-    "Français",
-    "한국어",
-    "עברית",
-    "Hrvatski",
-    "Italiano",
-    "Kiswahili",
-    "Lietuvių",
-    "Lojban",
-    "Magyar",
-    "Nederlands",
-    "日本語",
-    "Norsk Bokmål",
-    "Pirate",
-    "Polski",
-    "Português",
-    "Română",
-    "Русский",
-    "Slovenčina",
-    "Slovenščina",
-    "Suomi",
-    "Svenska",
-    "தமிழ்",
-    "Türkçe",
-    "ئۇيغۇرچە",
-    "Українська",
-    "中文（中国）",
-    "繁體中文（台灣）"
-};
 // clang-format on
 
 /**
@@ -139,8 +99,20 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
     bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
     bodyUI->checkUpdates->setChecked(s.getCheckUpdates());
 
-    for (int i = 0; i < langs.size(); ++i)
-        bodyUI->transComboBox->insertItem(i, langs[i]);
+    for (int i = 0; i < locales.size(); ++i) {
+        QString langName;
+
+        if (locales[i].startsWith(QLatin1String("eo"))) // QTBUG-57802
+            langName = QLocale::languageToString(QLocale::Esperanto);
+        else if (locales[i].startsWith(QLatin1String("jbo")))
+            langName = QLatin1String("Lojban");
+        else if (locales[i].startsWith(QLatin1String("pr")))
+            langName = QLatin1String("Pirate");
+        else
+            langName = QLocale(locales[i]).nativeLanguageName();
+
+        bodyUI->transComboBox->insertItem(i, langName);
+    }
 
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(s.getTranslation()));
 

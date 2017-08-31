@@ -93,8 +93,6 @@ dnf_install() {
         qt-creator
         qt-devel
         qt-doc
-        sqlite
-        sqlite-devel
     )
     sudo dnf install "${dnf_packages[@]}"
 }
@@ -130,8 +128,6 @@ zypper_install() {
         libQt5OpenGL-devel
         libqt5-qtbase-common-devel
         libqt5-qtsvg-devel
-        libQt5Sql5-sqlite
-        libQt5Sql-devel
         libQt5Test-devel
         libQt5Xml-devel
         libsodium-devel

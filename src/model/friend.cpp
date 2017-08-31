@@ -20,7 +20,7 @@
 
 #include "friend.h"
 #include "src/core/core.h"
-#include "src/group.h"
+#include "src/model/group.h"
 #include "src/grouplist.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
@@ -37,8 +37,6 @@ Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlia
     if (userName.isEmpty()) {
         userName = friendPk.toString();
     }
-
-    chatForm = new ChatForm(this);
 }
 
 Friend::~Friend()
@@ -58,8 +56,9 @@ void Friend::loadHistory()
     emit loadChatHistory();
 }
 
-void Friend::setName(QString name)
+void Friend::setName(const QString& _name)
 {
+    QString name = _name;
     if (name.isEmpty()) {
         name = friendPk.toString();
     }
@@ -70,7 +69,7 @@ void Friend::setName(QString name)
     }
 }
 
-void Friend::setAlias(QString alias)
+void Friend::setAlias(const QString& alias)
 {
     if (userAlias != alias) {
         userAlias = alias;
@@ -78,7 +77,7 @@ void Friend::setAlias(QString alias)
     }
 }
 
-void Friend::setStatusMessage(QString message)
+void Friend::setStatusMessage(const QString& message)
 {
     if (statusMessage != message) {
         statusMessage = message;
@@ -86,7 +85,7 @@ void Friend::setStatusMessage(QString message)
     }
 }
 
-QString Friend::getStatusMessage()
+QString Friend::getStatusMessage() const
 {
     return statusMessage;
 }
@@ -110,7 +109,7 @@ const ToxPk& Friend::getPublicKey() const
     return friendPk;
 }
 
-uint32_t Friend::getFriendId() const
+uint32_t Friend::getId() const
 {
     return friendId;
 }
@@ -138,7 +137,12 @@ Status Friend::getStatus() const
     return friendStatus;
 }
 
-ChatForm* Friend::getChatForm()
+ChatForm* Friend::getChatForm() const
 {
     return chatForm;
+}
+
+void Friend::setChatForm(ChatForm* form)
+{
+    chatForm = form;
 }

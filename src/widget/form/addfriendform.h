@@ -22,6 +22,8 @@
 
 #include "src/core/toxid.h"
 
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
@@ -51,7 +53,6 @@ public:
 
     bool isShown() const;
     void show(ContentLayout* contentLayout);
-    QString getMessage() const;
     void setMode(Mode mode);
 
     bool addFriendRequest(const QString& friendAddress, const QString& message);
@@ -67,11 +68,14 @@ public slots:
 private slots:
     void onSendTriggered();
     void onIdChanged(const QString& id);
+    void onImportSendClicked();
+    void onImportOpenClicked();
     void onFriendRequestAccepted();
     void onFriendRequestRejected();
     void onCurrentChanged(int index);
 
 private:
+    void addFriend(const QString& idText);
     void retranslateUi();
     void addFriendRequestWidget(const QString& friendAddress, const QString& message);
     void removeFriendRequestWidget(QWidget* friendWidget);
@@ -79,19 +83,35 @@ private:
     void retranslateRejectButton(QPushButton* rejectButton);
     void deleteFriendRequest(const ToxId& toxId);
     void setIdFromClipboard();
+    QString getMessage() const;
+    QString getImportMessage() const;
 
 private:
-    QLabel headLabel, toxIdLabel, messageLabel;
+    QLabel headLabel;
+    QLabel toxIdLabel;
+    QLabel messageLabel;
+    QLabel importFileLabel;
+    QLabel importMessageLabel;
+
     QPushButton sendButton;
+    QPushButton importFileButton;
+    QPushButton importSendButton;
     QLineEdit toxId;
     QTextEdit message;
-    QVBoxLayout layout, headLayout;
-    QWidget *head, *main;
+    QTextEdit importMessage;
+    QVBoxLayout layout;
+    QVBoxLayout headLayout;
+    QVBoxLayout importContactsLayout;
+    QHBoxLayout importFileLine;
+    QWidget* head;
+    QWidget* main;
+    QWidget* importContacts;
     QString lastUsername;
     QTabWidget* tabWidget;
     QVBoxLayout* requestsLayout;
     QList<QPushButton*> acceptButtons;
     QList<QPushButton*> rejectButtons;
+    QList<QString> contactsToImport;
 };
 
 #endif // ADDFRIENDFORM_H

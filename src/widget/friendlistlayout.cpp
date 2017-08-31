@@ -15,7 +15,7 @@
 #include "friendlistlayout.h"
 #include "friendlistwidget.h"
 #include "friendwidget.h"
-#include "src/friend.h"
+#include "src/model/friend.h"
 #include "src/friendlist.h"
 #include <cassert>
 
@@ -80,14 +80,14 @@ void FriendListLayout::moveFriendWidgets(FriendListWidget* listWidget)
         QWidget* getWidget = friendOnlineLayout.getLayout()->takeAt(0)->widget();
 
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(getWidget);
-        Friend* f = FriendList::findFriend(friendWidget->friendId);
+        const Friend* f = friendWidget->getFriend();
         listWidget->moveWidget(friendWidget, f->getStatus(), true);
     }
     while (!friendOfflineLayout.getLayout()->isEmpty()) {
         QWidget* getWidget = friendOfflineLayout.getLayout()->takeAt(0)->widget();
 
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(getWidget);
-        Friend* f = FriendList::findFriend(friendWidget->friendId);
+        const Friend* f = friendWidget->getFriend();
         listWidget->moveWidget(friendWidget, f->getStatus(), true);
     }
 }
