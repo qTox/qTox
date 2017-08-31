@@ -46,7 +46,7 @@ IPC::IPC(uint32_t profileId)
 
     timer.setInterval(EVENT_TIMER_MS);
     timer.setSingleShot(true);
-    processEvents();
+    connect(&timer, &QTimer::timeout, this, &IPC::processEvents);
 
     // The first started instance gets to manage the shared memory by taking ownership
     // Every time it processes events it updates the global shared timestamp "lastProcessed"
