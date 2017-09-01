@@ -380,9 +380,9 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
  * @param messageAuthor Author of the sent message
  * @return True if it's needed to hide name, false otherwise
  */
-bool GenericChatForm::needsToHideName(const ToxPk& messageAuthor) const
+bool GenericChatForm::needsToHideName(const ToxPk& messageAuthor, const QDateTime& messageTime) const
 {
-    qint64 messagesTimeDiff = prevMsgDateTime.secsTo(QDateTime::currentDateTime());
+    qint64 messagesTimeDiff = prevMsgDateTime.secsTo(messageTime);
     return messageAuthor == previousId && messagesTimeDiff < chatWidget->repNameAfter;
 }
 
@@ -411,12 +411,13 @@ ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QStri
         previousId = ToxPk{};
     } else {
         msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, isSelf);
-        if (needsToHideName(author)) {
+        QDateTime newMsgDateTime = QDateTime::currentDateTime();
+        if (needsToHideName(author, newMsgDateTime)) {
             msg->hideSender();
         }
 
         previousId = author;
-        prevMsgDateTime = QDateTime::currentDateTime();
+        prevMsgDateTime = newMsgDateTime;
     }
 
     if (isSent) {
@@ -459,13 +460,14 @@ void GenericChatForm::addAlertMessage(const ToxPk& author, const QString& msg, c
     QString authorStr = resolveToxPk(author);
     bool isSelf = author == Core::getInstance()->getSelfId().getPublicKey();
     auto chatMsg = ChatMessage::createChatMessage(authorStr, msg, ChatMessage::ALERT, isSelf, dt);
-    if (needsToHideName(author)) {
+    QDateTime newMsgDateTime = QDateTime::currentDateTime();
+    if (needsToHideName(author, newMsgDateTime)) {
         chatMsg->hideSender();
     }
 
     insertChatMessage(chatMsg);
     previousId = author;
-    prevMsgDateTime = QDateTime::currentDateTime();
+    prevMsgDateTime = newMsgDateTime;
 }
 
 void GenericChatForm::onEmoteButtonClicked()

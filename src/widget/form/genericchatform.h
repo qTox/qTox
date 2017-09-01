@@ -108,7 +108,7 @@ protected:
                                    const QDateTime& datetime, bool isAction, bool isSent);
     ChatMessage::Ptr createSelfMessage(const QString& message, const QDateTime& datetime,
                                        bool isAction, bool isSent);
-    bool needsToHideName(const ToxPk& author) const;
+    bool needsToHideName(const ToxPk& messageAuthor, const QDateTime& messageTime) const;
     void showNetcam();
     void hideNetcam();
     virtual GenericNetCamView* createNetcam() = 0;
