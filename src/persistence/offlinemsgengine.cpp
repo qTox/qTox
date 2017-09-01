@@ -52,19 +52,14 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
 {
     QMutexLocker ml(&mutex);
 
-    Profile* profile = Nexus::getProfile();
-    auto it = receipts.find(receipt);
-    if (it != receipts.end()) {
-        int mID = it.value();
-        auto msgIt = undeliveredMsgs.find(mID);
-        if (msgIt != undeliveredMsgs.end()) {
-            if (profile->isHistoryEnabled())
-                profile->getHistory()->markAsSent(mID);
-            msgIt.value().msg->markAsSent(QDateTime::currentDateTime());
-            undeliveredMsgs.erase(msgIt);
-        }
-        receipts.erase(it);
+    if (receipts.find(receipt) == receipts.end())
+    {
+        receipts[receipt] = Receipt();
+    } else if ( receipts[receipt].bRecepitReceived ){
+        qWarning() << "Received duplicate receipt";
     }
+    receipts[receipt].bRecepitReceived = true;
+    processReceipt_(receipt);
 }
 
 void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg,
@@ -72,8 +67,16 @@ void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessa
 {
     QMutexLocker ml(&mutex);
 
-    receipts[receipt] = messageID;
+    if (receipts.find(receipt) == receipts.end())
+    {
+        receipts[receipt] = Receipt();
+    } else if ( receipts[receipt].bRowValid && receipt != 0 /* offline receipt */ ){
+        qWarning() << "Received duplicate registration of receipt";
+    }
+    receipts[receipt].rowId = messageID;
+    receipts[receipt].bRowValid = true;
     undeliveredMsgs[messageID] = {msg, timestamp, receipt};
+    processReceipt_(receipt);
 }
 
 void OfflineMsgEngine::deliverOfflineMsgs()
@@ -118,4 +121,29 @@ void OfflineMsgEngine::removeAllReceipts()
     QMutexLocker ml(&mutex);
 
     receipts.clear();
+}
+
+void OfflineMsgEngine::updateTimestamp(int receiptId)
+{
+    QMutexLocker ml(&mutex);
+
+    auto receipt = receipts.find(receiptId);
+    auto msg = undeliveredMsgs.find(receipt->rowId);
+    msg->msg->markAsSent(QDateTime::currentDateTime());
+    undeliveredMsgs.remove(receipt->rowId);
+    receipts.erase(receipt);
+}
+
+void OfflineMsgEngine::processReceipt_(int receiptId)
+{
+    if (!receipts[receiptId].bRecepitReceived || !receipts[receiptId].bRowValid)
+        return;
+    Profile* profile = Nexus::getProfile();
+    auto receipt = receipts.find(receiptId);
+    if (profile->isHistoryEnabled())
+        profile->getHistory()->markAsSent(receipt->rowId);
+
+    // could either be called from GUI thread when we receive the receipt, or from db process thread when our message
+    // is inserted into history. Can't assume it's safe to update GUI, so need to force GUI thread to update timestamp
+    emit setTimestamp(f->getId(), receiptId);
 }

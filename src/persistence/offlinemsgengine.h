@@ -41,22 +41,33 @@ public:
     void dischargeReceipt(int receipt);
     void registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg,
                          const QDateTime& timestamp = QDateTime::currentDateTime());
+    void updateTimestamp(int recepitId);
 
 public slots:
     void deliverOfflineMsgs();
     void removeAllReceipts();
 
+signals:
+    void setTimestamp(uint32_t friendId, int receiptId);
+
 private:
+    void processReceipt_(int receipt);
+    struct Receipt
+    {
+        bool bRowValid = false;
+        int64_t rowId;
+        bool bRecepitReceived = false;
+    };
+
     struct MsgPtr
     {
         ChatMessage::Ptr msg;
         QDateTime timestamp;
         int receipt;
     };
-
     QMutex mutex;
     Friend* f;
-    QHash<int, int64_t> receipts;
+    QHash<int, Receipt> receipts;
     QMap<int64_t, MsgPtr> undeliveredMsgs;
 
     static const int offlineTimeout;

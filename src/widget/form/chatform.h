@@ -94,6 +94,7 @@ private slots:
     void onFriendMessageReceived(quint32 friendId, const QString& message, bool isAction);
     void onStatusMessage(const QString& message);
     void onReceiptReceived(quint32 friendId, int receipt);
+    void onSentMessageWriteFinished(uint32_t friendId, int receiptId);
     void onLoadHistory();
     void onUpdateTime();
     void onScreenshotClicked();
