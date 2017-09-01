@@ -161,7 +161,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(core, &Core::friendMessageReceived, this, &ChatForm::onFriendMessageReceived);
     connect(core, &Core::friendTypingChanged, this, &ChatForm::onFriendTypingChanged);
     connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
-
+    connect(offlineEngine, &OfflineMsgEngine::setTimestamp, this, &ChatForm::onSentMessageWriteFinished);
 
     const CoreAV* av = core->getAv();
     connect(av, &CoreAV::avInvite, this, &ChatForm::onAvInvite);
@@ -574,6 +574,13 @@ void ChatForm::onReceiptReceived(quint32 friendId, int receipt)
 {
     if (friendId == f->getId()) {
         offlineEngine->dischargeReceipt(receipt);
+    }
+}
+
+void ChatForm::onSentMessageWriteFinished(uint32_t friendId, int receiptId)
+{
+    if (friendId == f->getId()) {
+        offlineEngine->updateTimestamp(receiptId);
     }
 }
 
