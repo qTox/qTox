@@ -89,7 +89,7 @@ qt5_wrap_ui(${PROJECT_NAME}_FORMS
   src/chatlog/content/filetransferwidget.ui
   src/loginscreen.ui
   src/mainwindow.ui
-  src/widget/about/aboutuser.ui
+  src/widget/about/aboutfriendform.ui
   src/widget/form/loadhistorydialog.ui
   src/widget/form/profileform.ui
   src/widget/form/removefrienddialog.ui
@@ -251,6 +251,9 @@ set(${PROJECT_NAME}_SOURCES
   src/grouplist.h
   src/ipc.cpp
   src/ipc.h
+  src/model/about/aboutfriend.cpp
+  src/model/about/aboutfriend.h
+  src/model/about/iaboutfriend.h
   src/model/contact.cpp
   src/model/contact.h
   src/model/friend.cpp
@@ -271,6 +274,7 @@ set(${PROJECT_NAME}_SOURCES
   src/persistence/db/rawdatabase.h
   src/persistence/history.cpp
   src/persistence/history.h
+  src/persistence/ifriendsettings.h
   src/persistence/offlinemsgengine.cpp
   src/persistence/offlinemsgengine.h
   src/persistence/profile.cpp
@@ -307,8 +311,8 @@ set(${PROJECT_NAME}_SOURCES
   src/video/videosource.h
   src/video/videosurface.cpp
   src/video/videosurface.h
-  src/widget/about/aboutuser.cpp
-  src/widget/about/aboutuser.h
+  src/widget/about/aboutfriendform.cpp
+  src/widget/about/aboutfriendform.h
   src/widget/categorywidget.cpp
   src/widget/categorywidget.h
   src/widget/circlewidget.cpp

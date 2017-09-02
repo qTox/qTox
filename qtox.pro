@@ -45,7 +45,7 @@ FORMS    += \
     src/widget/form/settings/advancedsettings.ui \
     src/widget/form/settings/aboutsettings.ui \
     src/widget/form/removefrienddialog.ui \
-    src/widget/about/aboutuser.ui
+    src/widget/about/aboutfriendform.ui
 
 CONFIG   += c++11
 CONFIG   += warn_on exceptions_off rtti_off
@@ -369,6 +369,8 @@ HEADERS  += \
     src/groupinvite.h \
     src/grouplist.h \
     src/ipc.h \
+    src/model/about/aboutfriend.h \
+    src/model/about/iaboutfriend.h \
     src/model/contact.h \
     src/model/friend.h \
     src/model/group.h \
@@ -379,6 +381,7 @@ HEADERS  += \
     src/nexus.h \
     src/persistence/db/rawdatabase.h \
     src/persistence/history.h \
+    src/persistence/ifriendsettings.h \
     src/persistence/offlinemsgengine.h \
     src/persistence/profile.h \
     src/persistence/profilelocker.h \
@@ -397,7 +400,7 @@ HEADERS  += \
     src/video/videomode.h \
     src/video/videosource.h \
     src/video/videosurface.h \
-    src/widget/about/aboutuser.h \
+    src/widget/about/aboutfriendform.h \
     src/widget/categorywidget.h \
     src/widget/circlewidget.h \
     src/widget/contentdialog.h \
@@ -492,6 +495,7 @@ SOURCES += \
     src/grouplist.cpp \
     src/ipc.cpp \
     src/main.cpp \
+    src/model/about/aboutfriend.cpp \
     src/model/contact.cpp \
     src/model/friend.cpp \
     src/model/group.cpp \
@@ -520,7 +524,7 @@ SOURCES += \
     src/video/videomode.cpp \
     src/video/videosource.cpp \
     src/video/videosurface.cpp \
-    src/widget/about/aboutuser.cpp \
+    src/widget/about/aboutfriendform.cpp \
     src/widget/categorywidget.cpp \
     src/widget/circlewidget.cpp \
     src/widget/contentdialog.cpp \

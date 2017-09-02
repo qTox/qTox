@@ -25,11 +25,12 @@
 
 #include "src/core/core.h"
 #include "src/model/friend.h"
+#include "src/model/about/aboutfriend.h"
 #include "src/friendlist.h"
 #include "src/model/group.h"
 #include "src/grouplist.h"
 #include "src/persistence/settings.h"
-#include "src/widget/about/aboutuser.h"
+#include "src/widget/about/aboutfriendform.h"
 #include "src/widget/form/chatform.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/croppinglabel.h"
@@ -229,7 +230,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
         }
     } else if (selectedItem == aboutWindow) {
         const Friend* f = FriendList::findFriend(friendId);
-        AboutUser* aboutUser = new AboutUser(f, Widget::getInstance());
+        QPointer<IAboutFriend> about = new AboutFriend(f, &Settings::getInstance());
+        AboutFriendForm* aboutUser = new AboutFriendForm(about, Widget::getInstance());
         aboutUser->show();
     } else if (selectedItem == newGroupAction) {
         const int groupId = Core::getInstance()->createGroup();
