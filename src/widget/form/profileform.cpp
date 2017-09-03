@@ -512,6 +512,7 @@ void ProfileForm::onRegisterButtonClicked()
     bodyUI->toxmeUpdateButton->setText(tr("Update (processing)"));
 
     QString id = toxId->text();
+    id.remove(QRegularExpression("<[^>]*>"));
     QString bio = bodyUI->toxmeBio->text();
     QString server = bodyUI->toxmeServersList->currentText();
     bool privacy = bodyUI->toxmePrivacy->isChecked();
