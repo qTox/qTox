@@ -1865,6 +1865,8 @@ void Widget::onEmptyGroupCreated(int groupId)
     if (Widget::getInstance()->groupsVisible()) {
         groupWidgets[groupId]->editName();
     }
+
+    group->regeneratePeerList();
 }
 
 /**
