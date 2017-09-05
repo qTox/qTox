@@ -25,6 +25,7 @@
 #include "src/persistence/settings.h"
 #include <QMutexLocker>
 #include <QTimer>
+#include <QCoreApplication>
 
 /**
  * @var static const int OfflineMsgEngine::offlineTimeout
@@ -52,19 +53,14 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
 {
     QMutexLocker ml(&mutex);
 
-    Profile* profile = Nexus::getProfile();
     auto it = receipts.find(receipt);
-    if (it != receipts.end()) {
-        int mID = it.value();
-        auto msgIt = undeliveredMsgs.find(mID);
-        if (msgIt != undeliveredMsgs.end()) {
-            if (profile->isHistoryEnabled())
-                profile->getHistory()->markAsSent(mID);
-            msgIt.value().msg->markAsSent(QDateTime::currentDateTime());
-            undeliveredMsgs.erase(msgIt);
-        }
-        receipts.erase(it);
+    if (it == receipts.end()) {
+        it = receipts.insert(receipt, Receipt());
+    } else if (it->bRecepitReceived) {
+        qWarning() << "Received duplicate receipt";
     }
+    it->bRecepitReceived = true;
+    processReceipt(receipt);
 }
 
 void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg,
@@ -72,8 +68,16 @@ void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessa
 {
     QMutexLocker ml(&mutex);
 
-    receipts[receipt] = messageID;
+    auto it = receipts.find(receipt);
+    if (it == receipts.end()) {
+        it = receipts.insert(receipt, Receipt());
+    } else if (it->bRowValid && receipt != 0 /* offline receipt */) {
+        qWarning() << "Received duplicate registration of receipt";
+    }
+    it->rowId = messageID;
+    it->bRowValid = true;
     undeliveredMsgs[messageID] = {msg, timestamp, receipt};
+    processReceipt(receipt);
 }
 
 void OfflineMsgEngine::deliverOfflineMsgs()
@@ -118,4 +122,44 @@ void OfflineMsgEngine::removeAllReceipts()
     QMutexLocker ml(&mutex);
 
     receipts.clear();
+}
+
+void OfflineMsgEngine::updateTimestamp(int receiptId)
+{
+    QMutexLocker ml(&mutex);
+
+    auto receipt = receipts.find(receiptId);
+    const auto msg = undeliveredMsgs.constFind(receipt->rowId);
+    if (msg == undeliveredMsgs.end()) {
+        // this should never occur as registerReceipt adds the msg before processReceipt calls updateTimestamp
+        qCritical() << "Message was not in undeliveredMsgs map when attempting to update its timestamp!";
+        return;
+    }
+    msg->msg->markAsSent(QDateTime::currentDateTime());
+    undeliveredMsgs.remove(receipt->rowId);
+    receipts.erase(receipt);
+}
+
+void OfflineMsgEngine::processReceipt(int receiptId)
+{
+    const auto receipt = receipts.constFind(receiptId);
+    if (receipt == receipts.end()) {
+        // this should never occur as callers ensure receipts contains receiptId
+        qCritical() << "Receipt was not added to map prior to attempting to process it!";
+        return;
+    }
+
+    if (!receipt->bRecepitReceived || !receipt->bRowValid)
+        return;
+
+    Profile* const profile = Nexus::getProfile();
+    if (profile->isHistoryEnabled()) {
+        profile->getHistory()->markAsSent(receipt->rowId);
+    }
+
+    if (QThread::currentThread() == QCoreApplication::instance()->thread()) {
+        updateTimestamp(receiptId);
+    } else {
+        QMetaObject::invokeMethod(this, "updateTimestamp", Qt::QueuedConnection, Q_ARG(int, receiptId));
+    }
 }

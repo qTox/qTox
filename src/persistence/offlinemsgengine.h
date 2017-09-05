@@ -45,18 +45,26 @@ public:
 public slots:
     void deliverOfflineMsgs();
     void removeAllReceipts();
+    void updateTimestamp(int receiptId);
 
 private:
+    void processReceipt(int receiptId);
+    struct Receipt
+    {
+        bool bRowValid{false};
+        int64_t rowId{0};
+        bool bRecepitReceived{false};
+    };
+
     struct MsgPtr
     {
         ChatMessage::Ptr msg;
         QDateTime timestamp;
         int receipt;
     };
-
     QMutex mutex;
     Friend* f;
-    QHash<int, int64_t> receipts;
+    QHash<int, Receipt> receipts;
     QMap<int64_t, MsgPtr> undeliveredMsgs;
 
     static const int offlineTimeout;
