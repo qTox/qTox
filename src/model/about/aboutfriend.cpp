@@ -89,7 +89,7 @@ void AboutFriend::setAutoGroupInvite(bool enabled)
     const ToxPk pk = f->getPublicKey();
     Settings::getInstance().setAutoGroupInvite(pk, enabled);
     Settings::getInstance().savePersonal();
-    emit autoGroupInviteChaged(enabled);
+    emit autoGroupInviteChanged(enabled);
 }
 
 bool AboutFriend::clearHistory()

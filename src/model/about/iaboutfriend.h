@@ -1,6 +1,7 @@
 #ifndef I_ABOUT_FRIEND_H
 #define I_ABOUT_FRIEND_H
 
+#include "src/model/interface.h"
 #include <QObject>
 
 class IAboutFriend : public QObject
@@ -37,17 +38,17 @@ public:
 
     virtual bool clearHistory() = 0;
 
-signals:
-    void nameChanged(const QString& name) const;
-    void statusChanged(const QString& status) const;
-    void publicKeyChanged(const QString& pk) const;
+    /* signals */
+    CHANGED_SIGNAL(QString, name);
+    CHANGED_SIGNAL(QString, status);
+    CHANGED_SIGNAL(QString, publicKey);
 
-    void avatarChanged(const QPixmap& avatar) const;
-    void noteChanged(const QString& note) const;
+    CHANGED_SIGNAL(QPixmap, avatar);
+    CHANGED_SIGNAL(QString, note);
 
-    void autoAcceptDirChanged(const QString& dir);
-    void autoAcceptCallChanged(AutoAcceptCall flag);
-    void autoGroupInviteChaged(bool enabled);
+    CHANGED_SIGNAL(QString, autoAcceptDir);
+    CHANGED_SIGNAL(AutoAcceptCallFlags, autoAcceptCall);
+    CHANGED_SIGNAL(bool, autoGroupInvite);
 };
 
 #endif // I_ABOUT_FRIEND_H
