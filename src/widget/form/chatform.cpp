@@ -743,7 +743,7 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         ChatMessage::MessageType type = isAction ? ChatMessage::ACTION : ChatMessage::NORMAL;
         QDateTime dateTime = needSending ? QDateTime() : msgDateTime;
         auto msg = ChatMessage::createChatMessage(authorStr, messageText, type, isSelf, dateTime);
-        if (!isAction && needsToHideName(authorPk)) {
+        if (!isAction && needsToHideName(authorPk, msgDateTime)) {
             msg->hideSender();
         }
 
