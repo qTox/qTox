@@ -592,6 +592,7 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
     if (!errorMessage.isNull()) {
         emit failedToAddFriend(friendPk, errorMessage);
         profile.saveToxSave();
+        return;
     }
 
     ToxString cMessage(message);
