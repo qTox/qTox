@@ -365,9 +365,9 @@ void AddFriendForm::retranslateUi()
 
     onIdChanged(toxId.text());
 
-    tabWidget->setTabText(0, tr("Add a friend"));
-    tabWidget->setTabText(1, tr("Import contacts"));
-    tabWidget->setTabText(2, tr("Friend requests"));
+    tabWidget->setTabText(AddFriend, tr("Add a friend"));
+    tabWidget->setTabText(ImportContacts, tr("Import contacts"));
+    tabWidget->setTabText(FriendRequest, tr("Friend requests"));
 
     for (QPushButton* acceptButton : acceptButtons) {
         retranslateAcceptButton(acceptButton);
