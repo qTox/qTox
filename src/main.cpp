@@ -46,6 +46,10 @@
 #include "platform/install_osx.h"
 #endif
 
+#if defined(Q_OS_UNIX)
+#include "platform/posixsignalnotifier.h"
+#endif
+
 #ifdef LOG_TO_FILE
 static QAtomicPointer<FILE> logFileFile = nullptr;
 static QList<QByteArray>* logBuffer =
@@ -145,6 +149,17 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(logMessageHandler);
 
     QApplication* a = new QApplication(argc, argv);
+
+#if defined(Q_OS_UNIX)
+    // PosixSignalNotifier is used only for terminating signals,
+    // so it's connected directly to quit() without any filtering.
+    QObject::connect(&PosixSignalNotifier::globalInstance(),
+                     &PosixSignalNotifier::activated,
+                     a,
+                     &QApplication::quit);
+    PosixSignalNotifier::watchCommonTerminatingSignals();
+#endif
+
     a->setApplicationName("qTox");
     a->setOrganizationName("Tox");
     a->setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
