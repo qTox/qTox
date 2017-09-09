@@ -390,7 +390,7 @@ void FriendWidget::onAvatarRemoved(int friendId)
 
     isDefaultAvatar = true;
 
-    const QString path = QString(":/img/contact%1.svg").arg(isActive() ? "" : "_dark");
+    const QString path = QString(":/img/contact%1.svg").arg(isActive() ? "_dark" : "");
     avatar->setPixmap(QPixmap(path));
 }
 
