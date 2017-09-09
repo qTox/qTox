@@ -35,6 +35,7 @@ public:
 
     virtual void setEventFlag(bool flag) = 0;
     virtual bool getEventFlag() const = 0;
+    virtual void resetEventFlags() = 0;
 };
 
 #endif // CONTACT_H

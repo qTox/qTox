@@ -116,12 +116,20 @@ uint32_t Friend::getId() const
 
 void Friend::setEventFlag(bool flag)
 {
-    hasNewEvents = flag;
+    if (flag != hasNewEvents) {
+        hasNewEvents = flag;
+        emit eventFlagChanged(flag);
+    }
 }
 
 bool Friend::getEventFlag() const
 {
     return hasNewEvents;
+}
+
+void Friend::resetEventFlags()
+{
+    setEventFlag(false);
 }
 
 void Friend::setStatus(Status s)

@@ -33,8 +33,8 @@ public:
     void setAsInactiveChatroom() override final;
     void updateStatusLight() override final;
     void setChatForm(ContentLayout* contentLayout) override final;
-    void resetEventFlags() override final;
     QString getStatusString() const override final;
+    const Contact* getContact() const override final;
     const Friend* getFriend() const override final;
 
     void search(const QString& searchString, bool hide = false);

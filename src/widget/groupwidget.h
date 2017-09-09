@@ -32,8 +32,8 @@ public:
     void setAsActiveChatroom() final override;
     void updateStatusLight() final override;
     void setChatForm(ContentLayout* contentLayout) final override;
-    void resetEventFlags() final override;
     QString getStatusString() const final override;
+    const Contact* getContact() const final override;
     Group* getGroup() const final override;
     void setName(const QString& name);
     void editName();

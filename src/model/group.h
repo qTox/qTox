@@ -52,6 +52,7 @@ public:
 
     void setMentionedFlag(bool f);
     bool getMentionedFlag() const;
+    void resetEventFlags() override;
 
     void updatePeer(int peerId, QString newName);
     void setName(const QString& name) override;
@@ -63,6 +64,8 @@ public:
 signals:
     void titleChanged(uint32_t groupId, const QString& title);
     void userListChanged(uint32_t groupId, const QMap<QByteArray, QString>& toxids);
+    void eventFlagChanged(bool flag);
+    void mentionFlagChanged(bool flag);
 
 private:
     QString title;

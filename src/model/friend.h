@@ -49,6 +49,7 @@ public:
 
     void setEventFlag(bool f) override;
     bool getEventFlag() const override;
+    void resetEventFlags() override;
 
     const ToxPk& getPublicKey() const;
     uint32_t getId() const override;
@@ -64,9 +65,8 @@ signals:
     void aliasChanged(uint32_t friendId, QString alias);
     void statusChanged(uint32_t friendId, Status status);
     void statusMessageChanged(uint32_t friendId, const QString& message);
+    void eventFlagChanged(bool flag);
     void loadChatHistory();
-
-public slots:
 
 private:
     QString userName;

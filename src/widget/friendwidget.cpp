@@ -228,8 +228,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
             Settings::getInstance().setAutoAcceptDir(id, dir);
         }
     } else if (selectedItem == aboutWindow) {
-        const Friend* f = FriendList::findFriend(friendId);
-        AboutUser* aboutUser = new AboutUser(f, Widget::getInstance());
+        AboutUser* aboutUser = new AboutUser(frnd, Widget::getInstance());
         aboutUser->show();
     } else if (selectedItem == newGroupAction) {
         const int groupId = Core::getInstance()->createGroup();
@@ -341,6 +340,11 @@ QString FriendWidget::getStatusString() const
     return event ? tr("New message") : names.value(status);
 }
 
+const Contact* FriendWidget::getContact() const
+{
+    return frnd;
+}
+
 const Friend* FriendWidget::getFriend() const
 {
     return frnd;
@@ -363,13 +367,6 @@ void FriendWidget::setChatForm(ContentLayout* contentLayout)
     if (form) {
         form->show(contentLayout);
     }
-}
-
-void FriendWidget::resetEventFlags()
-{
-    // Hack to avoid edit const Friend. TODO: Repalce on emit
-    Friend* f = FriendList::findFriend(frnd->getId());
-    f->setEventFlag(false);
 }
 
 void FriendWidget::onAvatarChange(int friendId, const QPixmap& pic)

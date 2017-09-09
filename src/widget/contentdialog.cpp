@@ -546,7 +546,7 @@ bool ContentDialog::event(QEvent* event)
     switch (event->type()) {
     case QEvent::WindowActivate:
         if (activeChatroomWidget) {
-            activeChatroomWidget->resetEventFlags();
+            activeChatroomWidget->getContact()->resetEventFlags();
             activeChatroomWidget->updateStatusLight();
 
             updateTitleAndStatusIcon();
@@ -723,7 +723,7 @@ void ContentDialog::activate(GenericChatroomWidget* widget)
 
     widget->setChatForm(contentLayout);
     widget->setAsActiveChatroom();
-    widget->resetEventFlags();
+    widget->getContact()->resetEventFlags();
     widget->updateStatusLight();
 
     updateTitleAndStatusIcon();

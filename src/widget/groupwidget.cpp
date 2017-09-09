@@ -196,6 +196,11 @@ QString GroupWidget::getStatusString() const
         return "New Message";
 }
 
+const Contact* GroupWidget::getContact() const
+{
+    return getGroup();
+}
+
 void GroupWidget::editName()
 {
     nameLabel->editBegin();
@@ -210,13 +215,6 @@ void GroupWidget::setChatForm(ContentLayout* contentLayout)
 {
     Group* g = GroupList::findGroup(groupId);
     g->getChatForm()->show(contentLayout);
-}
-
-void GroupWidget::resetEventFlags()
-{
-    Group* g = GroupList::findGroup(groupId);
-    g->setEventFlag(false);
-    g->setMentionedFlag(false);
 }
 
 void GroupWidget::dragEnterEvent(QDragEnterEvent* ev)
