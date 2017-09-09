@@ -268,6 +268,10 @@ will alter your Tox ID. You don't need to tell your existing contacts your new
 Tox ID, but you have to tell new contacts your new Tox ID. Your Tox ID can be
 found in your [User Profile](#user-profile).
 
+#### BlackList
+
+BlackList is a feature of Tox that locally block group member's messages across all you joined groups who spam these groups. You need put member's public key one perline into the BlackList text edit. Since now qTox has no method to get group member's, for now you can't directly get the member's public key. I think this will some more work for easy use.
+
 ### Audio/Video
 #### Audio Settings
 
