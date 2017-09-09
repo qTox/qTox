@@ -178,6 +178,27 @@ static const QVector<QPair<QString, QString>> URL_CASES {
                 MAKE_LINK("http://site.com/part1/part2") " "
                 MAKE_LINK("http://site.com/part3") " and one more time "
                 MAKE_LINK("www.site.com/part1/part2")),
+    PAIR_FORMAT("https://127.0.0.1/asd\n"
+                "https://ABCD:EF01:2345:6789:ABCD:EF01:2345:6789/\n"
+                "ftp://2001:DB8::8:800:200C:417A/\n"
+                "http://::1/\n"
+                "http://::/\n"
+                "https://127.0.0.1:8080/asd "
+                "https://[ABCD:EF01:2345:6789:ABCD:EF01:2345:6789]:8080/ "
+                "ftp://[2001:DB8::8:800:200C:417A]:21/ "
+                "http://[::1]:22/ "
+                "http://[::]:20/ ",
+                MAKE_LINK("https://127.0.0.1/asd") "\n"
+                MAKE_LINK("https://ABCD:EF01:2345:6789:ABCD:EF01:2345:6789/") "\n"
+                MAKE_LINK("ftp://2001:DB8::8:800:200C:417A/") "\n"
+                MAKE_LINK("http://::1/") "\n"
+                MAKE_LINK("http://::/") "\n"
+                MAKE_LINK("https://127.0.0.1:8080/asd") " "
+                MAKE_LINK("https://[ABCD:EF01:2345:6789:ABCD:EF01:2345:6789]:8080/") " "
+                MAKE_LINK("ftp://[2001:DB8::8:800:200C:417A]:21/") " "
+                MAKE_LINK("http://[::1]:22/") " "
+                MAKE_LINK("http://[::]:20/") " "
+                ),
 };
 
 #undef PAIR_FORMAT
