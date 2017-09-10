@@ -1367,11 +1367,15 @@ void Settings::setAutoAcceptDir(const ToxPk& id, const QString& dir)
     QMutexLocker locker{&bigLock};
 
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
-        it->autoAcceptDir = dir;
-    } else {
+    if (it == friendLst.end()) {
         updateFriendAddress(id.toString());
         setAutoAcceptDir(id, dir);
+        return;
+    }
+
+    if (it->autoAcceptDir != dir) {
+        it->autoAcceptDir = dir;
+        emit autoAcceptDirChanged(id, dir);
     }
 }
 
@@ -1391,7 +1395,13 @@ void Settings::setAutoAcceptCall(const ToxPk& id, AutoAcceptCallFlags accept)
     QMutexLocker locker{&bigLock};
 
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
+    if (it == friendLst.end()) {
+        updateFriendAddress(id.toString());
+        setAutoAcceptCall(id, accept);
+        return;
+    }
+
+    if (it->autoAcceptCall != accept) {
         it->autoAcceptCall = accept;
         emit autoAcceptCallChanged(id, accept);
     }
@@ -1414,7 +1424,13 @@ void Settings::setAutoGroupInvite(const ToxPk& id, bool accept)
     QMutexLocker locker{&bigLock};
 
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
+    if (it == friendLst.end()) {
+        updateFriendAddress(id.toString());
+        setAutoGroupInvite(id, accept);
+        return;
+    }
+
+    if (it->autoGroupInvite != accept) {
         it->autoGroupInvite = accept;
         emit autoGroupInviteChanged(id, accept);
     }
@@ -1436,12 +1452,15 @@ void Settings::setContactNote(const ToxPk& id, const QString& note)
     QMutexLocker locker{&bigLock};
 
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
-        qDebug() << note;
-        it->note = note;
-    } else {
+    if (it == friendLst.end()) {
         updateFriendAddress(id.toString());
         setContactNote(id, note);
+        return;
+    }
+
+    if (it->note != note) {
+        it->note = note;
+        emit contactNoteChanged(id, note);
     }
 }
 

@@ -193,8 +193,12 @@ signals:
     void globalAutoAcceptDirChanged(const QString& path);
     void checkUpdatesChanged(bool enabled);
     void widgetDataChanged(const QString& key);
+
+    // Friend
     void autoAcceptCallChanged(const ToxPk& id, AutoAcceptCallFlags accept);
     void autoGroupInviteChanged(const ToxPk& id, bool accept);
+    void autoAcceptDirChanged(const ToxPk& id, const QString& dir);
+    void contactNoteChanged(const ToxPk& id, const QString& note);
 
     // GUI
     void autoLoginChanged(bool enabled);
