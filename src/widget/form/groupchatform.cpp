@@ -146,11 +146,9 @@ void GroupChatForm::onSendTriggered()
             emit sendMessage(group->getId(), msg);
         }
     } else {
-        if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive))
-            addSelfMessage(msg.mid(ChatForm::ACTION_PREFIX.length()), QDateTime::currentDateTime(),
-                           true);
-        else
-            addSelfMessage(msg, QDateTime::currentDateTime(), false);
+        const ToxPk selfPk = Core::getInstance()->getSelfId().getPublicKey();
+        const TextMessage message { 0, selfPk, msg, QDateTime::currentDateTime() };
+        addSelfMessage(message);
     }
 }
 

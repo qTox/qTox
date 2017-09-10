@@ -25,6 +25,7 @@
 #include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/model/group.h"
+#include "src/model/message/textmessage.h"
 #include "src/grouplist.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
@@ -395,22 +396,19 @@ bool GenericChatForm::needsToHideName(const ToxPk& messageAuthor) const
  * @param isSent True if message was received by your friend
  * @return ChatMessage object
  */
-ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QString& message,
-                                                const QDateTime& dt, bool isAction, bool isSent)
+ChatMessage::Ptr GenericChatForm::createMessage(const TextMessage& message, bool isSent)
 {
-    const Core* core = Core::getInstance();
-    bool isSelf = author == core->getSelfId().getPublicKey();
-    QString authorStr = isSelf ? core->getUsername() : resolveToxPk(author);
+    const ToxPk& author = message.getAuthor();
+    const QDateTime& dt = message.getTime();
+    const bool isAction = message.isAction();
     if (getLatestDate() != QDate::currentDate()) {
         addSystemDateMessage();
     }
 
-    ChatMessage::Ptr msg;
+    ChatMessage::Ptr msg = ChatMessage::createChatMessage(message);
     if (isAction) {
-        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION, isSelf);
         previousId = ToxPk{};
     } else {
-        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, isSelf);
         if (needsToHideName(author)) {
             msg->hideSender();
         }
@@ -430,35 +428,31 @@ ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QStri
 /**
  * @brief Same, as createMessage, but creates message that you will send to someone
  */
-ChatMessage::Ptr GenericChatForm::createSelfMessage(const QString& message, const QDateTime& dt,
-                                                    bool isAction, bool isSent)
+ChatMessage::Ptr GenericChatForm::createSelfMessage(const TextMessage& message, bool isSent)
 {
-    ToxPk selfPk = Core::getInstance()->getSelfId().getPublicKey();
-    return createMessage(selfPk, message, dt, isAction, isSent);
+    return createMessage(message, isSent);
 }
 
 /**
  * @brief Inserts message into ChatLog
  */
-void GenericChatForm::addMessage(const ToxPk& author, const QString& message, const QDateTime& dt,
-                                 bool isAction)
+void GenericChatForm::addMessage(const TextMessage& message)
 {
-    createMessage(author, message, dt, isAction, true);
+    createMessage(message, true);
 }
 
 /**
  * @brief Inserts int ChatLog message that you have sent
  */
-void GenericChatForm::addSelfMessage(const QString& message, const QDateTime& datetime, bool isAction)
+void GenericChatForm::addSelfMessage(const TextMessage& message)
 {
-    createSelfMessage(message, datetime, isAction, true);
+    createSelfMessage(message, true);
 }
 
-void GenericChatForm::addAlertMessage(const ToxPk& author, const QString& msg, const QDateTime& dt)
+void GenericChatForm::addAlertMessage(const TextMessage& message)
 {
-    QString authorStr = resolveToxPk(author);
-    bool isSelf = author == Core::getInstance()->getSelfId().getPublicKey();
-    auto chatMsg = ChatMessage::createChatMessage(authorStr, msg, ChatMessage::ALERT, isSelf, dt);
+    const ToxPk& author = message.getAuthor();
+    auto chatMsg = ChatMessage::createChatMessage(message);
     if (needsToHideName(author)) {
         chatMsg->hideSender();
     }

@@ -553,14 +553,15 @@ void ChatForm::onFriendNameChanged(const QString& name)
     }
 }
 
-void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& message, bool isAction)
+void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& text, bool isAction)
 {
     if (friendId != f->getId()) {
         return;
     }
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    addMessage(f->getPublicKey(), message, timestamp, isAction);
+    TextMessage message { 0, f->getPublicKey(), text, timestamp, isAction };
+    addMessage(message);
 }
 
 void ChatForm::onStatusMessage(const QString& message)
@@ -673,7 +674,7 @@ void ChatForm::onLoadChatHistory()
     }
 }
 
-QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName)
+static QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName = "")
 {
     QString authorStr;
     const Core* core = Core::getInstance();
@@ -710,7 +711,7 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
 
     History* history = Nexus::getProfile()->getHistory();
     QString pk = f->getPublicKey().toString();
-    QList<History::HistMessage> msgs = history->getChatHistory(pk, since, now);
+    QList<TextMessage> msgs = history->getChatHistory(pk, since, now);
 
     ToxPk prevIdBackup = previousId;
     previousId = ToxPk{};
@@ -718,9 +719,9 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
     QList<ChatLine::Ptr> historyMessages;
 
     QDate lastDate(1, 0, 0);
-    for (const auto& it : msgs) {
+    for (const TextMessage& m : msgs) {
         // Show the date every new day
-        QDateTime msgDateTime = it.timestamp.toLocalTime();
+        QDateTime msgDateTime = m.getTime().toLocalTime();
         QDate msgDate = msgDateTime.date();
 
         if (msgDate > lastDate) {
@@ -731,18 +732,9 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         }
 
         // Show each messages
-        const Core* core = Core::getInstance();
-        ToxPk authorPk(ToxId(it.sender).getPublicKey());
-        QString authorStr = getMsgAuthorDispName(authorPk, it.dispName);
-        bool isSelf = authorPk == core->getSelfId().getPublicKey();
-
-        bool isAction = it.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
-        bool needSending = !it.isSent && isSelf;
-
-        QString messageText = isAction ? it.message.mid(ACTION_PREFIX.length()) : it.message;
-        ChatMessage::MessageType type = isAction ? ChatMessage::ACTION : ChatMessage::NORMAL;
-        QDateTime dateTime = needSending ? QDateTime() : msgDateTime;
-        auto msg = ChatMessage::createChatMessage(authorStr, messageText, type, isSelf, dateTime);
+        const ToxPk& authorPk = m.getAuthor();
+        const bool isAction = m.isAction();
+        auto msg = ChatMessage::createChatMessage(m);
         if (!isAction && needsToHideName(authorPk)) {
             msg->hideSender();
         }
@@ -750,13 +742,14 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         previousId = authorPk;
         prevMsgDateTime = msgDateTime;
 
-        if (needSending && processUndelivered) {
+        const bool isSent = msgDateTime != QDateTime();
+        if (!isSent && processUndelivered) {
             Core* core = Core::getInstance();
             uint32_t friendId = f->getId();
             QString stringMsg = msg->toString();
             int receipt = isAction ? core->sendAction(friendId, stringMsg)
                                    : core->sendMessage(friendId, stringMsg);
-            getOfflineMsgEngine()->registerReceipt(receipt, it.id, msg);
+            getOfflineMsgEngine()->registerReceipt(receipt, m.getId(), msg);
         }
 
         historyMessages.append(msg);
@@ -963,32 +956,26 @@ void ChatForm::SendMessageStr(QString msg)
     }
 
     bool isAction = msg.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
-    if (isAction) {
-        msg.remove(0, ACTION_PREFIX.length());
-    }
-
     QStringList splittedMsg = Core::splitMessage(msg, tox_max_message_length());
     QDateTime timestamp = QDateTime::currentDateTime();
 
     for (const QString& part : splittedMsg) {
-        QString historyPart = part;
-        if (isAction) {
-            historyPart = ACTION_PREFIX + part;
-        }
-
         bool status = !Settings::getInstance().getFauxOfflineMessaging();
-        ChatMessage::Ptr ma = createSelfMessage(part, timestamp, isAction, false);
         Core* core = Core::getInstance();
-        uint32_t friendId = f->getId();
-        int rec = isAction ? core->sendAction(friendId, part) : core->sendMessage(friendId, part);
+        const uint32_t friendId = f->getId();
+        const ToxPk selfPk = Core::getInstance()->getSelfId().getPublicKey();
+        const TextMessage message { 0, selfPk, part, QDateTime() };
+        const int rec = isAction ? core->sendAction(friendId, message.getText())
+                                 : core->sendMessage(friendId, message.getText());
+        ChatMessage::Ptr ma = createSelfMessage(message, false);
 
         Profile* profile = Nexus::getProfile();
         if (profile->isHistoryEnabled()) {
             auto* offMsgEngine = getOfflineMsgEngine();
-            QString selfPk = Core::getInstance()->getSelfId().toString();
-            QString pk = f->getPublicKey().toString();
-            QString name = Core::getInstance()->getUsername();
-            profile->getHistory()->addNewMessage(pk, historyPart, selfPk, timestamp, status, name,
+            const QString selfPkStr = selfPk.toString();
+            const QString pk = f->getPublicKey().toString();
+            const QString name = Core::getInstance()->getUsername();
+            profile->getHistory()->addNewMessage(pk, part, selfPkStr, timestamp, status, name,
                                                  [offMsgEngine, rec, ma](int64_t id) {
                                                      offMsgEngine->registerReceipt(rec, id, ma);
                                                  });
@@ -1025,7 +1012,7 @@ void ChatForm::onExportChat()
     QString pk = f->getPublicKey().toString();
     QDateTime epochStart = QDateTime::fromMSecsSinceEpoch(0);
     QDateTime now = QDateTime::currentDateTime();
-    QList<History::HistMessage> msgs = history->getChatHistory(pk, epochStart, now);
+    QList<TextMessage> msgs = history->getChatHistory(pk, epochStart, now);
 
     QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"), QString{}, QString{}, 0,
                                                 QFileDialog::DontUseNativeDialog);
@@ -1039,12 +1026,13 @@ void ChatForm::onExportChat()
     }
 
     QString buffer;
-    for (const auto& it : msgs) {
-        QString timestamp = it.timestamp.toString();
-        ToxPk authorPk(ToxId(it.sender).getPublicKey());
-        QString author = getMsgAuthorDispName(authorPk, it.dispName);
+    for (const TextMessage& m : msgs) {
+        QString timestamp = m.getTime().toString();
+        const ToxPk& authorPk = m.getAuthor();
+        QString author = getMsgAuthorDispName(authorPk);
+        const QString& text = m.getText();
 
-        QString line = QString("%1\t%2\t%3\n").arg(timestamp, author, it.message);
+        QString line = QString("%1\t%2\t%3\n").arg(timestamp, author, text);
         buffer = buffer % line;
     }
     file.write(buffer.toUtf8());

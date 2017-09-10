@@ -251,6 +251,12 @@ set(${PROJECT_NAME}_SOURCES
   src/grouplist.h
   src/ipc.cpp
   src/ipc.h
+  src/model/message/message.cpp
+  src/model/message/message.h
+  src/model/message/textmessage.cpp
+  src/model/message/textmessage.h
+  src/model/message/usermessage.cpp
+  src/model/message/usermessage.h
   src/model/contact.cpp
   src/model/contact.h
   src/model/friend.cpp

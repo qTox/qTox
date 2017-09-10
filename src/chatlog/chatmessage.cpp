@@ -29,6 +29,12 @@
 
 #include <QDebug>
 
+#include "src/core/core.h"
+#include "src/friendlist.h"
+#include "src/grouplist.h"
+#include "src/model/friend.h"
+#include "src/model/group.h"
+#include "src/model/message/textmessage.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
 
@@ -39,16 +45,48 @@ ChatMessage::ChatMessage()
 {
 }
 
-ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
-                                                MessageType type, bool isMe, const QDateTime& date)
+static QString getMsgAuthorDispName(const ToxPk& authorPk)
 {
+    const Core* const core = Core::getInstance();
+    const bool isSelf = authorPk == core->getSelfId().getPublicKey();
+
+    if (isSelf) {
+        return core->getUsername();
+    }
+
+    const Friend* const f = FriendList::findFriend(authorPk);
+    if (f) {
+        return f->getDisplayedName();
+    }
+
+    for (const Group* it : GroupList::getAllGroups()) {
+        QString res = it->resolveToxId(authorPk);
+        if (!res.isEmpty()) {
+            return res;
+        }
+    }
+
+    return authorPk.toString();
+}
+
+ChatMessage::Ptr ChatMessage::createChatMessage(const TextMessage& message)
+{
+    const QString sender = getMsgAuthorDispName(message.getAuthor());
+    const QString& rawMessage = message.getText();
+    const MessageType type = message.isAction() ? MessageType::ACTION
+                                                : MessageType::NORMAL;
+    // TODO: Maybe extract Core dependency?
+    // For example add `ChatMessage::setSelf` or `ChatMessage::makeNameBold`
+    const bool isSelf = message.getAuthor() == Core::getInstance()->getSelfPublicKey();
+    const QDateTime& time = message.getTime();
+
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
     QString text = rawMessage.toHtmlEscaped();
     QString senderText = sender;
 
-    const QColor actionColor =
-        QColor("#1818FF"); // has to match the color in innerStyle.css (div.action)
+    // has to match the color in innerStyle.css (div.action)
+    const QColor actionColor{QStringLiteral("#1818FF")};
 
     // smileys
     if (Settings::getInstance().getUseEmoticons())
@@ -82,21 +120,21 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     // Note: Eliding cannot be enabled for RichText items. (QTBUG-17207)
     QFont baseFont = Settings::getInstance().getChatMessageFont();
     QFont authorFont = baseFont;
-    if (isMe)
+    if (isSelf)
         authorFont.setBold(true);
 
     msg->addColumn(new Text(senderText, authorFont, true, sender,
                             type == ACTION ? actionColor : Qt::black),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(text, baseFont, false, ((type == ACTION) && isMe)
+    msg->addColumn(new Text(text, baseFont, false, ((type == ACTION) && isSelf)
                                                        ? QString("%1 %2").arg(sender, rawMessage)
                                                        : rawMessage),
                    ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0 / 1.6),
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
-    if (!date.isNull())
-        msg->markAsSent(date);
+    if (!time.isNull())
+        msg->markAsSent(time);
 
     return msg;
 }
