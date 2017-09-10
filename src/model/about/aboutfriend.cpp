@@ -8,6 +8,21 @@
 AboutFriend::AboutFriend(const Friend* f)
     : f{f}
 {
+    Settings* s = &Settings::getInstance();
+    connect(s, &Settings::contactNoteChanged, [=](const ToxPk& pk, const QString& note) {
+        emit noteChanged(note);
+    });
+    connect(s, &Settings::autoAcceptCallChanged, [=](const ToxPk& pk, Settings::AutoAcceptCallFlags flag) {
+        const int value = static_cast<int>(Settings::getInstance().getAutoAcceptCall(pk));
+        const AutoAcceptCallFlags sFlag = static_cast<IAboutFriend::AutoAcceptCall>(value);
+        emit autoAcceptCallChanged(sFlag);
+    });
+    connect(s, &Settings::autoAcceptDirChanged, [=](const ToxPk& pk, const QString& dir) {
+        emit autoAcceptDirChanged(dir);
+    });
+    connect(s, &Settings::autoGroupInviteChanged, [=](const ToxPk& pk, bool enable) {
+        emit autoGroupInviteChanged(enable);
+    });
 }
 
 QString AboutFriend::getName() const
@@ -44,7 +59,6 @@ void AboutFriend::setNote(const QString& note)
     const ToxPk pk = f->getPublicKey();
     Settings::getInstance().setContactNote(pk, note);
     Settings::getInstance().savePersonal();
-    emit noteChanged(note);
 }
 
 QString AboutFriend::getAutoAcceptDir() const
@@ -58,7 +72,6 @@ void AboutFriend::setAutoAcceptDir(const QString& path)
     const ToxPk pk = f->getPublicKey();
     Settings::getInstance().setAutoAcceptDir(pk, path);
     Settings::getInstance().savePersonal();
-    emit autoAcceptDirChanged(path);
 }
 
 IAboutFriend::AutoAcceptCallFlags AboutFriend::getAutoAcceptCall() const
@@ -75,7 +88,6 @@ void AboutFriend::setAutoAcceptCall(AutoAcceptCallFlags flag)
     const Settings::AutoAcceptCallFlags sFlag(value);
     Settings::getInstance().setAutoAcceptCall(pk, sFlag);
     Settings::getInstance().savePersonal();
-    emit autoAcceptCallChanged(flag);
 }
 
 bool AboutFriend::getAutoGroupInvite() const
@@ -89,7 +101,6 @@ void AboutFriend::setAutoGroupInvite(bool enabled)
     const ToxPk pk = f->getPublicKey();
     Settings::getInstance().setAutoGroupInvite(pk, enabled);
     Settings::getInstance().savePersonal();
-    emit autoGroupInviteChanged(enabled);
 }
 
 bool AboutFriend::clearHistory()
