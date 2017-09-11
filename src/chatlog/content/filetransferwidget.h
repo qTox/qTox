@@ -75,6 +75,8 @@ private slots:
 
 private:
     static QPixmap scaleCropIntoSquare(const QPixmap& source, int targetSize);
+    static int getExifOrientation(const char* data, const int size);
+    static void applyTransformation(const int oritentation, QImage& image);
 
 private:
     Ui::FileTransferWidget* ui;
