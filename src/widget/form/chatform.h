@@ -98,6 +98,7 @@ private slots:
     void onUpdateTime();
     void onScreenshotClicked();
     void onScreenshotTaken(const QPixmap& pixmap);
+    void onImagePasted(QPixmap pixmap);
     void doScreenshot();
     void onCopyStatusMessage();
     void onExportChat();
@@ -111,6 +112,7 @@ private:
     void stopCounter(bool error = false);
     void updateCallButtons();
     void SendMessageStr(QString msg);
+    void sendImage(const QPixmap& pixmap);
 
 protected:
     GenericNetCamView* createNetcam() final override;

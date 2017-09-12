@@ -178,6 +178,7 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
+    connect(msgEdit, &ChatTextEdit::pasteImage, this, &ChatForm::onImagePasted);
     connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this,
             [&](const QPoint& pos) {
                 if (!statusMessageLabel->text().isEmpty()) {
@@ -790,6 +791,16 @@ void ChatForm::doScreenshot()
 }
 
 void ChatForm::onScreenshotTaken(const QPixmap& pixmap)
+{
+    sendImage(pixmap);
+}
+
+void ChatForm::onImagePasted(QPixmap pixmap)
+{
+    sendImage(pixmap);
+}
+
+void ChatForm::sendImage(const QPixmap& pixmap)
 {
     // use ~ISO 8601 for screenshot timestamp, considering FS limitations
     // https://en.wikipedia.org/wiki/ISO_8601

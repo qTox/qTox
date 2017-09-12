@@ -35,12 +35,14 @@ signals:
     void enterPressed();
     void tabPressed();
     void keyPressed();
+    void pasteImage(QPixmap pixmap);
 
 protected:
     virtual void keyPressEvent(QKeyEvent* event) final override;
 
 private:
     void retranslateUi();
+    bool paste(QKeyEvent* event);
 
 private:
     QString lastMessage;
