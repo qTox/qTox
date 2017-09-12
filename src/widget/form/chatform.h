@@ -82,7 +82,7 @@ private slots:
     void onAttachClicked();
     void onCallTriggered();
     void onVideoCallTriggered();
-    void onAnswerCallTriggered();
+    void onAnswerCallTriggered(bool video);
     void onRejectCallTriggered();
     void onMicMuteToggle();
     void onVolMuteToggle();

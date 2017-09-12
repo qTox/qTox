@@ -214,7 +214,7 @@ bool CoreAV::isCallVideoEnabled(const Friend* f) const
     return isCallStarted(f) ? calls[f->getId()].videoEnabled : false;
 }
 
-bool CoreAV::answerCall(uint32_t friendNum)
+bool CoreAV::answerCall(uint32_t friendNum, bool video)
 {
     if (QThread::currentThread() != coreavThread.get()) {
         if (threadSwitchLock.test_and_set(std::memory_order_acquire)) {
@@ -224,7 +224,7 @@ bool CoreAV::answerCall(uint32_t friendNum)
 
         bool ret;
         QMetaObject::invokeMethod(this, "answerCall", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
+                                  Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum), Q_ARG(bool, video));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
@@ -233,7 +233,9 @@ bool CoreAV::answerCall(uint32_t friendNum)
     qDebug() << QString("answering call %1").arg(friendNum);
     assert(calls.contains(friendNum));
     TOXAV_ERR_ANSWER err;
-    if (toxav_answer(toxav, friendNum, Settings::getInstance().getAudioBitrate(), VIDEO_DEFAULT_BITRATE, &err)) {
+
+    const uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
+    if (toxav_answer(toxav, friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate, &err)) {
         calls[friendNum].inactive = false;
         return true;
     } else {
