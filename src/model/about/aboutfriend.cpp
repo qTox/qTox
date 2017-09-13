@@ -109,5 +109,8 @@ bool AboutFriend::clearHistory()
     History* const history = Nexus::getProfile()->getHistory();
     if (history) {
         history->removeFriendHistory(pk.toString());
+        return true;
     }
+
+    return false;
 }
