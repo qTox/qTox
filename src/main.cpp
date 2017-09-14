@@ -247,7 +247,7 @@ int main(int argc, char* argv[])
     a->addLibraryPath("platforms");
 
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
-    qDebug() << "commit: " << GIT_VERSION << "\n";
+    qDebug() << "commit: " << GIT_VERSION;
 
 
 // Check whether we have an update waiting to be installed
@@ -300,7 +300,12 @@ int main(int argc, char* argv[])
         time_t event = ipc.postEvent(eventType, firstParam.toUtf8(), ipcDest);
         // If someone else processed it, we're done here, no need to actually start qTox
         if (ipc.waitUntilAccepted(event, 2)) {
-            qDebug() << "Event" << eventType << "was handled by other client.";
+            if (eventType == "activate") {
+                qDebug() << "Another qTox instance is already running. If you want to start a second "
+                        "instance, please start with a profile (qtox -p <profile name>).";
+            } else {
+                qDebug() << "Event" << eventType << "was handled by other client.";
+            }
             return EXIT_SUCCESS;
         }
     }
