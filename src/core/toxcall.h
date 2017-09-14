@@ -19,7 +19,7 @@ struct ToxCall
 {
 protected:
     ToxCall() = default;
-    explicit ToxCall(uint32_t CallId);
+    ToxCall(uint32_t CallId, bool VideoEnabled, CoreAV& av);
     ~ToxCall();
 
 public:
@@ -35,13 +35,20 @@ public:
 
 protected:
     QMetaObject::Connection audioInConn;
+    QMetaObject::Connection videoInConn;
+    CoreAV* av{nullptr};
 
 public:
-    uint32_t callId;
-    quint32 alSource;
-    bool inactive;
-    bool muteMic;
-    bool muteVol;
+    uint32_t callId{0};
+    // audio
+    quint32 alSource{0};
+    bool inactive{true};
+    bool muteMic{false};
+    bool muteVol{false};
+    // video
+    bool videoEnabled{false};
+    bool nullVideoBitrate{false};
+    CoreVideoSource* videoSource{nullptr};
 };
 
 struct ToxFriendCall : public ToxCall
@@ -53,17 +60,13 @@ struct ToxFriendCall : public ToxCall
 
     ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
 
-    bool videoEnabled;
-    bool nullVideoBitrate;
-    CoreVideoSource* videoSource;
-    TOXAV_FRIEND_CALL_STATE state;
+    TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
 
     void startTimeout();
     void stopTimeout();
 
 protected:
-    CoreAV* av;
-    QTimer* timeoutTimer;
+    QTimer* timeoutTimer{nullptr};
 
 private:
     static constexpr int CALL_TIMEOUT = 45000;
