@@ -30,32 +30,66 @@
 
 using namespace std;
 
-ToxCall::ToxCall(uint32_t CallId)
-    : callId{CallId}
-    , alSource{0}
-    , inactive{true}
-    , muteMic{false}
-    , muteVol{false}
+ToxCall::ToxCall(uint32_t callId, bool videoEnabled, CoreAV& av)
+    : callId{callId}
+    , videoEnabled{videoEnabled}
+    , av{&av}
 {
     Audio& audio = Audio::getInstance();
     audio.subscribeInput();
     audio.subscribeOutput(alSource);
+
+    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
+                        [&av, callId](const int16_t* pcm, size_t samples,
+                                        uint8_t chans, uint32_t rate) {
+                           av.sendCallAudio(callId, pcm, samples, chans, rate);
+                        });
+    if (!audioInConn) {
+        qDebug() << "Audio connection not working";
+    }
+
+    if (videoEnabled) {
+        videoSource = new CoreVideoSource();
+        CameraSource& source = CameraSource::getInstance();
+
+        if (source.isNone()) {
+            source.setupDefault();
+        }
+        source.subscribe();
+        videoInConn = QObject::connect(&source, &VideoSource::frameAvailable,
+                        [&av, callId](shared_ptr<VideoFrame> frame) {
+                         av.sendCallVideo(callId, frame);
+                        });
+        if (!videoInConn) {
+            qDebug() << "Video connection not working";
+        }
+    }
 }
 
-ToxCall::ToxCall(ToxCall&& other) noexcept : audioInConn{other.audioInConn},
-                                             callId{other.callId},
-                                             alSource{other.alSource},
-                                             inactive{other.inactive},
-                                             muteMic{other.muteMic},
-                                             muteVol{other.muteVol}
+ToxCall::ToxCall(ToxCall&& other) noexcept
+    : audioInConn{other.audioInConn}
+    , callId{other.callId}
+    , alSource{other.alSource}
+    , inactive{other.inactive}
+    , muteMic{other.muteMic}
+    , muteVol{other.muteVol}
+    , videoInConn{other.videoInConn}
+    , videoEnabled{other.videoEnabled}
+    , nullVideoBitrate{other.nullVideoBitrate}
+    , videoSource{other.videoSource}
+    , av{other.av}
 {
     other.audioInConn = QMetaObject::Connection();
     other.callId = numeric_limits<decltype(callId)>::max();
     other.alSource = 0;
 
+    other.videoInConn = QMetaObject::Connection();
+    other.videoEnabled = false;
+    other.videoSource = nullptr;
+
     // required -> ownership of audio input is moved to new instance
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
+    Audio::getInstance().subscribeInput();
+    CameraSource::getInstance().subscribe();
 }
 
 ToxCall::~ToxCall()
@@ -65,6 +99,21 @@ ToxCall::~ToxCall()
     QObject::disconnect(audioInConn);
     audio.unsubscribeInput();
     audio.unsubscribeOutput(alSource);
+
+    QObject::disconnect(videoInConn);
+    CameraSource::getInstance().unsubscribe();
+    if (videoEnabled) {
+        // This destructor could be running in a toxav callback while holding toxav locks.
+        // If the CameraSource thread calls toxav *_send_frame, we might deadlock the toxav and
+        // CameraSource locks,
+        // so we unsuscribe asynchronously, it's fine if the webcam takes a couple milliseconds more
+        // to poweroff.
+        QtConcurrent::run([]() { CameraSource::getInstance().unsubscribe(); });
+        if (videoSource) {
+            videoSource->setDeleteOnClose(true);
+            videoSource = nullptr;
+        }
+    }
 }
 
 ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
@@ -80,8 +129,19 @@ ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
     other.alSource = 0;
 
     // required -> ownership of audio input is moved to new instance
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
+    Audio::getInstance().subscribeInput();
+
+    videoInConn = other.videoInConn;
+    other.videoInConn = QMetaObject::Connection();
+    videoEnabled = other.videoEnabled;
+    other.videoEnabled = false;
+    nullVideoBitrate = other.nullVideoBitrate;
+    videoSource = other.videoSource;
+    other.videoSource = nullptr;
+    av = other.av;
+    other.av = nullptr;
+
+    CameraSource::getInstance().subscribe();
 
     return *this;
 }
@@ -112,48 +172,17 @@ void ToxFriendCall::stopTimeout()
 }
 
 ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
-    : ToxCall(FriendNum)
-    , videoEnabled{VideoEnabled}
-    , nullVideoBitrate{false}
-    , videoSource{nullptr}
+    : ToxCall(FriendNum, videoEnabled, av)
     , state{static_cast<TOXAV_FRIEND_CALL_STATE>(0)}
-    , av{&av}
-    , timeoutTimer{nullptr}
 {
-    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
-                                   [&av, FriendNum](const int16_t* pcm, size_t samples,
-                                                    uint8_t chans, uint32_t rate) {
-                                       av.sendCallAudio(FriendNum, pcm, samples, chans, rate);
-                                   });
-    if(!audioInConn) {
-        qDebug() << "Audio connection not working";
-    }
 
-    if (videoEnabled) {
-        videoSource = new CoreVideoSource;
-        CameraSource& source = CameraSource::getInstance();
-
-        if (source.isNone())
-            source.setupDefault();
-        source.subscribe();
-        QObject::connect(&source, &VideoSource::frameAvailable,
-                         [FriendNum, &av](shared_ptr<VideoFrame> frame) {
-                             av.sendCallVideo(FriendNum, frame);
-                         });
-    }
 }
 
 ToxFriendCall::ToxFriendCall(ToxFriendCall&& other) noexcept
-    : ToxCall(move(other)),
-      videoEnabled{other.videoEnabled},
-      nullVideoBitrate{other.nullVideoBitrate},
-      videoSource{other.videoSource},
-      state{other.state},
-      av{other.av},
-      timeoutTimer{other.timeoutTimer}
+    : ToxCall(move(other))
+    , state{other.state}
+    , timeoutTimer{other.timeoutTimer}
 {
-    other.videoEnabled = false;
-    other.videoSource = nullptr;
     other.timeoutTimer = nullptr;
 }
 
@@ -161,52 +190,26 @@ ToxFriendCall::~ToxFriendCall()
 {
     if (timeoutTimer)
         delete timeoutTimer;
-
-    if (videoEnabled) {
-        // This destructor could be running in a toxav callback while holding toxav locks.
-        // If the CameraSource thread calls toxav *_send_frame, we might deadlock the toxav and
-        // CameraSource locks,
-        // so we unsuscribe asynchronously, it's fine if the webcam takes a couple milliseconds more
-        // to poweroff.
-        QtConcurrent::run([]() { CameraSource::getInstance().unsubscribe(); });
-        if (videoSource) {
-            videoSource->setDeleteOnClose(true);
-            videoSource = nullptr;
-        }
-    }
 }
 
 ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
 {
     ToxCall::operator=(move(other));
-    videoEnabled = other.videoEnabled;
-    other.videoEnabled = false;
-    videoSource = other.videoSource;
-    other.videoSource = nullptr;
     state = other.state;
     timeoutTimer = other.timeoutTimer;
     other.timeoutTimer = nullptr;
-    av = other.av;
-    nullVideoBitrate = other.nullVideoBitrate;
 
     return *this;
 }
 
 ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
-    : ToxCall(static_cast<decltype(callId)>(GroupNum))
+    : ToxCall(static_cast<decltype(callId)>(GroupNum), false, av)
 {
-    static_assert(
-        numeric_limits<decltype(callId)>::max() >= numeric_limits<decltype(GroupNum)>::max(),
-        "The callId must be able to represent any group number, change its type if needed");
 
-    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
-                                   [&av, GroupNum](const int16_t* pcm, size_t samples,
-                                                   uint8_t chans, uint32_t rate) {
-                                       av.sendGroupCallAudio(GroupNum, pcm, samples, chans, rate);
-                                   });
 }
 
-ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept : ToxCall(move(other))
+ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept
+    : ToxCall(move(other))
 {
 }
 
