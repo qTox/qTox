@@ -148,14 +148,14 @@ int main(int argc, char* argv[])
 
     qInstallMessageHandler(logMessageHandler);
 
-    QApplication* a = new QApplication(argc, argv);
+    std::unique_ptr<QApplication> a(new QApplication(argc, argv));
 
 #if defined(Q_OS_UNIX)
     // PosixSignalNotifier is used only for terminating signals,
     // so it's connected directly to quit() without any filtering.
     QObject::connect(&PosixSignalNotifier::globalInstance(),
                      &PosixSignalNotifier::activated,
-                     a,
+                     a.get(),
                      &QApplication::quit);
     PosixSignalNotifier::watchCommonTerminatingSignals();
 #endif
@@ -326,7 +326,7 @@ int main(int argc, char* argv[])
     else if (eventType == "save")
         handleToxSave(firstParam.toUtf8());
 
-    QObject::connect(a, &QApplication::aboutToQuit, cleanup);
+    QObject::connect(a.get(), &QApplication::aboutToQuit, cleanup);
 
     // Run (unless we already quit before starting!)
     int errorcode = 0;
@@ -334,6 +334,5 @@ int main(int argc, char* argv[])
         errorcode = a->exec();
 
     qDebug() << "Exit with status" << errorcode;
-    delete a;
     return errorcode;
 }
