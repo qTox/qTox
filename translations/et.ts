@@ -87,6 +87,14 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>Test Sound</source>
         <translation>Testi heli</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -155,6 +163,102 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Aken</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">kasutajanimi</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished">olekuteade</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">Avalik võti:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">Pruugitud hüüdnimed:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished">HÜÜDNIMEDE AJALUGU</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished">Kui valitud, võetakse failid antud kontaktilt automaatselt vastu</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">Võta failid automaatselt vastu</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished">Kontakti failide automaatne vastuvõtmine on keelatud</translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">Võta kõne automaatselt vastu:</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished">Käsitsi</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Heli</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">Heli + Video</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished">Kui on valitud, siis nõustu automaatselt grupivestluste kutsetega sellelt kontaktilt.</translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished">Automaatnõustu grupi kutsetega</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished">Eemalda ajalugu (toimingut ei saa hiljem tühistada)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">Märkused</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished">Väli, kuhu saab antud kontakti kohta märkusi kirjutada</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished">Siia saad selle kontakti kohta kommentaare kirjutada.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">Ajalugu kustutati</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">Kasutajaga %1 peetud vestluste ajalugu on kustutatud!</translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -178,121 +282,10 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation>Aken</translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>kasutajanimi</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation>olekuteade</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Avalik võti:</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>Pruugitud hüüdnimed:</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation>HÜÜDNIMEDE AJALUGU</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>Failide vaikekaust:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Kontakti failide automaatne vastuvõtmine on keelatud</translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>Võta failid automaatselt vastu</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation>Eemalda ajalugu (toimingut ei saa hiljem tühistada)</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Märkused</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Siia saad selle kontakti kohta kommentaare kirjutada.</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Vali kaust, kuhu automaatselt vastuvõetavad failid laetakse</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>Ajalugu kustutati</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>Kasutajaga %1 peetud vestluste ajalugu on kustutatud!</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Võta kõne automaatselt vastu:</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Käsitsi</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Heli</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>Heli + Video</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation>Kui valitud, võetakse failid antud kontaktilt automaatselt vastu</translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation>Väli, kuhu saab antud kontakti kohta märkusi kirjutada</translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation>Kui on valitud, siis nõustu automaatselt grupivestluste kutsetega sellelt kontaktilt.</translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation>Automaatnõustu grupi kutsetega</translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Sõbra lisamine ebaõnnestus</translation>
-    </message>
-    <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Ennast pole võimalik sõbraks lisada!</translation>
-    </message>
-    <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>kas 76 kuueteistkümnendsüsteemi märki või nimi@mingiaadress.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -303,18 +296,8 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Lisa sõpru</translation>
     </message>
     <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>Teade</translation>
-    </message>
-    <message>
         <source>Send friend request</source>
         <translation>Saada sõbrakutse</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>%1 siin! Ehk liitud minuga Tox keskkonnas?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -349,9 +332,80 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Sisesta sõbrakutse sõnum, või jäta tühjaks, et saata vaikimisi kutse</translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>See Tox ID on vigane või seda ei ole olemas</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished">Ennast pole võimalik sõbraks lisada!</translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished">Tox ID</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">kas 76 kuueteistkümnendsüsteemi märki või nimi@mingiaadress.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Teade</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished">%1 siin! Ehk liitud minuga Tox keskkonnas?</translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -641,11 +695,15 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekspordi faili</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished">Salvesta vestluse logi</translation>
+        <translation>Salvesta vestluse logi</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1534,7 +1592,7 @@ Profiil ei sisalda vestluste ajalugu.</translation>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 sõnumit</translation>
     </message>
 </context>
 <context>
@@ -1913,6 +1971,14 @@ Kui saad hulgaliselt soovimatuid sõbrakutseid, muuda seda väärtust.</translat
         <source>Privacy</source>
         <translation>Privaatsus</translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2121,7 +2187,10 @@ Palun kasuta teist pilti.</translation>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>See kogumik märke ütleb teistele Toxi klientidele, kuidas sinuga ühenduda.
+Oma sõpradega suhtlemiseks jaga seda neile.
+
+See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
 </context>
 <context>
@@ -2341,6 +2410,10 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Reformatting text in progress..</source>
         <translation>Toimub teksti vormindamine...</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
