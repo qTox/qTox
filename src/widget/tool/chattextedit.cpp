@@ -18,8 +18,13 @@
 */
 
 #include "chattextedit.h"
+
 #include "src/widget/translator.h"
+
+#include <QApplication>
+#include <QClipboard>
 #include <QKeyEvent>
+#include <QMimeData>
 
 ChatTextEdit::ChatTextEdit(QWidget* parent)
     : QTextEdit(parent)
@@ -39,23 +44,30 @@ ChatTextEdit::~ChatTextEdit()
 void ChatTextEdit::keyPressEvent(QKeyEvent* event)
 {
     int key = event->key();
-    if ((key == Qt::Key_Enter || key == Qt::Key_Return) && !(event->modifiers() & Qt::ShiftModifier))
+    if ((key == Qt::Key_Enter || key == Qt::Key_Return) && !(event->modifiers() & Qt::ShiftModifier)) {
         emit enterPressed();
-    else if (key == Qt::Key_Tab) {
+        return;
+    }
+    if (key == Qt::Key_Tab) {
         if (event->modifiers())
             event->ignore();
         else {
             emit tabPressed();
             event->ignore();
         }
-    } else if (key == Qt::Key_Up && this->toPlainText().isEmpty()) {
+        return;
+    }
+    if (key == Qt::Key_Up && this->toPlainText().isEmpty()) {
         this->setText(lastMessage);
         this->setFocus();
         this->moveCursor(QTextCursor::MoveOperation::End, QTextCursor::MoveMode::MoveAnchor);
-    } else {
-        emit keyPressed();
-        QTextEdit::keyPressEvent(event);
+        return;
     }
+    if (event->matches(QKeySequence::Paste) && pasteIfImage(event)) {
+        return;
+    }
+    emit keyPressed();
+    QTextEdit::keyPressEvent(event);
 }
 
 void ChatTextEdit::setLastMessage(QString lm)
@@ -72,3 +84,21 @@ void ChatTextEdit::sendKeyEvent(QKeyEvent* event)
 {
     emit keyPressEvent(event);
 }
+
+bool ChatTextEdit::pasteIfImage(QKeyEvent* event)
+{
+    const QClipboard* const clipboard = QApplication::clipboard();
+    if (!clipboard) {
+        return false;
+    }
+
+    const QMimeData* const mimeData = clipboard->mimeData();
+    if (!mimeData || !mimeData->hasImage()) {
+        return false;
+    }
+
+    const QPixmap pixmap(clipboard->pixmap());
+    emit pasteImage(pixmap);
+    return true;
+}
+
