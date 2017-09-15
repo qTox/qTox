@@ -245,6 +245,10 @@ void Core::makeAv()
         qCritical() << "Toxav core failed to start";
         emit failedToStart();
     }
+    for (const auto& callback : toCallWhenAvReady) {
+        callback(av);
+    }
+    toCallWhenAvReady.clear();
 }
 
 /**
@@ -1388,6 +1392,10 @@ bool Core::isReady() const
     return av && av->getToxAv() && tox && ready;
 }
 
+void Core::callWhenAvReady(std::function<void(CoreAV* av)>&& toCall)
+{
+    toCallWhenAvReady.emplace_back(std::move(toCall));
+}
 
 /**
  * @brief Sets the NoSpam value to prevent friend request spam

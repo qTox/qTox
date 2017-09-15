@@ -71,6 +71,7 @@ public:
     QPair<QByteArray, QByteArray> getKeypair() const;
 
     bool isReady() const;
+    void callWhenAvReady(std::function<void(CoreAV* av)>&& toCall);
 
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
 
@@ -223,6 +224,7 @@ private:
     Profile& profile;
     QMutex messageSendMutex;
     bool ready;
+    std::vector<std::function<void(CoreAV* av)>> toCallWhenAvReady;
 
     static QThread* coreThread;
 

@@ -237,9 +237,7 @@ void Widget::init()
 
     const Settings& s = Settings::getInstance();
     Core* core = Nexus::getCore();
-    CoreAV* av = core->getAv();
-    connect(av, &CoreAV::avEnd, this, &Widget::onCallEnd);
-
+    core->callWhenAvReady([this](CoreAV* av){connect(av, &CoreAV::avEnd, this, &Widget::onCallEnd);});
     connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
     connect(core, &Core::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
     connect(ui->addButton, &QPushButton::clicked, this, &Widget::onAddClicked);
