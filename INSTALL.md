@@ -484,7 +484,7 @@ Provided that you have all required dependencies installed, you can simply run:
 ```bash
 git clone https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
-git checkout v0.1.2
+git checkout v0.1.10
 autoreconf -if
 ./configure
 make -j$(nproc)
