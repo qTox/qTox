@@ -975,7 +975,6 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
 
     friendWidgets[friendId] = widget;
     chatForms[friendId] = friendForm;
-    newfriend->loadHistory();
 
     const Settings& s = Settings::getInstance();
 

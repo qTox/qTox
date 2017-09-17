@@ -33,6 +33,7 @@ class QSet;
 
 class QSplitter;
 class QVBoxLayout;
+class ChatForm;
 class ContentDialog;
 class ContentLayout;
 class GenericChatroomWidget;
@@ -131,6 +132,7 @@ private:
     QSize videoSurfaceSize;
     int videoCount;
 
+    QHash<int, ChatForm*> chatForms;
     static QString username;
     static ContentDialog* currentDialog;
     static QHash<int, ContactInfo> friendList;

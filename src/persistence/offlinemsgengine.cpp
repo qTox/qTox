@@ -38,7 +38,7 @@
 const int OfflineMsgEngine::offlineTimeout = 20000;
 QMutex OfflineMsgEngine::globalMutex;
 
-OfflineMsgEngine::OfflineMsgEngine(Friend* frnd)
+OfflineMsgEngine::OfflineMsgEngine(const Friend* frnd)
     : mutex(QMutex::Recursive)
     , f(frnd)
 {

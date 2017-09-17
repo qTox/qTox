@@ -113,7 +113,7 @@ QString secondsToDHMS(quint32 duration)
 }
 
 
-ChatForm::ChatForm(Friend* chatFriend)
+ChatForm::ChatForm(const Friend* chatFriend)
     : f(chatFriend)
     , callDuration(new QLabel(this))
     , isTyping(false)
@@ -150,6 +150,10 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     exportChatAction =
         menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onExportChat()));
+
+    if (Nexus::getProfile()->isHistoryEnabled()) {
+        loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+    }
 
     const Core* core = Core::getInstance();
     connect(core, &Core::fileReceiveRequested, this, &ChatForm::onFileRecvRequest);
@@ -197,6 +201,12 @@ ChatForm::ChatForm(Friend* chatFriend)
     });
 
     updateCallButtons();
+
+    if (av->isCallStarted(f)) {
+        bool video = av->isCallVideoEnabled(f);
+        onAvStart(f->getId(), video);
+    }
+
     setAcceptDrops(true);
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
