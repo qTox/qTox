@@ -523,7 +523,7 @@ Profile does not contain your history.</string>
                <string/>
               </property>
               <property name="text">
-               <string comment="import profile button">Logout</string>
+               <string comment="import profile button">Log out</string>
               </property>
              </widget>
             </item>
