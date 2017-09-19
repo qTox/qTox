@@ -523,7 +523,7 @@ void ProfileForm::onRegisterButtonClicked()
     QString response = Toxme::createAddress(code, server, ToxId(id), name, privacy, bio);
 
     Core* newCore = Core::getInstance();
-    // Make sure the user didn't logout (or logout and login)
+    // Make sure the user didn't log out (or log out and back in)
     // before the request is finished, else qTox will crash.
     if (oldCore == newCore) {
         switch (code) {
@@ -534,7 +534,7 @@ void ProfileForm::onRegisterButtonClicked()
             break;
         case Toxme::Ok:
             GUI::showInfo(tr("Done!"),
-                          tr("Successfully added %1@%2 to the database. Save your password")
+                          tr("%1@%2 added to the database. Save your password")
                               .arg(name, server));
             Settings::getInstance().setToxme(name, server, bio, privacy, response);
             showExistingToxme();
@@ -543,7 +543,7 @@ void ProfileForm::onRegisterButtonClicked()
             QString errorMessage = Toxme::getErrorMessage(code);
             qWarning() << errorMessage;
             QString translated = Toxme::translateErrorMessage(code);
-            GUI::showWarning(tr("Toxme error"), translated);
+            GUI::showWarning(tr("ToxMe error"), translated);
         }
 
         bodyUI->toxmeRegisterButton->setEnabled(true);
