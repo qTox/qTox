@@ -2367,7 +2367,7 @@ void Widget::friendRequestsUpdate()
     }
 
     if (friendRequestsButton) {
-        friendRequestsButton->setText(tr("%n New Friend Request(s)", "", unreadFriendRequests));
+        friendRequestsButton->setText(tr("%n New Friend Request", "", unreadFriendRequests));
     }
 }
 
