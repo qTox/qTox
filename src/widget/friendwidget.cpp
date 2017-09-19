@@ -136,7 +136,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     QWidget* w = circleWidget ? circleWidget : static_cast<QWidget*>(this);
     FriendListWidget* friendList = qobject_cast<FriendListWidget*>(w->parentWidget());
 
-    QMenu* circleMenu = menu.addMenu(tr("Move to circle...",
+    QMenu* circleMenu = menu.addMenu(tr("Move to circle…",
                                         "Menu to move a friend into a different circle"));
 
     const QAction* newCircleAction = circleMenu->addAction(tr("To new circle"));
@@ -158,7 +158,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
         }
 
         const QString name = s.getCircleName(i);
-        QAction* action = new QAction(tr("Move  to circle \"%1\"").arg(name), circleMenu);
+        QAction* action = new QAction(tr("Move to circle \"%1\"").arg(name), circleMenu);
         circleActionList.push_back(action);
         circleActions[circleActionList.back()] = i;
     }
@@ -172,7 +172,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     circleMenu->addActions(circleActionList);
 
-    const QAction* setAlias = menu.addAction(tr("Set alias..."));
+    const QAction* setAlias = menu.addAction(tr("Set alias…"));
 
     menu.addSeparator();
     QAction* autoAccept = menu.addAction(tr("Auto accept files from this friend",
