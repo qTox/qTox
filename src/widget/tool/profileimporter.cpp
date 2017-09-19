@@ -126,7 +126,7 @@ bool ProfileImporter::importProfile(const QString& path)
     // no good way to update the ui from here... maybe we need a Widget:refreshUi() function...
     // such a thing would simplify other code as well I believe
     QMessageBox::information(this, tr("Profile imported"),
-                             tr("%1.tox was successfully imported").arg(profile), QMessageBox::Ok);
+                             tr("%1.tox is now usable").arg(profile), QMessageBox::Ok);
 
     return true; // import successfull
 }
