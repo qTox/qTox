@@ -97,7 +97,7 @@ private slots:
     void onLoadHistory();
     void onUpdateTime();
     void onScreenshotClicked();
-    void onScreenshotTaken(const QPixmap& pixmap);
+    void sendImage(const QPixmap& pixmap);
     void doScreenshot();
     void onCopyStatusMessage();
     void onExportChat();
