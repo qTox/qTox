@@ -538,7 +538,7 @@ if(${ENABLE_GTK_SYSTRAY})
 endif()
 
 if(${USE_FILTERAUDIO})
-    search_dependency(FILTERAUDIO LIBRARY filteraudio OPTIONAL)
+    search_dependency(FILTERAUDIO LIBRARY filteraudio HEADER filter_audio.h OPTIONAL)
     if(${FILTERAUDIO_FOUND})
         set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
             src/audio/backend/openal2.cpp

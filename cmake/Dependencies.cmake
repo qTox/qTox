@@ -35,7 +35,7 @@ include(Qt5CorePatches)
 
 function(search_dependency pkg)
   set(options OPTIONAL)
-  set(oneValueArgs PACKAGE LIBRARY FRAMEWORK)
+  set(oneValueArgs PACKAGE LIBRARY FRAMEWORK HEADER)
   set(multiValueArgs)
   cmake_parse_arguments(arg "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -60,7 +60,8 @@ function(search_dependency pkg)
   # Last, search for the library itself globally.
   if(NOT ${pkg}_FOUND AND arg_LIBRARY)
     find_library(${pkg}_LIBRARIES NAMES ${arg_LIBRARY})
-    if(${pkg}_LIBRARIES)
+    find_path(${pkg}_INCLUDE_DIRS NAMES ${arg_HEADER})
+    if(${pkg}_LIBRARIES AND ${pkg}_INCLUDE_DIRS)
       set(${pkg}_FOUND TRUE)
     endif()
   endif()
