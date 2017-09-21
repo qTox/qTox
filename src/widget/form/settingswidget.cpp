@@ -19,10 +19,6 @@
 
 #include "settingswidget.h"
 
-#include <QLabel>
-#include <QTabWidget>
-#include <QWindow>
-
 #include "src/video/camerasource.h"
 #include "src/widget/contentlayout.h"
 #include "src/widget/form/settings/aboutform.h"
@@ -34,6 +30,12 @@
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
+#include <QLabel>
+#include <QTabWidget>
+#include <QWindow>
+
+#include <memory>
+
 SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent, Qt::Window)
 {
@@ -41,22 +43,22 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     QVBoxLayout* bodyLayout = new QVBoxLayout();
 
-    settingsWidgets = new QTabWidget(this);
+    settingsWidgets = std::unique_ptr<QTabWidget>(new QTabWidget(this));
     settingsWidgets->setTabPosition(QTabWidget::North);
-    bodyLayout->addWidget(settingsWidgets);
+    bodyLayout->addWidget(settingsWidgets.get());
 
-    GeneralForm* gfrm = new GeneralForm(this);
-    UserInterfaceForm* uifrm = new UserInterfaceForm(this);
-    PrivacyForm* pfrm = new PrivacyForm();
-    AVForm* avfrm = new AVForm();
-    AdvancedForm* expfrm = new AdvancedForm();
-    AboutForm* abtfrm = new AboutForm();
+    std::unique_ptr<GeneralForm> gfrm(new GeneralForm(this));
+    std::unique_ptr<UserInterfaceForm> uifrm(new UserInterfaceForm(this));
+    std::unique_ptr<PrivacyForm> pfrm(new PrivacyForm());
+    std::unique_ptr<AVForm> avfrm(new AVForm());
+    std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm());
+    std::unique_ptr<AboutForm> abtfrm(new AboutForm());
 
-    cfgForms = {{gfrm, uifrm, pfrm, avfrm, expfrm, abtfrm}};
-    for (GenericForm* cfgForm : cfgForms)
-        settingsWidgets->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
+    cfgForms = {{std::move(gfrm), std::move(uifrm), std::move(pfrm), std::move(avfrm), std::move(expfrm), std::move(abtfrm)}};
+    for (auto& cfgForm : cfgForms)
+        settingsWidgets->addTab(cfgForm.get(), cfgForm->getFormIcon(), cfgForm->getFormName());
 
-    connect(settingsWidgets, &QTabWidget::currentChanged, this, &SettingsWidget::onTabChanged);
+    connect(settingsWidgets.get(), &QTabWidget::currentChanged, this, &SettingsWidget::onTabChanged);
 
     Translator::registerHandler(std::bind(&SettingsWidget::retranslateUi, this), this);
 }
@@ -88,7 +90,7 @@ bool SettingsWidget::isShown() const
 
 void SettingsWidget::show(ContentLayout* contentLayout)
 {
-    contentLayout->mainContent->layout()->addWidget(settingsWidgets);
+    contentLayout->mainContent->layout()->addWidget(settingsWidgets.get());
     settingsWidgets->show();
     onTabChanged(settingsWidgets->currentIndex());
 }
