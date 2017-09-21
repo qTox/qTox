@@ -2246,6 +2246,10 @@ It will be installed when qTox restarts.</source>
         <translation>Запускает новый экземпляр и загружает указанный профиль.</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
         <translation>профиль</translation>

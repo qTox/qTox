@@ -2216,6 +2216,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished">新しく起動して選択したプロファイルを読み込む。</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation type="unfinished">プロファイル</translation>
     </message>

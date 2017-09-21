@@ -2244,6 +2244,10 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <translation>Startet eine neue Instanz und lädt das angegebene Profil.</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>Profil</translation>
     </message>

@@ -2234,6 +2234,10 @@ It will be installed when qTox restarts.</source>
         <translation>开始一个新的实例并加载指定的配置文件。</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>用户配置文件</translation>
     </message>

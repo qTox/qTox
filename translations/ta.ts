@@ -2231,6 +2231,10 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation type="unfinished"></translation>
     </message>

@@ -2247,6 +2247,10 @@ It will be installed when qTox restarts.</source>
         <translation>Запускає новий екземпляр і завантажує вказаний профіль.</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>профіль</translation>
     </message>

@@ -2236,6 +2236,10 @@ It will be installed when qTox restarts.</source>
         <translation>Стартира нова инстанция и зарежда избран профил.</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>профил</translation>
     </message>

@@ -2222,6 +2222,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>بدء تشغيل حالة جديدة ثم يقوم بتحميل الحساب الشخصي المحدد.</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>ملف شخصي</translation>
     </message>

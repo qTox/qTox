@@ -2229,6 +2229,10 @@ Nameščena bo ob ponovne zagonu qToxa.</translation>
         <translation></translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>profil</translation>
     </message>

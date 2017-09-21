@@ -2239,6 +2239,10 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Inicia una nueva instancia de qTox y carga el perfil especificado.</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>perfil</translation>
     </message>

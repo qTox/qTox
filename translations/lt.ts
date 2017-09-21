@@ -2240,6 +2240,10 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <translation>Atidaro naują langą ir aktyvuoja nurodytą profilį.</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>profilis</translation>
     </message>

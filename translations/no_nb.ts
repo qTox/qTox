@@ -2233,6 +2233,10 @@ Den vil bli installert når qTox restarter.</translation>
         <translation>Starter en ny instanse og laster valgt profil.</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>profil</translation>
     </message>

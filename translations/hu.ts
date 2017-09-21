@@ -2231,6 +2231,10 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <translation>Új folyamatot indít, és betölt egy megadott profilt.</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>profil</translation>
     </message>

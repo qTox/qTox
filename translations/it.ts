@@ -2233,6 +2233,10 @@ Verrà installata al riavvio del programma.</translation>
         <translation>Avvia una nuova istanza caricando il profilo selezionato.</translation>
     </message>
     <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>profile</source>
         <translation>profilo</translation>
     </message>
