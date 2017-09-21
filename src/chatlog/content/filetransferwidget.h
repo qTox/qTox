@@ -48,15 +48,17 @@ protected slots:
     void onFileTransferInfo(ToxFile file);
     void onFileTransferAccepted(ToxFile file);
     void onFileTransferCancelled(ToxFile file);
+    void onFileTransferBroken(ToxFile file);
+    void onFileTransferUnbroken(ToxFile file);
     void onFileTransferPaused(ToxFile file);
     void onFileTransferResumed(ToxFile file);
     void onFileTransferFinished(ToxFile file);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
-    void fileTransferBrokenUnbroken(ToxFile file, bool broken);
 
 protected:
     QString getHumanReadableSize(qint64 size);
     void hideWidgets();
+    void showWidgets();
     void setupButtons();
     void handleButton(QPushButton* btn);
     void showPreview(const QString& filename);

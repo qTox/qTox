@@ -476,6 +476,7 @@ void Core::onUserStatusChanged(Tox*, uint32_t friendId, TOX_USER_STATUS userstat
     }
 
     emit static_cast<Core*>(core)->friendStatusChanged(friendId, status);
+    CoreFile::onConnectionStatusChanged(static_cast<Core*>(core), friendId, true);
 }
 
 void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, TOX_CONNECTION status, void* core)
@@ -728,34 +729,34 @@ void Core::sendAvatarFile(uint32_t friendId, const QByteArray& data)
     CoreFile::sendAvatarFile(this, friendId, data);
 }
 
-void Core::pauseResumeFileSend(uint32_t friendId, uint32_t fileNum)
+void Core::pauseResumeFileSend(QByteArray fileId)
 {
-    CoreFile::pauseResumeFileSend(this, friendId, fileNum);
+    CoreFile::pauseResumeFileSend(this, fileId);
 }
 
-void Core::pauseResumeFileRecv(uint32_t friendId, uint32_t fileNum)
+void Core::pauseResumeFileRecv(QByteArray fileId)
 {
-    CoreFile::pauseResumeFileRecv(this, friendId, fileNum);
+    CoreFile::pauseResumeFileRecv(this, fileId);
 }
 
-void Core::cancelFileSend(uint32_t friendId, uint32_t fileNum)
+void Core::cancelFileSend(QByteArray fileId)
 {
-    CoreFile::cancelFileSend(this, friendId, fileNum);
+    CoreFile::cancelFileSend(this, fileId);
 }
 
-void Core::cancelFileRecv(uint32_t friendId, uint32_t fileNum)
+void Core::cancelFileRecv(QByteArray fileId)
 {
-    CoreFile::cancelFileRecv(this, friendId, fileNum);
+    CoreFile::cancelFileRecv(this, fileId);
 }
 
-void Core::rejectFileRecvRequest(uint32_t friendId, uint32_t fileNum)
+void Core::rejectFileRecvRequest(QByteArray fileId)
 {
-    CoreFile::rejectFileRecvRequest(this, friendId, fileNum);
+    CoreFile::rejectFileRecvRequest(this, fileId);
 }
 
-void Core::acceptFileRecvRequest(uint32_t friendId, uint32_t fileNum, QString path)
+void Core::acceptFileRecvRequest(QByteArray fileId, QString path)
 {
-    CoreFile::acceptFileRecvRequest(this, friendId, fileNum, path);
+    CoreFile::acceptFileRecvRequest(this, fileId, path);
 }
 
 void Core::removeFriend(uint32_t friendId, bool fake)
