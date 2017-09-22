@@ -82,6 +82,7 @@ private:
     bool runEventHandler(IPCEventHandler handler, const QByteArray& arg);
     IPCEvent* fetchEvent();
     void processEvents();
+    bool isCurrentOwnerNoLock();
 
 private:
     QTimer timer;

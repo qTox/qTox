@@ -81,11 +81,13 @@ IPC::IPC(uint32_t profileId)
 
 IPC::~IPC()
 {
-    if (isCurrentOwner()) {
-        if (globalMemory.lock()) {
+    if (globalMemory.lock()) {
+        if (isCurrentOwnerNoLock()) {
             global()->globalId = 0;
-            globalMemory.unlock();
         }
+        globalMemory.unlock();
+    } else {
+        qWarning() << "Failed to lock in ~IPC";
     }
 }
 
@@ -135,13 +137,7 @@ time_t IPC::postEvent(const QString& name, const QByteArray& data, uint32_t dest
 bool IPC::isCurrentOwner()
 {
     if (globalMemory.lock()) {
-        void* data = globalMemory.data();
-        if (!data) {
-            qWarning() << "isCurrentOwner failed to access the memory, returning false";
-            globalMemory.unlock();
-            return false;
-        }
-        bool isOwner = ((*(uint64_t*)data) == globalId);
+        bool isOwner = isCurrentOwnerNoLock();
         globalMemory.unlock();
         return isOwner;
     } else {
@@ -216,7 +212,7 @@ IPC::IPCEvent* IPC::fetchEvent()
             memset(evt, 0, sizeof(IPCEvent));
 
         if (evt->posted && !evt->processed && evt->sender != getpid()
-            && (evt->dest == profileId || (evt->dest == 0 && isCurrentOwner())))
+            && (evt->dest == profileId || (evt->dest == 0 && isCurrentOwnerNoLock())))
             return evt;
     }
 
@@ -279,6 +275,20 @@ void IPC::processEvents()
         globalMemory.unlock();
     }
     timer.start();
+}
+
+/**
+ * @brief Only called when global memory IS LOCKED.
+ * @return true if owner, false if not owner or if error
+ */
+bool IPC::isCurrentOwnerNoLock()
+{
+    void* data = globalMemory.data();
+    if (!data) {
+        qWarning() << "isCurrentOwnerNoLock failed to access the memory, returning false";
+        return false;
+    }
+    return ((*(uint64_t*)data) == globalId);
 }
 
 IPC::IPCMemory* IPC::global()
