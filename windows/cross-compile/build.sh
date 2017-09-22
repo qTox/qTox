@@ -40,12 +40,6 @@
 # - FFmpeg 3.3 doesn't cross-compile correctly, qTox build fails when linking
 #   against the 3.3 FFmpeg. They have removed `--enable-memalign-hack` switch,
 #   which might be what causes this.
-#
-# - Toxcore v0.1.9 doesn't cross-compile to Windows due to a linking order
-#   issue in monolith_test https://github.com/TokTok/c-toxcore/pull/564. It's
-#   fixed in master, so we just wait checking out a stable master commit point
-#   until the next release. Once the next release occurs, we will be checking
-#   out that instead.
 
 
 set -euo pipefail
@@ -238,11 +232,11 @@ then
 
   QT_MAJOR=5
   QT_MINOR=6
-  QT_PATCH=2
+  QT_PATCH=3
 
   QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
   wget $QT_MIRROR/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz
-  check_sha256 "83e61bfc78bba230770704e828fa4d23fe3bbfdcfa4a8f5db37ce149731d89b3" "qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
+  check_sha256 "2fa0cf2e5e8841b29a4be62062c1a65c4f6f2cf1beaf61a5fd661f520cd776d0" "qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
   bsdtar -xf qt*.tar.xz
   rm qt*.tar.xz
   cd qt*
@@ -772,9 +766,12 @@ then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  git clone https://github.com/TokTok/c-toxcore
+  git clone \
+    --branch v0.1.10 \
+    --depth 1 \
+    https://github.com/TokTok/c-toxcore \
+    c-toxcore
   cd c-toxcore
-  git checkout 1b290c0d84d92fd28fc1f64f33bf4455d73e2e2e
 
   export PKG_CONFIG_PATH="$OPUS_PREFIX_DIR/lib/pkgconfig:$SODIUM_PREFIX_DIR/lib/pkgconfig:$VPX_PREFIX_DIR/lib/pkgconfig"
   export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
