@@ -33,7 +33,9 @@ struct ToxFile
         STOPPED,
         PAUSED,
         TRANSMITTING,
-        BROKEN
+        BROKEN,
+        BROKENPAUSED,
+        BROKENSTOPPED
     };
 
     enum FileDirection : bool
