@@ -310,6 +310,8 @@ then
   sed -i s/'LIBS="-lcrypto $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
   sed -i s/'if test "$TARGET_EXEEXT" = ".exe"'/'if test ".exe" = ".exe"'/g configure
 
+# Do not remove trailing whitespace and dont replace tabs with spaces in the patch below,
+#  otherwise the patch will fail to apply
 > Makefile.in-patch cat << "EOF"
 --- Makefile.in	2017-07-24 04:33:46.944080013 +0000
 +++ Makefile.in-patch	2017-07-24 04:50:47.340596990 +0000
@@ -622,6 +624,34 @@ then
 fi
 
 
+# Exif
+
+EXIF_PREFIX_DIR="$DEP_DIR/libexif"
+if [ ! -f "$EXIF_PREFIX_DIR/done" ]
+then
+  rm -rf "$EXIF_PREFIX_DIR"
+  mkdir -p "$EXIF_PREFIX_DIR"
+
+  wget https://sourceforge.net/projects/libexif/files/libexif/0.6.21/libexif-0.6.21.tar.bz2
+  bsdtar -xf libexif*.tar.bz2
+  rm libexif*.tar.bz2
+  cd libexif*
+
+  CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
+                               --prefix="$EXIF_PREFIX_DIR" \
+                               --disable-shared \
+                               --enable-static \
+                               --disable-docs \
+                               --disable-nls
+  make
+  make install
+  touch $EXIF_PREFIX_DIR/done
+
+  cd ..
+  rm -rf ./libexif*
+fi
+
+
 # Opus
 
 OPUS_PREFIX_DIR="$DEP_DIR/libopus"
@@ -629,7 +659,7 @@ if [ ! -f "$OPUS_PREFIX_DIR/done" ]
 then
   rm -rf "$OPUS_PREFIX_DIR"
   mkdir -p "$OPUS_PREFIX_DIR"
-  
+
   git clone \
     --branch v1.2.1 \
     --depth 1 \
