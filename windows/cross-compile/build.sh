@@ -40,12 +40,6 @@
 # - FFmpeg 3.3 doesn't cross-compile correctly, qTox build fails when linking
 #   against the 3.3 FFmpeg. They have removed `--enable-memalign-hack` switch,
 #   which might be what causes this.
-#
-# - Toxcore v0.1.9 doesn't cross-compile to Windows due to a linking order
-#   issue in monolith_test https://github.com/TokTok/c-toxcore/pull/564. It's
-#   fixed in master, so we just wait checking out a stable master commit point
-#   until the next release. Once the next release occurs, we will be checking
-#   out that instead.
 
 
 set -euo pipefail
@@ -172,6 +166,23 @@ MAKEFLAGS=j$(nproc)
 export MAKEFLAGS
 
 
+# Helper functions
+
+check_sha256()
+{
+  if ! ( echo "$1  $2" | sha256sum -c --status - )
+  then
+    echo "Error: sha256 of $2 doesn't match the known one."
+    echo "Expected: $1  $2"
+    echo -n "Got: "
+    sha256sum "$2"
+    exit 1
+  else
+    echo "sha256 matches the expected one: $1"
+  fi
+}
+
+
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
@@ -181,18 +192,9 @@ then
   mkdir -p "$OPENSSL_PREFIX_DIR"
 
   OPENSSL_VERSION=1.0.2l
-  OPENSSL_SHA256_HASH=ce07195b659e75f4e1db43552860070061f156a98bb37b672b101ba6e3ddf30c
 
   wget https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
-
-  if ! ( echo "$OPENSSL_SHA256_HASH  openssl-$OPENSSL_VERSION.tar.gz" | sha256sum -c --status - )
-  then
-    echo "Error: sha256 of openssl-$OPENSSL_VERSION.tar.gz doesn't match the known one."
-    exit 1
-  else
-    echo "sha256 matches the expected one: $OPENSSL_SHA256_HASH"
-  fi
-
+  check_sha256 "ce07195b659e75f4e1db43552860070061f156a98bb37b672b101ba6e3ddf30c" "openssl-$OPENSSL_VERSION.tar.gz"
   bsdtar -xf openssl*.tar.gz
   rm openssl*.tar.gz
   cd openssl*
@@ -230,11 +232,11 @@ then
 
   QT_MAJOR=5
   QT_MINOR=6
-  QT_PATCH=2
+  QT_PATCH=3
 
   QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
   wget $QT_MIRROR/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz
-
+  check_sha256 "2fa0cf2e5e8841b29a4be62062c1a65c4f6f2cf1beaf61a5fd661f520cd776d0" "qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
   bsdtar -xf qt*.tar.xz
   rm qt*.tar.xz
   cd qt*
@@ -310,6 +312,8 @@ then
   sed -i s/'LIBS="-lcrypto $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
   sed -i s/'if test "$TARGET_EXEEXT" = ".exe"'/'if test ".exe" = ".exe"'/g configure
 
+# Do not remove trailing whitespace and dont replace tabs with spaces in the patch below,
+#  otherwise the patch will fail to apply
 > Makefile.in-patch cat << "EOF"
 --- Makefile.in	2017-07-24 04:33:46.944080013 +0000
 +++ Makefile.in-patch	2017-07-24 04:50:47.340596990 +0000
@@ -354,6 +358,7 @@ then
   mkdir -p "$FFMPEG_PREFIX_DIR"
 
   wget https://www.ffmpeg.org/releases/ffmpeg-3.2.6.tar.xz
+  check_sha256 "3751cebb5c71a861288267769114d12b966a7703a686a325d90a93707f3a6d9f" "ffmpeg-3.2.6.tar.xz"
   bsdtar -xf ffmpeg*.tar.xz
   cd ffmpeg*
 
@@ -602,6 +607,7 @@ then
   mkdir -p "$QRENCODE_PREFIX_DIR"
 
   wget https://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.bz2
+  check_sha256 "efe5188b1ddbcbf98763b819b146be6a90481aac30cfc8d858ab78a19cde1fa5" "qrencode-3.4.4.tar.bz2"
   bsdtar -xf qrencode*.tar.bz2
   rm qrencode*.tar.bz2
   cd qrencode*
@@ -622,6 +628,35 @@ then
 fi
 
 
+# Exif
+
+EXIF_PREFIX_DIR="$DEP_DIR/libexif"
+if [ ! -f "$EXIF_PREFIX_DIR/done" ]
+then
+  rm -rf "$EXIF_PREFIX_DIR"
+  mkdir -p "$EXIF_PREFIX_DIR"
+
+  wget https://sourceforge.net/projects/libexif/files/libexif/0.6.21/libexif-0.6.21.tar.bz2
+  check_sha256 "16cdaeb62eb3e6dfab2435f7d7bccd2f37438d21c5218ec4e58efa9157d4d41a" "libexif-0.6.21.tar.bz2"
+  bsdtar -xf libexif*.tar.bz2
+  rm libexif*.tar.bz2
+  cd libexif*
+
+  CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
+                               --prefix="$EXIF_PREFIX_DIR" \
+                               --disable-shared \
+                               --enable-static \
+                               --disable-docs \
+                               --disable-nls
+  make
+  make install
+  touch $EXIF_PREFIX_DIR/done
+
+  cd ..
+  rm -rf ./libexif*
+fi
+
+
 # Opus
 
 OPUS_PREFIX_DIR="$DEP_DIR/libopus"
@@ -629,7 +664,7 @@ if [ ! -f "$OPUS_PREFIX_DIR/done" ]
 then
   rm -rf "$OPUS_PREFIX_DIR"
   mkdir -p "$OPUS_PREFIX_DIR"
-  
+
   git clone \
     --branch v1.2.1 \
     --depth 1 \
@@ -731,9 +766,12 @@ then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  git clone https://github.com/TokTok/c-toxcore
+  git clone \
+    --branch v0.1.10 \
+    --depth 1 \
+    https://github.com/TokTok/c-toxcore \
+    c-toxcore
   cd c-toxcore
-  git checkout 1b290c0d84d92fd28fc1f64f33bf4455d73e2e2e
 
   export PKG_CONFIG_PATH="$OPUS_PREFIX_DIR/lib/pkgconfig:$SODIUM_PREFIX_DIR/lib/pkgconfig:$VPX_PREFIX_DIR/lib/pkgconfig"
   export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
