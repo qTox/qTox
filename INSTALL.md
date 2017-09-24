@@ -470,7 +470,7 @@ libopus-dev libvpx-dev libsodium-dev
 
 If you are not using an old version of Fedora, skip this section, and go
 directly to compiling
-[**toxcore**](#toxcore-compiling).
+[**toxcore**](#compile-toxcore).
 
 ```bash
 git clone https://github.com/sqlcipher/sqlcipher
