@@ -172,7 +172,7 @@ void ScreenshotGrabber::useNothingSelectedTooltip()
            "hide/show qTox window, or %2 to cancel.",
            "Help text shown when no region has been selected yet")
             .arg(QString("<b>%1</b>").arg(tr("Space", "[Space] key on the keyboard")),
-                 QString("<b>%1</b>").arg(tr("Escape", "[Escape] key on the keyboard"))));
+                 QString("<b>%1</b>").arg(tr("Esc", "[Esc] key on the keyboard"))));
     adjustTooltipPosition();
 }
 
@@ -184,7 +184,7 @@ void ScreenshotGrabber::useRegionSelectedTooltip()
            "Help text shown when a region has been selected")
             .arg(QString("<b>%1</b>").arg(tr("Enter", "[Enter] key on the keyboard")),
                  QString("<b>%1</b>").arg(tr("Space", "[Space] key on the keyboard")),
-                 QString("<b>%1</b>").arg(tr("Escape", "[Escape] key on the keyboard"))));
+                 QString("<b>%1</b>").arg(tr("Esc", "[Esc] key on the keyboard"))));
     adjustTooltipPosition();
 }
 
