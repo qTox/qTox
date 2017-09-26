@@ -581,7 +581,7 @@ QString Core::getFriendRequestErrorMessage(const ToxId& friendId, const QString&
     }
 
     if (hasFriendWithPublicKey(friendId.getPublicKey())) {
-        return tr("Friend is already added", "Error while sending friendship request");
+        return tr("Friend already added", "Error while sending friendship request");
     }
 
     return QString{};
@@ -1216,7 +1216,7 @@ uint32_t Core::joinGroupchat(const GroupInvite& inviteInfo) const
     }
 
     case TOX_CONFERENCE_TYPE_AV: {
-        qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendId);
+        qDebug() << QString("Trying to make use of AV groupchat invite sent by friend %1").arg(friendId);
         return toxav_join_av_groupchat(tox, friendId, cookie, cookieLength,
                                        CoreAV::groupCallCallback, const_cast<Core*>(this));
     }
@@ -1322,7 +1322,7 @@ QString Core::getFriendUsername(uint32_t friendnumber) const
 {
     size_t namesize = tox_friend_get_name_size(tox, friendnumber, nullptr);
     if (namesize == SIZE_MAX) {
-        qWarning() << "getFriendUsername: Failed to get name size for friend " << friendnumber;
+        qWarning() << "getFriendUsername: Failed to get name size of friend " << friendnumber;
         return QString();
     }
 
