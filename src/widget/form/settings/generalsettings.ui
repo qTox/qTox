@@ -181,7 +181,7 @@
                  </sizepolicy>
                 </property>
                 <property name="toolTip">
-                 <string comment="toolTip for minimize to tray setting">After pressing minimize (_) qTox will minimize itself to tray,
+                 <string comment="toolTip for minimize to tray setting">Minimizing (_) qTox will put it in the tray,
 instead of system taskbar.</string>
                 </property>
                 <property name="text">
@@ -198,8 +198,7 @@ instead of system taskbar.</string>
                  </sizepolicy>
                 </property>
                 <property name="toolTip">
-                 <string comment="toolTip for close to tray setting">After pressing close (X) qTox will minimize to tray,
-instead of closing itself.</string>
+                 <string comment="toolTip for close to tray setting">Closing (×) qTox will instead minimize it to tray.</string>
                 </property>
                 <property name="text">
                  <string>Close to tray</string>
@@ -322,7 +321,7 @@ instead of closing itself.</string>
             <item row="2" column="0">
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Default directory to save files:</string>
+               <string>Default directory to save files in:</string>
               </property>
              </widget>
             </item>
@@ -335,7 +334,7 @@ instead of closing itself.</string>
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string comment="autoaccept cb tooltip">You can set this on a per-friend basis by right clicking them.</string>
+               <string comment="autoaccept cb tooltip">You can right-click each friend to set this individually.</string>
               </property>
               <property name="text">
                <string>Autoaccept files</string>
