@@ -38,7 +38,7 @@
 
 namespace detail {
 
-static std::atomic_flag g_signalSocketUsageFlag{ATOMIC_FLAG_INIT};
+static std::atomic_flag g_signalSocketUsageFlag = ATOMIC_FLAG_INIT;
 static std::array<int, 2> g_signalSocketPair;
 
 static void signalHandler(int signum)
