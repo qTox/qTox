@@ -13,7 +13,7 @@ AboutFriend::AboutFriend(const Friend* f, IFriendSettings* const s)
         emit noteChanged(note);
     });
     s->connectTo_autoAcceptCallChanged(
-                [=](const ToxPk& pk, IFriendSettings::AutoAcceptCallFlags flag) {
+            [=](const ToxPk& pk, IFriendSettings::AutoAcceptCallFlags flag) {
         emit autoAcceptCallChanged(flag);
     });
     s->connectTo_autoAcceptDirChanged([=](const ToxPk& pk, const QString& dir) {
