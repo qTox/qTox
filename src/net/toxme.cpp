@@ -145,8 +145,8 @@ QByteArray Toxme::prepareEncryptedJson(QString url, int action, QString payload)
 
 /**
  * @brief Converts a toxme address to a Tox ID.
- * @param address Toxme address.
- * @return Found ToxId (an empty ID on error).
+ * @param address ToxMe address.
+ * @return Found ToxID (an empty ID on error).
  */
 ToxId Toxme::lookup(QString address)
 {
@@ -219,8 +219,8 @@ Toxme::ExecCode Toxme::extractError(QString json)
  * @brief Creates a new toxme address associated with a Tox ID.
  * @param[out] code Tox error code @see getErrorMessage.
  * @param[in] server Create toxme account on this server.
- * @param[in] id ToxId of current user.
- * @param[in] address Create toxme account with this adress.
+ * @param[in] id ToxID of current user.
+ * @param[in] address Create ToxMe account with this adress.
  * @param[in] keepPrivate If true, the address will not be published on toxme site.
  * @param[in] bio A short optional description of yourself if you want to publish your address.
  * @return password on success, else sets code parameter and returns an empty QString.
@@ -331,7 +331,7 @@ QString Toxme::getErrorMessage(int errorCode)
     case NoPassword:
         return "No password in response";
     case ServerError:
-        return "Server doesn't support Toxme";
+        return "Server doesn't support ToxMe";
     case -1:
         return "You must send POST requests to /api";
     case -2:
@@ -345,7 +345,7 @@ QString Toxme::getErrorMessage(int errorCode)
     case -26:
         return "This Tox ID is already registered under another name";
     case -27:
-        return "Please don't use a space in your name";
+        return "Spaces are not allowed in names";
     case -28:
         return "Password incorrect";
     case -29:
@@ -374,7 +374,7 @@ QString Toxme::translateErrorMessage(int errorCode)
 {
     switch (errorCode) {
     case ServerError:
-        return QObject::tr("Server doesn't support Toxme");
+        return QObject::tr("Server doesn't support ToxMe");
     case -2:
         return QObject::tr("Problem with HTTPS connection");
     case -4:
@@ -384,7 +384,7 @@ QString Toxme::translateErrorMessage(int errorCode)
     case -26:
         return QObject::tr("This Tox ID is already registered under another name");
     case -27:
-        return QObject::tr("Please don't use a space in your name");
+        return QObject::tr("Spaces are not allowed in names");
     case -28:
         return QObject::tr("Password incorrect");
     case -29:
