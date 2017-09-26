@@ -47,7 +47,7 @@ public:
     DECLARE_SIGNAL(noteChanged, const QString&);
 
     DECLARE_SIGNAL(autoAcceptDirChanged, const QString&);
-    DECLARE_SIGNAL(autoAcceptCallChanged, AutoAcceptCallFlags);
+    DECLARE_SIGNAL(autoAcceptCallChanged, IFriendSettings::AutoAcceptCallFlags);
     DECLARE_SIGNAL(autoGroupInviteChanged, bool);
 };
 
