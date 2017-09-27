@@ -195,6 +195,11 @@ CameraSource::~CameraSource()
     QWriteLocker locker{&streamMutex};
     QWriteLocker locker2{&deviceMutex};
 
+    // Stop the device thread
+    deviceThread->exit(0);
+    deviceThread->wait();
+    delete deviceThread;
+
     if (_isNone) {
         return;
     }
@@ -223,10 +228,6 @@ CameraSource::~CameraSource()
     // Synchronize with our stream thread
     while (streamFuture.isRunning())
         QThread::yieldCurrentThread();
-
-    deviceThread->exit(0);
-    deviceThread->wait();
-    delete deviceThread;
 }
 
 void CameraSource::subscribe()
