@@ -17,27 +17,6 @@
  */
 
 /**
- * @brief   Compare equal operator
- * @param   other   the compared instance
- * @return  true, if equal; false otherwise
- */
-bool DhtServer::operator==(const DhtServer& other) const
-{
-    return this == &other || (port == other.port && address == other.address
-                              && userId == other.userId && name == other.name);
-}
-
-/**
- * @brief   Compare not equal operator
- * @param   other   the compared instance
- * @return  true, if not equal; false otherwise
- */
-bool DhtServer::operator!=(const DhtServer& other) const
-{
-    return !(*this == other);
-}
-
-/**
  * @brief ToxFile constructor
  */
 ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QByteArray filename, QString filePath,

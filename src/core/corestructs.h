@@ -15,17 +15,6 @@ enum class Status
     Offline
 };
 
-struct DhtServer
-{
-    QString name;
-    QString userId;
-    QString address;
-    quint16 port;
-
-    bool operator==(const DhtServer& other) const;
-    bool operator!=(const DhtServer& other) const;
-};
-
 struct ToxFile
 {
     enum FileStatus
