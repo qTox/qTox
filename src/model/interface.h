@@ -3,17 +3,15 @@
 
 #include <functional>
 
-#define CHANGED_SIGNAL(type, name) \
-    using Slot_##name = std::function<void (const type& val)>; \
-    virtual void connectTo_##name##Changed(Slot_##name slot) = 0; \
-    virtual void connectTo_##name##Changed(QObject* handler, Slot_##name slot) = 0
+#define DECLARE_SIGNAL(name, ...) \
+    using Slot_##name = std::function<void (__VA_ARGS__)>; \
+    virtual void connectTo_##name(Slot_##name slot) const = 0
 
-#define CHANGED_SIGNAL_IMPL(type, classname, name) \
-    void connectTo_##name##Changed(Slot_##name slot) override { \
-            connect(this, &classname::name##Changed, slot); \
-    } \
-    void connectTo_##name##Changed(QObject* handler, Slot_##name slot) override { \
-        connect(this, &classname::name##Changed, handler, slot); \
+#define SIGNAL_IMPL(classname, name, ...) \
+    using Slot_##name = std::function<void (__VA_ARGS__)>; \
+    Q_SIGNAL void name(__VA_ARGS__); \
+    void connectTo_##name(Slot_##name slot) const override { \
+        connect(this, &classname::name, slot); \
     }
 
 #endif // INTERFACE_H
