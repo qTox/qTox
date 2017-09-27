@@ -34,28 +34,16 @@ public:
 
     bool clearHistory() override;
 
-    CHANGED_SIGNAL_IMPL(QString, AboutFriend, name)
-    CHANGED_SIGNAL_IMPL(QString, AboutFriend, status)
-    CHANGED_SIGNAL_IMPL(QString, AboutFriend, publicKey)
+    SIGNAL_IMPL(AboutFriend, nameChanged, const QString&)
+    SIGNAL_IMPL(AboutFriend, statusChanged, const QString&)
+    SIGNAL_IMPL(AboutFriend, publicKeyChanged, const QString&)
 
-    CHANGED_SIGNAL_IMPL(QPixmap, AboutFriend, avatar)
-    CHANGED_SIGNAL_IMPL(QString, AboutFriend, note)
+    SIGNAL_IMPL(AboutFriend, avatarChanged, const QPixmap&)
+    SIGNAL_IMPL(AboutFriend, noteChanged, const QString&)
 
-    CHANGED_SIGNAL_IMPL(QString, AboutFriend, autoAcceptDir)
-    CHANGED_SIGNAL_IMPL(AutoAcceptCallFlags, AboutFriend, autoAcceptCall)
-    CHANGED_SIGNAL_IMPL(bool, AboutFriend, autoGroupInvite)
-
-signals:
-    void nameChanged(const QString& name);
-    void statusChanged(const QString& status);
-    void publicKeyChanged(const QString& pk);
-
-    void avatarChanged(const QPixmap& avatar);
-    void noteChanged(const QString& val);
-
-    void autoAcceptDirChanged(const QString& path);
-    void autoAcceptCallChanged(const AutoAcceptCallFlags& flag);
-    void autoGroupInviteChanged(const bool& enabled);
+    SIGNAL_IMPL(AboutFriend, autoAcceptDirChanged, const QString&)
+    SIGNAL_IMPL(AboutFriend, autoAcceptCallChanged, AutoAcceptCallFlags)
+    SIGNAL_IMPL(AboutFriend, autoGroupInviteChanged, bool)
 
 private:
     const Friend* const f;
