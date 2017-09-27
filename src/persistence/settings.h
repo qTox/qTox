@@ -159,12 +159,6 @@ public slots:
 
 signals:
     // General
-    void enableIPv6Changed(bool enabled);
-    void forceTCPChanged(bool enabled);
-    void proxyTypeChanged(ICoreSettings::ProxyType type);
-    void proxyAddressChanged(const QString& address);
-    void proxyPortChanged(quint16 port);
-    void dhtServerListChanged(const QList<DhtServer>& servers);
     void autorunChanged(bool enabled);
     void autoSaveEnabledChanged(bool enabled);
     void autostartInTrayChanged(bool enabled);
@@ -300,25 +294,32 @@ public:
     bool getAutoSaveEnabled() const;
 
     // ICoreSettings
-    virtual const QList<DhtServer>& getDhtServerList() const override;
-    virtual void setDhtServerList(const QList<DhtServer>& newDhtServerList) override;
+    const QList<DhtServer>& getDhtServerList() const override;
+    void setDhtServerList(const QList<DhtServer>& servers) override;
 
-    virtual bool getEnableIPv6() const override;
-    virtual void setEnableIPv6(bool newValue) override;
+    bool getEnableIPv6() const override;
+    void setEnableIPv6(bool enabled) override;
 
-    virtual bool getForceTCP() const override;
-    virtual void setForceTCP(bool newValue) override;
+    bool getForceTCP() const override;
+    void setForceTCP(bool enabled) override;
 
-    virtual QNetworkProxy getProxy() const override;
+    QString getProxyAddr() const override;
+    void setProxyAddr(const QString& address) override;
 
-    virtual QString getProxyAddr() const override;
-    virtual void setProxyAddr(const QString& newValue) override;
+    ICoreSettings::ProxyType getProxyType() const override;
+    void setProxyType(ICoreSettings::ProxyType type) override;
 
-    virtual ICoreSettings::ProxyType getProxyType() const override;
-    virtual void setProxyType(ICoreSettings::ProxyType newValue) override;
+    quint16 getProxyPort() const override;
+    void setProxyPort(quint16 port) override;
 
-    virtual quint16 getProxyPort() const override;
-    virtual void setProxyPort(quint16 newValue) override;
+    QNetworkProxy getProxy() const override;
+
+    SIGNAL_IMPL(Settings, enableIPv6Changed, bool enabled)
+    SIGNAL_IMPL(Settings, forceTCPChanged, bool enabled)
+    SIGNAL_IMPL(Settings, proxyTypeChanged, ICoreSettings::ProxyType type)
+    SIGNAL_IMPL(Settings, proxyAddressChanged, const QString& address)
+    SIGNAL_IMPL(Settings, proxyPortChanged, quint16 port)
+    SIGNAL_IMPL(Settings, dhtServerListChanged, const QList<DhtServer>& servers)
 
     bool getEnableLogging() const;
     void setEnableLogging(bool newValue);
