@@ -21,6 +21,7 @@
 #include "core.h"
 #include "corefile.h"
 #include "src/core/coreav.h"
+#include "src/core/icoresettings.h"
 #include "src/core/toxstring.h"
 #include "src/model/groupinvite.h"
 #include "src/nexus.h"
@@ -41,17 +42,20 @@ static const int MAX_PROXY_ADDRESS_LENGTH = 255;
 
 #define MAX_GROUP_MESSAGE_LEN 1024
 
-Core::Core(QThread* CoreThread, Profile& profile)
+Core::Core(QThread* CoreThread, Profile& profile, const ICoreSettings* const settings)
     : tox(nullptr)
     , av(nullptr)
     , profile(profile)
     , ready(false)
+    , s{settings}
 {
     coreThread = CoreThread;
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
     connect(toxTimer, &QTimer::timeout, this, &Core::process);
-    connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::process);
+    s->connectTo_dhtServerListChanged([=](const QList<DhtServer>& servers){
+        process();
+    });
 }
 
 void Core::deadifyTox()
@@ -112,16 +116,15 @@ CoreAV* Core::getAv()
  * @param savedata Previously saved Tox data
  * @return Tox_Options instance needed to create Tox instance
  */
-Tox_Options initToxOptions(const QByteArray& savedata)
+Tox_Options initToxOptions(const QByteArray& savedata, const ICoreSettings* s)
 {
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be
     // disabled in options.
-    const Settings& s = Settings::getInstance();
-    bool enableIPv6 = s.getEnableIPv6();
-    bool forceTCP = s.getForceTCP();
-    ICoreSettings::ProxyType proxyType = s.getProxyType();
-    quint16 proxyPort = s.getProxyPort();
-    QString proxyAddr = s.getProxyAddr();
+    bool enableIPv6 = s->getEnableIPv6();
+    bool forceTCP = s->getForceTCP();
+    ICoreSettings::ProxyType proxyType = s->getProxyType();
+    quint16 proxyPort = s->getProxyPort();
+    QString proxyAddr = s->getProxyAddr();
     QByteArray proxyAddrData = proxyAddr.toUtf8();
 
     if (enableIPv6) {
@@ -170,7 +173,7 @@ Tox_Options initToxOptions(const QByteArray& savedata)
  */
 void Core::makeTox(QByteArray savedata)
 {
-    Tox_Options toxOptions = initToxOptions(savedata);
+    Tox_Options toxOptions = initToxOptions(savedata, s);
     TOX_ERR_NEW tox_err;
     tox = tox_new(&toxOptions, &tox_err);
 
@@ -184,7 +187,7 @@ void Core::makeTox(QByteArray savedata)
         return;
 
     case TOX_ERR_NEW_PORT_ALLOC:
-        if (Settings::getInstance().getEnableIPv6()) {
+        if (s->getEnableIPv6()) {
             toxOptions.ipv6_enabled = false;
             tox = tox_new(&toxOptions, &tox_err);
             if (tox_err == TOX_ERR_NEW_OK) {
@@ -387,8 +390,7 @@ bool Core::checkConnection()
  */
 void Core::bootstrapDht()
 {
-    const Settings& s = Settings::getInstance();
-    QList<DhtServer> dhtServerList = s.getDhtServerList();
+    QList<DhtServer> dhtServerList = s->getDhtServerList();
     int listSize = dhtServerList.size();
     if (!listSize) {
         qWarning() << "no bootstrap list?!?";

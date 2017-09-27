@@ -30,6 +30,7 @@
 #include <QObject>
 
 class CoreAV;
+class ICoreSettings;
 class GroupInvite;
 class Profile;
 class QTimer;
@@ -38,7 +39,7 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    explicit Core(QThread* coreThread, Profile& profile);
+    Core(QThread* coreThread, Profile& profile, const ICoreSettings* const settings);
     static Core* getInstance();
     const CoreAV* getAv() const;
     CoreAV* getAv();
@@ -225,6 +226,7 @@ private:
     Profile& profile;
     QMutex messageSendMutex;
     bool ready;
+    const ICoreSettings* const s;
 
     static QThread* coreThread;
 
