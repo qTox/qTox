@@ -119,7 +119,7 @@ Tox_Options initToxOptions(const QByteArray& savedata)
     const Settings& s = Settings::getInstance();
     bool enableIPv6 = s.getEnableIPv6();
     bool forceTCP = s.getForceTCP();
-    Settings::ProxyType proxyType = s.getProxyType();
+    ICoreSettings::ProxyType proxyType = s.getProxyType();
     quint16 proxyPort = s.getProxyPort();
     QString proxyAddr = s.getProxyAddr();
     QByteArray proxyAddrData = proxyAddr.toUtf8();
@@ -144,15 +144,15 @@ Tox_Options initToxOptions(const QByteArray& savedata)
     toxOptions.savedata_data = reinterpret_cast<const uint8_t*>(savedata.data());
     toxOptions.savedata_length = savedata.size();
 
-    if (proxyType != Settings::ProxyType::ptNone) {
+    if (proxyType != ICoreSettings::ProxyType::ptNone) {
         if (proxyAddr.length() > MAX_PROXY_ADDRESS_LENGTH) {
             qWarning() << "proxy address" << proxyAddr << "is too long";
         } else if (!proxyAddr.isEmpty() && proxyPort > 0) {
             qDebug() << "using proxy" << proxyAddr << ":" << proxyPort;
             // protection against changings in TOX_PROXY_TYPE enum
-            if (proxyType == Settings::ProxyType::ptSOCKS5) {
+            if (proxyType == ICoreSettings::ProxyType::ptSOCKS5) {
                 toxOptions.proxy_type = TOX_PROXY_TYPE_SOCKS5;
-            } else if (proxyType == Settings::ProxyType::ptHTTP) {
+            } else if (proxyType == ICoreSettings::ProxyType::ptHTTP) {
                 toxOptions.proxy_type = TOX_PROXY_TYPE_HTTP;
             }
 
