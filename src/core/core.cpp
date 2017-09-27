@@ -26,7 +26,6 @@
 #include "src/model/groupinvite.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
-#include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 
 #include <QCoreApplication>
@@ -607,8 +606,6 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
         emit failedToAddFriend(friendPk);
     } else {
         qDebug() << "Requested friendship of " << friendNumber;
-        Settings::getInstance().updateFriendAddress(friendId.toString());
-
         emit friendAdded(friendNumber, friendPk);
         emit requestSent(friendPk, message);
     }
