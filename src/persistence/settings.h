@@ -22,8 +22,8 @@
 #define SETTINGS_HPP
 
 #include "src/core/corestructs.h"
+#include "src/core/icoresettings.h"
 #include "src/core/toxencrypt.h"
-#include "src/core/dhtserver.h"
 
 #include <QDate>
 #include <QFlags>
@@ -41,11 +41,10 @@ namespace Db {
 enum class syncType;
 }
 
-class Settings : public QObject
+class Settings : public QObject, public ICoreSettings
 {
     Q_OBJECT
 
-    Q_ENUMS(ProxyType)
     Q_ENUMS(StyleType)
 
     // general
@@ -114,12 +113,6 @@ class Settings : public QObject
     Q_PROPERTY(quint16 camVideoFPS READ getCamVideoFPS WRITE setCamVideoFPS NOTIFY camVideoFPSChanged FINAL)
 
 public:
-    enum class ProxyType
-    {
-        ptNone = 0,
-        ptSOCKS5 = 1,
-        ptHTTP = 2
-    };
     enum class StyleType
     {
         NONE = 0,
@@ -168,7 +161,7 @@ signals:
     // General
     void enableIPv6Changed(bool enabled);
     void forceTCPChanged(bool enabled);
-    void proxyTypeChanged(ProxyType type);
+    void proxyTypeChanged(ICoreSettings::ProxyType type);
     void proxyAddressChanged(const QString& address);
     void proxyPortChanged(quint16 port);
     void dhtServerListChanged(const QList<DhtServer>& servers);
@@ -254,12 +247,6 @@ signals:
     void camVideoFPSChanged(quint16 fps);
 
 public:
-    const QList<DhtServer>& getDhtServerList() const;
-    void setDhtServerList(const QList<DhtServer>& newDhtServerList);
-
-    bool getEnableIPv6() const;
-    void setEnableIPv6(bool newValue);
-
     bool getMakeToxPortable() const;
     void setMakeToxPortable(bool newValue);
 
@@ -312,19 +299,26 @@ public:
     void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
 
-    bool getForceTCP() const;
-    void setForceTCP(bool newValue);
+    // ICoreSettings
+    virtual const QList<DhtServer>& getDhtServerList() const override;
+    virtual void setDhtServerList(const QList<DhtServer>& newDhtServerList) override;
 
-    QNetworkProxy getProxy() const;
+    virtual bool getEnableIPv6() const override;
+    virtual void setEnableIPv6(bool newValue) override;
 
-    QString getProxyAddr() const;
-    void setProxyAddr(const QString& newValue);
+    virtual bool getForceTCP() const override;
+    virtual void setForceTCP(bool newValue) override;
 
-    ProxyType getProxyType() const;
-    void setProxyType(ProxyType newValue);
+    virtual QNetworkProxy getProxy() const override;
 
-    quint16 getProxyPort() const;
-    void setProxyPort(quint16 newValue);
+    virtual QString getProxyAddr() const override;
+    virtual void setProxyAddr(const QString& newValue) override;
+
+    virtual ICoreSettings::ProxyType getProxyType() const override;
+    virtual void setProxyType(ICoreSettings::ProxyType newValue) override;
+
+    virtual quint16 getProxyPort() const override;
+    virtual void setProxyPort(quint16 newValue) override;
 
     bool getEnableLogging() const;
     void setEnableLogging(bool newValue);
@@ -575,7 +569,7 @@ private:
 
     bool forceTCP;
 
-    ProxyType proxyType;
+    ICoreSettings::ProxyType proxyType;
     QString proxyAddr;
     quint16 proxyPort;
 
