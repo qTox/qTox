@@ -39,16 +39,16 @@ public:
     virtual bool clearHistory() = 0;
 
     /* signals */
-    CHANGED_SIGNAL(QString, name);
-    CHANGED_SIGNAL(QString, status);
-    CHANGED_SIGNAL(QString, publicKey);
+    DECLARE_SIGNAL(nameChanged, const QString&);
+    DECLARE_SIGNAL(statusChanged, const QString&);
+    DECLARE_SIGNAL(publicKeyChanged, const QString&);
 
-    CHANGED_SIGNAL(QPixmap, avatar);
-    CHANGED_SIGNAL(QString, note);
+    DECLARE_SIGNAL(avatarChanged, const QPixmap&);
+    DECLARE_SIGNAL(noteChanged, const QString&);
 
-    CHANGED_SIGNAL(QString, autoAcceptDir);
-    CHANGED_SIGNAL(AutoAcceptCallFlags, autoAcceptCall);
-    CHANGED_SIGNAL(bool, autoGroupInvite);
+    DECLARE_SIGNAL(autoAcceptDirChanged, const QString&);
+    DECLARE_SIGNAL(autoAcceptCallChanged, AutoAcceptCallFlags);
+    DECLARE_SIGNAL(autoGroupInviteChanged, bool);
 };
 
 #endif // I_ABOUT_FRIEND_H
