@@ -23,6 +23,8 @@
 
 #include "src/core/corestructs.h"
 #include "src/core/toxencrypt.h"
+#include "src/core/dhtserver.h"
+
 #include <QDate>
 #include <QFlags>
 #include <QFont>
