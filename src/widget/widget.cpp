@@ -967,8 +967,11 @@ void Widget::onCallEnd(uint32_t friendId)
 
 void Widget::addFriend(int friendId, const ToxPk& friendPk)
 {
+    Settings& s = Settings::getInstance();
+    s.updateFriendAddress(friendPk.toString());
+
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
-    bool compact = Settings::getInstance().getCompactLayout();
+    bool compact = s.getCompactLayout();
     FriendWidget* widget = new FriendWidget(newfriend, compact);
     ChatForm* friendForm = new ChatForm(newfriend);
     newfriend->setChatForm(friendForm);
@@ -977,12 +980,10 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
     chatForms[friendId] = friendForm;
     newfriend->loadHistory();
 
-    const Settings& s = Settings::getInstance();
-
     QDate activityDate = s.getFriendActivity(friendPk);
     QDate chatDate = friendForm->getLatestDate();
     if (chatDate > activityDate && chatDate.isValid()) {
-        Settings::getInstance().setFriendActivity(friendPk, chatDate);
+        s.setFriendActivity(friendPk, chatDate);
     }
 
     contactListWidget->addFriendWidget(widget, Status::Offline, s.getFriendCircleID(friendPk));
