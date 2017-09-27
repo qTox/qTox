@@ -805,12 +805,12 @@ const QList<DhtServer>& Settings::getDhtServerList() const
     return dhtServerList;
 }
 
-void Settings::setDhtServerList(const QList<DhtServer>& newDhtServerList)
+void Settings::setDhtServerList(const QList<DhtServer>& servers)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newDhtServerList != dhtServerList) {
-        dhtServerList = newDhtServerList;
+    if (servers != dhtServerList) {
+        dhtServerList = servers;
         emit dhtServerListChanged(dhtServerList);
     }
 }
@@ -836,12 +836,12 @@ bool Settings::getEnableIPv6() const
     return enableIPv6;
 }
 
-void Settings::setEnableIPv6(bool newValue)
+void Settings::setEnableIPv6(bool enabled)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != enableIPv6) {
-        enableIPv6 = newValue;
+    if (enabled != enableIPv6) {
+        enableIPv6 = enabled;
         emit enableIPv6Changed(enableIPv6);
     }
 }
@@ -1209,12 +1209,12 @@ bool Settings::getForceTCP() const
     return forceTCP;
 }
 
-void Settings::setForceTCP(bool newValue)
+void Settings::setForceTCP(bool enabled)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != forceTCP) {
-        forceTCP = newValue;
+    if (enabled != forceTCP) {
+        forceTCP = enabled;
         emit forceTCPChanged(forceTCP);
     }
 }
@@ -1265,12 +1265,12 @@ QString Settings::getProxyAddr() const
     return proxyAddr;
 }
 
-void Settings::setProxyAddr(const QString& newValue)
+void Settings::setProxyAddr(const QString& address)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != proxyAddr) {
-        proxyAddr = newValue;
+    if (address != proxyAddr) {
+        proxyAddr = address;
         emit proxyAddressChanged(proxyAddr);
     }
 }
@@ -1281,12 +1281,12 @@ quint16 Settings::getProxyPort() const
     return proxyPort;
 }
 
-void Settings::setProxyPort(quint16 newValue)
+void Settings::setProxyPort(quint16 port)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != proxyPort) {
-        proxyPort = newValue;
+    if (port != proxyPort) {
+        proxyPort = port;
         emit proxyPortChanged(proxyPort);
     }
 }

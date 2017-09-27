@@ -62,7 +62,7 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile, const
 
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
-    core = new Core(coreThread, *this);
+    core = new Core(coreThread, *this, &Settings::getInstance());
     QObject::connect(core, &Core::idSet, this,
                      [this, password](const ToxId& id) { loadDatabase(id, password); },
                      Qt::QueuedConnection);
