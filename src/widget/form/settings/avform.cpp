@@ -121,6 +121,7 @@ void AVForm::showEvent(QShowEvent* event)
     getAudioInDevices();
     createVideoSurface();
     getVideoDevices();
+    fillAudioQualityComboBox();
 
     if (!subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
@@ -333,6 +334,24 @@ void AVForm::fillScreenModesComboBox()
     videoModescomboBox->blockSignals(previouslyBlocked);
 }
 
+void AVForm::fillAudioQualityComboBox()
+{
+    bool previouslyBlocked = audioQualityComboBox->blockSignals(true);
+    audioQualityComboBox->clear();
+
+    QString name;
+    name = tr("High (64 kbps)");
+    audioQualityComboBox->addItem(name);
+    name = tr("Medium (32 kbps)");
+    audioQualityComboBox->addItem(name);
+    name = tr("Low (16 kbps)");
+    audioQualityComboBox->addItem(name);
+    name = tr("Very Low (8 kbps)");
+    audioQualityComboBox->addItem(name);
+
+    audioQualityComboBox->blockSignals(previouslyBlocked);
+}
+
 void AVForm::updateVideoModes(int curIndex)
 {
     if (curIndex < 0 || curIndex >= videoDeviceList.size()) {
@@ -406,6 +425,27 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
     camera.setupDevice(dev, mode);
     if (dev == "none")
         Core::getInstance()->getAv()->sendNoVideo();
+}
+
+void AVForm::on_audioQualityComboBox_currentIndexChanged(int index)
+{
+    uint32_t bitrate;
+    switch (index) {
+    case 1:
+        bitrate = 32;
+        break;
+    case 2:
+        bitrate = 16;
+        break;
+    case 3:
+        bitrate = 8;
+        break;
+    default:
+        bitrate = 64;
+        break;
+    }
+   
+    Core::getInstance()->getAv()->audioBitrate = bitrate;
 }
 
 void AVForm::getVideoDevices()

@@ -81,6 +81,7 @@ public:
                                   uint8_t channels, unsigned sample_rate, void* core);
     static void invalidateGroupCallPeerSource(int group, int peer);
 
+    uint32_t audioBitrate = 64;
 public slots:
     bool startCall(uint32_t friendNum, bool video = false);
     bool answerCall(uint32_t friendNum);
@@ -111,7 +112,6 @@ private:
                                    int32_t ystride, int32_t ustride, int32_t vstride, void* self);
 
 private:
-    static constexpr uint32_t AUDIO_DEFAULT_BITRATE = 64;
     static constexpr uint32_t VIDEO_DEFAULT_BITRATE = 6144;
 
 private:

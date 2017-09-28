@@ -48,7 +48,7 @@
  * @brief Sent when a call was ended by the peer.
  * @param friendId Id of friend in call list.
  *
- * @var CoreAV::AUDIO_DEFAULT_BITRATE
+ * @var CoreAV::audioBitrate
  * @brief In kb/s. More than enough for Opus.
  *
  * @var CoreAV::VIDEO_DEFAULT_BITRATE
@@ -236,7 +236,7 @@ bool CoreAV::answerCall(uint32_t friendNum)
     qDebug() << QString("answering call %1").arg(friendNum);
     assert(calls.contains(friendNum));
     TOXAV_ERR_ANSWER err;
-    if (toxav_answer(toxav, friendNum, AUDIO_DEFAULT_BITRATE, VIDEO_DEFAULT_BITRATE, &err)) {
+    if (toxav_answer(toxav, friendNum, audioBitrate, VIDEO_DEFAULT_BITRATE, &err)) {
         calls[friendNum].inactive = false;
         return true;
     } else {
@@ -271,7 +271,7 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     }
 
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (!toxav_call(toxav, friendNum, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
+    if (!toxav_call(toxav, friendNum, audioBitrate, videoBitrate, nullptr))
         return false;
 
     auto call = calls.insert({friendNum, video, *this});
