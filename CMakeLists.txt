@@ -248,8 +248,6 @@ set(${PROJECT_NAME}_SOURCES
   src/core/toxstring.h
   src/friendlist.cpp
   src/friendlist.h
-  src/model/groupinvite.cpp
-  src/model/groupinvite.h
   src/grouplist.cpp
   src/grouplist.h
   src/ipc.cpp
@@ -261,8 +259,11 @@ set(${PROJECT_NAME}_SOURCES
   src/model/contact.h
   src/model/friend.cpp
   src/model/friend.h
+  src/model/groupinvite.cpp
+  src/model/groupinvite.h
   src/model/group.cpp
   src/model/group.h
+  src/model/interface.h
   src/net/autoupdate.cpp
   src/net/autoupdate.h
   src/net/avatarbroadcaster.cpp
