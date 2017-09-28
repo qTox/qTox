@@ -369,14 +369,15 @@ HEADERS  += \
     src/core/toxpk.h \
     src/core/toxstring.h \
     src/friendlist.h \
-    src/model/groupinvite.h \
     src/grouplist.h \
     src/ipc.h \
     src/model/about/aboutfriend.h \
     src/model/about/iaboutfriend.h \
     src/model/contact.h \
     src/model/friend.h \
+    src/model/groupinvite.h \
     src/model/group.h \
+    src/model/interface.h \
     src/net/autoupdate.h \
     src/net/avatarbroadcaster.h \
     src/net/toxme.h \
