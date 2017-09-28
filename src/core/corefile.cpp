@@ -281,19 +281,19 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
 
     if (kind == TOX_FILE_KIND_AVATAR) {
         // TODO: port this to ToxPk
-        QString friendAddr = core->getFriendPublicKey(friendId).toString();
+        const ToxPk friendPk = core->getFriendPublicKey(friendId);
         if (!filesize) {
             qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
             // Avatars of size 0 means explicitely no avatar
             emit core->friendAvatarRemoved(friendId);
-            core->profile.removeAvatar(friendAddr);
+            core->profile.removeAvatar(friendPk);
             return;
         } else {
             static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH,
                           "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
             uint8_t avatarHash[TOX_FILE_ID_LENGTH];
             tox_file_get_file_id(core->tox, friendId, fileId, avatarHash, nullptr);
-            if (core->profile.getAvatarHash(friendAddr)
+            if (core->profile.getAvatarHash(friendPk)
                 == QByteArray((char*)avatarHash, TOX_HASH_LENGTH)) {
                 // If it's an avatar but we already have it cached, cancel
                 qDebug() << QString(
@@ -429,7 +429,7 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
             if (!pic.isNull()) {
                 qDebug() << "Got" << file->avatarData.size() << "bytes of avatar data from" << friendId;
                 core->profile.saveAvatar(file->avatarData,
-                                         core->getFriendPublicKey(friendId).toString());
+                                         core->getFriendPublicKey(friendId));
                 emit core->friendAvatarChanged(friendId, pic);
             }
         } else {

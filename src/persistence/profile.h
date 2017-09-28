@@ -59,12 +59,12 @@ public:
     void saveToxSave(QByteArray data);
 
     QPixmap loadAvatar();
-    QPixmap loadAvatar(const QString& ownerId);
-    QByteArray loadAvatarData(const QString& ownerId);
-    void setAvatar(QByteArray pic, const QString& ownerId);
-    void saveAvatar(QByteArray pic, const QString& ownerId);
-    QByteArray getAvatarHash(const QString& ownerId);
-    void removeAvatar(const QString& ownerId);
+    QPixmap loadAvatar(const ToxPk& owner);
+    QByteArray loadAvatarData(const ToxPk &owner);
+    void setAvatar(QByteArray pic, const ToxPk &owner);
+    void saveAvatar(QByteArray pic, const ToxPk &owner);
+    QByteArray getAvatarHash(const ToxPk &owner);
+    void removeAvatar(const ToxPk &owner);
     void removeAvatar();
 
     bool isHistoryEnabled();
@@ -93,7 +93,7 @@ private slots:
 private:
     Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave);
     static QVector<QString> getFilesByExt(QString extension);
-    QString avatarPath(const QString& ownerId, bool forceUnencrypted = false);
+    QString avatarPath(const ToxPk &owner, bool forceUnencrypted = false);
 
 private:
     Core* core;

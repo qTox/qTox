@@ -169,7 +169,7 @@ void GroupNetCamView::clearPeers()
 void GroupNetCamView::addPeer(int peer, const QString& name)
 {
     QPixmap groupAvatar =
-        Nexus::getProfile()->loadAvatar(Core::getInstance()->getGroupPeerPk(group, peer).toString());
+        Nexus::getProfile()->loadAvatar(Core::getInstance()->getGroupPeerPk(group, peer));
     LabeledVideo* labeledVideo = new LabeledVideo(groupAvatar, this);
     labeledVideo->setText(name);
     horLayout->insertWidget(horLayout->count() - 1, labeledVideo);
