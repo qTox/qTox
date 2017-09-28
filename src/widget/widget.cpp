@@ -1007,7 +1007,7 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
     connect(core, &Core::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(friendPk.toString());
+    QPixmap avatar = Nexus::getProfile()->loadAvatar(friendPk);
     if (!avatar.isNull()) {
         friendForm->onAvatarChange(friendId, avatar);
         widget->onAvatarChange(friendId, avatar);
@@ -1249,7 +1249,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
     connect(core, &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
     connect(core, &Core::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
 
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getPublicKey().toString());
+    QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getPublicKey());
     if (!avatar.isNull()) {
         friendWidget->onAvatarChange(frnd->getId(), avatar);
     }

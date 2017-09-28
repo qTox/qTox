@@ -42,7 +42,7 @@ QString AboutFriend::getPublicKey() const
 
 QPixmap AboutFriend::getAvatar() const
 {
-    const QString pk = f->getPublicKey().toString();
+    const ToxPk pk = f->getPublicKey();
     const QPixmap avatar = Nexus::getProfile()->loadAvatar(pk);
     return avatar.isNull() ? QPixmap(QStringLiteral(":/img/contact_dark.svg"))
                            : avatar;

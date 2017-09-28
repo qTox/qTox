@@ -304,7 +304,7 @@ void ProfileForm::onAvatarClicked()
         return;
     }
 
-    Nexus::getProfile()->setAvatar(bytes, core->getSelfPublicKey().toString());
+    Nexus::getProfile()->setAvatar(bytes, core->getSelfPublicKey());
 }
 
 void ProfileForm::onRenameClicked()
