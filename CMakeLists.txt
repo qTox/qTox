@@ -413,6 +413,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/tool/flyoutoverlaywidget.h
   src/widget/tool/friendrequestdialog.cpp
   src/widget/tool/friendrequestdialog.h
+  src/widget/tool/identicon.cpp
+  src/widget/tool/identicon.h
   src/widget/tool/movablewidget.cpp
   src/widget/tool/movablewidget.h
   src/widget/tool/profileimporter.cpp
