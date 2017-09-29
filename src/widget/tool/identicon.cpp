@@ -133,7 +133,7 @@ QImage Identicon::toImage(int scaleFactor)
         for (int col = 0; col < IDENTICON_ROWS; col++) {
             // mirror on vertical axis
             int colIdx = abs((col * 2 - (IDENTICON_ROWS - 1)) / 2);
-            pixels.setPixelColor(col, row, colors[identiconColors[row][colIdx]]);
+            pixels.setPixel(col, row, colors[identiconColors[row][colIdx]].rgb());
         }
     }
 
