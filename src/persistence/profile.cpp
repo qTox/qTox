@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
+#include <QBuffer>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
@@ -35,6 +35,7 @@
 #include "src/net/avatarbroadcaster.h"
 #include "src/nexus.h"
 #include "src/widget/gui.h"
+#include "src/widget/tool/identicon.h"
 #include "src/widget/widget.h"
 
 /**
@@ -69,7 +70,7 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile, const
     QObject::connect(coreThread, &QThread::started, core, [=]() {
         core->start(toxsave);
 
-        const ToxPk selfPk= core->getSelfPublicKey();
+        const ToxPk selfPk = core->getSelfPublicKey();
         QByteArray data = loadAvatarData(selfPk);
         if (data.isEmpty()) {
             qDebug() << "Self avatar not found, will broadcast empty avatar to friends";
@@ -391,10 +392,16 @@ QPixmap Profile::loadAvatar()
  * @param owner Friend PK to load avatar.
  * @return Avatar as QPixmap.
  */
-QPixmap Profile::loadAvatar(const ToxPk &owner)
+QPixmap Profile::loadAvatar(const ToxPk& owner)
 {
     QPixmap pic;
-    pic.loadFromData(loadAvatarData(owner));
+    QByteArray avataData = loadAvatarData(owner);
+    if(avataData.isEmpty()) {
+        pic = QPixmap::fromImage(Identicon(owner.getKey()).toImage(16));
+    } else {
+        pic.loadFromData(avataData);
+    }
+
     return pic;
 }
 
@@ -455,16 +462,23 @@ void Profile::loadDatabase(const ToxId& id, QString password)
 void Profile::setAvatar(QByteArray pic, const ToxPk& owner)
 {
     QPixmap pixmap;
+    QByteArray avatarData;
     if (!pic.isEmpty()) {
         pixmap.loadFromData(pic);
+        avatarData = pic;
     } else {
-        pixmap.load(":/img/contact_dark.svg");
+        // with IDENTICON_ROWS=5 this gives a 160x160 image file
+        QImage identicon = Identicon(owner.getKey()).toImage(32);
+        pixmap = QPixmap::fromImage(identicon);
+        QBuffer buf(&avatarData);
+        buf.open(QIODevice::WriteOnly);
+        identicon.save(&buf, "png");
     }
 
-    saveAvatar(pic, owner);
+    saveAvatar(avatarData, owner);
 
     emit selfAvatarChanged(pixmap);
-    AvatarBroadcaster::setAvatar(pic);
+    AvatarBroadcaster::setAvatar(avatarData);
     AvatarBroadcaster::enableAutoBroadcast();
 }
 
@@ -491,7 +505,7 @@ void Profile::onRequestSent(const ToxPk& friendPk, const QString& message)
  * @param pic Picture to save.
  * @param owner PK of avatar owner.
  */
-void Profile::saveAvatar(QByteArray pic, const ToxPk &owner)
+void Profile::saveAvatar(QByteArray pic, const ToxPk& owner)
 {
     if (encrypted && !pic.isEmpty()) {
         pic = passkey->encrypt(pic);
