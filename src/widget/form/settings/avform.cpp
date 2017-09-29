@@ -83,6 +83,8 @@ AVForm::AVForm()
     microphoneSlider->setTracking(false);
     microphoneSlider->installEventFilter(this);
 
+    fillAudioQualityComboBox();
+
     eventsInit();
 
     QDesktopWidget* desktop = QApplication::desktop();
@@ -121,7 +123,6 @@ void AVForm::showEvent(QShowEvent* event)
     getAudioInDevices();
     createVideoSurface();
     getVideoDevices();
-    fillAudioQualityComboBox();
 
     if (!subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
@@ -337,18 +338,25 @@ void AVForm::fillScreenModesComboBox()
 void AVForm::fillAudioQualityComboBox()
 {
     bool previouslyBlocked = audioQualityComboBox->blockSignals(true);
-    audioQualityComboBox->clear();
 
-    QString name;
-    name = tr("High (64 kbps)");
-    audioQualityComboBox->addItem(name);
-    name = tr("Medium (32 kbps)");
-    audioQualityComboBox->addItem(name);
-    name = tr("Low (16 kbps)");
-    audioQualityComboBox->addItem(name);
-    name = tr("Very Low (8 kbps)");
-    audioQualityComboBox->addItem(name);
+    QStringList names;
+    names << tr("High (64 kbps)") << tr("Medium (32 kbps)") << tr("Low (16 kbps")
+          << tr("Very low (8 kbps)");
+    audioQualityComboBox->addItems(names);
 
+    int currentBitrate = Settings::getInstance().getAudioBitrate();
+    QString currentBitrateString = QString::number(currentBitrate);
+    int index = 0;
+
+    for (int i = 0; i < names.length(); i++) {
+        QString name = names.at(i);
+        if (name.contains(currentBitrateString)) {
+            index = i;
+            break;
+        }
+    }
+
+    audioQualityComboBox->setCurrentIndex(index);
     audioQualityComboBox->blockSignals(previouslyBlocked);
 }
 
@@ -429,23 +437,9 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
 
 void AVForm::on_audioQualityComboBox_currentIndexChanged(int index)
 {
-    uint32_t bitrate;
-    switch (index) {
-    case 1:
-        bitrate = 32;
-        break;
-    case 2:
-        bitrate = 16;
-        break;
-    case 3:
-        bitrate = 8;
-        break;
-    default:
-        bitrate = 64;
-        break;
-    }
-   
-    Core::getInstance()->getAv()->audioBitrate = bitrate;
+    int bitrates[] = { 64, 32, 16, 8 };
+    int bitrate = bitrates[index];
+    Settings::getInstance().setAudioBitrate(bitrate);
 }
 
 void AVForm::getVideoDevices()

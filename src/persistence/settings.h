@@ -101,6 +101,7 @@ class Settings : public QObject
     Q_PROPERTY(bool audioOutDevEnabled READ getAudioOutDevEnabled WRITE setAudioOutDevEnabled NOTIFY
                    audioOutDevEnabledChanged FINAL)
     Q_PROPERTY(int outVolume READ getOutVolume WRITE setOutVolume NOTIFY outVolumeChanged FINAL)
+    Q_PROPERTY(int audioBitrate READ getAudioBitrate WRITE setAudioBitrate NOTIFY audioBitrateChanged FINAL)
     Q_PROPERTY(bool enableBackend2 READ getEnableBackend2 WRITE setEnableBackend2 NOTIFY
                    enableBackend2Changed FINAL)
 
@@ -241,6 +242,7 @@ signals:
     void outDevChanged(const QString& name);
     void audioOutDevEnabledChanged(bool enabled);
     void outVolumeChanged(int volume);
+    void audioBitrateChanged(int bitrate);
     void enableTestSoundChanged(bool enabled);
     void enableBackend2Changed(bool enabled);
 
@@ -368,6 +370,9 @@ public:
 
     int getOutVolume() const;
     void setOutVolume(int volume);
+
+    int getAudioBitrate() const;
+    void setAudioBitrate(int bitrate);
 
     bool getEnableTestSound() const;
     void setEnableTestSound(bool newValue);
@@ -631,6 +636,7 @@ private:
     QString outDev;
     bool audioOutDevEnabled;
     int outVolume;
+    int audioBitrate;
     bool enableTestSound;
     bool enableBackend2;
 
