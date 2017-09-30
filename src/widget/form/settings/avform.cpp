@@ -337,18 +337,18 @@ void AVForm::fillScreenModesComboBox()
 
 void AVForm::fillAudioQualityComboBox()
 {
-    const bool PREVIOUSLY_BLOCKED = audioQualityComboBox->blockSignals(true);
+    const bool previouslyBlocked = audioQualityComboBox->blockSignals(true);
 
     audioQualityComboBox->addItem(tr("High (64 kbps)"), 64);
     audioQualityComboBox->addItem(tr("Medium (32 kbps)"), 32);
     audioQualityComboBox->addItem(tr("Low (16 kbps)"), 16);
     audioQualityComboBox->addItem(tr("Very low (8 kbps)"), 8);
 
-    const int CURRENT_BITRATE = Settings::getInstance().getAudioBitrate();
-    const int INDEX = audioQualityComboBox->findData(CURRENT_BITRATE);
+    const int currentBitrate = Settings::getInstance().getAudioBitrate();
+    const int index = audioQualityComboBox->findData(currentBitrate);
 
-    audioQualityComboBox->setCurrentIndex(INDEX);
-    audioQualityComboBox->blockSignals(PREVIOUSLY_BLOCKED);
+    audioQualityComboBox->setCurrentIndex(index);
+    audioQualityComboBox->blockSignals(previouslyBlocked);
 }
 
 void AVForm::updateVideoModes(int curIndex)
