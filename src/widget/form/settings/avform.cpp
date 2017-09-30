@@ -337,27 +337,18 @@ void AVForm::fillScreenModesComboBox()
 
 void AVForm::fillAudioQualityComboBox()
 {
-    bool previouslyBlocked = audioQualityComboBox->blockSignals(true);
+    const bool PREVIOUSLY_BLOCKED = audioQualityComboBox->blockSignals(true);
 
-    QStringList names;
-    names << tr("High (64 kbps)") << tr("Medium (32 kbps)") << tr("Low (16 kbps")
-          << tr("Very low (8 kbps)");
-    audioQualityComboBox->addItems(names);
+    const QStringList NAMES = { tr("High (64 kbps)"), tr("Medium (32 kbps)"), tr("Low (16 kbps)"), 
+                                tr("Very low (8 kbps)") };
+    audioQualityComboBox->addItems(NAMES);
 
-    int currentBitrate = Settings::getInstance().getAudioBitrate();
-    QString currentBitrateString = QString::number(currentBitrate);
-    int index = 0;
+    const QVector<int> BITRATES = { 64, 32, 16, 8 };
+    const int CURRENT_BITRATE = Settings::getInstance().getAudioBitrate();
+    const int INDEX = BITRATES.indexOf(CURRENT_BITRATE);
 
-    for (int i = 0; i < names.length(); i++) {
-        QString name = names.at(i);
-        if (name.contains(currentBitrateString)) {
-            index = i;
-            break;
-        }
-    }
-
-    audioQualityComboBox->setCurrentIndex(index);
-    audioQualityComboBox->blockSignals(previouslyBlocked);
+    audioQualityComboBox->setCurrentIndex(INDEX);
+    audioQualityComboBox->blockSignals(PREVIOUSLY_BLOCKED);
 }
 
 void AVForm::updateVideoModes(int curIndex)
@@ -437,9 +428,9 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
 
 void AVForm::on_audioQualityComboBox_currentIndexChanged(int index)
 {
-    int bitrates[] = { 64, 32, 16, 8 };
-    int bitrate = bitrates[index];
-    Settings::getInstance().setAudioBitrate(bitrate);
+    const int BITRATES[] = { 64, 32, 16, 8 };
+    const int BITRATE = BITRATES[index];
+    Settings::getInstance().setAudioBitrate(BITRATE);
 }
 
 void AVForm::getVideoDevices()

@@ -1886,13 +1886,13 @@ void Settings::setOutVolume(int volume)
 
 int Settings::getAudioBitrate() const
 {
-    QMutexLocker locker{&bigLock};
+    const QMutexLocker locker{&bigLock};
     return audioBitrate;
 }
 
 void Settings::setAudioBitrate(int bitrate)
 {
-    QMutexLocker locker{&bigLock};
+    const QMutexLocker locker{&bigLock};
 
     if (bitrate != audioBitrate) {
         audioBitrate = bitrate;
