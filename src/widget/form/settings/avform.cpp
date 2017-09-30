@@ -339,13 +339,13 @@ void AVForm::fillAudioQualityComboBox()
 {
     const bool PREVIOUSLY_BLOCKED = audioQualityComboBox->blockSignals(true);
 
-    const QStringList NAMES = { tr("High (64 kbps)"), tr("Medium (32 kbps)"), tr("Low (16 kbps)"), 
-                                tr("Very low (8 kbps)") };
-    audioQualityComboBox->addItems(NAMES);
+    audioQualityComboBox->addItem(tr("High (64 kbps)"), 64);
+    audioQualityComboBox->addItem(tr("Medium (32 kbps)"), 32);
+    audioQualityComboBox->addItem(tr("Low (16 kbps)"), 16);
+    audioQualityComboBox->addItem(tr("Very low (8 kbps)"), 8);
 
-    const QVector<int> BITRATES = { 64, 32, 16, 8 };
     const int CURRENT_BITRATE = Settings::getInstance().getAudioBitrate();
-    const int INDEX = BITRATES.indexOf(CURRENT_BITRATE);
+    const int INDEX = audioQualityComboBox->findData(CURRENT_BITRATE);
 
     audioQualityComboBox->setCurrentIndex(INDEX);
     audioQualityComboBox->blockSignals(PREVIOUSLY_BLOCKED);
@@ -428,9 +428,7 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
 
 void AVForm::on_audioQualityComboBox_currentIndexChanged(int index)
 {
-    const int BITRATES[] = { 64, 32, 16, 8 };
-    const int BITRATE = BITRATES[index];
-    Settings::getInstance().setAudioBitrate(BITRATE);
+    Settings::getInstance().setAudioBitrate(audioQualityComboBox->currentData().toInt());
 }
 
 void AVForm::getVideoDevices()
