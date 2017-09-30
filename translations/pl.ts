@@ -250,7 +250,7 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wybierz domyślną ścieżkę dla plików</translation>
     </message>
     <message>
         <source>History removed</source>

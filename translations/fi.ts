@@ -389,7 +389,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 täällä! Toxaa minun kanssa?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>

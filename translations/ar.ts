@@ -87,6 +87,14 @@ which may lead to problems with video calls.</source>
         <source>Test Sound</source>
         <translation>اختبار الصوت</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -155,6 +163,102 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">اسم المستخدم</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished">الحالة</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">المعرف:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">الاسم:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished">قبول الملفات تلقائيا من جهة الاتصال المسجلة</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">القبول التلقائي للملفات</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished">مسار حفظ الملفات:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished">القبول التلقائي للملفات من هذا الشخص معطل</translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">قبول المكالمات تلقائياً:</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished">يدوي</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">الصوت</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">الصوت + التسجيل المرئي</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished">حذف السجل (العملية لا يمكن التراجع عنها)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">ملاحظات</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished">حقل لادخال للملاحظات عن جهة الاتصار</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished">يمكنك حفظ بعض الملاحظات عن هذا الشخص هنا.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">تم مسح السجل</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">سجل المحادثة مع %1 تم حذفها!</translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -178,121 +282,10 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>اسم المستخدم</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation>الحالة</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>المعرف:</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>الاسم:</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>مسار حفظ الملفات:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>القبول التلقائي للملفات من هذا الشخص معطل</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation>حذف السجل (العملية لا يمكن التراجع عنها)</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>ملاحظات</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>يمكنك حفظ بعض الملاحظات عن هذا الشخص هنا.</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>اختيار مجلد الحفظ التلقائي</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>تم مسح السجل</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>سجل المحادثة مع %1 تم حذفها!</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>قبول المكالمات تلقائياً:</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>يدوي</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>الصوت</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>الصوت + التسجيل المرئي</translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>القبول التلقائي للملفات</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation>قبول الملفات تلقائيا من جهة الاتصال المسجلة</translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation>حقل لادخال للملاحظات عن جهة الاتصار</translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Couldn&apos;t add friend</source>
         <translation>لا يمكن اضافة صديق</translation>
-    </message>
-    <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>لا تستطيع اضافة نفسك كصديق!</translation>
-    </message>
-    <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>المعرف (ID)</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>إما 76 حرف ست عشري أو name@example.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -303,18 +296,8 @@ which may lead to problems with video calls.</source>
         <translation>إضافة صديق</translation>
     </message>
     <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>رسالة طلب الاضافة</translation>
-    </message>
-    <message>
         <source>Send friend request</source>
         <translation>ارسال طلب اضافة</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>%1 هنا! هل تود التحدث؟</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -349,9 +332,84 @@ which may lead to problems with video calls.</source>
         <translation>اكتب رسالة لارسالها مع طلب الصداقة او اترك فارغا لارسال الرسالة الافتراضية</translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>معرف Tox هذا غير صالح أو غير موجود</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished">لا تستطيع اضافة نفسك كصديق!</translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">إما 76 حرف ست عشري أو name@example.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">رسالة طلب الاضافة</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -644,6 +702,10 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Save chat log</source>
         <translation type="unfinished">حفظ سجل المحادثة</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1911,6 +1973,14 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <source>Privacy</source>
         <translation>خصوصية</translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2337,6 +2407,10 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

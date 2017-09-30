@@ -198,7 +198,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vaikekaust failide salvestamiseks:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>

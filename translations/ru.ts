@@ -199,7 +199,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Стандартная папка сохранения файлов:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -248,7 +248,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выбрать папку для автоматического приёма</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -341,7 +341,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вы не можете добавить себя в друзья!</translation>
     </message>
     <message>
         <source>Open contact list</source>

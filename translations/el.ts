@@ -87,6 +87,14 @@ which may lead to problems with video calls.</source>
         <source>Test Sound</source>
         <translation>Δοκιμή Ήχου</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -155,6 +163,102 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Παράθυρο διαλόγου</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">όνομα χρήστη</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished">μήνυμα κατάστασης</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">Δημόσιο κλειδί:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">Χρησιμοποιημένα ψευδώνυμα:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished">ΙΣΤΟΡΙΚΟ ΨΕΥΔΩΝΥΜΩΝ</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished">Αυτόματη λήψη αρχείων από μια επαφή, εάν είναι ορισμένο</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">Αυτόματη αποδοχή αρχείων</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished">Η αυτόματη αποδοχή είναι απενεργοποιημένη για αυτήν την επαφή</translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">Αυτόματη αποδοχή κλήσης:</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished">Εγχειρίδιο</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Ήχος</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">Ήχος + Βίντεο</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished">Αυτόματη αποδοχή προσκλήσεων συνομιλίας ομάδας από αυτήν την επαφή, αν έχει οριστεί.</translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished">Αυτόματη αποδοχή προσκλήσεων ομάδας</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished">Αφαίρεση του ιστορικού (η λειτουργία δεν μπορεί να αναιρεθεί!)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">Σημειώσεις</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished">Πεδίο εισαγωγής για σημειώσεις σχετικά με την επαφή</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished">Μπορείτε να αποθηκεύσετε ένα σχόλιο σχετικά με αυτήν την επαφή εδώ.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">Το ιστορικό αφαιρέθηκε</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">Το ιστορικό της συνομιλίας με τον/την %1 αφαιρέθηκε!</translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -178,141 +282,18 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation>Παράθυρο διαλόγου</translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>όνομα χρήστη</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation>μήνυμα κατάστασης</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Δημόσιο κλειδί:</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>Χρησιμοποιημένα ψευδώνυμα:</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation>ΙΣΤΟΡΙΚΟ ΨΕΥΔΩΝΥΜΩΝ</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>Προεπιλεγμένη θέση για την αποθήκευση των αρχείων:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Η αυτόματη αποδοχή είναι απενεργοποιημένη για αυτήν την επαφή</translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>Αυτόματη αποδοχή αρχείων</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation>Αφαίρεση του ιστορικού (η λειτουργία δεν μπορεί να αναιρεθεί!)</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Σημειώσεις</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Μπορείτε να αποθηκεύσετε ένα σχόλιο σχετικά με αυτήν την επαφή εδώ.</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Επιλέξτε έναν φάκελο για αυτόματες αποδοχές</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>Το ιστορικό αφαιρέθηκε</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>Το ιστορικό της συνομιλίας με τον/την %1 αφαιρέθηκε!</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Αυτόματη αποδοχή κλήσης:</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Εγχειρίδιο</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Ήχος</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>Ήχος + Βίντεο</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation>Αυτόματη λήψη αρχείων από μια επαφή, εάν είναι ορισμένο</translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation>Πεδίο εισαγωγής για σημειώσεις σχετικά με την επαφή</translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation>Αυτόματη αποδοχή προσκλήσεων συνομιλίας ομάδας από αυτήν την επαφή, αν έχει οριστεί.</translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation>Αυτόματη αποδοχή προσκλήσεων ομάδας</translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Αδυναμία προσθήκης φίλου/ης</translation>
     </message>
     <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Δεν μπορείτε να προσθέσετε τον εαυτό σας ως φίλο!</translation>
-    </message>
-    <message>
         <source>Add Friends</source>
         <translation>Προσθέστε Φίλους</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox Ταυτότητα (ID)</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translatorcomment>Το μήνυμα που στέλνεις σε αιτήματα φιλίας</translatorcomment>
-        <translation>Μήνυμα</translation>
-    </message>
-    <message>
         <source>Send friend request</source>
         <translation>Στείλτε αίτημα φιλίας</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translatorcomment>Προεπιλεγμένο μήνυμα σε αιτήματα φιλίας όταν το αντίστοιχο πεδίο είναι κενό. Γράψε κάτι κατάλληλο!</translatorcomment>
-        <translation>%1 εδώ! Θέλεις να μιλήσουμε στο Tox;</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>είτε 76 δεκαεξαδικούς χαρακτήρες ή name@example.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -351,9 +332,80 @@ which may lead to problems with video calls.</source>
         <translation>Πληκτρολογήστε ένα μήνυμα για να σταλεί με το αίτημα φιλίας ή αφήστε κενό για να στείλετε ένα προεπιλεγμένο μήνυμα</translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>Αυτή η Tox ταυτότητα (ID) δεν είναι έγκυρη ή δεν υπάρχει</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished">Δεν μπορείτε να προσθέσετε τον εαυτό σας ως φίλο!</translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished">Tox Ταυτότητα (ID)</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">είτε 76 δεκαεξαδικούς χαρακτήρες ή name@example.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Μήνυμα</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished">%1 εδώ! Θέλεις να μιλήσουμε στο Tox;</translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -646,6 +698,10 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Save chat log</source>
         <translation type="unfinished">Αποθήκευση αρχείου καταγραφής της συνομιλίας</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1910,6 +1966,14 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <source>Privacy</source>
         <translation>Ιδιωτικό απόρρητο</translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2337,6 +2401,10 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Reformatting text in progress..</source>
         <translation>Επαναδιαμόρφωση κειμένου σε εξέλιξη ..</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

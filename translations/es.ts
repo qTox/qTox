@@ -87,6 +87,14 @@ se pueden producir problemas con las videollamadas.</translation>
         <source>Test Sound</source>
         <translation>Prueba de Sonido</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -155,6 +163,102 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Diálogo</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">nombre de usuario</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished">mensaje de estado</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">Clave pública:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">Alias usados:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished">HISTORIAL DE ALIAS</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished">Aceptar automáticamente archivos de los contactos cuando esté configurado</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">Aceptar archivos automáticamente</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished">Directorio predeterminado para guardar archivos:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished">Recepción automática deshabilitada para este contacto</translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">Aceptar llamadas automáticamente:</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished">Manual</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Audio</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">Audio y Vídeo</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished">Eliminar historial (¡no se puede deshacer!)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">Notas</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished">Campo de entrada para notas sobre el contacto</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished">Puedes guardar comentarios acerca de este contacto aquí.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">Historial eliminado</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">¡El historial de chat con %1 fue eliminado!</translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -178,125 +282,14 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation>Diálogo</translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>nombre de usuario</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation>mensaje de estado</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Clave pública:</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>Alias usados:</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation>HISTORIAL DE ALIAS</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>Directorio predeterminado para guardar archivos:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Recepción automática deshabilitada para este contacto</translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>Aceptar archivos automáticamente</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation>Eliminar historial (¡no se puede deshacer!)</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Notas</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Puedes guardar comentarios acerca de este contacto aquí.</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Elige un directorio para descargas automáticas</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>Historial eliminado</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>¡El historial de chat con %1 fue eliminado!</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Aceptar llamadas automáticamente:</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Manual</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Audio</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>Audio y Vídeo</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation>Aceptar automáticamente archivos de los contactos cuando esté configurado</translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation>Campo de entrada para notas sobre el contacto</translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
         <translation>Agregar Amigos</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>Mensaje</translation>
-    </message>
-    <message>
         <source>Send friend request</source>
         <translation>Enviar solicitud de amistad</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>¡Hola, soy %1! ¿Quieres agregarme en Tox?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -319,16 +312,6 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>No se pudo agregar el amigo</translation>
     </message>
     <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>¡No puedes agregarte a ti mismo como amigo!</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>76 caracteres hexadecimales o nombre@ejemplo.com</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID format</source>
         <translation>Formato inválido de Tox ID</translation>
     </message>
@@ -349,9 +332,80 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>Escribe el mensaje a enviar junto con la petición de amistad o déjalo vacío para enviar el mensaje por defecto</translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>El ID de Tox es inválido o no existe</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished">¡No puedes agregarte a ti mismo como amigo!</translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished">Tox ID</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">76 caracteres hexadecimales o nombre@ejemplo.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Mensaje</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -645,6 +699,10 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Save chat log</source>
         <translation type="unfinished">Guardar historial de chat</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1913,6 +1971,14 @@ Es posible que haya cambios en el formato de guardado, lo que puede generar una 
         <source>Privacy</source>
         <translation>Privacidad</translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2339,6 +2405,10 @@ Será instalada cuando reinicies qTox.</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

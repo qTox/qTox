@@ -247,7 +247,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alegeți un director de acceptare automată</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -339,7 +339,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nu te poți adăuga ca prieten!</translation>
     </message>
     <message>
         <source>Open contact list</source>
@@ -365,7 +365,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -389,7 +389,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 aici! Tox-ează-mă poate?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>

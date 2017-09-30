@@ -389,7 +389,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 vagyok! Beszélünk Toxon?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>

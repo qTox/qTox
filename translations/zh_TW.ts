@@ -83,6 +83,14 @@ which may lead to problems with video calls.</source>
         <source>Test Sound</source>
         <translation>測試音效</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -151,6 +159,102 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">對話方塊</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">使用者名稱</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished">狀態訊息</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">公開金鑰：</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">使用的別名：</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished">別名歷史</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">自動接受檔案</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished">預設檔案儲存目錄：</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">自動接受通話：</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished">手動</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">音訊</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">音訊與視訊</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">附註</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">選擇自動接受目錄</translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">已移除歷史記錄</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -174,134 +278,18 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation>對話方塊</translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>使用者名稱</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation>狀態訊息</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>公開金鑰：</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>使用的別名：</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation>別名歷史</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>預設檔案儲存目錄：</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>自動接受檔案</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>附註</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>選擇自動接受目錄</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>已移除歷史記錄</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>自動接受通話：</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>手動</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>音訊</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>音訊與視訊</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
         <translation>新增朋友</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Invalid Tox ID format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>訊息</translation>
-    </message>
-    <message>
         <source>Send friend request</source>
         <translation>傳送朋友請求</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -324,11 +312,6 @@ which may lead to problems with video calls.</source>
         <translation>無法新增朋友</translation>
     </message>
     <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -345,8 +328,78 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished">Tox ID</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">訊息</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -640,6 +693,10 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Save chat log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1901,6 +1958,14 @@ Save format changes are possible, which may result in data loss.</source>
         <source>Privacy</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2325,6 +2390,10 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

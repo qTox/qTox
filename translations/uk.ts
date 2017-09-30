@@ -87,6 +87,14 @@ which may lead to problems with video calls.</source>
         <source>Test Sound</source>
         <translation>Перевірити звук</translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -155,6 +163,102 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
+    <name>AboutFriendForm</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Діалог</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished">Ім&apos;я користувача</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished">Статус</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished">Відкритий ключ:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished">Використовуємі псевдоніми:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished">ІСТОРІЯ ПСЕВДОНІМІВ</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished">Автоматично приймати файли від контакту, якщо вибрано</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished">Автоматично приймати файли</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished">Каталог для зберігання файлів за замовчуванням:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished">Автоматичний прийом файлів для цього контакту вимкнено</translation>
+    </message>
+    <message>
+        <source>Auto accept call:</source>
+        <translation type="unfinished">Автоприйом дзвінків:</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Аудіо</translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished">Аудіо + Відео</translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished">Видалити історію (операцію відмінити неможливо!)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished">Нотатки</translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished">Поле для приміток про контакт</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished">Ви можете залишити коментар про даний контакт тут.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished">Історію видалено</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished">Історію переписки з %1 видалено!</translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
@@ -178,150 +282,22 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>AboutUser</name>
-    <message>
-        <source>Dialog</source>
-        <translation>Діалог</translation>
-    </message>
-    <message>
-        <source>username</source>
-        <translation>Ім&apos;я користувача</translation>
-    </message>
-    <message>
-        <source>status message</source>
-        <translation>Статус</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Відкритий ключ:</translation>
-    </message>
-    <message>
-        <source>Used aliases:</source>
-        <translation>Використовуємі псевдоніми:</translation>
-    </message>
-    <message>
-        <source>HISTORY OF ALIASES</source>
-        <translation>ІСТОРІЯ ПСЕВДОНІМІВ</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translatorcomment>To reduce string length it is also possible: &quot;Каталог для збергіання файлів:&quot;, which means &quot;Directory to save files&quot; (withot default).</translatorcomment>
-        <translation>Каталог для зберігання файлів за замовчуванням:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translatorcomment>To reduce string length it is also possible: 
-1) &quot;Автоприйом файлів для цього контакту вимкнено&quot;. Where &quot;Автоприйом&quot; means the same as &quot;Автоматичний прийом&quot; but is not a dictionary word.
-2) &quot;Автоматичний прийом файлів вимкнено&quot;. Which means &quot;auto accept files is disabled&quot;, without &quot;for this contact&quot;.</translatorcomment>
-        <translation>Автоматичний прийом файлів для цього контакту вимкнено</translation>
-    </message>
-    <message>
-        <source>Auto accept files</source>
-        <translation>Автоматично приймати файли</translation>
-    </message>
-    <message>
-        <source>Remove history (operation can not be undone!)</source>
-        <translation>Видалити історію (операцію відмінити неможливо!)</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Нотатки</translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Ви можете залишити коментар про даний контакт тут.</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translatorcomment>I changed &quot;Оберіть теку, для автоматичного отримання файлів&quot; to &quot;Оберіть каталог для автоматичного отримання файлів&quot;, because there is no need to put comma there and &quot;Каталог&quot; is more common word for &quot;Directory&quot; then &quot;тека (теку)&quot;</translatorcomment>
-        <translation>Оберіть каталог для автоматичного отримання файлів</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation>Історію видалено</translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>Історію переписки з %1 видалено!</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Автоприйом дзвінків:</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Аудіо</translation>
-    </message>
-    <message>
-        <source>Audio + Video</source>
-        <translation>Аудіо + Відео</translation>
-    </message>
-    <message>
-        <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Автоматично приймати файли від контакту, якщо вибрано</translation>
-    </message>
-    <message>
-        <source>Input field for notes about the contact</source>
-        <translation>Поле для приміток про контакт</translation>
-    </message>
-    <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
         <translation>Додати друзів</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation>76 шістнадцяткових цифр або name@example.com</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID format</source>
         <translation>Некоректний формат Tox ID</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translation>Повідомлення</translation>
     </message>
     <message>
         <source>Send friend request</source>
         <translation>Надіслати запит на дружбу</translation>
     </message>
     <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translatorcomment>That means &quot;Hi, I&apos;m %1! Please, add me to you contact list.
-It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian noun can&apos;t mean a verb (like &quot;call&quot; for noun and verb in English)</translatorcomment>
-        <translation>Привіт, я %1! Додай мене в свій список контактів, будь ласка.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Не можемо додати друга</translation>
-    </message>
-    <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Ви не можете додати самого себе до друзів!</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -356,9 +332,81 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <translation type="unfinished">Впишіть повідомлення у запрошення на дружбу, або залишіть його порожнім, щоб надіслати стандартне повідомлення</translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>Цей Tox ID неправильний або не існує</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished">Ви не можете додати самого себе до друзів!</translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished">76 шістнадцяткових цифр або name@example.com</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Повідомлення</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished">Привіт, я %1! Додай мене в свій список контактів, будь ласка.</translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -653,6 +701,10 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     <message>
         <source>Save chat log</source>
         <translation type="unfinished">Зберегти чат</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1921,6 +1973,14 @@ Save format changes are possible, which may result in data loss.</source>
         <source>Privacy</source>
         <translation type="unfinished">Приватність</translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2350,6 +2410,10 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     </message>
     <message>
         <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -198,7 +198,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Numatytas katalogas failams išsaugoti:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -389,7 +389,7 @@ vaizdo skambučiais.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Čia %1! Gal susirašinėjam per Tox?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>

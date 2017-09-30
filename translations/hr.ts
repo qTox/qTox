@@ -87,6 +87,14 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <source>Test Sound</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable experimental audio backend</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -155,30 +163,7 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     </message>
 </context>
 <context>
-    <name>AboutSettings</name>
-    <message>
-        <source>Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Downloading update: %p%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Authors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Known Issues</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AboutUser</name>
+    <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
@@ -204,11 +189,7 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
+        <source>Automatically accept files from contact if set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -216,28 +197,11 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove history (operation can not be undone!)</source>
+        <source>Default directory to save files:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Notes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can save comment about this contact here.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Odaberite direktorij za automatsko prihvaćanje</translation>
-    </message>
-    <message>
-        <source>History removed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chat history with %1 removed!</source>
+        <source>Auto accept for this contact is disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -257,7 +221,19 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automatically accept files from contact if set</source>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -265,11 +241,43 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <source>You can save comment about this contact here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto accept group invites</source>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Odaberite direktorij za automatsko prihvaćanje</translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AboutSettings</name>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloading update: %p%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Known Issues</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -280,40 +288,12 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation>Dodaj prijatelje</translation>
     </message>
     <message>
-        <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translatorcomment>Tox ID osobe kojoj šaljete zahtjev za prijateljstvom</translatorcomment>
-        <translation>Tox ID</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translatorcomment>Poruka koju šaljete sa zahtjevom za prijateljstvom</translatorcomment>
-        <translation>Poruka</translation>
-    </message>
-    <message>
         <source>Send friend request</source>
         <translation>Pošalji zahtjev za prijateljlstvom</translation>
     </message>
     <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translatorcomment>Zadana poruka u zahtjevu za prijateljstvom, ako se polje ostavi praznim. Upišite nešto prikladno!</translatorcomment>
-        <translation>%1 ovdje! A da me toksiraš?</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Ne mogah dodati prijatelja</translation>
-    </message>
-    <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Ne možete sami sebe dodati kao prijatelja!</translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -352,8 +332,80 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This Tox ID is invalid or does not exist</source>
+        <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <extracomment>When trying to add your own Tox ID as friend</extracomment>
+        <translation type="unfinished">Ne možete sami sebe dodati kao prijatelja!</translation>
+    </message>
+    <message>
+        <source>Open contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open the contact file</source>
+        <extracomment>Error message when trying to open a contact list file to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We couldn&apos;t find any contacts to import in this file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID</source>
+        <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
+        <translation type="unfinished">Tox ID</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <extracomment>The message you send in friend requests</extracomment>
+        <translation type="unfinished">Poruka</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <extracomment>Button to choose a file with a list of contacts to import</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
+        <translation type="unfinished">%1 ovdje! A da me toksiraš?</translation>
+    </message>
+    <message>
+        <source>Import a list of contacts, one Tox ID per line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Import contacts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -647,6 +699,10 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     <message>
         <source>Save chat log</source>
         <translation type="unfinished">Spremi bilješku o razgovoru</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1907,6 +1963,14 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <source>Privacy</source>
         <translation type="unfinished">Privatnost</translation>
     </message>
+    <message>
+        <source>BlackList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -2332,6 +2396,10 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
