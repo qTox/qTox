@@ -89,10 +89,34 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Уключае эксперыментальны аўдыярухавік з падтрымкай рэхакампенсацыі. Неабходна перагрузіць qTox.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
+        <translation>Уключыць эксперыментальны аўдыярухавік</translation>
+    </message>
+    <message>
+        <source>Audio quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High (64 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medium (32 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low (16 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -166,96 +190,96 @@ which may lead to problems with video calls.</source>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Дыялог</translation>
+        <translation>Дыялог</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished">Імя карыстальніка</translation>
+        <translation>імя карыстальніка</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">паведамленне аб стане</translation>
+        <translation>паведамленне аб стане</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Адкрыты ключ:</translation>
+        <translation>Публічны ключ:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">Ужытыя псеўданімы:</translation>
+        <translation>Ужытыя псеўданімы:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">ГІСТОРЫЯ ПСЕЎДАНІМАЎ</translation>
+        <translation>ГІСТОРЫЯ ПСЕЎДАНІМАЎ</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Аўтаматычна прымаць файлы ад кантактаў, калі зададзена</translation>
+        <translation>Аўтаматычна прымаць файлы ад кантактаў, калі зададзеная</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">Аўтаматычна прымаць файлы</translation>
+        <translation>Аўтаматычна прымаць файлы</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Агаданы каталог для захавання файлаў:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">Аўтаматычны прыём адключаны для гэтага кантакта</translation>
+        <translation>Аўтаматычны прыём адключаны для гэтага кантакта</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished">Аўтаматычна прымаць выклік:</translation>
+        <translation>Аўтаматычна прымаць выклік:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">Уручную</translation>
+        <translation>Уручную</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Аўдыя</translation>
+        <translation>Аўдыя</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">Аўдыя + відэа</translation>
+        <translation>Аўдыя + відэа</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished">Аўтаматычны прымаць запрашэнні ў групавы чат ад гэтага кантакта.</translation>
+        <translation>Аўтаматычна прымаць запрашэнні ў групавы чат ад гэтага кантакта.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished">Аўтапрыём групавых запрашэнняў</translation>
+        <translation>Аўтапрыём групавых запрашэнняў</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">Выдаліць гісторыю (аперацыя не можа быць адменена!)</translation>
+        <translation>Выдаліць гісторыю (аперацыя не можа быць адмененая!)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">Нататкі</translation>
+        <translation>Нататкі</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished">Поле ўводы для нататак аб кантакце</translation>
+        <translation>Поле ўвода нататак аб кантакце</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Тут вы можаце захаваць каментар аб гэтым кантакце.</translation>
+        <translation>Тут вы можаце захаваць каментар аб гэтым кантакце.</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Выбраць каталог для аўтаматычна прынятых файлаў</translation>
+        <translation>Абраць каталог для аўтаматычна прынятых файлаў</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished">Гісторыя выдалена</translation>
+        <translation>Гісторыя выдаленая</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">Гісторыя гутарак з %1 выдалена!</translation>
+        <translation>Гісторыя гутарак з %1 выдаленая!</translation>
     </message>
 </context>
 <context>
@@ -334,79 +358,79 @@ which may lead to problems with video calls.</source>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 няправільны Tox ID ці не існуе</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished">Вы не можаце дадаць сябе як сябра!</translation>
+        <translation>Вы не можаце дадаць сябе як сябра!</translation>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Адкрыць спіс кантактаў</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася адкрыць файл</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася адкрыць файл кантактаў</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation type="unfinished"></translation>
+        <translation>Няправільны файл</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Мы не знайшлі ніякіх кантактаў для імпарта з гэтага файла!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished">Ідэнтыфікатар Tox</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished">76 шаснаццатковых знакаў ці name@example.com</translation>
+        <translation>76 шаснаццатковых знакаў ці name@example.com</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished">Паведамленне</translation>
+        <translation>Паведамленне</translation>
     </message>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Адкрыць</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Адправіць запыт сяброўства</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished">%1 тут! Можа адкажаце мне?</translation>
+        <translation>%1 тут! Можа адкажаце мне?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпартаваць спіс кантактаў, па аднаму Tox ID у радку</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Гатоўнасць імпартаваць %n кантакт. Націсніце адправіць для пацверджання</numerusform>
+            <numerusform>Гатоўнасць імпартаваць %n кантакта. Націсніце адправіць для пацверджання</numerusform>
+            <numerusform>Гатоўнасць імпартаваць %n кантактаў. Націсніце адправіць для пацверджання</numerusform>
         </translation>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпартаваць кантакты</translation>
     </message>
 </context>
 <context>
@@ -703,7 +727,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Выклік з %1 нечакана завяршыўся. %2</translation>
     </message>
 </context>
 <context>
@@ -1978,11 +2002,11 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>BlackList</source>
-        <translation type="unfinished"></translation>
+        <translation>Чорны спіс</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Фільтраваць групавыя паведамленні па публічным ключам чальцоў. Змясціце публічныя ключы тут па аднаму ў радок.</translation>
     </message>
 </context>
 <context>
@@ -2417,7 +2441,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускае новы экзэмпляр і адкрывае экран уваходу.</translation>
     </message>
 </context>
 <context>
