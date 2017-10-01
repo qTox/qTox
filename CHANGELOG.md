@@ -1,4 +1,93 @@
 <a name=""></a>
+## v1.12.0 (2017-10-01)
+
+This release provides many handy new features, most notable are mass import of
+contacts from a file, improvements around images in the chatlog and an
+experimental audio backend with echo cancelling.
+
+#### Features
+
+*   UI to import a list of contacts from a file ([0974da54](https://github.com/qTox/qTox/commit/0974da543a6b76851ffa86d24883c324651a8ff9), closes [#4181](https://github.com/qTox/qTox/issues/4181))
+* **audio:**
+  *  make the libfilteraudio dependency optional ([8652fe99](https://github.com/qTox/qTox/commit/8652fe99e3cb80fac22a601c89ba405962c5537d))
+  *  add setting to switch between new and old audio backend ([9d0498e0](https://github.com/qTox/qTox/commit/9d0498e0cfdf654f4319675f019669dacde4dbcc))
+  *  make echo cancellation work and improve some minor stuff ([5d60f09d](https://github.com/qTox/qTox/commit/5d60f09df4b59c3a42c7544fd92c78710dd9d5b0))
+  *  add libfilteraudio ([9c603e86](https://github.com/qTox/qTox/commit/9c603e86546da199cd94f22f4e4f9349d526fad1))
+  *  add alternative OpenAL backend ([c7157291](https://github.com/qTox/qTox/commit/c7157291679ccb0414789dd04acd43455ce6aafc))
+* **build:**  Check sha256 of tarballs for Windows cross-compilation ([7f6f8a45](https://github.com/qTox/qTox/commit/7f6f8a4513bfa07356f7ac6a88da346d8c325e7a))
+* **exif:**  Honour exif orientation tag ([414fa178](https://github.com/qTox/qTox/commit/414fa178b4908d8451ca5304ee9ca1ab7421b26a), closes [#1848](https://github.com/qTox/qTox/issues/1848))
+* **l10n:**
+  *  update Belarusian translation from Weblate ([d5c6d102](https://github.com/qTox/qTox/commit/d5c6d1027c4e9e892049cbd4fb4dff6829a99318))
+  *  update Bulgarian translation from Weblate ([0e688da1](https://github.com/qTox/qTox/commit/0e688da1b0f6228478a5e18c5d2d63a369afcb43))
+  *  update Chinese (Simplified) translation from Weblate ([78a0d339](https://github.com/qTox/qTox/commit/78a0d33942dcda153fac2fa30321227127cf60e1))
+  *  update Estonian translation from Weblate ([035c158a](https://github.com/qTox/qTox/commit/035c158a9913389bd56faea4dcd5bd6b8f4a9de0))
+  *  update Finnish translation from Weblate ([814a6ea0](https://github.com/qTox/qTox/commit/814a6ea0cf83c68b959cdf53b73e7e18fcf18231))
+  *  update French translation from Weblate ([069feae3](https://github.com/qTox/qTox/commit/069feae311fef515eee948e90f4ed36a27160c87), [4abaf031](https://github.com/qTox/qTox/commit/4abaf03106d8d51b307d56d62f0ad7d1bfde8a4a), [53264f4c](https://github.com/qTox/qTox/commit/53264f4cf90357893f297d8a79580c9f7f697465), [5aa47be7](https://github.com/qTox/qTox/commit/5aa47be72a68d62b6bd8c3a6442bc43ad82b8800), [6917def2](https://github.com/qTox/qTox/commit/6917def238287a51458012983d27d70f0003d697), [8a94ad75](https://github.com/qTox/qTox/commit/8a94ad75efffe07da97725d9a1cbba9f87887b18), [8d3a6310](https://github.com/qTox/qTox/commit/8d3a631084f4281b07b910da63ebbf1a27275748), [a225eec5](https://github.com/qTox/qTox/commit/a225eec5fd36c9f154b90a9aaa148139d1961521), [d662866c](https://github.com/qTox/qTox/commit/d662866c413fccd0dc18fb1bdfba01e13023d1b5), [db4602ea](https://github.com/qTox/qTox/commit/db4602ead1cd7cbd031423429aca7747b96d5d03), [dbfc4794](https://github.com/qTox/qTox/commit/dbfc4794e53ed8523ba139031d03a512cd9a2dbb), [f2b648e4](https://github.com/qTox/qTox/commit/f2b648e4d3be5eba65c6444a544956133e9242db))
+  *  update German translation from Weblate ([55425705](https://github.com/qTox/qTox/commit/5542570505bc4d7b3ca5e4ff33bbccf3b5e79f9a), [f0ca3bed](https://github.com/qTox/qTox/commit/f0ca3bed382cf4cc51118989cc39a87a12d37be2))
+  *  update Hungarian translation from Weblate ([3b1a8ac7](https://github.com/qTox/qTox/commit/3b1a8ac704dabf14a60201a3fd114bf58db13cb7))
+  *  update Lithuanian translation from Weblate ([c06abad8](https://github.com/qTox/qTox/commit/c06abad83ba2fc127502d272a4ee0c4e9c16a566))
+  *  update Norwegian (old code) translation from Weblate ([868fd55d](https://github.com/qTox/qTox/commit/868fd55d8e30c9b17e1ae60a42c0640b4f3d6cad))
+  *  update Polish translation from Weblate ([916f7aa2](https://github.com/qTox/qTox/commit/916f7aa250281c6beae8135df05aa627d18e6527))
+  *  update Romanian translation from Weblate ([227516d2](https://github.com/qTox/qTox/commit/227516d206a8fea9f408861f5c63aa8c2a530f54), [e441db87](https://github.com/qTox/qTox/commit/e441db87d3b0f8c54f59848796bb76f56d47702b))
+  *  update Russian translation from Weblate ([a6692e28](https://github.com/qTox/qTox/commit/a6692e28ee89fe56094d719d7235d281dfe07c6c))
+  *  update Slovak translation from Weblate ([155812e4](https://github.com/qTox/qTox/commit/155812e444a4614c35e9c8ddeab619200c1d4643))
+  *  update Swedish translation from Weblate ([57519ca7](https://github.com/qTox/qTox/commit/57519ca75de1f1426a3fe20ee78330733ce328aa))
+  *  update Tamil translation from Weblate ([092cae62](https://github.com/qTox/qTox/commit/092cae62d05eada032f207ac3d13d55201905eee), [13c572c3](https://github.com/qTox/qTox/commit/13c572c393619f0da9777935b1c7bd8a5bcd437d))
+* **login:**  Add command line argument to open login screen ([0906b8eb](https://github.com/qTox/qTox/commit/0906b8eb1f9a413e80320d002d15540736a6fabb), closes [#4673](https://github.com/qTox/qTox/issues/4673))
+* **paste:**  Implement pasting images from clipboard ([5fed3736](https://github.com/qTox/qTox/commit/5fed37365f1d32f900814527bc8eb514986f2abd), closes [#1290](https://github.com/qTox/qTox/issues/1290))
+* **settings:**  add group chat local member black list ([27ecace7](https://github.com/qTox/qTox/commit/27ecace752424b67924011e5838fd1f11857b3cf))
+* **ui:**  output instructions when user tries to open a second instance ([48d65c26](https://github.com/qTox/qTox/commit/48d65c269a3dd3badd498b816f9d1cbfaa33bef4), closes [#3483](https://github.com/qTox/qTox/issues/3483))
+* **video:**  Error message on call fail ([ac75f7b5](https://github.com/qTox/qTox/commit/ac75f7b5944dc6dfc0b7334b22f53a159d8e7bc7))
+
+#### Bug Fixes
+
+*   ATOMIC_FLAG_INIT can't be used inside braces initializer ([f790747f](https://github.com/qTox/qTox/commit/f790747f2adda60f8809bb0e1671f18c3f7c6168))
+*   Return value ([f97c776a](https://github.com/qTox/qTox/commit/f97c776a8722c5f230cb709270559fdfcd77ba47))
+*   Fix crash on auto accept click in AboutFriendForm ([bd6516ea](https://github.com/qTox/qTox/commit/bd6516eab707c3e4b208b937e91a7c0eef39fafa))
+*   Fix crash on accept or reject friend request ([359a42f7](https://github.com/qTox/qTox/commit/359a42f78e8edf073d6132bca8954a55094385c5))
+*   Keep open and share X11 connection ([ae5cb4bc](https://github.com/qTox/qTox/commit/ae5cb4bcc27754f46d30209bf1658e49ff559dc7))
+* **IPC:**  don't double lock shared memory ([0bf27a00](https://github.com/qTox/qTox/commit/0bf27a000aa42559a5b04b7e03781a29885f6adf), closes [#4678](https://github.com/qTox/qTox/issues/4678))
+* **audio:**
+  *  Fix signed and unsigned comparation ([aa356bb7](https://github.com/qTox/qTox/commit/aa356bb73a7443720a0d73be1f5401940f014498))
+  *  Echo cancelling supports only mono audio ([809c5e6b](https://github.com/qTox/qTox/commit/809c5e6b04c991960afcc66a308bad63ca473610))
+* **autoaway:**  Improve autoaway algorithm. ([9fe503c7](https://github.com/qTox/qTox/commit/9fe503c7083b1e9f1600af0597455eb8237f8c6e))
+* **avatar:**  Don't invert default avatar colour on connect ([be324b93](https://github.com/qTox/qTox/commit/be324b932b3e572b59f408faacd690110360dcbb), closes [#4629](https://github.com/qTox/qTox/issues/4629))
+* **build:**
+  *  Fix regression in how cmake finds libraries ([b7ef73d4](https://github.com/qTox/qTox/commit/b7ef73d401aabbd0f5ee6ccfcd1a9f0a962bdaab))
+  *  Update toxcore and Qt versions for Windows cross-compilation ([80f1286e](https://github.com/qTox/qTox/commit/80f1286e7ca5025d3e9f93b4209f791e043ad367))
+  *  Add libexif to the Windows cross-compilation ([95548c6a](https://github.com/qTox/qTox/commit/95548c6a5fcce7a31ffcaafcaec8650fd6f4c968))
+  *  Fixed header file of libfilteraudio not being found ([8108bfdc](https://github.com/qTox/qTox/commit/8108bfdc358b5070d1dfbf57a02e25439ce09541))
+  *  Windows cross-compilation didn't see libfilterudio ([b0b157e7](https://github.com/qTox/qTox/commit/b0b157e77bc87eae1f8235e7d15d76e82c992ce6))
+  *  add install steps for libfilteraudio on OSX ([8f2401fe](https://github.com/qTox/qTox/commit/8f2401fee64d0b5535bd4d737a1caf2bffa30682))
+  *  make the OpenAL backend build with OpenALSoft < 1.15 ([526701fa](https://github.com/qTox/qTox/commit/526701fa9f7a2a5c950e7b16b6578bf32bff4604))
+  *  remove newline from timestamp ([0843b770](https://github.com/qTox/qTox/commit/0843b770c64204a078e0d73fe5f3b71b8ef17e52))
+  *  fix sqlcipher header inclusion ([e7b5c93b](https://github.com/qTox/qTox/commit/e7b5c93bfe3d3fbcfe8659ab93c4d03492ddefb9))
+* **chatform:**  Hide author on history like on new messages ([28979f57](https://github.com/qTox/qTox/commit/28979f577165b0ce2a8e67b8eea870218bdd0b21))
+* **dependency:**  remove unused qt sql dependency ([5d159e02](https://github.com/qTox/qTox/commit/5d159e0203bdd0e72153cce9ca5c0fe8483ba0db))
+* **desktop:**  Improved the comment in qtox.desktop ([38ef3ad6](https://github.com/qTox/qTox/commit/38ef3ad69de0dfa3b3126f6c8fbfcb6392aa46f2))
+* **exit:**  delete heap-based QApplication before exit ([a601df31](https://github.com/qTox/qTox/commit/a601df31da0859255e1220d24f3c97eae9eb0cca), closes [#4648](https://github.com/qTox/qTox/issues/4648))
+* **friends:**  Friend request button target location ([7f36ec92](https://github.com/qTox/qTox/commit/7f36ec9219e93fbbe2b790efc68215f5ec8bfb4b), closes [#4631](https://github.com/qTox/qTox/issues/4631))
+* **friendwidget:**  Add correct index calculation ([ad58c176](https://github.com/qTox/qTox/commit/ad58c1767b2ab4ff8340076d5ede53aa6e889972))
+* **group:**  Fix crash on group quit ([e606d3cb](https://github.com/qTox/qTox/commit/e606d3cb5573d956aa4df58fbe39a21b8c423860))
+* **i18n:**  string `Call with %1 ended. %2` is no longer translatable ([56ac95da](https://github.com/qTox/qTox/commit/56ac95dad9a807b4799840d7b2c3b1c1c44869f2), closes [#4552](https://github.com/qTox/qTox/issues/4552))
+* **ipc:**
+  *  Reorder initialize list ([43c2308b](https://github.com/qTox/qTox/commit/43c2308b7bd845aa1db572642858f9dde762a28a))
+  *  Call processEvent on timer timeout ([c2140e21](https://github.com/qTox/qTox/commit/c2140e21ad9a7edc893191f5e49307fc05933959))
+* **l10n:**  use native language names ([817a9897](https://github.com/qTox/qTox/commit/817a9897c2e1289c7ceda19f0335582ec46ad343))
+* **platform:**  handle terminating POSIX signals ([32b97cb9](https://github.com/qTox/qTox/commit/32b97cb9278e40c92337468fb61751cdf87a0542))
+* **popup:**  Don't create two error popups for friend requests ([1f787cc4](https://github.com/qTox/qTox/commit/1f787cc475c804ef890dec7e24c51ba6c2a3f9c4), closes [#4633](https://github.com/qTox/qTox/issues/4633))
+* **receipts:**  Prevent double message send for received receipt ([e9d63397](https://github.com/qTox/qTox/commit/e9d63397e1008e57a23c763aaa418fc65f57577b), closes [#2726](https://github.com/qTox/qTox/issues/2726))
+* **threads:**  Always stop the camera device thread ([8522141b](https://github.com/qTox/qTox/commit/8522141b1e7db63dade973f1ba9048aecc7db41e))
+* **tooltip:**  Set font colour to black for beige tooltip background ([fc1ed101](https://github.com/qTox/qTox/commit/fc1ed10199a4f34faf38081bf9b1a58ee5bdf033), closes [#4641](https://github.com/qTox/qTox/issues/4641))
+* **toxme:**  Remove HTML tags from ID to un-break toxme integration ([5af1b4af](https://github.com/qTox/qTox/commit/5af1b4af73d05e8da4bbc174410f0854a810ecd6))
+* **widget:**  Add removing friends and group on main window close ([638cdba5](https://github.com/qTox/qTox/commit/638cdba58d4ed506edb6eb5fadbeae8fa0c22995))
+* **windows:**
+  *  remove unneeded qt sql and fix problem when build dir exists ([68c5cdf0](https://github.com/qTox/qTox/commit/68c5cdf096fbdf5d18bad06b58241098f6873505))
+  *  workaround docker problem when extracting with tar ([af15cd06](https://github.com/qTox/qTox/commit/af15cd06acf549df753abf9f8521e24de1586a07))
+
+
+
+<a name=""></a>
 ## v1.11.0 (2017-07-16)
 
 The most interesting new features that were added in this release are export of
