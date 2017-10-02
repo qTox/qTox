@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project Contributors
+    Copyright © 2015-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -190,7 +190,6 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
     GroupWidget* groupWidget = new GroupWidget(groupId, name, compact);
     groupLayout.addSortedWidget(groupWidget);
 
-    Group* group = groupWidget->getGroup();
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
     connect(groupWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDialog);
 
@@ -240,7 +239,6 @@ void ContentDialog::removeFriend(int friendId)
 
 void ContentDialog::removeGroup(int groupId)
 {
-    Group* group = GroupList::findGroup(groupId);
 
     auto iter = groupList.find(groupId);
     if (iter == groupList.end()) {

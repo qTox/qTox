@@ -265,7 +265,6 @@ bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
     int stereoFlag = AUDIO_CHANNELS == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     const uint32_t sampleRate = AUDIO_SAMPLE_RATE;
     const uint16_t frameDuration = AUDIO_FRAME_DURATION;
-    const uint32_t chnls = AUDIO_CHANNELS;
     const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * channels;
 
     const QByteArray qDevName = deviceName.toUtf8();
