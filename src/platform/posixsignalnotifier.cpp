@@ -53,7 +53,9 @@ static void signalHandler(int signum)
     if (g_signalSocketUsageFlag.test_and_set())
         return;
 
-    ::write(g_signalSocketPair[0], &signum, sizeof(signum));
+    if(::write(g_signalSocketPair[0], &signum, sizeof(signum)) == -1) {
+        qFatal("Failed to write to signal socket, error = %d", errno);
+    }
 
     g_signalSocketUsageFlag.clear();
 }
@@ -109,7 +111,9 @@ PosixSignalNotifier& PosixSignalNotifier::globalInstance()
 void PosixSignalNotifier::onSignalReceived()
 {
     int signum{0};
-    ::read(detail::g_signalSocketPair[1], &signum, sizeof(signum));
+    if (::read(detail::g_signalSocketPair[1], &signum, sizeof(signum)) == -1) {
+        qFatal("Failed to read from signal socket, error = %d", errno);
+    }
 
     qDebug() << "Signal" << signum << "received";
     emit activated(signum);
