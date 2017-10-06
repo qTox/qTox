@@ -89,10 +89,34 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>启用实验性的支持回声消除的音频后台，需要重启 qTox 使之生效。</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
+        <translation>启用实验性的音频后台</translation>
+    </message>
+    <message>
+        <source>Audio quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High (64 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medium (32 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low (16 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -166,96 +190,96 @@ which may lead to problems with video calls.</source>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">对话框</translation>
+        <translation>对话框</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished">用户名</translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">状态消息</translation>
+        <translation>状态消息</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">公钥：</translation>
+        <translation>公钥：</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">已用的别名：</translation>
+        <translation>已用的别名：</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">曾用的别名</translation>
+        <translation>曾用的别名</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">如果设置则自动接收来自联系人的文件</translation>
+        <translation>如果设置则自动接收来自联系人的文件</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">自动接收文件</translation>
+        <translation>自动接收文件</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">默认文件保存目录：</translation>
+        <translation>默认文件保存目录：</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">已禁用这个联系人的自动接收</translation>
+        <translation>已针对这个联系人禁用了自动接受</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished">自动接听呼叫：</translation>
+        <translation>自动接听呼叫：</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">手动</translation>
+        <translation>手动</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">音频</translation>
+        <translation>音频</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">音视频</translation>
+        <translation>音视频</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished">如果设置此项则自动接受来自该联系人的群聊邀请。</translation>
+        <translation>如果设置此项则自动接受来自该联系人的群聊邀请。</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished">自动接受群邀请</translation>
+        <translation>自动接受群邀请</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">删除历史记录（再也不能找回！）</translation>
+        <translation>删除历史记录（再也不能找回！）</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">附注</translation>
+        <translation>附注</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished">关于该联系人信息的输入框</translation>
+        <translation>关于该联系人附注信息的输入框</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">你可以在这里记录关于该联系人的附注。</translation>
+        <translation>你可以在这里记录关于该联系人的各种信息。</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>选择一个自动接受的目录</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished">已删除历史记录</translation>
+        <translation>已删除历史记录</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">已删除与 %1 的聊天记录！</translation>
+        <translation>已删除与 %1 的聊天记录！</translation>
     </message>
 </context>
 <context>
@@ -334,77 +358,77 @@ which may lead to problems with video calls.</source>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 这个 Tox ID 无效或不存在</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished">你不能加自己为好友！</translation>
+        <translation>你不能添加自己为好友！</translation>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>打开联系人列表</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开文件</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>无法打开该联系人列表文件</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation type="unfinished"></translation>
+        <translation>文件无效</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation type="unfinished"></translation>
+        <translation>我们无法从该文件中找到可导入的任何联系人信息！</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished">Tox ID</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished">76 位十六进制字符或 name@example.com</translation>
+        <translation>可以是 76 位十六进制字符或者类似 name@example.com 的形式</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished">好友验证消息</translation>
+        <translation>好友验证消息</translation>
     </message>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>打开</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>请求添加为好友</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>我是 %1！我们用 Tox 聊天吧？</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation type="unfinished"></translation>
+        <translation>导入联系人列表，每行一个 Tox ID</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>准备好要导入 %n 个联系人，单击“发送”以确认</numerusform>
         </translation>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>导入联系人</translation>
     </message>
 </context>
 <context>
@@ -700,7 +724,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished"></translation>
+        <translation>与 %1 的通话意外中断。%2</translation>
     </message>
 </context>
 <context>
@@ -1968,11 +1992,11 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
     <message>
         <source>BlackList</source>
-        <translation type="unfinished"></translation>
+        <translation>黑名单</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>使用群成员的公钥过滤群聊信息。将公钥放在这里，每行一个。</translation>
     </message>
 </context>
 <context>
@@ -2407,7 +2431,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>开启一个新进程并打开登录界面。</translation>
     </message>
 </context>
 <context>
