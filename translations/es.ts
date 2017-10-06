@@ -89,10 +89,34 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Activa el panel experimental de gestión del sonido con soporte para cancelación de eco, necesita reiniciar qTox para tener efecto.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
+        <translation>Activa el panel experimental de gestión del sonido</translation>
+    </message>
+    <message>
+        <source>Audio quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High (64 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medium (32 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low (16 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -170,23 +194,23 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished">nombre de usuario</translation>
+        <translation>nombre de usuario</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">mensaje de estado</translation>
+        <translation>mensaje de estado</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Clave pública:</translation>
+        <translation>Clave pública:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">Alias usados:</translation>
+        <translation>Alias usados:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">HISTORIAL DE ALIAS</translation>
+        <translation>HISTORIAL DE ALIAS</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
@@ -194,55 +218,55 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">Aceptar archivos automáticamente</translation>
+        <translation>Aceptar archivos automáticamente</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Directorio predeterminado para guardar archivos:</translation>
+        <translation>Directorio predeterminado para guardar archivos:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">Recepción automática deshabilitada para este contacto</translation>
+        <translation>Recepción automática deshabilitada para este contacto</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished">Aceptar llamadas automáticamente:</translation>
+        <translation>Aceptar llamadas automáticamente:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">Manual</translation>
+        <translation>Manual</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">Audio y Vídeo</translation>
+        <translation>Audio y Vídeo</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aceptar automáticamente invitaciones de chat de grupo para este contacto si se activa.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aceptar automáticamente invitaciones de grupo</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">Eliminar historial (¡no se puede deshacer!)</translation>
+        <translation>Eliminar historial (¡no se puede deshacer!)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">Notas</translation>
+        <translation>Notas</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished">Campo de entrada para notas sobre el contacto</translation>
+        <translation>Campo de entrada para notas sobre el contacto</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Puedes guardar comentarios acerca de este contacto aquí.</translation>
+        <translation>Puedes guardar comentarios acerca de este contacto aquí.</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -389,7 +413,7 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">¡Hola, soy %1! ¿Deseas agregarme en Tox?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
