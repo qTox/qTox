@@ -57,7 +57,6 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
 {
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);
-    core = Core::getInstance();
 
     const uint32_t maxNameLength = tox_max_name_length();
     const QString toolTip = tr("Tox user names cannot exceed %1 characters.").arg(maxNameLength);
@@ -113,8 +112,7 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
 
     connect(bodyUI->toxIdLabel, &CroppingLabel::clicked, this, &ProfileForm::copyIdClicked);
     connect(toxId, &ClickableTE::clicked, this, &ProfileForm::copyIdClicked);
-    // TODO: Move to model
-    connect(core, &Core::idSet, this, &ProfileForm::setToxId);
+    connect(profileInfo, &IProfileInfo::idChanged, this, &ProfileForm::setToxId);
     connect(bodyUI->userName, &QLineEdit::editingFinished, this, &ProfileForm::onUserNameEdited);
     connect(bodyUI->statusMessage, &QLineEdit::editingFinished,
             this, &ProfileForm::onStatusMessageEdited);
@@ -137,10 +135,9 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
     connect(bodyUI->toxmeUpdateButton, &QPushButton::clicked,
             this, &ProfileForm::onRegisterButtonClicked);
 
-    // TODO: Move to model
-    connect(core, &Core::usernameSet, this,
+    connect(profileInfo, &IProfileInfo::usernameChanged, this,
             [=](const QString& val) { bodyUI->userName->setText(val); });
-    connect(core, &Core::statusMessageSet, this,
+    connect(profileInfo, &IProfileInfo::statusMessageChanged, this,
             [=](const QString& val) { bodyUI->statusMessage->setText(val); });
 
     for (QComboBox* cb : findChildren<QComboBox*>()) {
@@ -248,8 +245,10 @@ void ProfileForm::onSelfAvatarLoaded(const QPixmap& pic)
 
 void ProfileForm::setToxId(const ToxId& id)
 {
-    auto idString = id.toString();
-    static const QString ToxIdColor = QStringLiteral("%1<span style='color:blue'>%2</span><span style='color:gray'>%3</span>");
+    QString idString = id.toString();
+    static const QString ToxIdColor = QStringLiteral("%1"
+                                                     "<span style='color:blue'>%2</span>"
+                                                     "<span style='color:gray'>%3</span>");
     toxId->setText(ToxIdColor
       .arg(idString.mid(0, 64))
       .arg(idString.mid(64, 8))
@@ -257,7 +256,7 @@ void ProfileForm::setToxId(const ToxId& id)
 
     delete qr;
     qr = new QRWidget();
-    qr->setQRData("tox:" + id.toString());
+    qr->setQRData("tox:" + idString);
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
 }
 
