@@ -108,7 +108,27 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0" colspan="3">
+          <item row="4" column="0">
+           <widget class="QLabel" name="audioQualityLabel">
+            <property name="text">
+             <string>Audio quality</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1" colspan="2">
+           <widget class="QComboBox" name="audioQualityComboBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="3">
            <widget class="QCheckBox" name="cbEnableBackend2">
             <property name="enabled">
              <bool>true</bool>

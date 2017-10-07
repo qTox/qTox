@@ -83,6 +83,8 @@ AVForm::AVForm()
     microphoneSlider->setTracking(false);
     microphoneSlider->installEventFilter(this);
 
+    fillAudioQualityComboBox();
+
     eventsInit();
 
     QDesktopWidget* desktop = QApplication::desktop();
@@ -333,6 +335,22 @@ void AVForm::fillScreenModesComboBox()
     videoModescomboBox->blockSignals(previouslyBlocked);
 }
 
+void AVForm::fillAudioQualityComboBox()
+{
+    const bool previouslyBlocked = audioQualityComboBox->blockSignals(true);
+
+    audioQualityComboBox->addItem(tr("High (64 kbps)"), 64);
+    audioQualityComboBox->addItem(tr("Medium (32 kbps)"), 32);
+    audioQualityComboBox->addItem(tr("Low (16 kbps)"), 16);
+    audioQualityComboBox->addItem(tr("Very low (8 kbps)"), 8);
+
+    const int currentBitrate = Settings::getInstance().getAudioBitrate();
+    const int index = audioQualityComboBox->findData(currentBitrate);
+
+    audioQualityComboBox->setCurrentIndex(index);
+    audioQualityComboBox->blockSignals(previouslyBlocked);
+}
+
 void AVForm::updateVideoModes(int curIndex)
 {
     if (curIndex < 0 || curIndex >= videoDeviceList.size()) {
@@ -406,6 +424,11 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
     camera.setupDevice(dev, mode);
     if (dev == "none")
         Core::getInstance()->getAv()->sendNoVideo();
+}
+
+void AVForm::on_audioQualityComboBox_currentIndexChanged(int index)
+{
+    Settings::getInstance().setAudioBitrate(audioQualityComboBox->currentData().toInt());
 }
 
 void AVForm::getVideoDevices()

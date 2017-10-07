@@ -52,6 +52,7 @@ private:
     void selectBestModes(QVector<VideoMode>& allVideoModes);
     void fillCameraModesComboBox();
     void fillScreenModesComboBox();
+    void fillAudioQualityComboBox();
     int searchPreferredIndex();
 
     void createVideoSurface();
@@ -66,6 +67,7 @@ private slots:
     void on_playbackSlider_valueChanged(int value);
     void on_cbEnableTestSound_stateChanged();
     void on_microphoneSlider_valueChanged(int value);
+    void on_audioQualityComboBox_currentIndexChanged(int index);
 
     // camera
     void on_videoDevCombobox_currentIndexChanged(int index);
