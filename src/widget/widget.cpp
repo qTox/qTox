@@ -73,6 +73,8 @@
 #include "src/widget/translator.h"
 #include "tool/removefrienddialog.h"
 
+#include <src/model/profile/profileinfo.h>
+
 bool toxActivateEventHandler(const QByteArray&)
 {
     Widget* widget = Nexus::getDesktopGUI();
@@ -228,12 +230,14 @@ void Widget::init()
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
     groupInviteForm = new GroupInviteForm;
-    profileForm = new ProfileForm();
+
+    Profile* profile = Nexus::getProfile();
+    profileInfo = new ProfileInfo(profile);
+    profileForm = new ProfileForm(profileInfo);
 
     // connect logout tray menu action
     connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
-    Profile* profile = Nexus::getProfile();
     connect(profile, &Profile::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
 
     const Settings& s = Settings::getInstance();

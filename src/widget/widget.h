@@ -38,32 +38,33 @@ namespace Ui {
 class MainWindow;
 }
 
+class AddFriendForm;
+class Camera;
 class ChatForm;
-class GenericChatroomWidget;
+class CircleWidget;
+class ContentDialog;
+class ContentLayout;
+class Core;
+class FilesForm;
+class Friend;
+class FriendListWidget;
 class FriendWidget;
-class GroupWidget;
+class GenericChatroomWidget;
 class Group;
 class GroupInvite;
-class Friend;
-class QSplitter;
-class VideoSurface;
-class QMenu;
-class Core;
-class Camera;
-class FriendListWidget;
-class MaskablePixmapWidget;
-class QTimer;
-class SystemTrayIcon;
-class FilesForm;
-class ProfileForm;
-class SettingsWidget;
-class AddFriendForm;
 class GroupInviteForm;
-class CircleWidget;
+class GroupWidget;
+class MaskablePixmapWidget;
+class ProfileForm;
+class ProfileInfo;
 class QActionGroup;
-class ContentLayout;
-class ContentDialog;
+class QMenu;
 class QPushButton;
+class QSplitter;
+class QTimer;
+class SettingsWidget;
+class SystemTrayIcon;
+class VideoSurface;
 
 class Widget final : public QMainWindow
 {
@@ -276,7 +277,10 @@ private:
     ContentLayout* contentLayout;
     AddFriendForm* addFriendForm;
     GroupInviteForm* groupInviteForm;
+
+    ProfileInfo* profileInfo;
     ProfileForm* profileForm;
+
     QPointer<SettingsWidget> settingsWidget;
     FilesForm* filesForm;
     static Widget* instance;
