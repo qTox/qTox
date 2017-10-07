@@ -37,13 +37,17 @@
 
 /**
  * @brief ProfileInfo constructor.
+ * @param core Pointer to Tox Core.
  * @param profile Pointer to Profile.
  * @note All pointers parameters shouldn't be null.
  */
-
-ProfileInfo::ProfileInfo(Profile *profile)
+ProfileInfo::ProfileInfo(Core* core, Profile *profile)
     : profile{profile}
+    , core{core}
 {
+    connect(core, &Core::idSet, this, &ProfileInfo::idChanged);
+    connect(core, &Core::usernameSet, this, &ProfileInfo::usernameChanged);
+    connect(core, &Core::statusMessageSet, this, &ProfileInfo::usernameChanged);
 }
 
 /**
@@ -324,7 +328,6 @@ IProfileInfo::SetAvatarResult ProfileInfo::setAvatar(const QString &path)
         return SetAvatarResult::TooLarge;
     }
 
-    Core* core = Core::getInstance();
     profile->setAvatar(bytes, core->getSelfPublicKey());
     return SetAvatarResult::OK;
 }
