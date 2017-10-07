@@ -27,10 +27,11 @@
 #include <QTimer>
 #include <QVBoxLayout>
 
-class CroppingLabel;
-class Core;
-class MaskablePixmapWidget;
 class ContentLayout;
+class Core;
+class CroppingLabel;
+class IProfileInfo;
+class MaskablePixmapWidget;
 
 namespace Ui {
 class IdentitySettings;
@@ -54,7 +55,7 @@ class ProfileForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ProfileForm(QWidget* parent = nullptr);
+    ProfileForm(IProfileInfo* profileInfo, QWidget* parent = nullptr);
     ~ProfileForm();
     virtual void show() final
     {
@@ -98,6 +99,7 @@ private:
     bool hasCheck = false;
     QRWidget* qr;
     ClickableTE* toxId;
+    IProfileInfo* profileInfo;
     void showRegisterToxme();
 };
 
