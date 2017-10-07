@@ -19,14 +19,14 @@
 
 #include "iprofileinfo.h"
 
-class ToxId;
+class Core;
 class QPoint;
 class Profile;
 
 class ProfileInfo : public IProfileInfo
 {
 public:
-    ProfileInfo(Profile* profile);
+    ProfileInfo(Core* core, Profile* profile);
 
     bool setPassword(const QString& password) override;
     bool deletePassword() override;
@@ -51,4 +51,5 @@ public:
 
 private:
     Profile* profile;
+    const Core* core;
 };
