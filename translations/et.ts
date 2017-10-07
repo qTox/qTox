@@ -89,10 +89,34 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lubab eksperimentaalse, kaja summutava audio toe; aktiveerimiseks tuleb qTox uuesti käivitada.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
+        <translation>Luba eksperimentaalne audiotugi</translation>
+    </message>
+    <message>
+        <source>Audio quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High (64 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medium (32 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low (16 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -166,96 +190,96 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Aken</translation>
+        <translation>Dialoog</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished">kasutajanimi</translation>
+        <translation>kasutajanimi</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">olekuteade</translation>
+        <translation>olekuteade</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Avalik võti:</translation>
+        <translation>Avalik võti:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">Pruugitud hüüdnimed:</translation>
+        <translation>Kasutatud hüüdnimed:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">HÜÜDNIMEDE AJALUGU</translation>
+        <translation>HÜÜDNIMEDE AJALUGU</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Kui valitud, võetakse failid antud kontaktilt automaatselt vastu</translation>
+        <translation>Kui valitud, võetakse failid antud kontaktilt automaatselt vastu</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">Võta failid automaatselt vastu</translation>
+        <translation>Võta failid automaatselt vastu</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Vaikekaust failide salvestamiseks:</translation>
+        <translation>Failide salvestamise vaikekaust:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">Kontakti failide automaatne vastuvõtmine on keelatud</translation>
+        <translation>Failide automaatne vastuvõtt sellelt kontaktilt on keelatud</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished">Võta kõne automaatselt vastu:</translation>
+        <translation>Võta kõne automaatselt vastu:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">Käsitsi</translation>
+        <translation>Käsitsi</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Heli</translation>
+        <translation>Heli</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">Heli + Video</translation>
+        <translation>Heli + video</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished">Kui on valitud, siis nõustu automaatselt grupivestluste kutsetega sellelt kontaktilt.</translation>
+        <translation>Kui on valitud, siis nõustu automaatselt grupivestluste kutsetega sellelt kontaktilt.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished">Automaatnõustu grupi kutsetega</translation>
+        <translation>Nõustu automaatselt grupikutsetega</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">Eemalda ajalugu (toimingut ei saa hiljem tühistada)</translation>
+        <translation>Eemalda ajalugu (toimingut ei saa hiljem tühistada)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">Märkused</translation>
+        <translation>Märkmed</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished">Väli, kuhu saab antud kontakti kohta märkusi kirjutada</translation>
+        <translation>Väli, kuhu saab kontakti kohta lisada märkmeid</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Siia saad selle kontakti kohta kommentaare kirjutada.</translation>
+        <translation>Siia saad selle kontakti kohta kommentaare kirjutada.</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vali automaatse vastuvõtu kataloog</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished">Ajalugu kustutati</translation>
+        <translation>Ajalugu kustutatud</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">Kasutajaga %1 peetud vestluste ajalugu on kustutatud!</translation>
+        <translation>Kasutajaga %1 peetud vestluste ajalugu on kustutatud!</translation>
     </message>
 </context>
 <context>
@@ -334,78 +358,78 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID %1 on vigane või seda ei ole olemas</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished">Ennast pole võimalik sõbraks lisada!</translation>
+        <translation>Ennast pole võimalik sõbraks lisada!</translation>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava kontaktide loend</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Faili ei saanud avada</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktide faili ei saanud avada</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation type="unfinished"></translation>
+        <translation>Vigane fail</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Imporditavaid kontakte ei suudetud selle failist leida!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished">Tox ID</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished">kas 76 kuueteistkümnendsüsteemi märki või nimi@mingiaadress.com</translation>
+        <translation>kas 76 kuueteistkümnendsüsteemi märki või nimi@mingiaadress.com</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished">Teade</translation>
+        <translation>Sõnum</translation>
     </message>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ava</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Saatke sõbrakutseid</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished">%1 siin! Ehk liitud minuga Tox keskkonnas?</translation>
+        <translation>%1 siin! Ehk liitud minuga Tox keskkonnas?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation type="unfinished"></translation>
+        <translation>Impordi kontaktide loend, üks Tox ID real</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n kontakti importimiseks valmis, kinnitamiseks vajuta saada</numerusform>
+            <numerusform>%n kontakti importimiseks valmis, kinnitamiseks vajuta saada</numerusform>
         </translation>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Impordi kontaktid</translation>
     </message>
 </context>
 <context>
@@ -703,7 +727,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõne %1-ga lõppes ootamatult. %2</translation>
     </message>
 </context>
 <context>
@@ -1973,11 +1997,11 @@ Kui saad hulgaliselt soovimatuid sõbrakutseid, muuda seda väärtust.</translat
     </message>
     <message>
         <source>BlackList</source>
-        <translation type="unfinished"></translation>
+        <translation>Must nimekiri</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtreeri grupi sõnum grupiliikme avaliku võtme alusel. Sisesta avalik võti siia, üks rea kohta.</translation>
     </message>
 </context>
 <context>
@@ -2413,7 +2437,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Käivitab uue koopia ja avab sisselogimise ekraani.</translation>
     </message>
 </context>
 <context>
