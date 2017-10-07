@@ -57,4 +57,9 @@ public:
 
     virtual SetAvatarResult setAvatar(const QString& path) = 0;
     virtual void removeAvatar() = 0;
+
+signals:
+    void idChanged(const ToxId& id);
+    void usernameChanged(const QString& username);
+    void statusMessageChanged(const QString& message);
 };

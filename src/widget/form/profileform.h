@@ -94,7 +94,6 @@ private:
     void refreshProfiles();
     Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;
-    Core* core;
     QTimer timer;
     bool hasCheck = false;
     QRWidget* qr;

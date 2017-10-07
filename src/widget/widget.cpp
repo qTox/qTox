@@ -231,8 +231,9 @@ void Widget::init()
     addFriendForm = new AddFriendForm;
     groupInviteForm = new GroupInviteForm;
 
+    Core* core = Nexus::getCore();
     Profile* profile = Nexus::getProfile();
-    profileInfo = new ProfileInfo(profile);
+    profileInfo = new ProfileInfo(core, profile);
     profileForm = new ProfileForm(profileInfo);
 
     // connect logout tray menu action
@@ -241,7 +242,6 @@ void Widget::init()
     connect(profile, &Profile::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
 
     const Settings& s = Settings::getInstance();
-    Core* core = Nexus::getCore();
     CoreAV* av = core->getAv();
     connect(av, &CoreAV::avEnd, this, &Widget::onCallEnd);
 

@@ -28,9 +28,13 @@
 #include <QFile>
 #include <QBuffer>
 
-ProfileInfo::ProfileInfo(Profile *profile)
+ProfileInfo::ProfileInfo(Core* core, Profile *profile)
     : profile{profile}
+    , core{core}
 {
+    connect(core, &Core::idSet, this, &ProfileInfo::idChanged);
+    connect(core, &Core::usernameSet, this, &ProfileInfo::usernameChanged);
+    connect(core, &Core::statusMessageSet, this, &ProfileInfo::usernameChanged);
 }
 
 bool ProfileInfo::setPassword(const QString &password)
@@ -239,7 +243,6 @@ IProfileInfo::SetAvatarResult ProfileInfo::setAvatar(const QString &path)
         return SetAvatarResult::TooLarge;
     }
 
-    Core* core = Core::getInstance();
     profile->setAvatar(bytes, core->getSelfPublicKey().toString());
     return SetAvatarResult::OK;
 }
