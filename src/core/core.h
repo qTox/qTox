@@ -46,7 +46,6 @@ public:
     ~Core();
 
     static const QString TOX_EXT;
-    static QString sanitize(QString name);
     static QStringList splitMessage(const QString& message, int maxLen);
 
     static QByteArray getSaltFromFile(QString filename);

@@ -943,26 +943,6 @@ void Core::setStatus(Status status)
     emit statusSet(status);
 }
 
-QString Core::sanitize(QString name)
-{
-    // these are pretty much Windows banned filename characters
-    QList<QChar> banned{'/', '\\', ':', '<', '>', '"', '|', '?', '*'};
-    for (QChar c : banned) {
-        name.replace(c, '_');
-    }
-
-    // also remove leading and trailing periods
-    if (name[0] == '.') {
-        name[0] = '_';
-    }
-
-    if (name.endsWith('.')) {
-        name[name.length() - 1] = '_';
-    }
-
-    return name;
-}
-
 /**
  * @brief Returns the unencrypted tox save data
  */
