@@ -92,9 +92,9 @@ ProfileForm::ProfileForm(QWidget* parent)
     profilePicture->installEventFilter(this);
     profilePicture->setAccessibleName("Profile avatar");
     profilePicture->setAccessibleDescription("Set a profile avatar shown to all contacts");
-    connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
-    connect(profilePicture, SIGNAL(customContextMenuRequested(const QPoint&)), this,
-            SLOT(showProfilePictureContextMenu(const QPoint&)));
+    connect(profilePicture, &MaskablePixmapWidget::clicked, this, &ProfileForm::onAvatarClicked);
+    connect(profilePicture, &MaskablePixmapWidget::customContextMenuRequested,
+            this, &ProfileForm::showProfilePictureContextMenu);
     QHBoxLayout* publicGrouplayout = qobject_cast<QHBoxLayout*>(bodyUI->publicGroup->layout());
     publicGrouplayout->insertWidget(0, profilePicture);
     publicGrouplayout->insertSpacing(1, 7);
@@ -106,27 +106,30 @@ ProfileForm::ProfileForm(QWidget* parent)
         hasCheck = false;
     });
 
-    connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
-    connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
+    connect(bodyUI->toxIdLabel, &CroppingLabel::clicked, this, &ProfileForm::copyIdClicked);
+    connect(toxId, &ClickableTE::clicked, this, &ProfileForm::copyIdClicked);
     connect(core, &Core::idSet, this, &ProfileForm::setToxId);
-    connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
-    connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
+    connect(bodyUI->userName, &QLineEdit::editingFinished, this, &ProfileForm::onUserNameEdited);
+    connect(bodyUI->statusMessage, &QLineEdit::editingFinished,
+            this, &ProfileForm::onStatusMessageEdited);
     connect(bodyUI->renameButton, &QPushButton::clicked, this, &ProfileForm::onRenameClicked);
     connect(bodyUI->exportButton, &QPushButton::clicked, this, &ProfileForm::onExportClicked);
     connect(bodyUI->deleteButton, &QPushButton::clicked, this, &ProfileForm::onDeleteClicked);
     connect(bodyUI->logoutButton, &QPushButton::clicked, this, &ProfileForm::onLogoutClicked);
-    connect(bodyUI->deletePassButton, &QPushButton::clicked, this, &ProfileForm::onDeletePassClicked);
-    connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::onChangePassClicked);
-    connect(bodyUI->deletePassButton, &QPushButton::clicked, this,
-            &ProfileForm::setPasswordButtonsText);
-    connect(bodyUI->changePassButton, &QPushButton::clicked, this,
-            &ProfileForm::setPasswordButtonsText);
+    connect(bodyUI->deletePassButton, &QPushButton::clicked,
+            this, &ProfileForm::onDeletePassClicked);
+    connect(bodyUI->changePassButton, &QPushButton::clicked,
+            this, &ProfileForm::onChangePassClicked);
+    connect(bodyUI->deletePassButton, &QPushButton::clicked,
+            this, &ProfileForm::setPasswordButtonsText);
+    connect(bodyUI->changePassButton, &QPushButton::clicked,
+            this, &ProfileForm::setPasswordButtonsText);
     connect(bodyUI->saveQr, &QPushButton::clicked, this, &ProfileForm::onSaveQrClicked);
     connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::onCopyQrClicked);
-    connect(bodyUI->toxmeRegisterButton, &QPushButton::clicked, this,
-            &ProfileForm::onRegisterButtonClicked);
-    connect(bodyUI->toxmeUpdateButton, &QPushButton::clicked, this,
-            &ProfileForm::onRegisterButtonClicked);
+    connect(bodyUI->toxmeRegisterButton, &QPushButton::clicked,
+            this, &ProfileForm::onRegisterButtonClicked);
+    connect(bodyUI->toxmeUpdateButton, &QPushButton::clicked,
+            this, &ProfileForm::onRegisterButtonClicked);
 
     connect(core, &Core::usernameSet, this,
             [=](const QString& val) { bodyUI->userName->setText(val); });
