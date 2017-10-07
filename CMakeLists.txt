@@ -264,6 +264,9 @@ set(${PROJECT_NAME}_SOURCES
   src/model/group.cpp
   src/model/group.h
   src/model/interface.h
+  src/model/profile/iprofileinfo.h
+  src/model/profile/profileinfo.cpp
+  src/model/profile/profileinfo.h
   src/net/autoupdate.cpp
   src/net/autoupdate.h
   src/net/avatarbroadcaster.cpp
