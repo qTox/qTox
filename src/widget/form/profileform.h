@@ -62,10 +62,6 @@ public:
     void show(ContentLayout* contentLayout);
     bool isShown() const;
 
-signals:
-    void userNameChanged(QString);
-    void statusMessageChanged(QString);
-
 public slots:
     void onSelfAvatarLoaded(const QPixmap& pic);
     void onLogoutClicked();
