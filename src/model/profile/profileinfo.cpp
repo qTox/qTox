@@ -76,6 +76,27 @@ QString ProfileInfo::getProfileName() const
     return profile->getName();
 }
 
+static QString sanitize(const QString& src)
+{
+    QString name = src;
+    // these are pretty much Windows banned filename characters
+    QList<QChar> banned{'/', '\\', ':', '<', '>', '"', '|', '?', '*'};
+    for (QChar c : banned) {
+        name.replace(c, '_');
+    }
+
+    // also remove leading and trailing periods
+    if (name[0] == '.') {
+        name[0] = '_';
+    }
+
+    if (name.endsWith('.')) {
+        name[name.length() - 1] = '_';
+    }
+
+    return name;
+}
+
 IProfileInfo::RenameResult ProfileInfo::renameProfile(const QString &name)
 {
     QString cur = profile->getName();
@@ -83,7 +104,7 @@ IProfileInfo::RenameResult ProfileInfo::renameProfile(const QString &name)
         return RenameResult::OK;
     }
 
-    QString newName = Core::sanitize(name);
+    QString newName = sanitize(name);
 
     if (Profile::exists(newName)) {
         return RenameResult::ProfileAlreadyExists;
@@ -96,6 +117,19 @@ IProfileInfo::RenameResult ProfileInfo::renameProfile(const QString &name)
     return RenameResult::OK;
 }
 
+/**
+ * @brief Dangerous way to find out if a path is writable.
+ * @param filepath Path to file which should be deleted.
+ * @return True, if file writeable, false otherwise.
+ */
+static bool tryRemoveFile(const QString& filepath)
+{
+    QFile tmp(filepath);
+    bool writable = tmp.open(QIODevice::WriteOnly);
+    tmp.remove();
+    return writable;
+}
+
 IProfileInfo::SaveResult ProfileInfo::exportProfile(const QString &path) const
 {
     QString current = profile->getName() + Core::TOX_EXT;
@@ -103,7 +137,7 @@ IProfileInfo::SaveResult ProfileInfo::exportProfile(const QString &path) const
         return SaveResult::OK;
     }
 
-    if (!Nexus::tryRemoveFile(path)) {
+    if (!tryRemoveFile(path)) {
         return SaveResult::NoWritePermission;
     }
 
@@ -139,7 +173,7 @@ IProfileInfo::SaveResult ProfileInfo::saveQr(const QImage& image, const QString&
         return SaveResult::OK;
     }
 
-    if (!Nexus::tryRemoveFile(path)) {
+    if (!tryRemoveFile(path)) {
         return SaveResult::NoWritePermission;
     }
 
