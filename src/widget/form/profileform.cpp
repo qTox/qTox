@@ -519,7 +519,7 @@ void ProfileForm::onRegisterButtonClicked()
 
     Core* oldCore = Core::getInstance();
 
-    Toxme::ExecCode code = Toxme::ExecCode::Ok;
+    ToxmeData::ExecCode code = ToxmeData::ExecCode::Ok;
     QString response = Toxme::createAddress(code, server, ToxId(id), name, privacy, bio);
 
     Core* newCore = Core::getInstance();
@@ -527,12 +527,12 @@ void ProfileForm::onRegisterButtonClicked()
     // before the request is finished, else qTox will crash.
     if (oldCore == newCore) {
         switch (code) {
-        case Toxme::Updated:
+        case ToxmeData::Updated:
             GUI::showInfo(tr("Done!"), tr("Account %1@%2 updated successfully").arg(name, server));
             Settings::getInstance().setToxme(name, server, bio, privacy);
             showExistingToxme();
             break;
-        case Toxme::Ok:
+        case ToxmeData::Ok:
             GUI::showInfo(tr("Done!"),
                           tr("Successfully added %1@%2 to the database. Save your password")
                               .arg(name, server));
