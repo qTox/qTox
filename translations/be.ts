@@ -97,27 +97,27 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Якасць аўдыя</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Якасць перадачы гуку. Знізце гэтую наладу, калі прапускная здольнасць не дастаткова высокая, або калі вы хочаце знізіць выкарыстанне інтэрнэту.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Высокая (64 кбіт/с)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Сярэдняя (32 кбіт/с)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Нізкая (16 кбіт/с)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вельмі нізкая (8 кбіт/с)</translation>
     </message>
 </context>
 <context>
@@ -2058,33 +2058,8 @@ Please use another image.</source>
 Калі ласка, выкарыстайце іншую выяву.</translation>
     </message>
     <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>Профіль ужо існуе</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>Профіль з назвай «%1» ужо існуе.</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>Немагчыма перайменаваць</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>Не ўдалося перайменаваць профіль у «%1»</translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>Экспартаваць профіль</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>Файл Tox (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2123,11 +2098,6 @@ Please use another image.</source>
         <translation>Сапраўды выдаліць пароль?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Вы ўпэўнены, што хочаце выдаліць свой пароль?</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>Калі ласка, увядзіце новы пароль.</translation>
     </message>
@@ -2145,16 +2115,6 @@ Please use another image.</source>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
         <translation>Захаваць QR-код (*.png)</translation>
-    </message>
-    <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation>Наступныя файлы не могуць быць выдаленыя:</translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation>Калі ласка, выдаліце іх уручную.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -2220,6 +2180,62 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 Падзяліся гэтым з сябрамі каб мець зносіны.
 
 Гэты ID уключае NoSpam-код (сіні) і кантрольную суму (шэрую).</translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">Немагчыма перайменаваць</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished">Профіль ужо існуе</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">Профіль з назвай «%1» ужо існуе.</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished">Не атрымалася змяніць пароль у базе дадзеных, яна можа быць пашкоджана або выкарыстоўваць стары пароль.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Экспартаваць профіль</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished">Файл Tox (*.tox)</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished">Наступныя файлы не могуць быць выдаленыя:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished">Калі ласка, выдаліце іх уручную.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">Вы ўпэўнены, што хочаце выдаліць свой пароль?</translation>
     </message>
 </context>
 <context>
