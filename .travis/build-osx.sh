@@ -43,7 +43,15 @@ check() {
     fi
 }
 
+# The system ruby in Travis CI is too old, use latest stable
+get_ruby_version() {
+    rvm get stable
+    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+    rvm use ruby --install --default
+}
+
 main() {
+    get_ruby_version
     install_ccache
     build
     check
