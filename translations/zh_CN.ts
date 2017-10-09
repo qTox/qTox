@@ -97,27 +97,27 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>音频质量</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>传输音频质量。如果您的带宽不够高或您希望降低网络流量，请降低该设置。</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>高（64 kbps）</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>中（32kbps）</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>低（16 kbps）</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>极低（8 kbps）</translation>
     </message>
 </context>
 <context>
@@ -226,7 +226,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation>已针对这个联系人禁用了自动接受</translation>
+        <translation>已针对这个联系人禁用了自动接收</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
@@ -389,7 +389,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation>Tox ID</translation>
+        <translation>Tox 身份识别码</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -1974,17 +1974,17 @@ People will be unable to add you with your old ID, but you will keep your curren
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>NoSpam</translation>
+        <translation>NoSpam 混淆码</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>NoSpam 是你的 Tox ID 中可以随意改变的一部分。
-如果你收到好友请求的骚扰，那就改变你的 NoSpam。</translation>
+        <translation>NoSpam 混淆码是你的 Tox ID 中可以随意改变的一部分。
+如果你收到骚扰的好友请求，那就改变你的 NoSpam 混淆码。</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation>生成随机 NoSpam</translation>
+        <translation>生成随机 NoSpam 混淆码</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -2065,11 +2065,6 @@ Please use another image.</source>
         <translation>确定要删除密码吗？</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>你确定要删除密码吗？</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>请输入新密码。</translation>
     </message>
@@ -2123,33 +2118,8 @@ Please use another image.</source>
         <translation>重命名“%1”</translation>
     </message>
     <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>用户配置文件已存在</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>已存在一个名为&quot;%1&quot;的账户。</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>重命名失败</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>无法重命名该账户为&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>导出用户配置文件</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>Tox存档文件 (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2163,16 +2133,6 @@ Please use another image.</source>
     <message>
         <source>The file you chose could not be written to.</source>
         <translation>您选择的文件不可被写入。</translation>
-    </message>
-    <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation>无法删除下列文件：</translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation>请手动删除它们。</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -2210,6 +2170,62 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 将它分享给您的朋友们来开始通信。
 
 该 ID 包含 NoSpam 代码 (蓝色字体部分)，和校验码 (灰色字体部分)。</translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">重命名失败</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">已存在一个名为&quot;%1&quot;的账户。</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished">无法修改数据库中的密码。数据库可能损坏或使用了旧的密码。</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished">无法删除下列文件：</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished">请手动删除它们。</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">你确定要删除密码吗？</translation>
     </message>
 </context>
 <context>
