@@ -57,6 +57,9 @@ OpenAL::OpenAL()
     , outputInitialized{false}
     , minInGain{-30}
     , maxInGain{30}
+    , minInThreshold{0.0f}
+    , maxInThreshold{0.4f}
+    , isActive{false}
 {
     // initialize OpenAL error stack
     alGetError();
@@ -66,6 +69,10 @@ OpenAL::OpenAL()
     QObject::connect(audioThread, &QThread::finished, audioThread, &QThread::deleteLater);
 
     moveToThread(audioThread);
+
+    voiceTimer.setSingleShot(true);
+    connect(this, &Audio::startActive, &voiceTimer, static_cast<void (QTimer::*)(int)>(&QTimer::start));
+    connect(&voiceTimer, &QTimer::timeout, this, &Audio::stopActive);
 
     connect(&captureTimer, &QTimer::timeout, this, &OpenAL::doCapture);
     captureTimer.setInterval(AUDIO_FRAME_DURATION / 2);
@@ -175,6 +182,50 @@ void OpenAL::setMaxInputGain(qreal dB)
     maxInGain = dB;
 }
 
+/**
+ * @brief The minimum threshold value for an input device.
+ *
+ * @return minimum threshold percentage
+ */
+qreal OpenAL::minInputThreshold() const
+{
+    QMutexLocker locker(&audioLock);
+    return minInThreshold;
+}
+
+/**
+ * @brief Set the minimum allowed threshold percentage
+ *
+ * @note Default is 0%; usually you don't need to alter this value;
+ */
+void OpenAL::setMinInputThreshold(qreal percent)
+{
+    QMutexLocker locker(&audioLock);
+    minInThreshold = percent;
+}
+
+/**
+ * @brief The maximum threshold value for an input device.
+ *
+ * @return maximum threshold percentage
+ */
+qreal OpenAL::maxInputThreshold() const
+{
+    QMutexLocker locker(&audioLock);
+    return maxInThreshold;
+}
+
+/**
+ * @brief Set the maximum allowed threshold percentage
+ *
+ * @note Default is 40%; usually you don't need to alter this value.
+ */
+void OpenAL::setMaxInputThreshold(qreal percent)
+{
+    QMutexLocker locker(&audioLock);
+    maxInThreshold = percent;
+}
+
 void OpenAL::reinitInput(const QString& inDevDesc)
 {
     QMutexLocker locker(&audioLock);
@@ -278,6 +329,7 @@ bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
     }
 
     setInputGain(Settings::getInstance().getAudioInGainDecibel());
+    setInputThreshold(Settings::getInstance().getAudioThreshold());
 
     qDebug() << "Opened audio input" << deviceName;
     alcCaptureStart(alInDev);
@@ -483,6 +535,32 @@ void OpenAL::playMono16SoundCleanup()
 }
 
 /**
+ * @brief Called by doCapture to calculate volume of the audio buffer
+ *
+ * @param[in] buf   the current audio buffer
+ *
+ * @return volume in percent of max volume
+ */
+float OpenAL::getVolume(int16_t *buf)
+{
+    quint32 samples = AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS;
+    float sum = 0.0;
+    for (quint32 i = 0; i < samples; i++) {
+        float sample = (float)buf[i] / (float)std::numeric_limits<int16_t>::max();
+        sum += std::abs(sample);
+    }
+    return sum/samples;
+}
+
+/**
+ * @brief Called by voiceTimer's timeout to disable audio broadcasting
+ */
+void OpenAL::stopActive()
+{
+    isActive = false;
+}
+
+/**
  * @brief Called on the captureTimer events to capture audio
  */
 void OpenAL::doCapture()
@@ -499,6 +577,19 @@ void OpenAL::doCapture()
 
     int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS];
     alcCaptureSamples(alInDev, buf, AUDIO_FRAME_SAMPLE_COUNT);
+
+    float volume = getVolume(buf);
+    if (volume >= inputThreshold)
+    {
+        isActive = true;
+        emit startActive(voiceHold);
+    }
+
+    emit Audio::volumeAvailable(volume);
+    if (!isActive)
+    {
+        return;
+    }
 
     for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS; ++i) {
         // gain amplification with clipping to 16-bit boundaries
@@ -628,6 +719,11 @@ qreal OpenAL::inputGain() const
     return gain;
 }
 
+qreal OpenAL::getInputThreshold() const
+{
+    return inputThreshold;
+}
+
 qreal OpenAL::inputGainFactor() const
 {
     return gainFactor;
@@ -638,3 +734,9 @@ void OpenAL::setInputGain(qreal dB)
     gain = qBound(minInGain, dB, maxInGain);
     gainFactor = qPow(10.0, (gain / 20.0));
 }
+
+void OpenAL::setInputThreshold(qreal percent)
+{
+    inputThreshold = percent;
+}
+

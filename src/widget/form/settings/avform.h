@@ -67,6 +67,7 @@ private slots:
     void on_playbackSlider_valueChanged(int value);
     void on_cbEnableTestSound_stateChanged();
     void on_microphoneSlider_valueChanged(int value);
+    void on_audioThresholdSlider_valueChanged(int value);
     void on_audioQualityComboBox_currentIndexChanged(int index);
 
     // camera
@@ -74,6 +75,7 @@ private slots:
     void on_videoModescomboBox_currentIndexChanged(int index);
 
     void rescanDevices();
+    void setVolume(float value);
 
     void on_cbEnableBackend2_stateChanged();
 

@@ -72,6 +72,15 @@ public:
     virtual qreal inputGain() const = 0;
     virtual void setInputGain(qreal dB) = 0;
 
+    virtual qreal minInputThreshold() const = 0;
+    virtual void setMinInputThreshold(qreal dB) = 0;
+
+    virtual qreal maxInputThreshold() const = 0;
+    virtual void setMaxInputThreshold(qreal dB) = 0;
+
+    virtual qreal getInputThreshold() const = 0;
+    virtual void setInputThreshold(qreal percent) = 0;
+
     virtual void reinitInput(const QString& inDevDesc) = 0;
     virtual bool reinitOutput(const QString& outDevDesc) = 0;
 
@@ -91,6 +100,8 @@ public:
     virtual void playMono16Sound(const QByteArray& data) = 0;
     virtual void playMono16Sound(const QString& path) = 0;
 
+    virtual void stopActive() = 0;
+
     virtual void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
                                  int sampleRate) = 0;
 
@@ -104,6 +115,8 @@ protected:
 signals:
     void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
                         uint32_t sampling_rate);
+    void volumeAvailable(float value);
+    void startActive(qreal msec);
 };
 
 #endif // AUDIO_H

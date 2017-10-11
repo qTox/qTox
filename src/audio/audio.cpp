@@ -161,7 +161,15 @@
  * @fn void Audio::setInputGain(qreal dB)
  * @brief set the input gain
  *
- * @param[in] dB the new input gain in dB
+ * @fn void Audio::getInputThreshold()
+ * @brief get the current input threshold
+ *
+ * @return current input threshold percentage
+ *
+ * @fn void Audio::setInputThreshold(qreal percent)
+ * @brief set the input threshold
+ *
+ * @param[in] percent the new input threshold percentage
  */
 
 /**

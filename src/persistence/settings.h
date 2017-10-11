@@ -98,6 +98,8 @@ class Settings : public QObject, public ICoreSettings
                    audioInDevEnabledChanged FINAL)
     Q_PROPERTY(qreal audioInGainDecibel READ getAudioInGainDecibel WRITE setAudioInGainDecibel
                    NOTIFY audioInGainDecibelChanged FINAL)
+    Q_PROPERTY(qreal audioThreshold READ getAudioThreshold WRITE setAudioThreshold
+                   NOTIFY audioThresholdChanged FINAL)
     Q_PROPERTY(QString outDev READ getOutDev WRITE setOutDev NOTIFY outDevChanged FINAL)
     Q_PROPERTY(bool audioOutDevEnabled READ getAudioOutDevEnabled WRITE setAudioOutDevEnabled NOTIFY
                    audioOutDevEnabledChanged FINAL)
@@ -228,6 +230,7 @@ signals:
     void inDevChanged(const QString& name);
     void audioInDevEnabledChanged(bool enabled);
     void audioInGainDecibelChanged(qreal gain);
+    void audioThresholdChanged(qreal percent);
     void outDevChanged(const QString& name);
     void audioOutDevEnabledChanged(bool enabled);
     void outVolumeChanged(int volume);
@@ -364,6 +367,9 @@ public:
 
     qreal getAudioInGainDecibel() const;
     void setAudioInGainDecibel(qreal dB);
+
+    qreal getAudioThreshold() const;
+    void setAudioThreshold(qreal percent);
 
     int getOutVolume() const;
     void setOutVolume(int volume);
@@ -630,6 +636,7 @@ private:
     QString inDev;
     bool audioInDevEnabled;
     qreal audioInGainDecibel;
+    qreal audioThreshold;
     QString outDev;
     bool audioOutDevEnabled;
     int outVolume;
