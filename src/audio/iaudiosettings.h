@@ -22,6 +22,9 @@ public:
     virtual qreal getAudioInGainDecibel() const = 0;
     virtual void setAudioInGainDecibel(qreal dB) = 0;
 
+    virtual qreal getAudioThreshold() const = 0;
+    virtual void setAudioThreshold(qreal percent) = 0;
+
     virtual int getOutVolume() const = 0;
     virtual void setOutVolume(int volume) = 0;
 
@@ -41,6 +44,7 @@ public:
     DECLARE_SIGNAL(audioOutDevEnabledChanged, bool enabled);
 
     DECLARE_SIGNAL(audioInGainDecibelChanged, qreal dB);
+    DECLARE_SIGNAL(audioThresholdChanged, qreal dB);
     DECLARE_SIGNAL(outVolumeChanged, int volume);
     DECLARE_SIGNAL(audioBitrateChanged, int bitrate);
     DECLARE_SIGNAL(enableTestSoundChanged, bool newValue);

@@ -264,6 +264,7 @@ void Settings::loadGlobal()
         outDev = s.value("outDev", "").toString();
         audioOutDevEnabled = s.value("audioOutDevEnabled", true).toBool();
         audioInGainDecibel = s.value("inGain", 0).toReal();
+        audioThreshold = s.value("audioThreshold", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
         audioBitrate = s.value("audioBitrate", 64).toInt();
         enableBackend2 = false;
@@ -566,6 +567,7 @@ void Settings::saveGlobal()
         s.setValue("outDev", outDev);
         s.setValue("audioOutDevEnabled", audioOutDevEnabled);
         s.setValue("inGain", audioInGainDecibel);
+        s.setValue("audioThreshold", audioThreshold);
         s.setValue("outVolume", outVolume);
         s.setValue("audioBitrate", audioBitrate);
         s.setValue("enableBackend2", enableBackend2);
@@ -1817,6 +1819,22 @@ void Settings::setAudioInGainDecibel(qreal dB)
     if (dB < audioInGainDecibel || dB > audioInGainDecibel) {
         audioInGainDecibel = dB;
         emit audioInGainDecibelChanged(audioInGainDecibel);
+    }
+}
+
+qreal Settings::getAudioThreshold() const
+{
+    QMutexLocker locker{&bigLock};
+    return audioThreshold;
+}
+
+void Settings::setAudioThreshold(qreal percent)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (percent < audioThreshold || percent > audioThreshold) {
+        audioThreshold = percent;
+        emit audioThresholdChanged(audioThreshold);
     }
 }
 

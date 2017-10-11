@@ -60,6 +60,15 @@ public:
     qreal inputGain() const;
     void setInputGain(qreal dB);
 
+    qreal minInputThreshold() const;
+    void setMinInputThreshold(qreal percent);
+
+    qreal maxInputThreshold() const;
+    void setMaxInputThreshold(qreal percent);
+
+    qreal getInputThreshold() const;
+    void setInputThreshold(qreal percent);
+
     void reinitInput(const QString& inDevDesc);
     bool reinitOutput(const QString& outDevDesc);
 
@@ -78,6 +87,7 @@ public:
     void stopLoop();
     void playMono16Sound(const QByteArray& data);
     void playMono16Sound(const QString& path);
+    void stopActive();
 
     void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
                          int sampleRate);
@@ -99,6 +109,7 @@ private:
     virtual bool initInput(const QString& deviceName);
     virtual bool initOutput(const QString& outDevDescr);
     void playMono16SoundCleanup();
+    float getVolume(int16_t *buf);
     void doCapture();
 
 protected:
@@ -120,6 +131,12 @@ protected:
     qreal gainFactor;
     qreal minInGain = -30;
     qreal maxInGain = 30;
+    qreal inputThreshold;
+    qreal voiceHold = 250;
+    bool isActive = false;
+    QTimer voiceTimer;
+    qreal minInThreshold = 0.0;
+    qreal maxInThreshold = 0.4;
 };
 
 #endif // OPENAL_H
