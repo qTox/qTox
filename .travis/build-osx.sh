@@ -48,6 +48,7 @@ get_ruby_version() {
     rvm get stable
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
     rvm use ruby --install --default
+    echo rvm_auto_reload_flag=1 >> ~/.rvmrc
 }
 
 main() {
