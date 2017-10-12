@@ -49,6 +49,11 @@ static qint64 getCurrentTime()
     return QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / 1000;
 }
 
+/**
+ * @brief Get server public key from Json.
+ * @param text Json text.
+ * @return Server public key.
+ */
 QByteArray ToxmeData::parsePublicKey(const QString& text) const
 {
     const QJsonObject json = QJsonDocument::fromJson(text.toLatin1()).object();
@@ -56,6 +61,14 @@ QByteArray ToxmeData::parsePublicKey(const QString& text) const
     return QByteArray::fromHex(key.toLatin1());
 }
 
+/**
+ * @brief Build Json with encrypted payload.
+ * @param action Action number.
+ * @param pk User public key
+ * @param encrypted Encrypted payload.
+ * @param nonce Crypto nonce.
+ * @return Json with action and encrypted payload.
+ */
 QString ToxmeData::encryptedJson(int action, const QByteArray& pk, const QByteArray& encrypted,
                                  const QByteArray& nonce) const
 {
@@ -69,6 +82,11 @@ QString ToxmeData::encryptedJson(int action, const QByteArray& pk, const QByteAr
     return QJsonDocument{json}.toJson(QJsonDocument::Compact);
 }
 
+/**
+ * @brief Build lookup request Json.
+ * @param address Address to lookup.
+ * @return Json to lookup.
+ */
 QString ToxmeData::lookupRequest(const QString& address) const
 {
     const QJsonObject json = {
@@ -79,6 +97,11 @@ QString ToxmeData::lookupRequest(const QString& address) const
     return QJsonDocument{json}.toJson(QJsonDocument::Compact);
 }
 
+/**
+ * @brief Extract ToxId from lookup Json.
+ * @param inText Json text.
+ * @return User ToxId.
+ */
 ToxId ToxmeData::lookup(const QString& inText) const
 {
     const QJsonObject json = QJsonDocument::fromJson(inText.toLatin1()).object();
@@ -86,6 +109,11 @@ ToxId ToxmeData::lookup(const QString& inText) const
     return ToxId{text};
 }
 
+/**
+ * @brief Extract toxme result code.
+ * @param srcJson Json text.
+ * @return Toxme code result.
+ */
 ToxmeData::ExecCode ToxmeData::extractCode(const QString& srcJson) const
 {
     const QJsonObject json = QJsonDocument::fromJson(srcJson.toLatin1()).object();
@@ -101,6 +129,14 @@ ToxmeData::ExecCode ToxmeData::extractCode(const QString& srcJson) const
     return ExecCode(code);
 }
 
+/**
+ * @brief Build create address request Json.
+ * @param id Self ToxId.
+ * @param address Preferred address.
+ * @param bio Self biography.
+ * @param keepPrivate  If true, the address will not be published on toxme site.
+ * @return Json to register Toxme address.
+ */
 QString ToxmeData::createAddressRequest(const ToxId id, const QString& address, const QString& bio,
                                         bool keepPrivate) const
 {
@@ -115,6 +151,12 @@ QString ToxmeData::createAddressRequest(const ToxId id, const QString& address, 
     return QJsonDocument{json}.toJson(QJsonDocument::Compact);
 }
 
+/**
+ * @brief Extrace password from Json answer.
+ * @param srcJson[in] Json text.
+ * @param code[out] Result code. Changed if password not extracted.
+ * @return Extracted password.
+ */
 QString ToxmeData::getPass(const QString& srcJson, ToxmeData::ExecCode& code)
 {
     const QJsonObject json = QJsonDocument::fromJson(srcJson.toLatin1()).object();
@@ -137,6 +179,11 @@ QString ToxmeData::getPass(const QString& srcJson, ToxmeData::ExecCode& code)
     return pass.toString();
 }
 
+/**
+ * @brief Build Json to delete address.
+ * @param pk Self public key.
+ * @return Json to delete address.
+ */
 QString ToxmeData::deleteAddressRequest(const ToxPk& pk)
 {
     QJsonObject json = {
