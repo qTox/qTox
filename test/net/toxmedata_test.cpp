@@ -160,7 +160,7 @@ void TestToxmeData::extractCode_data()
     QTest::newRow("String code") << QStringLiteral(R"({"c": "string here"})")
                                  << ToxmeData::ExecCode::IncorrectResponse;
     QTest::newRow("Invalid code") << QStringLiteral(R"({"c": text})")
-                                  << ToxmeData::ExecCode::IncorrectResponse;
+                                  << ToxmeData::ExecCode::ServerError;
     QTest::newRow("Not json") << QStringLiteral("Not json string")
                               << ToxmeData::ExecCode::ServerError;
 }
