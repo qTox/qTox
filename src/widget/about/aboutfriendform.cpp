@@ -6,8 +6,8 @@
 
 AboutFriendForm::AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent)
     : QDialog(parent)
-    , about{about}
     , ui(new Ui::AboutFriendForm)
+    , about{about}
 {
     ui->setupUi(this);
     ui->label_4->hide();
