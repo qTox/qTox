@@ -97,27 +97,27 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitate audio</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitate audio transmisă. Reduceți această setare dacă lățimea de bandă nu este suficient de mare sau dacă doriți să reduceți utilizarea internetului.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ridicat (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mediu (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Slab (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Foarte slab (8 kbps)</translation>
     </message>
 </context>
 <context>
@@ -2060,33 +2060,8 @@ Please use another image.</source>
 Utilizați o altă imagine.</translation>
     </message>
     <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>Profilul există deja</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>Un profil numit &quot;%1&quot; există deja.</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>Redenumire eșuată</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>Nu s-a putut redenumi profilul &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>Exportați profilul</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>Tox fișier salvat (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2125,11 +2100,6 @@ Utilizați o altă imagine.</translation>
         <translation>Sigur ștergeți parola?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Sigur doriți să vă ștergeți parola?</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>Introduceți o nouă parolă.</translation>
     </message>
@@ -2147,16 +2117,6 @@ Utilizați o altă imagine.</translation>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
         <translation>Salvați QrCode (*.png)</translation>
-    </message>
-    <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation>Următoarele fișiere nu au putut fi șterse:</translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation>Îndepărtați-le manual.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -2222,6 +2182,62 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 Împărtășiți prietenilor pentru a comunica.
 
 Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">Redenumire eșuată</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished">Profilul există deja</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">Un profil numit &quot;%1&quot; există deja.</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished">Nu s-a putut modifica parola în baza de date, s-ar putea să fie deteriorată sau să se folosească parola veche.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Exportați profilul</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished">Următoarele fișiere nu au putut fi șterse:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished">Îndepărtați-le manual.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">Sigur doriți să vă ștergeți parola?</translation>
     </message>
 </context>
 <context>
