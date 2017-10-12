@@ -20,147 +20,128 @@
 #include "toxmedata.h"
 #include "src/core/toxid.h"
 
+#include <QDateTime>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QString>
 
-#include <ctime>
+namespace {
+namespace consts {
+namespace keys {
+const QString Key{QStringLiteral("key")};
+const QString Action{QStringLiteral("action")};
+const QString PublicKey{QStringLiteral("public_key")};
+const QString Encrypted{QStringLiteral("encrypted")};
+const QString Nonce{QStringLiteral("nonce")};
+const QString Name{QStringLiteral("name")};
+const QString ToxId{QStringLiteral("tox_id")};
+const QString Code{QStringLiteral("c")};
+const QString Bio{QStringLiteral("bio")};
+const QString Privacy{QStringLiteral("privacy")};
+const QString Timestamp{QStringLiteral("timestamp")};
+const QString Password{QStringLiteral("password")};
+}
+}
+}
+
+static qint64 getCurrentTime()
+{
+    return QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / 1000;
+}
 
 QByteArray ToxmeData::parsePublicKey(const QString& text) const
 {
-    static const QByteArray pattern{"key\":\""};
-
-    QString json = text;
-    json.remove(' ');
-    int start = json.indexOf(pattern) + pattern.length();
-    int end = json.indexOf("\"", start);
-    int pubkeySize = (end - start) / 2;
-    QString rawKey = json.mid(start, pubkeySize * 2);
-
-    QByteArray key;
-    // I think, exist more easy way to convert key to ByteArray
-    for (int i = 0; i < pubkeySize; ++i) {
-        QString byte = rawKey.mid(i * 2, 2);
-        key[i] = byte.toInt(nullptr, 16);
-    }
-
-    return key;
+    const QJsonObject json = QJsonDocument::fromJson(text.toLatin1()).object();
+    const QString& key = json[consts::keys::Key].toString();
+    return QByteArray::fromHex(key.toLatin1());
 }
 
 QString ToxmeData::encryptedJson(int action, const QByteArray& pk, const QByteArray& encrypted,
                                  const QByteArray& nonce) const
 {
-    return "{\"action\":" + QString().setNum(action) +
-            ",\"public_key\":\"" + pk.toHex() +
-            "\",\"encrypted\":\"" + encrypted.toBase64() +
-            "\",\"nonce\":\"" + nonce.toBase64() + "\"}";
+    const QJsonObject json = {
+        { consts::keys::Action, action },
+        { consts::keys::PublicKey, QString{pk.toHex()} },
+        { consts::keys::Encrypted, QString{encrypted.toBase64()} },
+        { consts::keys::Nonce, QString{nonce.toBase64()} },
+    };
+
+    return QJsonDocument{json}.toJson(QJsonDocument::Compact);
 }
 
 QString ToxmeData::lookupRequest(const QString& address) const
 {
-    return "{\"action\":3,\"name\":\"" + address + "\"}";
+    const QJsonObject json = {
+        { consts::keys::Action, 3 },
+        { consts::keys::Name, address },
+    };
+
+    return QJsonDocument{json}.toJson(QJsonDocument::Compact);
 }
 
 ToxId ToxmeData::lookup(const QString& inText) const
 {
-    QString text = inText;
-    static const QByteArray pattern{"tox_id\""};
-    const int index = text.indexOf(pattern);
-    if (index == -1)
-        return ToxId();
-
-    text = text.mid(index + pattern.size());
-
-    const int idStart = text.indexOf('"');
-    if (idStart == -1)
-        return ToxId();
-
-    text = text.mid(idStart + 1);
-
-    const int idEnd = text.indexOf('"');
-    if (idEnd == -1)
-        return ToxId();
-
-    text.truncate(idEnd);
-
-    return ToxId(text);
+    const QJsonObject json = QJsonDocument::fromJson(inText.toLatin1()).object();
+    const QString& text = json[consts::keys::ToxId].toString();
+    return ToxId{text};
 }
 
 ToxmeData::ExecCode ToxmeData::extractCode(const QString& srcJson) const
 {
-    QString json = srcJson;
-    static const QByteArray pattern{"c\":"};
-
-    if (json.isEmpty())
+    const QJsonObject json = QJsonDocument::fromJson(srcJson.toLatin1()).object();
+    if (json.isEmpty()) {
         return ServerError;
-
-    json = json.remove(' ');
-    const int start = json.indexOf(pattern);
-    if (start == -1)
-        return ServerError;
-
-    json = json.mid(start + pattern.size());
-    int end = json.indexOf(",");
-    if (end == -1) {
-        end = json.indexOf("}");
-        if (end == -1)
-            return IncorrectResponse;
     }
 
-    json.truncate(end);
-    bool ok;
-    int r = json.toInt(&ok);
-    if (!ok)
+    const int code = json[consts::keys::Code].toInt(INT32_MAX);
+    if (code == INT32_MAX) {
         return IncorrectResponse;
+    }
 
-    return ExecCode(r);
+    return ExecCode(code);
 }
 
 QString ToxmeData::createAddressRequest(const ToxId id, const QString& address, const QString& bio,
                                         bool keepPrivate) const
 {
-    int privacy = keepPrivate ? 0 : 2;
-    return "{\"tox_id\":\"" + id.toString() +
-           "\",\"name\":\"" + address +
-           "\",\"privacy\":" + QString().setNum(privacy) +
-           ",\"bio\":\"" + bio +
-           "\",\"timestamp\":" + QString().setNum(time(nullptr)) +
-            "}";
+    const QJsonObject json = {
+        { consts::keys::Bio, bio },
+        { consts::keys::Name, address },
+        { consts::keys::ToxId, id.toString() },
+        { consts::keys::Privacy, keepPrivate ? 0 : 2 },
+        { consts::keys::Timestamp, getCurrentTime() },
+    };
 
+    return QJsonDocument{json}.toJson(QJsonDocument::Compact);
 }
 
 QString ToxmeData::getPass(const QString& srcJson, ToxmeData::ExecCode& code)
 {
-    QString json = srcJson;
-    static const QByteArray pattern{"password\":"};
-
-    json = json.remove(' ');
-    const int start = json.indexOf(pattern);
-    if (start == -1) {
+    const QJsonObject json = QJsonDocument::fromJson(srcJson.toLatin1()).object();
+    if (json.isEmpty()) {
         code = ToxmeData::NoPassword;
-        return QString();
+        return QString{};
     }
 
-    json = json.mid(start + pattern.size());
-    if (json.startsWith("null")) {
+    const QJsonValue pass = json[consts::keys::Password];
+    if (pass.isNull()) {
         code = ToxmeData::Updated;
-        return QString();
+        return QString{};
     }
 
-    json = json.mid(1, json.length());
-    int end = json.indexOf("\"");
-    if (end == -1) {
+    if (!pass.isString()) {
         code = ToxmeData::IncorrectResponse;
-        return QString();
+        return QString{};
     }
 
-    json.truncate(end);
-
-    return json;
+    return pass.toString();
 }
 
 QString ToxmeData::deleteAddressRequest(const ToxPk& pk)
 {
-    return "{\"public_key\":\"" + pk.toString() +
-           "\",\"timestamp\":" + QString().setNum(time(nullptr)) +
-           "}";
-
+    QJsonObject json = {
+        { consts::keys::PublicKey, pk.toString() },
+        { consts::keys::Timestamp, getCurrentTime() },
+    };
+    return QJsonDocument{json}.toJson(QJsonDocument::Compact);
 }
