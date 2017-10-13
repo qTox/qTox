@@ -549,8 +549,16 @@ void FileTransferWidget::showPreview(const QString& filename)
         ui->previewButton->show();
         // Show mouseover preview, but make sure it's not larger than 50% of the screen width/height
         const QRect desktopSize = QApplication::desktop()->screenGeometry();
-        const QImage previewImage = image.scaled(0.5 * desktopSize.width(), 0.5 * desktopSize.height(),
+        const int maxPreviewWidth = 0.5 * desktopSize.width();
+        const int maxPreviewHeight = 0.5 * desktopSize.height();
+        QImage previewImage;
+        if (image.width() > maxPreviewWidth || image.height() > maxPreviewHeight) {
+            previewImage = image.scaled(maxPreviewWidth, maxPreviewHeight,
                                                  Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        }
+        else {
+            previewImage = image;
+        }
         QByteArray imageData;
         QBuffer buffer(&imageData);
         buffer.open(QIODevice::WriteOnly);
