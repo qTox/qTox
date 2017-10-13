@@ -22,6 +22,8 @@
 
 #include <QString>
 
+#include <ctime>
+
 QByteArray ToxmeData::parsePublicKey(const QString& text) const
 {
     static const QByteArray pattern{"key\":\""};
