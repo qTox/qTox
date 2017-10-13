@@ -38,9 +38,9 @@ static const StringToString
                     {QStringLiteral("%1aa%1"), QStringLiteral("<%2>%1aa%1</%2>")},
                     {QStringLiteral("%1aaa%1"), QStringLiteral("<%2>%1aaa%1</%2>")},
 
-                    // Additional text from both sides
-                    {QStringLiteral("aaa%1a%1"), QStringLiteral("aaa<%2>%1a%1</%2>")},
-                    {QStringLiteral("%1a%1aaa"), QStringLiteral("<%2>%1a%1</%2>aaa")},
+                    // Additional text from both sides - must be enclosed with spaces or newlines!
+                    {QStringLiteral("aaa %1a%1"), QStringLiteral("aaa <%2>%1a%1</%2>")},
+                    {QStringLiteral("%1a%1 aaa"), QStringLiteral("<%2>%1a%1</%2> aaa")},
 
                     // Must allow same formatting more than one time, divided by two and more
                     // symbols due to QRegularExpressionIterator
@@ -52,17 +52,23 @@ static const QVector<QString>
                      QStringLiteral("%1 a%1"), QStringLiteral("%1a %1"),
 
                      // No newlines
-                     QStringLiteral("%1aa\n%1"),
+                     QStringLiteral("%1aa\n%1"),};
 
+static const QVector<QString>
+    singleSignExceptions{
                      // Only exact combinations of symbols must encapsulate formatting string
-                     QStringLiteral("%1%1aaa%1"), QStringLiteral("%1aaa%1%1")};
+                     QStringLiteral("%1%1aaa%1"), QStringLiteral("%1aaa%1%1"),
+
+                     // Do not apply markdown in center of words
+                     QStringLiteral("%1aaa%1aa%1"), QStringLiteral("part%1part part%1part"),};
 
 static const StringToString singleSlash{
     // Must work with inserted tags
     {QStringLiteral("/aaa<b>aaa aaa</b>/"), QStringLiteral("<i>aaa<b>aaa aaa</b></i>")}};
 
 static const StringToString doubleSign{
-    {QStringLiteral("**aaa * aaa**"), QStringLiteral("<b>aaa * aaa</b>")}};
+    {QStringLiteral("**aaa * aaa**"), QStringLiteral("<b>aaa * aaa</b>")},
+    {QStringLiteral("*****"), QStringLiteral("<b>*</b>")}};
 
 static const StringToString mixedFormatting{
     // Must allow mixed formatting if there is no tag overlap in result
@@ -78,12 +84,8 @@ static const StringToString urlCases{
     {QStringLiteral("https://github.com/qTox/qTox/issues/4233"),
      QStringLiteral("<a href=\"https://github.com/qTox/qTox/issues/4233\">"
                     "https://github.com/qTox/qTox/issues/4233</a>")},
-    {QStringLiteral("No conflicts with /italic https://github.com/qTox/qTox/issues/4233 font/"),
-     QStringLiteral("No conflicts with <i>italic "
-                    "<a href=\"https://github.com/qTox/qTox/issues/4233\">"
-                    "https://github.com/qTox/qTox/issues/4233</a> font</i>")},
     {QStringLiteral("www.youtube.com"),
-     QStringLiteral("<a href=\"http://www.youtube.com\">www.youtube.com</a>")},
+     QStringLiteral("<a href=\"www.youtube.com\">www.youtube.com</a>")},
     {QStringLiteral("https://url.com/some*url/some*more*url/"),
      QStringLiteral("<a href=\"https://url.com/some*url/some*more*url/\">"
                     "https://url.com/some*url/some*more*url/</a>")},
@@ -106,14 +108,63 @@ static const StringToString urlCases{
                     ">http://www.metacritic.com/game/playstation-4/mass-effect-andromeda</a>\n"
                     "<a href=\"http://www.metacritic.com/game/xbox-one/mass-effect-andromeda\">"
                     "http://www.metacritic.com/game/xbox-one/mass-effect-andromeda</a>")},
-    {QStringLiteral("http://site.com/part1/part2 "
+    {QStringLiteral(
+                    "http://site.com/part1/part2 "
                     "http://site.com/part3 "
                     "and one more time "
-                    "www.site.com/part1/part2"),
-     QStringLiteral("<a href=\"http://site.com/part1/part2\">http://site.com/part1/part2</a> "
+                    "www.site.com/part1/part2"
+                    ),
+     QStringLiteral(
+                    "<a href=\"http://site.com/part1/part2\">http://site.com/part1/part2</a> "
                     "<a href=\"http://site.com/part3\">http://site.com/part3</a> "
                     "and one more time "
-                    "<a href=\"http://www.site.com/part1/part2\">www.site.com/part1/part2</a>")},
+                    "<a href=\"www.site.com/part1/part2\">www.site.com/part1/part2</a>"
+                    )},
+    // IPs. Examples of IPv6 textual representation: https://tools.ietf.org/html/rfc4291#section-2.2
+    {QStringLiteral(
+                    "https://127.0.0.1/asd\n"
+                    "https://ABCD:EF01:2345:6789:ABCD:EF01:2345:6789/\n"
+                    "ftp://2001:DB8::8:800:200C:417A/\n"
+                    "http://::1/\n"
+                    "http://::/\n"
+                    "https://127.0.0.1:8080/asd "
+                    "https://[ABCD:EF01:2345:6789:ABCD:EF01:2345:6789]:8080/ "
+                    "ftp://[2001:DB8::8:800:200C:417A]:21/ "
+                    "http://[::1]:22/ "
+                    "http://[::]:20/ "
+                    ),
+     QStringLiteral(
+                    "<a href=\"https://127.0.0.1/asd\">"
+                        "https://127.0.0.1/asd"
+                    "</a>\n"
+                    "<a href=\"https://ABCD:EF01:2345:6789:ABCD:EF01:2345:6789/\">"
+                        "https://ABCD:EF01:2345:6789:ABCD:EF01:2345:6789/"
+                    "</a>\n"
+                    "<a href=\"ftp://2001:DB8::8:800:200C:417A/\">"
+                        "ftp://2001:DB8::8:800:200C:417A/"
+                    "</a>\n"
+                    "<a href=\"http://::1/\">"
+                        "http://::1/"
+                    "</a>\n"
+                    "<a href=\"http://::/\">"
+                        "http://::/"
+                    "</a>\n"
+                    "<a href=\"https://127.0.0.1:8080/asd\">"
+                        "https://127.0.0.1:8080/asd"
+                    "</a> "
+                    "<a href=\"https://[ABCD:EF01:2345:6789:ABCD:EF01:2345:6789]:8080/\">"
+                        "https://[ABCD:EF01:2345:6789:ABCD:EF01:2345:6789]:8080/"
+                    "</a> "
+                    "<a href=\"ftp://[2001:DB8::8:800:200C:417A]:21/\">"
+                        "ftp://[2001:DB8::8:800:200C:417A]:21/"
+                    "</a> "
+                    "<a href=\"http://[::1]:22/\">"
+                        "http://[::1]:22/"
+                    "</a> "
+                    "<a href=\"http://[::]:20/\">"
+                        "http://[::]:20/"
+                    "</a> "
+                    )},
 };
 
 /**
@@ -126,9 +177,8 @@ static void commonTest(bool showSymbols, const StringToString map, const QString
 {
     for (QString key : map.keys()) {
         QString source = key.arg(signs);
-        TextFormatter tf = TextFormatter(source);
         QString result = map[key].arg(showSymbols ? signs : "", signsToTags[signs]);
-        QVERIFY(tf.applyStyling(showSymbols) == result);
+        QVERIFY(applyMarkdown(source, showSymbols) == result);
     }
 }
 
@@ -136,23 +186,35 @@ static void commonTest(bool showSymbols, const StringToString map, const QString
  * @brief Testing exception cases
  * @param signs Combination of formatting symbols
  */
-static void commonExceptionsTest(const QString signs)
+static void exceptionsTest(const QVector<QString>& exceptions, const QString signs)
 {
-    for (QString source : commonExceptions) {
-        TextFormatter tf = TextFormatter(source.arg(signs));
-        QVERIFY(tf.applyStyling(false) == source.arg(signs));
+    for (QString source : exceptions) {
+        QString message = source.arg(signs);
+        QVERIFY(applyMarkdown(message, false) == message);
     }
 }
 
 /**
- * @brief Testing some uncommon, special cases
+ * @brief Testing uncommon cases of markdown
  * @param map Grouped cases
  */
-static void specialTest(const StringToString map)
+static void specialMarkdownTest(const StringToString map)
 {
     for (QString key : map.keys()) {
-        TextFormatter tf = TextFormatter(key);
-        QVERIFY(tf.applyStyling(false) == map[key]);
+        QVERIFY(applyMarkdown(key, false) == map[key]);
+    }
+}
+
+/**
+ * @brief Uncommon cases of URLs
+ * @param map Grouped cases
+ */
+static void specialUrlTest(const StringToString map)
+{
+    for (QString key : map.keys()) {
+        QString factResult = highlightURL(key);
+        QString expecting = map[key];
+        QVERIFY(factResult == expecting);
     }
 }
 
@@ -208,42 +270,43 @@ void TestTextFormatter::doubleSignWithSymbolsTest()
 
 void TestTextFormatter::singleSignExceptionsTest()
 {
-    commonExceptionsTest("*");
+    exceptionsTest(commonExceptions, "*");
+    exceptionsTest(singleSignExceptions, "*");
 }
 
 void TestTextFormatter::slashExceptionsTest()
 {
-    commonExceptionsTest("/");
+    exceptionsTest(commonExceptions, "/");
 }
 
 void TestTextFormatter::doubleSignExceptionsTest()
 {
-    commonExceptionsTest("**");
+    exceptionsTest(commonExceptions, "**");
 }
 
 void TestTextFormatter::slashSpecialTest()
 {
-    specialTest(singleSlash);
+    specialMarkdownTest(singleSlash);
 }
 
 void TestTextFormatter::doubleSignSpecialTest()
 {
-    specialTest(doubleSign);
+    specialMarkdownTest(doubleSign);
 }
 
 void TestTextFormatter::mixedFormattingTest()
 {
-    specialTest(mixedFormatting);
+    specialMarkdownTest(mixedFormatting);
 }
 
 void TestTextFormatter::multilineCodeTest()
 {
-    specialTest(multilineCode);
+    specialMarkdownTest(multilineCode);
 }
 
 void TestTextFormatter::urlTest()
 {
-    specialTest(urlCases);
+    specialUrlTest(urlCases);
 }
 
 QTEST_GUILESS_MAIN(TestTextFormatter)
