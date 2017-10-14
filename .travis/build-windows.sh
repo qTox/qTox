@@ -19,9 +19,10 @@
 # Fail out on error
 set -euo pipefail
 
-# Just make sure the file exists, makes logic easier
+# Just make sure those exists, makes logic easier
 mkdir -p $DEP_CACHE
 touch $DEP_CACHE/hash
+mkdir -p workspace/$ARCH/dep-cache
 
 # If build.sh has changed, i.e. its hash doesn't match the previously stored one, and it's Stage 1
 # Then we want to rebuild everything from scratch
@@ -29,11 +30,10 @@ if [ "`cat $DEP_CACHE/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] &
 then
   # Clear the cache, removing all the pre-built dependencies
   rm -rf $DEP_CACHE/*
+else
+  # Copy over all pre-built dependencies
+  cp -a $DEP_CACHE/* workspace/$ARCH/dep-cache
 fi
-
-# Copy over all pre-built dependencies, if any
-mkdir -p workspace/$ARCH/dep-cache
-cp -a $DEP_CACHE/* workspace/$ARCH/dep-cache
 
 # Build
 sudo docker run --rm \
