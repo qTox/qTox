@@ -12,23 +12,24 @@ branches:
 matrix:
   fast_finish: true
   include:
-    - os: linux
+    - stage: Test
+      os: linux
       env: JOB=verify-commit-format
-    - os: linux
+    - stage: Test
+      os: linux
       env: JOB=build-docs DOXYGEN_CONFIG_FILE=doxygen.conf
-    - os: linux
+    - stage: Test
+      os: linux
       env: JOB=build-gitstats GITSTATS_DIR=gitstats
       addons:
         apt:
           packages:
             - gitstats
     # the actual compilin'
-    - os: linux
+    - stage: Linux
+      os: linux
       env: JOB=build-ubuntu-14-04
-    - os: osx
-      osx_image: xcode7.3
-      env: JOB=build-osx
-    - stage: Windows Dependencies Stage 1
+    - stage: Windows Stage 1: Dependencies (OpenSSL, Qt)
       os: linux
       env: JOB=build-windows-deps TRAVIS_CI_STAGE_ONE=true BUILD_TYPE=release ARCH=i686 DEP_CACHE=/opt/$JOB/$ARCH
       services:
@@ -36,27 +37,31 @@ matrix:
       cache:
         directories:
           - $DEP_CACHE
-    - stage: Windows Dependencies Stage 1
+    - stage: Windows Stage 1: Dependencies (OpenSSL, Qt)
       os: linux
       env: JOB=build-windows-deps TRAVIS_CI_STAGE_ONE=true BUILD_TYPE=release ARCH=x86_64
-    - stage: Windows Dependencies Stage 2
+    - stage: Windows Stage 2: Dependencies (other)
       os: linux
       env: JOB=build-windows-deps TRAVIS_CI_STAGE_TWO=true BUILD_TYPE=release ARCH=i686
-    - stage: Windows Dependencies Stage 2
+    - stage: Windows Stage 2: Dependencies (other)
       os: linux
       env: JOB=build-windows-deps TRAVIS_CI_STAGE_TWO=true BUILD_TYPE=release ARCH=x86_64
-    - stage: Windows (Stage 3)
+    - stage: Windows Stage 3: qTox
       os: linux
       env: JOB=build-windows BUILD_TYPE=release ARCH=i686
-    - stage: Windows (Stage 3)
+    - stage: Windows Stage 3: qTox
       os: linux
       env: JOB=build-windows BUILD_TYPE=release ARCH=x86_64
-    - stage: Windows (Stage 3)           
+    - stage: Windows Stage 3: qTox
       os: linux
       env: JOB=build-windows BUILD_TYPE=debug ARCH=i686
-    - stage: Windows (Stage 3)           
+    - stage: Windows Stage 3: qTox
       os: linux
       env: JOB=build-windows BUILD_TYPE=debug ARCH=x86_64
+    - stage: macOS
+      os: osx
+      osx_image: xcode7.3
+      env: JOB=build-osx
 
 script: "./.travis/$JOB.sh"
 
