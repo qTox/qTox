@@ -25,6 +25,7 @@ touch $DEP_CACHE/hash
 mkdir -p workspace/$ARCH/dep-cache
 sudo chown `id -u -n`:`id -g -n` -R $DEP_CACHE
 
+
 rm -rf $DEP_CACHE/*
 exit 0
 
