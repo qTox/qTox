@@ -28,6 +28,17 @@ matrix:
     - os: osx
       osx_image: xcode7.3
       env: JOB=build-osx
+    - stage: Windows Dependencies Part 1
+      - env: TRAVIS_CI_STAGE_ONE=true
+        - os: linux
+          env: JOB=build-windows-i686-deps-stage1
+    - stage: Windows Dependencies Part 2
+      - env: TRAVIS_CI_STAGE_TWO=true
+        - os: linux
+          env: JOB=build-windows-i686-deps-stage2
+    - stage: Windows Builds
+      - os: linux
+        env: JOB=build-windows-i686
 
 script: "./.travis/$JOB.sh"
 
