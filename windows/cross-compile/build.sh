@@ -310,7 +310,7 @@ fi
 
 # Stop here if running the first stage on Travis CI
 set +u
-if [ ! -z "$TRAVIS_CI_STAGE_ONE" ]
+if [ "$TRAVIS_CI_STAGE_ONE" == "true" ]
 then
   # Strip to reduce cache size
   strip_all
@@ -864,7 +864,7 @@ fi
 
 # Stop here if running the second stage on Travis CI
 set +u
-if [ ! -z "$TRAVIS_CI_STAGE_TWO" ]
+if [ "$TRAVIS_CI_STAGE_TWO" == "true" ]
 then
   # Strip to reduce cache size
   strip_all
