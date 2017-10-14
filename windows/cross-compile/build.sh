@@ -324,7 +324,7 @@ if [ "$TRAVIS_CI_STAGE_ONE" == "true" ]
 then
   # Strip to reduce cache size
   strip_all
-  exit 1
+  exit 0
 fi
 set -u
 
@@ -878,7 +878,7 @@ if [ "$TRAVIS_CI_STAGE_TWO" == "true" ]
 then
   # Strip to reduce cache size
   strip_all
-  exit 1
+  exit 0
 fi
 set -u
 
