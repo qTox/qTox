@@ -19,4 +19,10 @@
 # Fail out on error
 set -eu -o pipefail
 
-true
+echo JOB=$JOB
+echo TRAVIS_CI_STAGE_ONE=$TRAVIS_CI_STAGE_ONE
+echo TRAVIS_CI_STAGE_TWO=$TRAVIS_CI_STAGE_TWO
+echo BUILD_TYPE=$BUILD_TYPE
+echo ARCH=$ARCH
+echo DEP_CACHE=$DEP_CACHE
+
