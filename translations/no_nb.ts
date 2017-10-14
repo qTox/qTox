@@ -88,35 +88,35 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrur på eksperimentell lyd-bakende med ekkokanselleringsstøtte. qTox må startes på nytt for at dette skal tre i effekt.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>Skru på eksperimentell lyd-bakende</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Lydkvalitet</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sendt lydkvalitet. Senk denne hvis din båndbredde ikke er høy nok, eller hvis du ønsker å senke databruken.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Høy (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Middels (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lav (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Veldig lav (8 kbps)</translation>
     </message>
 </context>
 <context>
@@ -357,7 +357,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tox ID er ugyldig eller så finnes den ikke</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -366,24 +366,24 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Åpne kontaktliste</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke åpne fil</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke åpne kontaktfil</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig fil</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fant ingen kontakter å importere i denne fila.</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -403,11 +403,11 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Åpne</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Send venneforespørsler</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -416,19 +416,19 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer en liste med kontakter, én Tox ID per linje</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Klar til å importere %n kontakt, klikk send for å bekrefte</numerusform>
+            <numerusform>Klar til å importere %n kontakter, klikk send for å bekrefte</numerusform>
         </translation>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer kontakter</translation>
     </message>
 </context>
 <context>
@@ -726,7 +726,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Uventet slutt på samtale med %1. %2</translation>
     </message>
 </context>
 <context>
@@ -1752,7 +1752,7 @@ Det kan hende du ønsker å opprette en.</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Merk avkryssningsboks automatisk</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1993,11 +1993,11 @@ Endringer av lagringsformat er mulig, som kan forårsake data tap.</translation>
     </message>
     <message>
         <source>BlackList</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Svarteliste</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrer gruppemelding etter gruppemedlemmets offentlige nøkkel. Putt offentlig nøkkel her, én per linje.</translation>
     </message>
 </context>
 <context>
@@ -2041,33 +2041,8 @@ Please use another image.</source>
 Velg et annet bilde.</translation>
     </message>
     <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>Profilen finnes allrede</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>En profil ved navn &quot;%1&quot; finnes allrede.</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>Endring av navn mislyktes</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>Kunne ikke endre navn på profilen til &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>Eksporter profil</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>Tox lagringsfil (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2106,11 +2081,6 @@ Velg et annet bilde.</translation>
         <translation type="unfinished">Virkelig slett passordet?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Er du sikker på at du vil slette passordet ditt?</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>Skriv inn nytt passord.</translation>
     </message>
@@ -2136,16 +2106,6 @@ Velg et annet bilde.</translation>
     <message>
         <source>Remove</source>
         <translation>Fjern</translation>
-    </message>
-    <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation>Følgende filer kunne ikke slettes:</translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation>Fjern dem manuelt.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -2211,6 +2171,62 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 Del det med dine venner for å kommunisere.
 
 Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">Endring av navn mislyktes</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">En profil ved navn &quot;%1&quot; finnes allrede.</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished">Kunne ikke endre passord på databasen, den kan være skadet eller benytte seg av det gamle passordet.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Eksporter profil</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished">Følgende filer kunne ikke slettes:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished">Fjern dem manuelt.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">Er du sikker på at du vil slette passordet ditt?</translation>
     </message>
 </context>
 <context>
@@ -2432,7 +2448,7 @@ Den vil bli installert når qTox restarter.</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Starter ny instans og åpner innloggingsskjermen.</translation>
     </message>
 </context>
 <context>
