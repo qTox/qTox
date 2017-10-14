@@ -20,6 +20,7 @@
 set -euo pipefail
 
 # Just make sure the file exists, makes logic easier
+mkdir -p $DEP_CACHE
 touch $DEP_CACHE/hash
 
 # If build.sh has changed, i.e. its hash doesn't match the previously stored one, and it's Stage 1
@@ -42,7 +43,7 @@ sudo docker run --rm \
                 ubuntu:16.04 \
                 /bin/bash TRAVIS_CI_STAGE_ONE=$TRAVIS_CI_STAGE_ONE TRAVIS_CI_STAGE_TWO=$TRAVIS_CI_STAGE_TWO /script/build.sh $ARCH $BUILD_TYPE
 
-# If it's any of the dependency buildsing stages (Stage 1 or 2), copy over to Travis cache all the built dependencies
+# If it's any of the dependency building stages (Stage 1 or 2), copy over all the built dependencies to Travis cache
 if [ "$TRAVIS_CI_STAGE_ONE" == "true" ] || [ "$TRAVIS_CI_STAGE_TWO" == "true" ]
 then
   cp -a workspace/$ARCH/dep-cache/* $DEP_CACHE
@@ -53,4 +54,3 @@ if [ "`cat $DEP_CACHE/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] &
 then
   sha256sum windows/cross-compile/build.sh > $DEP_CACHE/hash
 fi
-
