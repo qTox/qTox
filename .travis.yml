@@ -12,20 +12,99 @@ branches:
 matrix:
   fast_finish: true
   include:
-    - os: linux
+    - stage: Linux
+      os: linux
       env: JOB=verify-commit-format
-    - os: linux
+    - stage: Linux
+      os: linux
       env: JOB=build-docs DOXYGEN_CONFIG_FILE=doxygen.conf
-    - os: linux
+    - stage: Linux
+      os: linux
       env: JOB=build-gitstats GITSTATS_DIR=gitstats
       addons:
         apt:
           packages:
             - gitstats
     # the actual compilin'
-    - os: linux
+    - stage: Linux
+      os: linux
       env: JOB=build-ubuntu-14-04
-    - os: osx
+    - stage: "Windows Stage 1: Dependencies (OpenSSL, Qt)"
+      os: linux
+      # Makes the cache this job creates avaiable only to jobs with WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=i686,
+      # making sure that i686 and x86_64 caches don't overwrite each other
+      env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=i686
+      script: ./.travis/build-windows.sh i686 release /opt/build-windows/i686 stage1
+      services:
+        - docker
+      cache:
+        directories:
+          - /opt/build-windows/i686
+    - stage: "Windows Stage 1: Dependencies (OpenSSL, Qt)"
+      os: linux
+      env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=x86_64
+      script: ./.travis/build-windows.sh x86_64 release /opt/build-windows/x86_64 stage1
+      services:
+        - docker
+      cache:
+        directories:
+          - /opt/build-windows/x86_64
+    - stage: "Windows Stage 2: Dependencies (other)"
+      os: linux
+      env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=i686
+      script: ./.travis/build-windows.sh i686 release /opt/build-windows/i686 stage2
+      services:
+        - docker
+      cache:
+        directories:
+          - /opt/build-windows/i686
+    - stage: "Windows Stage 2: Dependencies (other)"
+      os: linux
+      env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=x86_64
+      script: ./.travis/build-windows.sh x86_64 release /opt/build-windows/x86_64 stage2
+      services:
+        - docker
+      cache:
+        directories:
+          - /opt/build-windows/x86_64
+    - stage: "Windows Stage 3: qTox"
+      os: linux
+      env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=i686
+      script: ./.travis/build-windows.sh i686 release /opt/build-windows/i686 stage3
+      services:
+        - docker
+      cache:
+        directories:
+          - /opt/build-windows/i686
+    - stage: "Windows Stage 3: qTox"
+      os: linux
+      env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=x86_64
+      script: ./.travis/build-windows.sh x86_64 release /opt/build-windows/x86_64 stage3
+      services:
+        - docker
+      cache:
+        directories:
+          - /opt/build-windows/x86_64
+    - stage: "Windows Stage 3: qTox"
+      os: linux
+      env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=i686
+      script: ./.travis/build-windows.sh i686 debug /opt/build-windows/i686 stage3
+      services:
+        - docker
+      cache:
+        directories:
+          - /opt/build-windows/i686
+    - stage: "Windows Stage 3: qTox"
+      os: linux
+      env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=x86_64
+      script: ./.travis/build-windows.sh x86_64 debug /opt/build-windows/x86_64 stage3
+      services:
+        - docker
+      cache:
+        directories:
+          - /opt/build-windows/x86_64
+    - stage: macOS
+      os: osx
       osx_image: xcode7.3
       env: JOB=build-osx
 
