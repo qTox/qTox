@@ -257,6 +257,16 @@ then
   export PKG_CONFIG_PATH="$OPENSSL_PREFIX_DIR/lib/pkgconfig"
   export OPENSSL_LIBS="$(pkg-config --libs openssl)"
 
+  # So, apparently Travis CI terminate a build if it generates more than 4mb of output
+  # which happens when building Qt
+  CONFIGURE_EXTRA=""
+  set +u
+  if [ "$TRAVIS_CI_STAGE_ONE" == "true" ]
+  then
+    CONFIGURE_EXTRA="-silent"
+  fi
+  set -u
+
   ./configure -prefix $QT_PREFIX_DIR \
     -release \
     -shared \
@@ -292,7 +302,7 @@ then
     -qt-libjpeg \
     -qt-libpng \
     -qt-zlib \
-    -qt-pcre
+    -qt-pcre $CONFIGURE_EXTRA
 
   make
   make install
