@@ -34,69 +34,50 @@ matrix:
       env: JOB=build-windows BUILD_TYPE=release ARCH=i686   DEP_CACHE=/opt/$JOB/$ARCH TRAVIS_CI_STAGE_ONE=true TRAVIS_CI_STAGE_TWO=false
       services:
         - docker
-      cache:
-        directories:
-          - $DEP_CACHE
     - stage: "Windows Stage 1: Dependencies (OpenSSL, Qt)"
       os: linux
       env: JOB=build-windows BUILD_TYPE=release ARCH=x86_64 DEP_CACHE=/opt/$JOB/$ARCH TRAVIS_CI_STAGE_ONE=true TRAVIS_CI_STAGE_TWO=false
       services:
         - docker
-      cache:
-        directories:  
-          - $DEP_CACHE
     - stage: "Windows Stage 2: Dependencies (other)"
       os: linux
       env: JOB=build-windows BUILD_TYPE=release ARCH=i686   DEP_CACHE=/opt/$JOB/$ARCH TRAVIS_CI_STAGE_ONE=false TRAVIS_CI_STAGE_TWO=true
       services:
         - docker
-      cache:
-        directories:  
-          - $DEP_CACHE
     - stage: "Windows Stage 2: Dependencies (other)"
       os: linux
       env: JOB=build-windows BUILD_TYPE=release ARCH=x86_64 DEP_CACHE=/opt/$JOB/$ARCH TRAVIS_CI_STAGE_ONE=false TRAVIS_CI_STAGE_TWO=true
       services:
         - docker
-      cache:
-        directories:  
-          - $DEP_CACHE
     - stage: "Windows Stage 3: qTox"
       os: linux
       env: JOB=build-windows BUILD_TYPE=release ARCH=i686   DEP_CACHE=/opt/$JOB/$ARCH TRAVIS_CI_STAGE_ONE=false TRAVIS_CI_STAGE_TWO=false
       services:
         - docker
-      cache:
-        directories:  
-          - $DEP_CACHE
     - stage: "Windows Stage 3: qTox"
       os: linux
       env: JOB=build-windows BUILD_TYPE=release ARCH=x86_64 DEP_CACHE=/opt/$JOB/$ARCH TRAVIS_CI_STAGE_ONE=false TRAVIS_CI_STAGE_TWO=false
       services:
         - docker
-      cache:
-        directories:  
-          - $DEP_CACHE
     - stage: "Windows Stage 3: qTox"
       os: linux
       env: JOB=build-windows BUILD_TYPE=debug   ARCH=i686   DEP_CACHE=/opt/$JOB/$ARCH TRAVIS_CI_STAGE_ONE=false TRAVIS_CI_STAGE_TWO=false
       services:
         - docker
-      cache:
-        directories:  
-          - $DEP_CACHE
     - stage: "Windows Stage 3: qTox"
       os: linux
       env: JOB=build-windows BUILD_TYPE=debug   ARCH=x86_64 DEP_CACHE=/opt/$JOB/$ARCH TRAVIS_CI_STAGE_ONE=false TRAVIS_CI_STAGE_TWO=false
       services:
         - docker
-      cache:
-        directories:  
-          - $DEP_CACHE
     - stage: macOS
       os: osx
       osx_image: xcode7.3
       env: JOB=build-osx
+
+cache:
+  directories:
+    - /opt/build-windows/i686
+    - /opt/build-windows/x86_64
 
 script: "./.travis/$JOB.sh"
 

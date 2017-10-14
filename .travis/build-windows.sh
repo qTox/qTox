@@ -30,6 +30,7 @@ if [ "`cat $DEP_CACHE/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] &
 then
   # Clear the cache, removing all the pre-built dependencies
   rm -rf $DEP_CACHE/*
+  touch $DEP_CACHE/hash
 else
   # Copy over all pre-built dependencies
   cp -a $DEP_CACHE/* workspace/$ARCH/dep-cache
