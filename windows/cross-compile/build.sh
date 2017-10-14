@@ -24,22 +24,17 @@
 
 # Known issues:
 # - Doesn't build qTox updater, because it wasn't ported to cmake yet and
-#   because it requires static Qt, which means we'd need to build Qt twice,
-#   and building Qt takes really long time.
+#   because it requires static Qt, which means we'd need to build Qt twice, and
+#   building Qt takes really long time.
 #
-# - Doesn't create an installer because there is no NSIS 3 in Ubuntu. We could
-#   switch to Debian instead and backport it from Experimental, which is what
-#   we do on Jenkins, but since we don't build an updater, we might as well
-#   just do the nightly qTox build: no updater, no installer.
-#
-# - Qt from 5.8.0 to 5.9.1 doesn't cross-compile to Windows due to
-#   https://bugreports.qt.io/browse/QTBUG-61740. Should be fixed in 5.9.2. You
-#   can easily patch it though, just one sed command, but I guess we will wait
-#   for 5.9.2.
+# - Doesn't create an installer because there is no NSIS 3 in Debian Stable. We
+#   could backport it from Experimental, which is what we do on Jenkins, but
+#   since we don't build an updater, we might as well just do the nightly qTox
+#   build: no updater, no installer.
 #
 # - FFmpeg 3.3 doesn't cross-compile correctly, qTox build fails when linking
 #   against the 3.3 FFmpeg. They have removed `--enable-memalign-hack` switch,
-#   which might be what causes this.
+#   which might be what causes this. Further research needed.
 
 
 set -euo pipefail
@@ -53,29 +48,28 @@ readonly QTOX_SRC_DIR="/qtox"
 
 
 # Make sure we run in an expected environment
-
-if ! grep -q 'buntu 16\.04' /etc/lsb-release
+if [ ! -f /etc/os-release ] || ! cat /etc/os-release | grep -qi 'stretch'
 then
-    echo "Error: This script should be run on Ubuntu 16.04."
-    exit 1
+  echo "Error: This script should be run on Debian Stretch."
+  exit 1
 fi
 
 if [ ! -d "$WORKSPACE_DIR" ] || [ ! -d "$SCRIPT_DIR" ] || [ ! -d "$QTOX_SRC_DIR" ]
 then
-    echo "Error: At least one of $WORKSPACE_DIR, $SCRIPT_DIR or $QTOX_SRC_DIR directories is missing."
-    exit 1
+  echo "Error: At least one of $WORKSPACE_DIR, $SCRIPT_DIR or $QTOX_SRC_DIR directories is missing."
+  exit 1
 fi
 
 if [ ! -d "$QTOX_SRC_DIR/src" ]
 then
-    echo "Error: $QTOX_SRC_DIR/src directory is missing, make sure $QTOX_SRC_DIR contains qTox source code."
-    exit 1
+  echo "Error: $QTOX_SRC_DIR/src directory is missing, make sure $QTOX_SRC_DIR contains qTox source code."
+  exit 1
 fi
 
 if [ "$(id -u)" != "0" ]
 then
-   echo "Error: This script must be run as root."
-   exit 1
+  echo "Error: This script must be run as root."
+  exit 1
 fi
 
 
@@ -168,6 +162,7 @@ export MAKEFLAGS
 
 # Helper functions
 
+# We check sha256 of all tarballs we download
 check_sha256()
 {
   if ! ( echo "$1  $2" | sha256sum -c --status - )
@@ -182,16 +177,27 @@ check_sha256()
   fi
 }
 
+# Strip binaries to reduce file size, we don't need this information anyway
+strip_all()
+{
+  set +e
+  for PREFIX_DIR in $DEP_DIR/*; do
+    strip --strip-unneeded $PREFIX_DIR/bin/*
+    $ARCH-w64-mingw32-strip --strip-unneeded $PREFIX_DIR/bin/*
+    $ARCH-w64-mingw32-strip --strip-unneeded $PREFIX_DIR/lib/*
+  done
+  set -e
+}
+
 
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
+OPENSSL_VERSION=1.0.2l
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
   rm -rf "$OPENSSL_PREFIX_DIR"
   mkdir -p "$OPENSSL_PREFIX_DIR"
-
-  OPENSSL_VERSION=1.0.2l
 
   wget https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
   check_sha256 "ce07195b659e75f4e1db43552860070061f156a98bb37b672b101ba6e3ddf30c" "openssl-$OPENSSL_VERSION.tar.gz"
@@ -211,18 +217,24 @@ then
   ./Configure $CONFIGURE_OPTIONS
   make
   make install
-  touch $OPENSSL_PREFIX_DIR/done
+  echo -n $OPENSSL_VERSION > $OPENSSL_PREFIX_DIR/done
 
   CONFIGURE_OPTIONS=""
 
   cd ..
   rm -rf ./openssl*
+else
+  echo "Using cached build of OpenSSL `cat $OPENSSL_PREFIX_DIR/done`"
 fi
 
 
 # Qt
 
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
+QT_MAJOR=5
+QT_MINOR=9
+QT_PATCH=2
+QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
   rm -rf "$QT_PREFIX_DIR"
@@ -230,19 +242,28 @@ then
 
   QT_MIRROR=http://qt.mirror.constant.com
 
-  QT_MAJOR=5
-  QT_MINOR=6
-  QT_PATCH=3
-
-  QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
   wget $QT_MIRROR/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz
-  check_sha256 "2fa0cf2e5e8841b29a4be62062c1a65c4f6f2cf1beaf61a5fd661f520cd776d0" "qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
+  check_sha256 "6c6171a4d1ea3fbd4212d6a04899650218583df3ec583a8a6a4a589fe18620ff" "qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
   bsdtar -xf qt*.tar.xz
   rm qt*.tar.xz
   cd qt*
 
   export PKG_CONFIG_PATH="$OPENSSL_PREFIX_DIR/lib/pkgconfig"
   export OPENSSL_LIBS="$(pkg-config --libs openssl)"
+
+  # Fix https://bugreports.qt.io/browse/QTBUG-63637 present in Qt 5.9.2
+  echo "QMAKE_LINK_OBJECT_MAX = 10" >> qtbase/mkspecs/win32-g++/qmake.conf
+  echo "QMAKE_LINK_OBJECT_SCRIPT = object_script" >> qtbase/mkspecs/win32-g++/qmake.conf
+
+  # So, apparently Travis CI terminate a build if it generates more than 4mb of output
+  # which happens when building Qt
+  CONFIGURE_EXTRA=""
+  set +u
+  if [ "$TRAVIS_CI_STAGE" == "stage1" ]
+  then
+    CONFIGURE_EXTRA="-silent"
+  fi
+  set -u
 
   ./configure -prefix $QT_PREFIX_DIR \
     -release \
@@ -256,22 +277,42 @@ then
     -nomake examples \
     -nomake tools \
     -nomake tests \
-    -skip translations \
-    -skip doc \
-    -skip qtdeclarative \
+    -skip 3d \
     -skip activeqt \
-    -skip qtwebsockets \
-    -skip qtscript \
-    -skip qtquickcontrols \
-    -skip qtconnectivity \
-    -skip qtenginio \
-    -skip qtsensors \
-    -skip qtserialport \
-    -skip qtlocation \
-    -skip qtgraphicaleffects \
-    -skip qtimageformats \
-    -skip webchannel \
+    -skip androidextras \
+    -skip canvas3d \
+    -skip charts \
+    -skip connectivity \
+    -skip datavis3d \
+    -skip declarative \
+    -skip doc \
+    -skip enginio \
+    -skip gamepad \
+    -skip graphicaleffects \
+    -skip imageformats \
+    -skip location \
+    -skip macextras \
     -skip multimedia \
+    -skip networkauth \
+    -skip purchasing \
+    -skip quickcontrols \
+    -skip quickcontrols2 \
+    -skip remoteobjects \
+    -skip script \
+    -skip scxml \
+    -skip sensors \
+    -skip serialbus \
+    -skip serialport \
+    -skip speech \
+    -skip translations \
+    -skip virtualkeyboard \
+    -skip wayland \
+    -skip webchannel \
+    -skip webengine \
+    -skip websockets \
+    -skip webview \
+    -skip x11extras \
+    -skip xmlpatterns \
     -no-dbus \
     -no-icu \
     -no-qml-debug \
@@ -279,30 +320,45 @@ then
     -qt-libjpeg \
     -qt-libpng \
     -qt-zlib \
-    -qt-pcre
+    -qt-pcre \
+    -opengl desktop $CONFIGURE_EXTRA
 
   make
   make install
-  touch $QT_PREFIX_DIR/done
+  echo -n $QT_VERSION > $QT_PREFIX_DIR/done
 
   unset PKG_CONFIG_PATH
   unset OPENSSL_LIBS
 
   cd ..
   rm -rf ./qt*
+else
+  echo "Using cached build of Qt `cat $QT_PREFIX_DIR/done`"
 fi
+
+
+# Stop here if running the first stage on Travis CI
+set +u
+if [ "$TRAVIS_CI_STAGE" == "stage1" ]
+then
+  # Strip to reduce cache size
+  strip_all
+  exit 0
+fi
+set -u
 
 
 # SQLCipher
 
 SQLCIPHER_PREFIX_DIR="$DEP_DIR/libsqlcipher"
+SQLCIPHER_VERSION=v3.4.1
 if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]
 then
   rm -rf "$SQLCIPHER_PREFIX_DIR"
   mkdir -p "$SQLCIPHER_PREFIX_DIR"
 
   git clone \
-    --branch v3.4.1 \
+    --branch $SQLCIPHER_VERSION \
     --depth 1 \
     https://github.com/sqlcipher/sqlcipher \
     sqlcipher
@@ -342,24 +398,28 @@ EOF
 
   make
   make install
-  touch $SQLCIPHER_PREFIX_DIR/done
+  echo -n $SQLCIPHER_VERSION > $SQLCIPHER_PREFIX_DIR/done
 
   cd ..
   rm -rf ./sqlcipher
+else
+  echo "Using cached build of SQLCipher `cat $SQLCIPHER_PREFIX_DIR/done`"
 fi
 
 
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
+FFMPEG_VERSION=3.2.8
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
   rm -rf "$FFMPEG_PREFIX_DIR"
   mkdir -p "$FFMPEG_PREFIX_DIR"
 
-  wget https://www.ffmpeg.org/releases/ffmpeg-3.2.6.tar.xz
-  check_sha256 "3751cebb5c71a861288267769114d12b966a7703a686a325d90a93707f3a6d9f" "ffmpeg-3.2.6.tar.xz"
+  wget https://www.ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.xz
+  check_sha256 "42e7362692318afc666f14378dd445effa9a1b09787504a6ab5811fe442674cd" "ffmpeg-$FFMPEG_VERSION.tar.xz"
   bsdtar -xf ffmpeg*.tar.xz
+  rm ffmpeg*.tar.xz
   cd ffmpeg*
 
   if [[ "$ARCH" == "x86_64"* ]]
@@ -419,18 +479,21 @@ then
               --enable-memalign-hack
   make
   make install
-  touch $FFMPEG_PREFIX_DIR/done
+  echo -n $FFMPEG_VERSION > $FFMPEG_PREFIX_DIR/done
 
   CONFIGURE_OPTIONS=""
 
   cd ..
   rm -rf ./ffmpeg*
+else
+  echo "Using cached build of FFmpeg `cat $FFMPEG_PREFIX_DIR/done`"
 fi
 
 
 # Openal-soft (irungentoo's fork)
 
 OPENAL_PREFIX_DIR="$DEP_DIR/libopenal"
+OPENAL_VERSION=b80570bed017de60b67c6452264c634085c3b148
 if [ ! -f "$OPENAL_PREFIX_DIR/done" ]
 then
   rm -rf "$OPENAL_PREFIX_DIR"
@@ -438,7 +501,7 @@ then
 
   git clone https://github.com/irungentoo/openal-soft-tox openal-soft-tox
   cd openal*
-  git checkout b80570bed017de60b67c6452264c634085c3b148
+  git checkout $OPENAL_VERSION
 
   echo "
       SET(CMAKE_SYSTEM_NAME Windows)
@@ -466,16 +529,19 @@ then
 
   make
   make install
-  touch $OPENAL_PREFIX_DIR/done
+  echo -n $OPENAL_VERSION > $OPENAL_PREFIX_DIR/done
 
   cd ..
   rm -rf ./openal*
+else
+  echo "Using cached build of irungentoo's OpenAL-Soft fork `cat $OPENAL_PREFIX_DIR/done`"
 fi
 
 
 # Filteraudio
 
 FILTERAUDIO_PREFIX_DIR="$DEP_DIR/libfilteraudio"
+FILTERAUDIO_VERSION=ada2f4fdc04940cdeee47caffe43add4fa017096
 if [ ! -f "$FILTERAUDIO_PREFIX_DIR/done" ]
 then
   rm -rf "$FILTERAUDIO_PREFIX_DIR"
@@ -483,7 +549,7 @@ then
 
   git clone https://github.com/irungentoo/filter_audio filter_audio
   cd filter*
-  git checkout ada2f4fdc04940cdeee47caffe43add4fa017096
+  git checkout $FILTERAUDIO_VERSION
 
   $ARCH-w64-mingw32-gcc -O2 -g0 -c \
                aec/aec_core.c \
@@ -591,23 +657,26 @@ then
   mkdir $FILTERAUDIO_PREFIX_DIR/lib
   cp filter_audio.h $FILTERAUDIO_PREFIX_DIR/include
   cp libfilteraudio.a $FILTERAUDIO_PREFIX_DIR/lib
-  touch $FILTERAUDIO_PREFIX_DIR/done
+  echo -n $FILTERAUDIO_VERSION > $FILTERAUDIO_PREFIX_DIR/done
 
   cd ..
   rm -rf ./filter*
+else
+  echo "Using cached build of Filteraudio `cat $FILTERAUDIO_PREFIX_DIR/done`"
 fi
 
 
 # QREncode
 
 QRENCODE_PREFIX_DIR="$DEP_DIR/libqrencode"
+QRENCODE_VERSION=3.4.4
 if [ ! -f "$QRENCODE_PREFIX_DIR/done" ]
 then
   rm -rf "$QRENCODE_PREFIX_DIR"
   mkdir -p "$QRENCODE_PREFIX_DIR"
 
-  wget https://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.bz2
-  check_sha256 "efe5188b1ddbcbf98763b819b146be6a90481aac30cfc8d858ab78a19cde1fa5" "qrencode-3.4.4.tar.bz2"
+  wget https://fukuchi.org/works/qrencode/qrencode-$QRENCODE_VERSION.tar.bz2
+  check_sha256 "efe5188b1ddbcbf98763b819b146be6a90481aac30cfc8d858ab78a19cde1fa5" "qrencode-$QRENCODE_VERSION.tar.bz2"
   bsdtar -xf qrencode*.tar.bz2
   rm qrencode*.tar.bz2
   cd qrencode*
@@ -621,23 +690,26 @@ then
                                --without-debug
   make
   make install
-  touch $QRENCODE_PREFIX_DIR/done
+  echo -n $QRENCODE_VERSION > $QRENCODE_PREFIX_DIR/done
 
   cd ..
   rm -rf ./qrencode*
+else
+  echo "Using cached build of QREncode `cat $QRENCODE_PREFIX_DIR/done`"
 fi
 
 
 # Exif
 
 EXIF_PREFIX_DIR="$DEP_DIR/libexif"
+EXIF_VERSION=0.6.21
 if [ ! -f "$EXIF_PREFIX_DIR/done" ]
 then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  wget https://sourceforge.net/projects/libexif/files/libexif/0.6.21/libexif-0.6.21.tar.bz2
-  check_sha256 "16cdaeb62eb3e6dfab2435f7d7bccd2f37438d21c5218ec4e58efa9157d4d41a" "libexif-0.6.21.tar.bz2"
+  wget https://sourceforge.net/projects/libexif/files/libexif/0.6.21/libexif-$EXIF_VERSION.tar.bz2
+  check_sha256 "16cdaeb62eb3e6dfab2435f7d7bccd2f37438d21c5218ec4e58efa9157d4d41a" "libexif-$EXIF_VERSION.tar.bz2"
   bsdtar -xf libexif*.tar.bz2
   rm libexif*.tar.bz2
   cd libexif*
@@ -650,23 +722,26 @@ then
                                --disable-nls
   make
   make install
-  touch $EXIF_PREFIX_DIR/done
+  echo -n $EXIF_VERSION > $EXIF_PREFIX_DIR/done
 
   cd ..
   rm -rf ./libexif*
+else
+  echo "Using cached build of Exif `cat $EXIF_PREFIX_DIR/done`"
 fi
 
 
 # Opus
 
 OPUS_PREFIX_DIR="$DEP_DIR/libopus"
+OPUS_VERSION=v1.2.1
 if [ ! -f "$OPUS_PREFIX_DIR/done" ]
 then
   rm -rf "$OPUS_PREFIX_DIR"
   mkdir -p "$OPUS_PREFIX_DIR"
 
   git clone \
-    --branch v1.2.1 \
+    --branch $OPUS_VERSION \
     --depth 1 \
     git://git.opus-codec.org/opus.git \
     opus
@@ -681,23 +756,26 @@ then
                                --disable-doc
   make
   make install
-  touch $OPUS_PREFIX_DIR/done
+  echo -n $OPUS_VERSION > $OPUS_PREFIX_DIR/done
 
   cd ..
   rm -rf ./opus
+else
+  echo "Using cached build of Opus `cat $OPUS_PREFIX_DIR/done`"
 fi
 
 
 # Sodium
 
 SODIUM_PREFIX_DIR="$DEP_DIR/libsodium"
+SODIUM_VERSION=1.0.15
 if [ ! -f "$SODIUM_PREFIX_DIR/done" ]
 then
   rm -rf "$SODIUM_PREFIX_DIR"
   mkdir -p "$SODIUM_PREFIX_DIR"
 
   git clone \
-    --branch 1.0.13 \
+    --branch $SODIUM_VERSION \
     --depth 1 \
     https://github.com/jedisct1/libsodium \
     libsodium
@@ -711,23 +789,26 @@ then
               --with-pic
   make
   make install
-  touch $SODIUM_PREFIX_DIR/done
+  echo -n $SODIUM_VERSION > $SODIUM_PREFIX_DIR/done
 
   cd ..
   rm -rf ./libsodium
+else
+  echo "Using cached build of Sodium `cat $SODIUM_PREFIX_DIR/done`"
 fi
 
 
 # VPX
 
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
+VPX_VERSION=v1.6.1
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
   rm -rf "$VPX_PREFIX_DIR"
   mkdir -p "$VPX_PREFIX_DIR"
 
   git clone \
-    --branch v1.6.1 \
+    --branch $VPX_VERSION \
     --depth 1 \
     https://github.com/webmproject/libvpx \
     libvpx
@@ -742,32 +823,35 @@ then
   fi
 
   CROSS="$ARCH-w64-mingw32-" ./configure --target="$VPX_TARGET" \
-                                           --prefix="$VPX_PREFIX_DIR" \
-                                           --disable-shared \
-                                           --enable-static \
-                                           --disable-examples \
-                                           --disable-tools \
-                                           --disable-docs \
-                                           --disable-unit-tests
+                                         --prefix="$VPX_PREFIX_DIR" \
+                                         --disable-shared \
+                                         --enable-static \
+                                         --disable-examples \
+                                         --disable-tools \
+                                         --disable-docs \
+                                         --disable-unit-tests
   make
   make install
-  touch $VPX_PREFIX_DIR/done
+  echo -n $VPX_VERSION > $VPX_PREFIX_DIR/done
 
   cd ..
   rm -rf ./libvpx
+else
+  echo "Using cached build of VPX `cat $VPX_PREFIX_DIR/done`"
 fi
 
 
 # Toxcore
 
 TOXCORE_PREFIX_DIR="$DEP_DIR/libtoxcore"
+TOXCORE_VERSION=v0.1.10
 if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]
 then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
   git clone \
-    --branch v0.1.10 \
+    --branch $TOXCORE_VERSION \
     --depth 1 \
     https://github.com/TokTok/c-toxcore \
     c-toxcore
@@ -796,25 +880,29 @@ then
 
   make
   make install
-  touch $TOXCORE_PREFIX_DIR/done
+  echo -n $TOXCORE_VERSION > $TOXCORE_PREFIX_DIR/done
 
   unset PKG_CONFIG_PATH
   unset PKG_CONFIG_LIBDIR
 
   cd ..
   rm -rf ./c-toxcore
+else
+  echo "Using cached build of Toxcore `cat $TOXCORE_PREFIX_DIR/done`"
 fi
 
 
-# Strip to reduce file size, we don't need this information anyway.
+# Stop here if running the second stage on Travis CI
+set +u
+if [ "$TRAVIS_CI_STAGE" == "stage2" ]
+then
+  # Strip to reduce cache size
+  strip_all
+  exit 0
+fi
+set -u
 
-set +e
-for PREFIX_DIR in $DEP_DIR/*; do
-    strip --strip-unneeded $PREFIX_DIR/bin/*
-    $ARCH-w64-mingw32-strip --strip-unneeded $PREFIX_DIR/bin/*
-    $ARCH-w64-mingw32-strip --strip-unneeded $PREFIX_DIR/lib/*
-done
-set -e
+strip_all
 
 
 # qTox
