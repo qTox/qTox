@@ -40,8 +40,10 @@ sudo docker run --rm \
                 -v "$PWD/workspace":/workspace \
                 -v "$PWD/windows/cross-compile":/script \
                 -v "$PWD":/qtox \
+                -e TRAVIS_CI_STAGE_ONE=$TRAVIS_CI_STAGE_ONE \
+                -e TRAVIS_CI_STAGE_TWO=$TRAVIS_CI_STAGE_TWO \
                 ubuntu:16.04 \
-                /bin/bash TRAVIS_CI_STAGE_ONE=$TRAVIS_CI_STAGE_ONE TRAVIS_CI_STAGE_TWO=$TRAVIS_CI_STAGE_TWO /script/build.sh $ARCH $BUILD_TYPE
+                /bin/bash /script/build.sh $ARCH $BUILD_TYPE
 
 # If it's any of the dependency building stages (Stage 1 or 2), copy over all the built dependencies to Travis cache
 if [ "$TRAVIS_CI_STAGE_ONE" == "true" ] || [ "$TRAVIS_CI_STAGE_TWO" == "true" ]
