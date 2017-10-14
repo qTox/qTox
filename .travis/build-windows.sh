@@ -17,12 +17,13 @@
 #
 
 # Fail out on error
-set -euo pipefail
+set -exuo pipefail
 
 # Just make sure those exists, makes logic easier
 mkdir -p $DEP_CACHE
 touch $DEP_CACHE/hash
 mkdir -p workspace/$ARCH/dep-cache
+sudo chown `id -u -n`:`id -g -n` -R $DEP_CACHE
 
 # If build.sh has changed, i.e. its hash doesn't match the previously stored one, and it's Stage 1
 # Then we want to rebuild everything from scratch
@@ -49,6 +50,8 @@ sudo docker run --rm \
 # If it's any of the dependency building stages (Stage 1 or 2), copy over all the built dependencies to Travis cache
 if [ "$TRAVIS_CI_STAGE_ONE" == "true" ] || [ "$TRAVIS_CI_STAGE_TWO" == "true" ]
 then
+  # Docker runs as root, so we chown back to out user to be able to cp files
+  sudo chown `id -u -n`:`id -g -n` -R workspace
   cp -a workspace/$ARCH/dep-cache/* $DEP_CACHE
 fi
 
