@@ -22,22 +22,17 @@ set -exuo pipefail
 # Just make sure those exists, makes logic easier
 mkdir -p $DEP_CACHE
 
-rm -rf $DEP_CACHE/*
-exit 0
-
 ls -lbh $DEP_CACHE
-
-if [ -f $DEP_CACHE/one ]
-then
-  touch $DEP_CACHE/two
-else
-  touch $DEP_CACHE/one
-fi
 
 if [ -f $DEP_CACHE/one ] && [ -f $DEP_CACHE/two ]
 then
   echo "test"
   rm -rf $DEP_CACHE/*
+elif [ -f $DEP_CACHE/one ]
+then
+  touch $DEP_CACHE/two
+else
+  touch $DEP_CACHE/one
 fi
 
 ls -lbh $DEP_CACHE
