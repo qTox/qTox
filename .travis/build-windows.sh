@@ -97,6 +97,8 @@ sudo docker run --rm \
 # If it's any of the dependency building stages (Stage 1 or 2), copy over all the built dependencies to Travis cache
 if [ "$STAGE" == "stage1" ] || [ "$STAGE" == "stage2" ]
 then
+  rm -rf $CACHE_DIR/*
+  touch $CACHE_DIR/hash
   # Docker runs as root, so we chown back to out user to be able to cp files
   sudo chown `id -u -n`:`id -g -n` -R workspace
   cp -a workspace/$ARCH/dep-cache/* $CACHE_DIR
