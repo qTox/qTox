@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Use o controle deslizante para definir o ganho do seu dispositivo de entrada entre % 1dB e % 2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -88,7 +88,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilita o backend de áudio experimental com suporte a cancelamento de eco, necessita reiniciar o qTox para ser ativado.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
@@ -2036,33 +2036,8 @@ Por favor, escolha outra.</translation>
         <translation>Renomear &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>O perfil já existe</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>Um perfil chamada &quot;%1&quot; já existe.</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>Não foi possível renomear</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>Não foi possível renomear o perfil para &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>Exportar perfil</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>Arquivo Tox (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2116,11 +2091,6 @@ Por favor, escolha outra.</translation>
         <translation>Realmente remover senha?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Tem certeza de que deseja remover sua senha?</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>Por favor, insira uma nova senha.</translation>
     </message>
@@ -2130,16 +2100,6 @@ Por favor, escolha outra.</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2203,6 +2163,62 @@ Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">Não foi possível renomear</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished">O perfil já existe</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">Um perfil chamada &quot;%1&quot; já existe.</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Exportar perfil</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished">Arquivo Tox (*.tox)</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">Tem certeza de que deseja remover sua senha?</translation>
     </message>
 </context>
 <context>
