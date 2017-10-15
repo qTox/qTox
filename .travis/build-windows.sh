@@ -21,6 +21,11 @@ set -exuo pipefail
 
 # Just make sure those exists, makes logic easier
 mkdir -p $DEP_CACHE
+
+rm -rf $DEP_CACHE/*
+sleep 300
+exit 1
+
 ls -lbh $DEP_CACHE
 
 if [ -f $DEP_CACHE/one ]
