@@ -23,7 +23,7 @@
 
 // clang-format off
 
-/* Easy way to get count of markdown symbols - through length of substring, captured by reex group.
+/* Easy way to get count of markdown symbols - through length of substring, captured by regex group.
  * If you suppose to change regexes, assure that this const points to right group.
  */
 static constexpr uint8_t MARKDOWN_SYMBOLS_GROUP_INDEX = 1;
@@ -60,29 +60,38 @@ static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[\\s\\n])"
                                                      "```"
                                                      "(?=$|[\\s\\n])");
 
+#define REGEXP_WRAPPER_PAIR(pattern, wrapper)\
+{QRegularExpression(pattern,QRegularExpression::UseUnicodePropertiesOption),QStringLiteral(wrapper)}
+
 static const QPair<QRegularExpression, QString> REGEX_TO_WRAPPER[] {
-    {QRegularExpression(SINGLE_SLASH_PATTERN), QStringLiteral("<i>%1</i>")},
-    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('*')), QStringLiteral("<b>%1</b>")},
-    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('_')), QStringLiteral("<u>%1</u>")},
-    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('~')), QStringLiteral("<s>%1</s>")},
-    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('`')), QStringLiteral("<font color=#595959><code>"
-                                                                      "%1</code></font>")},
-    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('*')), QStringLiteral("<b>%1</b>")},
-    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('/')), QStringLiteral("<i>%1</i>")},
-    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('_')), QStringLiteral("<u>%1</u>")},
-    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('~')), QStringLiteral("<s>%1</s>")},
-    {QRegularExpression(MULTILINE_CODE), QStringLiteral("<font color=#595959><code>"
-                                                        "%1</code></font>")}};
+    REGEXP_WRAPPER_PAIR(SINGLE_SLASH_PATTERN, "<i>%1</i>"),
+    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('*'), "<b>%1</b>"),
+    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('_'), "<u>%1</u>"),
+    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('~'), "<s>%1</s>"),
+    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('`'), "<font color=#595959><code>%1</code></font>"),
+    REGEXP_WRAPPER_PAIR(DOUBLE_SIGN_PATTERN.arg('*'), "<b>%1</b>"),
+    REGEXP_WRAPPER_PAIR(DOUBLE_SIGN_PATTERN.arg('/'), "<i>%1</i>"),
+    REGEXP_WRAPPER_PAIR(DOUBLE_SIGN_PATTERN.arg('_'), "<u>%1</u>"),
+    REGEXP_WRAPPER_PAIR(DOUBLE_SIGN_PATTERN.arg('~'), "<s>%1</s>"),
+    REGEXP_WRAPPER_PAIR(MULTILINE_CODE, "<font color=#595959><code>%1</code></font>"),
+};
+
+#undef REGEXP_WRAPPER_PAIR
 
 static const QString HREF_WRAPPER = QStringLiteral(R"(<a href="%1">%1</a>)");
 
+// based in this: https://tools.ietf.org/html/rfc3986#section-2
+static const QString URL_PATH_PATTERN = QStringLiteral("[\\w:/?#\\[\\]@!$&'{}*+,;.~%=-]+");
+
 static const QRegularExpression URL_PATTERNS[] = {
-        QRegularExpression("\\b(www\\.|((http[s]?)|ftp)://)\\w+\\S+"),
-        QRegularExpression("\\b(file|smb)://([\\S| ]*)"),
-        QRegularExpression("\\btox:[a-zA-Z\\d]{76}"),
-        QRegularExpression("\\bmailto:\\S+@\\S+\\.\\S+"),
-        QRegularExpression("\\btox:\\S+@\\S+")
+    QRegularExpression(QStringLiteral(R"(\b(www\.|((http[s]?)|ftp)://)%1)").arg(URL_PATH_PATTERN)),
+    QRegularExpression(QStringLiteral(R"(\b(file|smb)://([\S| ]*))")),
+    QRegularExpression(QStringLiteral(R"(\btox:[a-zA-Z\\d]{76})")),
+    QRegularExpression(QStringLiteral(R"(\bmailto:\S+@\S+\.\S+)")),
+    QRegularExpression(QStringLiteral(R"(\btox:\S+@\S+)")),
 };
+
+// clang-format on
 
 /**
  * @brief Highlights URLs within passed message string
@@ -92,15 +101,15 @@ static const QRegularExpression URL_PATTERNS[] = {
 QString highlightURL(const QString& message)
 {
     QString result = message;
-    for (QRegularExpression exp : URL_PATTERNS) {
-        int startLength = result.length();
+    for (const QRegularExpression& exp : URL_PATTERNS) {
+        const int startLength = result.length();
         int offset = 0;
         QRegularExpressionMatchIterator iter = exp.globalMatch(result);
         while (iter.hasNext()) {
-            QRegularExpressionMatch match = iter.next();
-            int startPos = match.capturedStart() + offset;
-            int length = match.capturedLength();
-            QString wrappedURL = HREF_WRAPPER.arg(match.captured());
+            const QRegularExpressionMatch match = iter.next();
+            const int startPos = match.capturedStart() + offset;
+            const int length = match.capturedLength();
+            const QString wrappedURL = HREF_WRAPPER.arg(match.captured());
             result.replace(startPos, length, wrappedURL);
             offset = result.length() - startLength;
         }
@@ -108,7 +117,6 @@ QString highlightURL(const QString& message)
     return result;
 }
 
-// clang-format on
 /**
  * @brief Checks HTML tags intersection while applying styles to the message text
  * @param str Checking string
