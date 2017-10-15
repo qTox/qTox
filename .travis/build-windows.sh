@@ -23,8 +23,7 @@ set -exuo pipefail
 mkdir -p $DEP_CACHE
 
 rm -rf $DEP_CACHE/*
-sleep 300
-exit 1
+exit 0
 
 ls -lbh $DEP_CACHE
 
