@@ -97,27 +97,27 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Heli kvaliteet</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Saadetava heli kvaliteet. Vähenda, kui sulle eraldatud ribalaius ei ole piisav või sa soovid vähendada Interneti ühenduse kasutust.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõrge (64 kbit/s)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Keskmine (32 kbit/s)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Madal (16 kbit/s)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Väga madal (8 kbit/s)</translation>
     </message>
 </context>
 <context>
@@ -2053,33 +2053,8 @@ Palun kasuta teist pilti.</translation>
         <translation>Nimeta &quot;%1&quot; ümber</translation>
     </message>
     <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>Profiil on juba olemas</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>Profiil &quot;%1&quot; on juba olemas.</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>Ümbernimetamine luhtus</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>Ei suutnud profiili kujule &quot;%1&quot; ümber nimetada</translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>Ekspordi profiil</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>Tox profiili fail (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2133,23 +2108,8 @@ Palun kasuta teist pilti.</translation>
         <translation>Soovid tõesti salasõna eemaldada?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Oled sa kindel, et soovid oma salasõna eemaldada?</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>Palun sisesta uus salasõna.</translation>
-    </message>
-    <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation>Järgmiste failide kustutamine nurjus:</translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation>Palun kustuta need käsitsi.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -2215,6 +2175,62 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 Oma sõpradega suhtlemiseks jaga seda neile.
 
 See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">Ümbernimetamine luhtus</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished">Profiil on juba olemas</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">Profiil &quot;%1&quot; on juba olemas.</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished">Salasõna vahetamine andmebaasis nurjus; andmebaas võib olla rikutud või kasutada vana salasõna.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Ekspordi profiil</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished">Tox profiili fail (*.tox)</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished">Järgmiste failide kustutamine nurjus:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished">Palun kustuta need käsitsi.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">Oled sa kindel, et soovid oma salasõna eemaldada?</translation>
     </message>
 </context>
 <context>
