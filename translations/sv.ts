@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Avaktiverad</translation>
+        <translation>Inaktiverad</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
@@ -2053,33 +2053,8 @@ Använd en annan bild.</translation>
         <translation>Byt namn på &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>Profil finns redan</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>En profil med namnet &quot;%1&quot; finns redan.</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>Det gick inte att byta namn</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>Kunde inte byta namn på profilen till &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>Exportera profil</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>Tox-sparningsfil (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2110,16 +2085,6 @@ Använd en annan bild.</translation>
         <translation>Är du säker på att du vill ta bort denna profil?</translation>
     </message>
     <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation>Följande filer kan inte tas bort:</translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation>Vänligen ta bort dem manuellt.</translation>
-    </message>
-    <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation>Filer kunde inte tas bort!</translation>
@@ -2146,11 +2111,6 @@ Använd en annan bild.</translation>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
         <translation>Vill du verkligen ta bort lösenord?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Är du säker på att du vill ta bort ditt lösenord?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
@@ -2215,6 +2175,62 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 Dela den med dina vänner för att kommunicera.
 
 Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">Det gick inte att byta namn</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished">Profil finns redan</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">En profil med namnet &quot;%1&quot; finns redan.</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished">Kunde inte byta lösenord på databasen, den kan vara trasig eller använda det gamla lösenordet.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Exportera profil</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished">Tox-sparningsfil (*.tox)</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished">Följande filer kan inte tas bort:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished">Vänligen ta bort dem manuellt.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">Är du säker på att du vill ta bort ditt lösenord?</translation>
     </message>
 </context>
 <context>
