@@ -25,6 +25,9 @@ touch $DEP_CACHE/hash
 mkdir -p workspace/$ARCH/dep-cache
 sudo chown `id -u -n`:`id -g -n` -R $DEP_CACHE
 
+rm -rf $DEP_CACHE/*
+exit 0
+
 # If build.sh has changed, i.e. its hash doesn't match the previously stored one, and it's Stage 1
 # Then we want to rebuild everything from scratch
 if [ "`cat $DEP_CACHE/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] && [ "$TRAVIS_CI_STAGE_ONE" == "true" ]
