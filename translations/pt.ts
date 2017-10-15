@@ -92,7 +92,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilita backend de audio experimental</translation>
     </message>
     <message>
         <source>Audio quality</source>
