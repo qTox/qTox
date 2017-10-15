@@ -73,6 +73,9 @@ touch $CACHE_DIR/hash
 mkdir -p workspace/$ARCH/dep-cache
 sudo chown `id -u -n`:`id -g -n` -R $CACHE_DIR
 
+rm -rf $CACHE_DIR/*
+exit 0
+
 # If build.sh has changed, i.e. its hash doesn't match the previously stored one, and it's Stage 1
 # Then we want to rebuild everything from scratch
 if [ "`cat $CACHE_DIR/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] && [ "$STAGE" == "stage1" ]
@@ -84,6 +87,8 @@ else
   # Copy over all pre-built dependencies
   cp -a $CACHE_DIR/* workspace/$ARCH/dep-cache
 fi
+
+ls -lbh $CACHE_DIR
 
 # Build
 sudo docker run --rm \
@@ -109,3 +114,7 @@ if [ "`cat $CACHE_DIR/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] &
 then
   sha256sum windows/cross-compile/build.sh > $CACHE_DIR/hash
 fi
+
+touch $CACHE_DIR/$STAGE
+ls -lbh $CACHE_DIR
+
