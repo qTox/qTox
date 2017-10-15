@@ -45,8 +45,8 @@ while running on all major platforms.
 
 Windows | Linux | OS X | FreeBSD
 --------|-------|------|--------
-**[64 bit installer]**, [signature][sig-64] | **[Arch]**, **[Gentoo]** | **[Building instructions]** | **[Package & Port]**
-[32 bit installer], [signature][sig-32] | | [Experimental download] |
+**[64 bit installer]**, [signature][sig-64] | **[Arch]**, **[Gentoo]** | **[Latest release]**  | **[Package & Port]**
+[32 bit installer], [signature][sig-32] | | [Building instructions] |
 [64 bit][64portable], [32 bit][32portable] portable | [Other] | |
 
 _**Bold** options are recommended._
@@ -146,7 +146,7 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 [Building instructions]: /INSTALL.md#os-x
 [Contributing]: /CONTRIBUTING.md#how-to-start-contributing
 [easy issues]: https://github.com/qTox/qTox/labels/E-easy
-[Experimental download]: https://github.com/qTox/qTox/releases/latest
+[Latest release]: https://github.com/qTox/qTox/releases/latest
 [Gentoo]: /INSTALL.md#gentoo
 [Install/Build]: /INSTALL.md
 [IRC logs]: https://github.com/qTox/qtox-irc-logs
