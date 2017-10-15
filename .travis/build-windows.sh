@@ -19,20 +19,91 @@
 # Fail out on error
 set -exuo pipefail
 
-# Just make sure those exists, makes logic easier
-mkdir -p $DEP_CACHE
+readonly ARCH=$1
+readonly BUILD_TYPE=$2
+readonly CACHE_DIR=$3
+readonly STAGE=$4
 
-ls -lbh $DEP_CACHE
-
-if [ -f $DEP_CACHE/one ] && [ -f $DEP_CACHE/two ]
+if [ -z "$ARCH" ]
 then
-  echo "test"
-  rm -rf $DEP_CACHE/*
-elif [ -f $DEP_CACHE/one ]
-then
-  touch $DEP_CACHE/two
-else
-  touch $DEP_CACHE/one
+  echo "Error: No architecture was specified. Please specify either 'i686' or 'x86_64', case sensitive, as the first argument to the script."
+  exit 1
 fi
 
-ls -lbh $DEP_CACHE
+if [[ "$ARCH" != "i686" ]] && [[ "$ARCH" != "x86_64" ]]
+then
+  echo "Error: Incorrect architecture was specified. Please specify either 'i686' or 'x86_64', case sensitive, as the first argument to the script."
+  exit 1
+fi
+
+if [ -z "$BUILD_TYPE" ]
+then
+  echo "Error: No build type was specified. Please specify either 'release' or 'debug', case sensitive, as the second argument to the script."
+  exit 1
+fi
+
+if [[ "$BUILD_TYPE" != "release" ]] && [[ "$BUILD_TYPE" != "debug" ]]
+then
+  echo "Error: Incorrect build type was specified. Please specify either 'release' or 'debug', case sensitive, as the second argument to the script."
+  exit 1
+fi
+
+if [ -z "$CACHE_DIR" ]
+then
+  echo "Error: No cache directory path was specified. Please specify absolute path to the cache directory as the third argument to the script."
+  exit 1
+fi
+
+if [ -z "$STAGE" ]
+then
+  echo "Error: No stage was specified. Please specify either 'stage1', 'stage2' or 'stage3' as the fourth argument to the script."
+  exit 1
+fi
+
+if [[ "$STAGE" != "stage1" ]] && [[ "$STAGE" != "stage2" ]] && [[ "$STAGE" != "stage3" ]]
+then
+  echo "Error: Incorrect stage was specified. Please specify either 'stage1', 'stage2' or 'stage3', case sensitive, as the fourth argument to the script."
+  exit 1
+fi
+
+
+# Just make sure those exists, makes logic easier
+mkdir -p $CACHE_DIR
+touch $CACHE_DIR/hash
+mkdir -p workspace/$ARCH/dep-cache
+sudo chown `id -u -n`:`id -g -n` -R $CACHE_DIR
+
+# If build.sh has changed, i.e. its hash doesn't match the previously stored one, and it's Stage 1
+# Then we want to rebuild everything from scratch
+if [ "`cat $CACHE_DIR/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] && [ "$STAGE" == "stage1" ]
+then
+  # Clear the cache, removing all the pre-built dependencies
+  rm -rf $CACHE_DIR/*
+  touch $CACHE_DIR/hash
+else
+  # Copy over all pre-built dependencies
+  cp -a $CACHE_DIR/* workspace/$ARCH/dep-cache
+fi
+
+# Build
+sudo docker run --rm \
+                -v "$PWD/workspace":/workspace \
+                -v "$PWD/windows/cross-compile":/script \
+                -v "$PWD":/qtox \
+                -e TRAVIS_CI_STAGE=$STAGE \
+                ubuntu:16.04 \
+                /bin/bash /script/build.sh $ARCH $BUILD_TYPE
+
+# If it's any of the dependency building stages (Stage 1 or 2), copy over all the built dependencies to Travis cache
+if [ "$STAGE" == "stage1" ] || [ "$STAGE" == "stage2" ]
+then
+  # Docker runs as root, so we chown back to out user to be able to cp files
+  sudo chown `id -u -n`:`id -g -n` -R workspace
+  cp -a workspace/$ARCH/dep-cache/* $CACHE_DIR
+fi
+
+# We update the hash only at the end of the Stage 2
+if [ "`cat $CACHE_DIR/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] && [ "$STAGE" == "stage2" ]
+then
+  sha256sum windows/cross-compile/build.sh > $CACHE_DIR/hash
+fi

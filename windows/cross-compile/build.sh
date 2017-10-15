@@ -261,7 +261,7 @@ then
   # which happens when building Qt
   CONFIGURE_EXTRA=""
   set +u
-  if [ "$TRAVIS_CI_STAGE_ONE" == "true" ]
+  if [ "$TRAVIS_CI_STAGE" == "stage1" ]
   then
     CONFIGURE_EXTRA="-silent"
   fi
@@ -320,7 +320,7 @@ fi
 
 # Stop here if running the first stage on Travis CI
 set +u
-if [ "$TRAVIS_CI_STAGE_ONE" == "true" ]
+if [ "$TRAVIS_CI_STAGE" == "stage1" ]
 then
   # Strip to reduce cache size
   strip_all
@@ -874,7 +874,7 @@ fi
 
 # Stop here if running the second stage on Travis CI
 set +u
-if [ "$TRAVIS_CI_STAGE_TWO" == "true" ]
+if [ "$TRAVIS_CI_STAGE" == "stage2" ]
 then
   # Strip to reduce cache size
   strip_all
