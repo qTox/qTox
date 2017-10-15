@@ -21,45 +21,19 @@ set -exuo pipefail
 
 # Just make sure those exists, makes logic easier
 mkdir -p $DEP_CACHE
-touch $DEP_CACHE/hash
-mkdir -p workspace/$ARCH/dep-cache
-sudo chown `id -u -n`:`id -g -n` -R $DEP_CACHE
+ls -lbh $DEP_CACHE
 
-rm -rf $DEP_CACHE/*
-exit 0
-
-# If build.sh has changed, i.e. its hash doesn't match the previously stored one, and it's Stage 1
-# Then we want to rebuild everything from scratch
-if [ "`cat $DEP_CACHE/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] && [ "$TRAVIS_CI_STAGE_ONE" == "true" ]
+if [ -f $DEP_CACHE/one ]
 then
-  # Clear the cache, removing all the pre-built dependencies
-  rm -rf $DEP_CACHE/*
-  touch $DEP_CACHE/hash
+  touch $DEP_CACHE/two
 else
-  # Copy over all pre-built dependencies
-  cp -a $DEP_CACHE/* workspace/$ARCH/dep-cache
+  touch $DEP_CACHE/one
 fi
 
-# Build
-sudo docker run --rm \
-                -v "$PWD/workspace":/workspace \
-                -v "$PWD/windows/cross-compile":/script \
-                -v "$PWD":/qtox \
-                -e TRAVIS_CI_STAGE_ONE=$TRAVIS_CI_STAGE_ONE \
-                -e TRAVIS_CI_STAGE_TWO=$TRAVIS_CI_STAGE_TWO \
-                ubuntu:16.04 \
-                /bin/bash /script/build.sh $ARCH $BUILD_TYPE
-
-# If it's any of the dependency building stages (Stage 1 or 2), copy over all the built dependencies to Travis cache
-if [ "$TRAVIS_CI_STAGE_ONE" == "true" ] || [ "$TRAVIS_CI_STAGE_TWO" == "true" ]
+if [ -f $DEP_CACHE/one ] && [ -f $DEP_CACHE/two ]
 then
-  # Docker runs as root, so all files it createsare root:root; we chown back to our user to be able to cp files
-  sudo chown `id -u -n`:`id -g -n` -R workspace
-  cp -a workspace/$ARCH/dep-cache/* $DEP_CACHE
+  echo "test"
+  rm -rf $DEP_CACHE/*
 fi
 
-# We update the hash only at the end of the Stage 2
-if [ "`cat $DEP_CACHE/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] && [ "$TRAVIS_CI_STAGE_TWO" == "true" ]
-then
-  sha256sum windows/cross-compile/build.sh > $DEP_CACHE/hash
-fi
+ls -lbh $DEP_CACHE
