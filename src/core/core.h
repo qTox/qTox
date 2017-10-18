@@ -29,6 +29,8 @@
 #include <QMutex>
 #include <QObject>
 
+#include <functional>
+
 class CoreAV;
 class ICoreSettings;
 class GroupInvite;
