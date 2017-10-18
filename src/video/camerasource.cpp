@@ -332,6 +332,8 @@ void CameraSource::openDevice()
         emit openFailed();
         return;
     }
+
+    cctx->refcounted_frames = 1;
 #else
     // Create a context for our codec, using the existing parameters
     cctx = avcodec_alloc_context3(codec);
@@ -341,8 +343,6 @@ void CameraSource::openDevice()
         return;
     }
 #endif
-
-    cctx->refcounted_frames = 1;
 
     // Open codec
     if (avcodec_open2(cctx, codec, nullptr) < 0) {
