@@ -262,7 +262,9 @@ void SettingsSerializer::save()
     QDataStream stream(&data, QIODevice::ReadWrite | QIODevice::Append);
     stream.setVersion(QDataStream::Qt_5_0);
 
-    for (int g = -1; g < groups.size(); ++g) {
+    // prevent signed overflow and the associated warning
+    int numGroups = std::max(0, groups.size());
+    for (int g = -1; g < numGroups; ++g) {
         // Save the group name, if any
         if (g != -1) {
             writeStream(stream, RecordTag::GroupStart);
