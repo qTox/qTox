@@ -102,11 +102,13 @@ Core* Core::getInstance()
 
 const CoreAV* Core::getAv() const
 {
+    initializeMutex.tryLock(1000);
     return av;
 }
 
 CoreAV* Core::getAv()
 {
+    initializeMutex.tryLock(1000);
     return av;
 }
 
@@ -259,6 +261,8 @@ void Core::makeAv()
  */
 void Core::start(const QByteArray& savedata)
 {
+    initializeMutex.lock();
+
     bool isNewProfile = profile.isNewProfile();
     if (isNewProfile) {
         qDebug() << "Creating a new profile";
@@ -332,6 +336,8 @@ void Core::start(const QByteArray& savedata)
 
     process(); // starts its own timer
     av->start();
+
+    initializeMutex.unlock();
 }
 
 /* Using the now commented out statements in checkConnection(), I watched how

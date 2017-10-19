@@ -225,6 +225,7 @@ private:
     QTimer* toxTimer;
     Profile& profile;
     QMutex messageSendMutex;
+    mutable QMutex initializeMutex;
     bool ready;
     const ICoreSettings* const s;
     std::vector<std::function<void(CoreAV* av)>> toCallWhenAvReady;

@@ -189,10 +189,6 @@ void Nexus::showMainGUI()
     // Create GUI
     widget = Widget::getInstance();
 
-    // Start GUI
-    widget->init();
-    GUI::getInstance();
-
     // Zetok protection
     // There are small instants on startup during which no
     // profile is loaded but the GUI could still receive events,
@@ -235,6 +231,10 @@ void Nexus::showMainGUI()
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
     profile->startCore();
+    
+    // Start GUI
+    widget->init();
+    GUI::getInstance();
 }
 
 /**
