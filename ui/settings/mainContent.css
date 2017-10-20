@@ -49,12 +49,6 @@ QPushButton
     background: white;
 }
 
-QToolTip
-{
-    color: black;
-    background: #ffffdc;
-}
-
 QGroupBox
 {
     color: black;

@@ -78,6 +78,7 @@
         <file>ui/videoButton/videoButton.svg</file>
         <file>ui/volButton/volButton.css</file>
         <file>ui/volButton/volButton.svg</file>
+        <file>ui/window/general.css</file>
         <file>ui/window/statusPanel.css</file>
         <file>ui/window/window.css</file>
         <file>ui/chatArea/info.svg</file>

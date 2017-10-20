@@ -2149,6 +2149,7 @@ void Widget::clearAllReceipts()
 
 void Widget::reloadTheme()
 {
+	this->setStyleSheet(Style::getStylesheet(":/ui/window/general.css"));
     QString statusPanelStyle = Style::getStylesheet(":/ui/window/statusPanel.css");
     ui->tooliconsZone->setStyleSheet(Style::getStylesheet(":/ui/tooliconsZone/tooliconsZone.css"));
     ui->statusPanel->setStyleSheet(statusPanelStyle);
