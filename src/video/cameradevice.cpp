@@ -182,7 +182,8 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         av_dict_set(&options, "video_size",
                     QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
         av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
-        const char* pixel_format = v4l2::getPixelFormatString(mode.pixel_format).toStdString().c_str();
+        const std::string pixelFormatStr = v4l2::getPixelFormatString(mode.pixel_format).toStdString();
+        const char* pixel_format = pixelFormatStr.c_str();
         if (strncmp(pixel_format, "unknown", 7) != 0) {
             av_dict_set(&options, "pixel_format", pixel_format, 0);
         }
