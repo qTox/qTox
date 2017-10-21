@@ -177,6 +177,20 @@ check_sha256()
   fi
 }
 
+# If it's not a tarball but a git repo, let's check a hash of a file containing hashes of all files
+check_sha256_git()
+{
+  # There shoudl be .git directory
+  if [ ! -d ".git" ]
+  then
+    echo "Error: this function should be called in the root of a git repository."
+    exit 1
+  fi
+  # Create a file listing hashes of all the files except .git/*
+  find . -type f | grep -v "^./.git" | LC_COLLATE=C sort --stable --ignore-case | xargs sha256sum > /tmp/hashes.sha
+  check_sha256 "$1" "/tmp/hashes.sha"
+}
+
 # Strip binaries to reduce file size, we don't need this information anyway
 strip_all()
 {
@@ -356,17 +370,17 @@ set -u
 
 SQLCIPHER_PREFIX_DIR="$DEP_DIR/libsqlcipher"
 SQLCIPHER_VERSION=v3.4.1
+SQLCIPHER_HASH="4172cc6e5a79d36e178d36bd5cc467a938e08368952659bcd95eccbaf0fa4ad4"
 if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]
 then
   rm -rf "$SQLCIPHER_PREFIX_DIR"
   mkdir -p "$SQLCIPHER_PREFIX_DIR"
 
-  git clone \
-    --branch $SQLCIPHER_VERSION \
-    --depth 1 \
-    https://github.com/sqlcipher/sqlcipher \
-    sqlcipher
-  cd sqlcipher
+  wget https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_VERSION.tar.gz -O sqlcipher.tar.gz
+  check_sha256 "$SQLCIPHER_HASH" "sqlcipher.tar.gz"
+  bsdtar -xf sqlcipher.tar.gz
+  rm sqlcipher.tar.gz
+  cd sqlcipher*
 
   sed -i s/'LIBS="-lcrypto  $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
   sed -i s/'LIBS="-lcrypto $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
@@ -405,7 +419,7 @@ EOF
   echo -n $SQLCIPHER_VERSION > $SQLCIPHER_PREFIX_DIR/done
 
   cd ..
-  rm -rf ./sqlcipher
+  rm -rf ./sqlcipher*
 else
   echo "Using cached build of SQLCipher `cat $SQLCIPHER_PREFIX_DIR/done`"
 fi
@@ -499,6 +513,7 @@ fi
 
 OPENAL_PREFIX_DIR="$DEP_DIR/libopenal"
 OPENAL_VERSION=b80570bed017de60b67c6452264c634085c3b148
+OPENAL_HASH="734ef00895a9c1eb1505c11d638030b73593376df75da66ac5db6aa3e2f76807"
 if [ ! -f "$OPENAL_PREFIX_DIR/done" ]
 then
   rm -rf "$OPENAL_PREFIX_DIR"
@@ -507,6 +522,10 @@ then
   git clone https://github.com/irungentoo/openal-soft-tox openal-soft-tox
   cd openal*
   git checkout $OPENAL_VERSION
+  check_sha256_git "$OPENAL_HASH"
+
+  mkdir -p build
+  cd build
 
   echo "
       SET(CMAKE_SYSTEM_NAME Windows)
@@ -530,11 +549,14 @@ then
     -DALSOFT_EXAMPLES=OFF \
     -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
     -DDSOUND_INCLUDE_DIR=/usr/$ARCH-w64-mingw32/include \
-    -DDSOUND_LIBRARY=/usr/$ARCH-w64-mingw32/lib/libdsound.a
+    -DDSOUND_LIBRARY=/usr/$ARCH-w64-mingw32/lib/libdsound.a \
+    ..
 
   make
   make install
   echo -n $OPENAL_VERSION > $OPENAL_PREFIX_DIR/done
+
+  cd ..
 
   cd ..
   rm -rf ./openal*
@@ -547,6 +569,7 @@ fi
 
 FILTERAUDIO_PREFIX_DIR="$DEP_DIR/libfilteraudio"
 FILTERAUDIO_VERSION=ada2f4fdc04940cdeee47caffe43add4fa017096
+FILTERAUDIO_HASH="cf481e87c860aaf28b50d125195d84556f36d0ebb529d7ebdac39f8cc497256a"
 if [ ! -f "$FILTERAUDIO_PREFIX_DIR/done" ]
 then
   rm -rf "$FILTERAUDIO_PREFIX_DIR"
@@ -555,6 +578,7 @@ then
   git clone https://github.com/irungentoo/filter_audio filter_audio
   cd filter*
   git checkout $FILTERAUDIO_VERSION
+  check_sha256_git "$FILTERAUDIO_HASH"
 
   $ARCH-w64-mingw32-gcc -O2 -g0 -c \
                aec/aec_core.c \
@@ -741,20 +765,19 @@ fi
 # Opus
 
 OPUS_PREFIX_DIR="$DEP_DIR/libopus"
-OPUS_VERSION=v1.2.1
+OPUS_VERSION=1.2.1
+OPUS_HASH="cfafd339ccd9c5ef8d6ab15d7e1a412c054bf4cb4ecbbbcc78c12ef2def70732"
 if [ ! -f "$OPUS_PREFIX_DIR/done" ]
 then
   rm -rf "$OPUS_PREFIX_DIR"
   mkdir -p "$OPUS_PREFIX_DIR"
 
-  git clone \
-    --branch $OPUS_VERSION \
-    --depth 1 \
-    git://git.opus-codec.org/opus.git \
-    opus
-  cd opus
+  wget https://archive.mozilla.org/pub/opus/opus-$OPUS_VERSION.tar.gz
+  check_sha256 "$OPUS_HASH" "opus-$OPUS_VERSION.tar.gz"
+  bsdtar -xf opus*.tar.gz
+  rm opus*.tar.gz
+  cd opus*
 
-  ./autogen.sh
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
                                --prefix="$OPUS_PREFIX_DIR" \
                                --disable-shared \
@@ -766,7 +789,7 @@ then
   echo -n $OPUS_VERSION > $OPUS_PREFIX_DIR/done
 
   cd ..
-  rm -rf ./opus
+  rm -rf ./opus*
 else
   echo "Using cached build of Opus `cat $OPUS_PREFIX_DIR/done`"
 fi
@@ -776,19 +799,18 @@ fi
 
 SODIUM_PREFIX_DIR="$DEP_DIR/libsodium"
 SODIUM_VERSION=1.0.15
+SODIUM_HASH="fb6a9e879a2f674592e4328c5d9f79f082405ee4bb05cb6e679b90afe9e178f4"
 if [ ! -f "$SODIUM_PREFIX_DIR/done" ]
 then
   rm -rf "$SODIUM_PREFIX_DIR"
   mkdir -p "$SODIUM_PREFIX_DIR"
 
-  git clone \
-    --branch $SODIUM_VERSION \
-    --depth 1 \
-    https://github.com/jedisct1/libsodium \
-    libsodium
-  cd libsodium
+  wget https://download.libsodium.org/libsodium/releases/libsodium-$SODIUM_VERSION.tar.gz
+  check_sha256 "$SODIUM_HASH" "libsodium-$SODIUM_VERSION.tar.gz"
+  bsdtar -xf libsodium*.tar.gz
+  rm libsodium*.tar.gz
+  cd libsodium*
 
-  ./autogen.sh
   ./configure --host="$ARCH-w64-mingw32" \
               --prefix="$SODIUM_PREFIX_DIR" \
               --disable-shared \
@@ -799,7 +821,7 @@ then
   echo -n $SODIUM_VERSION > $SODIUM_PREFIX_DIR/done
 
   cd ..
-  rm -rf ./libsodium
+  rm -rf ./libsodium*
 else
   echo "Using cached build of Sodium `cat $SODIUM_PREFIX_DIR/done`"
 fi
@@ -808,18 +830,18 @@ fi
 # VPX
 
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
-VPX_VERSION=v1.6.1
+VPX_VERSION=1.6.1
+VPX_HASH="1c2c0c2a97fba9474943be34ee39337dee756780fc12870ba1dc68372586a819"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
   rm -rf "$VPX_PREFIX_DIR"
   mkdir -p "$VPX_PREFIX_DIR"
 
-  git clone \
-    --branch $VPX_VERSION \
-    --depth 1 \
-    https://github.com/webmproject/libvpx \
-    libvpx
-  cd libvpx
+  wget http://storage.googleapis.com/downloads.webmproject.org/releases/webm/libvpx-$VPX_VERSION.tar.bz2
+  check_sha256 "$VPX_HASH" "libvpx-$VPX_VERSION.tar.bz2"
+  bsdtar -xf libvpx-*.tar.bz2
+  rm libvpx*.tar.bz2
+  cd libvpx*
 
   if [[ "$ARCH" == "x86_64" ]]
   then
@@ -842,7 +864,7 @@ then
   echo -n $VPX_VERSION > $VPX_PREFIX_DIR/done
 
   cd ..
-  rm -rf ./libvpx
+  rm -rf ./libvpx*
 else
   echo "Using cached build of VPX `cat $VPX_PREFIX_DIR/done`"
 fi
@@ -851,18 +873,21 @@ fi
 # Toxcore
 
 TOXCORE_PREFIX_DIR="$DEP_DIR/libtoxcore"
-TOXCORE_VERSION=v0.1.10
+TOXCORE_VERSION=0.1.10
+TOXCORE_HASH=4e9a2881dd0ea8e65a35fc9621644ccf500c1797a2d37983b0057ed3be971299
 if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]
 then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  git clone \
-    --branch $TOXCORE_VERSION \
-    --depth 1 \
-    https://github.com/TokTok/c-toxcore \
-    c-toxcore
-  cd c-toxcore
+  wget https://github.com/TokTok/c-toxcore/releases/download/v$TOXCORE_VERSION/c-toxcore-$TOXCORE_VERSION.tar.gz
+  check_sha256 "$TOXCORE_HASH" "c-toxcore-$TOXCORE_VERSION.tar.gz"
+  bsdtar -xf c-toxcore*.tar.gz
+  rm c-toxcore*.tar.gz
+  cd c-toxcore*
+
+  mkdir -p build
+  cd build
 
   export PKG_CONFIG_PATH="$OPUS_PREFIX_DIR/lib/pkgconfig:$SODIUM_PREFIX_DIR/lib/pkgconfig:$VPX_PREFIX_DIR/lib/pkgconfig"
   export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
@@ -878,12 +903,13 @@ then
   " > toolchain.cmake
 
   cmake -DCMAKE_INSTALL_PREFIX=$TOXCORE_PREFIX_DIR \
-               -DBOOTSTRAP_DAEMON=OFF \
-               -DWARNINGS=OFF \
-               -DCMAKE_BUILD_TYPE=Release \
-               -DENABLE_STATIC=ON \
-               -DENABLE_SHARED=OFF \
-               -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake
+        -DBOOTSTRAP_DAEMON=OFF \
+        -DWARNINGS=OFF \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DENABLE_STATIC=ON \
+        -DENABLE_SHARED=OFF \
+        -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
+        ..
 
   make
   make install
@@ -893,9 +919,39 @@ then
   unset PKG_CONFIG_LIBDIR
 
   cd ..
-  rm -rf ./c-toxcore
+
+  cd ..
+  rm -rf ./c-toxcore*
 else
   echo "Using cached build of Toxcore `cat $TOXCORE_PREFIX_DIR/done`"
+fi
+
+
+# mingw-w64-debug-scripts
+
+MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR="$DEP_DIR/mingw-w64-debug-scripts"
+MINGW_W64_DEBUG_SCRIPTS_VERSION=7341e1ffdea352e5557f3fcae51569f13e1ef270
+MINGW_W64_DEBUG_SCRIPTS_HASH="a92883ddfe83780818347fda4ac07bce61df9226818df2f52fe4398fe733e204"
+if [ ! -f "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done" ]
+then
+  rm -rf "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR"
+  mkdir -p "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR"
+
+  # Get dbg executable and the debug scripts
+  git clone https://github.com/nurupo/mingw-w64-debug-scripts mingw-w64-debug-scripts
+  cd mingw-w64-debug-scripts
+  git checkout $MINGW_W64_DEBUG_SCRIPTS_VERSION
+  check_sha256_git "$MINGW_W64_DEBUG_SCRIPTS_HASH"
+
+  make $ARCH EXE_NAME=qtox.exe
+  mkdir -p "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/bin"
+  mv output/$ARCH/* "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/bin/"
+  echo -n $MINGW_W64_DEBUG_SCRIPTS_VERSION > $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done
+
+  cd ..
+  rm -rf ./mingw-w64-debug-scripts
+else
+  echo "Using cached build of mingw-w64-debug-scripts `cat $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done`"
 fi
 
 
@@ -910,6 +966,7 @@ then
   exit 0
 fi
 set -u
+
 
 strip_all
 
@@ -926,7 +983,7 @@ cd qtox
 cp -a $QTOX_SRC_DIR/. .
 
 rm -rf ./build
-mkdir build
+mkdir -p build
 cd build
 
 PKG_CONFIG_PATH=""
@@ -995,12 +1052,7 @@ then
   cp -r "$PWD/src" "$QTOX_PREFIX_DIR/$PWD"
 
   # Get dbg executable and the debug scripts
-  git clone https://github.com/nurupo/mingw-w64-debug-scripts
-  cd mingw-w64-debug-scripts
-  git checkout 7341e1ffdea352e5557f3fcae51569f13e1ef270
-  make $ARCH EXE_NAME=qtox.exe
-  mv output/$ARCH/* "$QTOX_PREFIX_DIR/"
-  cd ..
+  cp -r $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/bin/* "$QTOX_PREFIX_DIR/"
 fi
 
 # Strip
