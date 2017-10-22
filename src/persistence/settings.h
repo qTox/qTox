@@ -21,6 +21,7 @@
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
+#include "src/audio/iaudiosettings.h"
 #include "src/core/icoresettings.h"
 #include "src/core/toxencrypt.h"
 #include "src/core/toxfile.h"
@@ -41,7 +42,7 @@ namespace Db {
 enum class syncType;
 }
 
-class Settings : public QObject, public ICoreSettings
+class Settings : public QObject, public ICoreSettings, public IAudioSettings
 {
     Q_OBJECT
 
@@ -224,17 +225,6 @@ signals:
     void dbSyncTypeChanged(Db::syncType type);
     void blackListChanged(QStringList& blist);
 
-    // Audio
-    void inDevChanged(const QString& name);
-    void audioInDevEnabledChanged(bool enabled);
-    void audioInGainDecibelChanged(qreal gain);
-    void outDevChanged(const QString& name);
-    void audioOutDevEnabledChanged(bool enabled);
-    void outVolumeChanged(int volume);
-    void audioBitrateChanged(int bitrate);
-    void enableTestSoundChanged(bool enabled);
-    void enableBackend2Changed(bool enabled);
-
     // Video
     void videoDevChanged(const QString& name);
     void camVideoResChanged(const QRect& resolution);
@@ -350,32 +340,44 @@ public:
     bool getGroupAlwaysNotify() const;
     void setGroupAlwaysNotify(bool newValue);
 
-    QString getInDev() const;
-    void setInDev(const QString& deviceSpecifier);
+    QString getInDev() const override;
+    void setInDev(const QString& deviceSpecifier) override;
 
-    bool getAudioInDevEnabled() const;
-    void setAudioInDevEnabled(bool enabled);
+    bool getAudioInDevEnabled() const override;
+    void setAudioInDevEnabled(bool enabled) override;
 
-    QString getOutDev() const;
-    void setOutDev(const QString& deviceSpecifier);
+    QString getOutDev() const override;
+    void setOutDev(const QString& deviceSpecifier) override;
 
-    bool getAudioOutDevEnabled() const;
-    void setAudioOutDevEnabled(bool enabled);
+    bool getAudioOutDevEnabled() const override;
+    void setAudioOutDevEnabled(bool enabled) override;
 
-    qreal getAudioInGainDecibel() const;
-    void setAudioInGainDecibel(qreal dB);
+    qreal getAudioInGainDecibel() const override;
+    void setAudioInGainDecibel(qreal dB) override;
 
-    int getOutVolume() const;
-    void setOutVolume(int volume);
+    int getOutVolume() const override;
+    void setOutVolume(int volume) override;
 
-    int getAudioBitrate() const;
-    void setAudioBitrate(int bitrate);
+    int getAudioBitrate() const override;
+    void setAudioBitrate(int bitrate) override;
 
-    bool getEnableTestSound() const;
-    void setEnableTestSound(bool newValue);
+    bool getEnableTestSound() const override;
+    void setEnableTestSound(bool newValue) override;
 
-    bool getEnableBackend2() const;
-    void setEnableBackend2(bool enabled);
+    bool getEnableBackend2() const override;
+    void setEnableBackend2(bool enabled) override;
+
+    SIGNAL_IMPL(Settings, inDevChanged, const QString& device)
+    SIGNAL_IMPL(Settings, audioInDevEnabledChanged, bool enabled)
+
+    SIGNAL_IMPL(Settings, outDevChanged, const QString& device)
+    SIGNAL_IMPL(Settings, audioOutDevEnabledChanged, bool enabled)
+
+    SIGNAL_IMPL(Settings, audioInGainDecibelChanged, qreal dB)
+    SIGNAL_IMPL(Settings, outVolumeChanged, int volume)
+    SIGNAL_IMPL(Settings, audioBitrateChanged, int bitrate)
+    SIGNAL_IMPL(Settings, enableTestSoundChanged, bool newValue)
+    SIGNAL_IMPL(Settings, enableBackend2Changed, bool enabled)
 
     QString getVideoDev() const;
     void setVideoDev(const QString& deviceSpecifier);
