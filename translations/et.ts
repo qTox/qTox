@@ -520,7 +520,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Selle väljalülitamine võimaldab näiteks kasutada toxi üle Tor võrgu. Samas koormab väljalülitamine Toxi võrku. Teisisõnu, lülita valik mitteaktiivseks vaid vajaduse korral.</translation>
+        <translation>Selle väljalülitamine võimaldab näiteks kasutada toxi üle Tor võrgu. Samas koormab väljalülitamine Toxi võrku, seega tee seda vaid vajaduse korral.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -2618,7 +2618,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Uued tekstikujunduse eelistused võivad aktiveeruda alles siis, kui qTox uuesti käivitatakse.</translation>
+        <translation>Uued tekstikujunduse eelistused võivad jõustuda alles siis, kui qTox käivitatakse uuesti.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -2647,7 +2647,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Ava qToxi aken, kui saabub uus sõnum ja akent ei ole veel avatud.</translation>
+        <translation>Ava qToxi aken, kui saabub uus sõnum ja ühtki akent pole veel avatud.</translation>
     </message>
     <message>
         <source>Open window</source>
@@ -2678,7 +2678,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>Kui see valik on aktiivne, pannakse grupivestlused sõbranimekirja algusesse, vastasel juhul on nad sisselogitud sõprade järel.</translation>
+        <translation>Kui see valik on aktiivne, pannakse grupivestlused sõbranimekirja algusesse, vastasel juhul asetatakse need sisselogitud sõprade järele.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
@@ -2687,7 +2687,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>Sinu kontaktide nimekirja kuvatakse kompaktsel kujul.</translation>
+        <translation>Sinu kontaktide nimekirja kuvatakse vähendatud kujul.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
