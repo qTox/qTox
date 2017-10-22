@@ -134,9 +134,9 @@ void VideoSurface::unsubscribe()
     emit ratioChanged();
     emit boundaryChanged();
 
-    source->unsubscribe();
     disconnect(source, &VideoSource::frameAvailable, this, &VideoSurface::onNewFrameAvailable);
     disconnect(source, &VideoSource::sourceStopped, this, &VideoSurface::onSourceStopped);
+    source->unsubscribe();
 }
 
 void VideoSurface::onNewFrameAvailable(const std::shared_ptr<VideoFrame>& newFrame)
