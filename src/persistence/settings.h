@@ -25,6 +25,7 @@
 #include "src/core/icoresettings.h"
 #include "src/core/toxencrypt.h"
 #include "src/core/toxfile.h"
+#include "src/video/ivideosettings.h"
 
 #include <QDate>
 #include <QFlags>
@@ -42,7 +43,7 @@ namespace Db {
 enum class syncType;
 }
 
-class Settings : public QObject, public ICoreSettings, public IAudioSettings
+class Settings : public QObject, public ICoreSettings, public IAudioSettings, public IVideoSettings
 {
     Q_OBJECT
 
@@ -225,13 +226,6 @@ signals:
     void dbSyncTypeChanged(Db::syncType type);
     void blackListChanged(QStringList& blist);
 
-    // Video
-    void videoDevChanged(const QString& name);
-    void camVideoResChanged(const QRect& resolution);
-    void screenRegionChanged(const QRect& region);
-    void screenGrabbedChanged(bool enabled);
-    void camVideoFPSChanged(quint16 fps);
-
 public:
     bool getMakeToxPortable() const;
     void setMakeToxPortable(bool newValue);
@@ -379,20 +373,26 @@ public:
     SIGNAL_IMPL(Settings, enableTestSoundChanged, bool newValue)
     SIGNAL_IMPL(Settings, enableBackend2Changed, bool enabled)
 
-    QString getVideoDev() const;
-    void setVideoDev(const QString& deviceSpecifier);
+    QString getVideoDev() const override;
+    void setVideoDev(const QString& deviceSpecifier) override;
 
-    QRect getScreenRegion() const;
-    void setScreenRegion(const QRect& value);
+    QRect getScreenRegion() const override;
+    void setScreenRegion(const QRect& value) override;
 
-    bool getScreenGrabbed() const;
-    void setScreenGrabbed(bool value);
+    bool getScreenGrabbed() const override;
+    void setScreenGrabbed(bool value) override;
 
-    QRect getCamVideoRes() const;
-    void setCamVideoRes(QRect newValue);
+    QRect getCamVideoRes() const override;
+    void setCamVideoRes(QRect newValue) override;
 
-    unsigned short getCamVideoFPS() const;
-    void setCamVideoFPS(unsigned short newValue);
+    unsigned short getCamVideoFPS() const override;
+    void setCamVideoFPS(unsigned short newValue) override;
+
+    SIGNAL_IMPL(Settings, videoDevChanged, const QString& device)
+    SIGNAL_IMPL(Settings, screenRegionChanged, const QRect& region)
+    SIGNAL_IMPL(Settings, screenGrabbedChanged, bool enabled)
+    SIGNAL_IMPL(Settings, camVideoResChanged, const QRect& region)
+    SIGNAL_IMPL(Settings, camVideoFPSChanged, unsigned short fps)
 
     bool isAnimationEnabled() const;
     void setAnimationEnabled(bool newValue);
