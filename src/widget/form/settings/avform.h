@@ -28,16 +28,20 @@
 #include "ui_avform.h"
 #include "src/video/videomode.h"
 
-
+class Audio;
 class CameraSource;
+class CoreAV;
+class IAudioSettings;
+class IVideoSettings;
 class VideoSurface;
 
 class AVForm : public GenericForm, private Ui::AVForm
 {
     Q_OBJECT
 public:
-    AVForm();
-    ~AVForm();
+    AVForm(Audio* audio, CoreAV* coreAV, CameraSource& camera,
+           IAudioSettings* audioSettings, IVideoSettings* videoSettings);
+    ~AVForm() override;
     QString getFormName() final override
     {
         return tr("Audio/Video");
@@ -86,6 +90,11 @@ private:
     void open(const QString& devName, const VideoMode& mode);
 
 private:
+    Audio* audio;
+    CoreAV* coreAV;
+    IAudioSettings* audioSettings;
+    IVideoSettings* videoSettings;
+
     bool subscribedToAudioIn;
     VideoSurface* camVideoSurface;
     CameraSource& camera;

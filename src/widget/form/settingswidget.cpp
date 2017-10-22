@@ -23,6 +23,8 @@
 #include <QTabWidget>
 #include <QWindow>
 
+#include "src/core/coreav.h"
+#include "src/core/core.h"
 #include "src/video/camerasource.h"
 #include "src/widget/contentlayout.h"
 #include "src/widget/form/settings/aboutform.h"
@@ -34,9 +36,18 @@
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
+#include "src/audio/audio.h"
+#include "src/persistence/settings.h"
+
 SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent, Qt::Window)
 {
+    Audio* audio = &Audio::getInstance();
+    CoreAV* coreAV = Core::getInstance()->getAv();
+    IAudioSettings* audioSettings = &Settings::getInstance();
+    IVideoSettings* videoSettings = &Settings::getInstance();
+    CameraSource& camera = CameraSource::getInstance();
+
     setAttribute(Qt::WA_DeleteOnClose);
 
     QVBoxLayout* bodyLayout = new QVBoxLayout();
@@ -48,7 +59,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     GeneralForm* gfrm = new GeneralForm(this);
     UserInterfaceForm* uifrm = new UserInterfaceForm(this);
     PrivacyForm* pfrm = new PrivacyForm();
-    AVForm* avfrm = new AVForm();
+    AVForm* avfrm = new AVForm(audio, coreAV, camera, audioSettings, videoSettings);
     AdvancedForm* expfrm = new AdvancedForm();
     AboutForm* abtfrm = new AboutForm();
 
