@@ -82,8 +82,8 @@ public:
     static void invalidateGroupCallPeerSource(int group, int peer);
 
 public slots:
-    bool startCall(uint32_t friendNum, bool video = false);
-    bool answerCall(uint32_t friendNum);
+    bool startCall(uint32_t friendNum, bool video);
+    bool answerCall(uint32_t friendNum, bool video);
     bool cancelCall(uint32_t friendNum);
     void timeoutCall(uint32_t friendNum);
     void start();

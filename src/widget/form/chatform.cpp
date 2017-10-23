@@ -348,12 +348,12 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         qDebug() << "automatic call answer";
         CoreAV* coreav = Core::getInstance()->getAv();
         QMetaObject::invokeMethod(coreav, "answerCall", Qt::QueuedConnection,
-                                  Q_ARG(uint32_t, friendId));
+                                  Q_ARG(uint32_t, friendId), Q_ARG(bool, video));
         onAvStart(friendId, video);
     } else {
         callConfirm->show();
         CallConfirmWidget* confirmData = callConfirm.data();
-        connect(confirmData, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
+        connect(confirmData, &CallConfirmWidget::accepted, this, [this, video]{ onAnswerCallTriggered(video); });
         connect(confirmData, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
         auto msg = ChatMessage::createChatInfoMessage(tr("%1 calling").arg(displayedName),
                                                       ChatMessage::INFO, QDateTime::currentDateTime());
@@ -409,7 +409,7 @@ void ChatForm::showOutgoingCall(bool video)
     Widget::getInstance()->updateFriendActivity(f);
 }
 
-void ChatForm::onAnswerCallTriggered()
+void ChatForm::onAnswerCallTriggered(bool video)
 {
     delete callConfirm;
     uint32_t friendId = f->getId();
@@ -417,7 +417,7 @@ void ChatForm::onAnswerCallTriggered()
 
     updateCallButtons();
     CoreAV* av = Core::getInstance()->getAv();
-    if (!av->answerCall(friendId)) {
+    if (!av->answerCall(friendId, video)) {
         updateCallButtons();
         stopCounter();
         hideNetcam();
