@@ -12,6 +12,7 @@ apt_install() {
         cmake
         git
         libavdevice-dev
+        libexif-dev
         libgdk-pixbuf2.0-dev
         libglib2.0-dev
         libgtk2.0-dev
