@@ -15,7 +15,7 @@ function(auto_test subsystem module)
     Qt5::Test)
   add_test(
     NAME test_${module}
-    COMMAND test_${module})
+    COMMAND ${TEST_CROSSCOMPILING_EMULATOR} test_${module})
 endfunction()
 
 auto_test(core toxpk)

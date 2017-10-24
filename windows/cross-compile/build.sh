@@ -66,7 +66,7 @@ then
   exit 1
 fi
 
-if [ "$(id -u)" != "0" ]
+if [[ "$(id -u)" != "0" ]]
 then
   echo "Error: This script must be run as root."
   exit 1
@@ -140,6 +140,17 @@ then
                     g++-mingw-w64-x86-64 \
                     gcc-mingw-w64-x86-64
 fi
+
+
+# Install wine to run qTox tests in
+set +u
+if [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
+then
+  dpkg --add-architecture i386
+  apt-get update
+  apt-get install -y wine wine32 wine64
+fi
+set -u
 
 
 # Create the expected directory structure
@@ -275,7 +286,7 @@ then
   # which happens when building Qt
   CONFIGURE_EXTRA=""
   set +u
-  if [ "$TRAVIS_CI_STAGE" == "stage1" ]
+  if [[ "$TRAVIS_CI_STAGE" == "stage1" ]]
   then
     CONFIGURE_EXTRA="-silent"
   fi
@@ -355,7 +366,7 @@ fi
 
 # Stop here if running the first stage on Travis CI
 set +u
-if [ "$TRAVIS_CI_STAGE" == "stage1" ]
+if [[ "$TRAVIS_CI_STAGE" == "stage1" ]]
 then
   # Strip to reduce cache size
   strip_all
@@ -957,7 +968,7 @@ fi
 
 # Stop here if running the second stage on Travis CI
 set +u
-if [ "$TRAVIS_CI_STAGE" == "stage2" ]
+if [[ "$TRAVIS_CI_STAGE" == "stage2" ]]
 then
   # Strip to reduce cache size
   strip_all
@@ -1008,6 +1019,13 @@ echo "
     SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $CMAKE_FIND_ROOT_PATH)
 " > toolchain.cmake
 
+set +u
+if [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
+then
+  echo "SET(TEST_CROSSCOMPILING_EMULATOR /usr/bin/wine)" >> toolchain.cmake
+fi
+set -u
+
 if [[ "$BUILD_TYPE" == "release" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
@@ -1041,6 +1059,25 @@ cp $OPENSSL_PREFIX_DIR/bin/ssleay32.dll \
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
 cp /usr/$ARCH-w64-mingw32/lib/libwinpthread-1.dll $QTOX_PREFIX_DIR
+
+set +u
+if [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
+then
+  # Setup wine
+  if [[ "$ARCH" == "i686" ]]
+  then
+    export WINEARCH=win32
+  elif [[ "$ARCH" == "x86_64" ]]
+  then
+    export WINEARCH=win64
+  fi
+  winecfg
+  # Add libgcc_s_*.dll, libwinpthread-1.dll, QtTest.dll, etc. into PATH env var of wine
+  export WINEPATH=`cd $QTOX_PREFIX_DIR ; winepath -w $(pwd)`\;`winepath -w $QT_PREFIX_DIR/bin/`
+  export CTEST_OUTPUT_ON_FAILURE=1
+  make test
+fi
+set -u
 
 cd ..
 
