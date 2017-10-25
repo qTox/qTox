@@ -122,6 +122,13 @@ static const QVector<StringPair> DOUBLE_SIGN_WORK_CASES {
     PAIR_FORMAT("%1aaa%2%2aaa%1", "%3%1aaa%2%2aaa%1%4"),
 };
 
+// only multi-sign markdown must work for this data
+static const QVector<StringPair> MULTI_SIGN_WORK_CASES {
+    PAIR_FORMAT("%1int main()\n{    return 0;\n}%1", "%2%1"
+                                                     "int main()\n{    return 0;\n}"
+                                                     "%1%3"),
+};
+
 // any type of markdown must fail for this data
 static const QVector<QString> COMMON_EXCEPTIONS {
     // No empty formatting string
@@ -309,6 +316,8 @@ private slots:
     void singleSignWorkCasesHideSymbols();
     void doubleSignWorkCasesShowSymbols();
     void doubleSignWorkCasesHideSymbols();
+    void multiSignWorkCasesHideSymbols();
+    void multiSignWorkCasesShowSymbols();
     void commonExceptionsShowSymbols();
     void commonExceptionsHideSymbols();
     void singleSignExceptionsShowSymbols();
@@ -425,6 +434,39 @@ void TestTextFormatter::doubleSignWorkCasesHideSymbols()
                   false,
                   doubleSignWorkCasesProcessInput,
                   doubleSignWorkCasesProcessOutput);
+}
+
+static QString multiSignWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
+{
+    return str.arg(mtt.markdownSequence);
+}
+
+static QString multiSignWorkCasesProcessOutput(const QString& str,
+                                                const MarkdownToTags& mtt,
+                                                bool showSymbols)
+{
+    const auto tags = mtt.htmlTags;
+    return str.arg(showSymbols ? mtt.markdownSequence : "", tags.first, tags.second);
+}
+
+void TestTextFormatter::multiSignWorkCasesHideSymbols()
+{
+    workCasesTest(markdownFunction,
+                  MULTI_SIGN_MARKDOWN,
+                  MULTI_SIGN_WORK_CASES,
+                  false,
+                  multiSignWorkCasesProcessInput,
+                  multiSignWorkCasesProcessOutput);
+}
+
+void TestTextFormatter::multiSignWorkCasesShowSymbols()
+{
+    workCasesTest(markdownFunction,
+                  MULTI_SIGN_MARKDOWN,
+                  MULTI_SIGN_WORK_CASES,
+                  true,
+                  multiSignWorkCasesProcessInput,
+                  multiSignWorkCasesProcessOutput);
 }
 
 void TestTextFormatter::commonExceptionsShowSymbols()
