@@ -237,12 +237,9 @@ static void workCasesTest(MarkdownFunction applyMarkdown,
         for (const StringPair& data: testData) {
             const QString input = processInput != nullptr ? processInput(data.first, mtt)
                                                           : data.first;
-            qDebug() << "Input:" << input;
             QString output = processOutput != nullptr ? processOutput(data.second, mtt, showSymbols)
                                                       : data.second;
-            qDebug() << "Expected output:" << output;
             QString result = applyMarkdown(input, showSymbols);
-            qDebug() << "Observed output:" << result;
             QVERIFY(output == result);
         }
     }
@@ -265,7 +262,6 @@ static void exceptionsTest(MarkdownFunction applyMarkdown,
     for (const MarkdownToTags& mtt: markdownToTags) {
         for (const QString& e: exceptions) {
             QString processedException = e.arg(mtt.markdownSequence);
-            qDebug() << "Exception: " << processedException;
             QVERIFY(processedException == applyMarkdown(processedException, showSymbols));
         }
     }
@@ -281,10 +277,7 @@ static void specialCasesTest(MarkdownFunction applyMarkdown,
                              const QVector<StringPair>& pairs)
 {
     for (const auto& p : pairs) {
-        qDebug() << "Input:" << p.first;
-        qDebug() << "Expected output:" << p.second;
         QString result = applyMarkdown(p.first, false);
-        qDebug() << "Observed output:" << result;
         QVERIFY(p.second == result);
     }
 }
@@ -298,10 +291,7 @@ using UrlHighlightFunction = QString(*)(const QString&);
 static void urlHighlightTest(UrlHighlightFunction function, const QVector<QPair<QString, QString>>& data)
 {
     for (const QPair<QString, QString>& p : data) {
-        qDebug() << "Input:" << p.first;
-        qDebug() << "Output:" << p.second;
         QString result = function(p.first);
-        qDebug() << "Observed output:" << result;
         QVERIFY(p.second == result);
     }
 }
