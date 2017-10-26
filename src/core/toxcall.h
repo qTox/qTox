@@ -31,7 +31,6 @@ protected:
     QMetaObject::Connection audioInConn;
 
 public:
-    uint32_t callId;
     quint32 alSource;
     bool inactive;
     bool muteMic;
@@ -52,7 +51,7 @@ struct ToxFriendCall : public ToxCall
     CoreVideoSource* videoSource;
     TOXAV_FRIEND_CALL_STATE state;
 
-    void startTimeout();
+    void startTimeout(uint32_t callId);
     void stopTimeout();
 
 protected:

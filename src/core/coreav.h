@@ -118,7 +118,7 @@ private:
     std::unique_ptr<QThread> coreavThread;
     std::unique_ptr<QTimer> iterateTimer;
     static std::map<uint32_t, ToxFriendCall> calls;
-    static std::map<uint32_t, ToxGroupCall> groupCalls;
+    static std::map<int, ToxGroupCall> groupCalls;
     std::atomic_flag threadSwitchLock;
 
     friend class Audio;

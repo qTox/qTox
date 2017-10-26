@@ -79,7 +79,7 @@ std::map<uint32_t, ToxFriendCall> CoreAV::calls;
  * @brief Maps group IDs to ToxGroupCalls.
  * @note Need to use STL container here, because Qt containers need a copy constructor.
  */
-std::map<uint32_t, ToxGroupCall> CoreAV::groupCalls;
+std::map<int, ToxGroupCall> CoreAV::groupCalls;
 
 CoreAV::CoreAV(Tox* tox)
     : coreavThread{new QThread}
@@ -275,8 +275,8 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     if (!toxav_call(toxav, friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate, nullptr))
         return false;
 
-    calls[friendNum]= ToxFriendCall{friendNum, video, *this};
-    calls[friendNum].startTimeout();
+    calls[friendNum] = ToxFriendCall{friendNum, video, *this};
+    calls[friendNum].startTimeout(friendNum);
     return true;
 }
 
@@ -378,7 +378,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
     if (call.nullVideoBitrate) {
         qDebug() << "Restarting video stream to friend" << callId;
-        toxav_bit_rate_set(toxav, call.callId, -1, VIDEO_DEFAULT_BITRATE, nullptr);
+        toxav_bit_rate_set(toxav, callId, -1, VIDEO_DEFAULT_BITRATE, nullptr);
         call.nullVideoBitrate = false;
     }
 
@@ -649,7 +649,7 @@ void CoreAV::sendNoVideo()
     qDebug() << "CoreAV: Signaling end of video sending";
     for (auto& kv : calls) {
         ToxFriendCall& call = kv.second;
-        toxav_bit_rate_set(toxav, call.callId, -1, 0, nullptr);
+        toxav_bit_rate_set(toxav, kv.first, -1, 0, nullptr);
         call.nullVideoBitrate = true;
     }
 }
