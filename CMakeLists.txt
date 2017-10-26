@@ -325,6 +325,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/about/aboutfriendform.h
   src/widget/categorywidget.cpp
   src/widget/categorywidget.h
+  src/widget/chatformheader.cpp
+  src/widget/chatformheader.h
   src/widget/circlewidget.cpp
   src/widget/circlewidget.h
   src/widget/contentdialog.cpp

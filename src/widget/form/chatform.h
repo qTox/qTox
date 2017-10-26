@@ -57,7 +57,6 @@ public:
     static const QString ACTION_PREFIX;
 
 signals:
-    void aliasChanged(const QString& alias);
     void incomingNotification(uint32_t friendId);
     void outgoingNotification();
     void rejectCall(uint32_t friendId);
@@ -134,7 +133,6 @@ private:
     QAction* exportChatAction;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
-    QPointer<CallConfirmWidget> callConfirm;
     bool isTyping;
 };
 
