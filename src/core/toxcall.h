@@ -6,8 +6,6 @@
 #include <QtGlobal>
 #include <cstdint>
 
-#include "src/core/indexedlist.h"
-
 #include <tox/toxav.h>
 
 class QTimer;
