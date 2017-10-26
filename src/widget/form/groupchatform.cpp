@@ -26,6 +26,7 @@
 #include "src/friendlist.h"
 #include "src/model/group.h"
 #include "src/video/groupnetcamview.h"
+#include "src/widget/chatformheader.h"
 #include "src/widget/flowlayout.h"
 #include "src/widget/form/chatform.h"
 #include "src/widget/groupwidget.h"
@@ -77,46 +78,40 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     tabber = new TabCompleter(msgEdit, group);
 
     fileButton->setEnabled(false);
+    ChatFormHeader::Mode mode = ChatFormHeader::Mode::None;
     if (group->isAvGroupchat()) {
-        videoButton->setEnabled(false);
-        videoButton->setObjectName("grey");
-    } else {
-        videoButton->setVisible(false);
-        callButton->setVisible(false);
-        volButton->setVisible(false);
-        micButton->setVisible(false);
+        mode = ChatFormHeader::Mode::Audio;
     }
 
-    nameLabel->setText(group->getName());
+    headWidget->setMode(mode);
+    setName(group->getName());
 
     nusersLabel->setFont(Style::getFont(Style::Medium));
     nusersLabel->setObjectName("statusLabel");
     retranslateUi();
 
-    avatar->setPixmap(Style::scaleSvgImage(":/img/group_dark.svg", avatar->width(), avatar->height()));
+    const QSize& size = headWidget->getAvatarSize();
+    headWidget->setAvatar(Style::scaleSvgImage(":/img/group_dark.svg", size.width(), size.height()));
 
     msgEdit->setObjectName("group");
 
     namesListLayout = new FlowLayout(0, 5, 0);
-    headTextLayout->addWidget(nusersLabel);
-    headTextLayout->addLayout(namesListLayout);
-    headTextLayout->addStretch();
+    headWidget->addWidget(nusersLabel);
+    headWidget->addLayout(namesListLayout);
+    headWidget->addStretch();
 
-    nameLabel->setMinimumHeight(12);
+    //nameLabel->setMinimumHeight(12);
     nusersLabel->setMinimumHeight(12);
 
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
     connect(msgEdit, &ChatTextEdit::tabPressed, tabber, &TabCompleter::complete);
     connect(msgEdit, &ChatTextEdit::keyPressed, tabber, &TabCompleter::reset);
-    connect(callButton, &QPushButton::clicked, this, &GroupChatForm::onCallClicked);
-    connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
-    connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
-    connect(nameLabel, &CroppingLabel::editFinished, this, [=](const QString& newName) {
-        if (!newName.isEmpty()) {
-            nameLabel->setText(newName);
-            chatGroup->setName(newName);
-        }
+    connect(headWidget, &ChatFormHeader::callTriggered, this, &GroupChatForm::onCallClicked);
+    connect(headWidget, &ChatFormHeader::micMuteToggle, this, &GroupChatForm::onMicMuteToggle);
+    connect(headWidget, &ChatFormHeader::volMuteToggle, this, &GroupChatForm::onVolMuteToggle);
+    connect(headWidget, &ChatFormHeader::nameChanged, this, [=](const QString& newName) {
+        chatGroup->setName(newName);
     });
     connect(group, &Group::userListChanged, this, &GroupChatForm::onUserListChanged);
 
@@ -169,19 +164,9 @@ void GroupChatForm::onUserListChanged()
 
     // Enable or disable call button
     const int peersCount = group->getPeersCount();
-    if (peersCount > 1 && group->isAvGroupchat()) {
-        // don't set button to green if call running
-        if (!inCall) {
-            callButton->setEnabled(true);
-            callButton->setObjectName("green");
-            callButton->style()->polish(callButton);
-            callButton->setToolTip(tr("Start audio call"));
-        }
-    } else {
-        callButton->setEnabled(false);
-        callButton->setObjectName("grey");
-        callButton->style()->polish(callButton);
-        callButton->setToolTip("");
+    const bool online = peersCount > 1;
+    headWidget->updateCallButtons(online, inCall);
+    if (!online || !group->isAvGroupchat()) {
         Core::getInstance()->getAv()->leaveGroupCall(group->getId());
         hideNetcam();
     }
@@ -294,17 +279,10 @@ void GroupChatForm::onMicMuteToggle()
 {
     if (audioInputFlag) {
         CoreAV* av = Core::getInstance()->getAv();
-        if (micButton->objectName() == "red") {
-            av->muteCallInput(group, false);
-            micButton->setObjectName("green");
-            micButton->setToolTip(tr("Mute microphone"));
-        } else {
-            av->muteCallInput(group, true);
-            micButton->setObjectName("red");
-            micButton->setToolTip(tr("Unmute microphone"));
-        }
-
-        Style::repolish(micButton);
+        const bool oldMuteState = av->isGroupCallInputMuted(group);
+        const bool newMute = !oldMuteState;
+        av->muteCallInput(group, newMute);
+        headWidget->updateMuteMicButton(inCall, newMute);
     }
 }
 
@@ -312,53 +290,39 @@ void GroupChatForm::onVolMuteToggle()
 {
     if (audioOutputFlag) {
         CoreAV* av = Core::getInstance()->getAv();
-        if (volButton->objectName() == "red") {
-            av->muteCallOutput(group, false);
-            volButton->setObjectName("green");
-            volButton->setToolTip(tr("Mute call"));
-        } else {
-            av->muteCallOutput(group, true);
-            volButton->setObjectName("red");
-            volButton->setToolTip(tr("Unmute call"));
-        }
-
-        Style::repolish(volButton);
+        const bool oldMuteState = av->isGroupCallOutputMuted(group);
+        const bool newMute = !oldMuteState;
+        av->muteCallOutput(group, newMute);
+        headWidget->updateMuteVolButton(inCall, newMute);
     }
 }
 
 void GroupChatForm::onCallClicked()
 {
+    CoreAV* av = Core::getInstance()->getAv();
     if (!inCall) {
-        Core::getInstance()->getAv()->joinGroupCall(group->getId());
+        av->joinGroupCall(group->getId());
         audioInputFlag = true;
         audioOutputFlag = true;
-        callButton->setObjectName("red");
-        callButton->style()->polish(callButton);
-        callButton->setToolTip(tr("End audio call"));
-        micButton->setObjectName("green");
-        micButton->style()->polish(micButton);
-        micButton->setToolTip(tr("Mute microphone"));
-        volButton->setObjectName("green");
-        volButton->style()->polish(volButton);
-        volButton->setToolTip(tr("Mute call"));
         inCall = true;
         showNetcam();
     } else {
-        Core::getInstance()->getAv()->leaveGroupCall(group->getId());
+        av->leaveGroupCall(group->getId());
         audioInputFlag = false;
         audioOutputFlag = false;
-        callButton->setObjectName("green");
-        callButton->style()->polish(callButton);
-        callButton->setToolTip(tr("Start audio call"));
-        micButton->setObjectName("grey");
-        micButton->style()->polish(micButton);
-        micButton->setToolTip("");
-        volButton->setObjectName("grey");
-        volButton->style()->polish(volButton);
-        volButton->setToolTip("");
         inCall = false;
         hideNetcam();
     }
+
+    const int peersCount = group->getPeersCount();
+    const bool online = peersCount > 1;
+    headWidget->updateCallButtons(online, inCall);
+
+    const bool inMute = av->isGroupCallInputMuted(group);
+    headWidget->updateMuteMicButton(inCall, inMute);
+
+    const bool outMute = av->isGroupCallOutputMuted(group);
+    headWidget->updateMuteVolButton(inCall, outMute);
 }
 
 GenericNetCamView* GroupChatForm::createNetcam()
@@ -378,13 +342,7 @@ void GroupChatForm::keyPressEvent(QKeyEvent* ev)
 {
     // Push to talk (CTRL+P)
     if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall) {
-        CoreAV* av = Core::getInstance()->getAv();
-        if (!av->isGroupCallInputMuted(group)) {
-            av->muteCallInput(group, false);
-            micButton->setObjectName("green");
-            micButton->style()->polish(micButton);
-            Style::repolish(micButton);
-        }
+        onMicMuteToggle();
     }
 
     if (msgEdit->hasFocus())
@@ -395,13 +353,7 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 {
     // Push to talk (CTRL+P)
     if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall) {
-        CoreAV* av = Core::getInstance()->getAv();
-        if (av->isGroupCallInputMuted(group)) {
-            av->muteCallInput(group, true);
-            micButton->setObjectName("red");
-            micButton->style()->polish(micButton);
-            Style::repolish(micButton);
-        }
+        onMicMuteToggle();
     }
 
     if (msgEdit->hasFocus())
