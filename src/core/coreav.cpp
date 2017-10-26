@@ -71,13 +71,15 @@
 
 /**
  * @brief Maps friend IDs to ToxFriendCall.
+ * @note Need to use STL container here, because Qt containers need a copy constructor.
  */
-IndexedList<ToxFriendCall> CoreAV::calls;
+std::map<uint32_t, ToxFriendCall> CoreAV::calls;
 
 /**
  * @brief Maps group IDs to ToxGroupCalls.
+ * @note Need to use STL container here, because Qt containers need a copy constructor.
  */
-IndexedList<ToxGroupCall> CoreAV::groupCalls;
+std::map<uint32_t, ToxGroupCall> CoreAV::groupCalls;
 
 CoreAV::CoreAV(Tox* tox)
     : coreavThread{new QThread}
@@ -103,8 +105,8 @@ CoreAV::CoreAV(Tox* tox)
 
 CoreAV::~CoreAV()
 {
-    for (const ToxFriendCall& call : calls)
-        cancelCall(call.callId);
+    for (const auto& call : calls)
+        cancelCall(call.first);
     killTimerFromThread();
     toxav_kill(toxav);
     coreavThread->exit(0);
@@ -166,7 +168,7 @@ void CoreAV::process()
  */
 bool CoreAV::anyActiveCalls() const
 {
-    return !calls.isEmpty();
+    return !calls.empty();
 }
 
 /**
@@ -176,7 +178,7 @@ bool CoreAV::anyActiveCalls() const
  */
 bool CoreAV::isCallStarted(const Friend* f) const
 {
-    return f && calls.contains(f->getId());
+    return f && (calls.find(f->getId()) != calls.end());
 }
 
 /**
@@ -186,7 +188,7 @@ bool CoreAV::isCallStarted(const Friend* f) const
  */
 bool CoreAV::isCallStarted(const Group* g) const
 {
-    return g && groupCalls.contains(g->getId());
+    return g && (groupCalls.find(g->getId()) != groupCalls.end());
 }
 
 /**
@@ -231,7 +233,7 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
     }
 
     qDebug() << QString("answering call %1").arg(friendNum);
-    assert(calls.contains(friendNum));
+    assert(calls.find(friendNum) != calls.end());
     TOXAV_ERR_ANSWER err;
 
     const uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
@@ -241,7 +243,7 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
     } else {
         qWarning() << "Failed to answer call with error" << err;
         toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
-        calls.remove(friendNum);
+        calls.erase(friendNum);
         return false;
     }
 }
@@ -264,7 +266,7 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     }
 
     qDebug() << QString("Starting call with %1").arg(friendNum);
-    if (calls.contains(friendNum)) {
+    if (calls.find(friendNum) != calls.end()) {
         qWarning() << QString("Can't start call with %1, we're already in this call!").arg(friendNum);
         return false;
     }
@@ -273,8 +275,8 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     if (!toxav_call(toxav, friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate, nullptr))
         return false;
 
-    auto call = calls.insert({friendNum, video, *this});
-    call->startTimeout();
+    calls[friendNum]= ToxFriendCall{friendNum, video, *this};
+    calls[friendNum].startTimeout();
     return true;
 }
 
@@ -300,7 +302,7 @@ bool CoreAV::cancelCall(uint32_t friendNum)
         return false;
     }
 
-    calls.remove(friendNum);
+    calls.erase(friendNum);
     emit avEnd(friendNum);
     return true;
 }
@@ -334,7 +336,7 @@ void CoreAV::timeoutCall(uint32_t friendNum)
 bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, uint8_t chans,
                            uint32_t rate)
 {
-    if (!calls.contains(callId))
+    if (calls.find(callId) == calls.end())
         return false;
 
     ToxFriendCall& call = calls[callId];
@@ -366,7 +368,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 {
     // We might be running in the FFmpeg thread and holding the CameraSource lock
     // So be careful not to deadlock with anything while toxav locks in toxav_video_send_frame
-    if (!calls.contains(callId))
+    if (calls.find(callId) == calls.end())
         return;
 
     ToxFriendCall& call = calls[callId];
@@ -411,7 +413,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
  */
 void CoreAV::toggleMuteCallInput(const Friend* f)
 {
-    if (f && calls.contains(f->getId())) {
+    if (f && (calls.find(f->getId()) != calls.end())) {
         ToxCall& call = calls[f->getId()];
         call.muteMic = !call.muteMic;
     }
@@ -423,7 +425,7 @@ void CoreAV::toggleMuteCallInput(const Friend* f)
  */
 void CoreAV::toggleMuteCallOutput(const Friend* f)
 {
-    if (f && calls.contains(f->getId())) {
+    if (f && (calls.find(f->getId()) != calls.end())) {
         ToxCall& call = calls[f->getId()];
         call.muteVol = !call.muteVol;
     }
@@ -449,7 +451,7 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
     Core* c = static_cast<Core*>(core);
     CoreAV* cav = c->getAv();
 
-    if (!cav->groupCalls.contains(group)) {
+    if (cav->groupCalls.find(group) == cav->groupCalls.end()) {
         return;
     }
 
@@ -486,7 +488,7 @@ void CoreAV::invalidateGroupCallPeerSource(int group, int peer)
  */
 VideoSource* CoreAV::getVideoSourceFromCall(int friendNum)
 {
-    if (!calls.contains(friendNum)) {
+    if (calls.find(friendNum) == calls.end()) {
         qWarning() << "CoreAV::getVideoSourceFromCall: No such call, did it die before we finished "
                       "answering?";
         return nullptr;
@@ -504,8 +506,8 @@ void CoreAV::joinGroupCall(int groupId)
 {
     qDebug() << QString("Joining group call %1").arg(groupId);
 
-    auto call = groupCalls.insert({groupId, *this});
-    call->inactive = false;
+    groupCalls[groupId] = ToxGroupCall{groupId, *this};
+    groupCalls[groupId].inactive = false;
 }
 
 /**
@@ -517,14 +519,15 @@ void CoreAV::leaveGroupCall(int groupId)
 {
     qDebug() << QString("Leaving group call %1").arg(groupId);
 
-    groupCalls.remove(groupId);
+    groupCalls.erase(groupId);
 }
 
 bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples, uint8_t chans,
                                 uint32_t rate)
 {
-    if (!groupCalls.contains(groupId))
+    if (groupCalls.find(groupId) == groupCalls.end()) {
         return false;
+    }
 
     ToxGroupCall& call = groupCalls[groupId];
 
@@ -544,7 +547,7 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
  */
 void CoreAV::muteCallInput(const Group* g, bool mute)
 {
-    if (g && groupCalls.contains(g->getId()))
+    if (g && (groupCalls.find(g->getId()) != groupCalls.end()))
         groupCalls[g->getId()].muteMic = mute;
 }
 
@@ -555,7 +558,7 @@ void CoreAV::muteCallInput(const Group* g, bool mute)
  */
 void CoreAV::muteCallOutput(const Group* g, bool mute)
 {
-    if (g && groupCalls.contains(g->getId()))
+    if (g && (groupCalls.find(g->getId()) != groupCalls.end()))
         groupCalls[g->getId()].muteVol = mute;
 }
 
@@ -566,7 +569,7 @@ void CoreAV::muteCallOutput(const Group* g, bool mute)
  */
 bool CoreAV::isGroupCallInputMuted(const Group* g) const
 {
-    return g && groupCalls.contains(g->getId()) ? groupCalls[g->getId()].muteMic : false;
+    return g && (groupCalls.find(g->getId()) != groupCalls.end()) ? groupCalls[g->getId()].muteMic : false;
 }
 
 /**
@@ -576,7 +579,7 @@ bool CoreAV::isGroupCallInputMuted(const Group* g) const
  */
 bool CoreAV::isGroupCallOutputMuted(const Group* g) const
 {
-    return g && groupCalls.contains(g->getId()) ? groupCalls[g->getId()].muteVol : false;
+    return g && (groupCalls.find(g->getId()) != groupCalls.end()) ? groupCalls[g->getId()].muteVol : false;
 }
 
 /**
@@ -609,7 +612,7 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
  */
 bool CoreAV::isCallInputMuted(const Friend* f) const
 {
-    return f && calls.contains(f->getId()) ? calls[f->getId()].muteMic : false;
+    return f && (calls.find(f->getId()) != calls.end()) ? calls[f->getId()].muteMic : false;
 }
 
 /**
@@ -619,7 +622,7 @@ bool CoreAV::isCallInputMuted(const Friend* f) const
  */
 bool CoreAV::isCallOutputMuted(const Friend* f) const
 {
-    return f && calls.contains(f->getId()) ? calls[f->getId()].muteVol : false;
+    return f && (calls.find(f->getId()) != calls.end()) ? calls[f->getId()].muteVol : false;
 }
 
 /**
@@ -627,12 +630,12 @@ bool CoreAV::isCallOutputMuted(const Friend* f) const
  */
 void CoreAV::invalidateCallSources()
 {
-    for (ToxGroupCall& call : groupCalls) {
-        call.peers.clear();
+    for (auto& kv : groupCalls) {
+        kv.second.peers.clear();
     }
 
-    for (ToxFriendCall& call : calls) {
-        call.alSource = 0;
+    for (auto& kv : calls) {
+        kv.second.alSource = 0;
     }
 }
 
@@ -644,7 +647,8 @@ void CoreAV::sendNoVideo()
 {
     // We don't change the audio bitrate, but we signal that we're not sending video anymore
     qDebug() << "CoreAV: Signaling end of video sending";
-    for (ToxFriendCall& call : calls) {
+    for (auto& kv : calls) {
+        ToxFriendCall& call = kv.second;
         toxav_bit_rate_set(toxav, call.callId, -1, 0, nullptr);
         call.nullVideoBitrate = true;
     }
@@ -671,7 +675,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         return;
     }
 
-    if (self->calls.contains(friendNum)) {
+    if (self->calls.find(friendNum) != self->calls.end()) {
         /// Hanging up from a callback is supposed to be UB,
         /// but since currently the toxav callbacks are fired from the toxcore thread,
         /// we'll always reach this point through a non-blocking queud connection, so not in the
@@ -681,7 +685,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         return;
     }
     qDebug() << QString("Received call invite from %1").arg(friendNum);
-    const auto& callIt = self->calls.insert({friendNum, video, *self});
+    self->calls[friendNum] = ToxFriendCall{friendNum, video, *self};
 
     // We don't get a state callback when answering, so fill the state ourselves in advance
     int state = 0;
@@ -689,7 +693,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         state |= TOXAV_FRIEND_CALL_STATE_SENDING_A | TOXAV_FRIEND_CALL_STATE_ACCEPTING_A;
     if (video)
         state |= TOXAV_FRIEND_CALL_STATE_SENDING_V | TOXAV_FRIEND_CALL_STATE_ACCEPTING_V;
-    callIt->state = static_cast<TOXAV_FRIEND_CALL_STATE>(state);
+    calls[friendNum].state = static_cast<TOXAV_FRIEND_CALL_STATE>(state);
 
     emit reinterpret_cast<CoreAV*>(self)->avInvite(friendNum, video);
     self->threadSwitchLock.clear(std::memory_order_release);
@@ -716,7 +720,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
         return;
     }
 
-    if (!self->calls.contains(friendNum)) {
+    if (self->calls.find(friendNum) == self->calls.end()) {
         qWarning() << QString("stateCallback called, but call %1 is already dead").arg(friendNum);
         self->threadSwitchLock.clear(std::memory_order_release);
         return;
@@ -726,11 +730,11 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
 
     if (state & TOXAV_FRIEND_CALL_STATE_ERROR) {
         qWarning() << "Call with friend" << friendNum << "died of unnatural causes!";
-        calls.remove(friendNum);
+        calls.erase(friendNum);
         emit self->avEnd(friendNum, true);
     } else if (state & TOXAV_FRIEND_CALL_STATE_FINISHED) {
         qDebug() << "Call with friend" << friendNum << "finished quietly";
-        calls.remove(friendNum);
+        calls.erase(friendNum);
         emit self->avEnd(friendNum);
     } else {
         // If our state was null, we started the call and were still ringing
@@ -780,7 +784,7 @@ void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, 
                                 uint8_t channels, uint32_t samplingRate, void* vSelf)
 {
     CoreAV* self = static_cast<CoreAV*>(vSelf);
-    if (!self->calls.contains(friendNum))
+    if (self->calls.find(friendNum) == self->calls.end())
         return;
 
     ToxCall& call = self->calls[friendNum];
@@ -799,7 +803,7 @@ void CoreAV::videoFrameCallback(ToxAV*, uint32_t friendNum, uint16_t w, uint16_t
                                 const uint8_t* y, const uint8_t* u, const uint8_t* v,
                                 int32_t ystride, int32_t ustride, int32_t vstride, void*)
 {
-    if (!calls.contains(friendNum))
+    if (calls.find(friendNum) == calls.end())
         return;
 
     ToxFriendCall& call = calls[friendNum];

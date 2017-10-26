@@ -26,10 +26,6 @@ public:
     ToxCall(const ToxCall& other) = delete;
     ToxCall(ToxCall&& other) noexcept;
 
-    inline operator int()
-    {
-        return callId;
-    }
     ToxCall& operator=(const ToxCall& other) = delete;
     ToxCall& operator=(ToxCall&& other) noexcept;
 
