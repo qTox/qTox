@@ -47,7 +47,7 @@ ProfileInfo::ProfileInfo(Core* core, Profile *profile)
 {
     connect(core, &Core::idSet, this, &ProfileInfo::idChanged);
     connect(core, &Core::usernameSet, this, &ProfileInfo::usernameChanged);
-    connect(core, &Core::statusMessageSet, this, &ProfileInfo::usernameChanged);
+    connect(core, &Core::statusMessageSet, this, &ProfileInfo::statusMessageChanged);
 }
 
 /**
