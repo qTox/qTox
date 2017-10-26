@@ -31,8 +31,7 @@
 using namespace std;
 
 ToxCall::ToxCall(uint32_t CallId)
-    : callId{CallId}
-    , alSource{0}
+    : alSource{0}
     , inactive{true}
     , muteMic{false}
     , muteVol{false}
@@ -43,14 +42,12 @@ ToxCall::ToxCall(uint32_t CallId)
 }
 
 ToxCall::ToxCall(ToxCall&& other) noexcept : audioInConn{other.audioInConn},
-                                             callId{other.callId},
                                              alSource{other.alSource},
                                              inactive{other.inactive},
                                              muteMic{other.muteMic},
                                              muteVol{other.muteVol}
 {
     other.audioInConn = QMetaObject::Connection();
-    other.callId = numeric_limits<decltype(callId)>::max();
     other.alSource = 0;
 
     // required -> ownership of audio input is moved to new instance
@@ -71,8 +68,6 @@ ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
 {
     audioInConn = other.audioInConn;
     other.audioInConn = QMetaObject::Connection();
-    callId = other.callId;
-    other.callId = numeric_limits<decltype(callId)>::max();
     inactive = other.inactive;
     muteMic = other.muteMic;
     muteVol = other.muteVol;
@@ -86,15 +81,14 @@ ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
     return *this;
 }
 
-void ToxFriendCall::startTimeout()
+void ToxFriendCall::startTimeout(uint32_t callId)
 {
     if (!timeoutTimer) {
         timeoutTimer = new QTimer();
         // We might move, so we need copies of members. CoreAV won't move while we're alive
         CoreAV* avCopy = av;
-        auto callIdCopy = callId;
         QObject::connect(timeoutTimer, &QTimer::timeout,
-                         [avCopy, callIdCopy]() { avCopy->timeoutCall(callIdCopy); });
+                         [avCopy, callId]() { avCopy->timeoutCall(callId); });
     }
 
     if (!timeoutTimer->isActive())
@@ -193,10 +187,10 @@ ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
 }
 
 ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
-    : ToxCall(static_cast<decltype(callId)>(GroupNum))
+    : ToxCall(static_cast<uint32_t>(GroupNum))
 {
     static_assert(
-        numeric_limits<decltype(callId)>::max() >= numeric_limits<decltype(GroupNum)>::max(),
+        numeric_limits<uint32_t>::max() >= numeric_limits<decltype(GroupNum)>::max(),
         "The callId must be able to represent any group number, change its type if needed");
 
     audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
