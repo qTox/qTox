@@ -233,7 +233,6 @@ set(${PROJECT_NAME}_SOURCES
   src/core/dhtserver.cpp
   src/core/dhtserver.h
   src/core/icoresettings.h
-  src/core/indexedlist.h
   src/core/recursivesignalblocker.cpp
   src/core/recursivesignalblocker.h
   src/core/toxcall.cpp
