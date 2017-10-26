@@ -28,13 +28,12 @@
 
 class QPaintEvent;
 class QShowEvent;
-class Friend;
 
 class CallConfirmWidget final : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CallConfirmWidget(const QWidget* Anchor, const Friend& f);
+    explicit CallConfirmWidget(const QWidget* anchor);
 
 signals:
     void accepted();
@@ -51,7 +50,6 @@ protected:
 
 private:
     const QWidget* anchor;
-    const Friend& f;
 
     QRect mainRect;
     QPolygon spikePoly;

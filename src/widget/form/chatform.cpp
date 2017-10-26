@@ -335,7 +335,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         return;
     }
 
-    callConfirm = new CallConfirmWidget(video ? videoButton : callButton, *f);
+    callConfirm = new CallConfirmWidget(video ? videoButton : callButton);
     QString displayedName = f->getDisplayedName();
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("%1 calling").arg(displayedName),
                                                          ChatMessage::INFO,

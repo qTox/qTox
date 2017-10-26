@@ -41,9 +41,6 @@
  * @var const QWidget* CallConfirmWidget::anchor
  * @brief The widget we're going to be tracking
  *
- * @var const Friend& CallConfirmWidget::f
- * @brief The friend on whose chat form we should appear
- *
  * @var const int CallConfirmWidget::roundedFactor
  * @brief By how much are the corners of the main rect rounded
  *
@@ -51,10 +48,9 @@
  * @brief Used to correct the rounding factors on non-square rects
  */
 
-CallConfirmWidget::CallConfirmWidget(const QWidget* Anchor, const Friend& f)
+CallConfirmWidget::CallConfirmWidget(const QWidget* anchor)
     : QWidget()
-    , anchor(Anchor)
-    , f(f)
+    , anchor(anchor)
     , rectW{120}
     , rectH{85}
     , spikeW{30}
