@@ -157,10 +157,9 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
         menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onExportChat()));
 
     const Core* core = Core::getInstance();
+    const Profile* profile = Nexus::getProfile();
     connect(core, &Core::fileReceiveRequested, this, &ChatForm::onFileRecvRequest);
-    // TODO(sudden6): update slot to new API
-    connect(core, &Core::friendAvatarChangedDeprecated, this, &ChatForm::onAvatarChange);
-    connect(core, &Core::friendAvatarRemoved, this, &ChatForm::onAvatarRemoved);
+    connect(profile, &Profile::friendAvatarChanged, this, &ChatForm::onAvatarChanged);
     connect(core, &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(core, &Core::receiptRecieved, this, &ChatForm::onReceiptReceived);
@@ -652,9 +651,9 @@ void ChatForm::onReceiptReceived(quint32 friendId, int receipt)
     }
 }
 
-void ChatForm::onAvatarChange(uint32_t friendId, const QPixmap& pic)
+void ChatForm::onAvatarChanged(const ToxPk &friendPk, const QPixmap& pic)
 {
-    if (friendId != f->getId()) {
+    if (friendPk != f->getPublicKey()) {
         return;
     }
 
@@ -724,15 +723,6 @@ void ChatForm::dropEvent(QDropEvent* ev)
             core->sendFile(f->getId(), fileName, info.absoluteFilePath(), info.size());
         }
     }
-}
-
-void ChatForm::onAvatarRemoved(const ToxPk& friendPk)
-{
-    if (friendPk != f->getPublicKey()) {
-        return;
-    }
-
-    headWidget->setAvatar(QPixmap(":/img/contact_dark.svg"));
 }
 
 void ChatForm::clearChatArea(bool notInForm)

@@ -76,7 +76,7 @@ void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s)
     connect(core.get(), &Core::saveRequest, this, &Profile::onSaveToxSave);
     // react to avatar changes
     connect(core.get(), &Core::friendAvatarRemoved, this, &Profile::removeAvatar);
-    connect(core.get(), &Core::friendAvatarData, this, &Profile::saveAvatar);
+    connect(core.get(), &Core::friendAvatarChanged, this, &Profile::setFriendAvatar);
     connect(core.get(), &Core::fileAvatarOfferReceived, this, &Profile::onAvatarOfferReceived,
             Qt::ConnectionType::QueuedConnection);
 }
@@ -499,7 +499,6 @@ void Profile::loadDatabase(const ToxId& id, QString password)
 /**
  * @brief Sets our own avatar
  * @param pic Picture to use as avatar, if empty an Identicon will be used depending on settings
- * @param owner
  */
 void Profile::setAvatar(QByteArray pic)
 {
@@ -511,7 +510,6 @@ void Profile::setAvatar(QByteArray pic)
         avatarData = pic;
     } else {
         if (Settings::getInstance().getShowIdenticons()) {
-            // with IDENTICON_ROWS=5 this gives a 160x160 image file
             const QImage identicon = Identicon(selfPk.getKey()).toImage(32);
             pixmap = QPixmap::fromImage(identicon);
 
@@ -525,6 +523,32 @@ void Profile::setAvatar(QByteArray pic)
     emit selfAvatarChanged(pixmap);
     AvatarBroadcaster::setAvatar(avatarData);
     AvatarBroadcaster::enableAutoBroadcast();
+}
+
+
+/**
+ * @brief Sets a friends avatar
+ * @param pic Picture to use as avatar, if empty an Identicon will be used depending on settings
+ * @param owner pk of friend
+ */
+void Profile::setFriendAvatar(const ToxPk& owner, QByteArray pic)
+{
+    QPixmap pixmap;
+    QByteArray avatarData;
+    if (!pic.isEmpty()) {
+        pixmap.loadFromData(pic);
+        avatarData = pic;
+        emit friendAvatarSet(owner, pixmap);
+    } else if (Settings::getInstance().getShowIdenticons()) {
+        const QImage identicon = Identicon(owner.getKey()).toImage(32);
+        pixmap = QPixmap::fromImage(identicon);
+        emit friendAvatarSet(owner, pixmap);
+    } else {
+        pixmap.load(":/img/contact_dark.svg");
+        emit friendAvatarRemoved(owner);
+    }
+    friendAvatarChanged(owner, pixmap);
+    saveAvatar(owner, avatarData);
 }
 
 /**
@@ -592,6 +616,14 @@ void Profile::removeSelfAvatar()
 }
 
 /**
+ * @brief Removes friend avatar.
+ */
+void Profile::removeFriendAvatar(const ToxPk& owner)
+{
+    removeAvatar(owner);
+}
+
+/**
  * @brief Checks that the history is enabled in the settings, and loaded successfully for this
  * profile.
  * @return True if enabled, false otherwise.
@@ -619,6 +651,8 @@ void Profile::removeAvatar(const ToxPk& owner)
     QFile::remove(avatarPath(owner));
     if (owner == core->getSelfId().getPublicKey()) {
         setAvatar({});
+    } else {
+        setFriendAvatar(owner, {});
     }
 }
 

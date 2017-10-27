@@ -1018,16 +1018,16 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
     connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
     connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
-
-    Core* core = Core::getInstance();
-    connect(core, &Core::friendAvatarChanged, widget, &FriendWidget::onAvatarChange);
-    connect(core, &Core::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
+    
+    Profile* profile = Nexus::getProfile();
+    connect(profile, &Profile::friendAvatarSet, widget, &FriendWidget::onAvatarSet);
+    connect(profile, &Profile::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
     QPixmap avatar = Nexus::getProfile()->loadAvatar(friendPk);
     if (!avatar.isNull()) {
-        friendForm->onAvatarChange(friendId, avatar);
-        widget->onAvatarChange(friendPk, avatar);
+        friendForm->onAvatarChanged(friendPk, avatar);
+        widget->onAvatarSet(friendPk, avatar);
     }
 
     FilterCriteria filter = getFilterCriteria();
@@ -1281,13 +1281,13 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
     // FIXME: emit should be removed
     emit widget->chatroomWidgetClicked(widget);
 
-    Core* core = Core::getInstance();
-    connect(core, &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
-    connect(core, &Core::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
+    Profile* profile = Nexus::getProfile();
+    connect(profile, &Profile::friendAvatarSet, friendWidget, &FriendWidget::onAvatarSet);
+    connect(profile, &Profile::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
 
     QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getPublicKey());
     if (!avatar.isNull()) {
-        friendWidget->onAvatarChange(frnd->getPublicKey(), avatar);
+        friendWidget->onAvatarSet(frnd->getPublicKey(), avatar);
     }
 }
 

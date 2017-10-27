@@ -25,10 +25,12 @@
 
 #include "src/core/core.h"
 #include "src/friendlist.h"
+#include "src/nexus.h"
 #include "src/model/about/aboutfriend.h"
 #include "src/model/chatroom/friendchatroom.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
+#include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/widget/about/aboutfriendform.h"
 #include "src/widget/form/chatform.h"
@@ -389,7 +391,7 @@ void FriendWidget::resetEventFlags()
     chatroom->resetEventFlags();
 }
 
-void FriendWidget::onAvatarChange(const ToxPk& friendPk, const QPixmap& pic)
+void FriendWidget::onAvatarSet(const ToxPk& friendPk, const QPixmap& pic)
 {
     const auto frnd = chatroom->getFriend();
     if (friendPk != frnd->getPublicKey()) {

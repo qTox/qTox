@@ -34,9 +34,9 @@ QString AboutFriend::getStatusMessage() const
     return f->getStatusMessage();
 }
 
-QString AboutFriend::getPublicKey() const
+ToxPk AboutFriend::getPublicKey() const
 {
-    return f->getPublicKey().toString();
+    return f->getPublicKey();
 }
 
 QPixmap AboutFriend::getAvatar() const
