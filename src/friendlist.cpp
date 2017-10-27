@@ -24,10 +24,10 @@
 #include <QHash>
 #include <QMenu>
 
-QHash<int, Friend*> FriendList::friendList;
-QHash<QByteArray, int> FriendList::key2id;
+QHash<uint32_t, Friend*> FriendList::friendList;
+QHash<QByteArray, uint32_t> FriendList::key2id;
 
-Friend* FriendList::addFriend(int friendId, const ToxPk& friendPk)
+Friend* FriendList::addFriend(uint32_t friendId, const ToxPk& friendPk)
 {
     auto friendChecker = friendList.find(friendId);
     if (friendChecker != friendList.end())
@@ -41,7 +41,7 @@ Friend* FriendList::addFriend(int friendId, const ToxPk& friendPk)
     return newfriend;
 }
 
-Friend* FriendList::findFriend(int friendId)
+Friend* FriendList::findFriend(uint32_t friendId)
 {
     auto f_it = friendList.find(friendId);
     if (f_it != friendList.end())
@@ -50,7 +50,7 @@ Friend* FriendList::findFriend(int friendId)
     return nullptr;
 }
 
-void FriendList::removeFriend(int friendId, bool fake)
+void FriendList::removeFriend(uint32_t friendId, bool fake)
 {
     auto f_it = friendList.find(friendId);
     if (f_it != friendList.end()) {

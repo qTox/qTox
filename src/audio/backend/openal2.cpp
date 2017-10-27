@@ -308,7 +308,7 @@ void OpenAL2::doOutput()
         alSourceUnqueueBuffers(alProxySource, processed, bufids);
         // delete all but the first buffer, reuse first for new data
         alDeleteBuffers(processed - 1, bufids + 1);
-    } else if (queued < PROXY_BUFFER_COUNT) {
+    } else if (queued < static_cast<ALint>(PROXY_BUFFER_COUNT)) {
         // create new buffer until the maximum is reached
         alGenBuffers(1, bufids);
     } else {
@@ -357,16 +357,15 @@ void OpenAL2::doInput()
 {
     ALint curSamples = 0;
     alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
-    if (curSamples < AUDIO_FRAME_SAMPLE_COUNT) {
+    if (curSamples < static_cast<ALint>(AUDIO_FRAME_SAMPLE_COUNT)) {
         return;
     }
 
     int16_t buf[AUDIO_FRAME_SAMPLE_COUNT];
     alcCaptureSamples(alInDev, buf, AUDIO_FRAME_SAMPLE_COUNT);
 
-    int retVal = 0;
     if (echoCancelSupported && filterer) {
-        retVal = filter_audio(filterer, buf, AUDIO_FRAME_SAMPLE_COUNT);
+        filter_audio(filterer, buf, AUDIO_FRAME_SAMPLE_COUNT);
     }
 
     // gain amplification with clipping to 16-bit boundaries

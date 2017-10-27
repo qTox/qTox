@@ -968,7 +968,7 @@ void Widget::onCallEnd(uint32_t friendId)
     Audio::getInstance().stopLoop();
 }
 
-void Widget::addFriend(int friendId, const ToxPk& friendPk)
+void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 {
     Settings& s = Settings::getInstance();
     s.updateFriendAddress(friendPk.toString());
