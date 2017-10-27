@@ -161,7 +161,7 @@ void ChatFormHeader::showOutgoingCall(bool video)
 {
     QPushButton* btn = video ? videoButton : callButton;
     btn->setObjectName("yellow");
-    btn->setStyleSheet(video ? STYLE_SHEET(videoButton) : STYLE_SHEET(callButton));
+    Style::repolish(btn);
     btn->setToolTip(video ? tr("Cancel video call") : tr("Cancel audio call"));
 }
 
@@ -201,8 +201,8 @@ void ChatFormHeader::updateCallButtons(bool online, bool audio, bool video)
         videoButton->setToolTip(videoAvaliable ? tr("Start video call") : tr("Can't start video call"));
     }
 
-    callButton->setStyleSheet(STYLE_SHEET(callButton));
-    videoButton->setStyleSheet(STYLE_SHEET(videoButton));
+    Style::repolish(callButton);
+    Style::repolish(videoButton);
 }
 
 void ChatFormHeader::updateMuteMicButton(bool active, bool inputMuted)
@@ -216,7 +216,7 @@ void ChatFormHeader::updateMuteMicButton(bool active, bool inputMuted)
         micButton->setToolTip(tr("Microphone can be muted only during a call"));
     }
 
-    micButton->setStyleSheet(STYLE_SHEET(micButton));
+    Style::repolish(micButton);
 }
 
 void ChatFormHeader::updateMuteVolButton(bool active, bool outputMuted)
@@ -230,7 +230,7 @@ void ChatFormHeader::updateMuteVolButton(bool active, bool outputMuted)
         volButton->setToolTip(tr("Sound can be disabled only during a call"));
     }
 
-    volButton->setStyleSheet(STYLE_SHEET(volButton));
+    Style::repolish(volButton);
 }
 
 void ChatFormHeader::setAvatar(const QPixmap &img)
