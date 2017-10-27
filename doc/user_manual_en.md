@@ -411,17 +411,23 @@ and configured in [settings](#settings).
 
 The following shortcuts are currently supported:
 
-| Shortcut | Action |
-|----------|--------|
-| ``Arrow up`` | Paste last sent message |
-| ``CTRL`` + ``SHIFT`` + ``L`` | Clear chat |
-| ``CTRL`` + ``q`` | Quit qTox |
-| `CTRL` + `Page Down` | Switch to the next contact |
-| `CTRL` + `Page Up` | Switch to the previous contact|
-| `CTRL` + `TAB` | Switch to the next contact |
-| `CTRL` + `SHIFT` + `TAB` | Switch to the previous contact|
-| `ALT` + `q` | Quote selected text |
-| `F11` | Toggle fullscreen mode |
+| Shortcut                     | Action                         |
+|------------------------------|--------------------------------|
+| `Arrow up`                   | Paste last sent message        |
+| `CTRL` + `SHIFT` + `L`       | Clear chat                     |
+| `CTRL` + `q`                 | Quit qTox                      |
+| `CTRL` + `Page Down`         | Switch to the next contact     |
+| `CTRL` + `Page Up`           | Switch to the previous contact |
+| `CTRL` + `TAB`               | Switch to the next contact     |
+| `CTRL` + `SHIFT` + `TAB`     | Switch to the previous contact |
+| `CTRL` + `p`                 | [Push to talk](#push-to-talk)  |
+| `ALT` + `q`                  | Quote selected text            |
+| `F11`                        | Toggle fullscreen mode         |
+
+## Push to talk
+
+In audio group chat microphone mute state will be changed while `Ctrl` + 
+`p` pressed and reverted on release.
 
 ## Emoji Packs
 
