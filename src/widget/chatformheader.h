@@ -71,7 +71,7 @@ signals:
 
     void nameChanged(const QString& name);
 
-    void callAccepted(bool video);
+    void callAccepted();
     void callRejected();
 
 private slots:
