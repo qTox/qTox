@@ -34,13 +34,10 @@
 
 static const QSize AVATAR_SIZE{40, 40};
 static const QSize CALL_BUTTONS_SIZE{50, 40};
-static const QSize VOL_MIC_BUTTONS_SIZE{22, 18};
+static const QSize TOOL_BUTTONS_SIZE{22, 18};
 static const short HEAD_LAYOUT_SPACING = 5;
 static const short MIC_BUTTONS_LAYOUT_SPACING = 4;
 static const short BUTTONS_LAYOUT_HOR_SPACING = 4;
-
-#define STYLE_SHEET(x) Style::getStylesheet(":/ui/" #x "/" #x ".css")
-#define SET_STYLESHEET(x) (x)->setStyleSheet(STYLE_SHEET(x))
 
 namespace  {
 const QString ObjectName[] = {
@@ -81,6 +78,18 @@ const QString MicToolTip[] = {
 
 }
 
+template <class T, class Fun>
+T* createButton(ChatFormHeader* self, const QSize& size, const QString& name, Fun slot)
+{
+    T* btn = new T();
+    btn->setFixedSize(size);
+    btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    const QString& path = QStringLiteral(":/ui/%1/%1.css").arg(name);
+    btn->setStyleSheet(Style::getStylesheet(path));
+    QObject::connect(btn, &QAbstractButton::clicked, self, slot);
+    return btn;
+}
+
 ChatFormHeader::ChatFormHeader(QWidget* parent)
     : QWidget(parent)
     , mode{Mode::AV}
@@ -104,29 +113,10 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     headTextLayout->addWidget(nameLabel);
     headTextLayout->addStretch();
 
-    micButton = new QToolButton();
-    micButton->setFixedSize(VOL_MIC_BUTTONS_SIZE);
-    micButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    SET_STYLESHEET(micButton);
-    connect(micButton, &QPushButton::clicked, this, &ChatFormHeader::micMuteToggle);
-
-    volButton = new QToolButton();
-    volButton->setFixedSize(VOL_MIC_BUTTONS_SIZE);
-    volButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    SET_STYLESHEET(volButton);
-    connect(volButton, &QPushButton::clicked, this, &ChatFormHeader::volMuteToggle);
-
-    callButton = new QPushButton();
-    callButton->setFixedSize(CALL_BUTTONS_SIZE);
-    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    SET_STYLESHEET(callButton);
-    connect(callButton, &QPushButton::clicked, this, &ChatFormHeader::callTriggered);
-
-    videoButton = new QPushButton();
-    videoButton->setFixedSize(CALL_BUTTONS_SIZE);
-    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    SET_STYLESHEET(videoButton);
-    connect(videoButton, &QPushButton::clicked, this, &ChatFormHeader::videoCallTriggered);
+    micButton = createButton<QToolButton>(this, TOOL_BUTTONS_SIZE, "micButton", &ChatFormHeader::micMuteToggle);
+    volButton = createButton<QToolButton>(this, TOOL_BUTTONS_SIZE, "volButton", &ChatFormHeader::volMuteToggle);
+    callButton = createButton<QPushButton>(this, CALL_BUTTONS_SIZE, "callButton", &ChatFormHeader::callTriggered);
+    videoButton = createButton<QPushButton>(this, CALL_BUTTONS_SIZE, "videoButton", &ChatFormHeader::videoCallTriggered);
 
     QVBoxLayout* micButtonsLayout = new QVBoxLayout();
     micButtonsLayout->setSpacing(MIC_BUTTONS_LAYOUT_SPACING);
