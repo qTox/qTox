@@ -20,6 +20,8 @@
 #ifndef FRIENDLIST_H
 #define FRIENDLIST_H
 
+#include <cstdint>
+
 template <class T>
 class QList;
 template <class A, class B>
@@ -31,16 +33,16 @@ class ToxPk;
 class FriendList
 {
 public:
-    static Friend* addFriend(int friendId, const ToxPk& friendPk);
-    static Friend* findFriend(int friendId);
+    static Friend* addFriend(uint32_t friendId, const ToxPk& friendPk);
+    static Friend* findFriend(uint32_t friendId);
     static Friend* findFriend(const ToxPk& friendPk);
     static QList<Friend*> getAllFriends();
-    static void removeFriend(int friendId, bool fake = false);
+    static void removeFriend(uint32_t friendId, bool fake = false);
     static void clear();
 
 private:
-    static QHash<int, Friend*> friendList;
-    static QHash<QByteArray, int> key2id;
+    static QHash<uint32_t, Friend*> friendList;
+    static QHash<QByteArray, uint32_t> key2id;
 };
 
 #endif // FRIENDLIST_H

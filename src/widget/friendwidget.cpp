@@ -374,7 +374,7 @@ void FriendWidget::resetEventFlags()
     f->setEventFlag(false);
 }
 
-void FriendWidget::onAvatarChange(int friendId, const QPixmap& pic)
+void FriendWidget::onAvatarChange(uint32_t friendId, const QPixmap& pic)
 {
     if (friendId != frnd->getId()) {
         return;
@@ -384,7 +384,7 @@ void FriendWidget::onAvatarChange(int friendId, const QPixmap& pic)
     avatar->setPixmap(pic);
 }
 
-void FriendWidget::onAvatarRemoved(int friendId)
+void FriendWidget::onAvatarRemoved(uint32_t friendId)
 {
     if (friendId != frnd->getId()) {
         return;
