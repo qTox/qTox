@@ -113,11 +113,6 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     Translator::registerHandler(std::bind(&ChatFormHeader::retranslateUi, this), this);
 }
 
-ChatFormHeader::~ChatFormHeader()
-{
-    delete callConfirm;
-}
-
 void ChatFormHeader::setName(const QString& newName)
 {
     nameLabel->setText(newName);
@@ -172,18 +167,18 @@ void ChatFormHeader::showOutgoingCall(bool video)
 
 void ChatFormHeader::showCallConfirm(bool video)
 {
-    callConfirm = new CallConfirmWidget(video ? videoButton : callButton);
+    QWidget* btn = video ? videoButton : callButton;
+    callConfirm = std::unique_ptr<CallConfirmWidget>(new CallConfirmWidget(btn));
     callConfirm->show();
-    CallConfirmWidget* confirmData = callConfirm.data();
-    connect(confirmData, &CallConfirmWidget::accepted, this, [this, video]{
+    connect(callConfirm.get(), &CallConfirmWidget::accepted, this, [this, video]{
         emit callAccepted(video);
     });
-    connect(confirmData, &CallConfirmWidget::rejected, this, &ChatFormHeader::callRejected);
+    connect(callConfirm.get(), &CallConfirmWidget::rejected, this, &ChatFormHeader::callRejected);
 }
 
 void ChatFormHeader::removeCallConfirm()
 {
-    delete callConfirm;
+    callConfirm.reset(nullptr);
 }
 
 void ChatFormHeader::updateCallButtons(bool online, bool audio, bool video)

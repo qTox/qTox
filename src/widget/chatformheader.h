@@ -20,8 +20,9 @@
 #ifndef CHAT_FORM_HEADER
 #define CHAT_FORM_HEADER
 
-#include <QPointer>
 #include <QWidget>
+
+#include <memory>
 
 class MaskablePixmapWidget;
 class QVBoxLayout;
@@ -42,7 +43,6 @@ public:
     };
 
     ChatFormHeader(QWidget* parent = nullptr);
-    ~ChatFormHeader() override;
 
     void setName(const QString& newName);
     void setMode(Mode mode);
@@ -90,7 +90,7 @@ private:
     QToolButton* volButton;
     QToolButton* micButton;
 
-    QPointer<CallConfirmWidget> callConfirm;
+    std::unique_ptr<CallConfirmWidget> callConfirm;
 };
 
 #endif // CHAT_FORM_HEADER
