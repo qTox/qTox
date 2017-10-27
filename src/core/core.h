@@ -37,6 +37,14 @@ class GroupInvite;
 class Profile;
 class QTimer;
 
+enum class Status
+{
+    Online = 0,
+    Away,
+    Busy,
+    Offline
+};
+
 class Core : public QObject
 {
     Q_OBJECT
