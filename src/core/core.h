@@ -21,7 +21,7 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include "corestructs.h"
+#include "toxfile.h"
 #include "toxid.h"
 
 #include <tox/tox.h>

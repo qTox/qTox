@@ -228,8 +228,6 @@ set(${PROJECT_NAME}_SOURCES
   src/core/corefile.cpp
   src/core/corefile.h
   src/core/core.h
-  src/core/corestructs.cpp
-  src/core/corestructs.h
   src/core/dhtserver.cpp
   src/core/dhtserver.h
   src/core/icoresettings.h
@@ -239,6 +237,8 @@ set(${PROJECT_NAME}_SOURCES
   src/core/toxcall.h
   src/core/toxencrypt.cpp
   src/core/toxencrypt.h
+  src/core/toxfile.cpp
+  src/core/toxfile.h
   src/core/toxid.cpp
   src/core/toxid.h
   src/core/toxpk.cpp

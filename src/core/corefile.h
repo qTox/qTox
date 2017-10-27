@@ -26,7 +26,7 @@
 #include <memory>
 #include <tox/tox.h>
 
-#include "corestructs.h"
+#include "toxfile.h"
 
 #include <QHash>
 #include <QMutex>

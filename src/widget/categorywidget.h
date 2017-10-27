@@ -21,7 +21,7 @@
 #define CATEGORYWIDGET_H
 
 #include "genericchatitemwidget.h"
-#include "src/core/corestructs.h"
+#include "src/core/core.h"
 
 class FriendListLayout;
 class FriendListWidget;

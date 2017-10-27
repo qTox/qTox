@@ -29,7 +29,8 @@
 
 #include "genericchatitemwidget.h"
 
-#include "src/core/corestructs.h"
+#include "src/core/core.h"
+#include "src/core/toxfile.h"
 #include "src/core/toxid.h"
 
 #define PIXELS_TO_ACT 7

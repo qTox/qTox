@@ -26,7 +26,7 @@
 #include <QTimer>
 
 #include "genericchatform.h"
-#include "src/core/corestructs.h"
+#include "src/core/core.h"
 #include "src/persistence/history.h"
 #include "src/widget/tool/screenshotgrabber.h"
 

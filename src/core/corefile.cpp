@@ -20,7 +20,7 @@
 
 #include "core.h"
 #include "corefile.h"
-#include "corestructs.h"
+#include "toxfile.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include <QDebug>
