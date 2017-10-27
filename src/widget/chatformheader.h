@@ -35,6 +35,18 @@ class ChatFormHeader : public QWidget
 {
     Q_OBJECT
 public:
+    enum class CallButtonState {
+        Disabled = 0,    // Grey
+        Avaliable = 1,   // Green
+        InCall = 2,      // Red
+        Outgoing = 3,    // Yellow
+        Incoming = 4,    // Yellow
+    };
+    enum class ToolButtonState {
+        Disabled = 0,    // Grey
+        Off = 1,         // Green
+        On = 2,          // Red
+    };
     enum Mode {
         None = 0,
         Audio = 1,
@@ -77,6 +89,7 @@ signals:
 private slots:
     void onNameChanged(const QString& name);
     void retranslateUi();
+    void updateButtonsView();
 
 private:
     Mode mode;
@@ -86,9 +99,13 @@ private:
 
     QPushButton* callButton;
     QPushButton* videoButton;
-
     QToolButton* volButton;
     QToolButton* micButton;
+
+    CallButtonState callState;
+    CallButtonState videoState;
+    ToolButtonState volState;
+    ToolButtonState micState;
 
     std::unique_ptr<CallConfirmWidget> callConfirm;
 };

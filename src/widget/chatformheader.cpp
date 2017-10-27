@@ -38,14 +38,56 @@ static const QSize VOL_MIC_BUTTONS_SIZE{22, 18};
 static const short HEAD_LAYOUT_SPACING = 5;
 static const short MIC_BUTTONS_LAYOUT_SPACING = 4;
 static const short BUTTONS_LAYOUT_HOR_SPACING = 4;
-static const QString Green = QStringLiteral("green");
 
 #define STYLE_SHEET(x) Style::getStylesheet(":/ui/" #x "/" #x ".css")
 #define SET_STYLESHEET(x) (x)->setStyleSheet(STYLE_SHEET(x))
 
+namespace  {
+const QString ObjectName[] = {
+    QString{},
+    QStringLiteral("green"),
+    QStringLiteral("red"),
+    QStringLiteral("yellow"),
+    QStringLiteral("yellow"),
+};
+
+const QString CallToolTip[] = {
+    ChatFormHeader::tr("Can't start audio call"),
+    ChatFormHeader::tr("Start audio call"),
+    ChatFormHeader::tr("End audio call"),
+    ChatFormHeader::tr("Cancel audio call"),
+    ChatFormHeader::tr("Accept audio call"),
+};
+
+const QString VideoToolTip[] = {
+    ChatFormHeader::tr("Can't start video call"),
+    ChatFormHeader::tr("Start video call"),
+    ChatFormHeader::tr("End video call"),
+    ChatFormHeader::tr("Cancel video call"),
+    ChatFormHeader::tr("Accept video call"),
+};
+
+const QString VolToolTip[] = {
+    ChatFormHeader::tr("Sound can be disabled only during a call"),
+    ChatFormHeader::tr("Unmute call"),
+    ChatFormHeader::tr("Mute call"),
+};
+
+const QString MicToolTip[] = {
+    ChatFormHeader::tr("Microphone can be muted only during a call"),
+    ChatFormHeader::tr("Unmute microphone"),
+    ChatFormHeader::tr("Mute microphone"),
+};
+
+}
+
 ChatFormHeader::ChatFormHeader(QWidget* parent)
     : QWidget(parent)
     , mode{Mode::AV}
+    , callState{CallButtonState::Disabled}
+    , videoState{CallButtonState::Disabled}
+    , volState{ToolButtonState::Disabled}
+    , micState{ToolButtonState::Disabled}
 {
     QHBoxLayout* headLayout = new QHBoxLayout();
     avatar = new MaskablePixmapWidget(this, AVATAR_SIZE, ":/img/avatar_mask.svg");
@@ -105,11 +147,7 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
 
     setLayout(headLayout);
 
-    updateCallButtons(false, false, false);
-    updateMuteMicButton(false, false);
-    updateMuteVolButton(false, false);
-
-    retranslateUi();
+    updateButtonsView();
     Translator::registerHandler(std::bind(&ChatFormHeader::retranslateUi, this), this);
 }
 
@@ -131,38 +169,44 @@ void ChatFormHeader::setMode(ChatFormHeader::Mode mode)
     }
 }
 
+template<class State>
+void setStateToolTip(QAbstractButton* btn, State state, const QString toolTip[])
+{
+    const int index = static_cast<int>(state);
+    btn->setToolTip(toolTip[index]);
+}
+
 void ChatFormHeader::retranslateUi()
 {
-    const QString callObjectName = callButton->objectName();
-    const QString videoObjectName = videoButton->objectName();
+    setStateToolTip(callButton, callState, CallToolTip);
+    setStateToolTip(videoButton, videoState, VideoToolTip);
+    setStateToolTip(micButton, micState, MicToolTip);
+    setStateToolTip(volButton, volState, VolToolTip);
+}
 
-    if (callObjectName == QStringLiteral("green")) {
-        callButton->setToolTip(tr("Start audio call"));
-    } else if (callObjectName == QStringLiteral("yellow")) {
-        callButton->setToolTip(tr("Accept audio call"));
-    } else if (callObjectName == QStringLiteral("red")) {
-        callButton->setToolTip(tr("End audio call"));
-    } else if (callObjectName.isEmpty()) {
-        callButton->setToolTip(QString{});
-    }
+template<class State>
+void setStateName(QAbstractButton* btn, State state)
+{
+    const int index = static_cast<int>(state);
+    btn->setObjectName(ObjectName[index]);
+    btn->setEnabled(index != 0);
+}
 
-    if (videoObjectName == QStringLiteral("green")) {
-        videoButton->setToolTip(tr("Start video call"));
-    } else if (videoObjectName == QStringLiteral("yellow")) {
-        videoButton->setToolTip(tr("Accept video call"));
-    } else if (videoObjectName == QStringLiteral("red")) {
-        videoButton->setToolTip(tr("End video call"));
-    } else if (videoObjectName.isEmpty()) {
-        videoButton->setToolTip(QString{});
-    }
+void ChatFormHeader::updateButtonsView()
+{
+    setStateName(callButton, callState);
+    setStateName(videoButton, videoState);
+    setStateName(micButton, micState);
+    setStateName(volButton, volState);
+    retranslateUi();
+    Style::repolish(this);
 }
 
 void ChatFormHeader::showOutgoingCall(bool video)
 {
-    QPushButton* btn = video ? videoButton : callButton;
-    btn->setObjectName("yellow");
-    Style::repolish(btn);
-    btn->setToolTip(video ? tr("Cancel video call") : tr("Cancel audio call"));
+    CallButtonState& state = video ? videoState : callState;
+    state = CallButtonState::Outgoing;
+    updateButtonsView();
 }
 
 void ChatFormHeader::showCallConfirm(bool video)
@@ -181,56 +225,53 @@ void ChatFormHeader::removeCallConfirm()
 
 void ChatFormHeader::updateCallButtons(bool online, bool audio, bool video)
 {
-    callButton->setEnabled(audio && !video);
-    videoButton->setEnabled(video);
-    if (audio) {
-        callButton->setObjectName(!video ? "red" : "");
-        callButton->setToolTip(!video ? tr("End audio call") : tr("Can't start audio call"));
-
-        videoButton->setObjectName(video ? "red" : "");
-        videoButton->setToolTip(video ? tr("End video call") : tr("Can't start video call"));
+    const bool audioAvaliable = online && (mode & Mode::Audio);
+    const bool videoAvaliable = online && (mode & Mode::Video);
+    if (!audioAvaliable) {
+        callState = CallButtonState::Disabled;
+    } else if (video) {
+        callState = CallButtonState::Disabled;
+    } else if (audio) {
+        callState = CallButtonState::InCall;
     } else {
-        const bool audioAvaliable = online && (mode & Mode::Audio);
-        callButton->setEnabled(audioAvaliable);
-        callButton->setObjectName(audioAvaliable ? "green" : "");
-        callButton->setToolTip(audioAvaliable ? tr("Start audio call") : tr("Can't start audio call"));
-
-        const bool videoAvaliable = online && (mode & Mode::Video);
-        videoButton->setEnabled(videoAvaliable);
-        videoButton->setObjectName(videoAvaliable ? "green" : "");
-        videoButton->setToolTip(videoAvaliable ? tr("Start video call") : tr("Can't start video call"));
+        callState = CallButtonState::Avaliable;
     }
 
-    Style::repolish(callButton);
-    Style::repolish(videoButton);
+    if (!videoAvaliable) {
+        videoState = CallButtonState::Disabled;
+    } else if (video) {
+        videoState = CallButtonState::InCall;
+    } else if (audio) {
+        videoState = CallButtonState::Disabled;
+    } else {
+        videoState = CallButtonState::Avaliable;
+    }
+
+    updateButtonsView();
 }
 
 void ChatFormHeader::updateMuteMicButton(bool active, bool inputMuted)
 {
     micButton->setEnabled(active);
-    if (micButton->isEnabled()) {
-        micButton->setObjectName(inputMuted ? "red" : "green");
-        micButton->setToolTip(inputMuted ? tr("Unmute microphone") : tr("Mute microphone"));
+    if (active) {
+        micState = inputMuted ? ToolButtonState::On : ToolButtonState::Off;
     } else {
-        micButton->setObjectName("");
-        micButton->setToolTip(tr("Microphone can be muted only during a call"));
+        micState = ToolButtonState::Disabled;
     }
 
-    Style::repolish(micButton);
+    updateButtonsView();
 }
 
 void ChatFormHeader::updateMuteVolButton(bool active, bool outputMuted)
 {
     volButton->setEnabled(active);
-    if (volButton->isEnabled()) {
-        volButton->setObjectName(outputMuted ? "red" : "green");
-        volButton->setToolTip(outputMuted ? tr("Unmute call") : tr("Mute call"));
+    if (active) {
+        volState = outputMuted ? ToolButtonState::On : ToolButtonState::Off;
     } else {
-        volButton->setObjectName("");
-        volButton->setToolTip(tr("Sound can be disabled only during a call"));
+        volState = ToolButtonState::Disabled;
     }
 
-    Style::repolish(volButton);
+    updateButtonsView();
 }
 
 void ChatFormHeader::setAvatar(const QPixmap &img)
