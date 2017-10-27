@@ -561,6 +561,14 @@ if(${USE_FILTERAUDIO})
     endif()
 endif()
 
+if (MINGW)
+  STRING(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+  if (CMAKE_BUILD_TYPE_LOWER MATCHES debug)
+    # Allows wine to display source code file names and line numbers on crash in its backtrace
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -gdwarf-2")
+  endif()
+endif()
+
 # the compiler flags for compiling C sources
 MESSAGE( STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS} )
 

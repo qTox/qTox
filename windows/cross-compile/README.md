@@ -48,21 +48,21 @@ sudo docker run --rm \
                 -v /absolute/path/to/your/workspace:/workspace \
                 -v /absolute/path/to/your/script:/script \
                 -v /absolute/path/to/your/qtox:/qtox \
-                ubuntu:16.04 \
+                debian:stretch-slim \
                 /bin/bash /script/build.sh i686 release
 ```
 
 If you are a qTox developer, you might want to instead run
 
 ```sh
-# Get shell inside Ubuntu 16.04 container so that you can poke around if needed
+# Get shell inside Debian Stretch container so that you can poke around if needed
 sudo docker run -it \
                 --rm \
                 -v /absolute/path/to/your/workspace:/workspace \
                 -v /absolute/path/to/your/script:/script \
                 -v /absolute/path/to/your/qtox:/qtox \
-                ubuntu:16.04 \
-                 /bin/bash
+                debian:stretch-slim \
+                /bin/bash
 # Run the script
 bash /script/build.sh i686 release
 ```
