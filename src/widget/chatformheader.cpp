@@ -170,9 +170,7 @@ void ChatFormHeader::showCallConfirm(bool video)
     QWidget* btn = video ? videoButton : callButton;
     callConfirm = std::unique_ptr<CallConfirmWidget>(new CallConfirmWidget(btn));
     callConfirm->show();
-    connect(callConfirm.get(), &CallConfirmWidget::accepted, this, [this, video]{
-        emit callAccepted(video);
-    });
+    connect(callConfirm.get(), &CallConfirmWidget::accepted, this, &ChatFormHeader::callAccepted);
     connect(callConfirm.get(), &CallConfirmWidget::rejected, this, &ChatFormHeader::callRejected);
 }
 

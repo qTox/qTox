@@ -345,7 +345,9 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         onAvStart(friendId, video);
     } else {
         headWidget->showCallConfirm(video);
-        connect(headWidget, &ChatFormHeader::callAccepted, this, &ChatForm::onAnswerCallTriggered);
+        connect(headWidget, &ChatFormHeader::callAccepted, this, [this, video] {
+            onAnswerCallTriggered(video);
+        });
         connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
         auto msg = ChatMessage::createChatInfoMessage(tr("%1 calling").arg(displayedName),
                                                       ChatMessage::INFO, QDateTime::currentDateTime());
