@@ -30,55 +30,77 @@
 
 using namespace std;
 
-ToxCall::ToxCall(uint32_t CallId)
-    : alSource{0}
-    , inactive{true}
+ToxCall::ToxCall()
+    : active{false}
     , muteMic{false}
     , muteVol{false}
 {
     Audio& audio = Audio::getInstance();
     audio.subscribeInput();
-    audio.subscribeOutput(alSource);
 }
 
 ToxCall::ToxCall(ToxCall&& other) noexcept : audioInConn{other.audioInConn},
-                                             alSource{other.alSource},
-                                             inactive{other.inactive},
+                                             active{other.active},
                                              muteMic{other.muteMic},
                                              muteVol{other.muteVol}
 {
     other.audioInConn = QMetaObject::Connection();
-    other.alSource = 0;
-
-    // required -> ownership of audio input is moved to new instance
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
+    // invalidate object, all resources are moved
+    other.valid = false;
 }
 
 ToxCall::~ToxCall()
 {
     Audio& audio = Audio::getInstance();
 
-    QObject::disconnect(audioInConn);
-    audio.unsubscribeInput();
-    audio.unsubscribeOutput(alSource);
+    // only free resources if they weren't moved
+    if(valid) {
+        QObject::disconnect(audioInConn);
+        audio.unsubscribeInput();
+    }
 }
 
 ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
 {
     audioInConn = other.audioInConn;
     other.audioInConn = QMetaObject::Connection();
-    inactive = other.inactive;
+    active = other.active;
     muteMic = other.muteMic;
     muteVol = other.muteVol;
-    alSource = other.alSource;
-    other.alSource = 0;
-
-    // required -> ownership of audio input is moved to new instance
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
+    // invalidate object, all resources are moved
+    other.valid = false;
 
     return *this;
+}
+
+bool ToxCall::isActive() const
+{
+    return active;
+}
+
+void ToxCall::setActive(bool value)
+{
+    active = value;
+}
+
+bool ToxCall::getMuteVol() const
+{
+    return muteVol;
+}
+
+void ToxCall::setMuteVol(bool value)
+{
+    muteVol = value;
+}
+
+bool ToxCall::getMuteMic() const
+{
+    return muteMic;
+}
+
+void ToxCall::setMuteMic(bool value)
+{
+    muteMic = value;
 }
 
 void ToxFriendCall::startTimeout(uint32_t callId)
@@ -105,8 +127,53 @@ void ToxFriendCall::stopTimeout()
     timeoutTimer = nullptr;
 }
 
-ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
-    : ToxCall(FriendNum)
+bool ToxFriendCall::getVideoEnabled() const
+{
+    return videoEnabled;
+}
+
+void ToxFriendCall::setVideoEnabled(bool value)
+{
+    videoEnabled = value;
+}
+
+bool ToxFriendCall::getNullVideoBitrate() const
+{
+    return nullVideoBitrate;
+}
+
+void ToxFriendCall::setNullVideoBitrate(bool value)
+{
+    nullVideoBitrate = value;
+}
+
+CoreVideoSource *ToxFriendCall::getVideoSource() const
+{
+    return videoSource;
+}
+
+TOXAV_FRIEND_CALL_STATE ToxFriendCall::getState() const
+{
+    return state;
+}
+
+void ToxFriendCall::setState(const TOXAV_FRIEND_CALL_STATE &value)
+{
+    state = value;
+}
+
+quint32 ToxFriendCall::getAlSource() const
+{
+    return alSource;
+}
+
+void ToxFriendCall::setAlSource(const quint32 &value)
+{
+    alSource = value;
+}
+
+ToxFriendCall::ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av)
+    : ToxCall()
     , videoEnabled{VideoEnabled}
     , nullVideoBitrate{false}
     , videoSource{nullptr}
@@ -114,14 +181,18 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     , av{&av}
     , timeoutTimer{nullptr}
 {
-    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
-                                   [&av, FriendNum](const int16_t* pcm, size_t samples,
+    Audio& audio = Audio::getInstance();
+    audioInConn = QObject::connect(&audio, &Audio::frameAvailable,
+                                   [&av, friendId](const int16_t* pcm, size_t samples,
                                                     uint8_t chans, uint32_t rate) {
-                                       av.sendCallAudio(FriendNum, pcm, samples, chans, rate);
+                                       av.sendCallAudio(friendId, pcm, samples, chans, rate);
                                    });
     if(!audioInConn) {
         qDebug() << "Audio connection not working";
     }
+
+    // subscribe audio output
+    audio.subscribeOutput(alSource);
 
     if (videoEnabled) {
         videoSource = new CoreVideoSource;
@@ -131,14 +202,15 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
             source.setupDefault();
         source.subscribe();
         QObject::connect(&source, &VideoSource::frameAvailable,
-                         [FriendNum, &av](shared_ptr<VideoFrame> frame) {
-                             av.sendCallVideo(FriendNum, frame);
+                         [friendId, &av](shared_ptr<VideoFrame> frame) {
+                             av.sendCallVideo(friendId, frame);
                          });
     }
 }
 
 ToxFriendCall::ToxFriendCall(ToxFriendCall&& other) noexcept
     : ToxCall(move(other)),
+      alSource{other.alSource},
       videoEnabled{other.videoEnabled},
       nullVideoBitrate{other.nullVideoBitrate},
       videoSource{other.videoSource},
@@ -149,6 +221,8 @@ ToxFriendCall::ToxFriendCall(ToxFriendCall&& other) noexcept
     other.videoEnabled = false;
     other.videoSource = nullptr;
     other.timeoutTimer = nullptr;
+    // TODO: wrong, because "0" could be a valid source id
+    other.alSource = 0;
 }
 
 ToxFriendCall::~ToxFriendCall()
@@ -168,6 +242,9 @@ ToxFriendCall::~ToxFriendCall()
             videoSource = nullptr;
         }
     }
+    if(valid) {
+        Audio::getInstance().unsubscribeOutput(alSource);
+    }
 }
 
 ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
@@ -182,12 +259,15 @@ ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
     other.timeoutTimer = nullptr;
     av = other.av;
     nullVideoBitrate = other.nullVideoBitrate;
+    alSource = other.alSource;
+    // TODO: wrong, because "0" could be a valid source id
+    other.alSource = 0;
 
     return *this;
 }
 
 ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
-    : ToxCall(static_cast<uint32_t>(GroupNum))
+    : ToxCall()
 {
     static_assert(
         numeric_limits<uint32_t>::max() >= numeric_limits<decltype(GroupNum)>::max(),
@@ -201,7 +281,10 @@ ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
 }
 
 ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept : ToxCall(move(other))
+  , peers{other.peers}
 {
+    // all peers were moved, this ensures audio output is unsubscribed only once
+    other.peers.clear();
 }
 
 ToxGroupCall::~ToxGroupCall()
@@ -216,6 +299,18 @@ ToxGroupCall::~ToxGroupCall()
 ToxGroupCall& ToxGroupCall::operator=(ToxGroupCall&& other) noexcept
 {
     ToxCall::operator=(move(other));
+    peers = other.peers;
+    other.peers.clear();
 
     return *this;
+}
+
+void ToxGroupCall::removePeer(int peerId)
+{
+    peers.remove(peerId);
+}
+
+QMap<int, quint32> ToxGroupCall::getPeers() const
+{
+    return peers;
 }
