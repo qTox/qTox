@@ -13,11 +13,10 @@ class AudioFilterer;
 class CoreVideoSource;
 class CoreAV;
 
-struct ToxCall
+class ToxCall
 {
 protected:
-    ToxCall() = default;
-    explicit ToxCall(uint32_t CallId);
+    explicit ToxCall();
     ~ToxCall();
 
 public:
@@ -27,32 +26,57 @@ public:
     ToxCall& operator=(const ToxCall& other) = delete;
     ToxCall& operator=(ToxCall&& other) noexcept;
 
+    bool isInactive() const;
+    bool isActive() const;
+    void setActive(bool value);
+
+    bool getMuteVol() const;
+    void setMuteVol(bool value);
+
+    bool getMuteMic() const;
+    void setMuteMic(bool value);
+
 protected:
     QMetaObject::Connection audioInConn;
-
-public:
-    quint32 alSource;
-    bool inactive;
+    bool active;
     bool muteMic;
     bool muteVol;
+    bool valid = true;
 };
 
-struct ToxFriendCall : public ToxCall
+class ToxFriendCall : public ToxCall
 {
+public:
     ToxFriendCall() = default;
-    ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av);
+    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av);
     ToxFriendCall(ToxFriendCall&& other) noexcept;
     ~ToxFriendCall();
 
     ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
 
+    void startTimeout(uint32_t callId);
+    void stopTimeout();
+
+    bool getVideoEnabled() const;
+    void setVideoEnabled(bool value);
+
+    bool getNullVideoBitrate() const;
+    void setNullVideoBitrate(bool value);
+
+    CoreVideoSource *getVideoSource() const;
+
+    TOXAV_FRIEND_CALL_STATE getState() const;
+    void setState(const TOXAV_FRIEND_CALL_STATE &value);
+
+    quint32 getAlSource() const;
+    void setAlSource(const quint32 &value);
+
+private:
+    quint32 alSource;
     bool videoEnabled;
     bool nullVideoBitrate;
     CoreVideoSource* videoSource;
     TOXAV_FRIEND_CALL_STATE state;
-
-    void startTimeout(uint32_t callId);
-    void stopTimeout();
 
 protected:
     CoreAV* av;
@@ -62,8 +86,9 @@ private:
     static constexpr int CALL_TIMEOUT = 45000;
 };
 
-struct ToxGroupCall : public ToxCall
+class ToxGroupCall : public ToxCall
 {
+public:
     ToxGroupCall() = default;
     ToxGroupCall(int GroupNum, CoreAV& av);
     ToxGroupCall(ToxGroupCall&& other) noexcept;
@@ -71,6 +96,11 @@ struct ToxGroupCall : public ToxCall
 
     ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
 
+    void removePeer(int peerId);
+
+    QMap<int, quint32> getPeers() const;
+
+private:
     QMap<int, quint32> peers;
 
     // If you add something here, don't forget to override the ctors and move operators!
