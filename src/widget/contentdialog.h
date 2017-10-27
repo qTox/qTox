@@ -22,7 +22,6 @@
 
 #include <tuple>
 
-#include "src/core/corestructs.h"
 #include "src/widget/genericchatitemlayout.h"
 #include "src/widget/tool/activatedialog.h"
 

@@ -21,8 +21,8 @@
 #define FRIEND_H
 
 #include "contact.h"
+#include "src/core/core.h"
 #include "src/core/toxid.h"
-#include "src/core/corestructs.h"
 #include <QObject>
 #include <QString>
 
