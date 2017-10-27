@@ -7,14 +7,6 @@
 class QFile;
 class QTimer;
 
-enum class Status
-{
-    Online = 0,
-    Away,
-    Busy,
-    Offline
-};
-
 struct ToxFile
 {
     enum FileStatus
