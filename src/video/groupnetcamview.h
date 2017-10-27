@@ -39,7 +39,7 @@ public:
 
 private slots:
     void onUpdateActivePeer();
-    void friendAvatarChanged(int friendId, const QPixmap& pixmap);
+    void friendAvatarChanged(ToxPk friendPk, const QPixmap& pixmap);
 
 private:
     struct PeerVideo

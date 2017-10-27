@@ -12,7 +12,7 @@ class IAboutFriend : public QObject
 public:
     virtual QString getName() const = 0;
     virtual QString getStatusMessage() const = 0;
-    virtual QString getPublicKey() const = 0;
+    virtual ToxPk getPublicKey() const = 0;
 
     virtual QPixmap getAvatar() const = 0;
 

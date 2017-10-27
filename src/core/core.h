@@ -139,8 +139,7 @@ signals:
     void disconnected();
 
     void friendRequestReceived(const ToxPk& friendPk, const QString& message);
-    void friendAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
-    void friendAvatarData(const ToxPk& friendPk, const QByteArray& data);
+    void friendAvatarChanged(const ToxPk& friendPk, const QByteArray& pic);
     void friendAvatarRemoved(const ToxPk& friendPk);
 
     void requestSent(const ToxPk& friendPk, const QString& message);
@@ -187,7 +186,6 @@ signals:
     void friendUsernameChanged(uint32_t friendId, const QString& username);
     void friendTypingChanged(uint32_t friendId, bool isTyping);
 
-    void friendAvatarChangedDeprecated(uint32_t friendId, const QPixmap& pic);
     void friendRemoved(uint32_t friendId);
     void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
 

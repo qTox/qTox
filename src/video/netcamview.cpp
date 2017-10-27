@@ -34,11 +34,10 @@
 NetCamView::NetCamView(int friendId, QWidget* parent)
     : GenericNetCamView(parent)
     , selfFrame{nullptr}
-    , friendId{friendId}
+    , friendPk{FriendList::findFriend(friendId)->getPublicKey()}
     , e(false)
 {
-    const ToxPk pk = FriendList::findFriend(friendId)->getPublicKey();
-    videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(pk), this);
+    videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(friendPk), this);
     videoSurface->setMinimumHeight(256);
 
     verLayout->insertWidget(0, videoSurface, 1);
@@ -75,9 +74,9 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     connections += connect(Nexus::getProfile(), &Profile::selfAvatarChanged,
                            [this](const QPixmap& pixmap) { selfVideoSurface->setAvatar(pixmap); });
 
-    connections += connect(Core::getInstance(), &Core::friendAvatarChangedDeprecated,
-                           [this](int FriendId, const QPixmap& pixmap) {
-                               if (this->friendId == FriendId)
+    connections += connect(Nexus::getProfile(), &Profile::friendAvatarChanged,
+                           [this](ToxPk friendPk, const QPixmap& pixmap) {
+                               if (this->friendPk == friendPk)
                                    videoSurface->setAvatar(pixmap);
                            });
 

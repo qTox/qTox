@@ -1,5 +1,6 @@
 #include "aboutfriendform.h"
 #include "ui_aboutfriendform.h"
+#include "src/core/core.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -37,7 +38,7 @@ AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* 
     const QString name = about->getName();
     setWindowTitle(name);
     ui->userName->setText(name);
-    ui->publicKey->setText(about->getPublicKey());
+    ui->publicKey->setText(about->getPublicKey().toString());
     ui->publicKey->setCursorPosition(0); // scroll textline to left
     ui->note->setPlainText(about->getNote());
     ui->statusMessage->setText(about->getStatusMessage());
