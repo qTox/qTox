@@ -23,6 +23,7 @@
 #include "corestructs.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
+#include "src/widget/tool/identicon.h"
 #include <QDebug>
 #include <QDir>
 #include <QFile>
@@ -282,10 +283,18 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
     if (kind == TOX_FILE_KIND_AVATAR) {
         const ToxPk friendPk = core->getFriendPublicKey(friendId);
         if (!filesize) {
-            qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
-            // Avatars of size 0 means explicitely no avatar
-            emit core->friendAvatarRemoved(friendId);
-            core->profile.removeAvatar(friendPk);
+            // Avatars of size 0 means explicitly no avatar, so give them default identicon
+            QImage identiconImage{Identicon(friendPk.getKey()).toImage(32)};
+            QByteArray identiconData{(char*)identiconImage.bits(),identiconImage.byteCount()};
+            QByteArray identiconHash{TOX_HASH_LENGTH, 0};
+            tox_hash((uint8_t*)identiconHash.data(), (uint8_t*)identiconData.data(), identiconData.size());
+            if (core->profile.getAvatarHash(friendPk) != identiconHash) {
+                qDebug() << QString("Received empty avatar request %1:%2, changing to identicon").arg(friendId).arg(fileId);
+                core->profile.saveAvatar(identiconData, friendPk);
+                emit core->friendAvatarChanged(friendId, QPixmap::fromImage(identiconImage));
+            } else {
+                qDebug() << QString("Received empty avatar request %1:%2, keeping identicon").arg(friendId).arg(fileId);
+            }
             return;
         } else {
             static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH,
