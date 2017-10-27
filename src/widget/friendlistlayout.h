@@ -16,7 +16,7 @@
 #define FRIENDLISTLAYOUT_H
 
 #include "genericchatitemlayout.h"
-#include "src/core/corestructs.h"
+#include "src/core/core.h"
 #include <QBoxLayout>
 
 class FriendWidget;

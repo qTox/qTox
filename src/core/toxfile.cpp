@@ -1,4 +1,4 @@
-#include "src/core/corestructs.h"
+#include "src/core/toxfile.h"
 #include "src/core/core.h"
 #include <QFile>
 #include <QRegularExpression>

@@ -24,7 +24,7 @@
 #include <QWidget>
 
 #include "src/chatlog/chatlinecontent.h"
-#include "src/core/corestructs.h"
+#include "src/core/toxfile.h"
 
 
 namespace Ui {
