@@ -50,8 +50,6 @@ public:
     static const QString TOX_EXT;
     static QStringList splitMessage(const QString& message, int maxLen);
 
-    static QByteArray getSaltFromFile(QString filename);
-
     QString getPeerName(const ToxPk& id) const;
 
     QVector<uint32_t> getFriendList() const;
