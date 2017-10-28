@@ -40,7 +40,7 @@ static const short MIC_BUTTONS_LAYOUT_SPACING = 4;
 static const short BUTTONS_LAYOUT_HOR_SPACING = 4;
 
 namespace  {
-const QString ObjectName[] = {
+const QString STATE_NAME[] = {
     QString{},
     QStringLiteral("green"),
     QStringLiteral("red"),
@@ -48,7 +48,7 @@ const QString ObjectName[] = {
     QStringLiteral("yellow"),
 };
 
-const QString CallToolTip[] = {
+const QString CALL_TOOL_TIP[] = {
     ChatFormHeader::tr("Can't start audio call"),
     ChatFormHeader::tr("Start audio call"),
     ChatFormHeader::tr("End audio call"),
@@ -56,7 +56,7 @@ const QString CallToolTip[] = {
     ChatFormHeader::tr("Accept audio call"),
 };
 
-const QString VideoToolTip[] = {
+const QString VIDEO_TOOL_TIP[] = {
     ChatFormHeader::tr("Can't start video call"),
     ChatFormHeader::tr("Start video call"),
     ChatFormHeader::tr("End video call"),
@@ -64,13 +64,13 @@ const QString VideoToolTip[] = {
     ChatFormHeader::tr("Accept video call"),
 };
 
-const QString VolToolTip[] = {
+const QString VOL_TOOL_TIP[] = {
     ChatFormHeader::tr("Sound can be disabled only during a call"),
     ChatFormHeader::tr("Unmute call"),
     ChatFormHeader::tr("Mute call"),
 };
 
-const QString MicToolTip[] = {
+const QString MIC_TOOL_TIP[] = {
     ChatFormHeader::tr("Microphone can be muted only during a call"),
     ChatFormHeader::tr("Unmute microphone"),
     ChatFormHeader::tr("Mute microphone"),
@@ -84,7 +84,8 @@ T* createButton(ChatFormHeader* self, const QSize& size, const QString& name, Fu
     T* btn = new T();
     btn->setFixedSize(size);
     btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    const QString& path = QStringLiteral(":/ui/%1/%1.css").arg(name);
+    btn->setObjectName(name);
+    const QString& path = QStringLiteral(":/ui/chatFormHeader/buttons.css");
     btn->setStyleSheet(Style::getStylesheet(path));
     QObject::connect(btn, &QAbstractButton::clicked, self, slot);
     return btn;
@@ -100,6 +101,7 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
 {
     QHBoxLayout* headLayout = new QHBoxLayout();
     avatar = new MaskablePixmapWidget(this, AVATAR_SIZE, ":/img/avatar_mask.svg");
+    avatar->setObjectName("avatar");
 
     nameLabel = new CroppingLabel();
     nameLabel->setObjectName("nameLabel");
@@ -168,17 +170,17 @@ void setStateToolTip(QAbstractButton* btn, State state, const QString toolTip[])
 
 void ChatFormHeader::retranslateUi()
 {
-    setStateToolTip(callButton, callState, CallToolTip);
-    setStateToolTip(videoButton, videoState, VideoToolTip);
-    setStateToolTip(micButton, micState, MicToolTip);
-    setStateToolTip(volButton, volState, VolToolTip);
+    setStateToolTip(callButton, callState, CALL_TOOL_TIP);
+    setStateToolTip(videoButton, videoState, VIDEO_TOOL_TIP);
+    setStateToolTip(micButton, micState, MIC_TOOL_TIP);
+    setStateToolTip(volButton, volState, VOL_TOOL_TIP);
 }
 
 template<class State>
 void setStateName(QAbstractButton* btn, State state)
 {
     const int index = static_cast<int>(state);
-    btn->setObjectName(ObjectName[index]);
+    btn->setProperty("state", STATE_NAME[index]);
     btn->setEnabled(index != 0);
 }
 
