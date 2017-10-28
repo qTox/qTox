@@ -278,7 +278,7 @@ QByteArray picToPng(const QPixmap& pic)
     pic.save(&buffer, "PNG");
     buffer.close();
     return bytes;
-};
+}
 
 /**
  * @brief Set self avatar.
