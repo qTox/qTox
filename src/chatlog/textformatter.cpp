@@ -54,9 +54,9 @@ static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
 
 static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[\\s\\n])"
                                                      "(```)"
-                                                     "(?![`\\s\\n])"
+                                                     "(?!`)"
                                                      "(.|\\n)+?"
-                                                     "(?<![`\\s\\n])"
+                                                     "(?<!`)"
                                                      "```"
                                                      "(?=$|[\\s\\n])");
 

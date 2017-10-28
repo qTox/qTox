@@ -127,14 +127,19 @@ static const QVector<StringPair> MULTI_SIGN_WORK_CASES {
     PAIR_FORMAT("%1int main()\n{    return 0;\n}%1", "%2%1"
                                                      "int main()\n{    return 0;\n}"
                                                      "%1%3"),
+    // allows new line and spaces to go right after ``` sequence
+    PAIR_FORMAT("%1\nint main()\n{    return 0;\n}\n%1", "%2%1"
+                                                         "\nint main()\n{    return 0;\n}\n"
+                                                         "%1%3"),
+    PAIR_FORMAT("%1 int main()\n{    return 0;\n} %1", "%2%1"
+                                                       " int main()\n{    return 0;\n} "
+                                                       "%1%3"),
 };
 
 // any type of markdown must fail for this data
 static const QVector<QString> COMMON_EXCEPTIONS {
     // No empty formatting string
     QStringLiteral("%1%1"),
-    // Formatting text must not start/end with whitespace symbols
-    QStringLiteral("%1 %1"), QStringLiteral("%1 a%1"), QStringLiteral("%1a %1"),
     // Formatting string must be enclosed by whitespace symbols, newlines or message start/end
     QStringLiteral("a%1aa%1a"), QStringLiteral("%1aa%1a"), QStringLiteral("a%1aa%1"),
     QStringLiteral("a %1aa%1a"), QStringLiteral("a%1aa%1 a"),
@@ -142,6 +147,8 @@ static const QVector<QString> COMMON_EXCEPTIONS {
 };
 
 static const QVector<QString> SINGLE_AND_DOUBLE_SIGN_EXCEPTIONS {
+    // Formatting text must not start/end with whitespace symbols
+    QStringLiteral("%1 %1"), QStringLiteral("%1 a%1"), QStringLiteral("%1a %1"),
     // No newlines
     QStringLiteral("%1\n%1"), QStringLiteral("%1aa\n%1"), QStringLiteral("%1\naa%1"),
     QStringLiteral("%1aa\naa%1"),
