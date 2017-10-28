@@ -23,39 +23,34 @@
 
 // clang-format off
 
-/* Easy way to get count of markdown symbols - through length of substring, captured by regex group.
- * If you suppose to change regexes, assure that this const points to right group.
- */
-static constexpr uint8_t MARKDOWN_SYMBOLS_GROUP_INDEX = 1;
-
 static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
-                                                          "([%1])"
+                                                          "[%1]"
                                                           "(?!\\s)"
-                                                          "[^%1\\n]+?"
+                                                          "([^%1\\n]+?)"
                                                           "(?<!\\s)"
                                                           "[%1]"
                                                           "(?=$|[\\s\\n])");
 
 static const QString SINGLE_SLASH_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
-                                                           "(/)"
+                                                           "/"
                                                            "(?!\\s)"
-                                                           "[^/\\n]+?"
+                                                           "([^/\\n]+?)"
                                                            "(?<!\\s)"
                                                            "/"
                                                            "(?=$|[\\s\\n])");
 
 static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
-                                                          "([%1]{2})"
+                                                          "[%1]{2}"
                                                           "(?!\\s)"
-                                                          "[^\\n]+?"
+                                                          "([^\\n]+?)"
                                                           "(?<!\\s)"
                                                           "[%1]{2}"
                                                           "(?=$|[\\s\\n])");
 
 static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[\\s\\n])"
-                                                     "(```)"
+                                                     "```"
                                                      "(?!`)"
-                                                     "(.|\\n)+?"
+                                                     "((.|\\n)+?)"
                                                      "(?<!`)"
                                                      "```"
                                                      "(?=$|[\\s\\n])");
@@ -151,17 +146,12 @@ QString applyMarkdown(const QString& message, bool showFormattingSymbols)
         int offset = 0;
         while (iter.hasNext()) {
             const QRegularExpressionMatch match = iter.next();
-            QString captured = match.captured();
+            QString captured = match.captured(!showFormattingSymbols);
             if (isTagIntersection(captured)) {
                 continue;
             }
 
             const int length = match.capturedLength();
-            if (!showFormattingSymbols) {
-                const int choppingSignsCount = match.captured(MARKDOWN_SYMBOLS_GROUP_INDEX).length();
-                captured = captured.mid(choppingSignsCount, length - choppingSignsCount * 2);
-            }
-
             const QString wrappedText = pair.second.arg(captured);
             const int startPos = match.capturedStart() + offset;
             result.replace(startPos, length, wrappedText);
