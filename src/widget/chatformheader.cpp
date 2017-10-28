@@ -78,18 +78,33 @@ const QString MIC_TOOL_TIP[] = {
     ChatFormHeader::tr("Mute microphone"),
 };
 
-}
-
 template <class T, class Fun>
-T* createButton(ChatFormHeader* self, const QSize& size, const QString& name, Fun slot)
+T* createButton(ChatFormHeader* self, const QSize& size, const QString& name, Fun onClickSlot)
 {
     T* btn = new T();
     btn->setFixedSize(size);
     btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     btn->setObjectName(name);
     btn->setStyleSheet(Style::getStylesheet(STYLE_PATH));
-    QObject::connect(btn, &QAbstractButton::clicked, self, slot);
+    QObject::connect(btn, &QAbstractButton::clicked, self, onClickSlot);
     return btn;
+}
+
+template<class State>
+void setStateToolTip(QAbstractButton* btn, State state, const QString toolTip[])
+{
+    const int index = static_cast<int>(state);
+    btn->setToolTip(toolTip[index]);
+}
+
+template<class State>
+void setStateName(QAbstractButton* btn, State state)
+{
+    const int index = static_cast<int>(state);
+    btn->setProperty("state", STATE_NAME[index]);
+    btn->setEnabled(index != 0);
+}
+
 }
 
 ChatFormHeader::ChatFormHeader(QWidget* parent)
@@ -162,27 +177,12 @@ void ChatFormHeader::setMode(ChatFormHeader::Mode mode)
     }
 }
 
-template<class State>
-void setStateToolTip(QAbstractButton* btn, State state, const QString toolTip[])
-{
-    const int index = static_cast<int>(state);
-    btn->setToolTip(toolTip[index]);
-}
-
 void ChatFormHeader::retranslateUi()
 {
     setStateToolTip(callButton, callState, CALL_TOOL_TIP);
     setStateToolTip(videoButton, videoState, VIDEO_TOOL_TIP);
     setStateToolTip(micButton, micState, MIC_TOOL_TIP);
     setStateToolTip(volButton, volState, VOL_TOOL_TIP);
-}
-
-template<class State>
-void setStateName(QAbstractButton* btn, State state)
-{
-    const int index = static_cast<int>(state);
-    btn->setProperty("state", STATE_NAME[index]);
-    btn->setEnabled(index != 0);
 }
 
 void ChatFormHeader::updateButtonsView()
