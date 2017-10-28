@@ -44,8 +44,6 @@
         <file>img/taskbar/light/taskbar_event.svg</file>
         <file>img/transfer.svg</file>
         <file>ui/fileTransferWidget/fileDone.svg</file>
-        <file>ui/callButton/callButton.css</file>
-        <file>ui/callButton/callButton.svg</file>
         <file>ui/chatArea/chatArea.css</file>
         <file>ui/chatArea/chatHead.css</file>
         <file>ui/chatArea/innerStyle.css</file>
@@ -53,6 +51,11 @@
         <file>ui/chatArea/scrollBarDownArrow.svg</file>
         <file>ui/chatArea/scrollBarLeftArrow.svg</file>
         <file>ui/chatArea/scrollBarRightArrow.svg</file>
+        <file>ui/chatFormHeader/buttons.css</file>
+        <file>ui/chatFormHeader/callButton.svg</file>
+        <file>ui/chatFormHeader/micButton.svg</file>
+        <file>ui/chatFormHeader/videoButton.svg</file>
+        <file>ui/chatFormHeader/volButton.svg</file>
         <file>ui/emoteButton/emoteButton.css</file>
         <file>ui/emoteButton/emoteButton.svg</file>
         <file>ui/emoticonWidget/dot_page.svg</file>
@@ -65,8 +68,6 @@
         <file>ui/screenshotButton/screenshotButton.svg</file>
         <file>ui/fileTransferWidget/fileTransferWidget.css</file>
         <file>ui/friendList/friendList.css</file>
-        <file>ui/micButton/micButton.css</file>
-        <file>ui/micButton/micButton.svg</file>
         <file>ui/msgEdit/msgEdit.css</file>
         <file>ui/sendButton/sendButton.css</file>
         <file>ui/sendButton/sendButton.svg</file>
@@ -74,10 +75,6 @@
         <file>ui/settings/mainHead.css</file>
         <file>ui/statusButton/statusButton.css</file>
         <file>ui/statusButton/menu_indicator.svg</file>
-        <file>ui/videoButton/videoButton.css</file>
-        <file>ui/videoButton/videoButton.svg</file>
-        <file>ui/volButton/volButton.css</file>
-        <file>ui/volButton/volButton.svg</file>
         <file>ui/window/general.css</file>
         <file>ui/window/statusPanel.css</file>
         <file>ui/window/window.css</file>
