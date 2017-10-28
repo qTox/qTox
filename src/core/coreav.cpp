@@ -18,8 +18,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "core.h"
 #include "coreav.h"
+#include "core.h"
 #include "src/audio/audio.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
@@ -227,7 +227,8 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
 
         bool ret;
         QMetaObject::invokeMethod(this, "answerCall", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum), Q_ARG(bool, video));
+                                  Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum),
+                                  Q_ARG(bool, video));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
@@ -343,7 +344,8 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, 
 
     ToxFriendCall& call = calls[callId];
 
-    if (call.getMuteMic() || call.isActive() || !(call.getState() & TOXAV_FRIEND_CALL_STATE_ACCEPTING_A)) {
+    if (call.getMuteMic() || call.isActive()
+        || !(call.getState() & TOXAV_FRIEND_CALL_STATE_ACCEPTING_A)) {
         return true;
     }
 
@@ -377,7 +379,8 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
     ToxFriendCall& call = calls[callId];
 
-    if (!call.getVideoEnabled() || call.isActive() || !(call.getState() & TOXAV_FRIEND_CALL_STATE_ACCEPTING_V)) {
+    if (!call.getVideoEnabled() || call.isActive()
+        || !(call.getState() & TOXAV_FRIEND_CALL_STATE_ACCEPTING_V)) {
         return;
     }
 
@@ -465,8 +468,7 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
 
     emit c->groupPeerAudioPlaying(group, peer);
 
-    if (call.getMuteVol() || !call.isActive())
-    {
+    if (call.getMuteVol() || !call.isActive()) {
         return;
     }
 
@@ -634,7 +636,7 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
 bool CoreAV::isCallInputMuted(const Friend* f) const
 {
     if (!f) {
-        return  false;
+        return false;
     }
     const uint32_t friendId = f->getId();
     return (calls.find(friendId) != calls.end()) && calls[friendId].getMuteMic();
@@ -648,7 +650,7 @@ bool CoreAV::isCallInputMuted(const Friend* f) const
 bool CoreAV::isCallOutputMuted(const Friend* f) const
 {
     if (!f) {
-        return  false;
+        return false;
     }
     const uint32_t friendId = f->getId();
     return (calls.find(friendId) != calls.end()) && calls[f->getId()].getMuteVol();

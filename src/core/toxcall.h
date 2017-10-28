@@ -63,13 +63,13 @@ public:
     bool getNullVideoBitrate() const;
     void setNullVideoBitrate(bool value);
 
-    CoreVideoSource *getVideoSource() const;
+    CoreVideoSource* getVideoSource() const;
 
     TOXAV_FRIEND_CALL_STATE getState() const;
-    void setState(const TOXAV_FRIEND_CALL_STATE &value);
+    void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
     quint32 getAlSource() const;
-    void setAlSource(const quint32 &value);
+    void setAlSource(const quint32& value);
 
 private:
     quint32 alSource;
