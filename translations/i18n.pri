@@ -11,6 +11,7 @@ TRANSLATIONS = \
     translations/eo.ts \
     translations/es.ts \
     translations/et.ts \
+    translations/fa.ts \
     translations/fi.ts \
     translations/fr.ts \
     translations/he.ts \

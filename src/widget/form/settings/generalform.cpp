@@ -48,6 +48,7 @@ static QStringList locales = {
     "en",
     "es",
     "eo",
+    "fa",
     "fr",
     "ko",
     "he",

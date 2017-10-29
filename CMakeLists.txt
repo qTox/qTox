@@ -112,6 +112,7 @@ qt5_add_translation(${PROJECT_NAME}_QM_FILES
   translations/eo.ts
   translations/es.ts
   translations/et.ts
+  translations/fa.ts
   translations/fi.ts
   translations/fr.ts
   translations/he.ts
