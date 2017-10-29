@@ -2048,33 +2048,8 @@ Válasszon egy másik képet.</translation>
         <translation>&quot;%1&quot; átnevezése</translation>
     </message>
     <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>A profil már létezik</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>&quot;%1&quot; nevű profil már létezik.</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>Nem sikerült átnevezni</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>A profilt nem sikerült &quot;%1&quot;-ra/-re átnevezni</translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>Profil exportálása</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>Tox mentésfájl (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2105,16 +2080,6 @@ Válasszon egy másik képet.</translation>
         <translation>Valóban törölni szeretné ezt a profilt?</translation>
     </message>
     <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation>Nem sikerült törölni a következő fájlokat:</translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation>Kérjük, távolítsa el őket.</translation>
-    </message>
-    <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation>A fájlokat nem sikerült törölni!</translation>
@@ -2141,11 +2106,6 @@ Válasszon egy másik képet.</translation>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
         <translation>Tényleg törli a jelszót?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Biztosan törli a jelszavát?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
@@ -2207,6 +2167,62 @@ Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">Nem sikerült átnevezni</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished">A profil már létezik</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">&quot;%1&quot; nevű profil már létezik.</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Profil exportálása</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished">Tox mentésfájl (*.tox)</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished">Nem sikerült törölni a következő fájlokat:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished">Kérjük, távolítsa el őket.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">Biztosan törli a jelszavát?</translation>
     </message>
 </context>
 <context>

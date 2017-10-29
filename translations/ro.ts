@@ -2222,7 +2222,7 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fișier salvat Tox (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>

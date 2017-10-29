@@ -2055,33 +2055,8 @@ Please use another image.</source>
         <translation>اعادة تسمية &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>الملف الشخصي موجود فعلا</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>الملف الشخصي باسم &quot;%1&quot; موجود فعلا.</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>فشلة اعادة التسمية</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>غير قادر على اعادة تسمية الملف الشخصية لــ &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>تصدير الملف الشخصي</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>(*.tox) حفظ ملف حساب التوكس</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2135,23 +2110,8 @@ Please use another image.</source>
         <translation>حقاً حذف كلمة المرور؟</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>هل انت متأكد من حذف كلمة المرور الخاصة بك؟</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>يرجى إدخال كلمة مرور جديدة.</translation>
-    </message>
-    <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation>لا يمكن حذف الملفات التالية:</translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation>الرجاء إزالتها يدويا.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -2214,6 +2174,62 @@ Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">فشلة اعادة التسمية</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">الملف الشخصي باسم &quot;%1&quot; موجود فعلا.</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">تصدير الملف الشخصي</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished">لا يمكن حذف الملفات التالية:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished">الرجاء إزالتها يدويا.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">هل انت متأكد من حذف كلمة المرور الخاصة بك؟</translation>
     </message>
 </context>
 <context>

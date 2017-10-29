@@ -2067,16 +2067,6 @@ Możliwe są zmianay formatu zapisu, co może skutkować utratą danych.</transl
         <translation>Zmień nazwę &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>Eksportuj profil</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>Plik zapisu Tox (*.tox)</translation>
-    </message>
-    <message>
         <source>Unable to open this file.</source>
         <translation>Nie można otworzyć tego pliku.</translation>
     </message>
@@ -2094,21 +2084,6 @@ Please use another image.</source>
         <translatorcomment>better translation?</translatorcomment>
         <translation>Dany obrazek jest za duży.
 Proszę, użyj innego obrazka.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>Profil już istnieje</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>Profil z nazwą &quot;%1&quot; już istnieje.</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>Nie udało się zmienić nazwy</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
@@ -2151,11 +2126,6 @@ Proszę, użyj innego obrazka.</translation>
         <translation>Czy na pewno usunąć hasło?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Czy masz pewność, iż chcesz usunąć swoje hasło?</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>Proszę, podaj nowe hasło.</translation>
     </message>
@@ -2178,16 +2148,6 @@ Proszę, użyj innego obrazka.</translation>
     <message>
         <source>Remove</source>
         <translation>Usuń</translation>
-    </message>
-    <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation>Następujące pliki nie mogły zostać usunięte:</translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation>Proszę usunąć je ręcznie.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -2250,6 +2210,62 @@ Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">Nie udało się zmienić nazwy</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished">Profil już istnieje</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">Profil z nazwą &quot;%1&quot; już istnieje.</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Eksportuj profil</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished">Plik zapisu Tox (*.tox)</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished">Następujące pliki nie mogły zostać usunięte:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished">Proszę usunąć je ręcznie.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">Czy masz pewność, iż chcesz usunąć swoje hasło?</translation>
     </message>
 </context>
 <context>

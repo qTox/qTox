@@ -2058,33 +2058,8 @@ Please use another image.</source>
 Пожалуйста, выберите другое изображение.</translation>
     </message>
     <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation>Профиль уже существует</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation>Профиль с именем &quot;%1&quot; уже существует.</translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation>Не удалось переименовать</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>Не удалось переименовать профиль в &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation>Экспортировать профиль</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation>Файл профиля Tox (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2125,11 +2100,6 @@ Please use another image.</source>
         <translation>Действительно удалить пароль?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Вы уверены, что хотите удалить свой пароль?</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>Пожалуйста, введите новый пароль.</translation>
     </message>
@@ -2145,16 +2115,6 @@ Please use another image.</source>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Вы действительно хотите удалить этот профиль?</translation>
-    </message>
-    <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation>Следующие файлы не могут быть удалены:</translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation>Пожалуйста, удалите их вручную.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -2220,6 +2180,62 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 Поделитесь им со своими друзьями, чтобы начать общаться.
 
 Этот ID включает NoSpam код (синий), и контрольную сумму (серый).</translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation type="unfinished">Не удалось переименовать</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <translation type="unfinished">Профиль уже существует</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">Профиль с именем &quot;%1&quot; уже существует.</translation>
+    </message>
+    <message>
+        <source>Empty name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty name is unavaliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished">Невозможно изменить пароль в базе данных, должно быть база повреждена или вы используете старый пароль.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <extracomment>save dialog filter</extracomment>
+        <translation type="unfinished">Файл профиля Tox (*.tox)</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <extracomment>deletion failed text part 1</extracomment>
+        <translation type="unfinished">Следующие файлы не могут быть удалены:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <extracomment>deletion failed text part 2</extracomment>
+        <translation type="unfinished">Пожалуйста, удалите их вручную.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished">Вы уверены, что хотите удалить свой пароль?</translation>
     </message>
 </context>
 <context>

@@ -2218,7 +2218,7 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Izvezi profil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>

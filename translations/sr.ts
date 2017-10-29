@@ -2218,7 +2218,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Извези профил</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
