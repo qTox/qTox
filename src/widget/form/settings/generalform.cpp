@@ -68,6 +68,7 @@ static QStringList locales = {
     "ru",
     "sk",
     "sl",
+    "sr",
     "fi",
     "sv",
     "ta",

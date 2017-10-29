@@ -31,6 +31,7 @@ TRANSLATIONS = \
     translations/ru.ts \
     translations/sk.ts \
     translations/sl.ts \
+    translations/sr.ts \
     translations/sv.ts \
     translations/sw.ts \
     translations/ta.ts \
