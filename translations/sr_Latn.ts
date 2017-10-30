@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="sr_Latn" sourcelanguage="en_US">
+<TS version="2.1" language="sr_Latn" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>Podrazumevana rezolucija</translation>
+        <translation>podrazumevana rezolucija</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -162,16 +162,6 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Lista oznatih problema se može naći na našem Github %1. Ukoliko otkrijete grešku ili bezbenosnu ranjivost u qTox-u, molimo prijavite je u skladu sa smernicama na našem viki članku %2 .</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>bubolovcu</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>„Pisanje korisnih prijava grešaka“</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Kliknite ovde za prijavu greške.</translation>
     </message>
@@ -181,9 +171,19 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Pogledajte celokupan spisak %1 na Githabu</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">bubolovcu</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">„Pisanje korisnih prijava grešaka“</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>doprinosioca</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">doprinosioca</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Spreman da uvezem %n kontakt, kliknite na slanje za potvrdu</numerusform>
             <numerusform>Spreman da uvezem %n kontakta, kliknite na slanje za potvrdu</numerusform>
@@ -526,7 +525,7 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Omogući UP (preporučeno)</translation>
+        <translation>Omogući UDP (preporučeno)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
@@ -1013,7 +1012,7 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     <message>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Ukloni projatelja</translation>
+        <translation>Ukloni prijatelja</translation>
     </message>
     <message>
         <source>Show details</source>
@@ -1186,7 +1185,7 @@ umesto sistemske trake zadataka.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Pozrazumevana fascikla za čuvanje fajlova:</translation>
+        <translation>Podrazumevana fascikla za čuvanje fajlova:</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
@@ -2186,59 +2185,63 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Prazna putanja nije dostupna</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Neuspelo preimenovanje</translation>
+        <translation>Neuspelo preimenovanje</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Profil već postoji</translation>
+        <translation>Profil već postoji</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">Profil imena „%1“ već postoji.</translation>
+        <translation>Profil imena „%1“ već postoji.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>Prazno ime</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Prazno ime nije dostupno</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>Prazna putanja</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">Ne mogu da promenim lozinku baze, možda je oštećena ili koristite staru lozinku.</translation>
+        <translation>Ne mogu da promenim lozinku baze, možda je oštećena ili koristite staru lozinku.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Izvezi profil</translation>
+        <translation>Izvezi profil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Tox-ov fajl snimka (*.tox)</translation>
+        <translation>Tox-ov fajl snimka (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">Sledeći fajlovi se ne mogu obrisati:</translation>
+        <translation>Sledeći fajlovi se ne mogu obrisati:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">Molimo da ih ručno uklonite.</translation>
+        <translation>Molimo da ih ručno uklonite.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Stvarno ste sigurni da želite da uklonite lozinku?</translation>
+        <translation>Stvarno ste sigurni da želite da uklonite lozinku?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
