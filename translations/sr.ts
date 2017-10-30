@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="sr" sourcelanguage="en_US">
+<TS version="2.1" language="sr" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>Подразумевана резолуција</translation>
+        <translation>подразумевана резолуција</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -162,16 +162,6 @@ which may lead to problems with video calls.</source>
         <translation>Листа ознатих проблема се може наћи на нашем Github %1. Уколико откријете грешку или безбеносну рањивост у qTox-у, молимо пријавите је у складу са смерницама на нашем вики чланку %2 .</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>буболовцу</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>„Писање корисних пријава грешака“</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Кликните овде за пријаву грешке.</translation>
     </message>
@@ -181,9 +171,19 @@ which may lead to problems with video calls.</source>
         <translation>Погледајте целокупан списак %1 на Гитхабу</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">буболовцу</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">„Писање корисних пријава грешака“</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>доприносиоца</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">доприносиоца</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Спреман да увезем %n контакт, кликните на слање за потврду</numerusform>
             <numerusform>Спреман да увезем %n контакта, кликните на слање за потврду</numerusform>
@@ -526,7 +525,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Омогући UP (препоручено)</translation>
+        <translation>Омогући UДP (препоручено)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
@@ -1013,7 +1012,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Уклони пројатеља</translation>
+        <translation>Уклони пријатеља</translation>
     </message>
     <message>
         <source>Show details</source>
@@ -2186,59 +2185,63 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Празна путања није могућа</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Неуспело преименовање</translation>
+        <translation>Неуспело преименовање</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Профил већ постоји</translation>
+        <translation>Профил већ постоји</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">Профил имена „%1“ већ постоји.</translation>
+        <translation>Профил имена „%1“ већ постоји.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>Празно име</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Празно име није могуће</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>Празна путања</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">Не могу да променим лозинку базе, можда је оштећена или користите стару лозинку.</translation>
+        <translation>Не могу да променим лозинку базе, можда је оштећена или користите стару лозинку.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Извези профил</translation>
+        <translation>Извези профил</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Tox-ов фајл снимка (*.tox)</translation>
+        <translation>Tox-ов фајл снимка (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">Следећи фајлови се не могу обрисати:</translation>
+        <translation>Следећи фајлови се не могу обрисати:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">Молимо да их ручно уклоните.</translation>
+        <translation>Молимо да их ручно уклоните.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Стварно сте сигурни да желите да уклоните лозинку?</translation>
+        <translation>Стварно сте сигурни да желите да уклоните лозинку?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
