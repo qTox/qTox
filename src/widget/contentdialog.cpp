@@ -39,7 +39,6 @@
 #include "src/grouplist.h"
 #include "src/persistence/settings.h"
 #include "src/widget/form/chatform.h"
-#include "src/widget/form/settingswidget.h"
 #include "src/widget/friendlistlayout.h"
 #include "src/widget/translator.h"
 #include "tool/adjustingscrollarea.h"
@@ -54,12 +53,11 @@ static const int minHeight = 220;
 static const QSize minSize(minHeight, minWidget);
 static const QSize defaultSize(720, 400);
 
-ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
+ContentDialog::ContentDialog(QWidget* parent)
     : ActivateDialog(parent, Qt::Window)
     , splitter{new QSplitter(this)}
     , friendLayout{new FriendListLayout(this)}
     , activeChatroomWidget(nullptr)
-    , settingsWidget(settingsWidget)
     , videoSurfaceSize(QSize())
     , videoCount(0)
 {
@@ -684,7 +682,7 @@ void ContentDialog::keyPressEvent(QKeyEvent* event)
  */
 void ContentDialog::openNewDialog(GenericChatroomWidget* widget)
 {
-    ContentDialog* contentDialog = new ContentDialog(settingsWidget);
+    ContentDialog* contentDialog = new ContentDialog();
     contentDialog->show();
 
     if (widget->getFriend()) {

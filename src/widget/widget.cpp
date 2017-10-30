@@ -1550,7 +1550,7 @@ void Widget::toggleFullscreen()
 
 ContentDialog* Widget::createContentDialog() const
 {
-    ContentDialog* contentDialog = new ContentDialog(settingsWidget);
+    ContentDialog* contentDialog = new ContentDialog();
     connect(contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
     connect(contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
     connect(Core::getInstance(), &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
