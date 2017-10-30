@@ -115,7 +115,7 @@ fedora_locallib() {
 
 zypper_install() {
     local zypper_packages=(
-        automake
+        +pattern:devel_basis
         cmake
         git
         libavcodec-devel
@@ -134,7 +134,6 @@ zypper_install() {
         libvpx-devel
         libXScrnSaver-devel
         openal-soft-devel
-        patterns-openSUSE-devel_basis
         qrencode-devel
         sqlcipher-devel
     )
