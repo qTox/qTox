@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="et_EE">
+<TS version="2.1" language="et_EE">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Nimekirja kõikidest teadaolevatest probleemidest saab näha meie %1, mis asub keskkonnas nimega Github. Kui avastad qToxis vea või turvaaugu, anna sellest teada vastavalt meie %2 wiki artiklis antud juhistele.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>veahalduse süsteemis (inglise keeles)</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>„Writing Useful Bug Reports“ (inglise keeles)</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Veast teatamiseks klõpsa siia.</translation>
     </message>
@@ -181,9 +171,19 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Vaata %1 täielikku loendit keskkonnas Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">veahalduse süsteemis (inglise keeles)</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">„Writing Useful Bug Reports“ (inglise keeles)</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>kaastöölised</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">kaastöölised</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>%n kontakti importimiseks valmis, kinnitamiseks vajuta saada</numerusform>
             <numerusform>%n kontakti importimiseks valmis, kinnitamiseks vajuta saada</numerusform>
@@ -2182,19 +2181,19 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Ümbernimetamine luhtus</translation>
+        <translation>Ümbernimetamine luhtus</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Profiil on juba olemas</translation>
+        <translation>Profiil on juba olemas</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">Profiil &quot;%1&quot; on juba olemas.</translation>
+        <translation>Profiil &quot;%1&quot; on juba olemas.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühi nimi</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
@@ -2202,7 +2201,7 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühi rada</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
@@ -2210,12 +2209,12 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Ekspordi profiil</translation>
+        <translation>Ekspordi profiil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Tox profiili fail (*.tox)</translation>
+        <translation>Tox profiili fail (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
@@ -2225,12 +2224,16 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">Palun kustuta need käsitsi.</translation>
+        <translation>Palun kustuta need käsitsi.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Oled sa kindel, et soovid oma salasõna eemaldada?</translation>
+        <translation>Oled sa kindel, et soovid oma salasõna kustutada?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
