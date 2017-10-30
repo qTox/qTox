@@ -38,7 +38,6 @@ class GenericChatroomWidget;
 class FriendWidget;
 class GroupWidget;
 class FriendListLayout;
-class SettingsWidget;
 class Friend;
 class Group;
 
@@ -48,8 +47,8 @@ class ContentDialog : public ActivateDialog
 {
     Q_OBJECT
 public:
-    ContentDialog(SettingsWidget* settingsWidget, QWidget* parent = 0);
-    ~ContentDialog();
+    explicit ContentDialog(QWidget* parent = nullptr);
+    ~ContentDialog() override;
 
     FriendWidget* addFriend(const Friend* f);
     GroupWidget* addGroup(int groupId, const QString& name);
@@ -126,7 +125,6 @@ private:
     GenericChatItemLayout groupLayout;
     ContentLayout* contentLayout;
     GenericChatroomWidget* activeChatroomWidget;
-    SettingsWidget* settingsWidget;
     QSize videoSurfaceSize;
     int videoCount;
 
