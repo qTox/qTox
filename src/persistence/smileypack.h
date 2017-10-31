@@ -26,6 +26,8 @@
 
 #include <memory>
 
+class QTimer;
+
 class SmileyPack : public QObject
 {
     Q_OBJECT
@@ -41,18 +43,21 @@ public:
 
 private slots:
     void onSmileyPackChanged();
+    void cleanup();
 
 private:
     SmileyPack();
     SmileyPack(SmileyPack&) = delete;
     SmileyPack& operator=(const SmileyPack&) = delete;
+    ~SmileyPack() override;
 
     bool load(const QString& filename);
 
-    QMap<QString, std::shared_ptr<QIcon>> emoticonToIcon;
+    std::map<QString, std::shared_ptr<QIcon>> emoticonToIcon;
     QHash<QString, QString> emoticonToPath;
     QList<QStringList> emoticons;
     QString path;
+    QTimer* cleanupTimer;
     mutable QMutex loadingMutex;
 };
 

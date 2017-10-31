@@ -25,6 +25,7 @@
 #include <QRegularExpression>
 #include <QStandardPaths>
 #include <QtConcurrent/QtConcurrentRun>
+#include <QTimer>
 
 #if defined(Q_OS_FREEBSD)
 #include <locale.h>
@@ -57,6 +58,8 @@ static const QStringList DEFAULT_PATHS = loadDefaultPaths();
 static const QString RICH_TEXT_PATTERN = QStringLiteral("<img title=\"%1\" src=\"key:%1\"\\>");
 
 static const QString EMOTICONS_FILE_NAME = QStringLiteral("emoticons.xml");
+
+static constexpr int CLEANUP_TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
 /**
  * @brief Construct list of standard directories with "emoticons" sub dir, whether these directories
@@ -101,13 +104,34 @@ QString getAsRichText(const QString& key)
     return RICH_TEXT_PATTERN.arg(key);
 }
 
-
 SmileyPack::SmileyPack()
+    : cleanupTimer{new QTimer(this)}
 {
     loadingMutex.lock();
     QtConcurrent::run(this, &SmileyPack::load, Settings::getInstance().getSmileyPack());
     connect(&Settings::getInstance(), &Settings::smileyPackChanged, this,
             &SmileyPack::onSmileyPackChanged);
+    connect(cleanupTimer, &QTimer::timeout, this, &SmileyPack::cleanup);
+    cleanupTimer->start(CLEANUP_TIMEOUT);
+}
+
+SmileyPack::~SmileyPack()
+{
+    delete cleanupTimer;
+}
+
+void SmileyPack::cleanup()
+{
+    QMutexLocker locker(&loadingMutex);
+    for (auto it = emoticonToIcon.begin(); it != emoticonToIcon.end();) {
+        std::shared_ptr<QIcon>& icon = it->second;
+        if (icon.use_count() == 1) {
+            it = emoticonToIcon.erase(it);
+            icon.reset();
+        } else {
+            ++it;
+        }
+    }
 }
 
 /**
@@ -242,7 +266,7 @@ QString SmileyPack::smileyfied(const QString& msg)
         QString key = match.captured();
         int startPos = match.capturedStart();
         int keyLength = key.length();
-        if (emoticonToPath.contains(key)) {
+        if (emoticonToPath.find(key) != emoticonToPath.end()) {
             QString imgRichText = getAsRichText(key);
             result.replace(startPos + replaceDiff, keyLength, imgRichText);
             replaceDiff += imgRichText.length() - keyLength;
@@ -269,7 +293,7 @@ QList<QStringList> SmileyPack::getEmoticons() const
 std::shared_ptr<QIcon> SmileyPack::getAsIcon(const QString& emoticon)
 {
     QMutexLocker locker(&loadingMutex);
-    if (emoticonToIcon.contains(emoticon))
+    if (emoticonToIcon.find(emoticon) != emoticonToIcon.end())
         return emoticonToIcon[emoticon];
 
     const auto iconPathIt = emoticonToPath.find(emoticon);
@@ -279,7 +303,7 @@ std::shared_ptr<QIcon> SmileyPack::getAsIcon(const QString& emoticon)
 
     const QString& iconPath = iconPathIt.value();
     auto icon = std::make_shared<QIcon>(iconPath);
-    emoticonToIcon.insert(emoticon, icon);
+    emoticonToIcon[emoticon] = icon;
     return icon;
 }
 
