@@ -2205,7 +2205,7 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">Salasõna vahetamine andmebaasis nurjus; andmebaas võib olla rikutud või kasutada vana salasõna.</translation>
+        <translation>Salasõna vahetamine andmebaasis nurjus; andmebaas võib olla rikutud või kasutada vana salasõna.</translation>
     </message>
     <message>
         <source>Export profile</source>
