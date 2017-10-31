@@ -40,7 +40,9 @@ QVariant CustomTextDocument::loadResource(int type, const QUrl& name)
                            Settings::getInstance().getEmojiFontPointSize());
         QString fileName = QUrl::fromPercentEncoding(name.toEncoded()).mid(4).toHtmlEscaped();
 
-        return SmileyPack::getInstance().getAsIcon(fileName).pixmap(size);
+        std::shared_ptr<QIcon> icon = SmileyPack::getInstance().getAsIcon(fileName);
+        emoticonIcons.append(icon);
+        return icon->pixmap(size);
     }
 
     return QTextDocument::loadResource(type, name);

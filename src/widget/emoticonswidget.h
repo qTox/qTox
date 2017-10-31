@@ -23,6 +23,11 @@
 #include <QMenu>
 #include <QStackedWidget>
 #include <QVBoxLayout>
+#include <QVector>
+
+#include <memory>
+
+class QIcon;
 
 class EmoticonsWidget : public QMenu
 {
@@ -47,6 +52,7 @@ protected:
 private:
     QStackedWidget stack;
     QVBoxLayout layout;
+    QList<std::shared_ptr<QIcon>> emoticonsIcons;
 
 public:
     QSize sizeHint() const override;
