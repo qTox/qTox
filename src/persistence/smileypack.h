@@ -26,6 +26,8 @@
 
 #include <memory>
 
+class QTimer;
+
 class SmileyPack : public QObject
 {
     Q_OBJECT
@@ -41,6 +43,7 @@ public:
 
 private slots:
     void onSmileyPackChanged();
+    void cleanup();
 
 private:
     SmileyPack();
@@ -53,6 +56,7 @@ private:
     QMap<QString, QString> emoticonToPath;
     QList<QStringList> emoticons;
     QString path;
+    QTimer* cleanupTimer;
     mutable QMutex loadingMutex;
 };
 

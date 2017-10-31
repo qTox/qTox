@@ -25,6 +25,7 @@
 #include <QRegularExpression>
 #include <QStandardPaths>
 #include <QtConcurrent/QtConcurrentRun>
+#include <QTimer>
 
 #if defined(Q_OS_FREEBSD)
 #include <locale.h>
@@ -101,13 +102,29 @@ QString getAsRichText(const QString& key)
     return RICH_TEXT_PATTERN.arg(key);
 }
 
+constexpr int CleanupTimeout = 60 * 1000; // 1 minute
 
 SmileyPack::SmileyPack()
+    : cleanupTimer{new QTimer(this)}
 {
     loadingMutex.lock();
     QtConcurrent::run(this, &SmileyPack::load, Settings::getInstance().getSmileyPack());
     connect(&Settings::getInstance(), &Settings::smileyPackChanged, this,
             &SmileyPack::onSmileyPackChanged);
+    connect(cleanupTimer, &QTimer::timeout, this, &SmileyPack::cleanup);
+    cleanupTimer->start(CleanupTimeout);
+}
+
+void SmileyPack::cleanup()
+{
+    loadingMutex.lock();
+    QMutableMapIterator<QString, std::shared_ptr<QIcon>> it(emoticonToIcon);
+    while (it.hasNext()) {
+        std::shared_ptr<QIcon>& icon = it.value();
+        if (icon.use_count() == 1) {
+            it.remove();
+        }
+    }
 }
 
 /**
