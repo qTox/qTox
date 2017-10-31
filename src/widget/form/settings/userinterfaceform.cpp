@@ -239,10 +239,12 @@ void UserInterfaceForm::reloadSmileys()
     for (int i = 0; i < emoticons.size(); ++i)
         smileys.push_front(emoticons.at(i).first());
 
+    emoticonsIcons.clear();
     const QSize size(18, 18);
     for (int i = 0; i < smileLabels.size(); ++i) {
-        QIcon icon = SmileyPack::getInstance().getAsIcon(smileys[i]);
-        smileLabels[i]->setPixmap(icon.pixmap(size));
+        std::shared_ptr<QIcon> icon = SmileyPack::getInstance().getAsIcon(smileys[i]);
+        emoticonsIcons.append(icon);
+        smileLabels[i]->setPixmap(icon->pixmap(size));
         smileLabels[i]->setToolTip(smileys[i]);
     }
 
@@ -253,8 +255,7 @@ void UserInterfaceForm::reloadSmileys()
     int maxSide = qMin(desktop.geometry().height() / sideSize, desktop.geometry().width() / sideSize);
     QSize maxSize(maxSide, maxSide);
 
-    QIcon icon = SmileyPack::getInstance().getAsIcon(smileys[0]);
-    QSize actualSize = icon.actualSize(maxSize);
+    QSize actualSize = emoticonsIcons.first()->actualSize(maxSize);
     bodyUI->emoticonSize->setMaximum(actualSize.width());
 }
 

@@ -204,7 +204,6 @@ bool SmileyPack::load(const QString& filename)
     emoticons.clear();
     emoticonToIcon.clear();
     emoticonToPath.clear();
-    icons.clear();
 
     for (int i = 0; i < iconsCount; ++i) {
         QDomNode node = emoticonElements.at(i);
@@ -267,19 +266,19 @@ QList<QStringList> SmileyPack::getEmoticons() const
  * @param emoticon Passed emoticon
  * @return Returns cached icon according to passed emoticon, null if no icon mapped to this emoticon
  */
-QIcon SmileyPack::getAsIcon(const QString& emoticon)
+std::shared_ptr<QIcon> SmileyPack::getAsIcon(const QString& emoticon)
 {
     QMutexLocker locker(&loadingMutex);
     if (emoticonToIcon.contains(emoticon))
-        return *(emoticonToIcon[emoticon]);
+        return emoticonToIcon[emoticon];
 
     if (!emoticonToPath.contains(emoticon))
-        return QIcon{};
+        return std::make_shared<QIcon>();
 
     const QString& iconPath = emoticonToPath[emoticon];
-    icons.append(QIcon{iconPath});
-    emoticonToIcon.insert(emoticon, &icons.last());
-    return icons.last();
+    auto icon = std::make_shared<QIcon>(iconPath);
+    emoticonToIcon.insert(emoticon, icon);
+    return icon;
 }
 
 void SmileyPack::onSmileyPackChanged()
