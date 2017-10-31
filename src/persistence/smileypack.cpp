@@ -25,6 +25,7 @@
 #include <QRegularExpression>
 #include <QStandardPaths>
 #include <QtConcurrent/QtConcurrentRun>
+#include <QTimer>
 
 #if defined(Q_OS_FREEBSD)
 #include <locale.h>
@@ -101,13 +102,31 @@ QString getAsRichText(const QString& key)
     return RICH_TEXT_PATTERN.arg(key);
 }
 
+constexpr int CleanupTimeout = 20 * 1000; // 1 minute
 
 SmileyPack::SmileyPack()
+    : cleanupTimer{new QTimer(this)}
 {
     loadingMutex.lock();
     QtConcurrent::run(this, &SmileyPack::load, Settings::getInstance().getSmileyPack());
     connect(&Settings::getInstance(), &Settings::smileyPackChanged, this,
             &SmileyPack::onSmileyPackChanged);
+    connect(cleanupTimer, &QTimer::timeout, this, &SmileyPack::cleanup);
+    cleanupTimer->start(CleanupTimeout);
+}
+
+void SmileyPack::cleanup()
+{
+    QMutexLocker locker(&loadingMutex);
+    for (auto it = emoticonToIcon.begin(); it != emoticonToIcon.end();) {
+        std::shared_ptr<QIcon>& icon = it->second;
+        if (icon.use_count() == 1) {
+            emoticonToIcon.erase(it++);
+            icon.reset();
+        } else {
+            ++it;
+        }
+    }
 }
 
 /**
@@ -242,7 +261,7 @@ QString SmileyPack::smileyfied(const QString& msg)
         QString key = match.captured();
         int startPos = match.capturedStart();
         int keyLength = key.length();
-        if (emoticonToPath.contains(key)) {
+        if (emoticonToPath.find(key) != emoticonToPath.end()) {
             QString imgRichText = getAsRichText(key);
             result.replace(startPos + replaceDiff, keyLength, imgRichText);
             replaceDiff += imgRichText.length() - keyLength;
@@ -269,7 +288,7 @@ QList<QStringList> SmileyPack::getEmoticons() const
 std::shared_ptr<QIcon> SmileyPack::getAsIcon(const QString& emoticon)
 {
     QMutexLocker locker(&loadingMutex);
-    if (emoticonToIcon.contains(emoticon))
+    if (emoticonToIcon.find(emoticon) != emoticonToIcon.end())
         return emoticonToIcon[emoticon];
 
     if (!emoticonToPath.contains(emoticon))
@@ -277,7 +296,7 @@ std::shared_ptr<QIcon> SmileyPack::getAsIcon(const QString& emoticon)
 
     const QString& iconPath = emoticonToPath[emoticon];
     auto icon = std::make_shared<QIcon>(iconPath);
-    emoticonToIcon.insert(emoticon, icon);
+    emoticonToIcon[emoticon] = icon;
     return icon;
 }
 
