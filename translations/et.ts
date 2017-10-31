@@ -2219,7 +2219,7 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">Järgmiste failide kustutamine nurjus:</translation>
+        <translation>Alljärgnevate failide kustutamine nurjus:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
