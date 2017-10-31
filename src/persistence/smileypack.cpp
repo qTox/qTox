@@ -203,18 +203,18 @@ bool SmileyPack::load(const QString& filename)
     const int iconsCount = emoticonElements.size();
     emoticons.clear();
     emoticonToIcon.clear();
+    emoticonToPath.clear();
     icons.clear();
-    icons.reserve(iconsCount);
+
     for (int i = 0; i < iconsCount; ++i) {
         QDomNode node = emoticonElements.at(i);
         QString iconName = node.attributes().namedItem(itemName).nodeValue();
         QString iconPath = QDir{path}.filePath(iconName);
-        icons.append(QIcon{iconPath});
         QDomElement stringElement = node.firstChildElement(childName);
         QStringList emoticonList;
         while (!stringElement.isNull()) {
             QString emoticon = stringElement.text().replace("<", "&lt;").replace(">", "&gt;");
-            emoticonToIcon.insert(emoticon, &icons[i]);
+            emoticonToPath.insert(emoticon, iconPath);
             emoticonList.append(emoticon);
             stringElement = stringElement.nextSibling().toElement();
         }
@@ -243,7 +243,7 @@ QString SmileyPack::smileyfied(const QString& msg)
         QString key = match.captured();
         int startPos = match.capturedStart();
         int keyLength = key.length();
-        if (emoticonToIcon.contains(key)) {
+        if (emoticonToPath.contains(key)) {
             QString imgRichText = getAsRichText(key);
             result.replace(startPos + replaceDiff, keyLength, imgRichText);
             replaceDiff += imgRichText.length() - keyLength;
@@ -270,7 +270,16 @@ QList<QStringList> SmileyPack::getEmoticons() const
 QIcon SmileyPack::getAsIcon(const QString& emoticon)
 {
     QMutexLocker locker(&loadingMutex);
-    return emoticonToIcon.contains(emoticon) ? *(emoticonToIcon[emoticon]) : QIcon();
+    if (emoticonToIcon.contains(emoticon))
+        return *(emoticonToIcon[emoticon]);
+
+    if (!emoticonToPath.contains(emoticon))
+        return QIcon{};
+
+    const QString& iconPath = emoticonToPath[emoticon];
+    icons.append(QIcon{iconPath});
+    emoticonToIcon.insert(emoticon, &icons.last());
+    return icons.last();
 }
 
 void SmileyPack::onSmileyPackChanged()
