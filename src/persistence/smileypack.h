@@ -49,6 +49,7 @@ private:
 
     QVector<QIcon> icons;
     QMap<QString, const QIcon*> emoticonToIcon;
+    QMap<QString, QString> emoticonToPath;
     QList<QStringList> emoticons;
     QString path;
     mutable QMutex loadingMutex;
