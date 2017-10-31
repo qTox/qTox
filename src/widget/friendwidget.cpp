@@ -178,7 +178,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     QAction* autoAccept = menu.addAction(tr("Auto accept files from this friend",
                                             "context menu entry"));
     const ToxPk id = frnd->getPublicKey();
-    const QString dir = s.getAutoAcceptDir(id);
+    QString dir = s.getAutoAcceptDir(id);
     autoAccept->setCheckable(true);
     autoAccept->setChecked(!dir.isEmpty());
     menu.addSeparator();
@@ -221,8 +221,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
             autoAccept->setChecked(false);
             Settings::getInstance().setAutoAcceptDir(id, "");
         } else if (autoAccept->isChecked()) {
-            const QString dir = QFileDialog::getExistingDirectory(
-                        Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
+            dir = QFileDialog::getExistingDirectory(
+                Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
 
             autoAccept->setChecked(true);
             qDebug() << "Setting auto accept dir for" << friendId << "to" << dir;
