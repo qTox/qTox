@@ -2177,7 +2177,7 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühja otsingurada pole</translation>
     </message>
     <message>
         <source>Failed to rename</source>
@@ -2197,7 +2197,7 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühja nime pole</translation>
     </message>
     <message>
         <source>Empty path</source>
