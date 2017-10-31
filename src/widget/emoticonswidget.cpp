@@ -86,9 +86,12 @@ EmoticonsWidget::EmoticonsWidget(QWidget* parent)
     }
     buttonLayout->addStretch();
 
+    SmileyPack& smileyPack = SmileyPack::getInstance();
     for (const QStringList& set : emoticons) {
         QPushButton* button = new QPushButton;
-        button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]).pixmap(size));
+        std::shared_ptr<QIcon> icon = smileyPack.getAsIcon(set[0]);
+        emoticonsIcons.append(icon);
+        button->setIcon(icon->pixmap(size));
         button->setToolTip(set.join(" "));
         button->setProperty("sequence", set[0]);
         button->setCursor(Qt::PointingHandCursor);

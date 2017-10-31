@@ -24,6 +24,8 @@
 #include <QMap>
 #include <QMutex>
 
+#include <memory>
+
 class SmileyPack : public QObject
 {
     Q_OBJECT
@@ -35,7 +37,7 @@ public:
 
     QString smileyfied(const QString& msg);
     QList<QStringList> getEmoticons() const;
-    QIcon getAsIcon(const QString& key);
+    std::shared_ptr<QIcon> getAsIcon(const QString& key);
 
 private slots:
     void onSmileyPackChanged();
@@ -47,9 +49,8 @@ private:
 
     bool load(const QString& filename);
 
-    QVector<QIcon> icons;
-    QMap<QString, const QIcon*> emoticonToIcon;
-    QMap<QString, QString> emoticonToPath;
+    QMap<QString, std::shared_ptr<QIcon>> emoticonToIcon;
+    QHash<QString, QString> emoticonToPath;
     QList<QStringList> emoticons;
     QString path;
     mutable QMutex loadingMutex;

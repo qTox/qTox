@@ -23,6 +23,8 @@
 #include "genericsettings.h"
 #include "src/widget/form/settingswidget.h"
 
+#include <memory>
+
 namespace Ui {
 class UserInterfaceSettings;
 }
@@ -65,6 +67,7 @@ private:
 
 private:
     QList<QLabel*> smileLabels;
+    QList<std::shared_ptr<QIcon>> emoticonsIcons;
     SettingsWidget* parent;
     Ui::UserInterfaceSettings* bodyUI;
     const int MAX_FORMAT_LENGTH = 128;
