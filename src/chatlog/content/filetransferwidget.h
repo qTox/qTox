@@ -48,15 +48,17 @@ protected slots:
     void onFileTransferInfo(ToxFile file);
     void onFileTransferAccepted(ToxFile file);
     void onFileTransferCancelled(ToxFile file);
+    void onFileTransferBroken(ToxFile file);
+    void onFileTransferUnbroken(ToxFile file);
     void onFileTransferPaused(ToxFile file);
     void onFileTransferResumed(ToxFile file);
     void onFileTransferFinished(ToxFile file);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
-    void fileTransferBrokenUnbroken(ToxFile file, bool broken);
 
 protected:
     QString getHumanReadableSize(qint64 size);
     void hideWidgets();
+    void showWidgets();
     void setupButtons();
     void handleButton(QPushButton* btn);
     void showPreview(const QString& filename);
@@ -94,12 +96,15 @@ private:
     qreal meanData[TRANSFER_ROLLING_AVG_COUNT] = {0.0};
 
     bool active;
-    enum class ExifOrientation {
+    enum class ExifOrientation
+    {
         /* do not change values, this is exif spec
          *
          * name corresponds to where the 0 row and 0 column is in form row-column
-         * i.e. entry 5 here means that the 0'th row corresponds to the left side of the scene and the 0'th column corresponds
-         * to the top of the captured scene. This means that the image needs to be mirrored and rotated to be displayed.
+         * i.e. entry 5 here means that the 0'th row corresponds to the left side of the scene and
+         * the 0'th column corresponds
+         * to the top of the captured scene. This means that the image needs to be mirrored and
+         * rotated to be displayed.
          */
         TopLeft = 1,
         TopRight = 2,

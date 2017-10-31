@@ -107,12 +107,12 @@ public slots:
     void sendTyping(uint32_t friendId, bool typing);
 
     void sendAvatarFile(uint32_t friendId, const QByteArray& data);
-    void cancelFileSend(uint32_t friendId, uint32_t fileNum);
-    void cancelFileRecv(uint32_t friendId, uint32_t fileNum);
-    void rejectFileRecvRequest(uint32_t friendId, uint32_t fileNum);
-    void acceptFileRecvRequest(uint32_t friendId, uint32_t fileNum, QString path);
-    void pauseResumeFileSend(uint32_t friendId, uint32_t fileNum);
-    void pauseResumeFileRecv(uint32_t friendId, uint32_t fileNum);
+    void cancelFileSend(QByteArray fileId);
+    void cancelFileRecv(QByteArray fileId);
+    void rejectFileRecvRequest(QByteArray fileId);
+    void acceptFileRecvRequest(QByteArray fileId, QString path);
+    void pauseResumeFileSend(QByteArray fileId);
+    void pauseResumeFileRecv(QByteArray fileId);
 
     void setNospam(uint32_t nospam);
 
@@ -175,7 +175,8 @@ signals:
     void fileTransferPaused(ToxFile file);
     void fileTransferInfo(ToxFile file);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
-    void fileTransferBrokenUnbroken(ToxFile file, bool broken);
+    void fileTransferBroken(ToxFile file);
+    void fileTransferUnbroken(ToxFile file);
 
     void fileSendFailed(uint32_t friendId, const QString& fname);
 

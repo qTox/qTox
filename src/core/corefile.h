@@ -47,20 +47,16 @@ private:
     static void sendFile(Core* core, uint32_t friendId, QString filename, QString filePath,
                          long long filesize);
     static void sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& data);
-    static void pauseResumeFileSend(Core* core, uint32_t friendId, uint32_t fileId);
-    static void pauseResumeFileRecv(Core* core, uint32_t friendId, uint32_t fileId);
-    static void cancelFileSend(Core* core, uint32_t friendId, uint32_t fileId);
-    static void cancelFileRecv(Core* core, uint32_t friendId, uint32_t fileId);
-    static void rejectFileRecvRequest(Core* core, uint32_t friendId, uint32_t fileId);
-    static void acceptFileRecvRequest(Core* core, uint32_t friendId, uint32_t fileId, QString path);
-    static ToxFile* findFile(uint32_t friendId, uint32_t fileId);
-    static void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
-    static void removeFile(uint32_t friendId, uint32_t fileId);
+    static void pauseResumeFileSend(Core* core, QByteArray fileId);
+    static void pauseResumeFileRecv(Core* core, QByteArray fileId);
+    static void cancelFileSend(Core* core, QByteArray fileId);
+    static void cancelFileRecv(Core* core, QByteArray fileId);
+    static void rejectFileRecvRequest(Core* core, QByteArray fileId);
+    static void acceptFileRecvRequest(Core* core, QByteArray fileId, QString path);
+    static ToxFile* findFile(QByteArray fileId);
+    static void addFile(QByteArray fileId, const ToxFile& file);
+    static void removeFile(QByteArray fileId);
     static unsigned corefileIterationInterval();
-    static constexpr uint64_t getFriendKey(uint32_t friendId, uint32_t fileId)
-    {
-        return (static_cast<std::uint64_t>(friendId) << 32) + fileId;
-    }
 
 private:
     static void onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, uint32_t kind,
@@ -76,7 +72,7 @@ private:
 
 private:
     static QMutex fileSendMutex;
-    static QHash<uint64_t, ToxFile> fileMap;
+    static QHash<QByteArray, ToxFile> fileMap;
 };
 
 #endif // COREFILE_H
