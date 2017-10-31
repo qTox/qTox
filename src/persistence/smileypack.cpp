@@ -25,6 +25,7 @@
 #include <QRegularExpression>
 #include <QStandardPaths>
 #include <QtConcurrent/QtConcurrentRun>
+#include <QTimer>
 
 #if defined(Q_OS_FREEBSD)
 #include <locale.h>
@@ -101,13 +102,29 @@ QString getAsRichText(const QString& key)
     return RICH_TEXT_PATTERN.arg(key);
 }
 
+constexpr int CleanupTimeout = 60 * 1000; // 1 minute
 
 SmileyPack::SmileyPack()
+    : cleanupTimer{new QTimer(this)}
 {
     loadingMutex.lock();
     QtConcurrent::run(this, &SmileyPack::load, Settings::getInstance().getSmileyPack());
     connect(&Settings::getInstance(), &Settings::smileyPackChanged, this,
             &SmileyPack::onSmileyPackChanged);
+    connect(cleanupTimer, &QTimer::timeout, this, &SmileyPack::cleanup);
+    cleanupTimer->start(CleanupTimeout);
+}
+
+void SmileyPack::cleanup()
+{
+    loadingMutex.lock();
+    QMutableMapIterator<QString, std::shared_ptr<QIcon>> it(emoticonToIcon);
+    while (it.hasNext()) {
+        std::shared_ptr<QIcon>& icon = it.value();
+        if (icon.use_count() == 1) {
+            it.remove();
+        }
+    }
 }
 
 /**
@@ -203,18 +220,17 @@ bool SmileyPack::load(const QString& filename)
     const int iconsCount = emoticonElements.size();
     emoticons.clear();
     emoticonToIcon.clear();
-    icons.clear();
-    icons.reserve(iconsCount);
+    emoticonToPath.clear();
+
     for (int i = 0; i < iconsCount; ++i) {
         QDomNode node = emoticonElements.at(i);
         QString iconName = node.attributes().namedItem(itemName).nodeValue();
         QString iconPath = QDir{path}.filePath(iconName);
-        icons.append(QIcon{iconPath});
         QDomElement stringElement = node.firstChildElement(childName);
         QStringList emoticonList;
         while (!stringElement.isNull()) {
             QString emoticon = stringElement.text().replace("<", "&lt;").replace(">", "&gt;");
-            emoticonToIcon.insert(emoticon, &icons[i]);
+            emoticonToPath.insert(emoticon, iconPath);
             emoticonList.append(emoticon);
             stringElement = stringElement.nextSibling().toElement();
         }
@@ -267,10 +283,19 @@ QList<QStringList> SmileyPack::getEmoticons() const
  * @param emoticon Passed emoticon
  * @return Returns cached icon according to passed emoticon, null if no icon mapped to this emoticon
  */
-QIcon SmileyPack::getAsIcon(const QString& emoticon)
+std::shared_ptr<QIcon> SmileyPack::getAsIcon(const QString& emoticon)
 {
     QMutexLocker locker(&loadingMutex);
-    return emoticonToIcon.contains(emoticon) ? *(emoticonToIcon[emoticon]) : QIcon();
+    if (emoticonToIcon.contains(emoticon))
+        return emoticonToIcon[emoticon];
+
+    if (!emoticonToPath.contains(emoticon))
+        return std::make_shared<QIcon>();
+
+    const QString& iconPath = emoticonToPath[emoticon];
+    auto icon = std::make_shared<QIcon>(iconPath);
+    emoticonToIcon.insert(emoticon, icon);
+    return icon;
 }
 
 void SmileyPack::onSmileyPackChanged()
