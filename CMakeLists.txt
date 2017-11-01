@@ -260,6 +260,8 @@ set(${PROJECT_NAME}_SOURCES
   src/model/about/iaboutfriend.h
   src/model/contact.cpp
   src/model/contact.h
+  src/model/contactlist/contactscircle.cpp
+  src/model/contactlist/contactscircle.h
   src/model/friend.cpp
   src/model/friend.h
   src/model/groupinvite.cpp
