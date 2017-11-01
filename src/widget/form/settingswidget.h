@@ -23,7 +23,9 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QStyleFactory>
+
 #include <array>
+#include <memory>
 
 class Camera;
 class GenericForm;
@@ -54,8 +56,8 @@ private:
     void retranslateUi();
 
 private:
-    QTabWidget* settingsWidgets;
-    std::array<GenericForm*, 6> cfgForms;
+    std::unique_ptr<QTabWidget> settingsWidgets;
+    std::array<std::unique_ptr<GenericForm>, 6> cfgForms;
     int currentIndex;
 };
 
