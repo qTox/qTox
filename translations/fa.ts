@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fa" sourcelanguage="en_US">
+<TS version="2.1" language="fa" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -61,7 +61,7 @@
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished"></translation>
+        <translation>دستگاه ویدئویی</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -69,11 +69,15 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>تنظیم وضوح دوربین.
+مقدار های بیشتر باعث کیفیت بیشتر تصاویر ویدئویی می شوند.
+توجه داشته باشید برای کیفیت تصویری بهتر به اتصال اینترنت بهتر نیاز دارید.
+گاهی اوقات ممکن است کیفیت اینترنت شما به اندازه کافی برای برقراری ارتباط ویدئویی با کیفیت مناسب،نباشد
+که ممکن است باعث مشکلاتی در تماس های ویدئویی شود.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>وضوح</translation>
     </message>
     <message>
         <source>Rescan devices</source>
@@ -158,16 +162,6 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -177,8 +171,18 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -417,7 +421,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -2213,6 +2216,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
