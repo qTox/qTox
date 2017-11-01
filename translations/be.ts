@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="be" sourcelanguage="en_US">
+<TS version="2.1" language="be" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ which may lead to problems with video calls.</source>
         <translation>Спіс усіх вядомых пытанняў можна знайсці ў нашым %1 на Гітхабе. Калі вы знайшлі хібу або ўразлівасць бяспекі ў qTox, калі ласка, паведаміце аб гэтым, згодна з указаннямі ў артыкуле %2 нашай вікі.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>трэкеры хібаў</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>«Напісанне карысных справаздач аб хібах»</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Націсніце сюды, каб паведаміць аб хібе.</translation>
     </message>
@@ -181,9 +171,19 @@ which may lead to problems with video calls.</source>
         <translation>Глядзіце поўны спіс %1 на Гітхабе</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">трэкеры хібаў</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">«Напісанне карысных справаздач аб хібах»</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>удзельнікі</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">удзельнікі</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Гатоўнасць імпартаваць %n кантакт. Націсніце адправіць для пацверджання</numerusform>
             <numerusform>Гатоўнасць імпартаваць %n кантакта. Націсніце адправіць для пацверджання</numerusform>
@@ -2183,59 +2182,63 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Пусты шлях не даступны</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Немагчыма перайменаваць</translation>
+        <translation>Немагчыма перайменаваць</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Профіль ужо існуе</translation>
+        <translation>Профіль ужо існуе</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">Профіль з назвай «%1» ужо існуе.</translation>
+        <translation>Профіль з назвай «%1» ужо існуе.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустая назва</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустая назва не прымальная</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>Пусты шлях</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">Не атрымалася змяніць пароль у базе дадзеных, яна можа быць пашкоджана або выкарыстоўваць стары пароль.</translation>
+        <translation>Не атрымалася змяніць пароль базы дадзеных, яна можа быць пашкоджаная або выкарыстоўваць стары пароль.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Экспартаваць профіль</translation>
+        <translation>Экспартаваць профіль</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Файл Tox (*.tox)</translation>
+        <translation>Файл Tox (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">Наступныя файлы не могуць быць выдаленыя:</translation>
+        <translation>Наступныя файлы не могуць быць выдаленыя:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">Калі ласка, выдаліце іх уручную.</translation>
+        <translation>Калі ласка, выдаліце іх уручную.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Вы ўпэўнены, што хочаце выдаліць свой пароль?</translation>
+        <translation>Вы ўпэўненыя, што хочаце выдаліць свой пароль?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
