@@ -39,11 +39,11 @@ public:
 
     QString smileyfied(const QString& msg);
     QList<QStringList> getEmoticons() const;
-    std::shared_ptr<QIcon> getAsIcon(const QString& key);
+    std::shared_ptr<QIcon> getAsIcon(const QString& key) const;
 
 private slots:
     void onSmileyPackChanged();
-    void cleanup();
+    void cleanupIconsCache();
 
 private:
     SmileyPack();
@@ -53,7 +53,7 @@ private:
 
     bool load(const QString& filename);
 
-    std::map<QString, std::shared_ptr<QIcon>> emoticonToIcon;
+    mutable std::map<QString, std::shared_ptr<QIcon>> cachedIcon;
     QHash<QString, QString> emoticonToPath;
     QList<QStringList> emoticons;
     QString path;
