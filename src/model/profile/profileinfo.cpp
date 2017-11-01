@@ -217,7 +217,7 @@ IProfileInfo::SaveResult ProfileInfo::exportProfile(const QString &path) const
 QVector<QString> ProfileInfo::removeProfile()
 {
     QVector<QString> manualDeleteFiles = profile->remove();
-    Nexus::getInstance().showLoginLater();
+    QMetaObject::invokeMethod(&Nexus::getInstance(), "showLogin", Qt::BlockingQueuedConnection);
     return manualDeleteFiles;
 }
 
@@ -227,7 +227,7 @@ QVector<QString> ProfileInfo::removeProfile()
 void ProfileInfo::logout()
 {
     Settings::getInstance().saveGlobal();
-    Nexus::getInstance().showLoginLater();
+    QMetaObject::invokeMethod(&Nexus::getInstance(), "showLogin", Qt::BlockingQueuedConnection);
 }
 
 /**

@@ -57,7 +57,6 @@ public:
 
 public slots:
     void showLogin();
-    void showLoginLater();
 
 #ifdef Q_OS_MAC
 public:
