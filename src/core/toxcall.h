@@ -98,7 +98,7 @@ public:
 
     void removePeer(int peerId);
 
-    QMap<int, quint32> getPeers() const;
+    QMap<int, quint32>& getPeers();
 
 private:
     QMap<int, quint32> peers;

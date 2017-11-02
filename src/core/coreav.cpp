@@ -240,7 +240,7 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
 
     const uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
     if (toxav_answer(toxav, friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate, &err)) {
-        calls[friendNum].setActive(false);
+        calls[friendNum].setActive(true);
         return true;
     } else {
         qWarning() << "Failed to answer call with error" << err;
@@ -344,7 +344,7 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, 
 
     ToxFriendCall& call = calls[callId];
 
-    if (call.getMuteMic() || call.isActive()
+    if (call.getMuteMic() || !call.isActive()
         || !(call.getState() & TOXAV_FRIEND_CALL_STATE_ACCEPTING_A)) {
         return true;
     }
@@ -379,15 +379,15 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
     ToxFriendCall& call = calls[callId];
 
-    if (!call.getVideoEnabled() || call.isActive()
+    if (!call.getVideoEnabled() || !call.isActive()
         || !(call.getState() & TOXAV_FRIEND_CALL_STATE_ACCEPTING_V)) {
         return;
     }
 
-    if (call.getVideoEnabled()) {
+    if (call.getNullVideoBitrate()) {
         qDebug() << "Restarting video stream to friend" << callId;
         toxav_bit_rate_set(toxav, callId, -1, VIDEO_DEFAULT_BITRATE, nullptr);
-        call.setVideoEnabled(false);
+        call.setNullVideoBitrate(false);
     }
 
     ToxYUVFrame frame = vframe->toToxYUVFrame();
@@ -436,7 +436,7 @@ void CoreAV::toggleMuteCallOutput(const Friend* f)
 {
     if (f && (calls.find(f->getId()) != calls.end())) {
         ToxCall& call = calls[f->getId()];
-        call.setMuteVol(call.getMuteVol());
+        call.setMuteVol(!call.getMuteVol());
     }
 }
 
@@ -473,8 +473,10 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
     }
 
     Audio& audio = Audio::getInstance();
-    if (!call.getPeers()[peer])
+    if (!call.getPeers()[peer]) {
+        // FIXME: 0 is a valid sourceId, we shouldn't necessarily re-subscribe just because we have 0
         audio.subscribeOutput(call.getPeers()[peer]);
+    }
 
     audio.playAudioBuffer(call.getPeers()[peer], data, samples, channels, sample_rate);
 }
@@ -517,7 +519,7 @@ void CoreAV::joinGroupCall(int groupId)
     qDebug() << QString("Joining group call %1").arg(groupId);
 
     groupCalls[groupId] = ToxGroupCall{groupId, *this};
-    groupCalls[groupId].setActive(false);
+    groupCalls[groupId].setActive(true);
 }
 
 /**
@@ -541,7 +543,7 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
 
     ToxGroupCall& call = groupCalls[groupId];
 
-    if (call.isActive() || call.getMuteMic()) {
+    if (!call.isActive() || call.getMuteMic()) {
         return true;
     }
 
@@ -772,7 +774,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
         // If our state was null, we started the call and were still ringing
         if (!call.getState() && state) {
             call.stopTimeout();
-            call.setActive(false);
+            call.setActive(true);
             emit self->avStart(friendNum, call.getVideoEnabled());
         } else if ((call.getState() & TOXAV_FRIEND_CALL_STATE_SENDING_V)
                    && !(state & TOXAV_FRIEND_CALL_STATE_SENDING_V)) {
