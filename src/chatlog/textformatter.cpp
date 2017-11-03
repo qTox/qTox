@@ -89,10 +89,15 @@ static const QVector<QPair<QRegularExpression, QString>> textPatternStyle{
     REGEX_MARKDOWN_PAIR(STRIKE, 2),
     {QRegularExpression(MULTILINE_CODE), htmlPatterns[CODE]}};
 
+// RFC 3986: https://tools.ietf.org/html/rfc3986#section-2
+static const QString uriPattern = "[\\w:/?#[\\]@!$&'\\(\\)*+,;=\\-._~]+";
+
 static const QVector<QRegularExpression> urlPatterns {
-    QRegularExpression("((\\bhttp[s]?://(www\\.)?)|(\\bwww\\.))"
-                       "[^. \\n]+\\.[^ \\n]+"),
-    QRegularExpression("\\b(ftp|smb)://[^ \\n]+"),
+    QRegularExpression(                   "("
+        "((\\bhttp[s]?://)|(\\bwww\\.))"  "|"
+        "(\\b(ftp|smb)://)"               ")"
+        + uriPattern,
+        QRegularExpression::UseUnicodePropertiesOption),
     QRegularExpression("\\bfile://(localhost)?/[^ \\n]+"),
     QRegularExpression("\\btox:[a-zA-Z\\d]{76}"),
     QRegularExpression("\\b(mailto|tox):[^ \\n]+@[^ \\n]+")
@@ -154,6 +159,8 @@ static void processUrl(QString& str, std::function<QString(QString&)> func)
 {
     int startLength = str.length();
     int offset = 0;
+    // FIXME: regex is matched against escaped HTML, it should be matched
+    // against raw text instead
     for (QRegularExpression exp : urlPatterns) {
         QRegularExpressionMatchIterator iter = exp.globalMatch(str);
         while (iter.hasNext()) {

@@ -94,8 +94,8 @@ static const StringToString urlCases{
      QStringLiteral("<a href=\"https://url.com/some~url/some~more~url/\">"
                     "https://url.com/some~url/some~more~url/</a>")},
     {QStringLiteral("https://url.com/some`url/some`more`url/"),
-     QStringLiteral("<a href=\"https://url.com/some`url/some`more`url/\">"
-                    "https://url.com/some`url/some`more`url/</a>")},
+     QStringLiteral("<a href=\"https://url.com/some\">"
+                    "https://url.com/some</a>`url<i>some`more`url</i>")},
     // Test case from issue #4275
     {QStringLiteral("http://www.metacritic.com/game/pc/mass-effect-andromeda\n"
                     "http://www.metacritic.com/game/playstation-4/mass-effect-andromeda\n"
@@ -114,6 +114,7 @@ static const StringToString urlCases{
                     "<a href=\"http://site.com/part3\">http://site.com/part3</a> "
                     "and one more time "
                     "<a href=\"http://www.site.com/part1/part2\">www.site.com/part1/part2</a>")},
+    // TODO: add test case for `"` being excluded from URL (issue #4295)
 };
 
 /**
