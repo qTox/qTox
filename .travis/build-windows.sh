@@ -80,7 +80,7 @@ mkdir -p workspace/"$ARCH"/dep-cache
 
 # If build.sh has changed, i.e. its hash doesn't match the previously stored one, and it's Stage 1
 # Then we want to rebuild everything from scratch
-if [ "`cat '$CACHE_DIR'/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] && [ "$STAGE" == "stage1" ]
+if [ "`cat $CACHE_DIR/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] && [ "$STAGE" == "stage1" ]
 then
   # Clear the cache, removing all the pre-built dependencies
   rm -rf "$CACHE_DIR"/*
