@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN" sourcelanguage="en">
+<TS version="2.1" language="zh_CN" sourcelanguage="en">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ which may lead to problems with video calls.</source>
         <translation>所有已知问题的列表可以在 GitHub 上我们的 %1 里找到。如果你发现 qTox 的漏洞或者安全漏洞，请根据我们的维基文章 %2 提交报告。</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>漏洞追踪器</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>编写有用的漏洞报告</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>单击这里提交漏洞报告。</translation>
     </message>
@@ -181,9 +171,19 @@ which may lead to problems with video calls.</source>
         <translation>在 Github 上查看 %1 完整列表</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">漏洞追踪器</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">编写有用的漏洞报告</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>贡献者</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">贡献者</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>准备好要导入 %n 个联系人，单击“发送”以确认</numerusform>
         </translation>
@@ -2173,19 +2172,19 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>空路径不可用</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">重命名失败</translation>
+        <translation>重命名失败</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">账户已存在</translation>
+        <translation>帐户已存在</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">已存在一个名为&quot;%1&quot;的账户。</translation>
+        <translation type="unfinished">已存在一个名为&quot;%1&quot;的帐户。</translation>
     </message>
     <message>
         <source>Empty name</source>
@@ -2197,35 +2196,39 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>空路径</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">无法修改数据库中的密码。数据库可能损坏或使用了旧的密码。</translation>
+        <translation>无法修改数据库中的密码。数据库可能损坏或使用了旧的密码。</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">导出用户档案</translation>
+        <translation>导出用户档案</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Tox 存档文件（*.tox）</translation>
+        <translation>Tox 存档文件（*.tox）</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">无法删除下列文件：</translation>
+        <translation>无法删除下列文件：</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">请手动删除它们。</translation>
+        <translation>请手动删除它们。</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">你确定要删除密码吗？</translation>
+        <translation>你确定要删除密码吗？</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
