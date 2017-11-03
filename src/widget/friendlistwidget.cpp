@@ -24,8 +24,8 @@
 #include "groupwidget.h"
 #include "widget.h"
 #include "src/friendlist.h"
-#include "src/model/friend.h"
-#include "src/model/group.h"
+#include "src/model/contacts/friend.h"
+#include "src/model/contacts/group.h"
 #include "src/persistence/settings.h"
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>

@@ -20,7 +20,7 @@
 
 #include "friend.h"
 #include "src/core/core.h"
-#include "src/model/group.h"
+#include "src/model/contacts/group.h"
 #include "src/grouplist.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"

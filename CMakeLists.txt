@@ -258,16 +258,16 @@ set(${PROJECT_NAME}_SOURCES
   src/model/about/aboutfriend.cpp
   src/model/about/aboutfriend.h
   src/model/about/iaboutfriend.h
-  src/model/contact.cpp
-  src/model/contact.h
-  src/model/contactlist/contactscircle.cpp
-  src/model/contactlist/contactscircle.h
-  src/model/friend.cpp
-  src/model/friend.h
+  src/model/contacts/contact.cpp
+  src/model/contacts/contact.h
+  src/model/contacts/contactscircle.cpp
+  src/model/contacts/contactscircle.h
+  src/model/contacts/friend.cpp
+  src/model/contacts/friend.h
+  src/model/contacts/group.cpp
+  src/model/contacts/group.h
   src/model/groupinvite.cpp
   src/model/groupinvite.h
-  src/model/group.cpp
-  src/model/group.h
   src/model/interface.h
   src/model/profile/iprofileinfo.h
   src/model/profile/profileinfo.cpp

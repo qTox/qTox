@@ -18,7 +18,7 @@
 */
 
 #include "grouplist.h"
-#include "src/model/group.h"
+#include "src/model/contacts/group.h"
 #include <QDebug>
 #include <QHash>
 

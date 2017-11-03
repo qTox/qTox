@@ -18,7 +18,7 @@
 */
 
 #include "friendlist.h"
-#include "src/model/friend.h"
+#include "src/model/contacts/friend.h"
 #include "src/persistence/settings.h"
 #include <QDebug>
 #include <QHash>

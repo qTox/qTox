@@ -33,7 +33,7 @@
 #include "widget.h"
 #include "tool/croppinglabel.h"
 
-#include "src/model/friend.h"
+#include "src/model/contacts/friend.h"
 #include "src/friendlist.h"
 #include "src/persistence/settings.h"
 

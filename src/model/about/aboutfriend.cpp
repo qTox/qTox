@@ -1,6 +1,6 @@
 #include "aboutfriend.h"
 
-#include "src/model/friend.h"
+#include "src/model/contacts/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
