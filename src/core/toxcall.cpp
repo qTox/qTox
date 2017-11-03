@@ -63,6 +63,13 @@ ToxCall::~ToxCall()
 
 ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
 {
+    if (valid) {
+        // if we're already valid, we need to cleanup our resources since we're going to inherit the resources
+        // that are being moved in
+        QObject::disconnect(audioInConn);
+        Audio::getInstance().unsubscribeInput();
+    }
+
     audioInConn = other.audioInConn;
     other.audioInConn = QMetaObject::Connection();
     active = other.active;
@@ -312,7 +319,7 @@ void ToxGroupCall::removePeer(int peerId)
     peers.remove(peerId);
 }
 
-QMap<int, quint32> ToxGroupCall::getPeers() const
+QMap<int, quint32>& ToxGroupCall::getPeers()
 {
     return peers;
 }
