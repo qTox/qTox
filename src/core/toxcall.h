@@ -16,7 +16,8 @@ class CoreAV;
 class ToxCall
 {
 protected:
-    explicit ToxCall();
+    ToxCall() = delete;
+    ToxCall(uint32_t CallId, bool VideoEnabled, CoreAV& av);
     ~ToxCall();
 
 public:
@@ -26,7 +27,6 @@ public:
     ToxCall& operator=(const ToxCall& other) = delete;
     ToxCall& operator=(ToxCall&& other) noexcept;
 
-    bool isInactive() const;
     bool isActive() const;
     void setActive(bool value);
 
@@ -36,11 +36,30 @@ public:
     bool getMuteMic() const;
     void setMuteMic(bool value);
 
+    bool getVideoEnabled() const;
+    void setVideoEnabled(bool value);
+
+    bool getNullVideoBitrate() const;
+    void setNullVideoBitrate(bool value);
+
+    CoreVideoSource* getVideoSource() const;
+
+    quint32 getAlSource() const;
+    void setAlSource(const quint32& value);
+
 protected:
+    bool active{false};
+    CoreAV* av{nullptr};
+    // audio
     QMetaObject::Connection audioInConn;
-    bool active;
-    bool muteMic;
-    bool muteVol;
+    bool muteMic{false};
+    bool muteVol{false};
+    quint32 alSource{0};
+    // video
+    CoreVideoSource* videoSource{nullptr};
+    QMetaObject::Connection videoInConn;
+    bool videoEnabled{false};
+    bool nullVideoBitrate{false};
 };
 
 class ToxFriendCall : public ToxCall
@@ -56,32 +75,14 @@ public:
     void startTimeout(uint32_t callId);
     void stopTimeout();
 
-    bool getVideoEnabled() const;
-    void setVideoEnabled(bool value);
-
-    bool getNullVideoBitrate() const;
-    void setNullVideoBitrate(bool value);
-
-    CoreVideoSource* getVideoSource() const;
-
     TOXAV_FRIEND_CALL_STATE getState() const;
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
-    quint32 getAlSource() const;
-    void setAlSource(const quint32& value);
-
-private:
-    quint32 alSource;
-    bool videoEnabled;
-    bool nullVideoBitrate;
-    CoreVideoSource* videoSource;
-    TOXAV_FRIEND_CALL_STATE state;
-
 protected:
-    CoreAV* av;
-    QTimer* timeoutTimer;
+    QTimer* timeoutTimer{nullptr};
 
 private:
+    TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
     static constexpr int CALL_TIMEOUT = 45000;
 };
 
