@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pt_BR">
+<TS version="2.1" language="pt_BR">
 <context>
     <name>AVForm</name>
     <message>
@@ -161,16 +161,6 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <translation>Uma lista de todos os problemas conhecidos pode ser encontrada no nosso % 1 no Github. Se você descobrir um bug ou vulnerabilidade de segurança no qTox, informe-o de acordo com as diretrizes em nosso artigo wiki % 2.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">bug-tracker</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Escrevendo reportagem de bug útil</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Clique aqui para comunicar um bug.</translation>
     </message>
@@ -180,8 +170,18 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <translation type="unfinished">Veja uma lista completa de %1 no Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">bug-tracker</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Escrevendo reportagem de bug útil</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
         <translation type="unfinished">contribuidores</translation>
     </message>
 </context>
@@ -420,7 +420,6 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2219,6 +2218,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Tem certeza de que deseja remover sua senha?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

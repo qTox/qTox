@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ar">
+<TS version="2.1" language="ar">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ which may lead to problems with video calls.</source>
         <translation>لائحة بجميع المشاكل المعروفة موجودة في %1 على GitHub. اذا وجدت خطأ ما أو ضعف أمني في qTox, الرجاء التبليغ عنها فيما يتوافق في التعليمات الموجود على %2 مقالة الويكي.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>متتبع الأخطاء</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>كتابة تقارير مفيدة بالأخطاء</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>اضغط هنا لكتابة تقرير عن الخطأ.</translation>
     </message>
@@ -181,9 +171,19 @@ which may lead to problems with video calls.</source>
         <translation>رؤية قائمة كاملة من %1 في Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">متتبع الأخطاء</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">كتابة تقارير مفيدة بالأخطاء</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>المساهمين</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">المساهمين</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2185,7 +2184,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">الملف الشخصي موجود مسبقاً</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
@@ -2214,7 +2213,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">(*.tox) حفظ ملف الحساب الشخصي للتوكس</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
@@ -2230,6 +2229,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">هل انت متأكد من حذف كلمة المرور الخاصة بك؟</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

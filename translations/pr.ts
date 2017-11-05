@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pr" sourcelanguage="en_US">
+<TS version="2.1" language="pr" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ Take heed, fer higher qualities demand clearer skies.If yer seas are stormy, yer
         <translation>A big list o&apos; all th&apos; known problems is kept at tha %1 on Github. If ya discover any bilgerats, stowaways, or spies, haul yer keester over and report it in accordance wit&apos; %2.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>rat-tracker</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>How Ta Get Yer Complainin&apos; Heard</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Click here ta report rats an&apos; their ilk.</translation>
     </message>
@@ -181,9 +171,19 @@ Take heed, fer higher qualities demand clearer skies.If yer seas are stormy, yer
         <translation>Peer a full record o&apos; %1 at Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">rat-tracker</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">How Ta Get Yer Complainin&apos; Heard</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>privateers an&apos; deck-hands</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">privateers an&apos; deck-hands</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ Take heed, fer higher qualities demand clearer skies.If yer seas are stormy, yer
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -2217,6 +2216,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

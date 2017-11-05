@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="hu_HU">
+<TS version="2.1" language="hu_HU">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>Az összes ismert probléma listája megtalálható a Github-on %1. Ha észrevesz egy hibát vagy biztonsági sérülékenységet a qTox-ban, kérjük jelentse azt a %2 wiki cikkünkben leírtaknak megfelelően.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>hibakövető</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Hasznos hibajelentések írása</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Kattintson ide egy hiba bejelentéséért.</translation>
     </message>
@@ -181,9 +171,19 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>%1 teljes listája Github-on</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">hibakövető</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Hasznos hibajelentések írása</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>hozzájárulók</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">hozzájárulók</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -2223,6 +2222,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Biztosan törli a jelszavát?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="sv">
+<TS version="2.1" language="sv">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ vilket kan leda till problem med videosamtal.</translation>
         <translation>En lista över alla kända problem kan hittas på vår %1 på Github. Om du upptäcker ett fel eller säkerhetsproblem inom qTox, vänligen rapportera det i enlighet med riktlinjerna i vår wikiartikel %2.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>felbevakare</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Skriva användbara felrapporter</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Klicka här för att rapportera en bugg.</translation>
     </message>
@@ -181,9 +171,19 @@ vilket kan leda till problem med videosamtal.</translation>
         <translation>Se en fullständig lista över %1 på Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">felbevakare</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Skriva användbara felrapporter</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>bidragare</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">bidragare</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2231,6 +2230,10 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Är du säker på att du vill ta bort ditt lösenord?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

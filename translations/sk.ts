@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="sk" sourcelanguage="en_US">
+<TS version="2.1" language="sk" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Písanie užitočných hlásení o chybách</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Kliknite sem pre nahlásenie chyby.</translation>
     </message>
@@ -181,8 +171,18 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <translation type="unfinished">Úplný zoznam %1 nájdete na Githubu</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Písanie užitočných hlásení o chybách</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
         <translation type="unfinished">prispievateľov</translation>
     </message>
 </context>
@@ -421,7 +421,6 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2215,7 +2214,7 @@ Toto ID obsahuje NoSpam kód (modrou) a kontrolný súčet (šedou).</translatio
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exportovať profil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
@@ -2236,6 +2235,10 @@ Toto ID obsahuje NoSpam kód (modrou) a kontrolný súčet (šedou).</translatio
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Naozaj chcete odstrániť svoje heslo?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

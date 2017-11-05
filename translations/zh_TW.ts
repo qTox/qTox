@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_TW" sourcelanguage="en_US">
+<TS version="2.1" language="zh_TW" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -158,16 +158,6 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>Bug 追蹤器</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>點選此處報告 Bug。</translation>
     </message>
@@ -177,9 +167,19 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">Bug 追蹤器</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>參與者</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">參與者</translation>
     </message>
 </context>
 <context>
@@ -417,7 +417,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -2213,6 +2212,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

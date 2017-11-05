@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="eo">
+<TS version="2.1" language="eo">
 <context>
     <name>AVForm</name>
     <message>
@@ -158,16 +158,6 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -177,9 +167,19 @@ which may lead to problems with video calls.</source>
         <translation>Vidu plenan liston de %1 ĉe Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>kontribuintoj</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">kontribuintoj</translation>
     </message>
 </context>
 <context>
@@ -417,8 +417,8 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -1904,6 +1904,7 @@ You may want to create one.</source>
         <source>Unread message(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -2205,6 +2206,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2782,12 +2787,14 @@ It will be installed when qTox restarts.</source>
         <source>%n New Friend Request(s)</source>
         <translation>
             <numerusform>%n nova amikiĝpeto</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
         <translation>
             <numerusform>%n nova grupo-invito</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>

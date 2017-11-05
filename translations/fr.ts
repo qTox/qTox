@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
         <translation>Une liste de tous les problèmes connus peut être trouvée sur notre %1 sur le site internet Github. Si vous découvrez un bogue ou une faille de sécurité dans qTox, merci de bien vouloir nous la reporter en suivant les règles décrites dans notre article wiki %2.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>logiciel de suivi de bogue</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Rédaction de rapports de bogues utiles</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Cliquer ici afin de rapporter un bogue.</translation>
     </message>
@@ -181,9 +171,19 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
         <translation>Voir une liste complète de %1 sur Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">logiciel de suivi de bogue</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Rédaction de rapports de bogues utiles</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>contributeurs</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">contributeurs</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2184,7 +2183,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le profil existe déjà</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
@@ -2229,6 +2228,10 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Êtes-vous certain(e) de vouloir supprimer ce mot de passe ?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

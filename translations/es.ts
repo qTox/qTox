@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es_MX">
+<TS version="2.1" language="es_MX">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>Puedes encontrar una lista de los problemas conocidos en nuestro %1 en GitHub. Si encuentras un error o una vulnerabilidad de seguridad en qTox, por favor repórtalo de acuerdo a las directrices en nuestro artículo de la wiki %2</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>Informe de errores</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Cómo escribir un informe de errores correctamente</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Haz clic aquí para reportar un error.</translation>
     </message>
@@ -181,9 +171,19 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>Lista completa de %1 en Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">Informe de errores</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Cómo escribir un informe de errores correctamente</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>colaboradores</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">colaboradores</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2228,6 +2227,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">¿Estás seguro de que quieres eliminar tu contraseña?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

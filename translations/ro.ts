@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ro" sourcelanguage="en_US">
+<TS version="2.1" language="ro" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
         <translation>O listă a tuturor problemelor cunoscute poate fi găsită la adresa %1 din Github. Dacă descoperiți o eroare sau o vulnerabilitate de securitate în cadrul qTox, raportați-o conform ghidului din articolul nostru wiki %2.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>urmărire probleme</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Scrie rapoarte utile ale erorii</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Faceți clic aici pentru a raporta o eroare.</translation>
     </message>
@@ -181,9 +171,19 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
         <translation>Vedeți o listă completă de %1 la Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">urmărire probleme</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Scrie rapoarte utile ale erorii</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>contribuitori</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">contribuitori</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Gata de importare %n contact(e), dați clic de trimitere pentru a confirma</numerusform>
             <numerusform>Gata de importare %n contacte, dați clic de trimitere pentru a confirma</numerusform>
@@ -2238,6 +2237,10 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Sigur doriți să vă ștergeți parola?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE" sourcelanguage="en_US">
+<TS version="2.1" language="de_DE" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -160,16 +160,6 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
         <translation>Eine Liste von bekannten Problemen kann in unserem %1 angesehen werden. Wenn Du einen Bug oder eine Sicherheitslücke findest, melde ihn bitte entsprechend unseren Richtlinien, die Du in unserem Wiki-Artikel %2 findest.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>Bug-Tracker (Englisch)</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>„Writing Useful Bug Reports“ (Englisch)</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Hier klicken, um einen Fehler zu melden.</translation>
     </message>
@@ -179,9 +169,19 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
         <translation>Eine komplette Liste von %1 findest du auf Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">Bug-Tracker (Englisch)</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">„Writing Useful Bug Reports“ (Englisch)</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>Mitwirkende</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">Mitwirkende</translation>
     </message>
 </context>
 <context>
@@ -419,7 +419,6 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2233,6 +2232,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Bist du sicher, dass du dein Passwort löschen möchtest?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

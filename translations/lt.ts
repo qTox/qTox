@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="lt_LT">
+<TS version="2.1" language="lt_LT">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ vaizdo skambučiais.</translation>
         <translation>Visų žinomų klaidų sąrašą galima rasti mūsų %1, Github puslapyje. Jeigu qTox programoje rasite klaidą ar saugumo spragą, prašome apie ją pranešti, kaip tai yra nurodyta mūsų gairėse, vikio straipsnyje, pavadinimu &quot;%2&quot;.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>klaidų seklyje</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Kaip parašyti naudingą pranešimą apie klaidą</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Spustelėkite čia, kad praneštumėte apie klaidą.</translation>
     </message>
@@ -181,9 +171,19 @@ vaizdo skambučiais.</translation>
         <translation>Visą %1 rasite Github svetainėje</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">klaidų seklyje</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Kaip parašyti naudingą pranešimą apie klaidą</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>talkininkų sąrašą</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">talkininkų sąrašą</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ vaizdo skambučiais.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Pasiruošę importuoti %n kontaktą, norėdami patvirtinti spustelėkite siųsti</numerusform>
             <numerusform>Pasiruošę importuoti %n kontaktus, norėdami patvirtinti spustelėkite siųsti</numerusform>
@@ -2233,6 +2232,10 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Ar tikrai norite panaikinti šio profilio slaptažodį?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

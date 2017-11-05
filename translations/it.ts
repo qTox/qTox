@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="it_IT">
+<TS version="2.1" language="it_IT">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ questo può causare problemi con le chiamate video.</translation>
         <translation>Una lista di tutti i problemi può essere trovata alla nostra %1 su Github.Se scopri un bug o una vulnerabilità di sicurezza in qTox, ti preghiamo di segnalarcelo in accordo con le nostre linee guida nel nostro %2 articolo del wiki.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>gestore dei bug</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Redigere degli utili segnalatori di bug</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Clicca qui per segnalare un bug.</translation>
     </message>
@@ -181,9 +171,19 @@ questo può causare problemi con le chiamate video.</translation>
         <translation>Consulta l&apos;elenco completo dei %1 su Github</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">gestore dei bug</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Redigere degli utili segnalatori di bug</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>collaboratori</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">collaboratori</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,6 @@ questo può causare problemi con le chiamate video.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2205,12 +2204,12 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Salva profilo</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">File di salvataggio di Tox (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
@@ -2226,6 +2225,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Sei sicuro di voler rimuovere la password?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ta" sourcelanguage="en_US">
+<TS version="2.1" language="ta" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -163,16 +163,6 @@ which may lead to problems with video calls.</source>
 qTox இல் தாங்கள் சிக்கலோ பாதுகாப்புத் தளர்வோ கண்டறிந்தால் அதைத் தயவுசெய்து எங்கள் %2 பயனரியக்குவலைதள கட்டுரையின் வழிகாட்டுதல்களின்படி பதிவு செய்யவும்.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">நிரற்பிழை கண்காணி</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>பயனுள்ள நிரற்பிழை பதிவுகளை எழுதுதல்</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>நிரற்பிழை ஒன்றனை பதிய இங்கு சொடுக்குக.</translation>
     </message>
@@ -182,9 +172,19 @@ qTox இல் தாங்கள் சிக்கலோ பாதுகாப
         <translation>%1 முழுப்பட்டியலை Github இல் காண்க</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">நிரற்பிழை கண்காணி</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">பயனுள்ள நிரற்பிழை பதிவுகளை எழுதுதல்</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>பங்களிப்பாளர்கள்</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">பங்களிப்பாளர்கள்</translation>
     </message>
 </context>
 <context>
@@ -422,7 +422,6 @@ qTox இல் தாங்கள் சிக்கலோ பாதுகாப
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2224,6 +2223,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

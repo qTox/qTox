@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ko" sourcelanguage="en_US">
+<TS version="2.1" language="ko" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -160,16 +160,6 @@ which may lead to problems with video calls.</source>
         <translation>%1 에서 qTox의 알려진 문제들을 확인할 수 있습니다. 버그나 보안 취약점을 발견하면 %2 위키 가이드라인에 따라 %3.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>버그추적</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>버그 리포트 작성</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>버그 제출하기.</translation>
     </message>
@@ -179,9 +169,19 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished">%1의 전체 리스트 보기</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">버그추적</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">버그 리포트 작성</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>contributors</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">contributors</translation>
     </message>
 </context>
 <context>
@@ -419,7 +419,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -2215,6 +2214,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

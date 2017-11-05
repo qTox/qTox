@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="nb_NO">
+<TS version="2.1" language="nb_NO">
 <context>
     <name>AVForm</name>
     <message>
@@ -161,16 +161,6 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation>En liste over ale kjente feil er å finne på vår %1 på GitHub. Hvis du oppdater en feil eller sikkerhetssårbarhet i qTox, rapporter det inn i henhold til retningslinjene i vår %2 wiki-artikkel.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>feilrettingsoversikt</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Skriving av nyttige feilrapporter</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Klikk her for å rapportere en feil.</translation>
     </message>
@@ -180,9 +170,19 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation>Se en fullstendig liste over %1 på GitHub</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">feilrettingsoversikt</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Skriving av nyttige feilrapporter</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>bidragsytere</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">bidragsytere</translation>
     </message>
 </context>
 <context>
@@ -420,7 +420,6 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Klar til å importere %n kontakt, klikk send for å bekrefte</numerusform>
             <numerusform>Klar til å importere %n kontakter, klikk send for å bekrefte</numerusform>
@@ -2227,6 +2226,10 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Er du sikker på at du vil slette passordet ditt?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="nl_NL">
+<TS version="2.1" language="nl_NL">
 <context>
     <name>AVForm</name>
     <message>
@@ -162,16 +162,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">bug-tracker</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Nuttige probleemrapportages schrijven</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -181,8 +171,18 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">bug-tracker</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Nuttige probleemrapportages schrijven</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -421,7 +421,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2208,7 +2207,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tox-bestand (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
@@ -2224,6 +2223,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Weet je zeker dat je je wachtwoord wilt verwijderen?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

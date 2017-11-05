@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pl_PL">
+<TS version="2.1" language="pl_PL">
 <context>
     <name>AVForm</name>
     <message>
@@ -165,16 +165,6 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <translation>Lista znanych problemów może zostać znaleziona na naszym %1 na Githubie. Jeśli odkryjesz błąd lub lukę bezpieczeństwa w qToxie, proszę zgłoś to wedłóg naszych artykułu %2.</translation>
     </message>
     <message>
-        <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>bug-trackerze</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Zgłaszanie użytecznych reportów o błędach</translation>
-    </message>
-    <message>
         <source>Click here to report a bug.</source>
         <translation>Kliknij tutaj by zgłosić błąd.</translation>
     </message>
@@ -184,9 +174,19 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <translation>Zobacz pełną listę %1 na Githubie</translation>
     </message>
     <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">bug-trackerze</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Zgłaszanie użytecznych reportów o błędach</translation>
+    </message>
+    <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>współtwórców</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">współtwórców</translation>
     </message>
 </context>
 <context>
@@ -426,7 +426,6 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2266,6 +2265,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Czy masz pewność, iż chcesz usunąć swoje hasło?</translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
