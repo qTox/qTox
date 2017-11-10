@@ -98,8 +98,10 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
         format = iformat;
     }
 
-    if (avformat_open_input(&fctx, devName.toStdString().c_str(), format, options) < 0)
+    std::string devString = devName.toStdString();
+    if (avformat_open_input(&fctx, devString.c_str(), format, options) < 0) {
         goto out;
+    }
 
 // Fix avformat_find_stream_info hanging on garbage input
 #if FF_API_PROBESIZE_32
@@ -149,6 +151,14 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         return nullptr;
     }
 
+    int FPS = 5;
+    if (mode.FPS) {
+        FPS = mode.FPS;
+    }
+
+    const std::string videoSize = QStringLiteral("%1x%2").arg(mode.width).arg(mode.height).toStdString();
+    const std::string framerate = QString{}.setNum(FPS).toStdString();
+
     AVDictionary* options = nullptr;
     if (!iformat)
         ;
@@ -168,20 +178,14 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
             screen.setWidth((screen.width() * pixRatio) - 2);
             screen.setHeight((screen.height() * pixRatio) - 2);
         }
-        av_dict_set(&options, "video_size",
-                    QString("%1x%2").arg(screen.width()).arg(screen.height()).toStdString().c_str(),
-                    0);
+        const std::string screenVideoSize = QStringLiteral("%1x%2").arg(screen.width()).arg(screen.height()).toStdString();
+        av_dict_set(&options, "video_size", screenVideoSize.c_str(), 0);
         devName += QString("+%1,%2").arg(QString().setNum(mode.x), QString().setNum(mode.y));
 
-        int FPS = 5;
-        if (mode.FPS)
-            FPS = mode.FPS;
-
-        av_dict_set(&options, "framerate", QString().setNum(FPS).toStdString().c_str(), 0);
+        av_dict_set(&options, "framerate", framerate.c_str(), 0);
     } else if (iformat->name == QString("video4linux2,v4l2") && mode) {
-        av_dict_set(&options, "video_size",
-                    QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
-        av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
+        av_dict_set(&options, "video_size", videoSize.c_str(), 0);
+        av_dict_set(&options, "framerate", framerate.c_str(), 0);
         const std::string pixelFormatStr = v4l2::getPixelFormatString(mode.pixel_format).toStdString();
         const char* pixel_format = pixelFormatStr.c_str();
         if (strncmp(pixel_format, "unknown", 7) != 0) {
@@ -191,25 +195,25 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
 #endif
 #ifdef Q_OS_WIN
     else if (devName.startsWith("gdigrab#")) {
-        av_dict_set(&options, "framerate", QString().setNum(5).toStdString().c_str(), 0);
-        av_dict_set(&options, "offset_x", QString().setNum(mode.x).toStdString().c_str(), 0);
-        av_dict_set(&options, "offset_y", QString().setNum(mode.y).toStdString().c_str(), 0);
-        av_dict_set(&options, "video_size",
-                    QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
+
+        const std::string offsetX = QString().setNum(mode.x).toStdString();
+        const std::string offsetY = QString().setNum(mode.y).toStdString();
+        av_dict_set(&options, "framerate", framerate.c_str(), 0);
+        av_dict_set(&options, "offset_x", offsetX.c_str(), 0);
+        av_dict_set(&options, "offset_y", offsetY.c_str(), 0);
+        av_dict_set(&options, "video_size", videoSize.c_str(), 0);
     } else if (iformat->name == QString("dshow") && mode) {
-        av_dict_set(&options, "video_size",
-                    QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
-        av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
+        av_dict_set(&options, "video_size", videoSize.c_str(), 0);
+        av_dict_set(&options, "framerate", framerate.c_str(), 0);
     }
 #endif
 #ifdef Q_OS_OSX
     else if (iformat->name == QString("avfoundation")) {
         if (mode) {
-            av_dict_set(&options, "video_size",
-                        QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
-            av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
+            av_dict_set(&options, "video_size", videoSize.c_str(), 0);
+            av_dict_set(&options, "framerate", framerate.c_str(), 0);
         } else if (devName.startsWith(avfoundation::CAPTURE_SCREEN)) {
-            av_dict_set(&options, "framerate", QString().setNum(5).toStdString().c_str(), 0);
+            av_dict_set(&options, "framerate", framerate.c_str(), 0);
             av_dict_set_int(&options, "capture_cursor", 1, 0);
             av_dict_set_int(&options, "capture_mouse_clicks", 1, 0);
         }
@@ -221,8 +225,9 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     }
 
     CameraDevice* dev = open(devName, &options);
-    if (options)
+    if (options) {
         av_dict_free(&options);
+    }
 
     return dev;
 }

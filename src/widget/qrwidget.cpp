@@ -85,7 +85,8 @@ void QRWidget::paintImage()
     // https://fukuchi.org/works/qrencode/manual/qrencode_8h.html#a4cebc3c670efe1b8866b14c42737fc8f
     // any mode other than QR_MODE_8 or QR_MODE_KANJI results in EINVAL. First 1 is version, second
     // is case sensitivity
-    QRcode* qr = QRcode_encodeString(data.toStdString().c_str(), 1, QR_ECLEVEL_M, QR_MODE_8, 1);
+    const std::string dataString = data.toStdString();
+    QRcode* qr = QRcode_encodeString(dataString.c_str(), 1, QR_ECLEVEL_M, QR_MODE_8, 1);
 
     if (qr != nullptr) {
         QColor fg("black");

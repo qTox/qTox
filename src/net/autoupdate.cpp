@@ -595,13 +595,14 @@ void AutoUpdater::installLocalUpdate()
 // Workaround QTBUG-7645
 // QProcess fails silently when elevation is required instead of showing a UAC prompt on Win7/Vista
 #ifdef Q_OS_WIN
-    QString modulePath = qApp->applicationDirPath().replace('/', '\\');
-    HINSTANCE result = ::ShellExecuteW(0, L"open", updaterBin.toStdWString().c_str(), 0,
-                                       modulePath.toStdWString().c_str(), SW_SHOWNORMAL);
+    const std::wstring modulePath = qApp->applicationDirPath().replace('/', '\\').toStdWString();
+    const std::wstring updaterBinPath = updaterBin.toStdWString();
+    HINSTANCE result = ::ShellExecuteW(0, L"open", updaterBinPath.c_str(), 0,
+                                       modulePath.c_str(), SW_SHOWNORMAL);
     if (result == (HINSTANCE)SE_ERR_ACCESSDENIED) {
         // Requesting elevation
-        result = ::ShellExecuteW(0, L"runas", updaterBin.toStdWString().c_str(), 0,
-                                 modulePath.toStdWString().c_str(), SW_SHOWNORMAL);
+        result = ::ShellExecuteW(0, L"runas", updaterBinPath.c_str(), 0,
+                                 modulePath.c_str(), SW_SHOWNORMAL);
     }
     if (result <= (HINSTANCE)32)
         failExit();
