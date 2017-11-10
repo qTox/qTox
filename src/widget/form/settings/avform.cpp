@@ -280,14 +280,15 @@ void AVForm::fillCameraModesComboBox()
         VideoMode mode = videoModes[i];
 
         QString str;
-        QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
+        std::string pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format).toStdString();
         qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height,
-               mode.FPS, pixelFormat.toStdString().c_str());
+               mode.FPS, pixelFormat.c_str());
 
-        if (mode.height && mode.width)
+        if (mode.height && mode.width) {
             str += QString("%1p").arg(mode.height);
-        else
+        } else {
             str += tr("Default resolution");
+        }
 
         videoModescomboBox->addItem(str);
     }
@@ -320,9 +321,9 @@ void AVForm::fillScreenModesComboBox()
 
     for (int i = 0; i < videoModes.size(); ++i) {
         VideoMode mode = videoModes[i];
-        QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
+        std::string pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format).toStdString();
         qDebug("%dx%d+%d,%d FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.x, mode.y,
-               mode.FPS, pixelFormat.toStdString().c_str());
+               mode.FPS, pixelFormat.c_str());
 
         QString name;
         if (mode.width && mode.height)

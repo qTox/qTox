@@ -49,9 +49,10 @@ SystemTrayIcon::SystemTrayIcon()
         }
         backendType = SystrayBackendType::Unity;
         unityMenu = gtk_menu_new();
+        const std::string settingsDirString = settingsDir.toStdString();
         unityIndicator =
             app_indicator_new_with_path("qTox", "icon", APP_INDICATOR_CATEGORY_APPLICATION_STATUS,
-                                        settingsDir.toStdString().c_str());
+                                        settingsDirString.c_str());
         app_indicator_set_menu(unityIndicator, GTK_MENU(unityMenu));
     }
 #endif
@@ -141,15 +142,15 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
         g_signal_connect(statusNotifier, "secondary_activate", G_CALLBACK(callbackMiddleClick), this);
 
         for (QAction* a : menu->actions()) {
-            QString aText = a->text().replace('&', "");
+            const std::string aText = a->text().replace('&', "").toStdString();
             GtkWidget* item;
             if (a->isSeparator())
                 item = gtk_menu_item_new();
             else if (a->icon().isNull())
-                item = gtk_menu_item_new_with_label(aText.toStdString().c_str());
+                item = gtk_menu_item_new_with_label(aText.c_str());
             else {
                 GdkPixbuf* pixbuf = convertQIconToPixbuf(a->icon());
-                item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
+                item = gtk_image_menu_item_new_with_label(aText.c_str());
                 gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item),
                                               gtk_image_new_from_pixbuf(pixbuf));
                 gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item), TRUE);
@@ -174,15 +175,15 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
 #ifdef ENABLE_SYSTRAY_GTK_BACKEND
     else if (backendType == SystrayBackendType::GTK) {
         for (QAction* a : menu->actions()) {
-            QString aText = a->text().replace('&', "");
+            const std::string aText = a->text().replace('&', "").toStdString();
             GtkWidget* item;
             if (a->isSeparator())
                 item = gtk_menu_item_new();
             else if (a->icon().isNull())
-                item = gtk_menu_item_new_with_label(aText.toStdString().c_str());
+                item = gtk_menu_item_new_with_label(aText.c_str());
             else {
                 GdkPixbuf* pixbuf = convertQIconToPixbuf(a->icon());
-                item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
+                item = gtk_image_menu_item_new_with_label(aText.c_str());
                 gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item),
                                               gtk_image_new_from_pixbuf(pixbuf));
                 gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item), TRUE);
@@ -206,16 +207,17 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     else if (backendType == SystrayBackendType::Unity) {
         for (QAction* a : menu->actions()) {
-            QString aText = a->text().replace('&', "");
+            const std::string aText = a->text().replace('&', "").toStdString();
             GtkWidget* item;
             if (a->isSeparator())
                 item = gtk_menu_item_new();
             else if (a->icon().isNull())
-                item = gtk_menu_item_new_with_label(aText.toStdString().c_str());
+                item = gtk_menu_item_new_with_label(aText.c_str());
             else {
-                QString iconPath = extractIconToFile(a->icon(), "iconmenu" + a->icon().name());
-                GtkWidget* image = gtk_image_new_from_file(iconPath.toStdString().c_str());
-                item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
+                const std::string iconPath = extractIconToFile(a->icon(),
+                                             "iconmenu" + a->icon().name()).toStdString();
+                GtkWidget* image = gtk_image_new_from_file(iconPath.c_str());
+                item = gtk_image_menu_item_new_with_label(aText.c_str());
                 gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), image);
                 gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item), TRUE);
             }

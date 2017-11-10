@@ -62,7 +62,8 @@ static int deviceOpen(QString devName, int* error)
     struct v4l2_capability cap;
     int fd;
 
-    fd = open(devName.toStdString().c_str(), O_RDWR, 0);
+    const std::string devNameString = devName.toStdString();
+    fd = open(devNameString.c_str(), O_RDWR, 0);
     if (fd < 0) {
         *error = errno;
         return fd;
@@ -183,9 +184,11 @@ QVector<QPair<QString, QString>> v4l2::getDeviceList()
     closedir(dir);
 
     for (QString file : deviceFiles) {
-        int fd = open(file.toStdString().c_str(), O_RDWR);
-        if (fd < 0)
+        const std::string filePath = file.toStdString();
+        int fd = open(filePath.c_str(), O_RDWR);
+        if (fd < 0) {
             continue;
+        }
 
         v4l2_capability caps;
         ioctl(fd, VIDIOC_QUERYCAP, &caps);
