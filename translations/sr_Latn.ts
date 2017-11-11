@@ -173,17 +173,17 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation type="unfinished">bubolovcu</translation>
+        <translation>bubolovcu</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation type="unfinished">„Pisanje korisnih prijava grešaka“</translation>
+        <translation>„Pisanje korisnih prijava grešaka“</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation type="unfinished">doprinosioca</translation>
+        <translation>doprinosioca</translation>
     </message>
 </context>
 <context>
@@ -2241,7 +2241,7 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Korisnička imena za Tox ne smeju premašiti %1 znakova.</translation>
     </message>
 </context>
 <context>
