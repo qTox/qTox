@@ -173,17 +173,17 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation type="unfinished">veahalduse süsteemis (inglise keeles)</translation>
+        <translation>veahaldussüsteem</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation type="unfinished">„Writing Useful Bug Reports“ (inglise keeles)</translation>
+        <translation>Writing Useful Bug Reports (inglise keeles)</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation type="unfinished">kaastöölised</translation>
+        <translation>kaasautorid</translation>
     </message>
 </context>
 <context>
@@ -2233,7 +2233,7 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toxi kasutajanimed tohivad olla kuni %1 märki pikad.</translation>
     </message>
 </context>
 <context>
