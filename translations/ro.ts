@@ -173,17 +173,17 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation type="unfinished">urmărire probleme</translation>
+        <translation>urmărire probleme</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation type="unfinished">Scrie rapoarte utile ale erorii</translation>
+        <translation>Scrie rapoarte utile ale erorii</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation type="unfinished">contribuitori</translation>
+        <translation>contribuitori</translation>
     </message>
 </context>
 <context>
@@ -2184,63 +2184,63 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Calea goală nu este disponibilă</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Redenumire eșuată</translation>
+        <translation>Redenumire eșuată</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Profilul există deja</translation>
+        <translation>Profilul există deja</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">Un profil numit &quot;%1&quot; există deja.</translation>
+        <translation>Un profil numit &quot;%1&quot; există deja.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nume gol</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Numele gol este indisponibil</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>Cale goală</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">Nu s-a putut modifica parola în baza de date, s-ar putea să fie deteriorată sau să se folosească parola veche.</translation>
+        <translation>Nu s-a putut modifica parola în baza de date, s-ar putea să fie deteriorată sau să se folosească parola veche.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Exportați profilul</translation>
+        <translation>Exportați profil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Fișier salvat Tox (*.tox)</translation>
+        <translation>Fișier salvat Tox (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">Următoarele fișiere nu au putut fi șterse:</translation>
+        <translation>Următoarele fișiere nu au putut fi șterse:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">Îndepărtați-le manual.</translation>
+        <translation>Vă rugăm să le eliminați manual.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Sigur doriți să vă ștergeți parola?</translation>
+        <translation>Sigur doriți să vă ștergeți parola?</translation>
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Numele de utilizator Tox nu poate depăși %1 caractere.</translation>
     </message>
 </context>
 <context>
