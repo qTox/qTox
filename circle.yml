@@ -1,0 +1,36 @@
+machine:
+  services:
+    - docker
+  timezone:
+    Europe/Berlin
+  environment:
+    MAKEFLAGS: "j4"
+    BUILD__: "x86_64"
+    BTYPE__: "release"
+dependencies:
+  pre:
+    - sudo apt-get update
+    - sudo apt-get install zip
+    - docker info
+compile:
+  override:
+    - mkdir -p ~/workspace
+    - mkdir -p ~/script
+    - cp -av ./windows/cross-compile/build.sh ~/script/
+
+    - docker run --rm
+      -v /home/ubuntu/workspace:/workspace
+      -v /home/ubuntu/script:/script
+      -v /home/ubuntu/qTox:/qtox
+      debian:stretch-slim
+      /bin/bash /script/build.sh "$BUILD__" "$BTYPE__"
+
+    - ls -al /home/ubuntu/workspace/"$BUILD__"/qtox/"$BTYPE__"/
+    - ls -al /home/ubuntu/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe
+    
+    - mkdir -p $CIRCLE_ARTIFACTS/"$BUILD__"/
+    - cp -av /home/ubuntu/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BTYPE__".exe
+    - cd /home/ubuntu/workspace/"$BUILD__"/qtox/"$BTYPE__"/ ; zip -r $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BUILD__"_"$BTYPE__".zip *
+test:
+  override:
+    - echo "no tests yet"
