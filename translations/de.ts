@@ -91,31 +91,31 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviere den experimentellen Audio Back-End</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Tonqualität</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Übertragene Tonqualität. Verringere Sie diese Einstellung, wenn Ihre Bandbreite nicht ausreichend ist oder wenn Sie die Internetauslastung verringern möchten.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoch (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mittel (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niedrig (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sehr niedrig (8 kbps)</translation>
     </message>
 </context>
 <context>
@@ -269,7 +269,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Wähle ein Verzeichnis für automatische Annahme</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -356,7 +356,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tox ID ist ungültig oder existiert nicht</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -365,24 +365,24 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Kontaktliste</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann Datei nicht öffnen</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kann Kontaktdatei nicht öffnen</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültige Datei</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Wir können keine Kontakte zum importieren in dieser Datei finden!</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -406,7 +406,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Sende Freundschaftsanfrage </translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -415,18 +415,16 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation type="unfinished"></translation>
+        <translation>Importiere Kontaktliste, eine Tox ID pro Zeile</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Bereit %n Kontakt(e) zu importieren, klicke Senden zum bestätigen</numerusform>
+        <numerusform>Bereit %n Kontakte zu importieren, klicke Senden zum bestätigen</numerusform>
+        </translation></message>
     <message>
         <source>Import contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Importiere Kontakte</translation>
     </message>
 </context>
 <context>
@@ -723,7 +721,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Anruf von %1 beendete unerwartet. %2</translation>
     </message>
 </context>
 <context>
@@ -2005,7 +2003,7 @@ Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führ
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtere Gruppennachricht nach öffentlichen Schlüssel des Gruppenmitglieds. Füge öffentlichen Schlüssel hier ein, ein Schlüssel pro Zeile.</translation>
     </message>
 </context>
 <context>
@@ -2457,7 +2455,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Startet neue Instanz und öffnet den Anmeldebildschirm.</translation>
     </message>
 </context>
 <context>
