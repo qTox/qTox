@@ -101,6 +101,37 @@
             </property>
            </widget>
           </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="audioThresholdLabel">
+            <property name="text">
+             <string>Threshold</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1" colspan="2">
+           <widget class="QSlider" name="audioThresholdSlider">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="volumeDisplayLabel">
+            <property name="text">
+             <string>Volume</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1" colspan="2">
+           <widget class="QProgressBar" name="volumeDisplay">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="textVisible">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="outDevLabel">
             <property name="text">
@@ -108,14 +139,14 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="6" column="0">
            <widget class="QLabel" name="audioQualityLabel">
             <property name="text">
              <string>Audio quality</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1" colspan="2">
+          <item row="6" column="1" colspan="2">
            <widget class="QComboBox" name="audioQualityComboBox">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -128,7 +159,7 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0" colspan="3">
+          <item row="7" column="0" colspan="3">
            <widget class="QCheckBox" name="cbEnableBackend2">
             <property name="enabled">
              <bool>true</bool>

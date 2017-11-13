@@ -100,6 +100,8 @@ class Settings : public QObject, public ICoreSettings, public IAudioSettings, pu
                    audioInDevEnabledChanged FINAL)
     Q_PROPERTY(qreal audioInGainDecibel READ getAudioInGainDecibel WRITE setAudioInGainDecibel
                    NOTIFY audioInGainDecibelChanged FINAL)
+    Q_PROPERTY(qreal audioThreshold READ getAudioThreshold WRITE setAudioThreshold
+                   NOTIFY audioThresholdChanged FINAL)
     Q_PROPERTY(QString outDev READ getOutDev WRITE setOutDev NOTIFY outDevChanged FINAL)
     Q_PROPERTY(bool audioOutDevEnabled READ getAudioOutDevEnabled WRITE setAudioOutDevEnabled NOTIFY
                    audioOutDevEnabledChanged FINAL)
@@ -349,6 +351,9 @@ public:
     qreal getAudioInGainDecibel() const override;
     void setAudioInGainDecibel(qreal dB) override;
 
+    qreal getAudioThreshold() const override;
+    void setAudioThreshold(qreal percent) override;
+
     int getOutVolume() const override;
     void setOutVolume(int volume) override;
 
@@ -368,6 +373,7 @@ public:
     SIGNAL_IMPL(Settings, audioOutDevEnabledChanged, bool enabled)
 
     SIGNAL_IMPL(Settings, audioInGainDecibelChanged, qreal dB)
+    SIGNAL_IMPL(Settings, audioThresholdChanged, qreal percent)
     SIGNAL_IMPL(Settings, outVolumeChanged, int volume)
     SIGNAL_IMPL(Settings, audioBitrateChanged, int bitrate)
     SIGNAL_IMPL(Settings, enableTestSoundChanged, bool newValue)
@@ -632,6 +638,7 @@ private:
     QString inDev;
     bool audioInDevEnabled;
     qreal audioInGainDecibel;
+    qreal audioThreshold;
     QString outDev;
     bool audioOutDevEnabled;
     int outVolume;

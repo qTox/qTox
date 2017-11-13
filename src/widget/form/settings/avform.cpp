@@ -84,6 +84,18 @@ AVForm::AVForm(Audio* audio, CoreAV* coreAV, CameraSource& camera,
     microphoneSlider->setTracking(false);
     microphoneSlider->installEventFilter(this);
 
+    audioThresholdSlider->setToolTip(tr("Use slider to set the activation volume for your"
+                                    " input device."));
+    audioThresholdSlider->setMinimum(audio->minInputThreshold() * 1000);
+    audioThresholdSlider->setMaximum(audio->maxInputThreshold() * 1000);
+    audioThresholdSlider->setValue(audioSettings->getAudioThreshold() * 1000);
+    audioThresholdSlider->setTracking(false);
+    audioThresholdSlider->installEventFilter(this);
+
+    connect(audio, &Audio::volumeAvailable, this, &AVForm::setVolume);
+    volumeDisplay->setMinimum(audio->minInputThreshold() * 1000);
+    volumeDisplay->setMaximum(audio->maxInputThreshold() * 1000);
+
     fillAudioQualityComboBox();
 
     eventsInit();
@@ -147,6 +159,11 @@ void AVForm::rescanDevices()
     getAudioInDevices();
     getAudioOutDevices();
     getVideoDevices();
+}
+
+void AVForm::setVolume(float value)
+{
+    volumeDisplay->setValue(value * 1000);
 }
 
 void AVForm::on_cbEnableBackend2_stateChanged()
@@ -552,6 +569,14 @@ void AVForm::on_microphoneSlider_valueChanged(int value)
 
     audioSettings->setAudioInGainDecibel(dB);
     audio->setInputGain(dB);
+}
+
+void AVForm::on_audioThresholdSlider_valueChanged(int value)
+{
+    const qreal percent = value / 1000.0;
+
+    audioSettings->setAudioThreshold(percent);
+    Audio::getInstance().setInputThreshold(percent);
 }
 
 void AVForm::createVideoSurface()
