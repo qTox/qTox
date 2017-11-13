@@ -54,6 +54,7 @@ GroupWidget::GroupWidget(int groupId, const QString& name, bool compact)
 
     Group* g = GroupList::findGroup(groupId);
     connect(g, &Group::titleChanged, this, &GroupWidget::updateTitle);
+    connect(g, &Group::titleChangedByUser, this, &GroupWidget::updateTitle);
     connect(g, &Group::userListChanged, this, &GroupWidget::updateUserCount);
     connect(nameLabel, &CroppingLabel::editFinished, this, &GroupWidget::setTitle);
     Translator::registerHandler(std::bind(&GroupWidget::retranslateUi, this), this);

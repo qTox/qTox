@@ -54,14 +54,16 @@ public:
     bool getMentionedFlag() const;
 
     void updatePeer(int peerId, QString newName);
-    void setName(const QString& name) override;
+    void setName(const QString& newTitle) override;
+    void onTitleChanged(const QString& author, const QString& newTitle);
     QString getName() const;
     QString getDisplayedName() const override;
 
     QString resolveToxId(const ToxPk& id) const;
 
 signals:
-    void titleChanged(uint32_t groupId, const QString& title);
+    void titleChangedByUser(uint32_t groupId, const QString& title);
+    void titleChanged(uint32_t groupId, const QString& title, const QString& author);
     void userListChanged(uint32_t groupId, const QMap<QByteArray, QString>& toxids);
 
 private:

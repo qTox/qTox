@@ -66,11 +66,19 @@ void Group::updatePeer(int peerId, QString name)
     }
 }
 
-void Group::setName(const QString& name)
+void Group::setName(const QString& newTitle)
 {
-    if (!name.isEmpty() && title != name) {
-        title = name.left(MAX_GROUP_TITLE_LENGTH);
-        emit titleChanged(groupId, title);
+    if (!newTitle.isEmpty() && title != newTitle) {
+        title = newTitle.left(MAX_GROUP_TITLE_LENGTH);
+        emit titleChangedByUser(groupId, title);
+    }
+}
+
+void Group::onTitleChanged(const QString& author, const QString& newTitle)
+{
+    if (!newTitle.isEmpty() && title != newTitle) {
+        title = newTitle.left(MAX_GROUP_TITLE_LENGTH);
+        emit titleChanged(groupId, author, title);
     }
 }
 

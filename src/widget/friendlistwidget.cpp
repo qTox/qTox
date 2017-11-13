@@ -281,10 +281,13 @@ void FriendListWidget::addGroupWidget(GroupWidget* widget)
 {
     groupLayout.addSortedWidget(widget);
     Group* g = widget->getGroup();
-    connect(g, &Group::titleChanged, [=](uint32_t groupId, const QString& name) {
+    auto handler =  [=](uint32_t groupId, const QString& name) {
         Q_UNUSED(groupId);
         renameGroupWidget(widget, name);
-    });
+    };
+
+    connect(g, &Group::titleChangedByUser, handler);
+    connect(g, &Group::titleChanged, handler);
 }
 
 void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleIndex)

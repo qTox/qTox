@@ -1756,21 +1756,12 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
         return;
     }
 
-    if (!author.isEmpty()) {
-        QString message = tr("%1 has set the title to %2").arg(author, title);
-        QDateTime curTime = QDateTime::currentDateTime();
-        g->getChatForm()->addSystemInfoMessage(message, ChatMessage::INFO, curTime);
-    }
-
     GroupWidget* widget = groupWidgets[groupnumber];
-    contactListWidget->renameGroupWidget(widget, title);
-    g->getChatForm()->setName(title);
-
     if (widget->isActive()) {
         GUI::setWindowTitle(title);
     }
 
-    g->setName(title);
+    g->onTitleChanged(author, title);
     FilterCriteria filter = getFilterCriteria();
     widget->searchName(ui->searchContactText->text(), filterGroups(filter));
 }
@@ -1859,7 +1850,7 @@ Group* Widget::createGroup(int groupId)
     connect(widget, &GroupWidget::chatroomWidgetClicked, form, &ChatForm::focusInput);
     connect(form, &GroupChatForm::sendMessage, core, &Core::sendGroupMessage);
     connect(form, &GroupChatForm::sendAction, core, &Core::sendGroupAction);
-    connect(newgroup, &Group::titleChanged, core, &Core::changeGroupTitle);
+    connect(newgroup, &Group::titleChangedByUser, core, &Core::changeGroupTitle);
 
     FilterCriteria filter = getFilterCriteria();
     widget->searchName(ui->searchContactText->text(), filterGroups(filter));
