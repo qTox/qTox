@@ -891,7 +891,9 @@ then
 
   wget https://github.com/TokTok/c-toxcore/releases/download/v$TOXCORE_VERSION/c-toxcore-$TOXCORE_VERSION.tar.gz
   check_sha256 "$TOXCORE_HASH" "c-toxcore-$TOXCORE_VERSION.tar.gz"
+  set +euo pipefail
   bsdtar -xf c-toxcore*.tar.gz
+  set -euo pipefail
   rm c-toxcore*.tar.gz
   cd c-toxcore*
 
