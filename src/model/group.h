@@ -35,7 +35,7 @@ class Group : public Contact
 {
     Q_OBJECT
 public:
-    Group(int groupId, const QString& name, bool isAvGroupchat);
+    Group(int groupId, const QString& name, bool isAvGroupchat, const QString& selfName);
     ~Group() override;
 
     bool isAvGroupchat() const;
@@ -54,17 +54,21 @@ public:
     bool getMentionedFlag() const;
 
     void updatePeer(int peerId, QString newName);
-    void setName(const QString& name) override;
+    void setName(const QString& newTitle) override;
+    void onTitleChanged(const QString& author, const QString& newTitle);
     QString getName() const;
     QString getDisplayedName() const override;
 
     QString resolveToxId(const ToxPk& id) const;
+    void setSelfName(const QString& name);
 
 signals:
-    void titleChanged(uint32_t groupId, const QString& title);
+    void titleChangedByUser(uint32_t groupId, const QString& title);
+    void titleChanged(uint32_t groupId, const QString& author, const QString& title);
     void userListChanged(uint32_t groupId, const QMap<QByteArray, QString>& toxids);
 
 private:
+    QString selfName;
     QString title;
     GroupChatForm* chatForm;
     QStringList peers;

@@ -70,9 +70,10 @@ void GroupWidget::setTitle(const QString& newName)
     g->setName(newName);
 }
 
-void GroupWidget::updateTitle(uint32_t groupId, const QString& newName)
+void GroupWidget::updateTitle(uint32_t groupId, const QString& author, const QString& newName)
 {
     Q_UNUSED(groupId);
+    Q_UNUSED(author);
     nameLabel->setText(newName);
 }
 

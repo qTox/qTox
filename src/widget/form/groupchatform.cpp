@@ -114,6 +114,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
         chatGroup->setName(newName);
     });
     connect(group, &Group::userListChanged, this, &GroupChatForm::onUserListChanged);
+    connect(group, &Group::titleChanged, this, &GroupChatForm::onTitleChanged);
 
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
@@ -170,6 +171,19 @@ void GroupChatForm::onUserListChanged()
         Core::getInstance()->getAv()->leaveGroupCall(group->getId());
         hideNetcam();
     }
+}
+
+void GroupChatForm::onTitleChanged(uint32_t groupId, const QString& author, const QString& title)
+{
+    Q_UNUSED(groupId);
+    setName(title);
+    if (author.isEmpty()) {
+        return;
+    }
+
+    const QString message = tr("%1 has set the title to %2").arg(author, title);
+    const QDateTime curTime = QDateTime::currentDateTime();
+    addSystemInfoMessage(message, ChatMessage::INFO, curTime);
 }
 
 /**

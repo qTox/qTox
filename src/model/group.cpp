@@ -30,8 +30,9 @@
 
 static const int MAX_GROUP_TITLE_LENGTH = 128;
 
-Group::Group(int groupId, const QString& name, bool isAvGroupchat)
+Group::Group(int groupId, const QString& name, bool isAvGroupchat, const QString& selfName)
     : title{name}
+    , selfName{selfName}
     , groupId(groupId)
     , nPeers{0}
     , avGroupchat{isAvGroupchat}
@@ -66,11 +67,20 @@ void Group::updatePeer(int peerId, QString name)
     }
 }
 
-void Group::setName(const QString& name)
+void Group::setName(const QString& newTitle)
 {
-    if (!name.isEmpty() && title != name) {
-        title = name.left(MAX_GROUP_TITLE_LENGTH);
-        emit titleChanged(groupId, title);
+    if (!newTitle.isEmpty() && title != newTitle) {
+        title = newTitle.left(MAX_GROUP_TITLE_LENGTH);
+        emit titleChangedByUser(groupId, title);
+        emit titleChanged(groupId, selfName, title);
+    }
+}
+
+void Group::onTitleChanged(const QString& author, const QString& newTitle)
+{
+    if (!newTitle.isEmpty() && title != newTitle) {
+        title = newTitle.left(MAX_GROUP_TITLE_LENGTH);
+        emit titleChanged(groupId, author, title);
     }
 }
 
@@ -171,4 +181,9 @@ QString Group::resolveToxId(const ToxPk& id) const
         return *it;
 
     return QString();
+}
+
+void Group::setSelfName(const QString& name)
+{
+    selfName = name;
 }

@@ -30,7 +30,7 @@ class QString;
 class GroupList
 {
 public:
-    static Group* addGroup(int groupId, const QString& name, bool isAvGroupchat);
+    static Group* addGroup(int groupId, const QString& name, bool isAvGroupchat, const QString& selfName);
     static Group* findGroup(int groupId);
     static void removeGroup(int groupId, bool fake = false);
     static QList<Group*> getAllGroups();
