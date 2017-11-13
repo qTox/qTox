@@ -173,17 +173,17 @@ which may lead to problems with video calls.</source>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation type="unfinished">трэкеры хібаў</translation>
+        <translation>трэкер хібаў</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation type="unfinished">«Напісанне карысных справаздач аб хібах»</translation>
+        <translation>Напісанне карысных справаздач аб хібах</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation type="unfinished">удзельнікі</translation>
+        <translation>удзельнікі</translation>
     </message>
 </context>
 <context>
@@ -2238,7 +2238,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Імёны Tox-карыстальнікаў не можа перавышаць %1 сімвалаў.</translation>
     </message>
 </context>
 <context>
