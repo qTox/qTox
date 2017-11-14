@@ -97,27 +97,27 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Качество звука</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Качество передаваемого звука. Уменьшите значение, если ваше соединение не достаточно быстрое или если хотите сократить расходы трафика.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Высокий (64 Кбит/с)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Средний (32 КБит/с)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Низкий (16 КБит/с)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Очень низкий (8 КБит/с)</translation>
     </message>
 </context>
 <context>
@@ -174,64 +174,64 @@ which may lead to problems with video calls.</source>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation type="unfinished">баг-трекерe</translation>
+        <translation>баг-трекерe</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation type="unfinished">Написание полезных отчетов об ошибках</translation>
+        <translation>Написание полезных отчетов об ошибках</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation type="unfinished">разработчиков</translation>
+        <translation>разработчиков</translation>
     </message>
 </context>
 <context>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Диалог</translation>
+        <translation>Диалог</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished">имя пользователя</translation>
+        <translation>имя пользователя</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">статус</translation>
+        <translation>статус</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Публичный ключ:</translation>
+        <translation>Публичный ключ:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">Используемый псевдоним:</translation>
+        <translation>Используемый псевдоним:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">ИСТОРИЯ ПСЕВДОНИМОВ</translation>
+        <translation>ИСТОРИЯ ПСЕВДОНИМОВ</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Автоматически принимать файлы от контактов если установленo</translation>
+        <translation>Автоматически принимать файлы от контактов если установленo</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">Автоматически принимать файлы</translation>
+        <translation>Автоматически принимать файлы</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Стандартная папка сохранения файлов:</translation>
+        <translation>Стандартная папка сохранения файлов:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">Принимать файлы от этого контакта автоматически</translation>
+        <translation type="unfinished">Автоматический приём файлов от этого контакта отключён</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished">Автоматический прием звонка:</translation>
+        <translation>Автоматический прием звонка:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -239,48 +239,48 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Аудио</translation>
+        <translation>Аудио</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">Аудио + Видео</translation>
+        <translation>Аудио + Видео</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished">Автоматически принимать приглашения в груповой чат от этого контакта.</translation>
+        <translation>Автоматически принимать приглашения в групповой чат от этого контакта.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished">Автоматически принимать приглашения в группу</translation>
+        <translation>Автоматически принимать приглашения в группы</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">Удалить историю переписки (операцию нельзя отменить)</translation>
+        <translation>Удалить историю переписки (операцию нельзя отменить)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">Заметки</translation>
+        <translation>Заметки</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished">Поле ввода для заметок о контакте</translation>
+        <translation>Поле ввода для заметок о контакте</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Здесь вы можете сохранить заметки об этом контакте.</translation>
+        <translation>Здесь вы можете сохранить заметки об этом контакте.</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Выбрать папку для автоматического приёма</translation>
+        <translation>Выбрать папку для автоматического приёма</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished">История переписки удалена</translation>
+        <translation>История переписки удалена</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">История переписки с %1 была удалена!</translation>
+        <translation>История переписки с %1 была удалена!</translation>
     </message>
 </context>
 <context>
@@ -360,48 +360,48 @@ which may lead to problems with video calls.</source>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tox ID является недопустимым или не существует</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished">Вы не можете добавить себя в друзья!</translation>
+        <translation>Вы не можете добавить себя в друзья!</translation>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть список контактов</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удается открыть файл</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не удается открыть файл списка контактов</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation type="unfinished"></translation>
+        <translation>Недопустимый файл</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удаётся найти каких-либо контактов для импорта в этом файле!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished">Tox ID</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished">либо 76-ти значный шестнадцатеричный ключ или name@example.com</translation>
+        <translation>76-ти значный шестнадцатеричный ключ или name@example.com</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished">Сообщение</translation>
+        <translation>Сообщение</translation>
     </message>
     <message>
         <source>Open</source>
@@ -410,16 +410,16 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Отправить запрос на добавление</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished">Привет, это %1! Добавите меня в друзья?</translation>
+        <translation>Привет, это %1! Добавите меня в друзья?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать список контактов, один Tox ID в строке</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
@@ -431,7 +431,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт списка контактов</translation>
     </message>
 </context>
 <context>
@@ -728,7 +728,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Разговор с %1  неожиданно прервался. %2</translation>
     </message>
 </context>
 <context>
@@ -2001,11 +2001,11 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>BlackList</source>
-        <translation type="unfinished"></translation>
+        <translation>Чёрный список</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтровать групповые сообщения по открытому ключу. Укажите публичные ключи, по одному на каждой строке.</translation>
     </message>
 </context>
 <context>
@@ -2182,63 +2182,63 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустой путь недопустим</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Не удалось переименовать</translation>
+        <translation>Не удалось переименовать</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Профиль уже существует</translation>
+        <translation>Профиль уже существует</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">Профиль с именем &quot;%1&quot; уже существует.</translation>
+        <translation>Профиль с именем &quot;%1&quot; уже существует.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустое имя</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустое имя недопустимо</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Путь не задан</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">Невозможно изменить пароль в базе данных, должно быть база повреждена или вы используете старый пароль.</translation>
+        <translation>Невозможно изменить пароль в базе данных, должно быть база повреждена или вы используете старый пароль.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Экспортировать ьрофиль</translation>
+        <translation>Экспортировать профиль</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Файл профиля Tox (*.tox)</translation>
+        <translation>Файл профиля Tox (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">Следующие файлы не могут быть удалены:</translation>
+        <translation>Следующие файлы не могут быть удалены:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">Пожалуйста, удалите их вручную.</translation>
+        <translation>Пожалуйста, удалите их вручную.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Вы уверены, что хотите удалить свой пароль?</translation>
+        <translation>Вы уверены, что хотите удалить свой пароль?</translation>
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя пользователя Tox не может превышать %1 символов.</translation>
     </message>
 </context>
 <context>
@@ -2463,7 +2463,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускает новый экземпляр и открывает экран входа.</translation>
     </message>
 </context>
 <context>
