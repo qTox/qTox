@@ -89,11 +89,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Включает экспериментальную поддержку аудиоданных с поддержкой эхоподавления, требует перезагрузки qTox.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить экспериментальные аудиообъявления</translation>
     </message>
     <message>
         <source>Audio quality</source>
@@ -406,7 +406,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Открыть</translation>
     </message>
     <message>
         <source>Send friend requests</source>
