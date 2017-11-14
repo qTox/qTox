@@ -158,11 +158,11 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>En liste over ale kjente feil er å finne på vår %1 på GitHub. Hvis du oppdater en feil eller sikkerhetssårbarhet i qTox, rapporter det inn i henhold til retningslinjene i vår %2 wiki-artikkel.</translation>
+        <translation>En liste over alle kjente feil er å finne på vår %1 på GitHub. Hvis du oppdager en feil eller sikkerhetssårbarhet i qTox, rapporter det inn i henhold til retningslinjene i vår wiki-artikkel om %2.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation>Klikk her for å rapportere en feil.</translation>
+        <translation>Klikk her for å rapportere feil.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
@@ -177,7 +177,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation type="unfinished">Skriving av nyttige feilrapporter</translation>
+        <translation>skriving av nyttige feilrapporter</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -241,7 +241,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">Lyd + Video</translation>
+        <translation>Lyd og video</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
@@ -2173,7 +2173,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Tom sti utilgjengelig</translation>
     </message>
     <message>
         <source>Failed to rename</source>
@@ -2189,15 +2189,15 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>Tomt navn</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Tomt navn utilgjengelig</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>Tomt navn</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
@@ -2229,7 +2229,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Brukernavn for Tox kan ikke overstige %1 tegn.</translation>
     </message>
 </context>
 <context>
