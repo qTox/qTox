@@ -173,17 +173,17 @@ vaizdo skambučiais.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation type="unfinished">klaidų seklyje</translation>
+        <translation>klaidų seklyje</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation type="unfinished">Kaip parašyti naudingą pranešimą apie klaidą</translation>
+        <translation>Kaip parašyti naudingą pranešimą apie klaidą</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation type="unfinished">talkininkų sąrašą</translation>
+        <translation>talkininkų sąrašą</translation>
     </message>
 </context>
 <context>
@@ -2179,63 +2179,63 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuščias kelias yra neprieinamas</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Nepavyko pervadinti</translation>
+        <translation>Nepavyko pervadinti</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Toks profilis jau yra</translation>
+        <translation>Toks profilis jau yra</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">Profilis „%1“ jau egzistuoja.</translation>
+        <translation>Profilis „%1“ jau yra.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuščias vardas</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuščias vardas yra neprieinamas</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuščias kelias</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">Nepavyko pakeisti slaptažodžio duomenų bazėje, ji gali būti sugadinta arba gali naudoti seną slaptažodį.</translation>
+        <translation>Nepavyko pakeisti slaptažodžio duomenų bazėje, ji gali būti sugadinta arba gali naudoti seną slaptažodį.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Eksportuoti profilį</translation>
+        <translation>Eksportuoti profilį</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Tox failas (*.tox)</translation>
+        <translation>Tox failas (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">Šių failų ištrinti nepavyko:</translation>
+        <translation>Šių failų ištrinti nepavyko:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">Prašome juos ištrinti patiems.</translation>
+        <translation>Prašome juos pašalinti rankiniu būdu.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Ar tikrai norite panaikinti šio profilio slaptažodį?</translation>
+        <translation>Ar tikrai norite panaikinti savo slaptažodį?</translation>
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox naudotojų vardai negali viršyti %1 simbolių.</translation>
     </message>
 </context>
 <context>
