@@ -51,11 +51,11 @@
         <file>ui/chatArea/scrollBarDownArrow.svg</file>
         <file>ui/chatArea/scrollBarLeftArrow.svg</file>
         <file>ui/chatArea/scrollBarRightArrow.svg</file>
-        <file>ui/chatFormHeader/buttons.css</file>
-        <file>ui/chatFormHeader/callButton.svg</file>
-        <file>ui/chatFormHeader/micButton.svg</file>
-        <file>ui/chatFormHeader/videoButton.svg</file>
-        <file>ui/chatFormHeader/volButton.svg</file>
+        <file>ui/chatForm/buttons.css</file>
+        <file>ui/chatForm/callButton.svg</file>
+        <file>ui/chatForm/micButton.svg</file>
+        <file>ui/chatForm/videoButton.svg</file>
+        <file>ui/chatForm/volButton.svg</file>
         <file>ui/emoteButton/emoteButton.css</file>
         <file>ui/emoteButton/emoteButton.svg</file>
         <file>ui/emoticonWidget/dot_page.svg</file>
