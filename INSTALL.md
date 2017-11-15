@@ -281,7 +281,8 @@ sudo apt-get install \
     qt5-default \
     qttools5-dev \
     qttools5-dev-tools \
-    yasm
+    yasm \
+    sqlcipher
 ```
 
 <a name="fedora-other-deps" />
