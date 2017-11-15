@@ -12,6 +12,7 @@ option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 # AUTOUPDATE is currently broken and thus disabled
 option(AUTOUPDATE "Enable the auto updater" OFF)
 option(USE_CCACHE "Use ccache when available" ON)
+option(SPELL_CHECK "Enable spell cheching support" ON)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)

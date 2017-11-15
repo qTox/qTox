@@ -112,6 +112,16 @@ search_dependency(LIBSWSCALE          PACKAGE libswscale)
 search_dependency(SQLCIPHER           PACKAGE sqlcipher)
 search_dependency(VPX                 PACKAGE vpx)
 
+if(${SPELL_CHECK})
+    find_package(KF5Sonnet)
+    if(KF5Sonnet_FOUND)
+      add_definitions(-DSPELL_CHECKING)
+      add_dependency(KF5::SonnetUi)
+    else()
+      message(WARNING "Sonnet not found. Spell checking will be disabled.")
+    endif()
+endif()
+
 # Try to find cmake toxcore libraries
 if(WIN32)
   search_dependency(TOXCORE             PACKAGE toxcore          OPTIONAL STATIC_PACKAGE)
