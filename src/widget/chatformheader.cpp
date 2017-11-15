@@ -78,15 +78,14 @@ const QString MIC_TOOL_TIP[] = {
     ChatFormHeader::tr("Mute microphone"),
 };
 
-template <class T, class Fun>
-T* createButton(ChatFormHeader* self, const QSize& size, const QString& name, Fun onClickSlot)
+template <class Fun>
+QPushButton* createButton(ChatFormHeader* self, const QString& name, Fun onClickSlot)
 {
-    T* btn = new T();
-    btn->setFixedSize(size);
+    QPushButton* btn = new QPushButton();
     btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     btn->setObjectName(name);
     btn->setStyleSheet(Style::getStylesheet(STYLE_PATH));
-    QObject::connect(btn, &QAbstractButton::clicked, self, onClickSlot);
+    QObject::connect(btn, &QPushButton::clicked, self, onClickSlot);
     return btn;
 }
 
@@ -131,10 +130,10 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     headTextLayout->addWidget(nameLabel);
     headTextLayout->addStretch();
 
-    micButton = createButton<QToolButton>(this, TOOL_BUTTONS_SIZE, "micButton", &ChatFormHeader::micMuteToggle);
-    volButton = createButton<QToolButton>(this, TOOL_BUTTONS_SIZE, "volButton", &ChatFormHeader::volMuteToggle);
-    callButton = createButton<QPushButton>(this, CALL_BUTTONS_SIZE, "callButton", &ChatFormHeader::callTriggered);
-    videoButton = createButton<QPushButton>(this, CALL_BUTTONS_SIZE, "videoButton", &ChatFormHeader::videoCallTriggered);
+    micButton = createButton(this, "micButton", &ChatFormHeader::micMuteToggle);
+    volButton = createButton(this, "volButton", &ChatFormHeader::volMuteToggle);
+    callButton = createButton(this, "callButton", &ChatFormHeader::callTriggered);
+    videoButton = createButton(this, "videoButton", &ChatFormHeader::videoCallTriggered);
 
     QVBoxLayout* micButtonsLayout = new QVBoxLayout();
     micButtonsLayout->setSpacing(MIC_BUTTONS_LAYOUT_SPACING);

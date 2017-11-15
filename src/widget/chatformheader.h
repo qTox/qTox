@@ -99,8 +99,8 @@ private:
 
     QPushButton* callButton;
     QPushButton* videoButton;
-    QToolButton* volButton;
-    QToolButton* micButton;
+    QPushButton* volButton;
+    QPushButton* micButton;
 
     CallButtonState callState;
     CallButtonState videoState;

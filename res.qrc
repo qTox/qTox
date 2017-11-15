@@ -51,26 +51,25 @@
         <file>ui/chatArea/scrollBarDownArrow.svg</file>
         <file>ui/chatArea/scrollBarLeftArrow.svg</file>
         <file>ui/chatArea/scrollBarRightArrow.svg</file>
+
         <file>ui/chatForm/buttons.css</file>
         <file>ui/chatForm/callButton.svg</file>
         <file>ui/chatForm/micButton.svg</file>
         <file>ui/chatForm/videoButton.svg</file>
         <file>ui/chatForm/volButton.svg</file>
-        <file>ui/emoteButton/emoteButton.css</file>
-        <file>ui/emoteButton/emoteButton.svg</file>
+
+        <file>ui/chatForm/emoteButton.svg</file>
+        <file>ui/chatForm/fileButton.svg</file>
+        <file>ui/chatForm/screenshotButton.svg</file>
+        <file>ui/chatForm/sendButton.svg</file>
+
         <file>ui/emoticonWidget/dot_page.svg</file>
         <file>ui/emoticonWidget/dot_page_current.svg</file>
         <file>ui/emoticonWidget/dot_page_hover.svg</file>
         <file>ui/emoticonWidget/emoticonWidget.css</file>
-        <file>ui/fileButton/fileButton.css</file>
-        <file>ui/fileButton/fileButton.svg</file>
-        <file>ui/screenshotButton/screenshotButton.css</file>
-        <file>ui/screenshotButton/screenshotButton.svg</file>
         <file>ui/fileTransferWidget/fileTransferWidget.css</file>
         <file>ui/friendList/friendList.css</file>
         <file>ui/msgEdit/msgEdit.css</file>
-        <file>ui/sendButton/sendButton.css</file>
-        <file>ui/sendButton/sendButton.svg</file>
         <file>ui/settings/mainContent.css</file>
         <file>ui/settings/mainHead.css</file>
         <file>ui/statusButton/statusButton.css</file>
