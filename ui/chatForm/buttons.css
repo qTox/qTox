@@ -1,21 +1,21 @@
 QAbstractButton#volButton
 {
-    image: url(":/ui/chatFormHeader/volButton.svg");
+    image: url(":/ui/chatForm/volButton.svg");
 }
 
 QAbstractButton#micButton
 {
-    image: url(":/ui/chatFormHeader/micButton.svg");
+    image: url(":/ui/chatForm/micButton.svg");
 }
 
 QAbstractButton#videoButton
 {
-    background-image: url(":/ui/chatFormHeader/videoButton.svg");
+    background-image: url(":/ui/chatForm/videoButton.svg");
 }
 
 QAbstractButton#callButton
 {
-    background-image: url(":/ui/chatFormHeader/callButton.svg");
+    background-image: url(":/ui/chatForm/callButton.svg");
 }
 
 QAbstractButton
