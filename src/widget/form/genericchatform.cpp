@@ -111,12 +111,6 @@ GenericChatForm::GenericChatForm(QWidget* parent)
 {
     curRow = 0;
     headWidget = new ChatFormHeader();
-
-    QHBoxLayout* mainFootLayout = new QHBoxLayout();
-
-    QVBoxLayout* mainLayout = new QVBoxLayout();
-    QVBoxLayout* footButtonsSmall = new QVBoxLayout();
-
     chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
 
@@ -141,8 +135,6 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     QHBoxLayout* fileLayout = new QHBoxLayout(fileFlyout);
     fileLayout->addWidget(screenshotButton);
     fileLayout->setContentsMargins(0, 0, 0, 0);
-
-    footButtonsSmall->setSpacing(FOOT_BUTTONS_SPACING);
     fileLayout->setSpacing(0);
     fileLayout->setMargin(0);
 
@@ -156,28 +148,32 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     SET_STYLESHEET(screenshotButton);
     SET_STYLESHEET(emoteButton);
 
-    setLayout(mainLayout);
-
     bodySplitter = new QSplitter(Qt::Vertical, this);
     connect(bodySplitter, &QSplitter::splitterMoved, this, &GenericChatForm::onSplitterMoved);
-
     QWidget* contentWidget = new QWidget(this);
-    QVBoxLayout* contentLayout = new QVBoxLayout(contentWidget);
-    contentLayout->addWidget(chatWidget);
-    contentLayout->addLayout(mainFootLayout);
     bodySplitter->addWidget(contentWidget);
 
+    QVBoxLayout* mainLayout = new QVBoxLayout();
     mainLayout->addWidget(bodySplitter);
     mainLayout->setMargin(0);
 
+    setLayout(mainLayout);
+
+    QVBoxLayout* footButtonsSmall = new QVBoxLayout();
+    footButtonsSmall->setSpacing(FOOT_BUTTONS_SPACING);
     footButtonsSmall->addWidget(emoteButton);
     footButtonsSmall->addWidget(fileButton);
 
+    QHBoxLayout* mainFootLayout = new QHBoxLayout();
     mainFootLayout->addWidget(msgEdit);
     mainFootLayout->addLayout(footButtonsSmall);
     mainFootLayout->addSpacing(MAIN_FOOT_LAYOUT_SPACING);
     mainFootLayout->addWidget(sendButton);
     mainFootLayout->setSpacing(0);
+
+    QVBoxLayout* contentLayout = new QVBoxLayout(contentWidget);
+    contentLayout->addWidget(chatWidget);
+    contentLayout->addLayout(mainFootLayout);
 
     // Fix for incorrect layouts on OS X as per
     // https://bugreports.qt-project.org/browse/QTBUG-14591
