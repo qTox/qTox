@@ -104,6 +104,27 @@ QString GenericChatForm::resolveToxPk(const ToxPk& pk)
     return pk.toString();
 }
 
+namespace
+{
+const QString STYLE_PATH = QStringLiteral(":/ui/chatForm/buttons.css");
+}
+
+namespace
+{
+QPushButton* createButton(const QString& name)
+{
+    QPushButton* btn = new QPushButton();
+
+    // Fix for incorrect layouts on OS X as per
+    // https://bugreports.qt-project.org/browse/QTBUG-14591
+    btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    btn->setObjectName(name);
+    btn->setProperty("state", "green");
+    btn->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    return btn;
+}
+}
+
 GenericChatForm::GenericChatForm(QWidget* parent)
     : QWidget(parent, Qt::Window)
     , audioInputFlag(false)
@@ -121,12 +142,11 @@ GenericChatForm::GenericChatForm(QWidget* parent)
 
     msgEdit = new ChatTextEdit();
 
-    sendButton = new QPushButton();
-    emoteButton = new QPushButton();
+    sendButton = createButton("sendButton");
+    emoteButton = createButton("emoteButton");
 
-    // Setting the sizes in the CSS doesn't work (glitch with high DPIs)
-    fileButton = new QPushButton();
-    screenshotButton = new QPushButton;
+    fileButton = createButton("fileButton");
+    screenshotButton = createButton("screenshotButton");
 
     // TODO: Make updateCallButtons (see ChatForm) abstract
     //       and call here to set tooltips.
@@ -142,11 +162,6 @@ GenericChatForm::GenericChatForm(QWidget* parent)
                            + fontToCss(s.getChatMessageFont(), "QTextEdit"));
     msgEdit->setFixedHeight(MESSAGE_EDIT_HEIGHT);
     msgEdit->setFrameStyle(QFrame::NoFrame);
-
-    SET_STYLESHEET(sendButton);
-    SET_STYLESHEET(fileButton);
-    SET_STYLESHEET(screenshotButton);
-    SET_STYLESHEET(emoteButton);
 
     bodySplitter = new QSplitter(Qt::Vertical, this);
     connect(bodySplitter, &QSplitter::splitterMoved, this, &GenericChatForm::onSplitterMoved);
@@ -174,13 +189,6 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     QVBoxLayout* contentLayout = new QVBoxLayout(contentWidget);
     contentLayout->addWidget(chatWidget);
     contentLayout->addLayout(mainFootLayout);
-
-    // Fix for incorrect layouts on OS X as per
-    // https://bugreports.qt-project.org/browse/QTBUG-14591
-    sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    screenshotButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     menu.addActions(chatWidget->actions());
     menu.addSeparator();

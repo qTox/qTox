@@ -1,29 +1,79 @@
+/* Message edit */
+
+QAbstractButton#emoteButton
+{
+    background-image: url(":/ui/chatForm/emoteButton.svg");
+    border-top-right-radius: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+QAbstractButton#fileButton
+{
+    background-image: url(":/ui/chatForm/fileButton.svg");
+    border-bottom-right-radius: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+QAbstractButton#screenshotButton
+{
+    background-image: url(":/ui/chatForm/screenshotButton.svg");
+    border-top-left-radius: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+QAbstractButton#sendButton
+{
+    background-image: url(":/ui/chatForm/sendButton.svg");
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+
+}
+
+/* Header */
+
 QAbstractButton#volButton
 {
-    image: url(":/ui/chatForm/volButton.svg");
+    border-image: url(":/ui/chatForm/volButton.svg");
+    border-radius: 5px;
+    width: 22px;
+    height: 18px;
 }
 
 QAbstractButton#micButton
 {
-    image: url(":/ui/chatForm/micButton.svg");
+    border-image: url(":/ui/chatForm/micButton.svg");
+    border-radius: 5px;
+    width: 22px;
+    height: 18px;
 }
 
 QAbstractButton#videoButton
 {
     background-image: url(":/ui/chatForm/videoButton.svg");
+    border-radius: 5px;
+    width: 50px;
+    height: 40px;
 }
 
 QAbstractButton#callButton
 {
     background-image: url(":/ui/chatForm/callButton.svg");
+    border-radius: 5px;
+    width: 50px;
+    height: 40px;
 }
+
+/* Common */
 
 QAbstractButton
 {
     background-repeat: none;
     background-position: center;
     border: none;
-    border-radius: 5px;
 }
 
 QAbstractButton:disabled
