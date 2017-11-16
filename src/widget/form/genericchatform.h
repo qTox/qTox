@@ -86,6 +86,9 @@ public slots:
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
+    virtual void onScreenshotClicked() = 0;
+    virtual void onSendTriggered() = 0;
+    virtual void onAttachClicked() = 0;
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
     void onSaveLogClicked();

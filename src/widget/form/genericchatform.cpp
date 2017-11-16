@@ -111,18 +111,21 @@ const QString STYLE_PATH = QStringLiteral(":/ui/chatForm/buttons.css");
 
 namespace
 {
-QPushButton* createButton(const QString& name)
+
+template <class T, class Fun>
+QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
 {
     QPushButton* btn = new QPushButton();
-
     // Fix for incorrect layouts on OS X as per
     // https://bugreports.qt-project.org/browse/QTBUG-14591
     btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     btn->setObjectName(name);
     btn->setProperty("state", "green");
     btn->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    QObject::connect(btn, &QPushButton::clicked, self, onClickSlot);
     return btn;
 }
+
 }
 
 GenericChatForm::GenericChatForm(QWidget* parent)
@@ -142,11 +145,11 @@ GenericChatForm::GenericChatForm(QWidget* parent)
 
     msgEdit = new ChatTextEdit();
 
-    sendButton = createButton("sendButton");
-    emoteButton = createButton("emoteButton");
+    sendButton = createButton("sendButton", this, &GenericChatForm::onSendTriggered);
+    emoteButton = createButton("emoteButton", this, &GenericChatForm::onEmoteButtonClicked);
 
-    fileButton = createButton("fileButton");
-    screenshotButton = createButton("screenshotButton");
+    fileButton = createButton("fileButton", this, &GenericChatForm::onSendTriggered);
+    screenshotButton = createButton("screenshotButton", this, &GenericChatForm::onScreenshotClicked);
 
     // TODO: Make updateCallButtons (see ChatForm) abstract
     //       and call here to set tooltips.
@@ -203,7 +206,6 @@ GenericChatForm::GenericChatForm(QWidget* parent)
 
     menu.addSeparator();
 
-    connect(emoteButton, &QPushButton::clicked, this, &GenericChatForm::onEmoteButtonClicked);
     connect(chatWidget, &ChatLog::customContextMenuRequested, this,
             &GenericChatForm::onChatContextMenuRequested);
 

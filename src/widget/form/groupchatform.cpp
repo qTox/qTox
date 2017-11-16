@@ -78,6 +78,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     tabber = new TabCompleter(msgEdit, group);
 
     fileButton->setEnabled(false);
+    fileButton->setProperty("state", "");
     ChatFormHeader::Mode mode = ChatFormHeader::Mode::None;
     if (group->isAvGroupchat()) {
         mode = ChatFormHeader::Mode::Audio;
@@ -184,6 +185,16 @@ void GroupChatForm::onTitleChanged(uint32_t groupId, const QString& author, cons
     const QString message = tr("%1 has set the title to %2").arg(author, title);
     const QDateTime curTime = QDateTime::currentDateTime();
     addSystemInfoMessage(message, ChatMessage::INFO, curTime);
+}
+
+void GroupChatForm::onScreenshotClicked()
+{
+    // Unsupported
+}
+
+void GroupChatForm::onAttachClicked()
+{
+    // Unsupported
 }
 
 /**
