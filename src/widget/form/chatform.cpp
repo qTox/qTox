@@ -28,10 +28,9 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/model/friend.h"
-#include "src/nexus.h"
 #include "src/persistence/offlinemsgengine.h"
-#include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/history.h"
 #include "src/video/netcamview.h"
 #include "src/widget/chatformheader.h"
 #include "src/widget/form/loadhistorydialog.h"
@@ -109,10 +108,11 @@ QString secondsToDHMS(quint32 duration)
 }
 
 
-ChatForm::ChatForm(Friend* chatFriend)
+ChatForm::ChatForm(Friend* chatFriend, History* history)
     : f(chatFriend)
     , callDuration(new QLabel(this))
     , isTyping(false)
+    , history{history}
 {
     setName(f->getDisplayedName());
 
@@ -676,7 +676,6 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         }
     }
 
-    History* history = Nexus::getProfile()->getHistory();
     QString pk = f->getPublicKey().toString();
     QList<History::HistMessage> msgs = history->getChatHistory(pk, since, now);
 
@@ -784,7 +783,7 @@ void ChatForm::sendImage(const QPixmap& pixmap)
 
 void ChatForm::onLoadHistory()
 {
-    if (!Nexus::getProfile()->isHistoryEnabled()) {
+    if (!history) {
         return;
     }
 
@@ -921,13 +920,12 @@ void ChatForm::SendMessageStr(QString msg)
         uint32_t friendId = f->getId();
         int rec = isAction ? core->sendAction(friendId, part) : core->sendMessage(friendId, part);
 
-        Profile* profile = Nexus::getProfile();
-        if (profile->isHistoryEnabled()) {
+        if (history) {
             auto* offMsgEngine = getOfflineMsgEngine();
             QString selfPk = Core::getInstance()->getSelfId().toString();
             QString pk = f->getPublicKey().toString();
             QString name = Core::getInstance()->getUsername();
-            profile->getHistory()->addNewMessage(pk, historyPart, selfPk, timestamp, status, name,
+            history->addNewMessage(pk, historyPart, selfPk, timestamp, status, name,
                                                  [offMsgEngine, rec, ma](int64_t id) {
                                                      offMsgEngine->registerReceipt(rec, id, ma);
                                                  });
@@ -958,7 +956,6 @@ void ChatForm::retranslateUi()
 
 void ChatForm::onExportChat()
 {
-    History* history = Nexus::getProfile()->getHistory();
     QString pk = f->getPublicKey().toString();
     QDateTime epochStart = QDateTime::fromMSecsSinceEpoch(0);
     QDateTime now = QDateTime::currentDateTime();

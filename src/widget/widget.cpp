@@ -976,7 +976,8 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
     bool compact = s.getCompactLayout();
     FriendWidget* widget = new FriendWidget(newfriend, compact);
-    ChatForm* friendForm = new ChatForm(newfriend);
+    History* history = Nexus::getProfile()->getHistory();
+    ChatForm* friendForm = new ChatForm(newfriend, history);
     newfriend->setChatForm(friendForm);
 
     friendWidgets[friendId] = widget;

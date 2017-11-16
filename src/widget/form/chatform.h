@@ -27,23 +27,23 @@
 
 #include "genericchatform.h"
 #include "src/core/core.h"
-#include "src/persistence/history.h"
 #include "src/widget/tool/screenshotgrabber.h"
 
-class Friend;
-class FileTransferInstance;
-class QPixmap;
 class CallConfirmWidget;
+class CoreAV;
+class FileTransferInstance;
+class Friend;
+class History;
+class OfflineMsgEngine;
+class QPixmap;
 class QHideEvent;
 class QMoveEvent;
-class OfflineMsgEngine;
-class CoreAV;
 
 class ChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    explicit ChatForm(Friend* chatFriend);
+    ChatForm(Friend* chatFriend, History* history);
     ~ChatForm();
     void setStatusMessage(const QString& newMessage);
     void loadHistory(const QDateTime& since, bool processUndelivered = false);
@@ -132,6 +132,7 @@ private:
     QAction* copyStatusAction;
     QAction* exportChatAction;
 
+    History* history;
     QHash<uint, FileTransferInstance*> ftransWidgets;
     bool isTyping;
 };
