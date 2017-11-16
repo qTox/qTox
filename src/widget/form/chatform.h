@@ -73,12 +73,13 @@ public slots:
 
 private slots:
     void clearChatArea(bool notInForm) override final;
+    void onSendTriggered() override;
+    void onAttachClicked() override;
+    void onScreenshotClicked() override;
 
     void onDeliverOfflineMessages();
     void onLoadChatHistory();
-    void onSendTriggered();
     void onTextEditChanged();
-    void onAttachClicked();
     void onCallTriggered();
     void onVideoCallTriggered();
     void onAnswerCallTriggered(bool video);
@@ -95,7 +96,6 @@ private slots:
     void onReceiptReceived(quint32 friendId, int receipt);
     void onLoadHistory();
     void onUpdateTime();
-    void onScreenshotClicked();
     void sendImage(const QPixmap& pixmap);
     void doScreenshot();
     void onCopyStatusMessage();

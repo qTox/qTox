@@ -164,9 +164,6 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(av, &CoreAV::avStart, this, &ChatForm::onAvStart);
     connect(av, &CoreAV::avEnd, this, &ChatForm::onAvEnd);
 
-    connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
-    connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
-    connect(screenshotButton, &QPushButton::clicked, this, &ChatForm::onScreenshotClicked);
     connect(headWidget, &ChatFormHeader::callTriggered, this, &ChatForm::onCallTriggered);
     connect(headWidget, &ChatFormHeader::videoCallTriggered, this, &ChatForm::onVideoCallTriggered);
     connect(headWidget, &ChatFormHeader::micMuteToggle, this, &ChatForm::onMicMuteToggle);

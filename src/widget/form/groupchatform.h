@@ -41,7 +41,9 @@ public:
     void peerAudioPlaying(int peer);
 
 private slots:
-    void onSendTriggered();
+    void onSendTriggered() override;
+    void onScreenshotClicked() override;
+    void onAttachClicked() override;
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onCallClicked();
