@@ -1126,6 +1126,10 @@ QStringList Core::getGroupPeerNames(int groupId) const
     QStringList names;
     for (uint32_t i = 0; i < nPeers; ++i) {
         size_t length = tox_conference_peer_get_name_size(tox, groupId, i, &error);
+        if (!parsePeerQueryError(error)) {
+            continue;
+        }
+
         QByteArray name(length, Qt::Uninitialized);
         uint8_t* namePtr = static_cast<uint8_t*>(static_cast<void*>(name.data()));
         bool ok = tox_conference_peer_get_name(tox, groupId, i, namePtr, &error);
