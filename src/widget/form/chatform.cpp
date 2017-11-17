@@ -379,6 +379,7 @@ void ChatForm::onAvEnd(uint32_t friendId, bool error)
         return;
     }
 
+    headWidget->removeCallConfirm();
     // Fixes an OS X bug with ending a call while in full screen
     if (netcam && netcam->isFullScreen()) {
         netcam->showNormal();
