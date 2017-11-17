@@ -134,6 +134,7 @@ private:
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
     bool isTyping;
+    bool lastCallIsVideo;
 };
 
 #endif // CHATFORM_H

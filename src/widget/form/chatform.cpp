@@ -113,6 +113,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
     , callDuration(new QLabel(this))
     , isTyping(false)
+    , lastCallIsVideo{false}
 {
     setName(f->getDisplayedName());
 
@@ -190,6 +191,10 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(headWidget, &ChatFormHeader::nameChanged, this, [=](const QString& newName) {
         f->setAlias(newName);
     });
+    connect(headWidget, &ChatFormHeader::callAccepted, this, [this] {
+        onAnswerCallTriggered(lastCallIsVideo);
+    });
+    connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
 
     updateCallButtons();
     setAcceptDrops(true);
@@ -345,10 +350,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         onAvStart(friendId, video);
     } else {
         headWidget->showCallConfirm(video);
-        connect(headWidget, &ChatFormHeader::callAccepted, this, [this, video] {
-            onAnswerCallTriggered(video);
-        });
-        connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
+        lastCallIsVideo = video;
         auto msg = ChatMessage::createChatInfoMessage(tr("%1 calling").arg(displayedName),
                                                       ChatMessage::INFO, QDateTime::currentDateTime());
         insertChatMessage(msg);
