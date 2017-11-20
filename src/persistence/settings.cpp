@@ -77,6 +77,10 @@ Settings::Settings()
 
 Settings::~Settings()
 {
+    for (const auto circle: circleLst) {
+        delete circle;
+    }
+
     sync();
     settingsThread->exit(0);
     settingsThread->wait();
@@ -409,10 +413,9 @@ void Settings::loadPersonal(Profile* profile)
         circleLst.reserve(size);
         for (int i = 0; i < size; i++) {
             ps.setArrayIndex(i);
-            circleProp cp;
-            cp.name = ps.value("name").toString();
-            cp.expanded = ps.value("expanded", true).toBool();
-            circleLst.push_back(cp);
+            const QString circleName = ps.value("name").toString();
+            bool expanded = ps.value("expanded", true).toBool();
+            circleLst.append(new ContactsCircle(i, circleName, expanded));
         }
         ps.endArray();
     }
@@ -677,10 +680,10 @@ void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
     {
         ps.beginWriteArray("Circle", circleLst.size());
         int index = 0;
-        for (auto& circle : circleLst) {
+        for (const ContactsCircle* circle : circleLst) {
             ps.setArrayIndex(index);
-            ps.setValue("name", circle.name);
-            ps.setValue("expanded", circle.expanded);
+            ps.setValue("name", circle->getCircleName());
+            ps.setValue("expanded", circle->isExpanded());
             ++index;
         }
         ps.endArray();
@@ -2198,38 +2201,33 @@ int Settings::getCircleCount() const
 
 QString Settings::getCircleName(int id) const
 {
-    return circleLst[id].name;
+    return circleLst[id]->getCircleName();
 }
 
 void Settings::setCircleName(int id, const QString& name)
 {
-    circleLst[id].name = name;
-    savePersonal();
+    circleLst[id]->setCircleName(name);
 }
 
 int Settings::addCircle(const QString& name)
 {
-    circleProp cp;
-    cp.expanded = false;
-
-    if (name.isEmpty())
-        cp.name = tr("Circle #%1").arg(circleLst.count() + 1);
-    else
-        cp.name = name;
-
-    circleLst.append(cp);
+    const int id = circleLst.size();
+    const QString circleName = name.isEmpty() ? tr("Circle #%1").arg(id + 1) : name;
+    ContactsCircle* circle = new ContactsCircle(id, circleName);
+    connect(circle, &ContactsCircle::circleRenamed, [this] () { savePersonal(); });
+    circleLst.append(circle);
     savePersonal();
-    return circleLst.count() - 1;
+    return id;
 }
 
 bool Settings::getCircleExpanded(int id) const
 {
-    return circleLst[id].expanded;
+    return circleLst[id]->isExpanded();
 }
 
 void Settings::setCircleExpanded(int id, bool expanded)
 {
-    circleLst[id].expanded = expanded;
+    circleLst[id]->setExpanded(expanded);
 }
 
 bool Settings::addFriendRequest(const QString& friendAddress, const QString& message)
@@ -2300,8 +2298,11 @@ int Settings::removeCircle(int id)
 {
     // Replace index with last one and remove last one instead.
     // This gives you contiguous ids all the time.
+    const ContactsCircle* removingCircle = circleLst[id];
+    delete removingCircle;
     circleLst[id] = circleLst.last();
-    circleLst.pop_back();
+    circleLst.at(id)->setId(id);
+    circleLst.removeLast();
     savePersonal();
     return circleLst.count();
 }
