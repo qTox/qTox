@@ -199,11 +199,16 @@ int main(int argc, char* argv[])
 
     uint32_t profileId = Settings::getInstance().getCurrentProfileId();
     IPC ipc(profileId);
+    if (!ipc.isAttached()) {
+        qCritical() << "Can't init IPC";
+        return EXIT_FAILURE;
+    }
+
     QObject::connect(&Settings::getInstance(), &Settings::currentProfileIdChanged, &ipc,
                      &IPC::setProfileId);
 
-    if (sodium_init() < 0) // For the auto-updater
-    {
+    // For the auto-updater
+    if (sodium_init() < 0) {
         qCritical() << "Can't init libsodium";
         return EXIT_FAILURE;
     }

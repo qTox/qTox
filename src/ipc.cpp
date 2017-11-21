@@ -72,7 +72,8 @@ IPC::IPC(uint32_t profileId)
     } else if (globalMemory.attach()) {
         qDebug() << "Attaching to the global shared memory";
     } else {
-        qDebug() << "Failed to attach to the global shared memory, giving up";
+        qDebug() << "Failed to attach to the global shared memory, giving up. Error:"
+                 << globalMemory.error();
         return; // We won't be able to do any IPC without being attached, let's get outta here
     }
 
@@ -187,6 +188,11 @@ bool IPC::waitUntilAccepted(time_t postTime, int32_t timeout /*=-1*/)
         QThread::msleep(0);
     }
     return result;
+}
+
+bool IPC::isAttached() const
+{
+    return globalMemory.isAttached();
 }
 
 void IPC::setProfileId(uint32_t profileId)

@@ -73,6 +73,7 @@ public:
     void registerEventHandler(const QString& name, IPCEventHandler handler);
     bool isEventAccepted(time_t time);
     bool waitUntilAccepted(time_t time, int32_t timeout = -1);
+    bool isAttached() const;
 
 public slots:
     void setProfileId(uint32_t profileId);
