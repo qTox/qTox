@@ -87,6 +87,7 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
     bodyUI->cbSeparateWindow->setChecked(s.getSeparateWindow());
     bodyUI->cbDontGroupWindows->setChecked(s.getDontGroupWindows());
     bodyUI->cbDontGroupWindows->setEnabled(s.getSeparateWindow());
+    bodyUI->cbShowIdenticons->setChecked(s.getShowIdenticons());
 
     bodyUI->useEmoticons->setChecked(s.getUseEmoticons());
     for (auto entry : SmileyPack::listSmileyPacks())
@@ -296,6 +297,11 @@ void UserInterfaceForm::on_cbDontGroupWindows_stateChanged()
 void UserInterfaceForm::on_cbGroupchatPosition_stateChanged()
 {
     Settings::getInstance().setGroupchatPosition(bodyUI->cbGroupchatPosition->isChecked());
+}
+
+void UserInterfaceForm::on_cbShowIdenticons_stateChanged()
+{
+    Settings::getInstance().setShowIdenticons(bodyUI->cbShowIdenticons->isChecked());
 }
 
 void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int)

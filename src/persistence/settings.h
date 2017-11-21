@@ -75,6 +75,8 @@ class Settings : public QObject, public ICoreSettings, public IAudioSettings, pu
     Q_PROPERTY(QString style READ getStyle WRITE setStyle NOTIFY styleChanged FINAL)
     Q_PROPERTY(bool showSystemTray READ getShowSystemTray WRITE setShowSystemTray NOTIFY
                    showSystemTrayChanged FINAL)
+    Q_PROPERTY(bool showIdenticons READ getShowIdenticons WRITE setShowIdenticons NOTIFY
+                   showIdenticonsChanged FINAL)
 
     // ChatView
     Q_PROPERTY(bool groupchatPosition READ getGroupchatPosition WRITE setGroupchatPosition NOTIFY
@@ -209,6 +211,7 @@ signals:
     void styleChanged(const QString& style);
     void themeColorChanged(int color);
     void compactLayoutChanged(bool enabled);
+    void showIdenticonsChanged(bool enabled);
 
     // ChatView
     void useEmoticonsChanged(bool enabled);
@@ -499,9 +502,12 @@ public:
 
     bool getDontGroupWindows() const;
     void setDontGroupWindows(bool value);
-
+    
     bool getGroupchatPosition() const;
     void setGroupchatPosition(bool value);
+    
+    bool getShowIdenticons() const;
+    void setShowIdenticons(bool value);
 
     bool getAutoLogin() const;
     void setAutoLogin(bool state);
@@ -566,6 +572,7 @@ private:
     bool groupchatPosition;
     bool separateWindow;
     bool dontGroupWindows;
+    bool showIdenticons;
     bool enableIPv6;
     QString translation;
     bool makeToxPortable;
