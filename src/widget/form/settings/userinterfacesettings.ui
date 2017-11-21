@@ -257,6 +257,16 @@
             </item>
            </layout>
           </item>
+          <item>
+           <widget class="QCheckBox" name="cbShowIdenticons">
+            <property name="toolTip">
+             <string comment="toolTip for show identicons">If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</string>
+            </property>
+            <property name="text">
+             <string>Use identicons instead of empty avatars</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
