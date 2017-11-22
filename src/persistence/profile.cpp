@@ -403,7 +403,7 @@ QPixmap Profile::loadAvatar(const ToxPk& owner)
         } else {
             pic.loadFromData(avataData);
         }
-    
+
     } else {
         pic.loadFromData(loadAvatarData(owner));
     }
@@ -477,10 +477,7 @@ void Profile::setAvatar(QByteArray pic, const ToxPk& owner)
             // with IDENTICON_ROWS=5 this gives a 160x160 image file
             const QImage identicon = Identicon(owner.getKey()).toImage(32);
             pixmap = QPixmap::fromImage(identicon);
-            QBuffer buf(&avatarData);
-            buf.open(QIODevice::WriteOnly);
-            identicon.save(&buf, "png");
-            
+
         } else {
             pixmap.load(":/img/contact_dark.svg");
         }
