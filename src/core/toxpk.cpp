@@ -71,6 +71,11 @@ bool ToxPk::operator!=(const ToxPk& other) const
     return key != other.key;
 }
 
+bool ToxPk::operator <(const ToxPk& other) const
+{
+    return key < other.key;
+}
+
 /**
  * @brief Converts the ToxPk to a uppercase hex string.
  * @return QString containing the hex representation of the key

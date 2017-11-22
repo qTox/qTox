@@ -25,6 +25,7 @@
 #include "src/core/icoresettings.h"
 #include "src/core/toxencrypt.h"
 #include "src/core/toxfile.h"
+#include "src/model/contacts/contactscircle.h"
 #include "src/video/ivideosettings.h"
 
 #include <QDate>
@@ -665,15 +666,9 @@ private:
         bool autoGroupInvite = false;
     };
 
-    struct circleProp
-    {
-        QString name;
-        bool expanded;
-    };
-
     QHash<QByteArray, friendProp> friendLst;
 
-    QVector<circleProp> circleLst;
+    QVector<ContactsCircle*> circleLst;
 
     int themeColor;
 

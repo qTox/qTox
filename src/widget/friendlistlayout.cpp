@@ -15,7 +15,7 @@
 #include "friendlistlayout.h"
 #include "friendlistwidget.h"
 #include "friendwidget.h"
-#include "src/model/friend.h"
+#include "src/model/contacts/friend.h"
 #include "src/friendlist.h"
 #include <cassert>
 

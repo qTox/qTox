@@ -18,7 +18,7 @@
 */
 
 #include "friendlist.h"
-#include "src/model/friend.h"
+#include "src/model/contacts/friend.h"
 #include "src/persistence/settings.h"
 #include <QDebug>
 #include <QHash>
@@ -34,7 +34,8 @@ Friend* FriendList::addFriend(uint32_t friendId, const ToxPk& friendPk)
         qWarning() << "addFriend: friendId already taken";
 
     QString alias = Settings::getInstance().getFriendAlias(friendPk);
-    Friend* newfriend = new Friend(friendId, friendPk, alias);
+    const QString name = Core::getInstance()->getPeerName(friendPk);
+    Friend* newfriend = new Friend(friendId, friendPk, name, alias);
     friendList[friendId] = newfriend;
     key2id[friendPk.getKey()] = friendId;
 

@@ -19,20 +19,23 @@
 
 
 #include "friend.h"
-#include "src/core/core.h"
-#include "src/model/group.h"
+#include "src/model/contacts/group.h"
 #include "src/grouplist.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/widget/form/chatform.h"
 
-Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias)
-    : userName{Core::getInstance()->getPeerName(friendPk)}
+Friend::Friend(uint32_t friendId,
+               const ToxPk& friendPk,
+               const QString& name,
+               const QString& userAlias)
+    : userName{name}
     , userAlias{userAlias}
     , friendPk{friendPk}
     , friendId{friendId}
     , hasNewEvents{false}
     , friendStatus{Status::Offline}
+    , chatForm{nullptr}
 {
     if (userName.isEmpty()) {
         userName = friendPk.toString();
