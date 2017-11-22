@@ -429,8 +429,4 @@ void FriendWidget::setAlias(const QString& _alias)
     // Hack to avoid edit const Friend. TODO: Repalce on emit
     Friend* f = FriendList::findFriend(frnd->getId());
     f->setAlias(alias);
-
-    Settings& s = Settings::getInstance();
-    s.setFriendAlias(frnd->getPublicKey(), alias);
-    s.savePersonal();
 }

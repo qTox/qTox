@@ -1099,10 +1099,10 @@ void Widget::onFriendAliasChanged(uint32_t friendId, const QString& alias)
         GUI::setWindowTitle(alias);
     }
 
-    Status s = f->getStatus();
-    contactListWidget->moveWidget(friendWidget, s);
+    Status status = f->getStatus();
+    contactListWidget->moveWidget(friendWidget, status);
     FilterCriteria criteria = getFilterCriteria();
-    bool filter = s == Status::Offline ? filterOffline(criteria) : filterOnline(criteria);
+    bool filter = status == Status::Offline ? filterOffline(criteria) : filterOnline(criteria);
     friendWidget->searchName(ui->searchContactText->text(), filter);
 
     ChatForm* friendForm = chatForms[friendId];
@@ -1110,6 +1110,11 @@ void Widget::onFriendAliasChanged(uint32_t friendId, const QString& alias)
     for (Group* g : GroupList::getAllGroups()) {
         g->regeneratePeerList();
     }
+
+    const ToxPk& pk = f->getPublicKey();
+    Settings& s = Settings::getInstance();
+    s.setFriendAlias(pk, alias);
+    s.savePersonal();
 }
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget* widget)
