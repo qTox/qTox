@@ -6,6 +6,7 @@
 
 # This should go into subdirectories later.
 find_package(PkgConfig        REQUIRED)
+find_package(Qt5Concurrent    REQUIRED)
 find_package(Qt5Core          REQUIRED)
 find_package(Qt5Gui           REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
