@@ -1245,7 +1245,15 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 
     friendWidget->setStatusMsg(widget->getStatusMsg());
 
-    connect(friendWidget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
+    auto widgetRemoveFriend = QOverload<int>::of(&Widget::removeFriend);
+#else
+    auto widgetRemoveFriend = static_cast<void (Widget::*)(int)>(&Widget::removeFriend);
+#endif
+    connect(friendWidget, &FriendWidget::removeFriend, this, widgetRemoveFriend);
+    connect(friendWidget, &FriendWidget::middleMouseClicked, dialog, [=]() {
+        dialog->removeFriend(friendId);
+    });
     connect(friendWidget, &FriendWidget::copyFriendIdToClipboard, this,
             &Widget::copyFriendIdToClipboard);
 
@@ -1290,9 +1298,18 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
     }
 
     auto chatForm = groupChatForms[groupId];
-    GroupWidget* groupWidget = dialog->addGroup(group, chatForm);
-    connect(groupWidget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
+    auto groupWidget = dialog->addGroup(group, chatForm);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
+    auto removeGroup = QOverload<int>::of(&Widget::removeGroup);
+#else
+    auto removeGroup = static_cast<void (Widget::*)(int)>(&Widget::removeGroup);
+#endif
+    connect(groupWidget, &GroupWidget::removeGroup, this, removeGroup);
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, chatForm, &GroupChatForm::focusInput);
+    connect(groupWidget, &GroupWidget::middleMouseClicked, dialog, [=]() {
+        dialog->removeGroup(groupId);
+    });
+    connect(groupWidget, &GroupWidget::chatroomWidgetClicked, chatForm, &ChatForm::focusInput);
 
     // Signal transmission from the created `groupWidget` (which shown in
     // ContentDialog) to the `widget` (which shown in main widget)
