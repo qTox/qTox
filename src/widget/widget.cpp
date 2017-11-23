@@ -1911,7 +1911,15 @@ Group* Widget::createGroup(int groupId)
 
     connect(widget, &GroupWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &GroupWidget::newWindowOpened, this, &Widget::openNewDialog);
-    connect(widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
+    auto widgetRemoveGroup = QOverload<int>::of(&Widget::removeGroup);
+#else
+    auto widgetRemoveGroup = static_cast<void (Widget::*)(int)>(&Widget::removeGroup);
+#endif
+    connect(widget, &GroupWidget::removeGroup, this, widgetRemoveGroup);
+    connect(widget, &GroupWidget::middleMouseClicked, this, [=]() {
+        removeGroup(groupId);
+    });
     connect(widget, &GroupWidget::chatroomWidgetClicked, form, &ChatForm::focusInput);
     connect(form, &GroupChatForm::sendMessage, core, &Core::sendGroupMessage);
     connect(form, &GroupChatForm::sendAction, core, &Core::sendGroupAction);
