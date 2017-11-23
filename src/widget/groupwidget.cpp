@@ -260,5 +260,5 @@ void GroupWidget::setName(const QString& name)
 
 void GroupWidget::retranslateUi()
 {
-    updatePeerCount();
+    updateUserCount();
 }
