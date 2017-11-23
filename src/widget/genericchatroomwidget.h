@@ -69,11 +69,12 @@ public slots:
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
     void newWindowOpened(GenericChatroomWidget* widget);
+    void middleMouseClicked();
 
 protected:
-    virtual void mouseReleaseEvent(QMouseEvent* event) override;
-    virtual void enterEvent(QEvent* e) override;
-    virtual void leaveEvent(QEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void enterEvent(QEvent* e) override;
+    void leaveEvent(QEvent* e) override;
 
     QPoint dragStartPos;
 
