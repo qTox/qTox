@@ -55,6 +55,7 @@
 #include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/model/group.h"
+#include "src/model/profile/profileinfo.h"
 #include "src/grouplist.h"
 #include "src/net/autoupdate.h"
 #include "src/nexus.h"
@@ -72,8 +73,6 @@
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
 #include "tool/removefrienddialog.h"
-
-#include <src/model/profile/profileinfo.h>
 
 bool toxActivateEventHandler(const QByteArray&)
 {
@@ -1132,16 +1131,23 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
     GenericChatForm* form;
     const Friend* frnd = widget->getFriend();
     if (frnd) {
-        form = chatForms[frnd->getId()];
         id = frnd->getId();
+        form = chatForms[id];
     } else {
         Group* g = widget->getGroup();
         form = g->getChatForm();
         id = g->getId();
     }
 
-    ContentDialog::focusFriend(id);
-    bool chatFormIsSet = ContentDialog::friendWidgetExists(id);
+    bool chatFormIsSet;
+    if (frnd) {
+        ContentDialog::focusFriend(id);
+        chatFormIsSet = ContentDialog::friendWidgetExists(id);
+    } else {
+        ContentDialog::focusGroup(id);
+        chatFormIsSet = ContentDialog::groupWidgetExists(id);
+    }
+
     if ((chatFormIsSet || form->isVisible()) && !newWindow) {
         return;
     }
