@@ -186,10 +186,13 @@ void GenericChatroomWidget::activate()
 
 void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-    if (event->button() == Qt::LeftButton)
+    if (event->button() == Qt::LeftButton) {
         emit chatroomWidgetClicked(this);
-    else
+    } else if (event->button() == Qt::MiddleButton) {
+        emit middleMouseClicked();
+    } else {
         event->ignore();
+    }
 }
 
 void GenericChatroomWidget::enterEvent(QEvent*)
