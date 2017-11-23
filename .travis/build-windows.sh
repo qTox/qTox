@@ -24,7 +24,7 @@
 
 # Fail out on error
 set -exuo pipefail
-
+false
 readonly ARCH="$1"
 readonly BUILD_TYPE="$2"
 readonly CACHE_DIR="$3"
