@@ -260,12 +260,5 @@ void GroupWidget::setName(const QString& name)
 
 void GroupWidget::retranslateUi()
 {
-    Group* g = GroupList::findGroup(groupId);
-    if (g) {
-        int peersCount = g->getPeersCount();
-        if (peersCount == 1)
-            statusMessageLabel->setText(tr("1 user in chat"));
-        else
-            statusMessageLabel->setText(tr("%1 users in chat").arg(peersCount));
-    }
+    updatePeerCount();
 }
