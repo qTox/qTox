@@ -1846,7 +1846,11 @@ Group* Widget::createGroup(int groupId)
     GroupChatForm* form = newgroup->getChatForm();
     connect(widget, &GroupWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &GroupWidget::newWindowOpened, this, &Widget::openNewDialog);
-    connect(widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
+    auto widgetRemoveGroup = static_cast<void (Widget::*)(int)>(&Widget::removeGroup);
+    connect(widget, &GroupWidget::removeGroup, this, widgetRemoveGroup);
+    connect(widget, &GroupWidget::middleMouseClicked, this, [=]() {
+        removeGroup(groupId);
+    });
     connect(widget, &GroupWidget::chatroomWidgetClicked, form, &ChatForm::focusInput);
     connect(form, &GroupChatForm::sendMessage, core, &Core::sendGroupMessage);
     connect(form, &GroupChatForm::sendAction, core, &Core::sendGroupAction);
