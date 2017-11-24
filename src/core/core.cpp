@@ -1320,28 +1320,33 @@ QString Core::getFriendUsername(uint32_t friendnumber) const
     return sname.getQString();
 }
 
-QStringList Core::splitMessage(const QString& message, int maxLen)
+QStringList Core::splitMessage(const QString& srcMessage, int maxLen)
 {
     QStringList splittedMsgs;
-    QByteArray ba_message(message.toUtf8());
+    QString message{srcMessage};
 
-    while (ba_message.size() > maxLen) {
-        int splitPos = ba_message.lastIndexOf(' ', maxLen - 1);
+    while (message.size() > maxLen) {
+        int splitPos = message.lastIndexOf('\n', maxLen - 1);
+
         if (splitPos <= 0) {
-            splitPos = maxLen;
-            if (ba_message[splitPos] & 0x80) {
-                do {
-                    --splitPos;
-                } while (!(ba_message[splitPos] & 0x40));
-            }
-            --splitPos;
+            splitPos = message.lastIndexOf(' ', maxLen - 1);
         }
 
-        splittedMsgs.append(QString(ba_message.left(splitPos + 1)));
-        ba_message = ba_message.mid(splitPos + 1);
+        if (splitPos <= 0) {
+            splitPos = maxLen - 1;
+        }
+
+        if (message[splitPos].toLatin1() & 0x80) {
+            do {
+                --splitPos;
+            } while (!(message[splitPos].toLatin1() & 0x40));
+        }
+
+        splittedMsgs.append(message.left(splitPos + 1));
+        message = message.mid(splitPos + 1);
     }
 
-    splittedMsgs.append(QString(ba_message));
+    splittedMsgs.append(message);
     return splittedMsgs;
 }
 
