@@ -20,14 +20,14 @@
 #ifndef MASKABLEPIXMAPWIDGET_H
 #define MASKABLEPIXMAPWIDGET_H
 
-#include <QWidget>
+#include <QLabel>
 
-class MaskablePixmapWidget final : public QWidget
+class MaskablePixmapWidget final : public QLabel
 {
     Q_OBJECT
 public:
     MaskablePixmapWidget(QWidget* parent, QSize size, QString maskName = QString());
-    ~MaskablePixmapWidget();
+    ~MaskablePixmapWidget() override;
     void autopickBackground();
     void setClickable(bool clickable);
     void setPixmap(const QPixmap& pmap);
@@ -38,13 +38,15 @@ signals:
     void clicked();
 
 protected:
-    virtual void paintEvent(QPaintEvent*) final override;
-    virtual void mousePressEvent(QMouseEvent*) final override;
+    void paintEvent(QPaintEvent*) final override;
+    void mousePressEvent(QMouseEvent*) final override;
+
+private:
+    void updatePixmap();
 
 private:
     QPixmap pixmap, mask, unscaled;
     QPixmap* renderTarget;
-    QSize size;
     QString maskName;
     bool clickable;
 };

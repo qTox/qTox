@@ -19,6 +19,7 @@
 
 #include "maskablepixmapwidget.h"
 #include <QPainter>
+#include <QStyle>
 
 /**
  * @var QPixmap* MaskablePixmapWidget::renderTarget
@@ -26,7 +27,7 @@
  */
 
 MaskablePixmapWidget::MaskablePixmapWidget(QWidget* parent, QSize size, QString maskName)
-    : QWidget(parent)
+    : QLabel("", parent)
     , renderTarget(nullptr)
     , maskName(maskName)
     , clickable(false)
@@ -43,20 +44,25 @@ void MaskablePixmapWidget::setClickable(bool clickable)
 {
     this->clickable = clickable;
 
-    if (clickable)
+    if (clickable) {
         setCursor(Qt::PointingHandCursor);
-    else
+    } else {
         unsetCursor();
+    }
 }
 
 void MaskablePixmapWidget::setPixmap(const QPixmap& pmap)
 {
-    if (!pmap.isNull()) {
-        unscaled = pmap;
-        pixmap = pmap.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding,
-                             Qt::SmoothTransformation);
-        update();
+    if (pmap.isNull()) {
+        return;
     }
+
+    unscaled = pmap;
+    pixmap = pmap.scaled(width() - 2, height() - 2,
+                         Qt::KeepAspectRatioByExpanding,
+                         Qt::SmoothTransformation);
+    updatePixmap();
+    update();
 }
 
 QPixmap MaskablePixmapWidget::getPixmap() const
@@ -71,17 +77,35 @@ void MaskablePixmapWidget::setSize(QSize size)
     renderTarget = new QPixmap(size);
 
     QPixmap pmapMask = QPixmap(maskName);
-    if (!pmapMask.isNull())
+    if (!pmapMask.isNull()) {
         mask = pmapMask.scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    }
 
     if (!unscaled.isNull()) {
-        pixmap = unscaled.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding,
+        pixmap = unscaled.scaled(width() - 2, height() - 2,
+                                 Qt::KeepAspectRatioByExpanding,
                                  Qt::SmoothTransformation);
+        updatePixmap();
         update();
     }
 }
 
-void MaskablePixmapWidget::paintEvent(QPaintEvent*)
+
+
+void MaskablePixmapWidget::paintEvent(QPaintEvent* e)
+{
+    QLabel::setPixmap(*renderTarget);
+    QLabel::paintEvent(e);
+}
+
+void MaskablePixmapWidget::mousePressEvent(QMouseEvent*)
+{
+    if (clickable) {
+        emit clicked();
+    }
+}
+
+void MaskablePixmapWidget::updatePixmap()
 {
     renderTarget->fill(Qt::transparent);
 
@@ -94,13 +118,4 @@ void MaskablePixmapWidget::paintEvent(QPaintEvent*)
     painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
     painter.drawPixmap(0, 0, mask);
     painter.end();
-
-    painter.begin(this);
-    painter.drawPixmap(0, 0, *renderTarget);
-}
-
-void MaskablePixmapWidget::mousePressEvent(QMouseEvent*)
-{
-    if (clickable)
-        emit clicked();
 }
