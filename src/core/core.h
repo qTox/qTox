@@ -156,7 +156,7 @@ signals:
     void idSet(const ToxId& id);
 
     void messageSentResult(uint32_t friendId, const QString& message, int messageId);
-    void groupSentResult(int groupId, const QString& message, int result);
+    void groupSentFailed(int groupId);
     void actionSentResult(uint32_t friendId, const QString& action, int success);
 
     void receiptRecieved(int friedId, int receipt);
