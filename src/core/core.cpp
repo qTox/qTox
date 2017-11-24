@@ -644,6 +644,30 @@ void Core::sendTyping(uint32_t friendId, bool typing)
     }
 }
 
+bool parseConferenceSendMessageError(TOX_ERR_CONFERENCE_SEND_MESSAGE error)
+{
+    switch (error) {
+    case TOX_ERR_CONFERENCE_SEND_MESSAGE_OK:
+        return true;
+
+    case TOX_ERR_CONFERENCE_SEND_MESSAGE_CONFERENCE_NOT_FOUND:
+        qCritical() << "Conference not found";
+        return false;
+
+    case TOX_ERR_CONFERENCE_SEND_MESSAGE_FAIL_SEND:
+        qCritical() << "Conference message failed to send";
+        return false;
+
+    case TOX_ERR_CONFERENCE_SEND_MESSAGE_NO_CONNECTION:
+        qCritical() << "No connection";
+        return false;
+
+    case TOX_ERR_CONFERENCE_SEND_MESSAGE_TOO_LONG:
+        qCritical() << "Meesage too long";
+        return false;
+    }
+}
+
 void Core::sendGroupMessageWithType(int groupId, const QString& message, TOX_MESSAGE_TYPE type)
 {
     QStringList cMessages = splitMessage(message, MAX_GROUP_MESSAGE_LEN);
@@ -652,33 +676,11 @@ void Core::sendGroupMessageWithType(int groupId, const QString& message, TOX_MES
         ToxString cMsg(part);
         TOX_ERR_CONFERENCE_SEND_MESSAGE error;
         bool ok = tox_conference_send_message(tox, groupId, type, cMsg.data(), cMsg.size(), &error);
-        if (ok && error == TOX_ERR_CONFERENCE_SEND_MESSAGE_OK) {
+        if (!ok || !parseConferenceSendMessageError(error)) {
+            emit groupSentResult(groupId, message, -1);
             return;
         }
 
-        qCritical() << "Fail of tox_conference_send_message";
-        switch (error) {
-        case TOX_ERR_CONFERENCE_SEND_MESSAGE_CONFERENCE_NOT_FOUND:
-            qCritical() << "Conference not found";
-            return;
-
-        case TOX_ERR_CONFERENCE_SEND_MESSAGE_FAIL_SEND:
-            qCritical() << "Conference message failed to send";
-            return;
-
-        case TOX_ERR_CONFERENCE_SEND_MESSAGE_NO_CONNECTION:
-            qCritical() << "No connection";
-            return;
-
-        case TOX_ERR_CONFERENCE_SEND_MESSAGE_TOO_LONG:
-            qCritical() << "Meesage too long";
-            return;
-
-        default:
-            break;
-        }
-
-        emit groupSentResult(groupId, message, -1);
     }
 }
 
