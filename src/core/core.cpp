@@ -1324,10 +1324,15 @@ QString Core::getFriendUsername(uint32_t friendnumber) const
 QStringList Core::splitMessage(const QString& message, int maxLen)
 {
     QStringList splittedMsgs;
-    QByteArray ba_message(message.toUtf8());
+    QByteArray ba_message{message.toUtf8()};
 
     while (ba_message.size() > maxLen) {
-        int splitPos = ba_message.lastIndexOf(' ', maxLen - 1);
+        int splitPos = ba_message.lastIndexOf('\n', maxLen - 1);
+
+        if (splitPos <= 0) {
+            splitPos = ba_message.lastIndexOf(' ', maxLen - 1);
+        }
+
         if (splitPos <= 0) {
             splitPos = maxLen;
             if (ba_message[splitPos] & 0x80) {
@@ -1338,11 +1343,11 @@ QStringList Core::splitMessage(const QString& message, int maxLen)
             --splitPos;
         }
 
-        splittedMsgs.append(QString(ba_message.left(splitPos + 1)));
+        splittedMsgs.append(QString{ba_message.left(splitPos + 1)});
         ba_message = ba_message.mid(splitPos + 1);
     }
 
-    splittedMsgs.append(QString(ba_message));
+    splittedMsgs.append(QString{ba_message});
     return splittedMsgs;
 }
 
