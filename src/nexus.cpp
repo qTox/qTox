@@ -228,7 +228,7 @@ void Nexus::showMainGUI()
     connect(core, &Core::emptyGroupCreated, widget, &Widget::onEmptyGroupCreated);
     connect(core, &Core::friendTypingChanged, widget, &Widget::onFriendTypingChanged);
     connect(core, &Core::messageSentResult, widget, &Widget::onMessageSendResult);
-    connect(core, &Core::groupSentResult, widget, &Widget::onGroupSendResult);
+    connect(core, &Core::groupSentFailed, widget, &Widget::onGroupSendFailed);
 
     connect(widget, &Widget::statusSet, core, &Core::setStatus);
     connect(widget, &Widget::friendRequested, core, &Core::requestFriendship);
