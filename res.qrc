@@ -76,6 +76,7 @@
         <file>ui/statusButton/statusButton.css</file>
         <file>ui/statusButton/menu_indicator.svg</file>
         <file>ui/window/general.css</file>
+        <file>ui/window/profile.css</file>
         <file>ui/window/statusPanel.css</file>
         <file>ui/window/window.css</file>
         <file>ui/chatArea/info.svg</file>
