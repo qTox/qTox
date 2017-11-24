@@ -2040,19 +2040,16 @@ void Widget::onMessageSendResult(uint32_t friendId, const QString& message, int 
     }
 }
 
-void Widget::onGroupSendResult(int groupId, const QString& message, int result)
+void Widget::onGroupSendFailed(int groupId)
 {
-    Q_UNUSED(message)
     Group* g = GroupList::findGroup(groupId);
     if (!g) {
         return;
     }
 
-    if (result == -1) {
-        QString message = tr("Message failed to send");
-        QDateTime curTime = QDateTime::currentDateTime();
-        g->getChatForm()->addSystemInfoMessage(message, ChatMessage::INFO, curTime);
-    }
+    QString message = tr("Message failed to send");
+    QDateTime curTime = QDateTime::currentDateTime();
+    g->getChatForm()->addSystemInfoMessage(message, ChatMessage::INFO, curTime);
 }
 
 void Widget::onFriendTypingChanged(int friendId, bool isTyping)
