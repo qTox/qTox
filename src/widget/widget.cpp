@@ -152,6 +152,8 @@ void Widget::init()
     profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
     profilePicture->setClickable(true);
+    profilePicture->setObjectName("selfAvatar");
+    profilePicture->setStyleSheet(Style::getStylesheet(":ui/window/profile.css"));
     ui->myProfile->insertWidget(0, profilePicture);
     ui->myProfile->insertSpacing(1, 7);
 
