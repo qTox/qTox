@@ -1,4 +1,131 @@
 <a name=""></a>
+## v1.13.0 (2017-11-25)
+
+In this release we added microphone voice activation and the long-awaited
+Github-like Identicon instead of default avatars. Of course also some bugs were
+fixed and new ones added :P
+
+#### Bug Fixes
+
+*   use only well known categories in the desktop file ([4d36c23c](https://github.com/qTox/qTox/commit/4d36c23c9ba88a350a9b7ae6a7657fda3b8a2af2))
+*   add default return in Widget::getStatusIconPath to fix warning ([8a9c34d8](https://github.com/qTox/qTox/commit/8a9c34d8886ac2db3def1d08e8c203839d68c37d))
+*   URL patterns based on RFC 3986 ([6ffe4cd8](https://github.com/qTox/qTox/commit/6ffe4cd8d892183ecdfcba571ff8dd4d62d595fd))
+*   using current setting in autoaccept dialog ([70b235f2](https://github.com/qTox/qTox/commit/70b235f271b2f3d1dfaf036d60bb7e8e63db2908))
+*   remove unnecessary semicolon to compile with `-pedantic` flag ([37419825](https://github.com/qTox/qTox/commit/37419825cafcc0d4a239c2922abc074b753a4e29))
+*   add missed <functional> header ([5e455699](https://github.com/qTox/qTox/commit/5e455699730284e71709326b30f897d103db17ea))
+*   Use correct initialization order ([b41767d0](https://github.com/qTox/qTox/commit/b41767d0874eaf8887f908d2a9c5571f4342d5d5))
+*   remove unused variables ([c089c80e](https://github.com/qTox/qTox/commit/c089c80e53be33a8d42ea28176763659c1eb2005))
+* **build:**
+  *  install libexif-dev on apt-based systems ([2066c2e0](https://github.com/qTox/qTox/commit/2066c2e002009a75708c61f2ec3c39ce588d0e56))
+  *  do not build unix-specific test on Windows ([d69023c9](https://github.com/qTox/qTox/commit/d69023c9d78714f5e730e98bb251c8d0f723688a))
+* **call:**  fix bugs introduced from ToxCall refactor ([1394dd1b](https://github.com/qTox/qTox/commit/1394dd1b7fc59da57f0bd7470f4caed22231670a))
+* **cameradevice:**  Save string in local variable to avoid errors ([92def839](https://github.com/qTox/qTox/commit/92def839d084a97bed80e01e5afda49c593c34bd))
+* **chatForm:**  Fix issue with mixing friend and group id ([5bc8ef4e](https://github.com/qTox/qTox/commit/5bc8ef4e74dee407447de52328c3ccf98307c46a))
+* **chatform:**
+  *  Subscribe on accept and reject buttons once ([d77fbb4b](https://github.com/qTox/qTox/commit/d77fbb4b1999da2e20d5ed0071b254eea99dce4b))
+  *  Hide call confirm on call end ([f4a3bb28](https://github.com/qTox/qTox/commit/f4a3bb2812fbe3cab424a190a7f8114d26351cd7))
+* **core:**  Check that result of get peer name is successful ([78262b41](https://github.com/qTox/qTox/commit/78262b41bd8d2bec9d50ac736302eaa389369404))
+* **ffmpeg:**  don't use deprecated features ([2f13796a](https://github.com/qTox/qTox/commit/2f13796acc5e63a57a5af1e5a4ce102da506d5d5))
+* **friend:**  Add save friend alias on change ([c0a7488c](https://github.com/qTox/qTox/commit/c0a7488c12923354d0ed25f405994327ce2eb31a))
+* **group:**
+  *  Send all parts of long message ([7c76bebe](https://github.com/qTox/qTox/commit/7c76bebebef9d20da38bd4b45c3fb4aed2cf5915))
+  *  Add second signal for titile changed ([2f9ba3c4](https://github.com/qTox/qTox/commit/2f9ba3c4d793a9b50f932c82792a5f8afce5f2b8))
+* **identicon:**  don't set identicon as an avatar ([676be5f6](https://github.com/qTox/qTox/commit/676be5f625dc485433ba9137a027cad2bef1b5f5))
+* **init:**  register AV connects and call after AV is ready ([7170b485](https://github.com/qTox/qTox/commit/7170b48589c88eaa33263ffb0155dbf384b82d56), closes [#4651](https://github.com/qTox/qTox/issues/4651))
+* **ipc:**  Add check if IPC init failed ([c274cec8](https://github.com/qTox/qTox/commit/c274cec87e957894c021bd7f27994a2f6ce5473c))
+* **logout:**  Synchronously call showLogin to avoid multiple deletion ([5046fc90](https://github.com/qTox/qTox/commit/5046fc90103f8c33d8e5221a1e655414aad53f44), closes [#4201](https://github.com/qTox/qTox/issues/4201))
+* **platform:**  use result to remove -Wunused-result warning ([729dc774](https://github.com/qTox/qTox/commit/729dc7740b04becae7c509c3aafbf553fd955b31))
+* **preview:**  only downscale preview images, never upscale ([45b3575d](https://github.com/qTox/qTox/commit/45b3575d7902d99a3c8a31987b4ef92d4ba5d78f), closes [#4733](https://github.com/qTox/qTox/issues/4733))
+* **profile:**  Fix status message and username signal connection typo ([d41031bd](https://github.com/qTox/qTox/commit/d41031bd15bfa6cce1a0f55b20952a98680c3f2f), closes [#4760](https://github.com/qTox/qTox/issues/4760))
+* **settings:**
+  *  prevent signed overflow and associated warning ([6d1b1f62](https://github.com/qTox/qTox/commit/6d1b1f62aba08b84e4dddf3436a936cddea3518f))
+  *  Delete dynamically allocated members on destruction ([94cb6ce1](https://github.com/qTox/qTox/commit/94cb6ce1c562d7be0bc71e165f73c8ec5cd66353), closes [#4670](https://github.com/qTox/qTox/issues/4670))
+* **test:**  If json string not quoted is server error ([7c744912](https://github.com/qTox/qTox/commit/7c744912268c53db3509dd7b5575c72df1e9b542))
+* **toxme:**  Add #include <ctime> to toxmedata ([2f1bf107](https://github.com/qTox/qTox/commit/2f1bf107808953f5f080de3458f88abb33ad247a))
+* **travis:**  make Windows cross-compilation caching work ([0966e91e](https://github.com/qTox/qTox/commit/0966e91e31684cbfdc8b5b339929db1f17907707))
+* **ui:**  Set tooltip colour and background for all tooltips ([b1f40dec](https://github.com/qTox/qTox/commit/b1f40decd868f4df81ac8784bdcbb6a791d945ea), closes [#4667](https://github.com/qTox/qTox/issues/4667))
+* **video:**
+  *  don't use pointers to temporary objects ([5d6ae9ae](https://github.com/qTox/qTox/commit/5d6ae9ae372a95f8e6cd1950d87ba379eb1b8dfe))
+  *  prevent segfault when ending videocall ([fed70602](https://github.com/qTox/qTox/commit/fed7060270932f3731d78c2f2ba30f5a10300f95))
+  *  reduce default video bitrate to make it more usable ([ecea4104](https://github.com/qTox/qTox/commit/ecea41045c50611fb8f8b506c25c6f613073a4ce))
+  *  Set toxav video bitrate to 0 if answering audio-only call ([1613044c](https://github.com/qTox/qTox/commit/1613044c68cee2ceee82b61e789e5225dda45f7d))
+
+#### Performance
+
+* **smileys:**
+  *  Cleanup smileys icons by timer ([fa215949](https://github.com/qTox/qTox/commit/fa21594902beef73e70f69e80ae7acb016aa7ec6))
+  *  Use shared_ptr to automaticaly count references ([c6400077](https://github.com/qTox/qTox/commit/c64000777510e8b6c899475bf49fba31af9fda8b))
+  *  Use lazy smileys loading ([d83400bc](https://github.com/qTox/qTox/commit/d83400bcdc1bf177aabb6940ee3686f8e4f0e942))
+
+#### Features
+
+* **audio:**  microphone voice activation ([d24d4fb8](https://github.com/qTox/qTox/commit/d24d4fb8ea44999d037e7ca839c338140c5a59c7))
+* **build:**  hash everything in Windows cross-compilation ([319d871b](https://github.com/qTox/qTox/commit/319d871be38d6f92386f626c7fcbd25252e680bd))
+* **identicon:**
+  *  use Identicons instead of empty avatars ([003fc6b0](https://github.com/qTox/qTox/commit/003fc6b0b0cbef99888a746d60566a1bcc3805f9))
+  *  add algorithm to create identicons ([61b36d1b](https://github.com/qTox/qTox/commit/61b36d1bce87173fd290398db1045bd90a998dc9))
+* **l10n:**
+  *  update German translation from Weblate ([e0235dff](https://github.com/qTox/qTox/commit/e0235dffc5e3240696d5350bdbc1d2c5386e8cec))
+  *  update German translation from Weblate ([af2addec](https://github.com/qTox/qTox/commit/af2addec860de6fb986250b2f7d22c8ea039ffd7))
+  *  update German translation from Weblate ([13df29e5](https://github.com/qTox/qTox/commit/13df29e5d1f5e3c5365695b287778e024a9fc220))
+  *  update Italian translation from Weblate ([45a053cc](https://github.com/qTox/qTox/commit/45a053ccb7dc414b4f464d32039b99707632e665))
+  *  update Lithuanian translation from Weblate ([79f96c90](https://github.com/qTox/qTox/commit/79f96c902665e4c0d9f314a232201d2f16c137a9))
+  *  update Slovak translation from Weblate ([5bd1b971](https://github.com/qTox/qTox/commit/5bd1b97170bc42561519448692d16c9f7fe3eee9))
+  *  update Hungarian translation from Weblate ([d344e060](https://github.com/qTox/qTox/commit/d344e06016076265940dd1c293f946cd99df05c8))
+  *  update Norwegian (old code) translation from Weblate ([64a83067](https://github.com/qTox/qTox/commit/64a8306731b1992cb49c79c3de8b921cb15ee92a))
+  *  update Russian translation from Weblate ([a62535a5](https://github.com/qTox/qTox/commit/a62535a5e4acac41e95e2a186806d6f387fde9fd))
+  *  update Russian translation from Weblate ([e9c9eeea](https://github.com/qTox/qTox/commit/e9c9eeea9f3bd60105b8eeeb15b3275102d3be7f))
+  *  update Belarusian translation from Weblate ([652cdab8](https://github.com/qTox/qTox/commit/652cdab8d42101f6348dc183f5ad72a58082f8a2))
+  *  update Romanian translation from Weblate ([fd7fe766](https://github.com/qTox/qTox/commit/fd7fe76697512ffc1188e0588b17c81f934207ba))
+  *  update Estonian translation from Weblate ([d0394e88](https://github.com/qTox/qTox/commit/d0394e88e76752996bc24a8c179e17c0043d4160))
+  *  update Spanish translation from Weblate ([00e33153](https://github.com/qTox/qTox/commit/00e3315360036b5db031139b2c4b05e6dca10eb5))
+  *  update Serbian (latin) translation from Weblate ([6f4c675a](https://github.com/qTox/qTox/commit/6f4c675a46fe471fa00d9e63ae14306d0b88fe0d))
+  *  update Serbian translation from Weblate ([1aec68fd](https://github.com/qTox/qTox/commit/1aec68fdf0c32a4a0a782c9ef256563818ebbf41))
+  *  update Chinese (Simplified) translation from Weblate ([e828583b](https://github.com/qTox/qTox/commit/e828583b9af80c8aacbe208f2a6a831d8427e863))
+  *  update Persian translation from Weblate ([b3ceda6e](https://github.com/qTox/qTox/commit/b3ceda6e47d485037ab3c1df9c2f433801d1b688))
+  *  update Belarusian translation from Weblate ([07cf8838](https://github.com/qTox/qTox/commit/07cf8838b59059450b90a0c8cab7fb5285d02d59))
+  *  update Estonian translation from Weblate ([235e6bfd](https://github.com/qTox/qTox/commit/235e6bfd34959d0f0d11da167e7b63339780963a))
+  *  update Estonian translation from Weblate ([33d4cc4a](https://github.com/qTox/qTox/commit/33d4cc4a1dfc4c874eab8db916232e84000c7698))
+  *  update Estonian translation from Weblate ([f82d3449](https://github.com/qTox/qTox/commit/f82d34492872148757dfddcc5663d9f7a21ffb71))
+  *  update Estonian translation from Weblate ([53475ed2](https://github.com/qTox/qTox/commit/53475ed2dc334f4babebb14780dadc08b9b3e9a5))
+  *  update Serbian translation from Weblate ([907c3e5c](https://github.com/qTox/qTox/commit/907c3e5c8b557f3051943d17ef6aa785f01b890f))
+  *  update Serbian (latin) translation from Weblate ([f171c232](https://github.com/qTox/qTox/commit/f171c2327f19041b908ec4883d8d3426aa5f1e20))
+  *  update Croatian translation from Weblate ([6f0b6925](https://github.com/qTox/qTox/commit/6f0b692562cbc303ac8f420f7a9aee82821ab8e8))
+  *  add Serbian (latin) translation to UI ([641a8084](https://github.com/qTox/qTox/commit/641a80842e0d3fabb6b4872d2a342d167ff80958))
+  *  add Serbian (latin) translation using Weblate ([66a680df](https://github.com/qTox/qTox/commit/66a680df8720880fda7254cedccb8ddd45f6ceed))
+  *  add Serbian translation to UI ([3c4b1f11](https://github.com/qTox/qTox/commit/3c4b1f117d29293d6ebbb68457eb96452a9b557b))
+  *  add Serbian translation using Weblate ([17c00487](https://github.com/qTox/qTox/commit/17c00487921d12c2f54ed25f08d943e6914231e1))
+  *  add Persian translation to UI ([76df9a45](https://github.com/qTox/qTox/commit/76df9a453511e98693c7302b3f48598caff45d9e))
+  *  add Persian translation using Weblate ([f2d3beb6](https://github.com/qTox/qTox/commit/f2d3beb67e734fc190fd331a1539a043590ffeee))
+  *  update Lithuanian translation from Weblate ([7e80cbca](https://github.com/qTox/qTox/commit/7e80cbcaeee1c2187d3f31d83e0e31b615d5dac9))
+  *  update Swedish translation from Weblate ([27a58b93](https://github.com/qTox/qTox/commit/27a58b938d381f6d9a39a78280f4bb5958b34193))
+  *  update Portuguese translation from Weblate ([9b7e23c6](https://github.com/qTox/qTox/commit/9b7e23c68be190487cf131018e4a5a071aa23152))
+  *  update Portuguese translation from Weblate ([227bba8f](https://github.com/qTox/qTox/commit/227bba8fa2624714d8a73e6cd4dc50aab5eaafea))
+  *  update Portuguese translation from Weblate ([1425dff6](https://github.com/qTox/qTox/commit/1425dff6e7a711b5c053842620b8fdeaaed653ce))
+  *  update Portuguese translation from Weblate ([8c07a2b2](https://github.com/qTox/qTox/commit/8c07a2b22503be0ededabb261a553db132a38109))
+  *  update Portuguese translation from Weblate ([ccc5296f](https://github.com/qTox/qTox/commit/ccc5296fd30fe531de552abf76da3062c9e31c9f))
+  *  update Estonian translation from Weblate ([8710563b](https://github.com/qTox/qTox/commit/8710563bd638d672271c62fab9a06ef4cb200313))
+  *  update Estonian translation from Weblate ([d5e484b8](https://github.com/qTox/qTox/commit/d5e484b8d94469e866597d1794ec2d6eb0f6396f))
+  *  update Norwegian (old code) translation from Weblate ([bcdbd2ca](https://github.com/qTox/qTox/commit/bcdbd2caef16a8f4bc11da287dba01db2ed1c640))
+  *  update Romanian translation from Weblate ([2d2cdd01](https://github.com/qTox/qTox/commit/2d2cdd010a6cdd890cfea6bec2b7bd0a296a1ed6))
+  *  update Belarusian translation from Weblate ([01b9bcd9](https://github.com/qTox/qTox/commit/01b9bcd9d214389cfe7f84fb1ac300bbb5bfb4bc))
+  *  update Chinese (Simplified) translation from Weblate ([1514b800](https://github.com/qTox/qTox/commit/1514b80093c701318e187c8eb9ab93a4bd71822c))
+  *  update Spanish translation from Weblate ([154002c0](https://github.com/qTox/qTox/commit/154002c0027eb7dea7f5b74e302ef29eb5a096fe))
+  *  update Estonian translation from Weblate ([681661f6](https://github.com/qTox/qTox/commit/681661f61c55ba7b63e54b38594e9a85abb92454))
+  *  update Romanian translation from Weblate ([47a83e3b](https://github.com/qTox/qTox/commit/47a83e3bf9d099dc084dd8098d43f73258c47b56))
+  *  update Chinese (Simplified) translation from Weblate ([0145bb11](https://github.com/qTox/qTox/commit/0145bb11775d11dd2dc9b7025c2b1a0f8355fcc5))
+  *  update Belarusian translation from Weblate ([753ea45b](https://github.com/qTox/qTox/commit/753ea45b6d1b0eb5744370f96eae0492af9fda79))
+* **settings:**
+  *  add an option to toggle identicons ([905ca770](https://github.com/qTox/qTox/commit/905ca7708662c6fe5520ad2707715075ad1aa41d))
+  *  make audio quality setting persistent ([7ed2d97a](https://github.com/qTox/qTox/commit/7ed2d97aadab8aa0acb39e54aafaea06c0ebe57c))
+  *  Add audio quality setting ([61eddc1f](https://github.com/qTox/qTox/commit/61eddc1f6b76f2da1a6d180426a2b7f53c757e2a), closes [#4693](https://github.com/qTox/qTox/issues/4693))
+* **travis:**
+  *  run tests on Windows ([21af6875](https://github.com/qTox/qTox/commit/21af6875cc7a1f5a311b8149ced9970570a4b2e5))
+  *  Windows cross-compilation ([9358297a](https://github.com/qTox/qTox/commit/9358297af87ebb13dc4f74d2ced6033e38b25a5b))
+
+
+
+<a name=""></a>
 ## v1.12.0 (2017-10-01)
 
 This release provides many handy new features, most notable are mass import of
