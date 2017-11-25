@@ -395,11 +395,17 @@ QPixmap Profile::loadAvatar()
 QPixmap Profile::loadAvatar(const ToxPk& owner)
 {
     QPixmap pic;
-    const QByteArray avataData = loadAvatarData(owner);
-    if(avataData.isEmpty()) {
-        pic = QPixmap::fromImage(Identicon(owner.getKey()).toImage(16));
+    if (Settings::getInstance().getShowIdenticons()) {
+
+        const QByteArray avataData = loadAvatarData(owner);
+        if (avataData.isEmpty()) {
+            pic = QPixmap::fromImage(Identicon(owner.getKey()).toImage(16));
+        } else {
+            pic.loadFromData(avataData);
+        }
+
     } else {
-        pic.loadFromData(avataData);
+        pic.loadFromData(loadAvatarData(owner));
     }
 
     return pic;
@@ -467,12 +473,15 @@ void Profile::setAvatar(QByteArray pic, const ToxPk& owner)
         pixmap.loadFromData(pic);
         avatarData = pic;
     } else {
-        // with IDENTICON_ROWS=5 this gives a 160x160 image file
-        const QImage identicon = Identicon(owner.getKey()).toImage(32);
-        pixmap = QPixmap::fromImage(identicon);
-        QBuffer buf(&avatarData);
-        buf.open(QIODevice::WriteOnly);
-        identicon.save(&buf, "png");
+        if (Settings::getInstance().getShowIdenticons()) {
+            // with IDENTICON_ROWS=5 this gives a 160x160 image file
+            const QImage identicon = Identicon(owner.getKey()).toImage(32);
+            pixmap = QPixmap::fromImage(identicon);
+
+        } else {
+            pixmap.load(":/img/contact_dark.svg");
+        }
+
     }
 
     saveAvatar(avatarData, owner);

@@ -211,6 +211,7 @@ void Settings::loadGlobal()
         groupchatPosition = s.value("groupchatPosition", true).toBool();
         separateWindow = s.value("separateWindow", false).toBool();
         dontGroupWindows = s.value("dontGroupWindows", false).toBool();
+        showIdenticons = s.value("showIdenticons", true).toBool();
 
         const QString DEFAULT_SMILEYS = ":/smileys/emojione/emoticons.xml";
         smileyPack = s.value("smileyPack", DEFAULT_SMILEYS).toString();
@@ -526,6 +527,7 @@ void Settings::saveGlobal()
         s.setValue("separateWindow", separateWindow);
         s.setValue("dontGroupWindows", dontGroupWindows);
         s.setValue("groupchatPosition", groupchatPosition);
+        s.setValue("showIdenticons", showIdenticons);
 
         s.setValue("smileyPack", smileyPack);
         s.setValue("emojiFontPointSize", emojiFontPointSize);
@@ -2188,6 +2190,22 @@ void Settings::setGroupchatPosition(bool value)
     if (value != groupchatPosition) {
         groupchatPosition = value;
         emit groupchatPositionChanged(value);
+    }
+}
+
+bool Settings::getShowIdenticons() const
+{
+    const QMutexLocker locker{&bigLock};
+    return showIdenticons;
+}
+
+void Settings::setShowIdenticons(bool value)
+{
+    const QMutexLocker locker{&bigLock};
+
+    if (value != showIdenticons) {
+        showIdenticons = value;
+        emit showIdenticonsChanged(value);
     }
 }
 

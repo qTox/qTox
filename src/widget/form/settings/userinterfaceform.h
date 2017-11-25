@@ -56,6 +56,7 @@ private slots:
     void on_cbDontGroupWindows_stateChanged();
     void on_cbGroupchatPosition_stateChanged();
     void on_themeColorCBox_currentIndexChanged(int);
+    void on_cbShowIdenticons_stateChanged();
 
     void on_txtChatFont_currentFontChanged(const QFont& f);
     void on_txtChatFontSize_valueChanged(int arg1);
