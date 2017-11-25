@@ -7,6 +7,6 @@ Comment=Qt 5 based Tox instant messenger for secure communication
 TryExec=qtox
 Exec=qtox %u
 Icon=qtox
-Categories=InstantMessaging;AudioVideo;Network;
+Categories=Network;InstantMessaging;Chat;Telephony;VideoConference;
 Terminal=false
 MimeType=x-scheme-handler/tox;application/x-tox;
