@@ -259,17 +259,15 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=9
-QT_PATCH=2
+QT_PATCH=3
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-QT_HASH="6c6171a4d1ea3fbd4212d6a04899650218583df3ec583a8a6a4a589fe18620ff"
+QT_HASH="57acd8f03f830c2d7dc29fbe28aaa96781b2b9bdddce94196e6761a0f88c6046"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
   rm -rf "$QT_PREFIX_DIR"
   mkdir -p "$QT_PREFIX_DIR"
 
-  QT_MIRROR=http://qt.mirror.constant.com
-
-  wget $QT_MIRROR/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz
+  wget https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz
   check_sha256 "$QT_HASH" "qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
   bsdtar -xf qt*.tar.xz
   rm qt*.tar.xz
