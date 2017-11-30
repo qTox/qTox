@@ -38,7 +38,6 @@ signals:
     void clicked();
 
 protected:
-    void paintEvent(QPaintEvent*) final override;
     void mousePressEvent(QMouseEvent*) final override;
 
 private:

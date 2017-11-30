@@ -90,14 +90,6 @@ void MaskablePixmapWidget::setSize(QSize size)
     }
 }
 
-
-
-void MaskablePixmapWidget::paintEvent(QPaintEvent* e)
-{
-    QLabel::setPixmap(*renderTarget);
-    QLabel::paintEvent(e);
-}
-
 void MaskablePixmapWidget::mousePressEvent(QMouseEvent*)
 {
     if (clickable) {
@@ -118,4 +110,5 @@ void MaskablePixmapWidget::updatePixmap()
     painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
     painter.drawPixmap(0, 0, mask);
     painter.end();
+    QLabel::setPixmap(*renderTarget);
 }
