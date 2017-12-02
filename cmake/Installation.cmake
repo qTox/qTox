@@ -47,7 +47,7 @@ else()
   set(SVG_SRC "${CMAKE_SOURCE_DIR}/img/icons/qtox.svg")
   set(SVG_GZIP "${CMAKE_BINARY_DIR}/qtox.svgz")
   install(CODE "
-  execute_process(COMMAND gzip -Sz INPUT_FILE ${SVG_SRC} OUTPUT_FILE ${SVG_GZIP})
+  execute_process(COMMAND gzip -S z INPUT_FILE ${SVG_SRC} OUTPUT_FILE ${SVG_GZIP})
   " COMPONENT Runtime)
   install(FILES "${SVG_GZIP}" DESTINATION "share/icons/hicolor/scalable/apps")
 endif()
