@@ -59,7 +59,7 @@ QRect VideoMode::toRect() const
 bool VideoMode::operator==(const VideoMode& other) const
 {
     return width == other.width && height == other.height && x == other.x && y == other.y
-           && FPS == other.FPS && pixel_format == other.pixel_format;
+           && qFuzzyCompare(FPS, other.FPS) && pixel_format == other.pixel_format;
 }
 
 uint32_t VideoMode::norm(const VideoMode& other) const
@@ -72,5 +72,5 @@ uint32_t VideoMode::norm(const VideoMode& other) const
  */
 VideoMode::operator bool() const
 {
-    return width || height || (FPS < 0);
+    return width || height || static_cast<int>(FPS);
 }
