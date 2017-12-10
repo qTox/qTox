@@ -63,12 +63,8 @@ extern "C" {
  * the context MUST exit with alProxyContext as active context and MUST not be
  * interrupted. For this to work, all functions of the base class modifying the
  * context have to be overriden.
- *
- * @var BUFFER_COUNT
- * @brief Number of buffers to use per audio source
  */
 
-static const unsigned int BUFFER_COUNT = 16;
 static const unsigned int PROXY_BUFFER_COUNT = 4;
 
 #define GET_PROC_ADDR(dev, name) name = reinterpret_cast<LP##name>(alcGetProcAddress(dev, #name))

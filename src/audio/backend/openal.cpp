@@ -57,9 +57,9 @@ OpenAL::OpenAL()
     , outputInitialized{false}
     , minInGain{-30}
     , maxInGain{30}
-    , minInThreshold{0.0f}
-    , maxInThreshold{0.4f}
     , isActive{false}
+    , minInThreshold{0.0}
+    , maxInThreshold{0.4}
 {
     // initialize OpenAL error stack
     alGetError();
