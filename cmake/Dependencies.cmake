@@ -197,7 +197,7 @@ if (X11_FOUND AND XSS_FOUND)
 endif()
 
 if (PLATFORM_EXTENSIONS)
-  if (${APPLE_EXT} OR ${X11_EXT})
+  if (${APPLE_EXT} OR ${X11_EXT} OR WIN32)
     add_definitions(
       -DQTOX_PLATFORM_EXT
     )
