@@ -148,7 +148,7 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     sendButton = createButton("sendButton", this, &GenericChatForm::onSendTriggered);
     emoteButton = createButton("emoteButton", this, &GenericChatForm::onEmoteButtonClicked);
 
-    fileButton = createButton("fileButton", this, &GenericChatForm::onSendTriggered);
+    fileButton = createButton("fileButton", this, &GenericChatForm::onAttachClicked);
     screenshotButton = createButton("screenshotButton", this, &GenericChatForm::onScreenshotClicked);
 
     // TODO: Make updateCallButtons (see ChatForm) abstract
