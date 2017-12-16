@@ -31,8 +31,8 @@
 static const int MAX_GROUP_TITLE_LENGTH = 128;
 
 Group::Group(int groupId, const QString& name, bool isAvGroupchat, const QString& selfName)
-    : title{name}
-    , selfName{selfName}
+    : selfName{selfName}
+    , title{name}
     , groupId(groupId)
     , nPeers{0}
     , avGroupchat{isAvGroupchat}
