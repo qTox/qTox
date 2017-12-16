@@ -48,18 +48,6 @@ static const uint32_t AUDIO_CHANNELS = 2;
 
 OpenAL::OpenAL()
     : audioThread{new QThread}
-    , alInDev{nullptr}
-    , inSubscriptions{0}
-    , alOutDev{nullptr}
-    , alOutContext{nullptr}
-    , alMainSource{0}
-    , alMainBuffer{0}
-    , outputInitialized{false}
-    , minInGain{-30}
-    , maxInGain{30}
-    , minInThreshold{0.0f}
-    , maxInThreshold{0.4f}
-    , isActive{false}
 {
     // initialize OpenAL error stack
     alGetError();
