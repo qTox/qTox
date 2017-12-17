@@ -116,19 +116,19 @@ protected:
     QThread* audioThread;
     mutable QMutex audioLock;
 
-    ALCdevice* alInDev;
-    quint32 inSubscriptions;
+    ALCdevice* alInDev = nullptr;
+    quint32 inSubscriptions = 0;
     QTimer captureTimer, playMono16Timer;
 
-    ALCdevice* alOutDev;
-    ALCcontext* alOutContext;
-    ALuint alMainSource;
-    ALuint alMainBuffer;
-    bool outputInitialized;
+    ALCdevice* alOutDev = nullptr;
+    ALCcontext* alOutContext = nullptr;
+    ALuint alMainSource = 0;
+    ALuint alMainBuffer = 0;
+    bool outputInitialized = false;
 
     QList<ALuint> peerSources;
-    qreal gain;
-    qreal gainFactor;
+    qreal gain = 0;
+    qreal gainFactor = 1;
     qreal minInGain = -30;
     qreal maxInGain = 30;
     qreal inputThreshold;
