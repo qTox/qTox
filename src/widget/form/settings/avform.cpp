@@ -433,13 +433,15 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
     updateVideoModes(index);
     videoModescomboBox->blockSignals(previouslyBlocked);
 
-    if (videoSettings->getScreenGrabbed())
+    if (videoSettings->getScreenGrabbed()) {
         return;
+    }
 
     int modeIndex = videoModescomboBox->currentIndex();
     VideoMode mode = VideoMode();
-    if (0 < modeIndex && modeIndex < videoModes.size())
+    if (0 <= modeIndex && modeIndex < videoModes.size()) {
         mode = videoModes[modeIndex];
+    }
 
     camera.setupDevice(dev, mode);
     if (dev == "none") {
