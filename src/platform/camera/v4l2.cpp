@@ -203,7 +203,7 @@ QString v4l2::getPixelFormatString(uint32_t pixel_format)
 {
     if (pixFmtToName.find(pixel_format) == pixFmtToName.end()) {
         qWarning() << "Pixel format not found";
-        return QString("unknown");
+        return QString("invalid");
     }
     return pixFmtToName.at(pixel_format);
 }
