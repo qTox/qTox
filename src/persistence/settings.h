@@ -117,7 +117,7 @@ class Settings : public QObject, public ICoreSettings, public IAudioSettings, pu
     Q_PROPERTY(QRect camVideoRes READ getCamVideoRes WRITE setCamVideoRes NOTIFY camVideoResChanged FINAL)
     Q_PROPERTY(QRect screenRegion READ getScreenRegion WRITE setScreenRegion NOTIFY screenRegionChanged FINAL)
     Q_PROPERTY(bool screenGrabbed READ getScreenGrabbed WRITE setScreenGrabbed NOTIFY screenGrabbedChanged FINAL)
-    Q_PROPERTY(quint16 camVideoFPS READ getCamVideoFPS WRITE setCamVideoFPS NOTIFY camVideoFPSChanged FINAL)
+    Q_PROPERTY(float camVideoFPS READ getCamVideoFPS WRITE setCamVideoFPS NOTIFY camVideoFPSChanged FINAL)
 
 public:
     enum class StyleType
@@ -394,8 +394,8 @@ public:
     QRect getCamVideoRes() const override;
     void setCamVideoRes(QRect newValue) override;
 
-    unsigned short getCamVideoFPS() const override;
-    void setCamVideoFPS(unsigned short newValue) override;
+    float getCamVideoFPS() const override;
+    void setCamVideoFPS(float newValue) override;
 
     SIGNAL_IMPL(Settings, videoDevChanged, const QString& device)
     SIGNAL_IMPL(Settings, screenRegionChanged, const QRect& region)
@@ -658,7 +658,7 @@ private:
     QRect camVideoRes;
     QRect screenRegion;
     bool screenGrabbed;
-    unsigned short camVideoFPS;
+    float camVideoFPS;
 
     struct friendProp
     {
