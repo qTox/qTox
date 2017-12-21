@@ -91,17 +91,17 @@ fail:
     return -1;
 }
 
-static QVector<unsigned short> getDeviceModeFramerates(int fd, unsigned w, unsigned h,
+static QVector<float> getDeviceModeFramerates(int fd, unsigned w, unsigned h,
                                                        uint32_t pixelFormat)
 {
-    QVector<unsigned short> rates;
+    QVector<float> rates;
     v4l2_frmivalenum vfve{};
     vfve.pixel_format = pixelFormat;
     vfve.height = h;
     vfve.width = w;
 
     while (!ioctl(fd, VIDIOC_ENUM_FRAMEINTERVALS, &vfve)) {
-        int rate;
+        float rate;
         switch (vfve.type) {
         case V4L2_FRMSIZE_TYPE_DISCRETE:
             rate = vfve.discrete.denominator / vfve.discrete.numerator;
@@ -154,9 +154,9 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
                 continue;
             }
 
-            QVector<unsigned short> rates =
+            QVector<float> rates =
                 getDeviceModeFramerates(fd, mode.width, mode.height, vfd.pixelformat);
-            for (unsigned short rate : rates) {
+            for (float rate : rates) {
                 mode.FPS = rate;
                 if (!modes.contains(mode))
                     modes.append(std::move(mode));

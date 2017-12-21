@@ -319,7 +319,8 @@ void AVForm::fillCameraModesComboBox()
 int AVForm::searchPreferredIndex()
 {
     QRect prefRes = videoSettings->getCamVideoRes();
-    quint16 prefFPS = videoSettings->getCamVideoFPS();
+    // truncate the float values to handle non integer FPS values
+    quint16 prefFPS = static_cast<quint16>(videoSettings->getCamVideoFPS());
 
     for (int i = 0; i < videoModes.size(); ++i) {
         VideoMode mode = videoModes[i];
