@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Désactivé</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Jouer un son de test lors de la modification du volume de sortie.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Utiliser le curseur afin de définir le gain de votre périphérique d&apos;entrée dans l’intervalle de %1dB à %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -93,11 +85,11 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer le moteur audio expérimental</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualité audio</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
@@ -105,18 +97,22 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Haute (64Kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Moyenne (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Basse (16 Kbits/s)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -172,17 +168,17 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">logiciel de suivi de bogue</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">Rédaction de rapports de bogues utiles</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished">contributeurs</translation>
     </message>
 </context>
@@ -269,17 +265,17 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
         <translation type="unfinished">Vous pouvez enregistrer ici des commentaires sur ce contact.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Sélectionner un répertoire d&apos;acceptation automatique</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">Historique effacé</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">Historique de discussion avec %1 effacé(s) !</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished">Sélectionner un répertoire d&apos;acceptation automatique</translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -601,46 +598,6 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
         <translation>Mauvaise idée</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Mettre fin à l&apos;appel vidéo</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Mettre fin à l&apos;appel audio</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Couper le microphone</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Couper le son de l&apos;appel</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Annuler l&apos;appel vidéo</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Annuler l&apos;appel audio</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Démarrer un appel audio</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Démarrer un appel vidéo</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Réactiver le microphone</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Réactiver le son de l&apos;appel</translation>
-    </message>
-    <message>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>Impossible d&apos;envoyer le fichier &quot;%1&quot;</translation>
     </message>
@@ -699,22 +656,6 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
         <translation>%1 est maintenant %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Impossible de démarrer l&apos;appel vidéo</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Impossible de démarrer l&apos;appel audio</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Le microphone ne peut être coupé que lors d&apos;un appel</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Le son ne peut être coupé que lors d&apos;un appel</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Exporter vers le fichier</translation>
     </message>
@@ -725,6 +666,73 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Impossible de démarrer l&apos;appel audio</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Démarrer un appel audio</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Mettre fin à l&apos;appel audio</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Annuler l&apos;appel audio</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Accepter l&apos;appel audio</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Impossible de démarrer l&apos;appel vidéo</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Démarrer un appel vidéo</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Mettre fin à l&apos;appel vidéo</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Annuler l&apos;appel vidéo</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Accepter l&apos;appel vidéo</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Le son ne peut être coupé que lors d&apos;un appel</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Réactiver le son de l&apos;appel</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Couper le son de l&apos;appel</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Le microphone ne peut être coupé que lors d&apos;un appel</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Réactiver le microphone</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Couper le microphone</translation>
     </message>
 </context>
 <context>
@@ -1202,30 +1210,6 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
         <translation>Sauvegarder le journal de discussion</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Démarrer un appel audio</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Accepter l&apos;appel audio</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Mettre fin à l&apos;appel audio</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Démarrer un appel vidéo</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Accepter l&apos;appel vidéo</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Mettre fin à l&apos;appel vidéo</translation>
-    </message>
-    <message>
         <source>Send a screenshot</source>
         <translation>Envoyer une capture d&apos;écran</translation>
     </message>
@@ -1281,33 +1265,13 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
         <translation>1 personne dans la messagerie instantanée</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Démarrer un appel audio</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Couper le microphone</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Réactiver le microphone</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Couper le son de l&apos;appel</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Réactiver le son de l&apos;appel</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Mettre fin à l&apos;appel audio</translation>
-    </message>
-    <message>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 personnes dans la discussion instantanée</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 a modifié le titre en %2</translation>
     </message>
 </context>
 <context>
@@ -2229,10 +2193,6 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Êtes-vous certain(e) de vouloir supprimer ce mot de passe ?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2742,6 +2702,15 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <source>Date format:</source>
         <translation>Format de la date :</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2834,10 +2803,6 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Your status</source>
         <translation>Votre statut</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 a modifié le titre en %2</translation>
     </message>
     <message>
         <source>Status</source>
