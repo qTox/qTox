@@ -27,10 +27,10 @@ struct VideoMode
 {
     int width, height;
     int x, y;
-    float FPS;
-    uint32_t pixel_format;
+    float FPS = -1.0f;
+    uint32_t pixel_format = 0;
 
-    VideoMode(int width = 0, int height = 0, int x = 0, int y = 0, float FPS = 0.0f, int format = 0);
+    VideoMode(int width = 0, int height = 0, int x = 0, int y = 0, float FPS = -1.0f);
 
     explicit VideoMode(QRect rect);
 

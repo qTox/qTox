@@ -284,8 +284,9 @@ void CameraSource::openDevice()
 
     // We need to open the device as many time as we already have subscribers,
     // otherwise the device could get closed while we still have subscribers
-    for (int i = 0; i < subscriptions; ++i)
+    for (int i = 0; i < subscriptions; ++i) {
         device->open();
+    }
 
     // Find the first video stream, if any
     for (unsigned i = 0; i < device->context->nb_streams; ++i) {

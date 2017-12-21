@@ -31,15 +31,15 @@
  *
  * @var float VideoMode::FPS
  * @brief Frames per second supported by the device at this resolution
+ * @note a value < 0 indicates an invalid value
  */
 
-VideoMode::VideoMode(int width, int height, int x, int y, float FPS, int format)
+VideoMode::VideoMode(int width, int height, int x, int y, float FPS)
     : width(width)
     , height(height)
     , x(x)
     , y(y)
     , FPS(FPS)
-    , pixel_format(format)
 {
 }
 
@@ -48,8 +48,6 @@ VideoMode::VideoMode(QRect rect)
     , height(rect.height())
     , x(rect.x())
     , y(rect.y())
-    , FPS(0)
-    , pixel_format(0)
 {
 }
 
@@ -74,5 +72,5 @@ uint32_t VideoMode::norm(const VideoMode& other) const
  */
 VideoMode::operator bool() const
 {
-    return width || height || FPS;
+    return width || height || (FPS < 0);
 }
