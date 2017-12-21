@@ -33,7 +33,7 @@
  * @brief Frames per second supported by the device at this resolution
  */
 
-VideoMode::VideoMode(int width, int height, int x, int y, int FPS, int format)
+VideoMode::VideoMode(int width, int height, int x, int y, float FPS, int format)
     : width(width)
     , height(height)
     , x(x)

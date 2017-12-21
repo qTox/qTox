@@ -1984,13 +1984,13 @@ void Settings::setCamVideoRes(QRect newValue)
     }
 }
 
-unsigned short Settings::getCamVideoFPS() const
+float Settings::getCamVideoFPS() const
 {
     QMutexLocker locker{&bigLock};
     return camVideoFPS;
 }
 
-void Settings::setCamVideoFPS(unsigned short newValue)
+void Settings::setCamVideoFPS(float newValue)
 {
     QMutexLocker locker{&bigLock};
 

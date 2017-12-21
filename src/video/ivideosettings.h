@@ -20,8 +20,8 @@ public:
     virtual QRect getCamVideoRes() const = 0;
     virtual void setCamVideoRes(QRect newValue) = 0;
 
-    virtual unsigned short getCamVideoFPS() const = 0;
-    virtual void setCamVideoFPS(unsigned short newValue) = 0;
+    virtual float getCamVideoFPS() const = 0;
+    virtual void setCamVideoFPS(float newValue) = 0;
 
     DECLARE_SIGNAL(videoDevChanged, const QString& device);
     DECLARE_SIGNAL(screenRegionChanged, const QRect& region);

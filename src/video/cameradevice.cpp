@@ -153,9 +153,11 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         return nullptr;
     }
 
-    int FPS = 5;
-    if (mode.FPS) {
+    float FPS = 5;
+    if (mode.FPS > 0.0f) {
         FPS = mode.FPS;
+    } else {
+        qWarning() << "VideoMode could be invalid!";
     }
 
     const std::string videoSize = QStringLiteral("%1x%2").arg(mode.width).arg(mode.height).toStdString();
