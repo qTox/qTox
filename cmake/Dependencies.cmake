@@ -16,6 +16,7 @@ find_package(Qt5Svg           REQUIRED)
 find_package(Qt5Test          REQUIRED)
 find_package(Qt5Widgets       REQUIRED)
 find_package(Qt5Xml           REQUIRED)
+find_package(KF5Sonnet)
 
 function(add_dependency)
   set(ALL_LIBRARIES ${ALL_LIBRARIES} ${ARGN} PARENT_SCOPE)
@@ -30,6 +31,11 @@ add_dependency(
   Qt5::Svg
   Qt5::Widgets
   Qt5::Xml)
+
+if(KF5Sonnet_FOUND)
+  add_definitions(-DSPELL_CHECKING)
+  add_dependency(KF5::SonnetUi)
+endif()
 
 include(CMakeParseArguments)
 include(Qt5CorePatches)

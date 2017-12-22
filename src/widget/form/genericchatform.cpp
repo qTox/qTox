@@ -45,6 +45,10 @@
 #include <QKeyEvent>
 #include <QShortcut>
 
+#ifdef SPELL_CHECKING
+#include <KF5/SonnetUi/sonnet/spellcheckdecorator.h>
+#endif
+
 /**
  * @class GenericChatForm
  * @brief Parent class for all chatforms. It's provide the minimum required UI
@@ -144,6 +148,9 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     connect(&s, &Settings::chatMessageFontChanged, this, &GenericChatForm::onChatMessageFontChanged);
 
     msgEdit = new ChatTextEdit();
+#ifdef SPELL_CHECKING
+    decorator = new Sonnet::SpellCheckDecorator(msgEdit);
+#endif
 
     sendButton = createButton("sendButton", this, &GenericChatForm::onSendTriggered);
     emoteButton = createButton("emoteButton", this, &GenericChatForm::onEmoteButtonClicked);
@@ -228,6 +235,9 @@ GenericChatForm::GenericChatForm(QWidget* parent)
 
 GenericChatForm::~GenericChatForm()
 {
+#ifdef SPELL_CHECKING
+    delete decorator;
+#endif
     Translator::unregister(this);
 }
 
