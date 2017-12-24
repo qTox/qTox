@@ -112,6 +112,7 @@ zypper_install() {
         libavcodec-devel
         libavdevice-devel
         libopus-devel
+        libexif-devel
         libQt5Concurrent-devel
         libqt5-linguist
         libqt5-linguist-devel
