@@ -19,6 +19,7 @@ AboutFriendForm::AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent)
     connect(ui->autogroupinvite, &QCheckBox::clicked, this, &AboutFriendForm::onAutoGroupInvite);
     connect(ui->selectSaveDir, &QPushButton::clicked, this, &AboutFriendForm::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutFriendForm::onRemoveHistoryClicked);
+    about.data()->connectTo_autoAcceptDirChanged([=](const QString& dir){ onAutoAcceptDirChanged(dir); });
 
     const QString dir = about->getAutoAcceptDir();
     ui->autoacceptfile->setChecked(!dir.isEmpty());
@@ -43,33 +44,39 @@ AboutFriendForm::AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent)
     ui->avatar->setPixmap(about->getAvatar());
 }
 
+static QString getAutoAcceptDir(const QString& dir)
+{
+    //: popup title
+    const QString title = AboutFriendForm::tr("Choose an auto accept directory");
+    return QFileDialog::getExistingDirectory(Q_NULLPTR, title, dir);
+}
+
 void AboutFriendForm::onAutoAcceptDirClicked()
 {
-    if (!ui->autoacceptfile->isChecked()) {
-        ui->autoacceptfile->setChecked(false);
-        about->setAutoAcceptDir("");
-        ui->selectSaveDir->setText(tr("Auto accept for this contact is disabled"));
-    } else if (ui->autoacceptfile->isChecked()) {
-        QString dir = about->getAutoAcceptDir();
-        dir = QFileDialog::getExistingDirectory(
-                    Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
-
-        if (dir.isEmpty()) {
-            ui->autoacceptfile->setChecked(false);
-            return; // user canellced
+    const QString dir = [&]{
+        if (!ui->autoacceptfile->isChecked()) {
+            return QString{};
         }
 
-        about->setAutoAcceptDir(dir);
-        ui->selectSaveDir->setText(about->getAutoAcceptDir());
-    }
+        return getAutoAcceptDir(about->getAutoAcceptDir());
+    }();
 
-    ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
+    about->setAutoAcceptDir(dir);
 }
+
+void AboutFriendForm::onAutoAcceptDirChanged(const QString& path)
+{
+    const bool enabled = path.isNull();
+    ui->autoacceptfile->setChecked(enabled);
+    ui->selectSaveDir->setEnabled(enabled);
+    ui->selectSaveDir->setText(enabled ? path : tr("Auto accept for this contact is disabled"));
+}
+
 
 void AboutFriendForm::onAutoAcceptCallClicked()
 {
     const int index = ui->autoacceptcall->currentIndex();
-    const IAboutFriend::AutoAcceptCall flag = static_cast<IAboutFriend::AutoAcceptCall>(index);
+    const IFriendSettings::AutoAcceptCallFlags flag{index};
     about->setAutoAcceptCall(flag);
 }
 
@@ -83,10 +90,7 @@ void AboutFriendForm::onAutoGroupInvite()
 
 void AboutFriendForm::onSelectDirClicked()
 {
-    QString dir = about->getAutoAcceptDir();
-    dir = QFileDialog::getExistingDirectory(
-                Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), dir);
-
+    const QString dir = getAutoAcceptDir(about->getAutoAcceptDir());
     about->setAutoAcceptDir(dir);
 }
 

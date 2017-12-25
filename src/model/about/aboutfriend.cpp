@@ -3,24 +3,23 @@
 #include "src/model/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
-#include "src/persistence/settings.h"
+#include "src/persistence/ifriendsettings.h"
 
-AboutFriend::AboutFriend(const Friend* f)
+AboutFriend::AboutFriend(const Friend* f, IFriendSettings* const s)
     : f{f}
+    , settings{s}
 {
-    Settings* s = &Settings::getInstance();
-    connect(s, &Settings::contactNoteChanged, [=](const ToxPk& pk, const QString& note) {
+    s->connectTo_contactNoteChanged([=](const ToxPk& pk, const QString& note) {
         emit noteChanged(note);
     });
-    connect(s, &Settings::autoAcceptCallChanged, [=](const ToxPk& pk, Settings::AutoAcceptCallFlags flag) {
-        const int value = static_cast<int>(Settings::getInstance().getAutoAcceptCall(pk));
-        const AutoAcceptCallFlags sFlag = static_cast<IAboutFriend::AutoAcceptCall>(value);
-        emit autoAcceptCallChanged(sFlag);
+    s->connectTo_autoAcceptCallChanged(
+            [=](const ToxPk& pk, IFriendSettings::AutoAcceptCallFlags flag) {
+        emit autoAcceptCallChanged(flag);
     });
-    connect(s, &Settings::autoAcceptDirChanged, [=](const ToxPk& pk, const QString& dir) {
+    s->connectTo_autoAcceptDirChanged([=](const ToxPk& pk, const QString& dir) {
         emit autoAcceptDirChanged(dir);
     });
-    connect(s, &Settings::autoGroupInviteChanged, [=](const ToxPk& pk, bool enable) {
+    s->connectTo_autoGroupInviteChanged([=](const ToxPk& pk, bool enable) {
         emit autoGroupInviteChanged(enable);
     });
 }
@@ -51,56 +50,53 @@ QPixmap AboutFriend::getAvatar() const
 QString AboutFriend::getNote() const
 {
     const ToxPk pk = f->getPublicKey();
-    return Settings::getInstance().getContactNote(pk);
+    return settings->getContactNote(pk);
 }
 
 void AboutFriend::setNote(const QString& note)
 {
     const ToxPk pk = f->getPublicKey();
-    Settings::getInstance().setContactNote(pk, note);
-    Settings::getInstance().savePersonal();
+    settings->setContactNote(pk, note);
+    settings->saveFriendSettings(pk);
 }
 
 QString AboutFriend::getAutoAcceptDir() const
 {
     const ToxPk pk = f->getPublicKey();
-    return Settings::getInstance().getAutoAcceptDir(pk);
+    return settings->getAutoAcceptDir(pk);
 }
 
 void AboutFriend::setAutoAcceptDir(const QString& path)
 {
     const ToxPk pk = f->getPublicKey();
-    Settings::getInstance().setAutoAcceptDir(pk, path);
-    Settings::getInstance().savePersonal();
+    settings->setAutoAcceptDir(pk, path);
+    settings->saveFriendSettings(pk);
 }
 
-IAboutFriend::AutoAcceptCallFlags AboutFriend::getAutoAcceptCall() const
+IFriendSettings::AutoAcceptCallFlags AboutFriend::getAutoAcceptCall() const
 {
     const ToxPk pk = f->getPublicKey();
-    const int value = static_cast<int>(Settings::getInstance().getAutoAcceptCall(pk));
-    return static_cast<IAboutFriend::AutoAcceptCallFlags>(value);
+    return settings->getAutoAcceptCall(pk);
 }
 
-void AboutFriend::setAutoAcceptCall(AutoAcceptCallFlags flag)
+void AboutFriend::setAutoAcceptCall(IFriendSettings::AutoAcceptCallFlags flag)
 {
     const ToxPk pk = f->getPublicKey();
-    const int value = static_cast<int>(flag);
-    const Settings::AutoAcceptCallFlags sFlag(value);
-    Settings::getInstance().setAutoAcceptCall(pk, sFlag);
-    Settings::getInstance().savePersonal();
+    settings->setAutoAcceptCall(pk, flag);
+    settings->saveFriendSettings(pk);
 }
 
 bool AboutFriend::getAutoGroupInvite() const
 {
     const ToxPk pk = f->getPublicKey();
-    return Settings::getInstance().getAutoGroupInvite(pk);
+    return settings->getAutoGroupInvite(pk);
 }
 
 void AboutFriend::setAutoGroupInvite(bool enabled)
 {
     const ToxPk pk = f->getPublicKey();
-    Settings::getInstance().setAutoGroupInvite(pk, enabled);
-    Settings::getInstance().savePersonal();
+    settings->setAutoGroupInvite(pk, enabled);
+    settings->saveFriendSettings(pk);
 }
 
 bool AboutFriend::clearHistory()

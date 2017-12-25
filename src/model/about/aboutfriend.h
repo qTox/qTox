@@ -3,16 +3,19 @@
 
 #include "iaboutfriend.h"
 
+#include "src/persistence/ifriendsettings.h"
+
 #include <QObject>
 
 class Friend;
+class IFriendSettings;
 
 class AboutFriend : public IAboutFriend
 {
     Q_OBJECT
 
 public:
-    explicit AboutFriend(const Friend* f);
+    AboutFriend(const Friend* f, IFriendSettings* const settings);
 
     QString getName() const override;
     QString getStatusMessage() const override;
@@ -26,8 +29,8 @@ public:
     QString getAutoAcceptDir() const override;
     void setAutoAcceptDir(const QString& path) override;
 
-    AutoAcceptCallFlags getAutoAcceptCall() const override;
-    void setAutoAcceptCall(AutoAcceptCallFlags flag) override;
+    IFriendSettings::AutoAcceptCallFlags getAutoAcceptCall() const override;
+    void setAutoAcceptCall(IFriendSettings::AutoAcceptCallFlags flag) override;
 
     bool getAutoGroupInvite() const override;
     void setAutoGroupInvite(bool enabled) override;
@@ -42,11 +45,12 @@ public:
     SIGNAL_IMPL(AboutFriend, noteChanged, const QString&)
 
     SIGNAL_IMPL(AboutFriend, autoAcceptDirChanged, const QString&)
-    SIGNAL_IMPL(AboutFriend, autoAcceptCallChanged, AutoAcceptCallFlags)
+    SIGNAL_IMPL(AboutFriend, autoAcceptCallChanged, IFriendSettings::AutoAcceptCallFlags)
     SIGNAL_IMPL(AboutFriend, autoGroupInviteChanged, bool)
 
 private:
     const Friend* const f;
+    IFriendSettings* const settings;
 };
 
 #endif // ABOUT_FRIEND_H

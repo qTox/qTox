@@ -15,7 +15,7 @@ class AboutFriendForm : public QDialog
     Q_OBJECT
 
 public:
-    explicit AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent = 0);
+    AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent = 0);
     ~AboutFriendForm();
 
 private:
@@ -23,6 +23,7 @@ private:
     QPointer<IAboutFriend> about;
 
 private slots:
+    void onAutoAcceptDirChanged(const QString& path);
     void onAcceptedClicked();
     void onAutoAcceptDirClicked();
     void onAutoAcceptCallClicked();
