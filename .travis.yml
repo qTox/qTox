@@ -20,7 +20,6 @@ matrix:
       env: JOB=build-docs DOXYGEN_CONFIG_FILE=doxygen.conf
     - stage: Linux
       os: linux
-      group: deprecated-2017Q4
       env: JOB=build-gitstats GITSTATS_DIR=gitstats
       addons:
         apt:
