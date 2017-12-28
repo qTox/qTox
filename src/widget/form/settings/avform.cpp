@@ -38,6 +38,15 @@
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/translator.h"
 
+/**
+  * @var AVForm::DESKTOP_DEFAULT_FPS
+  * @brief This FPS value is used for desktop sharing.
+  *
+  * @var AVForm::CAM_DEFAULT_FPS
+  * @brief The target value for the webcam FPS. Not all webcams will support
+  *        that exact framerate, try to get as close as possible.
+  */
+
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
 #endif
