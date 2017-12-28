@@ -98,5 +98,5 @@ uint32_t VideoMode::norm(const VideoMode& other) const
  */
 VideoMode::operator bool() const
 {
-    return width || height || selectedFPSIdx >= 0;
+    return width && height && selectedFPSIdx >= 0;
 }

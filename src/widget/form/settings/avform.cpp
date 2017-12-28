@@ -153,6 +153,7 @@ void AVForm::open(const QString& devName, const VideoMode& mode)
         videoSettings->setCamVideoRes(rect);
         videoSettings->setCamVideoFPS(mode.availableFPS.at(mode.selectedFPSIdx));
     }
+
     camera.setupDevice(devName, mode);
 }
 

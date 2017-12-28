@@ -225,6 +225,7 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
             for (int i = 0; i < n; ++i) {
                 AM_MEDIA_TYPE* type = nullptr;
                 VideoMode mode;
+                int modeIdx = -1;
                 if (config->GetStreamCaps(i, &type, (BYTE*)vcaps) != S_OK)
                     goto nextformat;
 
@@ -235,7 +236,7 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
                 mode.width = vcaps->MaxOutputSize.cx;
                 mode.height = vcaps->MaxOutputSize.cy;
                 mode.availableFPS[0] = 1e7 / vcaps->MinFrameInterval;
-                int modeIdx = modes.indexOf(mode);
+                modeIdx = modes.indexOf(mode);
                 if (modeIdx == -1) {
                     modes.append(std::move(mode));
                 } else {
