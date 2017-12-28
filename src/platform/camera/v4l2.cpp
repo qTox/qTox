@@ -156,11 +156,8 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
 
             QVector<float> rates =
                 getDeviceModeFramerates(fd, mode.width, mode.height, vfd.pixelformat);
-            for (float rate : rates) {
-                mode.FPS = rate;
-                if (!modes.contains(mode))
-                    modes.append(std::move(mode));
-            }
+            mode.availableFPS = rates;
+            modes.append(mode);
             vfse.index++;
         }
     }

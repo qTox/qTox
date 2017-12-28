@@ -65,14 +65,15 @@ QVector<VideoMode> avfoundation::getDeviceModes(QString devName)
             CMVideoDimensions dimensions;
             formatDescription = (CMFormatDescriptionRef)[format performSelector:@selector(formatDescription)];
             dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription);
+            VideoMode mode;
+            mode.width = dimensions.width;
+            mode.height = dimensions.height;
 
             for (AVFrameRateRange* range in format.videoSupportedFrameRateRanges) {
-                VideoMode mode;
-                mode.width = dimensions.width;
-                mode.height = dimensions.height;
-                mode.FPS = range.maxFrameRate;
-                result.append(mode);
+
+                mode.availableFPS.append(range.maxFrameRate);
             }
+            result.append(mode);
         }
     }
 

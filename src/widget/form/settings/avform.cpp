@@ -150,7 +150,7 @@ void AVForm::open(const QString& devName, const VideoMode& mode)
 {
     QRect rect = mode.toRect();
     videoSettings->setCamVideoRes(rect);
-    videoSettings->setCamVideoFPS(static_cast<quint16>(mode.FPS));
+    videoSettings->setCamVideoFPS(mode.defaultFPS);
     camera.setupDevice(devName, mode);
 }
 
@@ -182,7 +182,7 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
 
     if (CameraDevice::isScreen(devName) && mode == VideoMode()) {
         if (videoSettings->getScreenGrabbed()) {
-            VideoMode mode(videoSettings->getScreenRegion());
+            VideoMode mode(videoSettings->getScreenRegion(), DESKTOP_DEFAULT_FPS);
             open(devName, mode);
             return;
         }
@@ -191,7 +191,7 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
         ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber;
 
         auto onGrabbed = [screenshotGrabber, devName, this](QRect region) {
-            VideoMode mode(region);
+            VideoMode mode(region, DESKTOP_DEFAULT_FPS);
             mode.width = mode.width / 2 * 2;
             mode.height = mode.height / 2 * 2;
 
@@ -227,13 +227,13 @@ void AVForm::selectBestModes(QVector<VideoMode>& allVideoModes)
     idealModes[720] = VideoMode(1280, 720);
     idealModes[1080] = VideoMode(1920, 1080);
 
-    std::map<int, int> bestModeInds;
+    std::map<int, VideoMode> bestModeInds;
     for (int i = 0; i < allVideoModes.size(); ++i) {
         VideoMode mode = allVideoModes[i];
 
-        // PS3-Cam protection, everything above 60fps makes no sense
-        if (mode.FPS > 60)
+        if(mode.availableFPS.isEmpty()) {
             continue;
+        }
 
         for (auto iter = idealModes.begin(); iter != idealModes.end(); ++iter) {
             int res = iter->first;
@@ -244,34 +244,31 @@ void AVForm::selectBestModes(QVector<VideoMode>& allVideoModes)
                 continue;
 
             if (bestModeInds.find(res) == bestModeInds.end()) {
-                bestModeInds[res] = i;
+                bestModeInds[res] = mode;
                 continue;
             }
 
             int index = bestModeInds[res];
             VideoMode best = allVideoModes[index];
             if (mode.norm(idealMode) < best.norm(idealMode)) {
-                bestModeInds[res] = i;
+                bestModeInds[res] = mode;
                 continue;
             }
 
             if (mode.norm(idealMode) == best.norm(idealMode)) {
-                // prefer higher FPS and "better" pixel formats
-                if (mode.FPS > best.FPS) {
-                    bestModeInds[res] = i;
-                    continue;
-                }
-
+                // prefer "better" pixel format
                 bool better = CameraDevice::betterPixelFormat(mode.pixel_format, best.pixel_format);
-                if (mode.FPS >= best.FPS && better)
-                    bestModeInds[res] = i;
+                if (better) {
+                    bestModeInds[res] = mode;
+                }
             }
         }
     }
 
+    // remove duplicate video modes
     QVector<VideoMode> newVideoModes;
     for (auto it = bestModeInds.rbegin(); it != bestModeInds.rend(); ++it) {
-        VideoMode mode = allVideoModes[it->second];
+        VideoMode mode = it->second;
 
         if (newVideoModes.empty()) {
             newVideoModes.push_back(mode);
@@ -280,11 +277,26 @@ void AVForm::selectBestModes(QVector<VideoMode>& allVideoModes)
             auto result = std::find_if(newVideoModes.cbegin(), newVideoModes.cend(),
                                        [size](VideoMode mode) { return getModeSize(mode) == size; });
 
-            if (result == newVideoModes.end())
+            if (result == newVideoModes.end()) {
                 newVideoModes.push_back(mode);
+            }
         }
     }
     allVideoModes = newVideoModes;
+
+    // select FPS near target
+    for(auto& mode : allVideoModes) {
+        qSort(mode.availableFPS);
+        // find FPS near target FPS
+        float fpsDiff = +INFINITY;
+        for(int i = 0; i < mode.availableFPS.length(); ++i) {
+            float newFPSdiff = qAbs(mode.availableFPS.at(i) - CAM_DEFAULT_FPS);
+            if(newFPSdiff < fpsDiff) {
+                fpsDiff = newFPSdiff;
+                mode.selectedFPSIdx = i;
+            }
+        }
+    }
 }
 
 void AVForm::fillCameraModesComboBox()
@@ -298,8 +310,8 @@ void AVForm::fillCameraModesComboBox()
 
         QString str;
         std::string pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format).toStdString();
-        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height,
-               mode.FPS, pixelFormat.c_str());
+        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height,
+               mode.availableFPS.at(mode.selectedFPSIdx), pixelFormat.c_str());
 
         if (mode.height && mode.width) {
             str += QString("%1p").arg(mode.height);
@@ -324,7 +336,7 @@ int AVForm::searchPreferredIndex()
     for (int i = 0; i < videoModes.size(); ++i) {
         VideoMode mode = videoModes[i];
         if (mode.width == prefRes.width() && mode.height == prefRes.height()
-                && (qAbs(mode.FPS - prefFPS) < 0.0001f)) {
+                && (qAbs(mode.selectedFPSIdx - prefFPS) < 0.0001f)) {
             return i;
         }
     }
@@ -339,9 +351,10 @@ void AVForm::fillScreenModesComboBox()
 
     for (int i = 0; i < videoModes.size(); ++i) {
         VideoMode mode = videoModes[i];
+        float fps = mode.selectedFPSIdx >= 0 ? mode.availableFPS.at(mode.selectedFPSIdx) : -1.0f;
         std::string pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format).toStdString();
         qDebug("%dx%d+%d,%d FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.x, mode.y,
-               mode.FPS, pixelFormat.c_str());
+               fps, pixelFormat.c_str());
 
         QString name;
         if (mode.width && mode.height)
@@ -405,7 +418,7 @@ void AVForm::updateVideoModes(int curIndex)
 
     if (isScreen) {
         QRect rect = videoSettings->getScreenRegion();
-        VideoMode mode(rect);
+        VideoMode mode(rect, DESKTOP_DEFAULT_FPS);
 
         videoSettings->setScreenGrabbed(true);
         videoModescomboBox->setCurrentIndex(videoModes.size() - 1);

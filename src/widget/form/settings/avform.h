@@ -102,6 +102,8 @@ private:
     CameraSource& camera;
     QVector<QPair<QString, QString>> videoDeviceList;
     QVector<VideoMode> videoModes;
+    static constexpr float DESKTOP_DEFAULT_FPS = 15.0f;
+    static constexpr float CAM_DEFAULT_FPS = 30.0f;
 };
 
 #endif

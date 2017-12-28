@@ -21,18 +21,22 @@
 #define VIDEOMODE_H
 
 #include <QRect>
+#include <QVector>
+
 #include <cstdint>
 
 struct VideoMode
 {
     int width, height;
     int x, y;
-    float FPS = -1.0f;
+    float defaultFPS = -1.0f;
+    int selectedFPSIdx = -1;
+    QVector<float> availableFPS{};
     uint32_t pixel_format = 0;
 
-    VideoMode(int width = 0, int height = 0, int x = 0, int y = 0, float FPS = -1.0f);
+    VideoMode(int width = 0, int height = 0, int x = 0, int y = 0, float additionalFPS = -1.0f);
 
-    explicit VideoMode(QRect rect);
+    explicit VideoMode(QRect rect, float fps = -1.0f);
 
     QRect toRect() const;
 

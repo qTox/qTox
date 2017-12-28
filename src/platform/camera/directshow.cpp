@@ -234,9 +234,13 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
 
                 mode.width = vcaps->MaxOutputSize.cx;
                 mode.height = vcaps->MaxOutputSize.cy;
-                mode.FPS = 1e7 / vcaps->MinFrameInterval;
-                if (!modes.contains(mode))
+                mode.availableFPS[0] = 1e7 / vcaps->MinFrameInterval;
+                int modeIdx = modes.indexOf(mode);
+                if (modeIdx == -1) {
                     modes.append(std::move(mode));
+                } else {
+                    modes[modeIdx].availableFPS.append(mode.availableFPS);
+                }
 
             nextformat:
                 if (type->pbFormat)

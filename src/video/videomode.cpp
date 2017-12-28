@@ -19,6 +19,8 @@
 
 #include "videomode.h"
 
+#include <QDebug>
+
 /**
  * @struct VideoMode
  * @brief Describes a video mode supported by a device.
@@ -29,25 +31,47 @@
  * @var unsigned short VideoMode::x, VideoMode::y
  * @brief Coordinates of upper-left corner.
  *
+ * @var float VideoMode::defaultFPS
+ * @brief The default FPS value for that video mode or <0 if invalid.
+ *
+ * @var int VideoMode::selectedFPSIdx
+ * @brief The selected FPS value for that video mode or <0 if invalid.
+ *
+ * @var QVector<float> VideoMode::availableFPS
+ * @brief Contains all available FPS values for this resolution.
+ *
  * @var float VideoMode::FPS
  * @brief Frames per second supported by the device at this resolution
  * @note a value < 0 indicates an invalid value
  */
 
-VideoMode::VideoMode(int width, int height, int x, int y, float FPS)
+/**
+ * @brief VideoMode::VideoMode
+ * @param width Displayed frame width
+ * @param height Displayed frame height
+ * @param x Coordinate of the upper left corner
+ * @param y Coordinate of the upper left corner
+ * @param additionalFPS Add a custom FPS value, usefulf for desktop sharing.
+ */
+VideoMode::VideoMode(int width, int height, int x, int y, float additionalFPS)
     : width(width)
     , height(height)
     , x(x)
     , y(y)
-    , FPS(FPS)
 {
+    if(additionalFPS < 0) {
+        return;
+    }
+
+    availableFPS.push_front(additionalFPS);
+    selectedFPSIdx = 0;
 }
 
-VideoMode::VideoMode(QRect rect)
-    : width(rect.width())
-    , height(rect.height())
-    , x(rect.x())
-    , y(rect.y())
+/**
+ * @brief VideoMode::VideoMode overloaded constructor
+ */
+VideoMode::VideoMode(QRect rect, float additionalFPS)
+    : VideoMode(rect.width(), rect.height(), rect.x(), rect.y(), additionalFPS)
 {
 }
 
@@ -58,8 +82,10 @@ QRect VideoMode::toRect() const
 
 bool VideoMode::operator==(const VideoMode& other) const
 {
+    // don't compare available FPS vector, so one can easily add FPS values
+    // during initialization
     return width == other.width && height == other.height && x == other.x && y == other.y
-           && FPS == other.FPS && pixel_format == other.pixel_format;
+           && selectedFPSIdx == other.selectedFPSIdx && pixel_format == other.pixel_format;
 }
 
 uint32_t VideoMode::norm(const VideoMode& other) const
@@ -72,5 +98,5 @@ uint32_t VideoMode::norm(const VideoMode& other) const
  */
 VideoMode::operator bool() const
 {
-    return width || height || (FPS < 0);
+    return width || height || selectedFPSIdx >= 0;
 }

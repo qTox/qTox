@@ -153,9 +153,11 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         return nullptr;
     }
 
-    float FPS = 5;
-    if (mode.FPS > 0.0f) {
-        FPS = mode.FPS;
+    float FPS = 15;
+    if (mode.selectedFPSIdx >= 0) {
+        FPS = mode.availableFPS.at(mode.selectedFPSIdx);
+    } else if(mode.defaultFPS > 0){
+        FPS = mode.defaultFPS;
     } else {
         qWarning() << "VideoMode could be invalid!";
     }
