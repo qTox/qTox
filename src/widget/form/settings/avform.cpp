@@ -149,8 +149,10 @@ void AVForm::showEvent(QShowEvent* event)
 void AVForm::open(const QString& devName, const VideoMode& mode)
 {
     QRect rect = mode.toRect();
-    videoSettings->setCamVideoRes(rect);
-    videoSettings->setCamVideoFPS(mode.defaultFPS);
+    if(mode) {
+        videoSettings->setCamVideoRes(rect);
+        videoSettings->setCamVideoFPS(mode.availableFPS.at(mode.selectedFPSIdx));
+    }
     camera.setupDevice(devName, mode);
 }
 
@@ -335,8 +337,10 @@ int AVForm::searchPreferredIndex()
 
     for (int i = 0; i < videoModes.size(); ++i) {
         VideoMode mode = videoModes[i];
+        // INFINITY is used to ensure the float comparison is false
+        float modeFPS = mode ? mode.availableFPS.at(mode.selectedFPSIdx) : +INFINITY;
         if (mode.width == prefRes.width() && mode.height == prefRes.height()
-                && (qAbs(mode.selectedFPSIdx - prefFPS) < 0.0001f)) {
+                && (qAbs(modeFPS - prefFPS) < 0.0001f)) {
             return i;
         }
     }
@@ -433,6 +437,9 @@ void AVForm::updateVideoModes(int curIndex)
     // but if we picked the largest, FPS would be bad and thus quality bad too.
     int mid = (videoModes.size() - 1) / 2;
     videoModescomboBox->setCurrentIndex(mid);
+
+    // open device with defaults to show video instantly
+    open(devName, videoModes.at(mid));
 }
 
 void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
