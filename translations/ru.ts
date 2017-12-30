@@ -89,11 +89,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>Включает экспериментальную поддержку аудиоданных с поддержкой эхоподавления, требует перезагрузки qTox.</translation>
+        <translation>Включает экспериментальную звуковую систему с поддержкой эхоподавления, требует перезагрузки qTox.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation>Включить экспериментальные аудиообъявления</translation>
+        <translation>Экспериментальная звуковая система</translation>
     </message>
     <message>
         <source>Audio quality</source>
