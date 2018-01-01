@@ -279,6 +279,7 @@ void GenericChatForm::show(ContentLayout* contentLayout)
 void GenericChatForm::showEvent(QShowEvent*)
 {
     msgEdit->setFocus();
+    headWidget->showCallConfirm();
 }
 
 bool GenericChatForm::event(QEvent* e)

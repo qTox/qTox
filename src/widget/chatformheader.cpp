@@ -202,13 +202,18 @@ void ChatFormHeader::showOutgoingCall(bool video)
     updateButtonsView();
 }
 
-void ChatFormHeader::showCallConfirm(bool video)
+void ChatFormHeader::createCallConfirm(bool video)
 {
     QWidget* btn = video ? videoButton : callButton;
     callConfirm = std::unique_ptr<CallConfirmWidget>(new CallConfirmWidget(btn));
-    callConfirm->show();
     connect(callConfirm.get(), &CallConfirmWidget::accepted, this, &ChatFormHeader::callAccepted);
     connect(callConfirm.get(), &CallConfirmWidget::rejected, this, &ChatFormHeader::callRejected);
+}
+
+void ChatFormHeader::showCallConfirm()
+{
+    if (callConfirm && !callConfirm->isVisible())
+        callConfirm->show();
 }
 
 void ChatFormHeader::removeCallConfirm()
