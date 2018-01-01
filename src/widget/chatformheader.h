@@ -60,7 +60,8 @@ public:
     void setMode(Mode mode);
 
     void showOutgoingCall(bool video);
-    void showCallConfirm(bool video);
+    void createCallConfirm(bool video);
+    void showCallConfirm();
     void removeCallConfirm();
 
     void updateCallButtons(bool online, bool audio, bool video = false);
@@ -69,6 +70,7 @@ public:
 
     void setAvatar(const QPixmap& img);
     QSize getAvatarSize() const;
+
 
     // TODO: Remove
     void addWidget(QWidget* widget, int stretch = 0, Qt::Alignment alignment = Qt::Alignment());

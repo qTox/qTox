@@ -484,6 +484,7 @@ void GenericChatForm::onCopyLogClicked()
 void GenericChatForm::focusInput()
 {
     msgEdit->setFocus();
+    headWidget->showCallConfirm();
 }
 
 void GenericChatForm::onChatMessageFontChanged(const QFont& font)
