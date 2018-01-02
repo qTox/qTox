@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_BR">
+<TS version="2.0" language="pt_BR">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Desabilitado</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Reproduzir um som ao mudar de volume.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Use o controle deslizante para definir o ganho do seu dispositivo de entrada entre % 1dB e % 2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -100,7 +92,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Qualidade de audio transmitida. Reduza essa configuração se sua largura de banda não é alta o suficiente ou se você deseja reduzir seu uso de internet. </translation>
+        <translation>Qualidade de audio transmitida. Reduza essa configuração se sua largura de banda não é alta o suficiente ou se você deseja reduzir seu uso de internet.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -117,6 +109,10 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     <message>
         <source>Very low (8 kbps)</source>
         <translation>Muito baixo (8 kbps)</translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -171,18 +167,18 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation>bug-tracker</translation>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">bug-tracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation>Escrevendo Relatórios de Erros Úteis</translation>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">Escrevendo Relatórios de Erros Úteis</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation>contribuidores</translation>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">contribuidores</translation>
     </message>
 </context>
 <context>
@@ -225,7 +221,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation>Aceitar automaticamente para esse contato está desabilitado</translation>
+        <translation>Aceitar automaticamente está desabilitado para esse contato</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
@@ -268,17 +264,17 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <translation>Você pode salvar comentários sobre esse contato aqui.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Escolher um diretório para aceitar arquivos automaticamente</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>Histórico apagado</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>O histórico de conversas com %1 foi apagado!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished">Escolher um diretório para aceitar arquivos automaticamente</translation>
     </message>
 </context>
 <context>
@@ -420,9 +416,12 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <translation><numerusform>Pronto para importar %n contato(s), clique em enviar para confirmar</numerusform>
-        <numerusform>Pronto para importar %n contatos, clique em enviar para confirmar</numerusform>
-        </translation></message>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation>
+            <numerusform>Pronto para importar %n contato(s), clique em enviar para confirmar</numerusform>
+            <numerusform>Pronto para importar %n contatos, clique em enviar para confirmar</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Import contacts</source>
         <translation>Importar contatos</translation>
@@ -586,46 +585,6 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <translation>%1 chamando</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Terminar chamada de vídeo</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Terminar chamada de áudio</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Silenciar microfone</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Silenciar chamada</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Cancelar chamada de vídeo</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Cancelar chamada de áudio</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Iniciar chamada de áudio</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Iniciar chamada de vídeo</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Desmutar microfone</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Desmutar chamada</translation>
-    </message>
-    <message>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>Falha ao enviar o arquivo &quot;%1&quot;</translation>
     </message>
@@ -696,22 +655,6 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <translation>%1 agora é %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Não é possível iniciar a vídeo chamada</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Não é possível iniciar a chamada de áudio</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>O microfone só pode ser cortado durante uma chamada</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>O som só pode ser desabilitado durante uma chamada</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Exportar para arquivo</translation>
     </message>
@@ -722,6 +665,73 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>A chamada com %1 terminou inesperadamente. %2</translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Não é possível iniciar a chamada de áudio</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Iniciar chamada de áudio</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Cancelar chamada de áudio</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Aceitar chamada de áudio</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Não é possível iniciar a vídeo chamada</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Iniciar chamada de vídeo</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Cancelar chamada de vídeo</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Aceitar chamada de vídeo</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">O som só pode ser desabilitado durante uma chamada</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Desmutar chamada</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Silenciar chamada</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">O microfone só pode ser cortado durante uma chamada</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Silenciar microfone</translation>
     </message>
 </context>
 <context>
@@ -1215,30 +1225,6 @@ instead of system taskbar.</source>
         <translation>Removidas</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Iniciar chamada de áudio</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Aceitar chamada de áudio</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Finalizar chamada de audio</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Iniciar chamada de vídeo</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Aceitar chamada de vídeo</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Finalizar chamada de vídeo</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation>Citar texto selecionado</translation>
     </message>
@@ -1273,30 +1259,6 @@ instead of system taskbar.</source>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <source>Start audio call</source>
-        <translation>Iniciar chamada de áudio</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Silenciar microfone</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Reativar microfone</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Silenciar chamada</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Desmutar chamada</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Terminar chamada de áudio</translation>
-    </message>
-    <message>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 usuários no grupo</translation>
@@ -1305,6 +1267,10 @@ instead of system taskbar.</source>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
         <translation>1 usuário em chat</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 alterou o título para %2</translation>
     </message>
 </context>
 <context>
@@ -2222,10 +2188,6 @@ Este ID inclui o código NoSpam (em azul) e a soma de verificação (em cinza).<
         <extracomment>deletion confirmation text</extracomment>
         <translation>Tem certeza de que deseja apagar a sua senha?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation>Os nomes de usuário do Tox não podem exceder %1 caracteres.</translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2735,6 +2697,15 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <source>Date format:</source>
         <translation>Formato de data:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2849,10 +2820,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <translation>Não foi possível adicionar o contato</translation>
     </message>
     <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 alterou o título para %2</translation>
-    </message>
-    <message>
         <source>Status</source>
         <translation>Status</translation>
     </message>
@@ -2887,14 +2854,18 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation><numerusform>%n Novo(s) pedido(s) de amizade</numerusform>
-        <numerusform>%n Novos pedidos de amizade</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n Novo(s) pedido(s) de amizade</numerusform>
+            <numerusform>%n Novos pedidos de amizade</numerusform>
+        </translation>
+    </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation><numerusform>%n Convite(s) de Novo Grupo</numerusform>
-        <numerusform>%n Convites de Novo Grupo</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n Convite(s) de Novo Grupo</numerusform>
+            <numerusform>%n Convites de Novo Grupo</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
