@@ -99,7 +99,11 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
 
     Settings& s = Settings::getInstance();
 
+#ifdef AUTOUPDATE_ENABLED
     bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
+#else
+    bodyUI->checkUpdates->setVisible(false);
+#endif
     bodyUI->checkUpdates->setChecked(s.getCheckUpdates());
 
     for (int i = 0; i < locales.size(); ++i) {

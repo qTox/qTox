@@ -258,7 +258,7 @@ int main(int argc, char* argv[])
 
 
 // Check whether we have an update waiting to be installed
-#if AUTOUPDATE_ENABLED
+#ifdef AUTOUPDATE_ENABLED
     if (AutoUpdater::isLocalUpdateReady())
         AutoUpdater::installLocalUpdate(); ///< NORETURN
 #endif

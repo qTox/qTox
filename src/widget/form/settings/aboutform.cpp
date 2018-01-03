@@ -165,6 +165,7 @@ AboutForm::~AboutForm()
  */
 void AboutForm::showUpdateProgress()
 {
+#ifdef AUTOUPDATE_ENABLED
     QString version = AutoUpdater::getProgressVersion();
     int value = AutoUpdater::getProgressValue();
 
@@ -182,6 +183,7 @@ void AboutForm::showUpdateProgress()
         bodyUI->updateProgress->setVisible(value != 0 && value != 100);
         bodyUI->updateText->setVisible(value != 0);
     }
+#endif
 }
 
 void AboutForm::hideEvent(QHideEvent*)

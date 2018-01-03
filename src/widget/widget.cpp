@@ -509,7 +509,9 @@ Widget::~Widget()
     }
 
     Translator::unregister(this);
+#ifdef AUTOUPDATE_ENABLED
     AutoUpdater::abortUpdates();
+#endif
     if (icon) {
         icon->hide();
     }

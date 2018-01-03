@@ -9,6 +9,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra dependencies" ON)
 option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
+# AUTOUPDATE is currently broken and thus disabled
+option(AUTOUPDATE "Enable the auto updater" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -270,8 +272,6 @@ set(${PROJECT_NAME}_SOURCES
   src/model/profile/iprofileinfo.h
   src/model/profile/profileinfo.cpp
   src/model/profile/profileinfo.h
-  src/net/autoupdate.cpp
-  src/net/autoupdate.h
   src/net/avatarbroadcaster.cpp
   src/net/avatarbroadcaster.h
   src/net/toxme.cpp
@@ -566,6 +566,14 @@ if(${USE_FILTERAUDIO})
     else()
          message(STATUS "not using filteraudio, libfilteraudio not found")
     endif()
+endif()
+
+if(${AUTOUPDATE} AND (WIN32 OR APPLE))
+    add_definitions(-DAUTOUPDATE_ENABLED=1)
+    set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+        src/net/autoupdate.cpp
+        src/net/autoupdate.h)
+    message(STATUS "using autoupdater")
 endif()
 
 if (MINGW)
