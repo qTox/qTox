@@ -8,6 +8,9 @@ machine:
     BUILD__: "x86_64"
     BTYPE__: "release"
 dependencies:
+  cache_directories:
+    - "~/workspace/i686/dep-cache/*"
+    - "~/workspace/x86_64/dep-cache/*"
   pre:
     - sudo apt-get update
     - sudo apt-get install zip
