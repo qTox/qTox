@@ -227,7 +227,7 @@ then
 
   wget https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
   check_sha256 "$OPENSSL_HASH" "openssl-$OPENSSL_VERSION.tar.gz"
-  bsdtar -xf openssl*.tar.gz
+  bsdtar --no-same-owner --no-same-permissions -xf openssl*.tar.gz
   rm openssl*.tar.gz
   cd openssl*
 
@@ -269,7 +269,7 @@ then
 
   wget https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz
   check_sha256 "$QT_HASH" "qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
-  bsdtar -xf qt*.tar.xz
+  bsdtar --no-same-owner --no-same-permissions -xf qt*.tar.xz
   rm qt*.tar.xz
   cd qt*
 
@@ -387,7 +387,7 @@ then
 
   wget https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_VERSION.tar.gz -O sqlcipher.tar.gz
   check_sha256 "$SQLCIPHER_HASH" "sqlcipher.tar.gz"
-  bsdtar -xf sqlcipher.tar.gz
+  bsdtar --no-same-owner --no-same-permissions -xf sqlcipher.tar.gz
   rm sqlcipher.tar.gz
   cd sqlcipher*
 
@@ -446,7 +446,7 @@ then
 
   wget https://www.ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.xz
   check_sha256 "$FFMPEG_HASH" "ffmpeg-$FFMPEG_VERSION.tar.xz"
-  bsdtar -xf ffmpeg*.tar.xz
+  bsdtar --no-same-owner --no-same-permissions -xf ffmpeg*.tar.xz
   rm ffmpeg*.tar.xz
   cd ffmpeg*
 
@@ -716,7 +716,7 @@ then
 
   wget https://fukuchi.org/works/qrencode/qrencode-$QRENCODE_VERSION.tar.bz2
   check_sha256 "$QRENCODE_HASH" "qrencode-$QRENCODE_VERSION.tar.bz2"
-  bsdtar -xf qrencode*.tar.bz2
+  bsdtar --no-same-owner --no-same-permissions -xf qrencode*.tar.bz2
   rm qrencode*.tar.bz2
   cd qrencode*
 
@@ -750,7 +750,7 @@ then
 
   wget https://sourceforge.net/projects/libexif/files/libexif/0.6.21/libexif-$EXIF_VERSION.tar.bz2
   check_sha256 "$EXIF_HASH" "libexif-$EXIF_VERSION.tar.bz2"
-  bsdtar -xf libexif*.tar.bz2
+  bsdtar --no-same-owner --no-same-permissions -xf libexif*.tar.bz2
   rm libexif*.tar.bz2
   cd libexif*
 
@@ -783,7 +783,7 @@ then
 
   wget https://archive.mozilla.org/pub/opus/opus-$OPUS_VERSION.tar.gz
   check_sha256 "$OPUS_HASH" "opus-$OPUS_VERSION.tar.gz"
-  bsdtar -xf opus*.tar.gz
+  bsdtar --no-same-owner --no-same-permissions -xf opus*.tar.gz
   rm opus*.tar.gz
   cd opus*
 
@@ -816,7 +816,7 @@ then
 
   wget https://download.libsodium.org/libsodium/releases/libsodium-$SODIUM_VERSION.tar.gz
   check_sha256 "$SODIUM_HASH" "libsodium-$SODIUM_VERSION.tar.gz"
-  bsdtar -xf libsodium*.tar.gz
+  bsdtar --no-same-owner --no-same-permissions -xf libsodium*.tar.gz
   rm libsodium*.tar.gz
   cd libsodium*
 
@@ -848,7 +848,7 @@ then
 
   wget http://storage.googleapis.com/downloads.webmproject.org/releases/webm/libvpx-$VPX_VERSION.tar.bz2
   check_sha256 "$VPX_HASH" "libvpx-$VPX_VERSION.tar.bz2"
-  bsdtar -xf libvpx-*.tar.bz2
+  bsdtar --no-same-owner --no-same-permissions -xf libvpx-*.tar.bz2
   rm libvpx*.tar.bz2
   cd libvpx*
 
@@ -891,9 +891,7 @@ then
 
   wget https://github.com/TokTok/c-toxcore/releases/download/v$TOXCORE_VERSION/c-toxcore-$TOXCORE_VERSION.tar.gz
   check_sha256 "$TOXCORE_HASH" "c-toxcore-$TOXCORE_VERSION.tar.gz"
-  set +euo pipefail
-  bsdtar -xf c-toxcore*.tar.gz
-  set -euo pipefail
+  bsdtar --no-same-owner --no-same-permissions -xf c-toxcore*.tar.gz
   rm c-toxcore*.tar.gz
   cd c-toxcore*
 
