@@ -78,6 +78,10 @@ mkdir -p "$CACHE_DIR"
 touch "$CACHE_DIR"/hash
 mkdir -p workspace/"$ARCH"/dep-cache
 
+# Purely for debugging
+ls -lbh "$CACHE_DIR"
+
+
 # If build.sh has changed, i.e. its hash doesn't match the previously stored one, and it's Stage 1
 # Then we want to rebuild everything from scratch
 if [ "`cat $CACHE_DIR/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] && [ "$STAGE" == "stage1" ]
@@ -87,7 +91,7 @@ then
   touch "$CACHE_DIR"/hash
 else
   # Copy over all pre-built dependencies
-  cp -a "$CACHE_DIR"/* workspace/"$ARCH"/dep-cache
+  cp -dR "$CACHE_DIR"/* workspace/"$ARCH"/dep-cache
 fi
 
 # Purely for debugging
@@ -102,13 +106,16 @@ sudo docker run --rm \
                 debian:stretch-slim \
                 /bin/bash /script/build.sh "$ARCH" "$BUILD_TYPE"
 
+# Purely for debugging
+ls -lbh workspace/"$ARCH"/dep-cache/
+
 # If we were building deps and it's any of the dependency building stages (Stage 1 or 2), copy over all the built dependencies to Travis cache
 if [ "`cat $CACHE_DIR/hash`" != "`sha256sum windows/cross-compile/build.sh`" ] && ( [ "$STAGE" == "stage1" ] || [ "$STAGE" == "stage2" ] )
 then
   # Clear out the cache
   rm -rf "$CACHE_DIR"/*
   touch "$CACHE_DIR"/hash
-  cp -a workspace/"$ARCH"/dep-cache/* "$CACHE_DIR"
+  cp -dR workspace/"$ARCH"/dep-cache/* "$CACHE_DIR"
 fi
 
 # Update the hash
