@@ -9,24 +9,16 @@ machine:
     BTYPE__: "release"
 dependencies:
   cache_directories:
-    - "~/workspace/i686/dep-cache/*"
-    - "~/workspace/x86_64/dep-cache/*"
+    - "~/cache/*"
   pre:
     - sudo apt-get update
     - sudo apt-get install zip
     - docker info
+    - ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage1
+    - ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage2
 compile:
   override:
-    - mkdir -p ~/workspace
-    - mkdir -p ~/script
-    - cp -av ./windows/cross-compile/build.sh ~/script/
-
-    - docker run --rm
-      -v /home/ubuntu/workspace:/workspace
-      -v /home/ubuntu/script:/script
-      -v /home/ubuntu/qTox:/qtox
-      debian:stretch-slim
-      /bin/bash /script/build.sh "$BUILD__" "$BTYPE__"
+    - ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage3
 
     - ls -al /home/ubuntu/workspace/"$BUILD__"/qtox/"$BTYPE__"/
     - ls -al /home/ubuntu/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe
