@@ -112,11 +112,10 @@ search_dependency(TOXAV               PACKAGE toxav            OPTIONAL)
 search_dependency(TOXENCRYPTSAVE      PACKAGE toxencryptsave   OPTIONAL)
 
 # If not found, use automake toxcore libraries
-if (NOT TOXCORE_FOUND OR
-        NOT TOXAV_FOUND OR
-        NOT TOXENCRYPTSAVE_FOUND)
-    search_dependency(TOXCORE         PACKAGE libtoxcore)
-    search_dependency(TOXAV           PACKAGE libtoxav)
+# We only check for TOXCORE, because the other two are gone in 0.2.0.
+if (NOT TOXCORE_FOUND)
+  search_dependency(TOXCORE         PACKAGE libtoxcore)
+  search_dependency(TOXAV           PACKAGE libtoxav)
 endif()
 
 search_dependency(OPENAL              PACKAGE openal)

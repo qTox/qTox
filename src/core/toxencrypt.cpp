@@ -18,6 +18,7 @@
 */
 
 #include "toxencrypt.h"
+#include <tox/tox.h>  // TOX_VERSION_IS_API_COMPATIBLE
 #include <tox/toxencryptsave.h>
 
 #include <QByteArray>
@@ -155,11 +156,17 @@ QByteArray ToxEncrypt::decryptPass(const QString& password, const QByteArray& ci
  */
 std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password)
 {
-    Tox_Pass_Key* passKey = tox_pass_key_new();
-    QByteArray pass = password.toUtf8();
+    const QByteArray pass = password.toUtf8();
     TOX_ERR_KEY_DERIVATION error;
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+    Tox_Pass_Key* const passKey = tox_pass_key_derive(
+        reinterpret_cast<const uint8_t*>(pass.constData()),
+        static_cast<size_t>(pass.length()), &error);
+#else
+    Tox_Pass_Key* const passKey = tox_pass_key_new();
     tox_pass_key_derive(passKey, reinterpret_cast<const uint8_t*>(pass.constData()),
                         static_cast<size_t>(pass.length()), &error);
+#endif
 
     if (error != TOX_ERR_KEY_DERIVATION_OK) {
         tox_pass_key_free(passKey);
@@ -195,11 +202,17 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, 
         return std::unique_ptr<ToxEncrypt>{};
     }
 
-    Tox_Pass_Key* passKey = tox_pass_key_new();
     QByteArray pass = password.toUtf8();
     TOX_ERR_KEY_DERIVATION keyError;
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+    Tox_Pass_Key* const passKey = tox_pass_key_derive_with_salt(
+        reinterpret_cast<const uint8_t*>(pass.constData()),
+        static_cast<size_t>(pass.length()), salt, &keyError);
+#else
+    Tox_Pass_Key* const passKey = tox_pass_key_new();
     tox_pass_key_derive_with_salt(passKey, reinterpret_cast<const uint8_t*>(pass.constData()),
                                   static_cast<size_t>(pass.length()), salt, &keyError);
+#endif
 
     if (keyError != TOX_ERR_KEY_DERIVATION_OK) {
         tox_pass_key_free(passKey);
