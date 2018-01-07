@@ -97,6 +97,9 @@ fi
 # Purely for debugging
 ls -lbh "$CACHE_DIR"
 
+# Purely for debugging
+ls -lbh "$PWD"
+
 # Build
 sudo docker run --rm \
                 -v "$PWD/workspace":/workspace \

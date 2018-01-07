@@ -19,13 +19,14 @@ dependencies:
 compile:
   override:
     - ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage3
+    - ls -al ~/
 
-    - ls -al /home/ubuntu/workspace/"$BUILD__"/qtox/"$BTYPE__"/
-    - ls -al /home/ubuntu/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe
+    - ls -al /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/
+    - ls -al /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe
     
     - mkdir -p $CIRCLE_ARTIFACTS/"$BUILD__"/
-    - cp -av /home/ubuntu/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BTYPE__".exe
-    - cd /home/ubuntu/workspace/"$BUILD__"/qtox/"$BTYPE__"/ ; zip -r $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BUILD__"_"$BTYPE__".zip *
+    - cp -av /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BTYPE__".exe
+    - cd /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/ ; zip -r $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BUILD__"_"$BTYPE__".zip *
 test:
   override:
     - echo "no tests yet"
