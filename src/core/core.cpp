@@ -235,26 +235,6 @@ void Core::makeTox(QByteArray savedata)
 }
 
 /**
- * @brief Creates CoreAv instance. Should be called after makeTox method
- */
-void Core::makeAv()
-{
-    if (!tox) {
-        qCritical() << "No Tox instance, can't create ToxAV";
-        return;
-    }
-    av = new CoreAV(tox);
-    if (!av->getToxAv()) {
-        qCritical() << "Toxav core failed to start";
-        emit failedToStart();
-    }
-    for (const auto& callback : toCallWhenAvReady) {
-        callback(av);
-    }
-    toCallWhenAvReady.clear();
-}
-
-/**
  * @brief Initializes the core, must be called before anything else
  */
 void Core::start(const QByteArray& savedata)
@@ -263,7 +243,6 @@ void Core::start(const QByteArray& savedata)
     if (isNewProfile) {
         qDebug() << "Creating a new profile";
         makeTox(QByteArray());
-        makeAv();
         setStatusMessage(tr("Toxing on qTox"));
         setUsername(profile.getName());
     } else {
@@ -274,7 +253,6 @@ void Core::start(const QByteArray& savedata)
         }
 
         makeTox(savedata);
-        makeAv();
     }
 
     qsrand(time(nullptr));
@@ -282,6 +260,13 @@ void Core::start(const QByteArray& savedata)
         ready = true;
         GUI::setEnabled(true);
         return;
+    }
+
+    // toxcore is successfully created, create toxav
+    av = new CoreAV(tox);
+    if (!av->getToxAv()) {
+        qCritical() << "Toxav failed to start";
+        emit failedToStart();
     }
 
     // set GUI with user and statusmsg
@@ -332,6 +317,7 @@ void Core::start(const QByteArray& savedata)
 
     process(); // starts its own timer
     av->start();
+    emit avReady();
 }
 
 /* Using the now commented out statements in checkConnection(), I watched how
@@ -1378,11 +1364,6 @@ QString Core::getPeerName(const ToxPk& id) const
 bool Core::isReady() const
 {
     return av && av->getToxAv() && tox && ready;
-}
-
-void Core::callWhenAvReady(std::function<void(CoreAV* av)>&& toCall)
-{
-    toCallWhenAvReady.emplace_back(std::move(toCall));
 }
 
 /**

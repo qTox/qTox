@@ -81,7 +81,6 @@ public:
     QPair<QByteArray, QByteArray> getKeypair() const;
 
     bool isReady() const;
-    void callWhenAvReady(std::function<void(CoreAV* av)>&& toCall);
 
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
 
@@ -170,6 +169,7 @@ signals:
 
     void failedToStart();
     void badProxy();
+    void avReady();
 
     void fileSendStarted(ToxFile file);
     void fileReceiveRequested(ToxFile file);
@@ -235,7 +235,6 @@ private:
     QMutex messageSendMutex;
     bool ready;
     const ICoreSettings* const s;
-    std::vector<std::function<void(CoreAV* av)>> toCallWhenAvReady;
 
     static QThread* coreThread;
 
