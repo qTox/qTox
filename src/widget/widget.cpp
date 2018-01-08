@@ -244,7 +244,6 @@ void Widget::init()
 
     const Settings& s = Settings::getInstance();
 
-    core->callWhenAvReady([this](CoreAV* av){connect(av, &CoreAV::avEnd, this, &Widget::onCallEnd);});
     connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
     connect(core, &Core::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
     connect(ui->addButton, &QPushButton::clicked, this, &Widget::onAddClicked);
@@ -954,21 +953,18 @@ void Widget::outgoingNotification()
     audio.playMono16Sound(Audio::getSound(Audio::Sound::OutgoingCall));
 }
 
+/**
+ * @brief Widget::onStopNotification Stop the notification sound.
+ */
+void Widget::onStopNotification()
+{
+    Audio::getInstance().stopLoop();
+}
+
 void Widget::onRejectCall(uint32_t friendId)
 {
-    Audio::getInstance().stopLoop();
     CoreAV* av = Core::getInstance()->getAv();
     av->cancelCall(friendId);
-}
-
-void Widget::onAcceptCall(uint32_t friendId)
-{
-    Audio::getInstance().stopLoop();
-}
-
-void Widget::onCallEnd(uint32_t friendId)
-{
-    Audio::getInstance().stopLoop();
 }
 
 void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
@@ -1000,8 +996,8 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
     connect(friendForm, &ChatForm::incomingNotification, this, &Widget::incomingNotification);
     connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
+    connect(friendForm, &ChatForm::stopNotification, this, &Widget::onStopNotification);
     connect(friendForm, &ChatForm::rejectCall, this, &Widget::onRejectCall);
-    connect(friendForm, &ChatForm::acceptCall, this, &Widget::onAcceptCall);
 
     connect(widget, &FriendWidget::newWindowOpened, this, &Widget::openNewDialog);
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);

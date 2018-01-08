@@ -217,8 +217,7 @@ private slots:
     void outgoingNotification();
     void incomingNotification(uint32_t friendId);
     void onRejectCall(uint32_t friendId);
-    void onAcceptCall(uint32_t friendId);
-    void onCallEnd(uint32_t friendId);
+    void onStopNotification();
 
 private:
     // QMainWindow overrides
