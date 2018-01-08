@@ -30,7 +30,6 @@
 #include "src/widget/tool/screenshotgrabber.h"
 
 class CallConfirmWidget;
-class CoreAV;
 class FileTransferInstance;
 class Friend;
 class History;
@@ -57,8 +56,10 @@ public:
     static const QString ACTION_PREFIX;
 
 signals:
+
     void incomingNotification(uint32_t friendId);
     void outgoingNotification();
+    void stopNotification();
     void rejectCall(uint32_t friendId);
     void acceptCall(uint32_t friendId);
 
