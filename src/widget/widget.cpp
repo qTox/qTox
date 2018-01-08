@@ -963,7 +963,7 @@ void Widget::onStopNotification()
 
 void Widget::onRejectCall(uint32_t friendId)
 {
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* const av = Core::getInstance()->getAv();
     av->cancelCall(friendId);
 }
 

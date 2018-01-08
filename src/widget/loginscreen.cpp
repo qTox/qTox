@@ -20,7 +20,6 @@
 
 #include "loginscreen.h"
 #include "ui_loginscreen.h"
-#include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settings.h"
@@ -29,11 +28,12 @@
 #include "src/widget/tool/profileimporter.h"
 #include "src/widget/translator.h"
 #include <QDebug>
+#include <QDialog>
 #include <QMessageBox>
 #include <QToolButton>
 
 LoginScreen::LoginScreen(QWidget* parent)
-    : QWidget(parent)
+    : QDialog(parent)
     , ui(new Ui::LoginScreen)
     , quitShortcut{QKeySequence(Qt::CTRL + Qt::Key_Q), this}
 {
@@ -105,6 +105,11 @@ void LoginScreen::reset()
     ui->autoLoginCB->blockSignals(false);
 }
 
+Profile *LoginScreen::getProfile() const
+{
+    return profile;
+}
+
 bool LoginScreen::event(QEvent* event)
 {
     switch (event->type()) {
@@ -117,7 +122,6 @@ bool LoginScreen::event(QEvent* event)
     default:
         break;
     }
-
 
     return QWidget::event(event);
 }
@@ -167,19 +171,16 @@ void LoginScreen::onCreateNewProfile()
         return;
     }
 
-    Profile* profile = Profile::createProfile(name, pass);
+    profile = Profile::createProfile(name, pass);
     if (!profile) {
         // Unknown error
         QMessageBox::critical(this, tr("Couldn't create a new profile"),
                               tr("Unknown error: Couldn't create a new profile.\nIf you "
                                  "encountered this error, please report it."));
+        done(-1);
         return;
     }
-
-    Nexus& nexus = Nexus::getInstance();
-
-    nexus.setProfile(profile);
-    nexus.showMainGUI();
+    done(0);
 }
 
 void LoginScreen::onLoginUsernameSelected(const QString& name)
@@ -223,7 +224,7 @@ void LoginScreen::onLogin()
         return;
     }
 
-    Profile* profile = Profile::loadProfile(name, pass);
+    profile = Profile::loadProfile(name, pass);
     if (!profile) {
         if (!ProfileLocker::isLockable(name)) {
             QMessageBox::critical(this, tr("Couldn't load this profile"),
@@ -236,11 +237,7 @@ void LoginScreen::onLogin()
             return;
         }
     }
-
-    Nexus& nexus = Nexus::getInstance();
-
-    nexus.setProfile(profile);
-    nexus.showMainGUI();
+    done(0);
 }
 
 void LoginScreen::onPasswordEdited()
