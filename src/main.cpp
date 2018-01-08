@@ -323,15 +323,30 @@ int main(int argc, char* argv[])
         }
     }
 
+    Profile* profile = nullptr;
+    int retCode = 0; // 0 means success, < 0 means error
+
     // Autologin
-    if (autoLogin) {
-        if (Profile::exists(profileName)) {
-            if (!Profile::isEncrypted(profileName)) {
-                Profile* profile = Profile::loadProfile(profileName);
-                if (profile)
-                    Nexus::getInstance().setProfile(profile);
-            }
-            Settings::getInstance().setCurrentProfile(profileName);
+    if (autoLogin && Profile::exists(profileName) &&
+        !Profile::isEncrypted(profileName)) {
+            profile = Profile::loadProfile(profileName);
+    } else {
+        LoginScreen* loginScreen = new LoginScreen();
+        retCode = loginScreen->exec();
+
+        profile = loginScreen->getProfile();
+        delete loginScreen;
+    }
+
+    if(profile) {
+        Nexus::getInstance().setProfile(profile);
+        Settings::getInstance().setCurrentProfile(profileName);
+    } else {
+        // TODO: detect errors with autologin
+        if(retCode == 0) {
+            return EXIT_SUCCESS;
+        } else {
+            return EXIT_FAILURE;
         }
     }
 

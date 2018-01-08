@@ -23,13 +23,15 @@
 
 #include <QShortcut>
 #include <QToolButton>
-#include <QWidget>
+#include <QDialog>
+
+class Profile;
 
 namespace Ui {
 class LoginScreen;
 }
 
-class LoginScreen : public QWidget
+class LoginScreen : public QDialog
 {
     Q_OBJECT
 
@@ -37,6 +39,7 @@ public:
     explicit LoginScreen(QWidget* parent = 0);
     ~LoginScreen();
     void reset();
+    Profile* getProfile();
 
     bool event(QEvent* event) final override;
 
@@ -68,6 +71,7 @@ private:
 private:
     Ui::LoginScreen* ui;
     QShortcut quitShortcut;
+    Profile* profile;
 };
 
 #endif // LOGINSCREEN_H
