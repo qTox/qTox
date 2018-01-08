@@ -323,16 +323,23 @@ int main(int argc, char* argv[])
         }
     }
 
+    Profile* profile = nullptr;
+
     // Autologin
-    if (autoLogin) {
-        if (Profile::exists(profileName)) {
-            if (!Profile::isEncrypted(profileName)) {
-                Profile* profile = Profile::loadProfile(profileName);
-                if (profile)
-                    Nexus::getInstance().setProfile(profile);
-            }
-            Settings::getInstance().setCurrentProfile(profileName);
-        }
+    if (autoLogin && Profile::exists(profileName) &&
+        !Profile::isEncrypted(profileName)) {
+        profile = Profile::loadProfile(profileName);
+    } else {
+        LoginScreen loginScreen{};
+        loginScreen.exec();
+        profile = loginScreen.getProfile();
+    }
+
+    if (profile) {
+        Nexus::getInstance().setProfile(profile);
+        Settings::getInstance().setCurrentProfile(profileName);
+    } else {
+        return EXIT_FAILURE;
     }
 
     Nexus& nexus = Nexus::getInstance();

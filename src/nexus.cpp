@@ -60,9 +60,7 @@ Nexus::Nexus(QObject* parent)
     : QObject(parent)
     , profile{nullptr}
     , widget{nullptr}
-    , loginScreen{nullptr}
     , running{true}
-    , quitOnLastWindowClosed{true}
 {
 }
 
@@ -70,8 +68,6 @@ Nexus::~Nexus()
 {
     delete widget;
     widget = nullptr;
-    delete loginScreen;
-    loginScreen = nullptr;
     delete profile;
     profile = nullptr;
     Settings::getInstance().saveGlobal();
@@ -109,17 +105,8 @@ void Nexus::start()
     qRegisterMetaType<ToxId>("ToxId");
     qRegisterMetaType<GroupInvite>("GroupInvite");
 
-    loginScreen = new LoginScreen();
-
-    // We need this LastWindowClosed dance because the LoginScreen may be shown
-    // and closed in a processEvents() loop before the start of the real
-    // exec() event loop, meaning we wouldn't receive the onLastWindowClosed,
-    // and so we wouldn't have a chance to tell the processEvents() loop to quit.
-    qApp->setQuitOnLastWindowClosed(false);
-    connect(qApp, &QApplication::lastWindowClosed, this, &Nexus::onLastWindowClosed);
-    connect(loginScreen, &LoginScreen::closed, this, &Nexus::onLastWindowClosed);
-
 #ifdef Q_OS_MAC
+    // TODO: still needed?
     globalMenuBar = new QMenuBar(0);
     dockMenu = new QMenu(globalMenuBar);
 
@@ -150,15 +137,9 @@ void Nexus::start()
     windowMapper = new QSignalMapper(this);
     connect(windowMapper, SIGNAL(mapped(QObject*)), this, SLOT(onOpenWindow(QObject*)));
 
-    connect(loginScreen, &LoginScreen::windowStateChanged, this, &Nexus::onWindowStateChanged);
-
     retranslateUi();
 #endif
-
-    if (profile)
-        showMainGUI();
-    else
-        showLogin();
+    showMainGUI();
 }
 
 /**
@@ -172,19 +153,23 @@ void Nexus::showLogin()
     delete profile;
     profile = nullptr;
 
-    loginScreen->reset();
-    loginScreen->move(QApplication::desktop()->screen()->rect().center()
-                      - loginScreen->rect().center());
-    loginScreen->show();
-    quitOnLastWindowClosed = true;
+    LoginScreen loginScreen;
+    loginScreen.exec();
+
+    profile = loginScreen.getProfile();
+
+    if (profile) {
+        Nexus::getInstance().setProfile(profile);
+        Settings::getInstance().setCurrentProfile(profile->getName());
+        showMainGUI();
+    } else {
+        quit();
+    }
 }
 
 void Nexus::showMainGUI()
 {
     assert(profile);
-
-    quitOnLastWindowClosed = false;
-    loginScreen->close();
 
     // Create GUI
     widget = Widget::getInstance();
@@ -336,12 +321,6 @@ bool Nexus::tryRemoveFile(const QString& filepath)
     bool writable = tmp.open(QIODevice::WriteOnly);
     tmp.remove();
     return writable;
-}
-
-void Nexus::onLastWindowClosed()
-{
-    if (quitOnLastWindowClosed)
-        quit();
 }
 
 #ifdef Q_OS_MAC

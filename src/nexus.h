@@ -25,7 +25,6 @@
 
 class Widget;
 class Profile;
-class LoginScreen;
 class Core;
 
 #ifdef Q_OS_MAC
@@ -85,9 +84,6 @@ private:
     QActionGroup* windowActions = nullptr;
 #endif
 
-private slots:
-    void onLastWindowClosed();
-
 private:
     explicit Nexus(QObject* parent = 0);
     ~Nexus();
@@ -95,9 +91,7 @@ private:
 private:
     Profile* profile;
     Widget* widget;
-    LoginScreen* loginScreen;
     bool running;
-    bool quitOnLastWindowClosed;
 };
 
 #endif // NEXUS_H
