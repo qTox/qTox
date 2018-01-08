@@ -25,7 +25,6 @@
 
 class Widget;
 class Profile;
-class LoginScreen;
 class Core;
 
 #ifdef Q_OS_MAC
@@ -95,9 +94,7 @@ private:
 private:
     Profile* profile;
     Widget* widget;
-    LoginScreen* loginScreen;
     bool running;
-    bool quitOnLastWindowClosed;
 };
 
 #endif // NEXUS_H
