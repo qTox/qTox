@@ -29,4 +29,4 @@ compile:
     - cd /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/ ; zip -r $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BUILD__"_"$BTYPE__".zip *
 test:
   override:
-    - echo "no tests yet"
+    - "true"
