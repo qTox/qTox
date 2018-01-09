@@ -138,8 +138,8 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 ```
 
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
-[64 bit release]: https://build.tox.chat/view/qtox/job/qTox-cmake-stable_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox-cmake-stable_build_windows_x86-64_release.zip
-[32 bit release]: https://build.tox.chat/view/qtox/job/qTox-cmake-stable_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox-cmake-stable_build_windows_x86_release.zip
+[64 bit release]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86-64_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
+[32 bit release]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
 [32nightly]: https://build.tox.chat/view/qtox/job/qTox-cmake-nightly_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox-cmake-nightly_build_windows_x86_release.zip
 [64nightly]: https://build.tox.chat/view/qtox/job/qTox-cmake-nightly_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox-cmake-nightly_build_windows_x86-64_release.zip
 [Arch]: /INSTALL.md#arch
