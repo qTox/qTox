@@ -9,13 +9,14 @@ machine:
     BTYPE__: "release"
 dependencies:
   cache_directories:
-    - "~/cache/*"
+    - "~/cache"
   pre:
     - sudo apt-get update
     - sudo apt-get install zip
     - docker info
     - ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage1
     - ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage2
+    - ls -al ~/cache
 compile:
   override:
     - ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage3
