@@ -591,11 +591,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation>%1 звонит</translation>
+        <translation>Входящий звонок от %1</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation>Звонит %1</translation>
+        <translation>Вызов %1</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
