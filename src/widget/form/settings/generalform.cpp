@@ -58,6 +58,7 @@ static QStringList locales = {
     "lt",
     "jbo",
     "hu",
+    "mk",
     "nl",
     "ja",
     "no_nb",
