@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sr_Latn" sourcelanguage="en_US">
+<TS version="2.0" language="sr_Latn" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Onemogućeno</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Svira probni zvuk pri promeni izlazne jačine.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Klizačem poedesite pojačanje vašeg ulaznog uređaja u opsegu od  %1dB do %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <source>Very low (8 kbps)</source>
         <translation>vrlo nizak (8 kbps)</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,18 +168,18 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation>bubolovcu</translation>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">bubolovcu</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation>„Pisanje korisnih prijava grešaka“</translation>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">„Pisanje korisnih prijava grešaka“</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation>doprinosioca</translation>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">doprinosioca</translation>
     </message>
 </context>
 <context>
@@ -269,17 +265,17 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Ovde možete sačuvati komentare o kontaktu.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Izaberite fasiklu za automatski prijem</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>Istorijat je uklonjen</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>Istorijat ćaskanja sa %1 je uklonjen!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Spreman da uvezem %n kontakt, kliknite na slanje za potvrdu</numerusform>
             <numerusform>Spreman da uvezem %n kontakta, kliknite na slanje za potvrdu</numerusform>
@@ -598,48 +595,8 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>%1 zove</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Prekini video poziv</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>rekini audio poziv</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Utišaj mikrofon</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Utišaj poziv</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>Pozivam %1</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Ozkaži video poziv</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Otkaži audio poziv</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Započni audio poziv</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Započni video poziv</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Uključi mikrofon</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Uključi poziv</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -701,22 +658,6 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>%1 je sad %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Ne mogu da započnem vido poziv</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Ne mogu da započnem audio poziv</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Mikrofon se može utišati samo tokom poziva</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Zvuk se može isključiti samo tokom poziva</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Izvezi u fajl</translation>
     </message>
@@ -727,6 +668,73 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Zvanje %1  neočekivano završi. %2</translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Ne mogu da započnem audio poziv</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Započni audio poziv</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Otkaži audio poziv</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Prihvati audio poziv</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Ne mogu da započnem vido poziv</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Započni video poziv</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Ozkaži video poziv</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Prihvati video poziv</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Zvuk se može isključiti samo tokom poziva</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Utišaj poziv</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Mikrofon se može utišati samo tokom poziva</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Utišaj mikrofon</translation>
     </message>
 </context>
 <context>
@@ -1215,30 +1223,6 @@ umesto sistemske trake zadataka.</translation>
         <translation>Sačuvaj dnevnik ćaskanja</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Započni audio poziv</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Prihvati audio poziv</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Okončaj audio poziv</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Započni video poziv</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Prihvati video poziv</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Okončaj video poziv</translation>
-    </message>
-    <message>
         <source>Clear displayed messages</source>
         <translation>Očisti prikazane poruke</translation>
     </message>
@@ -1295,28 +1279,8 @@ umesto sistemske trake zadataka.</translation>
         <translation>%1 korisnika u ćakanju</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Započni audio poziv</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Utišaj mikrofon</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Pojačaj mikrofon</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Utišaj poziv</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Pojačaj poziv</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Okončaj audio poziv</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 postavi naslov na %2</translation>
     </message>
 </context>
 <context>
@@ -2239,10 +2203,6 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <extracomment>deletion confirmation text</extracomment>
         <translation>Stvarno ste sigurni da želite da uklonite lozinku?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation>Korisnička imena za Tox ne smeju premašiti %1 znakova.</translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2752,6 +2712,15 @@ Biće instalirana po ponovnom pokretanju qTox-a.</translation>
         <source>Date format:</source>
         <translation>Format datuma:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2842,10 +2811,6 @@ Biće instalirana po ponovnom pokretanju qTox-a.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Ne mogu da zahtevam prijateljstvo</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 postavi naslov na %2</translation>
     </message>
     <message>
         <source>Status</source>

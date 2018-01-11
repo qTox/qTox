@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nb_NO">
+<TS version="2.0" language="nb_NO">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Avskrudd</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Spill en testlyd mens utgangslydstyrken endres.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Bruk en glidebryter for å sette forsterkningsnivå for din inndataenhet fra %1dB til %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -118,6 +110,10 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <source>Very low (8 kbps)</source>
         <translation>Veldig lav (8 kbps)</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -171,17 +167,17 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">feilrettingsoversikt</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation>skriving av nyttige feilrapporter</translation>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">skriving av nyttige feilrapporter</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished">bidragsytere</translation>
     </message>
 </context>
@@ -268,17 +264,17 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation type="unfinished">Du kan lagre en kommentar om denne brukeren her.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Velg en mappe for auto-aksepterte filer</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">Historikk fjernet</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">Sludrehistorikk med %1 fjernet!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished">Velg en mappe for auto-aksepterte filer</translation>
     </message>
 </context>
 <context>
@@ -420,6 +416,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Klar til å importere %n kontakt, klikk send for å bekrefte</numerusform>
             <numerusform>Klar til å importere %n kontakter, klikk send for å bekrefte</numerusform>
@@ -585,46 +582,6 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation>%1 ringer</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Avslutt videosamtale</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Avslutt audiosamtale</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Demp mikrofon</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Demp samtale</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Avbryt videosamtale</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Avbryt audiosamtale</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Start audiosamtale</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Start videosamtale</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Fjern demping av mikrofon</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Fjern demping av samtale</translation>
-    </message>
-    <message>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>Mislyktes å sende fil &quot;%1&quot;</translation>
     </message>
@@ -700,22 +657,6 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation>%1 er nå %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Kan ikke starte videosamtale</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Kan ikke starte lydsamtale</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Mikrofonen kan bare slås av under en samtale</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Lyd kan bare skrus av under en samtale</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Eksporter til fil</translation>
     </message>
@@ -726,6 +667,73 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Uventet slutt på samtale med %1. %2</translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Kan ikke starte lydsamtale</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Avbryt audiosamtale</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Godta lydsamtale</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Kan ikke starte videosamtale</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Start videosamtale</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Avslutt videosamtale</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Avbryt videosamtale</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Godta lydsamtale</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Lyd kan bare skrus av under en samtale</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Fjern demping av samtale</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Demp samtale</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Mikrofonen kan bare slås av under en samtale</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Fjern demping av mikrofon</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Demp mikrofon</translation>
     </message>
 </context>
 <context>
@@ -1218,30 +1226,6 @@ instead of system taskbar.</source>
         <translation>Fjernet</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Start lydsamtale</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Godta lydsamtale</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Avslutt lydsamtale</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Start videosamtale</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Godta lydsamtale</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Avslutt videosamtale</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation>Siter valgt tekst</translation>
     </message>
@@ -1281,33 +1265,13 @@ instead of system taskbar.</source>
         <translation>%1 brukere i chatten</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Start audiosamtale</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Demp mikrofon</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Fjern demping av mikrofon</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Demp samtale</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Fjern demping av samtale</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Avslutt audiosamtale</translation>
-    </message>
-    <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
         <translation>1 bruker i sludring</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 har endret navn på tittelen til %2</translation>
     </message>
 </context>
 <context>
@@ -2227,10 +2191,6 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Er du sikker på at du vil slette passordet ditt?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation>Brukernavn for Tox kan ikke overstige %1 tegn.</translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2740,6 +2700,15 @@ Den vil bli installert når qTox restarter.</translation>
         <source>Date format:</source>
         <translation>Datoformat:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2852,10 +2821,6 @@ Den vil bli installert når qTox restarter.</translation>
     <message>
         <source>Search Contacts</source>
         <translation>Søk i kontakter</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 har endret navn på tittelen til %2</translation>
     </message>
     <message>
         <source>Status</source>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sr" sourcelanguage="en_US">
+<TS version="2.0" language="sr" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Онемогућено</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Свира пробни звук при промени излазне јачине.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Клизачем поедесите појачање вашег улазног уређаја у опсегу од  %1dB до %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ which may lead to problems with video calls.</source>
         <source>Very low (8 kbps)</source>
         <translation>врло низак (8 kbps)</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,18 +168,18 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation>буболовцу</translation>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">буболовцу</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation>„Писање корисних пријава грешака“</translation>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">„Писање корисних пријава грешака“</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation>доприносиоца</translation>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">доприносиоца</translation>
     </message>
 </context>
 <context>
@@ -269,17 +265,17 @@ which may lead to problems with video calls.</source>
         <translation>Овде можете сачувати коментаре о контакту.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Изаберите фасиклу за аутоматски пријем</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>Историјат је уклоњен</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>Историјат ћаскања са %1 је уклоњен!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Спреман да увезем %n контакт, кликните на слање за потврду</numerusform>
             <numerusform>Спреман да увезем %n контакта, кликните на слање за потврду</numerusform>
@@ -598,48 +595,8 @@ which may lead to problems with video calls.</source>
         <translation>%1 зове</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Прекини видео позив</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>рекини аудио позив</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Утишај микрофон</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Утишај позив</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>Позивам %1</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Озкажи видео позив</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Откажи аудио позив</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Започни аудио позив</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Започни видео позив</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Укључи микрофон</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Укључи позив</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -701,22 +658,6 @@ which may lead to problems with video calls.</source>
         <translation>%1 је сад %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Не могу да започнем видо позив</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Не могу да започнем аудио позив</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Микрофон се може утишати само током позива</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Звук се може искључити само током позива</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Извези у фајл</translation>
     </message>
@@ -727,6 +668,73 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Звање %1  неочекивано заврши. %2</translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Не могу да започнем аудио позив</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Започни аудио позив</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Откажи аудио позив</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Прихвати аудио позив</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Не могу да започнем видо позив</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Започни видео позив</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Озкажи видео позив</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Прихвати видео позив</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Звук се може искључити само током позива</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Утишај позив</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Микрофон се може утишати само током позива</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Утишај микрофон</translation>
     </message>
 </context>
 <context>
@@ -1215,30 +1223,6 @@ instead of system taskbar.</source>
         <translation>Сачувај дневник ћаскања</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Започни аудио позив</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Прихвати аудио позив</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Окончај аудио позив</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Започни видео позив</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Прихвати видео позив</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Окончај видео позив</translation>
-    </message>
-    <message>
         <source>Clear displayed messages</source>
         <translation>Очисти приказане поруке</translation>
     </message>
@@ -1295,28 +1279,8 @@ instead of system taskbar.</source>
         <translation>%1 корисника у ћакању</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Започни аудио позив</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Утишај микрофон</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Појачај микрофон</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Утишај позив</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Појачај позив</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Окончај аудио позив</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 постави наслов на %2</translation>
     </message>
 </context>
 <context>
@@ -2239,10 +2203,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation>Стварно сте сигурни да желите да уклоните лозинку?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation>Корисничка имена за Tox не смеју премашити %1 знакова.</translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2752,6 +2712,15 @@ It will be installed when qTox restarts.</source>
         <source>Date format:</source>
         <translation>Формат датума:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2842,10 +2811,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Не могу да захтевам пријатељство</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 постави наслов на %2</translation>
     </message>
     <message>
         <source>Status</source>

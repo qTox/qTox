@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="hu_HU">
+<TS version="2.0" language="hu_HU">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Tiltva</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Teszt hang lejátszása hangerőváltoztatáskor.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Használd a csúszkát a felvevőeszköz erősítésének beállításához %1dB-től %2dB-ig.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <source>Very low (8 kbps)</source>
         <translation>Nagyon alacsony (8 kbps)</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,17 +168,17 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">hibakövető</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">Hasznos hibajelentések írása</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished">hozzájárulók</translation>
     </message>
 </context>
@@ -269,17 +265,17 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation type="unfinished">Itt elmenthet egy megjegyzést ehhez a partnerhez.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">Előzmények eltávolítva</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">Előzmények %1 partnerrel törölve!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -588,46 +585,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>%1 hívja Önt</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Videóhívás befejezése</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Hanghívás befejezése</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Mikrofon némítás</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Hívás némítása</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Videóhívás megszakítása</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Hanghívás megszakítása</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Hanghívás indítása</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Videóhívás indítása</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Mikrofon visszahangosítása</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Hívás visszahangosítása</translation>
-    </message>
-    <message>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>A(z) %1 fájl küldése nem sikerült</translation>
     </message>
@@ -698,22 +655,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>%1 most %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>A videohívás nem indítható el</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>A hívás nem indítható el</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Mikrofon némítása csak hívás közben lehetséges</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Exportálás fájlba</translation>
     </message>
@@ -723,6 +664,73 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">A hívás nem indítható el</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Hanghívás indítása</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Hanghívás befejezése</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Hanghívás megszakítása</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Hanghívás elfogadása</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">A videohívás nem indítható el</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Videóhívás indítása</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Videóhívás befejezése</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Videóhívás megszakítása</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Videóhívás elfogadása</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Hívás némítása</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Mikrofon némítása csak hívás közben lehetséges</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1213,30 +1221,6 @@ a rendszertálca helyett.</translation>
         <translation>Törölve</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Hanghívás indítása</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Hanghívás elfogadása</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Hanghívás befejezése</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Videóhívás indítása</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Videóhívás elfogadása</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Videóhívás befejezése</translation>
-    </message>
-    <message>
         <source>Send a screenshot</source>
         <translation>Képernyőkép küldése</translation>
     </message>
@@ -1280,33 +1264,13 @@ a rendszertálca helyett.</translation>
         <translation>%1 felhasználó a chatben</translation>
     </message>
     <message>
-        <source>Mute microphone</source>
-        <translation>Mikrofon némítása</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Mikrofon visszakapcsolása</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Hívás némítása</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Hívás visszakapcsolása</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Hanghívás befejezése</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Hanghívás indítása</translation>
-    </message>
-    <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
         <translation>1 felhasználó a chaten</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 megváltoztatta a címet erre: %2</translation>
     </message>
 </context>
 <context>
@@ -1597,7 +1561,7 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Saját profil</translation>
     </message>
 </context>
 <context>
@@ -1913,9 +1877,10 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation><numerusform>Olvasatlan üzenet</numerusform>
-        <numerusform>Olvasatlan üzenetek</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Olvasatlan üzenet</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>PasswordEdit</name>
@@ -2221,10 +2186,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Biztosan törli a jelszavát?</translation>
-    </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation>A Tox felhasználónevek nem haladhatják meg a %1 karaktert.</translation>
     </message>
 </context>
 <context>
@@ -2735,6 +2696,15 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <source>Date format:</source>
         <translation>Dátum formátuma:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2771,10 +2741,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Partnerkérelem nem lehetséges</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 megváltoztatta a címet erre: %2</translation>
     </message>
     <message>
         <source>Message failed to send</source>
@@ -2815,9 +2781,10 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation><numerusform>%n új barátkérelem</numerusform>
-        <numerusform>%n új barátkérelem</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n új barátkérelem</numerusform>
+        </translation>
+    </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
         <translation>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="uk_UA">
+<TS version="2.0" language="uk_UA">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Вимкнений</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Відтворювати тестовий звук при зміні гучності.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Використовуйте повзунок для налаштування підсилення вашого мікрофону в діапазоні від %1дБ до %2дБ.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ which may lead to problems with video calls.</source>
         <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,17 +168,17 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">баг-трекері</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">Writing Useful Bug Reports</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished">Співавтори</translation>
     </message>
 </context>
@@ -269,17 +265,17 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished">Ви можете залишити коментар про даний контакт тут.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Оберіть теку, для автоматичного отримання файлів</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">Історію видалено</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">Історію переписки з %1 видалено!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished">Оберіть теку, для автоматичного отримання файлів</translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -590,31 +587,6 @@ which may lead to problems with video calls.</source>
         <translation>Дзвінок від %1</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Завершити відеодзвінок</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Завершити аудіодзвінок</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Вимкнути мікрофон</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translatorcomment>(переклад може бути неточний)</translatorcomment>
-        <translation>Призупинити дзвінок</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Скинути відеодзвінок</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Скинути аудіодзвінок</translation>
-    </message>
-    <message>
         <source>Unable to open</source>
         <translation>Неможливо відкрити</translation>
     </message>
@@ -625,23 +597,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Calling %1</source>
         <translation>Дзінок до %1</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Почати аудіодзвінок</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Почати відеодзвінок</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Увімкнути мікрофон</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translatorcomment>(переклад може бути неточний)</translatorcomment>
-        <translation>Відновити дзвінок</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -702,22 +657,6 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished">%1 тепер вже відомий як %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Не можу розпочати відеодзвінок</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Не можу розпочати аудіодзвінок</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Вимкнути мікрофон можна лише під час дзвінка</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Звук можливо вимкнути лише під час дзвінка</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -728,6 +667,73 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Не можу розпочати аудіодзвінок</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Почати аудіодзвінок</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Завершити аудіодзвінок</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Скинути аудіодзвінок</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Прийняти аудіо дзвінок</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Не можу розпочати відеодзвінок</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Почати відеодзвінок</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Завершити відеодзвінок</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Скинути відеодзвінок</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Прийняти відеодзвінок</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Звук можливо вимкнути лише під час дзвінка</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Відновити дзвінок</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Призупинити дзвінок</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Вимкнути мікрофон можна лише під час дзвінка</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Увімкнути мікрофон</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Вимкнути мікрофон</translation>
     </message>
 </context>
 <context>
@@ -1207,30 +1213,6 @@ instead of system taskbar.</source>
         <translation>Зберегти чат</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Почати аудіодзвінок</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Прийняти аудіо дзвінок</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Завершити аудіодзвінок</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Почати відеодзвінок</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Прийняти відеодзвінок</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Завершити відеодзвінок</translation>
-    </message>
-    <message>
         <source>Clear displayed messages</source>
         <translation>Очистити показані повідомлення</translation>
     </message>
@@ -1287,28 +1269,8 @@ instead of system taskbar.</source>
         <translation>1 користувач в чаті</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Почати аудіодзвінок</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Вимкнути мікрофон</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Увімкнути мікрофон</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Призупинити дзвінок</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Відновити дзвінок</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Завершити аудіодзвінок</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 встановив тему %2</translation>
     </message>
 </context>
 <context>
@@ -2230,10 +2192,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Ви дійсно бажаєте видалити Ваш пароль?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2746,6 +2704,15 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <source>Date format:</source>
         <translation type="unfinished">Формат дати:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2884,10 +2851,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     <message>
         <source>Your status</source>
         <translation>Ваш статус</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 встановив тему %2</translation>
     </message>
     <message>
         <source>Message failed to send</source>

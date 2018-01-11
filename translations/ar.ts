@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ar">
+<TS version="2.0" language="ar">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>مٌعطل</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>قم بتشغيل أي ملف صوتي أثناء تغيير الصوت الخارج.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>إستخدم شريط التمرير لضبط الكسب الخاص بجهاز الإدخال من %1dB إلى %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ which may lead to problems with video calls.</source>
         <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,17 +168,17 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">متتبع الأخطاء</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">كتابة تقارير مفيدة بالأخطاء</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished">المساهمين</translation>
     </message>
 </context>
@@ -269,17 +265,17 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished">يمكنك حفظ بعض الملاحظات عن هذا الشخص هنا.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">تم مسح السجل</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">سجل المحادثة مع %1 تم حذفها!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -597,48 +594,8 @@ which may lead to problems with video calls.</source>
         <translation>%1 يتصل</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>انهاء المكالمة المرئية</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>انهاء المكالمة الصوتية</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>كتم المايكروفون</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>كتم المكالمة</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>الغاء المكالمة المرئية</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>الغاء المكالمة الصوتية</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>يتصل %1</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>بدء مكالمة صوتية</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>بدء مكالمة فيديو</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>الغاء كتم المايكروفون</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>الغاء كتم المكالمة</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -703,22 +660,6 @@ which may lead to problems with video calls.</source>
         <translation>%1 الأن %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>لا يمكن بدء مكالمة فيديو</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>لا يمكن بدء المكالمة الصوتية</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>يمكن كتم صوت الميكروفون فقط أثناء المكالمة</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>يمكن تعطيل الصوت فقط أثناء المكالمة</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -729,6 +670,73 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">لا يمكن بدء المكالمة الصوتية</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">الغاء المكالمة الصوتية</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">قبول مكالمة صوتية</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">لا يمكن بدء مكالمة فيديو</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">بدء مكالمة فيديو</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">الغاء المكالمة المرئية</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">قبول مكالمة فيديو</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">يمكن تعطيل الصوت فقط أثناء المكالمة</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">كتم المكالمة</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">يمكن كتم صوت الميكروفون فقط أثناء المكالمة</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">كتم المايكروفون</translation>
     </message>
 </context>
 <context>
@@ -1200,30 +1208,6 @@ instead of closing itself.</source>
         <translation>تم التنظيف</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>بدء مكالمة صوتية</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>قبول مكالمة صوتية</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>إنهاء مكالمة صوتية</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>بدء مكالمة فيديو</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>قبول مكالمة فيديو</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>إنهاء مكالمة فيديو</translation>
-    </message>
-    <message>
         <source>Send message</source>
         <translation>إرسال رسالة</translation>
     </message>
@@ -1288,28 +1272,8 @@ instead of closing itself.</source>
         <translation>%1 مستخدم في المحادثة</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>بدء المكالمة الصوتية</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>كتم المايكروفون</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>ازالة كتم المايكروفون</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>كتم المكالمة</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>ازالة كتم المكالمة</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>انهاء المكالمة الصوتية</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 قد وضع عنوان على %2</translation>
     </message>
 </context>
 <context>
@@ -2230,10 +2194,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">هل انت متأكد من حذف كلمة المرور الخاصة بك؟</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2743,6 +2703,15 @@ It will be installed when qTox restarts.</source>
         <source>Date format:</source>
         <translation>صيغة التاريخ:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2780,10 +2749,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>لا يمكن طلب الصداقة</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 قد وضع عنوان على %2</translation>
     </message>
     <message>
         <source>Message failed to send</source>

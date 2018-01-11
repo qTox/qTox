@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fi_FI">
+<TS version="2.0" language="fi_FI">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Pois käytöstä</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Toista tämä testiääni ulostuloäänenvoimakkuutta säädettäessä.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,17 +168,17 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -269,17 +265,17 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Valitse hakemisto automaattisesti hyväksyttäville tiedostoille</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">Historia poistettu</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">Käyttäjän %1 keskusteluhistoria poistettu!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished">Valitse hakemisto automaattisesti hyväksyttäville tiedostoille</translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -597,48 +594,8 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>Huono ajatus</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Lopeta videopuhelu</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Lopeta äänipuhelu</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Mykistä mikrofoni</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Mykistä puhelu</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Peruuta videopuhelu</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Peruuta äänipuhelu</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>Soitetaan %1:lle</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Aloita äänipuhelu</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Aloita videopuhelu</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Poista mikrofonin mykistys</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Poista puhelun mykistys</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -699,22 +656,6 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -725,6 +666,73 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Aloita äänipuhelu</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Lopeta äänipuhelu</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Peruuta äänipuhelu</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Hyväksy äänipuhelu</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Aloita videopuhelu</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Lopeta videopuhelu</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Peruuta videopuhelu</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Hyväksy videopuhelu</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Poista puhelun mykistys</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Mykistä puhelu</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Poista mikrofonin mykistys</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Mykistä mikrofoni</translation>
     </message>
 </context>
 <context>
@@ -1200,30 +1208,6 @@ instead of system taskbar.</source>
         <translation>Tallenna keskustelu</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Aloita äänipuhelu</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Hyväksy äänipuhelu</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Lopeta äänipuhelu</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Aloita videopuhelu</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Hyväksy videopuhelu</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Lopeta videopuhelu</translation>
-    </message>
-    <message>
         <source>Send a screenshot</source>
         <translation>Lähetä kuvakaappaus</translation>
     </message>
@@ -1284,28 +1268,8 @@ instead of system taskbar.</source>
         <translation>%1 henkilö keskustelussa</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Aloita äänipuhelu</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Mykistä mikrofoni</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Poista mikrofonin mykistys</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Mykistä puhelu</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Poista puhelun mykistys</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Lopeta äänipuhelu</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2214,10 +2178,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Haluatko varmasti poistaa salasanasi?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2726,6 +2686,15 @@ It will be installed when qTox restarts.</source>
         <source>Date format:</source>
         <translation>Päivämäärän muoto:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2777,10 +2746,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="it_IT">
+<TS version="2.0" language="it_IT">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Disabilitato</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Riprodurre un suono di prova mentre si varia il volume di uscita.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Utilizza lo slider per impostare la ricezione del dispositivo di input che va da %1 dB a %2 dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ questo può causare problemi con le chiamate video.</translation>
         <source>Very low (8 kbps)</source>
         <translation>Molto bassa (8 kbps)</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,18 +168,18 @@ questo può causare problemi con le chiamate video.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">gestore dei bug</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation>Scrivere delle segnalazioni di bug utili</translation>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">Scrivere delle segnalazioni di bug utili</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation>collaboratori</translation>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">collaboratori</translation>
     </message>
 </context>
 <context>
@@ -269,17 +265,17 @@ questo può causare problemi con le chiamate video.</translation>
         <translation type="unfinished">È possibile salvare un commento per questo contatto.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Scegli dove salvare i file accettati automaticamente</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">Cronologia rimossa</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">Cronologia chat con %1 rimossa!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished">Scegli dove salvare i file accettati automaticamente</translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ questo può causare problemi con le chiamate video.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -585,48 +582,8 @@ questo può causare problemi con le chiamate video.</translation>
         <translation>%1 ti sta chiamando</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Termina videochiamata</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Termina chiamata</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Disattiva microfono</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Disattiva audio</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Annulla videochiamata</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Annulla chiamata</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>Stai chiamando %1</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Avvia chiamata</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Avvia videochiamata</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Attiva microfono</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Attiva audio</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -699,22 +656,6 @@ questo può causare problemi con le chiamate video.</translation>
         <translation>%1 è %2 adesso</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Impossibile avviare una video chiamata</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Impossibile avviare una chiamata audio</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Il microfono può essere silenziato solo durante la chiamata</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Il suono può essere disabilitato solo durante una chiamata</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -725,6 +666,73 @@ questo può causare problemi con le chiamate video.</translation>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Impossibile avviare una chiamata audio</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Avvia chiamata</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Termina chiamata</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Annulla chiamata</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Accetta chiamata</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Impossibile avviare una video chiamata</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Avvia videochiamata</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Termina videochiamata</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Annulla videochiamata</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Accetta videochiamata</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Il suono può essere disabilitato solo durante una chiamata</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Attiva audio</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Disattiva audio</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Il microfono può essere silenziato solo durante la chiamata</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Attiva microfono</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Disattiva microfono</translation>
     </message>
 </context>
 <context>
@@ -1202,14 +1210,6 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
         <translation>Invia uno screenshot</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Avvia chiamata</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Avvia videochiamata</translation>
-    </message>
-    <message>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
@@ -1224,22 +1224,6 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
     <message>
         <source>Cleared</source>
         <translation>Pulito</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Accetta chiamata</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Termina chiamata</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Accetta videochiamata</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Termina videochiamata</translation>
     </message>
     <message>
         <source>Quote selected text</source>
@@ -1281,33 +1265,13 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
         <translation>%1 utenti in chat</translation>
     </message>
     <message>
-        <source>Mute microphone</source>
-        <translation>Disattiva microfono</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Attiva microfono</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Disattiva audio</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Attiva audio</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Termina chiamata</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Avvia chiamata</translation>
-    </message>
-    <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
         <translation>1 utente in chat</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 ha impostato il titolo in %2</translation>
     </message>
 </context>
 <context>
@@ -2226,10 +2190,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Sei sicuro di voler rimuovere la password?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2739,6 +2699,15 @@ Verrà installata al riavvio del programma.</translation>
         <source>Date format:</source>
         <translation>Formato data:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2811,10 +2780,6 @@ Verrà installata al riavvio del programma.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Impossibile inviare la richiesta d&apos;amicizia</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 ha impostato il titolo in %2</translation>
     </message>
     <message>
         <source>Message failed to send</source>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es_MX">
+<TS version="2.0" language="es_MX">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Deshabilitado</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Reproducir un sonido de prueba al cambiar el volumen.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Usar el control deslizante para ajustar la ganacia del micrófono entre %1dB y %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ se pueden producir problemas con las videollamadas.</translation>
         <source>Very low (8 kbps)</source>
         <translation>Muy bajo (8 kbps)</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,18 +168,18 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation>Rastrear error</translation>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">Rastrear error</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation>Cómo escribir un informe de error correctamente</translation>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">Cómo escribir un informe de error correctamente</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation>contribuyentes</translation>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">contribuyentes</translation>
     </message>
 </context>
 <context>
@@ -269,17 +265,17 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>Puedes guardar comentarios acerca de este contacto aquí.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Elijir un directorio y aceptar automaticamente</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>Historial eliminado</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>¡Historial del chat con %1 fue eliminado!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -421,9 +417,12 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <translation><numerusform>Listo para importar %n contacto, clic en enviar para confirmar</numerusform>
-        <numerusform>Listo para importar %n contactos, clic en enviar para confirmar</numerusform>
-        </translation></message>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation>
+            <numerusform>Listo para importar %n contacto, clic en enviar para confirmar</numerusform>
+            <numerusform>Listo para importar %n contactos, clic en enviar para confirmar</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Import contacts</source>
         <translation>Importar contactos</translation>
@@ -592,46 +591,6 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>%1 llamando</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Terminar videollamada</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Terminar llamada de audio</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Silenciar micrófono</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Silenciar llamada</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Cancelar videollamada</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Cancelar llamada de audio</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Iniciar llamada de audio</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Iniciar videollamada</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Activar sonido del micrófono</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Activar sonido de la llamada</translation>
-    </message>
-    <message>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>No se pudo enviar el archivo %1</translation>
     </message>
@@ -698,22 +657,6 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>%1 ahora está %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>No se puede comenzar una llamada de vídeo</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>No se puede comenzar una llamada de audio</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>El micrófono sólo puede ser silenciado durante una llamada</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>El sonido sólo puede ser inhabilitado durante una llamada</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Exportar al archivo</translation>
     </message>
@@ -724,6 +667,73 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Llamada con %1 terminó inesperadamente. %2</translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">No se puede comenzar una llamada de audio</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Iniciar llamada de audio</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Cancelar llamada de audio</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Aceptar llamada de audio</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">No se puede comenzar una llamada de vídeo</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Iniciar videollamada</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Terminar videollamada</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Cancelar videollamada</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Aceptar videollamada</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">El sonido sólo puede ser inhabilitado durante una llamada</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Activar sonido de la llamada</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Silenciar llamada</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">El micrófono sólo puede ser silenciado durante una llamada</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Activar sonido del micrófono</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Silenciar micrófono</translation>
     </message>
 </context>
 <context>
@@ -1217,30 +1227,6 @@ en lugar de la barra de tareas del sistema.</translation>
         <translation>Borrado</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Iniciar llamada de audio</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Aceptar llamada de audio</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Terminar llamada de audio</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Iniciar videollamada</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Aceptar videollamada</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Terminar videollamada</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation>Citar texto seleccionado</translation>
     </message>
@@ -1280,33 +1266,13 @@ en lugar de la barra de tareas del sistema.</translation>
         <translation>%1 usuarios en el chat</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Iniciar llamada de audio</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Silenciar micrófono</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Activar sonido del micrófono</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Silenciar llamada</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Activar sonido de la llamada</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Finalizar llamada de audio</translation>
-    </message>
-    <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
         <translation>1 usuario en el chat</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 ha establecido el título: %2</translation>
     </message>
 </context>
 <context>
@@ -2227,10 +2193,6 @@ Este ID incluye el código NoSpam (en azul) y la suma de comprobación (en gris)
         <extracomment>deletion confirmation text</extracomment>
         <translation>¿Seguro de que quieres eliminar tu contraseña?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation>Los nombres de usuario de Tox no pueden exceder los %1 caracteres.</translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2740,6 +2702,15 @@ Será instalada cuando reinicies qTox.</translation>
         <source>Date format:</source>
         <translation>Formato de la fecha:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2782,14 +2753,18 @@ Será instalada cuando reinicies qTox.</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation><numerusform>%n Nueva solicitud de amistad</numerusform>
-        <numerusform>%n Nuevas solicitudes de amistad</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n Nueva solicitud de amistad</numerusform>
+            <numerusform>%n Nuevas solicitudes de amistad</numerusform>
+        </translation>
+    </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation><numerusform>%n Nueva invitación a grupo</numerusform>
-        <numerusform>%n Nuevas invitaciones a grupos</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n Nueva invitación a grupo</numerusform>
+            <numerusform>%n Nuevas invitaciones a grupos</numerusform>
+        </translation>
+    </message>
     <message>
         <source>By Name</source>
         <translation>Por nombre</translation>
@@ -2883,10 +2858,6 @@ Será instalada cuando reinicies qTox.</translation>
     <message>
         <source>Your status</source>
         <translation>Tu estado</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 ha establecido el título: %2</translation>
     </message>
     <message>
         <source>Status</source>

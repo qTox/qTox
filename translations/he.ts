@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="he" sourcelanguage="en_US">
+<TS version="2.0" language="he" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -13,14 +13,6 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -115,6 +107,10 @@ which may lead to problems with video calls.</source>
         <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -168,17 +164,17 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -265,16 +261,16 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -417,6 +413,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -593,47 +590,7 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Calling %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -696,22 +653,6 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -721,6 +662,73 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1207,30 +1215,6 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear displayed messages</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1287,27 +1271,7 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End audio call</source>
+        <source>%1 has set the title to %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2216,10 +2180,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2728,6 +2688,15 @@ It will be installed when qTox restarts.</source>
         <source>Date format:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2817,10 +2786,6 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="lt_LT">
+<TS version="2.0" language="lt_LT">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Išjungta</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Keičiant išvesties garsį, groti bandomąjį garsą.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Naudokite slinktuką, kad nustatytumėte savo įvesties įrenginio stiprinimą rėžyje nuo %1dB iki %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ vaizdo skambučiais.</translation>
         <source>Very low (8 kbps)</source>
         <translation>Labai žema (8 kbps)</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,18 +168,18 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation>klaidų seklyje</translation>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">klaidų seklyje</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation>Kaip parašyti naudingą pranešimą apie klaidą</translation>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">Kaip parašyti naudingą pranešimą apie klaidą</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation>talkininkų sąrašą</translation>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">talkininkų sąrašą</translation>
     </message>
 </context>
 <context>
@@ -269,17 +265,17 @@ vaizdo skambučiais.</translation>
         <translation>Čia galite įrašyti komentarus apie šį kontaktą.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Pasirinkite automatiškai priimamų failų katalogą</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>Žurnalas išvalytas</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>Pokalbių su %1 žurnalas išvalytas!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Pasiruošę importuoti %n kontaktą, norėdami patvirtinti spustelėkite siųsti</numerusform>
             <numerusform>Pasiruošę importuoti %n kontaktus, norėdami patvirtinti spustelėkite siųsti</numerusform>
@@ -598,48 +595,8 @@ vaizdo skambučiais.</translation>
         <translation>Skambina %1</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Užbaigti vaizdo pokalbį</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Užbaigti pokalbį</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Nutildyti mikrofoną</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Išjungti garsą</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>Skambiname %1</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Nutraukti vaizdo skambutį</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Nutraukti skambutį</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Skambinti</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Pradėti vaizdo pokalbį</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Įjungti mikrofoną</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Įjungti garsą</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -700,22 +657,6 @@ vaizdo skambučiais.</translation>
         <translation>%1 dabar %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Nepavyksta pradėti vaizdo skambutį</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Nepavyksta pradėti garso skambutį</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Mikrofonas gali būti nutildytas tik skambučio metu</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Garsas gali būti išjungtas tik skambučio metu</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Eksportuoti į failą</translation>
     </message>
@@ -726,6 +667,73 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Skambutis su %1 netikėtai pasibaigė. %2</translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Nepavyksta pradėti garso skambutį</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Skambinti</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Nutraukti skambutį</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Atsiliepti</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Nepavyksta pradėti vaizdo skambutį</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Pradėti vaizdo pokalbį</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Nutraukti vaizdo skambutį</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Priimti vaizdo skambutį</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Garsas gali būti išjungtas tik skambučio metu</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Įjungti garsą</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Išjungti garsą</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Mikrofonas gali būti nutildytas tik skambučio metu</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Įjungti mikrofoną</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Nutildyti mikrofoną</translation>
     </message>
 </context>
 <context>
@@ -1207,30 +1215,6 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <translation>Išsaugoti pokalbio žurnalą</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Skambinti</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Atsiliepti</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Nutraukti pokalbį</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Pradėti vaizdo pokalbį</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Priimti vaizdo skambutį</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Nutraukti vaizdo pokalbį</translation>
-    </message>
-    <message>
         <source>Clear displayed messages</source>
         <translation>Išvalyti rodomas žinutes</translation>
     </message>
@@ -1287,28 +1271,8 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <translation>Pokalbyje 1 dalyvis</translation>
     </message>
     <message>
-        <source>Mute microphone</source>
-        <translation>Nutildyti mikrofoną</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Įjungti mikrofoną</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Išjungti garsą</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Įjungti garsą</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Nutraukti pokalbį</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Skambinti</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 nustatė pavadinimą „%2“</translation>
     </message>
 </context>
 <context>
@@ -2233,10 +2197,6 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
         <extracomment>deletion confirmation text</extracomment>
         <translation>Ar tikrai norite panaikinti savo slaptažodį?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation>Tox naudotojų vardai negali viršyti %1 simbolių.</translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2746,6 +2706,15 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <source>Date format:</source>
         <translation>Datos formatas:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2884,10 +2853,6 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Your status</source>
         <translation>Jūsų būsena</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 nustatė pavadinimą „%2“</translation>
     </message>
     <message>
         <source>Message failed to send</source>

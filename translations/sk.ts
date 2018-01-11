@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sk" sourcelanguage="en_US">
+<TS version="2.0" language="sk" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Zakázané</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Prehrať testovací zvuk pri zmene hlasitosti výstupu.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Pomocou posúvača nastavte zosilnenie vašeho vstupného zariadenia od %1dB %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <source>Very low (8 kbps)</source>
         <translation>Veľmi nízka (8 kbps)</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,17 +168,17 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">Písanie užitočných hlásení o chybách</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished">prispievateľov</translation>
     </message>
 </context>
@@ -269,17 +265,17 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <translation type="unfinished">Sem môžete vložiť poznámky o tomto kontakte.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Zvoľte adresár pre automatické prijímanie</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">História bola odstránená</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">História chatu s %1 bola odstránená!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished">Zvoľte adresár pre automatické prijímanie</translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -598,48 +595,8 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <translation>%1 volá</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Skončiť videohovor</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Skončiť audio hovor</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Stlmiť mikrofón</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Stlmiť hovor</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation type="unfinished">Volanie %1</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Zrušiť videohovor</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Zrušiť audio hovor</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Začať audio hovor</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Začať videohovor</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Zapnúť mikrofón</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Zrušiť stlmenie hovoru</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -701,22 +658,6 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <translation>%1 je %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Nemožno začať videohovor</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Nemožno začať audio hovor</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Mikrofón môže byť stlmený iba počas hovoru</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Zvuk môže byť zakázaný iba počas hovoru</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Export do súboru</translation>
     </message>
@@ -727,6 +668,73 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Hovor s %1 nečakane skončil. %2</translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Nemožno začať audio hovor</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Začať audio hovor</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Skončiť audio hovor</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Zrušiť audio hovor</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Prijať audio hovor</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Nemožno začať videohovor</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Začať videohovor</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Skončiť videohovor</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Zrušiť videohovor</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Prijať videohovor</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Zvuk môže byť zakázaný iba počas hovoru</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Zrušiť stlmenie hovoru</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Stlmiť hovor</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Mikrofón môže byť stlmený iba počas hovoru</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Zapnúť mikrofón</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Stlmiť mikrofón</translation>
     </message>
 </context>
 <context>
@@ -1214,30 +1222,6 @@ namiesto panelu úloh.</translation>
         <translation>Uložiť záznam chatu</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation type="unfinished">Začať audio hovor</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation type="unfinished">Prijať audio hovor</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation type="unfinished">Skončiť audio hovor</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation type="unfinished">Začať videohovor</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation type="unfinished">Prijať videohovor</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation type="unfinished">Skončiť videohovor</translation>
-    </message>
-    <message>
         <source>Clear displayed messages</source>
         <translation type="unfinished">Vyčistiť zobrazené správy</translation>
     </message>
@@ -1294,28 +1278,8 @@ namiesto panelu úloh.</translation>
         <translation>%1 užívateľov v chatu</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation type="unfinished">Začať audio hovor</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation type="unfinished">Stlmiť mikrofón</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation type="unfinished">Zapnúť mikrofón</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation type="unfinished">Stlmiť hovor</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation type="unfinished">Zrušiť stlmenie hovoru</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation type="unfinished">Skončiť audio hovor</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 nastavil meno konverzácie na %2</translation>
     </message>
 </context>
 <context>
@@ -1830,7 +1794,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Stav</translation>
     </message>
     <message>
         <source>Set availability status</source>
@@ -2235,10 +2199,6 @@ Toto ID obsahuje NoSpam kód (modrou) a kontrolný súčet (šedou).</translatio
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Naozaj chcete odstrániť svoje heslo?</translation>
-    </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation>Tox užívateľské mená nemôžu prekročiť %1 znakov.</translation>
     </message>
 </context>
 <context>
@@ -2749,6 +2709,15 @@ Nainštaluje sa po reštarte qToxu.</translation>
         <source>Date format:</source>
         <translation>Formát dátumu:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2839,10 +2808,6 @@ Nainštaluje sa po reštarte qToxu.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Nepodarilo sa požiadať o priateľstvo</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 nastavil meno konverzácie na %2</translation>
     </message>
     <message>
         <source>Status</source>

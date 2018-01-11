@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sv">
+<TS version="2.0" language="sv">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Inaktiverad</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Spela ett testljud när du byter utgångsvolymen.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Använd skjutreglaget för att ställa in förstärkningen av din inmatningsenhet som sträcker sig från %1dB till %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ vilket kan leda till problem med videosamtal.</translation>
         <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,17 +168,17 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">felbevakare</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">Skriva användbara felrapporter</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished">bidragare</translation>
     </message>
 </context>
@@ -269,17 +265,17 @@ vilket kan leda till problem med videosamtal.</translation>
         <translation type="unfinished">Du kan spara kommentar om denna kontakt här.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Välj en acceptera-automatiskt-katalog</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">Historik raderad</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">Chatthistorik med %1 raderad!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished">Välj en acceptera-automatiskt-katalog</translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -609,48 +606,8 @@ vilket kan leda till problem med videosamtal.</translation>
         <translation>Dålig idé</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Avsluta videosamtal</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Avsluta ljudsamtal</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Tysta mikrofonen</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Tysta samtal</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Avbryt videosamtal</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Avbryt ljudsamtal</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>Ringer %1</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Börja ljudsamtal</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Börja videosamtal</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Sätt på mikrofon</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Slå på samtal</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -699,22 +656,6 @@ vilket kan leda till problem med videosamtal.</translation>
         <translation>%1 är nu %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Kan inte börja videosamtal</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Kan inte börja ljudsamtal</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Mikrofon kan endast tystas under ett samtal</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Ljud kan endast avaktiveras under ett samtal</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Exportera till fil</translation>
     </message>
@@ -724,6 +665,73 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Kan inte börja ljudsamtal</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Börja ljudsamtal</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Avsluta ljudsamtal</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Avbryt ljudsamtal</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Acceptera ljudsamtal</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Kan inte börja videosamtal</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Börja videosamtal</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Avsluta videosamtal</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Avbryt videosamtal</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Acceptera videosamtal</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Ljud kan endast avaktiveras under ett samtal</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Slå på samtal</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Tysta samtal</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Mikrofon kan endast tystas under ett samtal</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1216,30 +1224,6 @@ istället för aktivitetsfältet för systemet.</translation>
         <translation>Borttaget</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Börja ljudsamtal</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Acceptera ljudsamtal</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Avsluta ljudsamtal</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Börja videosamtal</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Acceptera videosamtal</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Avsluta videosamtal</translation>
-    </message>
-    <message>
         <source>Send a screenshot</source>
         <translation>Skicka en skärmdump</translation>
     </message>
@@ -1288,28 +1272,8 @@ istället för aktivitetsfältet för systemet.</translation>
         <translation>1 användare i chatt</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Börja ljudsamtal</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Tysta mikrofon</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Sätt på mikrofonen</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Tysta samtal</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Slå på samtal</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Avsluta ljudsamtal</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 har satt titeln till %2</translation>
     </message>
 </context>
 <context>
@@ -2231,10 +2195,6 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Är du säker på att du vill ta bort ditt lösenord?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2744,6 +2704,15 @@ Den kommer att installeras när qTox startas om.</translation>
         <source>Date format:</source>
         <translation>Datumformat:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2770,10 +2739,6 @@ Den kommer att installeras när qTox startas om.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Kunde inte begära vänskap</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 har satt titeln till %2</translation>
     </message>
     <message>
         <source>Message failed to send</source>

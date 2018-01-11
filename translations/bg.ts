@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="bg_BG">
+<TS version="2.0" language="bg_BG">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Изключен</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Пусни тестов звук докато променяш силата на звука.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Ползвайте слайдера за да зададете силата на входното ви устройство варираща от %1dB до %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ which may lead to problems with video calls.</source>
         <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,17 +168,17 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">Система за следене на грешки</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">Писане на полезни доклади за грешки</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished">сътрудници</translation>
     </message>
 </context>
@@ -269,17 +265,17 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished">Можете да запишете коментар за този контакт тук.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Изберете папка за автоматично приемане</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">Историята е премахната</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">Хронологията на разговора с %1 е премахната!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished">Изберете папка за автоматично приемане</translation>
     </message>
 </context>
 <context>
@@ -422,6 +418,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -610,48 +607,8 @@ which may lead to problems with video calls.</source>
         <translation>Лоша идея</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Приключи видео обаждане</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Приключи звуково обаждане</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Заглуши микрофон</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Заглуши обаждане</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Отложи видео обаждане</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Отложи звуково обаждане</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>Звънене на %1</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Започни звуково обаждане</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Започни видео обаждане</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Отглуши микрофон</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Отглуши обаждане</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -700,22 +657,6 @@ which may lead to problems with video calls.</source>
         <translation>%1 сега е %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Видео обаждане не може да започне</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Аудио повикване не може да започне</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Микрофонът може да бъде заглушен само по време на обаждане</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Звукът може да бъде изключен само по време на обаждане</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -726,6 +667,73 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Аудио повикване не може да започне</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Започни звуково обаждане</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Приключи звуково обаждане</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Отложи звуково обаждане</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Приеми звуково обаждане</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Видео обаждане не може да започне</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Започни видео обаждане</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Приключи видео обаждане</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Отложи видео обаждане</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Приеми видео обаждане</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Звукът може да бъде изключен само по време на обаждане</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Отглуши обаждане</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Заглуши обаждане</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Микрофонът може да бъде заглушен само по време на обаждане</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Отглуши микрофон</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Заглуши микрофон</translation>
     </message>
 </context>
 <context>
@@ -1218,30 +1226,6 @@ instead of system taskbar.</source>
         <translation>Почистено</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Започни звуково обаждане</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Приеми звуково обаждане</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Приключи звуково обаждане</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Започни видео обаждане</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Приеми видео обаждане</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Приключи видео обаждане</translation>
-    </message>
-    <message>
         <source>Send a screenshot</source>
         <translation>Изпрати скрийншот</translation>
     </message>
@@ -1290,28 +1274,8 @@ instead of system taskbar.</source>
         <translation>1 потребител в чат</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Започни звуково обаждане</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Заглуши микрофон</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Отглуши микрофон</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Заглуши обаждане</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Отглуши обаждане</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Приключи звуково обаждане</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 промени заглавието на %2</translation>
     </message>
 </context>
 <context>
@@ -2229,10 +2193,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Сигурни ли сте, че искате да си изтриете паролата?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2742,6 +2702,15 @@ It will be installed when qTox restarts.</source>
         <source>Date format:</source>
         <translation>Формат на дата:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2769,10 +2738,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Неуспешно поискване на приятелство</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 промени заглавието на %2</translation>
     </message>
     <message>
         <source>Message failed to send</source>

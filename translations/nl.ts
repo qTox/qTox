@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nl_NL">
+<TS version="2.0" language="nl_NL">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Uitgeschakeld</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>Very low (8 kbps)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,17 +168,17 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">bug-tracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">Nuttige probleemrapportages schrijven</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -269,17 +265,17 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation type="unfinished">Hier kan je commentaren over dit contact opslaan.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Kies een locatie om automatisch geaccepteerde bestanden op te slaan</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">Geschiedenis verwijderd</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation type="unfinished">Gespreksgeschiedenis met %1 verwijderd!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished">Kies een locatie om automatisch geaccepteerde bestanden op te slaan</translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -589,52 +586,12 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>%1 belt</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Beëindig videogesprek</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Beëindig audiogesprek</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Schakel microfoon uit</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Demp gesprek</translation>
-    </message>
-    <message>
         <source>Unable to open</source>
         <translation>Openen mislukt</translation>
     </message>
     <message>
         <source>Bad idea</source>
         <translation>Slecht idee</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Annuleer het starten van een videogesprek</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Annuleer het starten van een audiogesprek</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Start audiogesprek</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Start videogesprek</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Schakel microfoon in</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Maak gesprek hoorbaar</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -699,22 +656,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation type="unfinished">%1 is nu %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -725,6 +666,73 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Start audiogesprek</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Beëindig audiogesprek</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Annuleer het starten van een audiogesprek</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Accepteer audiogesprek</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Start videogesprek</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Beëindig videogesprek</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Annuleer het starten van een videogesprek</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Accepteer videogesprek</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Maak gesprek hoorbaar</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Schakel microfoon in</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Schakel microfoon uit</translation>
     </message>
 </context>
 <context>
@@ -1219,30 +1227,6 @@ in plaats van naar de taakbalk.</translation>
         <translation>Geleegd</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Start audiogesprek</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Accepteer audiogesprek</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Beëindig audiogesprek</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Start videogesprek</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Accepteer videogesprek</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Beëindig videogesprek</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1282,33 +1266,13 @@ in plaats van naar de taakbalk.</translation>
         <translation>%1 gebruikers in de chat</translation>
     </message>
     <message>
-        <source>Mute microphone</source>
-        <translation>Schakel microfoon uit</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Schakel microfoon in</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Maak gesprek stil</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Maak gesprek hoorbaar</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Beëindig audiogesprek</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Start audiogesprek</translation>
-    </message>
-    <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 heeft de titel naar %2 gezet</translation>
     </message>
 </context>
 <context>
@@ -2224,10 +2188,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Weet je zeker dat je je wachtwoord wilt verwijderen?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2737,6 +2697,15 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <source>Date format:</source>
         <translation type="unfinished">Datum formaat:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2817,10 +2786,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Kon geen vriendschapsverzoek maken</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 heeft de titel naar %2 gezet</translation>
     </message>
     <message>
         <source>Status</source>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="et_EE">
+<TS version="2.0" language="et_EE">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Välja lülitatud</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Väljundsignaali muutmisel mängi prooviheli.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Kasuta liugurit, et määrata oma sisendseadme võimendus skaalal %1dB kuni %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>Very low (8 kbps)</source>
         <translation>Väga madal (8 kbit/s)</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,18 +168,18 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation>veahaldussüsteem</translation>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">veahaldussüsteem</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation>Writing Useful Bug Reports (inglise keeles)</translation>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">Writing Useful Bug Reports (inglise keeles)</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation>kaasautorid</translation>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">kaasautorid</translation>
     </message>
 </context>
 <context>
@@ -269,17 +265,17 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Siia saad selle kontakti kohta kommentaare kirjutada.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Vali automaatse vastuvõtu kataloog</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>Ajalugu kustutatud</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>Kasutajaga %1 peetud vestluste ajalugu on kustutatud!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>%n kontakti importimiseks valmis, kinnitamiseks vajuta saada</numerusform>
             <numerusform>%n kontakti importimiseks valmis, kinnitamiseks vajuta saada</numerusform>
@@ -593,49 +590,8 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>%1 helistab</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Lõpeta videokõne</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Lõpeta audiokõne</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Vaigista mikrofon</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Vaigista kõne</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Katkesta videokõne</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Katkesta audiokõne</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>Helistan kasutajale %1</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Alusta audiokõnet</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Alusta videokõnet</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Lülita mikrofon sisse</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translatorcomment>konteksti peaks täpsustama</translatorcomment>
-        <translation>Lülita kõne heli sisse</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -701,22 +657,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>%1 on nüüd %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Videokõnet ei saa alustada</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Häälkõnet ei saa alustada</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Mikrofoni saab vaigistada vaid kõne ajal</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Heli saab välja lülitada vaid kõne ajal</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Ekspordi faili</translation>
     </message>
@@ -727,6 +667,73 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Kõne %1-ga lõppes ootamatult. %2</translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Häälkõnet ei saa alustada</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Alusta audiokõnet</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Lõpeta audiokõne</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Katkesta audiokõne</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Võta audiokõne vastu</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Videokõnet ei saa alustada</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Alusta videokõnet</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Lõpeta videokõne</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Katkesta videokõne</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Võta videokõne vastu</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Heli saab välja lülitada vaid kõne ajal</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Lülita kõne heli sisse</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Vaigista kõne</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Mikrofoni saab vaigistada vaid kõne ajal</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Lülita mikrofon sisse</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Vaigista mikrofon</translation>
     </message>
 </context>
 <context>
@@ -1200,30 +1207,6 @@ instead of closing itself.</source>
         <translation>Eemaldatud</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Alusta audiokõnet</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Võta audiokõne vastu</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Lõpeta audiokõne</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Alusta videokõnet</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Võta videokõne vastu</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Lõpeta videokõne</translation>
-    </message>
-    <message>
         <source>Send message</source>
         <translation>Saada sõnum</translation>
     </message>
@@ -1288,28 +1271,8 @@ instead of closing itself.</source>
         <translation>Vestluses osaleb %1 kasutajat</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Alusta audiokõnet</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Vaigista mikrofon</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Lülita mikrofon sisse</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Vaigista kõne</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Lülita kõne heli sisse</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Lõpeta audiokõne</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 seadis pealkirjaks %2</translation>
     </message>
 </context>
 <context>
@@ -2231,10 +2194,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <extracomment>deletion confirmation text</extracomment>
         <translation>Oled sa kindel, et soovid oma salasõna kustutada?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation>Toxi kasutajanimed tohivad olla kuni %1 märki pikad.</translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2745,6 +2704,15 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <source>Date format:</source>
         <translation>Kuupäeva vorming:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2782,10 +2750,6 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Ei suutnud sõbrustamispalvet edastada</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 seadis pealkirjaks %2</translation>
     </message>
     <message>
         <source>Message failed to send</source>

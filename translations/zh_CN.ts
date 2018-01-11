@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN" sourcelanguage="en">
+<TS version="2.0" language="zh_CN" sourcelanguage="en">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>已禁用</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>更改输出音量时播放测试声音。</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>使用滑块设置输入设备增益（%1—%2dB） 。</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -119,6 +111,10 @@ which may lead to problems with video calls.</source>
         <source>Very low (8 kbps)</source>
         <translation>极低（8 kbps）</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,17 +168,17 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">漏洞追踪器</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">编写有用的漏洞报告</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished">贡献者</translation>
     </message>
 </context>
@@ -269,17 +265,17 @@ which may lead to problems with video calls.</source>
         <translation>你可以在这里记录关于该联系人的各种信息。</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>选择一个自动接受的目录</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>已删除历史记录</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>已删除与 %1 的聊天记录！</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -421,6 +417,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>准备好要导入 %n 个联系人，单击“发送”以确认</numerusform>
         </translation>
@@ -588,18 +585,6 @@ which may lead to problems with video calls.</source>
         <translation>%1 呼叫</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>结束视频通话</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>关闭麦克风</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>通话静音</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>正在呼叫 %1</translation>
     </message>
@@ -610,30 +595,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Copy</source>
         <translation>复制</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>取消视频通话</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>取消语音通话</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>开始语音通话</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>开始视频通话</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>打开麦克风</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>取消通话静音</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -665,10 +626,6 @@ which may lead to problems with video calls.</source>
         <translation>不好的主意</translation>
     </message>
     <message>
-        <source>End audio call</source>
-        <translation>结束语音通话</translation>
-    </message>
-    <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>你尝试发送一个顺序文件，该操作无法完成！</translation>
     </message>
@@ -698,22 +655,6 @@ which may lead to problems with video calls.</source>
         <translation>%1 现在 %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>无法开始视频通话</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>无法开始语音通话</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>只有在通话过程中才能执行麦克风静音操作</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>只有在通话过程中才能执行禁用声音操作</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>导出到文件</translation>
     </message>
@@ -724,6 +665,73 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>与 %1 的通话意外中断。%2</translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">无法开始语音通话</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">取消语音通话</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">接听语音通话</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">无法开始视频通话</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">开始视频通话</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">结束视频通话</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">取消视频通话</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">接听视频通话</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">只有在通话过程中才能执行禁用声音操作</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">取消通话静音</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">只有在通话过程中才能执行麦克风静音操作</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1217,30 +1225,6 @@ instead of system taskbar.</source>
         <translation>已清除</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>开始语音通话</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>接听语音通话</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>结束语音通话</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>开始视频通话</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>接听视频通话</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>结束视频通话</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation>引用选中的文本</translation>
     </message>
@@ -1285,28 +1269,8 @@ instead of system taskbar.</source>
         <translation>对话中有 1 个用户</translation>
     </message>
     <message>
-        <source>Mute microphone</source>
-        <translation>静音麦克风</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>取消麦克风静音</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>静音通话</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>取消通话静音</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>结束音频童话</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>开始音频通话</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 已将标题设置为 %2</translation>
     </message>
 </context>
 <context>
@@ -2226,10 +2190,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation>你确定要删除密码吗？</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2739,6 +2699,15 @@ It will be installed when qTox restarts.</source>
         <source>Date format:</source>
         <translation>日期格式：</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2804,10 +2773,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Log out</source>
         <translation>注销</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 已将标题设置为 %2</translation>
     </message>
     <message>
         <source>Message failed to send</source>

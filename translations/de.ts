@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE" sourcelanguage="en_US">
+<TS version="2.0" language="de_DE" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -14,14 +14,6 @@
     <message>
         <source>Disabled</source>
         <translation>Deaktiviert</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Einen Testton sofort abspielen, wenn die Ausgabelautstärke verändert wird.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Verwenden Sie den Schieberegler um die Verstärkung zwischen %1dB und %2dB festzulegen.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -117,6 +109,10 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
         <source>Very low (8 kbps)</source>
         <translation>Sehr niedrig (8 kbps)</translation>
     </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -170,18 +166,18 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">Bug-Tracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
         <translation type="unfinished">„Writing Useful Bug Reports“ (Englisch)</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation>Mitwirkende</translation>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">Mitwirkende</translation>
     </message>
 </context>
 <context>
@@ -267,17 +263,17 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
         <translation type="unfinished">Hier kannst du Notizen über diesen Kontakt eintragen.</translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Wähle ein Verzeichnis für automatische Annahme</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>Chatverlauf gelöscht</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>Chatverlauf mit %1 wurde gelöscht!</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -419,9 +415,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <translation type="unfinished"><numerusform>Bereit, %n Kontakt(e) zu importieren, klicke Senden zum bestätigen</numerusform>
-        <numerusform>Bereit, %n Kontakte zu importieren, klicke Senden zum bestätigen</numerusform>
-        </translation></message>
+        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
+        <translation type="unfinished">
+            <numerusform>Bereit, %n Kontakt(e) zu importieren, klicke Senden zum bestätigen</numerusform>
+            <numerusform>Bereit, %n Kontakte zu importieren, klicke Senden zum bestätigen</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Import contacts</source>
         <translation>Importiere Kontakte</translation>
@@ -593,48 +592,8 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
         <translation>%1 ruft an</translation>
     </message>
     <message>
-        <source>End video call</source>
-        <translation>Videoanruf beenden</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Anruf beenden</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Mikrofon deaktivieren</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Ton deaktivieren</translation>
-    </message>
-    <message>
         <source>Calling %1</source>
         <translation>Anruf %1</translation>
-    </message>
-    <message>
-        <source>Cancel video call</source>
-        <translation>Videoanruf abbrechen</translation>
-    </message>
-    <message>
-        <source>Cancel audio call</source>
-        <translation>Anruf abbrechen</translation>
-    </message>
-    <message>
-        <source>Start audio call</source>
-        <translation>Anruf starten</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Videoanruf starten</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Mikrofon aktivieren</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Ton aktivieren</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -696,22 +655,6 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
         <translation>%1 ist jetzt %2</translation>
     </message>
     <message>
-        <source>Can&apos;t start video call</source>
-        <translation>Videoanruf konnte nicht gestartet werden</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start audio call</source>
-        <translation>Sprachanruf konnte nicht gestartet werden</translation>
-    </message>
-    <message>
-        <source>Microphone can be muted only during a call</source>
-        <translation>Mikrofon kann nur während eines Anrufs stumm geschaltet werden</translation>
-    </message>
-    <message>
-        <source>Sound can be disabled only during a call</source>
-        <translation>Lautsprecher kann nur während eines Anrufs stumm geschaltet werden</translation>
-    </message>
-    <message>
         <source>Export to file</source>
         <translation>Als Datei exportieren</translation>
     </message>
@@ -722,6 +665,73 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished">Anruf mit %1 brach unerwartet ab. %2</translation>
+    </message>
+</context>
+<context>
+    <name>ChatFormHeader</name>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished">Sprachanruf konnte nicht gestartet werden</translation>
+    </message>
+    <message>
+        <source>Start audio call</source>
+        <translation type="unfinished">Anruf starten</translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">Anruf beenden</translation>
+    </message>
+    <message>
+        <source>Cancel audio call</source>
+        <translation type="unfinished">Anruf abbrechen</translation>
+    </message>
+    <message>
+        <source>Accept audio call</source>
+        <translation type="unfinished">Anruf annehmen</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished">Videoanruf konnte nicht gestartet werden</translation>
+    </message>
+    <message>
+        <source>Start video call</source>
+        <translation type="unfinished">Videoanruf starten</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Videoanruf beenden</translation>
+    </message>
+    <message>
+        <source>Cancel video call</source>
+        <translation type="unfinished">Videoanruf abbrechen</translation>
+    </message>
+    <message>
+        <source>Accept video call</source>
+        <translation type="unfinished">Videoanruf annehmen</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished">Lautsprecher kann nur während eines Anrufs stumm geschaltet werden</translation>
+    </message>
+    <message>
+        <source>Unmute call</source>
+        <translation type="unfinished">Ton aktivieren</translation>
+    </message>
+    <message>
+        <source>Mute call</source>
+        <translation type="unfinished">Ton deaktivieren</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished">Mikrofon kann nur während eines Anrufs stumm geschaltet werden</translation>
+    </message>
+    <message>
+        <source>Unmute microphone</source>
+        <translation type="unfinished">Mikrofon aktivieren</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Mikrofon deaktivieren</translation>
     </message>
 </context>
 <context>
@@ -1209,30 +1219,6 @@ instead of system taskbar.</source>
         <translation>Gesprächsverlauf speichern</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Anruf starten</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Anruf annehmen</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Anruf beenden</translation>
-    </message>
-    <message>
-        <source>Start video call</source>
-        <translation>Videoanruf starten</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Videoanruf annehmen</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Videoanruf beenden</translation>
-    </message>
-    <message>
         <source>Clear displayed messages</source>
         <translation>Angezeigte Nachrichten entfernen</translation>
     </message>
@@ -1289,28 +1275,8 @@ instead of system taskbar.</source>
         <translation>%1 Benutzer im Chat</translation>
     </message>
     <message>
-        <source>Start audio call</source>
-        <translation>Anruf starten</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Mikrofon deaktivieren</translation>
-    </message>
-    <message>
-        <source>Unmute microphone</source>
-        <translation>Mikrofon aktivieren</translation>
-    </message>
-    <message>
-        <source>Mute call</source>
-        <translation>Ton deaktivieren</translation>
-    </message>
-    <message>
-        <source>Unmute call</source>
-        <translation>Ton aktivieren</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>Anruf beenden</translation>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 hat den Titel auf %2 geändert.</translation>
     </message>
 </context>
 <context>
@@ -2234,10 +2200,6 @@ Diese ID beeinhaltet deinen NoSpam-Code (in blau), und die Checksumme (in grau).
         <extracomment>deletion confirmation text</extracomment>
         <translation>Bist du sicher, dass du dein Passwort löschen möchtest?</translation>
     </message>
-    <message>
-        <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished">Tox-Benutzernamen können nicht mehr als %1 Schriftzeichen lang sein.</translation>
-    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2747,6 +2709,15 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <source>Date format:</source>
         <translation>Datumsformat:</translation>
     </message>
+    <message>
+        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2838,10 +2809,6 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Freundschaftsanfrage konnte nicht gesendet werden</translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 hat den Titel auf %2 geändert.</translation>
     </message>
     <message>
         <source>Status</source>
