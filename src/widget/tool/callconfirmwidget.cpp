@@ -29,6 +29,7 @@
 #include <QPushButton>
 #include <QRect>
 #include <QVBoxLayout>
+#include <QFontMetrics>
 #include <assert.h>
 
 /**
@@ -67,9 +68,21 @@ CallConfirmWidget::CallConfirmWidget(const QWidget* anchor)
 
     QVBoxLayout* layout = new QVBoxLayout(this);
     QLabel* callLabel = new QLabel(QObject::tr("Incoming call..."), this);
-    callLabel->setStyleSheet("color: white");
-    callLabel->setWordWrap(true);
+    callLabel->setStyleSheet("QLabel{color: white;} QToolTip{color: black;}");
     callLabel->setAlignment(Qt::AlignHCenter);
+    callLabel->setToolTip(callLabel->text());
+
+    // Note: At the moment this may not work properly. For languages written
+    // from right to left, there is no translation for the phrase "Incoming call...".
+    // In this situation, the phrase "Incoming call..." looks as "...oming call..."
+    Qt::TextElideMode elideMode = (QGuiApplication::layoutDirection() == Qt::LeftToRight)
+                                  ? Qt::ElideRight : Qt::ElideLeft;
+    int marginSize = 12;
+    QFontMetrics fontMetrics(callLabel->font());
+    QString elidedText = fontMetrics.elidedText(callLabel->text(), elideMode,
+                                                rectW - marginSize * 2 - 4);
+    callLabel->setText(elidedText);
+
     QDialogButtonBox* buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
     QPushButton *accept = new QPushButton(this), *reject = new QPushButton(this);
     accept->setFlat(true);
@@ -87,7 +100,7 @@ CallConfirmWidget::CallConfirmWidget(const QWidget* anchor)
     connect(buttonBox, &QDialogButtonBox::accepted, this, &CallConfirmWidget::accepted);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &CallConfirmWidget::rejected);
 
-    layout->setMargin(12);
+    layout->setMargin(marginSize);
     layout->addSpacing(spikeH);
     layout->addWidget(callLabel);
     layout->addWidget(buttonBox);
