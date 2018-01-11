@@ -125,6 +125,7 @@ qt5_add_translation(${PROJECT_NAME}_QM_FILES
   translations/jbo.ts
   translations/ko.ts
   translations/lt.ts
+  translations/mk.ts
   translations/nl.ts
   translations/no_nb.ts
   translations/pl.ts

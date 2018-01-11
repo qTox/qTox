@@ -21,6 +21,7 @@ TRANSLATIONS = \
     translations/ja.ts \
     translations/jbo.ts \
     translations/ko.ts \
+    translations/mk.ts \
     translations/nl.ts \
     translations/no_nb.ts \
     translations/lt.ts \
