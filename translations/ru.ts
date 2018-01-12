@@ -1240,6 +1240,14 @@ instead of system taskbar.</source>
         <source>Copy link address</source>
         <translation>Копировать адрес ссылки</translation>
     </message>
+    <message>
+        <source>Confirmation</source>
+        <translation>Подтверждение</translation>
+    </message>
+    <message>
+        <source>You are sure that you want to clear all displayed messages?</source>
+        <translation>Вы уверены, что хотите удалить все отображаемые сообщения?</translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
