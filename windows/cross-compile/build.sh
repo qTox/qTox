@@ -504,6 +504,7 @@ then
               --enable-parser=mjpeg \
               --enable-decoder=h264 \
               --enable-decoder=mjpeg \
+              --enable-decoder=rawvideo \
               --enable-memalign-hack
   make
   make install
