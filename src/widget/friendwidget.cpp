@@ -63,7 +63,7 @@ FriendWidget::FriendWidget(const Friend* f, bool compact)
     , isDefaultAvatar{true}
 {
     avatar->setPixmap(QPixmap(":/img/contact.svg"));
-    statusPic.setPixmap(QPixmap(":/img/status/dot_offline.svg"));
+    statusPic.setPixmap(QPixmap(":/img/status/offline.svg"));
     statusPic.setMargin(3);
     nameLabel->setText(f->getDisplayedName());
     nameLabel->setTextFormat(Qt::PlainText);
@@ -300,14 +300,14 @@ void FriendWidget::setAsInactiveChatroom()
 void FriendWidget::updateStatusLight()
 {
     static const QString statuses[] = {
-        ":img/status/dot_online.svg",
-        ":img/status/dot_online_notification.svg",
-        ":img/status/dot_away.svg",
-        ":img/status/dot_away_notification.svg",
-        ":img/status/dot_busy.svg",
-        ":img/status/dot_busy_notification.svg",
-        ":img/status/dot_offline.svg",
-        ":img/status/dot_offline_notification.svg",
+        ":img/status/online.svg",
+        ":img/status/online_notification.svg",
+        ":img/status/away.svg",
+        ":img/status/away_notification.svg",
+        ":img/status/busy.svg",
+        ":img/status/busy_notification.svg",
+        ":img/status/offline.svg",
+        ":img/status/offline_notification.svg",
     };
 
     const bool event = frnd->getEventFlag();

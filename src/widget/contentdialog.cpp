@@ -493,10 +493,10 @@ void ContentDialog::updateTitleAndStatusIcon()
 
     Status currentStatus = activeChatroomWidget->getFriend()->getStatus();
 
-    QMap<Status, QIcon> icons{{Status::Online, QIcon(":/img/status/dot_online.svg")},
-                              {Status::Away, QIcon(":/img/status/dot_away.svg")},
-                              {Status::Busy, QIcon(":/img/status/dot_busy.svg")},
-                              {Status::Offline, QIcon(":/img/status/dot_offline.svg")}};
+    QMap<Status, QIcon> icons{{Status::Online, QIcon(":/img/status/online.svg")},
+                              {Status::Away, QIcon(":/img/status/away.svg")},
+                              {Status::Busy, QIcon(":/img/status/busy.svg")},
+                              {Status::Offline, QIcon(":/img/status/offline.svg")}};
 
     setWindowIcon(icons[currentStatus]);
 }
