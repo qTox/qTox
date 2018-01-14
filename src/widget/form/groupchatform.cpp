@@ -34,6 +34,7 @@
 #include "src/widget/style.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
+#include "src/persistence/settings.h"
 
 #include <QDragEnterEvent>
 #include <QMimeData>
@@ -116,6 +117,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     });
     connect(group, &Group::userListChanged, this, &GroupChatForm::onUserListChanged);
     connect(group, &Group::titleChanged, this, &GroupChatForm::onTitleChanged);
+    connect(&Settings::getInstance(), &Settings::blackListChanged, this, &GroupChatForm::updateUserNames);
 
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
@@ -225,9 +227,16 @@ void GroupChatForm::updateUserNames()
             label->setToolTip(fullName);
         }
         label->setTextFormat(Qt::PlainText);
+
+        const Settings& s = Settings::getInstance();
+        const Core* core = Core::getInstance();
+        const ToxPk peerPk = core->getGroupPeerPk(group->getId(), peerNumber);
+
         if (group->isSelfPeerNumber(peerNumber)) {
             label->setStyleSheet(QStringLiteral("QLabel {color : green;}"));
-        } else if (netcam != nullptr) {
+	} else if (s.getBlackList().contains(peerPk.toString())) {
+            label->setStyleSheet(QStringLiteral("QLabel {color : darkRed;}"));
+	} else if (netcam != nullptr) {
             static_cast<GroupNetCamView*>(netcam)->addPeer(peerNumber, fullName);
         }
         peerLabels.append(label);
