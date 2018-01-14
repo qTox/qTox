@@ -43,7 +43,7 @@
 #include <QClipboard>
 #include <QFileDialog>
 #include <QKeyEvent>
-#include <QShortcut>
+#include <QMessageBox>
 
 /**
  * @class GenericChatForm
@@ -193,24 +193,26 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     contentLayout->addWidget(chatWidget);
     contentLayout->addLayout(mainFootLayout);
 
+    quoteAction = menu.addAction(QIcon(), QString(), this, SLOT(quoteSelectedText()),
+                                 QKeySequence(Qt::ALT + Qt::Key_Q));
+    addAction(quoteAction);
+    menu.addSeparator();
+
     menu.addActions(chatWidget->actions());
     menu.addSeparator();
-    saveChatAction =
-        menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onSaveLogClicked()));
-    clearAction =
-        menu.addAction(QIcon::fromTheme("edit-clear"), QString(), this, SLOT(clearChatArea(bool)));
 
-    quoteAction = menu.addAction(QIcon(), QString(), this, SLOT(quoteSelectedText()));
+    saveChatAction = menu.addAction(QIcon::fromTheme("document-save"), QString(),
+                                    this, SLOT(onSaveLogClicked()));
+    clearAction = menu.addAction(QIcon::fromTheme("edit-clear"), QString(),
+                                 this, SLOT(clearChatArea(bool)),
+                                 QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_L));
+    addAction(clearAction);
 
     copyLinkAction = menu.addAction(QIcon(), QString(), this, SLOT(copyLink()));
-
     menu.addSeparator();
 
     connect(chatWidget, &ChatLog::customContextMenuRequested, this,
             &GenericChatForm::onChatContextMenuRequested);
-
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L, this, SLOT(clearChatArea()));
-    new QShortcut(Qt::ALT + Qt::Key_Q, this, SLOT(quoteSelectedText()));
 
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
@@ -524,6 +526,13 @@ void GenericChatForm::clearChatArea()
 
 void GenericChatForm::clearChatArea(bool notinform)
 {
+    QMessageBox::StandardButton mboxResult =
+        QMessageBox::question(this, tr("Confirmation"),
+                              tr("You are sure that you want to clear all displayed messages?"),
+                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    if (mboxResult == QMessageBox::No) {
+        return;
+    }
     chatWidget->clear();
     previousId = ToxPk();
 

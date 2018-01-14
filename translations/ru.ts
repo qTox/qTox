@@ -591,11 +591,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation>%1 звонит</translation>
+        <translation>Входящий звонок от %1</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation>Звонит %1</translation>
+        <translation>Вызов %1</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -1239,6 +1239,14 @@ instead of system taskbar.</source>
     <message>
         <source>Copy link address</source>
         <translation>Копировать адрес ссылки</translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation>Подтверждение</translation>
+    </message>
+    <message>
+        <source>You are sure that you want to clear all displayed messages?</source>
+        <translation>Вы уверены, что хотите удалить все отображаемые сообщения?</translation>
     </message>
 </context>
 <context>
