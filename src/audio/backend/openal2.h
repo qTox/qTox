@@ -55,12 +55,12 @@ class OpenAL2 : public OpenAL
 public:
     OpenAL2();
 
-private:
-    bool initInput(const QString& deviceName);
-    bool initOutput(const QString& outDevDescr);
-    void cleanupOutput();
+protected:
+    bool initInput(const QString& deviceName) override;
+    bool initOutput(const QString& outDevDescr) override;
+    void cleanupOutput() override;
     void playMono16SoundCleanup();
-    void doAudio();
+    void doAudio() override;
     void doInput();
     void doOutput();
     bool loadOpenALExtensions(ALCdevice* dev);
