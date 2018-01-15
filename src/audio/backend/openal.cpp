@@ -301,6 +301,7 @@ bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
     assert(!alInDev);
 
     // TODO: Try to actually detect if our audio source is stereo
+    this->channels = channels;
     int stereoFlag = channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     const uint32_t sampleRate = AUDIO_SAMPLE_RATE;
     const uint16_t frameDuration = AUDIO_FRAME_DURATION;
@@ -316,6 +317,7 @@ bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
         return false;
     }
 
+    inputBuffer = new int16_t[AUDIO_FRAME_SAMPLE_COUNT * channels];
     setInputGain(Settings::getInstance().getAudioInGainDecibel());
     setInputThreshold(Settings::getInstance().getAudioThreshold());
 
@@ -468,6 +470,8 @@ void OpenAL::cleanupInput()
         alInDev = nullptr;
     else
         qWarning() << "Failed to close input";
+
+    delete[] inputBuffer;
 }
 
 /**
@@ -529,9 +533,9 @@ void OpenAL::playMono16SoundCleanup()
  *
  * @return volume in percent of max volume
  */
-float OpenAL::getVolume(int16_t *buf)
+float OpenAL::getVolume()
 {
-    quint32 samples = AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS;
+    quint32 samples = AUDIO_FRAME_SAMPLE_COUNT * channels;
     float sum = 0.0;
     for (quint32 i = 0; i < samples; i++) {
         float sample = (float)buf[i] / (float)std::numeric_limits<int16_t>::max();
@@ -567,10 +571,9 @@ void OpenAL::doAudio()
     if (static_cast<ALuint>(curSamples) < AUDIO_FRAME_SAMPLE_COUNT)
         return;
 
-    int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS];
-    alcCaptureSamples(alInDev, buf, AUDIO_FRAME_SAMPLE_COUNT);
+    alcCaptureSamples(alInDev, inputBuffer, AUDIO_FRAME_SAMPLE_COUNT);
 
-    float volume = getVolume(buf);
+    float volume = getVolume();
     if (volume >= inputThreshold)
     {
         isActive = true;
@@ -583,16 +586,16 @@ void OpenAL::doAudio()
         return;
     }
 
-    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS; ++i) {
+    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * channels; ++i) {
         // gain amplification with clipping to 16-bit boundaries
-        int ampPCM =
-            qBound<int>(std::numeric_limits<int16_t>::min(), qRound(buf[i] * inputGainFactor()),
-                        std::numeric_limits<int16_t>::max());
+        int ampPCM = qBound<int>(std::numeric_limits<int16_t>::min(),
+                                 qRound(inputBuffer[i] * inputGainFactor()),
+                                 std::numeric_limits<int16_t>::max());
 
-        buf[i] = static_cast<int16_t>(ampPCM);
+        inputBuffer[i] = static_cast<int16_t>(ampPCM);
     }
 
-    emit Audio::frameAvailable(buf, AUDIO_FRAME_SAMPLE_COUNT, AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
+    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT, channels, AUDIO_SAMPLE_RATE);
 }
 
 /**

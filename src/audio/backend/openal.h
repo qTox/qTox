@@ -106,11 +106,12 @@ protected:
     bool initInput(const QString& deviceName, uint32_t channels);
     virtual void doAudio();
 
+    float getVolume();
+
 private:
     virtual bool initInput(const QString& deviceName);
     virtual bool initOutput(const QString& outDevDescr);
     void playMono16SoundCleanup();
-    float getVolume(int16_t *buf);
 
 protected:
     QThread* audioThread;
@@ -127,6 +128,7 @@ protected:
     bool outputInitialized = false;
 
     QList<ALuint> peerSources;
+    int channels = 0;
     qreal gain = 0;
     qreal gainFactor = 1;
     qreal minInGain = -30;
@@ -137,6 +139,7 @@ protected:
     QTimer voiceTimer;
     qreal minInThreshold = 0.0;
     qreal maxInThreshold = 0.4;
+    int16_t* inputBuffer;
 };
 
 #endif // OPENAL_H

@@ -361,23 +361,33 @@ void OpenAL2::doInput()
         return;
     }
 
-    int16_t buf[AUDIO_FRAME_SAMPLE_COUNT];
-    alcCaptureSamples(alInDev, buf, AUDIO_FRAME_SAMPLE_COUNT);
+    alcCaptureSamples(alInDev, inputBuffer, AUDIO_FRAME_SAMPLE_COUNT);
 
     if (echoCancelSupported && filterer) {
-        filter_audio(filterer, buf, AUDIO_FRAME_SAMPLE_COUNT);
+        filter_audio(filterer, inputBuffer, AUDIO_FRAME_SAMPLE_COUNT);
+    }
+
+    float volume = getVolume();
+    if (volume >= inputThreshold) {
+        isActive = true;
+        emit startActive(voiceHold);
+    }
+
+    emit Audio::volumeAvailable(volume);
+    if (!isActive) {
+        return;
     }
 
     // gain amplification with clipping to 16-bit boundaries
     for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT; ++i) {
         int ampPCM = qBound<int>(std::numeric_limits<int16_t>::min(),
-                                 qRound(buf[i] * OpenAL::inputGainFactor()),
+                                 qRound(inputBuffer[i] * OpenAL::inputGainFactor()),
                                  std::numeric_limits<int16_t>::max());
 
-        buf[i] = static_cast<int16_t>(ampPCM);
+        inputBuffer[i] = static_cast<int16_t>(ampPCM);
     }
 
-    emit Audio::frameAvailable(buf, AUDIO_FRAME_SAMPLE_COUNT, 1, AUDIO_SAMPLE_RATE);
+    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT, 1, AUDIO_SAMPLE_RATE);
 }
 
 /**
