@@ -466,10 +466,11 @@ void OpenAL::cleanupInput()
 
     qDebug() << "Closing audio input";
     alcCaptureStop(alInDev);
-    if (alcCaptureCloseDevice(alInDev) == ALC_TRUE)
+    if (alcCaptureCloseDevice(alInDev) == ALC_TRUE) {
         alInDev = nullptr;
-    else
+    } else {
         qWarning() << "Failed to close input";
+    }
 
     delete[] inputBuffer;
 }
@@ -538,14 +539,10 @@ float OpenAL::getVolume()
     quint32 samples = AUDIO_FRAME_SAMPLE_COUNT * channels;
     float sum = 0.0;
     for (quint32 i = 0; i < samples; i++) {
-        float sample = (float)buf[i] / (float)std::numeric_limits<int16_t>::max();
-        if (sample > 0) {
-            sum += sample;
-        } else {
-            sum -= sample;
-        }
+        float sample = static_cast<float>(inputBuffer[i]) / std::numeric_limits<int16_t>::max();
+        sum += qAbs(sample);
     }
-    return sum/samples;
+    return sum / samples;
 }
 
 /**
@@ -563,26 +560,26 @@ void OpenAL::doAudio()
 {
     QMutexLocker lock(&audioLock);
 
-    if (!alInDev || !inSubscriptions)
+    if (!alInDev || !inSubscriptions) {
         return;
+    }
 
     ALint curSamples = 0;
     alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
-    if (static_cast<ALuint>(curSamples) < AUDIO_FRAME_SAMPLE_COUNT)
+    if (static_cast<ALuint>(curSamples) < AUDIO_FRAME_SAMPLE_COUNT) {
         return;
+    }
 
     alcCaptureSamples(alInDev, inputBuffer, AUDIO_FRAME_SAMPLE_COUNT);
 
     float volume = getVolume();
-    if (volume >= inputThreshold)
-    {
+    if (volume >= inputThreshold) {
         isActive = true;
         emit startActive(voiceHold);
     }
 
     emit Audio::volumeAvailable(volume);
-    if (!isActive)
-    {
+    if (!isActive) {
         return;
     }
 
