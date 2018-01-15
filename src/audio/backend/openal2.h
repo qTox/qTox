@@ -60,11 +60,10 @@ protected:
     bool initOutput(const QString& outDevDescr) override;
     void cleanupOutput() override;
     void playMono16SoundCleanup();
-    void doAudio() override;
-    void doInput();
-    void doOutput();
+    void doOutput() override;
     bool loadOpenALExtensions(ALCdevice* dev);
     bool initOutputEchoCancel();
+    void captureSamples(ALCdevice* device, int16_t* buffer, ALCsizei samples) override;
 
 private:
     ALCdevice* alProxyDev;

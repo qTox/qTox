@@ -104,14 +104,18 @@ protected:
     bool autoInitOutput();
 
     bool initInput(const QString& deviceName, uint32_t channels);
-    virtual void doAudio();
 
-    float getVolume();
+    void doAudio();
+
+    virtual void doInput();
+    virtual void doOutput();
+    virtual void captureSamples(ALCdevice* device, int16_t* buffer, ALCsizei samples);
 
 private:
     virtual bool initInput(const QString& deviceName);
     virtual bool initOutput(const QString& outDevDescr);
     void playMono16SoundCleanup();
+    float getVolume();
 
 protected:
     QThread* audioThread;

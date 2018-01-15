@@ -297,6 +297,11 @@ void OpenAL2::cleanupOutput()
  */
 void OpenAL2::doOutput()
 {
+    if (!echoCancelSupported) {
+        kill_filter_audio(filterer);
+        filterer = nullptr;
+    }
+
     alcMakeContextCurrent(alOutContext);
     ALuint bufids[PROXY_BUFFER_COUNT];
     ALint processed = 0, queued = 0;
@@ -330,7 +335,7 @@ void OpenAL2::doOutput()
     alSourceQueueBuffers(alProxySource, 1, bufids);
 
     // initialize echo canceler if supported
-    if (!filterer) {
+    if (echoCancelSupported && !filterer) {
         filterer = new_filter_audio(AUDIO_SAMPLE_RATE);
         int16_t filterLatency = latency[1] * 1000 * 2 + AUDIO_FRAME_DURATION;
         qDebug() << "Setting filter delay to: " << filterLatency << "ms";
@@ -350,63 +355,10 @@ void OpenAL2::doOutput()
     alcMakeContextCurrent(alProxyContext);
 }
 
-/**
- * @brief handles recording of audio frames
- */
-void OpenAL2::doInput()
+void OpenAL2::captureSamples(ALCdevice* device, int16_t* buffer, ALCsizei samples)
 {
-    ALint curSamples = 0;
-    alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
-    if (curSamples < static_cast<ALint>(AUDIO_FRAME_SAMPLE_COUNT)) {
-        return;
-    }
-
-    alcCaptureSamples(alInDev, inputBuffer, AUDIO_FRAME_SAMPLE_COUNT);
-
+    alcCaptureSamples(device, buffer, samples);
     if (echoCancelSupported && filterer) {
-        filter_audio(filterer, inputBuffer, AUDIO_FRAME_SAMPLE_COUNT);
-    }
-
-    float volume = getVolume();
-    if (volume >= inputThreshold) {
-        isActive = true;
-        emit startActive(voiceHold);
-    }
-
-    emit Audio::volumeAvailable(volume);
-    if (!isActive) {
-        return;
-    }
-
-    // gain amplification with clipping to 16-bit boundaries
-    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT; ++i) {
-        int ampPCM = qBound<int>(std::numeric_limits<int16_t>::min(),
-                                 qRound(inputBuffer[i] * OpenAL::inputGainFactor()),
-                                 std::numeric_limits<int16_t>::max());
-
-        inputBuffer[i] = static_cast<int16_t>(ampPCM);
-    }
-
-    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT, 1, AUDIO_SAMPLE_RATE);
-}
-
-/**
- * @brief Called on the captureTimer events to capture audio
- */
-void OpenAL2::doAudio()
-{
-    QMutexLocker lock(&audioLock);
-
-    // output section
-    if (echoCancelSupported && outputInitialized && !peerSources.isEmpty()) {
-        doOutput();
-    } else {
-        kill_filter_audio(filterer);
-        filterer = nullptr;
-    }
-
-    // input section
-    if (alInDev && inSubscriptions) {
-        doInput();
+        filter_audio(filterer, buffer, samples);
     }
 }
