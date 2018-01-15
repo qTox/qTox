@@ -62,7 +62,7 @@ OpenAL::OpenAL()
     connect(this, &Audio::startActive, &voiceTimer, static_cast<void (QTimer::*)(int)>(&QTimer::start));
     connect(&voiceTimer, &QTimer::timeout, this, &Audio::stopActive);
 
-    connect(&captureTimer, &QTimer::timeout, this, &OpenAL::doCapture);
+    connect(&captureTimer, &QTimer::timeout, this, &OpenAL::doAudio);
     captureTimer.setInterval(AUDIO_FRAME_DURATION / 2);
     captureTimer.setSingleShot(false);
     captureTimer.start();
@@ -301,7 +301,7 @@ bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
     assert(!alInDev);
 
     // TODO: Try to actually detect if our audio source is stereo
-    int stereoFlag = AUDIO_CHANNELS == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+    int stereoFlag = channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     const uint32_t sampleRate = AUDIO_SAMPLE_RATE;
     const uint16_t frameDuration = AUDIO_FRAME_DURATION;
     const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * channels;
@@ -555,7 +555,7 @@ void OpenAL::stopActive()
 /**
  * @brief Called on the captureTimer events to capture audio
  */
-void OpenAL::doCapture()
+void OpenAL::doAudio()
 {
     QMutexLocker lock(&audioLock);
 
