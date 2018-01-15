@@ -554,23 +554,17 @@ void OpenAL::stopActive()
 }
 
 /**
- * @brief Called on the captureTimer events to capture audio
+ * @brief handles recording of audio frames
  */
-void OpenAL::doAudio()
+void OpenAL::doInput()
 {
-    QMutexLocker lock(&audioLock);
-
-    if (!alInDev || !inSubscriptions) {
-        return;
-    }
-
     ALint curSamples = 0;
     alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
-    if (static_cast<ALuint>(curSamples) < AUDIO_FRAME_SAMPLE_COUNT) {
+    if (curSamples < static_cast<ALint>(AUDIO_FRAME_SAMPLE_COUNT)) {
         return;
     }
 
-    alcCaptureSamples(alInDev, inputBuffer, AUDIO_FRAME_SAMPLE_COUNT);
+    captureSamples(alInDev, inputBuffer, AUDIO_FRAME_SAMPLE_COUNT);
 
     float volume = getVolume();
     if (volume >= inputThreshold) {
@@ -583,16 +577,44 @@ void OpenAL::doAudio()
         return;
     }
 
-    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * channels; ++i) {
+    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT; ++i) {
         // gain amplification with clipping to 16-bit boundaries
         int ampPCM = qBound<int>(std::numeric_limits<int16_t>::min(),
-                                 qRound(inputBuffer[i] * inputGainFactor()),
+                                 qRound(inputBuffer[i] * OpenAL::inputGainFactor()),
                                  std::numeric_limits<int16_t>::max());
 
         inputBuffer[i] = static_cast<int16_t>(ampPCM);
     }
 
-    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT, channels, AUDIO_SAMPLE_RATE);
+    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT, 1, AUDIO_SAMPLE_RATE);
+}
+
+void OpenAL::doOutput()
+{
+    // Nothing
+}
+
+/**
+ * @brief Called on the captureTimer events to capture audio
+ */
+void OpenAL::doAudio()
+{
+    QMutexLocker lock(&audioLock);
+
+    // Output section
+    if (outputInitialized && !peerSources.isEmpty()) {
+        doOutput();
+    }
+
+    // Input section
+    if (alInDev && inSubscriptions) {
+        doInput();
+    }
+}
+
+void OpenAL::captureSamples(ALCdevice* device, int16_t* buffer, ALCsizei samples)
+{
+    alcCaptureSamples(device, buffer, samples);
 }
 
 /**
