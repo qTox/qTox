@@ -104,13 +104,13 @@ protected:
     bool autoInitOutput();
 
     bool initInput(const QString& deviceName, uint32_t channels);
+    virtual void doAudio();
 
 private:
     virtual bool initInput(const QString& deviceName);
     virtual bool initOutput(const QString& outDevDescr);
     void playMono16SoundCleanup();
     float getVolume(int16_t *buf);
-    void doCapture();
 
 protected:
     QThread* audioThread;
