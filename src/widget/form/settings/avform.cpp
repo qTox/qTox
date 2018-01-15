@@ -117,6 +117,7 @@ void AVForm::hideEvent(QHideEvent* event)
 {
     if (subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
+        audio->unsubscribeOutput(alSource);
         audio->unsubscribeInput();
         subscribedToAudioIn = false;
     }
@@ -139,6 +140,7 @@ void AVForm::showEvent(QShowEvent* event)
 
     if (!subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
+        audio->subscribeOutput(alSource);
         audio->subscribeInput();
         subscribedToAudioIn = true;
     }

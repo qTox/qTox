@@ -102,6 +102,7 @@ private:
     CameraSource& camera;
     QVector<QPair<QString, QString>> videoDeviceList;
     QVector<VideoMode> videoModes;
+    uint alSource;
 };
 
 #endif
