@@ -586,7 +586,7 @@ void OpenAL::doInput()
         inputBuffer[i] = static_cast<int16_t>(ampPCM);
     }
 
-    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT, 1, AUDIO_SAMPLE_RATE);
+    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT, channels, AUDIO_SAMPLE_RATE);
 }
 
 void OpenAL::doOutput()
