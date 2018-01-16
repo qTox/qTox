@@ -577,7 +577,7 @@ void OpenAL::doInput()
         return;
     }
 
-    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT; ++i) {
+    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * channels; ++i) {
         // gain amplification with clipping to 16-bit boundaries
         int ampPCM = qBound<int>(std::numeric_limits<int16_t>::min(),
                                  qRound(inputBuffer[i] * OpenAL::inputGainFactor()),
