@@ -21,17 +21,17 @@
         <file>img/settings/general.png</file>
         <file>img/settings/identity.png</file>
         <file>img/settings/privacy.png</file>
-        <file>img/status/dot_away.svg</file>
-        <file>img/status/dot_away_notification.svg</file>
-        <file>img/status/dot_busy.svg</file>
-        <file>img/status/dot_busy_notification.svg</file>
-        <file>img/status/dot_groupchat.svg</file>
-        <file>img/status/dot_groupchat_newmessages.svg</file>
-        <file>img/status/dot_groupchat_notification.svg</file>
-        <file>img/status/dot_offline.svg</file>
-        <file>img/status/dot_offline_notification.svg</file>
-        <file>img/status/dot_online.svg</file>
-        <file>img/status/dot_online_notification.svg</file>
+        <file>img/status/away.svg</file>
+        <file>img/status/away_notification.svg</file>
+        <file>img/status/busy.svg</file>
+        <file>img/status/busy_notification.svg</file>
+        <file>img/status/groupchat.svg</file>
+        <file>img/status/groupchat_newmessages.svg</file>
+        <file>img/status/groupchat_notification.svg</file>
+        <file>img/status/offline.svg</file>
+        <file>img/status/offline_notification.svg</file>
+        <file>img/status/online.svg</file>
+        <file>img/status/online_notification.svg</file>
         <file>img/taskbar/dark/taskbar_online.svg</file>
         <file>img/taskbar/dark/taskbar_away.svg</file>
         <file>img/taskbar/dark/taskbar_busy.svg</file>

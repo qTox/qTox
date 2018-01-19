@@ -45,7 +45,7 @@ GroupWidget::GroupWidget(int groupId, const QString& name, bool compact)
     , groupId{groupId}
 {
     avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()));
-    statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
+    statusPic.setPixmap(QPixmap(":img/status/online.svg"));
     statusPic.setMargin(3);
     nameLabel->setText(name);
 
@@ -179,10 +179,10 @@ void GroupWidget::updateStatusLight()
     Group* g = GroupList::findGroup(groupId);
 
     if (!g->getEventFlag()) {
-        statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
+        statusPic.setPixmap(QPixmap(":img/status/online.svg"));
         statusPic.setMargin(3);
     } else {
-        statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.svg"));
+        statusPic.setPixmap(QPixmap(":img/status/online_notification.svg"));
         statusPic.setMargin(0);
     }
 }

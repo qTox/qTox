@@ -2188,13 +2188,13 @@ QString Widget::getStatusIconPath(Status status)
 {
     switch (status) {
     case Status::Online:
-        return ":/img/status/dot_online.svg";
+        return ":/img/status/online.svg";
     case Status::Away:
-        return ":/img/status/dot_away.svg";
+        return ":/img/status/away.svg";
     case Status::Busy:
-        return ":/img/status/dot_busy.svg";
+        return ":/img/status/busy.svg";
     case Status::Offline:
-        return ":/img/status/dot_offline.svg";
+        return ":/img/status/offline.svg";
     }
     qWarning() << "Status unknown";
     assert(false);
