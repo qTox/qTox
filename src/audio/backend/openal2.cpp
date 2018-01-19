@@ -112,6 +112,7 @@ bool OpenAL2::loadOpenALExtensions(ALCdevice* dev)
 
     GET_PROC_ADDR(dev, alGetSourcedvSOFT);
     checkAlcError(dev);
+    alGetSourcedvSOFT = nullptr;
     if (!alGetSourcedvSOFT) {
         qDebug() << "Failed to load alGetSourcedvSOFT function!";
         return false;
