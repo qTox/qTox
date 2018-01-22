@@ -150,7 +150,7 @@ void VideoSurface::onNewFrameAvailable(const std::shared_ptr<VideoFrame>& newFra
 
     float newRatio = getSizeRatio(newSize);
 
-    if (qAbs(newRatio - ratio) > 1E-3 && isVisible()) {
+    if (!qFuzzyCompare(newRatio, ratio)  && isVisible()) {
         ratio = newRatio;
         recalulateBounds();
         emit ratioChanged();
