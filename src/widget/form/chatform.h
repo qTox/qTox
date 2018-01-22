@@ -70,6 +70,7 @@ public slots:
     void onAvEnd(uint32_t friendId, bool error);
     void onAvatarChange(uint32_t friendId, const QPixmap& pic);
     void onAvatarRemoved(uint32_t friendId);
+    void onMicMuteToggle();
 
 private slots:
     void clearChatArea(bool notInForm) override final;
@@ -84,7 +85,6 @@ private slots:
     void onVideoCallTriggered();
     void onAnswerCallTriggered(bool video);
     void onRejectCallTriggered();
-    void onMicMuteToggle();
     void onVolMuteToggle();
 
     void onFileSendFailed(uint32_t friendId, const QString& fname);
