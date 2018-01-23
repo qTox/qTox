@@ -372,28 +372,6 @@ GenericNetCamView* GroupChatForm::createNetcam()
     return view;
 }
 
-void GroupChatForm::keyPressEvent(QKeyEvent* ev)
-{
-    // Push to talk (CTRL+P)
-    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall) {
-        onMicMuteToggle();
-    }
-
-    if (msgEdit->hasFocus())
-        return;
-}
-
-void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
-{
-    // Push to talk (CTRL+P)
-    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall) {
-        onMicMuteToggle();
-    }
-
-    if (msgEdit->hasFocus())
-        return;
-}
-
 /**
  * @brief Updates users' count label text
  */

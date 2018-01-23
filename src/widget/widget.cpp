@@ -73,6 +73,9 @@
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
 #include "tool/removefrienddialog.h"
+#ifdef UGLOBALHOTKEY
+#include <UGlobalHotkey/uglobalhotkeys.h>
+#endif
 
 bool toxActivateEventHandler(const QByteArray&)
 {
@@ -265,6 +268,11 @@ void Widget::init()
     connect(filterGroup, &QActionGroup::triggered, this, &Widget::searchContacts);
     connect(filterDisplayGroup, &QActionGroup::triggered, this, &Widget::changeDisplayMode);
     connect(ui->friendList, &QWidget::customContextMenuRequested, this, &Widget::friendListContextMenu);
+
+#ifdef UGLOBALHOTKEY
+    hotkeyManager = std::unique_ptr<UGlobalHotkeys>(new UGlobalHotkeys());
+    hotkeyManager->registerHotkey("Ctrl+p");
+#endif
 
     // keyboard shortcuts
     new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
@@ -1003,6 +1011,9 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(friendForm, &ChatForm::rejectCall, this, &Widget::onRejectCall);
     connect(friendForm, &ChatForm::acceptCall, this, &Widget::onAcceptCall);
 
+#ifdef UGLOBALHOTKEY
+    connect(hotkeyManager.get(), &UGlobalHotkeys::activated, friendForm, &ChatForm::onMicMuteToggle);
+#endif
     connect(widget, &FriendWidget::newWindowOpened, this, &Widget::openNewDialog);
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &FriendWidget::chatroomWidgetClicked, friendForm, &ChatForm::focusInput);
@@ -1868,6 +1879,9 @@ Group* Widget::createGroup(int groupId)
     connect(form, &GroupChatForm::sendAction, core, &Core::sendGroupAction);
     connect(newgroup, &Group::titleChangedByUser, core, &Core::changeGroupTitle);
     connect(core, &Core::usernameSet, newgroup, &Group::setSelfName);
+#ifdef UGLOBALHOTKEY
+    connect(hotkeyManager.get(), &UGlobalHotkeys::activated, form, &GroupChatForm::onMicMuteToggle);
+#endif
 
     FilterCriteria filter = getFilterCriteria();
     widget->searchName(ui->searchContactText->text(), filterGroups(filter));

@@ -40,11 +40,13 @@ public:
 
     void peerAudioPlaying(int peer);
 
+public slots:
+    void onMicMuteToggle();
+
 private slots:
     void onSendTriggered() override;
     void onScreenshotClicked() override;
     void onAttachClicked() override;
-    void onMicMuteToggle();
     void onVolMuteToggle();
     void onCallClicked();
     void onUserListChanged();
@@ -52,8 +54,6 @@ private slots:
 
 protected:
     virtual GenericNetCamView* createNetcam() final override;
-    virtual void keyPressEvent(QKeyEvent* ev) final override;
-    virtual void keyReleaseEvent(QKeyEvent* ev) final override;
     // drag & drop
     virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
     virtual void dropEvent(QDropEvent* ev) final override;

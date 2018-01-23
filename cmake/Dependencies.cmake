@@ -104,6 +104,7 @@ search_dependency(LIBQRENCODE         PACKAGE libqrencode)
 search_dependency(LIBSODIUM           PACKAGE libsodium)
 search_dependency(LIBSWSCALE          PACKAGE libswscale)
 search_dependency(SQLCIPHER           PACKAGE sqlcipher)
+search_dependency(UGLOBALHOTKEY       LIBRARY UGlobalHotkey    OPTIONAL)
 search_dependency(VPX                 PACKAGE vpx)
 
 # Try to find cmake toxcore libraries
@@ -205,6 +206,12 @@ if (PLATFORM_EXTENSIONS)
     message(WARNING "Not using platform extensions, dependencies not found")
     set(PLATFORM_EXTENSIONS OFF)
   endif()
+endif()
+
+if (UGLOBALHOTKEY_FOUND)
+  add_definitions(
+    -DUGLOBALHOTKEY
+  )
 endif()
 
 add_definitions(

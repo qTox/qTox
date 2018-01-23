@@ -66,6 +66,9 @@ class QTimer;
 class SettingsWidget;
 class SystemTrayIcon;
 class VideoSurface;
+#ifdef UGLOBALHOTKEY
+class UGlobalHotkeys;
+#endif
 
 class Widget final : public QMainWindow
 {
@@ -299,6 +302,9 @@ private:
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
     int icon_size;
+#ifdef UGLOBALHOTKEY
+    std::unique_ptr<UGlobalHotkeys> hotkeyManager;
+#endif
 
     QMap<uint32_t, GroupWidget*> groupWidgets;
     QMap<uint32_t, FriendWidget*> friendWidgets;
