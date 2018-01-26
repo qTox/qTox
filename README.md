@@ -115,6 +115,7 @@ and possibly other stuff.
 Active qTox maintainers:
 
 ```
+74AD B7A7 F8EC C100 9916  C4E4 2AA8 E0DA 1B31 FB3C      - Anthony Bilinski
 3103 9166 FA90 2CA5 0D05  D608 5AF9 F2E2 9107 C727      – Diadlo
 C7A2 552D 0B25 0F98 3827  742C 1332 03A3 AC39 9151      – initramfs
 CA92 21C5 389B 7C50 AA5F  7793 52A5 0775 BE13 DF17      - noavarice
