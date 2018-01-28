@@ -81,6 +81,9 @@ bool CategoryWidget::isExpanded() const
 
 void CategoryWidget::setExpanded(bool isExpanded, bool save)
 {
+    if (expanded == isExpanded) {
+        return;
+    }
     expanded = isExpanded;
     setMouseTracking(true);
     listWidget->setVisible(isExpanded);
