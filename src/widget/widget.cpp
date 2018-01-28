@@ -62,6 +62,7 @@
 #include "src/persistence/offlinemsgengine.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
+#include "src/platform/GlobalShortcut/GlobalShortcut.h"
 #include "src/platform/timer.h"
 #include "src/widget/form/addfriendform.h"
 #include "src/widget/form/chatform.h"
@@ -272,7 +273,17 @@ void Widget::init()
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(nextContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
-    new QShortcut(Qt::Key_F11, this, SLOT(toggleFullscreen()));
+    auto tmp = new QShortcut(Qt::Key_F11, this, SLOT(toggleFullscreen()));
+
+    // global shortcuts
+    globalShortcutEngine = std::unique_ptr<GlobalShortcutEngine>(GlobalShortcutEngine::platformInit());
+    Shortcut pttShortcut;
+    pttShortcut.bSuppress = false;
+    // TODO: where do these button values come from? not ascii or utf8, related to keyboard mapping? system independent?
+    pttShortcut.qlButtons = QList<QVariant>{QVariant{49}, QVariant{37}};  // 49 == '`', 37 == ctrl
+	gsPushTalk = std::unique_ptr<GlobalShortcut>(new GlobalShortcut(pttShortcut));
+	globalShortcutEngine->add(gsPushTalk.get());
+	connect(gsPushTalk.get(), &GlobalShortcut::triggered, this, &Widget::pttMute);
 
 #ifdef Q_OS_MAC
     QMenuBar* globalMenu = Nexus::getInstance().globalMenuBar;

@@ -494,6 +494,14 @@ if (PLATFORM_EXTENSIONS)
     src/platform/timer_win.cpp
     src/platform/timer_x11.cpp
     src/platform/x11_display.cpp
+    src/platform/GlobalShortcut/GlobalShortcut.cpp
+    src/platform/GlobalShortcut/GlobalShortcut.h
+    src/platform/GlobalShortcut/GlobalShortcut_unix.cpp
+    src/platform/GlobalShortcut/GlobalShortcut_unix.h
+    src/platform/GlobalShortcut/GlobalShortcut_win.cpp
+    src/platform/GlobalShortcut/GlobalShortcut_win.h
+    src/platform/GlobalShortcut/GlobalShortcut_macx.cpp
+    src/platform/GlobalShortcut/GlobalShortcut_macx.h
   )
 endif()
 
@@ -585,6 +593,10 @@ if (MINGW)
   endif()
 endif()
 
+#set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+    #src/GlobalShortcut/GlobalShortcut_unix.cpp
+    #src/GlobalShortcut/GlobalShortcut_unix.h
+#)
 # the compiler flags for compiling C sources
 MESSAGE( STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS} )
 

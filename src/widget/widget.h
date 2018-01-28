@@ -66,6 +66,8 @@ class QTimer;
 class SettingsWidget;
 class SystemTrayIcon;
 class VideoSurface;
+class GlobalShortcutEngine;
+class GlobalShortcut;
 
 class Widget final : public QMainWindow
 {
@@ -187,6 +189,7 @@ signals:
     void statusMessageChanged(const QString& statusMessage);
     void resized();
     void windowStateChanged(Qt::WindowStates states);
+    void pttMute();
 
 private slots:
     void onAddClicked();
@@ -299,6 +302,9 @@ private:
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
     int icon_size;
+
+    std::unique_ptr<GlobalShortcutEngine> globalShortcutEngine;
+    std::unique_ptr<GlobalShortcut> gsPushTalk;
 
     QMap<uint32_t, GroupWidget*> groupWidgets;
     QMap<uint32_t, FriendWidget*> friendWidgets;

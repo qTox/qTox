@@ -124,6 +124,7 @@ if (PLATFORM_EXTENSIONS AND UNIX AND NOT APPLE)
   # Automatic auto-away support. (X11 also using for capslock detection)
   search_dependency(X11               PACKAGE x11 OPTIONAL)
   search_dependency(XSS               PACKAGE xscrnsaver OPTIONAL)
+  search_dependency(XI                PACKAGE xi)
 endif()
 
 if(APPLE)

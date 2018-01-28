@@ -168,6 +168,8 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(headWidget, &ChatFormHeader::videoCallTriggered, this, &ChatForm::onVideoCallTriggered);
     connect(headWidget, &ChatFormHeader::micMuteToggle, this, &ChatForm::onMicMuteToggle);
     connect(headWidget, &ChatFormHeader::volMuteToggle, this, &ChatForm::onVolMuteToggle);
+    const Widget* widget = Widget::getInstance();
+    connect(widget, &Widget::pttMute, this, &ChatForm::onMicMuteToggle);
 
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
