@@ -386,7 +386,11 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
     if (call.getNullVideoBitrate()) {
         qDebug() << "Restarting video stream to friend" << callId;
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+        toxav_video_set_bit_rate(toxav, callId, VIDEO_DEFAULT_BITRATE, nullptr);
+#else
         toxav_bit_rate_set(toxav, callId, -1, VIDEO_DEFAULT_BITRATE, nullptr);
+#endif
         call.setNullVideoBitrate(false);
     }
 
@@ -683,7 +687,11 @@ void CoreAV::sendNoVideo()
     qDebug() << "CoreAV: Signaling end of video sending";
     for (auto& kv : calls) {
         ToxFriendCall& call = kv.second;
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+        toxav_video_set_bit_rate(toxav, kv.first, 0, nullptr);
+#else
         toxav_bit_rate_set(toxav, kv.first, -1, 0, nullptr);
+#endif
         call.setNullVideoBitrate(true);
     }
 }
