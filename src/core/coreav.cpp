@@ -96,7 +96,12 @@ CoreAV::CoreAV(Tox* tox)
 
     toxav_callback_call(toxav, CoreAV::callCallback, this);
     toxav_callback_call_state(toxav, CoreAV::stateCallback, this);
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+    toxav_callback_audio_bit_rate(toxav, CoreAV::audioBitrateCallback, this);
+    toxav_callback_video_bit_rate(toxav, CoreAV::videoBitrateCallback, this);
+#else
     toxav_callback_bit_rate_status(toxav, CoreAV::bitrateCallback, this);
+#endif
     toxav_callback_audio_receive_frame(toxav, CoreAV::audioFrameCallback, this);
     toxav_callback_video_receive_frame(toxav, CoreAV::videoFrameCallback, this);
 
@@ -821,6 +826,36 @@ void CoreAV::bitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t arate, u
     }
 
     qDebug() << "Recommended bitrate with" << friendNum << " is now " << arate << "/" << vrate
+             << ", ignoring it";
+}
+
+void CoreAV::audioBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rate, void* vSelf)
+{
+    CoreAV* self = static_cast<CoreAV*>(vSelf);
+
+    // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
+    if (QThread::currentThread() != self->coreavThread.get()) {
+        return (void)QMetaObject::invokeMethod(self, "audioBitrateCallback", Qt::QueuedConnection,
+                                               Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
+                                               Q_ARG(uint32_t, rate), Q_ARG(void*, vSelf));
+    }
+
+    qDebug() << "Recommended audio bitrate with" << friendNum << " is now " << rate
+             << ", ignoring it";
+}
+
+void CoreAV::videoBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rate, void* vSelf)
+{
+    CoreAV* self = static_cast<CoreAV*>(vSelf);
+
+    // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
+    if (QThread::currentThread() != self->coreavThread.get()) {
+        return (void)QMetaObject::invokeMethod(self, "videoBitrateCallback", Qt::QueuedConnection,
+                                               Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
+                                               Q_ARG(uint32_t, rate), Q_ARG(void*, vSelf));
+    }
+
+    qDebug() << "Recommended video bitrate with" << friendNum << " is now " << rate
              << ", ignoring it";
 }
 
