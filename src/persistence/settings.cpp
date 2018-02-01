@@ -243,6 +243,8 @@ void Settings::loadGlobal()
         audioThreshold = s.value("audioThreshold", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
         enableTestSound = s.value("enableTestSound", true).toBool();
+        audioCaptureMode = s.value("audioCaptureMode", 0).toInt();
+        pttShortcutKeys = s.value("pttShortcutKeys", QList<int>());
         audioBitrate = s.value("audioBitrate", 64).toInt();
     }
     s.endGroup();
@@ -710,6 +712,8 @@ void Settings::saveGlobal()
         s.setValue("audioThreshold", audioThreshold);
         s.setValue("outVolume", outVolume);
         s.setValue("enableTestSound", enableTestSound);
+        s.setValue("audioCaptureMode", audioCaptureMode);
+        s.setValue("pttShortcutKeys", pttShortcutKeys);
         s.setValue("audioBitrate", audioBitrate);
     }
     s.endGroup();
@@ -1792,6 +1796,38 @@ void Settings::setOutVolume(int volume)
 {
     if (setVal(outVolume, volume)) {
         emit outVolumeChanged(volume);
+    }
+}
+
+int Settings::getAudioCaptureMode() const
+{
+    const QMutexLocker locker{&bigLock};
+    return audioCaptureMode;
+}
+
+void Settings::setAudioCaptureMode(int mode)
+{
+    const QMutexLocker locker{&bigLock};
+
+    if (mode != audioCaptureMode) {
+        audioCaptureMode = mode;
+        emit audioCaptureModeChanged(mode);
+    }
+}
+
+QList<int> Settings::getPttShortcutKeys() const
+{
+    const QMutexLocker locker{&bigLock};
+    return pttShortcutKeys;
+}
+
+void Settings::setPttShortcutKeys(QList<int> keys)
+{
+    const QMutexLocker locker{&bigLock};
+
+    if (keys != pttShortcutKeys) {
+        pttShortcutKeys = keys;
+        emit pttShortcutKeysChanged(pttShortcutKeys);
     }
 }
 

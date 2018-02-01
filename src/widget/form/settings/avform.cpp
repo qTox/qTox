@@ -95,6 +95,7 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
 
     volumeDisplay->setMaximum(totalSliderSteps);
 
+    fillCaptureModeComboBox();
     fillAudioQualityComboBox();
 
     eventsInit();
@@ -546,6 +547,52 @@ void AVForm::on_inDevCombobox_currentIndexChanged(int deviceIndex)
     if (!inputEnabled) {
         volumeDisplay->setValue(volumeDisplay->minimum());
     }
+}
+
+void AVForm::fillCaptureModeComboBox()
+{
+    const bool previouslyBlocked = inModeComboBox->blockSignals(true);
+
+    inModeComboBox->addItem(tr("Continuous transmission"), 0);
+    inModeComboBox->addItem(tr("Voice activation"), 1);
+    inModeComboBox->addItem(tr("Push to talk"), 2);
+
+    const int mode = audioSettings->getAudioCaptureMode();
+    const int index = inModeComboBox->findData(mode);
+
+    updateCaptureModeUI(mode);
+    inModeComboBox->setCurrentIndex(index);
+    inModeComboBox->blockSignals(previouslyBlocked);
+}
+
+void AVForm::updateCaptureModeUI(int mode)
+{
+    audioThresholdLabel->hide();
+    audioThresholdSlider->hide();
+    pushToTalkShortcutLabel->hide();
+    pushToTalkShortcutInput->hide();
+    
+    switch (mode) {
+        case 0:
+            break;
+        case 1:
+            audioThresholdLabel->show();
+            audioThresholdSlider->show();
+            break;
+        case 2:
+            pushToTalkShortcutLabel->show();
+            pushToTalkShortcutInput->show();
+            break;
+        default:
+            break;
+    }
+}
+
+void AVForm::on_inModeComboBox_currentIndexChanged(int index)
+{
+    const int mode = inModeComboBox->currentData().toInt(); 
+    audioSettings->setAudioCaptureMode(mode);
+    updateCaptureModeUI(mode);
 }
 
 void AVForm::on_outDevCombobox_currentIndexChanged(int deviceIndex)
