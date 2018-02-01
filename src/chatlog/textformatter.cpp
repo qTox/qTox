@@ -23,51 +23,43 @@
 
 // clang-format off
 
-static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
-                                                          "[%1]"
+static const QString SINGLE_SIGN_PATTERN = QStringLiteral("[%1]"
                                                           "(?!\\s)"
                                                           "([^%1\\n]+?)"
                                                           "(?<!\\s)"
-                                                          "[%1]"
-                                                          "(?=$|[\\s\\n])");
+                                                          "[%1]");
 
-static const QString SINGLE_SLASH_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
-                                                           "/"
+static const QString SINGLE_SLASH_PATTERN = QStringLiteral("/"
                                                            "(?!\\s)"
                                                            "([^/\\n]+?)"
                                                            "(?<!\\s)"
-                                                           "/"
-                                                           "(?=$|[\\s\\n])");
+                                                           "/");
 
-static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
-                                                          "[%1]{2}"
+static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("[%1]{2}"
                                                           "(?!\\s)"
                                                           "([^\\n]+?)"
                                                           "(?<!\\s)"
-                                                          "[%1]{2}"
-                                                          "(?=$|[\\s\\n])");
+                                                          "[%1]{2}");
 
-static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[\\s\\n])"
-                                                     "```"
+static const QString MULTILINE_CODE = QStringLiteral("```"
                                                      "(?!`)"
                                                      "((.|\\n)+?)"
                                                      "(?<!`)"
-                                                     "```"
-                                                     "(?=$|[\\s\\n])");
+                                                     "```");
 
 #define REGEXP_WRAPPER_PAIR(pattern, wrapper)\
 {QRegularExpression(pattern,QRegularExpression::UseUnicodePropertiesOption),QStringLiteral(wrapper)}
 
 static const QPair<QRegularExpression, QString> REGEX_TO_WRAPPER[] {
     REGEXP_WRAPPER_PAIR(SINGLE_SLASH_PATTERN, "<i>%1</i>"),
-    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('*'), "<b>%1</b>"),
-    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('_'), "<u>%1</u>"),
-    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('~'), "<s>%1</s>"),
-    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('`'), "<font color=#595959><code>%1</code></font>"),
     REGEXP_WRAPPER_PAIR(DOUBLE_SIGN_PATTERN.arg('*'), "<b>%1</b>"),
     REGEXP_WRAPPER_PAIR(DOUBLE_SIGN_PATTERN.arg('/'), "<i>%1</i>"),
     REGEXP_WRAPPER_PAIR(DOUBLE_SIGN_PATTERN.arg('_'), "<u>%1</u>"),
     REGEXP_WRAPPER_PAIR(DOUBLE_SIGN_PATTERN.arg('~'), "<s>%1</s>"),
+    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('*'), "<b>%1</b>"),
+    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('_'), "<u>%1</u>"),
+    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('~'), "<s>%1</s>"),
+    REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('`'), "<font color=#595959><code>%1</code></font>"),
     REGEXP_WRAPPER_PAIR(MULTILINE_CODE, "<font color=#595959><code>%1</code></font>"),
 };
 
