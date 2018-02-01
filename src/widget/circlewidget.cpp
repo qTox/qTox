@@ -116,23 +116,19 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
             ContentDialog* dialog = Widget::getInstance()->createContentDialog();
 
             for (int i = 0; i < friendOnlineLayout()->count(); ++i) {
-                FriendWidget* friendWidget =
-                    qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
+                QWidget* const widget = friendOnlineLayout()->itemAt(i)->widget();
+                FriendWidget* const friendWidget = qobject_cast<FriendWidget*>(widget);
 
                 if (friendWidget != nullptr) {
-                    const Friend* const f = friendWidget->getFriend();
-                    ChatForm* const form = f->getChatForm();
-                    dialog->addFriend(f, form);
+                    friendWidget->activate();
                 }
             }
             for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
-                FriendWidget* friendWidget =
-                    qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
+                QWidget* const widget = friendOfflineLayout()->itemAt(i)->widget();
+                FriendWidget* const friendWidget = qobject_cast<FriendWidget*>(widget);
 
                 if (friendWidget != nullptr) {
-                    const Friend* f = friendWidget->getFriend();
-                    ChatForm* const form = f->getChatForm();
-                    dialog->addFriend(f, form);
+                    friendWidget->activate();
                 }
             }
 
