@@ -119,6 +119,8 @@ class Settings : public QObject,
     Q_PROPERTY(bool audioOutDevEnabled READ getAudioOutDevEnabled WRITE setAudioOutDevEnabled NOTIFY
                    audioOutDevEnabledChanged FINAL)
     Q_PROPERTY(int outVolume READ getOutVolume WRITE setOutVolume NOTIFY outVolumeChanged FINAL)
+    Q_PROPERTY(int audioCaptureMode READ getAudioCaptureMode WRITE setAudioCaptureMode NOTIFY audioCaptureModeChanged FINAL)
+    Q_PROPERTY(QList<int> pttShortcutKeys READ getPttShortcutKeys WRITE setPttShortcutKeys NOTIFY pttShortcutKeysChanged FINAL)
     Q_PROPERTY(int audioBitrate READ getAudioBitrate WRITE setAudioBitrate NOTIFY audioBitrateChanged FINAL)
 
     // Video
@@ -362,7 +364,13 @@ public:
         return 100;
     }
     void setOutVolume(int volume) override;
-
+    
+    int getAudioCaptureMode() const override;
+    void setAudioCaptureMode(int mode) override;
+    
+    QList<int> getPttShortcutKeys() const override;
+    void setPttShortcutKeys(QList<int> keys) override;    
+    
     int getAudioBitrate() const override;
     void setAudioBitrate(int bitrate) override;
 
@@ -378,6 +386,8 @@ public:
     SIGNAL_IMPL(Settings, audioInGainDecibelChanged, qreal dB)
     SIGNAL_IMPL(Settings, audioThresholdChanged, qreal percent)
     SIGNAL_IMPL(Settings, outVolumeChanged, int volume)
+    SIGNAL_IMPL(Settings, audioCaptureModeChanged, int mode)
+    SIGNAL_IMPL(Settings, pttShortcutKeysChanged, QList<int> keys)
     SIGNAL_IMPL(Settings, audioBitrateChanged, int bitrate)
     SIGNAL_IMPL(Settings, enableTestSoundChanged, bool newValue)
 
@@ -665,6 +675,8 @@ private:
     QString outDev;
     bool audioOutDevEnabled;
     int outVolume;
+    int audioCaptureMode;
+    QList<int> pttShortcutKeys;
     int audioBitrate;
     bool enableTestSound;
 
