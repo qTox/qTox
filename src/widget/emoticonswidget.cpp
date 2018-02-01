@@ -131,7 +131,7 @@ void EmoticonsWidget::onSmileyClicked()
     if (sender) {
         QString sequence =
             sender->property("sequence").toString().replace("&lt;", "<").replace("&gt;", ">");
-        emit insertEmoticon(' ' + sequence + ' ');
+        emit insertEmoticon(sequence);
     }
 }
 

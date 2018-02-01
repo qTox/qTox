@@ -258,21 +258,25 @@ QString SmileyPack::smileyfied(const QString& msg)
 {
     QMutexLocker locker(&loadingMutex);
     QString result(msg);
-    QRegularExpression exp("\\S+");
-    QRegularExpressionMatchIterator iter = exp.globalMatch(result);
-    int replaceDiff = 0;
-    while (iter.hasNext()) {
-        QRegularExpressionMatch match = iter.next();
-        QString key = match.captured();
-        int startPos = match.capturedStart();
-        int keyLength = key.length();
-        if (emoticonToPath.find(key) != emoticonToPath.end()) {
-            QString imgRichText = getAsRichText(key);
-            result.replace(startPos + replaceDiff, keyLength, imgRichText);
-            replaceDiff += imgRichText.length() - keyLength;
+    int replaceDiff = 0; // how much we have increased message size by replacing emoji with image tags
+    int curCharLength;
+    QStringRef curChar; // the current UTF-32 which we are examining, which may look like a 2-length QString
+    for (int strIndex = 0; strIndex < msg.length(); strIndex += curCharLength) {
+        if ((msg.length() - strIndex >= 2) && ((curChar = msg.midRef(strIndex, 2)).toUcs4().length() == 1)) {
+            // if converting two characters to UTF-32 gives us a single valid character, this is actually a single
+            // 4-byte character, with a QString length of 2
+            curCharLength = 2;
+        }
+        else {
+            curChar = msg.midRef(strIndex, 1);
+            curCharLength = 1;
+        }
+        if (emoticonToPath.find(curChar.toString()) != emoticonToPath.end()) {
+            QString imgRichText = getAsRichText(curChar.toString());
+            result.replace(strIndex + replaceDiff, curCharLength, imgRichText);
+            replaceDiff += imgRichText.length() - curCharLength;
         }
     }
-
     return result;
 }
 
