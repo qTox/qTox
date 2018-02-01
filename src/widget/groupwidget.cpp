@@ -207,12 +207,6 @@ Group* GroupWidget::getGroup() const
     return GroupList::findGroup(groupId);
 }
 
-void GroupWidget::setChatForm(ContentLayout* contentLayout)
-{
-    Group* g = GroupList::findGroup(groupId);
-    g->getChatForm()->show(contentLayout);
-}
-
 void GroupWidget::resetEventFlags()
 {
     Group* g = GroupList::findGroup(groupId);

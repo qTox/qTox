@@ -1138,12 +1138,12 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
     uint32_t id;
     GenericChatForm* form;
     const Friend* frnd = widget->getFriend();
+    const Group* group = widget->getGroup();
     if (frnd) {
         id = frnd->getId();
         form = chatForms[id];
     } else {
-        Group* g = widget->getGroup();
-        id = g->getId();
+        id = group->getId();
         form = groupChatForms[id];
     }
 
@@ -1187,8 +1187,7 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
         if (frnd) {
             chatForms[frnd->getId()]->show(contentLayout);
         } else {
-            GroupWidget* const groupWidget = qobject_cast<GroupWidget*>(widget);
-            groupWidget->setChatForm(contentLayout);
+            groupChatForms[group->getId()]->show(contentLayout);
         }
         widget->setAsActiveChatroom();
         setWindowTitle(widget->getTitle());
@@ -1287,9 +1286,9 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
         onAddClicked();
     }
 
-    GroupWidget* groupWidget = dialog->addGroup(groupId, group->getName());
-    connect(groupWidget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     auto chatForm = groupChatForms[groupId];
+    GroupWidget* groupWidget = dialog->addGroup(group, chatForm);
+    connect(groupWidget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, chatForm, &GroupChatForm::focusInput);
 
     // Signal transmission from the created `groupWidget` (which shown in

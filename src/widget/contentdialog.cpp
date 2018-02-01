@@ -183,11 +183,14 @@ FriendWidget* ContentDialog::addFriend(const Friend* frnd, GenericChatForm* form
     return friendWidget;
 }
 
-GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
+GroupWidget* ContentDialog::addGroup(const Group* g, GenericChatForm* form)
 {
-    bool compact = Settings::getInstance().getCompactLayout();
+    const auto groupId = g->getId();
+    const auto name = g->getName();
+    const auto compact = Settings::getInstance().getCompactLayout();
     GroupWidget* groupWidget = new GroupWidget(groupId, name, compact);
     groupLayout.addSortedWidget(groupWidget);
+    groupChatForms[groupId] = form;
 
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
     connect(groupWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDialog);
@@ -719,11 +722,11 @@ void ContentDialog::activate(GenericChatroomWidget* widget)
 
     const FriendWidget* const friendWidget = qobject_cast<FriendWidget*>(widget);
     if (friendWidget) {
-        uint32_t friendId = friendWidget->getFriend()->getId();
+        auto friendId = friendWidget->getFriend()->getId();
         friendChatForms[friendId]->show(contentLayout);
     } else {
-        GroupWidget* const groupWidget = qobject_cast<GroupWidget*>(widget);
-        groupWidget->setChatForm(contentLayout);
+        auto groupId = widget->getGroup()->getId();
+        groupChatForms[groupId]->show(contentLayout);
     }
 
     widget->setAsActiveChatroom();
