@@ -37,18 +37,11 @@ Group::Group(int groupId, const QString& name, bool isAvGroupchat, const QString
     , nPeers{0}
     , avGroupchat{isAvGroupchat}
 {
-    chatForm = new GroupChatForm(this);
-
     // in groupchats, we only notify on messages containing your name <-- dumb
     // sound notifications should be on all messages, but system popup notification
     // on naming is appropriate
     hasNewMessages = 0;
     userWasMentioned = 0;
-}
-
-Group::~Group()
-{
-    delete chatForm;
 }
 
 void Group::updatePeer(int peerId, QString name)
@@ -135,11 +128,6 @@ uint32_t Group::getId() const
 int Group::getPeersCount() const
 {
     return nPeers;
-}
-
-GroupChatForm* Group::getChatForm()
-{
-    return chatForm;
 }
 
 QStringList Group::getPeerList() const

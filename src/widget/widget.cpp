@@ -527,6 +527,10 @@ Widget::~Widget()
         delete form;
     }
 
+    for (auto form : groupChatForms) {
+        delete form;
+    }
+
     delete icon;
     delete profileForm;
     delete addFriendForm;
@@ -1849,7 +1853,7 @@ Group* Widget::createGroup(int groupId)
     GroupWidget* widget = new GroupWidget(groupId, groupName, compact);
     groupWidgets[groupId] = widget;
 
-    auto form = newgroup->getChatForm();
+    auto form = new GroupChatForm(newgroup);
     groupChatForms[groupId] = form;
 
     contactListWidget->addGroupWidget(widget);
