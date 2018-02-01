@@ -524,6 +524,10 @@ Widget::~Widget()
         removeFriend(f, true);
     }
 
+    for (auto form : chatForms) {
+        delete form;
+    }
+
     delete icon;
     delete profileForm;
     delete addFriendForm;
