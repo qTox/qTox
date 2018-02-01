@@ -984,7 +984,6 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
     friendWidgets[friendId] = widget;
     chatForms[friendId] = friendForm;
-    newfriend->loadHistory();
 
     QDate activityDate = s.getFriendActivity(friendPk);
     QDate chatDate = friendForm->getLatestDate();

@@ -37,8 +37,6 @@ public:
     ~Friend() override;
     Friend& operator=(const Friend& other) = delete;
 
-    void loadHistory();
-
     void setName(const QString& name) override;
     void setAlias(const QString& name);
     QString getDisplayedName() const override;
