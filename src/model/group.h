@@ -36,7 +36,6 @@ class Group : public Contact
     Q_OBJECT
 public:
     Group(int groupId, const QString& name, bool isAvGroupchat, const QString& selfName);
-    ~Group() override;
 
     bool isAvGroupchat() const;
     uint32_t getId() const override;
@@ -44,8 +43,6 @@ public:
     void regeneratePeerList();
     QStringList getPeerList() const;
     bool isSelfPeerNumber(int peernumber) const;
-
-    GroupChatForm* getChatForm();
 
     void setEventFlag(bool f) override;
     bool getEventFlag() const override;
