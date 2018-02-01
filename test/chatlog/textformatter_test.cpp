@@ -99,6 +99,13 @@ static const QVector<StringPair> COMMON_WORK_CASES {
     PAIR_FORMAT("%1a%1", "%2%1a%1%3"),
     PAIR_FORMAT("%1aa%1", "%2%1aa%1%3"),
     PAIR_FORMAT("%1aaa%1", "%2%1aaa%1%3"),
+	PAIR_FORMAT("a%1aa%1a", "a%2%1aa%1%3a"),
+	PAIR_FORMAT("%1aa%1a", "%2%1aa%1%3a"),
+	PAIR_FORMAT("a%1aa%1", "a%2%1aa%1%3"),
+	PAIR_FORMAT("a %1aa%1a", "a %2%1aa%1%3a"),
+	PAIR_FORMAT("a%1aa%1 a", "a%2%1aa%1%3 a"),
+	PAIR_FORMAT("a\n%1aa%1a", "a\n%2%1aa%1%3a"),
+	PAIR_FORMAT("a%1aa%1\na", "a%2%1aa%1%3\na"),
     // Must allow same formatting more than one time
     PAIR_FORMAT("%1aaa%1 %1aaa%1", "%2%1aaa%1%3 %2%1aaa%1%3"),
 };
@@ -140,10 +147,6 @@ static const QVector<StringPair> MULTI_SIGN_WORK_CASES {
 static const QVector<QString> COMMON_EXCEPTIONS {
     // No empty formatting string
     QStringLiteral("%1%1"),
-    // Formatting string must be enclosed by whitespace symbols, newlines or message start/end
-    QStringLiteral("a%1aa%1a"), QStringLiteral("%1aa%1a"), QStringLiteral("a%1aa%1"),
-    QStringLiteral("a %1aa%1a"), QStringLiteral("a%1aa%1 a"),
-    QStringLiteral("a\n%1aa%1a"), QStringLiteral("a%1aa%1\na"),
 };
 
 static const QVector<QString> SINGLE_AND_DOUBLE_SIGN_EXCEPTIONS {
@@ -363,7 +366,8 @@ void TestTextFormatter::commonWorkCasesHideSymbols()
 
 static QString singleSignWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
 {
-    return str.arg(mtt.markdownSequence);
+	const StringPair& tags = mtt.htmlTags;
+    return str.arg(mtt.markdownSequence).arg(tags.first).arg(tags.second);
 }
 
 static QString singleSignWorkCasesProcessOutput(const QString& str,
