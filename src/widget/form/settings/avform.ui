@@ -102,13 +102,23 @@
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QLabel" name="audioThresholdLabel">
+           <widget class="QLabel" name="inModeLabel">
             <property name="text">
-             <string>Threshold</string>
+             <string>Capture mode</string>
             </property>
            </widget>
           </item>
           <item row="4" column="1" colspan="2">
+           <widget class="QComboBox" name="inModeComboBox"></widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="audioThresholdLabel">
+            <property name="text">
+             <string>Activation threshold</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1" colspan="2">
            <widget class="QSlider" name="audioThresholdSlider">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -116,21 +126,14 @@
            </widget>
           </item>
           <item row="5" column="0">
-           <widget class="QLabel" name="volumeDisplayLabel">
+           <widget class="QLabel" name="pushToTalkShortcutLabel">
             <property name="text">
-             <string>Volume</string>
+             <string>Shortcut</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1" colspan="2">
-           <widget class="QProgressBar" name="volumeDisplay">
-            <property name="textVisible">
-             <bool>false</bool>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
+          <item row="5" column="1">
+           <widget class="HotkeyInput" name="pushToTalkShortcutInput"></widget>
           </item>
           <item row="0" column="0">
            <widget class="QLabel" name="outDevLabel">
@@ -156,6 +159,36 @@
             </property>
             <property name="toolTip">
              <string>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="volumeDisplayLabel">
+            <property name="text">
+             <string>Volume preview</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1" colspan="2">
+           <widget class="QProgressBar" name="volumeDisplay">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="textVisible">
+             <bool>false</bool>
+            </property>
+           </widget>
+	   </item> 
+	  <item row="8" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbEnableBackend2">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</string>
+            </property>
+            <property name="text">
+             <string>Enable experimental audio backend</string>
             </property>
            </widget>
           </item>
@@ -253,6 +286,11 @@ which may lead to problems with video calls.</string>
    <header>src/widget/form/settings/verticalonlyscroller.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>HotkeyInput</class>
+   <extends>QTextEdit</extends>
+   <header>src/widget/form/settings/hotkeyinput.h</header>
+  </customwidget> 
  </customwidgets>
  <tabstops>
   <tabstop>scrollArea</tabstop>
