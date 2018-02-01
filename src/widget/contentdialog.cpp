@@ -159,12 +159,13 @@ ContentDialog::~ContentDialog()
     Translator::unregister(this);
 }
 
-FriendWidget* ContentDialog::addFriend(const Friend* frnd)
+FriendWidget* ContentDialog::addFriend(const Friend* frnd, GenericChatForm* form)
 {
     bool compact = Settings::getInstance().getCompactLayout();
     uint32_t friendId = frnd->getId();
     FriendWidget* friendWidget = new FriendWidget(frnd, compact);
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
+    friendChatForms[friendId] = form;
 
     connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
@@ -716,11 +717,18 @@ void ContentDialog::activate(GenericChatroomWidget* widget)
 
     activeChatroomWidget = widget;
 
-    widget->setChatForm(contentLayout);
+    const FriendWidget* const friendWidget = qobject_cast<FriendWidget*>(widget);
+    if (friendWidget) {
+        uint32_t friendId = friendWidget->getFriend()->getId();
+        friendChatForms[friendId]->show(contentLayout);
+    } else {
+        GroupWidget* const groupWidget = qobject_cast<GroupWidget*>(widget);
+        groupWidget->setChatForm(contentLayout);
+    }
+
     widget->setAsActiveChatroom();
     widget->resetEventFlags();
     widget->updateStatusLight();
-
     updateTitleAndStatusIcon();
 }
 

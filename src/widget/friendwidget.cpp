@@ -359,14 +359,6 @@ void FriendWidget::search(const QString& searchString, bool hide)
     }
 }
 
-void FriendWidget::setChatForm(ContentLayout* contentLayout)
-{
-    ChatForm* form = frnd->getChatForm();
-    if (form) {
-        form->show(contentLayout);
-    }
-}
-
 void FriendWidget::resetEventFlags()
 {
     // Hack to avoid edit const Friend. TODO: Repalce on emit

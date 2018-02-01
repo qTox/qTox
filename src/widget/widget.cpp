@@ -1189,7 +1189,8 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
         if (frnd) {
             chatForms[frnd->getId()]->show(contentLayout);
         } else {
-            widget->setChatForm(contentLayout);
+            GroupWidget* const groupWidget = qobject_cast<GroupWidget*>(widget);
+            groupWidget->setChatForm(contentLayout);
         }
         widget->setAsActiveChatroom();
         setWindowTitle(widget->getTitle());
@@ -1230,15 +1231,17 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
 
 void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 {
-    ContentDialog* contentDialog = ContentDialog::getFriendDialog(frnd->getId());
+    uint32_t friendId = frnd->getId();
+    ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
     bool isSeparate = Settings::getInstance().getSeparateWindow();
-    FriendWidget* widget = friendWidgets[frnd->getId()];
+    FriendWidget* widget = friendWidgets[friendId];
     bool isCurrent = activeChatroomWidget == widget;
     if (!contentDialog && !isSeparate && isCurrent) {
         onAddClicked();
     }
 
-    FriendWidget* friendWidget = dialog->addFriend(frnd);
+    ChatForm* form = chatForms[friendId];
+    FriendWidget* friendWidget = dialog->addFriend(frnd, form);
 
     friendWidget->setStatusMsg(widget->getStatusMsg());
 
@@ -1271,7 +1274,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 
     QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getPublicKey());
     if (!avatar.isNull()) {
-        friendWidget->onAvatarChange(frnd->getId(), avatar);
+        friendWidget->onAvatarChange(friendId, avatar);
     }
 }
 

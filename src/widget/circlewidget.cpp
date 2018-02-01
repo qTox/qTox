@@ -36,6 +36,7 @@
 #include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/persistence/settings.h"
+#include "src/widget/form/chatform.h"
 
 QHash<int, CircleWidget*> CircleWidget::circleList;
 
@@ -119,8 +120,9 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                     qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr) {
-                    const Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(f);
+                    const Friend* const f = friendWidget->getFriend();
+                    ChatForm* const form = f->getChatForm();
+                    dialog->addFriend(f, form);
                 }
             }
             for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
@@ -129,7 +131,8 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
                 if (friendWidget != nullptr) {
                     const Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(f);
+                    ChatForm* const form = f->getChatForm();
+                    dialog->addFriend(f, form);
                 }
             }
 
