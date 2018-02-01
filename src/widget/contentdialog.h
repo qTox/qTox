@@ -52,7 +52,7 @@ public:
     ~ContentDialog() override;
 
     FriendWidget* addFriend(const Friend* f, GenericChatForm* form);
-    GroupWidget* addGroup(int groupId, const QString& name);
+    GroupWidget* addGroup(const Group* g, GenericChatForm* form);
     void removeFriend(int friendId);
     void removeGroup(int groupId);
     bool hasFriendWidget(int friendId, const GenericChatroomWidget* chatroomWidget) const;
@@ -134,6 +134,7 @@ private:
     static QHash<int, ContactInfo> friendList;
     static QHash<int, ContactInfo> groupList;
     QHash<int, GenericChatForm*> friendChatForms;
+    QHash<int, GenericChatForm*> groupChatForms;
 };
 
 #endif // CONTENTDIALOG_H

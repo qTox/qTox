@@ -34,7 +34,6 @@ public:
     void resetEventFlags() final override;
     QString getStatusString() const final override;
     Group* getGroup() const final override;
-    void setChatForm(ContentLayout* contentLayout);
     void setName(const QString& name);
     void editName();
 
