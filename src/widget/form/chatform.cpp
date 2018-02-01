@@ -26,7 +26,9 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/model/friend.h"
+#include "src/nexus.h"
 #include "src/persistence/offlinemsgengine.h"
+#include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/history.h"
 #include "src/video/netcamview.h"
@@ -201,6 +203,10 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
 
     updateCallButtons();
+    if (Nexus::getProfile()->isHistoryEnabled()) {
+        loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+    }
+
     setAcceptDrops(true);
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
