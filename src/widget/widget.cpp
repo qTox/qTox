@@ -1147,8 +1147,8 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
         form = chatForms[id];
     } else {
         Group* g = widget->getGroup();
-        form = g->getChatForm();
         id = g->getId();
+        form = groupChatForms[id];
     }
 
     bool chatFormIsSet;
@@ -1293,8 +1293,8 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
 
     GroupWidget* groupWidget = dialog->addGroup(groupId, group->getName());
     connect(groupWidget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
-    connect(groupWidget, &GroupWidget::chatroomWidgetClicked, group->getChatForm(),
-            &ChatForm::focusInput);
+    auto chatForm = groupChatForms[groupId];
+    connect(groupWidget, &GroupWidget::chatroomWidgetClicked, chatForm, &GroupChatForm::focusInput);
 
     // Signal transmission from the created `groupWidget` (which shown in
     // ContentDialog) to the `widget` (which shown in main widget)
@@ -1723,15 +1723,18 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
     }
 
-    bool targeted =
-        !isSelf && (message.contains(nameMention) || message.contains(sanitizedNameMention));
+    const auto mention = message.contains(nameMention) || message.contains(sanitizedNameMention);
+    const auto targeted = !isSelf && mention;
+    const auto groupId = g->getId();
+    const auto date = QDateTime::currentDateTime();
+    auto form = groupChatForms[groupId];
     if (targeted && !isAction) {
-        g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
+        form->addAlertMessage(author, message, date);
     } else {
-        g->getChatForm()->addMessage(author, message, QDateTime::currentDateTime(), isAction);
+        form->addMessage(author, message, date, isAction);
     }
 
-    newGroupMessageAlert(g->getId(), targeted || Settings::getInstance().getGroupAlwaysNotify());
+    newGroupMessageAlert(groupId, targeted || Settings::getInstance().getGroupAlwaysNotify());
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)
@@ -1794,7 +1797,8 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
         return;
     }
 
-    g->getChatForm()->peerAudioPlaying(peernumber);
+    auto form = groupChatForms[g->getId()];
+    form->peerAudioPlaying(peernumber);
 }
 
 void Widget::removeGroup(Group* g, bool fake)
@@ -1839,20 +1843,9 @@ Group* Widget::createGroup(int groupId)
         return g;
     }
 
+    const auto groupName = tr("Groupchat #%1").arg(groupId);
     Core* core = Nexus::getCore();
-
-    if (!core) {
-        qWarning() << "Can't create group. Core does not exist";
-        return nullptr;
-    }
-
-    QString groupName = tr("Groupchat #%1").arg(groupId);
     CoreAV* coreAv = core->getAv();
-
-    if (!coreAv) {
-        qWarning() << "Can't create group. CoreAv does not exist";
-        return nullptr;
-    }
 
     bool enabled = coreAv->isGroupAvEnabled(groupId);
     Group* newgroup = GroupList::addGroup(groupId, groupName, enabled, core->getUsername());
@@ -1860,11 +1853,13 @@ Group* Widget::createGroup(int groupId)
     GroupWidget* widget = new GroupWidget(groupId, groupName, compact);
     groupWidgets[groupId] = widget;
 
+    auto form = newgroup->getChatForm();
+    groupChatForms[groupId] = form;
+
     contactListWidget->addGroupWidget(widget);
     widget->updateStatusLight();
     contactListWidget->activateWindow();
 
-    GroupChatForm* form = newgroup->getChatForm();
     connect(widget, &GroupWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &GroupWidget::newWindowOpened, this, &Widget::openNewDialog);
     connect(widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
@@ -2057,9 +2052,10 @@ void Widget::onGroupSendFailed(int groupId)
         return;
     }
 
-    QString message = tr("Message failed to send");
-    QDateTime curTime = QDateTime::currentDateTime();
-    g->getChatForm()->addSystemInfoMessage(message, ChatMessage::INFO, curTime);
+    const auto message = tr("Message failed to send");
+    const auto curTime = QDateTime::currentDateTime();
+    auto form = groupChatForms[g->getId()];
+    form->addSystemInfoMessage(message, ChatMessage::INFO, curTime);
 }
 
 void Widget::onFriendTypingChanged(int friendId, bool isTyping)
@@ -2480,7 +2476,7 @@ void Widget::focusChatInput()
         if (const Friend* f = activeChatroomWidget->getFriend()) {
             chatForms[f->getId()]->focusInput();
         } else if (Group* g = activeChatroomWidget->getGroup()) {
-            g->getChatForm()->focusInput();
+            groupChatForms[g->getId()]->focusInput();
         }
     }
 }
