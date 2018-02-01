@@ -26,15 +26,12 @@
 #include <QObject>
 #include <QString>
 
-class ChatForm;
-
 class Friend : public Contact
 {
     Q_OBJECT
 public:
     Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias);
     Friend(const Friend& other) = delete;
-    ~Friend() override;
     Friend& operator=(const Friend& other) = delete;
 
     void setName(const QString& name) override;
@@ -54,9 +51,6 @@ public:
     void setStatus(Status s);
     Status getStatus() const;
 
-    ChatForm* getChatForm() const;
-    void setChatForm(ChatForm* form);
-
 signals:
     void nameChanged(uint32_t friendId, const QString& name);
     void aliasChanged(uint32_t friendId, QString alias);
@@ -74,8 +68,6 @@ private:
     uint32_t friendId;
     bool hasNewEvents;
     Status friendStatus;
-
-    ChatForm* chatForm;
 };
 
 #endif // FRIEND_H
