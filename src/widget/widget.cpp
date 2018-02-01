@@ -981,7 +981,6 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     FriendWidget* widget = new FriendWidget(newfriend, compact);
     History* history = Nexus::getProfile()->getHistory();
     ChatForm* friendForm = new ChatForm(newfriend, history);
-    newfriend->setChatForm(friendForm);
 
     friendWidgets[friendId] = widget;
     chatForms[friendId] = friendForm;

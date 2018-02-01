@@ -63,6 +63,7 @@ public:
     void reloadTheme();
 
 public slots:
+    void activate();
     void compactChange(bool compact);
 
 signals:
