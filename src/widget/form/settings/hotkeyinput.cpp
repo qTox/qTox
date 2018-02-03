@@ -18,58 +18,91 @@
 */
 
 #include <QKeyEvent>
-#include <QDebug>
+#include <QObject>
 
 #include "hotkeyinput.h"
 #include "audio/iaudiosettings.h"
 #include "src/persistence/settings.h"
+
+bool wasCleared = false;
+bool isReadyToOverwrite = false;
+QString noKeyString = QObject::tr("<no key>");
+QString pressAnyKeyString = QObject::tr("Press any key or Esc to cancel");
 
 HotkeyInput::HotkeyInput(QWidget* parent)
     : QTextEdit(parent)
 {
     setAcceptRichText(false);
     setAcceptDrops(false);
+    setPlaceholderText(noKeyString);
+}
+
+QString keyListToString(QList<int> keys)
+{
+    // TODO: get key names from GlobalHotkey instead of displaying key numbers
+    QString keyString = "";
+    for (int i = 0; i < keys.length(); i++) {
+        keyString += QString::number(keys[i]) + "+";
+    }
+
+    keyString.replace(QRegExp("++$"), "");
+    return keyString;
 }
 
 void HotkeyInput::keyPressEvent(QKeyEvent* event)
 {
-    int key = event->key();
+    // we only want to act on key press event, not on key hold event
+    if (event->isAutoRepeat()) {
+        return;
+    }
+
+    QList<int> keys;
+
+    if (event->key() == Qt::Key_Escape) {
+        this->clear();
+        wasCleared = true;
+        Settings::getInstance().setPttShortcutKeys(keys);
+        this->clearFocus();
+        return;
+    }
+
     int nativeKey = event->nativeScanCode();
-    QString keyString;
-    QString modifierString = "";
-
-    if (event->modifiers() & Qt::MetaModifier) {
-        modifierString += "Command+";
+    if (!isReadyToOverwrite) {
+        keys = Settings::getInstance().getPttShortcutKeys();
     }
 
-    if (event->modifiers() & Qt::ControlModifier) {
-        modifierString += "Ctrl+";
+    if (keys.indexOf(nativeKey) == -1) {
+        keys.append(nativeKey);
+        Settings::getInstance().setPttShortcutKeys(keys);
     }
 
-    if (event->modifiers() & Qt::ShiftModifier) {
-        modifierString += "Shift+";
+    isReadyToOverwrite = false;
+    this->setText(keyListToString(keys));
+}
+
+void HotkeyInput::keyReleaseEvent(QKeyEvent* event)
+{
+    if (!event->isAutoRepeat()) {
+        this->clearFocus();
+    }
+}
+
+void HotkeyInput::focusInEvent(QFocusEvent* event)
+{
+    const QList<int> keys = Settings::getInstance().getPttShortcutKeys();
+    this->clear();
+    setPlaceholderText(pressAnyKeyString);
+    isReadyToOverwrite = true;
+}
+
+void HotkeyInput::focusOutEvent(QFocusEvent* event)
+{
+    const QString text = this->toPlainText();
+    if (text == "" && !wasCleared) {
+        const QList<int> keys = Settings::getInstance().getPttShortcutKeys();
+        this->setText(keyListToString(keys));
     }
 
-    if (event->modifiers() & Qt::AltModifier) {
-        modifierString += "Alt+";
-    }
-
-    QKeySequence keySequence = QKeySequence(nativeKey);
-    keyString = modifierString;
-
-    if (keySequence != Qt::Key_unknown && keySequence != 0) {
-        keyString += keySequence.toString();
-    }
-    
-    QList<int> keys = Settings::getInstance().getPttShortcutKeys();
-    if (keys.indexOf(nativeKey) == -1)
-    {
-	    keys.append(nativeKey);
-	    Settings::getInstance().setPttShortcutKeys(keys);
-    }
-
-    keyString.replace(QRegExp("++$"), "");
-    this->setText(keyString);
-
-    qDebug() << " " << event->nativeScanCode();
+    wasCleared = false;
+    setPlaceholderText(noKeyString);
 }

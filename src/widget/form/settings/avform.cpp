@@ -96,6 +96,7 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
     volumeDisplay->setMaximum(totalSliderSteps);
 
     fillCaptureModeComboBox();
+    showPttShortcutKeys();
     fillAudioQualityComboBox();
 
     eventsInit();
@@ -563,6 +564,21 @@ void AVForm::fillCaptureModeComboBox()
     updateCaptureModeUI(mode);
     inModeComboBox->setCurrentIndex(index);
     inModeComboBox->blockSignals(previouslyBlocked);
+}
+
+void AVForm::showPttShortcutKeys()
+{
+    const bool previouslyBlocked = pushToTalkShortcutInput->blockSignals(true);
+    const QList<int> keys = audioSettings->getPttShortcutKeys();
+
+    QString keyString = "";
+    for (int i = 0; i < keys.length(); i++) {
+        keyString += QString::number(keys[i]) + "+";
+    }
+
+    keyString.replace(QRegExp("++$"), "");
+    pushToTalkShortcutInput->setText(keyString);
+    pushToTalkShortcutInput->blockSignals(previouslyBlocked);
 }
 
 void AVForm::updateCaptureModeUI(int mode)
