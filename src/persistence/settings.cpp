@@ -244,7 +244,15 @@ void Settings::loadGlobal()
         outVolume = s.value("outVolume", 100).toInt();
         enableTestSound = s.value("enableTestSound", true).toBool();
         audioCaptureMode = s.value("audioCaptureMode", 0).toInt();
-        pttShortcutKeys = s.value("pttShortcutKeys", QList<int>());
+
+        int pttShortcutKeysSize = s.beginReadArray("pttShortcutKeys");
+        for (int i = 0; i < pttShortcutKeysSize; i++) {
+            s.setArrayIndex(i);
+            const int key = s.value("pttKey" + QString::number(i), 0).toInt();
+            pttShortcutKeys << key;
+        }
+        s.endArray();
+
         audioBitrate = s.value("audioBitrate", 64).toInt();
     }
     s.endGroup();
@@ -713,7 +721,14 @@ void Settings::saveGlobal()
         s.setValue("outVolume", outVolume);
         s.setValue("enableTestSound", enableTestSound);
         s.setValue("audioCaptureMode", audioCaptureMode);
-        s.setValue("pttShortcutKeys", pttShortcutKeys);
+
+	s.beginWriteArray("pttShortcutKeys", pttShortcutKeys.size());
+        for (int i = 0; i < pttShortcutKeys.size(); i++) {
+            s.setArrayIndex(i);
+            s.setValue("pttKey" + QString::number(i), pttShortcutKeys[i]);
+        }
+        s.endArray();
+
         s.setValue("audioBitrate", audioBitrate);
     }
     s.endGroup();

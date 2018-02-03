@@ -30,6 +30,9 @@ public:
 
 protected:
     virtual void keyPressEvent(QKeyEvent* event) final override;
+    virtual void keyReleaseEvent(QKeyEvent* event) final override;
+    virtual void focusInEvent(QFocusEvent* event) final override;
+    virtual void focusOutEvent(QFocusEvent* event) final override;
 };
 
 #endif // HOTKEYINPUT_H
