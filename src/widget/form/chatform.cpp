@@ -177,6 +177,7 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(headWidget, &ChatFormHeader::videoCallTriggered, this, &ChatForm::onVideoCallTriggered);
     connect(headWidget, &ChatFormHeader::micMuteToggle, this, &ChatForm::onMicMuteToggle);
     connect(headWidget, &ChatFormHeader::volMuteToggle, this, &ChatForm::onVolMuteToggle);
+    connect(headWidget, &ChatFormHeader::searchTriggered, this, &ChatForm::onSearchTrigered);
 
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
@@ -486,6 +487,11 @@ void ChatForm::onVolMuteToggle()
     CoreAV* av = Core::getInstance()->getAv();
     av->toggleMuteCallOutput(f);
     updateMuteVolButton();
+}
+
+void ChatForm::onSearchTrigered()
+{
+
 }
 
 void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)

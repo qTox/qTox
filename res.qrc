@@ -51,18 +51,15 @@
         <file>ui/chatArea/scrollBarDownArrow.svg</file>
         <file>ui/chatArea/scrollBarLeftArrow.svg</file>
         <file>ui/chatArea/scrollBarRightArrow.svg</file>
-
         <file>ui/chatForm/buttons.css</file>
         <file>ui/chatForm/callButton.svg</file>
         <file>ui/chatForm/micButton.svg</file>
         <file>ui/chatForm/videoButton.svg</file>
         <file>ui/chatForm/volButton.svg</file>
-
         <file>ui/chatForm/emoteButton.svg</file>
         <file>ui/chatForm/fileButton.svg</file>
         <file>ui/chatForm/screenshotButton.svg</file>
         <file>ui/chatForm/sendButton.svg</file>
-
         <file>ui/emoticonWidget/dot_page.svg</file>
         <file>ui/emoticonWidget/dot_page_current.svg</file>
         <file>ui/emoticonWidget/dot_page_hover.svg</file>
@@ -98,5 +95,6 @@
         <file>img/caps_lock.svg</file>
         <file>ui/contentDialog/contentDialog.css</file>
         <file>ui/tooliconsZone/tooliconsZone.css</file>
+        <file>ui/chatForm/searchButton.svg</file>
     </qresource>
 </RCC>

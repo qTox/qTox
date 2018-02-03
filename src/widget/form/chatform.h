@@ -87,6 +87,7 @@ private slots:
     void onRejectCallTriggered();
     void onMicMuteToggle();
     void onVolMuteToggle();
+    void onSearchTrigered();
 
     void onFileSendFailed(uint32_t friendId, const QString& fname);
     void onFriendStatusChanged(quint32 friendId, Status status);

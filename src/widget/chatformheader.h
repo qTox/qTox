@@ -81,6 +81,7 @@ signals:
     void videoCallTriggered();
     void micMuteToggle();
     void volMuteToggle();
+    void searchTriggered();
 
     void nameChanged(const QString& name);
 
@@ -102,11 +103,13 @@ private:
     QPushButton* videoButton;
     QPushButton* volButton;
     QPushButton* micButton;
+    QPushButton* searchButton;
 
     CallButtonState callState;
     CallButtonState videoState;
     ToolButtonState volState;
     ToolButtonState micState;
+    ToolButtonState searchState;
 
     std::unique_ptr<CallConfirmWidget> callConfirm;
 };
