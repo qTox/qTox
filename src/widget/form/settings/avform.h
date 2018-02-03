@@ -58,8 +58,9 @@ private:
     void selectBestModes(QVector<VideoMode>& allVideoModes);
     void fillCameraModesComboBox();
     void fillScreenModesComboBox();
-    void fillAudioQualityComboBox();
     void fillCaptureModeComboBox();
+    void showPttShortcutKeys();
+    void fillAudioQualityComboBox();
     void updateCaptureModeUI(int mode);
     int searchPreferredIndex();
 
