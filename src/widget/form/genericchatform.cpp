@@ -39,6 +39,7 @@
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
+#include "src/widget/searchform.h"
 
 #include <QClipboard>
 #include <QFileDialog>
@@ -135,8 +136,10 @@ GenericChatForm::GenericChatForm(QWidget* parent)
 {
     curRow = 0;
     headWidget = new ChatFormHeader();
+    searchForm = new SearchForm();
     chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
+    searchForm->setMaximumHeight(0);
 
     // settings
     const Settings& s = Settings::getInstance();
@@ -190,6 +193,7 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     mainFootLayout->setSpacing(0);
 
     QVBoxLayout* contentLayout = new QVBoxLayout(contentWidget);
+    contentLayout->addWidget(searchForm);
     contentLayout->addWidget(chatWidget);
     contentLayout->addLayout(mainFootLayout);
 

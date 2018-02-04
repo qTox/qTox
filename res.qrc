@@ -96,5 +96,7 @@
         <file>ui/contentDialog/contentDialog.css</file>
         <file>ui/tooliconsZone/tooliconsZone.css</file>
         <file>ui/chatForm/searchButton.svg</file>
+        <file>ui/chatForm/searchDownButton.svg</file>
+        <file>ui/chatForm/searchUpButton.svg</file>
     </qresource>
 </RCC>

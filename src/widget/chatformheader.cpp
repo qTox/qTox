@@ -281,6 +281,17 @@ void ChatFormHeader::updateMuteVolButton(bool active, bool outputMuted)
     updateButtonsView();
 }
 
+void ChatFormHeader::updateSearchButton(bool active)
+{
+    if (active) {
+        searchState = ToolButtonState::On;
+    } else {
+        searchState = ToolButtonState::Off;
+    }
+
+    updateButtonsView();
+}
+
 void ChatFormHeader::setAvatar(const QPixmap &img)
 {
     avatar->setPixmap(img);

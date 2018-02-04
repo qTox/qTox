@@ -41,6 +41,7 @@
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
+#include "src/widget/searchform.h"
 
 #include <QClipboard>
 #include <QFileDialog>
@@ -491,7 +492,13 @@ void ChatForm::onVolMuteToggle()
 
 void ChatForm::onSearchTrigered()
 {
-
+    if (searchForm->maximumHeight() == 0) {
+        searchForm->setMaximumHeight(50);
+        headWidget->updateSearchButton(true);
+    } else {
+        searchForm->setMaximumHeight(0);
+        headWidget->updateSearchButton(false);
+    }
 }
 
 void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)

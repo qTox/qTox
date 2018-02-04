@@ -67,6 +67,7 @@ public:
     void updateCallButtons(bool online, bool audio, bool video = false);
     void updateMuteMicButton(bool active, bool inputMuted);
     void updateMuteVolButton(bool active, bool outputMuted);
+    void updateSearchButton(bool active);
 
     void setAvatar(const QPixmap& img);
     QSize getAvatarSize() const;

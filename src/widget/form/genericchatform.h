@@ -40,6 +40,7 @@ class CroppingLabel;
 class FlyoutOverlayWidget;
 class GenericNetCamView;
 class MaskablePixmapWidget;
+class SearchForm;
 class Widget;
 
 class QLabel;
@@ -151,6 +152,7 @@ protected:
 
     ChatFormHeader* headWidget;
 
+    SearchForm *searchForm;
     ChatLog* chatWidget;
     ChatTextEdit* msgEdit;
     FlyoutOverlayWidget* fileFlyout;
