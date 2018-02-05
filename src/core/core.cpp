@@ -110,12 +110,25 @@ CoreAV* Core::getAv()
     return av;
 }
 
+namespace {
+
+class ToxOptionsDeleter
+{
+public:
+    void operator()(Tox_Options* options)
+    {
+        tox_options_free(options);
+    }
+};
+
+using ToxOptionsPtr = std::unique_ptr<Tox_Options, ToxOptionsDeleter>;
+
 /**
  * @brief Initializes Tox_Options instance
  * @param savedata Previously saved Tox data
  * @return Tox_Options instance needed to create Tox instance
  */
-Tox_Options initToxOptions(const QByteArray& savedata, const ICoreSettings* s)
+ToxOptionsPtr initToxOptions(const QByteArray& savedata, const ICoreSettings* s)
 {
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be
     // disabled in options.
@@ -132,19 +145,18 @@ Tox_Options initToxOptions(const QByteArray& savedata, const ICoreSettings* s)
         qWarning() << "Core starting with IPv6 disabled. LAN discovery may not work properly.";
     }
 
-    Tox_Options toxOptions;
-    tox_options_default(&toxOptions);
-    toxOptions.ipv6_enabled = enableIPv6;
-    toxOptions.udp_enabled = !forceTCP;
-    toxOptions.start_port = toxOptions.end_port = 0;
+    ToxOptionsPtr toxOptions = ToxOptionsPtr(tox_options_new(NULL));
+    tox_options_set_ipv6_enabled(toxOptions.get(), enableIPv6);
+    tox_options_set_udp_enabled(toxOptions.get(), !forceTCP);
+    tox_options_set_start_port(toxOptions.get(), 0);
+    tox_options_set_end_port(toxOptions.get(), 0);
 
     // No proxy by default
-    toxOptions.proxy_type = TOX_PROXY_TYPE_NONE;
-    toxOptions.proxy_host = nullptr;
-    toxOptions.proxy_port = 0;
-    toxOptions.savedata_type = !savedata.isNull() ? TOX_SAVEDATA_TYPE_TOX_SAVE : TOX_SAVEDATA_TYPE_NONE;
-    toxOptions.savedata_data = reinterpret_cast<const uint8_t*>(savedata.data());
-    toxOptions.savedata_length = savedata.size();
+    tox_options_set_proxy_type(toxOptions.get(), TOX_PROXY_TYPE_NONE);
+    tox_options_set_proxy_host(toxOptions.get(), nullptr);
+    tox_options_set_proxy_port(toxOptions.get(), 0);
+    tox_options_set_savedata_type(toxOptions.get(), !savedata.isNull() ? TOX_SAVEDATA_TYPE_TOX_SAVE : TOX_SAVEDATA_TYPE_NONE);
+    tox_options_set_savedata_data(toxOptions.get(), reinterpret_cast<const uint8_t*>(savedata.data()), savedata.size());
 
     if (proxyType != ICoreSettings::ProxyType::ptNone) {
         if (proxyAddr.length() > MAX_PROXY_ADDRESS_LENGTH) {
@@ -153,18 +165,20 @@ Tox_Options initToxOptions(const QByteArray& savedata, const ICoreSettings* s)
             qDebug() << "using proxy" << proxyAddr << ":" << proxyPort;
             // protection against changings in TOX_PROXY_TYPE enum
             if (proxyType == ICoreSettings::ProxyType::ptSOCKS5) {
-                toxOptions.proxy_type = TOX_PROXY_TYPE_SOCKS5;
+                tox_options_set_proxy_type(toxOptions.get(), TOX_PROXY_TYPE_SOCKS5);
             } else if (proxyType == ICoreSettings::ProxyType::ptHTTP) {
-                toxOptions.proxy_type = TOX_PROXY_TYPE_HTTP;
+                tox_options_set_proxy_type(toxOptions.get(), TOX_PROXY_TYPE_HTTP);
             }
 
-            toxOptions.proxy_host = proxyAddrData.data();
-            toxOptions.proxy_port = proxyPort;
+            tox_options_set_proxy_host(toxOptions.get(), proxyAddrData.data());
+            tox_options_set_proxy_port(toxOptions.get(), proxyPort);
         }
     }
 
     return toxOptions;
 }
+
+}  // namespace
 
 /**
  * @brief Creates Tox instance from previously saved data
@@ -172,9 +186,15 @@ Tox_Options initToxOptions(const QByteArray& savedata, const ICoreSettings* s)
  */
 void Core::makeTox(QByteArray savedata)
 {
-    Tox_Options toxOptions = initToxOptions(savedata, s);
+    ToxOptionsPtr toxOptions = initToxOptions(savedata, s);
+    if (toxOptions == nullptr) {
+        qCritical() << "could not allocate Tox Options data structure";
+        emit failedToStart();
+        return;
+    }
+
     TOX_ERR_NEW tox_err;
-    tox = tox_new(&toxOptions, &tox_err);
+    tox = tox_new(toxOptions.get(), &tox_err);
 
     switch (tox_err) {
     case TOX_ERR_NEW_OK:
@@ -187,8 +207,8 @@ void Core::makeTox(QByteArray savedata)
 
     case TOX_ERR_NEW_PORT_ALLOC:
         if (s->getEnableIPv6()) {
-            toxOptions.ipv6_enabled = false;
-            tox = tox_new(&toxOptions, &tox_err);
+            tox_options_set_ipv6_enabled(toxOptions.get(), false);
+            tox = tox_new(toxOptions.get(), &tox_err);
             if (tox_err == TOX_ERR_NEW_OK) {
                 qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery "
                               "may not work properly.";
