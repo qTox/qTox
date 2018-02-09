@@ -51,6 +51,8 @@
 #include "src/audio/audio.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
+#include "src/model/chatroom/friendchatroom.h"
+#include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/grouplist.h"
 #include "src/model/friend.h"
@@ -983,10 +985,12 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
     bool compact = s.getCompactLayout();
-    FriendWidget* widget = new FriendWidget(newfriend, compact);
-    History* history = Nexus::getProfile()->getHistory();
-    ChatForm* friendForm = new ChatForm(newfriend, history);
+    auto chatroom = new FriendChatroom(newfriend);
+    auto widget = new FriendWidget(chatroom, compact);
+    auto history = Nexus::getProfile()->getHistory();
+    auto friendForm = new ChatForm(newfriend, history);
 
+    friendChatrooms[friendId] = chatroom;
     friendWidgets[friendId] = widget;
     chatForms[friendId] = friendForm;
 
@@ -1242,8 +1246,9 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
         onAddClicked();
     }
 
-    ChatForm* form = chatForms[friendId];
-    FriendWidget* friendWidget = dialog->addFriend(frnd, form);
+    auto form = chatForms[friendId];
+    auto chatroom = friendChatrooms[friendId];
+    FriendWidget* friendWidget = dialog->addFriend(chatroom, form);
 
     friendWidget->setStatusMsg(widget->getStatusMsg());
 

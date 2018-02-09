@@ -48,6 +48,7 @@ class ContentLayout;
 class Core;
 class FilesForm;
 class Friend;
+class FriendChatroom;
 class FriendListWidget;
 class FriendWidget;
 class GenericChatroomWidget;
@@ -303,9 +304,11 @@ private:
     unsigned int unreadGroupInvites;
     int icon_size;
 
-    QMap<uint32_t, GroupWidget*> groupWidgets;
     QMap<uint32_t, FriendWidget*> friendWidgets;
+    QMap<uint32_t, FriendChatroom*> friendChatrooms;
     QMap<uint32_t, ChatForm*> chatForms;
+
+    QMap<uint32_t, GroupWidget*> groupWidgets;
     QMap<uint32_t, GroupChatForm*> groupChatForms;
 
 #ifdef Q_OS_MAC
