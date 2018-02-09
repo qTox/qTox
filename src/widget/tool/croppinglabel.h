@@ -30,6 +30,7 @@ class CroppingLabel : public QLabel
 public:
     explicit CroppingLabel(QWidget* parent = 0);
 
+public slots:
     void editBegin();
     void setEditable(bool editable);
     void setElideMode(Qt::TextElideMode elide);
@@ -37,8 +38,6 @@ public:
     void setText(const QString& text);
     QString fullText();
 
-
-public slots:
     void minimizeMaximumWidth();
 
 signals:
