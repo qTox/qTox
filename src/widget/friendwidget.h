@@ -55,6 +55,16 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent* ev) override;
     void setFriendAlias();
 
+private slots:
+    void removeChatWindow();
+    void moveToNewGroup();
+    void inviteFriend(uint32_t friendId, const Group* group);
+    void moveToNewCircle();
+    void removeFromCircle();
+    void moveToCircle(int circleId);
+    void changeAutoAccept(bool enable);
+    void showDetails();
+
 public:
     const Friend* frnd;
     bool isDefaultAvatar;
