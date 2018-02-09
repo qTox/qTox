@@ -30,17 +30,18 @@ class QHash;
 template <typename T>
 class QSet;
 
-class QSplitter;
-class QVBoxLayout;
 class ContentDialog;
 class ContentLayout;
+class Friend;
+class FriendChatroom;
+class FriendListLayout;
+class FriendWidget;
 class GenericChatForm;
 class GenericChatroomWidget;
-class FriendWidget;
-class GroupWidget;
-class FriendListLayout;
-class Friend;
 class Group;
+class GroupWidget;
+class QSplitter;
+class QVBoxLayout;
 
 using ContactInfo = std::tuple<ContentDialog*, GenericChatroomWidget*>;
 
@@ -51,7 +52,7 @@ public:
     explicit ContentDialog(QWidget* parent = nullptr);
     ~ContentDialog() override;
 
-    FriendWidget* addFriend(const Friend* f, GenericChatForm* form);
+    FriendWidget* addFriend(FriendChatroom* chatroom, GenericChatForm* form);
     GroupWidget* addGroup(const Group* g, GenericChatForm* form);
     void removeFriend(int friendId);
     void removeGroup(int groupId);

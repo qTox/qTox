@@ -24,11 +24,12 @@
 #include "maskablepixmapwidget.h"
 
 #include "src/core/core.h"
-#include "src/model/friend.h"
-#include "src/model/about/aboutfriend.h"
 #include "src/friendlist.h"
-#include "src/model/group.h"
 #include "src/grouplist.h"
+#include "src/model/about/aboutfriend.h"
+#include "src/model/chatroom/friendchatroom.h"
+#include "src/model/friend.h"
+#include "src/model/group.h"
 #include "src/persistence/settings.h"
 #include "src/widget/about/aboutfriendform.h"
 #include "src/widget/form/chatform.h"
@@ -48,6 +49,7 @@
 #include <QMimeData>
 
 #include <cassert>
+#include <memory>
 
 namespace
 {
@@ -61,21 +63,21 @@ constexpr auto MAX_NAME_LENGTH = 30;
  * For example, used on friend list.
  * When you click should open the chat with friend. Widget has a context menu.
  */
-
-FriendWidget::FriendWidget(const Friend* f, bool compact)
+FriendWidget::FriendWidget(FriendChatroom* chatroom, bool compact)
     : GenericChatroomWidget(compact)
-    , frnd{f}
+    , chatroom{chatroom}
+    , frnd{chatroom->getFriend()}
     , isDefaultAvatar{true}
 {
     avatar->setPixmap(QPixmap(":/img/contact.svg"));
     statusPic.setPixmap(QPixmap(":/img/status/offline.svg"));
     statusPic.setMargin(3);
-    setName(f->getDisplayedName());
-    nameLabel->setTextFormat(Qt::PlainText);
-    // update on changes of the displayed name
-    connect(f, &Friend::displayedNameChanged, this, &FriendWidget::setName);
+    nameLabel->setText(frnd->getDisplayedName());
     // update alias when edited
-    connect(nameLabel, &CroppingLabel::editFinished, f, &Friend::setAlias);
+    connect(nameLabel, &CroppingLabel::editFinished, frnd, &Friend::setAlias);
+    // update on changes of the displayed name
+    connect(frnd, &Friend::displayedNameChanged, nameLabel, &CroppingLabel::setText);
+    connect(chatroom, &FriendChatroom::activeChanged, this, &FriendWidget::setActive);
     statusMessageLabel->setTextFormat(Qt::PlainText);
 }
 
@@ -108,13 +110,15 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     QMenu menu;
 
     const auto friendId = frnd->getId();
-    const ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
+    const auto contentDialog = ContentDialog::getFriendDialog(friendId);
 
+    // TODO: move to model
     if (!contentDialog || contentDialog->chatroomWidgetCount() > 1) {
         const auto openChatWindow = menu.addAction(tr("Open chat in new window"));
         connect(openChatWindow, &QAction::triggered, [=]() { emit newWindowOpened(this); });
     }
 
+    // TODO: move to model
     if (contentDialog && contentDialog->hasFriendWidget(friendId, this)) {
         const auto removeChatWindow = menu.addAction(tr("Remove chat from this window"));
         connect(removeChatWindow, &QAction::triggered, this, &FriendWidget::removeChatWindow);
@@ -123,26 +127,23 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     menu.addSeparator();
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group",
                                         "Menu to invite a friend to a groupchat"));
-    inviteMenu->setEnabled(frnd->getStatus() != Status::Offline);
+    inviteMenu->setEnabled(chatroom->canBeInvited());
     const auto newGroupAction = inviteMenu->addAction(tr("To new group"));
-    connect(newGroupAction, &QAction::triggered, this, &FriendWidget::moveToNewGroup);
+    connect(newGroupAction, &QAction::triggered, chatroom, &FriendChatroom::inviteToNewGroup);
     inviteMenu->addSeparator();
 
-    for (const Group* group : GroupList::getAllGroups()) {
+    for (const auto group : GroupList::getAllGroups()) {
         auto name = group->getName();
         if (name.length() > MAX_NAME_LENGTH) {
             name = name.left(MAX_NAME_LENGTH).trimmed() + "..";
         }
         const auto groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(name));
-        connect(groupAction, &QAction::triggered, [=]() { inviteFriend(friendId, group); });
+        connect(groupAction, &QAction::triggered, [=]() {
+            chatroom->inviteFriend(friendId, group);
+        });
     }
 
-    const auto& s = Settings::getInstance();
-    const auto circleId = s.getFriendCircleID(frnd->getPublicKey());
-    auto circleWidget = CircleWidget::getFromID(circleId);
-    auto w = circleWidget ? circleWidget : static_cast<QWidget*>(this);
-    auto friendList = qobject_cast<FriendListWidget*>(w->parentWidget());
-
+    const int circleId = chatroom->getCircleId();
     auto circleMenu = menu.addMenu(tr("Move to circle...",
                                         "Menu to move a friend into a different circle"));
 
@@ -151,13 +152,14 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     connect(newCircleAction, &QAction::triggered, this, &FriendWidget::moveToNewCircle);
 
     if (circleId != -1) {
-        const QString circleName = s.getCircleName(circleId);
+        const auto circleName = chatroom->getCircleName();
         const auto removeCircleAction = circleMenu->addAction(
                     tr("Remove from circle '%1'").arg(circleName));
         connect(removeCircleAction, &QAction::triggered, this, &FriendWidget::removeFromCircle);
     }
 
     circleMenu->addSeparator();
+    auto& s = Settings::getInstance();
 
     QList<QAction*> circleActionList;
     for (int i = 0; i < s.getCircleCount(); ++i) {
@@ -181,7 +183,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     circleMenu->addActions(circleActionList);
 
     const auto setAlias = menu.addAction(tr("Set alias..."));
-    connect(setAlias, &QAction::triggered, [this]() { nameLabel->editBegin(); });
+    connect(setAlias, &QAction::triggered, nameLabel, &CroppingLabel::editBegin);
 
     menu.addSeparator();
     auto autoAccept = menu.addAction(tr("Auto accept files from this friend",
@@ -217,13 +219,6 @@ void FriendWidget::removeChatWindow()
     const auto friendId = frnd->getId();
     ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
     contentDialog->removeFriend(friendId);
-}
-
-void FriendWidget::moveToNewGroup()
-{
-    const auto friendId = frnd->getId();
-    const auto groupId = Core::getInstance()->createGroup();
-    Core::getInstance()->groupInviteFriend(friendId, groupId);
 }
 
 void FriendWidget::inviteFriend(uint32_t friendId, const Group* group)
@@ -312,43 +307,40 @@ void FriendWidget::moveToCircle(int newCircleId)
 
 void FriendWidget::changeAutoAccept(bool enable)
 {
-    const auto pk = frnd->getPublicKey();
-    auto &s = Settings::getInstance();
     if (enable) {
-        const auto oldDir = s.getAutoAcceptDir(pk);
+        const auto oldDir = chatroom->getAutoAcceptDir();
         const auto newDir = QFileDialog::getExistingDirectory(
             Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), oldDir);
-
-        const auto friendId = frnd->getId();
-        qDebug() << "Setting auto accept dir for" << friendId << "to" << newDir;
-        s.setAutoAcceptDir(pk, newDir);
+        chatroom->setAutoAcceptDir(newDir);
     } else {
-        qDebug() << "not checked";
-        s.setAutoAcceptDir(pk, "");
+        chatroom->disableAutoAccept();
     }
 }
 void FriendWidget::showDetails()
 {
-    const QPointer<IAboutFriend> about = new AboutFriend(frnd, &Settings::getInstance());
-    auto aboutUser = new AboutFriendForm(about, Widget::getInstance());
+    auto iabout = new AboutFriend(frnd, &Settings::getInstance());
+    std::unique_ptr<IAboutFriend> about = std::unique_ptr<IAboutFriend>(iabout);
+    auto aboutUser = new AboutFriendForm(std::move(about), Widget::getInstance());
     aboutUser->show();
 }
 
 void FriendWidget::setAsActiveChatroom()
 {
     setActive(true);
-
-    if (isDefaultAvatar) {
-        avatar->setPixmap(QPixmap(":img/contact_dark.svg"));
-    }
 }
 
 void FriendWidget::setAsInactiveChatroom()
 {
     setActive(false);
+}
 
+void FriendWidget::setActive(bool active)
+{
+    GenericChatroomWidget::setActive(active);
     if (isDefaultAvatar) {
-        avatar->setPixmap(QPixmap(":img/contact.svg"));
+        const auto uri = active ? QStringLiteral(":img/contact_dark.svg")
+                                : QStringLiteral(":img/contact.svg");
+        avatar->setPixmap(QPixmap{uri});
     }
 }
 
@@ -416,9 +408,7 @@ void FriendWidget::search(const QString& searchString, bool hide)
 
 void FriendWidget::resetEventFlags()
 {
-    // Hack to avoid edit const Friend. TODO: Repalce on emit
-    Friend* f = FriendList::findFriend(frnd->getId());
-    f->setEventFlag(false);
+    frnd->setEventFlag(false);
 }
 
 void FriendWidget::onAvatarChange(uint32_t friendId, const QPixmap& pic)
