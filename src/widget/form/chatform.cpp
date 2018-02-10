@@ -180,6 +180,10 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(headWidget, &ChatFormHeader::volMuteToggle, this, &ChatForm::onVolMuteToggle);
     connect(headWidget, &ChatFormHeader::searchTriggered, this, &ChatForm::onSearchTrigered);
 
+    connect(searchForm, &SearchForm::searchInBegin, this, &ChatForm::earchInBegin);
+    connect(searchForm, &SearchForm::searchUp, this, &ChatForm::onSearchUp);
+    connect(searchForm, &SearchForm::searchDown, this, &ChatForm::onSearchDown);
+
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(msgEdit, &ChatTextEdit::pasteImage, this, &ChatForm::sendImage);
@@ -495,9 +499,113 @@ void ChatForm::onSearchTrigered()
     if (searchForm->maximumHeight() == 0) {
         searchForm->setMaximumHeight(50);
         headWidget->updateSearchButton(true);
+        searchPoint = QPoint(1, -1);
     } else {
         searchForm->setMaximumHeight(0);
+        searchForm->removeText();
         headWidget->updateSearchButton(false);
+
+        desibleSearchText();
+    }
+}
+
+void ChatForm::earchInBegin(const QString &phrase)
+{
+    desibleSearchText();
+
+    searchPoint = QPoint(1, -1);
+    onSearchUp(phrase);
+}
+
+void ChatForm::onSearchUp(const QString &phrase)
+{
+    if (phrase.isEmpty()) {
+        desibleSearchText();
+    }
+
+    QVector<ChatLine::Ptr> lines = chatWidget->getLines();
+    int numLines = lines.size();
+
+    int startLine = numLines - searchPoint.x();
+
+    if (startLine == 0) {
+        return;
+    }
+
+    for (int i = startLine; i >= 0; --i) {
+        ChatLine::Ptr l = lines[i];
+        if (l->getColumnCount() >= 2) {
+            ChatLineContent* content = l->getContent(1);
+            Text* text = static_cast<Text*>(content);
+            QString txt = content->getText();
+
+            if (txt.contains(phrase)) {
+                int startIndex = -1;
+                if (searchPoint.y() > -1) {
+                    startIndex = searchPoint.y() - 1;
+                }
+
+                int index = txt.lastIndexOf(phrase, startIndex);
+                if (index == -1 && searchPoint.y() > -1) {
+                    text->deselectText();
+                    searchPoint.setY(-1);
+                } else {
+                    chatWidget->scrollToLine(l);
+                    text->deselectText();
+                    text->selectText(phrase, index);
+                    searchPoint = QPoint(numLines - i, index);
+
+                    break;
+                }
+            }
+
+            if (i == 0) {
+                searchPoint.setX(numLines);
+                loadHistory(historyBaselineDate.addDays(-1));
+                onSearchUp(phrase);
+            }
+        }
+    }
+}
+
+void ChatForm::onSearchDown(const QString &phrase)
+{
+    if (phrase.isEmpty()) {
+        desibleSearchText();
+    }
+
+    QVector<ChatLine::Ptr> lines = chatWidget->getLines();
+    int numLines = lines.size();
+
+    int startLine = numLines - searchPoint.x();
+
+    for (int i = startLine; i < numLines; ++i) {
+        ChatLine::Ptr l = lines[i];
+        if (l->getColumnCount() >= 2) {
+            ChatLineContent* content = l->getContent(1);
+            Text* text = static_cast<Text*>(content);
+            QString txt = content->getText();
+
+            if (txt.contains(phrase)) {
+                int startIndex = 0;
+                if (searchPoint.y() > -1) {
+                    startIndex = searchPoint.y() + 1;
+                }
+
+                int index = txt.indexOf(phrase, startIndex);
+                if (index == -1 && searchPoint.y() > -1) {
+                    text->deselectText();
+                    searchPoint.setY(-1);
+                } else {
+                    chatWidget->scrollToLine(l);
+                    text->deselectText();
+                    text->selectText(phrase, index);
+                    searchPoint = QPoint(numLines - i, index);
+
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -966,6 +1074,21 @@ void ChatForm::SendMessageStr(QString msg)
         // set last message only when sending it
         msgEdit->setLastMessage(msg);
         Widget::getInstance()->updateFriendActivity(f);
+    }
+}
+
+void ChatForm::desibleSearchText()
+{
+    if (searchPoint != QPoint(1, -1)) {
+        QVector<ChatLine::Ptr> lines = chatWidget->getLines();
+        int numLines = lines.size();
+        int index = numLines - searchPoint.x();
+        if (numLines > index) {
+            ChatLine::Ptr l = lines[index];
+            ChatLineContent* content = l->getContent(1);
+            Text* text = static_cast<Text*>(content);
+            text->deselectText();
+        }
     }
 }
 

@@ -25,4 +25,29 @@ SearchForm::SearchForm(QWidget *parent) : QWidget(parent)
     layout->addWidget(downButton);
 
     setLayout(layout);
+
+    connect(searchLine, &QLineEdit::textChanged, this, &SearchForm::changedSearchPhrare);
+    connect(upButton, &QPushButton::clicked, this, &SearchForm::clickedUp);
+    connect(downButton, &QPushButton::clicked, this, &SearchForm::clickedDown);
+}
+
+void SearchForm::removeText()
+{
+    searchLine->setText("");
+}
+
+void SearchForm::changedSearchPhrare(const QString &text)
+{
+    searchPhrase = text;
+    emit searchInBegin(searchPhrase);
+}
+
+void SearchForm::clickedUp()
+{
+    emit searchUp(searchPhrase);
+}
+
+void SearchForm::clickedDown()
+{
+    emit searchDown(searchPhrase);
 }

@@ -297,11 +297,13 @@ void GenericChatForm::showEvent(QShowEvent*)
 bool GenericChatForm::event(QEvent* e)
 {
     // If the user accidentally starts typing outside of the msgEdit, focus it automatically
-    if (e->type() == QEvent::KeyRelease && !msgEdit->hasFocus()) {
-        QKeyEvent* ke = static_cast<QKeyEvent*>(e);
-        if ((ke->modifiers() == Qt::NoModifier || ke->modifiers() == Qt::ShiftModifier)
-            && !ke->text().isEmpty())
-            msgEdit->setFocus();
+    if (searchForm->maximumHeight() == 0) {
+        if (e->type() == QEvent::KeyRelease && !msgEdit->hasFocus()) {
+            QKeyEvent* ke = static_cast<QKeyEvent*>(e);
+            if ((ke->modifiers() == Qt::NoModifier || ke->modifiers() == Qt::ShiftModifier)
+                    && !ke->text().isEmpty())
+                msgEdit->setFocus();
+        }
     }
     return QWidget::event(e);
 }
