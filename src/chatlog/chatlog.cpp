@@ -815,6 +815,8 @@ void ChatLog::onWorkerTimeout()
 
         // hidden during busy screen
         verticalScrollBar()->show();
+
+        emit workerTimeoutFinished();
     }
 }
 

@@ -92,6 +92,7 @@ private slots:
     void earchInBegin(const QString& phrase);
     void onSearchUp(const QString& phrase);
     void onSearchDown(const QString& phrase);
+    void onContinueSearch();
     void onFileSendFailed(uint32_t friendId, const QString& fname);
     void onFriendStatusChanged(quint32 friendId, Status status);
     void onFriendTypingChanged(quint32 friendId, bool isTyping);
@@ -144,6 +145,7 @@ private:
     bool isTyping;
     bool lastCallIsVideo;
     QPoint searchPoint;
+    bool searchAfterLoadHistory;
 };
 
 #endif // CHATFORM_H

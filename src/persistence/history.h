@@ -82,6 +82,7 @@ public:
                                       const QDateTime& to);
 
     QList<DateMessages> getChatHistoryCounts(const ToxPk& friendPk, const QDate& from, const QDate& to);
+    QDateTime getStartDateChatHistory(const QString& friendPk);
 
     void markAsSent(qint64 messageId);
 
