@@ -22,7 +22,7 @@
 
 #include <QString>
 
-QString highlightURL(const QString& message);
+QString highlightURI(const QString& message);
 
 QString applyMarkdown(const QString& message, bool showFormattingSymbols);
 

@@ -168,11 +168,12 @@ static const QVector<StringPair> MIXED_FORMATTING_SPECIAL_CASES {
 };
 
 #define MAKE_LINK(url) "<a href=\"" url "\">" url "</a>"
+#define MAKE_WWW_LINK(url) "<a href=\"http://" url "\">" url "</a>"
 
 static const QVector<QPair<QString, QString>> URL_CASES {
     PAIR_FORMAT("https://github.com/qTox/qTox/issues/4233",
                 MAKE_LINK("https://github.com/qTox/qTox/issues/4233")),
-    PAIR_FORMAT("www.youtube.com", MAKE_LINK("www.youtube.com")),
+    PAIR_FORMAT("www.youtube.com", MAKE_WWW_LINK("www.youtube.com")),
     PAIR_FORMAT("https://url.com/some*url/some*more*url/",
                 MAKE_LINK("https://url.com/some*url/some*more*url/")),
     PAIR_FORMAT("https://url.com/some_url/some_more_url/",
@@ -191,7 +192,7 @@ static const QVector<QPair<QString, QString>> URL_CASES {
                 "www.site.com/part1/part2",
                 MAKE_LINK("http://site.com/part1/part2") " "
                 MAKE_LINK("http://site.com/part3") " and one more time "
-                MAKE_LINK("www.site.com/part1/part2")),
+                MAKE_WWW_LINK("www.site.com/part1/part2")),
     PAIR_FORMAT("https://127.0.0.1/asd\n"
                 "https://ABCD:EF01:2345:6789:ABCD:EF01:2345:6789/\n"
                 "ftp://2001:DB8::8:800:200C:417A/\n"
@@ -325,7 +326,7 @@ private slots:
     void urlTest();
 private:
     const MarkdownFunction markdownFunction = applyMarkdown;
-    UrlHighlightFunction urlHighlightFunction = highlightURL;
+    UrlHighlightFunction urlHighlightFunction = highlightURI;
 };
 
 static QString commonWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
