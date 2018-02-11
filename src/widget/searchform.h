@@ -29,11 +29,13 @@ class SearchForm final : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SearchForm(QWidget *parent = nullptr);
+    explicit SearchForm(QWidget* parent = nullptr);
     void removeSearchPhrase();
     QString getSearchPhrase() const;
 
 private:
+    QPushButton* createButton(const QString& name, const QString& state);
+
     QPushButton* upButton;
     QPushButton* downButton;
     QPushButton* hideButton;
@@ -42,18 +44,18 @@ private:
     QString searchPhrase;
 
 protected:
-    virtual void showEvent(QShowEvent *event);
+    virtual void showEvent(QShowEvent* event);
 
 private slots:
-    void changedSearchPhrase(const QString &text);
+    void changedSearchPhrase(const QString& text);
     void clickedUp();
     void clickedDown();
     void clickedHide();
 
 signals:
-    void searchInBegin(const QString &);
-    void searchUp(const QString &);
-    void searchDown(const QString &);
+    void searchInBegin(const QString& phrase);
+    void searchUp(const QString& phrase);
+    void searchDown(const QString& phrase);
     void visibleChanged();
 };
 

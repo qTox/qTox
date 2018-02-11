@@ -62,12 +62,13 @@ void Text::selectText(const QString &txt, const int index)
 {
     regenerate();
 
-    if (!doc)
+    if (!doc) {
         return;
+    }
 
-    QTextCursor cursor = doc->find(txt, index);
+    auto cursor = doc->find(txt, index);
 
-    if (cursor != QTextCursor()) {
+    if (!cursor.isNull()) {
         cursor.beginEditBlock();
         cursor.setPosition(index);
         cursor.setPosition(index + txt.size(), QTextCursor::KeepAnchor);

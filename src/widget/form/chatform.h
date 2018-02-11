@@ -72,6 +72,10 @@ public slots:
     void onAvatarChange(uint32_t friendId, const QPixmap& pic);
     void onAvatarRemoved(uint32_t friendId);
 
+protected slots:
+    void onSearchUp(const QString& phrase) override;
+    void onSearchDown(const QString& phrase) override;
+
 private slots:
     void clearChatArea(bool notInForm) override final;
     void onSendTriggered() override;
@@ -87,12 +91,7 @@ private slots:
     void onRejectCallTriggered();
     void onMicMuteToggle();
     void onVolMuteToggle();
-    void onSearchTrigered();
 
-    void searchInBegin(const QString& phrase);
-    void onSearchUp(const QString& phrase);
-    void onSearchDown(const QString& phrase);
-    void onContinueSearch();
     void onFileSendFailed(uint32_t friendId, const QString& fname);
     void onFriendStatusChanged(quint32 friendId, Status status);
     void onFriendTypingChanged(quint32 friendId, bool isTyping);
@@ -116,8 +115,6 @@ private:
     void stopCounter(bool error = false);
     void updateCallButtons();
     void SendMessageStr(QString msg);
-
-    void desibleSearchText();
 
 protected:
     GenericNetCamView* createNetcam() final override;
@@ -144,8 +141,6 @@ private:
     QHash<uint, FileTransferInstance*> ftransWidgets;
     bool isTyping;
     bool lastCallIsVideo;
-    QPoint searchPoint;
-    bool searchAfterLoadHistory;
 };
 
 #endif // CHATFORM_H

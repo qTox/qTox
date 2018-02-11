@@ -224,6 +224,13 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     connect(chatWidget, &ChatLog::customContextMenuRequested, this,
             &GenericChatForm::onChatContextMenuRequested);
 
+    connect(searchForm, &SearchForm::searchInBegin, this, &GenericChatForm::searchInBegin);
+    connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
+    connect(searchForm, &SearchForm::searchDown, this, &GenericChatForm::onSearchDown);
+    connect(searchForm, &SearchForm::visibleChanged, this, &GenericChatForm::onSearchTrigered);
+
+    connect(chatWidget, &ChatLog::workerTimeoutFinished, this, &GenericChatForm::onContinueSearch);
+
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
 
@@ -241,6 +248,7 @@ GenericChatForm::GenericChatForm(QWidget* parent)
 GenericChatForm::~GenericChatForm()
 {
     Translator::unregister(this);
+    delete searchForm;
 }
 
 void GenericChatForm::adjustFileMenuPosition()
@@ -531,6 +539,104 @@ void GenericChatForm::addSystemDateMessage()
     insertChatMessage(ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime()));
 }
 
+void GenericChatForm::desibleSearchText()
+{
+    if (searchPoint != QPoint(1, -1)) {
+        QVector<ChatLine::Ptr> lines = chatWidget->getLines();
+        int numLines = lines.size();
+        int index = numLines - searchPoint.x();
+        if (numLines > index) {
+            ChatLine::Ptr l = lines[index];
+            ChatLineContent* content = l->getContent(1);
+            Text* text = static_cast<Text*>(content);
+            text->deselectText();
+        }
+    }
+}
+
+bool GenericChatForm::searchInText(const QString& phrase, bool searchUp)
+{
+    bool isSearch = false;
+
+    if (phrase.isEmpty()) {
+        desibleSearchText();
+    }
+
+    QVector<ChatLine::Ptr> lines = chatWidget->getLines();
+
+    if (lines.isEmpty()) {
+        return isSearch;
+    }
+
+    int numLines = lines.size();
+    int startLine = numLines - searchPoint.x();
+
+    if (startLine < 0 || startLine >= numLines) {
+        return isSearch;
+    }
+
+    for (int i = startLine; searchUp ? i >= 0 : i < numLines; searchUp ? --i : ++i) {
+        ChatLine::Ptr l = lines[i];
+
+        if (l->getColumnCount() < 2) {
+            continue;
+        }
+
+        ChatLineContent* content = l->getContent(1);
+        Text* text = static_cast<Text*>(content);
+
+        if (searchUp && searchPoint.y() == 0) {
+            text->deselectText();
+            searchPoint.setY(-1);
+
+            continue;
+        }
+
+        QString txt = content->getText();
+
+        if (txt.contains(phrase, Qt::CaseInsensitive)) {
+            int index = indexForSearchInLine(txt, phrase, searchUp);
+            if ((index == -1 && searchPoint.y() > -1)) {
+                text->deselectText();
+                searchPoint.setY(-1);
+            } else {
+                chatWidget->scrollToLine(l);
+                text->deselectText();
+                text->selectText(phrase, index);
+                searchPoint = QPoint(numLines - i, index);
+                isSearch = true;
+
+                break;
+            }
+        }
+    }
+
+    return isSearch;
+}
+
+int GenericChatForm::indexForSearchInLine(const QString& txt, const QString& phrase, bool searchUp)
+{
+    int index = 0;
+
+    if (searchUp) {
+        int startIndex = -1;
+        if (searchPoint.y() > -1) {
+            startIndex = searchPoint.y() - 1;
+        }
+
+        index = txt.lastIndexOf(phrase, startIndex, Qt::CaseInsensitive);
+    } else {
+        int startIndex = 0;
+        if (searchPoint.y() > -1) {
+            startIndex = searchPoint.y() + 1;
+        }
+
+        index = txt.indexOf(phrase, startIndex, Qt::CaseInsensitive);
+    }
+
+    return index;
+}
+
 void GenericChatForm::clearChatArea()
 {
     clearChatArea(true);
@@ -678,6 +784,35 @@ void GenericChatForm::searchFormShow()
 {
     if (searchForm->isHidden()) {
         searchForm->show();
+    }
+}
+
+void GenericChatForm::onSearchTrigered()
+{
+    if (searchForm->isHidden()) {
+        searchForm->removeSearchPhrase();
+
+        desibleSearchText();
+    } else {
+        searchPoint = QPoint(1, -1);
+        searchAfterLoadHistory = false;
+    }
+}
+
+void GenericChatForm::searchInBegin(const QString& phrase)
+{
+    desibleSearchText();
+
+    searchPoint = QPoint(1, -1);
+    onSearchUp(phrase);
+}
+
+void GenericChatForm::onContinueSearch()
+{
+    QString phrase = searchForm->getSearchPhrase();
+    if (!phrase.isEmpty() && searchAfterLoadHistory) {
+        searchAfterLoadHistory = false;
+        onSearchUp(phrase);
     }
 }
 

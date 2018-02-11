@@ -23,27 +23,14 @@
 #include <QLineEdit>
 #include <QPushButton>
 
-SearchForm::SearchForm(QWidget *parent) : QWidget(parent)
+SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
 {
     QHBoxLayout *layout = new QHBoxLayout();
     searchLine = new QLineEdit();
-    upButton = new QPushButton();
-    upButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    upButton->setObjectName("searchUpButton");
-    upButton->setProperty("state", "green");
-    upButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
 
-    downButton = new QPushButton();
-    downButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    downButton->setObjectName("searchDownButton");
-    downButton->setProperty("state", "green");
-    downButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
-
-    hideButton = new QPushButton();
-    hideButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    hideButton->setObjectName("hideButton");
-    hideButton->setProperty("state", "red");
-    hideButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
+    upButton = createButton("searchUpButton", "green");
+    downButton = createButton("searchDownButton", "green");
+    hideButton = createButton("hideButton","red");
 
     layout->setMargin(0);
     layout->addWidget(searchLine);
@@ -69,13 +56,24 @@ QString SearchForm::getSearchPhrase() const
     return searchPhrase;
 }
 
-void SearchForm::showEvent(QShowEvent *event)
+QPushButton *SearchForm::createButton(const QString& name, const QString& state)
+{
+    QPushButton* btn = new QPushButton();
+    btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    btn->setObjectName(name);
+    btn->setProperty("state", state);
+    btn->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
+
+    return btn;
+}
+
+void SearchForm::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
     emit visibleChanged();
 }
 
-void SearchForm::changedSearchPhrase(const QString &text)
+void SearchForm::changedSearchPhrase(const QString& text)
 {
     searchPhrase = text;
     emit searchInBegin(searchPhrase);

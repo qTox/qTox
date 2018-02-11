@@ -104,6 +104,12 @@ protected slots:
     void quoteSelectedText();
     void copyLink();
     void searchFormShow();
+    void onSearchTrigered();
+
+    void searchInBegin(const QString& phrase);
+    virtual void onSearchUp(const QString& phrase) = 0;
+    virtual void onSearchDown(const QString& phrase) = 0;
+    void onContinueSearch();
 
 private:
     void retranslateUi();
@@ -125,6 +131,9 @@ protected:
     virtual bool event(QEvent*) final override;
     virtual void resizeEvent(QResizeEvent* event) final override;
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
+    void desibleSearchText();
+    bool searchInText(const QString& phrase, bool searchUp);
+    int indexForSearchInLine(const QString& txt, const QString& phrase, bool searchUp);
 
 protected:
     bool audioInputFlag;
@@ -160,6 +169,9 @@ protected:
     FlyoutOverlayWidget* fileFlyout;
     GenericNetCamView* netcam;
     Widget* parent;
+
+    QPoint searchPoint;
+    bool searchAfterLoadHistory;
 };
 
 #endif // GENERICCHATFORM_H

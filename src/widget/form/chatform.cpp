@@ -179,11 +179,6 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(headWidget, &ChatFormHeader::micMuteToggle, this, &ChatForm::onMicMuteToggle);
     connect(headWidget, &ChatFormHeader::volMuteToggle, this, &ChatForm::onVolMuteToggle);
 
-    connect(searchForm, &SearchForm::searchInBegin, this, &ChatForm::searchInBegin);
-    connect(searchForm, &SearchForm::searchUp, this, &ChatForm::onSearchUp);
-    connect(searchForm, &SearchForm::searchDown, this, &ChatForm::onSearchDown);
-    connect(searchForm, &SearchForm::visibleChanged, this, &ChatForm::onSearchTrigered);
-
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(msgEdit, &ChatTextEdit::pasteImage, this, &ChatForm::sendImage);
@@ -207,8 +202,6 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
         onAnswerCallTriggered(lastCallIsVideo);
     });
     connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
-
-    connect(chatWidget, &ChatLog::workerTimeoutFinished, this, &ChatForm::onContinueSearch);
 
     updateCallButtons();
     if (Nexus::getProfile()->isHistoryEnabled()) {
@@ -496,27 +489,7 @@ void ChatForm::onVolMuteToggle()
     updateMuteVolButton();
 }
 
-void ChatForm::onSearchTrigered()
-{
-    if (searchForm->isHidden()) {
-        searchForm->removeSearchPhrase();
-
-        desibleSearchText();
-    } else {
-        searchPoint = QPoint(1, -1);
-        searchAfterLoadHistory = false;
-    }
-}
-
-void ChatForm::searchInBegin(const QString &phrase)
-{
-    desibleSearchText();
-
-    searchPoint = QPoint(1, -1);
-    onSearchUp(phrase);
-}
-
-void ChatForm::onSearchUp(const QString &phrase)
+void ChatForm::onSearchUp(const QString& phrase)
 {
     if (phrase.isEmpty()) {
         desibleSearchText();
@@ -531,7 +504,7 @@ void ChatForm::onSearchUp(const QString &phrase)
         QString pk = f->getPublicKey().toString();
         QDateTime startDate = history->getStartDateChatHistory(pk);
 
-        if (startDate == earliestMessage) {
+        if (!startDate.isValid() || startDate == earliestMessage) {
             return;
         }
 
@@ -547,109 +520,30 @@ void ChatForm::onSearchUp(const QString &phrase)
         return;
     }
 
-    for (int i = startLine; i >= 0; --i) {
-        ChatLine::Ptr l = lines[i];
+    bool isSearch = searchInText(phrase, true);
 
-        if (l->getColumnCount() >= 2) {
-            ChatLineContent* content = l->getContent(1);
-            Text* text = static_cast<Text*>(content);
+    if (!isSearch) {
+        QString pk = f->getPublicKey().toString();
+        QDateTime startDate = history->getStartDateChatHistory(pk);
+        QDateTime newBaseData = earliestMessage.addDays(-1);
 
-            if (searchPoint.y() == 0) {
-                text->deselectText();
-                searchPoint.setY(-1);
-            } else {
-                QString txt = content->getText();
-
-                if (txt.contains(phrase, Qt::CaseInsensitive)) {
-                    int startIndex = -1;
-                    if (searchPoint.y() > -1) {
-                        startIndex = searchPoint.y() - 1;
-                    }
-
-                    int index = txt.lastIndexOf(phrase, startIndex, Qt::CaseInsensitive);
-                    if ((index == -1 && searchPoint.y() > -1)) {
-                        text->deselectText();
-                        searchPoint.setY(-1);
-                    } else {
-                        chatWidget->scrollToLine(l);
-                        text->deselectText();
-                        text->selectText(phrase, index);
-                        searchPoint = QPoint(numLines - i, index);
-
-                        break;
-                    }
-                }
-            }
-
-            if (i == 0) {
-                QString pk = f->getPublicKey().toString();
-                QDateTime startDate = history->getStartDateChatHistory(pk);
-                QDateTime newBaseData = earliestMessage.addDays(-1);
-
-                if (startDate > newBaseData) {
-                    newBaseData = startDate;
-                }
-
-                searchPoint.setX(numLines);
-                searchAfterLoadHistory = true;
-                loadHistory(newBaseData);
-            }
+        if (!startDate.isValid()) {
+            return;
         }
+
+        if (startDate > newBaseData) {
+            newBaseData = startDate;
+        }
+
+        searchPoint.setX(numLines);
+        searchAfterLoadHistory = true;
+        loadHistory(newBaseData);
     }
 }
 
-void ChatForm::onSearchDown(const QString &phrase)
+void ChatForm::onSearchDown(const QString& phrase)
 {
-    if (phrase.isEmpty()) {
-        desibleSearchText();
-    }
-
-    QVector<ChatLine::Ptr> lines = chatWidget->getLines();
-
-    if (lines.isEmpty()) {
-        return;
-    }
-
-    int numLines = lines.size();
-    int startLine = numLines - searchPoint.x();
-
-    for (int i = startLine; i < numLines; ++i) {
-        ChatLine::Ptr l = lines[i];
-        if (l->getColumnCount() >= 2) {
-            ChatLineContent* content = l->getContent(1);
-            Text* text = static_cast<Text*>(content);
-            QString txt = content->getText();
-
-            if (txt.contains(phrase, Qt::CaseInsensitive)) {
-                int startIndex = 0;
-                if (searchPoint.y() > -1) {
-                    startIndex = searchPoint.y() + 1;
-                }
-
-                int index = txt.indexOf(phrase, startIndex, Qt::CaseInsensitive);
-                if (index == -1 && searchPoint.y() > -1) {
-                    text->deselectText();
-                    searchPoint.setY(-1);
-                } else {
-                    chatWidget->scrollToLine(l);
-                    text->deselectText();
-                    text->selectText(phrase, index);
-                    searchPoint = QPoint(numLines - i, index);
-
-                    break;
-                }
-            }
-        }
-    }
-}
-
-void ChatForm::onContinueSearch()
-{
-    QString phrase = searchForm->getSearchPhrase();
-    if (!phrase.isEmpty() && searchAfterLoadHistory) {
-        searchAfterLoadHistory = false;
-        onSearchUp(phrase);
-    }
+    searchInText(phrase, false);
 }
 
 void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)
@@ -1121,21 +1015,6 @@ void ChatForm::SendMessageStr(QString msg)
         // set last message only when sending it
         msgEdit->setLastMessage(msg);
         Widget::getInstance()->updateFriendActivity(f);
-    }
-}
-
-void ChatForm::desibleSearchText()
-{
-    if (searchPoint != QPoint(1, -1)) {
-        QVector<ChatLine::Ptr> lines = chatWidget->getLines();
-        int numLines = lines.size();
-        int index = numLines - searchPoint.x();
-        if (numLines > index) {
-            ChatLine::Ptr l = lines[index];
-            ChatLineContent* content = l->getContent(1);
-            Text* text = static_cast<Text*>(content);
-            text->deselectText();
-        }
     }
 }
 
