@@ -178,11 +178,11 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(headWidget, &ChatFormHeader::videoCallTriggered, this, &ChatForm::onVideoCallTriggered);
     connect(headWidget, &ChatFormHeader::micMuteToggle, this, &ChatForm::onMicMuteToggle);
     connect(headWidget, &ChatFormHeader::volMuteToggle, this, &ChatForm::onVolMuteToggle);
-    connect(headWidget, &ChatFormHeader::searchTriggered, this, &ChatForm::onSearchTrigered);
 
-    connect(searchForm, &SearchForm::searchInBegin, this, &ChatForm::earchInBegin);
+    connect(searchForm, &SearchForm::searchInBegin, this, &ChatForm::searchInBegin);
     connect(searchForm, &SearchForm::searchUp, this, &ChatForm::onSearchUp);
     connect(searchForm, &SearchForm::searchDown, this, &ChatForm::onSearchDown);
+    connect(searchForm, &SearchForm::visibleChanged, this, &ChatForm::onSearchTrigered);
 
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
@@ -498,21 +498,17 @@ void ChatForm::onVolMuteToggle()
 
 void ChatForm::onSearchTrigered()
 {
-    if (searchForm->maximumHeight() == 0) {
-        searchForm->setMaximumHeight(50);
-        headWidget->updateSearchButton(true);
-        searchPoint = QPoint(1, -1);
-        searchAfterLoadHistory = false;
-    } else {
-        searchForm->setMaximumHeight(0);
+    if (searchForm->isHidden()) {
         searchForm->removeSearchPhrase();
-        headWidget->updateSearchButton(false);
 
         desibleSearchText();
+    } else {
+        searchPoint = QPoint(1, -1);
+        searchAfterLoadHistory = false;
     }
 }
 
-void ChatForm::earchInBegin(const QString &phrase)
+void ChatForm::searchInBegin(const QString &phrase)
 {
     desibleSearchText();
 
@@ -609,8 +605,12 @@ void ChatForm::onSearchDown(const QString &phrase)
     }
 
     QVector<ChatLine::Ptr> lines = chatWidget->getLines();
-    int numLines = lines.size();
 
+    if (lines.isEmpty()) {
+        return;
+    }
+
+    int numLines = lines.size();
     int startLine = numLines - searchPoint.x();
 
     for (int i = startLine; i < numLines; ++i) {

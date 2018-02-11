@@ -103,6 +103,7 @@ protected slots:
     void onSplitterMoved(int pos, int index);
     void quoteSelectedText();
     void copyLink();
+    void searchFormShow();
 
 private:
     void retranslateUi();
@@ -134,6 +135,7 @@ protected:
     QAction* clearAction;
     QAction* quoteAction;
     QAction* copyLinkAction;
+    QAction* searchAction;
 
     ToxPk previousId;
 

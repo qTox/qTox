@@ -95,8 +95,8 @@
         <file>img/caps_lock.svg</file>
         <file>ui/contentDialog/contentDialog.css</file>
         <file>ui/tooliconsZone/tooliconsZone.css</file>
-        <file>ui/chatForm/searchButton.svg</file>
         <file>ui/chatForm/searchDownButton.svg</file>
         <file>ui/chatForm/searchUpButton.svg</file>
+        <file>ui/chatForm/hideButton.svg</file>
     </qresource>
 </RCC>

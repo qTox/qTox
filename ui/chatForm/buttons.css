@@ -67,15 +67,15 @@ QAbstractButton#callButton
     height: 40px;
 }
 
-QAbstractButton#searchButton
-{
-    background-image: url(":/ui/chatForm/searchButton.svg");
-    border-radius: 5px;
-    width: 50px;
-    height: 40px;
-}
-
 /* SearchLine */
+
+QAbstractButton#hideButton
+{
+    background-image: url(":/ui/chatForm/hideButton.svg");
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+}
 
 
 QAbstractButton#searchUpButton

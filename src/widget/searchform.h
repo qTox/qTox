@@ -36,19 +36,25 @@ public:
 private:
     QPushButton* upButton;
     QPushButton* downButton;
+    QPushButton* hideButton;
     QLineEdit* searchLine;
 
     QString searchPhrase;
 
+protected:
+    virtual void showEvent(QShowEvent *event);
+
 private slots:
-    void changedSearchPhrare(const QString &text);
+    void changedSearchPhrase(const QString &text);
     void clickedUp();
     void clickedDown();
+    void clickedHide();
 
 signals:
     void searchInBegin(const QString &);
     void searchUp(const QString &);
     void searchDown(const QString &);
+    void visibleChanged();
 };
 
 #endif // SEARCHFORM_H

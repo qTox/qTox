@@ -76,12 +76,6 @@ const QString MIC_TOOL_TIP[] = {
     ChatFormHeader::tr("Mute microphone"),
 };
 
-const QString SEARCH_TOOL_TIP[] = {
-    ChatFormHeader::tr("Search in text"),
-    ChatFormHeader::tr("Unmute search"),
-    ChatFormHeader::tr("Mute search"),
-};
-
 template <class T, class Fun>
 QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
 {
@@ -117,7 +111,6 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     , videoState{CallButtonState::Disabled}
     , volState{ToolButtonState::Disabled}
     , micState{ToolButtonState::Disabled}
-    , searchState{ToolButtonState::Off}
 {
     QHBoxLayout* headLayout = new QHBoxLayout();
     avatar = new MaskablePixmapWidget(this, AVATAR_SIZE, ":/img/avatar_mask.svg");
@@ -139,7 +132,6 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     volButton = createButton("volButton", this, &ChatFormHeader::volMuteToggle);
     callButton = createButton("callButton", this, &ChatFormHeader::callTriggered);
     videoButton = createButton("videoButton", this, &ChatFormHeader::videoCallTriggered);
-    searchButton = createButton("searchButton", this, &ChatFormHeader::searchTriggered);
 
     QVBoxLayout* micButtonsLayout = new QVBoxLayout();
     micButtonsLayout->setSpacing(MIC_BUTTONS_LAYOUT_SPACING);
@@ -147,10 +139,9 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     micButtonsLayout->addWidget(volButton, Qt::AlignTop | Qt::AlignRight);
 
     QGridLayout* buttonsLayout = new QGridLayout();
-    buttonsLayout->addWidget(searchButton, 0, 0, 2, 1, Qt::AlignTop);
-    buttonsLayout->addLayout(micButtonsLayout, 0, 1, 2, 1, Qt::AlignTop | Qt::AlignRight);
-    buttonsLayout->addWidget(callButton, 0, 2, 2, 1, Qt::AlignTop);
-    buttonsLayout->addWidget(videoButton, 0, 3, 2, 1, Qt::AlignTop);
+    buttonsLayout->addLayout(micButtonsLayout, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignRight);
+    buttonsLayout->addWidget(callButton, 0, 1, 2, 1, Qt::AlignTop);
+    buttonsLayout->addWidget(videoButton, 0, 2, 2, 1, Qt::AlignTop);
     buttonsLayout->setVerticalSpacing(0);
     buttonsLayout->setHorizontalSpacing(BUTTONS_LAYOUT_HOR_SPACING);
 
@@ -180,7 +171,6 @@ void ChatFormHeader::setMode(ChatFormHeader::Mode mode)
         videoButton->hide();
         volButton->hide();
         micButton->hide();
-        searchButton->hide();
     }
 }
 
@@ -190,7 +180,6 @@ void ChatFormHeader::retranslateUi()
     setStateToolTip(videoButton, videoState, VIDEO_TOOL_TIP);
     setStateToolTip(micButton, micState, MIC_TOOL_TIP);
     setStateToolTip(volButton, volState, VOL_TOOL_TIP);
-    setStateToolTip(searchButton, searchState, SEARCH_TOOL_TIP);
 }
 
 void ChatFormHeader::updateButtonsView()
@@ -199,7 +188,6 @@ void ChatFormHeader::updateButtonsView()
     setStateName(videoButton, videoState);
     setStateName(micButton, micState);
     setStateName(volButton, volState);
-    setStateName(searchButton, searchState);
     retranslateUi();
     Style::repolish(this);
 }
@@ -276,17 +264,6 @@ void ChatFormHeader::updateMuteVolButton(bool active, bool outputMuted)
         volState = outputMuted ? ToolButtonState::On : ToolButtonState::Off;
     } else {
         volState = ToolButtonState::Disabled;
-    }
-
-    updateButtonsView();
-}
-
-void ChatFormHeader::updateSearchButton(bool active)
-{
-    if (active) {
-        searchState = ToolButtonState::On;
-    } else {
-        searchState = ToolButtonState::Off;
     }
 
     updateButtonsView();

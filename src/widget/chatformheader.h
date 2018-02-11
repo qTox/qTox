@@ -67,7 +67,6 @@ public:
     void updateCallButtons(bool online, bool audio, bool video = false);
     void updateMuteMicButton(bool active, bool inputMuted);
     void updateMuteVolButton(bool active, bool outputMuted);
-    void updateSearchButton(bool active);
 
     void setAvatar(const QPixmap& img);
     QSize getAvatarSize() const;
@@ -82,7 +81,6 @@ signals:
     void videoCallTriggered();
     void micMuteToggle();
     void volMuteToggle();
-    void searchTriggered();
 
     void nameChanged(const QString& name);
 
@@ -104,13 +102,11 @@ private:
     QPushButton* videoButton;
     QPushButton* volButton;
     QPushButton* micButton;
-    QPushButton* searchButton;
 
     CallButtonState callState;
     CallButtonState videoState;
     ToolButtonState volState;
     ToolButtonState micState;
-    ToolButtonState searchState;
 
     std::unique_ptr<CallConfirmWidget> callConfirm;
 };

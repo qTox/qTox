@@ -139,7 +139,7 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     searchForm = new SearchForm();
     chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
-    searchForm->setMaximumHeight(0);
+    searchForm->hide();
 
     // settings
     const Settings& s = Settings::getInstance();
@@ -200,6 +200,12 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     quoteAction = menu.addAction(QIcon(), QString(), this, SLOT(quoteSelectedText()),
                                  QKeySequence(Qt::ALT + Qt::Key_Q));
     addAction(quoteAction);
+    menu.addSeparator();
+
+    searchAction = menu.addAction(QIcon(), QString(), this, SLOT(searchFormShow()),
+                                  QKeySequence(Qt::CTRL + Qt::Key_F));
+    addAction(searchAction);
+
     menu.addSeparator();
 
     menu.addActions(chatWidget->actions());
@@ -297,7 +303,7 @@ void GenericChatForm::showEvent(QShowEvent*)
 bool GenericChatForm::event(QEvent* e)
 {
     // If the user accidentally starts typing outside of the msgEdit, focus it automatically
-    if (searchForm->maximumHeight() == 0) {
+    if (searchForm->isHidden()) {
         if (e->type() == QEvent::KeyRelease && !msgEdit->hasFocus()) {
             QKeyEvent* ke = static_cast<QKeyEvent*>(e);
             if ((ke->modifiers() == Qt::NoModifier || ke->modifiers() == Qt::ShiftModifier)
@@ -668,6 +674,13 @@ void GenericChatForm::copyLink()
     QApplication::clipboard()->setText(linkText);
 }
 
+void GenericChatForm::searchFormShow()
+{
+    if (searchForm->isHidden()) {
+        searchForm->show();
+    }
+}
+
 void GenericChatForm::retranslateUi()
 {
     sendButton->setToolTip(tr("Send message"));
@@ -678,6 +691,7 @@ void GenericChatForm::retranslateUi()
     clearAction->setText(tr("Clear displayed messages"));
     quoteAction->setText(tr("Quote selected text"));
     copyLinkAction->setText(tr("Copy link address"));
+    searchAction->setText(tr("Search in text"));
 }
 
 void GenericChatForm::showNetcam()

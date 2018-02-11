@@ -89,7 +89,7 @@ private slots:
     void onVolMuteToggle();
     void onSearchTrigered();
 
-    void earchInBegin(const QString& phrase);
+    void searchInBegin(const QString& phrase);
     void onSearchUp(const QString& phrase);
     void onSearchDown(const QString& phrase);
     void onContinueSearch();

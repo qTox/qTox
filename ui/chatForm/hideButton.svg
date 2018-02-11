@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="8.5557709mm"
-   height="5.0002112mm"
-   viewBox="0 0 8.555771 5.0002106"
+   width="5.5071211mm"
+   height="5.5071211mm"
+   viewBox="0 0 5.5071209 5.5071212"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="searchButton.svg">
+   sodipodi:docname="hideButton.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="22.4"
-     inkscape:cx="21.984681"
-     inkscape:cy="2.8941014"
+     inkscape:zoom="2.8"
+     inkscape:cx="186.40227"
+     inkscape:cy="-38.76831"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -39,12 +39,7 @@
      inkscape:window-height="1015"
      inkscape:window-x="0"
      inkscape:window-y="876"
-     inkscape:window-maximized="1"
-     showguides="false">
-    <inkscape:grid
-       type="xygrid"
-       id="grid40" />
-  </sodipodi:namedview>
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -61,26 +56,26 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(340.51327,202.78083)">
+     transform="translate(59.891963,-41.449704)">
     <g
-       id="g38"
-       transform="translate(-6.0476191,-0.34254092)"
+       id="g30"
+       transform="matrix(0.42362466,0.42362466,-0.42362466,0.42362466,-22.854056,42.277356)"
        style="fill:#ffffff">
-      <path
-         id="path12"
-         transform="matrix(0.26458333,0,0,0.26458333,-340.91,-203.00001)"
-         d="m 47.244141,2.1230469 a 9.4488189,9.4488189 0 0 0 -9.449219,9.4492191 9.4488189,9.4488189 0 0 0 9.449219,9.449218 9.4488189,9.4488189 0 0 0 9.449218,-9.449218 9.4488189,9.4488189 0 0 0 -9.449218,-9.4492191 z m 0,3.4023437 a 6.0472442,6.0472442 0 0 1 6.046875,6.0468754 6.0472442,6.0472442 0 0 1 -6.046875,6.046875 6.0472442,6.0472442 0 0 1 -6.046875,-6.046875 6.0472442,6.0472442 0 0 1 6.046875,-6.0468754 z"
-         style="fill:#ffffff;stroke-width:1.0102793"
-         inkscape:connector-curvature="0" />
       <rect
-         ry="0.64999998"
-         transform="rotate(-15)"
-         y="-278.625"
-         x="-271.75787"
-         height="1.3"
-         width="4.5002789"
-         id="rect32"
-         style="fill:#ffffff;stroke-width:0.26111853" />
+         y="41.988605"
+         x="-43.942345"
+         height="1.5"
+         width="11.5"
+         id="rect11"
+         style="fill:#ffffff;stroke-width:0.26458332" />
+      <rect
+         transform="rotate(-90)"
+         y="-38.942345"
+         x="-48.488605"
+         height="1.5"
+         width="11.500001"
+         id="rect11-3"
+         style="fill:#ffffff;stroke-width:0.26458332" />
     </g>
   </g>
 </svg>

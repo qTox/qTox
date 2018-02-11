@@ -39,15 +39,24 @@ SearchForm::SearchForm(QWidget *parent) : QWidget(parent)
     downButton->setProperty("state", "green");
     downButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
 
+    hideButton = new QPushButton();
+    hideButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    hideButton->setObjectName("hideButton");
+    hideButton->setProperty("state", "red");
+    hideButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
+
+    layout->setMargin(0);
     layout->addWidget(searchLine);
     layout->addWidget(upButton);
     layout->addWidget(downButton);
+    layout->addWidget(hideButton);
 
     setLayout(layout);
 
-    connect(searchLine, &QLineEdit::textChanged, this, &SearchForm::changedSearchPhrare);
+    connect(searchLine, &QLineEdit::textChanged, this, &SearchForm::changedSearchPhrase);
     connect(upButton, &QPushButton::clicked, this, &SearchForm::clickedUp);
     connect(downButton, &QPushButton::clicked, this, &SearchForm::clickedDown);
+    connect(hideButton, &QPushButton::clicked, this, &SearchForm::clickedHide);
 }
 
 void SearchForm::removeSearchPhrase()
@@ -60,7 +69,13 @@ QString SearchForm::getSearchPhrase() const
     return searchPhrase;
 }
 
-void SearchForm::changedSearchPhrare(const QString &text)
+void SearchForm::showEvent(QShowEvent *event)
+{
+    QWidget::showEvent(event);
+    emit visibleChanged();
+}
+
+void SearchForm::changedSearchPhrase(const QString &text)
 {
     searchPhrase = text;
     emit searchInBegin(searchPhrase);
@@ -74,4 +89,10 @@ void SearchForm::clickedUp()
 void SearchForm::clickedDown()
 {
     emit searchDown(searchPhrase);
+}
+
+void SearchForm::clickedHide()
+{
+    hide();
+    emit visibleChanged();
 }
