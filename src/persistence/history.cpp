@@ -326,7 +326,7 @@ QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk
     return counts;
 }
 
-QDateTime History::getStartDateChatHistory(const QString& friendPk)
+QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, const QString& phrase)
 {
     QList<QDateTime> counts;
     auto rowCallback = [&counts](const QVector<QVariant>& row) {
@@ -338,8 +338,13 @@ QDateTime History::getStartDateChatHistory(const QString& friendPk)
                 "FROM history "
                 "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                 "JOIN peers chat ON chat_id = chat.id "
-                "WHERE chat.public_key='%1' ORDER BY timestamp ASC LIMIT 1;")
-            .arg(friendPk);
+                "WHERE chat.public_key='%1' "
+                "AND message LIKE '%%2%' "
+                "AND timestamp < '%3' ORDER BY timestamp DESC LIMIT 1;")
+            .arg(friendPk)
+            .arg(phrase)
+            .arg(from.toMSecsSinceEpoch());
+
 
     db->execNow({queryText, rowCallback});
 

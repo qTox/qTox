@@ -502,16 +502,10 @@ void ChatForm::onSearchUp(const QString& phrase)
 
     if (startLine == 0) {
         QString pk = f->getPublicKey().toString();
-        QDateTime startDate = history->getStartDateChatHistory(pk);
+        QDateTime newBaseData = history->getDateWhereFindPhrase(pk, earliestMessage, phrase);
 
-        if (!startDate.isValid() || startDate == earliestMessage) {
+        if (!newBaseData.isValid()) {
             return;
-        }
-
-        QDateTime newBaseData = earliestMessage.addDays(-1);
-
-        if (startDate > newBaseData) {
-            newBaseData = startDate;
         }
 
         searchAfterLoadHistory = true;
@@ -524,15 +518,10 @@ void ChatForm::onSearchUp(const QString& phrase)
 
     if (!isSearch) {
         QString pk = f->getPublicKey().toString();
-        QDateTime startDate = history->getStartDateChatHistory(pk);
-        QDateTime newBaseData = earliestMessage.addDays(-1);
+        QDateTime newBaseData = history->getDateWhereFindPhrase(pk, earliestMessage, phrase);
 
-        if (!startDate.isValid()) {
+        if (!newBaseData.isValid()) {
             return;
-        }
-
-        if (startDate > newBaseData) {
-            newBaseData = startDate;
         }
 
         searchPoint.setX(numLines);
