@@ -227,7 +227,7 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     connect(searchForm, &SearchForm::searchInBegin, this, &GenericChatForm::searchInBegin);
     connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
     connect(searchForm, &SearchForm::searchDown, this, &GenericChatForm::onSearchDown);
-    connect(searchForm, &SearchForm::visibleChanged, this, &GenericChatForm::onSearchTrigered);
+    connect(searchForm, &SearchForm::visibleChanged, this, &GenericChatForm::onSearchTriggered);
 
     connect(chatWidget, &ChatLog::workerTimeoutFinished, this, &GenericChatForm::onContinueSearch);
 
@@ -311,14 +311,18 @@ void GenericChatForm::showEvent(QShowEvent*)
 bool GenericChatForm::event(QEvent* e)
 {
     // If the user accidentally starts typing outside of the msgEdit, focus it automatically
-    if (searchForm->isHidden()) {
+
         if (e->type() == QEvent::KeyRelease && !msgEdit->hasFocus()) {
             QKeyEvent* ke = static_cast<QKeyEvent*>(e);
             if ((ke->modifiers() == Qt::NoModifier || ke->modifiers() == Qt::ShiftModifier)
-                    && !ke->text().isEmpty())
-                msgEdit->setFocus();
+                    && !ke->text().isEmpty()) {
+                if (searchForm->isHidden()) {
+                    msgEdit->setFocus();
+                } else {
+                    searchForm->setFocusEditor();
+                }
+            }
         }
-    }
     return QWidget::event(e);
 }
 
@@ -578,9 +582,7 @@ bool GenericChatForm::searchInText(const QString& phrase, bool searchUp)
     for (int i = startLine; searchUp ? i >= 0 : i < numLines; searchUp ? --i : ++i) {
         ChatLine::Ptr l = lines[i];
 
-        if (l->getColumnCount() < 2) {
-            continue;
-        }
+        if (l->getColumnCount() < 2) { continue; }
 
         ChatLineContent* content = l->getContent(1);
         Text* text = static_cast<Text*>(content);
@@ -784,10 +786,11 @@ void GenericChatForm::searchFormShow()
 {
     if (searchForm->isHidden()) {
         searchForm->show();
+        searchForm->setFocusEditor();
     }
 }
 
-void GenericChatForm::onSearchTrigered()
+void GenericChatForm::onSearchTriggered()
 {
     if (searchForm->isHidden()) {
         searchForm->removeSearchPhrase();

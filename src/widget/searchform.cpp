@@ -20,13 +20,13 @@
 #include "searchform.h"
 #include "src/widget/style.h"
 #include <QHBoxLayout>
-#include <QLineEdit>
 #include <QPushButton>
+#include <QKeyEvent>
 
 SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
 {
     QHBoxLayout *layout = new QHBoxLayout();
-    searchLine = new QLineEdit();
+    searchLine = new LineEdit();
 
     upButton = createButton("searchUpButton", "green");
     downButton = createButton("searchDownButton", "green");
@@ -40,7 +40,11 @@ SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
 
     setLayout(layout);
 
-    connect(searchLine, &QLineEdit::textChanged, this, &SearchForm::changedSearchPhrase);
+    connect(searchLine, &LineEdit::textChanged, this, &SearchForm::changedSearchPhrase);
+    connect(searchLine, &LineEdit::clickEnter, this, &SearchForm::clickedUp);
+    connect(searchLine, &LineEdit::clickShiftEnter, this, &SearchForm::clickedDown);
+    connect(searchLine, &LineEdit::clickEsc, this, &SearchForm::clickedHide);
+
     connect(upButton, &QPushButton::clicked, this, &SearchForm::clickedUp);
     connect(downButton, &QPushButton::clicked, this, &SearchForm::clickedDown);
     connect(hideButton, &QPushButton::clicked, this, &SearchForm::clickedHide);
@@ -56,6 +60,17 @@ QString SearchForm::getSearchPhrase() const
     return searchPhrase;
 }
 
+void SearchForm::setFocusEditor()
+{
+    searchLine->setFocus();
+}
+
+void SearchForm::showEvent(QShowEvent* event)
+{
+    QWidget::showEvent(event);
+    emit visibleChanged();
+}
+
 QPushButton *SearchForm::createButton(const QString& name, const QString& state)
 {
     QPushButton* btn = new QPushButton();
@@ -65,12 +80,6 @@ QPushButton *SearchForm::createButton(const QString& name, const QString& state)
     btn->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
 
     return btn;
-}
-
-void SearchForm::showEvent(QShowEvent* event)
-{
-    QWidget::showEvent(event);
-    emit visibleChanged();
 }
 
 void SearchForm::changedSearchPhrase(const QString& text)
@@ -94,3 +103,26 @@ void SearchForm::clickedHide()
     hide();
     emit visibleChanged();
 }
+
+LineEdit::LineEdit(QWidget* parent) : QLineEdit(parent)
+{
+}
+
+void LineEdit::keyPressEvent(QKeyEvent* event)
+{
+    int key = event->key();
+
+    if ((key == Qt::Key_Enter || key == Qt::Key_Return)) {
+        if ((event->modifiers() & Qt::ShiftModifier)) {
+            emit clickShiftEnter();
+        } else {
+            emit clickEnter();
+        }
+    } else if (key == Qt::Key_Escape) {
+        emit clickEsc();
+    }
+
+    QLineEdit::keyPressEvent(event);
+}
+
+

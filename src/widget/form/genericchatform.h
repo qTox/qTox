@@ -104,7 +104,7 @@ protected slots:
     void quoteSelectedText();
     void copyLink();
     void searchFormShow();
-    void onSearchTrigered();
+    void onSearchTriggered();
 
     void searchInBegin(const QString& phrase);
     virtual void onSearchUp(const QString& phrase) = 0;

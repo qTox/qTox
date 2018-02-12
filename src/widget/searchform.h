@@ -21,9 +21,10 @@
 #define SEARCHFORM_H
 
 #include <QWidget>
+#include <QLineEdit>
 
 class QPushButton;
-class QLineEdit;
+class LineEdit;
 
 class SearchForm final : public QWidget
 {
@@ -32,6 +33,10 @@ public:
     explicit SearchForm(QWidget* parent = nullptr);
     void removeSearchPhrase();
     QString getSearchPhrase() const;
+    void setFocusEditor();
+
+protected:
+    virtual void showEvent(QShowEvent* event) final override;
 
 private:
     QPushButton* createButton(const QString& name, const QString& state);
@@ -39,12 +44,9 @@ private:
     QPushButton* upButton;
     QPushButton* downButton;
     QPushButton* hideButton;
-    QLineEdit* searchLine;
+    LineEdit* searchLine;
 
     QString searchPhrase;
-
-protected:
-    virtual void showEvent(QShowEvent* event);
 
 private slots:
     void changedSearchPhrase(const QString& text);
@@ -57,6 +59,22 @@ signals:
     void searchUp(const QString& phrase);
     void searchDown(const QString& phrase);
     void visibleChanged();
+};
+
+class LineEdit : public QLineEdit
+{
+    Q_OBJECT
+
+public:
+    LineEdit(QWidget* parent = nullptr);
+
+protected:
+    virtual void keyPressEvent(QKeyEvent* event) final override;
+
+signals:
+    void clickEnter();
+    void clickShiftEnter();
+    void clickEsc();
 };
 
 #endif // SEARCHFORM_H
