@@ -582,7 +582,9 @@ bool GenericChatForm::searchInText(const QString& phrase, bool searchUp)
     for (int i = startLine; searchUp ? i >= 0 : i < numLines; searchUp ? --i : ++i) {
         ChatLine::Ptr l = lines[i];
 
-        if (l->getColumnCount() < 2) { continue; }
+        if (l->getColumnCount() < 2) {
+            continue;
+        }
 
         ChatLineContent* content = l->getContent(1);
         Text* text = static_cast<Text*>(content);
@@ -596,20 +598,22 @@ bool GenericChatForm::searchInText(const QString& phrase, bool searchUp)
 
         QString txt = content->getText();
 
-        if (txt.contains(phrase, Qt::CaseInsensitive)) {
-            int index = indexForSearchInLine(txt, phrase, searchUp);
-            if ((index == -1 && searchPoint.y() > -1)) {
-                text->deselectText();
-                searchPoint.setY(-1);
-            } else {
-                chatWidget->scrollToLine(l);
-                text->deselectText();
-                text->selectText(phrase, index);
-                searchPoint = QPoint(numLines - i, index);
-                isSearch = true;
+        if (!txt.contains(phrase, Qt::CaseInsensitive)) {
+            continue;
+        }
 
-                break;
-            }
+        int index = indexForSearchInLine(txt, phrase, searchUp);
+        if ((index == -1 && searchPoint.y() > -1)) {
+            text->deselectText();
+            searchPoint.setY(-1);
+        } else {
+            chatWidget->scrollToLine(l);
+            text->deselectText();
+            text->selectText(phrase, index);
+            searchPoint = QPoint(numLines - i, index);
+            isSearch = true;
+
+            break;
         }
     }
 
