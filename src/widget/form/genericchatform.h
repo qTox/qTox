@@ -131,7 +131,7 @@ protected:
     virtual bool event(QEvent*) final override;
     virtual void resizeEvent(QResizeEvent* event) final override;
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
-    void desibleSearchText();
+    void disableSearchText();
     bool searchInText(const QString& phrase, bool searchUp);
     int indexForSearchInLine(const QString& txt, const QString& phrase, bool searchUp);
 

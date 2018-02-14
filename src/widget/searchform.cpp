@@ -30,7 +30,7 @@ SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
 
     upButton = createButton("searchUpButton", "green");
     downButton = createButton("searchDownButton", "green");
-    hideButton = createButton("hideButton","red");
+    hideButton = createButton("hideButton", "red");
 
     layout->setMargin(0);
     layout->addWidget(searchLine);

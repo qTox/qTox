@@ -39,6 +39,7 @@ protected:
     virtual void showEvent(QShowEvent* event) final override;
 
 private:
+    // TODO: Merge with 'createButton' from chatformheader.cpp
     QPushButton* createButton(const QString& name, const QString& state);
 
     QPushButton* upButton;

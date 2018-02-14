@@ -543,7 +543,7 @@ void GenericChatForm::addSystemDateMessage()
     insertChatMessage(ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime()));
 }
 
-void GenericChatForm::desibleSearchText()
+void GenericChatForm::disableSearchText()
 {
     if (searchPoint != QPoint(1, -1)) {
         QVector<ChatLine::Ptr> lines = chatWidget->getLines();
@@ -563,7 +563,7 @@ bool GenericChatForm::searchInText(const QString& phrase, bool searchUp)
     bool isSearch = false;
 
     if (phrase.isEmpty()) {
-        desibleSearchText();
+        disableSearchText();
     }
 
     QVector<ChatLine::Ptr> lines = chatWidget->getLines();
@@ -799,7 +799,7 @@ void GenericChatForm::onSearchTriggered()
     if (searchForm->isHidden()) {
         searchForm->removeSearchPhrase();
 
-        desibleSearchText();
+        disableSearchText();
     } else {
         searchPoint = QPoint(1, -1);
         searchAfterLoadHistory = false;
@@ -808,7 +808,7 @@ void GenericChatForm::onSearchTriggered()
 
 void GenericChatForm::searchInBegin(const QString& phrase)
 {
-    desibleSearchText();
+    disableSearchText();
 
     searchPoint = QPoint(1, -1);
     onSearchUp(phrase);

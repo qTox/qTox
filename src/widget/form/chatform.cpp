@@ -492,7 +492,7 @@ void ChatForm::onVolMuteToggle()
 void ChatForm::onSearchUp(const QString& phrase)
 {
     if (phrase.isEmpty()) {
-        desibleSearchText();
+        disableSearchText();
     }
 
     QVector<ChatLine::Ptr> lines = chatWidget->getLines();

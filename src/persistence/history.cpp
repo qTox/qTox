@@ -326,12 +326,16 @@ QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk
     return counts;
 }
 
-QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, const QString& phrase)
+QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase)
 {
     QList<QDateTime> counts;
     auto rowCallback = [&counts](const QVector<QVariant>& row) {
         counts.append(QDateTime::fromMSecsSinceEpoch(row[0].toLongLong()));
     };
+
+    if (phrase.contains("'")) {
+        phrase.replace("'", "''");
+    }
 
     QString queryText =
         QString("SELECT timestamp "
