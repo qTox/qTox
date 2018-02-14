@@ -53,7 +53,6 @@
         <file>ui/chatArea/scrollBarRightArrow.svg</file>
         <file>ui/chatForm/buttons.css</file>
         <file>ui/chatForm/callButton.svg</file>
-        <file>ui/chatForm/hideButton.svg</file>
         <file>ui/chatForm/micButton.svg</file>
         <file>ui/chatForm/videoButton.svg</file>
         <file>ui/chatForm/volButton.svg</file>
@@ -61,6 +60,7 @@
         <file>ui/chatForm/fileButton.svg</file>
         <file>ui/chatForm/screenshotButton.svg</file>
         <file>ui/chatForm/searchDownButton.svg</file>
+        <file>ui/chatForm/searchHideButton.svg</file>
         <file>ui/chatForm/searchUpButton.svg</file>
         <file>ui/chatForm/sendButton.svg</file>
         <file>ui/emoticonWidget/dot_page.svg</file>

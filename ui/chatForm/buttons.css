@@ -69,9 +69,9 @@ QAbstractButton#callButton
 
 /* SearchLine */
 
-QAbstractButton#hideButton
+QAbstractButton#searchHideButton
 {
-    background-image: url(":/ui/chatForm/hideButton.svg");
+    background-image: url(":/ui/chatForm/searchHideButton.svg");
     border-radius: 5px;
     width: 35px;
     height: 35px;
