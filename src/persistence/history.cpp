@@ -333,9 +333,7 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
         counts.append(QDateTime::fromMSecsSinceEpoch(row[0].toLongLong()));
     };
 
-    if (phrase.contains("'")) {
-        phrase.replace("'", "''");
-    }
+    phrase.replace("'", "''");
 
     QString queryText =
         QString("SELECT timestamp "

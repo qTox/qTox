@@ -311,18 +311,17 @@ void GenericChatForm::showEvent(QShowEvent*)
 bool GenericChatForm::event(QEvent* e)
 {
     // If the user accidentally starts typing outside of the msgEdit, focus it automatically
-
-        if (e->type() == QEvent::KeyRelease && !msgEdit->hasFocus()) {
-            QKeyEvent* ke = static_cast<QKeyEvent*>(e);
-            if ((ke->modifiers() == Qt::NoModifier || ke->modifiers() == Qt::ShiftModifier)
-                    && !ke->text().isEmpty()) {
-                if (searchForm->isHidden()) {
-                    msgEdit->setFocus();
-                } else {
-                    searchForm->setFocusEditor();
-                }
+    if (e->type() == QEvent::KeyRelease && !msgEdit->hasFocus()) {
+        QKeyEvent* ke = static_cast<QKeyEvent*>(e);
+        if ((ke->modifiers() == Qt::NoModifier || ke->modifiers() == Qt::ShiftModifier)
+                && !ke->text().isEmpty()) {
+            if (searchForm->isHidden()) {
+                msgEdit->setFocus();
+            } else {
+                searchForm->setFocusEditor();
             }
         }
+    }
     return QWidget::event(e);
 }
 
@@ -549,11 +548,13 @@ void GenericChatForm::disableSearchText()
         QVector<ChatLine::Ptr> lines = chatWidget->getLines();
         int numLines = lines.size();
         int index = numLines - searchPoint.x();
-        if (numLines > index) {
+        if (index >= 0 && numLines > index) {
             ChatLine::Ptr l = lines[index];
-            ChatLineContent* content = l->getContent(1);
-            Text* text = static_cast<Text*>(content);
-            text->deselectText();
+            if (l->getColumnCount() >= 2) {
+                ChatLineContent* content = l->getContent(1);
+                Text* text = static_cast<Text*>(content);
+                text->deselectText();
+            }
         }
     }
 }
