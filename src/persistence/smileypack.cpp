@@ -258,23 +258,25 @@ QString SmileyPack::smileyfied(const QString& msg)
 {
     QMutexLocker locker(&loadingMutex);
     QString result(msg);
-    int replaceDiff = 0; // how much we have increased message size by replacing emoji with image tags
-    int curCharLength;
-    QStringRef curChar; // the current UTF-32 which we are examining, which may look like a 2-length QString
-    for (int strIndex = 0; strIndex < msg.length(); strIndex += curCharLength) {
-        if ((msg.length() - strIndex >= 2) && ((curChar = msg.midRef(strIndex, 2)).toUcs4().length() == 1)) {
-            // if converting two characters to UTF-32 gives us a single valid character, this is actually a single
-            // 4-byte character, with a QString length of 2
-            curCharLength = 2;
+    for ( auto r = emoticonToPath.begin(); r != emoticonToPath.end(); ++r) {
+        QRegularExpression exp;
+        if (r.key().toUcs4().length() == 1) {
+            // UTF-8 emoji
+            exp.setPattern(r.key());
         }
         else {
-            curChar = msg.midRef(strIndex, 1);
-            curCharLength = 1;
+            // patterns like ":)" or ":smile:", don't match inside a word or else will hit punctuation and html tags
+            exp.setPattern(QStringLiteral(R"((?<=^|\s))") + QRegularExpression::escape(r.key()) + QStringLiteral(R"((?=$|\s))"));
         }
-        if (emoticonToPath.find(curChar.toString()) != emoticonToPath.end()) {
-            QString imgRichText = getAsRichText(curChar.toString());
-            result.replace(strIndex + replaceDiff, curCharLength, imgRichText);
-            replaceDiff += imgRichText.length() - curCharLength;
+        int replaceDiff = 0;
+        QRegularExpressionMatchIterator iter = exp.globalMatch(result);
+        while (iter.hasNext()) {
+            QRegularExpressionMatch match = iter.next();
+            int startPos = match.capturedStart();
+            int keyLength = r.key().length();
+            QString imgRichText = getAsRichText(r.key());
+            result.replace(startPos + replaceDiff, keyLength, imgRichText);
+            replaceDiff += imgRichText.length() - keyLength;
         }
     }
     return result;
