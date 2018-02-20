@@ -461,6 +461,36 @@ void CoreAV::toggleMuteCallOutput(const Friend* f)
  * @param[in] sample_rate  the audio sample rate
  * @param[in] core         the qTox Core class
  */
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const int16_t* data,
+                               unsigned samples, uint8_t channels, uint32_t sample_rate, void* core)
+{
+    Q_UNUSED(tox);
+
+    Core* c = static_cast<Core*>(core);
+    CoreAV* cav = c->getAv();
+
+    if (cav->groupCalls.find(group) == cav->groupCalls.end()) {
+        return;
+    }
+
+    ToxGroupCall& call = cav->groupCalls[group];
+
+    emit c->groupPeerAudioPlaying(group, peer);
+
+    if (call.getMuteVol() || !call.isActive()) {
+        return;
+    }
+
+    Audio& audio = Audio::getInstance();
+    if (!call.getPeers()[peer]) {
+        // FIXME: 0 is a valid sourceId, we shouldn't necessarily re-subscribe just because we have 0
+        audio.subscribeOutput(call.getPeers()[peer]);
+    }
+
+    audio.playAudioBuffer(call.getPeers()[peer], data, samples, channels, sample_rate);
+}
+#else
 void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* data,
                                unsigned samples, uint8_t channels, unsigned sample_rate, void* core)
 {
@@ -489,6 +519,7 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
 
     audio.playAudioBuffer(call.getPeers()[peer], data, samples, channels, sample_rate);
 }
+#endif
 
 /**
  * @brief Called from core to make sure the source for that peer is invalidated when they leave.
@@ -500,6 +531,16 @@ void CoreAV::invalidateGroupCallPeerSource(int group, int peer)
     Audio& audio = Audio::getInstance();
     audio.unsubscribeOutput(groupCalls[group].getPeers()[peer]);
     groupCalls[group].getPeers()[peer] = 0;
+}
+
+/**
+ * @brief Called from core to make sure the sources for that group are invalidated when
+ *        the peer list changes.
+ * @param group Group Index
+ */
+void CoreAV::invalidateGroupCallSources(int group)
+{
+    groupCalls.erase(group);
 }
 
 /**

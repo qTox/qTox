@@ -320,7 +320,12 @@ void Core::start(const QByteArray& savedata)
     tox_callback_friend_read_receipt(tox, onReadReceiptCallback);
     tox_callback_conference_invite(tox, onGroupInvite);
     tox_callback_conference_message(tox, onGroupMessage);
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+    tox_callback_conference_peer_list_changed(tox, onGroupPeerListChange);
+    tox_callback_conference_peer_name(tox, onGroupPeerNameChange);
+#else
     tox_callback_conference_namelist_change(tox, onGroupNamelistChange);
+#endif
     tox_callback_conference_title(tox, onGroupTitleChange);
     tox_callback_file_chunk_request(tox, CoreFile::onFileDataCallback);
     tox_callback_file_recv(tox, CoreFile::onFileReceiveCallback);
@@ -546,15 +551,33 @@ void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_T
     emit core->groupMessageReceived(groupId, peerId, message, isAction);
 }
 
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+void Core::onGroupPeerListChange(Tox*, uint32_t groupId, void* core)
+{
+    const auto coreAv = static_cast<Core*>(core)->getAv();
+    if (coreAv->isGroupAvEnabled(groupId)) {
+        CoreAV::invalidateGroupCallSources(groupId);
+    }
+
+    qDebug() << QString("Group %1 peerlist changed").arg(groupId);
+    emit static_cast<Core*>(core)->groupPeerlistChanged(groupId);
+}
+
+void Core::onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId,
+                            const uint8_t* name, size_t length, void* core)
+{
+    const auto newName = ToxString(name, length).getQString();
+    qDebug() << QString("Group %1, Peer %2, name changed to %3").arg(groupId).arg(peerId).arg(newName);
+    emit static_cast<Core*>(core)->groupPeerNameChanged(groupId, peerId, newName);
+}
+
+#else
+// for toxcore < 0.2.0, aka old groups
 void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
                                  TOX_CONFERENCE_STATE_CHANGE change, void* core)
 {
     CoreAV* coreAv = static_cast<Core*>(core)->getAv();
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
-	const auto changed = change == TOX_CONFERENCE_STATE_CHANGE_LIST_CHANGED;
-#else
 	const auto changed = change == TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT;
-#endif
     if (changed && coreAv->isGroupAvEnabled(groupId)) {
         CoreAV::invalidateGroupCallPeerSource(groupId, peerId);
     }
@@ -562,6 +585,7 @@ void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
     qDebug() << QString("Group namelist change %1:%2 %3").arg(groupId).arg(peerId).arg(change);
     emit static_cast<Core*>(core)->groupNamelistChanged(groupId, peerId, change);
 }
+#endif
 
 void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* cTitle,
                               size_t length, void* vCore)
