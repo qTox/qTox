@@ -72,6 +72,10 @@ public slots:
     void onAvatarChange(uint32_t friendId, const QPixmap& pic);
     void onAvatarRemoved(uint32_t friendId);
 
+protected slots:
+    void onSearchUp(const QString& phrase) override;
+    void onSearchDown(const QString& phrase) override;
+
 private slots:
     void clearChatArea(bool notInForm) override final;
     void onSendTriggered() override;

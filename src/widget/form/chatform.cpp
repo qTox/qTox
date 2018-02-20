@@ -41,6 +41,7 @@
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
+#include "src/widget/searchform.h"
 
 #include <QClipboard>
 #include <QFileDialog>
@@ -488,6 +489,52 @@ void ChatForm::onVolMuteToggle()
     updateMuteVolButton();
 }
 
+void ChatForm::onSearchUp(const QString& phrase)
+{
+    if (phrase.isEmpty()) {
+        disableSearchText();
+    }
+
+    QVector<ChatLine::Ptr> lines = chatWidget->getLines();
+    int numLines = lines.size();
+
+    int startLine = numLines - searchPoint.x();
+
+    if (startLine == 0) {
+        QString pk = f->getPublicKey().toString();
+        QDateTime newBaseData = history->getDateWhereFindPhrase(pk, earliestMessage, phrase);
+
+        if (!newBaseData.isValid()) {
+            return;
+        }
+
+        searchAfterLoadHistory = true;
+        loadHistory(newBaseData);
+
+        return;
+    }
+
+    bool isSearch = searchInText(phrase, true);
+
+    if (!isSearch) {
+        QString pk = f->getPublicKey().toString();
+        QDateTime newBaseData = history->getDateWhereFindPhrase(pk, earliestMessage, phrase);
+
+        if (!newBaseData.isValid()) {
+            return;
+        }
+
+        searchPoint.setX(numLines);
+        searchAfterLoadHistory = true;
+        loadHistory(newBaseData);
+    }
+}
+
+void ChatForm::onSearchDown(const QString& phrase)
+{
+    searchInText(phrase, false);
+}
+
 void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)
 {
     if (friendId != f->getId()) {
@@ -753,6 +800,10 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
     chatWidget->insertChatlineOnTop(historyMessages);
     savedSliderPos = verticalBar->maximum() - savedSliderPos;
     verticalBar->setValue(savedSliderPos);
+
+    if (searchAfterLoadHistory && historyMessages.isEmpty()) {
+        onContinueSearch();
+    }
 }
 
 void ChatForm::onScreenshotClicked()

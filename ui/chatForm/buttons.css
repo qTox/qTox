@@ -67,6 +67,33 @@ QAbstractButton#callButton
     height: 40px;
 }
 
+/* SearchLine */
+
+QAbstractButton#searchHideButton
+{
+    background-image: url(":/ui/chatForm/searchHideButton.svg");
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+}
+
+
+QAbstractButton#searchUpButton
+{
+    background-image: url(":/ui/chatForm/searchUpButton.svg");
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+}
+
+QAbstractButton#searchDownButton
+{
+    background-image: url(":/ui/chatForm/searchDownButton.svg");
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+}
+
 /* Common */
 
 QAbstractButton

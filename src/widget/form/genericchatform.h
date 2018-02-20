@@ -40,6 +40,7 @@ class CroppingLabel;
 class FlyoutOverlayWidget;
 class GenericNetCamView;
 class MaskablePixmapWidget;
+class SearchForm;
 class Widget;
 
 class QLabel;
@@ -102,6 +103,13 @@ protected slots:
     void onSplitterMoved(int pos, int index);
     void quoteSelectedText();
     void copyLink();
+    void searchFormShow();
+    void onSearchTriggered();
+
+    void searchInBegin(const QString& phrase);
+    virtual void onSearchUp(const QString& phrase) = 0;
+    virtual void onSearchDown(const QString& phrase) = 0;
+    void onContinueSearch();
 
 private:
     void retranslateUi();
@@ -123,6 +131,9 @@ protected:
     virtual bool event(QEvent*) final override;
     virtual void resizeEvent(QResizeEvent* event) final override;
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
+    void disableSearchText();
+    bool searchInText(const QString& phrase, bool searchUp);
+    int indexForSearchInLine(const QString& txt, const QString& phrase, bool searchUp);
 
 protected:
     bool audioInputFlag;
@@ -133,6 +144,7 @@ protected:
     QAction* clearAction;
     QAction* quoteAction;
     QAction* copyLinkAction;
+    QAction* searchAction;
 
     ToxPk previousId;
 
@@ -151,11 +163,15 @@ protected:
 
     ChatFormHeader* headWidget;
 
+    SearchForm *searchForm;
     ChatLog* chatWidget;
     ChatTextEdit* msgEdit;
     FlyoutOverlayWidget* fileFlyout;
     GenericNetCamView* netcam;
     Widget* parent;
+
+    QPoint searchPoint;
+    bool searchAfterLoadHistory;
 };
 
 #endif // GENERICCHATFORM_H

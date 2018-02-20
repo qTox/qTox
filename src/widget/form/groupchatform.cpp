@@ -22,6 +22,8 @@
 #include "tabcompleter.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
+#include "src/chatlog/chatlog.h"
+#include "src/chatlog/content/text.h"
 #include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/model/group.h"
@@ -187,6 +189,16 @@ void GroupChatForm::onTitleChanged(uint32_t groupId, const QString& author, cons
     const QString message = tr("%1 has set the title to %2").arg(author, title);
     const QDateTime curTime = QDateTime::currentDateTime();
     addSystemInfoMessage(message, ChatMessage::INFO, curTime);
+}
+
+void GroupChatForm::onSearchUp(const QString& phrase)
+{
+    searchInText(phrase, true);
+}
+
+void GroupChatForm::onSearchDown(const QString& phrase)
+{
+    searchInText(phrase, false);
 }
 
 void GroupChatForm::onScreenshotClicked()

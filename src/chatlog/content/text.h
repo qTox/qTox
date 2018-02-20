@@ -36,6 +36,8 @@ public:
     virtual ~Text();
 
     void setText(const QString& txt);
+    void selectText(const QString& txt, const int index);
+    void deselectText();
 
     virtual void setWidth(qreal width) final;
 

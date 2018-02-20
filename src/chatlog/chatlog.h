@@ -67,6 +67,7 @@ public:
 
 signals:
     void selectionChanged();
+    void workerTimeoutFinished();
 
 public slots:
     void forceRelayout();

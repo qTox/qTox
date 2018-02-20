@@ -49,6 +49,8 @@ private slots:
     void onCallClicked();
     void onUserListChanged();
     void onTitleChanged(uint32_t groupId, const QString& author, const QString& title);
+    void onSearchUp(const QString& phrase)  override;
+    void onSearchDown(const QString& phrase)  override;
 
 protected:
     virtual GenericNetCamView* createNetcam() final override;
