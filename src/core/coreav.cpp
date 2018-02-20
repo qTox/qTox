@@ -503,6 +503,21 @@ void CoreAV::invalidateGroupCallPeerSource(int group, int peer)
 }
 
 /**
+ * @brief Called from core to make sure the sources for that group are invalidated when
+ *        the peer list changes.
+ * @param group Group Index
+ */
+void CoreAV::invalidateGroupCallSources(int group)
+{
+    Audio& audio = Audio::getInstance();
+    auto it = groupCalls[group].getPeers().begin();
+    while (it != groupCalls[group].getPeers().end()) {
+        audio.unsubscribeOutput(it.value());
+        it.value() = 0;
+    }
+}
+
+/**
  * @brief Get a call's video source.
  * @param friendNum Id of friend in call list.
  * @return Video surface to show
