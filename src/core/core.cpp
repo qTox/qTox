@@ -503,7 +503,7 @@ void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, TOX_CONNECTION sta
     }
 }
 
-void Core::onGroupInvite(Tox*, uint32_t friendId, TOX_CONFERENCE_TYPE type, const uint8_t* cookie,
+void Core::onGroupInvite(Tox* tox, uint32_t friendId, TOX_CONFERENCE_TYPE type, const uint8_t* cookie,
                          size_t length, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
@@ -513,11 +513,22 @@ void Core::onGroupInvite(Tox*, uint32_t friendId, TOX_CONFERENCE_TYPE type, cons
     switch (type) {
     case TOX_CONFERENCE_TYPE_TEXT:
         qDebug() << QString("Text group invite by %1").arg(friendId);
+        if (friendId == UINT32_MAX) {
+            // Rejoining existing (persistent) conference after disconnect and reconnect.
+            tox_conference_join(tox, friendId, cookie, length, nullptr);
+            return;
+        }
         emit core->groupInviteReceived(inviteInfo);
         break;
 
     case TOX_CONFERENCE_TYPE_AV:
         qDebug() << QString("AV group invite by %1").arg(friendId);
+        if (friendId == UINT32_MAX) {
+            // Rejoining existing (persistent) AV conference after disconnect and reconnect.
+            toxav_join_av_groupchat(tox, friendId, cookie, length,
+                                    CoreAV::groupCallCallback, core);
+            return;
+        }
         emit core->groupInviteReceived(inviteInfo);
         break;
 
@@ -539,7 +550,12 @@ void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
                                  TOX_CONFERENCE_STATE_CHANGE change, void* core)
 {
     CoreAV* coreAv = static_cast<Core*>(core)->getAv();
-    if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT && coreAv->isGroupAvEnabled(groupId)) {
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+	const auto changed = change == TOX_CONFERENCE_STATE_CHANGE_LIST_CHANGED;
+#else
+	const auto changed = change == TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT;
+#endif
+    if (changed && coreAv->isGroupAvEnabled(groupId)) {
         CoreAV::invalidateGroupCallPeerSource(groupId, peerId);
     }
 
