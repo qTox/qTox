@@ -509,12 +509,7 @@ void CoreAV::invalidateGroupCallPeerSource(int group, int peer)
  */
 void CoreAV::invalidateGroupCallSources(int group)
 {
-    Audio& audio = Audio::getInstance();
-    auto it = groupCalls[group].getPeers().begin();
-    while (it != groupCalls[group].getPeers().end()) {
-        audio.unsubscribeOutput(it.value());
-        it.value() = 0;
-    }
+    groupCalls.erase(group);
 }
 
 /**
