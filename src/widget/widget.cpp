@@ -1736,8 +1736,44 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     newGroupMessageAlert(groupId, targeted || Settings::getInstance().getGroupAlwaysNotify());
 }
 
+void Widget::onGroupPeerlistChanged(int groupnumber)
+{
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g) {
+        qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
+        g = createGroup(groupnumber);
+        if (!g) {
+            return;
+        }
+    }
+    g->regeneratePeerList();
+#endif
+}
+
+void Widget::onGroupPeerNameChanged(int groupnumber, int peernumber, QString newName)
+{
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g) {
+        qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
+        g = createGroup(groupnumber);
+        if (!g) {
+            return;
+        }
+    }
+
+    if (newName.isEmpty()) {
+        newName = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+    }
+
+    g->updatePeer(peernumber, newName);
+#endif
+}
+
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)
 {
+#if !(TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0))
     Group* g = GroupList::findGroup(groupnumber);
     if (!g) {
         qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
@@ -1748,15 +1784,10 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     }
 
     TOX_CONFERENCE_STATE_CHANGE change = static_cast<TOX_CONFERENCE_STATE_CHANGE>(Change);
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
-    if (change == TOX_CONFERENCE_STATE_CHANGE_LIST_CHANGED) {
-        g->regeneratePeerList();
-#else
     if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_JOIN) {
         g->regeneratePeerList();
     } else if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT) {
         g->regeneratePeerList();
-#endif
     } else if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_NAME_CHANGE) // core overwrites old name
                                                                        // before telling us it
                                                                        // changed...
@@ -1767,6 +1798,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
 
         g->updatePeer(peernumber, name);
     }
+#endif
 }
 
 void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const QString& title)
