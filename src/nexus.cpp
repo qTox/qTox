@@ -105,6 +105,8 @@ void Nexus::start()
     qRegisterMetaType<ToxId>("ToxId");
     qRegisterMetaType<GroupInvite>("GroupInvite");
 
+    qApp->setQuitOnLastWindowClosed(false);
+
 #ifdef Q_OS_MAC
     // TODO: still needed?
     globalMenuBar = new QMenuBar(0);
