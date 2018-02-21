@@ -195,7 +195,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     if (!contentDialog || !contentDialog->hasFriendWidget(friendId, this)) {
         const auto removeAction = menu.addAction(
                     tr("Remove friend", "Menu to remove the friend from our friendlist"));
-        connect(removeAction, &QAction::triggered, [=]() { emit removeFriend(friendId); });
+        connect(removeAction, &QAction::triggered, this, [=]() { emit removeFriend(friendId); },
+            Qt::QueuedConnection);
     }
 
     menu.addSeparator();
