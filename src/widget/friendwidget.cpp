@@ -377,7 +377,7 @@ void FriendWidget::updateStatusLight()
         Widget::getInstance()->updateFriendActivity(frnd);
     }
 
-    statusPic.setMargin(event ? 0 : 3);
+    statusPic.setMargin(event ? 1 : 3);
 }
 
 QString FriendWidget::getStatusString() const

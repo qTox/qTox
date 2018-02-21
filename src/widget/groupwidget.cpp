@@ -183,7 +183,7 @@ void GroupWidget::updateStatusLight()
         statusPic.setMargin(3);
     } else {
         statusPic.setPixmap(QPixmap(":img/status/online_notification.svg"));
-        statusPic.setMargin(0);
+        statusPic.setMargin(1);
     }
 }
 
