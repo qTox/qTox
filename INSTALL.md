@@ -404,6 +404,7 @@ sudo apt-get install \
     qrencode \
     qt5-default \
     qttools5-dev-tools
+    qttools5-dev
 ```
 
 ### toxcore dependencies
