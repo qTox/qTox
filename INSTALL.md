@@ -403,7 +403,8 @@ sudo apt-get install \
     libxss-dev \
     qrencode \
     qt5-default \
-    qttools5-dev-tools
+    qttools5-dev-tools \
+    qttools5-dev
 ```
 
 ### toxcore dependencies
