@@ -167,7 +167,8 @@ FriendWidget* ContentDialog::addFriend(const Friend* frnd, GenericChatForm* form
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
     friendChatForms[friendId] = form;
 
-    connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
+    // TODO(sudden6): move this connection to the Friend::displayedNameChanged signal
+    connect(frnd, &Friend::aliasChanged, this, [](const QString&) &ContentDialog::updateFriendWidget);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
     connect(friendWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDialog);
 
