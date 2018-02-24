@@ -167,6 +167,7 @@ FriendWidget* ContentDialog::addFriend(const Friend* frnd, GenericChatForm* form
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
     friendChatForms[friendId] = form;
 
+    // TODO(sudden6): move this connection to the Friend::displayedNameChanged signal
     connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
     connect(friendWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDialog);
@@ -745,7 +746,6 @@ void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
     Friend* f = FriendList::findFriend(friendId);
     GenericChatroomWidget* widget = std::get<1>(friendList.find(friendId).value());
     FriendWidget* friendWidget = static_cast<FriendWidget*>(widget);
-    friendWidget->setName(alias);
 
     Status status = f->getStatus();
     friendLayout->addFriendWidget(friendWidget, status);
