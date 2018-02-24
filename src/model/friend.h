@@ -52,6 +52,7 @@ public:
     Status getStatus() const;
 
 signals:
+    void displayedNameChanged(const QString& newName);
     void nameChanged(uint32_t friendId, const QString& name);
     void aliasChanged(uint32_t friendId, QString alias);
     void statusChanged(uint32_t friendId, Status status);
