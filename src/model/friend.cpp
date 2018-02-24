@@ -39,6 +39,10 @@ Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlia
     }
 }
 
+/**
+ * @brief Friend::setName sets a new username for the friend
+ * @param _name new username, sets the public key if _name is empty
+ */
 void Friend::setName(const QString& _name)
 {
     QString name = _name;
@@ -46,17 +50,36 @@ void Friend::setName(const QString& _name)
         name = friendPk.toString();
     }
 
+    // save old displayed name to be able to compare for changes
+    const auto oldDisplayed = getDisplayedName();
     if (userName != name) {
         userName = name;
         emit nameChanged(friendId, name);
     }
-}
 
+    const auto newDisplayed = getDisplayedName();
+    if (oldDisplayed != newDisplayed) {
+        emit displayedNameChanged(newDisplayed);
+    }
+}
+/**
+ * @brief Friend::setAlias sets the alias for the friend
+ * @param alias new alias, removes it if set to an empty string
+ */
 void Friend::setAlias(const QString& alias)
 {
-    if (userAlias != alias) {
-        userAlias = alias;
-        emit aliasChanged(friendId, alias);
+    if (userAlias == alias) {
+        return;
+    }
+    emit aliasChanged(friendId, alias);
+
+    // save old displayed name to be able to compare for changes
+    const auto oldDisplayed = getDisplayedName();
+    userAlias = alias;
+
+    const auto newDisplayed = getDisplayedName();
+    if (oldDisplayed != newDisplayed) {
+        emit displayedNameChanged(newDisplayed);
     }
 }
 
@@ -73,6 +96,12 @@ QString Friend::getStatusMessage() const
     return statusMessage;
 }
 
+/**
+ * @brief Friend::getDisplayedName Gets the name that should be displayed for a user
+ * @return a QString containing either alias, username or public key
+ * @note This function and corresponding signal should be preferred over getting
+ *       the name or alias directly.
+ */
 QString Friend::getDisplayedName() const
 {
     if (userAlias.isEmpty()) {
