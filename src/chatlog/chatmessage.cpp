@@ -56,7 +56,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
 
     // quotes (green text)
     text = detectQuotes(text, type);
-    text = highlightURL(text);
+    text = highlightURI(text);
 
     // text styling
     Settings::StyleType styleType = Settings::getInstance().getStylePreference();

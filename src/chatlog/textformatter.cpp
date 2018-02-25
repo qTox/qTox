@@ -20,40 +20,42 @@
 #include "textformatter.h"
 
 #include <QRegularExpression>
+#include <QVector>
 
 // clang-format off
 
-static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
+// Note: escaping of '\' is only needed because QStringLiteral is broken by linebreak
+static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s)"
                                                           "[%1]"
                                                           "(?!\\s)"
                                                           "([^%1\\n]+?)"
                                                           "(?<!\\s)"
                                                           "[%1]"
-                                                          "(?=$|[\\s\\n])");
+                                                          "(?=$|\\s)");
 
-static const QString SINGLE_SLASH_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
+static const QString SINGLE_SLASH_PATTERN = QStringLiteral("(?<=^|\\s)"
                                                            "/"
                                                            "(?!\\s)"
                                                            "([^/\\n]+?)"
                                                            "(?<!\\s)"
                                                            "/"
-                                                           "(?=$|[\\s\\n])");
+                                                           "(?=$|\\s)");
 
-static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
+static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s)"
                                                           "[%1]{2}"
                                                           "(?!\\s)"
                                                           "([^\\n]+?)"
                                                           "(?<!\\s)"
                                                           "[%1]{2}"
-                                                          "(?=$|[\\s\\n])");
+                                                          "(?=$|\\s)");
 
-static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[\\s\\n])"
+static const QString MULTILINE_CODE = QStringLiteral("(?<=^|\\s)"
                                                      "```"
                                                      "(?!`)"
                                                      "((.|\\n)+?)"
                                                      "(?<!`)"
                                                      "```"
-                                                     "(?=$|[\\s\\n])");
+                                                     "(?=$|\\s)");
 
 #define REGEXP_WRAPPER_PAIR(pattern, wrapper)\
 {QRegularExpression(pattern,QRegularExpression::UseUnicodePropertiesOption),QStringLiteral(wrapper)}
@@ -74,41 +76,131 @@ static const QPair<QRegularExpression, QString> REGEX_TO_WRAPPER[] {
 #undef REGEXP_WRAPPER_PAIR
 
 static const QString HREF_WRAPPER = QStringLiteral(R"(<a href="%1">%1</a>)");
+static const QString WWW_WRAPPER = QStringLiteral(R"(<a href="http://%1">%1</a>)");
 
-// based in this: https://tools.ietf.org/html/rfc3986#section-2
-static const QString URL_PATH_PATTERN = QStringLiteral("[\\w:/?#\\[\\]@!$&'{}*+,;.~%=-]+");
-
-static const QRegularExpression URL_PATTERNS[] = {
-    QRegularExpression(QStringLiteral(R"(\b(www\.|((http[s]?)|ftp)://)%1)").arg(URL_PATH_PATTERN)),
-    QRegularExpression(QStringLiteral(R"(\b(file|smb)://([\S| ]*))")),
-    QRegularExpression(QStringLiteral(R"(\btox:[a-zA-Z\\d]{76})")),
-    QRegularExpression(QStringLiteral(R"(\bmailto:\S+@\S+\.\S+)")),
-    QRegularExpression(QStringLiteral(R"(\btox:\S+@\S+)")),
+static const QVector<QRegularExpression> WWW_WORD_PATTERN = {
+        QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*((www)\S+))"))
 };
 
+static const QVector<QRegularExpression> URI_WORD_PATTERNS = {
+    // Note: This does not match only strictly valid URLs, but we broaden search to any string following scheme to
+    // allow UTF-8 "IRI"s instead of ASCII-only URLs
+    QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*((((http[s]?)|ftp)://)\S+))")),
+    QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*((file|smb)://([\S| ]*)))")),
+    QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*(tox:[a-zA-Z\d]{76}))")),
+    QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*(mailto:\S+@\S+\.\S+))")),
+    QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*(tox:\S+@\S+))")),
+};
+
+
 // clang-format on
+
+struct MatchingUri {
+    bool valid{false};
+    int length{0};
+};
+
+// pairs of characters that are ignored when surrounding a URI
+static const QPair<QString, QString> URI_WRAPPING_CHARS[] = {
+        {QString("("), QString(")")},
+        {QString("["), QString("]")},
+        {QString("&quot;"), QString("&quot;")},
+        {QString("'"), QString("'")}
+};
+
+// characters which are ignored from the end of URI
+static const QChar URI_ENDING_CHARS[] = {
+        QChar::fromLatin1('?'),
+        QChar::fromLatin1('.'),
+        QChar::fromLatin1('!'),
+        QChar::fromLatin1(':'),
+        QChar::fromLatin1(',')
+};
+
+/**
+ * @brief Strips wrapping characters and ending punctuation from URI
+ * @param QRegularExpressionMatch of a word containing a URI
+ * @return MatchingUri containing info on the stripped URI
+ */
+MatchingUri stripSurroundingChars(const QStringRef wrappedUri, const int startOfBareUri)
+{
+    bool matchFound;
+    int curValidationStartPos = 0;
+    int curValidationEndPos = wrappedUri.length();
+    do {
+        matchFound = false;
+        for (auto const& surroundChars : URI_WRAPPING_CHARS)
+        {
+            const int openingCharLength = surroundChars.first.length();
+            const int closingCharLength = surroundChars.second.length();
+            if (surroundChars.first == wrappedUri.mid(curValidationStartPos, openingCharLength) &&
+                surroundChars.second == wrappedUri.mid(curValidationEndPos - closingCharLength, closingCharLength)) {
+                curValidationStartPos += openingCharLength;
+                curValidationEndPos -= closingCharLength;
+                matchFound = true;
+                break;
+            }
+        }
+        for (QChar const endChar : URI_ENDING_CHARS) {
+            const int charLength = 1;
+            if (endChar == wrappedUri.at(curValidationEndPos - charLength)) {
+                curValidationEndPos -= charLength;
+                matchFound = true;
+                break;
+            }
+        }
+    } while (matchFound);
+    MatchingUri strippedMatch;
+    if (startOfBareUri != curValidationStartPos) {
+        strippedMatch.valid = false;
+    } else {
+        strippedMatch.valid = true;
+        strippedMatch.length = curValidationEndPos - startOfBareUri;
+    }
+    return strippedMatch;
+}
+
+/**
+ * @brief Wrap substrings matching "patterns" with "wrapper" in "message"
+ * @param message Where search for patterns
+ * @param patterns Array of regex patterns to find strings to wrap
+ * @param wrapper Surrounds the matched strings
+ * @note done separately from URI since the link must have a scheme added to be valid
+ * @return Copy of message with highlighted URLs
+ */
+QString highlight(const QString& message, const QVector<QRegularExpression>& patterns, const QString& wrapper)
+{
+    QString result = message;
+    for (const QRegularExpression& exp : patterns) {
+        const int startLength = result.length();
+        int offset = 0;
+        QRegularExpressionMatchIterator iter = exp.globalMatch(result);
+        while (iter.hasNext()) {
+            const QRegularExpressionMatch match = iter.next();
+            const int uriWithWrapMatch{0};
+            const int uriWithoutWrapMatch{1};
+            MatchingUri matchUri = stripSurroundingChars(match.capturedRef(uriWithWrapMatch),
+                   match.capturedStart(uriWithoutWrapMatch) - match.capturedStart(uriWithWrapMatch));
+            if (!matchUri.valid) {
+                continue;
+            }
+            const QString wrappedURL = wrapper.arg(match.captured(uriWithoutWrapMatch).left(matchUri.length));
+            result.replace(match.capturedStart(uriWithoutWrapMatch) + offset, matchUri.length, wrappedURL);
+            offset = result.length() - startLength;
+        }
+    }
+    return result;
+}
 
 /**
  * @brief Highlights URLs within passed message string
  * @param message Where search for URLs
  * @return Copy of message with highlighted URLs
  */
-QString highlightURL(const QString& message)
+QString highlightURI(const QString& message)
 {
-    QString result = message;
-    for (const QRegularExpression& exp : URL_PATTERNS) {
-        const int startLength = result.length();
-        int offset = 0;
-        QRegularExpressionMatchIterator iter = exp.globalMatch(result);
-        while (iter.hasNext()) {
-            const QRegularExpressionMatch match = iter.next();
-            const int startPos = match.capturedStart() + offset;
-            const int length = match.capturedLength();
-            const QString wrappedURL = HREF_WRAPPER.arg(match.captured());
-            result.replace(startPos, length, wrappedURL);
-            offset = result.length() - startLength;
-        }
-    }
+    QString result = highlight(message, URI_WORD_PATTERNS, HREF_WRAPPER);
+    result = highlight(result, WWW_WORD_PATTERN, WWW_WRAPPER);
     return result;
 }
 
