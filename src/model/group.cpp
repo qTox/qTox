@@ -25,8 +25,6 @@
 #include "src/widget/form/groupchatform.h"
 #include "src/widget/groupwidget.h"
 #include "src/widget/gui.h"
-#include <QDebug>
-#include <QTimer>
 
 static const int MAX_GROUP_TITLE_LENGTH = 128;
 
@@ -48,6 +46,18 @@ void Group::updatePeer(int peerId, QString name)
 {
     ToxPk peerKey = Core::getInstance()->getGroupPeerPk(groupId, peerId);
     QByteArray peerPk = peerKey.getKey();
+
+    // joining users always have an empty name at first (toxcore problem),
+    // which is later changed to their real name. Because of that we treat everyone
+    // who changed the name from empty to non empty as a newly joined user
+    if (name != peers[peerId]) {
+        if (!peers[peerId].isEmpty()) {
+            emit peerNameChanged(getId(), peers[peerId], name);
+        } else {
+            emit peerJoined(getId(), name);
+        }
+    }
+
     peers[peerId] = name;
     toxids[peerPk] = name;
 
@@ -90,7 +100,28 @@ QString Group::getDisplayedName() const
 void Group::regeneratePeerList()
 {
     const Core* core = Core::getInstance();
+    const QStringList oldPeersList = peers;    // save the list of old peers to a variable before overwriting
     peers = core->getGroupPeerNames(groupId);
+
+    // only if we didn't just join - oldPeersList is empty
+    if (oldPeersList.length() > 0) {
+        // peers that have joined
+        for (int i = 0; i < peers.length(); i++) {
+            // don't show join message if name is empty. Instead it should
+            // be shown by updatePeer() when user's name gets updated to their real name
+            if (oldPeersList.indexOf(peers[i]) == -1 && !peers[i].isEmpty()) {
+                emit peerJoined(getId(), peers[i]);
+            }
+        }
+
+        // peers that have left
+        for (int i = 0; i < oldPeersList.length(); i++) {
+            if (peers.indexOf(oldPeersList[i]) == -1) {
+                emit peerLeft(getId(), oldPeersList[i]);
+            }
+        }
+    }
+
     toxids.clear();
     nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i) {

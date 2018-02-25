@@ -63,6 +63,9 @@ signals:
     void titleChangedByUser(uint32_t groupId, const QString& title);
     void titleChanged(uint32_t groupId, const QString& author, const QString& title);
     void userListChanged(uint32_t groupId, const QMap<QByteArray, QString>& toxids);
+    void peerJoined(int peerId, QString username);
+    void peerLeft(int peerId, QString username);
+    void peerNameChanged(int peerId, QString oldName, QString newName);
 
 private:
     QString selfName;

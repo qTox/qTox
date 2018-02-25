@@ -1833,6 +1833,48 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
     form->peerAudioPlaying(peernumber);
 }
 
+void Widget::groupShowPeerJoinMessage(int groupnumber, QString username)
+{
+    const QDateTime curTime = QDateTime::currentDateTime();
+    const QString message = tr("%1 has joined the chat");
+
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g) {
+        return;
+    }
+
+    auto form = groupChatForms[g->getId()];
+    form->addSystemInfoMessage(message.arg(username), ChatMessage::INFO, curTime);
+}
+
+void Widget::groupShowPeerLeaveMessage(int groupnumber, QString username)
+{
+    const QDateTime curTime = QDateTime::currentDateTime();
+    const QString message = tr("%1 has left the chat");
+
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g) {
+        return;
+    }
+
+    auto form = groupChatForms[g->getId()];
+    form->addSystemInfoMessage(message.arg(username), ChatMessage::INFO, curTime);
+}
+
+void Widget::groupShowPeerNameChangeMessage(int groupnumber, QString oldName, QString newName)
+{
+    const QDateTime curTime = QDateTime::currentDateTime();
+    const QString message = tr("%1 is now known as %2");
+
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g) {
+        return;
+    }
+
+    auto form = groupChatForms[g->getId()];
+    form->addSystemInfoMessage(message.arg(oldName, newName), ChatMessage::INFO, curTime);
+}
+
 void Widget::removeGroup(Group* g, bool fake)
 {
     GroupWidget* widget = groupWidgets[g->getId()];
@@ -1900,6 +1942,9 @@ Group* Widget::createGroup(int groupId)
     connect(form, &GroupChatForm::sendAction, core, &Core::sendGroupAction);
     connect(newgroup, &Group::titleChangedByUser, core, &Core::changeGroupTitle);
     connect(core, &Core::usernameSet, newgroup, &Group::setSelfName);
+    connect(newgroup, &Group::peerJoined, this, &Widget::groupShowPeerJoinMessage);
+    connect(newgroup, &Group::peerLeft, this, &Widget::groupShowPeerLeaveMessage);
+    connect(newgroup, &Group::peerNameChanged, this, &Widget::groupShowPeerNameChangeMessage);
 
     FilterCriteria filter = getFilterCriteria();
     widget->searchName(ui->searchContactText->text(), filterGroups(filter));
