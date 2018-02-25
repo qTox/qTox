@@ -41,13 +41,12 @@ protected:
     bool active;
     bool muteMic;
     bool muteVol;
-    bool valid = true;
 };
 
 class ToxFriendCall : public ToxCall
 {
 public:
-    ToxFriendCall() = default;
+    ToxFriendCall() = delete;
     ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av);
     ToxFriendCall(ToxFriendCall&& other) noexcept;
     ~ToxFriendCall();
@@ -89,7 +88,7 @@ private:
 class ToxGroupCall : public ToxCall
 {
 public:
-    ToxGroupCall() = default;
+    ToxGroupCall() = delete;
     ToxGroupCall(int GroupNum, CoreAV& av);
     ToxGroupCall(ToxGroupCall&& other) noexcept;
     ~ToxGroupCall();

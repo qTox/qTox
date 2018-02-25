@@ -45,38 +45,25 @@ ToxCall::ToxCall(ToxCall&& other) noexcept
     , muteMic{other.muteMic}
     , muteVol{other.muteVol}
 {
+	Audio::getInstance().subscribeInput();
     other.audioInConn = QMetaObject::Connection();
-    // invalidate object, all resources are moved
-    other.valid = false;
 }
 
 ToxCall::~ToxCall()
 {
     Audio& audio = Audio::getInstance();
-
-    // only free resources if they weren't moved
-    if (valid) {
-        QObject::disconnect(audioInConn);
-        audio.unsubscribeInput();
-    }
+    QObject::disconnect(audioInConn);
+    audio.unsubscribeInput();
 }
 
 ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
 {
-    if (valid) {
-        // if we're already valid, we need to cleanup our resources since we're going to inherit the resources
-        // that are being moved in
-        QObject::disconnect(audioInConn);
-        Audio::getInstance().unsubscribeInput();
-    }
-
+	QObject::disconnect(audioInConn);
     audioInConn = other.audioInConn;
     other.audioInConn = QMetaObject::Connection();
     active = other.active;
     muteMic = other.muteMic;
     muteVol = other.muteVol;
-    // invalidate object, all resources are moved
-    other.valid = false;
 
     return *this;
 }
@@ -235,6 +222,7 @@ ToxFriendCall::ToxFriendCall(ToxFriendCall&& other) noexcept
 
 ToxFriendCall::~ToxFriendCall()
 {
+	Audio::getInstance().unsubscribeOutput(alSource);
     if (timeoutTimer)
         delete timeoutTimer;
 
@@ -249,9 +237,6 @@ ToxFriendCall::~ToxFriendCall()
             videoSource->setDeleteOnClose(true);
             videoSource = nullptr;
         }
-    }
-    if (valid) {
-        Audio::getInstance().unsubscribeOutput(alSource);
     }
 }
 
