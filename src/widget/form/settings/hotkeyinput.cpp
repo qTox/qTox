@@ -30,11 +30,10 @@ QString noKeyString = QObject::tr("<no key>");
 QString pressAnyKeyString = QObject::tr("Press any key or Esc to cancel");
 
 HotkeyInput::HotkeyInput(QWidget* parent)
-    : QTextEdit(parent)
+    : QLineEdit(parent)
 {
-    setAcceptRichText(false);
-    setAcceptDrops(false);
     setPlaceholderText(noKeyString);
+    setReadOnly(true); // hides the caret
 }
 
 QString keyListToString(QList<int> keys)
@@ -45,13 +44,13 @@ QString keyListToString(QList<int> keys)
         keyString += QString::number(keys[i]) + "+";
     }
 
-    keyString.replace(QRegExp("++$"), "");
+    keyString.replace(QRegExp("[+]+$"), "");
     return keyString;
 }
 
 void HotkeyInput::keyPressEvent(QKeyEvent* event)
 {
-    // we only want to act on key press event, not on key hold event
+    // we only want to act on key press, not on key hold
     if (event->isAutoRepeat()) {
         return;
     }
@@ -97,7 +96,7 @@ void HotkeyInput::focusInEvent(QFocusEvent* event)
 
 void HotkeyInput::focusOutEvent(QFocusEvent* event)
 {
-    const QString text = this->toPlainText();
+    const QString text = this->text();
     if (text == "" && !wasCleared) {
         const QList<int> keys = Settings::getInstance().getPttShortcutKeys();
         this->setText(keyListToString(keys));

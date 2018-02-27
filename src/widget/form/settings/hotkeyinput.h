@@ -20,9 +20,9 @@
 #ifndef HOTKEYINPUT_H
 #define HOTKEYINPUT_H
 
-#include <QTextEdit>
+#include <QLineEdit>
 
-class HotkeyInput : public QTextEdit
+class HotkeyInput : public QLineEdit
 {
     Q_OBJECT
 public:
