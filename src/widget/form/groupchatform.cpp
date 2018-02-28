@@ -121,6 +121,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(group, &Group::titleChanged, this, &GroupChatForm::onTitleChanged);
     connect(&Settings::getInstance(), &Settings::blackListChanged, this, &GroupChatForm::updateUserNames);
 
+    onUserListChanged();
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
 }

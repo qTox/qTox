@@ -42,6 +42,7 @@ Group::Group(int groupId, const QString& name, bool isAvGroupchat, const QString
     // on naming is appropriate
     hasNewMessages = 0;
     userWasMentioned = 0;
+    regeneratePeerList();
 }
 
 void Group::updatePeer(int peerId, QString name)
