@@ -211,7 +211,6 @@ private slots:
     void onTryCreateTrayIcon();
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
-    void processOfflineMsgs();
     void friendListContextMenu(const QPoint& pos);
     void friendRequestsUpdate();
     void groupInvitesUpdate();
@@ -292,7 +291,7 @@ private:
     MaskablePixmapWidget* profilePicture;
     bool notify(QObject* receiver, QEvent* event);
     bool autoAwayActive = false;
-    QTimer *timer, *offlineMsgTimer;
+    QTimer *timer;
     QRegExp nameMention, sanitizedNameMention;
     bool eventFlag;
     bool eventIcon;

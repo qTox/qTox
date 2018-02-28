@@ -28,22 +28,19 @@
 #include <QSet>
 
 class Friend;
-class QTimer;
 
 class OfflineMsgEngine : public QObject
 {
     Q_OBJECT
 public:
     explicit OfflineMsgEngine(Friend*);
-    virtual ~OfflineMsgEngine();
-    static QMutex globalMutex;
+    virtual ~OfflineMsgEngine() = default;
 
     void dischargeReceipt(int receipt);
-    void registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg,
-                         const QDateTime& timestamp = QDateTime::currentDateTime());
+    void registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg);
+    void deliverOfflineMsgs();
 
 public slots:
-    void deliverOfflineMsgs();
     void removeAllReceipts();
     void updateTimestamp(int receiptId);
 
@@ -59,7 +56,6 @@ private:
     struct MsgPtr
     {
         ChatMessage::Ptr msg;
-        QDateTime timestamp;
         int receipt;
     };
     QMutex mutex;

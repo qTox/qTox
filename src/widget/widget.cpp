@@ -112,9 +112,6 @@ void Widget::init()
 
     timer = new QTimer();
     timer->start(1000);
-    offlineMsgTimer = new QTimer();
-    // FIXME: ↓ make a proper fix instead of increasing timeout into ∞
-    offlineMsgTimer->start(2 * 60 * 1000);
 
     icon_size = 15;
 
@@ -259,7 +256,6 @@ void Widget::init()
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
-    connect(offlineMsgTimer, &QTimer::timeout, this, &Widget::processOfflineMsgs);
     connect(ui->searchContactText, &QLineEdit::textChanged, this, &Widget::searchContacts);
     connect(filterGroup, &QActionGroup::triggered, this, &Widget::searchContacts);
     connect(filterDisplayGroup, &QActionGroup::triggered, this, &Widget::changeDisplayMode);
@@ -537,7 +533,6 @@ Widget::~Widget()
     delete groupInviteForm;
     delete filesForm;
     delete timer;
-    delete offlineMsgTimer;
     delete contentLayout;
 
     FriendList::clear();
@@ -2162,18 +2157,6 @@ bool Widget::filterOnline(FilterCriteria index)
         return true;
     default:
         return false;
-    }
-}
-
-void Widget::processOfflineMsgs()
-{
-    if (OfflineMsgEngine::globalMutex.tryLock()) {
-        QList<Friend*> frnds = FriendList::getAllFriends();
-        for (Friend* f : frnds) {
-            chatForms[f->getId()]->getOfflineMsgEngine()->deliverOfflineMsgs();
-        }
-
-        OfflineMsgEngine::globalMutex.unlock();
     }
 }
 

@@ -64,7 +64,6 @@
  */
 
 static const int CHAT_WIDGET_MIN_HEIGHT = 50;
-static const int DELIVER_OFFLINE_MESSAGES_DELAY = 250;
 static const int SCREENSHOT_GRABBER_OPENING_DELAY = 500;
 static const int TYPING_NOTIFICATION_DURATION = 3000;
 
@@ -556,7 +555,7 @@ void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
         // Hide the "is typing" message when a friend goes offline
         setFriendTyping(false);
     } else {
-        QTimer::singleShot(DELIVER_OFFLINE_MESSAGES_DELAY, this, SLOT(onDeliverOfflineMessages()));
+        offlineEngine->deliverOfflineMsgs();
     }
 
     updateCallButtons();
@@ -690,11 +689,6 @@ void ChatForm::clearChatArea(bool notInForm)
 {
     GenericChatForm::clearChatArea(notInForm);
     offlineEngine->removeAllReceipts();
-}
-
-void ChatForm::onDeliverOfflineMessages()
-{
-    offlineEngine->deliverOfflineMsgs();
 }
 
 void ChatForm::onLoadChatHistory()
