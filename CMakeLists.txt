@@ -612,3 +612,4 @@ target_link_libraries(${PROJECT_NAME}
 
 include(Testing)
 include(Installation)
+include(Packing)
