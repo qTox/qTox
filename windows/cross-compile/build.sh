@@ -742,19 +742,20 @@ fi
 # Exif
 
 EXIF_PREFIX_DIR="$DEP_DIR/libexif"
-EXIF_VERSION=0.6.21
+EXIF_VERSION=0_6_21
 EXIF_HASH="16cdaeb62eb3e6dfab2435f7d7bccd2f37438d21c5218ec4e58efa9157d4d41a"
 if [ ! -f "$EXIF_PREFIX_DIR/done" ]
 then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  wget https://sourceforge.net/projects/libexif/files/libexif/0.6.21/libexif-$EXIF_VERSION.tar.bz2
+  wget https://github.com/libexif/libexif/archive/libexif-${EXIF_VERSION}-release.tar.gz
   check_sha256 "$EXIF_HASH" "libexif-$EXIF_VERSION.tar.bz2"
   bsdtar --no-same-owner --no-same-permissions -xf libexif*.tar.bz2
   rm libexif*.tar.bz2
   cd libexif*
 
+  autoreconf .
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
                                --prefix="$EXIF_PREFIX_DIR" \
                                --disable-shared \
