@@ -220,14 +220,15 @@ strip_all()
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
 OPENSSL_VERSION=1.0.2m
 OPENSSL_HASH="8c6ff15ec6b319b50788f42c7abc2890c08ba5a1cdcd3810eb9092deada37b0f"
+OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
   rm -rf "$OPENSSL_PREFIX_DIR"
   mkdir -p "$OPENSSL_PREFIX_DIR"
 
-  wget https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
-  check_sha256 "$OPENSSL_HASH" "openssl-$OPENSSL_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf openssl*.tar.gz
+  wget "https://www.openssl.org/source/$OPENSSL_FILENAME"
+  check_sha256 "$OPENSSL_HASH" "$OPENSSL_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$OPENSSL_FILENAME"
   rm openssl*.tar.gz
   cd openssl*
 
@@ -262,12 +263,13 @@ QT_MINOR=9
 QT_PATCH=3
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
 QT_HASH="57acd8f03f830c2d7dc29fbe28aaa96781b2b9bdddce94196e6761a0f88c6046"
+QT_FILENAME="qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
   rm -rf "$QT_PREFIX_DIR"
   mkdir -p "$QT_PREFIX_DIR"
 
-  wget https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz
+  wget "https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/$QT_FILENAME"
   check_sha256 "$QT_HASH" "qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
   bsdtar --no-same-owner --no-same-permissions -xf qt*.tar.xz
   rm qt*.tar.xz
@@ -380,15 +382,16 @@ set -u
 SQLCIPHER_PREFIX_DIR="$DEP_DIR/libsqlcipher"
 SQLCIPHER_VERSION=v3.4.1
 SQLCIPHER_HASH="4172cc6e5a79d36e178d36bd5cc467a938e08368952659bcd95eccbaf0fa4ad4"
+SQLCIPHER_FILENAME="$SQLCIPHER_VERSION.tar.gz"
 if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]
 then
   rm -rf "$SQLCIPHER_PREFIX_DIR"
   mkdir -p "$SQLCIPHER_PREFIX_DIR"
 
-  wget https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_VERSION.tar.gz -O sqlcipher.tar.gz
-  check_sha256 "$SQLCIPHER_HASH" "sqlcipher.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf sqlcipher.tar.gz
-  rm sqlcipher.tar.gz
+  wget "https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_FILENAME"
+  check_sha256 "$SQLCIPHER_HASH" "$SQLCIPHER_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$SQLCIPHER_FILENAME"
+  rm $SQLCIPHER_FILENAME
   cd sqlcipher*
 
   sed -i s/'LIBS="-lcrypto  $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
@@ -439,15 +442,16 @@ fi
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
 FFMPEG_VERSION=3.2.9
 FFMPEG_HASH="1131d37890ed3dcbc3970452b200a56ceb36b73eaa51d1c23c770c90f928537f"
+FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
   rm -rf "$FFMPEG_PREFIX_DIR"
   mkdir -p "$FFMPEG_PREFIX_DIR"
 
-  wget https://www.ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.xz
+  wget "https://www.ffmpeg.org/releases/$FFMPEG_FILENAME"
   check_sha256 "$FFMPEG_HASH" "ffmpeg-$FFMPEG_VERSION.tar.xz"
-  bsdtar --no-same-owner --no-same-permissions -xf ffmpeg*.tar.xz
-  rm ffmpeg*.tar.xz
+  bsdtar --no-same-owner --no-same-permissions -xf $FFMPEG_FILENAME
+  rm $FFMPEG_FILENAME
   cd ffmpeg*
 
   if [[ "$ARCH" == "x86_64"* ]]
@@ -710,14 +714,15 @@ fi
 QRENCODE_PREFIX_DIR="$DEP_DIR/libqrencode"
 QRENCODE_VERSION=3.4.4
 QRENCODE_HASH="efe5188b1ddbcbf98763b819b146be6a90481aac30cfc8d858ab78a19cde1fa5"
+QRENCODE_FILENAME="qrencode-$QRENCODE_VERSION.tar.bz2"
 if [ ! -f "$QRENCODE_PREFIX_DIR/done" ]
 then
   rm -rf "$QRENCODE_PREFIX_DIR"
   mkdir -p "$QRENCODE_PREFIX_DIR"
 
-  wget https://fukuchi.org/works/qrencode/qrencode-$QRENCODE_VERSION.tar.bz2
-  check_sha256 "$QRENCODE_HASH" "qrencode-$QRENCODE_VERSION.tar.bz2"
-  bsdtar --no-same-owner --no-same-permissions -xf qrencode*.tar.bz2
+  wget https://fukuchi.org/works/qrencode/$QRENCODE_FILENAME
+  check_sha256 "$QRENCODE_HASH" "$QRENCODE_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$QRENCODE_FILENAME"
   rm qrencode*.tar.bz2
   cd qrencode*
 
@@ -744,15 +749,16 @@ fi
 EXIF_PREFIX_DIR="$DEP_DIR/libexif"
 EXIF_VERSION=0.6.21
 EXIF_HASH="16cdaeb62eb3e6dfab2435f7d7bccd2f37438d21c5218ec4e58efa9157d4d41a"
+EXIF_FILENAME=libexif-$EXIF_VERSION.tar.bz2
 if [ ! -f "$EXIF_PREFIX_DIR/done" ]
 then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  wget https://sourceforge.net/projects/libexif/files/libexif/0.6.21/libexif-$EXIF_VERSION.tar.bz2
-  check_sha256 "$EXIF_HASH" "libexif-$EXIF_VERSION.tar.bz2"
-  bsdtar --no-same-owner --no-same-permissions -xf libexif*.tar.bz2
-  rm libexif*.tar.bz2
+  wget https://sourceforge.net/projects/libexif/files/libexif/$EXIF_VERSION/$EXIF_FILENAME
+  check_sha256 "$EXIF_HASH" "$EXIF_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf $EXIF_FILENAME
+  rm $EXIF_FILENAME
   cd libexif*
 
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
@@ -777,15 +783,16 @@ fi
 OPUS_PREFIX_DIR="$DEP_DIR/libopus"
 OPUS_VERSION=1.2.1
 OPUS_HASH="cfafd339ccd9c5ef8d6ab15d7e1a412c054bf4cb4ecbbbcc78c12ef2def70732"
+OPUS_FILENAME="opus-$OPUS_VERSION.tar.gz"
 if [ ! -f "$OPUS_PREFIX_DIR/done" ]
 then
   rm -rf "$OPUS_PREFIX_DIR"
   mkdir -p "$OPUS_PREFIX_DIR"
 
-  wget https://archive.mozilla.org/pub/opus/opus-$OPUS_VERSION.tar.gz
-  check_sha256 "$OPUS_HASH" "opus-$OPUS_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf opus*.tar.gz
-  rm opus*.tar.gz
+  wget "https://archive.mozilla.org/pub/opus/$OPUS_FILENAME"
+  check_sha256 "$OPUS_HASH" "$OPUS_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$OPUS_FILENAME"
+  rm $OPUS_FILENAME
   cd opus*
 
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
@@ -810,15 +817,16 @@ fi
 SODIUM_PREFIX_DIR="$DEP_DIR/libsodium"
 SODIUM_VERSION=1.0.15
 SODIUM_HASH="fb6a9e879a2f674592e4328c5d9f79f082405ee4bb05cb6e679b90afe9e178f4"
+SODIUM_FILENAME="libsodium-$SODIUM_VERSION.tar.gz"
 if [ ! -f "$SODIUM_PREFIX_DIR/done" ]
 then
   rm -rf "$SODIUM_PREFIX_DIR"
   mkdir -p "$SODIUM_PREFIX_DIR"
 
-  wget https://download.libsodium.org/libsodium/releases/libsodium-$SODIUM_VERSION.tar.gz
-  check_sha256 "$SODIUM_HASH" "libsodium-$SODIUM_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf libsodium*.tar.gz
-  rm libsodium*.tar.gz
+  wget "https://download.libsodium.org/libsodium/releases/$SODIUM_FILENAME"
+  check_sha256 "$SODIUM_HASH" "$SODIUM_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$SODIUM_FILENAME"
+  rm "$SODIUM_FILENAME"
   cd libsodium*
 
   ./configure --host="$ARCH-w64-mingw32" \
@@ -842,15 +850,16 @@ fi
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
 VPX_VERSION=1.6.1
 VPX_HASH="1c2c0c2a97fba9474943be34ee39337dee756780fc12870ba1dc68372586a819"
+VPX_FILENAME="libvpx-$VPX_VERSION.tar.bz2"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
   rm -rf "$VPX_PREFIX_DIR"
   mkdir -p "$VPX_PREFIX_DIR"
 
-  wget http://storage.googleapis.com/downloads.webmproject.org/releases/webm/libvpx-$VPX_VERSION.tar.bz2
-  check_sha256 "$VPX_HASH" "libvpx-$VPX_VERSION.tar.bz2"
-  bsdtar --no-same-owner --no-same-permissions -xf libvpx-*.tar.bz2
-  rm libvpx*.tar.bz2
+  wget "http://storage.googleapis.com/downloads.webmproject.org/releases/webm/$VPX_FILENAME"
+  check_sha256 "$VPX_HASH" "$VPX_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$VPX_FILENAME"
+  rm "$VPX_FILENAME"
   cd libvpx*
 
   if [[ "$ARCH" == "x86_64" ]]
@@ -885,15 +894,16 @@ fi
 TOXCORE_PREFIX_DIR="$DEP_DIR/libtoxcore"
 TOXCORE_VERSION=0.1.11
 TOXCORE_HASH=56a4566a5cdd201ef27d3a884c0f9aa17e99a300f08ace6323306d24928e727f
+TOXCORE_FILENAME="c-toxcore-$TOXCORE_VERSION.tar.gz"
 if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]
 then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  wget https://github.com/TokTok/c-toxcore/releases/download/v$TOXCORE_VERSION/c-toxcore-$TOXCORE_VERSION.tar.gz
-  check_sha256 "$TOXCORE_HASH" "c-toxcore-$TOXCORE_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf c-toxcore*.tar.gz
-  rm c-toxcore*.tar.gz
+  wget "https://github.com/TokTok/c-toxcore/releases/download/v$TOXCORE_VERSION/$TOXCORE_FILENAME"
+  check_sha256 "$TOXCORE_HASH" "$TOXCORE_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$TOXCORE_FILENAME"
+  rm "$TOXCORE_FILENAME"
   cd c-toxcore*
 
   mkdir -p build
