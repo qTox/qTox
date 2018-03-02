@@ -217,15 +217,16 @@ OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
 OPENSSL_VERSION=1.0.2o
 # hash from https://www.openssl.org/source/
 OPENSSL_HASH="ec3f5c9714ba0fd45cb4e087301eb1336c317e0d20b575a125050470e8089e4d"
+OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
   rm -rf "$OPENSSL_PREFIX_DIR"
   mkdir -p "$OPENSSL_PREFIX_DIR"
 
-  wget https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
-  check_sha256 "$OPENSSL_HASH" "openssl-$OPENSSL_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf openssl*.tar.gz
-  rm openssl*.tar.gz
+  wget "https://www.openssl.org/source/$OPENSSL_FILENAME"
+  check_sha256 "$OPENSSL_HASH" "$OPENSSL_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$OPENSSL_FILENAME"
+  rm $OPENSSL_FILENAME
   cd openssl*
 
   CONFIGURE_OPTIONS="--prefix=$OPENSSL_PREFIX_DIR shared"
@@ -260,15 +261,16 @@ QT_PATCH=5
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
 # hash from https://download.qt.io/archive/qt/5.9/5.9.5/single/qt-everywhere-opensource-src-5.9.5.tar.xz.mirrorlist
 QT_HASH="a75b87f46240a374fde93fb60038d63e3b570457785268c766c639b5dc18ccf6"
+QT_FILENAME="qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
   rm -rf "$QT_PREFIX_DIR"
   mkdir -p "$QT_PREFIX_DIR"
 
-  wget https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz
-  check_sha256 "$QT_HASH" "qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
-  bsdtar --no-same-owner --no-same-permissions -xf qt*.tar.xz
-  rm qt*.tar.xz
+  wget "https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/$QT_FILENAME"
+  check_sha256 "$QT_HASH" "$QT_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf $QT_FILENAME
+  rm $QT_FILENAME
   cd qt*
 
   export PKG_CONFIG_PATH="$OPENSSL_PREFIX_DIR/lib/pkgconfig"
@@ -374,15 +376,16 @@ set -u
 SQLCIPHER_PREFIX_DIR="$DEP_DIR/libsqlcipher"
 SQLCIPHER_VERSION=v3.4.2
 SQLCIPHER_HASH="69897a5167f34e8a84c7069f1b283aba88cdfa8ec183165c4a5da2c816cfaadb"
+SQLCIPHER_FILENAME="$SQLCIPHER_VERSION.tar.gz"
 if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]
 then
   rm -rf "$SQLCIPHER_PREFIX_DIR"
   mkdir -p "$SQLCIPHER_PREFIX_DIR"
 
-  wget https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_VERSION.tar.gz -O sqlcipher.tar.gz
-  check_sha256 "$SQLCIPHER_HASH" "sqlcipher.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf sqlcipher.tar.gz
-  rm sqlcipher.tar.gz
+  wget "https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_FILENAME"
+  check_sha256 "$SQLCIPHER_HASH" "$SQLCIPHER_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$SQLCIPHER_FILENAME"
+  rm $SQLCIPHER_FILENAME
   cd sqlcipher*
 
   sed -i s/'LIBS="-lcrypto  $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
@@ -397,8 +400,8 @@ then
 @@ -1074,7 +1074,7 @@
     $(TOP)/ext/fts5/fts5_varint.c \
     $(TOP)/ext/fts5/fts5_vocab.c  \
- 
--fts5parse.c:	$(TOP)/ext/fts5/fts5parse.y lemon 
+
+-fts5parse.c:	$(TOP)/ext/fts5/fts5parse.y lemon
 +fts5parse.c:	$(TOP)/ext/fts5/fts5parse.y lemon$(BEXE)
  	cp $(TOP)/ext/fts5/fts5parse.y .
  	rm -f fts5parse.h
@@ -433,15 +436,16 @@ fi
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
 FFMPEG_VERSION=3.2.10
 FFMPEG_HASH="3c1626220c7b68ff6be7312559f77f3c65ff6809daf645d4470ac0189926bdbc"
+FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
   rm -rf "$FFMPEG_PREFIX_DIR"
   mkdir -p "$FFMPEG_PREFIX_DIR"
 
-  wget https://www.ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.xz
-  check_sha256 "$FFMPEG_HASH" "ffmpeg-$FFMPEG_VERSION.tar.xz"
-  bsdtar --no-same-owner --no-same-permissions -xf ffmpeg*.tar.xz
-  rm ffmpeg*.tar.xz
+  wget "https://www.ffmpeg.org/releases/$FFMPEG_FILENAME"
+  check_sha256 "$FFMPEG_HASH" "$FFMPEG_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf $FFMPEG_FILENAME
+  rm $FFMPEG_FILENAME
   cd ffmpeg*
 
   if [[ "$ARCH" == "x86_64"* ]]
@@ -704,15 +708,16 @@ fi
 QRENCODE_PREFIX_DIR="$DEP_DIR/libqrencode"
 QRENCODE_VERSION=4.0.0
 QRENCODE_HASH="c90035e16921117d4086a7fdee65aab85be32beb4a376f6b664b8a425d327d0b"
+QRENCODE_FILENAME="qrencode-$QRENCODE_VERSION.tar.bz2"
 if [ ! -f "$QRENCODE_PREFIX_DIR/done" ]
 then
   rm -rf "$QRENCODE_PREFIX_DIR"
   mkdir -p "$QRENCODE_PREFIX_DIR"
 
-  wget https://fukuchi.org/works/qrencode/qrencode-$QRENCODE_VERSION.tar.bz2
-  check_sha256 "$QRENCODE_HASH" "qrencode-$QRENCODE_VERSION.tar.bz2"
-  bsdtar --no-same-owner --no-same-permissions -xf qrencode*.tar.bz2
-  rm qrencode*.tar.bz2
+  wget https://fukuchi.org/works/qrencode/$QRENCODE_FILENAME
+  check_sha256 "$QRENCODE_HASH" "$QRENCODE_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$QRENCODE_FILENAME"
+  rm $QRENCODE_FILENAME
   cd qrencode*
 
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
@@ -738,15 +743,16 @@ fi
 EXIF_PREFIX_DIR="$DEP_DIR/libexif"
 EXIF_VERSION=0.6.21
 EXIF_HASH="16cdaeb62eb3e6dfab2435f7d7bccd2f37438d21c5218ec4e58efa9157d4d41a"
+EXIF_FILENAME=libexif-$EXIF_VERSION.tar.bz2
 if [ ! -f "$EXIF_PREFIX_DIR/done" ]
 then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  wget https://sourceforge.net/projects/libexif/files/libexif/0.6.21/libexif-$EXIF_VERSION.tar.bz2
-  check_sha256 "$EXIF_HASH" "libexif-$EXIF_VERSION.tar.bz2"
-  bsdtar --no-same-owner --no-same-permissions -xf libexif*.tar.bz2
-  rm libexif*.tar.bz2
+  wget https://sourceforge.net/projects/libexif/files/libexif/$EXIF_VERSION/$EXIF_FILENAME
+  check_sha256 "$EXIF_HASH" "$EXIF_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf $EXIF_FILENAME
+  rm $EXIF_FILENAME
   cd libexif*
 
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
@@ -771,15 +777,16 @@ fi
 OPUS_PREFIX_DIR="$DEP_DIR/libopus"
 OPUS_VERSION=1.2.1
 OPUS_HASH="cfafd339ccd9c5ef8d6ab15d7e1a412c054bf4cb4ecbbbcc78c12ef2def70732"
+OPUS_FILENAME="opus-$OPUS_VERSION.tar.gz"
 if [ ! -f "$OPUS_PREFIX_DIR/done" ]
 then
   rm -rf "$OPUS_PREFIX_DIR"
   mkdir -p "$OPUS_PREFIX_DIR"
 
-  wget https://archive.mozilla.org/pub/opus/opus-$OPUS_VERSION.tar.gz
-  check_sha256 "$OPUS_HASH" "opus-$OPUS_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf opus*.tar.gz
-  rm opus*.tar.gz
+  wget "https://archive.mozilla.org/pub/opus/$OPUS_FILENAME"
+  check_sha256 "$OPUS_HASH" "$OPUS_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$OPUS_FILENAME"
+  rm $OPUS_FILENAME
   cd opus*
 
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
@@ -804,15 +811,16 @@ fi
 SODIUM_PREFIX_DIR="$DEP_DIR/libsodium"
 SODIUM_VERSION=1.0.16
 SODIUM_HASH="eeadc7e1e1bcef09680fb4837d448fbdf57224978f865ac1c16745868fbd0533"
+SODIUM_FILENAME="libsodium-$SODIUM_VERSION.tar.gz"
 if [ ! -f "$SODIUM_PREFIX_DIR/done" ]
 then
   rm -rf "$SODIUM_PREFIX_DIR"
   mkdir -p "$SODIUM_PREFIX_DIR"
 
-  wget https://download.libsodium.org/libsodium/releases/libsodium-$SODIUM_VERSION.tar.gz
-  check_sha256 "$SODIUM_HASH" "libsodium-$SODIUM_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf libsodium*.tar.gz
-  rm libsodium*.tar.gz
+  wget "https://download.libsodium.org/libsodium/releases/$SODIUM_FILENAME"
+  check_sha256 "$SODIUM_HASH" "$SODIUM_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$SODIUM_FILENAME"
+  rm "$SODIUM_FILENAME"
   cd libsodium*
 
   ./configure --host="$ARCH-w64-mingw32" \
@@ -836,15 +844,16 @@ fi
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
 VPX_VERSION=v1.7.0
 VPX_HASH="1fec931eb5c94279ad219a5b6e0202358e94a93a90cfb1603578c326abfc1238"
+VPX_FILENAME="libvpx-$VPX_VERSION.tar.bz2"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
   rm -rf "$VPX_PREFIX_DIR"
   mkdir -p "$VPX_PREFIX_DIR"
 
-  wget https://github.com/webmproject/libvpx/archive/$VPX_VERSION.tar.gz -O libvpx-$VPX_VERSION.tar.gz
-  check_sha256 "$VPX_HASH" "libvpx-$VPX_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf libvpx-*.tar.gz
-  rm libvpx*.tar.gz
+  wget https://github.com/webmproject/libvpx/archive/$VPX_VERSION.tar.gz -O $VPX_FILENAME
+  check_sha256 "$VPX_HASH" "$VPX_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$VPX_FILENAME"
+  rm $VPX_FILENAME
   cd libvpx*
 
   if [[ "$ARCH" == "x86_64" ]]
@@ -879,15 +888,16 @@ fi
 TOXCORE_PREFIX_DIR="$DEP_DIR/libtoxcore"
 TOXCORE_VERSION=0.2.2
 TOXCORE_HASH=a3b25d8bd92b9526b47ba1f60a2893d2154a80bb7ae690f44b5a2dea41c76ea1
+TOXCORE_FILENAME="c-toxcore-$TOXCORE_VERSION.tar.gz"
 if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]
 then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  wget https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz -O c-toxcore-$TOXCORE_VERSION.tar.gz
-  check_sha256 "$TOXCORE_HASH" "c-toxcore-$TOXCORE_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf c-toxcore*.tar.gz
-  rm c-toxcore*.tar.gz
+  wget https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz -O $TOXCORE_FILENAME
+  check_sha256 "$TOXCORE_HASH" "$TOXCORE_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$TOXCORE_FILENAME"
+  rm "$TOXCORE_FILENAME"
   cd c-toxcore*
 
   mkdir -p build
