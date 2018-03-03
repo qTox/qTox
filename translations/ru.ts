@@ -113,7 +113,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Порог</translation>
     </message>
 </context>
 <context>
@@ -170,17 +170,17 @@ which may lead to problems with video calls.</source>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">баг-трекерe</translation>
+        <translation>баг-трекерe</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Написание полезных отчетов об ошибках</translation>
+        <translation>Написание полезных отчетов об ошибках</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">разработчиков</translation>
+        <translation>разработчиков</translation>
     </message>
 </context>
 <context>
@@ -223,7 +223,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">Автоматический приём файлов от этого контакта отключён</translation>
+        <translation>Автоматический приём файлов от этого контакта отключён</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
@@ -231,7 +231,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">Ручной</translation>
+        <translation>Ручной</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -276,7 +276,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished">Выбрать папку для автоматического приёма</translation>
+        <translation>Выбрать папку для автоматического приёма</translation>
     </message>
 </context>
 <context>
@@ -420,12 +420,10 @@ which may lead to problems with video calls.</source>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Можно импортировать %n контакт, нажмите &quot;Отправить&quot; для подтверждения</numerusform>
+        <numerusform>Можно импортировать %n контактов, нажмите &quot;Отправить&quot; для подтверждения</numerusform>
+        <numerusform>Можно импортировать %n контакта, нажмите &quot;Отправить&quot; для подтверждения</numerusform>
+        </translation></message>
     <message>
         <source>Import contacts</source>
         <translation>Импорт списка контактов</translation>
@@ -676,67 +674,67 @@ which may lead to problems with video calls.</source>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Невозможно начать аудиозвонок</translation>
+        <translation>Невозможно начать аудиозвонок</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Начать голосовой звонок</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Завершить звонок</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Отменить аудиозвонок</translation>
+        <translation>Прервать звонок</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Принять аудиозвонок</translation>
+        <translation>Принять аудиозвонок</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Невозможно начать видеозвонок</translation>
+        <translation>Невозможно начать видеозвонок</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Начать видеозвонок</translation>
+        <translation>Начать видеозвонок</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Завершить видеозвонок</translation>
+        <translation>Завершить видеозвонок</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Отменить видеозвонок</translation>
+        <translation>Отменить видеозвонок</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Принять видеозвонок</translation>
+        <translation>Принять видеозвонок</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Звук может быть выключен только во время звонка</translation>
+        <translation>Звук может быть выключен только во время звонка</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Включить звук</translation>
+        <translation>Включить звук</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Выключить звук</translation>
+        <translation>Выключить звук</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Микрофон может быть выключен только во время звонка</translation>
+        <translation>Микрофон может быть выключен только во время звонка</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished">Включить микрофон</translation>
+        <translation>Включить микрофон</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Выключить микрофон</translation>
+        <translation>Выключить микрофон</translation>
     </message>
 </context>
 <context>
@@ -1286,7 +1284,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 сменил заголовок на %2</translation>
+        <translation>%1 сменил заголовок на %2</translation>
     </message>
 </context>
 <context>
@@ -2178,7 +2176,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished">Путь не задан</translation>
+        <translation>Путь не задан</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
@@ -2723,11 +2721,11 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Если включено, каждый контакт без аватара будет иметь сгенерированный аватар, основываясь на своём Tox ID, вместо картинки по умолчанию. Требуется перезагрузка для применения.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать картинки вместо пустых аватаров</translation>
     </message>
 </context>
 <context>

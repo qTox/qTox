@@ -61,7 +61,7 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Establece la resolución de la cámara.
+        <translation>Establezca la resolución de la cámara.
 Valores más altos mejoran la calidad de vídeo que tus amigos pueden ver.
 Ten en cuenta que una mejor calidad de vídeo requiere una mejor conexión a Internet.
 Si tu conexión no es suficiente para soportar una calidad de vídeo alta,
@@ -113,7 +113,7 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Límite</translation>
     </message>
 </context>
 <context>
@@ -141,7 +141,7 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation>Commit hash: %1</translation>
+        <translation>Confirmación de hash: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
@@ -169,17 +169,17 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Rastrear error</translation>
+        <translation>Localizar error</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Cómo escribir un informe de error correctamente</translation>
+        <translation>Escribir informes de errores necesarios</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">contribuyentes</translation>
+        <translation>colaboradores</translation>
     </message>
 </context>
 <context>
@@ -275,7 +275,7 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione un directorio y aceptar automáticamente</translation>
     </message>
 </context>
 <context>
@@ -673,67 +673,67 @@ se pueden producir problemas con las videollamadas.</translation>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">No se puede comenzar una llamada de audio</translation>
+        <translation>No se puede iniciar la llamada de audio</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Iniciar llamada de audio</translation>
+        <translation>Iniciar llamada de audio</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminar llamada de audio</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Cancelar llamada de audio</translation>
+        <translation>Cancelar llamada de audio</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Aceptar llamada de audio</translation>
+        <translation>Aceptar llamada de audio</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">No se puede comenzar una llamada de vídeo</translation>
+        <translation>No se puede iniciar la videollamada</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Iniciar videollamada</translation>
+        <translation>Iniciar videollamada</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Terminar videollamada</translation>
+        <translation>Terminar videollamada</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Cancelar videollamada</translation>
+        <translation>Cancelar videollamada</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Aceptar videollamada</translation>
+        <translation>Aceptar videollamada</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">El sonido sólo puede ser inhabilitado durante una llamada</translation>
+        <translation>El sonido sólo puede ser desactivado durante una llamada</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Activar sonido de la llamada</translation>
+        <translation>Dejar de silenciar llamada</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Silenciar llamada</translation>
+        <translation>Silenciar llamada</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">El micrófono sólo puede ser silenciado durante una llamada</translation>
+        <translation>El micrófono se puede silenciar sólo durante una llamada</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished">Activar sonido del micrófono</translation>
+        <translation>Dejar de silenciar el micrófono</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Silenciar micrófono</translation>
+        <translation>Silenciar micrófono</translation>
     </message>
 </context>
 <context>
@@ -1272,7 +1272,7 @@ en lugar de la barra de tareas del sistema.</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 ha establecido el título: %2</translation>
+        <translation>%1 ha establecido el título a: %2</translation>
     </message>
 </context>
 <context>
@@ -1933,7 +1933,7 @@ Ya no va a ser posible que te agreguen con tu vieja ID, pero no vas a perder a l
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>NoSpam</translation>
+        <translation>Anti-spam</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
@@ -2705,11 +2705,11 @@ Será instalada cuando reinicies qTox.</translation>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Si está activado, cada contacto sin un avatar tendrá un avatar generado según su ID de Tox en lugar de una imagen predeterminada. Requiere reiniciar para aplicar.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilice identicones en lugar de avatares vacíos</translation>
     </message>
 </context>
 <context>

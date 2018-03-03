@@ -113,7 +113,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>阈值</translation>
     </message>
 </context>
 <context>
@@ -169,17 +169,17 @@ which may lead to problems with video calls.</source>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">漏洞追踪器</translation>
+        <translation>漏洞追踪器</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">编写有用的漏洞报告</translation>
+        <translation>编写有用的漏洞报告</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">贡献者</translation>
+        <translation>贡献者</translation>
     </message>
 </context>
 <context>
@@ -275,7 +275,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>选择自动接受目录</translation>
     </message>
 </context>
 <context>
@@ -286,7 +286,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Downloading update: %p%</source>
-        <translation>下载更新：%p%</translation>
+        <translation>下载更新中：%p%</translation>
     </message>
     <message>
         <source>License</source>
@@ -380,7 +380,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>我们无法从该文件中找到可导入的任何联系人信息！</translation>
+        <translation>我们无法从该文件中找到任何可导入的联系人信息！</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -671,67 +671,67 @@ which may lead to problems with video calls.</source>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">无法开始语音通话</translation>
+        <translation>无法开始语音通话</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>启动音频呼叫</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>结束音频呼叫</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">取消语音通话</translation>
+        <translation>取消语音通话</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">接听语音通话</translation>
+        <translation>接听语音通话</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">无法开始视频通话</translation>
+        <translation>无法开始视频通话</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">开始视频通话</translation>
+        <translation>开始视频通话</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">结束视频通话</translation>
+        <translation>结束视频通话</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">取消视频通话</translation>
+        <translation>取消视频通话</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">接听视频通话</translation>
+        <translation>接听视频通话</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">只有在通话过程中才能执行禁用声音操作</translation>
+        <translation>只有在通话过程中才能执行禁用声音操作</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">取消通话静音</translation>
+        <translation>取消通话静音</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished"></translation>
+        <translation>静音通话</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">只有在通话过程中才能执行麦克风静音操作</translation>
+        <translation>只有在通话过程中才能执行麦克风静音操作</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>取消静音麦克风</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>静音麦克风</translation>
     </message>
 </context>
 <context>
@@ -1270,7 +1270,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 已将标题设置为 %2</translation>
+        <translation>%1 已将标题设置为 %2</translation>
     </message>
 </context>
 <context>
@@ -2148,15 +2148,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">已存在一个名为&quot;%1&quot;的帐户。</translation>
+        <translation>名为&quot;%1&quot;的帐户已存在。</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>空名称</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>空名称无效</translation>
     </message>
     <message>
         <source>Empty path</source>
@@ -2702,11 +2702,11 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>如果启用，每个没有头像集的联系人将基于他们的 Tox ID 生成头像而不使用默认的图片。需要重新启动才能生效。</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>使用 identicons 代替空的头像</translation>
     </message>
 </context>
 <context>

@@ -113,7 +113,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Lävi</translation>
     </message>
 </context>
 <context>
@@ -169,17 +169,17 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">veahaldussüsteem</translation>
+        <translation>veahaldussüsteem</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Writing Useful Bug Reports (inglise keeles)</translation>
+        <translation>Asjalike vearaportite koostamine (inglise keeles)</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">kaasautorid</translation>
+        <translation>abilised</translation>
     </message>
 </context>
 <context>
@@ -275,7 +275,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vali kaust, kuhu automaatselt vastuvõetavad failid paigutatakse</translation>
     </message>
 </context>
 <context>
@@ -673,67 +673,67 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Häälkõnet ei saa alustada</translation>
+        <translation>Häälkõnet ei saa alustada</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Alusta audiokõnet</translation>
+        <translation>Alusta häälkõnet</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished">Lõpeta audiokõne</translation>
+        <translation>Lõpeta häälkõne</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Katkesta audiokõne</translation>
+        <translation>Katkesta häälkõne</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Võta audiokõne vastu</translation>
+        <translation>Võta häälkõne vastu</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Videokõnet ei saa alustada</translation>
+        <translation>Videokõnet ei saa alustada</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Alusta videokõnet</translation>
+        <translation>Alusta videokõnet</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Lõpeta videokõne</translation>
+        <translation>Lõpeta videokõne</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Katkesta videokõne</translation>
+        <translation>Katkesta videokõne</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Võta videokõne vastu</translation>
+        <translation>Võta videokõne vastu</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Heli saab välja lülitada vaid kõne ajal</translation>
+        <translation>Heli saab välja lülitada vaid kõne ajal</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Lülita kõne heli sisse</translation>
+        <translation>Lülita kõne heli sisse</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Vaigista kõne</translation>
+        <translation>Vaigista kõne</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Mikrofoni saab vaigistada vaid kõne ajal</translation>
+        <translation>Mikrofoni saab vaigistada vaid kõne ajal</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished">Lülita mikrofon sisse</translation>
+        <translation>Lülita mikrofon sisse</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Vaigista mikrofon</translation>
+        <translation>Vaigista mikrofon</translation>
     </message>
 </context>
 <context>
@@ -1272,7 +1272,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 seadis pealkirjaks %2</translation>
+        <translation>%1 seadis pealkirjaks %2</translation>
     </message>
 </context>
 <context>
@@ -1426,7 +1426,7 @@ Profiil ei sisalda vestluste ajalugu.</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation>Peida mu nimi avalikust loendist</translation>
+        <translation>Ära kuva minu nime avalikus nimekirjas</translation>
     </message>
     <message>
         <source>Register</source>
@@ -2707,11 +2707,11 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kui see valik on aktiivne, siis luuakse kõigile ilma avatarita kasutajatele avatar vastavalt nende Tox ID-le. Aktiveerimine eeldab programmi taaskäivitamist.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasuta tühjade avataride asemel identiteedipilte</translation>
     </message>
 </context>
 <context>

@@ -194,7 +194,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Publika ŝlosilo:</translation>
+        <translation>Publika ŝlosilo:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -250,7 +250,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">Notoj</translation>
+        <translation>Notoj</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
@@ -381,7 +381,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished">Tox-identigilo</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -391,7 +391,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished">Mesaĝo</translation>
+        <translation>Mesaĝo</translation>
     </message>
     <message>
         <source>Open</source>
@@ -2748,16 +2748,14 @@ It will be installed when qTox restarts.</source>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation>
-            <numerusform>%n nova amikiĝpeto</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n nova amikiĝpeto</numerusform>
+        <numerusform>%n novaj amikiĝpetoj</numerusform>
+        </translation></message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation>
-            <numerusform>%n nova grupo-invito</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n nova grupo-invito</numerusform>
+        <numerusform>%n novaj grupo-invitoj</numerusform>
+        </translation></message>
     <message>
         <source>By Name</source>
         <translation>Per nomo</translation>

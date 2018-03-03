@@ -169,17 +169,17 @@ which may lead to problems with video calls.</source>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">буболовцу</translation>
+        <translation>буболовцу</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">„Писање корисних пријава грешака“</translation>
+        <translation>„Писање корисних пријава грешака“</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">доприносиоца</translation>
+        <translation>доприносиоца</translation>
     </message>
 </context>
 <context>
@@ -275,7 +275,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Изаберите фасциклу за аутоматски пријем</translation>
     </message>
 </context>
 <context>
@@ -674,47 +674,47 @@ which may lead to problems with video calls.</source>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Не могу да започнем аудио позив</translation>
+        <translation>Не могу да започнем аудио позив</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Започни аудио позив</translation>
+        <translation>Започни аудио позив</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Заврши аудио позив</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Откажи аудио позив</translation>
+        <translation>Откажи аудио позив</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Прихвати аудио позив</translation>
+        <translation>Прихвати аудио позив</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Не могу да започнем видо позив</translation>
+        <translation>Не могу да започнем видео позив</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Започни видео позив</translation>
+        <translation>Започни видео позив</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Заврши видео позив</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Озкажи видео позив</translation>
+        <translation>Откажи видео позив</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Прихвати видео позив</translation>
+        <translation>Прихвати видео позив</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Звук се може искључити само током позива</translation>
+        <translation>Звук се може искључити само током позива</translation>
     </message>
     <message>
         <source>Unmute call</source>
@@ -722,11 +722,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Утишај позив</translation>
+        <translation>Утишај позив</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Микрофон се може утишати само током позива</translation>
+        <translation>Микрофон се може утишати само током позива</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
@@ -734,7 +734,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Утишај микрофон</translation>
+        <translation>Утишај микрофон</translation>
     </message>
 </context>
 <context>
@@ -1280,7 +1280,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 постави наслов на %2</translation>
+        <translation>%1 постави наслов на %2</translation>
     </message>
 </context>
 <context>

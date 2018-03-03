@@ -198,7 +198,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Julkinen avain:</translation>
+        <translation>Julkinen avain:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -254,7 +254,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">Muistiinpanot</translation>
+        <translation>Muistiinpanot</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
@@ -385,7 +385,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished">Tox ID</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -395,7 +395,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished">Viesti</translation>
+        <translation>Viesti</translation>
     </message>
     <message>
         <source>Open</source>
@@ -2132,7 +2132,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Profiili on jo olemassa</translation>
+        <translation>Profiili on jo olemassa</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
@@ -2156,12 +2156,12 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Vie profiili</translation>
+        <translation>Vie profiili</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Tox-tiedosto (*.tox)</translation>
+        <translation>Tox-tiedosto (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>

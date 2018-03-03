@@ -112,7 +112,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Limite</translation>
     </message>
 </context>
 <context>
@@ -168,17 +168,17 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">bug-tracker</translation>
+        <translation>bug tracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Escrevendo Relatórios de Erros Úteis</translation>
+        <translation>Escrevendo Relatórios de Erros Úteis</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">contribuidores</translation>
+        <translation>contribuidores</translation>
     </message>
 </context>
 <context>
@@ -274,7 +274,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished">Escolher um diretório para aceitar arquivos automaticamente</translation>
+        <translation>Escolher um diretório para aceitar arquivos automaticamente</translation>
     </message>
 </context>
 <context>
@@ -671,67 +671,67 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Não é possível iniciar a chamada de áudio</translation>
+        <translation>Não foi possível iniciar a chamada de áudio</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Iniciar chamada de áudio</translation>
+        <translation>Iniciar chamada de áudio</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminar chamada de áudio</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Cancelar chamada de áudio</translation>
+        <translation>Cancelar chamada de áudio</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Aceitar chamada de áudio</translation>
+        <translation>Aceitar chamada de áudio</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Não é possível iniciar a vídeo chamada</translation>
+        <translation>Não foi possível iniciar a chamada de vídeo</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Iniciar chamada de vídeo</translation>
+        <translation>Iniciar chamada de vídeo</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminar chamada de vídeo</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Cancelar chamada de vídeo</translation>
+        <translation>Cancelar chamada de vídeo</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Aceitar chamada de vídeo</translation>
+        <translation>Aceitar chamada de vídeo</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">O som só pode ser desabilitado durante uma chamada</translation>
+        <translation>O som só pode ser desabilitado durante uma chamada</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Desmutar chamada</translation>
+        <translation>Ativar áudio da chamada</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Silenciar chamada</translation>
+        <translation>Silenciar chamada</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">O microfone só pode ser cortado durante uma chamada</translation>
+        <translation>O microfone só pode ser desativado durante uma chamada</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Acionar microfone</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Silenciar microfone</translation>
+        <translation>Silenciar microfone</translation>
     </message>
 </context>
 <context>
@@ -1270,7 +1270,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 alterou o título para %2</translation>
+        <translation>%1 definiu o título como %2</translation>
     </message>
 </context>
 <context>
@@ -2700,11 +2700,11 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Se ativado, cada contato sem um avatar terá um gerado com base em seu Tox ID ao invés de uma imagem padrão. Requer reiniciar para aplicar modificações.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Use identicons em vez de avatares em branco</translation>
     </message>
 </context>
 <context>

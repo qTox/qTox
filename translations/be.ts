@@ -113,7 +113,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Парог</translation>
     </message>
 </context>
 <context>
@@ -169,17 +169,17 @@ which may lead to problems with video calls.</source>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">трэкер хібаў</translation>
+        <translation>трэкер хібаў</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Напісанне карысных справаздач аб хібах</translation>
+        <translation>Напісанне карысных справаздач аб хібах</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">удзельнікі</translation>
+        <translation>удзельнікаў</translation>
     </message>
 </context>
 <context>
@@ -275,7 +275,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Абраць каталог для аўтаматычнага прыёму</translation>
     </message>
 </context>
 <context>
@@ -674,67 +674,67 @@ which may lead to problems with video calls.</source>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Не магчыма пачаць аўдыявыклік</translation>
+        <translation>Немагчыма пачаць аўдыявыклік</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Пачаць аўдыявыклік</translation>
+        <translation>Пачаць аўдыявыклік</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished">Скончыць аўдыявыклік</translation>
+        <translation>Скончыць аўдыявыклік</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Адмяніць аўдыявыклік</translation>
+        <translation>Адмяніць аўдыявыклік</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Прыняць аўдыявыклік</translation>
+        <translation>Прыняць аўдыявыклік</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Не магчыма пачаць відэавыклік</translation>
+        <translation>Немагчыма пачаць відэавыклік</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Пачаць відэавыклік</translation>
+        <translation>Пачаць відэавыклік</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Скончыць відэавыклік</translation>
+        <translation>Скончыць відэавыклік</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Адмяніць відэавыклік</translation>
+        <translation>Адмяніць відэавыклік</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Прыняць відэавыклік</translation>
+        <translation>Прыняць відэавыклік</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Гук можа быць адключаны толькі ў час размовы</translation>
+        <translation>Гук можа быць адключаны толькі падчас размовы</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Уключыць выклік</translation>
+        <translation>Уключыць гук</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Адключыць выклік</translation>
+        <translation>Адключыць гук</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Мікрафон можа быць адключаны толькі ў час размовы</translation>
+        <translation>Мікрафон можа быць адключаны толькі падчас размовы</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished">Уключыць мікрафон</translation>
+        <translation>Уключыць мікрафон</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Адключыць мікрафон</translation>
+        <translation>Адключыць мікрафон</translation>
     </message>
 </context>
 <context>
@@ -1277,7 +1277,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 змяніў назву на «%2»</translation>
+        <translation>%1 змяніў загаловак на «%2»</translation>
     </message>
 </context>
 <context>
@@ -2712,11 +2712,11 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Калі ўключанае, кожны кантакт без аватара будзе мець згенераваны аватар на аснове яго Tox ID замест агаданай выявы. Патрабуецца перазапуск.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Паказваць ідэнтыфікацыйныя выявы замест пустых аватараў</translation>
     </message>
 </context>
 <context>

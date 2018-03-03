@@ -112,7 +112,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Terskel</translation>
     </message>
 </context>
 <context>
@@ -168,7 +168,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">feilrettingsoversikt</translation>
+        <translation type="unfinished">feilrettingssporer</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
@@ -677,11 +677,11 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Start lydsamtale</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg på</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
@@ -2703,11 +2703,11 @@ Den vil bli installert når qTox restarter.</translation>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hvis påskrudd, vil hver kontakt uten en avatar få en basert på deres Tox ID istedenfor forvalgt bilde. Krever omstart for å tre i effekt.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk identikoner istedenfor tomme avatarer</translation>
     </message>
 </context>
 <context>

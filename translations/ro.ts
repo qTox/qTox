@@ -113,7 +113,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Prag</translation>
     </message>
 </context>
 <context>
@@ -169,17 +169,17 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">urmărire probleme</translation>
+        <translation>urmărire probleme</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Scrie rapoarte utile ale erorii</translation>
+        <translation>Se scriu rapoarte utile de erori</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">contribuitori</translation>
+        <translation>contribuitori</translation>
     </message>
 </context>
 <context>
@@ -275,7 +275,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished">Alegeți un director de acceptare automată</translation>
+        <translation>Alegeți un director de acceptare automată</translation>
     </message>
 </context>
 <context>
@@ -380,7 +380,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>Nu am putut găsi contacte de importat în acest fișier!</translation>
+        <translation>Nu s-a putut găsi contacte de importat în acest fișier!</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -409,7 +409,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation>%1 aici! Tox-ează-mă poate?</translation>
+        <translation>%1 aici! Tox cu mine poate?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
@@ -674,67 +674,67 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Nu se poate iniția apelul audio</translation>
+        <translation>Nu se poate iniția apel audio</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Începeți apel audio</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished">Terminați apelul audio</translation>
+        <translation>Terminați apelul audio</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Anulați apelul audio</translation>
+        <translation>Anulați apelul audio</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Acceptați apelul audio</translation>
+        <translation>Acceptați apelul audio</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Nu se poate iniția apelul video</translation>
+        <translation>Nu se poate iniția apelul video</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Începeți apel video</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Terminați apelul video</translation>
+        <translation>Terminați apelul video</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Anulați apelul video</translation>
+        <translation>Anulați apelul video</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Acceptați apelul video</translation>
+        <translation>Acceptați apelul video</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Sunetul poate fi dezactivat numai în timpul unui apel</translation>
+        <translation>Sunetul poate fi dezactivat numai în timpul unui apel</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Apel cu sunet</translation>
+        <translation>Apel cu sunet</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished"></translation>
+        <translation>Apel fără sunet</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Microfonul poate fi dezactivat numai în timpul unui apel</translation>
+        <translation>Microfonul poate fi dezactivat numai în timpul unui apel</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Microfon cu sunet</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Microfon fără sunet</translation>
     </message>
 </context>
 <context>
@@ -1279,7 +1279,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 a fost setat titlul la %2</translation>
+        <translation>%1 a fost setat titlul la %2</translation>
     </message>
 </context>
 <context>
@@ -2714,11 +2714,11 @@ Va fi instalat când qTox repornește.</translation>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dacă este activată orice persoană de contact fără un avatar setat se va genera un avatar pe baza Tox ID-ului în locul unei imagini implicite. Necesită repornire pentru a aplica.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizați icon de identificare în loc de avatare goale</translation>
     </message>
 </context>
 <context>

@@ -113,7 +113,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Slenkstis</translation>
     </message>
 </context>
 <context>
@@ -169,17 +169,17 @@ vaizdo skambučiais.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">klaidų seklyje</translation>
+        <translation>klaidų seklyje</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Kaip parašyti naudingą pranešimą apie klaidą</translation>
+        <translation>Kaip parašyti naudingą pranešimą apie klaidą</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">talkininkų sąrašą</translation>
+        <translation>talkininkų sąrašą</translation>
     </message>
 </context>
 <context>
@@ -275,7 +275,7 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkite katalogą automatiniam priėmimui</translation>
     </message>
 </context>
 <context>
@@ -673,67 +673,67 @@ vaizdo skambučiais.</translation>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Nepavyksta pradėti garso skambutį</translation>
+        <translation>Nepavyksta pradėti garso skambutį</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Skambinti</translation>
+        <translation>Pradėti garso skambutį</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Užbaigti garso skambutį</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Nutraukti skambutį</translation>
+        <translation>Atsisakyti garso skambučio</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Atsiliepti</translation>
+        <translation>Atsiliepti į garso skambutį</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Nepavyksta pradėti vaizdo skambutį</translation>
+        <translation>Nepavyksta pradėti vaizdo skambutį</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Pradėti vaizdo pokalbį</translation>
+        <translation>Pradėti vaizdo skambutį</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Užbaigti vaizdo skambutį</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Nutraukti vaizdo skambutį</translation>
+        <translation>Atsisakyti vaizdo skambučio</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Priimti vaizdo skambutį</translation>
+        <translation>Atsiliepti į vaizdo skambutį</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Garsas gali būti išjungtas tik skambučio metu</translation>
+        <translation>Garsas gali būti išjungtas tik skambučio metu</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Įjungti garsą</translation>
+        <translation>Įjungti garsą</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Išjungti garsą</translation>
+        <translation>Išjungti garsą</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Mikrofonas gali būti nutildytas tik skambučio metu</translation>
+        <translation>Mikrofonas gali būti nutildytas tik skambučio metu</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished">Įjungti mikrofoną</translation>
+        <translation>Įjungti mikrofoną</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Nutildyti mikrofoną</translation>
+        <translation>Nutildyti mikrofoną</translation>
     </message>
 </context>
 <context>
@@ -1272,7 +1272,7 @@ sistemos juostelėje, o ne programų juostoje.</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 nustatė pavadinimą „%2“</translation>
+        <translation>%1 nustatė pavadinimą „%2“</translation>
     </message>
 </context>
 <context>
@@ -2709,11 +2709,11 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Įjungus, kiekvienam kontaktui be avataro rinkinio, vietoj kontakto numatytojo paveikslo, bus sugeneruotas avataras pagal jo Tox ID.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Vietoj tuščių avatarų, naudoti tapatybės piktogramas</translation>
     </message>
 </context>
 <context>
