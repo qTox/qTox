@@ -79,7 +79,7 @@ if (USE_CCACHE)
     message(STATUS "ccache not found")
   endif()
 else()
-  message(STATUS "ccache disabled; set option USE_CCACHE to use ccache if available")
+  message(STATUS "ccache disabled; set option USE_CCACHE=ON to use ccache if available")
 endif()
 
 # Search for headers in current directory.
