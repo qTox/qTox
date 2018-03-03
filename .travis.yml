@@ -29,6 +29,9 @@ matrix:
     - stage: Linux
       os: linux
       env: JOB=build-ubuntu-14-04
+    - stage: "Deb package build"
+      os: linux
+      script: cmake --build . --target package
     - stage: "Windows Stage 1: Dependencies (OpenSSL, Qt)"
       os: linux
       # Makes the cache this job creates avaiable only to jobs with WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=i686,
@@ -128,6 +131,14 @@ deploy:
     on:
       tags: true
     skip_cleanup: true
+  - protider: releases
+    skip_cleanup: true
+    script: .travis/upload_package.sh nightly
+  - protider: releases
+    skip_cleanup: true
+    script: .travis/upload_package.sh
+    on:
+      tags: true
 
 
 after_success:
