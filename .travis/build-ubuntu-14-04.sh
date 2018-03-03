@@ -157,13 +157,18 @@ export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
 build_qtox() {
     bdir() {
         cd $BUILDDIR
-        make -j$(nproc)
+        cmake --build .
         # check if `qtox` file has been made, is non-empty and is an executable
         [[ -s qtox ]] && [[ -x qtox ]]
+        # build package
+        cmake --build . --target package
         cd -
     }
 
     local BUILDDIR=_build
+
+    git fetch origin
+    git fetch origin --tags
 
     # first build qTox without support for optional dependencies
     echo '*** BUILDING "MINIMAL" VERSION ***'
@@ -178,7 +183,10 @@ build_qtox() {
     rm -rf "$BUILDDIR"
 
     echo '*** BUILDING "FULL" VERSION ***'
-    cmake -H. -B"$BUILDDIR"
+    cmake -H. -B"$BUILDDIR" \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_BUILD_TYPE="Release"
+
     bdir
 }
 
