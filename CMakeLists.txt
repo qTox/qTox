@@ -11,6 +11,7 @@ option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra 
 option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 # AUTOUPDATE is currently broken and thus disabled
 option(AUTOUPDATE "Enable the auto updater" OFF)
+option(USE_CCACHE "Use ccache when available" ON)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -69,10 +70,16 @@ endif()
 
 
 # Use ccache when available to speed up builds.
-find_program(CCACHE_FOUND ccache)
-if(CCACHE_FOUND)
-  set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
-  message(STATUS "using ccache")
+if (USE_CCACHE)
+  find_program(CCACHE_FOUND ccache)
+  if(CCACHE_FOUND)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+    message(STATUS "using ccache")
+  else()
+    message(STATUS "ccache not found")
+  endif()
+else()
+  message(STATUS "ccache disabled; set option USE_CCACHE=ON to use ccache if available")
 endif()
 
 # Search for headers in current directory.
