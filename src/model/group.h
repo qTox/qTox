@@ -52,7 +52,7 @@ public:
 
     void updatePeer(int peerId, QString newName);
     void setName(const QString& newTitle) override;
-    void onTitleChanged(const QString& author, const QString& newTitle);
+    void setTitle(const QString& author, const QString& newTitle);
     QString getName() const;
     QString getDisplayedName() const override;
 

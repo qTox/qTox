@@ -35,6 +35,9 @@ public:
 
     virtual void setEventFlag(bool flag) = 0;
     virtual bool getEventFlag() const = 0;
+
+signals:
+    void displayedNameChanged(const QString& newName);
 };
 
 #endif // CONTACT_H

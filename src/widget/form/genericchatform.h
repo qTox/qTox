@@ -22,6 +22,7 @@
 
 #include "src/chatlog/chatmessage.h"
 #include "src/core/toxpk.h"
+#include "src/model/contact.h"
 
 #include <QMenu>
 #include <QWidget>
@@ -57,7 +58,7 @@ class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GenericChatForm(QWidget* parent = nullptr);
+    explicit GenericChatForm(const Contact* contact, QWidget* parent = nullptr);
     ~GenericChatForm() override;
 
     void setName(const QString& newName);

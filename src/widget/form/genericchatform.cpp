@@ -129,7 +129,7 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
 
 }
 
-GenericChatForm::GenericChatForm(QWidget* parent)
+GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     : QWidget(parent, Qt::Window)
     , audioInputFlag(false)
     , audioOutputFlag(false)
@@ -239,8 +239,12 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     fileButton->installEventFilter(this);
     fileFlyout->installEventFilter(this);
 
+    // Translation
     retranslateUi();
     Translator::registerHandler(std::bind(&GenericChatForm::retranslateUi, this), this);
+
+    // update header on name/title change
+    connect(contact, &Contact::displayedNameChanged, this, &GenericChatForm::setName);
 
     netcam = nullptr;
 }
