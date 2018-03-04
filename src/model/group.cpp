@@ -46,13 +46,11 @@ void Group::updatePeer(int peerId, QString name)
 {
     ToxPk peerKey = Core::getInstance()->getGroupPeerPk(groupId, peerId);
     QByteArray peerPk = peerKey.getKey();
-    peers[peerId] = name;
     toxids[peerPk] = name;
 
     Friend* f = FriendList::findFriend(peerKey);
     if (f != nullptr) {
         // use the displayed name from the friends list
-        peers[peerId] = f->getDisplayedName();
         toxids[peerPk] = f->getDisplayedName();
     } else {
         emit userListChanged(groupId, toxids);
@@ -93,24 +91,26 @@ QString Group::getDisplayedName() const
 void Group::regeneratePeerList()
 {
     const Core* core = Core::getInstance();
-    peers = core->getGroupPeerNames(groupId);
+    const ToxPk self = core->getSelfId().getPublicKey();
+
+    QStringList peers = core->getGroupPeerNames(groupId);
     toxids.clear();
     nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i) {
         ToxPk id = core->getGroupPeerPk(groupId, i);
-        ToxPk self = core->getSelfId().getPublicKey();
-        if (id == self)
+        if (id == self) {
             selfPeerNum = i;
+        }
 
         QByteArray peerPk = id.getKey();
         toxids[peerPk] = peers[i];
-        if (toxids[peerPk].isEmpty())
+        if (toxids[peerPk].isEmpty()) {
             toxids[peerPk] =
                 tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+        }
 
         Friend* f = FriendList::findFriend(id);
         if (f != nullptr && f->hasAlias()) {
-            peers[i] = f->getDisplayedName();
             toxids[peerPk] = f->getDisplayedName();
         }
     }
@@ -135,7 +135,7 @@ int Group::getPeersCount() const
 
 QStringList Group::getPeerList() const
 {
-    return peers;
+    return toxids.values();
 }
 
 bool Group::isSelfPeerNumber(int num) const
@@ -168,8 +168,9 @@ QString Group::resolveToxId(const ToxPk& id) const
     QByteArray key = id.getKey();
     auto it = toxids.find(key);
 
-    if (it != toxids.end())
+    if (it != toxids.end()) {
         return *it;
+    }
 
     return QString();
 }

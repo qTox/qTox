@@ -67,8 +67,6 @@ signals:
 private:
     QString selfName;
     QString title;
-    GroupChatForm* chatForm;
-    QStringList peers;
     QMap<QByteArray, QString> toxids;
     bool hasNewMessages;
     bool userWasMentioned;
