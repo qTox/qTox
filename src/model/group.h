@@ -27,8 +27,6 @@
 
 #define RETRY_PEER_INFO_INTERVAL 500
 
-class Friend;
-class GroupChatForm;
 class ToxPk;
 
 class Group : public Contact
@@ -52,7 +50,7 @@ public:
 
     void updatePeer(int peerId, QString newName);
     void setName(const QString& newTitle) override;
-    void onTitleChanged(const QString& author, const QString& newTitle);
+    void setTitle(const QString& author, const QString& newTitle);
     QString getName() const;
     QString getDisplayedName() const override;
 

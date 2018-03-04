@@ -118,7 +118,8 @@ QString secondsToDHMS(quint32 duration)
 
 
 ChatForm::ChatForm(Friend* chatFriend, History* history)
-    : f(chatFriend)
+    : GenericChatForm(chatFriend)
+    , f(chatFriend)
     , history{history}
     , isTyping{false}
     , lastCallIsVideo{false}
@@ -194,8 +195,6 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     });
 
     // reflect name changes in the header
-    // TODO(sudden6): check if this creates a cycle when the alias is changed
-    connect(f, &Friend::displayedNameChanged, this, &ChatForm::setName);
     connect(headWidget, &ChatFormHeader::nameChanged, this, [=](const QString& newName) {
         f->setAlias(newName);
     });

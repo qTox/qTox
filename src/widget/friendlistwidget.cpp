@@ -385,7 +385,6 @@ void FriendListWidget::searchChatrooms(const QString& searchString, bool hideOnl
 void FriendListWidget::renameGroupWidget(GroupWidget* groupWidget, const QString& newName)
 {
     groupLayout.removeSortedWidget(groupWidget);
-    groupWidget->setName(newName);
     groupLayout.addSortedWidget(groupWidget);
 }
 

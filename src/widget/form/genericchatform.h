@@ -35,6 +35,7 @@
 class ChatFormHeader;
 class ChatLog;
 class ChatTextEdit;
+class Contact;
 class ContentLayout;
 class CroppingLabel;
 class FlyoutOverlayWidget;
@@ -57,7 +58,7 @@ class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GenericChatForm(QWidget* parent = nullptr);
+    explicit GenericChatForm(const Contact* contact, QWidget* parent = nullptr);
     ~GenericChatForm() override;
 
     void setName(const QString& newName);

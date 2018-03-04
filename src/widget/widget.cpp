@@ -1823,7 +1823,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
         GUI::setWindowTitle(title);
     }
 
-    g->onTitleChanged(author, title);
+    g->setTitle(author, title);
     FilterCriteria filter = getFilterCriteria();
     widget->searchName(ui->searchContactText->text(), filterGroups(filter));
 }
