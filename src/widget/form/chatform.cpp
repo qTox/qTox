@@ -626,6 +626,10 @@ GenericNetCamView* ChatForm::createNetcam()
     CoreAV* av = Core::getInstance()->getAv();
     VideoSource* source = av->getVideoSourceFromCall(friendId);
     view->show(source, f->getDisplayedName());
+    connect(view, &GenericNetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
+    connect(view, &GenericNetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
+    connect(view, &GenericNetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
+    connect(view, &GenericNetCamView::videoPreviewToggle, view, &NetCamView::toggleVideoPreview);
     return view;
 }
 
@@ -907,6 +911,9 @@ void ChatForm::updateMuteMicButton()
     bool active = av->isCallActive(f);
     bool inputMuted = av->isCallInputMuted(f);
     headWidget->updateMuteMicButton(active, inputMuted);
+    if (netcam) {
+        netcam->updateMuteMicButton(inputMuted);
+    }
 }
 
 void ChatForm::updateMuteVolButton()
@@ -915,6 +922,9 @@ void ChatForm::updateMuteVolButton()
     bool active = av->isCallActive(f);
     bool outputMuted = av->isCallOutputMuted(f);
     headWidget->updateMuteVolButton(active, outputMuted);
+    if (netcam) {
+        netcam->updateMuteVolButton(outputMuted);
+    }
 }
 
 void ChatForm::startCounter()
