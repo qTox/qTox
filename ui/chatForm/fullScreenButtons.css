@@ -1,0 +1,74 @@
+QFrame
+{
+    background-color: rgba(50, 50, 50, 0.6);
+    border-radius: 20px;
+}
+
+QAbstractButton
+{
+    background-color: transparent;
+    background-repeat: none;
+    background-position: center;
+    border: none;
+    border-radius: 5px;
+}
+
+QAbstractButton:hover
+{
+    background-color: rgba(255,255,255, 0.2);
+}
+
+QAbstractButton:pressed
+{
+    background-color: rgba(0,0,0, 0.2);
+}
+
+QAbstractButton#volButtonFullScreen
+{
+    border-image: url(":/ui/chatForm/volButton.svg");
+    width: 27px;
+    height: 22px;
+}
+
+QAbstractButton#micButtonFullScreen
+{
+    border-image: url(":/ui/chatForm/micButton.svg");
+    width: 27px;
+    height: 22px;
+}
+
+QAbstractButton#videoButtonFullScreen
+{
+    background-image: url(":/ui/chatForm/videoButtonRed.svg");
+    width: 37px;
+    height: 33px;
+}
+
+QAbstractButton#videoPreviewButton
+{
+    background-image: url(":/ui/chatForm/videoPreview.svg");
+    width: 25px;
+    height: 23px;
+}
+
+QAbstractButton#exitFullScreenButton
+{
+    background-image: url(":/ui/chatForm/exitFullScreenButton.svg");
+    width: 30px;
+    height: 30px;
+}
+
+QAbstractButton#volButtonFullScreen[state="red"]
+{
+    border-image: url(":/ui/chatForm/volButtonRed.svg");
+}
+
+QAbstractButton#micButtonFullScreen[state="red"]
+{
+    border-image: url(":/ui/chatForm/micButtonRed.svg");
+}
+
+QAbstractButton#videoPreviewButton[state="red"]
+{
+    border-image: url(":/ui/chatForm/videoPreviewRed.svg");
+}

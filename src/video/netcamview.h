@@ -42,6 +42,7 @@ public:
 
     void setSource(VideoSource* s);
     void setTitle(const QString& title);
+    void toggleVideoPreview();
 
 protected:
     void showEvent(QShowEvent* event) final override;
