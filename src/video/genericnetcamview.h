@@ -20,11 +20,13 @@
 #ifndef GENERICNETCAMVIEW_H
 #define GENERICNETCAMVIEW_H
 
+#include <QFrame>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QWidget>
 
 #include "src/video/videosurface.h"
+#include "src/widget/style.h"
 
 class GenericNetCamView : public QWidget
 {
@@ -35,16 +37,41 @@ public:
 
 signals:
     void showMessageClicked();
+    void videoCallEnd();
+    void volMuteToggle();
+    void micMuteToggle();
+    void videoPreviewToggle();
 
 public slots:
     void setShowMessages(bool show, bool notify = false);
+    void updateMuteVolButton(bool isMuted);
+    void updateMuteMicButton(bool isMuted);
 
 protected:
     QVBoxLayout* verLayout;
     VideoSurface* videoSurface;
 
 private:
-    QPushButton* button;
+    QHBoxLayout* buttonLayout;
+    QPushButton* toggleMessagesButton;
+    QPushButton* enterFullScreenButton;
+    QFrame* buttonPanel;
+    const int buttonPanelHeight = 55;
+    const int buttonPanelWidth = 250;
+    const QString buttonsStyleSheetPath = ":/ui/chatForm/fullScreenButtons.css";
+    QPushButton* videoPreviewButton;
+    QPushButton* volumeButton;
+    QPushButton* microphoneButton;
+    QPushButton* endVideoButton;
+    QPushButton* exitFullScreenButton;
+    QPushButton* createButton(const QString& name, const QString& state);
+    void toggleFullScreen();
+    void endVideoCall();
+    void toggleAudioOutput();
+    void toggleMicrophone();
+    void toggleVideoPreview();
+    void toggleButtonState(QPushButton* btn);
+    void updateButtonState(QPushButton* btn, bool active);
 };
 
 #endif // GENERICNETCAMVIEW_H
