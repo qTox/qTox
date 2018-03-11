@@ -29,6 +29,7 @@
 
 #include "src/audio/audio.h"
 #include "src/audio/iaudiosettings.h"
+#include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/core/recursivesignalblocker.h"
 #include "src/video/cameradevice.h"
@@ -447,7 +448,8 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
 
     camera.setupDevice(dev, mode);
     if (dev == "none") {
-        coreAV->sendNoVideo();
+        // TODO: Use injected `coreAv` currently injected `nullptr`
+        Core::getInstance()->getAv()->sendNoVideo();
     }
 }
 
