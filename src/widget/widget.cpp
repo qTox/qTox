@@ -1489,7 +1489,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     }
 
     const uint32_t friendId = f->getId();
-    FriendWidget* widget = friendWidgets[friendId];
+    auto widget = friendWidgets[friendId];
     widget->setAsInactiveChatroom();
     if (widget == activeChatroomWidget) {
         activeChatroomWidget = nullptr;
@@ -1509,6 +1509,11 @@ void Widget::removeFriend(Friend* f, bool fake)
 
     friendWidgets.remove(friendId);
     delete widget;
+
+    auto chatForm = chatForms[friendId];
+    chatForms.remove(friendId);
+    delete chatForm;
+
     delete f;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
         onAddClicked();
@@ -1834,24 +1839,29 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
 
 void Widget::removeGroup(Group* g, bool fake)
 {
-    GroupWidget* widget = groupWidgets[g->getId()];
+    auto groupId = g->getId();
+    auto widget = groupWidgets[groupId];
     widget->setAsInactiveChatroom();
     if (static_cast<GenericChatroomWidget*>(widget) == activeChatroomWidget) {
         activeChatroomWidget = nullptr;
         onAddClicked();
     }
 
-    int groupId = g->getId();
     GroupList::removeGroup(groupId, fake);
     ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
     if (contentDialog != nullptr) {
         contentDialog->removeGroup(groupId);
     }
 
-    groupWidgets.remove(groupId);
-
     Nexus::getCore()->removeGroup(groupId, fake);
     contactListWidget->removeGroupWidget(widget);
+
+    groupWidgets.remove(groupId);
+    delete widget;
+
+    auto chatForm = groupChatForms[groupId];
+    groupChatForms.remove(groupId);
+    delete chatForm;
 
     delete g;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
