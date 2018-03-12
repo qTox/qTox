@@ -100,12 +100,20 @@ ls -lbh "$CACHE_DIR"
 # Purely for debugging
 ls -lbh "$PWD"
 
+# Use custom c-toxcore if configured to do so
+TOXCORE_CUSTOM_VERSION=${TOXCORE_CUSTOM_VERSION:-}
+TOXCORE_REPO=${TOXCORE_REPO:-}
+TOXCORE_VERSION=${TOXCORE_VERSION:-}
+
 # Build
 sudo docker run --rm \
                 -v "$PWD/workspace":/workspace \
                 -v "$PWD/windows/cross-compile":/script \
                 -v "$PWD":/qtox \
                 -e TRAVIS_CI_STAGE="$STAGE" \
+                -e TOXCORE_CUSTOM_VERSION="$TOXCORE_CUSTOM_VERSION" \
+                -e TOXCORE_REPO="$TOXCORE_REPO" \
+                -e TOXCORE_VERSION="$TOXCORE_VERSION" \
                 debian:stretch-slim \
                 /bin/bash /script/build.sh "$ARCH" "$BUILD_TYPE"
 
