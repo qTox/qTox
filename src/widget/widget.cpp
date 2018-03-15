@@ -1840,7 +1840,12 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
 void Widget::removeGroup(Group* g, bool fake)
 {
     auto groupId = g->getId();
-    auto widget = groupWidgets[groupId];
+    auto groupWidgetIt = groupWidgets.find(groupId);
+    if (groupWidgetIt == groupWidgets.end()) {
+        qWarning() << "Tried to remove group" << groupId << "but GroupWidget doesn't exist";
+        return;
+    }
+    auto widget = groupWidgetIt.value();
     widget->setAsInactiveChatroom();
     if (static_cast<GenericChatroomWidget*>(widget) == activeChatroomWidget) {
         activeChatroomWidget = nullptr;
@@ -1854,15 +1859,16 @@ void Widget::removeGroup(Group* g, bool fake)
     }
 
     Nexus::getCore()->removeGroup(groupId, fake);
-    contactListWidget->removeGroupWidget(widget);
+    contactListWidget->removeGroupWidget(widget); // deletes widget
 
     groupWidgets.remove(groupId);
-    delete widget;
-
-    auto chatForm = groupChatForms[groupId];
-    groupChatForms.remove(groupId);
-    delete chatForm;
-
+    auto groupChatFormIt = groupChatForms.find(groupId);
+    if (groupChatFormIt == groupChatForms.end()) {
+        qWarning() << "Tried to remove group" << groupId << "but GroupChatForm doesn't exist";
+        return;
+    }
+    groupChatForms.erase(groupChatFormIt);
+    delete groupChatFormIt.value();
     delete g;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
         onAddClicked();
