@@ -139,10 +139,6 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     const auto& s = Settings::getInstance();
     const auto circleId = s.getFriendCircleID(frnd->getPublicKey());
-    auto circleWidget = CircleWidget::getFromID(circleId);
-    auto w = circleWidget ? circleWidget : static_cast<QWidget*>(this);
-    auto friendList = qobject_cast<FriendListWidget*>(w->parentWidget());
-
     auto circleMenu = menu.addMenu(tr("Move to circle...",
                                         "Menu to move a friend into a different circle"));
 

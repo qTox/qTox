@@ -713,6 +713,10 @@ bool parseConferenceSendMessageError(TOX_ERR_CONFERENCE_SEND_MESSAGE error)
     case TOX_ERR_CONFERENCE_SEND_MESSAGE_TOO_LONG:
         qCritical() << "Message too long";
         return false;
+
+    default:
+        qCritical() << "Unknown TOX_ERR_CONFERENCE_SEND_MESSAGE error";
+        return false;
     }
 }
 
