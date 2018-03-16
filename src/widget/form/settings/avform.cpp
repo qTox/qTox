@@ -153,7 +153,7 @@ void AVForm::open(const QString& devName, const VideoMode& mode)
 {
     QRect rect = mode.toRect();
     videoSettings->setCamVideoRes(rect);
-    videoSettings->setCamVideoFPS(static_cast<quint16>(mode.FPS));
+    videoSettings->setCamVideoFPS(static_cast<float>(mode.FPS));
     camera.setupDevice(devName, mode);
 }
 
