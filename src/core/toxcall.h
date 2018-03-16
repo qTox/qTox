@@ -1,6 +1,7 @@
 #ifndef TOXCALL_H
 #define TOXCALL_H
 
+#include <memory>
 #include <QMap>
 #include <QMetaObject>
 #include <QtGlobal>
@@ -16,7 +17,8 @@ class CoreAV;
 class ToxCall
 {
 protected:
-    explicit ToxCall();
+    ToxCall() = delete;
+    ToxCall(uint32_t CallId, bool VideoEnabled, CoreAV& av);
     ~ToxCall();
 
 public:
@@ -26,7 +28,6 @@ public:
     ToxCall& operator=(const ToxCall& other) = delete;
     ToxCall& operator=(ToxCall&& other) noexcept;
 
-    bool isInactive() const;
     bool isActive() const;
     void setActive(bool value);
 
@@ -36,27 +37,6 @@ public:
     bool getMuteMic() const;
     void setMuteMic(bool value);
 
-protected:
-    QMetaObject::Connection audioInConn;
-    bool active;
-    bool muteMic;
-    bool muteVol;
-    bool valid = true;
-};
-
-class ToxFriendCall : public ToxCall
-{
-public:
-    ToxFriendCall() = default;
-    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av);
-    ToxFriendCall(ToxFriendCall&& other) noexcept;
-    ~ToxFriendCall();
-
-    ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
-
-    void startTimeout(uint32_t callId);
-    void stopTimeout();
-
     bool getVideoEnabled() const;
     void setVideoEnabled(bool value);
 
@@ -65,31 +45,50 @@ public:
 
     CoreVideoSource* getVideoSource() const;
 
-    TOXAV_FRIEND_CALL_STATE getState() const;
-    void setState(const TOXAV_FRIEND_CALL_STATE& value);
-
     quint32 getAlSource() const;
     void setAlSource(const quint32& value);
 
-private:
-    quint32 alSource;
-    bool videoEnabled;
-    bool nullVideoBitrate;
-    CoreVideoSource* videoSource;
-    TOXAV_FRIEND_CALL_STATE state;
+protected:
+    bool active{false};
+    CoreAV* av{nullptr};
+    // audio
+    QMetaObject::Connection audioInConn;
+    bool muteMic{false};
+    bool muteVol{false};
+    quint32 alSource{0};
+    // video
+    CoreVideoSource* videoSource{nullptr};
+    QMetaObject::Connection videoInConn;
+    bool videoEnabled{false};
+    bool nullVideoBitrate{false};
+};
+
+class ToxFriendCall : public ToxCall
+{
+public:
+    ToxFriendCall() = delete;
+    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av);
+    ToxFriendCall(ToxFriendCall&& other) noexcept = default;
+    ToxFriendCall& operator=(ToxFriendCall&& other) noexcept = default;
+
+    void startTimeout(uint32_t callId);
+    void stopTimeout();
+
+    TOXAV_FRIEND_CALL_STATE getState() const;
+    void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
 protected:
-    CoreAV* av;
-    QTimer* timeoutTimer;
+    std::unique_ptr<QTimer> timeoutTimer;
 
 private:
+    TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
     static constexpr int CALL_TIMEOUT = 45000;
 };
 
 class ToxGroupCall : public ToxCall
 {
 public:
-    ToxGroupCall() = default;
+    ToxGroupCall() = delete;
     ToxGroupCall(int GroupNum, CoreAV& av);
     ToxGroupCall(ToxGroupCall&& other) noexcept;
     ~ToxGroupCall();

@@ -50,7 +50,7 @@ private:
     std::atomic_bool stopped;
 
     friend class CoreAV;
-    friend class ToxFriendCall;
+    friend class ToxCall;
 };
 
 #endif // COREVIDEOSOURCE_H
