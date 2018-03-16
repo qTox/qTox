@@ -199,10 +199,11 @@ Follow steps for adding translations from Weblate up to step 5. Next:
 - Generate changelog with `clog`.
   - In a `MAJOR`/`MINOR` release tag should include information that changelog
     is located in the `CHANGELOG.md` file, e.g. `For details see CHANGELOG.md`
-- To release a `PATCH` version after non-fix changes have landed on `master`
-  branch, checkout latest `MAJOR`/`MINOR` version and `git cherry-pick -x`
-  commits from `master` that you want `PATCH` release to include. Once
-  cherry-picking has been done, tag HEAD of the branch.
+- To release a `PATCH` version, checkout the latest `MAJOR`/`MINOR`/`PATCH` release tag
+  and merge or commit the changes that you want the `PATCH` release to include. Once the
+  required changes have been made, tag HEAD of the branch, then merge back to master `HEAD`
+    - If the required changes have already landed on `master` branch, checkout latest
+      `MAJOR`/`MINOR`/`PATCH` version and `git cherry-pick -x` the required commits from `master`.
   - When making a `PATCH` tag, include in tag message short summary of what the
     tag release fixes, and to whom it's interesting (often only some
     OSes/distributions would find given `PATCH` release interesting).
