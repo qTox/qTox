@@ -127,7 +127,6 @@ void SmileyPack::cleanupIconsCache()
         std::shared_ptr<QIcon>& icon = it->second;
         if (icon.use_count() == 1) {
             it = cachedIcon.erase(it);
-            icon.reset();
         } else {
             ++it;
         }
