@@ -52,6 +52,10 @@ void Friend::setName(const QString& _name)
 
     // save old displayed name to be able to compare for changes
     const auto oldDisplayed = getDisplayedName();
+    if (userName == userAlias) {
+        userAlias.clear(); // because userAlias was set on name change before (issue #5013)
+                           // we clear alias if equal to old name so that name change is visible
+    }
     if (userName != name) {
         userName = name;
         emit nameChanged(friendId, name);
