@@ -124,6 +124,7 @@ apt-get install -y --no-install-recommends \
                    cmake \
                    git \
                    libtool \
+                   nsis \
                    pkg-config \
                    tclsh \
                    unzip \
@@ -1100,6 +1101,36 @@ fi
 $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*.dll
 $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*/*.dll
 set -e
+
+# Create installer for releases
+SHELLEXECASUSER_HASH=8fc19829e144716a422b15a85e718e1816fe561de379b2b5ae87ef9017490799
+if [[ "$BUILD_TYPE" == "release" ]]
+then
+  cd windows
+  # we need the NSIS plugin "ShellExecAsUser" which is not included in the Debian nsis package
+  mkdir nsis-plugins
+  wget http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
+  check_sha256 "$SHELLEXECASUSER_HASH" "ShellExecAsUser.zip"
+  NSIS_PLUGINDIR="./nsis-plugins"
+  unzip "ShellExecAsUser.zip" -d "$NSIS_PLUGINDIR"
+  NSIS_PLUGIN_CMD='!'"addplugindir $NSIS_PLUGINDIR"
+
+  # the installer creation script expects all the files in qtox/*
+  mkdir qtox
+  cp -R "$QTOX_PREFIX_DIR"/* ./qtox
+
+  # Select the installer script for the correct architecture
+  if [[ "$ARCH" == "i686" ]]
+  then
+    makensis -X"$NSIS_PLUGIN_CMD" qtox.nsi
+  elif [[ "$ARCH" == "x86_64" ]]
+  then
+    makensis -X"$NSIS_PLUGIN_CMD" qtox64.nsi
+  fi
+
+  cp setup-qtox.exe "$QTOX_PREFIX_DIR"/setup-qtox-"$ARCH".exe
+  cd ..
+fi
 
 cd ..
 rm -rf ./qtox
