@@ -25,6 +25,7 @@
 #include <QClipboard>
 #include <QKeyEvent>
 #include <QMimeData>
+#include <QDebug>
 
 ChatTextEdit::ChatTextEdit(QWidget* parent)
     : QTextEdit(parent)
@@ -58,7 +59,8 @@ void ChatTextEdit::keyPressEvent(QKeyEvent* event)
         return;
     }
     if (key == Qt::Key_Up && this->toPlainText().isEmpty()) {
-        this->setText(lastMessage);
+	    
+        this->setPlainText(lastMessage);
         this->setFocus();
         this->moveCursor(QTextCursor::MoveOperation::End, QTextCursor::MoveMode::MoveAnchor);
         return;
