@@ -45,7 +45,7 @@ while running on all major platforms.
 
 Windows | Linux | OS X | FreeBSD
 --------|-------|------|--------
-**[64 bit release]**| **[Arch]**, **[Gentoo]** | **[Latest release]**  | **[Package & Port]**
+**[64 bit release]**| **[Arch]**, **[Fedora]**, **[Gentoo]** | **[Latest release]**  | **[Package & Port]**
 [32 bit release]| | [Building instructions] |
 [64 bit][64nightly], [32 bit][32nightly] nigthly | [Other] | |
 
@@ -149,6 +149,7 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 [Contributing]: /CONTRIBUTING.md#how-to-start-contributing
 [easy issues]: https://github.com/qTox/qTox/labels/E-easy
 [Latest release]: https://github.com/qTox/qTox/releases/latest
+[Fedora]: /INSTALL.md#fedora
 [Gentoo]: /INSTALL.md#gentoo
 [Install/Build]: /INSTALL.md
 [IRC logs]: https://github.com/qTox/qtox-irc-logs
