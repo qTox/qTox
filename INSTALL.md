@@ -3,6 +3,7 @@
 - [Linux](#linux)
   - [Simple install](#simple-install)
     - [Arch](#arch-easy)
+    - [Fedora](#fedora-easy)
     - [Gentoo](#gentoo-easy)
     - [Slackware](#slackware-easy)
     - [FreeBSD](#freebsd-easy)
@@ -116,6 +117,7 @@ To enable: `-DENABLE_APPINDICATOR=True`
 Easy qTox install is provided for variety of distributions:
 
 * [Arch](#arch)
+* [Fedora](#fedora)
 * [Gentoo](#gentoo)
 * [Slackware](#slackware)
 
@@ -129,6 +131,16 @@ PKGBUILD is available in the `community` repo, to install:
 
 ```bash
 pacman -S qtox
+```
+
+<a name="fedora-easy" />
+
+#### Fedora
+
+qTox is available in the [RPMFusion](https://rpmfusion.org/) repo, to install:
+
+```bash
+dnf install qtox
 ```
 
 <a name="gentoo-easy" />
