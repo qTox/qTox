@@ -27,25 +27,9 @@
 #include <QTimer>
 #include <QCoreApplication>
 
-/**
- * @var static const int OfflineMsgEngine::offlineTimeout
- * @brief timeout after which faux offline messages get to be re-sent.
- * Originally was 2s, but since that was causing lots of duplicated
- * messages on receiving end, make qTox be more lazy about re-sending
- * should be 20s.
- */
-
-
-const int OfflineMsgEngine::offlineTimeout = 20000;
-QMutex OfflineMsgEngine::globalMutex;
-
 OfflineMsgEngine::OfflineMsgEngine(Friend* frnd)
     : mutex(QMutex::Recursive)
     , f(frnd)
-{
-}
-
-OfflineMsgEngine::~OfflineMsgEngine()
 {
 }
 
@@ -63,8 +47,7 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
     processReceipt(receipt);
 }
 
-void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg,
-                                       const QDateTime& timestamp)
+void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg)
 {
     QMutexLocker ml(&mutex);
 
@@ -76,7 +59,7 @@ void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessa
     }
     it->rowId = messageID;
     it->bRowValid = true;
-    undeliveredMsgs[messageID] = {msg, timestamp, receipt};
+    undeliveredMsgs[messageID] = {msg, receipt};
     processReceipt(receipt);
 }
 
@@ -100,11 +83,6 @@ void OfflineMsgEngine::deliverOfflineMsgs()
     for (auto iter = msgs.begin(); iter != msgs.end(); ++iter) {
         auto val = iter.value();
         auto key = iter.key();
-
-        if (val.timestamp.msecsTo(QDateTime::currentDateTime()) < offlineTimeout) {
-            registerReceipt(val.receipt, key, val.msg, val.timestamp);
-            continue;
-        }
         QString messageText = val.msg->toString();
         int rec;
         if (val.msg->isAction()) {
