@@ -185,8 +185,7 @@ int main(int argc, char* argv[])
 
     // Process arguments
     QCommandLineParser parser;
-    parser.setApplicationDescription("qTox, version: " + QString(GIT_VERSION) + "\nBuilt: "
-                                     + __TIME__ + " " + __DATE__);
+    parser.setApplicationDescription("qTox, version: " + QString(GIT_VERSION));
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addPositionalArgument("uri", QObject::tr("Tox URI to parse"));
@@ -253,7 +252,6 @@ int main(int argc, char* argv[])
     QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
     a->addLibraryPath("platforms");
 
-    qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION;
 
 
