@@ -1,5 +1,4 @@
 #include "src/core/toxfile.h"
-#include "src/core/core.h"
 #include <QFile>
 #include <QRegularExpression>
 #include <tox/tox.h>

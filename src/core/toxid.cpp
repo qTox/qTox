@@ -19,7 +19,6 @@
 
 
 #include "toxid.h"
-#include "core.h"
 #include "toxpk.h"
 
 #include <tox/tox.h>

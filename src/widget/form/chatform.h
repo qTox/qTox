@@ -82,7 +82,6 @@ private slots:
     void onAttachClicked() override;
     void onScreenshotClicked() override;
 
-    void onDeliverOfflineMessages();
     void onLoadChatHistory();
     void onTextEditChanged();
     void onCallTriggered();
