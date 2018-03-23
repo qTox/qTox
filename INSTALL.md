@@ -278,9 +278,9 @@ sudo apt-get install \
     build-essential \
     cmake \
     ffmpeg \
+    libavcodec-dev \
     libexif-dev \
     libgdk-pixbuf2.0-dev \
-    libglib2.0-dev \
     libgtk2.0-dev \
     libopenal-dev \
     libqrencode-dev \
