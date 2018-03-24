@@ -331,7 +331,9 @@ int main(int argc, char* argv[])
         LoginScreen loginScreen{};
         loginScreen.exec();
         profile = loginScreen.getProfile();
-        profileName = profile->getName();
+        if (profile) {
+            profileName = profile->getName();
+        }
     }
 
     if (!profile) {
