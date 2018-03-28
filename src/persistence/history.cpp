@@ -230,6 +230,10 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
                             const QDateTime& time, bool isSent, QString dispName,
                             const std::function<void(int64_t)>& insertIdCallback)
 {
+    if (!Settings::getInstance().getEnableLogging()) {
+        qWarning() << "Blocked a message from being added to database while history is disabled";
+        return;
+    }
     if (!isValid()) {
         return;
     }

@@ -984,7 +984,7 @@ void ChatForm::SendMessageStr(QString msg)
         uint32_t friendId = f->getId();
         int rec = isAction ? core->sendAction(friendId, part) : core->sendMessage(friendId, part);
 
-        if (history) {
+        if (history && Settings::getInstance().getEnableLogging()) {
             auto* offMsgEngine = getOfflineMsgEngine();
             QString selfPk = Core::getInstance()->getSelfId().toString();
             QString pk = f->getPublicKey().toString();
