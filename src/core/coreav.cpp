@@ -314,6 +314,34 @@ bool CoreAV::cancelCall(uint32_t friendNum)
     return true;
 }
 
+bool CoreAV::changeVideo(uint32_t friendId, bool video)
+{
+    if (QThread::currentThread() != coreavThread.get()) {
+        if (threadSwitchLock.test_and_set(std::memory_order_acquire)) {
+            qDebug() << "CoreAV::startCall: Backed off of thread-switch lock";
+            return false;
+        }
+
+        bool ret;
+        QMetaObject::invokeMethod(this, "changeVideo", Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendId),
+                                  Q_ARG(bool, video));
+
+        threadSwitchLock.clear(std::memory_order_release);
+        return ret;
+    }
+
+    ToxFriendCall& call = calls[friendId];
+    uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
+    TOXAV_ERR_BIT_RATE_SET error;
+    toxav_bit_rate_set(toxav, friendId, -1, videoBitrate, &error);
+    if (error != TOXAV_ERR_BIT_RATE_SET_OK)
+        return false;
+
+    call.changeVideo(video);
+    return true;
+}
+
 void CoreAV::timeoutCall(uint32_t friendNum)
 {
     // Non-blocking switch to the CoreAV thread, we really don't want to be coming

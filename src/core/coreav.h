@@ -91,6 +91,7 @@ public slots:
     bool startCall(uint32_t friendNum, bool video);
     bool answerCall(uint32_t friendNum, bool video);
     bool cancelCall(uint32_t friendNum);
+    bool changeVideo(uint32_t friendId, bool video);
     void timeoutCall(uint32_t friendNum);
     void start();
     void stop();

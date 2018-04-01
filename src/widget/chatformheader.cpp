@@ -225,7 +225,7 @@ void ChatFormHeader::updateCallButtons(bool online, bool audio, bool video)
     if (!audioAvaliable) {
         callState = CallButtonState::Disabled;
     } else if (video) {
-        callState = CallButtonState::Disabled;
+        callState = CallButtonState::InCall;
     } else if (audio) {
         callState = CallButtonState::InCall;
     } else {
@@ -237,7 +237,7 @@ void ChatFormHeader::updateCallButtons(bool online, bool audio, bool video)
     } else if (video) {
         videoState = CallButtonState::InCall;
     } else if (audio) {
-        videoState = CallButtonState::Disabled;
+        videoState = CallButtonState::Avaliable;
     } else {
         videoState = CallButtonState::Avaliable;
     }
