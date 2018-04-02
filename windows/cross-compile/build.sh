@@ -261,9 +261,10 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=9
-QT_PATCH=3
+QT_PATCH=4
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-QT_HASH="57acd8f03f830c2d7dc29fbe28aaa96781b2b9bdddce94196e6761a0f88c6046"
+# hash from https://download.qt.io/archive/qt/5.9/5.9.4/single/qt-everywhere-opensource-src-5.9.4.tar.xz.mirrorlist
+QT_HASH="e3acd9cbeafba3aed9f14592f4d70bf0b255e0203943e8d2b4235002268274d5"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
   rm -rf "$QT_PREFIX_DIR"
@@ -278,11 +279,19 @@ then
   export PKG_CONFIG_PATH="$OPENSSL_PREFIX_DIR/lib/pkgconfig"
   export OPENSSL_LIBS="$(pkg-config --libs openssl)"
 
+  # Fix https://bugreports.qt.io/browse/QTBUG-66123 present in Qt 5.9.4
+  cd qtbase
+  wget https://github.com/qt/qtbase/commit/40e87491886957696486b87dc2dedec2adaf6e1a.patch -O "QTBUG-66123.patch"
+  check_sha256 "15c4e6f0eba90a67fee3faabd86ca670a3021ac49d19fd9b311e16615bce87a6" "QTBUG-66123.patch"
+  patch -p1 < "QTBUG-66123.patch"
+  rm "QTBUG-66123.patch"
+  cd ..
+
   # Fix https://bugreports.qt.io/browse/QTBUG-63637 present in Qt 5.9.2
   echo "QMAKE_LINK_OBJECT_MAX = 10" >> qtbase/mkspecs/win32-g++/qmake.conf
   echo "QMAKE_LINK_OBJECT_SCRIPT = object_script" >> qtbase/mkspecs/win32-g++/qmake.conf
 
-  # So, apparently Travis CI terminate a build if it generates more than 4mb of output
+  # So, apparently Travis CI terminates a build if it generates more than 4mb of stdout output
   # which happens when building Qt
   CONFIGURE_EXTRA=""
   set +u
