@@ -219,8 +219,9 @@ strip_all()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.0.2m
-OPENSSL_HASH="8c6ff15ec6b319b50788f42c7abc2890c08ba5a1cdcd3810eb9092deada37b0f"
+OPENSSL_VERSION=1.0.2o
+# hash from https://www.openssl.org/source/
+OPENSSL_HASH="ec3f5c9714ba0fd45cb4e087301eb1336c317e0d20b575a125050470e8089e4d"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
   rm -rf "$OPENSSL_PREFIX_DIR"
