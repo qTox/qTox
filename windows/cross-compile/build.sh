@@ -851,17 +851,17 @@ fi
 # VPX
 
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
-VPX_VERSION=1.6.1
-VPX_HASH="1c2c0c2a97fba9474943be34ee39337dee756780fc12870ba1dc68372586a819"
+VPX_VERSION=v1.7.0
+VPX_HASH="1fec931eb5c94279ad219a5b6e0202358e94a93a90cfb1603578c326abfc1238"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
   rm -rf "$VPX_PREFIX_DIR"
   mkdir -p "$VPX_PREFIX_DIR"
 
-  wget http://storage.googleapis.com/downloads.webmproject.org/releases/webm/libvpx-$VPX_VERSION.tar.bz2
-  check_sha256 "$VPX_HASH" "libvpx-$VPX_VERSION.tar.bz2"
-  bsdtar --no-same-owner --no-same-permissions -xf libvpx-*.tar.bz2
-  rm libvpx*.tar.bz2
+  wget https://github.com/webmproject/libvpx/archive/$VPX_VERSION.tar.gz -O libvpx-$VPX_VERSION.tar.gz
+  check_sha256 "$VPX_HASH" "libvpx-$VPX_VERSION.tar.gz"
+  bsdtar --no-same-owner --no-same-permissions -xf libvpx-*.tar.gz
+  rm libvpx*.tar.gz
   cd libvpx*
 
   if [[ "$ARCH" == "x86_64" ]]
