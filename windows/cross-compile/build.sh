@@ -1213,7 +1213,7 @@ set -e
 
 # Create zip
 cd $QTOX_PREFIX_DIR
-zip qtox-"$ARCH".zip -r *
+zip qtox-"$ARCH"-"$BUILD_TYPE".zip -r *
 cd -
 
 # Create installer
@@ -1235,7 +1235,7 @@ then
     makensis qtox64.nsi
   fi
 
-  cp setup-qtox.exe $QTOX_PREFIX_DIR/setup-qtox-"$ARCH".exe
+  cp setup-qtox.exe $QTOX_PREFIX_DIR/setup-qtox-"$ARCH"-"$BUILD_TYPE".exe
   cd ..
 fi
 
