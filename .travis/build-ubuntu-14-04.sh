@@ -188,6 +188,14 @@ build_qtox() {
         -DCMAKE_BUILD_TYPE="Release"
 
     bdir
+
+    REP=qtox-nightly
+    PKG=`ls _build/qtox-nightly-*-Linux.deb`
+
+    VERSION=`git describe`
+    URL_BASE="https://api.bintray.com/content/qtox/qTox/$REP/$VERSION"
+    PARAMS="deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+    curl -T $PKG -udiadlo:$BINTRAY_API_KEY "$URL_BASE/$PKG;$PARAMS"
 }
 
 test_qtox() {
