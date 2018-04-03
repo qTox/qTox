@@ -166,6 +166,7 @@ signals:
     void closeToTrayChanged(bool enabled);
     void lightTrayIconChanged(bool enabled);
     void minimizeToTrayChanged(bool enabled);
+    void notifyChanged(bool enabled);
     void showWindowChanged(bool enabled);
     void makeToxPortableChanged(bool enabled);
     void busySoundChanged(bool enabled);
@@ -310,6 +311,9 @@ public:
 
     bool getCheckUpdates() const;
     void setCheckUpdates(bool newValue);
+
+    bool getNotify() const;
+    void setNotify(bool newValue);
 
     bool getShowWindow() const;
     void setShowWindow(bool newValue);
@@ -576,6 +580,7 @@ private:
     bool lightTrayIcon;
     bool useEmoticons;
     bool checkUpdates;
+    bool notify;
     bool showWindow;
     bool showInFront;
     bool notifySound;

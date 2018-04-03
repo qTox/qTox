@@ -1421,11 +1421,6 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
     }
 
     if (notify) {
-        if (inactiveWindow) {
-            QApplication::alert(currentWindow);
-            eventFlag = true;
-        }
-
         if (Settings::getInstance().getShowWindow()) {
             currentWindow->show();
             if (inactiveWindow && Settings::getInstance().getShowInFront()) {
@@ -1433,13 +1428,19 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
             }
         }
 
-        bool isBusy = Nexus::getCore()->getStatus() == Status::Busy;
-        bool busySound = Settings::getInstance().getBusySound();
-        bool notifySound = Settings::getInstance().getNotifySound();
+        if (Settings::getInstance().getNotify()) {
+            if (inactiveWindow) {
+                QApplication::alert(currentWindow);
+                eventFlag = true;
+            }
+            bool isBusy = Nexus::getCore()->getStatus() == Status::Busy;
+            bool busySound = Settings::getInstance().getBusySound();
+            bool notifySound = Settings::getInstance().getNotifySound();
 
-        if (notifySound && sound && (!isBusy || busySound)) {
-            QString soundPath = Audio::getSound(Audio::Sound::NewMessage);
-            Audio::getInstance().playMono16Sound(soundPath);
+            if (notifySound && sound && (!isBusy || busySound)) {
+                QString soundPath = Audio::getSound(Audio::Sound::NewMessage);
+                Audio::getInstance().playMono16Sound(soundPath);
+            }
         }
     }
 
