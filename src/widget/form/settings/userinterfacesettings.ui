@@ -162,6 +162,16 @@
            <number>6</number>
           </property>
           <item>
+           <widget class="QCheckBox" name="notify">
+            <property name="toolTip">
+             <string comment="tooltip for Notify setting">Show a notification when you receive a new message and the window is not selected.</string>
+            </property>
+            <property name="text">
+             <string>Notify</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="showWindow">
             <property name="toolTip">
              <string comment="tooltip for Show window setting">Open qTox's window when you receive a new message and no window is open yet.</string>
@@ -572,6 +582,7 @@
   <tabstop>txtChatFont</tabstop>
   <tabstop>txtChatFontSize</tabstop>
   <tabstop>textStyleComboBox</tabstop>
+  <tabstop>notify</tabstop>
   <tabstop>showWindow</tabstop>
   <tabstop>showInFront</tabstop>
   <tabstop>groupAlwaysNotify</tabstop>

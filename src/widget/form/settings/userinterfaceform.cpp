@@ -75,6 +75,7 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
     int index = static_cast<int>(s.getStylePreference());
     bodyUI->textStyleComboBox->setCurrentIndex(index);
 
+    bodyUI->notify->setChecked(s.getNotify());
     bool showWindow = s.getShowWindow();
 
     bodyUI->showWindow->setChecked(showWindow);
@@ -258,6 +259,11 @@ void UserInterfaceForm::reloadSmileys()
 
     QSize actualSize = emoticonsIcons.first()->actualSize(maxSize);
     bodyUI->emoticonSize->setMaximum(actualSize.width());
+}
+
+void UserInterfaceForm::on_notify_stateChanged()
+{
+    Settings::getInstance().setNotify(bodyUI->notify->isChecked());
 }
 
 void UserInterfaceForm::on_showWindow_stateChanged()
