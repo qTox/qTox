@@ -172,6 +172,44 @@
            </widget>
           </item>
           <item>
+           <layout class="QVBoxLayout" name="verticalLayout_11">
+            <property name="leftMargin">
+             <number>40</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="groupOnlyNotfiyWhenMentioned">
+              <property name="toolTip">
+               <string comment="toolTip for Group chats only notify when mentioned">Onlys notify about new messages in groupchats when mentioned.</string>
+              </property>
+              <property name="text">
+               <string>Group chats only notify when mentioned</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="notifySound">
+              <property name="text">
+               <string>Play sound</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <property name="leftMargin">
+               <number>40</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="busySound">
+                <property name="text">
+                 <string>Play sound while Busy</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QCheckBox" name="showWindow">
             <property name="toolTip">
              <string comment="tooltip for Show window setting">Open qTox's window when you receive a new message and no window is open yet.</string>
@@ -207,16 +245,6 @@
           <string>Contact list</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
-          <item>
-           <widget class="QCheckBox" name="groupAlwaysNotify">
-            <property name="toolTip">
-             <string comment="toolTip for Group chat always notify">Always notify about new messages in groupchats.</string>
-            </property>
-            <property name="text">
-             <string>Group chats always notify</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="QCheckBox" name="cbGroupchatPosition">
             <property name="toolTip">
@@ -583,9 +611,11 @@
   <tabstop>txtChatFontSize</tabstop>
   <tabstop>textStyleComboBox</tabstop>
   <tabstop>notify</tabstop>
+  <tabstop>groupOnlyNotfiyWhenMentioned</tabstop>
+  <tabstop>notifySound</tabstop>
+  <tabstop>busySound</tabstop>
   <tabstop>showWindow</tabstop>
   <tabstop>showInFront</tabstop>
-  <tabstop>groupAlwaysNotify</tabstop>
   <tabstop>cbGroupchatPosition</tabstop>
   <tabstop>cbCompactLayout</tabstop>
   <tabstop>cbSeparateWindow</tabstop>

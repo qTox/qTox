@@ -48,8 +48,6 @@ private slots:
     void on_lightTrayIcon_stateChanged();
     void on_autoAwaySpinBox_editingFinished();
     void on_minimizeToTray_stateChanged();
-    void on_notifySound_stateChanged();
-    void on_busySound_stateChanged();
     void on_statusChanges_stateChanged();
     void on_cbFauxOfflineMessaging_stateChanged();
 

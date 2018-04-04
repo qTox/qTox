@@ -137,10 +137,6 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
     bodyUI->closeToTray->setChecked(s.getCloseToTray());
     bodyUI->closeToTray->setEnabled(showSystemTray);
 
-    bodyUI->notifySound->setChecked(s.getNotifySound());
-    bodyUI->busySound->setChecked(s.getBusySound());
-    bodyUI->busySound->setEnabled(s.getNotifySound());
-
     bodyUI->statusChanges->setChecked(s.getStatusChangeNotificationEnabled());
     bodyUI->cbFauxOfflineMessaging->setChecked(s.getFauxOfflineMessaging());
 
@@ -201,18 +197,6 @@ void GeneralForm::on_lightTrayIcon_stateChanged()
 void GeneralForm::on_minimizeToTray_stateChanged()
 {
     Settings::getInstance().setMinimizeToTray(bodyUI->minimizeToTray->isChecked());
-}
-
-void GeneralForm::on_notifySound_stateChanged()
-{
-    bool notify = bodyUI->notifySound->isChecked();
-    Settings::getInstance().setNotifySound(notify);
-    bodyUI->busySound->setEnabled(notify);
-}
-
-void GeneralForm::on_busySound_stateChanged()
-{
-    Settings::getInstance().setBusySound(bodyUI->busySound->isChecked());
 }
 
 void GeneralForm::on_statusChanges_stateChanged()
