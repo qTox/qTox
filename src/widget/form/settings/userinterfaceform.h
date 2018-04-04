@@ -49,9 +49,11 @@ private slots:
     void on_textStyleComboBox_currentTextChanged();
     void on_useEmoticons_stateChanged();
     void on_notify_stateChanged();
+    void on_notifySound_stateChanged();
+    void on_busySound_stateChanged();
     void on_showWindow_stateChanged();
     void on_showInFront_stateChanged();
-    void on_groupAlwaysNotify_stateChanged();
+    void on_groupOnlyNotfiyWhenMentioned_stateChanged();
     void on_cbCompactLayout_stateChanged();
     void on_cbSeparateWindow_stateChanged();
     void on_cbDontGroupWindows_stateChanged();

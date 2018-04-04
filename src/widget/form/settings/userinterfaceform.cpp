@@ -76,13 +76,20 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
     bodyUI->textStyleComboBox->setCurrentIndex(index);
 
     bodyUI->notify->setChecked(s.getNotify());
+    // Note: UI is boolean inversed from settings to maintain setting file backwards compatibility
+    bodyUI->groupOnlyNotfiyWhenMentioned->setChecked(!s.getGroupAlwaysNotify());
+    bodyUI->groupOnlyNotfiyWhenMentioned->setEnabled(s.getNotify());
+    bodyUI->notifySound->setChecked(s.getNotifySound());
+    bodyUI->notifySound->setEnabled(s.getNotify());
+    bodyUI->busySound->setChecked(s.getBusySound());
+    bodyUI->busySound->setEnabled(s.getNotifySound() && s.getNotify());
+
     bool showWindow = s.getShowWindow();
 
     bodyUI->showWindow->setChecked(showWindow);
     bodyUI->showInFront->setChecked(s.getShowInFront());
     bodyUI->showInFront->setEnabled(showWindow);
 
-    bodyUI->groupAlwaysNotify->setChecked(s.getGroupAlwaysNotify());
     bodyUI->cbGroupchatPosition->setChecked(s.getGroupchatPosition());
     bodyUI->cbCompactLayout->setChecked(s.getCompactLayout());
     bodyUI->cbSeparateWindow->setChecked(s.getSeparateWindow());
@@ -263,7 +270,23 @@ void UserInterfaceForm::reloadSmileys()
 
 void UserInterfaceForm::on_notify_stateChanged()
 {
-    Settings::getInstance().setNotify(bodyUI->notify->isChecked());
+    const bool notify = bodyUI->notify->isChecked();
+    Settings::getInstance().setNotify(notify);
+    bodyUI->groupOnlyNotfiyWhenMentioned->setEnabled(notify);
+    bodyUI->notifySound->setEnabled(notify);
+    bodyUI->busySound->setEnabled(notify && bodyUI->notifySound->isChecked());
+}
+
+void UserInterfaceForm::on_notifySound_stateChanged()
+{
+    const bool notify = bodyUI->notifySound->isChecked();
+    Settings::getInstance().setNotifySound(notify);
+    bodyUI->busySound->setEnabled(notify);
+}
+
+void UserInterfaceForm::on_busySound_stateChanged()
+{
+    Settings::getInstance().setBusySound(bodyUI->busySound->isChecked());
 }
 
 void UserInterfaceForm::on_showWindow_stateChanged()
@@ -278,9 +301,10 @@ void UserInterfaceForm::on_showInFront_stateChanged()
     Settings::getInstance().setShowInFront(bodyUI->showInFront->isChecked());
 }
 
-void UserInterfaceForm::on_groupAlwaysNotify_stateChanged()
+void UserInterfaceForm::on_groupOnlyNotfiyWhenMentioned_stateChanged()
 {
-    Settings::getInstance().setGroupAlwaysNotify(bodyUI->groupAlwaysNotify->isChecked());
+    // Note: UI is boolean inversed from settings to maintain setting file backwards compatibility
+    Settings::getInstance().setGroupAlwaysNotify(!bodyUI->groupOnlyNotfiyWhenMentioned->isChecked());
 }
 
 void UserInterfaceForm::on_cbCompactLayout_stateChanged()

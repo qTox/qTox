@@ -209,41 +209,6 @@ instead of closing itself.</string>
              </layout>
             </item>
             <item>
-             <widget class="QLabel" name="newMessageLabel">
-              <property name="text">
-               <string>On new message:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_5">
-              <property name="leftMargin">
-               <number>40</number>
-              </property>
-              <item>
-               <widget class="QCheckBox" name="notifySound">
-                <property name="text">
-                 <string>Play sound</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout">
-                <property name="leftMargin">
-                 <number>40</number>
-                </property>
-                <item>
-                 <widget class="QCheckBox" name="busySound">
-                  <property name="text">
-                   <string>Play sound while Busy</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-            <item>
              <widget class="QCheckBox" name="statusChanges">
               <property name="text">
                <string>Show contacts' status changes</string>
@@ -384,8 +349,6 @@ instead of closing itself.</string>
   <tabstop>startInTray</tabstop>
   <tabstop>minimizeToTray</tabstop>
   <tabstop>closeToTray</tabstop>
-  <tabstop>notifySound</tabstop>
-  <tabstop>busySound</tabstop>
   <tabstop>statusChanges</tabstop>
   <tabstop>cbFauxOfflineMessaging</tabstop>
   <tabstop>autoAwaySpinBox</tabstop>
