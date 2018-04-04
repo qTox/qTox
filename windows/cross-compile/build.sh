@@ -128,7 +128,9 @@ apt-get install -y --no-install-recommends \
                    tclsh \
                    unzip \
                    wget \
-                   yasm
+                   yasm \
+                   zip
+
 if [[ "$ARCH" == "i686" ]]
 then
   apt-get install -y --no-install-recommends \
@@ -1209,6 +1211,11 @@ $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*.dll
 $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*/*.dll
 set -e
 
+# Create zip
+cd $QTOX_PREFIX_DIR
+zip qtox-"$ARCH".zip -r *
+cd -
+
 # Create installer
 if [[ "$BUILD_TYPE" == "release" ]]
 then
@@ -1217,6 +1224,7 @@ then
   # The installer creation script expects all the files to be in qtox/*
   mkdir qtox
   cp -r $QTOX_PREFIX_DIR/* ./qtox
+  rm ./qtox/*.zip
 
   # Select the installer script for the correct architecture
   if [[ "$ARCH" == "i686" ]]
