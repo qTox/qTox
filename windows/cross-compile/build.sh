@@ -124,7 +124,6 @@ apt-get install -y --no-install-recommends \
                    cmake \
                    git \
                    libtool \
-                   nsis \
                    pkg-config \
                    tclsh \
                    unzip \
@@ -976,6 +975,104 @@ else
 fi
 
 
+# NSIS
+
+NSIS_PREFIX_DIR="$DEP_DIR/nsis"
+NSIS_VERSION="Debian Unstable"
+#NSIS_HASH=
+if [ ! -f "$NSIS_PREFIX_DIR/done" ]
+then
+  rm -rf "$NSIS_PREFIX_DIR"
+  mkdir -p "$NSIS_PREFIX_DIR"
+
+  # We want to use NSIS 3, instead of NSIS 2, because it added Windows 8 and 10
+  # support, as well as unicode support. NSIS 3 is not packaged in Debian Stretch
+  # and building it manually appears to be quite a challenge. Luckly it's
+  # packaged in  Debian Unstable, so we can backport it to our Debian version
+  # with little effort, utilizing maintainer's build script.
+
+  # Kepp the indentation of the next echo command as it is, as apt seems to
+  # ignore preferences starting with whitespace.
+  echo "
+Package: *
+Pin: Release a=unstable
+Pin-Priority: -1
+  " >> /etc/apt/preferences
+  echo "
+  # Needed for NSIS 3
+  deb http://httpredir.debian.org/debian unstable main
+  deb-src http://httpredir.debian.org/debian unstable main
+  " >> /etc/apt/sources.list
+  apt-get update
+  # Get dependencies required for building NSIS
+  apt-get install -y --no-install-recommends \
+    build-essential \
+    devscripts \
+    docbook-xsl-ns \
+    docbook5-xml \
+    dpkg-dev \
+    fakeroot \
+    html2text \
+    libcppunit-dev \
+    mingw-w64 \
+    scons \
+    xsltproc \
+    zlib1g-dev
+  apt-get -t unstable install -y --no-install-recommends debhelper
+  mkdir nsis-build
+  cd nsis-build
+  apt-get -t unstable source nsis
+
+  cd nsis-*
+  # The build script is not parallel enough, this speeds things up greatly
+  sed -i "s/scons / scons -j `nproc` /" debian/rules
+  DEB_BUILD_OPTIONS="parallel=`nproc` nocheck" debuild -b -uc -us
+  cd ..
+  mv nsis-common_*.deb "$NSIS_PREFIX_DIR"
+  mv nsis-doc_*.deb "$NSIS_PREFIX_DIR"
+  mv nsis_*.deb "$NSIS_PREFIX_DIR"
+  mv nsis-pluginapi_*.deb "$NSIS_PREFIX_DIR"
+
+  cd ..
+  rm -rf ./nsis-build
+
+  echo -n $NSIS_VERSION > $NSIS_PREFIX_DIR/done
+else
+  echo "Using cached build of NSIS `cat $NSIS_PREFIX_DIR/done`"
+fi
+# Install NSIS
+dpkg -i "$NSIS_PREFIX_DIR"/nsis-common_*.deb
+dpkg -i "$NSIS_PREFIX_DIR"/nsis-doc_*.deb
+dpkg -i "$NSIS_PREFIX_DIR"/nsis_*.deb
+dpkg -i "$NSIS_PREFIX_DIR"/nsis-pluginapi_*.deb
+
+
+# NSIS ShellExecAsUser plugin
+
+NSISSHELLEXECASUSER_PREFIX_DIR="$DEP_DIR/nsis_shellexecuteasuser"
+NSISSHELLEXECASUSER_VERSION=" "
+NSISSHELLEXECASUSER_HASH="8fc19829e144716a422b15a85e718e1816fe561de379b2b5ae87ef9017490799"
+if [ ! -f "$NSISSHELLEXECASUSER_PREFIX_DIR/done" ]
+then
+  rm -rf "$NSISSHELLEXECASUSER_PREFIX_DIR"
+  mkdir -p "$NSISSHELLEXECASUSER_PREFIX_DIR"
+
+  # Backup: https://web.archive.org/web/20171008011417/http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
+  wget http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
+  check_sha256 "$NSISSHELLEXECASUSER_HASH" "ShellExecAsUser.zip"
+  unzip ShellExecAsUser.zip 'ShellExecAsUser.dll'
+
+  mkdir "$NSISSHELLEXECASUSER_PREFIX_DIR/bin"
+  mv ShellExecAsUser.dll "$NSISSHELLEXECASUSER_PREFIX_DIR/bin"
+  rm ShellExecAsUser*
+  echo -n $NSISSHELLEXECASUSER_VERSION > $NSISSHELLEXECASUSER_PREFIX_DIR/done
+else
+  echo "Using cached build of NSIS ShellExecAsUser plugin `cat $NSISSHELLEXECASUSER_PREFIX_DIR/done`"
+fi
+# Install ShellExecAsUser plugin
+cp "$NSISSHELLEXECASUSER_PREFIX_DIR/bin/ShellExecAsUser.dll" /usr/share/nsis/Plugins/x86-ansi/
+
+
 # Stop here if running the second stage on Travis CI
 set +u
 if [[ "$TRAVIS_CI_STAGE" == "stage2" ]]
@@ -1112,30 +1209,22 @@ $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*.dll
 $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*/*.dll
 set -e
 
-# Create installer for releases
-SHELLEXECASUSER_HASH=8fc19829e144716a422b15a85e718e1816fe561de379b2b5ae87ef9017490799
+# Create installer
 if [[ "$BUILD_TYPE" == "release" ]]
 then
   cd windows
-  # we need the NSIS plugin "ShellExecAsUser" which is not included in the Debian nsis package
-  mkdir nsis-plugins
-  wget http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
-  check_sha256 "$SHELLEXECASUSER_HASH" "ShellExecAsUser.zip"
-  NSIS_PLUGINDIR="./nsis-plugins"
-  unzip "ShellExecAsUser.zip" -d "$NSIS_PLUGINDIR"
-  NSIS_PLUGIN_CMD='!'"addplugindir $NSIS_PLUGINDIR"
 
-  # the installer creation script expects all the files in qtox/*
+  # The installer creation script expects all the files to be in qtox/*
   mkdir qtox
-  cp -R $QTOX_PREFIX_DIR/* ./qtox
+  cp -r $QTOX_PREFIX_DIR/* ./qtox
 
   # Select the installer script for the correct architecture
   if [[ "$ARCH" == "i686" ]]
   then
-    makensis -X"$NSIS_PLUGIN_CMD" qtox.nsi
+    makensis qtox.nsi
   elif [[ "$ARCH" == "x86_64" ]]
   then
-    makensis -X"$NSIS_PLUGIN_CMD" qtox64.nsi
+    makensis qtox64.nsi
   fi
 
   cp setup-qtox.exe $QTOX_PREFIX_DIR/setup-qtox-"$ARCH".exe
