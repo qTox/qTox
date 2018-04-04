@@ -267,6 +267,7 @@ void Settings::loadGlobal()
         audioInGainDecibel = s.value("inGain", 0).toReal();
         audioThreshold = s.value("audioThreshold", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
+        enableTestSound = s.value("enableTestSound", true).toBool();
         audioBitrate = s.value("audioBitrate", 64).toInt();
         enableBackend2 = false;
         #ifdef USE_FILTERAUDIO
@@ -571,6 +572,7 @@ void Settings::saveGlobal()
         s.setValue("inGain", audioInGainDecibel);
         s.setValue("audioThreshold", audioThreshold);
         s.setValue("outVolume", outVolume);
+        s.setValue("enableTestSound", enableTestSound);
         s.setValue("audioBitrate", audioBitrate);
         s.setValue("enableBackend2", enableBackend2);
     }
