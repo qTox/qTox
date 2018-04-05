@@ -402,6 +402,7 @@ void ChatForm::onAvEnd(uint32_t friendId, bool error)
     }
 
     emit stopNotification();
+    emit endCallNotification();
     updateCallButtons();
     stopCounter(error);
     hideNetcam();

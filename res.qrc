@@ -9,6 +9,7 @@
         <file>audio/notification.pcm</file>
         <file>audio/ToxIncomingCall.pcm</file>
         <file>audio/ToxOutgoingCall.pcm</file>
+        <file>audio/ToxEndCall.pcm</file>
         <file>img/add.svg</file>
         <file>img/avatar_mask.svg</file>
         <file>img/contact.svg</file>

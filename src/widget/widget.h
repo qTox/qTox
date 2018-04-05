@@ -218,6 +218,7 @@ private slots:
     void groupInvitesClear();
     void onDialogShown(GenericChatroomWidget* widget);
     void outgoingNotification();
+    void onCallEnd();
     void incomingNotification(uint32_t friendId);
     void onRejectCall(uint32_t friendId);
     void onStopNotification();

@@ -40,7 +40,8 @@ public:
         NewMessage,
         Test,
         IncomingCall,
-        OutgoingCall
+        OutgoingCall,
+        CallEnd
     };
 
     inline static QString getSound(Sound s)
@@ -54,6 +55,8 @@ public:
             return QStringLiteral(":/audio/ToxIncomingCall.pcm");
         case Sound::OutgoingCall:
             return QStringLiteral(":/audio/ToxOutgoingCall.pcm");
+        case Sound::CallEnd:
+            return QStringLiteral(":/audio/ToxEndCall.pcm");
         }
         assert(false);
         return QString();
