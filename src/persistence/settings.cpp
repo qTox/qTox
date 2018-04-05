@@ -192,6 +192,7 @@ void Settings::loadGlobal()
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         enableIPv6 = s.value("enableIPv6", true).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
+        enableLanDiscovery = s.value("enableLanDiscovery", true).toBool();
     }
     s.endGroup();
 
@@ -508,6 +509,7 @@ void Settings::saveGlobal()
         s.setValue("makeToxPortable", makeToxPortable);
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("forceTCP", forceTCP);
+        s.setValue("enableLanDiscovery", enableLanDiscovery);
         s.setValue("dbSyncType", static_cast<int>(dbSyncType));
     }
     s.endGroup();
@@ -1222,6 +1224,22 @@ void Settings::setForceTCP(bool enabled)
     if (enabled != forceTCP) {
         forceTCP = enabled;
         emit forceTCPChanged(forceTCP);
+    }
+}
+
+bool Settings::getEnableLanDiscovery() const
+{
+    QMutexLocker locker{&bigLock};
+    return enableLanDiscovery;
+}
+
+void Settings::setEnableLanDiscovery(bool enabled)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (enabled != enableLanDiscovery) {
+    	enableLanDiscovery = enabled;
+        emit enableLanDiscoveryChanged(enableLanDiscovery);
     }
 }
 

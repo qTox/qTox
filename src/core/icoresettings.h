@@ -23,6 +23,9 @@ public:
     virtual bool getForceTCP() const = 0;
     virtual void setForceTCP(bool enable) = 0;
 
+    virtual bool getEnableLanDiscovery() const = 0;
+    virtual void setEnableLanDiscovery(bool enable) = 0;
+
     virtual QString getProxyAddr() const = 0;
     virtual void setProxyAddr(const QString& address) = 0;
 
@@ -39,6 +42,7 @@ public:
 
     DECLARE_SIGNAL(enableIPv6Changed, bool enabled);
     DECLARE_SIGNAL(forceTCPChanged, bool enabled);
+    DECLARE_SIGNAL(enableLanDiscoveryChanged, bool enabled);
     DECLARE_SIGNAL(proxyTypeChanged, ICoreSettings::ProxyType type);
     DECLARE_SIGNAL(proxyAddressChanged, const QString& address);
     DECLARE_SIGNAL(proxyPortChanged, quint16 port);

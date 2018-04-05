@@ -134,20 +134,26 @@ ToxOptionsPtr initToxOptions(const QByteArray& savedata, const ICoreSettings* s)
     // disabled in options.
     bool enableIPv6 = s->getEnableIPv6();
     bool forceTCP = s->getForceTCP();
+    // LAN requiring UDP is a toxcore limitation, ideally wouldn't be related
+    const bool enabelLanDiscovery = s->getEnableLanDiscovery() && !forceTCP;
     ICoreSettings::ProxyType proxyType = s->getProxyType();
     quint16 proxyPort = s->getProxyPort();
     QString proxyAddr = s->getProxyAddr();
     QByteArray proxyAddrData = proxyAddr.toUtf8();
 
+    if (!enabelLanDiscovery) {
+        qWarning() << "Core starting without LAN discovery. Peers can only be found through DHT.";
+    }
     if (enableIPv6) {
         qDebug() << "Core starting with IPv6 enabled";
-    } else {
+    } else if(enabelLanDiscovery) {
         qWarning() << "Core starting with IPv6 disabled. LAN discovery may not work properly.";
     }
 
     ToxOptionsPtr toxOptions = ToxOptionsPtr(tox_options_new(NULL));
     tox_options_set_ipv6_enabled(toxOptions.get(), enableIPv6);
     tox_options_set_udp_enabled(toxOptions.get(), !forceTCP);
+    tox_options_set_local_discovery_enabled(toxOptions.get(), enabelLanDiscovery);
     tox_options_set_start_port(toxOptions.get(), 0);
     tox_options_set_end_port(toxOptions.get(), 0);
 
