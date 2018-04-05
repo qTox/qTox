@@ -955,6 +955,12 @@ void Widget::outgoingNotification()
     audio.playMono16Sound(Audio::getSound(Audio::Sound::OutgoingCall));
 }
 
+void Widget::onCallEnd()
+{
+    Audio& audio = Audio::getInstance();
+    audio.playMono16Sound(Audio::getSound(Audio::Sound::CallEnd));
+}
+
 /**
  * @brief Widget::onStopNotification Stop the notification sound.
  */
@@ -997,6 +1003,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(friendForm, &ChatForm::incomingNotification, this, &Widget::incomingNotification);
     connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
     connect(friendForm, &ChatForm::stopNotification, this, &Widget::onStopNotification);
+    connect(friendForm, &ChatForm::endCallNotification, this, &Widget::onCallEnd);
     connect(friendForm, &ChatForm::rejectCall, this, &Widget::onRejectCall);
 
     connect(widget, &FriendWidget::newWindowOpened, this, &Widget::openNewDialog);
