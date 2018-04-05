@@ -281,6 +281,9 @@ public:
     bool getForceTCP() const override;
     void setForceTCP(bool enabled) override;
 
+    bool getEnableLanDiscovery() const override;
+    void setEnableLanDiscovery(bool enabled) override;
+
     QString getProxyAddr() const override;
     void setProxyAddr(const QString& address) override;
 
@@ -294,6 +297,7 @@ public:
 
     SIGNAL_IMPL(Settings, enableIPv6Changed, bool enabled)
     SIGNAL_IMPL(Settings, forceTCPChanged, bool enabled)
+    SIGNAL_IMPL(Settings, enableLanDiscoveryChanged, bool enabled)
     SIGNAL_IMPL(Settings, proxyTypeChanged, ICoreSettings::ProxyType type)
     SIGNAL_IMPL(Settings, proxyAddressChanged, const QString& address)
     SIGNAL_IMPL(Settings, proxyPortChanged, quint16 port)
@@ -583,6 +587,7 @@ private:
     bool groupAlwaysNotify;
 
     bool forceTCP;
+    bool enableLanDiscovery;
 
     ICoreSettings::ProxyType proxyType;
     QString proxyAddr;
