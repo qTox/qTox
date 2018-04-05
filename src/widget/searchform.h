@@ -34,6 +34,7 @@ public:
     void removeSearchPhrase();
     QString getSearchPhrase() const;
     void setFocusEditor();
+    void insertEditor(const QString &text);
 
 protected:
     virtual void showEvent(QShowEvent* event) final override;

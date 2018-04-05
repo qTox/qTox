@@ -65,6 +65,11 @@ void SearchForm::setFocusEditor()
     searchLine->setFocus();
 }
 
+void SearchForm::insertEditor(const QString &text)
+{
+    searchLine->insert(text);
+}
+
 void SearchForm::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
