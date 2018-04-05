@@ -314,6 +314,9 @@ void ProfileForm::onAvatarClicked()
     const QString path = QFileDialog::getOpenFileName(Q_NULLPTR, tr("Choose a profile picture"),
                                                 QDir::homePath(), filter, nullptr);
 
+    if (path.isEmpty()) {
+        return;
+    }
     const IProfileInfo::SetAvatarResult result = profileInfo->setAvatar(path);
     if (result == IProfileInfo::SetAvatarResult::OK) {
         return;
