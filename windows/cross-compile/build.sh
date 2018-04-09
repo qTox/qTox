@@ -911,7 +911,7 @@ then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  git clone "$TOXCORE_REPO"
+  git clone "$TOXCORE_REPO" c-toxcore
   cd c-toxcore
   git checkout "$TOXCORE_VERSION"
   # do not check hash for a custom version of c-toxcore
