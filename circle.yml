@@ -41,7 +41,7 @@ compile:
     - if [ "$CI_PULL_REQUESTS""x" == "x" ]; then
       echo "Download Artifacts for this build at https://circleci.com/api/v1/project/qTox/qTox/latest/artifacts/0/\$CIRCLE_ARTIFACTS/x86_64/qtox_x86_64_release.zip?filter=completed&branch=$CIRCLE_BRANCH" ;
       else
-      echo "Download Artifacts for this PR at https://circleci.com/api/v1/project/$CIRCLE_PR_USERNAME/qTox/latest/artifacts/0/\$CIRCLE_ARTIFACTS/x86_64/qtox_x86_64_release.zip?filter=completed&branch=$CIRCLE_BRANCH" ;
+      echo "Download Artifacts for this PR at https://circleci.com/api/v1/project/$CIRCLE_PROJECT_USERNAME/qTox/latest/artifacts/0/\$CIRCLE_ARTIFACTS/x86_64/qtox_x86_64_release.zip?filter=completed&branch=$CIRCLE_BRANCH" ;
       fi
 # --------- mark if custom c-toxcore version was used ----------
     - if [ "$TOXCORE_CUSTOM_VERSION""x" != "x" ]; then touch $CIRCLE_ARTIFACTS/"$BUILD__"/__CUSTOM_TOXCORE_VERSION__ ; fi
