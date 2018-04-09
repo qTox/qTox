@@ -800,7 +800,7 @@ then
   rm opus*.tar.gz
   cd opus*
 
-  CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
+  CFLAGS="-O3 -g0" ./configure --host="$ARCH-w64-mingw32" \
                                --prefix="$OPUS_PREFIX_DIR" \
                                --disable-shared \
                                --enable-static \
@@ -873,7 +873,7 @@ then
     VPX_TARGET=x86-win32-gcc
   fi
 
-  CROSS="$ARCH-w64-mingw32-" ./configure --target="$VPX_TARGET" \
+  CROSS="$ARCH-w64-mingw32-" CXXLAGS="-O3 -g0" CFLAGS="-O3 -g0" ./configure --target="$VPX_TARGET" \
                                          --prefix="$VPX_PREFIX_DIR" \
                                          --disable-shared \
                                          --enable-static \
@@ -895,18 +895,28 @@ fi
 # Toxcore
 
 TOXCORE_PREFIX_DIR="$DEP_DIR/libtoxcore"
-TOXCORE_VERSION=0.2.1
-TOXCORE_HASH=1496164954941b175493fba02bf3115118c0d29feb46cd1ff458a1a11eab1597
+TOXCORE_CUSTOM_VERSION=${TOXCORE_CUSTOM_VERSION:-}
+
+if [ "$TOXCORE_CUSTOM_VERSION""x" == "x" ]; then
+  TOXCORE_REPO="https://github.com/TokTok/c-toxcore"
+  TOXCORE_VERSION="v0.2.1"
+  TOXCORE_HASH="e0a52c42434cf7827e138e97014d4e5743cecb6eae111f459de04b0e86526185"
+else
+  echo "Using custom c-toxcore repo:$TOXCORE_REPO version:$TOXCORE_VERSION hash:$TOXCORE_HASH"
+fi
+
 if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]
 then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  wget https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz -O c-toxcore-$TOXCORE_VERSION.tar.gz
-  check_sha256 "$TOXCORE_HASH" "c-toxcore-$TOXCORE_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf c-toxcore*.tar.gz
-  rm c-toxcore*.tar.gz
-  cd c-toxcore*
+  git clone "$TOXCORE_REPO"
+  cd c-toxcore
+  git checkout "$TOXCORE_VERSION"
+  # do not check hash for a custom version of c-toxcore
+  if [ "$TOXCORE_CUSTOM_VERSION""x" == "x" ]; then
+    check_sha256_git "$TOXCORE_HASH"
+  fi
 
   mkdir -p build
   cd build
@@ -943,7 +953,7 @@ then
   cd ..
 
   cd ..
-  rm -rf ./c-toxcore*
+  rm -rf ./c-toxcore
 else
   echo "Using cached build of Toxcore `cat $TOXCORE_PREFIX_DIR/done`"
 fi
