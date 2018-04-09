@@ -873,14 +873,15 @@ then
     VPX_TARGET=x86-win32-gcc
   fi
 
-  CROSS="$ARCH-w64-mingw32-" CXXLAGS="-O3 -g0" CFLAGS="-O3 -g0" ./configure --target="$VPX_TARGET" \
-                                         --prefix="$VPX_PREFIX_DIR" \
-                                         --disable-shared \
-                                         --enable-static \
-                                         --disable-examples \
-                                         --disable-tools \
-                                         --disable-docs \
-                                         --disable-unit-tests
+  CROSS="$ARCH-w64-mingw32-" CXXLAGS="-O3 -g0" CFLAGS="-O3 -g0" \
+                            ./configure --target="$VPX_TARGET" \
+                                        --prefix="$VPX_PREFIX_DIR" \
+                                        --disable-shared \
+                                        --enable-static \
+                                        --disable-examples \
+                                        --disable-tools \
+                                        --disable-docs \
+                                        --disable-unit-tests
   make
   make install
   echo -n $VPX_VERSION > $VPX_PREFIX_DIR/done
