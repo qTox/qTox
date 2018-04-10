@@ -313,7 +313,9 @@ bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
     int stereoFlag = channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     const uint32_t sampleRate = AUDIO_SAMPLE_RATE;
     const uint16_t frameDuration = AUDIO_FRAME_DURATION;
-    const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * channels;
+    const int bytesPerSample = 2;
+    const int safetyFactor = 2;
+    const ALCsizei bufSize = AUDIO_FRAME_SAMPLE_COUNT * channels *  bytesPerSample * safetyFactor;
 
     const QByteArray qDevName = deviceName.toUtf8();
     const ALchar* tmpDevName = qDevName.isEmpty() ? nullptr : qDevName.constData();
@@ -585,13 +587,11 @@ void OpenAL::doInput()
         return;
     }
 
-    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT; ++i) {
+    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * channels; ++i) {
         // gain amplification with clipping to 16-bit boundaries
-        int ampPCM = qBound<int>(std::numeric_limits<int16_t>::min(),
+        inputBuffer[i] = qBound<int16_t>(std::numeric_limits<int16_t>::min(),
                                  qRound(inputBuffer[i] * OpenAL::inputGainFactor()),
                                  std::numeric_limits<int16_t>::max());
-
-        inputBuffer[i] = static_cast<int16_t>(ampPCM);
     }
 
     emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT, channels, AUDIO_SAMPLE_RATE);
