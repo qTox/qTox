@@ -353,6 +353,8 @@ public:
     void setAudioThreshold(qreal percent) override;
 
     int getOutVolume() const override;
+    int getOutVolumeMin() const override { return 0; }
+    int getOutVolumeMax() const override { return 100; }
     void setOutVolume(int volume) override;
 
     int getAudioBitrate() const override;
