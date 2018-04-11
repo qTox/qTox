@@ -62,6 +62,8 @@ public:
 
     virtual qreal outputVolume() const = 0;
     virtual void setOutputVolume(qreal volume) = 0;
+    virtual qreal maxOutputVolume() const = 0;
+    virtual qreal minOutputVolume() const = 0;
 
     virtual qreal minInputGain() const = 0;
     virtual void setMinInputGain(qreal dB) = 0;
@@ -73,10 +75,7 @@ public:
     virtual void setInputGain(qreal dB) = 0;
 
     virtual qreal minInputThreshold() const = 0;
-    virtual void setMinInputThreshold(qreal dB) = 0;
-
     virtual qreal maxInputThreshold() const = 0;
-    virtual void setMaxInputThreshold(qreal dB) = 0;
 
     virtual qreal getInputThreshold() const = 0;
     virtual void setInputThreshold(qreal percent) = 0;
@@ -109,8 +108,9 @@ protected:
     // Public default audio settings
     static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000;
     static constexpr uint32_t AUDIO_FRAME_DURATION = 20;
-    static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT =
+    static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL =
         AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
+    uint32_t AUDIO_FRAME_SAMPLE_COUNT_TOTAL = 0;
 
 signals:
     void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
