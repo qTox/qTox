@@ -112,6 +112,7 @@ bool OpenAL2::loadOpenALExtensions(ALCdevice* dev)
 
     GET_PROC_ADDR(dev, alGetSourcedvSOFT);
     checkAlcError(dev);
+    alGetSourcedvSOFT = nullptr;
     if (!alGetSourcedvSOFT) {
         qDebug() << "Failed to load alGetSourcedvSOFT function!";
         return false;
@@ -318,15 +319,21 @@ void OpenAL2::doOutput()
     }
 
     ALdouble latency[2] = {0};
-    alGetSourcedvSOFT(alProxySource, AL_SEC_OFFSET_LATENCY_SOFT, latency);
+    if (echoCancelSupported) {
+        alGetSourcedvSOFT(alProxySource, AL_SEC_OFFSET_LATENCY_SOFT, latency);
+    }
+
     checkAlError();
 
     ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT] = {0};
-    alcMakeContextCurrent(alProxyContext);
-    alcRenderSamplesSOFT(alProxyDev, outBuf, AUDIO_FRAME_SAMPLE_COUNT);
-    checkAlcError(alProxyDev);
+    if (echoCancelSupported) {
+        alcMakeContextCurrent(alProxyContext);
+        alcRenderSamplesSOFT(alProxyDev, outBuf, AUDIO_FRAME_SAMPLE_COUNT);
+        checkAlcError(alProxyDev);
 
-    alcMakeContextCurrent(alOutContext);
+        alcMakeContextCurrent(alOutContext);
+    }
+
     alBufferData(bufids[0], AL_FORMAT_MONO16, outBuf, AUDIO_FRAME_SAMPLE_COUNT * 2, AUDIO_SAMPLE_RATE);
     alSourceQueueBuffers(alProxySource, 1, bufids);
 
