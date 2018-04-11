@@ -54,20 +54,28 @@ OpenAL::OpenAL()
     alcGetError(nullptr);
 
     audioThread->setObjectName("qTox Audio");
+    QObject::connect(audioThread, &QThread::finished, &voiceTimer, &QTimer::stop);
+    QObject::connect(audioThread, &QThread::finished, &captureTimer, &QTimer::stop);
+    QObject::connect(audioThread, &QThread::finished, &playMono16Timer, &QTimer::stop);
     QObject::connect(audioThread, &QThread::finished, audioThread, &QThread::deleteLater);
 
     moveToThread(audioThread);
 
     voiceTimer.setSingleShot(true);
+    voiceTimer.moveToThread(audioThread);
     connect(this, &Audio::startActive, &voiceTimer, static_cast<void (QTimer::*)(int)>(&QTimer::start));
     connect(&voiceTimer, &QTimer::timeout, this, &Audio::stopActive);
 
     connect(&captureTimer, &QTimer::timeout, this, &OpenAL::doAudio);
     captureTimer.setInterval(AUDIO_FRAME_DURATION / 2);
     captureTimer.setSingleShot(false);
-    captureTimer.start();
+    captureTimer.moveToThread(audioThread);
+    // TODO for Qt 5.6+: use qOverload
+    connect(audioThread, &QThread::started, &captureTimer, static_cast<void (QTimer::*)(void)>(&QTimer::start));
+
     connect(&playMono16Timer, &QTimer::timeout, this, &OpenAL::playMono16SoundCleanup);
     playMono16Timer.setSingleShot(true);
+    playMono16Timer.moveToThread(audioThread);
 
     audioThread->start();
 }
@@ -413,7 +421,8 @@ void OpenAL::playMono16Sound(const QByteArray& data)
     alSourcePlay(alMainSource);
 
     int durationMs = data.size() * 1000 / 2 / 44100;
-    playMono16Timer.start(durationMs + 50);
+//    QMetaObject::invokeMethod(this, "startPlayMono16Timer", Q_ARG(int, durationMs + 50));
+    QMetaObject::invokeMethod(&playMono16Timer, "start", Q_ARG(int, durationMs + 50));
 }
 
 void OpenAL::playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
