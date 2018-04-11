@@ -26,6 +26,8 @@ public:
     virtual void setAudioThreshold(qreal percent) = 0;
 
     virtual int getOutVolume() const = 0;
+    virtual int getOutVolumeMin() const = 0;
+    virtual int getOutVolumeMax() const = 0;
     virtual void setOutVolume(int volume) = 0;
 
     virtual int getAudioBitrate() const = 0;
