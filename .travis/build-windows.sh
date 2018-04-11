@@ -72,6 +72,11 @@ then
   exit 1
 fi
 
+# make the build stage visible to the deploy process
+touch "$STAGE"
+
+# for debugging of the stage files
+echo $PWD
 
 # Just make sure those exist, makes logic easier
 mkdir -p "$CACHE_DIR"
