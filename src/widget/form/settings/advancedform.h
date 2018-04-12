@@ -49,6 +49,7 @@ private slots:
     // Connection
     void on_cbEnableIPv6_stateChanged();
     void on_cbEnableUDP_stateChanged();
+    void on_cbEnableLanDiscovery_stateChanged();
     void on_proxyAddr_editingFinished();
     void on_proxyPort_valueChanged(int port);
     void on_proxyType_currentIndexChanged(int index);
