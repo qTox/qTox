@@ -39,6 +39,7 @@ struct VideoMode
     operator bool() const;
     bool operator==(const VideoMode& other) const;
     uint32_t norm(const VideoMode& other) const;
+    uint32_t tolerance() const;
 };
 
 #endif // VIDEOMODE_H

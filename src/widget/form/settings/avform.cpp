@@ -230,6 +230,8 @@ void AVForm::selectBestModes(QVector<VideoMode>& allVideoModes)
     idealModes[480] = VideoMode(854, 480);
     idealModes[720] = VideoMode(1280, 720);
     idealModes[1080] = VideoMode(1920, 1080);
+    idealModes[1440] = VideoMode(2560, 1440);
+    idealModes[2160] = VideoMode(3840, 2160);
 
     std::map<int, int> bestModeInds;
     for (int i = 0; i < allVideoModes.size(); ++i) {
@@ -244,7 +246,7 @@ void AVForm::selectBestModes(QVector<VideoMode>& allVideoModes)
             VideoMode idealMode = iter->second;
             // don't take approximately correct resolutions unless they really
             // are close
-            if (mode.norm(idealMode) > 300)
+            if (mode.norm(idealMode) > idealMode.tolerance())
                 continue;
 
             if (bestModeInds.find(res) == bestModeInds.end()) {
