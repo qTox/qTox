@@ -1,6 +1,6 @@
 /*
     Copyright (c) 2014 Thilo Borgmann <thilo.borgmann@mail.de>
-    Copyright © 2015 by The qTox Project Contributors
+    Copyright © 2015-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
