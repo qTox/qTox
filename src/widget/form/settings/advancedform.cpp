@@ -180,6 +180,11 @@ void AdvancedForm::on_cbEnableUDP_stateChanged()
     bodyUI->cbEnableLanDiscovery->setEnabled(enableUdp);
 }
 
+void AdvancedForm::on_cbEnableLanDiscovery_stateChanged()
+{
+    Settings::getInstance().setEnableLanDiscovery(bodyUI->cbEnableLanDiscovery->isChecked());
+}
+
 void AdvancedForm::on_proxyAddr_editingFinished()
 {
     Settings::getInstance().setProxyAddr(bodyUI->proxyAddr->text());
