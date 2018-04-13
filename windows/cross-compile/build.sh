@@ -800,7 +800,7 @@ then
   rm opus*.tar.gz
   cd opus*
 
-  CFLAGS="-O3 -g0" ./configure --host="$ARCH-w64-mingw32" \
+  CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
                                --prefix="$OPUS_PREFIX_DIR" \
                                --disable-shared \
                                --enable-static \
@@ -873,7 +873,7 @@ then
     VPX_TARGET=x86-win32-gcc
   fi
 
-  CROSS="$ARCH-w64-mingw32-" CXXLAGS="-O3 -g0" CFLAGS="-O3 -g0" \
+  CROSS="$ARCH-w64-mingw32-" CXXFLAGS="-O2 -g0" CFLAGS="-O2 -g0" \
                             ./configure --target="$VPX_TARGET" \
                                         --prefix="$VPX_PREFIX_DIR" \
                                         --disable-shared \
