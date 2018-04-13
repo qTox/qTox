@@ -143,14 +143,15 @@ void Widget::init()
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
     layout()->setContentsMargins(0, 0, 0, 0);
-    ui->friendList->setStyleSheet(
-        Style::resolve(Style::getStylesheet(":/ui/friendList/friendList.css")));
+    stylesheetFriendList = Style::getStylesheet(":/ui/friendList/friendList.css");
+    ui->friendList->setStyleSheet(*stylesheetFriendList.get());
 
     profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
     profilePicture->setClickable(true);
     profilePicture->setObjectName("selfAvatar");
-    profilePicture->setStyleSheet(Style::getStylesheet(":ui/window/profile.css"));
+    stylesheetProfile = Style::getStylesheet(":ui/window/profile.css");
+    profilePicture->setStyleSheet(*stylesheetProfile.get());
     ui->myProfile->insertWidget(0, profilePicture);
     ui->myProfile->insertSpacing(1, 7);
 
@@ -193,8 +194,9 @@ void Widget::init()
 
     ui->searchContactFilterBox->setMenu(filterMenu);
 
+    stylesheetStatusPanel = Style::getStylesheet(":/ui/window/statusPanel.css");
 #ifndef Q_OS_MAC
-    ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    ui->statusHead->setStyleSheet(*stylesheetStatusPanel.get());
 #endif
 
     contactListWidget = new FriendListWidget(this, Settings::getInstance().getGroupchatPosition());
@@ -204,7 +206,7 @@ void Widget::init()
 
     ui->statusLabel->setEditable(true);
 
-    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    ui->statusPanel->setStyleSheet(*stylesheetStatusPanel.get());
 
     QMenu* statusButtonMenu = new QMenu(ui->statusButton);
     statusButtonMenu->addAction(statusOnline);
@@ -2186,13 +2188,15 @@ void Widget::clearAllReceipts()
 
 void Widget::reloadTheme()
 {
-    this->setStyleSheet(Style::getStylesheet(":/ui/window/general.css"));
-    QString statusPanelStyle = Style::getStylesheet(":/ui/window/statusPanel.css");
-    ui->tooliconsZone->setStyleSheet(Style::getStylesheet(":/ui/tooliconsZone/tooliconsZone.css"));
-    ui->statusPanel->setStyleSheet(statusPanelStyle);
-    ui->statusHead->setStyleSheet(statusPanelStyle);
-    ui->friendList->setStyleSheet(Style::getStylesheet(":/ui/friendList/friendList.css"));
-    ui->statusButton->setStyleSheet(Style::getStylesheet(":/ui/statusButton/statusButton.css"));
+    stylesheetGeneral = Style::getStylesheet(":/ui/window/general.css");
+    QWidget::setStyleSheet(*stylesheetGeneral.get());
+    stylesheetToolIcon = Style::getStylesheet(":/ui/tooliconsZone/tooliconsZone.css");
+    ui->tooliconsZone->setStyleSheet(*stylesheetToolIcon.get());
+    ui->statusPanel->setStyleSheet(*stylesheetStatusPanel.get());
+    ui->statusHead->setStyleSheet(*stylesheetStatusPanel.get());
+    ui->friendList->setStyleSheet(*stylesheetFriendList.get());
+    stylesheetStatusButton = Style::getStylesheet(":/ui/statusButton/statusButton.css");
+    ui->statusButton->setStyleSheet(*stylesheetStatusButton.get());
     contactListWidget->reDraw();
 
     for (Friend* f : FriendList::getAllFriends()) {

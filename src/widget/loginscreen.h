@@ -21,6 +21,8 @@
 #ifndef LOGINSCREEN_H
 #define LOGINSCREEN_H
 
+#include <memory>
+
 #include <QShortcut>
 #include <QToolButton>
 #include <QDialog>
@@ -72,6 +74,7 @@ private:
     Ui::LoginScreen* ui;
     QShortcut quitShortcut;
     Profile* profile{nullptr};
+    std::shared_ptr<QString> stylesheet;
 };
 
 #endif // LOGINSCREEN_H

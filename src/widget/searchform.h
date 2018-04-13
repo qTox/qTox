@@ -22,6 +22,7 @@
 
 #include <QWidget>
 #include <QLineEdit>
+#include <memory>
 
 class QPushButton;
 class LineEdit;
@@ -43,6 +44,7 @@ private:
     // TODO: Merge with 'createButton' from chatformheader.cpp
     QPushButton* createButton(const QString& name, const QString& state);
 
+    std::shared_ptr<QString> stylesheet;
     QPushButton* upButton;
     QPushButton* downButton;
     QPushButton* hideButton;

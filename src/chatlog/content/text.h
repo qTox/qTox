@@ -23,6 +23,7 @@
 #include "../chatlinecontent.h"
 
 #include <QFont>
+#include <memory>
 
 class QTextDocument;
 
@@ -92,7 +93,7 @@ private:
     qreal ascent = 0.0;
     qreal width = 0.0;
     QFont defFont;
-    QString defStyleSheet;
+    std::shared_ptr<QString> defStyleSheet;
     QColor color;
 };
 

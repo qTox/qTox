@@ -317,7 +317,7 @@ void Text::regenerate()
 
             doc->setPlainText(elidedText);
         } else {
-            doc->setDefaultStyleSheet(defStyleSheet);
+            doc->setDefaultStyleSheet(*defStyleSheet.get());
             doc->setHtml(text);
         }
 

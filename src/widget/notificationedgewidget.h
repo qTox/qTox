@@ -20,6 +20,7 @@
 #ifndef NOTIFICATIONEDGEWIDGET_H
 #define NOTIFICATIONEDGEWIDGET_H
 
+#include <memory>
 #include <QWidget>
 
 class QLabel;
@@ -45,6 +46,7 @@ protected:
 
 private:
     QLabel* textLabel;
+    std::shared_ptr<QString> stylesheet;
 };
 
 #endif // NOTIFICATIONEDGEWIDGET_H

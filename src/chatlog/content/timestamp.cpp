@@ -21,8 +21,8 @@
 
 Timestamp::Timestamp(const QDateTime& time, const QString& format, const QFont& font)
     : Text(time.toString(format), font, false, time.toString(format))
+    , time(time)
 {
-    this->time = time;
 }
 
 QDateTime Timestamp::getTime()

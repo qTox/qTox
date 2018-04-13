@@ -22,6 +22,7 @@
 
 #include <QBoxLayout>
 #include <QFrame>
+#include <memory>
 
 class ContentLayout : public QVBoxLayout
 {
@@ -36,6 +37,10 @@ public:
     QHBoxLayout mainHLineLayout;
     QWidget* mainContent;
     QWidget* mainHead;
+#ifndef Q_OS_MAC
+    std::shared_ptr<QString> stylesheetMainHead;
+    std::shared_ptr<QString> stylesheetMainContent;
+#endif
 
 private:
     void init();

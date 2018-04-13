@@ -60,9 +60,10 @@ ContentDialog::ContentDialog(QWidget* parent)
     , activeChatroomWidget(nullptr)
     , videoSurfaceSize(QSize())
     , videoCount(0)
+    , stylesheetContentDialog{Style::getStylesheet(":/ui/contentDialog/contentDialog.css")}
 {
     const Settings& s = Settings::getInstance();
-    setStyleSheet(Style::getStylesheet(":/ui/contentDialog/contentDialog.css"));
+    setStyleSheet(*stylesheetContentDialog.get());
 
     friendLayout->setMargin(0);
     friendLayout->setSpacing(0);
@@ -86,7 +87,8 @@ ContentDialog::ContentDialog(QWidget* parent)
     friendScroll->setFrameStyle(QFrame::NoFrame);
     friendScroll->setLayoutDirection(Qt::RightToLeft);
     friendScroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    friendScroll->setStyleSheet(Style::getStylesheet(":/ui/friendList/friendList.css"));
+    stylesheetFriendList = Style::getStylesheet(":/ui/friendList/friendList.css");
+    friendScroll->setStyleSheet(*stylesheetFriendList.get());
     friendScroll->setWidgetResizable(true);
     friendScroll->setWidget(friendWidget);
 

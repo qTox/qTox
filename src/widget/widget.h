@@ -307,6 +307,12 @@ private:
     QMap<uint32_t, ChatForm*> chatForms;
     QMap<uint32_t, GroupChatForm*> groupChatForms;
 
+    std::shared_ptr<QString> stylesheetFriendList;
+    std::shared_ptr<QString> stylesheetProfile;
+    std::shared_ptr<QString> stylesheetStatusPanel;
+    std::shared_ptr<QString> stylesheetGeneral;
+    std::shared_ptr<QString> stylesheetToolIcon;
+    std::shared_ptr<QString> stylesheetStatusButton;
 #ifdef Q_OS_MAC
     QAction* fileMenu;
     QAction* editMenu;

@@ -112,8 +112,10 @@ void ContentLayout::init()
     }
 
 #ifndef Q_OS_MAC
-    mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
-    mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
+    stylesheetMainHead = Style::getStylesheet(":ui/settings/mainHead.css");
+    mainHead->setStyleSheet(*stylesheetMainHead.get());
+    stylesheetMainContent = Style::getStylesheet(":ui/settings/mainContent.css");
+    mainContent->setStyleSheet(*stylesheetMainContent.get());
 #endif
 
     mainHLineLayout.addWidget(&mainHLine);

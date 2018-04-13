@@ -53,6 +53,7 @@ private:
     QStackedWidget stack;
     QVBoxLayout layout;
     QList<std::shared_ptr<QIcon>> emoticonsIcons;
+    std::shared_ptr<QString> stylesheet;
 
 public:
     QSize sizeHint() const override;

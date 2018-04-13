@@ -181,7 +181,8 @@ void FileTransferWidget::setBackgroundColor(const QColor& c, bool whiteFont)
 
     setProperty("fontColor", whiteFont ? "white" : "black");
 
-    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/filetransferWidget.css"));
+    stylesheet = Style::getStylesheet(":/ui/fileTransferInstance/filetransferWidget.css");
+    setStyleSheet(*stylesheet.get());
     Style::repolish(this);
 
     update();
