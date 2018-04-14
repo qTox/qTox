@@ -2,6 +2,9 @@
 
 set -eu -o pipefail
 
+# additional flags for apt-get, used for CI
+readonly APT_FLAGS=$1
+
 apt_install() {
     local apt_packages=(
         automake
@@ -31,7 +34,7 @@ apt_install() {
         qttools5-dev-tools
     )
 
-    sudo apt-get install "${apt_packages[@]}"
+    sudo apt-get install $APT_FLAGS "${apt_packages[@]}"
 }
 
 pacman_install() {
