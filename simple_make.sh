@@ -31,7 +31,7 @@ apt_install() {
         qttools5-dev-tools
     )
 
-    sudo apt-get install "${apt_packages[@]}"
+    sudo apt-get install -y --no-install-recommends "${apt_packages[@]}"
 }
 
 pacman_install() {
