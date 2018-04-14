@@ -114,7 +114,7 @@ namespace
 {
 
 template <class T, class Fun>
-QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
+QPushButton* createButton(const QString& name, T* self, Fun onClickSlot, QString& stylesheet)
 {
     QPushButton* btn = new QPushButton();
     // Fix for incorrect layouts on OS X as per
@@ -122,7 +122,7 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
     btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     btn->setObjectName(name);
     btn->setProperty("state", "green");
-    btn->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    btn->setStyleSheet(stylesheet);
     QObject::connect(btn, &QPushButton::clicked, self, onClickSlot);
     return btn;
 }
@@ -133,6 +133,10 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     : QWidget(parent, Qt::Window)
     , audioInputFlag(false)
     , audioOutputFlag(false)
+    , stylesheetButton{Style::getStylesheet(STYLE_PATH)}
+    , stylesheetMsgEdit{Style::getStylesheet(":/ui/msgEdit/msgEdit.css")}
+    , stylesheetChatArea{Style::getStylesheet(":/ui/chatArea/chatArea.css")}
+    , stylesheetChatHead{Style::getStylesheet(":/ui/chatArea/chatHead.css")}
 {
     curRow = 0;
     headWidget = new ChatFormHeader();
@@ -148,11 +152,11 @@ GenericChatForm::GenericChatForm(QWidget* parent)
 
     msgEdit = new ChatTextEdit();
 
-    sendButton = createButton("sendButton", this, &GenericChatForm::onSendTriggered);
-    emoteButton = createButton("emoteButton", this, &GenericChatForm::onEmoteButtonClicked);
+    sendButton = createButton("sendButton", this, &GenericChatForm::onSendTriggered, *stylesheetButton);
+    emoteButton = createButton("emoteButton", this, &GenericChatForm::onEmoteButtonClicked, *stylesheetButton);
 
-    fileButton = createButton("fileButton", this, &GenericChatForm::onAttachClicked);
-    screenshotButton = createButton("screenshotButton", this, &GenericChatForm::onScreenshotClicked);
+    fileButton = createButton("fileButton", this, &GenericChatForm::onAttachClicked, *stylesheetButton);
+    screenshotButton = createButton("screenshotButton", this, &GenericChatForm::onScreenshotClicked, *stylesheetButton);
 
     // TODO: Make updateCallButtons (see ChatForm) abstract
     //       and call here to set tooltips.
@@ -164,8 +168,7 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     fileLayout->setSpacing(0);
     fileLayout->setMargin(0);
 
-    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css")
-                           + fontToCss(s.getChatMessageFont(), "QTextEdit"));
+    msgEdit->setStyleSheet(*stylesheetMsgEdit + fontToCss(Settings::getInstance().getChatMessageFont(), "QTextEdit"));
     msgEdit->setFixedHeight(MESSAGE_EDIT_HEIGHT);
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
@@ -231,8 +234,8 @@ GenericChatForm::GenericChatForm(QWidget* parent)
 
     connect(chatWidget, &ChatLog::workerTimeoutFinished, this, &GenericChatForm::onContinueSearch);
 
-    chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
-    headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
+    chatWidget->setStyleSheet(*stylesheetChatArea);
+    headWidget->setStyleSheet(*stylesheetChatHead);
 
     fileFlyout->setFixedSize(FILE_FLYOUT_SIZE);
     fileFlyout->setParent(this);
@@ -520,8 +523,10 @@ void GenericChatForm::onChatMessageFontChanged(const QFont& font)
     chatWidget->fontChanged(font);
     chatWidget->forceRelayout();
     // message editor
-    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css")
-                           + fontToCss(font, "QTextEdit"));
+    std::shared_ptr<QString> newStyle = Style::getStylesheet(":/ui/msgEdit/msgEdit.css");
+    msgEdit->setStyleSheet(*newStyle + fontToCss(font, "QTextEdit"));
+    // preserve lifetime of our old stylesheet until new one is set
+    stylesheetMsgEdit = newStyle;
 }
 
 void GenericChatForm::addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,

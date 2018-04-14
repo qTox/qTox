@@ -60,7 +60,8 @@ LoginScreen::LoginScreen(QWidget* parent)
     connect(ui->importButton, &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
     reset();
-    this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
+    stylesheet = Style::getStylesheet(":/ui/loginScreen/loginScreen.css");
+    this->setStyleSheet(*stylesheet);
 
     retranslateUi();
     Translator::registerHandler(std::bind(&LoginScreen::retranslateUi, this), this);

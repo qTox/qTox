@@ -25,6 +25,7 @@
 
 #include <QMenu>
 #include <QWidget>
+#include <memory>
 
 /**
  * Spacing in px inserted when the author of the last message changes
@@ -169,6 +170,10 @@ protected:
     FlyoutOverlayWidget* fileFlyout;
     GenericNetCamView* netcam;
     Widget* parent;
+    std::shared_ptr<QString> stylesheetButton;
+    std::shared_ptr<QString> stylesheetMsgEdit;
+    std::shared_ptr<QString> stylesheetChatArea;
+    std::shared_ptr<QString> stylesheetChatHead;
 
     QPoint searchPoint;
     bool searchAfterLoadHistory;

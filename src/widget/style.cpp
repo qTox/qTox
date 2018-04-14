@@ -92,15 +92,32 @@ QStringList Style::getThemeColorNames()
 QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"),
                                          QColor("#c23716"), QColor("#4617b5")};
 
-QString Style::getStylesheet(const QString& filename, const QFont& baseFont)
-{
-    QFile file(filename);
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        qWarning() << "Stylesheet " << filename << " not found";
-        return QString();
-    }
+// stylesheet filename, font -> stylesheet
+std::map<std::pair<QString, QFont>, std::weak_ptr<QString>> Style::stylesheetsCache;
 
-    return resolve(file.readAll(), baseFont);
+// caller must hold on to the returned shared_ptr as long as they use the stylesheet
+std::shared_ptr<QString> Style::getStylesheet(const QString& filename, QFont baseFont)
+{
+    const std::pair<QString, QFont> cacheKey(filename, baseFont);
+    auto it = stylesheetsCache.find(cacheKey);
+    if (it != stylesheetsCache.end())
+    {
+        if (auto val = it->second.lock()) {
+            // cache hit
+            return val;
+        } else {
+            // miss, cache expired
+            std::shared_ptr<QString> newVal;
+            newVal = resolve(filename, baseFont);
+            it->second = newVal;
+            return newVal;
+        }
+    }
+    // miss, new style
+    std::shared_ptr<QString> newVal;
+    newVal = resolve(filename, baseFont);
+    stylesheetsCache.insert(std::make_pair(cacheKey, newVal));
+    return newVal;
 }
 
 QColor Style::getColor(Style::ColorPalette entry)
@@ -128,8 +145,15 @@ QFont Style::getFont(Style::Font font)
     return fonts[font];
 }
 
-QString Style::resolve(QString qss, const QFont& baseFont)
+std::shared_ptr<QString> Style::resolve(const QString& filename, QFont baseFont)
 {
+    QFile file{filename};
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+        qWarning() << "Stylesheet " << filename << " not found";
+        return std::make_shared<QString>("");
+    }
+    QString qss = file.readAll();
+
     if (dict.isEmpty()) {
         dict = {// colors
                 {"@green", Style::getColor(Style::Green).name()},
@@ -162,8 +186,7 @@ QString Style::resolve(QString qss, const QFont& baseFont)
     for (const QString& key : dict.keys()) {
         qss.replace(QRegularExpression(QString("%1\\b").arg(key)), dict[key]);
     }
-
-    return qss;
+    return std::make_shared<QString>(qss);
 }
 
 void Style::repolish(QWidget* w)
