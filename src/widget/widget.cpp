@@ -143,8 +143,7 @@ void Widget::init()
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
     layout()->setContentsMargins(0, 0, 0, 0);
-    ui->friendList->setStyleSheet(
-        Style::resolve(Style::getStylesheet(":/ui/friendList/friendList.css")));
+    ui->friendList->setStyleSheet(Style::getStylesheet(":/ui/friendList/friendList.css"));
 
     profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
