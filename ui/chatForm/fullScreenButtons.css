@@ -25,16 +25,18 @@ QAbstractButton:pressed
 
 QAbstractButton#volButtonFullScreen
 {
-    border-image: url(":/ui/chatForm/volButton.svg");
-    width: 27px;
-    height: 22px;
+    background-image: url(":/ui/chatForm/volButton.svg");
+    width: 11px;
+    height: 9px;
+    padding: 12px;
 }
 
 QAbstractButton#micButtonFullScreen
 {
-    border-image: url(":/ui/chatForm/micButton.svg");
-    width: 27px;
-    height: 22px;
+    background-image: url(":/ui/chatForm/micButton.svg");
+    width: 11px;
+    height: 9px;
+    padding: 12px;
 }
 
 QAbstractButton#videoButtonFullScreen
@@ -47,8 +49,9 @@ QAbstractButton#videoButtonFullScreen
 QAbstractButton#videoPreviewButton
 {
     background-image: url(":/ui/chatForm/videoPreview.svg");
-    width: 25px;
-    height: 23px;
+    width: 13px;
+    height: 13px;
+    padding: 10px;
 }
 
 QAbstractButton#exitFullScreenButton
@@ -56,19 +59,20 @@ QAbstractButton#exitFullScreenButton
     background-image: url(":/ui/chatForm/exitFullScreenButton.svg");
     width: 30px;
     height: 30px;
+    padding: 1px;
 }
 
 QAbstractButton#volButtonFullScreen[state="red"]
 {
-    border-image: url(":/ui/chatForm/volButtonRed.svg");
+    background-image: url(":/ui/chatForm/volButtonRed.svg");
 }
 
 QAbstractButton#micButtonFullScreen[state="red"]
 {
-    border-image: url(":/ui/chatForm/micButtonRed.svg");
+    background-image: url(":/ui/chatForm/micButtonRed.svg");
 }
 
 QAbstractButton#videoPreviewButton[state="red"]
 {
-    border-image: url(":/ui/chatForm/videoPreviewRed.svg");
+    background-image: url(":/ui/chatForm/videoPreviewRed.svg");
 }
