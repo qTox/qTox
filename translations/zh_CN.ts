@@ -380,7 +380,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>我们无法从该文件中找到任何可导入的联系人信息！</translation>
+        <translation>无法从该文件中找到任何可导入的联系人信息！</translation>
     </message>
     <message>
         <source>Tox ID</source>

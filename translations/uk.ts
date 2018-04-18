@@ -81,15 +81,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вмикає експерментальну звукову систему з підтримкою ехо пригнічування, потребує перезавантаження qTox.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>Увімкнути експерментальний аудіо бекенд</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Якість аудіо</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
@@ -97,23 +97,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Висока (64 кбіт)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Середня (32 кбіт)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Низька (16 кбіт)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Дуже низька (8 кбіт)</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Поріг</translation>
     </message>
 </context>
 <context>
@@ -230,7 +230,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Ручне</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -242,11 +242,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично приймати запрошення в груповий чат від цього контакту якщо встановлено.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично приймати запрошення в групи</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
@@ -354,7 +354,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tox ID є неприйнятним або не існує</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -363,7 +363,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Відрити список контактів</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>

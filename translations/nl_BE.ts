@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="sv">
+<TS version="2.0" language="nl_BE" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>Ljud/video</translation>
+        <translation>Audio/video</translation>
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>Standardupplösning</translation>
+        <translation>Standaardresolutie</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Inaktiverad</translation>
+        <translation>Uitgeschakeld</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation>Välj region</translation>
+        <translation>Selecteer regio</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation>Skärm %1</translation>
+        <translation>Scherm %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Ljudinställningar</translation>
+        <translation>Audio-instellingen</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Förstärkning</translation>
+        <translation>Versterking</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Uppspelningsenhet</translation>
+        <translation>Afspeelapparaat</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Använder skjutreglaget för att ställa in volym på dina högtalare.</translation>
+        <translation>Gebruik de schuifbalk voor het volume van uw speakers in te stellen.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Inspelningsenhet</translation>
+        <translation>Opnameapparaat</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Volym</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Videoinställningar</translation>
+        <translation>Video-instellingen</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Video-enhet</translation>
+        <translation>Video-apparaat</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -61,402 +61,400 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Ange upplösning för din kamera.
-Ju högre värden, desto bättre bildkvalitet kan dina vänner få.
-Tänk dock på att med bättre bildkvalitet behövs bättre internetanslutning.
-Ibland kanske din anslutning inte är bra nog för att hantera högre videokvalitet,
-vilket kan leda till problem med videosamtal.</translation>
+        <translation>Stel de resolutie van uw camera in.
+Hoe hoger de resolutie, hoe beter de videokwaliteit die uw vrienden te zien krijgen.
+Let er echter op dat ge voor een hogere resolutie ook een betere internetverbinding nodig hebt.
+Het is mogelijk dat uw internetverbinding niet snel genoeg is voor een hogere videokwaliteit te ondersteunen,
+wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>Upplösning</translation>
+        <translation>Resolutie</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Skanna om enheter</translation>
+        <translation>Apparaten opnieuw scannen</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation>Prova ljud</translation>
+        <translation>Testgeluid</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>Aktiverar experimentell ljud-backend med ekoborttagningsstöd, kräver att qTox startas om för att träda i kraft.</translation>
+        <translation>Schakelt den experimentelen audioback-end met ondersteuning voor echo-cancelling in. qTox moet opnieuw opstarten voor de wijziging door te voeren.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation>Aktivera experimentell ljud-backend</translation>
+        <translation>Experimentelen audioback-end inschakelen</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation>Ljudkvalitet</translation>
+        <translation>Audiokwaliteit</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Skickad ljudkvalitet. Välj en lägre inställning om din bandbredd är för låg eller om du vill minska på dataanvändningen.</translation>
+        <translation>Geluidskwaliteit van verstuurde audio. Verlaag deze instelling als ge te weinig bandbreedte hebt, of als ge uw internetverbruik wilt beperken.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation>Hög (64 kbps)</translation>
+        <translation>Hoog (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation>Medium (32 kbps)</translation>
+        <translation>Gemiddeld (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation>Låg (16 kbps)</translation>
+        <translation>Laag (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation>Väldigt låg (8 kbps)</translation>
+        <translation>Zeer laag (8 kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Drempel</translation>
     </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
+        <source>About</source>
+        <translation>Over</translation>
+    </message>
+    <message>
         <source>Restart qTox to install version %1</source>
-        <translation>Starta om qTox för att installera version %1</translation>
+        <translation>Herstart qTox voor versie %1 te installeren</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation>qTox laddar ner uppdatering %1</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>Om</translation>
+        <translation>qTox is update %1 aan het downloaden</translation>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation>Ursprunglig författare: %1</translation>
+        <translation>Oorspronkelijke auteur: %1</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation>Du använder qTox version %1.</translation>
+        <translation>Ge gebruikt qTox-versie %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation>Inchecknings-hash: %1</translation>
+        <translation>Commit-hash: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation>toxcore-version: %1</translation>
+        <translation>toxcore-versie: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation>Qt-version: %1</translation>
+        <translation>Qt-versie: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>En lista över alla kända problem kan hittas på vår %1 på Github. Om du upptäcker ett fel eller säkerhetsproblem inom qTox, vänligen rapportera det i enlighet med riktlinjerna i vår wikiartikel %2.</translation>
+        <translation>Ne lijst met gekende problemen kunt g vinden op onzen %1 op GitHub. Als ge een probleem of beveiligingsfout in qTox tegenkomt, gelieve deze dan te melden volgens de richtlijnen in ons wiki-artikel %2.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation>Klicka här för att rapportera en bugg.</translation>
+        <translation>Klik hier voor een probleem te melden.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation>Se en fullständig lista över %1 på Github</translation>
+        <translation>Bekijk ne volledige lijst op %1 op GitHub</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">felbevakare</translation>
+        <translation>bugtracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Skriva användbara felrapporter</translation>
+        <translation>Nuttige probleemmeldingen schrijven</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">bidragare</translation>
+        <translation>bijdragers</translation>
     </message>
 </context>
 <context>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation>Dialoog</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished">användarnamn</translation>
+        <translation>gebruikersnaam</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">statusmeddelande</translation>
+        <translation>statusbericht</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Öppen nyckel:</translation>
+        <translation>Publieke sleutel:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">Använda alias:</translation>
+        <translation>Gebruikte aliassen:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">HISTORIK AV ALIAS</translation>
+        <translation>ALIASGESCHIEDENIS</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Acceptera filer från kontakt automatiskt om inställd</translation>
+        <translation>Indien ingesteld automatisch bestanden van dit contact aanvaarden</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">Acceptera automatiskt filer</translation>
+        <translation>Bestanden automatisch aanvaarden</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Standardkatalog för att spara filer:</translation>
+        <translation>Standaardlocatie voor bestanden in op te slaan:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">Acceptera automatiskt för den här kontakten är avaktiverad</translation>
+        <translation>Automatisch aanvaarden is uitgeschakeld voor dit contact</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished">Acceptera automatiskt samtal:</translation>
+        <translation>Oproep automatisch aanvaarden:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">Handbok</translation>
+        <translation>Handmatig</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Ljud</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">Ljud + Video</translation>
+        <translation>Audio + video</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished">Acceptera automatiskt gruppchattsinbjudningar från denna kontakt om inställd.</translation>
+        <translation>Indien ingesteld groepsgespreksuitnodigingen van dit contact automatisch aanvaarden.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished">Acceptera automatiskt gruppinbjudningar</translation>
+        <translation>Groepsgespreksuitnodigingen automatisch aanvaarden</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">Ta bort historia (operation kan inte ångras!)</translation>
+        <translation>Geschiedenis verwijderen (kan niet ongedaan gemaakt worden!)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">Anteckningar</translation>
+        <translation>Notities</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished">Inmatningsfält för anteckningar om kontakten</translation>
+        <translation>Invoerveld voor notities over het contact</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Du kan spara kommentar om denna kontakt här.</translation>
+        <translation>Hier kunt ge commentaren over dit contact opslaan.</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished">Historik raderad</translation>
+        <translation>Geschiedenis verwijderd</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">Chatthistorik med %1 raderad!</translation>
+        <translation>Gespreksgeschiedenis met %1 verwijderd!</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished">Välj en acceptera-automatiskt-katalog</translation>
+        <translation>Kies een map voor automatisch aanvaarde bestanden in op te slaan</translation>
     </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
-        <translation>Version</translation>
+        <translation>Versie</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
-        <translation>Laddar ner uppdatering: %p%</translation>
+        <translation>Update downloaden: %p%</translation>
     </message>
     <message>
         <source>License</source>
-        <translation>Licens</translation>
+        <translation>Licentie</translation>
     </message>
     <message>
         <source>Authors</source>
-        <translation>Författare</translation>
+        <translation>Auteurs</translation>
     </message>
     <message>
         <source>Known Issues</source>
-        <translation>Kända problem</translation>
+        <translation>Bekende problemen</translation>
     </message>
 </context>
 <context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
-        <translation>Lägg till vänner</translation>
-    </message>
-    <message>
-        <source>Send friend request</source>
-        <translation>Skicka vänförfrågning</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t add friend</source>
-        <translation>Kunde inte lägga till vän</translation>
+        <translation>Vrienden toevoegen</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation>Ogiltigt format på Tox-ID</translation>
+        <translation>Ongeldig Tox-ID-formaat</translation>
+    </message>
+    <message>
+        <source>Send friend request</source>
+        <translation>Vriendschapsverzoek sturen</translation>
     </message>
     <message>
         <source>Add a friend</source>
-        <translation>Lägg till en vän</translation>
+        <translation>Vriend toevoegen</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation>Vänförfrågningar</translation>
+        <translation>Vriendschapsverzoeken</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Acceptera</translation>
+        <translation>Aanvaarden</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation>Avvisa</translation>
+        <translation>Weigeren</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation>Kon vriend niet toevoegen</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>Tox-ID, antingen 76 hexadecimala tecken eller name@example.com</translation>
+        <translation>Tox-ID, oftewel 76 hexadecimale tekens, oftewel naam@voorbeeld.be</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation>Ange Tox-ID för din vän</translation>
+        <translation>Voer den Tox-ID van uwe vriend in</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation>Vänförfrågningsmeddelande</translation>
+        <translation>Bericht voor vriendschapsverzoek</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation>Skriv meddelande att skicka med vänförfrågningen eller lämna tomt för att skicka ett standardmeddelande</translation>
+        <translation>Voer een bericht in voor samen met het vriendschapsverzoek te sturen, of laat leeg voor een standaardbericht te sturen</translation>
     </message>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>%1 Tox-ID är felaktigt eller existerar inte</translation>
+        <translation>%1 Tox-ID is ongeldig of bestaat niet</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished">Du kan inte lägga till dig själv som vän!</translation>
+        <translation>Ge kunt uzelf niet als vriend toevoegen!</translation>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation>Öppna kontaktlista</translation>
+        <translation>Contactenlijst openen</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation>Kunde inte öppna filen</translation>
+        <translation>Kon bestand niet openen</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation>Kunde inte öppna filen med kontakter</translation>
+        <translation>Kon het contactbestand niet openen</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation>Felaktig fil</translation>
+        <translation>Ongeldig bestand</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>Vi kunde inte hitta några kontakter att importera från denna fil!</translation>
+        <translation>We konden in dit bestand geen contacten vinden voor te importeren!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished">Tox-ID</translation>
+        <translation>Tox-ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished">antingen 76 hexadecimala tecken eller name@example.com</translation>
+        <translation>oftewel 76 hexadecimale tekens, oftewel naam@voorbeeld.be</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished">Meddelande</translation>
+        <translation>Bericht</translation>
     </message>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation>Öppna</translation>
+        <translation>Openen</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation>Skicka vänförfrågan</translation>
+        <translation>Vriendschapsverzoeken sturen</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished">%1 här! Toxa mig kanske?</translation>
+        <translation>Het is hier %1! Tox met mij!</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation>Importera en lista med kontakter, ett Tox-ID per rad</translation>
+        <translation>Importeer ne lijst met contacten, enen Tox-ID per regel</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Klaar voor %n contact te importeren, klik voor te bevestigen</numerusform>
+        <numerusform>Klaar voor %n contacten te importeren, klik voor te bevestigen</numerusform>
+        </translation></message>
     <message>
         <source>Import contacts</source>
-        <translation>Importera kontakter</translation>
+        <translation>Contacten importeren</translation>
     </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
-        <translation>Avancerad</translation>
+        <translation>Geavanceerd</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Om du inte %1 vet vad du gör, gör %2 ändringar här. Ändringar som görs här kan leda till problem med qTox, och även till förlust av data, t.ex. historik.</translation>
+        <translation>Tenzij dat ge %1 weet wat ge doet, wijzigt ge hier best %2. Wijzigingen die ge hier doorvoert kunnen tot problemen met qTox leiden, en zelfs tot verlies van uw gegevens, bijvoorbeeld uw geschiedenis.</translation>
     </message>
     <message>
         <source>really</source>
-        <translation>verkligen</translation>
+        <translation>écht</translation>
     </message>
     <message>
         <source>not</source>
-        <translation>inte</translation>
+        <translation>niks</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation>VIKTIG NOTERING</translation>
+        <translation>BELANGRIJKEN OPMERKING</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation>Återställ inställningar</translation>
+        <translation>Instellingen herstellen</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation>Alla inställningar återställs till standard. Är du säker?</translation>
+        <translation>Alle instellingen zullen teruggebracht worden naar de standaardinstellingen. Zijt ge het zeker?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -464,25 +462,25 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Nej</translation>
+        <translation>Nee</translation>
     </message>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation>Samtal aktivt</translation>
+        <translation>In gesprek</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Du kan inte koppla bort under ett aktivt samtal!</translation>
+        <translation>Ge kunt niet offline gaan terwijl dat ge in een gesprek zit!</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation>Spara fil</translation>
+        <translation>Bestand opslaan</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation>Loggar (*.log)</translation>
+        <translation>Logboeken (*.log)</translation>
     </message>
 </context>
 <context>
@@ -490,271 +488,272 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Spara inställningar till arbetsmappen istället för den vanliga konfigurationsmappen</translation>
+        <translation>Sla instellingen op in de map waarin dat qTox draait in plaats van de normale configuratielocatie</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
-        <translation>Gör Tox portabel</translation>
+        <translation>Maak Tox draagbaar</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation>Återställ till standardinställningar</translation>
+        <translation>Standaardinstellingen herstellen</translation>
     </message>
     <message>
         <source>Portable</source>
-        <translation>Bärbar</translation>
+        <translation>Draagbaar</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation>Anslutningsinställningar</translation>
+        <translation>Verbindingsinstellingen</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Aktivera IPv6 (rekommenderat)</translation>
+        <translation>Gebruik IPv6 (aanbevolen)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Avaktivera detta tillåter, exempelvis, toxande över Tor. Det ger extra belastning till Tox-nätverket, så avmarkera endast när det är nödvändigt.</translation>
+        <translation>Door dit uit te schakelen kunt ge bijvoorbeeld Tox via Tor gebruiken. Het is wel zwaarder voor het Tox-netwerk, dus schakel dit alleen uit indien noodzakelijk.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Aktivera UDP (rekommenderat)</translation>
+        <translation>Gebruik UDP (aanbevolen)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation>Proxytyp:</translation>
+        <translation>Proxytype:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation>Adress:</translation>
+        <translation>Adres:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Port:</translation>
+        <translation>Poort:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Ingen</translation>
+        <translation>Geen</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
+        <translation></translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation>HTTP</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation>Återanslut</translation>
+        <translation>Opnieuw verbinden</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation>Felsök</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation>Exportera felsökningslogg</translation>
+        <translation>Debuglogboek exporteren</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation>Kopiera felsökningslogg</translation>
+        <translation>Debuglogboek kopiëren</translation>
     </message>
 </context>
 <context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
-        <translation>Laddar chatthistorik...</translation>
+        <translation>Gespreksgeschiedenis laden…</translation>
     </message>
     <message>
         <source>Send a file</source>
-        <translation>Skicka en fil</translation>
+        <translation>Verstuur een bestand</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation>qTox kunde inte öppna %1</translation>
-    </message>
-    <message>
-        <source>%1 calling</source>
-        <translation>%1 ringer</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Misslyckades att sända fil &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>Samtal med %1 avslutades. %2</translation>
-    </message>
-    <message>
-        <source>Call duration: </source>
-        <translation>Samtalslängd: </translation>
+        <translation>qTox kan %1 niet openen</translation>
     </message>
     <message>
         <source>Unable to open</source>
-        <translation>Det går inte att öppna</translation>
+        <translation>Openen mislukt</translation>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation>Dålig idé</translation>
+        <translation>Slecht idee</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation>%1 belt</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation>Ringer %1</translation>
+        <translation>%1 bellen</translation>
+    </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation>Kon bestand ‘%1’ niet verzenden</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation>Misslyckades öppna temporär fil</translation>
+        <translation>Kon tijdelijk bestand niet openen</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
-        <translation>qTox kunde inte spara skärmdumpen</translation>
+        <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
+        <translation>qTox kon de schermafdruk niet opslaan</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation>Gesprek met %1 beëindigd. %2</translation>
+    </message>
+    <message>
+        <source>Call duration: </source>
+        <translation>Gesprekstijd: </translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation>%1 skriver</translation>
+        <translation>%1 is aan het typen</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopiera</translation>
+        <translation>Kopiëren</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation>Du försöker skicka en sekventiell fil, som inte kommer att fungera!</translation>
+        <translation>Ge probeert een sequentieel bestand te sturen, maar dat kan niet!</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation>borta</translation>
+        <translation>afwezig</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation>upptagen</translation>
+        <translation>bezet</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation>frånkopplad</translation>
+        <translation></translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation>tillgänglig</translation>
+        <translation></translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 är nu %2</translation>
+        <translation>%1 is nu %2</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation>Exportera till fil</translation>
+        <translation>Exporteren naar bestand</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation>Spara chattlogg</translation>
+        <translation>Chatgeschiedenis opslaan</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Samtalet med %1 avbröts av okänd anledning. %2</translation>
+        <translation>Gesprek met %1 is onverwacht beëindigd. %2</translation>
     </message>
 </context>
 <context>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Kan inte börja ljudsamtal</translation>
+        <translation>Kan audiogesprek niet starten</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Börja ljudsamtal</translation>
+        <translation>Audiogesprek starten</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished">Avsluta ljudsamtal</translation>
+        <translation>Audiogesprek beëindigen</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Avbryt ljudsamtal</translation>
+        <translation>Audiogesprek annuleren</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Acceptera ljudsamtal</translation>
+        <translation>Audiogesprek aanvaarden</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Kan inte börja videosamtal</translation>
+        <translation>Kan videogesprek niet starten</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Börja videosamtal</translation>
+        <translation>Videogesprek starten</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Avsluta videosamtal</translation>
+        <translation>Videogesprek beëindigen</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Avbryt videosamtal</translation>
+        <translation>Videogesprek annuleren</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Acceptera videosamtal</translation>
+        <translation>Videogesprek aanvaarden</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Ljud kan endast avaktiveras under ett samtal</translation>
+        <translation>Geluid kan enkel uitgeschakeld worden tijdens een gesprek</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Slå på samtal</translation>
+        <translation>Gesprek niet meer dempen</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Tysta samtal</translation>
+        <translation>Gesprek dempen</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Mikrofon kan endast tystas under ett samtal</translation>
+        <translation>Microfoon kan enkel gedempt worden tijdens een gesprek</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation>Aktivera mikrofon</translation>
+        <translation>Microfoon niet meer dempen</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation>Stäng av mikrofon</translation>
+        <translation>Microfoon dempen</translation>
     </message>
 </context>
 <context>
     <name>ChatLog</name>
     <message>
         <source>Copy</source>
-        <translation>Kopiera</translation>
+        <translation>Kopiëren</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Markera alla</translation>
+        <translation>Alles selecteren</translation>
     </message>
     <message>
         <source>pending</source>
-        <translation>avvaktar</translation>
+        <translation>wachtend</translation>
     </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>Skriv ditt meddelande här...</translation>
+        <translation>Typ uw bericht hier…</translation>
     </message>
 </context>
 <context>
@@ -762,172 +761,177 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation>Byt namn på cirkel</translation>
+        <translation>Cirkel hernoemen</translation>
     </message>
     <message>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation>Ta bort cirkel</translation>
+        <translation>Cirkel verwijderen</translation>
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation>Öppna alla i nytt fönster</translation>
+        <translation>Alles openen in nieuw venster</translation>
     </message>
 </context>
 <context>
     <name>Core</name>
     <message>
         <source>Toxing on qTox</source>
-        <translation>Toxar på qTox</translation>
+        <translation>Toxt met qTox</translation>
     </message>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation>/me erbjuder vänskap, &quot;%1&quot;</translation>
+        <translation>/me biedt vriendschap aan, ‘%1’</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Ogiltigt Tox-ID</translation>
+        <translation>Ongeldigen Tox-ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Du måste skriva ett meddelande med din förfrågan</translation>
+        <translation>Uw vriendschapsverzoek moet een bericht bevatten</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Ditt meddelande är för långt!</translation>
+        <translation>Uw bericht is te lang!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Vän är redan tillagd</translation>
+        <translation>Vriend is al toegevoegd</translation>
     </message>
 </context>
 <context>
     <name>FileTransferWidget</name>
     <message>
         <source>Form</source>
-        <translation>Formulär</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>Formulier</translation>
     </message>
     <message>
         <source>10Mb</source>
-        <translation>10Mb</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>0kb/s</source>
-        <translation>0kb/s</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>ETA:10:10</source>
-        <translation>ETA:10:10</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Filename</source>
-        <translation>Filnamn</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>Bestandsnaam</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation>Väntar på att skicka...</translation>
+        <translation>Wachten voor te versturen…</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation>Acceptera för att ta emot den här filen</translation>
+        <translation>Bestand aanvaarden</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Plats ej skrivbar</translation>
+        <translation>Locatie niet schrijfbaar</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Du har inte tillåtelse att skriva till platsen. Välj en annan, eller avbryt spara-dialogen.</translation>
-    </message>
-    <message>
-        <source>Save a file</source>
-        <comment>Title of the file saving dialog</comment>
-        <translation>Spara en fil</translation>
-    </message>
-    <message>
-        <source>Paused</source>
-        <comment>file transfer widget</comment>
-        <translation>Pausad</translation>
+        <translation>Ge hebt genen toegang voor een bestand op deze locatie op te slaan. Kies een andere locatie of annuleer het opslaan.</translation>
     </message>
     <message>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
-        <translation>Återuppta...</translation>
-    </message>
-    <message>
-        <source>Open file</source>
-        <translation>Öppna fil</translation>
-    </message>
-    <message>
-        <source>Open file directory</source>
-        <translation>Öppna filkatalog</translation>
-    </message>
-    <message>
-        <source>Pause transfer</source>
-        <translation>Pausa överföring</translation>
+        <translation>Hervatten…</translation>
     </message>
     <message>
         <source>Cancel transfer</source>
-        <translation>Avbryt överföring</translation>
+        <translation>Bestandsoverdracht annuleren</translation>
+    </message>
+    <message>
+        <source>Pause transfer</source>
+        <translation>Bestandsoverdracht pauzeren</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <comment>file transfer widget</comment>
+        <translation>Gepauzeerd</translation>
+    </message>
+    <message>
+        <source>Open file</source>
+        <translation>Bestand openen</translation>
+    </message>
+    <message>
+        <source>Open file directory</source>
+        <translation>Bestandsmap openen</translation>
     </message>
     <message>
         <source>Resume transfer</source>
-        <translation>Återuppta överföring</translation>
+        <translation>Bestandsoverdracht hervatten</translation>
     </message>
     <message>
         <source>Accept transfer</source>
-        <translation>Acceptera överföring</translation>
+        <translation>Bestandsoverdracht aanvaarden</translation>
+    </message>
+    <message>
+        <source>Save a file</source>
+        <comment>Title of the file saving dialog</comment>
+        <translation>Bestand opslaan</translation>
     </message>
 </context>
 <context>
     <name>FilesForm</name>
     <message>
+        <source>Transferred Files</source>
+        <comment>&quot;Headline&quot; of the window</comment>
+        <translation>Overgedragen bestanden</translation>
+    </message>
+    <message>
         <source>Downloads</source>
-        <translation>Nedladdningar</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Uploads</source>
-        <translation>Uppladdningar</translation>
-    </message>
-    <message>
-        <source>Transferred Files</source>
-        <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Överförda filer</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation>Idag</translation>
+        <translation>Vandaag</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation>Igår</translation>
+        <translation>Gisteren</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation>Senaste 7 dagar</translation>
+        <translation>Afgelopen 7 dagen</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation>Denna månad</translation>
+        <translation>Deze maand</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation>Äldre än 6 månader</translation>
+        <translation>Ouder dan 6 maand</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>Aldrig</translation>
+        <translation>Nooit</translation>
     </message>
 </context>
 <context>
@@ -935,305 +939,304 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Vänförfrågning</translation>
+        <translation>Vriendschapsverzoek</translation>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
-        <translation>Någon vill bli vän med dig</translation>
+        <translation>Iemand wilt u als vriend toevoegen</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>Användar-ID:</translation>
+        <translation>Gebruikers-ID:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translatorcomment>Better translation?</translatorcomment>
-        <translation>Vänförfrågningsmeddelande:</translation>
+        <translation>Bericht voor vriendschapsverzoek:</translation>
     </message>
     <message>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
-        <translation>Acceptera</translation>
+        <translation>Aanvaarden</translation>
     </message>
     <message>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
-        <translation>Avvisa</translation>
+        <translation>Weigeren</translation>
     </message>
 </context>
 <context>
     <name>FriendWidget</name>
     <message>
-        <source>Set alias...</source>
-        <translation>Ange alias...</translation>
-    </message>
-    <message>
-        <source>Auto accept files from this friend</source>
-        <comment>context menu entry</comment>
-        <translation>Acceptera automatiskt filer från denna vän</translation>
-    </message>
-    <message>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
-        <translation>Bjud in till grupp</translation>
-    </message>
-    <message>
-        <source>Remove friend</source>
-        <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Ta bort vän</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translatorcomment>Hmm, hard one. Got any better?</translatorcomment>
-        <translation>Välj en acceptera-automatiskt-katalog</translation>
-    </message>
-    <message>
-        <source>Open chat in new window</source>
-        <translation>Öppna chatt i nytt fönster</translation>
-    </message>
-    <message>
-        <source>Remove chat from this window</source>
-        <translation>Radera chatt från detta fönster</translation>
-    </message>
-    <message>
-        <source>To new group</source>
-        <translation>Till ny grupp</translation>
-    </message>
-    <message>
-        <source>Invite to group &apos;%1&apos;</source>
-        <translation>Bjud in till grupp &apos;%1&apos;</translation>
+        <translation>Uitnodigen in groep</translation>
     </message>
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation>Flytta till cirkel...</translation>
+        <translation>Verplaatsen naar cirkel…</translation>
     </message>
     <message>
         <source>To new circle</source>
-        <translation>Till ny cirkel</translation>
+        <translation>Naar nieuwe cirkel</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Ta bort från cirkel &apos;%1&apos;</translation>
+        <translation>Verwijderen uit cirkel ‘%1’</translation>
     </message>
     <message>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Flytta till cirkel &quot;%1&quot;</translation>
+        <translation>Verplaatsen naar cirkel ‘%1’</translation>
+    </message>
+    <message>
+        <source>Open chat in new window</source>
+        <translation>Gesprek openen in nieuw venster</translation>
+    </message>
+    <message>
+        <source>Remove chat from this window</source>
+        <translation>Gesprek verwijderen uit dit venster</translation>
+    </message>
+    <message>
+        <source>To new group</source>
+        <translation>Naar nieuwe groep</translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation>Uitnodigen in groep ‘%1’</translation>
+    </message>
+    <message>
+        <source>Set alias...</source>
+        <translation>Alias instellen…</translation>
+    </message>
+    <message>
+        <source>Auto accept files from this friend</source>
+        <comment>context menu entry</comment>
+        <translation>Bestanden van deze vriend automatisch aanvaarden</translation>
+    </message>
+    <message>
+        <source>Remove friend</source>
+        <comment>Menu to remove the friend from our friendlist</comment>
+        <translation>Vriend verwijderen</translation>
     </message>
     <message>
         <source>Show details</source>
-        <translation>Visa detaljer</translation>
+        <translation>Details tonen</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation>Kies een map voor automatisch aanvaarde bestanden in op te slaan</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation>Nytt meddelande</translation>
+        <translation>Nieuw bericht</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation>Tillgänglig</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Away</source>
-        <translation>Borta</translation>
+        <translation>Afwezig</translation>
     </message>
     <message>
         <source>Busy</source>
-        <translation>Upptagen</translation>
+        <translation>Bezet</translation>
     </message>
     <message>
         <source>Offline</source>
-        <translation>Otillgänglig</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>GUI</name>
     <message>
         <source>Enter your password</source>
-        <translation>Ange ditt lösenord</translation>
+        <translation>Voer uw paswoord in</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>Dekryptera</translation>
+        <translation>Ontsleutelen</translation>
     </message>
     <message>
         <source>You must enter a non-empty password:</source>
-        <translation>Du måste ange ett icke-tomt lösenord:</translation>
+        <translation>Ge moet een niet-leeg paswoord invoeren:</translation>
     </message>
 </context>
 <context>
     <name>GeneralForm</name>
     <message>
         <source>General</source>
-        <translation>Allmänt</translation>
+        <translation>Algemeen</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Välj en acceptera-automatiskt-katalog</translation>
+        <translation>Kies een map voor automatisch aanvaarde bestanden in op te slaan</translation>
     </message>
 </context>
 <context>
     <name>GeneralSettings</name>
     <message>
         <source>General Settings</source>
-        <translation>Allmänna inställningar</translation>
+        <translation>Algemene instellingen</translation>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>Översättning laddas inte in innan qTox startas om.</translation>
+        <translation>De vertaling zal niet laden totdat qTox herstart.</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation>Språk:</translation>
+        <translation>Taal:</translation>
     </message>
     <message>
         <source>Show system tray icon</source>
-        <translation>Visa ikon i systemfältet</translation>
+        <translation>Pictogram tonen in systeemvak</translation>
     </message>
     <message>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation>Aktivera Ljus-ikon i aktivitetsfältet.</translation>
+        <translation>Licht systeemvakpictogram inschakelen.</translation>
     </message>
     <message>
         <source>Light icon</source>
-        <translation>Ljus-ikon</translation>
+        <translation>Licht pictogram</translation>
     </message>
     <message>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>qTox kommer att starta minimerad i verktygsfältet.</translation>
+        <translation>qTox zal geminimaliseerd naar het systeemvak starten.</translation>
     </message>
     <message>
         <source>Start in tray</source>
-        <translation>Starta i bakgrunden</translation>
+        <translation>Starten in systeemvak</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Efter att du tryckt på stäng (X) kommer qTox att minimeras till systemfältet,
-istället för att stängas.</translation>
+        <translation>Indien ge op sluiten (X) klikt, zal qTox naar het systeemvak minimaliseren,
+in plek van af te sluiten.</translation>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation>Stäng till bakgrund</translation>
+        <translation>Sluiten naar systeemvak</translation>
     </message>
     <message>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Efter att du tryckt på minimera (_) kommer qTox att minimeras till systemfältet,
-istället för aktivitetsfältet för systemet.</translation>
+        <translation>Indien ge op minimaliseren (_) klikt, zal qTox naar het systeemvak minimaliseren,
+in plaats van naar den taakbalk.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
-        <translation>Minimera till bakgrund</translation>
+        <translation>Minimaliseren naar systeemvak</translation>
     </message>
     <message>
         <source>Autostart</source>
-        <translation>Automatisk uppstart</translation>
+        <translation>Automatisch starten</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
-        <translation>Sök efter uppdateringar vid uppstart</translation>
+        <translation>Zoeken naar updates bij opstarten</translation>
     </message>
     <message>
         <source>Set where files will be saved.</source>
-        <translation>Ange var filer ska sparas.</translation>
+        <translation>Stel in waar dat bestanden opgeslagen worden.</translation>
     </message>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Du kan ställa in detta för varje enskild vän genom att högerklicka på dem.</translation>
-    </message>
-    <message>
-        <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Din status ändras till Borta efter inställd tid av inaktivitet.</translation>
-    </message>
-    <message>
-        <source>Auto away after (0 to disable):</source>
-        <translation>Automatisk borta efter (0 för att avaktivera):</translation>
-    </message>
-    <message>
-        <source>Show contacts&apos; status changes</source>
-        <translation>Visa kontakters statusändringar</translation>
-    </message>
-    <message>
-        <source>Set to 0 to disable</source>
-        <translation>Sätt 0 för att avaktivera</translation>
-    </message>
-    <message>
-        <source>On new message:</source>
-        <translation>Vid nytt meddelande:</translation>
-    </message>
-    <message>
-        <source>Faux offline messaging</source>
-        <translation>Faux frånkopplad-meddelanden</translation>
+        <translation>Ge kunt dit per vriend instellen door met de rechtermuisknop op ne vriend te klikken.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
-        <translation>Acceptera filer automatiskt</translation>
+        <translation>Bestanden automatisch aanvaarden</translation>
     </message>
     <message>
-        <source>Start qTox on operating system startup (current profile).</source>
-        <translation>Starta qTox vid operativsystemets uppstart (nuvarande profil).</translation>
+        <source>Set to 0 to disable</source>
+        <translation>Stel in op 0 voor uit te schakelen</translation>
     </message>
     <message>
-        <source>Default directory to save files:</source>
-        <translation>Standardkatalog för att spara filer:</translation>
+        <source>Your status is changed to Away after set period of inactivity.</source>
+        <translation>Uwe status zal automatisch op afwezig gezet worden na een bepaalde periode van inactiviteit.</translation>
+    </message>
+    <message>
+        <source>Auto away after (0 to disable):</source>
+        <translation>Automatisch afwezig na (0 voor uit te schakelen):</translation>
+    </message>
+    <message>
+        <source>Show contacts&apos; status changes</source>
+        <translation>Toon statusverandering van contacten</translation>
+    </message>
+    <message>
+        <source>On new message:</source>
+        <translation>Bij een nieuw bericht:</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation>Spela ljud</translation>
+        <translation>Geluid afspelen</translation>
+    </message>
+    <message>
+        <source>Faux offline messaging</source>
+        <translation>Faux offline berichten</translation>
+    </message>
+    <message>
+        <source>Start qTox on operating system startup (current profile).</source>
+        <translation>qTox starten bij opstarten van besturingssysteem (huidig profiel).</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation>Standaardlocatie voor bestanden in op te slaan:</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Spela upp ljud medan du är Upptagen</translation>
+        <translation>Geluid afspelen indien Bezet</translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
         <source>Send message</source>
-        <translation>Skicka meddelande</translation>
+        <translation>Bericht versturen</translation>
     </message>
     <message>
         <source>Smileys</source>
-        <translation>Humörsymboler</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Send file(s)</source>
-        <translation>Skicka fil(er)</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Spara chattlogg</translation>
-    </message>
-    <message>
-        <source>Clear displayed messages</source>
-        <translation>Ta bort visade meddelanden</translation>
-    </message>
-    <message>
-        <source>Not sent</source>
-        <translation>Inte skickat</translation>
-    </message>
-    <message>
-        <source>Cleared</source>
-        <translation>Borttaget</translation>
+        <translation>Bestand(en) versturen</translation>
     </message>
     <message>
         <source>Send a screenshot</source>
-        <translation>Skicka en skärmdump</translation>
+        <translation>Schermafdruk sturen</translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation>Chatgeschiedenis opslaan</translation>
+    </message>
+    <message>
+        <source>Clear displayed messages</source>
+        <translation>Getoonde berichten verwijderen</translation>
+    </message>
+    <message>
+        <source>Not sent</source>
+        <translation>Niet verstuurd</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation>Geleegd</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation>Citera markerad text</translation>
+        <translation>Geselecteerden tekst citeren</translation>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation>Kopiera länkadress</translation>
+        <translation>Koppelingsadres kopiëren</translation>
     </message>
 </context>
 <context>
@@ -1244,11 +1247,11 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation>Visa meddelanden</translation>
+        <translation>Berichten tonen</translation>
     </message>
     <message>
         <source>Hide Messages</source>
-        <translation>Göm meddelanden</translation>
+        <translation>Berichten verbergen</translation>
     </message>
 </context>
 <context>
@@ -1256,89 +1259,89 @@ istället för aktivitetsfältet för systemet.</translation>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Tom&gt;</translation>
+        <translation>&lt;leeg&gt;</translation>
     </message>
 </context>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <source>%1 users in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>%1 användare i chatt</translation>
-    </message>
-    <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>1 användare i chatt</translation>
+        <translation>1 gebruiker in het gesprek</translation>
+    </message>
+    <message>
+        <source>%1 users in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation>%1 gebruikers in het gesprek</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 har satt titeln till %2</translation>
+        <translation>%1 heeft den titel ingesteld op %2</translation>
     </message>
 </context>
 <context>
     <name>GroupInviteForm</name>
     <message>
         <source>Groups</source>
-        <translation>Grupper</translation>
+        <translation>Groepen</translation>
     </message>
     <message>
         <source>Create new group</source>
-        <translation>Skapa ny grupp</translation>
+        <translation>Nieuwe groep aanmaken</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation>Gruppinbjudningar</translation>
+        <translation>Groepsuitnodigingen</translation>
     </message>
 </context>
 <context>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation>Inbjuden av %1 på %2 i %3.</translation>
+        <translation>Uitgenodigd in %1, door %2, om %3.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation>Gå med</translation>
+        <translation>Deelnemen</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation>Avböj</translation>
+        <translation>Weigeren</translation>
     </message>
 </context>
 <context>
     <name>GroupWidget</name>
     <message>
         <source>%1 users in chat</source>
-        <translation>%1 användare i chatt</translation>
+        <translation>%1 gebruikers in het gesprek</translation>
     </message>
     <message>
         <source>Set title...</source>
-        <translation>Ange titel...</translation>
+        <translation>Stel den titel in…</translation>
+    </message>
+    <message>
+        <source>Open chat in new window</source>
+        <translation>Gesprek openen in nieuw venster</translation>
+    </message>
+    <message>
+        <source>Remove chat from this window</source>
+        <translation>Gesprek verwijderen uit dit venster</translation>
     </message>
     <message>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
-        <translation>Lämna grupp</translation>
-    </message>
-    <message>
-        <source>Open chat in new window</source>
-        <translation>Öppna chatt i nytt fönster</translation>
-    </message>
-    <message>
-        <source>Remove chat from this window</source>
-        <translation>Ta bort chatt från detta fönster</translation>
+        <translation>Groep verlaten</translation>
     </message>
     <message>
         <source>1 user in chat</source>
-        <translation>1 användare i chatt</translation>
+        <translation>1 gebruiker in het gesprek</translation>
     </message>
 </context>
 <context>
     <name>IdentitySettings</name>
     <message>
         <source>Public Information</source>
-        <translation>Publik information</translation>
+        <translation>Publieke informatie</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -1348,497 +1351,497 @@ istället för aktivitetsfältet för systemet.</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Detta gäng tecken berättar andra Tox-klienter din kontaktinformation.
-Dela den med dina vänner för att kommunicera.</translation>
+        <translation>Deze combinatie van tekens vertelt andere Tox-cliënten hoe ze contact met u moeten opnemen.
+Deel dit met uw vrienden voor te communiceren.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation>Ditt Tox-ID (klicka för att kopiera)</translation>
+        <translation>Uwen Tox-ID (klik voor te kopiëren)</translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation>Profiel</translation>
+    </message>
+    <message>
+        <source>Rename profile.</source>
+        <comment>tooltip for renaming profile button</comment>
+        <translation>Profiel hernoemen.</translation>
+    </message>
+    <message>
+        <source>Go back to the login screen</source>
+        <comment>tooltip for logout button</comment>
+        <translation>Ga terug naar het aanmeldingsscherm</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <comment>import profile button</comment>
+        <translation>Uitloggen</translation>
+    </message>
+    <message>
+        <source>Remove password</source>
+        <translation>Paswoord verwijderen</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <translation>Paswoord wijzigen</translation>
+    </message>
+    <message>
+        <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
+        <translation>Deze QR-code bevat uwen Tox-ID. Ge kunt hem met uw vrienden delen.</translation>
+    </message>
+    <message>
+        <source>Save image</source>
+        <translation>Afbeelding opslaan</translation>
+    </message>
+    <message>
+        <source>Copy image</source>
+        <translation>Afbeelding kopiëren</translation>
     </message>
     <message>
         <source>Rename</source>
         <comment>rename profile button</comment>
-        <translation>Byt namn</translation>
+        <translation>Hernoemen</translation>
     </message>
     <message>
-        <source>Export</source>
-        <comment>export profile button</comment>
-        <translation>Exportera</translation>
+        <source>Delete profile.</source>
+        <comment>delete profile button tooltip</comment>
+        <translation>Profiel verwijderen.</translation>
     </message>
     <message>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation>Tillåter dig att exportera din Tox-profil till en fil.
-Profilen innehåller inte din historik.</translation>
+        <translation>Exporteer uw Tox-profiel naar een bestand.
+Dit bestand bevat geen chatgeschiedenis.</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <comment>export profile button</comment>
+        <translation>Exporteren</translation>
     </message>
     <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
-        <translation>Radera</translation>
-    </message>
-    <message>
-        <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Denna QR-kod innehåller ditt Tox-ID. Du kan dela det med dina vänner.</translation>
-    </message>
-    <message>
-        <source>Save image</source>
-        <translation>Spara bild</translation>
-    </message>
-    <message>
-        <source>Copy image</source>
-        <translation>Kopiera bild</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation>Server</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation>Dölj mitt namn från den offentliga listan</translation>
+        <translation>Verberg mijne naam in den openbare lijst</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>Registrera</translation>
+        <translation>Registreren</translation>
     </message>
     <message>
         <source>Your password</source>
-        <translation>Ditt lösenord</translation>
+        <translation>Uw paswoord</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Uppdatera</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
-    </message>
-    <message>
-        <source>Rename profile.</source>
-        <comment>tooltip for renaming profile button</comment>
-        <translation>Byt namn på profil.</translation>
-    </message>
-    <message>
-        <source>Delete profile.</source>
-        <comment>delete profile button tooltip</comment>
-        <translation>Radera profil.</translation>
-    </message>
-    <message>
-        <source>Go back to the login screen</source>
-        <comment>tooltip for logout button</comment>
-        <translation>Gå tillbaka till inloggningsskärmen</translation>
-    </message>
-    <message>
-        <source>Logout</source>
-        <comment>import profile button</comment>
-        <translation>Logga ut</translation>
-    </message>
-    <message>
-        <source>Remove password</source>
-        <translation>Ta bort lösenord</translation>
-    </message>
-    <message>
-        <source>Change password</source>
-        <translation>Ändra lösenord</translation>
+        <translation>Bijwerken</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation>Registrera på ToxMe</translation>
+        <translation>Registreren op ToxMe</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation>Namn för tjänsten ToxMe.</translation>
+        <translation>Naam van den ToxMe-dienst.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation>Valfritt. Något om dig. Eller din katt.</translation>
+        <translation>Optioneel. Iets over uzelf, of over uw kat.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation>Valfritt. Något om dig. Eller din katt.</translation>
+        <translation>Optioneel. Iets over uzelf, of over uw kat.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation>ToxMe-tjänst att registrera sig på.</translation>
+        <translation>ToxMe-dienst voor op te registreren.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation>Om ej inställt, visas ToxMe-poster offentligt.</translation>
+        <translation>Indien niet ingesteld is uwe naam openbaar zichtbaar op ToxMe.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation>Ta bort ditt lösenord och kryptering från din profil.</translation>
+        <translation>Verwijder uw paswoord en versleuteling van uw profiel.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation>Namn inmatning</translation>
+        <translation>Naaminvoer</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation>Namn synligt för kontakter</translation>
+        <translation>Naam zichtbaar voor contacten</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Statusmeddelande-inmatning</translation>
+        <translation>Invoer voor statusbericht</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation>Statusmeddelande synligt för kontakter</translation>
+        <translation>Statusbericht zichtbaar voor contacten</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation>Ditt Tox-ID</translation>
+        <translation>Uwen Tox-ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation>Spara QR-bild som fil</translation>
+        <translation>QR-afbeelding opslaan als bestand</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation>Kopiera QR-bild till urklipp</translation>
+        <translation>QR-afbeelding kopiëren naar klembord</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation>ToxMe-användarnamn att visas på ToxMe</translation>
+        <translation>ToxMe-gebruikersnaam voor te tonen op ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>Valfri ToxMe-biografi som visas på ToxMe</translation>
+        <translation>Optionele ToxMe-biografie voor te tonen op ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation>ToxMe-tjänstadress</translation>
+        <translation>ToxMe-dienstadres</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation>Synlighet på tjänsten ToxMe</translation>
+        <translation>Zichtbaarheid op den ToxMe-dienst</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Lösenord</translation>
+        <translation>Paswoord</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation>Uppdatera ToxMe-inlägg</translation>
+        <translation>ToxMe-invoer bijwerken</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation>Byt namn på profil.</translation>
+        <translation>Profiel hernoemen.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation>Ta bort profil.</translation>
+        <translation>Profiel verwijderen.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation>Exportera profil</translation>
+        <translation>Profiel exporteren</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation>Ta bort lösenord från profil</translation>
+        <translation>Paswoord van profiel verwijderen</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation>Ändra profillösenord</translation>
+        <translation>Paswoord van profiel wijzigen</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation>Mitt namn:</translation>
+        <translation>Mijne naam:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation>Min status:</translation>
+        <translation>Mijne status:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation>Mitt användarnamn</translation>
+        <translation>Mijne gebruikersnaam</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation>Min biografi</translation>
+        <translation>Mijnen biografie</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation>Min profil</translation>
+        <translation>Mijn profiel</translation>
     </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation>Ladda in historik</translation>
+        <translation>Geschiedenis laden</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation>Ladda in historik från:</translation>
+        <translation>Geschiedenis laden van:</translation>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation>%1 meddelanden</translation>
+        <translation>%1 berichten</translation>
     </message>
 </context>
 <context>
     <name>LoginScreen</name>
     <message>
         <source>Username:</source>
-        <translation>Användarnamn:</translation>
+        <translation>Gebruikersnaam:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Lösenord:</translation>
+        <translation>Paswoord:</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>Bekräfta:</translation>
+        <translation>Bevestig:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation>Lösenordets styrka: %p%</translation>
+        <translation>Paswoordsterkte: %p%</translation>
     </message>
     <message>
         <source>Create Profile</source>
-        <translation>Skapa profil</translation>
+        <translation>Profiel aanmaken</translation>
     </message>
     <message>
         <source>If the profile does not have a password, qTox can skip the login screen</source>
-        <translation>Om profilen inte har ett lösenord, kan qTox hoppa över inloggningsskärmen</translation>
+        <translation>Als het profiel geen paswoord heeft kan qTox het aanmeldingsscherm overslaan</translation>
     </message>
     <message>
         <source>Load automatically</source>
-        <translation>Ladda automatiskt</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation>Importera</translation>
+        <translation>Automatisch laden</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation>Ladda</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation>Ny profil</translation>
+        <translation>Laden</translation>
     </message>
     <message>
         <source>Load Profile</source>
-        <translation>Ladda profil</translation>
+        <translation>Profiel laden</translation>
+    </message>
+    <message>
+        <source>New Profile</source>
+        <translation>Nieuw profiel</translation>
     </message>
     <message>
         <source>Couldn&apos;t create a new profile</source>
-        <translation>Kunde inte skapa en ny profil</translation>
+        <translation>Kon geen nieuw profiel aanmaken</translation>
     </message>
     <message>
         <source>The username must not be empty.</source>
-        <translation>Användarnamnet får inte vara tomt.</translation>
+        <translation>De gebruikersnaam mag niet leeg zijn.</translation>
     </message>
     <message>
         <source>The password must be at least 6 characters long.</source>
-        <translation>Lösenordet måste vara minst 6 tecken långt.</translation>
+        <translation>Het paswoord moet minstens 6 tekens lang zijn.</translation>
     </message>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation>Lösenorden du angav är olika.
-Var noga med att ange samma lösenord två gånger.</translation>
+        <translation>De paswoorden die ge hebt ingevoerd komen niet overeen.
+Voer twee keer hetzelfde paswoord in.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
-        <translation>En profil med detta namn finns redan.</translation>
+        <translation>Een profiel met deze naam bestaat al.</translation>
     </message>
     <message>
         <source>Unknown error: Couldn&apos;t create a new profile.
 If you encountered this error, please report it.</source>
-        <translation>Okänt fel: Kunde inte skapa en ny profil.
-Om du stöter på detta fel, vänligen rapportera det.</translation>
+        <translation>Onbekende fout: kon geen nieuw profiel aanmaken.
+Als ge deze fout tegenkomt, gelieve deze dan te melden.</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation>Lösenordsskyddade profiler kan inte laddas automatiskt.</translation>
+        <translation>Profielen beschermd met paswoord kunnen niet automatisch worden geladen.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
-        <translation>Kunde inte ladda profil</translation>
+        <translation>Kon profiel niet laden</translation>
     </message>
     <message>
         <source>There is no selected profile.
 
 You may want to create one.</source>
-        <translation>Det finns ingen vald profil.
+        <translation>Der is geen profiel geselecteerd.
 
-Du kanske vill skapa en.</translation>
+Ge kunt der een aanmaken.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
-        <translation>Kunde inte ladda denna profil</translation>
+        <translation>Kon dit profiel niet laden</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
-        <translation>Denna profil är redan i bruk.</translation>
+        <translation>Dit profiel is al in gebruik.</translation>
     </message>
     <message>
         <source>Profile already in use. Close other clients.</source>
-        <translation>Profilen redan i bruk. Stäng andra klienter.</translation>
+        <translation>Dit profiel is al in gebruik, sluit alle andere Tox-cliënten.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
-        <translation>Fel lösenord.</translation>
+        <translation>Verkeerd paswoord.</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Importeren</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation>Inmatningsfält för användarnamn</translation>
+        <translation>Invoerveld voor gebruikersnaam</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation>Lösenordets inmatningsfält, du kan lämna det tomt (inget lösenord), eller ange minst 6 tecken</translation>
+        <translation>Paswoordinvoerveld, ge kunt dit leeg laten (geen paswoord), of minstens 6 tekens invoeren</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation>Fält för lösenordsbekräftelse</translation>
+        <translation>Paswoordbevestigingsveld</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation>Skapa en ny profil-knapp</translation>
+        <translation>Knop voor aanmaken van nieuw profiel</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation>Profillista</translation>
+        <translation>Profiellijst</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation>Lista över profiler</translation>
+        <translation>Lijst van profielen</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation>Lösenordsinmatning</translation>
+        <translation>Paswoordinvoer</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation>Ladda automatiskt kryssrutan</translation>
+        <translation>Selectievakje voor automatisch laden</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation>Importera profil</translation>
+        <translation>Profiel importeren</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation>Ladda vald profilknapp</translation>
+        <translation>Knop voor laden van geselecteerd profiel</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation>Sidan för att skapa en ny profil</translation>
+        <translation>Pagina voor aanmaken van nieuw profiel</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation>Laddar befintlig profilsida</translation>
+        <translation>Pagina voor laden van bestaand profiel</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Your name</source>
-        <translation>Ditt namn</translation>
+        <translation>Uwe naam</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation>Din status</translation>
-    </message>
-    <message>
-        <source>Add friends</source>
-        <translation>Lägg till vänner</translation>
-    </message>
-    <message>
-        <source>Create a group chat</source>
-        <translation>Skapa en chattgrupp</translation>
-    </message>
-    <message>
-        <source>View completed file transfers</source>
-        <translation>Se färdiga filöverföringar</translation>
-    </message>
-    <message>
-        <source>Change your settings</source>
-        <translatorcomment>translated as &quot;change settings&quot;;  seems to be simpler this way</translatorcomment>
-        <translation>Ändra dina inställningar</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Stäng</translation>
+        <translation>Uwe status</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>…</translation>
+    </message>
+    <message>
+        <source>Add friends</source>
+        <translation>Vrienden toevoegen</translation>
+    </message>
+    <message>
+        <source>Create a group chat</source>
+        <translation>Groepsgesprek aanmaken</translation>
+    </message>
+    <message>
+        <source>View completed file transfers</source>
+        <translation>Bekijk voltooide bestandsoverdrachten</translation>
+    </message>
+    <message>
+        <source>Change your settings</source>
+        <translation>Verander uw instellingen</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <source>Open profile</source>
-        <translation>Öppen profil</translation>
+        <translation>Profiel openen</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation>Öppna profilsida när du klickar</translation>
+        <translation>Profielpagina openen wanneer aangeklikt</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Statusmeddelande-inmatning</translation>
+        <translation>Invoer voor statusbericht</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation>Ange ditt statusmeddelande som visas för andra</translation>
+        <translation>Stel uw statusbericht in dat aan anderen getoond zal worden</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation>Ange tillgänglighetsstatus</translation>
+        <translation>Stel beschikbaarheidsstatus in</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation>Kontaktsökning</translation>
+        <translation>Zoeken naar contacten</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation>Kontaktsökningsinmatning för kända vänner</translation>
+        <translation>Invoer voor zoeken naar gekende vrienden in contacten</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation>Sortering och synlighet</translation>
+        <translation>Sorteren en zichtbaarheid</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation>Ställa in vänsortering och synlighet</translation>
+        <translation>Stel sorteren en zichtbaarheid van vrienden in</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation>Öppna sidan Lägg till vänner</translation>
+        <translation>Open pagina voor toevoegen van vrienden</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation>Gruppchatt</translation>
+        <translation>Groepsgesprek</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation>Öppna gruppchatt-hanteringssidan</translation>
+        <translation>Open pagina voor beheer van groepsgesprek</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation>Filöverföringshistorik</translation>
+        <translation>Bestandsoverdrachtgeschiedenis</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation>Öppna filöverföringshistorik</translation>
+        <translation>Open bestandsoverdrachtgeschiedenis</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Inställningar</translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation>Öppna inställningar</translation>
+        <translation>Open instellingen</translation>
     </message>
 </context>
 <context>
@@ -1846,67 +1849,65 @@ Du kanske vill skapa en.</translation>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation>Bilder (%1)</translation>
+        <translation>Afbeeldingen (%1)</translation>
     </message>
     <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
-        <translation>Visa</translation>
+        <translation>Weergave</translation>
     </message>
     <message>
         <source>Window</source>
         <comment>OS X Menu bar</comment>
-        <translation>Fönster</translation>
+        <translation>Venster</translation>
     </message>
     <message>
         <source>Minimize</source>
         <comment>OS X Menu bar</comment>
-        <translation>Minimera</translation>
+        <translation>Minimaliseren</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation>Flytta längst fram</translation>
+        <translation>Breng alles naar de voorgrond</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
-        <translation>Avsluta helskärmsläge</translation>
+        <translation>Volledig scherm verlaten</translation>
     </message>
     <message>
         <source>Enter Fullscreen</source>
-        <translation>Använd helskärm</translation>
+        <translation>Volledig scherm gebruiken</translation>
     </message>
 </context>
 <context>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation>
-            <numerusform>Oläst meddelande</numerusform>
-            <numerusform>Olästa meddelanden</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Ongelezen bericht</numerusform>
+        <numerusform>Ongelezen berichten</numerusform>
+        </translation></message>
 </context>
 <context>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation>CAPS-LOCK AKTIVERAD</translation>
+        <translation>CAPS-LOCK INGESCHAKELD</translation>
     </message>
 </context>
 <context>
     <name>PrivacyForm</name>
     <message>
         <source>Privacy</source>
-        <translation>Integritet</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Bekräftelse</translation>
+        <translation>Bevestiging</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation>Vill du permanent ta bort all chatthistorik?</translation>
+        <translation>Wilt ge voorgoed alle gespreksgeschiedenis verwijderen?</translation>
     </message>
 </context>
 <context>
@@ -1914,286 +1915,286 @@ Du kanske vill skapa en.</translation>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation>Dina vänner kommer att kunna se när du skriver.</translation>
-    </message>
-    <message>
-        <source>Chat history keeping is still in development.
-Save format changes are possible, which may result in data loss.</source>
-        <comment>toolTip for Keep History setting</comment>
-        <translation>Chatthistorik fortfarande under utveckling.
-Ändringar i sparningsformatet är möjliga, vilket kan resultera i dataförlust.</translation>
+        <translation>Uw vrienden kunnen op deze manier zien wanneer dat ge typt.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation>Skicka skrivaviseringar</translation>
+        <translation>Typmeldingen sturen</translation>
     </message>
     <message>
         <source>Keep chat history</source>
-        <translation>Bevara chatthistorik</translation>
+        <translation>Gespreksgeschiedenis behouden</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>NoSpam är en del av ditt Tox-ID.
-Om du blir spammad med vänförfrågningar, bör du ändra din NoSpam.
-Människor kommer att kunna lägga till dig med ditt gamla ID, men du behåller dina nuvarande vänner.</translation>
+        <translation>NoSpam is een deel van uwen Tox-ID.
+Als ge gebombardeerd wordt met vriendschapsverzoeken is het verstandig voor uwe NoSpam te veranderen.
+Mensen die uwen ouden Tox-ID hebben kunnen u dan niet meer toevoegen, maar uwen huidige vriendenlijst wordt wel behouden.</translation>
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>NoSpam</translation>
+        <translation></translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>NoSpam är en del av ditt ID som kan ändras efter behag.
-Om du blir spammad med vänförfrågningar, ändra NoSpam.</translation>
+        <translation>NoSpam is een deel van uwen Tox-ID dat veranderd kan worden.
+Verander de NoSpam als ge gebombardeerd wordt met vriendschapsverzoeken.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation>Generera slumpmässiga NoSpam</translation>
+        <translation>Genereer ne willekeurige NoSpam</translation>
+    </message>
+    <message>
+        <source>Chat history keeping is still in development.
+Save format changes are possible, which may result in data loss.</source>
+        <comment>toolTip for Keep History setting</comment>
+        <translation>Het opslaan van gespreksgeschiedenis is nog in ontwikkeling.
+Het is mogelijk dat er zich veranderingen in het formaat voordoen, wat kan leiden tot gegevensverlies.</translation>
     </message>
     <message>
         <source>Privacy</source>
-        <translation>Integritet</translation>
+        <translation></translation>
     </message>
     <message>
         <source>BlackList</source>
-        <translation>Blocklista</translation>
+        <translation>Zwarte lijst</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Groepsberichten filteren op publieke sleutel van groepslid. Plaats hier ene publieke sleutel per regel.</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation>Misslyckades att härleda nyckel från lösenord, profilen kommer inte använda det nya lösenordet.</translation>
+        <translation>Sleutel ophalen van paswoord mislukt, het profiel zal het nieuw paswoord niet gebruiken.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Kunde inte byta lösenord på databasen, den kan vara trasig eller använda det gamla lösenordet.</translation>
+        <translation>Kon paswoord van databank niet wijzigen, het is mogelijk beschadigd of gebruikt het oud paswoord.</translation>
     </message>
 </context>
 <context>
     <name>ProfileForm</name>
     <message>
-        <source>Current profile: </source>
-        <translation>Aktuell profil: </translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Ta bort</translation>
-    </message>
-    <message>
         <source>Choose a profile picture</source>
-        <translation>Välj en profilbild</translation>
+        <translation>Kies ne profielfoto</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fel</translation>
-    </message>
-    <message>
-        <source>Unable to open this file.</source>
-        <translation>Det gick inte att öppna filen.</translation>
-    </message>
-    <message>
-        <source>Unable to read this image.</source>
-        <translation>Det gick inte att läsa denna bild.</translation>
-    </message>
-    <message>
-        <source>The supplied image is too large.
-Please use another image.</source>
-        <translation>Medföljande bilden är för stor.
-Använd en annan bild.</translation>
+        <translation>Fout</translation>
     </message>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation>Byt namn på &quot;%1&quot;</translation>
+        <translation>‘%1’ hernoemen</translation>
+    </message>
+    <message>
+        <source>Unable to open this file.</source>
+        <translation>Kan dit bestand niet openen.</translation>
+    </message>
+    <message>
+        <source>Current profile: </source>
+        <translation>Huidig profiel: </translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>Unable to read this image.</source>
+        <translation>Kan deze foto niet lezen.</translation>
+    </message>
+    <message>
+        <source>The supplied image is too large.
+Please use another image.</source>
+        <translation>De geselecteerde afbeelding is te groot.
+Gebruik een andere afbeelding.</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>Kunde inte byta namn på profilen till &quot;%1&quot;</translation>
+        <translation>Kon het profiel niet hernoemen naar ‘%1’</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Plats ej skrivbar</translation>
+        <translation>Locatie niet schrijfbaar</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Du har inte tillåtelse att skriva till platsen. Välj en annan, eller avbryt spara-dialogen.</translation>
+        <translation>Ge hebt geen toelating voor een bestand op deze locatie op te slaan. Kies een andere locatie of annuleer het opslaan.</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation>Det gick inte att kopiera filen</translation>
+        <translation>Kopiëren van bestand mislukt</translation>
     </message>
     <message>
         <source>The file you chose could not be written to.</source>
-        <translation>Filen du valde kunde inte skrivas till.</translation>
+        <translation>Het bestand dat ge hebt gekozen kan niet geschreven worden.</translation>
     </message>
     <message>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
-        <translation>Vill du verkligen ta bort profil?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete this profile?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Är du säker på att du vill ta bort denna profil?</translation>
-    </message>
-    <message>
-        <source>Files could not be deleted!</source>
-        <comment>deletion failed title</comment>
-        <translation>Filer kunde inte tas bort!</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <comment>save qr image</comment>
-        <translation>Spara</translation>
-    </message>
-    <message>
-        <source>Save QrCode (*.png)</source>
-        <comment>save dialog filter</comment>
-        <translation>Spara QrCode (*.png)</translation>
+        <translation>Het profiel echt verwijderen?</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
-        <translation>Ingenting att ta bort</translation>
+        <translation>Niks te verwijderen</translation>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
-        <translation>Din profil har inte ett lösenord!</translation>
+        <translation>Uw profiel heeft geen paswoord!</translation>
     </message>
     <message>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation>Vill du verkligen ta bort lösenord?</translation>
+        <translation>Het paswoord echt verwijderen?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
-        <translation>Vänligen ange ett nytt lösenord.</translation>
+        <translation>Voer een nieuw paswoord in.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this profile?</source>
+        <comment>deletion confirmation text</comment>
+        <translation>Zijt ge zeker dat ge dit profiel wilt verwijderen?</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <comment>save qr image</comment>
+        <translation>Opslaan</translation>
+    </message>
+    <message>
+        <source>Save QrCode (*.png)</source>
+        <comment>save dialog filter</comment>
+        <translation>QR-code opslaan (*.png)</translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation>Bestanden konden niet verwijderd worden!</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation>Registrera (bearbetning)</translation>
+        <translation>Registreren (in verwerking)</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation>Uppdatering (bearbetning)</translation>
+        <translation>Update (in verwerking)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation>Klart!</translation>
+        <translation>Klaar!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation>Konto %1@%2 uppdaterats</translation>
+        <translation>Account %1@%2 is bijgewerkt</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>Lade framgångsrikt %1@%2 till databasen. Spara ditt lösenord</translation>
+        <translation>%1@%2 is toegevoegd aan den databank. Sla uw paswoord op</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation>Toxme-fel</translation>
+        <translation>ToxMe-fout</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>Registrera dig</translation>
+        <translation>Registreren</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Uppdatering</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation>Ändra lösenord</translation>
+        <translation>Paswoord wijzigen</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation>Ange profillösenord</translation>
+        <translation>Profielpaswoord instellen</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation>Aktuell profilplats: %1</translation>
+        <translation>Huidige profiellocatie: %1</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation>Kunde inte ändra lösenord</translation>
+        <translation>Kon paswoord niet wijzigen</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation>Denna grupp tecken berättar för andra Tox-klienter hur man kontaktar dig.
-Dela den med dina vänner för att kommunicera.
+        <translation>Dezen hoop tekens vertelt andere Tox-cliënten hoe dat ze u moeten contacteren.
+Deel hem met uw vrienden voor te communiceren.
 
-Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translation>
+Dezen ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Leeg pad is niet beschikbaar</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Det gick inte att byta namn</translation>
+        <translation>Hernoemen mislukt</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Profil finns redan</translation>
+        <translation>Profiel bestaat al</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">En profil med namnet &quot;%1&quot; finns redan.</translation>
+        <translation>Een profiel met de naam ‘%1’ bestaat al.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>Lege naam</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Lege naam is niet beschikbaar</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>Leeg pad</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">Kunde inte byta lösenord på databasen, den kan vara trasig eller använda det gamla lösenordet.</translation>
+        <translation>Kon paswoord van databank niet wijzigen, het is mogelijk beschadigd of gebruikt het oud paswoord.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Exportera profil</translation>
+        <translation>Profiel exporteren</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Tox-sparningsfil (*.tox)</translation>
+        <translation>Tox-opslagbestand (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">Följande filer kan inte tas bort:</translation>
+        <translation>Volgende bestanden konden niet verwijderd worden:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">Vänligen ta bort dem manuellt.</translation>
+        <translation>Verwijder ze handmatig.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Är du säker på att du vill ta bort ditt lösenord?</translation>
+        <translation>Zijt ge zeker dat ge uw paswoord wilt verwijderen?</translation>
     </message>
 </context>
 <context>
@@ -2201,59 +2202,59 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation>Importera profil</translation>
+        <translation>Profiel importeren</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation>Tox-sparningsfil (*.tox)</translation>
+        <translation>Tox-opslagbestand (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation>Ignorerar icke-Toxfil</translation>
+        <translation>Niet-Tox-bestand wordt genegeerd</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Varning: Du har valt en fil som inte är en Tox-sparafil; Ignorerar.</translation>
+        <translation>Waarschuwing: ge hebt een bestand gekozen dat geen Tox-opslagbestand is; dit bestand wordt genegeerd.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation>Profil finns redan</translation>
+        <translation>Profiel bestaat al</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>En profil med namnet &quot;%1&quot; finns redan. Vill du ta bort det?</translation>
+        <translation>Der bestaat al een profiel met de naam ‘%1’. Wilt ge het verwijderen?</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation>Fil finns inte</translation>
+        <translation>Bestand bestaat niet</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation>Profil finns inte</translation>
+        <translation>Profiel bestaat niet</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation>Profilen har importerats</translation>
+        <translation>Profiel geïmporteerd</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation>%1.tox har importerats</translation>
+        <translation>%1.tox is geïmporteerd</translation>
     </message>
 </context>
 <context>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation>Oké</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Avbryt</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -2261,184 +2262,184 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>No</source>
-        <translation>Nej</translation>
+        <translation>Nee</translation>
     </message>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation>LTR</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation>Kunde inte lägga till vän</translation>
+        <translation>Kon vriend niet toevoegen</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 är inte en giltig Toxme-adress.</translation>
+        <translation>%1 is geen geldig ToxMe-adres.</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Du kan inte lägga till dig själv som vän!</translation>
+        <translation>Ge kunt uzelf niet als vriend toevoegen!</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
+        <source>Version %1, %2</source>
+        <translation>Versie %1, %2</translation>
+    </message>
+    <message>
         <source>Update</source>
         <comment>The title of a message box</comment>
-        <translation>Uppdatering</translation>
+        <translation></translation>
     </message>
     <message>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
-        <translation>En uppdatering är tillgänglig, vill du ladda ner den nu?
-Den kommer att installeras när qTox startas om.</translation>
+        <translation>Der is nen update beschikbaar, wilt ge hem nu downloaden?
+Hij zal geïnstalleerd worden wanneer dat qTox herstart.</translation>
     </message>
     <message>
         <source>Tox URI to parse</source>
-        <translation>Tox-URI för att tolka</translation>
+        <translation>Te verwerken Tox-URI</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation>Startar ny instans och laddar angiven profil.</translation>
+        <translation>Start nieuwe instantie en laadt specifiek profiel.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation>profil</translation>
+        <translation>profiel</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>Standard</translation>
+        <translation>Standaard</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Blå</translation>
+        <translation>Blauw</translation>
     </message>
     <message>
         <source>Olive</source>
-        <translation>Olivgrönt</translation>
+        <translation>Olijf</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Röd</translation>
+        <translation>Rood</translation>
     </message>
     <message>
         <source>Violet</source>
-        <translation>Violett</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation>Inkommande samtal...</translation>
-    </message>
-    <message>
-        <source>Version %1, %2</source>
-        <translation>Version %1, %2</translation>
-    </message>
-    <message>
-        <source>Server doesn&apos;t support Toxme</source>
-        <translation>Server stöder inte Toxme</translation>
-    </message>
-    <message>
-        <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation>Du gör alltför många förfrågningar. Vänta en timme och försök igen</translation>
-    </message>
-    <message>
-        <source>This name is already in use</source>
-        <translation>Detta namn används redan</translation>
-    </message>
-    <message>
-        <source>This Tox ID is already registered under another name</source>
-        <translation>Detta Tox-ID är redan registrerat under ett annat namn</translation>
-    </message>
-    <message>
-        <source>Please don&apos;t use a space in your name</source>
-        <translation>Använd inte ett mellanrum i ditt namn</translation>
-    </message>
-    <message>
-        <source>Password incorrect</source>
-        <translation>Felaktigt lösenord</translation>
-    </message>
-    <message>
-        <source>You can&apos;t use this name</source>
-        <translation>Du kan inte använda detta namn</translation>
-    </message>
-    <message>
-        <source>Name not found</source>
-        <translation>Namn hittades inte</translation>
-    </message>
-    <message>
-        <source>Tox ID not sent</source>
-        <translation>Tox-ID skickades inte</translation>
-    </message>
-    <message>
-        <source>That user does not exist</source>
-        <translation>Användaren finns inte</translation>
+        <translation>Inkomenden oproep…</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>%1 här! Toxa mig kanske?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Fel</translation>
-    </message>
-    <message>
-        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox kunde inte öppna dina chattloggar, de kommer att avaktiveras.</translation>
+        <translation>Het is hier %1! Tox met mij!</translation>
     </message>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation>Ingen</translation>
+        <translation>Geen</translation>
     </message>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
-        <translation>Skrivbord</translation>
+        <translation>Bureaublad</translation>
+    </message>
+    <message>
+        <source>Server doesn&apos;t support Toxme</source>
+        <translation>Server biedt geen ondersteuning voor ToxMe</translation>
+    </message>
+    <message>
+        <source>You&apos;re making too many requests. Wait an hour and try again</source>
+        <translation>Ge doet te veel verzoeken. Wacht een uur en probeer het opnieuw</translation>
+    </message>
+    <message>
+        <source>This name is already in use</source>
+        <translation>Deze naam is al in gebruik</translation>
+    </message>
+    <message>
+        <source>This Tox ID is already registered under another name</source>
+        <translation>Dezen Tox-ID is al geregistreerd onder nen andere naam</translation>
+    </message>
+    <message>
+        <source>Please don&apos;t use a space in your name</source>
+        <translation>Gebruik geen spaties in uwe naam</translation>
+    </message>
+    <message>
+        <source>Password incorrect</source>
+        <translation>Paswoord verkeerd</translation>
+    </message>
+    <message>
+        <source>You can&apos;t use this name</source>
+        <translation>Ge kunt deze naam niet gebruiken</translation>
+    </message>
+    <message>
+        <source>Name not found</source>
+        <translation>Naam niet gevonden</translation>
+    </message>
+    <message>
+        <source>Tox ID not sent</source>
+        <translation>Tox-ID niet verstuurd</translation>
+    </message>
+    <message>
+        <source>That user does not exist</source>
+        <translation>Die gebruiker bestaat niet</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fout</translation>
+    </message>
+    <message>
+        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
+        <translation>qTox kon uw gespreksgeschiedenis niet openen, ze zal uitgeschakeld worden.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation>Problem med HTTPS-anslutning</translation>
+        <translation>Probleem met HTTPS-verbinding</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation>Internt ToxMe-fel</translation>
+        <translation>Interne ToxMe-fout</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation>Formaterar om text...</translation>
+        <translation>Tekst wordt opnieuw geformatteerd…</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation>Startar ny instans och öppnar loginskärmen.</translation>
+        <translation>Start nieuwe instantie en opent aanmeldingsscherm.</translation>
     </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Ta bort vän</translation>
+        <translation>Vriend verwijderen</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation>Ta också bort chatthistorik</translation>
+        <translation>Gespreksgeschiedenis ook verwijderen</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Ta bort</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Är du säker du vill ta bort %1 från kontaktlistan?</translation>
+        <translation>Zijt ge zeker dat ge %1 uit uw contactenlijst wilt verwijderen?</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Ta bort all chatthistorik med vännen om den är inställd</translation>
+        <translation>Indien ingesteld alle gespreksgeschiedenis met de vriend verwijderen</translation>
     </message>
 </context>
 <context>
@@ -2446,70 +2447,70 @@ Den kommer att installeras när qTox startas om.</translation>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Klicka och dra för att markera en region. Tryck på %1 för att dölja/visa qTox-fönster, eller %2 för att avbryta.</translation>
+        <translation>Klik en sleep voor een gebied te selecteren. Druk op %1 voor het qTox-venster te verbergen/herstellen, of %2 voor te annuleren.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation>Mellanrum</translation>
+        <translation>Spatie</translation>
     </message>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation>Escape</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Tryck på %1 för att skicka en skärmdump av urvalet, %2 för att visa/dölja qTox-fönster eller %3 för att avbryta.</translation>
+        <translation>Druk op %1 voor ne schermafdruk van de selectie te sturen, %2 voor het qTox-scherm te verbergen/herstellen, of %3 voor te annuleren.</translation>
     </message>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
-        <translation>Enter-tangent</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>SetPasswordDialog</name>
     <message>
         <source>Set your password</source>
-        <translation>Ange ditt lösenord</translation>
+        <translation>Stel uw paswoord in</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>Bekräfta:</translation>
+        <translation>Bevestig:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Lösenord:</translation>
+        <translation>Paswoord:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation>Lösenordets styrka: %p%</translation>
+        <translation>Paswoordsterkte: %p%</translation>
     </message>
     <message>
         <source>The password is too short</source>
-        <translation>Lösenordet är för kort</translation>
+        <translation>Het paswoord is te kort</translation>
     </message>
     <message>
         <source>The password doesn&apos;t match.</source>
-        <translation>Lösenordet matchar inte.</translation>
+        <translation>Het paswoord komt niet overeen.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation>Bekräfta lösenord</translation>
+        <translation>Paswoord bevestigen</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation>Bekräfta lösenordsinmatning</translation>
+        <translation>Paswoordinvoerbevestiging</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation>Lösenordsinmatning</translation>
+        <translation>Paswoordinvoer</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation>Lösenordsinmatningsfält, minst 6 tecken långt</translation>
+        <translation>Paswoordinvoerveld, minimaal 6 tekens</translation>
     </message>
 </context>
 <context>
@@ -2524,194 +2525,194 @@ Den kommer att installeras när qTox startas om.</translation>
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation>Lägga till en vän</translation>
+        <translation>Vriend toevoegen</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
-        <translation>Vill du lägga till %1 som en vän?</translation>
+        <translation>Wilt ge %1 als vriend toevoegen?</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>Användar-ID:</translation>
+        <translation>Gebruikers-ID:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation>Vänförfrågningsmeddelande:</translation>
+        <translation>Bericht voor vriendschapsverzoek:</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Send a friend request</comment>
-        <translation>Skicka</translation>
+        <translation>Versturen</translation>
     </message>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation>Avbryt</translation>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation>Inget</translation>
+        <translation>Geen</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation>Användargränssnitt</translation>
+        <translation>Gebruikersinterface</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation>Chatt</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation>Bas-typsnitt:</translation>
+        <translation>Basislettertype:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation>px</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation>Storlek: </translation>
+        <translation>Grootte: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Ny textstilsinställning kanske inte laddas förrän qTox startas om.</translation>
+        <translation>qTox moet mogelijk herstarten voor de nieuwe tekststijlvoorkeur van kracht te laten gaan.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation>Textstilsformat:</translation>
+        <translation>Tekststijlformaat:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation>Välj textstilsinställning.</translation>
+        <translation>Selecteer nen tekststijlvoorkeur.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation>Klartext</translation>
+        <translation>Platte tekst</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation>Visa formateringstecken</translation>
+        <translation>Formatteringstekens tonen</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation>Visa inte formateringstecken</translation>
+        <translation>Formatteringstekens niet tonen</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation>Nytt meddelande</translation>
+        <translation>Nieuw bericht</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Öppna qTox fönster när du får ett nytt meddelande och inga fönster är öppna ännu.</translation>
+        <translation>qTox-venster openen wanneer ge een bericht ontvangt en der nog geen venster open is.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation>Öppna fönster</translation>
+        <translation>Venster openen</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation>Fokusera på qTox när du tar emot meddelande.</translation>
+        <translation>Focussen op qTox-venster bij het ontvangen van een nieuw bericht.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation>Fokusera fönster</translation>
+        <translation>Venster focussen</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation>Kontaktlista</translation>
+        <translation>Contactenlijst</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation>Meddela alltid om nya meddelanden i gruppchattar.</translation>
+        <translation>Stuur altijd een melding voor nieuwe berichten in groepsgesprekken.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation>Meddela alltid i gruppchattar</translation>
+        <translation>Melding voor alle berichten in groepsgesprekken</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>Om ifylld, kommer gruppchattar att placeras överst i vänlistan, annars kommer de att placeras nedanför uppkopplade vänner.</translation>
+        <translation>Indien geselecteerd zullen groepsgesprekken bovenaan de vriendenlijst gezet worden, anders komen ze onder online vrienden.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation>Placera gruppchattar högst upp i vänlistan</translation>
+        <translation>Groepsgesprekken bovenaan vriendenlijst plaatsen</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>Din kontaktlista kommer att visas i kompaktläge.</translation>
+        <translation>Uwe contactenlijst zal in compacte modus getoond worden.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation>Kompakt kontaktlista</translation>
+        <translation>Compacte contactenlijst</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation>Flerfönsterläge</translation>
+        <translation>Meerderevenstersmodus</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation>Öppna varje chatt i enskilt fönster</translation>
+        <translation>Elk gesprek openen in apart venster</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation>Humörsymboler</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation>Använd humörsymboler</translation>
+        <translation>Emoticons gebruiken</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Humörsymbol-paket:</translation>
+        <translation>Smileypakket:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation>Humörsymbolstorlek:</translation>
+        <translation>Emoticongrootte:</translation>
     </message>
     <message>
         <source> px</source>
-        <translation> px</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation>Tema</translation>
+        <translation>Thema</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation>Stil:</translation>
+        <translation>Stijl:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation>Temafärg:</translation>
+        <translation>Themakleur:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation>Tidsstämpelformat:</translation>
+        <translation>Tijdsaanduiding:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation>Datumformat:</translation>
+        <translation>Datumformaat:</translation>
     </message>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Indien ingeschakeld krijgt elk contact zonder profielfoto een automatisch gegenereerde afbeelding gebaseerd op hunnen Tox-ID, in plek van ne standaardfoto. Toepassen vereist nen herstart.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Identicons gebruiken in plaats van lege profielfoto’s</translation>
     </message>
 </context>
 <context>
@@ -2719,199 +2720,196 @@ Den kommer att installeras när qTox startas om.</translation>
     <message>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation>Tillgänglig</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Borta</translation>
+        <translation>Afwezig</translation>
     </message>
     <message>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation>Upptagen</translation>
+        <translation>Bezet</translation>
+    </message>
+    <message>
+        <source>toxcore failed to start, the application will terminate after you close this message.</source>
+        <translation>toxcore kon niet opstarten, de toepassing zal afsluiten na het sluiten van dit bericht.</translation>
     </message>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>toxcore misslyckades att starta med dina proxy-inställningar. qTox kan inte köras; ändra dina inställningar och starta om.</translation>
+        <translation>toxcore kon niet opstarten met deze proxyinstellingen. Hierdoor kan qTox niet starten. Verander uw instellingen en herstart.</translation>
     </message>
     <message>
-        <source>Couldn&apos;t request friendship</source>
-        <translation>Kunde inte begära vänskap</translation>
+        <source>File</source>
+        <translation>Bestand</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>Misslyckades att skicka meddelande</translation>
+        <source>Edit Profile</source>
+        <translation>Profiel bewerken</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation>Status</translation>
+        <source>Change Status</source>
+        <translation>Status wijzigen</translation>
     </message>
     <message>
-        <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>toxcore kunde inte startas, programmet kommer att avslutas efter att du stängt det här meddelandet.</translation>
+        <source>Log out</source>
+        <translation>Uitloggen</translation>
     </message>
     <message>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation>Körbar fil</translation>
-    </message>
-    <message>
-        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
-        <comment>popup text</comment>
-        <translation>Du har bett qTox att öppna en körbar fil. Körbara filer kan potentiellt skada din dator. Är du säker vill öppna den här filen?</translation>
-    </message>
-    <message>
-        <source>Your name</source>
-        <translation>Ditt namn</translation>
-    </message>
-    <message>
-        <source>Your status</source>
-        <translation>Din status</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Tom&gt;</translation>
-    </message>
-    <message>
-        <source>Groupchat #%1</source>
-        <translation>Gruppchatt #%1</translation>
-    </message>
-    <message>
-        <source>Create new group...</source>
-        <translation>Skapa ny grupp...</translation>
-    </message>
-    <message>
-        <source>Add new circle...</source>
-        <translation>Lägg till ny cirkel...</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Friend Request(s)</source>
-        <translation>
-            <numerusform>%n ny vänförfrågning</numerusform>
-            <numerusform>%n nya vänförfrågningar</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Group Invite(s)</source>
-        <translation>
-            <numerusform>%n ny gruppinbjudan</numerusform>
-            <numerusform>%n nya Gruppinbjudningar</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>By Name</source>
-        <translation>Efter namn</translation>
-    </message>
-    <message>
-        <source>By Activity</source>
-        <translation>Efter aktivitet</translation>
-    </message>
-    <message>
-        <source>All</source>
-        <translation>Alla</translation>
-    </message>
-    <message>
-        <source>Online</source>
-        <translation>Tillgänglig</translation>
-    </message>
-    <message>
-        <source>Offline</source>
-        <translation>Frånkopplad</translation>
-    </message>
-    <message>
-        <source>Friends</source>
-        <translation>Vänner</translation>
-    </message>
-    <message>
-        <source>Groups</source>
-        <translation>Grupper</translation>
-    </message>
-    <message>
-        <source>Search Contacts</source>
-        <translation>Sök kontakter</translation>
+        <source>Edit</source>
+        <translation>Bewerken</translation>
     </message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation>Logga ut</translation>
+        <translation>Uitloggen</translation>
     </message>
     <message>
         <source>Exit</source>
         <comment>Tray action menu to exit tox</comment>
-        <translation>Avsluta</translation>
+        <translation>Afsluiten</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation>Filtrera...</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Fil</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Redigera</translation>
+        <translation>Filteren…</translation>
     </message>
     <message>
         <source>Contacts</source>
-        <translation>Kontakter</translation>
-    </message>
-    <message>
-        <source>Change Status</source>
-        <translation>Ändra status</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation>Redigera profil</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translation>Logga ut</translation>
+        <translation>Contacten</translation>
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation>Lägg till kontakt...</translation>
+        <translation>Contact toevoegen…</translation>
     </message>
     <message>
         <source>Next Conversation</source>
-        <translation>Nästa konversation</translation>
+        <translation>Volgend gesprek</translation>
     </message>
     <message>
         <source>Previous Conversation</source>
-        <translation>Föregående konversation</translation>
+        <translation>Vorig gesprek</translation>
+    </message>
+    <message>
+        <source>Executable file</source>
+        <comment>popup title</comment>
+        <translation>Uitvoerbaar bestand</translation>
+    </message>
+    <message>
+        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
+        <comment>popup text</comment>
+        <translation>Ge hebt qTox gevraagd voor een uitvoerbaar bestand te openen. Uitvoerbare bestanden kunnen schade toebrengen aan uwe computer. Zijt ge zeker dat ge dit bestand wilt openen?</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t request friendship</source>
+        <translation>Kon geen vriendschapsverzoek sturen</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Your name</source>
+        <translation>Uwe naam</translation>
+    </message>
+    <message>
+        <source>Your status</source>
+        <translation>Uwe status</translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;leeg&gt;</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation>Bericht kon niet verstuurd worden</translation>
+    </message>
+    <message>
+        <source>Create new group...</source>
+        <translation>Nieuwe groep aanmaken…</translation>
+    </message>
+    <message>
+        <source>Add new circle...</source>
+        <translation>Nieuwe cirkel toevoegen…</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation><numerusform>%n nieuw vriendschapsverzoek</numerusform>
+        <numerusform>%n nieuwe vriendschapsverzoeken</numerusform>
+        </translation></message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation><numerusform>%n nieuwe groepsuitnodiging</numerusform>
+        <numerusform>%n nieuwe groepsuitnodigingen</numerusform>
+        </translation></message>
+    <message>
+        <source>By Name</source>
+        <translation>Op naam</translation>
+    </message>
+    <message>
+        <source>By Activity</source>
+        <translation>Op activiteit</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Alle</translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Offline</source>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Friends</source>
+        <translation>Vrienden</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation>Groepen</translation>
+    </message>
+    <message>
+        <source>Search Contacts</source>
+        <translation>Contacten doorzoeken</translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation>Groepsgesprek #%1</translation>
     </message>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation>Visa</translation>
+        <translation>Tonen</translation>
     </message>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation>Lägg till vän</translation>
+        <translation>Vriend toevoegen</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation>Gruppinbjudningar</translation>
+        <translation>Groepsuitnodigingen</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation>Filöverföringar</translation>
+        <translation>Bestandsoverdrachten</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation>Inställningar</translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation>Min profil</translation>
+        <translation>Mijn profiel</translation>
     </message>
 </context>
 </TS>

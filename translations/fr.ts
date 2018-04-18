@@ -81,7 +81,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished">Active la rétro-écoute audio expérimental avec la prise en charge de l&apos;annulation d&apos;écho, nécessite le redémarrage de qTox pour prendre effet.</translation>
+        <translation>Active le serveur audio expérimental avec prise en charge de l&apos;annulation d&apos;écho, nécessite le redémarrage de qTox pour prendre effet.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
@@ -210,19 +210,19 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Si activé, accepte automatiquement les fichiers du contact</translation>
+        <translation>Si actif, accepte automatiquement les fichiers du contact</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">Acceptation automatique des fichiers</translation>
+        <translation>Accepter automatiquement les fichiers</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Répertoire par défaut d&apos;enregistrement des fichiers :</translation>
+        <translation>Répertoire d&apos;enregistrement par défaut des fichiers :</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">L&apos;acceptation automatique est désactivée pour ce contact</translation>
+        <translation>L&apos;acceptation automatique est désactivée pour ce contact</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
@@ -246,7 +246,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished">Acceptation automatique des invitations de groupe</translation>
+        <translation>Accepter automatiquement les invitations de groupe</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
@@ -258,7 +258,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished">Champ de saisie des notes concernant le contact</translation>
+        <translation>Champ de saisie des notes du contact</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
@@ -270,7 +270,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">Historique de discussion avec %1 effacé(s) !</translation>
+        <translation>Historique de discussion avec %1 effacé !</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -359,7 +359,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished">Vous ne pouvez pas vous ajouter vous-même comme contact !</translation>
+        <translation>Vous ne pouvez pas vous ajouter vous-même comme contact !</translation>
     </message>
     <message>
         <source>Open contact list</source>
@@ -710,27 +710,27 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Le son ne peut être coupé que lors d&apos;un appel</translation>
+        <translation>Le son ne peut être coupé que lors d&apos;un appel</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Réactiver le son de l&apos;appel</translation>
+        <translation>Réactiver le son de l&apos;appel</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Couper le son de l&apos;appel</translation>
+        <translation>Couper le son de l&apos;appel</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Le microphone ne peut être coupé que lors d&apos;un appel</translation>
+        <translation>Le micro ne peut être coupé que lors d&apos;un appel</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished">Réactiver le microphone</translation>
+        <translation>Réactiver le micro</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Couper le microphone</translation>
+        <translation>Couper le micro</translation>
     </message>
 </context>
 <context>
