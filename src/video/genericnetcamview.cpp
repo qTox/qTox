@@ -20,6 +20,7 @@
 #include "genericnetcamview.h"
 
 #include <QBoxLayout>
+#include <QKeyEvent>
 #include <QPushButton>
 #include <QTimer>
 #include <QVariant>
@@ -113,29 +114,39 @@ void GenericNetCamView::setShowMessages(bool show, bool notify)
 void GenericNetCamView::toggleFullScreen()
 {
     if (isFullScreen()) {
-        // exit full screen mode
-        setWindowFlags(Qt::Widget);
-        showNormal();
-        buttonPanel->hide();
-        enterFullScreenButton->show();
-        toggleMessagesButton->show();
+        exitFullScreen();
     } else {
-        // enter full screen mode
-        setWindowFlags(Qt::Tool | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-        showFullScreen();
-        enterFullScreenButton->hide();
-        toggleMessagesButton->hide();
-
-        // we need to get the correct width and height but it has to be
-        // after the widget switched to full screen - there must be a better way?
-        QTimer::singleShot(200, this, [this]() {
-            buttonPanel->setGeometry((width() / 2) - buttonPanel->width() / 2,
-                    height() - buttonPanelHeight - 25, buttonPanelWidth, buttonPanelHeight);
-            buttonPanel->show();
-            buttonPanel->activateWindow();
-            buttonPanel->raise();
-        });
+        enterFullScreen();
     }
+}
+
+// enter full screen mode
+void GenericNetCamView::enterFullScreen()
+{
+    setWindowFlags(Qt::Tool | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    showFullScreen();
+    enterFullScreenButton->hide();
+    toggleMessagesButton->hide();
+
+    // we need to get the correct width and height but it has to be
+    // after the widget switched to full screen - there must be a better way?
+    QTimer::singleShot(200, this, [this]() {
+        buttonPanel->setGeometry((width() / 2) - buttonPanel->width() / 2,
+                height() - buttonPanelHeight - 25, buttonPanelWidth, buttonPanelHeight);
+        buttonPanel->show();
+        buttonPanel->activateWindow();
+        buttonPanel->raise();
+    });
+}
+
+// exit full screen mode
+void GenericNetCamView::exitFullScreen()
+{
+    setWindowFlags(Qt::Widget);
+    showNormal();
+    buttonPanel->hide();
+    enterFullScreenButton->show();
+    toggleMessagesButton->show();
 }
 
 void GenericNetCamView::endVideoCall()
@@ -201,4 +212,12 @@ void GenericNetCamView::updateButtonState(QPushButton* btn, bool active)
     }
 
     btn->setStyleSheet(Style::getStylesheet(buttonsStyleSheetPath));
+}
+
+void GenericNetCamView::keyPressEvent(QKeyEvent *event)
+{
+    int key = event->key();
+    if (key == Qt::Key_Escape && isFullScreen()) {
+        exitFullScreen();
+    }
 }

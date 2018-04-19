@@ -66,12 +66,15 @@ private:
     QPushButton* exitFullScreenButton;
     QPushButton* createButton(const QString& name, const QString& state);
     void toggleFullScreen();
+    void enterFullScreen();
+    void exitFullScreen();
     void endVideoCall();
     void toggleAudioOutput();
     void toggleMicrophone();
     void toggleVideoPreview();
     void toggleButtonState(QPushButton* btn);
     void updateButtonState(QPushButton* btn, bool active);
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // GENERICNETCAMVIEW_H
