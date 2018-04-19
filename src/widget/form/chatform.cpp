@@ -886,7 +886,7 @@ void ChatForm::updateMuteMicButton()
     bool active = av->isCallActive(f);
     bool inputMuted = av->isCallInputMuted(f);
     headWidget->updateMuteMicButton(active, inputMuted);
-    if(netcam) {
+    if (netcam) {
         netcam->updateMuteMicButton(inputMuted);
     }
 }
@@ -897,7 +897,7 @@ void ChatForm::updateMuteVolButton()
     bool active = av->isCallActive(f);
     bool outputMuted = av->isCallOutputMuted(f);
     headWidget->updateMuteVolButton(active, outputMuted);
-    if(netcam) {
+    if (netcam) {
         netcam->updateMuteVolButton(outputMuted);
     }
 }

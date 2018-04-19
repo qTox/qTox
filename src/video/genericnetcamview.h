@@ -22,6 +22,7 @@
 
 #include <QFrame>
 #include <QPushButton>
+#include <QVariant>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -52,26 +53,31 @@ protected:
     VideoSurface* videoSurface;
 
 private:
-    QHBoxLayout* buttonLayout;
-    QPushButton* toggleMessagesButton;
-    QPushButton* enterFullScreenButton;
-    QFrame* buttonPanel;
     const int buttonPanelHeight = 55;
     const int buttonPanelWidth = 250;
     const QString buttonsStyleSheetPath = ":/ui/chatForm/fullScreenButtons.css";
-    QPushButton* videoPreviewButton;
-    QPushButton* volumeButton;
-    QPushButton* microphoneButton;
-    QPushButton* endVideoButton;
-    QPushButton* exitFullScreenButton;
+    const QVariant btnStateNone = QVariant("none");
+    const QVariant btnStateRed = QVariant("red");
+    QHBoxLayout* buttonLayout = nullptr;
+    QPushButton* toggleMessagesButton = nullptr;
+    QPushButton* enterFullScreenButton = nullptr;
+    QFrame* buttonPanel = nullptr;
+    QPushButton* videoPreviewButton = nullptr;
+    QPushButton* volumeButton = nullptr;
+    QPushButton* microphoneButton = nullptr;
+    QPushButton* endVideoButton = nullptr;
+    QPushButton* exitFullScreenButton = nullptr;
+
+private:
     QPushButton* createButton(const QString& name, const QString& state);
     void toggleFullScreen();
+    void enterFullScreen();
+    void exitFullScreen();
     void endVideoCall();
-    void toggleAudioOutput();
-    void toggleMicrophone();
     void toggleVideoPreview();
     void toggleButtonState(QPushButton* btn);
     void updateButtonState(QPushButton* btn, bool active);
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // GENERICNETCAMVIEW_H
