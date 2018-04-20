@@ -1025,8 +1025,7 @@ void ChatForm::onExportChat()
     QDateTime now = QDateTime::currentDateTime();
     QList<History::HistMessage> msgs = history->getChatHistory(pk, epochStart, now);
 
-    QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"), QString{}, QString{}, 0,
-                                                QFileDialog::DontUseNativeDialog);
+    QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"));
     if (path.isEmpty()) {
         return;
     }
@@ -1038,11 +1037,12 @@ void ChatForm::onExportChat()
 
     QString buffer;
     for (const auto& it : msgs) {
-        QString timestamp = it.timestamp.toString();
+        QString timestamp = it.timestamp.time().toString();
+        QString datestamp = it.timestamp.date().toString();
         ToxPk authorPk(ToxId(it.sender).getPublicKey());
         QString author = getMsgAuthorDispName(authorPk, it.dispName);
 
-        QString line = QString("%1\t%2\t%3\n").arg(timestamp, author, it.message);
+        QString line = QString("%1\t%2\t%3\t%4\n").arg(datestamp, timestamp, author, it.message);
         buffer = buffer % line;
     }
     file.write(buffer.toUtf8());
