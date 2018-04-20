@@ -328,7 +328,7 @@ int main(int argc, char* argv[])
         !Profile::isEncrypted(profileName)) {
         profile = Profile::loadProfile(profileName);
     } else {
-        LoginScreen loginScreen{};
+        LoginScreen loginScreen{profileName};
         loginScreen.exec();
         profile = loginScreen.getProfile();
         if (profile) {
