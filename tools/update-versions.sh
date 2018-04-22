@@ -47,6 +47,11 @@ update_osx() {
         ./update-plist-version.sh "$@" )
 }
 
+update_readme() {
+    cd "$BASE_DIR"
+    sed -ri "s|(github.com/qTox/qTox/releases/download/v)[0-9]+\.[0-9]+\.[0-9]+|\1$@|g" README.md
+}
+
 # exit if supplied arg is not a version
 is_version() {
     if [[ ! $@ =~ [0-9\\.]+ ]]
@@ -64,6 +69,7 @@ main() {
     then
         update_osx "$@"
         update_windows "$@"
+        update_readme "$@"
     else
         # TODO: actually check whether there is a GNU sed on osx
         echo "OSX's sed not supported. Get a proper one."
