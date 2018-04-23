@@ -487,15 +487,17 @@ void GenericChatForm::onSaveLogClicked()
     for (ChatLine::Ptr l : lines) {
         Timestamp* rightCol = qobject_cast<Timestamp*>(l->getContent(2));
 
-        if (!rightCol)
-            break;
-
         ChatLineContent* middleCol = l->getContent(1);
         ChatLineContent* leftCol = l->getContent(0);
 
         QString timestamp = rightCol->getTime().isNull() ? tr("Not sent") : rightCol->getText();
         QString nick = leftCol->getText();
         QString msg = middleCol->getText();
+
+        if (msg.isEmpty())
+        {
+            break;
+        }
 
         plainText += QString("[%2] %1\n%3\n\n").arg(nick, timestamp, msg);
     }
