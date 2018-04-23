@@ -933,9 +933,8 @@ void Widget::setStatusMessage(const QString& statusMessage)
 
 void Widget::reloadHistory()
 {
-    QDateTime weekAgo = QDateTime::currentDateTime().addDays(-7);
     for (auto f : FriendList::getAllFriends()) {
-        chatForms[f->getId()]->loadHistory(weekAgo, true);
+        chatForms[f->getId()]->loadHistoryDefaultNum(true);
     }
 }
 

@@ -34,6 +34,8 @@
  * Caches mappings to speed up message saving.
  */
 
+static constexpr int NUM_MESSAGES_DEFAULT = 100;
+
 /**
  * @brief Prepares the database to work with the history.
  * @param db This database will be prepared for use with the history.
@@ -249,45 +251,28 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
  * @param to End of period to fetch.
  * @return List of messages.
  */
-QList<History::HistMessage> History::getChatHistory(const QString& friendPk, const QDateTime& from,
+QList<History::HistMessage> History::getChatHistoryFromDate(const QString& friendPk, const QDateTime& from,
                                                     const QDateTime& to)
 {
     if (!isValid()) {
         return {};
     }
-
-    QList<HistMessage> messages;
-
-    auto rowCallback = [&messages](const QVector<QVariant>& row) {
-        // dispName and message could have null bytes, QString::fromUtf8
-        // truncates on null bytes so we strip them
-        messages += {row[0].toLongLong(),
-                     row[1].isNull(),
-                     QDateTime::fromMSecsSinceEpoch(row[2].toLongLong()),
-                     row[3].toString(),
-                     QString::fromUtf8(row[4].toByteArray().replace('\0', "")),
-                     row[5].toString(),
-                     QString::fromUtf8(row[6].toByteArray().replace('\0', ""))};
-    };
-
-    // Don't forget to update the rowCallback if you change the selected columns!
-    QString queryText =
-        QString("SELECT history.id, faux_offline_pending.id, timestamp, "
-                "chat.public_key, aliases.display_name, sender.public_key, "
-                "message FROM history "
-                "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
-                "JOIN peers chat ON chat_id = chat.id "
-                "JOIN aliases ON sender_alias = aliases.id "
-                "JOIN peers sender ON aliases.owner = sender.id "
-                "WHERE timestamp BETWEEN %1 AND %2 AND chat.public_key='%3';")
-            .arg(from.toMSecsSinceEpoch())
-            .arg(to.toMSecsSinceEpoch())
-            .arg(friendPk);
-
-    db->execNow({queryText, rowCallback});
-
-    return messages;
+    return getChatHistory(friendPk, from, to, 0);
 }
+
+/**
+ * @brief Fetches the latest set amount of messages from the database.
+ * @param friendPk Friend publick key to fetch.
+ * @return List of messages.
+ */
+QList<History::HistMessage> History::getChatHistoryDefaultNum(const QString& friendPk)
+{
+    if (!isValid()) {
+        return {};
+    }
+    return getChatHistory(friendPk, QDateTime::fromMSecsSinceEpoch(0), QDateTime::currentDateTime(), NUM_MESSAGES_DEFAULT);
+}
+
 
 /**
  * @brief Fetches chat messages counts for each day from the database.
@@ -374,4 +359,54 @@ void History::markAsSent(qint64 messageId)
     }
 
     db->execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;").arg(messageId));
+}
+
+
+/**
+ * @brief Fetches chat messages from the database.
+ * @param friendPk Friend publick key to fetch.
+ * @param from Start of period to fetch.
+ * @param to End of period to fetch.
+ * @return List of messages.
+ */
+QList<History::HistMessage> History::getChatHistory(const QString& friendPk, const QDateTime& from,
+                                                    const QDateTime& to, int numMessages)
+{
+    QList<HistMessage> messages;
+
+    auto rowCallback = [&messages](const QVector<QVariant>& row) {
+        // dispName and message could have null bytes, QString::fromUtf8
+        // truncates on null bytes so we strip them
+        messages += {row[0].toLongLong(),
+                     row[1].isNull(),
+                     QDateTime::fromMSecsSinceEpoch(row[2].toLongLong()),
+                     row[3].toString(),
+                     QString::fromUtf8(row[4].toByteArray().replace('\0', "")),
+                     row[5].toString(),
+                     QString::fromUtf8(row[6].toByteArray().replace('\0', ""))};
+    };
+
+    // Don't forget to update the rowCallback if you change the selected columns!
+    QString queryText =
+        QString("SELECT history.id, faux_offline_pending.id, timestamp, "
+                "chat.public_key, aliases.display_name, sender.public_key, "
+                "message FROM history "
+                "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+                "JOIN peers chat ON chat_id = chat.id "
+                "JOIN aliases ON sender_alias = aliases.id "
+                "JOIN peers sender ON aliases.owner = sender.id "
+                "WHERE timestamp BETWEEN %1 AND %2 AND chat.public_key='%3'")
+            .arg(from.toMSecsSinceEpoch())
+            .arg(to.toMSecsSinceEpoch())
+            .arg(friendPk);
+    if (numMessages) {
+        queryText = "SELECT * FROM (" + queryText +
+                QString(" ORDER BY history.id DESC limit %1) AS T1 ORDER BY T1.id ASC;").arg(numMessages);
+    } else {
+        queryText = queryText + ";";
+    }
+
+    db->execNow({queryText, rowCallback});
+
+    return messages;
 }
