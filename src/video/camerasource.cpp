@@ -109,7 +109,11 @@ CameraSource::CameraSource()
     moveToThread(deviceThread);
 
     subscriptions = 0;
+
+// TODO(sudden6): remove code when minimum ffmpeg version >= 4.0
+#if LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(58, 9, 100)
     av_register_all();
+#endif
     avdevice_register_all();
 }
 
