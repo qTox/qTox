@@ -150,7 +150,6 @@ protected:
 
     QDateTime prevMsgDateTime;
     QDateTime earliestMessage;
-    QDateTime historyBaselineDate = QDateTime::currentDateTime();
 
     QMenu menu;
 
