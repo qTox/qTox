@@ -50,11 +50,6 @@
  * @class GenericChatForm
  * @brief Parent class for all chatforms. It's provide the minimum required UI
  * elements and methods to work with chat messages.
- *
- * TODO: reword
- * @var GenericChatForm::historyBaselineDate
- * @brief Used by HistoryKeeper to load messages from t to historyBaselineDate
- *        (excluded)
  */
 
 #define SET_STYLESHEET(x) (x)->setStyleSheet(Style::getStylesheet(":/ui/" #x "/" #x ".css"))
@@ -670,7 +665,6 @@ void GenericChatForm::clearChatArea(bool notinform)
         addSystemInfoMessage(tr("Cleared"), ChatMessage::INFO, QDateTime::currentDateTime());
 
     earliestMessage = QDateTime(); // null
-    historyBaselineDate = QDateTime::currentDateTime();
 
     emit chatAreaCleared();
 }

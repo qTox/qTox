@@ -380,10 +380,10 @@ void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
     if (!l.get())
         return;
 
-    insertChatlineOnTop(QList<ChatLine::Ptr>() << l);
+    insertChatlinesOnTop(QList<ChatLine::Ptr>() << l);
 }
 
-void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
+void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
 {
     if (newLines.isEmpty())
         return;
