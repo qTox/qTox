@@ -1212,7 +1212,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         QString name = f->getDisplayedName();
         QString text = message;
         if (isAction) {
-            text = ChatForm::ACTION_PREFIX + f->getDisplayedName() + " " + text;
+            text = ChatForm::ACTION_PREFIX + text;
         }
         profile->getHistory()->addNewMessage(publicKey, text, publicKey, timestamp, true, name);
     }
