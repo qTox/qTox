@@ -69,8 +69,9 @@ uint32_t VideoMode::norm(const VideoMode& other) const
 
 uint32_t VideoMode::tolerance() const
 {
+    constexpr uint32_t minTolerance = 300; // keep wider tolerance for low res cameras
     constexpr uint32_t toleranceFactor = 10; // video mode must be within 10% to be "close enough" to ideal
-    return (width + height)/toleranceFactor;
+    return std::max((width + height)/toleranceFactor, minTolerance);
 }
 
 /**
