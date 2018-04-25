@@ -196,6 +196,7 @@ void Style::repolish(QWidget* w)
 
 void Style::setThemeColor(int color)
 {
+    stylesheetsCache.clear(); // clear stylesheet cache which includes color info
     if (color < 0 || color >= themeColorColors.size())
         setThemeColor(QColor());
     else
