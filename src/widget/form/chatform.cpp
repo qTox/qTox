@@ -119,7 +119,6 @@ QString secondsToDHMS(quint32 duration)
 
 ChatForm::ChatForm(Friend* chatFriend, History* history)
     : f(chatFriend)
-    , callDuration(new QLabel(this))
     , history{history}
     , isTyping{false}
     , lastCallIsVideo{false}
