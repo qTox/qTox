@@ -36,6 +36,8 @@ readonly QTOX_APP_DIR="$BUILD_DIR"/appdir
 readonly LDQT_BUILD_DIR="$BUILD_DIR"/ldqt
 # "appimagetool" becomes aitool
 readonly AITOOL_BUILD_DIR="$BUILD_DIR"/aitool
+# sqlcipher build directory
+readonly SQLCIPHER_BUILD_DIR="$BUILD_DIR"/sqlcipher
 # ldqt binary
 readonly LDQT_BIN="/usr/lib/x86_64-linux-gnu/qt5/bin/linuxdeployqt"
 readonly APT_FLAGS="-y --no-install-recommends"
@@ -44,20 +46,36 @@ export MAKEFLAGS="-j$(nproc)"
 
 # Get packages
 apt-get update
-apt-get install $APT_FLAGS sudo ca-certificates wget fuse xxd git g++ patchelf
+apt-get install $APT_FLAGS sudo ca-certificates wget build-essential fuse xxd \
+git g++ patchelf tclsh libssl-dev
 
 # get version
 cd "$QTOX_SRC_DIR"
-export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
+# linuxdeployqt uses this for naming the file
+export VERSION=$(git rev-parse --short HEAD)
 
 
 # create build directory
 mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
+# we need a custom built sqlcipher version because of a Debian bug
+# https://bugs.debian.org/850421
+git clone https://github.com/sqlcipher/sqlcipher.git "$SQLCIPHER_BUILD_DIR"
+cd "$SQLCIPHER_BUILD_DIR"
+git checkout tags/v3.4.2
+./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
+LDFLAGS="-lcrypto"
+
+make
+make install
+
 # copy qtox source
 cp -r "$QTOX_SRC_DIR" "$QTOX_BUILD_DIR"
 cd "$QTOX_BUILD_DIR"
+
+# ensure this directory is empty
+rm -rf ./_build
 
 # reuse for our purposes, pass flags to automatically install packages
 ./simple_make.sh "$APT_FLAGS"
@@ -67,7 +85,8 @@ cd _build
 
 make DESTDIR="$QTOX_APP_DIR" install ; find "$QTOX_APP_DIR"
 
-LDQT_HASH="9c90a882ac744b5f704598e9588450ddfe487c67" # is master as of 2018-04-25
+# is master as of 2018-04-25
+LDQT_HASH="9c90a882ac744b5f704598e9588450ddfe487c67"
 # build linuxdeployqt
 git clone https://github.com/probonopd/linuxdeployqt.git "$LDQT_BUILD_DIR"
 cd "$LDQT_BUILD_DIR"
@@ -76,9 +95,12 @@ qmake
 make
 make install
 
-AITOOL_HASH="5d93115f279d94a4d23dfd64fb8ccd109e98f039" # is master as of 2018-04-25
+# is master as of 2018-04-25
+AITOOL_HASH="5d93115f279d94a4d23dfd64fb8ccd109e98f039"
 # build appimagetool
-git clone -b appimagetool/master --single-branch --recursive https://github.com/AppImage/AppImageKit "$AITOOL_BUILD_DIR"
+git clone -b appimagetool/master --single-branch --recursive \
+https://github.com/AppImage/AppImageKit "$AITOOL_BUILD_DIR"
+
 cd "$AITOOL_BUILD_DIR"
 git checkout "$AITOOL_HASH"
 bash -ex install-build-deps.sh
@@ -92,7 +114,9 @@ cd build
 # make sure that deps in separate install tree are found
 export PKG_CONFIG_PATH=/deps/lib/pkgconfig/
 
-cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING=ON -DAPPIMAGEKIT_PACKAGE_DEBS=ON
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING=ON \
+-DAPPIMAGEKIT_PACKAGE_DEBS=ON
+
 make
 make install
 
