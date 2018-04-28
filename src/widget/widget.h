@@ -113,10 +113,13 @@ public:
     void addGroupDialog(Group* group, ContentDialog* dialog);
     bool newFriendMessageAlert(int friendId, bool sound = true);
     bool newGroupMessageAlert(int groupId, bool notify);
+    void groupShowPeerJoinMessage(int groupnumber, QString username);
+    void groupShowPeerLeaveMessage(int groupnumber, QString username);
+    void groupShowPeerNameChangeMessage(int groupnumber, QString oldName, QString newName);
+
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
-
     static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog() const;
     ContentLayout* createContentDialog(DialogType type) const;
