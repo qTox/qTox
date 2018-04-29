@@ -268,7 +268,7 @@ void CameraSource::openDevice()
         return;
     }
 
-    qDebug() << "Opening device " << deviceName;
+    qDebug() << "Opening device" << deviceName << "subscriptions:" << subscriptions;
 
     if (device) {
         device->open();
@@ -385,7 +385,7 @@ void CameraSource::closeDevice()
         return;
     }
 
-    qDebug() << "Closing device " << deviceName;
+    qDebug() << "Closing device" << deviceName << "subscriptions:" << subscriptions;
 
     // Free all remaining VideoFrame
     VideoFrame::untrackFrames(id, true);
