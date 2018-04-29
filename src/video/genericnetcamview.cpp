@@ -19,10 +19,21 @@
 
 #include "genericnetcamview.h"
 
+#include <QApplication>
 #include <QBoxLayout>
+#include <QDesktopWidget>
 #include <QKeyEvent>
 #include <QPushButton>
-#include <QTimer>
+#include <QVariant>
+
+namespace
+{
+const QVariant BTN_STATE_NONE = QVariant("none");
+const QVariant BTN_STATE_RED = QVariant("red");
+const int BTN_PANEL_HEIGHT = 55;
+const int BTN_PANEL_WIDTH = 250;
+const auto BTN_STYLE_SHEET_PATH = QStringLiteral(":/ui/chatForm/fullScreenButtons.css");
+}
 
 GenericNetCamView::GenericNetCamView(QWidget* parent)
     : QWidget(parent)
@@ -50,8 +61,8 @@ GenericNetCamView::GenericNetCamView(QWidget* parent)
 
     setStyleSheet("NetCamView { background-color: #c1c1c1; }");
     buttonPanel = new QFrame(this);
-    buttonPanel->setStyleSheet(Style::getStylesheet(buttonsStyleSheetPath));
-    buttonPanel->setGeometry(0, 0, buttonPanelWidth, buttonPanelHeight);
+    buttonPanel->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH));
+    buttonPanel->setGeometry(0, 0, BTN_PANEL_WIDTH, BTN_PANEL_HEIGHT);
 
     QHBoxLayout* buttonPanelLayout = new QHBoxLayout(buttonPanel);
     buttonPanelLayout->setContentsMargins(20, 0, 20, 0);
@@ -72,8 +83,8 @@ GenericNetCamView::GenericNetCamView(QWidget* parent)
     exitFullScreenButton->setToolTip(tr("Exit full screen"));
 
     connect(videoPreviewButton, &QPushButton::clicked, this, &GenericNetCamView::toggleVideoPreview);
-    connect(volumeButton, SIGNAL(clicked()), this, SIGNAL(volMuteToggle()));
-    connect(microphoneButton, SIGNAL(clicked()), this, SIGNAL(micMuteToggle()));
+    connect(volumeButton, &QPushButton::clicked, this, &GenericNetCamView::volMuteToggle);
+    connect(microphoneButton, &QPushButton::clicked, this, &GenericNetCamView::micMuteToggle);
     connect(endVideoButton, &QPushButton::clicked, this, &GenericNetCamView::endVideoCall);
     connect(exitFullScreenButton, &QPushButton::clicked, this, &GenericNetCamView::toggleFullScreen);
 
@@ -121,20 +132,17 @@ void GenericNetCamView::toggleFullScreen()
 
 void GenericNetCamView::enterFullScreen()
 {
-    setWindowFlags(Qt::Tool | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     showFullScreen();
     enterFullScreenButton->hide();
     toggleMessagesButton->hide();
 
-    // we need to get the correct width and height but it has to be
-    // after the widget switched to full screen - there must be a better way?
-    QTimer::singleShot(200, this, [this]() {
-        buttonPanel->setGeometry((width() / 2) - buttonPanel->width() / 2,
-                height() - buttonPanelHeight - 25, buttonPanelWidth, buttonPanelHeight);
-        buttonPanel->show();
-        buttonPanel->activateWindow();
-        buttonPanel->raise();
-    });
+    const auto screenSize = QApplication::desktop()->screenGeometry(this);
+    buttonPanel->setGeometry((screenSize.width() / 2) - buttonPanel->width() / 2,
+            screenSize.height() - BTN_PANEL_HEIGHT - 25, BTN_PANEL_WIDTH, BTN_PANEL_HEIGHT);
+    buttonPanel->show();
+    buttonPanel->activateWindow();
+    buttonPanel->raise();
 }
 
 void GenericNetCamView::exitFullScreen()
@@ -164,7 +172,7 @@ QPushButton *GenericNetCamView::createButton(const QString& name, const QString&
     btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     btn->setObjectName(name);
     btn->setProperty("state", QVariant(state));
-    btn->setStyleSheet(Style::getStylesheet(buttonsStyleSheetPath));
+    btn->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH));
 
     return btn;
 }
@@ -181,24 +189,24 @@ void GenericNetCamView::updateMuteMicButton(bool isMuted)
 
 void GenericNetCamView::toggleButtonState(QPushButton* btn)
 {
-    if (btn->property("state") == btnStateRed) {
-        btn->setProperty("state", btnStateNone);
+    if (btn->property("state") == BTN_STATE_RED) {
+        btn->setProperty("state", BTN_STATE_NONE);
     } else {
-        btn->setProperty("state", btnStateRed);
+        btn->setProperty("state", BTN_STATE_RED);
     }
 
-    btn->setStyleSheet(Style::getStylesheet(buttonsStyleSheetPath));
+    btn->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH));
 }
 
 void GenericNetCamView::updateButtonState(QPushButton* btn, bool active)
 {
     if (active) {
-        btn->setProperty("state", btnStateNone);
+        btn->setProperty("state", BTN_STATE_NONE);
     } else {
-        btn->setProperty("state", btnStateRed);
+        btn->setProperty("state", BTN_STATE_RED);
     }
 
-    btn->setStyleSheet(Style::getStylesheet(buttonsStyleSheetPath));
+    btn->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH));
 }
 
 void GenericNetCamView::keyPressEvent(QKeyEvent *event)
