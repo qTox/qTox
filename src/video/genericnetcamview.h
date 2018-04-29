@@ -22,7 +22,6 @@
 
 #include <QFrame>
 #include <QPushButton>
-#include <QVariant>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -53,11 +52,6 @@ protected:
     VideoSurface* videoSurface;
 
 private:
-    const int buttonPanelHeight = 55;
-    const int buttonPanelWidth = 250;
-    const QString buttonsStyleSheetPath = ":/ui/chatForm/fullScreenButtons.css";
-    const QVariant btnStateNone = QVariant("none");
-    const QVariant btnStateRed = QVariant("red");
     QHBoxLayout* buttonLayout = nullptr;
     QPushButton* toggleMessagesButton = nullptr;
     QPushButton* enterFullScreenButton = nullptr;

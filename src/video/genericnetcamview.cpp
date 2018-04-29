@@ -19,10 +19,18 @@
 
 #include "genericnetcamview.h"
 
+#include <QApplication>
 #include <QBoxLayout>
+#include <QDesktopWidget>
 #include <QKeyEvent>
 #include <QPushButton>
-#include <QTimer>
+#include <QVariant>
+
+const QVariant btnStateNone = QVariant("none");
+const QVariant btnStateRed = QVariant("red");
+const int buttonPanelHeight = 55;
+const int buttonPanelWidth = 250;
+const QString buttonsStyleSheetPath = ":/ui/chatForm/fullScreenButtons.css";
 
 GenericNetCamView::GenericNetCamView(QWidget* parent)
     : QWidget(parent)
@@ -72,8 +80,8 @@ GenericNetCamView::GenericNetCamView(QWidget* parent)
     exitFullScreenButton->setToolTip(tr("Exit full screen"));
 
     connect(videoPreviewButton, &QPushButton::clicked, this, &GenericNetCamView::toggleVideoPreview);
-    connect(volumeButton, SIGNAL(clicked()), this, SIGNAL(volMuteToggle()));
-    connect(microphoneButton, SIGNAL(clicked()), this, SIGNAL(micMuteToggle()));
+    connect(volumeButton, &QPushButton::clicked, this, &GenericNetCamView::volMuteToggle);
+    connect(microphoneButton, &QPushButton::clicked, this, &GenericNetCamView::micMuteToggle);
     connect(endVideoButton, &QPushButton::clicked, this, &GenericNetCamView::endVideoCall);
     connect(exitFullScreenButton, &QPushButton::clicked, this, &GenericNetCamView::toggleFullScreen);
 
@@ -121,20 +129,17 @@ void GenericNetCamView::toggleFullScreen()
 
 void GenericNetCamView::enterFullScreen()
 {
-    setWindowFlags(Qt::Tool | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     showFullScreen();
     enterFullScreenButton->hide();
     toggleMessagesButton->hide();
 
-    // we need to get the correct width and height but it has to be
-    // after the widget switched to full screen - there must be a better way?
-    QTimer::singleShot(200, this, [this]() {
-        buttonPanel->setGeometry((width() / 2) - buttonPanel->width() / 2,
-                height() - buttonPanelHeight - 25, buttonPanelWidth, buttonPanelHeight);
-        buttonPanel->show();
-        buttonPanel->activateWindow();
-        buttonPanel->raise();
-    });
+    const QRect screenSize = QApplication::desktop()->screenGeometry(this);
+    buttonPanel->setGeometry((screenSize.width() / 2) - buttonPanel->width() / 2,
+            screenSize.height() - buttonPanelHeight - 25, buttonPanelWidth, buttonPanelHeight);
+    buttonPanel->show();
+    buttonPanel->activateWindow();
+    buttonPanel->raise();
 }
 
 void GenericNetCamView::exitFullScreen()
