@@ -107,6 +107,7 @@ private slots:
     void onExportChat();
 
 private:
+    static QString getCleanFilename(QString filename);
     void updateMuteMicButton();
     void updateMuteVolButton();
     void retranslateUi();
