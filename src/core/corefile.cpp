@@ -21,12 +21,14 @@
 #include "core.h"
 #include "corefile.h"
 #include "toxfile.h"
+#include "toxstring.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QThread>
+#include <QRegularExpression>
 #include <memory>
 
 /**
@@ -273,11 +275,21 @@ void CoreFile::removeFile(uint32_t friendId, uint32_t fileId)
     fileMap.remove(key);
 }
 
+QString CoreFile::getCleanFileName(QString filename)
+{
+    QRegularExpression regex("[<>:\"/\\|?*]");
+    filename.replace(regex, "_");
+
+    return filename;
+}
+
 void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, uint32_t kind,
                                      uint64_t filesize, const uint8_t* fname, size_t fnameLen,
                                      void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
+    auto filename = ToxString(fname, fnameLen);
+    const auto cleanFileName = CoreFile::getCleanFileName(filename.getQString());
 
     if (kind == TOX_FILE_KIND_AVATAR) {
         const ToxPk friendPk = core->getFriendPublicKey(friendId);
@@ -314,7 +326,15 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
         qDebug() << QString("Received file request %1:%2 kind %3").arg(friendId).arg(fileId).arg(kind);
     }
 
-    ToxFile file{fileId, friendId, QByteArray((char*)fname, fnameLen), "", ToxFile::RECEIVING};
+    if (cleanFileName != filename.getQString()) {
+        qDebug() << QStringLiteral("Cleaned filename from %1 to %2").arg(filename.getQString()).arg(cleanFileName);
+        filename = ToxString(cleanFileName);
+        emit core->fileNameChanged();
+    } else {
+        qDebug() << QStringLiteral("cleanFileName: filename already clean");
+    }
+
+    ToxFile file{fileId, friendId, filename.getBytes(), "", ToxFile::RECEIVING};
     file.filesize = filesize;
     file.fileKind = kind;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
