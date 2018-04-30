@@ -27,6 +27,7 @@
 #include <QDir>
 #include <QFile>
 #include <QThread>
+#include <QMessageBox>
 #include <memory>
 
 /**
@@ -113,12 +114,32 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
     tox_file_get_file_id(core->tox, friendId, fileNum, (uint8_t*)file.resumeFileId.data(), nullptr);
     addFile(friendId, fileNum, file);
 }
+QString CoreFile::getCleanFilename(QString filename)
+{
+    QString dirtyfilename;
+    dirtyfilename = filename;
+
+    if (filename.contains(QRegExp("[^0-9a-zA-Z. ]"))){
+        filename.replace(QRegExp("[^0-9a-zA-Z. ]"), "_");
+        qDebug() << QString("cleanFileName: Cleaned filename from %1 to %2").arg(dirtyfilename).arg(filename);
+        QMessageBox::warning(0,
+            QObject::tr("qTox"),
+            QObject::tr("The file you're trying to send had some illegal characters('\' / : * ? < > | ). \n They have been replaced.") );
+    }else {
+        qDebug() << QString("cleanFileName: filename already clean");
+    }
+
+
+    return filename;
+}
 
 void CoreFile::sendFile(Core* core, uint32_t friendId, QString filename, QString filePath,
                         long long filesize)
 {
     QMutexLocker mlocker(&fileSendMutex);
 
+
+    filename = getCleanFilename(filename);
     QByteArray fileName = filename.toUtf8();
     uint32_t fileNum = tox_file_send(core->tox, friendId, TOX_FILE_KIND_DATA, filesize, nullptr,
                                      (uint8_t*)fileName.data(), fileName.size(), nullptr);
