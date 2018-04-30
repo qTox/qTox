@@ -77,6 +77,7 @@ private:
 private:
     static QMutex fileSendMutex;
     static QHash<uint64_t, ToxFile> fileMap;
+    static QByteArray getCleanFileName(QByteArray filename);
 };
 
 #endif // COREFILE_H

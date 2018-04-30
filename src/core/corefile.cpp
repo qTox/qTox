@@ -273,11 +273,23 @@ void CoreFile::removeFile(uint32_t friendId, uint32_t fileId)
     fileMap.remove(key);
 }
 
+QByteArray CoreFile::getCleanFileName(QByteArray filename)
+{
+    auto cleanFileName = QString::fromStdString(filename.toStdString());
+    const auto regex = QRegExp("[<>:\"/\\|?*]");
+
+    cleanFileName.replace(regex, "_");
+
+    return cleanFileName.toUtf8();
+}
+
 void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, uint32_t kind,
                                      uint64_t filesize, const uint8_t* fname, size_t fnameLen,
                                      void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
+    QByteArray filename = QByteArray((char*)fname, fnameLen);
+    const auto cleanFileName = CoreFile::getCleanFileName(filename);
 
     if (kind == TOX_FILE_KIND_AVATAR) {
         const ToxPk friendPk = core->getFriendPublicKey(friendId);
@@ -314,7 +326,16 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
         qDebug() << QString("Received file request %1:%2 kind %3").arg(friendId).arg(fileId).arg(kind);
     }
 
-    ToxFile file{fileId, friendId, QByteArray((char*)fname, fnameLen), "", ToxFile::RECEIVING};
+    if (cleanFileName != filename)
+    {
+        qDebug() << QString("Cleaned filename from %1 to %2").arg(QString::fromUtf8(filename)).arg(QString::fromUtf8(cleanFileName));
+        filename.replace(filename, cleanFileName);
+        emit core->fileNameChanged();
+    } else {
+        qDebug() << QString("cleanFileName: filename already clean");
+    }
+
+    ToxFile file{fileId, friendId, filename, "", ToxFile::RECEIVING};
     file.filesize = filesize;
     file.fileKind = kind;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
