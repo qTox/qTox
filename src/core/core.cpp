@@ -858,6 +858,17 @@ void Core::removeGroup(int groupId, bool fake)
         break;
     }
 }
+QByteArray Core::getCleanFileName(QByteArray filename)
+{
+    QString dirtyfilename = QString::fromStdString(filename.toStdString());
+    const auto regex = QRegExp("[<>:\"/\\|?*]");
+
+    dirtyfilename.replace(regex, "_");
+    QByteArray cleanfilename = dirtyfilename.toUtf8();
+
+    return cleanfilename;
+}
+
 
 /**
  * @brief Returns our username, or an empty string on failure

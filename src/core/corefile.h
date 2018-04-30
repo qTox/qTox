@@ -57,6 +57,7 @@ private:
     static void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
     static void removeFile(uint32_t friendId, uint32_t fileId);
     static unsigned corefileIterationInterval();
+
     static constexpr uint64_t getFriendKey(uint32_t friendId, uint32_t fileId)
     {
         return (static_cast<std::uint64_t>(friendId) << 32) + fileId;
@@ -73,7 +74,6 @@ private:
     static void onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fileId, uint64_t position,
                                         const uint8_t* data, size_t length, void* vCore);
     static void onConnectionStatusChanged(Core* core, uint32_t friendId, bool online);
-
 private:
     static QMutex fileSendMutex;
     static QHash<uint64_t, ToxFile> fileMap;

@@ -231,6 +231,8 @@ private:
 
     void deadifyTox();
     QString getFriendRequestErrorMessage(const ToxId& friendId, const QString& message) const;
+    QByteArray getCleanFileName(QByteArray filename);
+
 
 private slots:
     void killTimers(bool onlyStop);
