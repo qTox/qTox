@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2017 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -118,8 +118,8 @@ QString secondsToDHMS(quint32 duration)
 
 
 ChatForm::ChatForm(Friend* chatFriend, History* history)
-    : f(chatFriend)
-    , callDuration(new QLabel(this))
+    : GenericChatForm(chatFriend)
+    , f(chatFriend)
     , history{history}
     , isTyping{false}
     , lastCallIsVideo{false}
@@ -195,8 +195,6 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     });
 
     // reflect name changes in the header
-    // TODO(sudden6): check if this creates a cycle when the alias is changed
-    connect(f, &Friend::displayedNameChanged, this, &ChatForm::setName);
     connect(headWidget, &ChatFormHeader::nameChanged, this, [=](const QString& newName) {
         f->setAlias(newName);
     });
@@ -402,6 +400,7 @@ void ChatForm::onAvEnd(uint32_t friendId, bool error)
     }
 
     emit stopNotification();
+    emit endCallNotification();
     updateCallButtons();
     stopCounter(error);
     hideNetcam();

@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Zablokowane</translation>
+        <translation>Wyłączone</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -61,11 +61,11 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Ustaw rodzielczość swojej kamery.
-Im większa wartość, tym lepszą jakość obrazu otrzymają twoi znajomi.
+        <translation>Ustaw rozdzielczość swojej kamery.
+Im większa wartość, tym lepszą jakość obrazu uzyskają twoi znajomi.
 Do lepszej jakości obrazu potrzebne jest jednak lepsze połączenie z internetem.
-Może się zdarzyć, iż twoje połączenie nie jest wystarczająco dobre do wyższej jakości,
-co może spowodować problemy z połączeniami wideo.</translation>
+Czasem twoje połączenie może nie być wystarczająco dobre do uzyskania lepszej jakości obrazu,
+co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -81,39 +81,39 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Włącza eksperymentalny podkład dźwiękowy z obsługą usuwania echa, wymaga ponownego uruchomienia qToxa.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>Włącza eksperymentalny podkład dźwiękowy</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Jakość dźwięku</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jakość wysyłanego dźwięku. Zmniejsz jeśli masz słabe łącze lub gdy chcesz obniżyć zużycie internetu.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Wysoka (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Średnia (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niska (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bardzo niska (8 kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Próg</translation>
     </message>
 </context>
 <context>
@@ -171,17 +171,17 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">bug-trackerze</translation>
+        <translation>bug-trackerze</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Zgłaszanie użytecznych reportów o błędach</translation>
+        <translation>Zgłaszanie użytecznych raportów o błędach</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">współtwórców</translation>
+        <translation>współtwórców</translation>
     </message>
 </context>
 <context>
@@ -192,7 +192,7 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished">Nazwa użytkownika</translation>
+        <translation>Nazwa użytkownika</translation>
     </message>
     <message>
         <source>status message</source>
@@ -200,84 +200,84 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Klucz publiczny:</translation>
+        <translation>Klucz publiczny:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">Poprzednie aliasy:</translation>
+        <translation>Użyte aliasy:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">HISTORIA ALIASÓW</translation>
+        <translation>HISTORIA ALIASÓW</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Jeśli zaznaczone, automatycznie odbieraj pliki</translation>
+        <translation>Jeśli zaznaczone, automatycznie odbieraj pliki</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">Automatycznie akceptuj pliki</translation>
+        <translation>Automatycznie akceptuj pliki</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Domyślny katalog do zapisu plików:</translation>
+        <translation>Domyślny katalog do zapisu plików:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">Automatyczny odbiór plików jest dla tego kontaktu wyłączony</translation>
+        <translation>Automatyczny odbiór plików jest dla tego kontaktu wyłączony</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished">Automatycznie akceptuj rozmowy:</translation>
+        <translation>Automatycznie akceptuj rozmowy:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">Ręcznie</translation>
+        <translation>Ręcznie</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">Audio + Wideo</translation>
+        <translation>Audio + Wideo</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatycznie akceptuj zaproszenia do czatu grupowego od tego kontaktu.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished">Automatycznie akceptuj grupowe zeproszenia</translation>
+        <translation>Automatycznie akceptuj zaproszenia grupowe</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">Usuń historię (akcja nie może zostać odwrócona!)</translation>
+        <translation>Usuń historię (operacji nie można cofnąć!)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">Notatki</translation>
+        <translation>Notatki</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished">Pole na notatki o znajomym</translation>
+        <translation>Pole na notatki o kontakcie</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Tutaj możesz zapisać komentarze o kontakcie.</translation>
+        <translation>Tutaj możesz zapisać komentarz o tym kontakcie.</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished">Historia usunięta</translation>
+        <translation>Historia usunięta</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">Historia rozmów z %1 usunięta!</translation>
+        <translation>Historia rozmów z %1 usunięta!</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished">Wybierz domyślną ścieżkę dla plików</translation>
+        <translation>Wybierz domyślną ścieżkę dla plików</translation>
     </message>
 </context>
 <context>
@@ -358,79 +358,77 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tox ID jest nieprawidłowy lub nie istnieje</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished">Nie możesz dodać siebie jako znajomego!</translation>
+        <translation>Nie możesz dodać samego siebie jako znajomego!</translation>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz listę kontaktów</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można otworzyć pliku</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nie można otworzyć pliku z kontaktami</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieprawidłowy plik</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie mogliśmy znaleźć żadnych kontaktów do zaimportowania w tym pliku!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished">Tox ID</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished">76 heksadecymalnych znaków lub nazwa@domena.com</translation>
+        <translation>76 heksadecymalnych znaków lub nazwa@domena.com</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished">Wiadomość</translation>
+        <translation>Wiadomość</translation>
     </message>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyślij zaproszenia do znajomych</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished">Tutaj %1. Toxnij ze mną?</translation>
+        <translation>Tutaj %1. Toxniesz do mnie?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaimportuj listę kontaktów - jedno Tox ID na każdą linię.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Gotowy do zaimportowania %n kontaktu, kliknij &quot;Wyślij&quot; aby potwierdzić</numerusform>
+        <numerusform>Gotowy do zaimportowania %n kontaktów, kliknij &quot;Wyślij&quot; aby potwierdzić</numerusform>
+        <numerusform>Gotowy do zaimportowania %n kontaktów, kliknij &quot;Wyślij&quot; aby potwierdzić</numerusform>
+        </translation></message>
     <message>
         <source>Import contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Importuj kontakty</translation>
     </message>
 </context>
 <context>
@@ -636,7 +634,7 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>Próbujesz wysłać plik sekwencyjny, co nie zadziała!</translation>
     </message>
     <message>
         <source>away</source>
@@ -665,82 +663,82 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuj do pliku</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished">Zapisz historię rozmowy</translation>
+        <translation>Zapisz historię rozmowy</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Połączenie z %1 zakończyło się niespodziewanie. %2</translation>
     </message>
 </context>
 <context>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Nie można rozpocząć połączenia audio</translation>
+        <translation>Nie można nawiązać połączenia audio</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Rozpocznij rozmowę audio</translation>
+        <translation>Rozpocznij rozmowę audio</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished">Zakończ rozmowę audio</translation>
+        <translation>Zakończ rozmowę audio</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Anuluj rozmowę audio</translation>
+        <translation>Anuluj rozmowę audio</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Zaakceptuj rozmowę audio</translation>
+        <translation>Zaakceptuj rozmowę audio</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Nie można rozpocząć połączenia wideo</translation>
+        <translation>Nie można rozpocząć połączenia wideo</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Rozpocznij rozmowę wideo</translation>
+        <translation>Rozpocznij rozmowę wideo</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Zakończ rozmowę wideo</translation>
+        <translation>Zakończ rozmowę wideo</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Anuluj rozmowę wideo</translation>
+        <translation>Anuluj rozmowę wideo</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Zaakceptuj rozmowę wideo</translation>
+        <translation>Zaakceptuj rozmowę wideo</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Dźwięk może być wyłączony tylko podczas połączenia</translation>
+        <translation>Dźwięk może zostać wyłączony tylko podczas połączenia</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Odcisz rozmowę</translation>
+        <translation>Wyłącz wyciszenie rozmowy</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Wycisz rozmowę</translation>
+        <translation>Wycisz rozmowę</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Mikrofon może być wyciszony tylko podczas połączenia</translation>
+        <translation>Mikrofon może zostać wyciszony tylko podczas połączenia</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished">Włącz mikrofon</translation>
+        <translation>Wyłącz wyciszenie mikrofonu</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Wycisz mikrofon</translation>
+        <translation>Wycisz mikrofon</translation>
     </message>
 </context>
 <context>
@@ -797,7 +795,7 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Niepoprawne Tox ID</translation>
+        <translation>Niepoprawne Tox ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -807,12 +805,12 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Twoja wiadomość jest za długa!</translation>
+        <translation>Twoja wiadomość jest za długa!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Znajomy jest już dodany</translation>
+        <translation>Znajomy jest już dodany</translation>
     </message>
 </context>
 <context>
@@ -919,27 +917,27 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Dziś</translation>
+        <translation>Dziś</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Wczoraj</translation>
+        <translation>Wczoraj</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">Ostatnie 7 dni</translation>
+        <translation>Ostatnie 7 dni</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">Ten miesiąc</translation>
+        <translation>Ten miesiąc</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Starsze niż 6 miesięcy</translation>
+        <translation>Starsze niż 6 miesięcy</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Nigdy</translation>
     </message>
 </context>
 <context>
@@ -1291,7 +1289,7 @@ zamiast do paska zadań.</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 zmienił(a) nazwę na %2</translation>
+        <translation>%1 zmienił(a) nazwę na %2</translation>
     </message>
 </context>
 <context>
@@ -1313,7 +1311,7 @@ zamiast do paska zadań.</translation>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zaproszony przez %1 na %2 na %3.</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1469,7 +1467,7 @@ Profil nie zawiera twojej historii.</translation>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
         <translatorcomment>better translation?</translatorcomment>
-        <translation type="unfinished">Nazwa w serwisie ToxMe.</translation>
+        <translation>Nazwa w serwisie ToxMe.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
@@ -1510,7 +1508,7 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished">Status widoczna tylko dla listy kontaktów</translation>
+        <translation type="unfinished">Status widoczny dla kontaktów</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
@@ -1571,7 +1569,7 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished">Moje imię:</translation>
+        <translation>Moje imię:</translation>
     </message>
     <message>
         <source>My status:</source>
@@ -1583,7 +1581,7 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished">Moja biografia</translation>
+        <translation>Moja biografia</translation>
     </message>
     <message>
         <source>My profile</source>
@@ -1602,7 +1600,7 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 wiadomości</translation>
     </message>
 </context>
 <context>
@@ -1803,7 +1801,7 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz stronę profilu po kliknięciu</translation>
     </message>
     <message>
         <source>Status message input</source>
@@ -1811,7 +1809,7 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished">Ustaw swój status, który będzie pokazany innym</translation>
+        <translation>Ustaw swój status, który będzie pokazany innym</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1835,11 +1833,11 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished">Ustaw sortowanie znajomych i widoczność</translation>
+        <translation>Ustaw sortowanie znajomych i widoczność</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished">Otwórz Dodaj znajomych</translation>
+        <translation>Otwórz stronę Dodaj znajomych</translation>
     </message>
     <message>
         <source>Groupchat</source>
@@ -1851,11 +1849,11 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished">Historia transferów</translation>
+        <translation>Historia transferów plików</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished">Otwórz historię transferów</translation>
+        <translation>Otwórz historię transferów plików</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1991,11 +1989,11 @@ Możliwe są zmianay formatu zapisu, co może skutkować utratą danych.</transl
     </message>
     <message>
         <source>BlackList</source>
-        <translation type="unfinished"></translation>
+        <translation>Czarna lista</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtruj wiadomości grupowe po kluczu publicznym danego użytkownika. Wprowadź tutaj po jednym kluczu publicznym na każdą linię.</translation>
     </message>
 </context>
 <context>
@@ -2161,34 +2159,37 @@ Proszę, użyj innego obrazka.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zmienić hasła</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten zestaw znaków mówi innym użytkownikom Toxa jak się z tobą skontaktować.
+Podziel się nim ze znajomymi.
+
+Ten identyfikator zawiera kod NoSpam (na niebiesko) i sumę kontrolną (na szaro).</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Pusta ścieżka jest niedostępna</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Nie udało się zmienić nazwy</translation>
+        <translation>Nie udało się zmienić nazwy</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Profil już istnieje</translation>
+        <translation>Profil już istnieje</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">Profil z nazwą &quot;%1&quot; już istnieje.</translation>
+        <translation>Profil o nazwie &quot;%1&quot; już istnieje.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pusta nazwa</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
@@ -2196,7 +2197,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>Pusta ścieżka</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
@@ -2204,27 +2205,27 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Eksportuj profil</translation>
+        <translation>Eksportuj profil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Plik zapisu Tox (*.tox)</translation>
+        <translation>Plik zapisu Toxa (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">Następujące pliki nie mogły zostać usunięte:</translation>
+        <translation>Następujące pliki nie mogły zostać usunięte:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">Proszę usunąć je ręcznie.</translation>
+        <translation>Proszę usunąć je ręcznie.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Czy masz pewność, iż chcesz usunąć swoje hasło?</translation>
+        <translation>Czy na pewno chcesz usunąć swoje hasło?</translation>
     </message>
 </context>
 <context>
@@ -2304,16 +2305,16 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">Nie udało się dodać znajomego</translation>
+        <translation>Nie udało się dodać znajomego</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished">%1 nie jest prawidłowym adresem Toxme.</translation>
+        <translation>%1 nie jest prawidłowym adresem Toxme.</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">Nie możesz dodać siebie jako znajomego!</translation>
+        <translation>Nie możesz dodać siebie jako znajomego!</translation>
     </message>
 </context>
 <context>
@@ -2445,11 +2446,11 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponowne formatowanie tekstu w toku...</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwiera nowe okno z ekranem logowania.</translation>
     </message>
 </context>
 <context>
@@ -2543,7 +2544,7 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished">Pole hasła, długie na minimum 6 znaków</translation>
+        <translation>Pole wprowadzania hasła, długie na minimum 6 znaków</translation>
     </message>
 </context>
 <context>
@@ -2741,11 +2742,11 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Po włączeniu każdy kontakt bez awatara zamiast pustego obrazka będzie miał ikonę wygenerowaną na podstawie jego Tox ID. Zatwierdzenie zmiany wymaga restartu.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Użyj ikon zamiast pustych awatarów</translation>
     </message>
 </context>
 <context>
@@ -2900,20 +2901,16 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation>
-            <numerusform>%n nowe zaproszenie do przyjaciół</numerusform>
-            <numerusform>%n nowe zaproszenia do przyjaciół</numerusform>
-            <numerusform>%n nowe zaproszenie do przyjaciół</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n nowe zaproszenie</numerusform>
+        <numerusform>%n nowe zaproszenia</numerusform>
+        <numerusform>%n nowych zaproszeń</numerusform>
+        </translation></message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation>
-            <numerusform>%n nowe zaproszenie do grup</numerusform>
-            <numerusform>%n nowe zaproszenia do grup</numerusform>
-            <numerusform>%n nowe zaproszenie do grup</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n nowe zaproszenie do grup</numerusform>
+        <numerusform>%n nowe zaproszenia do grup</numerusform>
+        <numerusform>%n nowych zaproszeń do grup</numerusform>
+        </translation></message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
@@ -2937,12 +2934,12 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Zaproszenia do grup</translation>
+        <translation>Zaproszenia do grup</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Transfer plików</translation>
+        <translation>Transfer plików</translation>
     </message>
     <message>
         <source>Settings</source>

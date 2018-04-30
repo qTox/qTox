@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -68,10 +68,10 @@ private slots:
     // audio
     void on_inDevCombobox_currentIndexChanged(int deviceIndex);
     void on_outDevCombobox_currentIndexChanged(int deviceIndex);
-    void on_playbackSlider_valueChanged(int value);
+    void on_playbackSlider_valueChanged(int sliderSteps);
     void on_cbEnableTestSound_stateChanged();
-    void on_microphoneSlider_valueChanged(int value);
-    void on_audioThresholdSlider_valueChanged(int value);
+    void on_microphoneSlider_valueChanged(int sliderSteps);
+    void on_audioThresholdSlider_valueChanged(int sliderSteps);
     void on_audioQualityComboBox_currentIndexChanged(int index);
 
     // camera
@@ -90,6 +90,8 @@ private:
     void hideEvent(QHideEvent* event) final override;
     void showEvent(QShowEvent* event) final override;
     void open(const QString& devName, const VideoMode& mode);
+    int getStepsFromValue(qreal val, qreal valMin, qreal valMax);
+    qreal getValueFromSteps(int steps, qreal valMin, qreal valMax);
 
 private:
     Audio* audio;
@@ -103,6 +105,7 @@ private:
     QVector<QPair<QString, QString>> videoDeviceList;
     QVector<VideoMode> videoModes;
     uint alSource;
+    const uint totalSliderSteps = 100; // arbitrary number of steps to give slider a good "feel"
 };
 
 #endif

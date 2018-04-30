@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2016 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -178,6 +178,11 @@ void AdvancedForm::on_cbEnableUDP_stateChanged()
     const bool enableUdp = bodyUI->cbEnableUDP->isChecked();
     Settings::getInstance().setForceTCP(!enableUdp);
     bodyUI->cbEnableLanDiscovery->setEnabled(enableUdp);
+}
+
+void AdvancedForm::on_cbEnableLanDiscovery_stateChanged()
+{
+    Settings::getInstance().setEnableLanDiscovery(bodyUI->cbEnableLanDiscovery->isChecked());
 }
 
 void AdvancedForm::on_proxyAddr_editingFinished()

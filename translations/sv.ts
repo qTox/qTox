@@ -93,23 +93,23 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skickad ljudkvalitet. Välj en lägre inställning om din bandbredd är för låg eller om du vill minska på dataanvändningen.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hög (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Medium (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Låg (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Väldigt låg (8 kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
@@ -354,7 +354,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tox-ID är felaktigt eller existerar inte</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -363,24 +363,24 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna kontaktlista</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte öppna filen</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte öppna filen med kontakter</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation type="unfinished"></translation>
+        <translation>Felaktig fil</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi kunde inte hitta några kontakter att importera från denna fil!</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -400,11 +400,11 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Öppna</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka vänförfrågan</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -413,7 +413,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation type="unfinished"></translation>
+        <translation>Importera en lista med kontakter, ett Tox-ID per rad</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
@@ -425,7 +425,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Importera kontakter</translation>
     </message>
 </context>
 <context>
@@ -665,7 +665,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Samtalet med %1 avbröts av okänd anledning. %2</translation>
     </message>
 </context>
 <context>
@@ -728,11 +728,11 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera mikrofon</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng av mikrofon</translation>
     </message>
 </context>
 <context>
@@ -1960,7 +1960,7 @@ Om du blir spammad med vänförfrågningar, ändra NoSpam.</translation>
     </message>
     <message>
         <source>BlackList</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocklista</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
@@ -2415,7 +2415,7 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Startar ny instans och öppnar loginskärmen.</translation>
     </message>
 </context>
 <context>

@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2017 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -48,6 +48,8 @@ public:
     OpenAL();
     virtual ~OpenAL();
 
+    qreal maxOutputVolume() const { return 1; }
+    qreal minOutputVolume() const { return 0; }
     qreal outputVolume() const;
     void setOutputVolume(qreal volume);
 
@@ -61,13 +63,10 @@ public:
     void setInputGain(qreal dB);
 
     qreal minInputThreshold() const;
-    void setMinInputThreshold(qreal percent);
-
     qreal maxInputThreshold() const;
-    void setMaxInputThreshold(qreal percent);
 
     qreal getInputThreshold() const;
-    void setInputThreshold(qreal percent);
+    void setInputThreshold(qreal normalizedThreshold);
 
     void reinitInput(const QString& inDevDesc);
     bool reinitOutput(const QString& outDevDesc);
@@ -137,13 +136,13 @@ protected:
     qreal gainFactor = 1;
     qreal minInGain = -30;
     qreal maxInGain = 30;
-    qreal inputThreshold;
+    qreal inputThreshold = 0;
     qreal voiceHold = 250;
     bool isActive = false;
     QTimer voiceTimer;
-    qreal minInThreshold = 0.0;
-    qreal maxInThreshold = 0.4;
-    int16_t* inputBuffer;
+    const qreal minInThreshold = 0.0;
+    const qreal maxInThreshold = 0.4;
+    int16_t* inputBuffer = nullptr;
 };
 
 #endif // OPENAL_H

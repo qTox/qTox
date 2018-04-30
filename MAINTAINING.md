@@ -212,6 +212,9 @@ Follow steps for adding translations from Weblate up to step 5. Next:
 - Create and GPG-sign tarball using [`./tools/create-tarball.sh`] script, and
   upload the tarball to the github release that was created by a Travis OSX
   release job.
+- Update download links on https://tox.chat to point to the new release.
+- Write a short blog post for https://github.com/qTox/blog/ and advertise the post
+  on Tox IRC channels, popular Tox groups, reddit, or whatever other platforms.
 
 
 # How to become a maintainer?

@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project Contributors
+    Copyright © 2015-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -32,7 +32,7 @@
 #include <QMessageBox>
 #include <QToolButton>
 
-LoginScreen::LoginScreen(QWidget* parent)
+LoginScreen::LoginScreen(QString initialProfile, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::LoginScreen)
     , quitShortcut{QKeySequence(Qt::CTRL + Qt::Key_Q), this}
@@ -59,7 +59,7 @@ LoginScreen::LoginScreen(QWidget* parent)
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
     connect(ui->importButton, &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
-    reset();
+    reset(initialProfile);
     this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
 
     retranslateUi();
@@ -75,7 +75,7 @@ LoginScreen::~LoginScreen()
 /**
  * @brief Resets the UI, clears all fields.
  */
-void LoginScreen::reset()
+void LoginScreen::reset(QString initialProfile)
 {
     ui->newUsername->clear();
     ui->newPass->clear();
@@ -84,12 +84,15 @@ void LoginScreen::reset()
     ui->loginUsernames->clear();
 
     Profile::scanProfiles();
-    QString lastUsed = Settings::getInstance().getCurrentProfile();
+    if (initialProfile.isEmpty()) {
+        initialProfile = Settings::getInstance().getCurrentProfile();
+    }
     QVector<QString> profiles = Profile::getProfiles();
     for (QString profile : profiles) {
         ui->loginUsernames->addItem(profile);
-        if (profile == lastUsed)
+        if (profile == initialProfile) {
             ui->loginUsernames->setCurrentIndex(ui->loginUsernames->count() - 1);
+        }
     }
 
     if (profiles.isEmpty()) {

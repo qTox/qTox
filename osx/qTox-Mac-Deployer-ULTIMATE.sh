@@ -2,7 +2,7 @@
 
 #
 #    Copyright © 2015 by RowenStipe
-#    Copyright © 2016-2017 by The qTox Project Contributors
+#    Copyright © 2016-2018 by The qTox Project Contributors
 #
 #    This program is libre software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ install() {
         git pull
     else
         fcho "Cloning Toxcore git ... "
-        git clone --branch v0.2.1 --depth=1 https://github.com/toktok/c-toxcore "$TOXCORE_DIR"
+        git clone --branch v0.2.2 --depth=1 https://github.com/toktok/c-toxcore "$TOXCORE_DIR"
     fi
     # qTox
     if [[ $TRAVIS = true ]]

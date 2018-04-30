@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -60,6 +60,7 @@ signals:
     void incomingNotification(uint32_t friendId);
     void outgoingNotification();
     void stopNotification();
+    void endCallNotification();
     void rejectCall(uint32_t friendId);
     void acceptCall(uint32_t friendId);
 

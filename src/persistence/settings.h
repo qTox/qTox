@@ -1,6 +1,6 @@
 /*
     Copyright (C) 2013 by Maxim Biro <nurupo.contributions@gmail.com>
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -353,6 +353,8 @@ public:
     void setAudioThreshold(qreal percent) override;
 
     int getOutVolume() const override;
+    int getOutVolumeMin() const override { return 0; }
+    int getOutVolumeMax() const override { return 100; }
     void setOutVolume(int volume) override;
 
     int getAudioBitrate() const override;

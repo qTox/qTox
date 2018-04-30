@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project Contributors
+    Copyright © 2015-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -36,9 +36,9 @@ class LoginScreen : public QDialog
     Q_OBJECT
 
 public:
-    explicit LoginScreen(QWidget* parent = nullptr);
+    LoginScreen(QString selectedProfile = QString(), QWidget* parent = nullptr);
     ~LoginScreen();
-    void reset();
+    void reset(QString selectedProfile = QString());
     Profile* getProfile() const;
 
     bool event(QEvent* event) final override;

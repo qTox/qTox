@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project Contributors
+    Copyright © 2015-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -39,6 +39,7 @@ struct VideoMode
     operator bool() const;
     bool operator==(const VideoMode& other) const;
     uint32_t norm(const VideoMode& other) const;
+    uint32_t tolerance() const;
 };
 
 #endif // VIDEOMODE_H

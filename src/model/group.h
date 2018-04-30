@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2017 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -27,8 +27,6 @@
 
 #define RETRY_PEER_INFO_INTERVAL 500
 
-class Friend;
-class GroupChatForm;
 class ToxPk;
 
 class Group : public Contact
@@ -52,7 +50,7 @@ public:
 
     void updatePeer(int peerId, QString newName);
     void setName(const QString& newTitle) override;
-    void onTitleChanged(const QString& author, const QString& newTitle);
+    void setTitle(const QString& author, const QString& newTitle);
     QString getName() const;
     QString getDisplayedName() const override;
 
@@ -67,8 +65,6 @@ signals:
 private:
     QString selfName;
     QString title;
-    GroupChatForm* chatForm;
-    QStringList peers;
     QMap<QByteArray, QString> toxids;
     bool hasNewMessages;
     bool userWasMentioned;

@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2017 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -52,7 +52,6 @@ public:
     Status getStatus() const;
 
 signals:
-    void displayedNameChanged(const QString& newName);
     void nameChanged(uint32_t friendId, const QString& name);
     void aliasChanged(uint32_t friendId, QString alias);
     void statusChanged(uint32_t friendId, Status status);

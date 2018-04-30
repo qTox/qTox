@@ -103,10 +103,15 @@ matrix:
       cache:
         directories:
           - /opt/build-windows/x86_64
-    - stage: macOS
+    - stage: "macOS and AppImage"
       os: osx
       osx_image: xcode7.3
       env: JOB=build-osx
+    - stage: "macOS and AppImage"
+      os: linux
+      script: ./appimage/build-appimage.sh
+      services:
+        - docker
 
 script: "./.travis/$JOB.sh"
 
@@ -118,6 +123,28 @@ deploy:
     file: "./qTox.dmg"
     on:
       condition: $TRAVIS_OS_NAME == osx
+      repo: qTox/qTox
+      tags: true
+    skip_cleanup: true
+
+  # Windows Installer 64Bit
+  - provider: releases
+    api_key:
+      secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+    file: "./workspace/x86_64/qtox/release/setup-qtox-x86_64-release.exe"
+    on:
+      condition: $WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE == x86_64 && -f /home/travis/build/qTox/qTox/stage3 && -f /home/travis/build/qTox/qTox/release
+      repo: qTox/qTox
+      tags: true
+    skip_cleanup: true
+
+  # Windows Installer 32Bit
+  - provider: releases
+    api_key:
+      secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+    file: "./workspace/i686/qtox/release/setup-qtox-i686-release.exe"
+    on:
+      condition: $WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE == i686 && -f /home/travis/build/qTox/qTox/stage3 && -f /home/travis/build/qTox/qTox/release
       repo: qTox/qTox
       tags: true
     skip_cleanup: true

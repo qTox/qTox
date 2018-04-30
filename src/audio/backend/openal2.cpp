@@ -1,5 +1,5 @@
 /*
-    Copyright © 2017 by The qTox Project Contributors
+    Copyright © 2017-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -321,13 +321,13 @@ void OpenAL2::doOutput()
     alGetSourcedvSOFT(alProxySource, AL_SEC_OFFSET_LATENCY_SOFT, latency);
     checkAlError();
 
-    ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT] = {0};
+    ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL] = {0};
     alcMakeContextCurrent(alProxyContext);
-    alcRenderSamplesSOFT(alProxyDev, outBuf, AUDIO_FRAME_SAMPLE_COUNT);
+    alcRenderSamplesSOFT(alProxyDev, outBuf, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL);
     checkAlcError(alProxyDev);
 
     alcMakeContextCurrent(alOutContext);
-    alBufferData(bufids[0], AL_FORMAT_MONO16, outBuf, AUDIO_FRAME_SAMPLE_COUNT * 2, AUDIO_SAMPLE_RATE);
+    alBufferData(bufids[0], AL_FORMAT_MONO16, outBuf, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL * 2, AUDIO_SAMPLE_RATE);
     alSourceQueueBuffers(alProxySource, 1, bufids);
 
     // initialize echo canceler if supported
@@ -340,7 +340,7 @@ void OpenAL2::doOutput()
     }
 
     // do echo cancel
-    pass_audio_output(filterer, outBuf, AUDIO_FRAME_SAMPLE_COUNT);
+    pass_audio_output(filterer, outBuf, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL);
 
     ALint state;
     alGetSourcei(alProxySource, AL_SOURCE_STATE, &state);

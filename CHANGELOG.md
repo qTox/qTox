@@ -1,3 +1,49 @@
+<a name="v1.15.0"></a>
+## v1.15.0 (2018-04-18)
+
+
+#### Performance
+
+* **ui:**  cache stylesheets to reduce memory usage ([6d9d26db](https://github.com/qTox/qTox/commit/6d9d26db654981dbd22bdb0a70dfbc48f89b2e60))
+
+#### Bug Fixes
+
+*   remove build date and time from main.cpp ([23f6ad70](https://github.com/qTox/qTox/commit/23f6ad7047a2391defd95b144cfcceac37994a51))
+*   don't use invalid reference after erasing element ([1afed5f7](https://github.com/qTox/qTox/commit/1afed5f72e78b96222af4ab1d747cc73d6e8df35))
+* **IPC:**  Update profileName to update IPC ID after login screen ([d2ad2107](https://github.com/qTox/qTox/commit/d2ad2107f2ea9238a0e56ff8dd883d308615ab57))
+* **audio:**
+  *  apply gain to both audio channels ([f6622e40](https://github.com/qTox/qTox/commit/f6622e40928196ae85724f340a760b4ea5f2fb2f))
+  *  move audio timers to and start from audioThread ([5d0f9509](https://github.com/qTox/qTox/commit/5d0f9509a8d5fac940f402237efe4a8a6ab7e27b))
+* **avform:**  Audio/Video settings tab #5011 issue bugfix ([ad6ddfc4](https://github.com/qTox/qTox/commit/ad6ddfc4f245f9d0e36a6ce0ef9646a50fde30f8))
+* **build:**  Remove unused vars, add default case for switch ([bc18990f](https://github.com/qTox/qTox/commit/bc18990fd248c117916c88d640456e6b967a4802))
+* **chatform:**  include pressed key(s) when changing focus ([a8fc6e5c](https://github.com/qTox/qTox/commit/a8fc6e5c6bb0284950eab8495c8bc8ad45fd6355))
+* **chattextedit:**  ChatTextEdit bug fix for issue #5020 Corrected ([ebdc675c](https://github.com/qTox/qTox/commit/ebdc675cbc2dd0054306d461c382568c6148bf60))
+* **core:**  split messages on utf8 multibyte character boundary properly ([869036f3](https://github.com/qTox/qTox/commit/869036f3c6fc567b56fca1e36b7b4bdcda03a089))
+* **docs:**
+  *  include master key fingerprint instead of subkey fingerprint ([3748ca6b](https://github.com/qTox/qTox/commit/3748ca6bc849046a44b83f16104490a685e65055))
+  *  update dependencies for Debian ([7627d60a](https://github.com/qTox/qTox/commit/7627d60a89c89adea514f97b2f803617a22e6171))
+* **history:**  don't save own messages when history is disabled ([b852809d](https://github.com/qTox/qTox/commit/b852809d0c554754496a54cadc7d14d3802bc183))
+* **import:**  don't use java-style iterator before first element ([acea7c31](https://github.com/qTox/qTox/commit/acea7c315fd2b8cb89bac21956a16bca721f0712))
+* **login:**  Don't dereference null pointer ([703876c3](https://github.com/qTox/qTox/commit/703876c3724386c540d7e62e4f5d19dad31477bb))
+* **name:**  Clear alias on name change so that name changes are visible ([c2410e0a](https://github.com/qTox/qTox/commit/c2410e0a656f1708ed07bf8b2644300ae54af53c))
+* **offlinemsg:**  make faux offline messages purely event based ([4951f909](https://github.com/qTox/qTox/commit/4951f90964317a8a409f5ab75ecde3073c72e491))
+* **profile:**  don't error if no new avatar is selected ([cfdc1cdb](https://github.com/qTox/qTox/commit/cfdc1cdb2e74aeaece70c2798ec9b7fddbbbed39))
+* **settings:**
+  *  connect enable LAN discovery checkbox ([55d8922d](https://github.com/qTox/qTox/commit/55d8922d69f035580dbea92285648d75645bfcf0))
+  *  add missing enableTestSound to settings ([65d59ba6](https://github.com/qTox/qTox/commit/65d59ba6b7d2f89bf1d4078df3a3647abc84858c))
+* **ui:**  remove placeholder update UI ([cb0f2635](https://github.com/qTox/qTox/commit/cb0f26356d419b9be945f4f910c7415f14bf024d))
+* **widget:**  Fix double free crash on group leave ([81989406](https://github.com/qTox/qTox/commit/81989406073a70f7e9b17f03dee78ed7be5e978a))
+
+#### Features
+
+* **Weblate:**  create script to automatically merge Weblate changes ([96ae4284](https://github.com/qTox/qTox/commit/96ae4284a09df48fda2cdd0868779ec32a9d18de))
+* **camera:**  add higher resolution camera options ([04ecfe3f](https://github.com/qTox/qTox/commit/04ecfe3f344c29d9c598d38aaad46f2da8a17728))
+* **ui:**
+  *  add setting for disabling new message notification popup ([fcd88d65](https://github.com/qTox/qTox/commit/fcd88d65b2875c06312374186fd9a08a9637dac7))
+  *  Add ability to disable LAN discovery ([9f8b0fed](https://github.com/qTox/qTox/commit/9f8b0fed07d5a1debb27252df6dc88e8941ae487))
+
+
+
 <a name=""></a>
 ##  (2018-03-12)
 

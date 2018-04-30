@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015-2016 by The qTox Project Contributors
+    Copyright © 2015-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -65,6 +65,13 @@ bool VideoMode::operator==(const VideoMode& other) const
 uint32_t VideoMode::norm(const VideoMode& other) const
 {
     return qAbs(this->width - other.width) + qAbs(this->height - other.height);
+}
+
+uint32_t VideoMode::tolerance() const
+{
+    constexpr uint32_t minTolerance = 300; // keep wider tolerance for low res cameras
+    constexpr uint32_t toleranceFactor = 10; // video mode must be within 10% to be "close enough" to ideal
+    return std::max((width + height)/toleranceFactor, minTolerance);
 }
 
 /**

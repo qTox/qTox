@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -92,15 +92,23 @@ QStringList Style::getThemeColorNames()
 QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"),
                                          QColor("#c23716"), QColor("#4617b5")};
 
-QString Style::getStylesheet(const QString& filename, const QFont& baseFont)
-{
-    QFile file(filename);
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        qWarning() << "Stylesheet " << filename << " not found";
-        return QString();
-    }
+// stylesheet filename, font -> stylesheet
+// QString implicit sharing deduplicates stylesheets rather than constructing a new one each time
+std::map<std::pair<const QString, const QFont>, const QString> Style::stylesheetsCache;
 
-    return resolve(file.readAll(), baseFont);
+const QString Style::getStylesheet(const QString& filename, const QFont& baseFont)
+{
+    const std::pair<const QString, const QFont> cacheKey(filename, baseFont);
+    auto it = stylesheetsCache.find(cacheKey);
+    if (it != stylesheetsCache.end())
+    {
+        // cache hit
+        return it->second;
+    }
+    // cache miss, new styleSheet, read it from file and add to cache
+    const QString newStylesheet = resolve(filename, baseFont);
+    stylesheetsCache.insert(std::make_pair(cacheKey, newStylesheet));
+    return newStylesheet;
 }
 
 QColor Style::getColor(Style::ColorPalette entry)
@@ -128,8 +136,15 @@ QFont Style::getFont(Style::Font font)
     return fonts[font];
 }
 
-QString Style::resolve(QString qss, const QFont& baseFont)
+const QString Style::resolve(const QString& filename, const QFont& baseFont)
 {
+    QFile file{filename};
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+        qWarning() << "Stylesheet " << filename << " not found";
+        return QString("");
+    }
+    QString qss = file.readAll();
+
     if (dict.isEmpty()) {
         dict = {// colors
                 {"@green", Style::getColor(Style::Green).name()},
@@ -162,7 +177,6 @@ QString Style::resolve(QString qss, const QFont& baseFont)
     for (const QString& key : dict.keys()) {
         qss.replace(QRegularExpression(QString("%1\\b").arg(key)), dict[key]);
     }
-
     return qss;
 }
 
@@ -182,6 +196,7 @@ void Style::repolish(QWidget* w)
 
 void Style::setThemeColor(int color)
 {
+    stylesheetsCache.clear(); // clear stylesheet cache which includes color info
     if (color < 0 || color >= themeColorColors.size())
         setThemeColor(QColor());
     else

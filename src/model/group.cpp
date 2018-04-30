@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2017 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -24,9 +24,7 @@
 #include "src/persistence/settings.h"
 #include "src/widget/form/groupchatform.h"
 #include "src/widget/groupwidget.h"
-#include "src/widget/gui.h"
 #include <QDebug>
-#include <QTimer>
 
 static const int MAX_GROUP_TITLE_LENGTH = 128;
 
@@ -49,13 +47,11 @@ void Group::updatePeer(int peerId, QString name)
 {
     ToxPk peerKey = Core::getInstance()->getGroupPeerPk(groupId, peerId);
     QByteArray peerPk = peerKey.getKey();
-    peers[peerId] = name;
     toxids[peerPk] = name;
 
     Friend* f = FriendList::findFriend(peerKey);
     if (f != nullptr) {
         // use the displayed name from the friends list
-        peers[peerId] = f->getDisplayedName();
         toxids[peerPk] = f->getDisplayedName();
     } else {
         emit userListChanged(groupId, toxids);
@@ -64,17 +60,21 @@ void Group::updatePeer(int peerId, QString name)
 
 void Group::setName(const QString& newTitle)
 {
-    if (!newTitle.isEmpty() && title != newTitle) {
-        title = newTitle.left(MAX_GROUP_TITLE_LENGTH);
+    const QString shortTitle = newTitle.left(MAX_GROUP_TITLE_LENGTH);
+    if (!shortTitle.isEmpty() && title != shortTitle) {
+        title = shortTitle;
+        emit displayedNameChanged(title);
         emit titleChangedByUser(groupId, title);
         emit titleChanged(groupId, selfName, title);
     }
 }
 
-void Group::onTitleChanged(const QString& author, const QString& newTitle)
+void Group::setTitle(const QString& author, const QString& newTitle)
 {
-    if (!newTitle.isEmpty() && title != newTitle) {
-        title = newTitle.left(MAX_GROUP_TITLE_LENGTH);
+    const QString shortTitle = newTitle.left(MAX_GROUP_TITLE_LENGTH);
+    if (!shortTitle.isEmpty() && title != shortTitle) {
+        title = shortTitle;
+        emit displayedNameChanged(title);
         emit titleChanged(groupId, author, title);
     }
 }
@@ -92,24 +92,26 @@ QString Group::getDisplayedName() const
 void Group::regeneratePeerList()
 {
     const Core* core = Core::getInstance();
-    peers = core->getGroupPeerNames(groupId);
+    const ToxPk self = core->getSelfId().getPublicKey();
+
+    QStringList peers = core->getGroupPeerNames(groupId);
     toxids.clear();
     nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i) {
         ToxPk id = core->getGroupPeerPk(groupId, i);
-        ToxPk self = core->getSelfId().getPublicKey();
-        if (id == self)
+        if (id == self) {
             selfPeerNum = i;
+        }
 
         QByteArray peerPk = id.getKey();
         toxids[peerPk] = peers[i];
-        if (toxids[peerPk].isEmpty())
+        if (toxids[peerPk].isEmpty()) {
             toxids[peerPk] =
                 tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+        }
 
         Friend* f = FriendList::findFriend(id);
         if (f != nullptr && f->hasAlias()) {
-            peers[i] = f->getDisplayedName();
             toxids[peerPk] = f->getDisplayedName();
         }
     }
@@ -134,7 +136,7 @@ int Group::getPeersCount() const
 
 QStringList Group::getPeerList() const
 {
-    return peers;
+    return toxids.values();
 }
 
 bool Group::isSelfPeerNumber(int num) const
@@ -167,8 +169,9 @@ QString Group::resolveToxId(const ToxPk& id) const
     QByteArray key = id.getKey();
     auto it = toxids.find(key);
 
-    if (it != toxids.end())
+    if (it != toxids.end()) {
         return *it;
+    }
 
     return QString();
 }

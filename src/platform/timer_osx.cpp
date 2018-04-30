@@ -5,7 +5,7 @@
     <https://hg.pidgin.im/pidgin/main/file/13e4ae613a6a/COPYRIGHT> ).
 
     Copyright © 2006 by Richard Laager
-    Copyright © 2014 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 

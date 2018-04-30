@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -385,7 +385,6 @@ void FriendListWidget::searchChatrooms(const QString& searchString, bool hideOnl
 void FriendListWidget::renameGroupWidget(GroupWidget* groupWidget, const QString& newName)
 {
     groupLayout.removeSortedWidget(groupWidget);
-    groupWidget->setName(newName);
     groupLayout.addSortedWidget(groupWidget);
 }
 

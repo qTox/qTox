@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -143,8 +143,7 @@ void Widget::init()
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
     layout()->setContentsMargins(0, 0, 0, 0);
-    ui->friendList->setStyleSheet(
-        Style::resolve(Style::getStylesheet(":/ui/friendList/friendList.css")));
+    ui->friendList->setStyleSheet(Style::getStylesheet(":/ui/friendList/friendList.css"));
 
     profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
@@ -956,6 +955,12 @@ void Widget::outgoingNotification()
     audio.playMono16Sound(Audio::getSound(Audio::Sound::OutgoingCall));
 }
 
+void Widget::onCallEnd()
+{
+    Audio& audio = Audio::getInstance();
+    audio.playMono16Sound(Audio::getSound(Audio::Sound::CallEnd));
+}
+
 /**
  * @brief Widget::onStopNotification Stop the notification sound.
  */
@@ -998,6 +1003,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(friendForm, &ChatForm::incomingNotification, this, &Widget::incomingNotification);
     connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
     connect(friendForm, &ChatForm::stopNotification, this, &Widget::onStopNotification);
+    connect(friendForm, &ChatForm::endCallNotification, this, &Widget::onCallEnd);
     connect(friendForm, &ChatForm::rejectCall, this, &Widget::onRejectCall);
 
     connect(widget, &FriendWidget::newWindowOpened, this, &Widget::openNewDialog);
@@ -1817,7 +1823,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
         GUI::setWindowTitle(title);
     }
 
-    g->onTitleChanged(author, title);
+    g->setTitle(author, title);
     FilterCriteria filter = getFilterCriteria();
     widget->searchName(ui->searchContactText->text(), filterGroups(filter));
 }

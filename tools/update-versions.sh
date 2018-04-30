@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2016-2017 The qTox Project Contributors
+#    Copyright © 2016-2018 The qTox Project Contributors
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ set -eu -o pipefail
 
 readonly SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 readonly BASE_DIR="$SCRIPT_DIR/../"
+readonly VERSION_PATTERN="[0-9]+\.[0-9]+\.[0-9]+"
 
 update_windows() {
     ( cd "$BASE_DIR/windows"
@@ -47,11 +48,17 @@ update_osx() {
         ./update-plist-version.sh "$@" )
 }
 
+update_readme() {
+    cd "$BASE_DIR"
+    sed -ri "s|(github.com/qTox/qTox/releases/download/v)$VERSION_PATTERN|\1$@|g" README.md
+}
+
 # exit if supplied arg is not a version
 is_version() {
-    if [[ ! $@ =~ [0-9\\.]+ ]]
+    if [[ ! $@ =~ $VERSION_PATTERN ]]
     then
         echo "Not a version: $@"
+        echo "Must match: $VERSION_PATTERN"
         exit 1
     fi
 }
@@ -64,6 +71,7 @@ main() {
     then
         update_osx "$@"
         update_windows "$@"
+        update_readme "$@"
     else
         # TODO: actually check whether there is a GNU sed on osx
         echo "OSX's sed not supported. Get a proper one."

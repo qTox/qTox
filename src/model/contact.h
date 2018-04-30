@@ -1,5 +1,5 @@
 /*
-    Copyright © 2017 by The qTox Project Contributors
+    Copyright © 2017-2018 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -35,6 +35,9 @@ public:
 
     virtual void setEventFlag(bool flag) = 0;
     virtual bool getEventFlag() const = 0;
+
+signals:
+    void displayedNameChanged(const QString& newName);
 };
 
 #endif // CONTACT_H

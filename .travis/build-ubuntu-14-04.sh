@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2015-2017 by The qTox Project Contributors
+#    Copyright © 2015-2018 by The qTox Project Contributors
 #
 #    This program is libre software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -131,7 +131,7 @@ sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.8 --nodoc -y
 sudo ldconfig
 cd ..
 # toxcore
-git clone --branch v0.2.1 --depth=1 https://github.com/toktok/c-toxcore.git toxcore
+git clone --branch v0.2.2 --depth=1 https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
 autoreconf -if
 CC="ccache $CC" CXX="ccache $CXX" ./configure
