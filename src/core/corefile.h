@@ -44,6 +44,7 @@ private:
 
     // Internal file sending APIs, used by Core. Public API in core.h
 private:
+    static QString getCleanFilename(QString filename);
     static void sendFile(Core* core, uint32_t friendId, QString filename, QString filePath,
                          long long filesize);
     static void sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& data);
