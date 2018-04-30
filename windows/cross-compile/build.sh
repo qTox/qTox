@@ -873,14 +873,15 @@ then
     VPX_TARGET=x86-win32-gcc
   fi
 
-  CROSS="$ARCH-w64-mingw32-" ./configure --target="$VPX_TARGET" \
-                                         --prefix="$VPX_PREFIX_DIR" \
-                                         --disable-shared \
-                                         --enable-static \
-                                         --disable-examples \
-                                         --disable-tools \
-                                         --disable-docs \
-                                         --disable-unit-tests
+  CROSS="$ARCH-w64-mingw32-" CXXFLAGS="-O2 -g0" CFLAGS="-O2 -g0" \
+                            ./configure --target="$VPX_TARGET" \
+                                        --prefix="$VPX_PREFIX_DIR" \
+                                        --disable-shared \
+                                        --enable-static \
+                                        --disable-examples \
+                                        --disable-tools \
+                                        --disable-docs \
+                                        --disable-unit-tests
   make
   make install
   echo -n $VPX_VERSION > $VPX_PREFIX_DIR/done
@@ -895,18 +896,28 @@ fi
 # Toxcore
 
 TOXCORE_PREFIX_DIR="$DEP_DIR/libtoxcore"
-TOXCORE_VERSION=0.2.2
-TOXCORE_HASH=a3b25d8bd92b9526b47ba1f60a2893d2154a80bb7ae690f44b5a2dea41c76ea1
+TOXCORE_CUSTOM_VERSION=${TOXCORE_CUSTOM_VERSION:-}
+
+if [ "$TOXCORE_CUSTOM_VERSION""x" == "x" ]; then
+  TOXCORE_REPO="https://github.com/TokTok/c-toxcore"
+  TOXCORE_VERSION="v0.2.2"
+  TOXCORE_HASH="6146b22584ab11787cd4ec85d387549746695ef4070a0809e3a798104d10f86c"
+else
+  echo "Using custom c-toxcore repo:$TOXCORE_REPO version:$TOXCORE_VERSION hash:$TOXCORE_HASH"
+fi
+
 if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]
 then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  wget https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz -O c-toxcore-$TOXCORE_VERSION.tar.gz
-  check_sha256 "$TOXCORE_HASH" "c-toxcore-$TOXCORE_VERSION.tar.gz"
-  bsdtar --no-same-owner --no-same-permissions -xf c-toxcore*.tar.gz
-  rm c-toxcore*.tar.gz
-  cd c-toxcore*
+  git clone "$TOXCORE_REPO" c-toxcore
+  cd c-toxcore
+  git checkout "$TOXCORE_VERSION"
+  # do not check hash for a custom version of c-toxcore
+  if [ "$TOXCORE_CUSTOM_VERSION""x" == "x" ]; then
+    check_sha256_git "$TOXCORE_HASH"
+  fi
 
   mkdir -p build
   cd build
@@ -943,7 +954,7 @@ then
   cd ..
 
   cd ..
-  rm -rf ./c-toxcore*
+  rm -rf ./c-toxcore
 else
   echo "Using cached build of Toxcore `cat $TOXCORE_PREFIX_DIR/done`"
 fi
