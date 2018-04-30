@@ -254,6 +254,26 @@ void ChatForm::onTextEditChanged()
     }
 }
 
+
+QString ChatForm::getCleanFilename(QString filename)
+{
+    QString dirtyfilename;
+    const auto regex = QRegExp("[<>:\"/\\|?*]");
+    dirtyfilename = filename;
+
+    if (filename.contains(regex)){
+        filename.replace(regex, "_");
+        qDebug() << QString("cleanFileName: Cleaned filename from %1 to %2").arg(dirtyfilename).arg(filename);
+        QMessageBox::warning(0,
+            QObject::tr("qTox"),
+            QObject::tr("Replaced illegal characters in filename ('\' / : * ? < > | ).") );
+    } else {
+        qDebug() << QString("cleanFileName: filename already clean");
+    }
+
+    return filename;
+}
+
 void ChatForm::onAttachClicked()
 {
     QStringList paths = QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"), QDir::homePath(), 0, 0);
@@ -280,6 +300,7 @@ void ChatForm::onAttachClicked()
             continue;
         }
 
+        fileName = getCleanFilename(fileName);
         qint64 filesize = file.size();
         core->sendFile(f->getId(), fileName, path, filesize);
     }
