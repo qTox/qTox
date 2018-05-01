@@ -264,6 +264,11 @@ void GroupChatForm::updateUserNames()
     {
         return a->text().toLower() < b->text().toLower();
     });
+
+    // no need to remove the comma if list is empty
+    if(nickLabelList.isEmpty()) {
+        return;
+    }
     // remove comma from last sorted label
     QLabel* const lastLabel = nickLabelList.last();
     QString labelText = lastLabel->text();
