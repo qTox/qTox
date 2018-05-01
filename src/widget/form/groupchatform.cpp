@@ -224,6 +224,11 @@ void GroupChatForm::updateUserNames()
 
     peerLabels.clear();
     const int peersCount = group->getPeersCount();
+
+    // no need to do anything without a peer
+    if (peersCount == 0) {
+        return;
+    }
     peerLabels.reserve(peersCount);
     QVector<QLabel*> nickLabelList(peersCount);
 
@@ -245,9 +250,9 @@ void GroupChatForm::updateUserNames()
 
         if (group->isSelfPeerNumber(peerNumber)) {
             label->setStyleSheet(QStringLiteral("QLabel {color : green;}"));
-	} else if (s.getBlackList().contains(peerPk.toString())) {
+        } else if (s.getBlackList().contains(peerPk.toString())) {
             label->setStyleSheet(QStringLiteral("QLabel {color : darkRed;}"));
-	} else if (netcam != nullptr) {
+        } else if (netcam != nullptr) {
             static_cast<GroupNetCamView*>(netcam)->addPeer(peerNumber, fullName);
         }
         peerLabels.append(label);
@@ -262,6 +267,7 @@ void GroupChatForm::updateUserNames()
     {
         return a->text().toLower() < b->text().toLower();
     });
+
     // remove comma from last sorted label
     QLabel* const lastLabel = nickLabelList.last();
     QString labelText = lastLabel->text();

@@ -1869,8 +1869,8 @@ void Widget::removeGroup(Group* g, bool fake)
         qWarning() << "Tried to remove group" << groupId << "but GroupChatForm doesn't exist";
         return;
     }
-    groupChatForms.erase(groupChatFormIt);
     delete groupChatFormIt.value();
+    groupChatForms.erase(groupChatFormIt);
     delete g;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
         onAddClicked();
