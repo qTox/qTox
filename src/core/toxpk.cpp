@@ -72,6 +72,16 @@ bool ToxPk::operator!=(const ToxPk& other) const
 }
 
 /**
+ * @brief Compares two ToxPks
+ * @param other ToxPk to compare.
+ * @return True if this ToxPks is less than the other ToxPk, false otherwise.
+ */
+bool ToxPk::operator<(const ToxPk& other) const
+{
+    return key < other.key;
+}
+
+/**
  * @brief Converts the ToxPk to a uppercase hex string.
  * @return QString containing the hex representation of the key
  */

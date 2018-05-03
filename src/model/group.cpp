@@ -32,7 +32,6 @@ Group::Group(int groupId, const QString& name, bool isAvGroupchat, const QString
     : selfName{selfName}
     , title{name}
     , groupId(groupId)
-    , nPeers{0}
     , avGroupchat{isAvGroupchat}
 {
     // in groupchats, we only notify on messages containing your name <-- dumb
@@ -46,15 +45,14 @@ Group::Group(int groupId, const QString& name, bool isAvGroupchat, const QString
 void Group::updatePeer(int peerId, QString name)
 {
     ToxPk peerKey = Core::getInstance()->getGroupPeerPk(groupId, peerId);
-    QByteArray peerPk = peerKey.getKey();
-    toxids[peerPk] = name;
+    toxpks[peerKey] = name;
 
     Friend* f = FriendList::findFriend(peerKey);
     if (f != nullptr) {
         // use the displayed name from the friends list
-        toxids[peerPk] = f->getDisplayedName();
+        toxpks[peerKey] = f->getDisplayedName();
     } else {
-        emit userListChanged(groupId, toxids);
+        emit userListChanged(groupId, toxpks);
     }
 }
 
@@ -89,34 +87,42 @@ QString Group::getDisplayedName() const
     return getName();
 }
 
+/**
+ * @brief performs a peerId to ToxPk lookup
+ * @param peerId peerId to lookup
+ * @return ToxPk if peerId found
+ * @note should not be used, reference peers by their ToxPk instead
+ * @todo remove this function
+ */
+const ToxPk Group::resolvePeerId(int peerId) const
+{
+    const Core* core = Core::getInstance();
+    return core->getGroupPeerPk(groupId, peerId);
+}
+
 void Group::regeneratePeerList()
 {
     const Core* core = Core::getInstance();
-    const ToxPk self = core->getSelfId().getPublicKey();
 
     QStringList peers = core->getGroupPeerNames(groupId);
-    toxids.clear();
-    nPeers = peers.size();
+    toxpks.clear();
+    const int nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i) {
-        ToxPk id = core->getGroupPeerPk(groupId, i);
-        if (id == self) {
-            selfPeerNum = i;
-        }
+        const auto pk = core->getGroupPeerPk(groupId, i);
 
-        QByteArray peerPk = id.getKey();
-        toxids[peerPk] = peers[i];
-        if (toxids[peerPk].isEmpty()) {
-            toxids[peerPk] =
+        toxpks[pk] = peers[i];
+        if (toxpks[pk].isEmpty()) {
+            toxpks[pk] =
                 tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
         }
 
-        Friend* f = FriendList::findFriend(id);
+        Friend* f = FriendList::findFriend(pk);
         if (f != nullptr && f->hasAlias()) {
-            toxids[peerPk] = f->getDisplayedName();
+            toxpks[pk] = f->getDisplayedName();
         }
     }
 
-    emit userListChanged(groupId, toxids);
+    emit userListChanged(groupId, toxpks);
 }
 
 bool Group::isAvGroupchat() const
@@ -131,17 +137,16 @@ uint32_t Group::getId() const
 
 int Group::getPeersCount() const
 {
-    return nPeers;
+    return toxpks.size();
 }
 
-QStringList Group::getPeerList() const
+/**
+ * @brief Gets the PKs and names of all peers
+ * @return PKs and names of all peers, including our own PK and name
+ */
+const QMap<ToxPk, QString>& Group::getPeerList() const
 {
-    return toxids.values();
-}
-
-bool Group::isSelfPeerNumber(int num) const
-{
-    return num == selfPeerNum;
+    return toxpks;
 }
 
 void Group::setEventFlag(bool f)
@@ -166,10 +171,9 @@ bool Group::getMentionedFlag() const
 
 QString Group::resolveToxId(const ToxPk& id) const
 {
-    QByteArray key = id.getKey();
-    auto it = toxids.find(key);
+    auto it = toxpks.find(id);
 
-    if (it != toxids.end()) {
+    if (it != toxpks.end()) {
         return *it;
     }
 
