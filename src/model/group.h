@@ -21,13 +21,12 @@
 #define GROUP_H
 
 #include "contact.h"
+
+#include "src/core/toxpk.h"
+
 #include <QMap>
 #include <QObject>
 #include <QStringList>
-
-#define RETRY_PEER_INFO_INTERVAL 500
-
-class ToxPk;
 
 class Group : public Contact
 {
@@ -39,8 +38,7 @@ public:
     uint32_t getId() const override;
     int getPeersCount() const;
     void regeneratePeerList();
-    QStringList getPeerList() const;
-    bool isSelfPeerNumber(int peernumber) const;
+    const QMap<ToxPk, QString> &getPeerList() const;
 
     void setEventFlag(bool f) override;
     bool getEventFlag() const override;
@@ -54,23 +52,22 @@ public:
     QString getName() const;
     QString getDisplayedName() const override;
 
+    const ToxPk resolvePeerId(int peerId) const;
     QString resolveToxId(const ToxPk& id) const;
     void setSelfName(const QString& name);
 
 signals:
     void titleChangedByUser(uint32_t groupId, const QString& title);
     void titleChanged(uint32_t groupId, const QString& author, const QString& title);
-    void userListChanged(uint32_t groupId, const QMap<QByteArray, QString>& toxids);
+    void userListChanged(uint32_t groupId, const QMap<ToxPk, QString>& toxids);
 
 private:
     QString selfName;
     QString title;
-    QMap<QByteArray, QString> toxids;
+    QMap<ToxPk, QString> toxids;
     bool hasNewMessages;
     bool userWasMentioned;
     int groupId;
-    int nPeers;
-    int selfPeerNum = -1;
     bool avGroupchat;
 };
 
