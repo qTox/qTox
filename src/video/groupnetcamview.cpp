@@ -152,6 +152,7 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
         selfVideoSurface->setText(username);
         setActive();
     });
+
     connect(Core::getInstance(), &Core::friendAvatarChanged, this,
             &GroupNetCamView::friendAvatarChanged);
 
@@ -160,16 +161,14 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
 
 void GroupNetCamView::clearPeers()
 {
-    QList<int> keys = videoList.keys();
-
-    for (int& i : keys)
-        removePeer(i);
+    for (const auto& peerPk : videoList.keys()) {
+        removePeer(peerPk);
+    }
 }
 
-void GroupNetCamView::addPeer(int peer, const QString& name)
+void GroupNetCamView::addPeer(const ToxPk& peer, const QString& name)
 {
-    QPixmap groupAvatar =
-        Nexus::getProfile()->loadAvatar(Core::getInstance()->getGroupPeerPk(group, peer));
+    QPixmap groupAvatar = Nexus::getProfile()->loadAvatar(peer);
     LabeledVideo* labeledVideo = new LabeledVideo(groupAvatar, this);
     labeledVideo->setText(name);
     horLayout->insertWidget(horLayout->count() - 1, labeledVideo);
@@ -180,7 +179,7 @@ void GroupNetCamView::addPeer(int peer, const QString& name)
     setActive();
 }
 
-void GroupNetCamView::removePeer(int peer)
+void GroupNetCamView::removePeer(const ToxPk& peer)
 {
     auto peerVideo = videoList.find(peer);
 
@@ -199,14 +198,16 @@ void GroupNetCamView::onUpdateActivePeer()
     setActive();
 }
 
-void GroupNetCamView::setActive(int peer)
+void GroupNetCamView::setActive(const ToxPk& peer)
 {
-    if (peer == -1) {
+    if (peer.isEmpty()) {
         videoLabelSurface->setText(selfVideoSurface->getText());
         activePeer = -1;
         return;
     }
 
+    // TODO(sudden6): check if we can remove the code, it won't be reached right now
+#if 0
     auto peerVideo = videoList.find(peer);
 
     if (peerVideo != videoList.end()) {
@@ -225,22 +226,16 @@ void GroupNetCamView::setActive(int peer)
 
         activePeer = peer;
     }
+#endif
 }
 
-void GroupNetCamView::friendAvatarChanged(int FriendId, const QPixmap& pixmap)
+void GroupNetCamView::friendAvatarChanged(int friendId, const QPixmap& pixmap)
 {
-    Friend* f = FriendList::findFriend(FriendId);
+    const auto friendPk = Core::getInstance()->getFriendPublicKey(friendId);
+    auto peerVideo = videoList.find(friendPk);
 
-    for (uint32_t i = 0; i < Core::getInstance()->getGroupNumberPeers(group); ++i) {
-        if (Core::getInstance()->getGroupPeerPk(group, i) == f->getPublicKey()) {
-            auto peerVideo = videoList.find(i);
-
-            if (peerVideo != videoList.end()) {
-                peerVideo.value().video->getVideoSurface()->setAvatar(pixmap);
-                setActive();
-            }
-
-            break;
-        }
+    if (peerVideo != videoList.end()) {
+        peerVideo.value().video->getVideoSurface()->setAvatar(pixmap);
+        setActive();
     }
 }
