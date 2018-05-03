@@ -223,20 +223,19 @@ void GroupChatForm::updateUserNames()
     }
 
     peerLabels.clear();
-    const int peersCount = group->getPeersCount();
+    const auto peers = group->getPeerList();
 
-    // no need to do anything without a peer
-    if (peersCount == 0) {
+    // no need to do anything without any peers
+    if (peers.isEmpty()) {
         return;
     }
-    peerLabels.reserve(peersCount);
-    QVector<QLabel*> nickLabelList(peersCount);
 
-    /* the list needs peers in peernumber order, nameLayout needs alphabetical
-     * first traverse in peer number order, storing the QLabels as necessary */
-    const QStringList names = group->getPeerList();
-    int peerNumber = 0;
-    for (const QString& fullName : names) {
+    /* we store the peer labels by their ToxPk, but the namelist layout
+     * needs it in alphabetical order, so we first create and store the labels
+     * and then sort them by their text and add them to the layout in that order */
+    const auto selfPk = Core::getInstance()->getSelfPublicKey();
+    for (const auto& peerPk : peers.keys()) {
+        const QString fullName = peers.value(peerPk);
         const QString editedName = editName(fullName).append(QLatin1String(", "));
         QLabel* const label = new QLabel(editedName);
         if (editedName != fullName) {
@@ -245,23 +244,23 @@ void GroupChatForm::updateUserNames()
         label->setTextFormat(Qt::PlainText);
 
         const Settings& s = Settings::getInstance();
-        const Core* core = Core::getInstance();
-        const ToxPk peerPk = core->getGroupPeerPk(group->getId(), peerNumber);
 
-        if (group->isSelfPeerNumber(peerNumber)) {
+        if (peerPk == selfPk) {
             label->setStyleSheet(QStringLiteral("QLabel {color : green;}"));
         } else if (s.getBlackList().contains(peerPk.toString())) {
             label->setStyleSheet(QStringLiteral("QLabel {color : darkRed;}"));
         } else if (netcam != nullptr) {
-            static_cast<GroupNetCamView*>(netcam)->addPeer(peerNumber, fullName);
+            static_cast<GroupNetCamView*>(netcam)->addPeer(peerPk, fullName);
         }
-        peerLabels.append(label);
-        nickLabelList[peerNumber++] = label;
+        peerLabels.insert(peerPk, label);
     }
 
     if (netcam != nullptr) {
         static_cast<GroupNetCamView*>(netcam)->clearPeers();
     }
+
+    // add the labels in alphabetical order into the layout
+    auto nickLabelList = peerLabels.values();
 
     qSort(nickLabelList.begin(), nickLabelList.end(), [](const QLabel* a, const QLabel* b)
     {
@@ -278,30 +277,30 @@ void GroupChatForm::updateUserNames()
     }
 }
 
-void GroupChatForm::peerAudioPlaying(int peer)
+void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
 {
-    peerLabels[peer]->setStyleSheet(QStringLiteral("QLabel {color : red;}"));
-    if (!peerAudioTimers[peer]) {
-        peerAudioTimers[peer] = new QTimer(this);
-        peerAudioTimers[peer]->setSingleShot(true);
-        connect(peerAudioTimers[peer], &QTimer::timeout, [this, peer] {
-            if (netcam)
-                static_cast<GroupNetCamView*>(netcam)->removePeer(peer);
+    peerLabels[peerPk]->setStyleSheet(QStringLiteral("QLabel {color : red;}"));
+    // TODO(sudden6): check if this can ever be false, cause [] default constructs
+    if (!peerAudioTimers[peerPk]) {
+        peerAudioTimers[peerPk] = new QTimer(this);
+        peerAudioTimers[peerPk]->setSingleShot(true);
+        connect(peerAudioTimers[peerPk], &QTimer::timeout, [this, peerPk] {
+            if (netcam) {
+                static_cast<GroupNetCamView*>(netcam)->removePeer(peerPk);
+            }
 
-            if (peer >= peerLabels.size())
-                return;
-
-            peerLabels[peer]->setStyleSheet("");
-            delete peerAudioTimers[peer];
-            peerAudioTimers[peer] = nullptr;
+            peerLabels[peerPk]->setStyleSheet("");
+            delete peerAudioTimers[peerPk];
+            peerAudioTimers[peerPk] = nullptr;
         });
 
         if (netcam) {
-            static_cast<GroupNetCamView*>(netcam)->removePeer(peer);
-            static_cast<GroupNetCamView*>(netcam)->addPeer(peer, group->getPeerList()[peer]);
+            static_cast<GroupNetCamView*>(netcam)->removePeer(peerPk);
+            const auto nameIt = group->getPeerList().find(peerPk);
+            static_cast<GroupNetCamView*>(netcam)->addPeer(peerPk, nameIt.value());
         }
     }
-    peerAudioTimers[peer]->start(500);
+    peerAudioTimers[peerPk]->start(500);
 }
 
 void GroupChatForm::dragEnterEvent(QDragEnterEvent* ev)
@@ -380,10 +379,12 @@ GenericNetCamView* GroupChatForm::createNetcam()
 {
     GroupNetCamView* view = new GroupNetCamView(group->getId(), this);
 
-    QStringList names = group->getPeerList();
-    for (int i = 0; i < names.size(); ++i) {
-        if (!group->isSelfPeerNumber(i))
-            static_cast<GroupNetCamView*>(view)->addPeer(i, names[i]);
+    const auto& names = group->getPeerList();
+    const auto ownPk = Core::getInstance()->getSelfPublicKey();
+    for (const auto& peerPk : names.keys()) {
+        if (peerPk != ownPk) {
+            static_cast<GroupNetCamView*>(view)->addPeer(peerPk, names.find(peerPk).value());
+        }
     }
 
     return view;

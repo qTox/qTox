@@ -1835,7 +1835,8 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
     }
 
     auto form = groupChatForms[g->getId()];
-    form->peerAudioPlaying(peernumber);
+    // TODO(sudden6): switch to ToxPk here
+    form->peerAudioPlaying(g->resolvePeerId(peernumber));
 }
 
 void Widget::removeGroup(Group* g, bool fake)

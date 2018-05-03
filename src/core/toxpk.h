@@ -17,6 +17,7 @@ public:
 
     bool operator==(const ToxPk& other) const;
     bool operator!=(const ToxPk& other) const;
+    bool operator<(const ToxPk& other) const;
     QString toString() const;
     QByteArray getKey() const;
     const uint8_t* getBytes() const;
