@@ -72,6 +72,7 @@ private:
     void toggleButtonState(QPushButton* btn);
     void updateButtonState(QPushButton* btn, bool active);
     void keyPressEvent(QKeyEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 };
 
 #endif // GENERICNETCAMVIEW_H

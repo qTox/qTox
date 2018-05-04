@@ -216,3 +216,9 @@ void GenericNetCamView::keyPressEvent(QKeyEvent *event)
         exitFullScreen();
     }
 }
+
+void GenericNetCamView::closeEvent(QCloseEvent *event)
+{
+    exitFullScreen();
+    event->ignore();
+}
