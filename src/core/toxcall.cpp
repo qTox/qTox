@@ -64,16 +64,20 @@ ToxCall::ToxCall(uint32_t CallId, bool VideoEnabled, CoreAV& av)
     }
 }
 
-ToxCall::ToxCall(ToxCall&& other) noexcept : audioInConn{other.audioInConn},
-                                             alSource{other.alSource},
-                                             active{other.active},
+/**
+ * @brief ToxCall move constructor
+ * @param other object moved from
+ */
+ToxCall::ToxCall(ToxCall&& other) noexcept : active{other.active},
+                                             av{other.av},
+                                             audioInConn{other.audioInConn},
                                              muteMic{other.muteMic},
                                              muteVol{other.muteVol},
+                                             alSource{other.alSource},
+                                             videoSource{other.videoSource},
                                              videoInConn{other.videoInConn},
                                              videoEnabled{other.videoEnabled},
-                                             nullVideoBitrate{other.nullVideoBitrate},
-                                             videoSource{other.videoSource},
-                                             av{other.av}
+                                             nullVideoBitrate{other.nullVideoBitrate}
 {
     Audio& audio = Audio::getInstance();
     audio.subscribeInput();
@@ -95,20 +99,14 @@ ToxCall::~ToxCall()
     if (videoEnabled) {
         QObject::disconnect(videoInConn);
         CameraSource::getInstance().unsubscribe();
-        // TODO: check if async is still needed
-        // This destructor could be running in a toxav callback while holding toxav locks.
-        // If the CameraSource thread calls toxav *_send_frame, we might deadlock the toxav and
-        // CameraSource locks,
-        // so we unsuscribe asynchronously, it's fine if the webcam takes a couple milliseconds more
-        // to poweroff.
-        QtConcurrent::run([]() { CameraSource::getInstance().unsubscribe(); });
-        if (videoSource) {
-            videoSource->setDeleteOnClose(true);
-            videoSource = nullptr;
-        }
     }
 }
 
+/**
+ * @brief ToxCall move assignement
+ * @param other object moved from
+ * @return object moved to
+ */
 ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
 {
     QObject::disconnect(audioInConn);
