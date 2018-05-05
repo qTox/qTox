@@ -521,6 +521,10 @@ void OpenAL::playMono16SoundCleanup()
         alSourcei(alMainSource, AL_BUFFER, AL_NONE);
         alDeleteBuffers(1, &alMainBuffer);
         alMainBuffer = 0;
+        // close the audio device if no other sources active
+        if (peerSources.isEmpty()) {
+            cleanupOutput();
+        }
     } else {
         // the audio didn't finish, try again later
         playMono16Timer.start(10);
