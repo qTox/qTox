@@ -243,10 +243,49 @@ void GroupChatForm::updateUserNames()
             label->setToolTip(fullName);
         }
         label->setTextFormat(Qt::PlainText);
+        label->setContextMenuPolicy(Qt::CustomContextMenu);
 
-        const Settings& s = Settings::getInstance();
         const Core* core = Core::getInstance();
         const ToxPk peerPk = core->getGroupPeerPk(group->getId(), peerNumber);
+
+        connect(label, &QLabel::customContextMenuRequested, [label, peerPk, this, editedName](const QPoint& localPos) {
+            QMenu* contextMenu = new QMenu(this);
+            Settings& s = Settings::getInstance();
+            QStringList blackList = s.getBlackList();
+            const QPoint pos = label->mapToGlobal(localPos);
+            const QString muteString = tr("mute");
+            const QString unmuteString = tr("unmute");
+            const QAction* toggleMuteAction;
+            const bool isPeerBlocked = blackList.contains(peerPk.toString());
+
+            QString menuTitle = editedName;
+            menuTitle.chop(2);
+            QAction* menuTitleAction = contextMenu->addAction(menuTitle);
+            menuTitleAction->setEnabled(false); // make sure the title is not clickable
+            contextMenu->addSeparator();
+
+            if (isPeerBlocked) {
+                toggleMuteAction = contextMenu->addAction(unmuteString);
+            } else {
+                toggleMuteAction = contextMenu->addAction(muteString);
+            }
+
+            const QAction* selectedItem = contextMenu->exec(pos);
+            if (selectedItem == toggleMuteAction) {
+                if (isPeerBlocked) {
+                    int index = blackList.indexOf(peerPk.toString());
+                    if (index != -1) {
+                        blackList.removeAt(index);
+                    }
+                } else {
+                    blackList << peerPk.toString();
+                }
+
+                s.setBlackList(blackList);
+            }
+        });
+
+        const Settings& s = Settings::getInstance();
 
         if (group->isSelfPeerNumber(peerNumber)) {
             label->setStyleSheet(QStringLiteral("QLabel {color : green;}"));
