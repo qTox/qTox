@@ -103,14 +103,20 @@ matrix:
       cache:
         directories:
           - /opt/build-windows/x86_64
-    - stage: "macOS and AppImage"
+    - stage: "macOS, AppImage and Flatpak"
       os: osx
       osx_image: xcode7.3
       env: JOB=build-osx
-    - stage: "macOS and AppImage"
+    - stage: "macOS, AppImage and Flatpak"
       os: linux
       env: JOB=APPIMAGE
       script: ./appimage/build-appimage.sh
+      services:
+        - docker
+    - stage: "macOS, AppImage and Flatpak"
+      os: linux
+      env: JOB=FLATPAK
+      script: ./flatpak/build-flatpak.sh
       services:
         - docker
 
