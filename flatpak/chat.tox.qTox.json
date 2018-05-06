@@ -1,0 +1,44 @@
+{
+	"app-id": "chat.tox.qTox",
+	"runtime": "org.kde.Platform",
+	"sdk": "org.kde.Sdk",
+	"runtime-version": "5.10",
+	"command": "qtox",
+	"finish-args": [
+		"--share=network",
+		"--socket=pulseaudio",
+		"--socket=wayland",
+		"--socket=x11",
+		"--filesystem=host",
+		"--device=all"
+	],
+	"build-options": {
+		"cflags": "-O3 -DSQLITE_HAS_CODEC",
+		"cxxflags": "-O3"
+	},
+	"modules": [
+		{
+			"name": "sqlcipher",
+			"config-opts": ["--enable-tempstore=yes", "--disable-tcl"],
+			"sources": [{"type": "git", "url": "https://github.com/sqlcipher/sqlcipher", "tag": "v3.4.2", "commit": "c6f709fca81c910ba133aaf6330c28e01ccfe5f8"}]
+		},
+		{
+			"name": "libsodium",
+			"sources": [{"type": "git", "url": "https://github.com/jedisct1/libsodium", "tag": "1.0.16", "commit": "675149b9b8b66ff44152553fb3ebf9858128363d"}]
+		},
+		{
+			"name": "libqrencode",
+			"sources": [{"type": "git", "url": "https://github.com/fukuchi/libqrencode", "tag": "v4.0.0", "commit": "07f3c5d4bf9136711422cc7dbf28aff469da220a"}]
+		},
+		{
+			"name": "c-toxcore",
+			"sources": [{"type": "git", "url": "https://github.com/toktok/c-toxcore", "tag": "v0.2.2", "commit": "2824daf74a6d2bd60ebaf387a30f1b7719b6b67c"}]
+		},
+		{
+			"name": "qTox",
+			"buildsystem": "cmake",
+			"sources": [{"type": "git", "url": "https://github.com/qTox/qTox", "tag": "v1.15.0", "commit": "02d6c63acaac0ae95fa8be3a1b9301657e6a4a94"}]
+		}
+	]
+}
+
