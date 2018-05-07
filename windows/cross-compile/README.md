@@ -6,8 +6,7 @@ Following these instructions will show you how to cross-compile qTox for Windows
 
 This script can be used by qTox users and devs to compile qTox for windows themselves.
 
-Please note that the compilation script doesn't build the updater and doesn't produce
-an installer.
+Please note that the compilation script doesn't build the updater.
 
 ## Usage
 

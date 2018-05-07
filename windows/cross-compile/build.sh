@@ -27,11 +27,6 @@
 #   because it requires static Qt, which means we'd need to build Qt twice, and
 #   building Qt takes really long time.
 #
-# - Doesn't create an installer because there is no NSIS 3 in Debian Stable. We
-#   could backport it from Experimental, which is what we do on Jenkins, but
-#   since we don't build an updater, we might as well just do the nightly qTox
-#   build: no updater, no installer.
-#
 # - FFmpeg 3.3 doesn't cross-compile correctly, qTox build fails when linking
 #   against the 3.3 FFmpeg. They have removed `--enable-memalign-hack` switch,
 #   which might be what causes this. Further research needed.
