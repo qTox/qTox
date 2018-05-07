@@ -977,11 +977,11 @@ then
 
   # We want to use NSIS 3, instead of NSIS 2, because it added Windows 8 and 10
   # support, as well as unicode support. NSIS 3 is not packaged in Debian Stretch
-  # and building it manually appears to be quite a challenge. Luckly it's
-  # packaged in  Debian Unstable, so we can backport it to our Debian version
+  # and building it manually appears to be quite a challenge. Luckily it's
+  # packaged in Debian Unstable, so we can backport it to our Debian version
   # with little effort, utilizing maintainer's build script.
 
-  # Kepp the indentation of the next echo command as it is, as apt seems to
+  # Keep the indentation of the next echo command as it is, as apt seems to
   # ignore preferences starting with whitespace.
   echo "
 Package: *
