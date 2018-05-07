@@ -38,7 +38,6 @@ set -euo pipefail
 # Common directory paths
 
 readonly WORKSPACE_DIR="/workspace"
-readonly SCRIPT_DIR="/script"
 readonly QTOX_SRC_DIR="/qtox"
 
 
@@ -49,9 +48,9 @@ then
   exit 1
 fi
 
-if [ ! -d "$WORKSPACE_DIR" ] || [ ! -d "$SCRIPT_DIR" ] || [ ! -d "$QTOX_SRC_DIR" ]
+if [ ! -d "$WORKSPACE_DIR" ] || [ ! -d "$QTOX_SRC_DIR" ]
 then
-  echo "Error: At least one of $WORKSPACE_DIR, $SCRIPT_DIR or $QTOX_SRC_DIR directories is missing."
+  echo "Error: At least one of $WORKSPACE_DIR or $QTOX_SRC_DIR directories is missing."
   exit 1
 fi
 
