@@ -27,11 +27,6 @@
 #   because it requires static Qt, which means we'd need to build Qt twice, and
 #   building Qt takes really long time.
 #
-# - Doesn't create an installer because there is no NSIS 3 in Debian Stable. We
-#   could backport it from Experimental, which is what we do on Jenkins, but
-#   since we don't build an updater, we might as well just do the nightly qTox
-#   build: no updater, no installer.
-#
 # - FFmpeg 3.3 doesn't cross-compile correctly, qTox build fails when linking
 #   against the 3.3 FFmpeg. They have removed `--enable-memalign-hack` switch,
 #   which might be what causes this. Further research needed.
@@ -43,7 +38,6 @@ set -euo pipefail
 # Common directory paths
 
 readonly WORKSPACE_DIR="/workspace"
-readonly SCRIPT_DIR="/script"
 readonly QTOX_SRC_DIR="/qtox"
 
 
@@ -54,9 +48,9 @@ then
   exit 1
 fi
 
-if [ ! -d "$WORKSPACE_DIR" ] || [ ! -d "$SCRIPT_DIR" ] || [ ! -d "$QTOX_SRC_DIR" ]
+if [ ! -d "$WORKSPACE_DIR" ] || [ ! -d "$QTOX_SRC_DIR" ]
 then
-  echo "Error: At least one of $WORKSPACE_DIR, $SCRIPT_DIR or $QTOX_SRC_DIR directories is missing."
+  echo "Error: At least one of $WORKSPACE_DIR or $QTOX_SRC_DIR directories is missing."
   exit 1
 fi
 
@@ -262,10 +256,10 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=9
-QT_PATCH=4
+QT_PATCH=5
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.9/5.9.4/single/qt-everywhere-opensource-src-5.9.4.tar.xz.mirrorlist
-QT_HASH="e3acd9cbeafba3aed9f14592f4d70bf0b255e0203943e8d2b4235002268274d5"
+# hash from https://download.qt.io/archive/qt/5.9/5.9.5/single/qt-everywhere-opensource-src-5.9.5.tar.xz.mirrorlist
+QT_HASH="a75b87f46240a374fde93fb60038d63e3b570457785268c766c639b5dc18ccf6"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
   rm -rf "$QT_PREFIX_DIR"
@@ -279,18 +273,6 @@ then
 
   export PKG_CONFIG_PATH="$OPENSSL_PREFIX_DIR/lib/pkgconfig"
   export OPENSSL_LIBS="$(pkg-config --libs openssl)"
-
-  # Fix https://bugreports.qt.io/browse/QTBUG-66123 present in Qt 5.9.4
-  cd qtbase
-  wget https://github.com/qt/qtbase/commit/40e87491886957696486b87dc2dedec2adaf6e1a.patch -O "QTBUG-66123.patch"
-  check_sha256 "15c4e6f0eba90a67fee3faabd86ca670a3021ac49d19fd9b311e16615bce87a6" "QTBUG-66123.patch"
-  patch -p1 < "QTBUG-66123.patch"
-  rm "QTBUG-66123.patch"
-  cd ..
-
-  # Fix https://bugreports.qt.io/browse/QTBUG-63637 present in Qt 5.9.2
-  echo "QMAKE_LINK_OBJECT_MAX = 10" >> qtbase/mkspecs/win32-g++/qmake.conf
-  echo "QMAKE_LINK_OBJECT_SCRIPT = object_script" >> qtbase/mkspecs/win32-g++/qmake.conf
 
   # So, apparently Travis CI terminates a build if it generates more than 4mb of stdout output
   # which happens when building Qt
@@ -989,11 +971,11 @@ then
 
   # We want to use NSIS 3, instead of NSIS 2, because it added Windows 8 and 10
   # support, as well as unicode support. NSIS 3 is not packaged in Debian Stretch
-  # and building it manually appears to be quite a challenge. Luckly it's
-  # packaged in  Debian Unstable, so we can backport it to our Debian version
+  # and building it manually appears to be quite a challenge. Luckily it's
+  # packaged in Debian Unstable, so we can backport it to our Debian version
   # with little effort, utilizing maintainer's build script.
 
-  # Kepp the indentation of the next echo command as it is, as apt seems to
+  # Keep the indentation of the next echo command as it is, as apt seems to
   # ignore preferences starting with whitespace.
   echo "
 Package: *
