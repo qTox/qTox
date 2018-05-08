@@ -40,3 +40,9 @@ docker run --rm \
     -v $PWD/output:/output \
     debian:stretch-slim \
     /bin/bash -c "/qtox/appimage/build.sh"
+    
+# use the version number in the name when building a tag on Travis CI
+if [ -n "$TRAVIS_TAG" ]
+then
+    mv ./output/*.AppImage ./output/qTox-"$TRAVIS_TAG".AppImage
+fi
