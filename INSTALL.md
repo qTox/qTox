@@ -500,12 +500,9 @@ Provided that you have all required dependencies installed, you can simply run:
 git clone https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
 git checkout v0.2.2
-autoreconf -if
-./configure
+cmake .
 make -j$(nproc)
 sudo make install
-echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
-sudo ldconfig
 ```
 
 ### Compile qTox
@@ -525,7 +522,7 @@ Run in qTox directory to compile:
 
 ```bash
 cmake .
-make
+make -j$(nproc)
 ```
 
 Now you can start compiled qTox with `./qtox`
