@@ -32,9 +32,20 @@ if(APPLE)
   " COMPONENT Runtime
   )
 else()
+  include( GNUInstallDirs )
+  # follow the xdg-desktop specification
+  set(QTOX_DESKTOP_DIR "${CMAKE_INSTALL_FULL_DATAROOTDIR}/applications")
+  set(QTOX_DESKTOP_FILE "io.github.qtox.qTox.desktop")
   install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin")
-  install(FILES "res/qTox.appdata.xml" DESTINATION "share/metainfo")
-  install(FILES "qtox.desktop" DESTINATION "share/applications")
+  install(FILES "res/io.github.qtox.qTox.appdata.xml" DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/metainfo")
+  install(FILES "${QTOX_DESKTOP_FILE}" DESTINATION "${QTOX_DESKTOP_DIR}")
+  
+  # try to set up the menu system
+  find_program(XDG-DESKTOP-MENU_EXECUTABLE xdg-desktop-menu)
+  INSTALL(CODE "
+    execute_process(COMMAND ${XDG-DESKTOP-MENU_EXECUTABLE} install --novendor ${QTOX_DESKTOP_DIR}/${QTOX_DESKTOP_FILE})
+    "
+  )
 
   # Install application icons according to the XDG spec
   set(ICON_SIZES 14 16 22 24 32 36 48 64 72 96 128 192 256 512)
