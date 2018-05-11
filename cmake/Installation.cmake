@@ -32,9 +32,11 @@ if(APPLE)
   " COMPONENT Runtime
   )
 else()
-  install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin")
-  install(FILES "res/qTox.appdata.xml" DESTINATION "share/metainfo")
-  install(FILES "qtox.desktop" DESTINATION "share/applications")
+  include( GNUInstallDirs )
+  # follow the xdg-desktop specification
+  install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+  install(FILES "res/io.github.qtox.qTox.appdata.xml" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/metainfo")
+  install(FILES "io.github.qtox.qTox.desktop" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications")
 
   # Install application icons according to the XDG spec
   set(ICON_SIZES 14 16 22 24 32 36 48 64 72 96 128 192 256 512)
