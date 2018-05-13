@@ -44,6 +44,15 @@
 #include <QTimer>
 #include <QToolButton>
 
+namespace
+{
+const auto LABEL_PEER_TYPE_OUR = QVariant("our");
+const auto LABEL_PEER_TYPE_MUTED = QVariant("muted");
+const auto LABEL_PEER_PLAYING_AUDIO = QVariant("true");
+const auto LABEL_PEER_NOT_PLAYING_AUDIO = QVariant("false");
+const auto PEER_LABEL_STYLE_SHEET_PATH = QStringLiteral(":/ui/chatArea/chatHead.css");
+}
+
 /**
  * @brief Edit name for correct representation if it is needed
  * @param name Editing string
@@ -242,16 +251,20 @@ void GroupChatForm::updateUserNames()
             label->setToolTip(fullName);
         }
         label->setTextFormat(Qt::PlainText);
+        label->setContextMenuPolicy(Qt::CustomContextMenu);
 
         const Settings& s = Settings::getInstance();
+        connect(label, &QLabel::customContextMenuRequested, this, &GroupChatForm::onLabelContextMenuRequested);
 
         if (peerPk == selfPk) {
-            label->setStyleSheet(QStringLiteral("QLabel {color : green;}"));
+            label->setProperty("peerType", LABEL_PEER_TYPE_OUR);
         } else if (s.getBlackList().contains(peerPk.toString())) {
-            label->setStyleSheet(QStringLiteral("QLabel {color : darkRed;}"));
+            label->setProperty("peerType", LABEL_PEER_TYPE_MUTED);
         } else if (netcam != nullptr) {
             static_cast<GroupNetCamView*>(netcam)->addPeer(peerPk, fullName);
         }
+
+        label->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH));
         peerLabels.insert(peerPk, label);
     }
 
@@ -279,7 +292,7 @@ void GroupChatForm::updateUserNames()
 
 void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
 {
-    peerLabels[peerPk]->setStyleSheet(QStringLiteral("QLabel {color : red;}"));
+    peerLabels[peerPk]->setProperty("playingAudio", LABEL_PEER_PLAYING_AUDIO);
     // TODO(sudden6): check if this can ever be false, cause [] default constructs
     if (!peerAudioTimers[peerPk]) {
         peerAudioTimers[peerPk] = new QTimer(this);
@@ -289,7 +302,7 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
                 static_cast<GroupNetCamView*>(netcam)->removePeer(peerPk);
             }
 
-            peerLabels[peerPk]->setStyleSheet("");
+            peerLabels[peerPk]->setProperty("playingAudio", LABEL_PEER_NOT_PLAYING_AUDIO);
             delete peerAudioTimers[peerPk];
             peerAudioTimers[peerPk] = nullptr;
         });
@@ -300,6 +313,8 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
             static_cast<GroupNetCamView*>(netcam)->addPeer(peerPk, nameIt.value());
         }
     }
+
+    peerLabels[peerPk]->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH));
     peerAudioTimers[peerPk]->start(500);
 }
 
@@ -428,4 +443,69 @@ void GroupChatForm::updateUserCount()
 void GroupChatForm::retranslateUi()
 {
     updateUserCount();
+}
+
+void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)
+{
+    QLabel* label = static_cast<QLabel*>(QObject::sender());
+
+    if (label == nullptr) {
+        return;
+    }
+
+    const QPoint pos = label->mapToGlobal(localPos);
+    const QString muteString = tr("mute");
+    const QString unmuteString = tr("unmute");
+    Settings& s = Settings::getInstance();
+    QStringList blackList = s.getBlackList();
+    QMenu* contextMenu = new QMenu(this);
+    const QAction* toggleMuteAction;
+    const ToxPk selfPk = Core::getInstance()->getSelfPublicKey();
+    ToxPk peerPk;
+
+    QMap<ToxPk, QLabel*>::const_iterator i = peerLabels.constBegin();
+    while (i != peerLabels.constEnd()) {
+        if (i.value() == label) {
+            peerPk = i.key();
+            break;
+        }
+        ++i;
+    }
+
+    if (peerPk.isEmpty() || peerPk == selfPk) {
+        return;
+    }
+
+    const bool isPeerBlocked = blackList.contains(peerPk.toString());
+    QString menuTitle = label->text();
+    if (menuTitle.endsWith(", ")) {
+        menuTitle.chop(2);
+    }
+    QAction* menuTitleAction = contextMenu->addAction(menuTitle);
+    menuTitleAction->setEnabled(false); // make sure the title is not clickable
+    contextMenu->addSeparator();
+
+    if (isPeerBlocked) {
+        toggleMuteAction = contextMenu->addAction(unmuteString);
+    } else {
+        toggleMuteAction = contextMenu->addAction(muteString);
+    }
+    contextMenu->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH));
+
+    const QAction* selectedItem = contextMenu->exec(pos);
+    if (selectedItem == toggleMuteAction) {
+        if (isPeerBlocked) {
+            int index = blackList.indexOf(peerPk.toString());
+            if (index != -1) {
+                blackList.removeAt(index);
+            }
+        } else {
+            blackList << peerPk.toString();
+        }
+
+        s.setBlackList(blackList);
+    }
+
+    // delete menu after it stops being used
+    contextMenu->deleteLater();
 }

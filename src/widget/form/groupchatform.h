@@ -52,6 +52,7 @@ private slots:
     void onTitleChanged(uint32_t groupId, const QString& author, const QString& title);
     void onSearchUp(const QString& phrase)  override;
     void onSearchDown(const QString& phrase)  override;
+    void onLabelContextMenuRequested(const QPoint& localPos);
 
 protected:
     virtual GenericNetCamView* createNetcam() final override;
