@@ -483,6 +483,13 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
     Q_UNUSED(tox);
 
     Core* c = static_cast<Core*>(core);
+    const ToxPk peerPk = c->getGroupPeerPk(group, peer);
+    const Settings& s = Settings::getInstance();
+    // don't play the audio if it comes from a muted peer
+    if (s.getBlackList().contains(peerPk.toString())) {
+         return;
+    }
+
     CoreAV* cav = c->getAv();
 
     auto it = cav->groupCalls.find(group);
