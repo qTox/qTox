@@ -1,23 +1,39 @@
 QLineEdit {
-  color: @black;
-  background: white;
-  border: 0px;
+    color: @black;
+    background: white;
+    border: 0px;
 }
 
 #nameLabel {
-  color: @black;
-  font: @mediumBold;
-  font-size:12px;
+    color: @black;
+    font: @mediumBold;
+    font-size:12px;
 }
 
 #statusLabel {
-  color: @mediumGrey;
-  font: @medium;
-  font-size:12px;
+    color: @mediumGrey;
+    font: @medium;
+    font-size:12px;
 }
 
 #peersLabel {
-  color: @mediumGrey;
-  font: @medium;
-  font-size:12px;
+    color: @mediumGrey;
+    font: @medium;
+    font-size:12px;
+}
+
+QLabel[peerType="our"] {
+    color: green;
+}
+
+QLabel[peerType="muted"] {
+    color: darkred;
+}
+
+QLabel[playingAudio="true"] {
+    font-weight: bold;
+}
+
+QMenu:disabled {
+    color: gray;
 }
