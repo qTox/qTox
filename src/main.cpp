@@ -161,6 +161,9 @@ int main(int argc, char* argv[])
 #endif
 
     a->setApplicationName("qTox");
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+    a->setDesktopFileName("io.github.qtox.qTox");
+#endif
     a->setOrganizationName("Tox");
     a->setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
 
