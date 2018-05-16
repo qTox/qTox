@@ -88,6 +88,9 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 include(Dependencies)
 
+# Copy themes
+file(COPY ${CMAKE_SOURCE_DIR}/themes DESTINATION ${CMAKE_BINARY_DIR})
+
 ################################################################################
 #
 # :: qTox main library sources

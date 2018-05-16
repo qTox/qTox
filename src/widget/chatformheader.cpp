@@ -38,7 +38,7 @@ static const short MIC_BUTTONS_LAYOUT_SPACING = 4;
 static const short BUTTONS_LAYOUT_HOR_SPACING = 4;
 
 namespace {
-const QString STYLE_PATH = QStringLiteral(":/ui/chatForm/buttons.css");
+const QString STYLE_PATH = QStringLiteral("chatForm/buttons.css");
 
 const QString STATE_NAME[] = {
     QString{},
