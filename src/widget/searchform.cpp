@@ -82,7 +82,7 @@ QPushButton *SearchForm::createButton(const QString& name, const QString& state)
     btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     btn->setObjectName(name);
     btn->setProperty("state", state);
-    btn->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
+    btn->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
 
     return btn;
 }
