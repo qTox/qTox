@@ -69,6 +69,18 @@ dependencies are missing.
 |---------|---------|
 | [Check] | >= 0.9  |
 
+### Spell checking support
+
+| Name     | Version |
+|----------|---------|
+| [sonnet] | >= 5.45 |
+
+Use `-DSPELL_CHECK=OFF` to disable it.
+
+**Note:** Specified version was tested and works well. You can try to use older
+version, but in this case you may have some errors (including a complete lack
+of spell check).
+
 ### Linux
 
 #### Auto-away support
@@ -282,6 +294,7 @@ sudo apt-get install \
     libexif-dev \
     libgdk-pixbuf2.0-dev \
     libgtk2.0-dev \
+    libkdeui5 \
     libopenal-dev \
     libqrencode-dev \
     libqt5opengl5-dev \
@@ -312,6 +325,7 @@ sudo dnf groupinstall "Development Tools" "C Development Tools and Libraries"
 sudo dnf install \
     ffmpeg-devel \
     gtk2-devel \
+    kf5-sonnet \
     libexif-devel \
     libXScrnSaver-devel \
     libtool \
@@ -350,7 +364,8 @@ sudo zypper install \
     openal-soft-devel \
     patterns-openSUSE-devel_basis \
     qrencode-devel \
-    sqlcipher-devel
+    sqlcipher-devel \
+    sonnet
 ```
 
 <a name="slackware-other-deps" />
@@ -376,6 +391,7 @@ sudo apt-get install \
     libgdk-pixbuf2.0-dev \
     libglib2.0-dev \
     libgtk2.0-dev \
+    libkdeui5 \
     libopenal-dev \
     libqrencode-dev \
     libqt5opengl5-dev \
@@ -405,6 +421,7 @@ sudo apt-get install \
     libgdk-pixbuf2.0-dev \
     libglib2.0-dev \
     libgtk2.0-dev \
+    libkdeui5 \
     libopenal-dev \
     libqrencode-dev \
     libqt5opengl5-dev \
@@ -721,9 +738,9 @@ Download the MinGW installer for Windows from
 [sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/). Make
 sure to install MSYS (a set of Unix tools for Windows). The following steps
 assume that MinGW is installed at `C:\MinGW`. If you decided to choose another
-location, replace corresponding parts. Select `mingw-developer-toolkit`, 
-`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32` 
-packages using MinGW Installation Manager (`mingw-get.exe`). Check that the 
+location, replace corresponding parts. Select `mingw-developer-toolkit`,
+`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32`
+packages using MinGW Installation Manager (`mingw-get.exe`). Check that the
 version of MinGW, corresponds to the version of the QT component!
 
 #### Wget
@@ -751,7 +768,7 @@ second box search for the `PATH` variable and press `Edit...`. The input box
 separated with a semicolon. Extend the input box by adding
 `;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files (x86)\GnuWin32\bin`.
 The very first semicolon must only be added if it is missing. CMake may be added
-by installer automatically. Make sure that paths containing alternative `sh`, 
+by installer automatically. Make sure that paths containing alternative `sh`,
 `bash` implementations such as `C:\Program Files\OpenSSH\bin` are at the end of
 `PATH` or build may fail.
 
@@ -816,3 +833,4 @@ Switches:
 [sqlcipher]: https://www.zetetic.net/sqlcipher/
 [toxcore]: https://github.com/TokTok/c-toxcore/
 [filteraudio]: https://github.com/irungentoo/filter_audio
+[sonnet]: https://github.com/KDE/sonnet

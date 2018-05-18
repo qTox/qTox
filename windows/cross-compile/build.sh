@@ -397,8 +397,8 @@ then
 @@ -1074,7 +1074,7 @@
     $(TOP)/ext/fts5/fts5_varint.c \
     $(TOP)/ext/fts5/fts5_vocab.c  \
- 
--fts5parse.c:	$(TOP)/ext/fts5/fts5parse.y lemon 
+
+-fts5parse.c:	$(TOP)/ext/fts5/fts5parse.y lemon
 +fts5parse.c:	$(TOP)/ext/fts5/fts5parse.y lemon$(BEXE)
  	cp $(TOP)/ext/fts5/fts5parse.y .
  	rm -f fts5parse.h
@@ -1121,11 +1121,14 @@ if [[ "$BUILD_TYPE" == "release" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Release \
+# Spell check on windows currently not supported
+        -DSPELL_CHECK=OFF \
         ..
 elif [[ "$BUILD_TYPE" == "debug" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Debug \
+        -DSPELL_CHECK=OFF \
         ..
 fi
 
