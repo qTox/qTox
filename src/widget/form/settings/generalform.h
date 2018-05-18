@@ -42,6 +42,7 @@ public:
 private slots:
     void on_transComboBox_currentIndexChanged(int index);
     void on_cbAutorun_stateChanged();
+    void on_cbSpellChecking_stateChanged();
     void on_showSystemTray_stateChanged();
     void on_startInTray_stateChanged();
     void on_closeToTray_stateChanged();
