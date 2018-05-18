@@ -368,6 +368,10 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/form/loadhistorydialog.h
   src/widget/form/profileform.cpp
   src/widget/form/profileform.h
+  src/widget/form/avatarimage.cpp
+  src/widget/form/avatarimage.h
+  src/widget/form/graphicspixmapitem.cpp
+  src/widget/form/graphicspixmapitem.h
   src/widget/form/setpassworddialog.cpp
   src/widget/form/setpassworddialog.h
   src/widget/form/settings/aboutform.cpp

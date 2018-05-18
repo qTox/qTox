@@ -866,10 +866,7 @@ void Widget::onShowSettings()
 void Widget::showProfile() // onAvatarClicked, onUsernameClicked
 {
     if (Settings::getInstance().getSeparateWindow()) {
-        if (!profileForm->isShown()) {
-            profileForm->show(createContentDialog(DialogType::ProfileDialog));
-        }
-
+        profileForm->show(createContentDialog(DialogType::ProfileDialog));
         setActiveToolMenuButton(ActiveToolMenuButton::None);
     } else {
         hideMainForms(nullptr);

@@ -136,19 +136,19 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
     QRegExpValidator* validator = new QRegExpValidator(re, this);
     bodyUI->toxmeUsername->setValidator(validator);
 
-    profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");
-    profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
-    profilePicture->setContextMenuPolicy(Qt::CustomContextMenu);
-    profilePicture->setClickable(true);
-    profilePicture->installEventFilter(this);
-    profilePicture->setAccessibleName("Profile avatar");
-    profilePicture->setAccessibleDescription("Set a profile avatar shown to all contacts");
-    connect(profilePicture, &MaskablePixmapWidget::clicked, this, &ProfileForm::onAvatarClicked);
-    connect(profilePicture, &MaskablePixmapWidget::customContextMenuRequested,
-            this, &ProfileForm::showProfilePictureContextMenu);
+    this->setMouseTracking(true);
+    avatar = new AvatarImage(64,64);
+    avatar->setAvatar(QImage(":/img/contact_dark.svg"));
+    avatar->setAccessibleName("Profile avatar");
+    avatar->setAccessibleDescription("Set a profile avatar shown to all contacts");
+    avatar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+
+    connect(avatar, SIGNAL(openAvatar()), this, SLOT(onAvatarClicked()));
+    connect(avatar, SIGNAL(dropAvatar()), this, SLOT(onRemoveAvatarClicked()));
 
     QHBoxLayout* publicGrouplayout = qobject_cast<QHBoxLayout*>(bodyUI->publicGroup->layout());
-    publicGrouplayout->insertWidget(0, profilePicture);
+    publicGrouplayout->insertWidget(0, avatar);
     publicGrouplayout->insertSpacing(1, 7);
 
     timer.setInterval(750);
@@ -210,16 +210,6 @@ ProfileForm::~ProfileForm()
     delete bodyUI;
 }
 
-bool ProfileForm::isShown() const
-{
-    if (profilePicture->isVisible()) {
-        window()->windowHandle()->alert(0);
-        return true;
-    }
-
-    return false;
-}
-
 void ProfileForm::show(ContentLayout* contentLayout)
 {
     contentLayout->mainContent->layout()->addWidget(this);
@@ -241,28 +231,9 @@ void ProfileForm::show(ContentLayout* contentLayout)
     bodyUI->userName->selectAll();
 }
 
-bool ProfileForm::eventFilter(QObject* object, QEvent* event)
+void ProfileForm::onRemoveAvatarClicked()
 {
-    if (object == static_cast<QObject*>(profilePicture) && event->type() == QEvent::MouseButtonPress) {
-        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-        if (mouseEvent->button() == Qt::RightButton)
-            return true;
-    }
-    return false;
-}
-
-void ProfileForm::showProfilePictureContextMenu(const QPoint& point)
-{
-    const QPoint pos = profilePicture->mapToGlobal(point);
-
-    QMenu contextMenu;
-    const QIcon icon = style()->standardIcon(QStyle::SP_DialogCancelButton);
-    const QAction* removeAction = contextMenu.addAction(icon, tr("Remove"));
-    const QAction* selectedItem = contextMenu.exec(pos);
-
-    if (selectedItem == removeAction) {
-        profileInfo->removeAvatar();
-    }
+    profileInfo->removeAvatar();
 }
 
 void ProfileForm::copyIdClicked()
@@ -288,7 +259,7 @@ void ProfileForm::onStatusMessageEdited()
 
 void ProfileForm::onSelfAvatarLoaded(const QPixmap& pic)
 {
-    profilePicture->setPixmap(pic);
+    avatar->setAvatar(pic.toImage());
 }
 
 void ProfileForm::setToxId(const ToxId& id)

@@ -26,6 +26,7 @@
 #include <QLineEdit>
 #include <QTimer>
 #include <QVBoxLayout>
+#include "avatarimage.h"
 
 class ContentLayout;
 class CroppingLabel;
@@ -60,11 +61,11 @@ public:
     {
     }
     void show(ContentLayout* contentLayout);
-    bool isShown() const;
 
 public slots:
     void onSelfAvatarLoaded(const QPixmap& pic);
     void onLogoutClicked();
+    void onRemoveAvatarClicked();
 
 private slots:
     void setPasswordButtonsText();
@@ -80,7 +81,6 @@ private slots:
     void onDeletePassClicked();
     void onChangePassClicked();
     void onAvatarClicked();
-    void showProfilePictureContextMenu(const QPoint& point);
     void onRegisterButtonClicked();
 
 private:
@@ -89,10 +89,9 @@ private:
     void prFileLabelUpdate();
 
 private:
-    bool eventFilter(QObject* object, QEvent* event);
     void refreshProfiles();
     Ui::IdentitySettings* bodyUI;
-    MaskablePixmapWidget* profilePicture;
+    AvatarImage *avatar;
     QTimer timer;
     bool hasCheck = false;
     QRWidget* qr;
