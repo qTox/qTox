@@ -147,7 +147,9 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
 
     msgEdit = new ChatTextEdit();
 #ifdef SPELL_CHECKING
-    decorator = new Sonnet::SpellCheckDecorator(msgEdit);
+    if (s.getSpellCheckingEnabled()) {
+        decorator = new Sonnet::SpellCheckDecorator(msgEdit);
+    }
 #endif
 
     sendButton = createButton("sendButton", this, &GenericChatForm::onSendTriggered);

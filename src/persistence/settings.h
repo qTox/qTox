@@ -91,6 +91,8 @@ class Settings : public QObject, public ICoreSettings, public IFriendSettings,
     Q_PROPERTY(QString dateFormat READ getDateFormat WRITE setDateFormat NOTIFY dateFormatChanged FINAL)
     Q_PROPERTY(bool statusChangeNotificationEnabled READ getStatusChangeNotificationEnabled WRITE
                    setStatusChangeNotificationEnabled NOTIFY statusChangeNotificationEnabledChanged FINAL)
+    Q_PROPERTY(bool spellCheckingEnabled READ getSpellCheckingEnabled WRITE
+                   setSpellCheckingEnabled NOTIFY spellCheckingEnabledChanged FINAL)
 
     // Privacy
     Q_PROPERTY(bool typingNotification READ getTypingNotification WRITE setTypingNotification NOTIFY
@@ -212,6 +214,7 @@ signals:
     void timestampFormatChanged(const QString& format);
     void dateFormatChanged(const QString& format);
     void statusChangeNotificationEnabledChanged(bool enabled);
+    void spellCheckingEnabledChanged(bool enabled);
     void fauxOfflineMessagingChanged(bool enabled);
 
     // Privacy
@@ -449,6 +452,9 @@ public:
     bool getStatusChangeNotificationEnabled() const;
     void setStatusChangeNotificationEnabled(bool newValue);
 
+    bool getSpellCheckingEnabled() const;
+    void setSpellCheckingEnabled(bool newValue);
+
     // Privacy
     bool getTypingNotification() const;
     void setTypingNotification(bool enabled);
@@ -641,6 +647,7 @@ private:
     QString timestampFormat;
     QString dateFormat;
     bool statusChangeNotificationEnabled;
+    bool spellCheckingEnabled;
 
     // Privacy
     bool typingNotification;
