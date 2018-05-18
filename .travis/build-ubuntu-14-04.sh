@@ -35,6 +35,7 @@ sudo apt-get install -y --force-yes \
     libgdk-pixbuf2.0-dev \
     libglib2.0-dev \
     libgtk2.0-dev \
+    libkdeui5 \
     libopenal-dev \
     libopus-dev \
     libqrencode-dev \
@@ -170,7 +171,8 @@ build_qtox() {
     cmake -H. -B"$BUILDDIR" \
         -DSMILEYS=DISABLED \
         -DENABLE_STATUSNOTIFIER=False \
-        -DENABLE_GTK_SYSTRAY=False
+        -DENABLE_GTK_SYSTRAY=False \
+        -DSPELL_CHECK=OFF
 
     bdir
 

@@ -230,7 +230,8 @@ build() {
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
     export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
-    cmake -H$QTOX_DIR -B.
+# Spell check on MaxOS currently not supported
+    cmake -H$QTOX_DIR -B. -DSPELL_CHECK=OFF
     make -j$(sysctl -n hw.ncpu)
 }
 

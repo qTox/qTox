@@ -1131,11 +1131,14 @@ if [[ "$BUILD_TYPE" == "release" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Release \
+# Spell check on windows currently not supported
+        -DSPELL_CHECK=OFF \
         ..
 elif [[ "$BUILD_TYPE" == "debug" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Debug \
+        -DSPELL_CHECK=OFF \
         ..
 fi
 
