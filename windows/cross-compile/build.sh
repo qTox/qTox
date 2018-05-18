@@ -1125,15 +1125,18 @@ then
 fi
 set -u
 
+# Spell check on windows currently not supported, disable
 if [[ "$BUILD_TYPE" == "release" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DSPELL_CHECK=OFF \
         ..
 elif [[ "$BUILD_TYPE" == "debug" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Debug \
+        -DSPELL_CHECK=OFF \
         ..
 fi
 
