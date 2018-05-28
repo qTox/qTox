@@ -45,6 +45,7 @@
 #include <QFileDialog>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QtSpell.hpp>
 
 /**
  * @class GenericChatForm
@@ -142,6 +143,8 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     connect(&s, &Settings::chatMessageFontChanged, this, &GenericChatForm::onChatMessageFontChanged);
 
     msgEdit = new ChatTextEdit();
+    QtSpell::TextEditChecker* checker = new QtSpell::TextEditChecker(this);
+    checker->setTextEdit(msgEdit);
 
     sendButton = createButton("sendButton", this, &GenericChatForm::onSendTriggered);
     emoteButton = createButton("emoteButton", this, &GenericChatForm::onEmoteButtonClicked);

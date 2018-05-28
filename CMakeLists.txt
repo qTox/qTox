@@ -85,7 +85,7 @@ endif()
 # Search for headers in current directory.
 include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
-
+include_directories(SYSTEM /usr/local/include/QtSpell-qt5)
 include(Dependencies)
 
 ################################################################################
