@@ -231,7 +231,7 @@ static inline bool checkIsValidId(const QString& id)
 
 void AddFriendForm::onImportOpenClicked()
 {
-    const QString path = QFileDialog::getOpenFileName(tabWidget, tr("Open contact list"));
+    const QString path = QFileDialog::getOpenFileName(Q_NULLPTR, tr("Open contact list"));
     if (path.isEmpty()) {
         return;
     }

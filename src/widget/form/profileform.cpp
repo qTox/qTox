@@ -348,10 +348,9 @@ void ProfileForm::onExportClicked()
 {
     const QString current = profileInfo->getProfileName() + Core::TOX_EXT;
     //:save dialog title
-    const QString path = QFileDialog::getSaveFileName(Q_NULLPTR, tr("Export profile"),
-                                                      QDir::home().filePath(current),
+    const QString path = QFileDialog::getSaveFileName(Q_NULLPTR, tr("Export profile"), current,
                                                       //: save dialog filter
-                                                      tr("Tox save file (*.tox)"), nullptr);
+                                                      tr("Tox save file (*.tox)"));
     if (path.isEmpty()) {
         return;
     }
@@ -417,8 +416,8 @@ void ProfileForm::onSaveQrClicked()
 {
     const QString current = profileInfo->getProfileName() + ".png";
     const QString path = QFileDialog::getSaveFileName(
-                Q_NULLPTR, tr("Save", "save qr image"), QDir::home().filePath(current),
-                tr("Save QrCode (*.png)", "save dialog filter"), nullptr);
+                Q_NULLPTR, tr("Save", "save qr image"), current,
+                tr("Save QrCode (*.png)", "save dialog filter"));
     if (path.isEmpty()) {
         return;
     }

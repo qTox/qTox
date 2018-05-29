@@ -472,7 +472,7 @@ void GenericChatForm::onEmoteInsertRequested(QString str)
 
 void GenericChatForm::onSaveLogClicked()
 {
-    QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"));
+    QString path = QFileDialog::getSaveFileName(Q_NULLPTR, tr("Save chat log"));
     if (path.isEmpty())
         return;
 

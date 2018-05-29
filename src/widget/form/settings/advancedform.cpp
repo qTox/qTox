@@ -99,8 +99,7 @@ void AdvancedForm::on_cbMakeToxPortable_stateChanged()
 void AdvancedForm::on_btnExportLog_clicked()
 {
     QString savefile =
-        QFileDialog::getSaveFileName(this, tr("Save File"), QDir::homePath(), tr("Logs (*.log)"), 0,
-                                     QFileDialog::DontUseNativeDialog);
+        QFileDialog::getSaveFileName(Q_NULLPTR, tr("Save File"), QString{}, tr("Logs (*.log)"));
 
     if (savefile.isNull() || savefile.isEmpty()) {
         qDebug() << "Debug log save file was not properly chosen";
