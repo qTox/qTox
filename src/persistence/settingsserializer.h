@@ -106,7 +106,7 @@ private:
     QString path;
     const ToxEncrypt* passKey;
     int group, array, arrayIndex;
-    QVector<QString> groups;
+    QStringList groups;
     QVector<Array> arrays;
     QVector<Value> values;
     static const char magic[];

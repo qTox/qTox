@@ -352,6 +352,7 @@ void ProfileForm::onExportClicked()
                                                       QDir::home().filePath(current),
                                                       //: save dialog filter
                                                       tr("Tox save file (*.tox)"), nullptr);
+
     const IProfileInfo::SaveResult result = profileInfo->exportProfile(path);
     if (result == IProfileInfo::SaveResult::OK) {
         return;
@@ -370,8 +371,7 @@ void ProfileForm::onDeleteClicked()
         return;
     }
 
-    // TODO: Use QStringList
-    const QVector<QString> manualDeleteFiles = profileInfo->removeProfile();
+    const QStringList manualDeleteFiles = profileInfo->removeProfile();
     if (manualDeleteFiles.empty()) {
         return;
     }

@@ -171,7 +171,7 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
 QVector<QPair<QString, QString>> v4l2::getDeviceList()
 {
     QVector<QPair<QString, QString>> devices;
-    QVector<QString> deviceFiles;
+    QStringList deviceFiles;
 
     DIR* dir = opendir("/dev");
     if (!dir)

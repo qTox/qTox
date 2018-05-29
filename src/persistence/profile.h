@@ -70,12 +70,12 @@ public:
     bool isHistoryEnabled();
     History* getHistory();
 
-    QVector<QString> remove();
+    QStringList remove();
 
     bool rename(QString newName);
 
     static void scanProfiles();
-    static QVector<QString> getProfiles();
+    static QStringList getProfiles();
 
     static bool exists(QString name);
     static bool isEncrypted(QString name);
@@ -92,7 +92,7 @@ private slots:
 
 private:
     Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave);
-    static QVector<QString> getFilesByExt(QString extension);
+    static QStringList getFilesByExt(QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
 
 private:
@@ -105,7 +105,7 @@ private:
     bool newProfile;
     bool isRemoved;
     bool encrypted = false;
-    static QVector<QString> profiles;
+    static QStringList profiles;
 };
 
 #endif // PROFILE_H

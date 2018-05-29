@@ -87,7 +87,7 @@ void LoginScreen::reset(QString initialProfile)
     if (initialProfile.isEmpty()) {
         initialProfile = Settings::getInstance().getCurrentProfile();
     }
-    QVector<QString> profiles = Profile::getProfiles();
+    QStringList profiles = Profile::getProfiles();
     for (QString profile : profiles) {
         ui->loginUsernames->addItem(profile);
         if (profile == initialProfile) {
