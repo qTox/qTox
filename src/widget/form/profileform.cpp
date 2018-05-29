@@ -352,6 +352,10 @@ void ProfileForm::onExportClicked()
                                                       QDir::home().filePath(current),
                                                       //: save dialog filter
                                                       tr("Tox save file (*.tox)"), nullptr);
+    if (path.isEmpty()) {
+        return;
+    }
+
     const IProfileInfo::SaveResult result = profileInfo->exportProfile(path);
     if (result == IProfileInfo::SaveResult::OK) {
         return;
@@ -415,6 +419,9 @@ void ProfileForm::onSaveQrClicked()
     const QString path = QFileDialog::getSaveFileName(
                 Q_NULLPTR, tr("Save", "save qr image"), QDir::home().filePath(current),
                 tr("Save QrCode (*.png)", "save dialog filter"), nullptr);
+    if (path.isEmpty()) {
+        return;
+    }
 
     const IProfileInfo::SaveResult result = profileInfo->saveQr(*qr->getImage(), path);
     if (result == IProfileInfo::SaveResult::OK) {
