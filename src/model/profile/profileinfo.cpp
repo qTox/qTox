@@ -213,10 +213,9 @@ IProfileInfo::SaveResult ProfileInfo::exportProfile(const QString &path) const
  * @brief Remove profile.
  * @return List of files, which couldn't be removed automaticaly.
  */
-// TODO: Use QStringList
-QVector<QString> ProfileInfo::removeProfile()
+QStringList ProfileInfo::removeProfile()
 {
-    QVector<QString> manualDeleteFiles = profile->remove();
+    QStringList manualDeleteFiles = profile->remove();
     QMetaObject::invokeMethod(&Nexus::getInstance(), "showLogin");
     return manualDeleteFiles;
 }

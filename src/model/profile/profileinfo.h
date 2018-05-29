@@ -40,7 +40,7 @@ public:
     QString getProfileName() const override;
     RenameResult renameProfile(const QString& name) override;
     SaveResult exportProfile(const QString& path) const override;
-    QVector<QString> removeProfile() override;
+    QStringList removeProfile() override;
     void logout() override;
 
     void copyQr(const QImage& image) const override;
