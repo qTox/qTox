@@ -1067,8 +1067,7 @@ void ChatForm::onExportChat()
     QDateTime now = QDateTime::currentDateTime();
     QList<History::HistMessage> msgs = history->getChatHistoryFromDate(pk, epochStart, now);
 
-    QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"), QString{}, QString{}, 0,
-                                                QFileDialog::DontUseNativeDialog);
+    QString path = QFileDialog::getSaveFileName(Q_NULLPTR, tr("Save chat log"));
     if (path.isEmpty()) {
         return;
     }

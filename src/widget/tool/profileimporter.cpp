@@ -53,7 +53,7 @@ bool ProfileImporter::importProfile()
     // TODO: Change all QFileDialog instances across project to use
     // this instead of Q_NULLPTR. Possibly requires >Qt 5.9 due to:
     // https://bugreports.qt.io/browse/QTBUG-59184
-    QString path = QFileDialog::getOpenFileName(Q_NULLPTR, title, dir, filter, 0);
+    QString path = QFileDialog::getOpenFileName(Q_NULLPTR, title, dir, filter);
 
     return importProfile(path);
 }
