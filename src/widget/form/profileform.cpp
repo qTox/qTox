@@ -373,8 +373,7 @@ void ProfileForm::onDeleteClicked()
         return;
     }
 
-    // TODO: Use QStringList
-    const QVector<QString> manualDeleteFiles = profileInfo->removeProfile();
+    const QStringList manualDeleteFiles = profileInfo->removeProfile();
     if (manualDeleteFiles.empty()) {
         return;
     }
