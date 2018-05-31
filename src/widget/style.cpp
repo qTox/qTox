@@ -89,6 +89,12 @@ QStringList Style::getThemeColorNames()
             QObject::tr("Violet")};
 }
 
+QString Style::getThemePath()
+{
+    //TODO: return path to the currently selected theme
+    return QStringLiteral("themes/default/");
+}
+
 QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"),
                                          QColor("#c23716"), QColor("#4617b5")};
 
@@ -98,7 +104,8 @@ std::map<std::pair<const QString, const QFont>, const QString> Style::stylesheet
 
 const QString Style::getStylesheet(const QString& filename, const QFont& baseFont)
 {
-    const std::pair<const QString, const QFont> cacheKey(filename, baseFont);
+    const QString fullPath = getThemePath() + filename;
+    const std::pair<const QString, const QFont> cacheKey(fullPath, baseFont);
     auto it = stylesheetsCache.find(cacheKey);
     if (it != stylesheetsCache.end())
     {
@@ -109,6 +116,25 @@ const QString Style::getStylesheet(const QString& filename, const QFont& baseFon
     const QString newStylesheet = resolve(filename, baseFont);
     stylesheetsCache.insert(std::make_pair(cacheKey, newStylesheet));
     return newStylesheet;
+}
+
+const QString Style::getImagePath(const QString& filename)
+{
+    QString fullPath = getThemePath() + filename;
+    QFile file{fullPath};
+
+    if (file.open(QFile::ReadOnly)) {
+        return fullPath;
+    } else {
+        fullPath = ":" + fullPath;
+        if (file.open(QFile::ReadOnly)) {
+            qWarning() << "Stylesheet " << fullPath << " not found. Default will be used";
+            return fullPath;
+        } else {
+            return QString("");
+        }
+    }
+
 }
 
 QColor Style::getColor(Style::ColorPalette entry)
@@ -138,12 +164,23 @@ QFont Style::getFont(Style::Font font)
 
 const QString Style::resolve(const QString& filename, const QFont& baseFont)
 {
-    QFile file{filename};
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        qWarning() << "Stylesheet " << filename << " not found";
-        return QString("");
+    QString themePath = getThemePath();
+    QString fullPath = themePath + filename;
+    QString qss = "";
+
+    QFile file{fullPath};
+    if (file.open(QFile::ReadOnly | QFile::Text)) {
+        qss = file.readAll();
+    } else {
+        fullPath = ":" + fullPath;
+        if (file.open(QFile::ReadOnly | QFile::Text)) {
+            qWarning() << "Stylesheet " << fullPath << " not found. Default will be used";
+            qss = file.readAll();
+        } else {
+            qWarning() << "Stylesheet " << fullPath << " not found and no default exists.";
+            return QString("");
+        }
     }
-    QString qss = file.readAll();
 
     if (dict.isEmpty()) {
         dict = {// colors
@@ -177,6 +214,30 @@ const QString Style::resolve(const QString& filename, const QFont& baseFont)
     for (const QString& key : dict.keys()) {
         qss.replace(QRegularExpression(QString("%1\\b").arg(key)), dict[key]);
     }
+
+    // @getImagePath() function
+    QRegularExpression re("@getImagePath\\([^)\\s]*\\)");
+    QRegularExpressionMatchIterator i = re.globalMatch(qss);
+
+    while (i.hasNext()) {
+        QRegularExpressionMatch match = i.next();
+        QString path = match.captured(0);
+        const QString phrase = path;
+
+        path.remove("@getImagePath(");
+        path.chop(1);
+
+        QString fullImagePath = getThemePath() + path;
+        QFile file{fullImagePath};
+
+        if (!file.open(QFile::ReadOnly)) {
+            qWarning() << "Image " << fullImagePath << " not found. Default will be used";
+            fullImagePath = ":" + fullImagePath;
+        }
+
+        qss.replace(phrase, fullImagePath);
+    }
+
     return qss;
 }
 

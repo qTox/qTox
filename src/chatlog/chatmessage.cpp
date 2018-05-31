@@ -26,6 +26,7 @@
 #include "content/spinner.h"
 #include "content/text.h"
 #include "content/timestamp.h"
+#include "src/widget/style.h"
 
 #include <QDebug>
 
@@ -92,7 +93,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
                                                        ? QString("%1 %2").arg(sender, rawMessage)
                                                        : rawMessage),
                    ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0 / 1.6),
+    msg->addColumn(new Spinner(Style::getImagePath("chatArea/spinner.svg"), QSize(16, 16), 360.0 / 1.6),
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     if (!date.isNull())
@@ -110,13 +111,13 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString& rawMessage,
     QString img;
     switch (type) {
     case INFO:
-        img = ":/ui/chatArea/info.svg";
+        img = Style::getImagePath("chatArea/info.svg");
         break;
     case ERROR:
-        img = ":/ui/chatArea/error.svg";
+        img = Style::getImagePath("chatArea/error.svg");
         break;
     case TYPING:
-        img = ":/ui/chatArea/typing.svg";
+        img = Style::getImagePath("chatArea/typing.svg");
         break;
     }
 

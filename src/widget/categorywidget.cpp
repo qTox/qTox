@@ -48,7 +48,7 @@ CategoryWidget::CategoryWidget(bool compact, QWidget* parent)
     statusLabel->setObjectName("status");
     statusLabel->setTextFormat(Qt::PlainText);
 
-    statusPic.setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
+    statusPic.setPixmap(QPixmap(Style::getImagePath("chatArea/scrollBarRightArrow.svg")));
 
     fullLayout = new QVBoxLayout(this);
     fullLayout->setSpacing(0);
@@ -90,9 +90,9 @@ void CategoryWidget::setExpanded(bool isExpanded, bool save)
 
     QString pixmapPath;
     if (isExpanded)
-        pixmapPath = ":/ui/chatArea/scrollBarDownArrow.svg";
+        pixmapPath = Style::getImagePath("chatArea/scrollBarDownArrow.svg");
     else
-        pixmapPath = ":/ui/chatArea/scrollBarRightArrow.svg";
+        pixmapPath = Style::getImagePath("chatArea/scrollBarRightArrow.svg");
     statusPic.setPixmap(QPixmap(pixmapPath));
     // The listWidget will recieve a enterEvent for some reason if now visible.
     // Using the following, we prevent that.
