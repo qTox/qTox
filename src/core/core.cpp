@@ -29,6 +29,9 @@
 #include "src/widget/gui.h"
 
 #include <QCoreApplication>
+#include <QRegularExpression>
+#include <QString>
+#include <QStringBuilder>
 #include <QTimer>
 
 #include <cassert>
@@ -124,6 +127,56 @@ public:
 using ToxOptionsPtr = std::unique_ptr<Tox_Options, ToxOptionsDeleter>;
 
 /**
+ * @brief Map TOX_LOG_LEVEL to a string
+ * @param level log level
+ * @return Descriptive string for the log level
+ */
+static QString getToxLogLevel(TOX_LOG_LEVEL level) {
+    switch (level) {
+    case TOX_LOG_LEVEL_TRACE:
+        return QLatin1Literal("TRACE");
+    case TOX_LOG_LEVEL_DEBUG:
+        return QLatin1Literal("DEBUG");
+    case TOX_LOG_LEVEL_INFO:
+        return QLatin1Literal("INFO ");
+    case TOX_LOG_LEVEL_WARNING:
+        return QLatin1Literal("WARN ");
+    case TOX_LOG_LEVEL_ERROR:
+        return QLatin1Literal("ERROR");
+    default:
+        // Invalid log level
+        return QLatin1Literal("INVAL");
+    }
+}
+
+/**
+ * @brief Log message handler for toxcore log messages
+ * @note See tox.h for the parameter definitions
+ */
+void onLogMessage(Tox *tox, TOX_LOG_LEVEL level, const char *file, uint32_t line,
+                  const char *func, const char *message, void *user_data)
+{
+    // for privacy, make the path relative to the c-toxcore source directory
+    const QRegularExpression pathCleaner(QLatin1Literal{"[\\s|\\S]*c-toxcore."});
+    const QString cleanPath = QString{file}.remove(pathCleaner);
+
+    const QString logMsg = getToxLogLevel(level) % QLatin1Literal{":"} % cleanPath
+                           % QLatin1Literal{":"} % func % QStringLiteral(":%1: ").arg(line)
+                           % message;
+
+    switch (level) {
+    case TOX_LOG_LEVEL_TRACE:
+    case TOX_LOG_LEVEL_DEBUG:
+    case TOX_LOG_LEVEL_INFO:
+        qDebug() << logMsg;
+        break;
+    case TOX_LOG_LEVEL_WARNING:
+    case TOX_LOG_LEVEL_ERROR:
+        qWarning() << logMsg;
+    }
+}
+
+/**
  * @brief Initializes Tox_Options instance
  * @param savedata Previously saved Tox data
  * @return Tox_Options instance needed to create Tox instance
@@ -150,7 +203,10 @@ ToxOptionsPtr initToxOptions(const QByteArray& savedata, const ICoreSettings* s)
         qWarning() << "Core starting with IPv6 disabled. LAN discovery may not work properly.";
     }
 
-    ToxOptionsPtr toxOptions = ToxOptionsPtr(tox_options_new(NULL));
+    ToxOptionsPtr toxOptions = ToxOptionsPtr(tox_options_new(nullptr));
+    // register log first, to get messages as early as possible
+    tox_options_set_log_callback(toxOptions.get(), onLogMessage);
+
     tox_options_set_ipv6_enabled(toxOptions.get(), enableIPv6);
     tox_options_set_udp_enabled(toxOptions.get(), !forceTCP);
     tox_options_set_local_discovery_enabled(toxOptions.get(), enableLanDiscovery);
