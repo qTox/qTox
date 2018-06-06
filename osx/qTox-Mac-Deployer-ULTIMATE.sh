@@ -32,7 +32,7 @@ then
     MAIN_DIR="${TRAVIS_BUILD_DIR}"
     QTOX_DIR="${MAIN_DIR}"
 else
-    MAIN_DIR="/Users/${USER}"
+    MAIN_DIR="$(pwd)"
     QTOX_DIR="${MAIN_DIR}/qTox${SUBGIT}"
 fi
 QT_DIR="/usr/local/Cellar/qt5" # Folder name of QT install
