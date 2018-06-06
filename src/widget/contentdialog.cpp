@@ -488,6 +488,8 @@ void ContentDialog::updateTitleAndStatusIcon()
         return;
     }
 
+    username = Core::getInstance()->getUsername();
+
     setWindowTitle(activeChatroomWidget->getTitle() + QStringLiteral(" - ") + username);
 
     bool isGroupchat = activeChatroomWidget->getGroup() != nullptr;
