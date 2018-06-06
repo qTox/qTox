@@ -29,8 +29,8 @@
  */
 
 ToxCall::ToxCall(uint32_t CallId, bool VideoEnabled, CoreAV& av)
-    : videoEnabled{VideoEnabled}
-    , av{&av}
+    : av{&av}
+    , videoEnabled{VideoEnabled}
 {
     Audio& audio = Audio::getInstance();
     audio.subscribeInput();

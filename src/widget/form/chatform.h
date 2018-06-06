@@ -117,8 +117,8 @@ private:
         const ToxPk authorPk;
         const QDateTime msgDateTime;
         MessageMetadata(bool isSelf, bool needSending, bool isAction, qint64 id, ToxPk authorPk, QDateTime msgDateTime) :
-            needSending{needSending},
             isSelf{isSelf},
+            needSending{needSending},
             isAction{isAction},
             id{id},
             authorPk{authorPk},
