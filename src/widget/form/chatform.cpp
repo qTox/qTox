@@ -759,7 +759,6 @@ void ChatForm::handleLoadedMessages(QList<History::HistMessage> newHistMsgs, boo
     ToxPk prevIdBackup = previousId;
     previousId = ToxPk{};
     QList<ChatLine::Ptr> chatLines;
-    Core* core = Core::getInstance();
     QDate lastDate(1, 0, 0);
     for (const auto& histMessage : newHistMsgs) {
         MessageMetadata const metadata = getMessageMetadata(histMessage);
