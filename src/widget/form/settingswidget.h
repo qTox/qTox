@@ -56,6 +56,7 @@ private:
     void retranslateUi();
 
 private:
+    std::unique_ptr<QVBoxLayout> bodyLayout;
     std::unique_ptr<QTabWidget> settingsWidgets;
     std::array<std::unique_ptr<GenericForm>, 6> cfgForms;
     int currentIndex;

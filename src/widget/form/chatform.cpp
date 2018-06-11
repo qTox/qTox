@@ -219,6 +219,7 @@ ChatForm::~ChatForm()
     Translator::unregister(this);
     delete netcam;
     netcam = nullptr;
+    delete offlineEngine;
 }
 
 void ChatForm::setStatusMessage(const QString& newMessage)
