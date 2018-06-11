@@ -528,11 +528,13 @@ Widget::~Widget()
 
     delete icon;
     delete profileForm;
+    delete profileInfo;
     delete addFriendForm;
     delete groupInviteForm;
     delete filesForm;
     delete timer;
     delete contentLayout;
+    delete settingsWidget;
 
     FriendList::clear();
     GroupList::clear();
