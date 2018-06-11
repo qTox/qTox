@@ -26,10 +26,6 @@
 # - Doesn't build qTox updater, because it wasn't ported to cmake yet and
 #   because it requires static Qt, which means we'd need to build Qt twice, and
 #   building Qt takes really long time.
-#
-# - FFmpeg 3.3 doesn't cross-compile correctly, qTox build fails when linking
-#   against the 3.3 FFmpeg. They have removed `--enable-memalign-hack` switch,
-#   which might be what causes this. Further research needed.
 
 
 set -euo pipefail
@@ -434,8 +430,8 @@ fi
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
-FFMPEG_VERSION=3.2.10
-FFMPEG_HASH="3c1626220c7b68ff6be7312559f77f3c65ff6809daf645d4470ac0189926bdbc"
+FFMPEG_VERSION=4.0.1
+FFMPEG_HASH="605f5c01c60db35d3b617a79cabb2c7032412be243554602eeed1b628125c0ee"
 FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
@@ -457,6 +453,7 @@ then
   fi
 
   ./configure $CONFIGURE_OPTIONS \
+              --enable-gpl \
               --prefix="$FFMPEG_PREFIX_DIR" \
               --target-os="mingw32" \
               --cross-prefix="$ARCH-w64-mingw32-" \
@@ -464,11 +461,12 @@ then
               --extra-cflags="-static -O2 -g0" \
               --extra-ldflags="-lm -static" \
               --pkg-config-flags="--static" \
+              --disable-debug \
               --disable-shared \
               --disable-programs \
               --disable-protocols \
               --disable-doc \
-              --disable-sdl \
+              --disable-sdl2 \
               --disable-avfilter \
               --disable-avresample \
               --disable-filters \
@@ -496,14 +494,14 @@ then
               --disable-decoders \
               --disable-demuxers \
               --disable-parsers \
+              --disable-bsfs \
               --enable-demuxer=h264 \
               --enable-demuxer=mjpeg \
               --enable-parser=h264 \
               --enable-parser=mjpeg \
               --enable-decoder=h264 \
               --enable-decoder=mjpeg \
-              --enable-decoder=rawvideo \
-              --enable-memalign-hack
+              --enable-decoder=rawvideo
   make
   make install
   echo -n $FFMPEG_VERSION > $FFMPEG_PREFIX_DIR/done
