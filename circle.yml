@@ -7,6 +7,15 @@ machine:
     MAKEFLAGS: "j4"
     BUILD__: "x86_64"
     BTYPE__: "release"
+# --------------------------------------------------------------
+# ----- if you want to build with custom c-toxcore version -----
+# --------------------------------------------------------------
+#    TOXCORE_CUSTOM_VERSION: y
+#    TOXCORE_REPO: "https://github.com/my_user/c-toxcore/"
+#    TOXCORE_VERSION: "my_branch"
+# --------------------------------------------------------------
+# ------------------ use ONLY for TESTING !! -------------------
+# --------------------------------------------------------------
 dependencies:
   cache_directories:
     - "~/cache"
@@ -28,7 +37,15 @@ compile:
     - mkdir -p $CIRCLE_ARTIFACTS/"$BUILD__"/
     - cp -av /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BTYPE__".exe
     - cd /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/ ; zip -r $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BUILD__"_"$BTYPE__".zip *
-    - echo "Download Artifacts for this PR at https://circleci.com/api/v1/project/qTox/qTox/latest/artifacts/0/\$CIRCLE_ARTIFACTS/x86_64/qtox_x86_64_release.zip?filter=completed&branch=$CIRCLE_BRANCH"
+
+    - if [ "$CI_PULL_REQUESTS""x" == "x" ]; then
+      echo "Download Artifacts for this build at https://circleci.com/api/v1/project/qTox/qTox/latest/artifacts/0/\$CIRCLE_ARTIFACTS/x86_64/qtox_x86_64_release.zip?filter=completed&branch=$CIRCLE_BRANCH" ;
+      else
+      echo "Download Artifacts for this PR at https://circleci.com/api/v1/project/$CIRCLE_PROJECT_USERNAME/qTox/latest/artifacts/0/\$CIRCLE_ARTIFACTS/x86_64/qtox_x86_64_release.zip?filter=completed&branch=$CIRCLE_BRANCH" ;
+      fi
+# --------- mark if custom c-toxcore version was used ----------
+    - if [ "$TOXCORE_CUSTOM_VERSION""x" != "x" ]; then touch $CIRCLE_ARTIFACTS/"$BUILD__"/__CUSTOM_TOXCORE_VERSION__ ; fi
+# --------------------------------------------------------------
 test:
   override:
     - "true"
