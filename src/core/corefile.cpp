@@ -289,7 +289,6 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
 {
     Core* core = static_cast<Core*>(vCore);
     auto filename = ToxString(fname, fnameLen);
-    const auto cleanFileName = CoreFile::getCleanFileName(filename.getQString());
 
     if (kind == TOX_FILE_KIND_AVATAR) {
         const ToxPk friendPk = core->getFriendPublicKey(friendId);
@@ -323,15 +322,15 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
             }
         }
     } else {
+        const auto cleanFileName = CoreFile::getCleanFileName(filename.getQString());
+        if (cleanFileName != filename.getQString()) {
+            qDebug() << QStringLiteral("Cleaned filename");
+            filename = ToxString(cleanFileName);
+            emit core->fileNameChanged();
+        } else {
+            qDebug() << QStringLiteral("filename already clean");
+        }
         qDebug() << QString("Received file request %1:%2 kind %3").arg(friendId).arg(fileId).arg(kind);
-    }
-
-    if (cleanFileName != filename.getQString()) {
-        qDebug() << QStringLiteral("Cleaned filename from %1 to %2").arg(filename.getQString()).arg(cleanFileName);
-        filename = ToxString(cleanFileName);
-        emit core->fileNameChanged();
-    } else {
-        qDebug() << QStringLiteral("cleanFileName: filename already clean");
     }
 
     ToxFile file{fileId, friendId, filename.getBytes(), "", ToxFile::RECEIVING};
