@@ -68,6 +68,7 @@
         <file>ui/chatForm/screenshotButton.svg</file>
         <file>ui/chatForm/searchDownButton.svg</file>
         <file>ui/chatForm/searchHideButton.svg</file>
+        <file>ui/chatForm/searchSettingsButton.svg</file>
         <file>ui/chatForm/searchUpButton.svg</file>
         <file>ui/chatForm/sendButton.svg</file>
         <file>ui/chatForm/exitFullScreenButton.svg</file>

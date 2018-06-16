@@ -25,6 +25,7 @@
 
 class QPushButton;
 class LineEdit;
+class SearchSettingsForm;
 
 class SearchForm final : public QWidget
 {
@@ -43,18 +44,23 @@ private:
     // TODO: Merge with 'createButton' from chatformheader.cpp
     QPushButton* createButton(const QString& name, const QString& state);
 
+    QPushButton* settingsButton;
     QPushButton* upButton;
     QPushButton* downButton;
     QPushButton* hideButton;
     LineEdit* searchLine;
+    SearchSettingsForm* settings;
 
     QString searchPhrase;
+
+    bool isActiveSettings;
 
 private slots:
     void changedSearchPhrase(const QString& text);
     void clickedUp();
     void clickedDown();
     void clickedHide();
+    void clickedSearch();
 
 signals:
     void searchInBegin(const QString& phrase);

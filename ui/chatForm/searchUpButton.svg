@@ -14,7 +14,7 @@
    viewBox="0 0 7.0183304 4.1245209"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
    sodipodi:docname="searchUpButton.svg">
   <defs
      id="defs2" />
@@ -38,7 +38,7 @@
      inkscape:window-width="1920"
      inkscape:window-height="1015"
      inkscape:window-x="0"
-     inkscape:window-y="876"
+     inkscape:window-y="36"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

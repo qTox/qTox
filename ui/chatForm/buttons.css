@@ -69,6 +69,14 @@ QAbstractButton#callButton
 
 /* SearchLine */
 
+QAbstractButton#searchSettingsButton
+{
+    background-image: url(":/ui/chatForm/searchSettingsButton.svg");
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+}
+
 QAbstractButton#searchHideButton
 {
     background-image: url(":/ui/chatForm/searchHideButton.svg");
@@ -76,7 +84,6 @@ QAbstractButton#searchHideButton
     width: 35px;
     height: 35px;
 }
-
 
 QAbstractButton#searchUpButton
 {
@@ -92,6 +99,14 @@ QAbstractButton#searchDownButton
     border-radius: 5px;
     width: 35px;
     height: 35px;
+}
+
+QAbstractButton#choiceDateButton
+{
+    border-radius: 5px;
+    width: 55px;
+    height: 25px;
+    color: #fff
 }
 
 /* Common */

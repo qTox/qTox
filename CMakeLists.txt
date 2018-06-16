@@ -102,6 +102,7 @@ qt5_wrap_ui(${PROJECT_NAME}_FORMS
   src/widget/form/loadhistorydialog.ui
   src/widget/form/profileform.ui
   src/widget/form/removefrienddialog.ui
+  src/widget/form/searchsettingsform.ui
   src/widget/form/setpassworddialog.ui
   src/widget/form/settings/aboutsettings.ui
   src/widget/form/settings/advancedsettings.ui
@@ -368,6 +369,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/form/loadhistorydialog.h
   src/widget/form/profileform.cpp
   src/widget/form/profileform.h
+  src/widget/form/searchsettingsform.cpp
+  src/widget/form/searchsettingsform.h
   src/widget/form/setpassworddialog.cpp
   src/widget/form/setpassworddialog.h
   src/widget/form/settings/aboutform.cpp

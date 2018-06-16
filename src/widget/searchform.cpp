@@ -18,25 +18,37 @@
 */
 
 #include "searchform.h"
+#include "form/searchsettingsform.h"
 #include "src/widget/style.h"
+#include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QKeyEvent>
 
 SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
 {
-    QHBoxLayout *layout = new QHBoxLayout();
+    QVBoxLayout* layout = new QVBoxLayout();
+    QHBoxLayout* layoutNavigation = new QHBoxLayout();
     searchLine = new LineEdit();
+    settings = new SearchSettingsForm();
+    settings->setVisible(false);
 
+    isActiveSettings = false;
+
+    settingsButton = createButton("searchSettingsButton", "green");
     upButton = createButton("searchUpButton", "green");
     downButton = createButton("searchDownButton", "green");
     hideButton = createButton("searchHideButton", "red");
 
-    layout->setMargin(0);
-    layout->addWidget(searchLine);
-    layout->addWidget(upButton);
-    layout->addWidget(downButton);
-    layout->addWidget(hideButton);
+    layoutNavigation->setMargin(0);
+    layoutNavigation->addWidget(settingsButton);
+    layoutNavigation->addWidget(searchLine);
+    layoutNavigation->addWidget(upButton);
+    layoutNavigation->addWidget(downButton);
+    layoutNavigation->addWidget(hideButton);
+
+    layout->addLayout(layoutNavigation);
+    layout->addWidget(settings);
 
     setLayout(layout);
 
@@ -48,6 +60,7 @@ SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
     connect(upButton, &QPushButton::clicked, this, &SearchForm::clickedUp);
     connect(downButton, &QPushButton::clicked, this, &SearchForm::clickedDown);
     connect(hideButton, &QPushButton::clicked, this, &SearchForm::clickedHide);
+    connect(settingsButton, &QPushButton::clicked, this, &SearchForm::clickedSearch);
 }
 
 void SearchForm::removeSearchPhrase()
@@ -107,6 +120,20 @@ void SearchForm::clickedHide()
 {
     hide();
     emit visibleChanged();
+}
+
+void SearchForm::clickedSearch()
+{
+    isActiveSettings = !isActiveSettings;
+    settings->setVisible(isActiveSettings);
+
+    if (isActiveSettings) {
+        settingsButton->setProperty("state", "red");
+    } else {
+        settingsButton->setProperty("state", "green");
+    }
+    settingsButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
+    settingsButton->update();
 }
 
 LineEdit::LineEdit(QWidget* parent) : QLineEdit(parent)
