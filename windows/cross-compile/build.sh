@@ -26,10 +26,6 @@
 # - Doesn't build qTox updater, because it wasn't ported to cmake yet and
 #   because it requires static Qt, which means we'd need to build Qt twice, and
 #   building Qt takes really long time.
-#
-# - FFmpeg 3.3 doesn't cross-compile correctly, qTox build fails when linking
-#   against the 3.3 FFmpeg. They have removed `--enable-memalign-hack` switch,
-#   which might be what causes this. Further research needed.
 
 
 set -euo pipefail
@@ -257,10 +253,10 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=9
-QT_PATCH=5
+QT_PATCH=6
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.9/5.9.5/single/qt-everywhere-opensource-src-5.9.5.tar.xz.mirrorlist
-QT_HASH="a75b87f46240a374fde93fb60038d63e3b570457785268c766c639b5dc18ccf6"
+# hash from https://download.qt.io/archive/qt/5.9/5.9.6/single/qt-everywhere-opensource-src-5.9.6.tar.xz.mirrorlist
+QT_HASH="dacc995ae3a7cdad80eb9fdf6470299a8fac41f468a9bb941670ece523b62af4"
 QT_FILENAME="qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
@@ -434,8 +430,8 @@ fi
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
-FFMPEG_VERSION=3.2.10
-FFMPEG_HASH="3c1626220c7b68ff6be7312559f77f3c65ff6809daf645d4470ac0189926bdbc"
+FFMPEG_VERSION=4.0.1
+FFMPEG_HASH="605f5c01c60db35d3b617a79cabb2c7032412be243554602eeed1b628125c0ee"
 FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
@@ -457,6 +453,7 @@ then
   fi
 
   ./configure $CONFIGURE_OPTIONS \
+              --enable-gpl \
               --prefix="$FFMPEG_PREFIX_DIR" \
               --target-os="mingw32" \
               --cross-prefix="$ARCH-w64-mingw32-" \
@@ -464,11 +461,12 @@ then
               --extra-cflags="-static -O2 -g0" \
               --extra-ldflags="-lm -static" \
               --pkg-config-flags="--static" \
+              --disable-debug \
               --disable-shared \
               --disable-programs \
               --disable-protocols \
               --disable-doc \
-              --disable-sdl \
+              --disable-sdl2 \
               --disable-avfilter \
               --disable-avresample \
               --disable-filters \
@@ -496,14 +494,14 @@ then
               --disable-decoders \
               --disable-demuxers \
               --disable-parsers \
+              --disable-bsfs \
               --enable-demuxer=h264 \
               --enable-demuxer=mjpeg \
               --enable-parser=h264 \
               --enable-parser=mjpeg \
               --enable-decoder=h264 \
               --enable-decoder=mjpeg \
-              --enable-decoder=rawvideo \
-              --enable-memalign-hack
+              --enable-decoder=rawvideo
   make
   make install
   echo -n $FFMPEG_VERSION > $FFMPEG_PREFIX_DIR/done
@@ -706,8 +704,8 @@ fi
 # QREncode
 
 QRENCODE_PREFIX_DIR="$DEP_DIR/libqrencode"
-QRENCODE_VERSION=4.0.0
-QRENCODE_HASH="c90035e16921117d4086a7fdee65aab85be32beb4a376f6b664b8a425d327d0b"
+QRENCODE_VERSION=4.0.2
+QRENCODE_HASH="c9cb278d3b28dcc36b8d09e8cad51c0eca754eb004cb0247d4703cb4472b58b4"
 QRENCODE_FILENAME="qrencode-$QRENCODE_VERSION.tar.bz2"
 if [ ! -f "$QRENCODE_PREFIX_DIR/done" ]
 then
