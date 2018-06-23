@@ -22,13 +22,6 @@
     - [Slackware](#slackware-other-deps)
     - [Ubuntu >=15.04](#ubuntu-other-deps)
     - [Ubuntu >=16.04](#ubuntu-other-1604-deps)
-  - [toxcore dependencies](#toxcore-dependencies)
-    - [Arch](#arch-toxcore)
-    - [Debian](#debian-toxcore)
-    - [Fedora](#fedora-toxcore)
-    - [openSUSE](#opensuse-toxcore)
-    - [Slackware](#slackware-toxcore)
-    - [Ubuntu >=15.04](#ubuntu-toxcore)
   - [sqlcipher](#sqlcipher)
   - [Compile toxcore](#compile-toxcore)
   - [Compile qTox](#compile-qtox)
@@ -263,7 +256,7 @@ corresponding parts.
 #### Arch Linux
 
 ```bash
-sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
+sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg opus libvpx libsodium
 ```
 
 
@@ -275,25 +268,34 @@ sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 
 ```bash
 sudo apt-get install \
+    automake \
+    autotools-dev \
     build-essential \
+    check \
+    checkinstall \
     cmake \
     ffmpeg \
     libavcodec-dev \
+    libavdevice-dev
     libexif-dev \
     libgdk-pixbuf2.0-dev \
     libgtk2.0-dev \
     libopenal-dev \
+    libopus-dev \
     libqrencode-dev \
     libqt5opengl5-dev \
     libqt5svg5-dev \
+    libsodium-dev \
     libsqlcipher-dev \
+    libtool \
+    libvpx-dev \
     libxss-dev \
     pkg-config \
     qrencode \
     qt5-default \
     qttools5-dev \
     qttools5-dev-tools \
-    yasm
+    yasm \
 ```
 
 <a name="fedora-other-deps" />
@@ -310,20 +312,27 @@ have to compile it yourself, otherwise compiling qTox will fail.**
 sudo dnf groupinstall "Development Tools" "C Development Tools and Libraries"
 # (can also use sudo dnf install @"Development Tools")
 sudo dnf install \
+    autoconf \
+    automake \
+    check \
+    check-devel \
     ffmpeg-devel \
     gtk2-devel \
     libexif-devel \
-    libXScrnSaver-devel \
+    libsodium-devel \
     libtool \
+    libvpx-devel \
+    libXScrnSaver-devel \
     openal-soft-devel \
     openssl-devel \
+    opus-devel \
     qrencode-devel \
-    qt-creator \
-    qt-devel \
-    qt-doc \
     qt5-linguist \
     qt5-qtsvg \
     qt5-qtsvg-devel \
+    qt-creator \
+    qt-devel \
+    qt-doc \
     qtsingleapplication \
     sqlcipher \
     sqlcipher-devel
@@ -338,15 +347,18 @@ sudo dnf install \
 ```bash
 sudo zypper install \
     libexif-devel \
+    libffmpeg-devel \
+    libopus-devel \
     libQt5Concurrent-devel \
+    libqt5-linguist \
     libQt5Network-devel \
     libQt5OpenGL-devel \
-    libQt5Xml-devel \
-    libXScrnSaver-devel \
-    libffmpeg-devel \
-    libqt5-linguist \
     libqt5-qtbase-common-devel \
     libqt5-qtsvg-devel \
+    libQt5Xml-devel \
+    libsodium-devel \
+    libvpx-devel \
+    libXScrnSaver-devel \
     openal-soft-devel \
     patterns-openSUSE-devel_basis \
     qrencode-devel \
@@ -356,6 +368,9 @@ sudo zypper install \
 <a name="slackware-other-deps" />
 
 #### Slackware
+
+List of all the toxcore dependencies and their SlackBuilds can be found
+here: http://slackbuilds.org/repository/14.2/network/toxcore/
 
 List of all the qTox dependencies and their SlackBuilds can be found here:
 http://slackbuilds.org/repository/14.2/network/qTox/
@@ -367,7 +382,11 @@ http://slackbuilds.org/repository/14.2/network/qTox/
 
 ```bash
 sudo apt-get install \
+    automake \
+    autotools-dev \
     build-essential cmake \
+    check \
+    checkinstall \
     libavcodec-ffmpeg-dev \
     libavdevice-ffmpeg-dev \
     libavfilter-ffmpeg-dev \
@@ -377,16 +396,20 @@ sudo apt-get install \
     libglib2.0-dev \
     libgtk2.0-dev \
     libopenal-dev \
+    libopus-dev \
     libqrencode-dev \
     libqt5opengl5-dev \
     libqt5svg5-dev \
+    libsodium-dev \
     libsqlcipher-dev \
     libswresample-ffmpeg-dev \
     libswscale-ffmpeg-dev \
+    libtool \
+    libvpx-dev \
     libxss-dev \
     qrencode \
     qt5-default \
-    qttools5-dev-tools
+    qttools5-dev-tools 
 ```
 
 <a name="ubuntu-other-1604-deps" />
@@ -406,75 +429,21 @@ sudo apt-get install \
     libglib2.0-dev \
     libgtk2.0-dev \
     libopenal-dev \
+    libopus-dev \
     libqrencode-dev \
     libqt5opengl5-dev \
     libqt5svg5-dev \
+    libsodium-dev \
     libsqlcipher-dev \
     libswresample-dev \
     libswscale-dev \
+    libvpx-dev \
     libxss-dev \
     qrencode \
     qt5-default \
     qttools5-dev-tools \
     qttools5-dev
 ```
-
-### toxcore dependencies
-
-Install all of the toxcore dependencies.
-
-<a name="arch-toxcore" />
-
-#### Arch Linux
-
-```bash
-sudo pacman -S --needed opus libvpx libsodium
-```
-
-<a name="debian-toxcore" />
-
-#### Debian
-
-```bash
-sudo apt-get install libtool autotools-dev automake checkinstall check \
-libopus-dev libvpx-dev libsodium-dev libavdevice-dev
-```
-
-<a name="fedora-toxcore" />
-
-#### Fedora
-
-```bash
-sudo dnf install libtool autoconf automake check check-devel libsodium-devel \
-opus-devel libvpx-devel
-```
-
-<a name="opensuse-toxcore" />
-
-#### openSUSE
-
-```bash
-sudo zypper install libsodium-devel libvpx-devel libopus-devel \
-patterns-openSUSE-devel_basis
-```
-
-<a name="slackware-toxcore" />
-
-#### Slackware
-
-List of all the toxcore dependencies and their SlackBuilds can be found
-here: http://slackbuilds.org/repository/14.2/network/toxcore/
-
-
-<a name="ubuntu-toxcore" />
-
-#### Ubuntu >=15.04
-
-```bash
-sudo apt-get install libtool autotools-dev automake checkinstall check \
-libopus-dev libvpx-dev libsodium-dev
-```
-
 
 ### sqlcipher
 
@@ -493,6 +462,8 @@ cd ..
 ```
 
 ### Compile toxcore
+
+Normally you don't want to do that, `bootstrap.sh` will do it for you.
 
 Provided that you have all required dependencies installed, you can simply run:
 
