@@ -49,7 +49,7 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be
     // disabled in options.
     const bool enableIPv6 = s->getEnableIPv6();
-    const bool forceTCP = s->getForceTCP();
+    bool forceTCP = s->getForceTCP();
     // LAN requiring UDP is a toxcore limitation, ideally wouldn't be related
     const bool enableLanDiscovery = s->getEnableLanDiscovery() && !forceTCP;
     ICoreSettings::ProxyType proxyType = s->getProxyType();
@@ -76,7 +76,6 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
     tox_options_set_log_callback(*toxOptions, ToxLogger::onLogMessage);
 
     tox_options_set_ipv6_enabled(*toxOptions, enableIPv6);
-    tox_options_set_udp_enabled(*toxOptions, !forceTCP);
     tox_options_set_local_discovery_enabled(*toxOptions, enableLanDiscovery);
     tox_options_set_start_port(*toxOptions, 0);
     tox_options_set_end_port(*toxOptions, 0);
@@ -102,8 +101,15 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
 
             tox_options_set_proxy_host(*toxOptions, toxOptions->getProxyAddrData());
             tox_options_set_proxy_port(*toxOptions, proxyPort);
+
+            if (!forceTCP) {
+                qDebug() << "Proxy and UDP enabled, this is a security risk, forcing TCP only";
+                forceTCP = true;
+            }
         }
     }
+
+    tox_options_set_udp_enabled(*toxOptions, !forceTCP);
 
     return toxOptions;
 }
