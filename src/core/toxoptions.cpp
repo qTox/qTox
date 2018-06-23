@@ -49,7 +49,7 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be
     // disabled in options.
     const bool enableIPv6 = s->getEnableIPv6();
-    const bool forceTCP = s->getForceTCP();
+    bool forceTCP = s->getForceTCP();
     // LAN requiring UDP is a toxcore limitation, ideally wouldn't be related
     const bool enableLanDiscovery = s->getEnableLanDiscovery() && !forceTCP;
     ICoreSettings::ProxyType proxyType = s->getProxyType();
@@ -75,18 +75,14 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
     // register log first, to get messages as early as possible
     tox_options_set_log_callback(*toxOptions, ToxLogger::onLogMessage);
 
-    tox_options_set_ipv6_enabled(*toxOptions, enableIPv6);
-    tox_options_set_udp_enabled(*toxOptions, !forceTCP);
-    tox_options_set_local_discovery_enabled(*toxOptions, enableLanDiscovery);
-    tox_options_set_start_port(*toxOptions, 0);
-    tox_options_set_end_port(*toxOptions, 0);
+    // savedata
+    tox_options_set_savedata_type(*toxOptions, !savedata.isNull() ? TOX_SAVEDATA_TYPE_TOX_SAVE : TOX_SAVEDATA_TYPE_NONE);
+    tox_options_set_savedata_data(*toxOptions, reinterpret_cast<const uint8_t*>(savedata.data()), savedata.size());
 
     // No proxy by default
     tox_options_set_proxy_type(*toxOptions, TOX_PROXY_TYPE_NONE);
     tox_options_set_proxy_host(*toxOptions, nullptr);
     tox_options_set_proxy_port(*toxOptions, 0);
-    tox_options_set_savedata_type(*toxOptions, !savedata.isNull() ? TOX_SAVEDATA_TYPE_TOX_SAVE : TOX_SAVEDATA_TYPE_NONE);
-    tox_options_set_savedata_data(*toxOptions, reinterpret_cast<const uint8_t*>(savedata.data()), savedata.size());
 
     if (proxyType != ICoreSettings::ProxyType::ptNone) {
         if (proxyAddr.length() > MAX_PROXY_ADDRESS_LENGTH) {
@@ -102,8 +98,20 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
 
             tox_options_set_proxy_host(*toxOptions, toxOptions->getProxyAddrData());
             tox_options_set_proxy_port(*toxOptions, proxyPort);
+
+            if (!forceTCP) {
+                qDebug() << "Proxy and UDP enabled, this is a security risk, forcing TCP only";
+                forceTCP = true;
+            }
         }
     }
+
+    // network options
+    tox_options_set_udp_enabled(*toxOptions, !forceTCP);
+    tox_options_set_ipv6_enabled(*toxOptions, enableIPv6);
+    tox_options_set_local_discovery_enabled(*toxOptions, enableLanDiscovery);
+    tox_options_set_start_port(*toxOptions, 0);
+    tox_options_set_end_port(*toxOptions, 0);
 
     return toxOptions;
 }
