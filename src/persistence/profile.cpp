@@ -70,6 +70,12 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile, const
     QObject::connect(coreThread, &QThread::started, core, [=]() {
         core->start(toxsave);
 
+        // prevent segfault by checking if core started successfully
+        if(!core->isReady()) {
+            qWarning() << "Core not ready, aborting";
+            return;
+        }
+
         const ToxPk selfPk = core->getSelfPublicKey();
         QByteArray data = loadAvatarData(selfPk);
         if (data.isEmpty()) {
