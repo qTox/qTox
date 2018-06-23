@@ -123,36 +123,33 @@ namespace {
 class ToxOptionsWrapper
 {
 public:
-    ToxOptionsWrapper(Tox_Options *options, const QByteArray& proxyAddrData) {
-        this->options = options;
-        this->proxyAddrData = new QByteArray(proxyAddrData);
-    }
+    ToxOptionsWrapper(Tox_Options *options, const QByteArray& proxyAddrData)
+        : options(options)
+        , proxyAddrData(proxyAddrData)
+    {}
 
     ~ToxOptionsWrapper() {
         tox_options_free(options);
-        options = nullptr;
-        delete proxyAddrData;
-        proxyAddrData = nullptr;
     }
 
     ToxOptionsWrapper (ToxOptionsWrapper && from) {
-        this->options = from.options;
+        options = from.options;
+        proxyAddrData.swap(from.proxyAddrData);
         from.options = nullptr;
-        this->proxyAddrData = from.proxyAddrData;
-        from.proxyAddrData = nullptr;
+        from.proxyAddrData.clear();
     }
 
     operator Tox_Options* () {
         return options;
     }
 
-    const char* getProxyAddrData() {
-        return this->proxyAddrData->data();
+    const char* getProxyAddrData() const {
+        return proxyAddrData.constData();
     }
 
 private:
     Tox_Options *options = nullptr;
-    QByteArray *proxyAddrData = nullptr;
+    QByteArray proxyAddrData;
 };
 
 /**
