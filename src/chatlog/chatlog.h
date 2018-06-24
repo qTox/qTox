@@ -62,6 +62,7 @@ public:
     ChatLine::Ptr getTypingNotification() const;
     QVector<ChatLine::Ptr> getLines();
     ChatLine::Ptr getLatestLine() const;
+    ChatLine::Ptr getFirstLine() const;
     ChatLineContent* getContentFromGlobalPos(QPoint pos) const;
     const uint repNameAfter = 5 * 60;
 

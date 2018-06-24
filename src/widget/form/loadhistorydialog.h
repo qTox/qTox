@@ -34,6 +34,7 @@ class LoadHistoryDialog : public QDialog
 
 public:
     explicit LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent = 0);
+    explicit LoadHistoryDialog(QWidget* parent = 0);
     ~LoadHistoryDialog();
 
     QDateTime getFromDate();

@@ -22,6 +22,7 @@
 
 #include <QWidget>
 #include <QLineEdit>
+#include "searchtypes.h"
 
 class QPushButton;
 class LineEdit;
@@ -34,6 +35,7 @@ public:
     explicit SearchForm(QWidget* parent = nullptr);
     void removeSearchPhrase();
     QString getSearchPhrase() const;
+    ParameterSearch getParametrSearch();
     void setFocusEditor();
     void insertEditor(const QString &text);
 
@@ -43,6 +45,7 @@ protected:
 private:
     // TODO: Merge with 'createButton' from chatformheader.cpp
     QPushButton* createButton(const QString& name, const QString& state);
+    ParameterSearch getAndCheckParametrSearch();
 
     QPushButton* settingsButton;
     QPushButton* upButton;
@@ -52,8 +55,10 @@ private:
     SearchSettingsForm* settings;
 
     QString searchPhrase;
+    ParameterSearch parameter;
 
     bool isActiveSettings;
+    bool isChangedPhrase;
 
 private slots:
     void changedSearchPhrase(const QString& text);
@@ -63,9 +68,9 @@ private slots:
     void clickedSearch();
 
 signals:
-    void searchInBegin(const QString& phrase);
-    void searchUp(const QString& phrase);
-    void searchDown(const QString& phrase);
+    void searchInBegin(const QString& phrase, const ParameterSearch& parameter);
+    void searchUp(const QString& phrase, const ParameterSearch& parameter);
+    void searchDown(const QString& phrase, const ParameterSearch& parameter);
     void visibleChanged();
 };
 

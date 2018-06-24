@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>473</width>
-    <height>78</height>
+    <height>83</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,16 +20,7 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item row="0" column="0">
@@ -107,16 +98,37 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="wordsOnlyCheckBox">
+      <widget class="QRadioButton" name="wordsOnlyRadioButton">
        <property name="text">
         <string>Whole words only</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+       <property name="autoRepeat">
+        <bool>false</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="regularCheckBox">
+      <widget class="QRadioButton" name="regularRadioButton">
        <property name="text">
         <string>Use regular expressions</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoRepeat">
+        <bool>false</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

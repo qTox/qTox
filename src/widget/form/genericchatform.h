@@ -22,6 +22,7 @@
 
 #include "src/chatlog/chatmessage.h"
 #include "src/core/toxpk.h"
+#include "src/widget/searchtypes.h"
 
 #include <QMenu>
 #include <QWidget>
@@ -75,6 +76,7 @@ public:
     void addAlertMessage(const ToxPk& author, const QString& message, const QDateTime& datetime);
     static QString resolveToxPk(const ToxPk& pk);
     QDate getLatestDate() const;
+    QDate getFirstDate() const;
 
 signals:
     void sendMessage(uint32_t, QString);
@@ -107,14 +109,15 @@ protected slots:
     void searchFormShow();
     void onSearchTriggered();
 
-    void searchInBegin(const QString& phrase);
-    virtual void onSearchUp(const QString& phrase) = 0;
-    virtual void onSearchDown(const QString& phrase) = 0;
+    virtual void searchInBegin(const QString& phrase, const ParameterSearch& parameter) = 0;
+    virtual void onSearchUp(const QString& phrase, const ParameterSearch& parameter) = 0;
+    virtual void onSearchDown(const QString& phrase, const ParameterSearch& parameter) = 0;
     void onContinueSearch();
 
 private:
     void retranslateUi();
     void addSystemDateMessage();
+    QDate getDate(const ChatLine::Ptr& chatLine) const;
 
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
@@ -133,8 +136,8 @@ protected:
     virtual void resizeEvent(QResizeEvent* event) final override;
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
     void disableSearchText();
-    bool searchInText(const QString& phrase, bool searchUp);
-    int indexForSearchInLine(const QString& txt, const QString& phrase, bool searchUp);
+    bool searchInText(const QString& phrase, const ParameterSearch& parameter, bool searchUp);
+    std::pair<int, int> indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, bool searchUp);
 
 protected:
     bool audioInputFlag;

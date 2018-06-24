@@ -37,6 +37,13 @@ LoadHistoryDialog::LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent)
             &LoadHistoryDialog::highlightDates);
 }
 
+LoadHistoryDialog::LoadHistoryDialog(QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui::LoadHistoryDialog)
+{
+    ui->setupUi(this);
+}
+
 LoadHistoryDialog::~LoadHistoryDialog()
 {
     delete ui;

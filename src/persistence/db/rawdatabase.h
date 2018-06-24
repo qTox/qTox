@@ -15,6 +15,8 @@
 
 struct sqlite3;
 struct sqlite3_stmt;
+struct sqlite3_context;
+struct sqlite3_value;
 
 class RawDatabase : QObject
 {
@@ -85,6 +87,9 @@ protected:
     static QString deriveKey(const QString& password, const QByteArray& salt);
     static QString deriveKey(const QString& password);
     static QVariant extractData(sqlite3_stmt* stmt, int col);
+    static void regexpInsensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv);
+    static void regexpSensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv);
+    static void regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const Qt::CaseSensitivity cs);
 
 private:
     struct Transaction

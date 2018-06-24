@@ -29,6 +29,7 @@
 
 #include "src/core/toxpk.h"
 #include "src/persistence/db/rawdatabase.h"
+#include "src/widget/searchtypes.h"
 
 class Profile;
 class HistoryKeeper;
@@ -82,7 +83,8 @@ public:
                                       const QDateTime& to);
     QList<HistMessage> getChatHistoryDefaultNum(const QString& friendPk);
     QList<DateMessages> getChatHistoryCounts(const ToxPk& friendPk, const QDate& from, const QDate& to);
-    QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase);
+    QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase, const ParameterSearch &parameter);
+    QDateTime getStartDateChatHistory(const QString& friendPk);
 
     void markAsSent(qint64 messageId);
 

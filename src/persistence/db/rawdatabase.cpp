@@ -171,6 +171,18 @@ bool RawDatabase::open(const QString& path, const QString& hexKey)
         return false;
     }
 
+    if (sqlite3_create_function(sqlite, "regexp", 2, SQLITE_UTF8, NULL, &RawDatabase::regexpInsensitive, NULL, NULL)) {
+        qWarning() << "Failed to create function regexp";
+        close();
+        return false;
+    }
+
+    if (sqlite3_create_function(sqlite, "regexpsensitive", 2, SQLITE_UTF8, NULL, &RawDatabase::regexpSensitive, NULL, NULL)) {
+        qWarning() << "Failed to create function regexpsensitive";
+        close();
+        return false;
+    }
+
     if (!hexKey.isEmpty()) {
         if (!execNow("PRAGMA key = \"x'" + hexKey + "'\"")) {
             qWarning() << "Failed to set encryption key";
@@ -703,5 +715,33 @@ QVariant RawDatabase::extractData(sqlite3_stmt* stmt, int col)
         const char* data = reinterpret_cast<const char*>(sqlite3_column_blob(stmt, col));
         int len = sqlite3_column_bytes(stmt, col);
         return QByteArray::fromRawData(data, len);
+    }
+}
+
+void RawDatabase::regexpInsensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv)
+{
+    regexp(ctx, argc, argv, Qt::CaseInsensitive);
+}
+
+void RawDatabase::regexpSensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv)
+{
+    regexp(ctx, argc, argv, Qt::CaseSensitive);
+}
+
+void RawDatabase::regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const Qt::CaseSensitivity cs)
+{
+    QRegExp regex;
+    QString str1((const char*)sqlite3_value_text(argv[0]));
+    QString str2((const char*)sqlite3_value_text(argv[1]));
+
+    regex.setPattern(str1);
+    regex.setCaseSensitivity(cs);
+
+    bool b = str2.contains(regex);
+
+    if (b) {
+        sqlite3_result_int(ctx, 1);
+    } else {
+        sqlite3_result_int(ctx, 0);
     }
 }

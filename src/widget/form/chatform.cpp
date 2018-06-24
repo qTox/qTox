@@ -497,7 +497,38 @@ void ChatForm::onVolMuteToggle()
     updateMuteVolButton();
 }
 
-void ChatForm::onSearchUp(const QString& phrase)
+void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& parameter)
+{
+    disableSearchText();
+
+    searchPoint = QPoint(1, -1);
+
+    bool b = (parameter.period == PeriodSearch::WithTheFirst);
+    bool b1 = (parameter.period == PeriodSearch::AfterDate);
+    if (b || b1) {
+        if (b || (b1 && parameter.date < getFirstDate())) {
+            QString pk = f->getPublicKey().toString();
+            if ((b || parameter.date >= history->getStartDateChatHistory(pk).date()) &&
+                    loadHistory(phrase, parameter)) {
+
+                return;
+            }
+        }
+
+        onSearchDown(phrase, parameter);
+    } else {
+        if (parameter.period == PeriodSearch::BeforeDate && parameter.date < getFirstDate()) {
+            QString pk = f->getPublicKey().toString();
+            if (parameter.date >= history->getStartDateChatHistory(pk).date() && loadHistory(phrase, parameter)) {
+                return;
+            }
+        }
+
+        onSearchUp(phrase, parameter);
+    }
+}
+
+void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& parameter)
 {
     if (phrase.isEmpty()) {
         disableSearchText();
@@ -508,25 +539,26 @@ void ChatForm::onSearchUp(const QString& phrase)
 
     int startLine = numLines - searchPoint.x();
 
-    if (startLine == 0) {
-        QString pk = f->getPublicKey().toString();
-        QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase);
+    if (startLine == 0 && loadHistory(phrase, parameter)) {
+//        QString pk = f->getPublicKey().toString();
+//        QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
-        if (!newBaseDate.isValid()) {
-            return;
-        }
+//        if (!newBaseDate.isValid()) {
+//            return;
+//        }
 
-        searchAfterLoadHistory = true;
-        loadHistoryByDateRange(newBaseDate);
+//        searchAfterLoadHistory = true;
+//        loadHistoryByDateRange(newBaseDate);
 
+//        return;
         return;
     }
 
-    bool isSearch = searchInText(phrase, true);
+    bool isSearch = searchInText(phrase, parameter, true);
 
     if (!isSearch) {
         QString pk = f->getPublicKey().toString();
-        QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase);
+        QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
         if (!newBaseDate.isValid()) {
             return;
@@ -538,9 +570,9 @@ void ChatForm::onSearchUp(const QString& phrase)
     }
 }
 
-void ChatForm::onSearchDown(const QString& phrase)
+void ChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
 {
-    searchInText(phrase, false);
+    searchInText(phrase, parameter, false);
 }
 
 void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)
@@ -1043,6 +1075,21 @@ void ChatForm::SendMessageStr(QString msg)
         msgEdit->setLastMessage(msg);
         Widget::getInstance()->updateFriendActivity(f);
     }
+}
+
+bool ChatForm::loadHistory(const QString& phrase, const ParameterSearch& parameter)
+{
+    QString pk = f->getPublicKey().toString();
+    QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+
+    if (newBaseDate.isValid() && getFirstDate().isValid() && newBaseDate.date() < getFirstDate()) {
+        searchAfterLoadHistory = true;
+        loadHistoryByDateRange(newBaseDate);
+
+        return true;
+    }
+
+    return false;
 }
 
 void ChatForm::retranslateUi()

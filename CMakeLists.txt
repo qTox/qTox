@@ -351,6 +351,7 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/flowlayout.h
   src/widget/searchform.cpp
   src/widget/searchform.h
+  src/widget/searchtypes.h
   src/widget/form/addfriendform.cpp
   src/widget/form/addfriendform.h
   src/widget/form/chatform.cpp

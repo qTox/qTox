@@ -315,7 +315,7 @@ QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk
     return counts;
 }
 
-QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase)
+QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase, const ParameterSearch& parameter)
 {
     QList<QDateTime> counts;
     auto rowCallback = [&counts](const QVector<QVariant>& row) {
@@ -324,18 +324,85 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
 
     phrase.replace("'", "''");
 
+    QString message;
+
+    switch (parameter.filter) {
+    case FilterSearch::Register:
+        message = QString("message LIKE '%%1%'").arg(phrase);
+        break;
+    case FilterSearch::WordsOnly:
+        message = QString("message REGEXP '\\b%1\\b'").arg(phrase.toLower());
+        break;
+    case FilterSearch::RegisterAndWordsOnly:
+        message = QString("REGEXPSENSITIVE(message, '\\b%1\\b')").arg(phrase);
+        break;
+    case FilterSearch::Regular:
+        message = QString("message REGEXP '%1'").arg(phrase);
+        break;
+    case FilterSearch::RegisterAndRegular:
+        message = QString("REGEXPSENSITIVE(message '%1')").arg(phrase);
+        break;
+    default:
+        message = QString("LOWER(message) LIKE '%%1%'").arg(phrase.toLower());
+        break;
+    }
+
+    QDateTime date = from;
+    if (parameter.period != PeriodSearch::None) {
+        date = QDateTime(parameter.date);
+    }
+
+    QString period;
+    switch (parameter.period) {
+    case PeriodSearch::WithTheFirst:
+        period = QString("ORDER BY timestamp ASC LIMIT 1;");
+        break;
+    case PeriodSearch::AfterDate:
+        period = QString("AND timestamp > '%1' ORDER BY timestamp ASC LIMIT 1;").arg(date.toMSecsSinceEpoch());
+        break;
+    case PeriodSearch::BeforeDate:
+        period = QString("AND timestamp < '%1' ORDER BY timestamp DESC LIMIT 1;").arg(date.toMSecsSinceEpoch());
+        break;
+    default:
+        period = QString("AND timestamp < '%1' ORDER BY timestamp DESC LIMIT 1;").arg(date.toMSecsSinceEpoch());
+        break;
+    }
+
     QString queryText =
         QString("SELECT timestamp "
                 "FROM history "
                 "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                 "JOIN peers chat ON chat_id = chat.id "
                 "WHERE chat.public_key='%1' "
-                "AND message LIKE '%%2%' "
-                "AND timestamp < '%3' ORDER BY timestamp DESC LIMIT 1;")
+                "AND %2 "
+                "%3")
             .arg(friendPk)
-            .arg(phrase)
-            .arg(from.toMSecsSinceEpoch());
+            .arg(message)
+            .arg(period);
 
+
+    db->execNow({queryText, rowCallback});
+    if (!counts.isEmpty()) {
+        return counts[0];
+    }
+
+    return QDateTime();
+}
+
+QDateTime History::getStartDateChatHistory(const QString &friendPk)
+{
+    QList<QDateTime> counts;
+    auto rowCallback = [&counts](const QVector<QVariant>& row) {
+        counts.append(QDateTime::fromMSecsSinceEpoch(row[0].toLongLong()));
+    };
+
+    QString queryText =
+            QString("SELECT timestamp "
+                    "FROM history "
+                    "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+                    "JOIN peers chat ON chat_id = chat.id "
+                    "WHERE chat.public_key='%1' ORDER BY timestamp ASC LIMIT 1;")
+            .arg(friendPk);
 
     db->execNow({queryText, rowCallback});
 

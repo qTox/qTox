@@ -34,6 +34,7 @@ SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
     settings->setVisible(false);
 
     isActiveSettings = false;
+    isChangedPhrase = false;
 
     settingsButton = createButton("searchSettingsButton", "green");
     upButton = createButton("searchUpButton", "green");
@@ -73,6 +74,11 @@ QString SearchForm::getSearchPhrase() const
     return searchPhrase;
 }
 
+ParameterSearch SearchForm::getParametrSearch()
+{
+    return parameter;
+}
+
 void SearchForm::setFocusEditor()
 {
     searchLine->setFocus();
@@ -100,20 +106,46 @@ QPushButton *SearchForm::createButton(const QString& name, const QString& state)
     return btn;
 }
 
+ParameterSearch SearchForm::getAndCheckParametrSearch()
+{
+    auto sendParam = settings->getParameterSearch();
+    if (!isChangedPhrase && !sendParam.isUpdate) {
+        sendParam.period = PeriodSearch::None;
+    }
+
+    isChangedPhrase = false;
+    parameter = sendParam;
+
+    return sendParam;
+}
+
 void SearchForm::changedSearchPhrase(const QString& text)
 {
     searchPhrase = text;
-    emit searchInBegin(searchPhrase);
+    isChangedPhrase = true;
+    if (!isActiveSettings) {
+        emit searchInBegin(searchPhrase, getAndCheckParametrSearch());
+    }
 }
 
 void SearchForm::clickedUp()
 {
-    emit searchUp(searchPhrase);
+    auto param = getAndCheckParametrSearch();
+    if (param.period == PeriodSearch::None) {
+        emit searchUp(searchPhrase, param);
+    } else {
+        emit searchInBegin(searchPhrase, param);
+    }
 }
 
 void SearchForm::clickedDown()
 {
-    emit searchDown(searchPhrase);
+    auto param = getAndCheckParametrSearch();
+    if (param.period == PeriodSearch::None) {
+        emit searchDown(searchPhrase, param);
+    } else {
+        emit searchInBegin(searchPhrase, param);
+    }
 }
 
 void SearchForm::clickedHide()

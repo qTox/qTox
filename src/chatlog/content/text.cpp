@@ -58,7 +58,7 @@ void Text::setText(const QString& txt)
     dirty = true;
 }
 
-void Text::selectText(const QString &txt, const int index)
+void Text::selectText(const QString& txt, const std::pair<int, int>& point)
 {
     regenerate();
 
@@ -66,21 +66,22 @@ void Text::selectText(const QString &txt, const int index)
         return;
     }
 
-    auto cursor = doc->find(txt, index);
+    auto cursor = doc->find(txt, point.first);
 
-    if (!cursor.isNull()) {
-        cursor.beginEditBlock();
-        cursor.setPosition(index);
-        cursor.setPosition(index + txt.size(), QTextCursor::KeepAnchor);
-        cursor.endEditBlock();
+    selectText(cursor, point);
+}
 
-        QTextCharFormat format;
-        format.setBackground(QBrush(QColor("#ff7626")));
-        cursor.mergeCharFormat(format);
+void Text::selectText(const QRegExp &exp, const std::pair<int, int>& point)
+{
+    regenerate();
 
-        regenerate();
-        update();
+    if (!doc) {
+        return;
     }
+
+    auto cursor = doc->find(exp, point.first);
+
+    selectText(cursor, point);
 }
 
 void Text::deselectText()
@@ -438,4 +439,21 @@ QString Text::extractImgTooltip(int pos) const
     }
 
     return QString();
+}
+
+void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
+{
+    if (!cursor.isNull()) {
+        cursor.beginEditBlock();
+        cursor.setPosition(point.first);
+        cursor.setPosition(point.first + point.second, QTextCursor::KeepAnchor);
+        cursor.endEditBlock();
+
+        QTextCharFormat format;
+        format.setBackground(QBrush(QColor("#ff7626")));
+        cursor.mergeCharFormat(format);
+
+        regenerate();
+        update();
+    }
 }

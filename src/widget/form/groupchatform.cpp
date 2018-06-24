@@ -199,14 +199,27 @@ void GroupChatForm::onTitleChanged(uint32_t groupId, const QString& author, cons
     addSystemInfoMessage(message, ChatMessage::INFO, curTime);
 }
 
-void GroupChatForm::onSearchUp(const QString& phrase)
+void GroupChatForm::searchInBegin(const QString& phrase, const ParameterSearch& parameter)
 {
-    searchInText(phrase, true);
+    disableSearchText();
+
+    searchPoint = QPoint(1, -1);
+
+    if (parameter.period == PeriodSearch::WithTheFirst || parameter.period == PeriodSearch::AfterDate) {
+        onSearchDown(phrase, parameter);
+    } else {
+        onSearchUp(phrase, parameter);
+    }
 }
 
-void GroupChatForm::onSearchDown(const QString& phrase)
+void GroupChatForm::onSearchUp(const QString& phrase, const ParameterSearch& parameter)
 {
-    searchInText(phrase, false);
+    searchInText(phrase, parameter, true);
+}
+
+void GroupChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
+{
+    searchInText(phrase, parameter, false);
 }
 
 void GroupChatForm::onScreenshotClicked()
