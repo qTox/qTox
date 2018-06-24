@@ -40,16 +40,21 @@ SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
     upButton = createButton("searchUpButton", "green");
     downButton = createButton("searchDownButton", "green");
     hideButton = createButton("searchHideButton", "red");
+    startButton = createButton("startButton", "green");
+    startButton->setText(tr("Start"));
 
     layoutNavigation->setMargin(0);
     layoutNavigation->addWidget(settingsButton);
     layoutNavigation->addWidget(searchLine);
+    layoutNavigation->addWidget(startButton);
     layoutNavigation->addWidget(upButton);
     layoutNavigation->addWidget(downButton);
     layoutNavigation->addWidget(hideButton);
 
     layout->addLayout(layoutNavigation);
     layout->addWidget(settings);
+
+    startButton->setHidden(true);
 
     setLayout(layout);
 
@@ -61,7 +66,10 @@ SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
     connect(upButton, &QPushButton::clicked, this, &SearchForm::clickedUp);
     connect(downButton, &QPushButton::clicked, this, &SearchForm::clickedDown);
     connect(hideButton, &QPushButton::clicked, this, &SearchForm::clickedHide);
+    connect(startButton, &QPushButton::clicked, this, &SearchForm::clickedStart);
     connect(settingsButton, &QPushButton::clicked, this, &SearchForm::clickedSearch);
+
+    connect(settings, &SearchSettingsForm::updateSettings, this, &SearchForm::changedButtons);
 }
 
 void SearchForm::removeSearchPhrase()
@@ -108,43 +116,60 @@ QPushButton *SearchForm::createButton(const QString& name, const QString& state)
 
 ParameterSearch SearchForm::getAndCheckParametrSearch()
 {
-    auto sendParam = settings->getParameterSearch();
-    if (!isChangedPhrase && !sendParam.isUpdate) {
-        sendParam.period = PeriodSearch::None;
+    if (isActiveSettings) {
+        auto sendParam = settings->getParameterSearch();
+        if (!isChangedPhrase && !sendParam.isUpdate) {
+            sendParam.period = PeriodSearch::None;
+        }
+
+        isChangedPhrase = false;
+        parameter = sendParam;
+
+        return sendParam;
     }
 
-    isChangedPhrase = false;
-    parameter = sendParam;
-
-    return sendParam;
+    return ParameterSearch();
 }
 
 void SearchForm::changedSearchPhrase(const QString& text)
 {
+    QString l = text.right(1);
+
+    if (searchPhrase == text) {
+        return;
+    }
+
+    if (!l.isEmpty() && l != " " && l[0].isSpace()) {
+        searchLine->setText(searchPhrase);
+        return;
+    }
+
     searchPhrase = text;
     isChangedPhrase = true;
-    if (!isActiveSettings) {
+    if (isActiveSettings) {
+        if (startButton->isHidden()) {
+            changedButtons(true);
+        }
+    } else {
         emit searchInBegin(searchPhrase, getAndCheckParametrSearch());
     }
 }
 
 void SearchForm::clickedUp()
 {
-    auto param = getAndCheckParametrSearch();
-    if (param.period == PeriodSearch::None) {
-        emit searchUp(searchPhrase, param);
+    if (startButton->isHidden()) {
+        emit searchUp(searchPhrase, getAndCheckParametrSearch());
     } else {
-        emit searchInBegin(searchPhrase, param);
+        clickedStart();
     }
 }
 
 void SearchForm::clickedDown()
 {
-    auto param = getAndCheckParametrSearch();
-    if (param.period == PeriodSearch::None) {
-        emit searchDown(searchPhrase, param);
+    if (startButton->isHidden()) {
+        emit searchDown(searchPhrase, getAndCheckParametrSearch());
     } else {
-        emit searchInBegin(searchPhrase, param);
+        clickedStart();
     }
 }
 
@@ -152,6 +177,12 @@ void SearchForm::clickedHide()
 {
     hide();
     emit visibleChanged();
+}
+
+void SearchForm::clickedStart()
+{
+    changedButtons(false);
+    emit searchInBegin(searchPhrase, getAndCheckParametrSearch());
 }
 
 void SearchForm::clickedSearch()
@@ -163,9 +194,23 @@ void SearchForm::clickedSearch()
         settingsButton->setProperty("state", "red");
     } else {
         settingsButton->setProperty("state", "green");
+        changedButtons(false);
     }
     settingsButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
     settingsButton->update();
+}
+
+void SearchForm::changedButtons(const bool isUpdate)
+{
+    if (isUpdate) {
+        startButton->setHidden(false);
+        upButton->setHidden(true);
+        downButton->setHidden(true);
+    } else {
+        startButton->setHidden(true);
+        upButton->setHidden(false);
+        downButton->setHidden(false);
+    }
 }
 
 LineEdit::LineEdit(QWidget* parent) : QLineEdit(parent)

@@ -80,9 +80,14 @@ void SearchSettingsForm::updateStartDateLabel()
     ui->startDateLabel->setText(startDate.toString("dd.MM.yyyy"));
 }
 
+void SearchSettingsForm::setUpdate(const bool isUpdate)
+{
+    this->isUpdate = isUpdate;
+    emit updateSettings(isUpdate);
+}
+
 void SearchSettingsForm::onStartSearchSelected(const int index)
 {
-    isUpdate = true;
     if (index > 1) {
         ui->choiceDateButton->setEnabled(true);
         ui->startDateLabel->setEnabled(true);
@@ -106,32 +111,35 @@ void SearchSettingsForm::onStartSearchSelected(const int index)
 
         ui->startDateLabel->setStyleSheet("QLabel{color: #ddd;}");
     }
+
+    setUpdate(true);
 }
 
 void SearchSettingsForm::onRegisterClicked(const bool checked)
 {
-    isUpdate = true;
+    setUpdate(true);
 }
 
 void SearchSettingsForm::onWordsOnlyClicked(const bool checked)
 {
-    isUpdate = true;
     if (checked) {
         ui->regularRadioButton->setChecked(false);
     }
+
+    setUpdate(true);
 }
 
 void SearchSettingsForm::onRegularClicked(const bool checked)
 {
-    isUpdate = true;
     if (checked) {
         ui->wordsOnlyRadioButton->setChecked(false);
     }
+
+    setUpdate(true);
 }
 
 void SearchSettingsForm::onChoiceDate()
 {
-    isUpdate = true;
     LoadHistoryDialog dlg;
     dlg.setTitle(tr("Select Date Dialog"));
     dlg.setInfoLabel(tr("Select a date"));
@@ -139,4 +147,6 @@ void SearchSettingsForm::onChoiceDate()
         startDate = dlg.getFromDate().date();
         updateStartDateLabel();
     }
+
+    setUpdate(true);
 }

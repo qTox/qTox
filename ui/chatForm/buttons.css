@@ -109,6 +109,14 @@ QAbstractButton#choiceDateButton
     color: #fff
 }
 
+QAbstractButton#startButton
+{
+    border-radius: 5px;
+    width: 60px;
+    height: 35px;
+    color: #fff
+}
+
 /* Common */
 
 QAbstractButton

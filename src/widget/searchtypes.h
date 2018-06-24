@@ -26,6 +26,12 @@ struct ParameterSearch {
     QDate date;
     bool isUpdate;
 
+    ParameterSearch() {
+        filter = FilterSearch::None;
+        period = PeriodSearch::None;
+        isUpdate = false;
+    }
+
     bool operator ==(const ParameterSearch& other) {
         if (this->filter != other.filter) {
             return false;

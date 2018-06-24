@@ -51,6 +51,7 @@ private:
     QPushButton* upButton;
     QPushButton* downButton;
     QPushButton* hideButton;
+    QPushButton* startButton;
     LineEdit* searchLine;
     SearchSettingsForm* settings;
 
@@ -65,7 +66,9 @@ private slots:
     void clickedUp();
     void clickedDown();
     void clickedHide();
+    void clickedStart();
     void clickedSearch();
+    void changedButtons(const bool isUpdate);
 
 signals:
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter);

@@ -24,6 +24,7 @@ private:
     bool isUpdate;
 
     void updateStartDateLabel();
+    void setUpdate(const bool isUpdate);
 
 private slots:
     void onStartSearchSelected(const int index);
@@ -31,6 +32,9 @@ private slots:
     void onWordsOnlyClicked(const bool checked);
     void onRegularClicked(const bool checked);
     void onChoiceDate();
+
+signals:
+    void updateSettings(const bool isUpdate);
 };
 
 #endif // SEARCHSETTINGSFORM_H
