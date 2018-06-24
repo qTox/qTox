@@ -61,6 +61,16 @@ QDateTime LoadHistoryDialog::getFromDate()
     return res;
 }
 
+void LoadHistoryDialog::setTitle(const QString& title)
+{
+    setWindowTitle(title);
+}
+
+void LoadHistoryDialog::setInfoLabel(const QString& info)
+{
+    ui->fromLabel->setText(info);
+}
+
 void LoadHistoryDialog::highlightDates(int year, int month)
 {
     History* history = Nexus::getProfile()->getHistory();

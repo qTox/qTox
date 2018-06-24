@@ -38,6 +38,8 @@ public:
     ~LoadHistoryDialog();
 
     QDateTime getFromDate();
+    void setTitle(const QString& title);
+    void setInfoLabel(const QString& info);
 
 public slots:
     void highlightDates(int year, int month);

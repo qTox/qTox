@@ -133,6 +133,8 @@ void SearchSettingsForm::onChoiceDate()
 {
     isUpdate = true;
     LoadHistoryDialog dlg;
+    dlg.setTitle(tr("Select Date Dialog"));
+    dlg.setInfoLabel(tr("Select a date"));
     if (dlg.exec()) {
         startDate = dlg.getFromDate().date();
         updateStartDateLabel();
