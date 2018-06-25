@@ -3,8 +3,8 @@
 set -eu -o pipefail
 
 # additional flags for apt-get, used for CI
-readonly APT_FLAGS=$1
-readonly WITHOUT_SQLCIPHER=$2
+readonly APT_FLAGS='$1'
+readonly WITHOUT_SQLCIPHER='$2'
 
 apt_install() {
     local apt_packages=(
