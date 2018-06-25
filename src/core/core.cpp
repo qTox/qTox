@@ -23,6 +23,7 @@
 #include "src/core/coreav.h"
 #include "src/core/icoresettings.h"
 #include "src/core/toxstring.h"
+#include "src/core/toxlogger.h"
 #include "src/model/groupinvite.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
@@ -153,56 +154,6 @@ private:
 };
 
 /**
- * @brief Map TOX_LOG_LEVEL to a string
- * @param level log level
- * @return Descriptive string for the log level
- */
-static QString getToxLogLevel(TOX_LOG_LEVEL level) {
-    switch (level) {
-    case TOX_LOG_LEVEL_TRACE:
-        return QLatin1Literal("TRACE");
-    case TOX_LOG_LEVEL_DEBUG:
-        return QLatin1Literal("DEBUG");
-    case TOX_LOG_LEVEL_INFO:
-        return QLatin1Literal("INFO ");
-    case TOX_LOG_LEVEL_WARNING:
-        return QLatin1Literal("WARN ");
-    case TOX_LOG_LEVEL_ERROR:
-        return QLatin1Literal("ERROR");
-    default:
-        // Invalid log level
-        return QLatin1Literal("INVAL");
-    }
-}
-
-/**
- * @brief Log message handler for toxcore log messages
- * @note See tox.h for the parameter definitions
- */
-void onLogMessage(Tox *tox, TOX_LOG_LEVEL level, const char *file, uint32_t line,
-                  const char *func, const char *message, void *user_data)
-{
-    // for privacy, make the path relative to the c-toxcore source directory
-    const QRegularExpression pathCleaner(QLatin1Literal{"[\\s|\\S]*c-toxcore."});
-    const QString cleanPath = QString{file}.remove(pathCleaner);
-
-    const QString logMsg = getToxLogLevel(level) % QLatin1Literal{":"} % cleanPath
-                           % QLatin1Literal{":"} % func % QStringLiteral(":%1: ").arg(line)
-                           % message;
-
-    switch (level) {
-    case TOX_LOG_LEVEL_TRACE:
-    case TOX_LOG_LEVEL_DEBUG:
-    case TOX_LOG_LEVEL_INFO:
-        qDebug() << logMsg;
-        break;
-    case TOX_LOG_LEVEL_WARNING:
-    case TOX_LOG_LEVEL_ERROR:
-        qWarning() << logMsg;
-    }
-}
-
-/**
  * @brief Initializes Tox_Options instance
  * @param savedata Previously saved Tox data
  * @return ToxOptionsWrapper instance initialized to create Tox instance
@@ -230,7 +181,7 @@ ToxOptionsWrapper initToxOptions(const QByteArray& savedata, const ICoreSettings
 
     ToxOptionsWrapper toxOptions = ToxOptionsWrapper(tox_options_new(nullptr), proxyAddr.toUtf8());
     // register log first, to get messages as early as possible
-    tox_options_set_log_callback(toxOptions, onLogMessage);
+    tox_options_set_log_callback(toxOptions, ToxLogger::onLogMessage);
 
     tox_options_set_ipv6_enabled(toxOptions, enableIPv6);
     tox_options_set_udp_enabled(toxOptions, !forceTCP);
