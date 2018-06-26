@@ -276,7 +276,7 @@ sudo apt-get install \
     cmake \
     ffmpeg \
     libavcodec-dev \
-    libavdevice-dev
+    libavdevice-dev \
     libexif-dev \
     libgdk-pixbuf2.0-dev \
     libgtk2.0-dev \
@@ -691,9 +691,9 @@ Download the MinGW installer for Windows from
 [sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/). Make
 sure to install MSYS (a set of Unix tools for Windows). The following steps
 assume that MinGW is installed at `C:\MinGW`. If you decided to choose another
-location, replace corresponding parts. Select `mingw-developer-toolkit`, 
-`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32` 
-packages using MinGW Installation Manager (`mingw-get.exe`). Check that the 
+location, replace corresponding parts. Select `mingw-developer-toolkit`,
+`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32`
+packages using MinGW Installation Manager (`mingw-get.exe`). Check that the
 version of MinGW, corresponds to the version of the QT component!
 
 #### Wget
@@ -721,7 +721,7 @@ second box search for the `PATH` variable and press `Edit...`. The input box
 separated with a semicolon. Extend the input box by adding
 `;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files (x86)\GnuWin32\bin`.
 The very first semicolon must only be added if it is missing. CMake may be added
-by installer automatically. Make sure that paths containing alternative `sh`, 
+by installer automatically. Make sure that paths containing alternative `sh`,
 `bash` implementations such as `C:\Program Files\OpenSSH\bin` are at the end of
 `PATH` or build may fail.
 
