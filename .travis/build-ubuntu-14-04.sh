@@ -52,6 +52,15 @@ sudo apt-get install -y --force-yes \
 # Qt
 source /opt/qt55/bin/qt55-env.sh || yes
 
+# sqlite
+wget https://sqlite.org/2018/sqlite-autoconf-3240000.tar.gz
+tar xvfz sqlite-autoconf-3240000.tar.gz
+cd sqlite-autoconf-3240000
+./configure
+make -j$(nproc)
+sudo make install
+cd ..
+
 # ffmpeg
 if [ ! -e "libs" ]; then mkdir libs; fi
 if [ ! -e "ffmpeg" ]; then mkdir ffmpeg; fi
