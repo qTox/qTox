@@ -296,15 +296,17 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
             qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
             // Avatars of size 0 means explicitely no avatar
             emit core->friendAvatarRemoved(friendId);
-            core->profile.removeAvatar(friendPk);
+            // TODO(sudden6): use signal from above for that action
+            //core->profile.removeAvatar(friendPk);
             return;
         } else {
             static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH,
                           "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
             uint8_t avatarHash[TOX_FILE_ID_LENGTH];
             tox_file_get_file_id(core->tox, friendId, fileId, avatarHash, nullptr);
-            if (core->profile.getAvatarHash(friendPk)
-                == QByteArray((char*)avatarHash, TOX_HASH_LENGTH)) {
+            // TODO(sudden6): fix that condition below
+            if (/*core->profile.getAvatarHash(friendPk)
+                == QByteArray((char*)avatarHash, TOX_HASH_LENGTH)*/ false) {
                 // If it's an avatar but we already have it cached, cancel
                 qDebug() << QString(
                                 "Received avatar request %1:%2, reject, since we have it in cache.")
@@ -446,8 +448,10 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
             pic.loadFromData(file->avatarData);
             if (!pic.isNull()) {
                 qDebug() << "Got" << file->avatarData.size() << "bytes of avatar data from" << friendId;
+                // TODO(sudden6): handle the action below with the signal
+                /*
                 core->profile.saveAvatar(file->avatarData,
-                                         core->getFriendPublicKey(friendId));
+                                         core->getFriendPublicKey(friendId));*/
                 emit core->friendAvatarChanged(friendId, pic);
             }
         } else {

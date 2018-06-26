@@ -224,6 +224,8 @@ void Nexus::showMainGUI()
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
     profile->startCore();
+
+    GUI::setEnabled(true);
 }
 
 /**
