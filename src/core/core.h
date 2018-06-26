@@ -28,8 +28,10 @@
 
 #include <QMutex>
 #include <QObject>
+#include <QTimer>
 
 #include <functional>
+#include <memory>
 
 class CoreAV;
 class ICoreSettings;
@@ -45,11 +47,16 @@ enum class Status
     Offline
 };
 
+class Core;
+
+using ToxCorePtr = std::unique_ptr<Core>;
+
 class Core : public QObject
 {
     Q_OBJECT
 public:
-    Core(QThread* coreThread, Profile& profile, const ICoreSettings* const settings);
+
+    static ToxCorePtr makeToxCore(const QByteArray& savedata, const ICoreSettings* const settings);
     static Core* getInstance();
     const CoreAV* getAv() const;
     CoreAV* getAv();
@@ -85,10 +92,7 @@ public:
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
 
 public slots:
-    void start(const QByteArray& savedata);
-    void reset();
-    void process();
-    void bootstrapDht();
+    bool start();
 
     QByteArray getToxSaveData();
 
@@ -189,6 +193,8 @@ signals:
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
 private:
+    Core(QThread* coreThread);
+
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
                                 size_t cMessageSize, void* core);
     static void onFriendMessage(Tox* tox, uint32_t friendId, TOX_MESSAGE_TYPE type,
@@ -224,28 +230,28 @@ private:
     bool checkConnection();
 
     void checkEncryptedHistory();
-    void makeTox(QByteArray savedata);
+    void makeTox(QByteArray savedata, ICoreSettings *s);
     void makeAv();
     void loadFriends();
+    void bootstrapDht();
 
     void checkLastOnline(uint32_t friendId);
 
-    void deadifyTox();
     QString getFriendRequestErrorMessage(const ToxId& friendId, const QString& message) const;
+    static void registerCallbacks(Tox * tox);
 
 private slots:
-    void killTimers(bool onlyStop);
+    void killTimers();
+    void process();
+    void onStarted();
 
 private:
     Tox* tox;
     CoreAV* av;
-    QTimer* toxTimer;
-    Profile& profile;
+    QTimer toxTimer;
     QMutex messageSendMutex;
-    bool ready;
-    const ICoreSettings* const s;
 
-    static QThread* coreThread;
+    QThread* coreThread = nullptr;
 
     friend class Audio;    ///< Audio can access our calls directly to reduce latency
     friend class CoreFile; ///< CoreFile can access tox* and emit our signals

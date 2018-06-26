@@ -107,3 +107,14 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
 
     return toxOptions;
 }
+
+bool ToxOptions::getIPv6Enabled() const
+{
+    return tox_options_get_ipv6_enabled(options);
+}
+
+void ToxOptions::setIPv6Enabled(bool enabled)
+{
+    tox_options_set_ipv6_enabled(options, enabled);
+}
+

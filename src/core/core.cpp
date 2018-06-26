@@ -28,7 +28,6 @@
 #include "src/model/groupinvite.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
-#include "src/widget/gui.h"
 
 #include <QCoreApplication>
 #include <QRegularExpression>
@@ -40,209 +39,38 @@
 #include <ctime>
 
 const QString Core::TOX_EXT = ".tox";
-QThread* Core::coreThread{nullptr};
 
 #define MAX_GROUP_MESSAGE_LEN 1024
 
-Core::Core(QThread* CoreThread, Profile& profile, const ICoreSettings* const settings)
+Core::Core(QThread* coreThread)
     : tox(nullptr)
     , av(nullptr)
-    , profile(profile)
-    , ready(false)
-    , s{settings}
+    , coreThread{coreThread}
 {
-    coreThread = CoreThread;
-    toxTimer = new QTimer(this);
-    toxTimer->setSingleShot(true);
-    connect(toxTimer, &QTimer::timeout, this, &Core::process);
-    s->connectTo_dhtServerListChanged([=](const QList<DhtServer>& servers){
-        process();
-    });
-}
-
-void Core::deadifyTox()
-{
-    if (av) {
-        delete av;
-        av = nullptr;
-    }
-
-    if (tox) {
-        tox_kill(tox);
-        tox = nullptr;
-    }
+    toxTimer.setSingleShot(true);
+    connect(&this->toxTimer, &QTimer::timeout, this, &Core::process);
 }
 
 Core::~Core()
 {
-    if (coreThread->isRunning()) {
-        if (QThread::currentThread() == coreThread) {
-            killTimers(false);
-        } else {
-            QMetaObject::invokeMethod(this, "killTimers", Qt::BlockingQueuedConnection,
-                                      Q_ARG(bool, false));
-        }
+    if (QThread::currentThread() == coreThread) {
+        killTimers();
+    } else {
+        // ensure the timer is stopped, even if not called from this thread
+        QMetaObject::invokeMethod(this, "killTimers", Qt::BlockingQueuedConnection);
     }
 
     coreThread->exit(0);
-    if (QThread::currentThread() != coreThread) {
-        while (coreThread->isRunning()) {
-            qApp->processEvents();
-            coreThread->wait(500);
-        }
-    }
 
-    deadifyTox();
+    delete av;
+    tox_kill(tox);
 }
 
 /**
- * @brief Returns the global widget's Core instance
+ * @brief Registers all toxcore callbacks
+ * @param tox Tox instance to register the callbacks on
  */
-Core* Core::getInstance()
-{
-    return Nexus::getCore();
-}
-
-const CoreAV* Core::getAv() const
-{
-    return av;
-}
-
-CoreAV* Core::getAv()
-{
-    return av;
-}
-
-/**
- * @brief Creates Tox instance from previously saved data
- * @param savedata Previously saved Tox data - null, if new profile was created
- */
-void Core::makeTox(QByteArray savedata)
-{
-    auto toxOptions = ToxOptions::makeToxOptions(savedata, s);
-    if (toxOptions == nullptr) {
-        qCritical() << "could not allocate Tox Options data structure";
-        emit failedToStart();
-        return;
-    }
-
-    TOX_ERR_NEW tox_err;
-    tox = tox_new(*toxOptions, &tox_err);
-
-    switch (tox_err) {
-    case TOX_ERR_NEW_OK:
-        break;
-
-    case TOX_ERR_NEW_LOAD_BAD_FORMAT:
-        qCritical() << "failed to parse Tox save data";
-        emit failedToStart();
-        return;
-
-    case TOX_ERR_NEW_PORT_ALLOC:
-        if (s->getEnableIPv6()) {
-            tox_options_set_ipv6_enabled(*toxOptions, false);
-            tox = tox_new(*toxOptions, &tox_err);
-            if (tox_err == TOX_ERR_NEW_OK) {
-                qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery "
-                              "may not work properly.";
-                break;
-            }
-        }
-
-        qCritical() << "can't to bind the port";
-        emit failedToStart();
-        return;
-
-    case TOX_ERR_NEW_PROXY_BAD_HOST:
-    case TOX_ERR_NEW_PROXY_BAD_PORT:
-    case TOX_ERR_NEW_PROXY_BAD_TYPE:
-        qCritical() << "bad proxy, error code:" << tox_err;
-        emit badProxy();
-        return;
-
-    case TOX_ERR_NEW_PROXY_NOT_FOUND:
-        qCritical() << "proxy not found";
-        emit badProxy();
-        return;
-
-    case TOX_ERR_NEW_LOAD_ENCRYPTED:
-        qCritical() << "attempted to load encrypted Tox save data";
-        emit failedToStart();
-        return;
-
-    case TOX_ERR_NEW_MALLOC:
-        qCritical() << "memory allocation failed";
-        emit failedToStart();
-        return;
-
-    case TOX_ERR_NEW_NULL:
-        qCritical() << "a parameter was null";
-        emit failedToStart();
-        return;
-
-    default:
-        qCritical() << "Tox core failed to start, unknown error code:" << tox_err;
-        emit failedToStart();
-        return;
-    }
-}
-
-/**
- * @brief Initializes the core, must be called before anything else
- */
-void Core::start(const QByteArray& savedata)
-{
-    bool isNewProfile = profile.isNewProfile();
-    if (isNewProfile) {
-        qDebug() << "Creating a new profile";
-        makeTox(QByteArray());
-        setStatusMessage(tr("Toxing on qTox"));
-        setUsername(profile.getName());
-    } else {
-        qDebug() << "Loading user profile";
-        if (savedata.isEmpty()) {
-            emit failedToStart();
-            return;
-        }
-
-        makeTox(savedata);
-    }
-
-    qsrand(time(nullptr));
-    if (!tox) {
-        ready = true;
-        GUI::setEnabled(true);
-        return;
-    }
-
-    // toxcore is successfully created, create toxav
-    av = new CoreAV(tox);
-    if (!av->getToxAv()) {
-        qCritical() << "Toxav failed to start";
-        emit failedToStart();
-        deadifyTox();
-        return;
-    }
-
-    // set GUI with user and statusmsg
-    QString name = getUsername();
-    if (!name.isEmpty()) {
-        emit usernameSet(name);
-    }
-
-    QString msg = getStatusMessage();
-    if (!msg.isEmpty()) {
-        emit statusMessageSet(msg);
-    }
-
-    ToxId id = getSelfId();
-    // TODO: probably useless check, comes basically directly from toxcore
-    if (id.isValid()) {
-        emit idSet(id);
-    }
-
-    loadFriends();
-
+void Core::registerCallbacks(Tox * tox) {
     tox_callback_friend_request(tox, onFriendRequest);
     tox_callback_friend_message(tox, onFriendMessage);
     tox_callback_friend_name(tox, onFriendNameChange);
@@ -264,20 +92,174 @@ void Core::start(const QByteArray& savedata)
     tox_callback_file_recv(tox, CoreFile::onFileReceiveCallback);
     tox_callback_file_recv_chunk(tox, CoreFile::onFileRecvChunkCallback);
     tox_callback_file_recv_control(tox, CoreFile::onFileControlCallback);
+}
 
-    ready = true;
+/**
+ * @brief Factory method for the Core object
+ * @param savedata empty if new profile or saved data else
+ * @param settings Settings specific to Core
+ * @return nullptr or a Core object ready to start
+ */
+ToxCorePtr Core::makeToxCore(const QByteArray &savedata, const ICoreSettings * const settings)
+{
+    QThread* thread = new QThread();
+    if (thread == nullptr) {
+        qCritical() << "could not allocate Core thread";
+        return {};
+    }
+    thread->setObjectName("qTox Core");
 
-    if (isNewProfile) {
-        profile.saveToxSave();
+    auto toxOptions = ToxOptions::makeToxOptions(savedata, settings);
+    if (toxOptions == nullptr) {
+        qCritical() << "could not allocate Tox Options data structure";
+        return {};
     }
 
-    if (isReady()) {
-        GUI::setEnabled(true);
+    ToxCorePtr core(new Core(thread));
+    if(core == nullptr) {
+        return {};
     }
+
+    TOX_ERR_NEW tox_err;
+    core->tox = tox_new(*toxOptions, &tox_err);
+
+    switch (tox_err) {
+    case TOX_ERR_NEW_OK:
+        break;
+
+    case TOX_ERR_NEW_LOAD_BAD_FORMAT:
+        qCritical() << "failed to parse Tox save data";
+        return {};
+
+    case TOX_ERR_NEW_PORT_ALLOC:
+        if (toxOptions->getIPv6Enabled()) {
+            toxOptions->setIPv6Enabled(false);
+            core->tox = tox_new(*toxOptions, &tox_err);
+            if (tox_err == TOX_ERR_NEW_OK) {
+                qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery "
+                              "may not work properly.";
+                break;
+            }
+        }
+
+        qCritical() << "can't to bind the port";
+        return {};
+
+    case TOX_ERR_NEW_PROXY_BAD_HOST:
+    case TOX_ERR_NEW_PROXY_BAD_PORT:
+    case TOX_ERR_NEW_PROXY_BAD_TYPE:
+        qCritical() << "bad proxy, error code:" << tox_err;
+        //emit badProxy();
+        return {};
+
+    case TOX_ERR_NEW_PROXY_NOT_FOUND:
+        qCritical() << "proxy not found";
+        //emit badProxy();
+        return {};
+
+    case TOX_ERR_NEW_LOAD_ENCRYPTED:
+        qCritical() << "attempted to load encrypted Tox save data";
+        //emit failedToStart();
+        return {};
+
+    case TOX_ERR_NEW_MALLOC:
+        qCritical() << "memory allocation failed";
+        //emit failedToStart();
+        return {};
+
+    case TOX_ERR_NEW_NULL:
+        qCritical() << "a parameter was null";
+        //emit failedToStart();
+        return {};
+
+    default:
+        qCritical() << "Tox core failed to start, unknown error code:" << tox_err;
+        //emit failedToStart();
+        return {};
+    }
+
+    qsrand(time(nullptr));  // TODO(sudden6): needed?
+    // tox should be valid by now
+    assert(core->tox != nullptr);
+
+    // toxcore is successfully created, create toxav
+    core->av = new CoreAV(core->tox);
+    if (!core->av || !core->av->getToxAv()) {
+        qCritical() << "Toxav failed to start";
+        //emit failedToStart();
+        //deadifyTox();
+        return {};
+    }
+
+    registerCallbacks(core->tox);
+
+    // connect the thread with the Core
+    connect(thread, &QThread::started, core.get(), &Core::onStarted);
+    core->moveToThread(thread);
+    // since this is allocated in the constructor move it to the other thread too
+    core->toxTimer.moveToThread(thread);
+
+    // when leaving this function 'core' should be ready for it's start() action or
+    // a nullptr
+    return core;
+}
+
+void Core::onStarted()
+{
+    // TODO(sudden6): this assert should hold?
+    //assert(QThread::currentThread() == coreThread);
+    // One time initialization stuff
+    // set GUI with user and statusmsg
+    QString name = getUsername();
+    if (!name.isEmpty()) {
+        emit usernameSet(name);
+    }
+
+    QString msg = getStatusMessage();
+    if (!msg.isEmpty()) {
+        emit statusMessageSet(msg);
+    }
+
+    ToxId id = getSelfId();
+    // TODO: probably useless check, comes basically directly from toxcore
+    if (id.isValid()) {
+        emit idSet(id);
+    }
+
+    loadFriends();
 
     process(); // starts its own timer
     av->start();
     emit avReady();
+}
+
+/**
+ * @brief Starts toxcore and it's event loop, must be run from the Core thread
+ * @return true on success, false otherwise
+ */
+bool Core::start()
+{
+    coreThread->start();
+    return true;
+}
+
+
+/**
+ * @brief Returns the global widget's Core instance
+ */
+Core* Core::getInstance()
+{
+    return Nexus::getCore();
+}
+
+const CoreAV* Core::getAv() const
+{
+    return av;
+}
+
+CoreAV* Core::getAv()
+{
+    return av;
 }
 
 /* Using the now commented out statements in checkConnection(), I watched how
@@ -294,19 +276,21 @@ void Core::start(const QByteArray& savedata)
  */
 void Core::process()
 {
+    assert(QThread::currentThread() == coreThread);
     if (!isReady()) {
         av->stop();
         return;
     }
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
-    tox_iterate(tox, getInstance());
+    tox_iterate(tox, this);
 
 #ifdef DEBUG
     // we want to see the debug messages immediately
     fflush(stdout);
 #endif
 
+    // TODO(sudden6): recheck if this is still necessary
     if (checkConnection()) {
         tolerance = CORE_DISCONNECT_TOLERANCE;
     } else if (!(--tolerance)) {
@@ -315,7 +299,7 @@ void Core::process()
     }
 
     unsigned sleeptime = qMin(tox_iteration_interval(tox), CoreFile::corefileIterationInterval());
-    toxTimer->start(sleeptime);
+    toxTimer.start(sleeptime);
 }
 
 bool Core::checkConnection()
@@ -339,7 +323,8 @@ bool Core::checkConnection()
  */
 void Core::bootstrapDht()
 {
-    QList<DhtServer> dhtServerList = s->getDhtServerList();
+    // TODO(sudden6): fix bootstrapping
+    QList<DhtServer> dhtServerList{};// = s->getDhtServerList();
     int listSize = dhtServerList.size();
     if (!listSize) {
         qWarning() << "no bootstrap list?!?";
@@ -540,7 +525,8 @@ void Core::acceptFriendRequest(const ToxPk& friendPk)
     if (friendId == std::numeric_limits<uint32_t>::max()) {
         emit failedToAddFriend(friendPk);
     } else {
-        profile.saveToxSave();
+        // TODO(sudden6): emit save request
+        //profile.saveToxSave();
         emit friendAdded(friendId, friendPk);
     }
 }
@@ -579,7 +565,8 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
     QString errorMessage = getFriendRequestErrorMessage(friendId, message);
     if (!errorMessage.isNull()) {
         emit failedToAddFriend(friendPk, errorMessage);
-        profile.saveToxSave();
+        // TODO(sudden6): emit save request
+        // profile.saveToxSave();
         return;
     }
 
@@ -595,7 +582,8 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
         emit requestSent(friendPk, message);
     }
 
-    profile.saveToxSave();
+    // TODO(sudden6): emit save request
+    // profile.saveToxSave();
 }
 
 int Core::sendMessage(uint32_t friendId, const QString& message)
@@ -757,8 +745,8 @@ void Core::removeFriend(uint32_t friendId, bool fake)
         emit failedToRemoveFriend(friendId);
         return;
     }
-
-    profile.saveToxSave();
+    // TODO(sudden6): emit save request
+    // profile.saveToxSave();
     emit friendRemoved(friendId);
 }
 
@@ -817,9 +805,8 @@ void Core::setUsername(const QString& username)
     }
 
     emit usernameSet(username);
-    if (ready) {
-        profile.saveToxSave();
-    }
+
+    // TODO(sudden6): request saving
 }
 
 /**
@@ -900,9 +887,7 @@ void Core::setStatusMessage(const QString& message)
         return;
     }
 
-    if (ready) {
-        profile.saveToxSave();
-    }
+    // TODO(sudden6): request saving
 
     emit statusMessageSet(message);
 }
@@ -929,7 +914,8 @@ void Core::setStatus(Status status)
     }
 
     tox_self_set_status(tox, userstatus);
-    profile.saveToxSave();
+    // TODO(sudden6): emit save request
+    // profile.saveToxSave();
     emit statusSet(status);
 }
 
@@ -1369,7 +1355,7 @@ QString Core::getPeerName(const ToxPk& id) const
  */
 bool Core::isReady() const
 {
-    return av && av->getToxAv() && tox && ready;
+    return av && av->getToxAv() && tox;
 }
 
 /**
@@ -1383,32 +1369,13 @@ void Core::setNospam(uint32_t nospam)
 }
 
 /**
- * @brief Returns the unencrypted tox save data
+ * @brief Stops the AV thread and the timer here
  */
-void Core::killTimers(bool onlyStop)
+void Core::killTimers()
 {
     assert(QThread::currentThread() == coreThread);
     if (av) {
         av->stop();
     }
-    toxTimer->stop();
-    if (!onlyStop) {
-        delete toxTimer;
-        toxTimer = nullptr;
-    }
-}
-
-/**
- * @brief Reinitialized the core.
- * @warning Must be called from the Core thread, with the GUI thread ready to process events.
- */
-void Core::reset()
-{
-    assert(QThread::currentThread() == coreThread);
-    QByteArray toxsave = getToxSaveData();
-    ready = false;
-    killTimers(true);
-    deadifyTox();
-    GUI::clearContacts();
-    start(toxsave);
+    toxTimer.stop();
 }

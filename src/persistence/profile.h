@@ -21,6 +21,7 @@
 #ifndef PROFILE_H
 #define PROFILE_H
 
+#include "src/core/core.h"
 #include "src/core/toxencrypt.h"
 #include "src/core/toxid.h"
 
@@ -32,9 +33,6 @@
 #include <QString>
 #include <QVector>
 #include <memory>
-
-class Core;
-class QThread;
 
 class Profile : public QObject
 {
@@ -96,8 +94,7 @@ private:
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
 
 private:
-    Core* core;
-    QThread* coreThread;
+    std::unique_ptr<Core> core = nullptr;
     QString name;
     std::unique_ptr<ToxEncrypt> passkey = nullptr;
     std::shared_ptr<RawDatabase> database;

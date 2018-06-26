@@ -60,30 +60,22 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile, const
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    coreThread = new QThread();
-    coreThread->setObjectName("qTox Core");
-    core = new Core(coreThread, *this, &Settings::getInstance());
-    QObject::connect(core, &Core::idSet, this,
-                     [this, password](const ToxId& id) { loadDatabase(id, password); },
-                     Qt::QueuedConnection);
-    core->moveToThread(coreThread);
-    QObject::connect(coreThread, &QThread::started, core, [=]() {
-        core->start(toxsave);
+    core = Core::makeToxCore(toxsave, &s);
+    if(!core) {
+        qDebug() << "failed to start ToxCore";
+        return;
+    }
 
-        // prevent segfault by checking if core started successfully
-        if(!core->isReady()) {
-            qWarning() << "Core not ready, aborting";
-            return;
-        }
+    const ToxId& selfId = core->getSelfId();
+    loadDatabase(selfId, password);
+    const ToxPk& selfPk = selfId.getPublicKey();
+    QByteArray data = loadAvatarData(selfPk);
+    if (data.isEmpty()) {
+        qDebug() << "Self avatar not found, will broadcast empty avatar to friends";
+    }
 
-        const ToxPk selfPk = core->getSelfPublicKey();
-        QByteArray data = loadAvatarData(selfPk);
-        if (data.isEmpty()) {
-            qDebug() << "Self avatar not found, will broadcast empty avatar to friends";
-        }
-
-        setAvatar(data, selfPk);
-    });
+    // TODO(sudden6): check if needed
+    //setAvatar(data, selfPk);
 }
 
 /**
@@ -223,11 +215,6 @@ Profile::~Profile()
         saveToxSave();
     }
 
-    core->deleteLater();
-    while (coreThread->isRunning())
-        qApp->processEvents();
-
-    delete coreThread;
     if (!isRemoved) {
         Settings::getInstance().savePersonal(this);
         Settings::getInstance().sync();
@@ -281,7 +268,8 @@ QStringList Profile::getProfiles()
 
 Core* Profile::getCore()
 {
-    return core;
+    // TODO(sudden6): this is evil
+    return core.get();
 }
 
 QString Profile::getName() const
@@ -294,7 +282,7 @@ QString Profile::getName() const
  */
 void Profile::startCore()
 {
-    coreThread->start();
+    core->start();
 }
 
 bool Profile::isNewProfile()
@@ -721,12 +709,13 @@ const ToxEncrypt* Profile::getPasskey() const
  */
 void Profile::restartCore()
 {
+    /* TODO(sudden6): rethink this
     GUI::setEnabled(false); // Core::reset re-enables it
     if (!isRemoved && core->isReady()) {
         saveToxSave();
     }
-
     QMetaObject::invokeMethod(core, "reset");
+    */
 }
 
 /**
