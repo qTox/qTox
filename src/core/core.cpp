@@ -22,8 +22,9 @@
 #include "corefile.h"
 #include "src/core/coreav.h"
 #include "src/core/icoresettings.h"
-#include "src/core/toxstring.h"
 #include "src/core/toxlogger.h"
+#include "src/core/toxoptions.h"
+#include "src/core/toxstring.h"
 #include "src/model/groupinvite.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
@@ -40,8 +41,6 @@
 
 const QString Core::TOX_EXT = ".tox";
 QThread* Core::coreThread{nullptr};
-
-static const int MAX_PROXY_ADDRESS_LENGTH = 255;
 
 #define MAX_GROUP_MESSAGE_LEN 1024
 
@@ -114,117 +113,13 @@ CoreAV* Core::getAv()
     return av;
 }
 
-namespace {
-
-/**
- * @brief The ToxOptionsWrapper class wraps the Tox_Options struct and the matching
- *        proxy address data. This is needed to ensure both have equal lifetime and
- *        are correctly deleted.
- */
-class ToxOptionsWrapper
-{
-public:
-    ToxOptionsWrapper(Tox_Options *options, const QByteArray& proxyAddrData)
-        : options(options)
-        , proxyAddrData(proxyAddrData)
-    {}
-
-    ~ToxOptionsWrapper() {
-        tox_options_free(options);
-    }
-
-    ToxOptionsWrapper (ToxOptionsWrapper && from) {
-        options = from.options;
-        proxyAddrData.swap(from.proxyAddrData);
-        from.options = nullptr;
-        from.proxyAddrData.clear();
-    }
-
-    operator Tox_Options* () {
-        return options;
-    }
-
-    const char* getProxyAddrData() const {
-        return proxyAddrData.constData();
-    }
-
-private:
-    Tox_Options *options = nullptr;
-    QByteArray proxyAddrData;
-};
-
-/**
- * @brief Initializes Tox_Options instance
- * @param savedata Previously saved Tox data
- * @return ToxOptionsWrapper instance initialized to create Tox instance
- */
-ToxOptionsWrapper initToxOptions(const QByteArray& savedata, const ICoreSettings* s)
-{
-    // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be
-    // disabled in options.
-    const bool enableIPv6 = s->getEnableIPv6();
-    const bool forceTCP = s->getForceTCP();
-    // LAN requiring UDP is a toxcore limitation, ideally wouldn't be related
-    const bool enableLanDiscovery = s->getEnableLanDiscovery() && !forceTCP;
-    ICoreSettings::ProxyType proxyType = s->getProxyType();
-    quint16 proxyPort = s->getProxyPort();
-    QString proxyAddr = s->getProxyAddr();
-
-    if (!enableLanDiscovery) {
-        qWarning() << "Core starting without LAN discovery. Peers can only be found through DHT.";
-    }
-    if (enableIPv6) {
-        qDebug() << "Core starting with IPv6 enabled";
-    } else if(enableLanDiscovery) {
-        qWarning() << "Core starting with IPv6 disabled. LAN discovery may not work properly.";
-    }
-
-    ToxOptionsWrapper toxOptions = ToxOptionsWrapper(tox_options_new(nullptr), proxyAddr.toUtf8());
-    // register log first, to get messages as early as possible
-    tox_options_set_log_callback(toxOptions, ToxLogger::onLogMessage);
-
-    tox_options_set_ipv6_enabled(toxOptions, enableIPv6);
-    tox_options_set_udp_enabled(toxOptions, !forceTCP);
-    tox_options_set_local_discovery_enabled(toxOptions, enableLanDiscovery);
-    tox_options_set_start_port(toxOptions, 0);
-    tox_options_set_end_port(toxOptions, 0);
-
-    // No proxy by default
-    tox_options_set_proxy_type(toxOptions, TOX_PROXY_TYPE_NONE);
-    tox_options_set_proxy_host(toxOptions, nullptr);
-    tox_options_set_proxy_port(toxOptions, 0);
-    tox_options_set_savedata_type(toxOptions, !savedata.isNull() ? TOX_SAVEDATA_TYPE_TOX_SAVE : TOX_SAVEDATA_TYPE_NONE);
-    tox_options_set_savedata_data(toxOptions, reinterpret_cast<const uint8_t*>(savedata.data()), savedata.size());
-
-    if (proxyType != ICoreSettings::ProxyType::ptNone) {
-        if (proxyAddr.length() > MAX_PROXY_ADDRESS_LENGTH) {
-            qWarning() << "proxy address" << proxyAddr << "is too long";
-        } else if (!proxyAddr.isEmpty() && proxyPort > 0) {
-            qDebug() << "using proxy" << proxyAddr << ":" << proxyPort;
-            // protection against changings in TOX_PROXY_TYPE enum
-            if (proxyType == ICoreSettings::ProxyType::ptSOCKS5) {
-                tox_options_set_proxy_type(toxOptions, TOX_PROXY_TYPE_SOCKS5);
-            } else if (proxyType == ICoreSettings::ProxyType::ptHTTP) {
-                tox_options_set_proxy_type(toxOptions, TOX_PROXY_TYPE_HTTP);
-            }
-
-            tox_options_set_proxy_host(toxOptions, toxOptions.getProxyAddrData());
-            tox_options_set_proxy_port(toxOptions, proxyPort);
-        }
-    }
-
-    return toxOptions;
-}
-
-}  // namespace
-
 /**
  * @brief Creates Tox instance from previously saved data
  * @param savedata Previously saved Tox data - null, if new profile was created
  */
 void Core::makeTox(QByteArray savedata)
 {
-    ToxOptionsWrapper toxOptions = initToxOptions(savedata, s);
+    auto toxOptions = ToxOptions::makeToxOptions(savedata, s);
     if (toxOptions == nullptr) {
         qCritical() << "could not allocate Tox Options data structure";
         emit failedToStart();
@@ -232,7 +127,7 @@ void Core::makeTox(QByteArray savedata)
     }
 
     TOX_ERR_NEW tox_err;
-    tox = tox_new(toxOptions, &tox_err);
+    tox = tox_new(*toxOptions, &tox_err);
 
     switch (tox_err) {
     case TOX_ERR_NEW_OK:
@@ -245,8 +140,8 @@ void Core::makeTox(QByteArray savedata)
 
     case TOX_ERR_NEW_PORT_ALLOC:
         if (s->getEnableIPv6()) {
-            tox_options_set_ipv6_enabled(toxOptions, false);
-            tox = tox_new(toxOptions, &tox_err);
+            tox_options_set_ipv6_enabled(*toxOptions, false);
+            tox = tox_new(*toxOptions, &tox_err);
             if (tox_err == TOX_ERR_NEW_OK) {
                 qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery "
                               "may not work properly.";
