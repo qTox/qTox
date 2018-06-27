@@ -82,6 +82,10 @@ public:
 signals:
     void selfAvatarChanged(const QPixmap& pixmap);
 
+    // TODO(sudden6): this doesn't seem to be the right place for Core errors
+    void failedToStart();
+    void badProxy();
+
 public slots:
     void onRequestSent(const ToxPk& friendPk, const QString& message);
 
