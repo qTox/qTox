@@ -552,8 +552,7 @@ void Core::acceptFriendRequest(const ToxPk& friendPk)
     if (friendId == std::numeric_limits<uint32_t>::max()) {
         emit failedToAddFriend(friendPk);
     } else {
-        // TODO(sudden6): emit save request
-        //profile.saveToxSave();
+        emit saveRequest();
         emit friendAdded(friendId, friendPk);
     }
 }
@@ -592,8 +591,7 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
     QString errorMessage = getFriendRequestErrorMessage(friendId, message);
     if (!errorMessage.isNull()) {
         emit failedToAddFriend(friendPk, errorMessage);
-        // TODO(sudden6): emit save request
-        // profile.saveToxSave();
+        emit saveRequest();
         return;
     }
 
@@ -609,8 +607,7 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
         emit requestSent(friendPk, message);
     }
 
-    // TODO(sudden6): emit save request
-    // profile.saveToxSave();
+    emit saveRequest();
 }
 
 int Core::sendMessage(uint32_t friendId, const QString& message)
@@ -772,8 +769,8 @@ void Core::removeFriend(uint32_t friendId, bool fake)
         emit failedToRemoveFriend(friendId);
         return;
     }
-    // TODO(sudden6): emit save request
-    // profile.saveToxSave();
+
+    emit saveRequest();
     emit friendRemoved(friendId);
 }
 
@@ -832,8 +829,7 @@ void Core::setUsername(const QString& username)
     }
 
     emit usernameSet(username);
-
-    // TODO(sudden6): request saving
+    emit saveRequest();
 }
 
 /**
@@ -914,8 +910,7 @@ void Core::setStatusMessage(const QString& message)
         return;
     }
 
-    // TODO(sudden6): request saving
-
+    emit saveRequest();
     emit statusMessageSet(message);
 }
 
@@ -941,8 +936,7 @@ void Core::setStatus(Status status)
     }
 
     tox_self_set_status(tox, userstatus);
-    // TODO(sudden6): emit save request
-    // profile.saveToxSave();
+    emit saveRequest();
     emit statusSet(status);
 }
 

@@ -86,6 +86,9 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile, const
         qDebug() << "Self avatar not found, will broadcast empty avatar to friends";
     }
 
+    // save tox file when Core requests it
+    connect(core.get(), &Core::saveRequest, this, &Profile::onSaveToxSave);
+
     // TODO(sudden6): check if needed
     //setAvatar(data, selfPk);
 }
@@ -224,7 +227,7 @@ Profile* Profile::createProfile(QString name, QString password)
 Profile::~Profile()
 {
     if (!isRemoved && core->isReady()) {
-        saveToxSave();
+        onSaveToxSave();
     }
 
     if (!isRemoved) {
@@ -306,7 +309,7 @@ bool Profile::isNewProfile()
  * @brief Saves the profile's .tox save, encrypted if needed.
  * @warning Invalid on deleted profiles.
  */
-void Profile::saveToxSave()
+void Profile::onSaveToxSave()
 {
     assert(core->isReady());
     QByteArray data = core->getToxSaveData();
@@ -756,7 +759,7 @@ QString Profile::setPassword(const QString& newPassword)
     }
 
     // apply new encryption
-    saveToxSave();
+    onSaveToxSave();
 
     bool dbSuccess = false;
 
