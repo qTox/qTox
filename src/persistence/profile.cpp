@@ -60,8 +60,20 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile, const
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    core = Core::makeToxCore(toxsave, &s);
+    Core::ToxCoreErrors err;
+    core = Core::makeToxCore(toxsave, &s, &err);
     if(!core) {
+        switch (err) {
+        case Core::ToxCoreErrors::BAD_PROXY:
+            emit badProxy();
+            break;
+        case Core::ToxCoreErrors::ERROR_ALLOC:
+        case Core::ToxCoreErrors::FAILED_TO_START:
+        case Core::ToxCoreErrors::INVALID_SAVE:
+        default:
+            emit failedToStart();
+        }
+
         qDebug() << "failed to start ToxCore";
         return;
     }

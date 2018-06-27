@@ -56,7 +56,15 @@ class Core : public QObject
     Q_OBJECT
 public:
 
-    static ToxCorePtr makeToxCore(const QByteArray& savedata, const ICoreSettings* const settings);
+    enum class ToxCoreErrors {
+        BAD_PROXY,
+        INVALID_SAVE,
+        FAILED_TO_START,
+        ERROR_ALLOC
+    };
+
+    static ToxCorePtr makeToxCore(const QByteArray& savedata, const ICoreSettings* const settings,
+                                  ToxCoreErrors* err = nullptr);
     static Core* getInstance();
     const CoreAV* getAv() const;
     CoreAV* getAv();
@@ -173,8 +181,6 @@ signals:
     void failedToSetStatus(Status status);
     void failedToSetTyping(bool typing);
 
-    void failedToStart();
-    void badProxy();
     void avReady();
 
     void fileSendStarted(ToxFile file);
