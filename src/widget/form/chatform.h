@@ -73,7 +73,7 @@ public slots:
     void onAvStart(uint32_t friendId, bool video);
     void onAvEnd(uint32_t friendId, bool error);
     void onAvatarChange(uint32_t friendId, const QPixmap& pic);
-    void onAvatarRemoved(uint32_t friendId);
+    void onAvatarRemoved(const ToxPk &friendPk);
     void onFileNameChanged();
 
 protected slots:

@@ -139,44 +139,18 @@ signals:
     void disconnected();
 
     void friendRequestReceived(const ToxPk& friendPk, const QString& message);
-    void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
+    void friendAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
+    void friendAvatarData(const ToxPk& friendPk, const QByteArray& data);
+    void friendAvatarRemoved(const ToxPk& friendPk);
 
-    void friendAdded(uint32_t friendId, const ToxPk& friendPk);
     void requestSent(const ToxPk& friendPk, const QString& message);
-
-    void friendStatusChanged(uint32_t friendId, Status status);
-    void friendStatusMessageChanged(uint32_t friendId, const QString& message);
-    void friendUsernameChanged(uint32_t friendId, const QString& username);
-    void friendTypingChanged(uint32_t friendId, bool isTyping);
-    void friendAvatarChanged(uint32_t friendId, const QPixmap& pic);
-    void friendAvatarRemoved(uint32_t friendId);
-
-    void friendRemoved(uint32_t friendId);
-
-    void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
-
-    void emptyGroupCreated(int groupnumber);
-    void groupInviteReceived(const GroupInvite& inviteInfo);
-    void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
-    void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
-    void groupPeerlistChanged(int groupnumber);
-    void groupPeerNameChanged(int groupnumber, int peernumber, const QString& newName);
-    void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
-    void groupPeerAudioPlaying(int groupnumber, int peernumber);
+    void failedToAddFriend(const ToxPk& friendPk, const QString& errorInfo = QString());
 
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
     void statusSet(Status status);
     void idSet(const ToxId& id);
 
-    void messageSentResult(uint32_t friendId, const QString& message, int messageId);
-    void groupSentFailed(int groupId);
-    void actionSentResult(uint32_t friendId, const QString& action, int success);
-
-    void receiptRecieved(int friedId, int receipt);
-
-    void failedToAddFriend(const ToxPk& friendPk, const QString& errorInfo = QString());
-    void failedToRemoveFriend(uint32_t friendId);
     void failedToSetUsername(const QString& username);
     void failedToSetStatusMessage(const QString& message);
     void failedToSetStatus(Status status);
@@ -197,9 +171,44 @@ signals:
     void fileTransferBrokenUnbroken(ToxFile file, bool broken);
     void fileNameChanged();
 
-    void fileSendFailed(uint32_t friendId, const QString& fname);
-
     void saveRequest();
+
+    /**
+     * @deprecated prefer signals using ToxPk
+     */
+
+    void fileAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash);
+
+    void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
+    void friendAdded(uint32_t friendId, const ToxPk& friendPk);
+
+    void friendStatusChanged(uint32_t friendId, Status status);
+    void friendStatusMessageChanged(uint32_t friendId, const QString& message);
+    void friendUsernameChanged(uint32_t friendId, const QString& username);
+    void friendTypingChanged(uint32_t friendId, bool isTyping);
+
+    void friendAvatarChangedDeprecated(uint32_t friendId, const QPixmap& pic);
+    void friendRemoved(uint32_t friendId);
+    void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
+
+    void emptyGroupCreated(int groupnumber);
+    void groupInviteReceived(const GroupInvite& inviteInfo);
+    void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
+    void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
+    void groupPeerlistChanged(int groupnumber);
+    void groupPeerNameChanged(int groupnumber, int peernumber, const QString& newName);
+    void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
+    void groupPeerAudioPlaying(int groupnumber, int peernumber);
+
+    void messageSentResult(uint32_t friendId, const QString& message, int messageId);
+    void groupSentFailed(int groupId);
+    void actionSentResult(uint32_t friendId, const QString& action, int success);
+
+    void receiptRecieved(int friedId, int receipt);
+
+    void failedToRemoveFriend(uint32_t friendId);
+
+    void fileSendFailed(uint32_t friendId, const QString& fname);
 
 private:
     Core(QThread* coreThread);

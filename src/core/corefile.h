@@ -39,6 +39,9 @@ class CoreFile
 {
     friend class Core;
 
+
+public:
+    static void handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept);
 private:
     CoreFile() = delete;
 

@@ -19,6 +19,7 @@
 #define FRIENDWIDGET_H
 
 #include "genericchatroomwidget.h"
+#include "src/core/toxpk.h"
 
 class QPixmap;
 class MaskablePixmapWidget;
@@ -45,8 +46,8 @@ signals:
     void contextMenuCalled(QContextMenuEvent* event);
 
 public slots:
-    void onAvatarChange(uint32_t friendId, const QPixmap& pic);
-    void onAvatarRemoved(uint32_t friendId);
+    void onAvatarChange(const ToxPk &friendPk, const QPixmap& pic);
+    void onAvatarRemoved(const ToxPk &friendPk);
     void onContextMenuCalled(QContextMenuEvent* event);
 
 protected:

@@ -418,9 +418,9 @@ void FriendWidget::resetEventFlags()
     f->setEventFlag(false);
 }
 
-void FriendWidget::onAvatarChange(uint32_t friendId, const QPixmap& pic)
+void FriendWidget::onAvatarChange(const ToxPk& friendPk, const QPixmap& pic)
 {
-    if (friendId != frnd->getId()) {
+    if (friendPk != frnd->getPublicKey()) {
         return;
     }
 
@@ -428,9 +428,9 @@ void FriendWidget::onAvatarChange(uint32_t friendId, const QPixmap& pic)
     avatar->setPixmap(pic);
 }
 
-void FriendWidget::onAvatarRemoved(uint32_t friendId)
+void FriendWidget::onAvatarRemoved(const ToxPk& friendPk)
 {
-    if (friendId != frnd->getId()) {
+    if (friendPk != frnd->getPublicKey()) {
         return;
     }
 

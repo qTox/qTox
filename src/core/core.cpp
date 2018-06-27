@@ -235,8 +235,7 @@ ToxCorePtr Core::makeToxCore(const QByteArray &savedata, const ICoreSettings * c
 
 void Core::onStarted()
 {
-    // TODO(sudden6): this assert should hold?
-    //assert(QThread::currentThread() == coreThread);
+    assert(QThread::currentThread() == coreThread);
     // One time initialization stuff
     // set GUI with user and statusmsg
     QString name = getUsername();
