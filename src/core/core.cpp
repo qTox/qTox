@@ -203,6 +203,9 @@ ToxCorePtr Core::makeToxCore(const QByteArray &savedata, const ICoreSettings * c
         return {};
     }
 
+    // provide a list of bootstrap nodes
+    core->bootstrapNodes = settings->getDhtServerList();
+
     qsrand(time(nullptr));  // TODO(sudden6): needed?
     // tox should be valid by now
     assert(core->tox != nullptr);
@@ -349,9 +352,7 @@ bool Core::checkConnection()
  */
 void Core::bootstrapDht()
 {
-    // TODO(sudden6): fix bootstrapping
-    QList<DhtServer> dhtServerList{};// = s->getDhtServerList();
-    int listSize = dhtServerList.size();
+    int listSize = bootstrapNodes.size();
     if (!listSize) {
         qWarning() << "no bootstrap list?!?";
         return;
@@ -361,7 +362,7 @@ void Core::bootstrapDht()
     static int j = qrand() % listSize;
     // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
     while (i < 2) {
-        const DhtServer& dhtServer = dhtServerList[j % listSize];
+        const DhtServer& dhtServer = bootstrapNodes[j % listSize];
         QString dhtServerAddress = dhtServer.address.toLatin1();
         QString port = QString::number(dhtServer.port);
         QString name = dhtServer.name;

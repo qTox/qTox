@@ -25,6 +25,7 @@
 #include "toxid.h"
 
 #include <tox/tox.h>
+#include "src/core/dhtserver.h"
 
 #include <QMutex>
 #include <QObject>
@@ -258,6 +259,7 @@ private:
     QMutex messageSendMutex;
 
     QThread* coreThread = nullptr;
+    QList<DhtServer> bootstrapNodes{};
 
     friend class Audio;    ///< Audio can access our calls directly to reduce latency
     friend class CoreFile; ///< CoreFile can access tox* and emit our signals
