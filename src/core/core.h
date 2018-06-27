@@ -199,6 +199,8 @@ signals:
 
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
+    void saveRequest();
+
 private:
     Core(QThread* coreThread);
 

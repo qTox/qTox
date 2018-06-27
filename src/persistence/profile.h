@@ -53,9 +53,6 @@ public:
     QString setPassword(const QString& newPassword);
     const ToxEncrypt* getPasskey() const;
 
-    void saveToxSave();
-    void saveToxSave(QByteArray data);
-
     QPixmap loadAvatar();
     QPixmap loadAvatar(const ToxPk& owner);
     QByteArray loadAvatarData(const ToxPk& owner);
@@ -91,11 +88,13 @@ public slots:
 
 private slots:
     void loadDatabase(const ToxId& id, QString password);
+    void onSaveToxSave();
 
 private:
     Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave);
     static QStringList getFilesByExt(QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
+    void saveToxSave(QByteArray data);
 
 private:
     std::unique_ptr<Core> core = nullptr;
