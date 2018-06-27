@@ -1022,7 +1022,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     QPixmap avatar = Nexus::getProfile()->loadAvatar(friendPk);
     if (!avatar.isNull()) {
         friendForm->onAvatarChange(friendId, avatar);
-        widget->onAvatarChange(friendId, avatar);
+        widget->onAvatarChange(friendPk, avatar);
     }
 
     FilterCriteria filter = getFilterCriteria();
@@ -1284,7 +1284,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 
     QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getPublicKey());
     if (!avatar.isNull()) {
-        friendWidget->onAvatarChange(friendId, avatar);
+        friendWidget->onAvatarChange(frnd->getPublicKey(), avatar);
     }
 }
 

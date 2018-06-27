@@ -327,7 +327,7 @@ IProfileInfo::SetAvatarResult ProfileInfo::setAvatar(const QString &path)
         return SetAvatarResult::TooLarge;
     }
 
-    profile->setAvatar(bytes, core->getSelfPublicKey());
+    profile->setAvatar(bytes);
     return SetAvatarResult::OK;
 }
 
@@ -336,5 +336,5 @@ IProfileInfo::SetAvatarResult ProfileInfo::setAvatar(const QString &path)
  */
 void ProfileInfo::removeAvatar()
 {
-    profile->removeAvatar();
+    profile->removeSelfAvatar();
 }

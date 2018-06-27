@@ -153,7 +153,7 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
         setActive();
     });
 
-    connect(Core::getInstance(), &Core::friendAvatarChanged, this,
+    connect(Core::getInstance(), &Core::friendAvatarChangedDeprecated, this,
             &GroupNetCamView::friendAvatarChanged);
 
     selfVideoSurface->setText(Core::getInstance()->getUsername());

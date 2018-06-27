@@ -56,11 +56,9 @@ public:
     QPixmap loadAvatar();
     QPixmap loadAvatar(const ToxPk& owner);
     QByteArray loadAvatarData(const ToxPk& owner);
-    void setAvatar(QByteArray pic, const ToxPk& owner);
-    void saveAvatar(QByteArray pic, const ToxPk& owner);
+    void setAvatar(QByteArray pic);
     QByteArray getAvatarHash(const ToxPk& owner);
-    void removeAvatar(const ToxPk& owner);
-    void removeAvatar();
+    void removeSelfAvatar();
 
     bool isHistoryEnabled();
     History* getHistory();
@@ -88,7 +86,11 @@ public slots:
 
 private slots:
     void loadDatabase(const ToxId& id, QString password);
+    void saveAvatar(const ToxPk& owner, QByteArray pic);
+    void removeAvatar(const ToxPk& owner);
     void onSaveToxSave();
+    // TODO(sudden6): use ToxPk instead of friendId
+    void onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash);
 
 private:
     Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave);

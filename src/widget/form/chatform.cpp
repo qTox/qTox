@@ -158,7 +158,8 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
 
     const Core* core = Core::getInstance();
     connect(core, &Core::fileReceiveRequested, this, &ChatForm::onFileRecvRequest);
-    connect(core, &Core::friendAvatarChanged, this, &ChatForm::onAvatarChange);
+    // TODO(sudden6): update slot to new API
+    connect(core, &Core::friendAvatarChangedDeprecated, this, &ChatForm::onAvatarChange);
     connect(core, &Core::friendAvatarRemoved, this, &ChatForm::onAvatarRemoved);
     connect(core, &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
@@ -690,9 +691,9 @@ void ChatForm::dropEvent(QDropEvent* ev)
     }
 }
 
-void ChatForm::onAvatarRemoved(uint32_t friendId)
+void ChatForm::onAvatarRemoved(const ToxPk& friendPk)
 {
-    if (friendId != f->getId()) {
+    if (friendPk != f->getPublicKey()) {
         return;
     }
 
