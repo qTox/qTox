@@ -93,23 +93,7 @@ install_toxcore() {
             "${BASE_DIR}/${TOXCORE_DIR}"
 
         pushd ${BASE_DIR}/${TOXCORE_DIR}
-        ./autogen.sh
-
-        # configure
-        if [[ $SYSTEM_WIDE = "false" ]]
-        then
-            ./configure --prefix=${BASE_DIR}
-        else
-            ./configure
-        fi
-
-        # ensure A/V support is enabled
-        if ! grep -Fxq "BUILD_AV_TRUE=''" config.log
-        then
-            echo "A/V support of libtoxcore is disabled but required by qTox.  Aborting."
-            echo "Maybe the dev-packages of libopus and libvpx are not installed?"
-            exit 1
-        fi
+        cmake .
 
         # compile
         make -j $(nproc)
