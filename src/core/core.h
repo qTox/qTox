@@ -267,7 +267,9 @@ private:
     Tox* tox;
     CoreAV* av;
     QTimer toxTimer;
-    QMutex messageSendMutex;
+    // recursive, since we might call our own functions
+    // pointer so we can circumvent const functions
+    QMutex* coreLoopLock = nullptr;
 
     QThread* coreThread = nullptr;
     QList<DhtServer> bootstrapNodes{};
