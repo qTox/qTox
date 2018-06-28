@@ -140,13 +140,15 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 
 int main(int argc, char* argv[])
 {
-
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 
     qInstallMessageHandler(logMessageHandler);
+
+    // initialize random number generator
+    qsrand(time(nullptr));
 
     std::unique_ptr<QApplication> a(new QApplication(argc, argv));
 
