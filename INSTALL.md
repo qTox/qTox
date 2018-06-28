@@ -5,6 +5,7 @@
     - [Arch](#arch-easy)
     - [Fedora](#fedora-easy)
     - [Gentoo](#gentoo-easy)
+    - [openSUSE](#opensuse-easy)
     - [Slackware](#slackware-easy)
     - [FreeBSD](#freebsd-easy)
   - [Install git](#install-git)
@@ -148,6 +149,24 @@ To install:
 emerge qtox
 ```
 
+<a name="opensuse-easy" />
+
+#### openSUSE
+
+qTox is available in openSUSE Factory.
+
+To install in openSUSE 15.0 or newer:
+
+```bash
+zypper in qtox
+```
+
+To install in openSUSE 42.3:
+
+```bash
+zypper ar -f https://download.opensuse.org/repositories/server:/messaging/openSUSE_Leap_42.3 server:messaging
+zypper in qtox
+```
 
 <a name="slackware-easy" />
 
