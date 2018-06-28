@@ -263,13 +263,11 @@ void Core::onStarted()
 }
 
 /**
- * @brief Starts toxcore and it's event loop, must be run from the Core thread
- * @return true on success, false otherwise
+ * @brief Starts toxcore and it's event loop, can be called from any thread
  */
-bool Core::start()
+void Core::start()
 {
     coreThread->start();
-    return true;
 }
 
 

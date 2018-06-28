@@ -101,7 +101,7 @@ public:
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
 
 public slots:
-    bool start();
+    void start();
 
     QByteArray getToxSaveData();
 
