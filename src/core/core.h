@@ -29,6 +29,7 @@
 
 #include <QMutex>
 #include <QObject>
+#include <QThread>
 #include <QTimer>
 
 #include <functional>
@@ -38,7 +39,6 @@ class CoreAV;
 class ICoreSettings;
 class GroupInvite;
 class Profile;
-class QTimer;
 
 enum class Status
 {
@@ -264,14 +264,21 @@ private slots:
     void onStarted();
 
 private:
-    Tox* tox;
-    CoreAV* av;
+
+    struct ToxDeleter {
+        void operator()(Tox* tox) { tox_kill(tox); }
+    };
+
+    using ToxPtr = std::unique_ptr<Tox, ToxDeleter>;
+    ToxPtr tox;
+
+    std::unique_ptr<CoreAV> av;
     QTimer toxTimer;
     // recursive, since we might call our own functions
     // pointer so we can circumvent const functions
-    QMutex* coreLoopLock = nullptr;
+    std::unique_ptr<QMutex> coreLoopLock = nullptr;
 
-    QThread* coreThread = nullptr;
+    std::unique_ptr<QThread> coreThread = nullptr;
     QList<DhtServer> bootstrapNodes{};
 
     friend class Audio;    ///< Audio can access our calls directly to reduce latency
