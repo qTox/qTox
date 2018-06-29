@@ -35,7 +35,7 @@ public:
     explicit SearchForm(QWidget* parent = nullptr);
     void removeSearchPhrase();
     QString getSearchPhrase() const;
-    ParameterSearch getParametrSearch();
+    ParameterSearch getParameterSearch();
     void setFocusEditor();
     void insertEditor(const QString &text);
 

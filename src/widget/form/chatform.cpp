@@ -540,17 +540,6 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
     int startLine = numLines - searchPoint.x();
 
     if (startLine == 0 && loadHistory(phrase, parameter)) {
-//        QString pk = f->getPublicKey().toString();
-//        QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
-
-//        if (!newBaseDate.isValid()) {
-//            return;
-//        }
-
-//        searchAfterLoadHistory = true;
-//        loadHistoryByDateRange(newBaseDate);
-
-//        return;
         return;
     }
 

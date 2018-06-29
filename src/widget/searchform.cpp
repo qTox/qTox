@@ -82,7 +82,7 @@ QString SearchForm::getSearchPhrase() const
     return searchPhrase;
 }
 
-ParameterSearch SearchForm::getParametrSearch()
+ParameterSearch SearchForm::getParameterSearch()
 {
     return parameter;
 }

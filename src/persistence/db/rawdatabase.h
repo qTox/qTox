@@ -89,9 +89,10 @@ protected:
     static QVariant extractData(sqlite3_stmt* stmt, int col);
     static void regexpInsensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv);
     static void regexpSensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv);
-    static void regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const Qt::CaseSensitivity cs);
 
 private:
+    static void regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const Qt::CaseSensitivity cs);
+
     struct Transaction
     {
         QVector<Query> queries;

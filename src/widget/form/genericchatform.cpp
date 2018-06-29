@@ -934,7 +934,7 @@ void GenericChatForm::onSearchTriggered()
 void GenericChatForm::onContinueSearch()
 {
     QString phrase = searchForm->getSearchPhrase();
-    ParameterSearch parameter = searchForm->getParametrSearch();
+    ParameterSearch parameter = searchForm->getParameterSearch();
     if (!phrase.isEmpty() && searchAfterLoadHistory) {
         searchAfterLoadHistory = false;
 
