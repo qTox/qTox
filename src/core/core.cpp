@@ -65,8 +65,9 @@ Core::~Core()
 
     coreThread->exit(0);
 
+    // need to reset av first, because it uses tox
     av.reset();
-    tox_kill(tox.get());
+    tox.reset();
 }
 
 /**

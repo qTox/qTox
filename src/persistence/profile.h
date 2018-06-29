@@ -86,7 +86,7 @@ public slots:
 
 private slots:
     void loadDatabase(const ToxId& id, QString password);
-    void saveAvatar(const ToxPk& owner, QByteArray pic);
+    void saveAvatar(const ToxPk& owner, const QByteArray &avatar);
     void removeAvatar(const ToxPk& owner);
     void onSaveToxSave();
     // TODO(sudden6): use ToxPk instead of friendId
@@ -96,7 +96,8 @@ private:
     Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave);
     static QStringList getFilesByExt(QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
-    void saveToxSave(QByteArray data);
+    bool saveToxSave(QByteArray data);
+    void initCore(const QByteArray &toxsave, ICoreSettings &s);
 
 private:
     std::unique_ptr<Core> core = nullptr;
