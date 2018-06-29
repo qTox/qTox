@@ -315,6 +315,14 @@ QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk
     return counts;
 }
 
+/**
+ * @brief Search phrase in chat messages
+ * @param friendPk Friend public key
+ * @param from a date message where need to start a search
+ * @param phrase what need to find
+ * @param parameter for search
+ * @return date of the message where the phrase was found
+ */
 QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase, const ParameterSearch& parameter)
 {
     QList<QDateTime> counts;
@@ -389,6 +397,11 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
     return QDateTime();
 }
 
+/**
+ * @brief get start date of correspondence
+ * @param friendPk Friend public key
+ * @return start date of correspondence
+ */
 QDateTime History::getStartDateChatHistory(const QString &friendPk)
 {
     QList<QDateTime> counts;

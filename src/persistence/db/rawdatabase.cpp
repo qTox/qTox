@@ -718,11 +718,23 @@ QVariant RawDatabase::extractData(sqlite3_stmt* stmt, int col)
     }
 }
 
+/**
+ * @brief Use for create function in db for search data use regular experessions without case sensitive
+ * @param ctx ctx the context in which an SQL function executes
+ * @param argc number of arguments
+ * @param argv arguments
+ */
 void RawDatabase::regexpInsensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv)
 {
     regexp(ctx, argc, argv, Qt::CaseInsensitive);
 }
 
+/**
+ * @brief Use for create function in db for search data use regular experessions without case sensitive
+ * @param ctx the context in which an SQL function executes
+ * @param argc number of arguments
+ * @param argv arguments
+ */
 void RawDatabase::regexpSensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv)
 {
     regexp(ctx, argc, argv, Qt::CaseSensitive);
