@@ -1095,6 +1095,7 @@ bool Core::parsePeerQueryError(TOX_ERR_CONFERENCE_PEER_QUERY error) const
         return false;
 
     default:
+        qCritical() << "Unknow error code:" << error;
         return false;
     }
 }
@@ -1241,6 +1242,7 @@ bool Core::parseConferenceJoinError(TOX_ERR_CONFERENCE_JOIN error) const
         return false;
 
     default:
+        qCritical() << "Unknow error code:" << error;
         return false;
     }
 }
