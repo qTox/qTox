@@ -24,11 +24,11 @@
 #include "maskablepixmapwidget.h"
 
 #include "src/core/core.h"
-#include "src/model/friend.h"
-#include "src/model/about/aboutfriend.h"
 #include "src/friendlist.h"
-#include "src/model/group.h"
 #include "src/grouplist.h"
+#include "src/model/about/aboutfriend.h"
+#include "src/model/friend.h"
+#include "src/model/group.h"
 #include "src/persistence/settings.h"
 #include "src/widget/about/aboutfriendform.h"
 #include "src/widget/form/chatform.h"
@@ -49,8 +49,7 @@
 
 #include <cassert>
 
-namespace
-{
+namespace {
 constexpr auto MAX_NAME_LENGTH = 30;
 }
 
@@ -121,8 +120,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     }
 
     menu.addSeparator();
-    QMenu* inviteMenu = menu.addMenu(tr("Invite to group",
-                                        "Menu to invite a friend to a groupchat"));
+    QMenu* inviteMenu =
+        menu.addMenu(tr("Invite to group", "Menu to invite a friend to a groupchat"));
     inviteMenu->setEnabled(frnd->getStatus() != Status::Offline);
     const auto newGroupAction = inviteMenu->addAction(tr("To new group"));
     connect(newGroupAction, &QAction::triggered, this, &FriendWidget::moveToNewGroup);
@@ -139,8 +138,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     const auto& s = Settings::getInstance();
     const auto circleId = s.getFriendCircleID(frnd->getPublicKey());
-    auto circleMenu = menu.addMenu(tr("Move to circle...",
-                                        "Menu to move a friend into a different circle"));
+    auto circleMenu =
+        menu.addMenu(tr("Move to circle...", "Menu to move a friend into a different circle"));
 
     const auto pk = frnd->getPublicKey();
     const auto newCircleAction = circleMenu->addAction(tr("To new circle"));
@@ -148,8 +147,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     if (circleId != -1) {
         const QString circleName = s.getCircleName(circleId);
-        const auto removeCircleAction = circleMenu->addAction(
-                    tr("Remove from circle '%1'").arg(circleName));
+        const auto removeCircleAction =
+            circleMenu->addAction(tr("Remove from circle '%1'").arg(circleName));
         connect(removeCircleAction, &QAction::triggered, this, &FriendWidget::removeFromCircle);
     }
 
@@ -180,8 +179,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     connect(setAlias, &QAction::triggered, [this]() { nameLabel->editBegin(); });
 
     menu.addSeparator();
-    auto autoAccept = menu.addAction(tr("Auto accept files from this friend",
-                                            "context menu entry"));
+    auto autoAccept =
+        menu.addAction(tr("Auto accept files from this friend", "context menu entry"));
     const auto dir = s.getAutoAcceptDir(pk);
     autoAccept->setCheckable(true);
     autoAccept->setChecked(!dir.isEmpty());
@@ -189,10 +188,10 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     menu.addSeparator();
 
     if (!contentDialog || !contentDialog->hasFriendWidget(friendId, this)) {
-        const auto removeAction = menu.addAction(
-                    tr("Remove friend", "Menu to remove the friend from our friendlist"));
+        const auto removeAction =
+            menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
         connect(removeAction, &QAction::triggered, this, [=]() { emit removeFriend(friendId); },
-            Qt::QueuedConnection);
+                Qt::QueuedConnection);
     }
 
     menu.addSeparator();
@@ -228,11 +227,9 @@ void FriendWidget::inviteFriend(uint32_t friendId, const Group* group)
     Core::getInstance()->groupInviteFriend(friendId, group->getId());
 }
 
-namespace
-{
+namespace {
 
-std::tuple<CircleWidget*, FriendListWidget*> getCircleAndFriendList(
-        const Friend* frnd, FriendWidget* fw)
+std::tuple<CircleWidget*, FriendListWidget*> getCircleAndFriendList(const Friend* frnd, FriendWidget* fw)
 {
     const auto pk = frnd->getPublicKey();
     const auto circleId = Settings::getInstance().getFriendCircleID(pk);
@@ -242,7 +239,7 @@ std::tuple<CircleWidget*, FriendListWidget*> getCircleAndFriendList(
     return std::make_tuple(circleWidget, friendList);
 }
 
-}
+} // namespace
 
 void FriendWidget::moveToNewCircle()
 {
@@ -258,7 +255,7 @@ void FriendWidget::moveToNewCircle()
         friendList->addCircleWidget(this);
     } else {
         const auto pk = frnd->getPublicKey();
-        auto &s = Settings::getInstance();
+        auto& s = Settings::getInstance();
         auto circleId = s.addCircle();
         s.setFriendCircleID(pk, circleId);
     }
@@ -310,11 +307,13 @@ void FriendWidget::moveToCircle(int newCircleId)
 void FriendWidget::changeAutoAccept(bool enable)
 {
     const auto pk = frnd->getPublicKey();
-    auto &s = Settings::getInstance();
+    auto& s = Settings::getInstance();
     if (enable) {
         const auto oldDir = s.getAutoAcceptDir(pk);
-        const auto newDir = QFileDialog::getExistingDirectory(
-            Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), oldDir);
+        const auto newDir =
+            QFileDialog::getExistingDirectory(Q_NULLPTR,
+                                              tr("Choose an auto accept directory", "popup title"),
+                                              oldDir);
 
         const auto friendId = frnd->getId();
         qDebug() << "Setting auto accept dir for" << friendId << "to" << newDir;
@@ -351,6 +350,7 @@ void FriendWidget::setAsInactiveChatroom()
 
 void FriendWidget::updateStatusLight()
 {
+    // clang-format off
     static const QString statuses[] = {
         ":img/status/online.svg",
         ":img/status/online_notification.svg",
@@ -361,6 +361,7 @@ void FriendWidget::updateStatusLight()
         ":img/status/offline.svg",
         ":img/status/offline_notification.svg",
     };
+    // clang-format on
 
     const bool event = frnd->getEventFlag();
     const int index = static_cast<int>(frnd->getStatus()) * 2 + event;

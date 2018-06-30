@@ -487,7 +487,7 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
     const Settings& s = Settings::getInstance();
     // don't play the audio if it comes from a muted peer
     if (s.getBlackList().contains(peerPk.toString())) {
-         return;
+        return;
     }
 
     CoreAV* cav = c->getAv();
@@ -797,7 +797,8 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         return;
     }
 
-    auto it = self->calls.insert(std::pair<uint32_t, ToxFriendCall>(friendNum, ToxFriendCall{friendNum, video, *self}));
+    auto it = self->calls.insert(
+        std::pair<uint32_t, ToxFriendCall>(friendNum, ToxFriendCall{friendNum, video, *self}));
     if (it.second == false) {
         /// Hanging up from a callback is supposed to be UB,
         /// but since currently the toxav callbacks are fired from the toxcore thread,
@@ -919,8 +920,7 @@ void CoreAV::audioBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rat
                                                Q_ARG(uint32_t, rate), Q_ARG(void*, vSelf));
     }
 
-    qDebug() << "Recommended audio bitrate with" << friendNum << " is now " << rate
-             << ", ignoring it";
+    qDebug() << "Recommended audio bitrate with" << friendNum << " is now " << rate << ", ignoring it";
 }
 
 void CoreAV::videoBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rate, void* vSelf)
@@ -934,8 +934,7 @@ void CoreAV::videoBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rat
                                                Q_ARG(uint32_t, rate), Q_ARG(void*, vSelf));
     }
 
-    qDebug() << "Recommended video bitrate with" << friendNum << " is now " << rate
-             << ", ignoring it";
+    qDebug() << "Recommended video bitrate with" << friendNum << " is now " << rate << ", ignoring it";
 }
 
 void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, size_t sampleCount,

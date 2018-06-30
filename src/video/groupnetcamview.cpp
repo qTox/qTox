@@ -20,8 +20,8 @@
 #include "groupnetcamview.h"
 #include "src/audio/audio.h"
 #include "src/core/core.h"
-#include "src/model/friend.h"
 #include "src/friendlist.h"
+#include "src/model/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/video/videosurface.h"
@@ -56,9 +56,7 @@ public:
         layout->addWidget(label);
     }
 
-    ~LabeledVideo()
-    {
-    }
+    ~LabeledVideo() {}
 
     VideoSurface* getVideoSurface() const
     {

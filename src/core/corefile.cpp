@@ -18,8 +18,8 @@
 */
 
 
-#include "core.h"
 #include "corefile.h"
+#include "core.h"
 #include "toxfile.h"
 #include "toxstring.h"
 #include "src/persistence/profile.h"
@@ -27,8 +27,8 @@
 #include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QThread>
 #include <QRegularExpression>
+#include <QThread>
 #include <memory>
 
 /**
@@ -112,7 +112,8 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.avatarData = data;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
-    tox_file_get_file_id(core->tox.get(), friendId, fileNum, (uint8_t*)file.resumeFileId.data(), nullptr);
+    tox_file_get_file_id(core->tox.get(), friendId, fileNum, (uint8_t*)file.resumeFileId.data(),
+                         nullptr);
     addFile(friendId, fileNum, file);
 }
 
@@ -122,8 +123,8 @@ void CoreFile::sendFile(Core* core, uint32_t friendId, QString filename, QString
     QMutexLocker mlocker(&fileSendMutex);
 
     QByteArray fileName = filename.toUtf8();
-    uint32_t fileNum = tox_file_send(core->tox.get(), friendId, TOX_FILE_KIND_DATA, filesize, nullptr,
-                                     (uint8_t*)fileName.data(), fileName.size(), nullptr);
+    uint32_t fileNum = tox_file_send(core->tox.get(), friendId, TOX_FILE_KIND_DATA, filesize,
+                                     nullptr, (uint8_t*)fileName.data(), fileName.size(), nullptr);
     if (fileNum == std::numeric_limits<uint32_t>::max()) {
         qWarning() << "sendFile: Can't create the Tox file sender";
         emit core->fileSendFailed(friendId, filename);
@@ -134,7 +135,8 @@ void CoreFile::sendFile(Core* core, uint32_t friendId, QString filename, QString
     ToxFile file{fileNum, friendId, fileName, filePath, ToxFile::SENDING};
     file.filesize = filesize;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
-    tox_file_get_file_id(core->tox.get(), friendId, fileNum, (uint8_t*)file.resumeFileId.data(), nullptr);
+    tox_file_get_file_id(core->tox.get(), friendId, fileNum, (uint8_t*)file.resumeFileId.data(),
+                         nullptr);
     if (!file.open(false)) {
         qWarning() << QString("sendFile: Can't open file, error: %1").arg(file.file->errorString());
     }
@@ -154,11 +156,13 @@ void CoreFile::pauseResumeFileSend(Core* core, uint32_t friendId, uint32_t fileI
     if (file->status == ToxFile::TRANSMITTING) {
         file->status = ToxFile::PAUSED;
         emit core->fileTransferPaused(*file);
-        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_PAUSE, nullptr);
+        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_PAUSE,
+                         nullptr);
     } else if (file->status == ToxFile::PAUSED) {
         file->status = ToxFile::TRANSMITTING;
         emit core->fileTransferAccepted(*file);
-        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME, nullptr);
+        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME,
+                         nullptr);
     } else {
         qWarning() << "pauseResumeFileSend: File is stopped";
     }
@@ -174,11 +178,13 @@ void CoreFile::pauseResumeFileRecv(Core* core, uint32_t friendId, uint32_t fileI
     if (file->status == ToxFile::TRANSMITTING) {
         file->status = ToxFile::PAUSED;
         emit core->fileTransferPaused(*file);
-        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_PAUSE, nullptr);
+        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_PAUSE,
+                         nullptr);
     } else if (file->status == ToxFile::PAUSED) {
         file->status = ToxFile::TRANSMITTING;
         emit core->fileTransferAccepted(*file);
-        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME, nullptr);
+        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME,
+                         nullptr);
     } else {
         qWarning() << "pauseResumeFileRecv: File is stopped or broken";
     }
@@ -323,7 +329,8 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
     file.filesize = filesize;
     file.fileKind = kind;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
-    tox_file_get_file_id(core->tox.get(), friendId, fileId, (uint8_t*)file.resumeFileId.data(), nullptr);
+    tox_file_get_file_id(core->tox.get(), friendId, fileId, (uint8_t*)file.resumeFileId.data(),
+                         nullptr);
     addFile(friendId, fileId, file);
     if (kind != TOX_FILE_KIND_AVATAR)
         emit core->fileReceiveRequested(file);
@@ -336,8 +343,7 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
     auto core = Core::getInstance();
     if (!accept) {
         // If it's an avatar but we already have it cached, cancel
-        qDebug() << QString(
-                        "Received avatar request %1:%2, reject, since we have it in cache.")
+        qDebug() << QString("Received avatar request %1:%2, reject, since we have it in cache.")
                         .arg(friendId)
                         .arg(fileId);
         tox_file_control(core->tox.get(), friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
@@ -355,7 +361,8 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
     file.filesize = 0;
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
-    tox_file_get_file_id(core->tox.get(), friendId, fileId, (uint8_t*)file.resumeFileId.data(), nullptr);
+    tox_file_get_file_id(core->tox.get(), friendId, fileId, (uint8_t*)file.resumeFileId.data(),
+                         nullptr);
     addFile(friendId, fileId, file);
 }
 

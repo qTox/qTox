@@ -24,8 +24,8 @@
 #include "toxfile.h"
 #include "toxid.h"
 
-#include <tox/tox.h>
 #include "src/core/dhtserver.h"
+#include <tox/tox.h>
 
 #include <QMutex>
 #include <QObject>
@@ -56,8 +56,8 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-
-    enum class ToxCoreErrors {
+    enum class ToxCoreErrors
+    {
         BAD_PROXY,
         INVALID_SAVE,
         FAILED_TO_START,
@@ -232,8 +232,8 @@ private:
                                const uint8_t* cMessage, size_t length, void* vCore);
 #if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
     static void onGroupPeerListChange(Tox*, uint32_t groupId, void* core);
-    static void onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId,
-                                 const uint8_t* name, size_t length, void* core);
+    static void onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* name,
+                                      size_t length, void* core);
 #else
     static void onGroupNamelistChange(Tox* tox, uint32_t groupId, uint32_t peerId,
                                       TOX_CONFERENCE_STATE_CHANGE change, void* core);
@@ -248,7 +248,7 @@ private:
     bool checkConnection();
 
     void checkEncryptedHistory();
-    void makeTox(QByteArray savedata, ICoreSettings *s);
+    void makeTox(QByteArray savedata, ICoreSettings* s);
     void makeAv();
     void loadFriends();
     void bootstrapDht();
@@ -256,7 +256,7 @@ private:
     void checkLastOnline(uint32_t friendId);
 
     QString getFriendRequestErrorMessage(const ToxId& friendId, const QString& message) const;
-    static void registerCallbacks(Tox * tox);
+    static void registerCallbacks(Tox* tox);
 
 private slots:
     void killTimers();
@@ -264,9 +264,12 @@ private slots:
     void onStarted();
 
 private:
-
-    struct ToxDeleter {
-        void operator()(Tox* tox) { tox_kill(tox); }
+    struct ToxDeleter
+    {
+        void operator()(Tox* tox)
+        {
+            tox_kill(tox);
+        }
     };
 
     using ToxPtr = std::unique_ptr<Tox, ToxDeleter>;

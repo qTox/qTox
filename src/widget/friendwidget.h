@@ -46,8 +46,8 @@ signals:
     void contextMenuCalled(QContextMenuEvent* event);
 
 public slots:
-    void onAvatarChange(const ToxPk &friendPk, const QPixmap& pic);
-    void onAvatarRemoved(const ToxPk &friendPk);
+    void onAvatarChange(const ToxPk& friendPk, const QPixmap& pic);
+    void onAvatarRemoved(const ToxPk& friendPk);
     void onContextMenuCalled(QContextMenuEvent* event);
 
 protected:

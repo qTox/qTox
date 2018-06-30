@@ -15,27 +15,31 @@ static const int MAX_PROXY_ADDRESS_LENGTH = 255;
  *        are correctly deleted.
  */
 
-ToxOptions::ToxOptions(Tox_Options *options, const QByteArray &proxyAddrData)
+ToxOptions::ToxOptions(Tox_Options* options, const QByteArray& proxyAddrData)
     : options(options)
     , proxyAddrData(proxyAddrData)
 {}
 
-ToxOptions::~ToxOptions() {
+ToxOptions::~ToxOptions()
+{
     tox_options_free(options);
 }
 
-ToxOptions::ToxOptions(ToxOptions &&from) {
+ToxOptions::ToxOptions(ToxOptions&& from)
+{
     options = from.options;
     proxyAddrData.swap(from.proxyAddrData);
     from.options = nullptr;
     from.proxyAddrData.clear();
 }
 
-const char *ToxOptions::getProxyAddrData() const {
+const char* ToxOptions::getProxyAddrData() const
+{
     return proxyAddrData.constData();
 }
 
-ToxOptions::operator Tox_Options *() {
+ToxOptions::operator Tox_Options*()
+{
     return options;
 }
 
@@ -44,7 +48,8 @@ ToxOptions::operator Tox_Options *() {
  * @param savedata Previously saved Tox data
  * @return ToxOptions instance initialized to create Tox instance
  */
-std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedata, const ICoreSettings* s)
+std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedata,
+                                                       const ICoreSettings* s)
 {
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be
     // disabled in options.
@@ -61,13 +66,13 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
     }
     if (enableIPv6) {
         qDebug() << "Core starting with IPv6 enabled";
-    } else if(enableLanDiscovery) {
+    } else if (enableLanDiscovery) {
         qWarning() << "Core starting with IPv6 disabled. LAN discovery may not work properly.";
     }
 
     Tox_Options* tox_opts = tox_options_new(nullptr);
 
-    if(!tox_opts) {
+    if (!tox_opts) {
         return {};
     }
 
@@ -76,9 +81,10 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
     tox_options_set_log_callback(*toxOptions, ToxLogger::onLogMessage);
 
     // savedata
-    tox_options_set_savedata_type(*toxOptions, !savedata.isNull() ? TOX_SAVEDATA_TYPE_TOX_SAVE : TOX_SAVEDATA_TYPE_NONE);
-    tox_options_set_savedata_data(*toxOptions, reinterpret_cast<const uint8_t*>(savedata.data()), savedata.size());
-
+    tox_options_set_savedata_type(*toxOptions, !savedata.isNull() ? TOX_SAVEDATA_TYPE_TOX_SAVE
+                                                                  : TOX_SAVEDATA_TYPE_NONE);
+    tox_options_set_savedata_data(*toxOptions, reinterpret_cast<const uint8_t*>(savedata.data()),
+                                  savedata.size());
     // No proxy by default
     tox_options_set_proxy_type(*toxOptions, TOX_PROXY_TYPE_NONE);
     tox_options_set_proxy_host(*toxOptions, nullptr);
@@ -125,4 +131,3 @@ void ToxOptions::setIPv6Enabled(bool enabled)
 {
     tox_options_set_ipv6_enabled(options, enabled);
 }
-
