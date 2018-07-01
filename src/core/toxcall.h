@@ -18,7 +18,7 @@ class ToxCall
 {
 protected:
     ToxCall() = delete;
-    ToxCall(uint32_t CallId, bool VideoEnabled, CoreAV& av);
+    ToxCall(bool VideoEnabled, CoreAV& av);
     ~ToxCall();
 
 public:

@@ -28,39 +28,10 @@
  * @brief Keeps sources for users in group calls.
  */
 
-ToxCall::ToxCall(uint32_t CallId, bool VideoEnabled, CoreAV& av)
+ToxCall::ToxCall(bool VideoEnabled, CoreAV& av)
     : av{&av}
     , videoEnabled{VideoEnabled}
 {
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
-
-    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
-                                   [&av, CallId](const int16_t* pcm, size_t samples, uint8_t chans,
-                                                 uint32_t rate) {
-                                       av.sendCallAudio(CallId, pcm, samples, chans, rate);
-                                   });
-
-    if (!audioInConn) {
-        qDebug() << "Audio connection not working";
-    }
-
-    if (videoEnabled) {
-        videoSource = new CoreVideoSource();
-        CameraSource& source = CameraSource::getInstance();
-
-        if (source.isNone()) {
-            source.setupDefault();
-        }
-        source.subscribe();
-        videoInConn = QObject::connect(&source, &VideoSource::frameAvailable,
-                                       [&av, CallId](std::shared_ptr<VideoFrame> frame) {
-                                           av.sendCallVideo(CallId, frame);
-                                       });
-        if (!videoInConn) {
-            qDebug() << "Video connection not working";
-        }
-    }
 }
 
 /**
@@ -194,10 +165,40 @@ void ToxFriendCall::setAlSource(const quint32& value)
 }
 
 ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
-    : ToxCall(FriendNum, VideoEnabled, av)
+    : ToxCall(VideoEnabled, av)
 {
+    // register audio
     Audio& audio = Audio::getInstance();
+    audio.subscribeInput();
+    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
+    [&av, FriendNum](const int16_t* pcm, size_t samples, uint8_t chans,
+            uint32_t rate) {
+        av.sendCallAudio(FriendNum, pcm, samples, chans, rate);
+    });
+
+    if (!audioInConn) {
+       qDebug() << "Audio input connection not working";
+    }
+
     audio.subscribeOutput(alSource);
+
+    // register video
+    if (videoEnabled) {
+        videoSource = new CoreVideoSource();
+        CameraSource& source = CameraSource::getInstance();
+
+        if (source.isNone()) {
+            source.setupDefault();
+        }
+        source.subscribe();
+        videoInConn = QObject::connect(&source, &VideoSource::frameAvailable,
+                                       [&av, FriendNum](std::shared_ptr<VideoFrame> frame) {
+                                           av.sendCallVideo(FriendNum, frame);
+                                       });
+        if (!videoInConn) {
+            qDebug() << "Video connection not working";
+        }
+    }
 }
 
 ToxFriendCall::ToxFriendCall(ToxFriendCall &&other) noexcept
@@ -256,8 +257,20 @@ void ToxFriendCall::setState(const TOXAV_FRIEND_CALL_STATE& value)
 }
 
 ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
-    : ToxCall(static_cast<uint32_t>(GroupNum), false, av)
+    : ToxCall(false, av)
 {
+    // register audio
+    Audio& audio = Audio::getInstance();
+    audio.subscribeInput();
+    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
+    [&av, GroupNum](const int16_t* pcm, size_t samples, uint8_t chans,
+            uint32_t rate) {
+        av.sendGroupCallAudio(GroupNum, pcm, samples, chans, rate);
+    });
+
+    if (!audioInConn) {
+       qDebug() << "Audio input connection not working";
+    }
 }
 
 ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept
