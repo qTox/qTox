@@ -287,10 +287,48 @@ ToxGroupCall& ToxGroupCall::operator=(ToxGroupCall&& other) noexcept
 
 void ToxGroupCall::removePeer(int peerId)
 {
+    auto& audio = Audio::getInstance();
+    const auto& sourceId = peers.find(peerId);
+    if(sourceId == peers.constEnd()) {
+        qDebug() << "Peer:" << peerId << "does not have a source, can't remove";
+        return;
+    }
+
+    audio.unsubscribeOutput(sourceId.value());
     peers.remove(peerId);
 }
 
-QMap<int, quint32>& ToxGroupCall::getPeers()
+void ToxGroupCall::addPeer(int peerId)
 {
-    return peers;
+    auto& audio = Audio::getInstance();
+    uint sourceId = 0;
+    audio.subscribeOutput(sourceId);
+    peers.insert(peerId, sourceId);
+}
+
+bool ToxGroupCall::havePeer(int peerId)
+{
+    const auto& sourceId = peers.find(peerId);
+    return sourceId != peers.constEnd();
+}
+
+void ToxGroupCall::clearPeers()
+{
+    Audio& audio = Audio::getInstance();
+
+    for (quint32 v : peers) {
+        audio.unsubscribeOutput(v);
+    }
+
+    peers.clear();
+}
+
+quint32 ToxGroupCall::getAlSource(int peer)
+{
+    if(!havePeer(peer)) {
+        qWarning() << "Getting alSource for non-existant peer";
+        return 0;
+    }
+
+    return peers[peer];
 }

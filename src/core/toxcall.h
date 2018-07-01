@@ -97,8 +97,11 @@ public:
     ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
 
     void removePeer(int peerId);
+    void addPeer(int peerId);
+    bool havePeer(int peerId);
+    void clearPeers();
 
-    QMap<int, quint32>& getPeers();
+    quint32 getAlSource(int peer);
 
 private:
     QMap<int, quint32> peers;
