@@ -117,6 +117,9 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
     videoLabelSurface->layout()->setMargin(0);
     videoLabelSurface->setStyleSheet("QFrame { background-color: black; }");
 
+    // remove full screen button in audio group chat since it's useless there
+    enterFullScreenButton->hide();
+
     QSplitter* splitter = new QSplitter(Qt::Vertical, this);
     splitter->setChildrenCollapsible(false);
     verLayout->insertWidget(0, splitter, 1);
