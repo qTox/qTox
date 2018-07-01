@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished"></translation>
+        <translation>재생 기기</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
@@ -87,7 +87,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>오디오 음질</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
@@ -95,23 +95,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>높음(64kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>중간(32kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>낮음 (16kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>아주 낮음 (8kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>한계점</translation>
     </message>
 </context>
 <context>
@@ -135,7 +135,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation>qTox 버젼 %1.</translation>
+        <translation>qTox 버젼 %1 사용중.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
@@ -184,7 +184,7 @@ which may lead to problems with video calls.</source>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>대화</translation>
     </message>
     <message>
         <source>username</source>
@@ -232,11 +232,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">오디오</translation>
+        <translation>오디오</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">오디오 + 비디오</translation>
+        <translation>오디오 + 비디오</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
@@ -244,7 +244,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>그룹 초대를 받아드립니다.</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
@@ -264,11 +264,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished">기록이 삭제되었습니다</translation>
+        <translation>기록 삭제</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">%1 채팅기록이 삭제되었습니다!</translation>
+        <translation>%1 채팅기록이 삭제되었습니다!</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -357,7 +357,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished">자기 자신을 친구로 추가할 수 없습니다!</translation>
+        <translation>자신을 친구로 추가할 수 없습니다!</translation>
     </message>
     <message>
         <source>Open contact list</source>
@@ -365,7 +365,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>파일을 열 수 없습니다</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
@@ -393,16 +393,16 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished">메시지</translation>
+        <translation>메시지</translation>
     </message>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>열기</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>친구 요청을 보냄</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -475,7 +475,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Save File</source>
-        <translation>파일보관</translation>
+        <translation>파일저장</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
@@ -499,7 +499,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>이동가능</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -584,7 +584,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation type="unfinished"></translation>
+        <translation>좋지않은 의견</translation>
     </message>
     <message>
         <source>%1 calling</source>
@@ -606,7 +606,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>스크린샷을 저장할 수 없었습니다.</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
@@ -646,7 +646,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>온라인</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
@@ -659,7 +659,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished"></translation>
+        <translation>채팅 기록을 저장</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -674,7 +674,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>음성통화 시작</translation>
     </message>
     <message>
         <source>End audio call</source>
@@ -694,7 +694,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>영상통화 시작</translation>
     </message>
     <message>
         <source>End video call</source>
@@ -718,7 +718,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished"></translation>
+        <translation>음소거 전화</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
@@ -795,12 +795,12 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">제한된 메시지 길이를 초과했습니다!</translation>
+        <translation>제한된 메시지 길이를 초과했습니다!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">이미 추가된 친구입니다</translation>
+        <translation>이미 추가된 친구입니다</translation>
     </message>
 </context>
 <context>
@@ -895,7 +895,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>전송 된 파일</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -910,23 +910,23 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">오늘</translation>
+        <translation>오늘</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">어제</translation>
+        <translation>어제</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">지난 7일</translation>
+        <translation>지난 7일</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">이달내</translation>
+        <translation>이 달</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">6개월 이전</translation>
+        <translation>6개월 이전</translation>
     </message>
     <message>
         <source>Never</source>
@@ -2726,23 +2726,23 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>파일</translation>
     </message>
     <message>
         <source>Edit Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>프로필 편집</translation>
     </message>
     <message>
         <source>Change Status</source>
-        <translation type="unfinished"></translation>
+        <translation>상태 바꾸기</translation>
     </message>
     <message>
         <source>Log out</source>
-        <translation type="unfinished"></translation>
+        <translation>로그아웃</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>편집</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2772,7 +2772,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Previous Conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>이전의 대화</translation>
     </message>
     <message>
         <source>Executable file</source>
@@ -2803,7 +2803,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>비었습니다</translation>
     </message>
     <message>
         <source>Message failed to send</source>
@@ -2874,17 +2874,17 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>친구 추가</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>그룹 초대</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>파일 이동</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2894,7 +2894,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>내 프로필</translation>
     </message>
 </context>
 </TS>

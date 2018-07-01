@@ -81,39 +81,39 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Включва експериментален звуков процесор с потискане на ехото, изисква рестарт на qTox.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>Включва експериментален звуков процесор</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Качество на звука</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Качество на предавания звук. Намалете тази настройка ако нямате достатъчно широколентова връзка или ако искате да намалите използването на интернет.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Високо (64 kбита/с)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Средно (32 kбита/с)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ниско (16 kбита/с)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Много ниско (8 kбита/с)</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Прагова стойност</translation>
     </message>
 </context>
 <context>
@@ -198,7 +198,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Публичен ключ:</translation>
+        <translation>Публичен ключ:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -242,7 +242,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично приемане на покани за групов чат от този контакт ако е включено.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
@@ -355,7 +355,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tox ID е невалиден или не съществува</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -364,24 +364,24 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Отваряне на списък с контакти</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Не може да се отвори файла</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не може да се отвори файла с контакти</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation type="unfinished"></translation>
+        <translation>Невалиден файл</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не са намерени контакти за зареждане в този файл!</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -401,11 +401,11 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Отваряне</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Изпращане на заявка за приятелство</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -414,7 +414,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареждане на списък с контакти, по един Tox ID на ред</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
@@ -426,7 +426,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареждане на контакти</translation>
     </message>
 </context>
 <context>
@@ -658,7 +658,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Изнасяне към файл</translation>
     </message>
     <message>
         <source>Save chat log</source>
@@ -666,7 +666,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Връзката с %1 завърши неочаквано. %2</translation>
     </message>
 </context>
 <context>
@@ -929,7 +929,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Никога</translation>
     </message>
 </context>
 <context>
@@ -1297,7 +1297,7 @@ instead of system taskbar.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation>Поканен от %1 на %2 в %3</translation>
+        <translation>Поканен от %1на %2 в %3.</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1581,7 +1581,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 съобщения</translation>
     </message>
 </context>
 <context>
@@ -1803,7 +1803,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Входно поле за търсене на известни приятели</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
@@ -1961,18 +1961,18 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
     <message>
         <source>BlackList</source>
-        <translation type="unfinished"></translation>
+        <translation>Черен списък</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Филтриране на групови съобщения по публичен ключ на членовете. Поставете побличните ключове тук, по един на ред.</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неуспешно произвеждане на ключ от парола, профилът няма за използва новата парола.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
@@ -2128,7 +2128,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation type="unfinished"></translation>
+        <translation>Неуспешна смяна на парола</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2139,7 +2139,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Празен път не е достъпен</translation>
     </message>
     <message>
         <source>Failed to rename</source>
@@ -2155,15 +2155,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>Празно име</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Празно име не е достъпно</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>Празен път</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
@@ -2409,11 +2409,11 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation>Изпълнява се преформатиране на текст..</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стартира ново копие и отваря екрана за вписване.</translation>
     </message>
 </context>
 <context>
@@ -2709,7 +2709,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Използване на идентикони вместо празни аватари</translation>
     </message>
 </context>
 <context>
