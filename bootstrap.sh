@@ -93,16 +93,16 @@ install_toxcore() {
             "${BASE_DIR}/${TOXCORE_DIR}"
 
         pushd ${BASE_DIR}/${TOXCORE_DIR}
-        cmake .
 
-        # compile
-        make -j $(nproc)
-
-        # install
+        # compile and install
         if [[ $SYSTEM_WIDE = "false" ]]
         then
+            cmake . -DCMAKE_INSTALL_PREFIX=${BASE_DIR}
+            make -j $(nproc)
             make install
         else
+            cmake .
+            make -j $(nproc)
             sudo make install
             sudo ldconfig
         fi
