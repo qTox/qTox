@@ -31,8 +31,8 @@ readonly INSTALL_DIR=libs
 readonly BASE_DIR="${SCRIPT_DIR}/${INSTALL_DIR}"
 
 # versions of libs to checkout
-readonly TOXCORE_VERSION="v0.2.2"
-readonly SQLCIPHER_VERSION="v3.4.0"
+readonly TOXCORE_VERSION="v0.2.3"
+readonly SQLCIPHER_VERSION="v3.4.2"
 
 # directory names of cloned repositories
 readonly TOXCORE_DIR="libtoxcore-$TOXCORE_VERSION"
