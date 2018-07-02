@@ -1,3 +1,63 @@
+<a name=""></a>
+##  (2018-07-02)
+
+The most notable additions in this release are a new fullscreen mode for
+video calls, a new call end sound and support for more camera resolutions. To
+distribute qTox in a more user friendly manner we now publish Flatpak and
+AppImage packages.
+
+#### Bug Fixes
+
+*   remove full screen btn from audio group chat ([0d3f061b](https://github.com/qTox/qTox/commit/0d3f061ba80d9f3f8a971d2b8e11a7d9b59d180a))
+*   local toxcore install with bootstrap.sh ([9ca38750](https://github.com/qTox/qTox/commit/9ca3875079adf175f31f568e45aabc37e3409000), closes [#5199](https://github.com/qTox/qTox/issues/5199))
+*   simple_make.sh script ([ead2152d](https://github.com/qTox/qTox/commit/ead2152d6f0d15f7e662975fb3ed8525109794c3))
+*   Fix PR #5182. Eliminating the 'new' operator at ToxOptionsWrapper ([9b6cd1c0](https://github.com/qTox/qTox/commit/9b6cd1c0227006308d4fe556f2b721865c2d9b21))
+*   Fix usage of unitialized functions ([06ae7ead](https://github.com/qTox/qTox/commit/06ae7ead0c7c23935c1c05c75d9cb11ed516224b))
+*   two crashes, uncovered by the persistent groupchat patch ([48179b6a](https://github.com/qTox/qTox/commit/48179b6a19807383e298661a21f97db3b140eb44))
+*   delete double initialization callDuration ([dc1f5ea0](https://github.com/qTox/qTox/commit/dc1f5ea0a319bf4cbf05989c414ccaea898b4826))
+* **Core:**  fix use after free of proxyAddrData ([26b59d31](https://github.com/qTox/qTox/commit/26b59d312375ad6391228308aabe45f0a85a1194))
+* **appimage:**  build sqlcipher form source ([64a7c24b](https://github.com/qTox/qTox/commit/64a7c24b2b5ad11a6df5dbb11da6e3aa7c0fd6f3))
+* **audio:**
+  *  fix error introduced in 67f2605971cf43093c72f811e4df90ab70544dd6 ([40d30153](https://github.com/qTox/qTox/commit/40d30153aed223b65b596dc7d3bf17573b04f3e9))
+  *  connect the correct audio callbacks ([a00af087](https://github.com/qTox/qTox/commit/a00af087778c6315ef55ed77c4209cbb63a6323d))
+  *  close the audio device after playing a sound ([a3370173](https://github.com/qTox/qTox/commit/a3370173df24cd6880e3e3845ddbbc7c090b7aed))
+* **build:**
+  *  Elimination the build warnings (Wunused-variable, Wreorder) ([2cd65610](https://github.com/qTox/qTox/commit/2cd65610fcce0c3dcf8a5e9cb9f313a76167c09a))
+  *  correct install script nsis for win64 ([25e69572](https://github.com/qTox/qTox/commit/25e69572f89d816cfab5a8c0d1c261bae34d3cdd))
+  *  make qTox compile with ffmpeg 4.0 and newer ([44193176](https://github.com/qTox/qTox/commit/441931765ffe3de349b28a28bf10a006edcc9949))
+* **chatform:**
+  *  name in window title and close detached chats ([39968a31](https://github.com/qTox/qTox/commit/39968a313d78c727046837901e6cc3d6c31d18e0))
+  *  check for empty path when exporting profile ([757791ee](https://github.com/qTox/qTox/commit/757791eea4be390bb6d1cdc908d1cd3c4b18728d), closes [#5146](https://github.com/qTox/qTox/issues/5146))
+* **core:**  Clean illegal chars from filenames ([ab85716f](https://github.com/qTox/qTox/commit/ab85716f00acfe00ff8035670919dd548d7f7f83))
+* **docs:**  update toxcore build instructions ([b00cbc1d](https://github.com/qTox/qTox/commit/b00cbc1d6f3a7f8406e4a96e732c534068fde22c))
+* **file:**  don't clean the filenames of avatar transfer ([2a8ab03e](https://github.com/qTox/qTox/commit/2a8ab03e46dd08efc4051a01bea56fe6a4c38a11))
+* **history:**  don't save both action prefix and displayed name ([dfd2de83](https://github.com/qTox/qTox/commit/dfd2de836eae605e02a1afb270620dd9274f6385))
+* **leak:**  Fix few memory leaks ([daaa5518](https://github.com/qTox/qTox/commit/daaa5518dd7c02c2de45690daa3f592206fc4023))
+* **login:**  start login screen on profile select by -p option ([1af3ad69](https://github.com/qTox/qTox/commit/1af3ad69e884bc4e74a4fcdd452a6aff10bffd62))
+* **settings:**
+  *  automatically disable UDP when a proxy is set ([977b7fc9](https://github.com/qTox/qTox/commit/977b7fc9a02b2b44164ffb77ab35f4cdfae90542))
+  *  prevent segfault on wrong proxy settings ([dfd5232e](https://github.com/qTox/qTox/commit/dfd5232e2fb727685a20804d7ca3b932ea239332))
+* **simple_make:**  correct variable initialization ([1537f83e](https://github.com/qTox/qTox/commit/1537f83e85ff28dd73fb66161ae2cd5eeef692d1))
+* **theme:**  clear stylesheet cache on theme colour change ([8ba8ce91](https://github.com/qTox/qTox/commit/8ba8ce91f3317794b72fb4937c459dac2856d367))
+* **ui:**  increase number of low res camera options ([72931514](https://github.com/qTox/qTox/commit/72931514695a8691593d6a5abd2df1e340f95002))
+* **video:**  unsubscribe the video device correctly ([e55f86c6](https://github.com/qTox/qTox/commit/e55f86c6a5b0344642fcb3d7a2550df6e899a6e5))
+* **wayland:**  Fix desktop file name in Qt properties ([c1caeb58](https://github.com/qTox/qTox/commit/c1caeb585a8845eaa72c7db79fb334262eafdb8f))
+
+#### Features
+
+*   Add ability to remove dialog from content dialog with middle click ([aae567ed](https://github.com/qTox/qTox/commit/aae567ed8e299fc0cdd700e2e0020042ee1cba11))
+*   Add ability to quit group with middle click ([228c431c](https://github.com/qTox/qTox/commit/228c431c890a7e68d078b441311892c691643926))
+*   Add middle mouse clicked signal for GenericChatroom ([65fc1dc2](https://github.com/qTox/qTox/commit/65fc1dc266da29e0679f2b645c31bc428f0cf575))
+* **appimage:**  build appimage on TravisCI ([f7345e4d](https://github.com/qTox/qTox/commit/f7345e4db264a5681490b9094981a65cac68d317))
+* **call:**  add call end sound ([65896e45](https://github.com/qTox/qTox/commit/65896e45017f8f748bc5b9db10a4400d7fd418dc))
+* **chat:**
+  *  add UI option to mute group peers ([2fae2a30](https://github.com/qTox/qTox/commit/2fae2a30f76978ce722c5b24236384c8052ebfc4))
+  *  full screen video chat ([d6df8883](https://github.com/qTox/qTox/commit/d6df8883e399b95a55c5a5870497c1dcd45a3917))
+* **core:**  put c-toxcore log messages in the qTox log ([4faab075](https://github.com/qTox/qTox/commit/4faab0750d3841beeb08c7d17e85044b5013aea8))
+* **history:**  load set number of messages from history ([ca32e77d](https://github.com/qTox/qTox/commit/ca32e77d7400e23a6a839f6a8d1f322bfe48bbf0))
+
+
+
 <a name="v1.15.0"></a>
 ## v1.15.0 (2018-04-18)
 
