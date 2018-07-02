@@ -539,7 +539,7 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
         call.addPeer(peer);
     }
 
-    audio.playAudioBuffer(call.getPeers()[peer], data, samples, channels, sample_rate);
+    audio.playAudioBuffer(call.getAlSource(peer), data, samples, channels, sample_rate);
 }
 #endif
 
