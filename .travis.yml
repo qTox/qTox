@@ -127,7 +127,8 @@ deploy:
   - provider: releases
     api_key:
       secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
-    file: ./output/qTox-"$TRAVIS_TAG".AppImage
+    file_glob: true
+    file: ./output/*
     on:
       condition: $JOB == APPIMAGE
       repo: qTox/qTox

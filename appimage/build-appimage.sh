@@ -22,6 +22,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+ 
++set -exo pipefail
+
 # This script should be run from the root of the repository
 
 if [ ! -f ./appimage/build-appimage.sh ]; then
