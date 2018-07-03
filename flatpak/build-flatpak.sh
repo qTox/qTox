@@ -22,3 +22,9 @@ docker run --rm --privileged \
     -v $PWD/output:/output \
     debian:stretch-slim \
     /bin/bash -c "/qtox/flatpak/build.sh"
+
+# use the version number in the name when building a tag on Travis CI
+if [ -n "$TRAVIS_TAG" ]
+then
+    mv ./output/*.flatpak ./output/qTox-"$TRAVIS_TAG".flatpak
+fi
