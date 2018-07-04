@@ -1,4 +1,20 @@
 <a name=""></a>
+##  (2018-07-04)
+
+This point release fixes our deployment of Flapak and AppImage on Github. No
+feature changes.
+
+#### Features
+
+* **deploy:**  upload Flatpak bundle to Github releases ([59b5578c](https://github.com/qTox/qTox/commit/59b5578c7bffc56f6227c60bfcb38f97d39ec8d9))
+
+#### Bug Fixes
+
+* **deploy:**  fix file path in AppImage deployment ([64602f38](https://github.com/qTox/qTox/commit/64602f38f154a3f3d2429146ae5d370b2202d1b8))
+
+
+
+<a name=""></a>
 ##  (2018-07-02)
 
 The most notable additions in this release are a new fullscreen mode for
