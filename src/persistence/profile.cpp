@@ -552,7 +552,7 @@ void Profile::onRequestSent(const ToxPk& friendPk, const QString& message)
  */
 void Profile::saveAvatar(const ToxPk& owner, const QByteArray& avatar)
 {
-    bool needEncrypt = encrypted && !avatar.isEmpty();
+    const bool needEncrypt = encrypted && !avatar.isEmpty();
     const QByteArray& pic = needEncrypt ? passkey->encrypt(avatar) : avatar;
 
     QString path = avatarPath(owner);
@@ -756,10 +756,9 @@ void Profile::restartCore()
         // TODO(sudden6): there's a potential race condition between unlocking the core loop
         // and killing the core
         const QByteArray& savedata = core->getToxSaveData();
-        // save to disk just in case
-        bool saved = saveToxSave(savedata);
 
-        if (saved) {
+        // save to disk just in case
+        if (saveToxSave(savedata)) {
             qDebug() << "Restarting Core";
             initCore(savedata, Settings::getInstance());
             core->start();
