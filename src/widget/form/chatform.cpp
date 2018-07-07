@@ -537,7 +537,14 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
     QVector<ChatLine::Ptr> lines = chatWidget->getLines();
     int numLines = lines.size();
 
-    int startLine = numLines - searchPoint.x();
+    int startLine;
+
+    if (searchAfterLoadHistory) {
+        startLine = 1;
+        searchAfterLoadHistory = false;
+    } else {
+        startLine = numLines - searchPoint.x();
+    }
 
     if (startLine == 0 && loadHistory(phrase, parameter)) {
         return;
@@ -746,7 +753,7 @@ void ChatForm::loadHistoryDefaultNum(bool processUndelivered)
     QString pk = f->getPublicKey().toString();
     QList<History::HistMessage> msgs = history->getChatHistoryDefaultNum(pk);
     if (!msgs.isEmpty()) {
-        earliestMessage = msgs.back().timestamp;
+        earliestMessage = msgs.first().timestamp;
     }
     handleLoadedMessages(msgs, processUndelivered);
 }

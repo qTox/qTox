@@ -28,7 +28,6 @@
 #include <QFile>
 #include <QMetaObject>
 #include <QMutexLocker>
-#include <QRegularExpression>
 
 /// The two following defines are required to use SQLCipher
 /// They are used by the sqlite3.h header
@@ -726,7 +725,7 @@ QVariant RawDatabase::extractData(sqlite3_stmt* stmt, int col)
  */
 void RawDatabase::regexpInsensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv)
 {
-    regexp(ctx, argc, argv, Qt::CaseInsensitive);
+    regexp(ctx, argc, argv, QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
 }
 
 /**
@@ -737,17 +736,17 @@ void RawDatabase::regexpInsensitive(sqlite3_context* ctx, int argc, sqlite3_valu
  */
 void RawDatabase::regexpSensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv)
 {
-    regexp(ctx, argc, argv, Qt::CaseSensitive);
+    regexp(ctx, argc, argv, QRegularExpression::UseUnicodePropertiesOption);
 }
 
-void RawDatabase::regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const Qt::CaseSensitivity cs)
+void RawDatabase::regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const QRegularExpression::PatternOptions cs)
 {
-    QRegExp regex;
+    QRegularExpression regex;
     QString str1((const char*)sqlite3_value_text(argv[0]));
     QString str2((const char*)sqlite3_value_text(argv[1]));
 
     regex.setPattern(str1);
-    regex.setCaseSensitivity(cs);
+    regex.setPatternOptions(cs);
 
     bool b = str2.contains(regex);
 

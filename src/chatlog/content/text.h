@@ -37,7 +37,7 @@ public:
 
     void setText(const QString& txt);
     void selectText(const QString& txt, const std::pair<int, int>& point);
-    void selectText(const QRegExp& exp, const std::pair<int, int>& point);
+    void selectText(const QRegularExpression& exp, const std::pair<int, int>& point);
     void deselectText();
 
     virtual void setWidth(qreal width) final;

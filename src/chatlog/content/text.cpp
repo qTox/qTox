@@ -71,7 +71,7 @@ void Text::selectText(const QString& txt, const std::pair<int, int>& point)
     selectText(cursor, point);
 }
 
-void Text::selectText(const QRegExp &exp, const std::pair<int, int>& point)
+void Text::selectText(const QRegularExpression &exp, const std::pair<int, int>& point)
 {
     regenerate();
 

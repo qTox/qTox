@@ -9,6 +9,7 @@
 #include <QThread>
 #include <QVariant>
 #include <QVector>
+#include <QRegularExpression>
 #include <atomic>
 #include <functional>
 #include <memory>
@@ -91,7 +92,7 @@ protected:
     static void regexpSensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv);
 
 private:
-    static void regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const Qt::CaseSensitivity cs);
+    static void regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const QRegularExpression::PatternOptions cs);
 
     struct Transaction
     {

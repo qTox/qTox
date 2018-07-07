@@ -45,7 +45,7 @@
 #include <QFileDialog>
 #include <QKeyEvent>
 #include <QMessageBox>
-#include <QRegExp>
+#include <QRegularExpression>
 
 /**
  * @class GenericChatForm
@@ -585,8 +585,6 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
 
     int numLines = lines.size();
 
-    auto d = QDate::currentDate();
-
     int startLine = numLines - searchPoint.x();
     if (parameter.period == PeriodSearch::WithTheFirst) {
         startLine = 0;
@@ -632,25 +630,29 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
         QString txt = content->getText();
 
         bool find = false;
-        QRegExp exp;
+        QRegularExpression exp;
+        QRegularExpressionMatch match;
+
+        auto flagIns = QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption;
+        auto flag = QRegularExpression::UseUnicodePropertiesOption;
         switch (parameter.filter) {
         case FilterSearch::Register:
             find = txt.contains(phrase, Qt::CaseSensitive);
             break;
         case FilterSearch::WordsOnly:
-            exp = QRegExp(QString("\\b%1\\b").arg(phrase), Qt::CaseInsensitive);
+            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flagIns);
             find = txt.contains(exp);
             break;
         case FilterSearch::RegisterAndWordsOnly:
-            exp = QRegExp(QString("\\b%1\\b").arg(phrase));
+            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flag);
             find = txt.contains(exp);
             break;
         case FilterSearch::RegisterAndRegular:
-            exp = QRegExp(phrase);
+            exp = QRegularExpression(phrase, flag);
             find = txt.contains(exp);
             break;
         case FilterSearch::Regular:
-            exp = QRegExp(phrase, Qt::CaseInsensitive);
+            exp = QRegularExpression(phrase, flagIns);
             find = txt.contains(exp);
             break;
         default:
@@ -670,7 +672,7 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
             chatWidget->scrollToLine(l);
             text->deselectText();
 
-            if (exp.isEmpty()) {
+            if (exp.pattern().isEmpty()) {
                 text->selectText(phrase, point);
             } else {
                 text->selectText(exp, point);
@@ -688,9 +690,12 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
 
 std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, bool searchUp)
 {
-    int index = 0;
-    QRegExp exp;
+    int index = -1;
+    int size = 0;
 
+    QRegularExpression exp;
+    auto flagIns = QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption;
+    auto flag = QRegularExpression::UseUnicodePropertiesOption;
     if (searchUp) {
         int startIndex = -1;
         if (searchPoint.y() > -1) {
@@ -702,25 +707,42 @@ std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, co
             index = txt.lastIndexOf(phrase, startIndex, Qt::CaseSensitive);
             break;
         case FilterSearch::WordsOnly:
-            exp = QRegExp(QString("\\b%1\\b").arg(phrase), Qt::CaseInsensitive);
-            index = exp.lastIndexIn(txt, startIndex);
+            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flagIns);
             break;
         case FilterSearch::RegisterAndWordsOnly:
-            exp = QRegExp(QString("\\b%1\\b").arg(phrase));
-            index = exp.lastIndexIn(txt, startIndex);
+            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flag);
             break;
         case FilterSearch::RegisterAndRegular:
-            exp = QRegExp(phrase);
-            index = exp.lastIndexIn(txt, startIndex);
+            exp = QRegularExpression(phrase, flag);
             break;
         case FilterSearch::Regular:
-            exp = QRegExp(phrase, Qt::CaseInsensitive);
-            index = exp.lastIndexIn(txt, startIndex);
+            exp = QRegularExpression(phrase, flagIns);
             break;
         default:
             index = txt.lastIndexOf(phrase, startIndex, Qt::CaseInsensitive);
             break;
         }
+
+        if (!exp.pattern().isEmpty()) {
+            auto matchIt = exp.globalMatch(txt);
+
+            while (matchIt.hasNext()) {
+                auto match = matchIt.next();
+
+                int sizeItem = match.capturedLength();
+                int indexItem = match.capturedStart();
+
+                if (startIndex == -1 || indexItem < startIndex) {
+                    index = indexItem;
+                    size = sizeItem;
+                } else {
+                    break;
+                }
+            }
+        } else {
+            size = phrase.size();
+        }
+
     } else {
         int startIndex = 0;
         if (searchPoint.y() > -1) {
@@ -732,37 +754,30 @@ std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, co
             index = txt.indexOf(phrase, startIndex, Qt::CaseSensitive);
             break;
         case FilterSearch::WordsOnly:
-            exp = QRegExp(QString("\\b%1\\b").arg(phrase), Qt::CaseInsensitive);
-            index = exp.indexIn(txt, startIndex);
+            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flagIns);
             break;
         case FilterSearch::RegisterAndWordsOnly:
-            exp = QRegExp(QString("\\b%1\\b").arg(phrase));
-            index = exp.indexIn(txt, startIndex);
+            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flag);
             break;
         case FilterSearch::RegisterAndRegular:
-            exp = QRegExp(phrase);
-            index = exp.indexIn(txt, startIndex);
+            exp = QRegularExpression(phrase, flag);
             break;
         case FilterSearch::Regular:
-            exp = QRegExp(phrase, Qt::CaseInsensitive);
-            index = exp.indexIn(txt, startIndex);
+            exp = QRegularExpression(phrase, flagIns);
             break;
         default:
             index = txt.indexOf(phrase, startIndex, Qt::CaseInsensitive);
             break;
         }
-    }
 
-    int size = 0;
-    if (index > -1) {
-        if (exp.isEmpty()) {
-            size = phrase.size();
-        } else {
-            auto lExp = exp.capturedTexts();
-
-            if (!lExp.isEmpty()) {
-                size = lExp[0].size();
+        if (!exp.pattern().isEmpty()) {
+            auto match = exp.match(txt, startIndex);
+            if (match.hasMatch()) {
+                size = match.capturedLength(0);
+                index = match.capturedEnd() - size;
             }
+        } else {
+            size = phrase.size();
         }
     }
 
@@ -936,9 +951,8 @@ void GenericChatForm::onContinueSearch()
     QString phrase = searchForm->getSearchPhrase();
     ParameterSearch parameter = searchForm->getParameterSearch();
     if (!phrase.isEmpty() && searchAfterLoadHistory) {
-        searchAfterLoadHistory = false;
-
         if (parameter.period == PeriodSearch::WithTheFirst || parameter.period == PeriodSearch::AfterDate) {
+            searchAfterLoadHistory = false;
             onSearchDown(phrase, parameter);
         } else {
             onSearchUp(phrase, parameter);
