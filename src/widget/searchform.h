@@ -58,8 +58,8 @@ private:
     QString searchPhrase;
     ParameterSearch parameter;
 
-    bool isActiveSettings;
-    bool isChangedPhrase;
+    bool isActiveSettings{false};
+    bool isChangedPhrase{false};
 
 private slots:
     void changedSearchPhrase(const QString& text);

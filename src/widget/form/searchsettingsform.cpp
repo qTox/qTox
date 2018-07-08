@@ -13,11 +13,10 @@ SearchSettingsForm::SearchSettingsForm(QWidget *parent) :
     ui->startDateLabel->setEnabled(false);
 
     ui->choiceDateButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    ui->choiceDateButton->setObjectName("choiceDateButton");
+    ui->choiceDateButton->setObjectName(QStringLiteral("choiceDateButton"));
     ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
 
-    ui->startDateLabel->setStyleSheet("QLabel{color: #ddd;}");
-    isUpdate = false;
+    ui->startDateLabel->setStyleSheet(QStringLiteral("QLabel{color: #ddd;}")); // TODO: need use a style file (.css)
 
     connect(ui->startSearchComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &SearchSettingsForm::onStartSearchSelected);
@@ -77,7 +76,7 @@ ParameterSearch SearchSettingsForm::getParameterSearch()
 
 void SearchSettingsForm::updateStartDateLabel()
 {
-    ui->startDateLabel->setText(startDate.toString("dd.MM.yyyy"));
+    ui->startDateLabel->setText(startDate.toString(QStringLiteral("dd.MM.yyyy")));
 }
 
 void SearchSettingsForm::setUpdate(const bool isUpdate)
@@ -92,10 +91,10 @@ void SearchSettingsForm::onStartSearchSelected(const int index)
         ui->choiceDateButton->setEnabled(true);
         ui->startDateLabel->setEnabled(true);
 
-        ui->choiceDateButton->setProperty("state", "green");
+        ui->choiceDateButton->setProperty("state", QStringLiteral("green"));
         ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
 
-        ui->startDateLabel->setStyleSheet("QLabel{color: #000;}");
+        ui->startDateLabel->setStyleSheet(QStringLiteral("QLabel{color: #000;}"));
 
         if (startDate.isNull()) {
             startDate = QDate::currentDate();
@@ -106,10 +105,10 @@ void SearchSettingsForm::onStartSearchSelected(const int index)
         ui->choiceDateButton->setEnabled(false);
         ui->startDateLabel->setEnabled(false);
 
-        ui->choiceDateButton->setProperty("state", "");
+        ui->choiceDateButton->setProperty("state", QString());
         ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
 
-        ui->startDateLabel->setStyleSheet("QLabel{color: #ddd;}");
+        ui->startDateLabel->setStyleSheet(QStringLiteral("QLabel{color: #ddd;}"));
     }
 
     setUpdate(true);
@@ -117,6 +116,7 @@ void SearchSettingsForm::onStartSearchSelected(const int index)
 
 void SearchSettingsForm::onRegisterClicked(const bool checked)
 {
+    Q_UNUSED(checked)
     setUpdate(true);
 }
 

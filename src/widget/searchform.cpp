@@ -33,9 +33,6 @@ SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
     settings = new SearchSettingsForm();
     settings->setVisible(false);
 
-    isActiveSettings = false;
-    isChangedPhrase = false;
-
     settingsButton = createButton("searchSettingsButton", "green");
     upButton = createButton("searchUpButton", "green");
     downButton = createButton("searchDownButton", "green");
@@ -133,12 +130,11 @@ ParameterSearch SearchForm::getAndCheckParametrSearch()
 
 void SearchForm::changedSearchPhrase(const QString& text)
 {
-    QString l = text.right(1);
-
     if (searchPhrase == text) {
         return;
     }
 
+    QString l = text.right(1);
     if (!l.isEmpty() && l != " " && l[0].isSpace()) {
         searchLine->setText(searchPhrase);
         return;
@@ -191,9 +187,9 @@ void SearchForm::clickedSearch()
     settings->setVisible(isActiveSettings);
 
     if (isActiveSettings) {
-        settingsButton->setProperty("state", "red");
+        settingsButton->setProperty("state", QStringLiteral("red"));
     } else {
-        settingsButton->setProperty("state", "green");
+        settingsButton->setProperty("state", QStringLiteral("green"));
         changedButtons(false);
     }
     settingsButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));

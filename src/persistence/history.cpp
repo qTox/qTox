@@ -388,7 +388,6 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
             .arg(message)
             .arg(period);
 
-    qDebug() << "mes:" << queryText;
     db->execNow({queryText, rowCallback});
     if (!counts.isEmpty()) {
         return counts[0];

@@ -503,12 +503,12 @@ void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& param
 
     searchPoint = QPoint(1, -1);
 
-    bool b = (parameter.period == PeriodSearch::WithTheFirst);
-    bool b1 = (parameter.period == PeriodSearch::AfterDate);
-    if (b || b1) {
-        if (b || (b1 && parameter.date < getFirstDate())) {
-            QString pk = f->getPublicKey().toString();
-            if ((b || parameter.date >= history->getStartDateChatHistory(pk).date()) &&
+    const bool isFirst = (parameter.period == PeriodSearch::WithTheFirst);
+    const bool isAfter = (parameter.period == PeriodSearch::AfterDate);
+    if (isFirst || isAfter) {
+        if (isFirst || (isAfter && parameter.date < getFirstDate())) {
+            const QString pk = f->getPublicKey().toString();
+            if ((isFirst || parameter.date >= history->getStartDateChatHistory(pk).date()) &&
                     loadHistory(phrase, parameter)) {
 
                 return;
@@ -518,7 +518,7 @@ void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& param
         onSearchDown(phrase, parameter);
     } else {
         if (parameter.period == PeriodSearch::BeforeDate && parameter.date < getFirstDate()) {
-            QString pk = f->getPublicKey().toString();
+            const QString pk = f->getPublicKey().toString();
             if (parameter.date >= history->getStartDateChatHistory(pk).date() && loadHistory(phrase, parameter)) {
                 return;
             }
@@ -553,8 +553,8 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
     bool isSearch = searchInText(phrase, parameter, true);
 
     if (!isSearch) {
-        QString pk = f->getPublicKey().toString();
-        QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+        const QString pk = f->getPublicKey().toString();
+        const QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
         if (!newBaseDate.isValid()) {
             return;
@@ -750,7 +750,7 @@ QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName)
 
 void ChatForm::loadHistoryDefaultNum(bool processUndelivered)
 {
-    QString pk = f->getPublicKey().toString();
+    const QString pk = f->getPublicKey().toString();
     QList<History::HistMessage> msgs = history->getChatHistoryDefaultNum(pk);
     if (!msgs.isEmpty()) {
         earliestMessage = msgs.first().timestamp;
@@ -1075,8 +1075,8 @@ void ChatForm::SendMessageStr(QString msg)
 
 bool ChatForm::loadHistory(const QString& phrase, const ParameterSearch& parameter)
 {
-    QString pk = f->getPublicKey().toString();
-    QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+    const QString pk = f->getPublicKey().toString();
+    const QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
     if (newBaseDate.isValid() && getFirstDate().isValid() && newBaseDate.date() < getFirstDate()) {
         searchAfterLoadHistory = true;

@@ -21,7 +21,7 @@ public:
 private:
     Ui::SearchSettingsForm *ui;
     QDate startDate;
-    bool isUpdate;
+    bool isUpdate{false};
 
     void updateStartDateLabel();
     void setUpdate(const bool isUpdate);

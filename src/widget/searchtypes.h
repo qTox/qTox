@@ -21,31 +21,15 @@ enum class PeriodSearch {
 };
 
 struct ParameterSearch {
-    FilterSearch filter;
-    PeriodSearch period;
+    FilterSearch filter{FilterSearch::None};
+    PeriodSearch period{PeriodSearch::None};
     QDate date;
-    bool isUpdate;
-
-    ParameterSearch() {
-        filter = FilterSearch::None;
-        period = PeriodSearch::None;
-        isUpdate = false;
-    }
+    bool isUpdate{false};
 
     bool operator ==(const ParameterSearch& other) {
-        if (this->filter != other.filter) {
-            return false;
-        }
-
-        if (this->period != other.period) {
-            return false;
-        }
-
-        if (this->date != other.date) {
-            return false;
-        }
-
-        return true;
+        return filter == other.filter &&
+            period == other.period &&
+            date == other.date;
     }
 
     bool operator !=(const ParameterSearch& other) {

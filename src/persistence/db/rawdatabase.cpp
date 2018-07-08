@@ -742,13 +742,13 @@ void RawDatabase::regexpSensitive(sqlite3_context* ctx, int argc, sqlite3_value*
 void RawDatabase::regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const QRegularExpression::PatternOptions cs)
 {
     QRegularExpression regex;
-    QString str1((const char*)sqlite3_value_text(argv[0]));
-    QString str2((const char*)sqlite3_value_text(argv[1]));
+    const QString str1(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
+    const QString str2(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));
 
     regex.setPattern(str1);
     regex.setPatternOptions(cs);
 
-    bool b = str2.contains(regex);
+    const bool b = str2.contains(regex);
 
     if (b) {
         sqlite3_result_int(ctx, 1);

@@ -948,8 +948,8 @@ void GenericChatForm::onSearchTriggered()
 
 void GenericChatForm::onContinueSearch()
 {
-    QString phrase = searchForm->getSearchPhrase();
-    ParameterSearch parameter = searchForm->getParameterSearch();
+    const QString phrase = searchForm->getSearchPhrase();
+    const ParameterSearch parameter = searchForm->getParameterSearch();
     if (!phrase.isEmpty() && searchAfterLoadHistory) {
         if (parameter.period == PeriodSearch::WithTheFirst || parameter.period == PeriodSearch::AfterDate) {
             searchAfterLoadHistory = false;
