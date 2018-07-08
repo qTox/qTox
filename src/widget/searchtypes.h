@@ -53,4 +53,26 @@ struct ParameterSearch {
     }
 };
 
+class SearchExtraFunctions {
+public:
+    static QString generateFilterWordsOnly(const QString &phrase) {
+        QString filter = phrase;
+
+        if (filter.contains("\\")) {
+            filter.replace("\\", "\\\\");
+
+            if (filter.front() != '\\') {
+                filter = "\\b" + filter;
+            }
+            if (filter.back() != '\\') {
+                filter += "\\b";
+            }
+        } else {
+            filter = QStringLiteral("\\b%1\\b").arg(filter);
+        }
+
+        return filter;
+    };
+};
+
 #endif //SEARCHTYPES_H

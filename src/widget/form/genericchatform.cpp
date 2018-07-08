@@ -640,11 +640,11 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
             find = txt.contains(phrase, Qt::CaseSensitive);
             break;
         case FilterSearch::WordsOnly:
-            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flagIns);
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flagIns);
             find = txt.contains(exp);
             break;
         case FilterSearch::RegisterAndWordsOnly:
-            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flag);
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flag);
             find = txt.contains(exp);
             break;
         case FilterSearch::RegisterAndRegular:
@@ -707,10 +707,10 @@ std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, co
             index = txt.lastIndexOf(phrase, startIndex, Qt::CaseSensitive);
             break;
         case FilterSearch::WordsOnly:
-            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flagIns);
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flagIns);
             break;
         case FilterSearch::RegisterAndWordsOnly:
-            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flag);
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flag);
             break;
         case FilterSearch::RegisterAndRegular:
             exp = QRegularExpression(phrase, flag);
@@ -754,10 +754,10 @@ std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, co
             index = txt.indexOf(phrase, startIndex, Qt::CaseSensitive);
             break;
         case FilterSearch::WordsOnly:
-            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flagIns);
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flagIns);
             break;
         case FilterSearch::RegisterAndWordsOnly:
-            exp = QRegularExpression(QString("\\b%1\\b").arg(phrase), flag);
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flag);
             break;
         case FilterSearch::RegisterAndRegular:
             exp = QRegularExpression(phrase, flag);

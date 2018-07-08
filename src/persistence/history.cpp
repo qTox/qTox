@@ -339,10 +339,10 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
         message = QStringLiteral("message LIKE '%%1%'").arg(phrase);
         break;
     case FilterSearch::WordsOnly:
-        message = QStringLiteral("message REGEXP '\\b%1\\b'").arg(phrase.toLower());
+        message = QStringLiteral("message REGEXP '%1'").arg(SearchExtraFunctions::generateFilterWordsOnly(phrase).toLower());
         break;
     case FilterSearch::RegisterAndWordsOnly:
-        message = QStringLiteral("REGEXPSENSITIVE(message, '\\b%1\\b')").arg(phrase);
+        message = QStringLiteral("REGEXPSENSITIVE(message, '%1')").arg(SearchExtraFunctions::generateFilterWordsOnly(phrase));
         break;
     case FilterSearch::Regular:
         message = QStringLiteral("message REGEXP '%1'").arg(phrase);
@@ -388,7 +388,7 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
             .arg(message)
             .arg(period);
 
-
+    qDebug() << "mes:" << queryText;
     db->execNow({queryText, rowCallback});
     if (!counts.isEmpty()) {
         return counts[0];
