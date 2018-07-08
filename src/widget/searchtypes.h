@@ -39,16 +39,22 @@ struct ParameterSearch {
 
 class SearchExtraFunctions {
 public:
+    /**
+     * @brief generateFilterWordsOnly generate string for filter "Whole words only" for correct search phrase
+     * containing symbols "\"
+     * @param phrase for search
+     * @return new phrase for search
+     */
     static QString generateFilterWordsOnly(const QString &phrase) {
         QString filter = phrase;
 
         if (filter.contains("\\")) {
             filter.replace("\\", "\\\\");
 
-            if (filter.front() != '\\') {
+            if (filter.left(1) != "\\") {
                 filter = "\\b" + filter;
             }
-            if (filter.back() != '\\') {
+            if (filter.right(1) != "\\") {
                 filter += "\\b";
             }
         } else {
@@ -56,7 +62,7 @@ public:
         }
 
         return filter;
-    };
+    }
 };
 
 #endif //SEARCHTYPES_H

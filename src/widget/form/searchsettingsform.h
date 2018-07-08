@@ -2,7 +2,7 @@
 #define SEARCHSETTINGSFORM_H
 
 #include <QWidget>
-#include "../searchtypes.h"
+#include "src/widget/searchtypes.h"
 
 namespace Ui {
 class SearchSettingsForm;
