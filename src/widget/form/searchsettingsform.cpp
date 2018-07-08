@@ -16,7 +16,7 @@ SearchSettingsForm::SearchSettingsForm(QWidget *parent) :
     ui->choiceDateButton->setObjectName(QStringLiteral("choiceDateButton"));
     ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
 
-    ui->startDateLabel->setStyleSheet(QStringLiteral("QLabel{color: #ddd;}")); // TODO: need use a style file (.css)
+    ui->startDateLabel->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/labels.css")));
 
     connect(ui->startSearchComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &SearchSettingsForm::onStartSearchSelected);
@@ -94,8 +94,6 @@ void SearchSettingsForm::onStartSearchSelected(const int index)
         ui->choiceDateButton->setProperty("state", QStringLiteral("green"));
         ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
 
-        ui->startDateLabel->setStyleSheet(QStringLiteral("QLabel{color: #000;}"));
-
         if (startDate.isNull()) {
             startDate = QDate::currentDate();
             updateStartDateLabel();
@@ -107,8 +105,6 @@ void SearchSettingsForm::onStartSearchSelected(const int index)
 
         ui->choiceDateButton->setProperty("state", QString());
         ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
-
-        ui->startDateLabel->setStyleSheet(QStringLiteral("QLabel{color: #ddd;}"));
     }
 
     setUpdate(true);

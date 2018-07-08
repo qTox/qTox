@@ -55,6 +55,7 @@
         <file>ui/chatForm/buttons.css</file>
         <file>ui/chatForm/fullScreenButtons.css</file>
         <file>ui/chatForm/callButton.svg</file>
+        <file>ui/chatForm/labels.css</file>
         <file>ui/chatForm/micButton.svg</file>
         <file>ui/chatForm/micButtonRed.svg</file>
         <file>ui/chatForm/videoButton.svg</file>

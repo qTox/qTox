@@ -1,0 +1,9 @@
+QLabel
+{
+    color: #000;
+}
+
+QLabel:disabled
+{
+    color: #ddd;
+}
