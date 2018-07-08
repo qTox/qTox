@@ -2,6 +2,7 @@
 #define SEARCHTYPES_H
 
 #include <QDate>
+#include <QRegularExpression>
 
 enum class FilterSearch {
     None,
@@ -39,24 +40,34 @@ struct ParameterSearch {
 
 class SearchExtraFunctions {
 public:
+    /**
+     * @brief generateFilterWordsOnly generate string for filter "Whole words only" for correct search phrase
+     * containing symbols "\[]/^$.|?*+(){}"
+     * @param phrase for search
+     * @return new phrase for search
+     */
     static QString generateFilterWordsOnly(const QString &phrase) {
-        QString filter = phrase;
+        QString filter = QRegularExpression::escape(phrase);
 
-        if (filter.contains("\\")) {
-            filter.replace("\\", "\\\\");
+        QString symbols = {"\\[]/^$.|?*+(){}"};
 
-            if (filter.front() != '\\') {
+        if (filter != phrase) {
+            if (filter.left(1) != QLatin1String("\\")) {
                 filter = "\\b" + filter;
+            } else {
+                filter = "(^|\\s)" + filter;
             }
-            if (filter.back() != '\\') {
+            if (!symbols.contains(filter.right(1))) {
                 filter += "\\b";
+            } else {
+                filter += "($|\\s)";
             }
         } else {
             filter = QStringLiteral("\\b%1\\b").arg(filter);
         }
 
         return filter;
-    };
+    }
 };
 
 #endif //SEARCHTYPES_H

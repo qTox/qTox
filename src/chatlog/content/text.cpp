@@ -450,7 +450,7 @@ void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
         cursor.endEditBlock();
 
         QTextCharFormat format;
-        format.setBackground(QBrush(QColor("#ff7626")));
+        format.setBackground(QBrush(colorHighlight));
         cursor.mergeCharFormat(format);
 
         regenerate();
