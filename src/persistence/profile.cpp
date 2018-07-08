@@ -78,7 +78,7 @@ void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s)
     connect(core.get(), &Core::friendAvatarRemoved, this, &Profile::removeAvatar);
     connect(core.get(), &Core::friendAvatarData, this, &Profile::saveAvatar);
     connect(core.get(), &Core::fileAvatarOfferReceived, this, &Profile::onAvatarOfferReceived,
-            Qt::ConnectionType::BlockingQueuedConnection);
+            Qt::ConnectionType::QueuedConnection);
 }
 
 Profile::Profile(QString name, const QString& password, bool isNewProfile, const QByteArray& toxsave)
