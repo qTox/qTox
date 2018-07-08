@@ -47,6 +47,7 @@ void ToxLogger::onLogMessage(Tox *tox, TOX_LOG_LEVEL level, const char *file, ui
 
     switch (level) {
     case TOX_LOG_LEVEL_TRACE:
+        return; // trace level generates too much noise to enable by default
     case TOX_LOG_LEVEL_DEBUG:
     case TOX_LOG_LEVEL_INFO:
         qDebug() << logMsg;
