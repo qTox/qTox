@@ -154,6 +154,7 @@ private:
     AutoScrollDirection selectionScrollDir = NoDirection;
     int clickCount = 0;
     QPoint lastClickPos;
+    Qt::MouseButton lastClickButton;
 
     // worker vars
     int workerLastIndex = 0;
