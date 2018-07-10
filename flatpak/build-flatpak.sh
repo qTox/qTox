@@ -26,5 +26,5 @@ docker run --rm --privileged \
 # use the version number in the name when building a tag on Travis CI
 if [ -n "$TRAVIS_TAG" ]
 then
-    mv ./output/*.flatpak ./output/qTox-"$TRAVIS_TAG".flatpak
+    mv ./output/*.flatpak ./output/qTox-"$TRAVIS_TAG".x86_64.flatpak
 fi

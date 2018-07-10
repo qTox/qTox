@@ -47,5 +47,5 @@ docker run --rm \
 # use the version number in the name when building a tag on Travis CI
 if [ -n "$TRAVIS_TAG" ]
 then
-    mv ./output/*.AppImage ./output/qTox-"$TRAVIS_TAG".AppImage
+    mv ./output/*.AppImage ./output/qTox-"$TRAVIS_TAG".x86_64.AppImage
 fi
