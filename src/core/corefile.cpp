@@ -283,7 +283,7 @@ void CoreFile::removeFile(uint32_t friendId, uint32_t fileId)
 
 QString CoreFile::getCleanFileName(QString filename)
 {
-    QRegularExpression regex("[<>:\"/\\|?*]");
+    QRegularExpression regex{QStringLiteral(R"([<>:"/\\|?])")};
     filename.replace(regex, "_");
 
     return filename;
@@ -295,9 +295,9 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
 {
     Core* core = static_cast<Core*>(vCore);
     auto filename = ToxString(fname, fnameLen);
+    const ToxPk friendPk = core->getFriendPublicKey(friendId);
 
     if (kind == TOX_FILE_KIND_AVATAR) {
-        const ToxPk friendPk = core->getFriendPublicKey(friendId);
         if (!filesize) {
             qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
             // Avatars of size 0 means explicitely no avatar
@@ -318,7 +318,7 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
         if (cleanFileName != filename.getQString()) {
             qDebug() << QStringLiteral("Cleaned filename");
             filename = ToxString(cleanFileName);
-            emit core->fileNameChanged();
+            emit core->fileNameChanged(friendPk);
         } else {
             qDebug() << QStringLiteral("filename already clean");
         }
