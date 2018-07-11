@@ -184,7 +184,7 @@ signals:
     void fileTransferInfo(ToxFile file);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
     void fileTransferBrokenUnbroken(ToxFile file, bool broken);
-    void fileNameChanged();
+    void fileNameChanged(const ToxPk& friendPk);
 
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
