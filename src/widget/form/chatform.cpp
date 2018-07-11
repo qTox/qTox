@@ -233,8 +233,12 @@ void ChatForm::onSendTriggered()
     SendMessageStr(msgEdit->toPlainText());
     msgEdit->clear();
 }
-void ChatForm::onFileNameChanged()
+void ChatForm::onFileNameChanged(const ToxPk& friendPk)
 {
+    if(friendPk != f->getPublicKey()) {
+        return;
+    }
+
     QMessageBox::warning(this, tr("Filename contained illegal characters"),
                          tr("Illegal characters have been changed to _ \n"
                             "so you can save the file on windows."));

@@ -74,7 +74,7 @@ public slots:
     void onAvEnd(uint32_t friendId, bool error);
     void onAvatarChange(uint32_t friendId, const QPixmap& pic);
     void onAvatarRemoved(const ToxPk& friendPk);
-    void onFileNameChanged();
+    void onFileNameChanged(const ToxPk& friendPk);
 
 protected slots:
     void onSearchUp(const QString& phrase) override;
