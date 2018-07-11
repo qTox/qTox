@@ -41,13 +41,22 @@ readonly SQLCIPHER_BUILD_DIR="$BUILD_DIR"/sqlcipher
 # ldqt binary
 readonly LDQT_BIN="/usr/lib/x86_64-linux-gnu/qt5/bin/linuxdeployqt"
 readonly APT_FLAGS="-y --no-install-recommends"
+# snorenotify source
+readonly SNORE_GIT="https://github.com/KDE/snorenotify"
+# snorenotify build directory
+readonly SNORE_BUILD_DIR="$BUILD_DIR"/snorenotify
+
 # use multiple cores when building
 export MAKEFLAGS="-j$(nproc)"
 
 # Get packages
 apt-get update
 apt-get install $APT_FLAGS sudo ca-certificates wget build-essential fuse xxd \
-git g++ patchelf tclsh libssl-dev
+git patchelf tclsh libssl-dev cmake extra-cmake-modules build-essential \
+check checkinstall libavdevice-dev libexif-dev libgdk-pixbuf2.0-dev \
+libgtk2.0-dev libopenal-dev libopus-dev libqrencode-dev libqt5opengl5-dev \
+libqt5svg5-dev libsodium-dev libtool libvpx-dev libxss-dev \
+qt5-default qttools5-dev qttools5-dev-tools qtdeclarative5-dev
 
 # get version
 cd "$QTOX_SRC_DIR"
@@ -57,6 +66,17 @@ export VERSION=$(git rev-parse --short HEAD)
 
 # create build directory
 mkdir -p "$BUILD_DIR"
+
+# install snorenotify because it's not packaged
+cd "$BUILD_DIR"
+git clone "$SNORE_GIT" "$SNORE_BUILD_DIR"
+cd "$SNORE_BUILD_DIR"
+git checkout tags/v0.7.0
+# HACK: Kids, don't do this at your home system
+cmake -DCMAKE_INSTALL_PREFIX=/usr/lib/.
+make
+make install
+
 cd "$BUILD_DIR"
 
 # we need a custom built sqlcipher version because of a Debian bug
@@ -74,16 +94,19 @@ make install
 cp -r "$QTOX_SRC_DIR" "$QTOX_BUILD_DIR"
 cd "$QTOX_BUILD_DIR"
 
+./bootstrap.sh
+
 # ensure this directory is empty
 rm -rf ./_build
-
-# reuse for our purposes, pass flags to automatically install packages
-# APT_FLAGS for automatic install
-# True to not install sqlcipher
-./simple_make.sh "$APT_FLAGS" True
+mkdir -p ./_build
 
 # build dir of simple_make
 cd _build
+
+# need to build with -DDESKTOP_NOTIFICATIONS=True for snorenotify
+cmake -DDESKTOP_NOTIFICATIONS=True ../
+
+make
 
 make DESTDIR="$QTOX_APP_DIR" install ; find "$QTOX_APP_DIR"
 
@@ -128,7 +151,8 @@ unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH;
 
 readonly QTOX_DESKTOP_FILE="$QTOX_APP_DIR"/usr/local/share/applications/*.desktop
 
-eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs"
+eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs -extra-plugins=libsnore-qt5"
+
 eval "$LDQT_BIN $QTOX_DESKTOP_FILE -appimage"
 
 # Chmod since everything is root:root
