@@ -221,6 +221,12 @@ if (PLATFORM_EXTENSIONS)
   endif()
 endif()
 
+if (${DESKTOP_NOTIFICATIONS})
+    # snorenotify does only provide a cmake find module
+    find_package(LibsnoreQt5 0.7.0 REQUIRED)
+    set(ALL_LIBRARIES ${ALL_LIBRARIES} Snore::Libsnore)
+endif()
+
 add_definitions(
   -DLOG_TO_FILE=1
 )
