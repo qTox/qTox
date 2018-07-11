@@ -46,6 +46,7 @@
 | [sqlcipher]   | >= 3.2.0    |                                                          |
 | [pkg-config]  | >= 0.28     |                                                          |
 | [filteraudio] | >= 0.0.1    | optional dependency                                      |
+| [snorenotify] | >= 0.7.0    | optional dependency                                      |
 
 ## Optional dependencies
 
@@ -115,6 +116,16 @@ Disabled by default.
 | [Pango]           | >= 1.18   |
 
 To enable: `-DENABLE_APPINDICATOR=True`
+
+#### Snorenotify desktop notification backend
+
+Disabled by default
+
+| Name              | Version   |
+|-------------------|-----------|
+| [snorenotify]     | >= 0.7.0  |
+
+To enable: `-DDESKTOP_NOTIFICATIONS=True`
 
 
 ## Linux
@@ -829,3 +840,4 @@ Switches:
 [toxcore]: https://github.com/TokTok/c-toxcore/
 [filteraudio]: https://github.com/irungentoo/filter_audio
 [sonnet]: https://github.com/KDE/sonnet
+[snorenotify]: https://techbase.kde.org/Projects/Snorenotify

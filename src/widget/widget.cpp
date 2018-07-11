@@ -1357,6 +1357,9 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
         f->setEventFlag(true);
         widget->updateStatusLight();
         ui->friendList->trackWidget(widget);
+#if DESKTOP_NOTIFICATIONS
+        notifier.notifyFriendMessage();
+#endif
 
         if (contentDialog == nullptr) {
             if (hasActive) {
@@ -1394,6 +1397,9 @@ bool Widget::newGroupMessageAlert(int groupId, bool notify)
 
     g->setEventFlag(true);
     widget->updateStatusLight();
+#if DESKTOP_NOTIFICATIONS
+    notifier.notifyGroupMessage();
+#endif
 
     if (contentDialog == nullptr) {
         if (hasActive) {
@@ -1462,6 +1468,9 @@ void Widget::onFriendRequestReceived(const ToxPk& friendPk, const QString& messa
     if (addFriendForm->addFriendRequest(friendPk.toString(), message)) {
         friendRequestsUpdate();
         newMessageAlert(window(), isActiveWindow(), true, true);
+#if DESKTOP_NOTIFICATIONS
+        notifier.notifyFriendRequest();
+#endif
     }
 }
 
@@ -1706,6 +1715,9 @@ void Widget::onGroupInviteReceived(const GroupInvite& inviteInfo)
             ++unreadGroupInvites;
             groupInvitesUpdate();
             newMessageAlert(window(), isActiveWindow(), true, true);
+#if DESKTOP_NOTIFICATIONS
+            notifier.notifyGroupInvite();
+#endif
         }
     } else {
         qWarning() << "onGroupInviteReceived: Unknown groupchat type:" << confType;

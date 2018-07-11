@@ -32,6 +32,9 @@
 #include "src/core/core.h"
 #include "src/core/toxfile.h"
 #include "src/core/toxid.h"
+#if DESKTOP_NOTIFICATIONS
+#include "src/platform/desktop_notifications/desktopnotify.h"
+#endif
 
 #define PIXELS_TO_ACT 7
 
@@ -298,7 +301,7 @@ private:
     MaskablePixmapWidget* profilePicture;
     bool notify(QObject* receiver, QEvent* event);
     bool autoAwayActive = false;
-    QTimer *timer;
+    QTimer* timer;
     QRegExp nameMention, sanitizedNameMention;
     bool eventFlag;
     bool eventIcon;
@@ -316,6 +319,10 @@ private:
     QMap<uint32_t, GroupWidget*> groupWidgets;
     QMap<uint32_t, std::shared_ptr<GroupChatroom>> groupChatrooms;
     QMap<uint32_t, QSharedPointer<GroupChatForm>> groupChatForms;
+
+#if DESKTOP_NOTIFICATIONS
+    DesktopNotify notifier;
+#endif
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;
