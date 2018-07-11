@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# additional flags for apt-get, used for CI
-readonly APT_FLAGS=$1
-readonly WITHOUT_SQLCIPHER=$2
-
 set -eu -o pipefail
 
 apt_install() {
@@ -32,13 +28,10 @@ apt_install() {
         qt5-default
         qttools5-dev
         qttools5-dev-tools
+        libsqlcipher-dev
     )
 
-    if [ "$WITHOUT_SQLCIPHER" != "True" ]; then
-        apt_packages+=("libsqlcipher-dev")
-    fi
-
-    sudo apt-get install $APT_FLAGS "${apt_packages[@]}"
+    sudo apt-get install "${apt_packages[@]}"
 }
 
 pacman_install() {
