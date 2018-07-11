@@ -14,6 +14,7 @@ option(AUTOUPDATE "Enable the auto updater" OFF)
 option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
 option(ASAN "Compile with AddressSanitizer" OFF)
+option(DESKTOP_NOTIFICATIONS "Use snorenotify for desktop notifications" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug CACHE STRING "Options are: None, Debug, Release, RelWithDebInfo, MinSizeRel." FORCE)
@@ -604,6 +605,17 @@ if(${AUTOUPDATE} AND (WIN32 OR APPLE))
         src/net/autoupdate.cpp
         src/net/autoupdate.h)
     message(STATUS "using autoupdater")
+endif()
+
+if (${DESKTOP_NOTIFICATIONS})
+    add_definitions(-DDESKTOP_NOTIFICATIONS=1)
+    set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+        src/platform/desktop_notifications/desktopnotify.cpp
+        src/platform/desktop_notifications/desktopnotify.h)
+    message(STATUS "using desktop notifications")
+else()
+    add_definitions(-DDESKTOP_NOTIFICATIONS=0)
+    message(STATUS "not using desktop notifications")
 endif()
 
 if (MINGW)
