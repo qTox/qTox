@@ -43,6 +43,7 @@ QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 FILTERAUIO_DIR="${MAIN_DIR}/filter_audio" # Change to Git location
+SNORE_DIR="${MAIN_DIR}/snorenotify" # Change to Git location
 
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
@@ -173,11 +174,22 @@ install() {
 
     brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet
 
-    fcho "Cloning filter_audio ... "
+    fcho "Cloning filter_audio ..."
     git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio "$FILTERAUIO_DIR"
     cd "$FILTERAUIO_DIR"
-    fcho "Installing filter_audio ... "
+    fcho "Installing filter_audio ..."
     make install PREFIX="$LIB_INSTALL_PREFIX"
+
+    fcho "Cloning snorenotify ..."
+
+    git clone https://github.com/KDE/snorenotify "$SNORE_DIR"
+    cd "$SNORE_DIR"
+    git checkout tags/v0.7.0
+    cmake -DCMAKE_INSTALL_PREFIX="$LIB_INSTALL_PREFIX" -DDESKTOP_NOTIFICATIONS=True .
+    make
+    make install
+
+    fcho "Installing snorenotify ..."
 
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
     QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
