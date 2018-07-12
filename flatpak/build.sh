@@ -14,8 +14,6 @@ readonly BUILD_DIR="/build"
 readonly QTOX_BUILD_DIR="$BUILD_DIR"/qtox
 readonly FP_BUILD_DIR="$BUILD_DIR"/flatpak
 readonly APT_FLAGS="-y --no-install-recommends"
-# flatpak manifest file
-readonly QTOX_MANIFEST="https://raw.githubusercontent.com/flathub/io.github.qtox.qTox/master/io.github.qtox.qTox.json"
 # flatpak manifest download location
 readonly MANIFEST_FILE="flatpak/io.github.qtox.qTox.json"
 # directory containing necessary patches
@@ -40,18 +38,6 @@ cd "$BUILD_DIR"
 # copy qtox source
 cp -r "$QTOX_SRC_DIR" "$QTOX_BUILD_DIR"
 cd "$QTOX_BUILD_DIR"
-
-# download manifest file if not in repo, this allows an easy local override
-if [ ! -f "$MANIFEST_FILE" ];
-then
-  wget -O "$MANIFEST_FILE" "$QTOX_MANIFEST"
-fi
-
-# build from the local build directory instead of the git repo
-patch "$MANIFEST_FILE" < "$PATCH_DIR"/build_directory.patch
-
-# this patch should contain all other patches needed
-patch "$MANIFEST_FILE" < "$PATCH_DIR"/ci_fixes.patch
 
 # create flatpak build directory
 mkdir -p "$FP_BUILD_DIR"
