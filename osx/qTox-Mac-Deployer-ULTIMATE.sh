@@ -41,6 +41,7 @@ QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
+SNORE_DIR="${MAIN_DIR}/snorenotify" # Change to Git location
 
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
@@ -206,6 +207,17 @@ install() {
     then
         kill $DOT_PID
     fi
+
+    fcho "Cloning snorenotify ..."
+
+    git clone https://github.com/KDE/snorenotify "$SNORE_DIR"
+    cd "$SNORE_DIR"
+    git checkout tags/v0.7.0
+    cmake -DCMAKE_INSTALL_PREFIX="$LIB_INSTALL_PREFIX" -DDESKTOP_NOTIFICATIONS=True .
+    make
+    make install
+
+    fcho "Installing snorenotify ..."
 
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
     QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
