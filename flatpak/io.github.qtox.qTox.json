@@ -1,0 +1,157 @@
+{
+    "app-id": "io.github.qtox.qTox",
+    "runtime": "org.kde.Platform",
+    "sdk": "org.kde.Sdk",
+    "runtime-version": "5.10",
+    "command": "qtox",
+    "rename-icon": "qtox",
+    "finish-args": [
+        "--share=network",
+        "--socket=pulseaudio",
+        "--socket=wayland",
+        "--socket=x11",
+        "--share=ipc",
+        "--filesystem=xdg-desktop",
+        "--filesystem=xdg-documents",
+        "--filesystem=xdg-download",
+        "--filesystem=xdg-music",
+        "--filesystem=xdg-pictures",
+        "--filesystem=xdg-videos",
+        "--filesystem=/media",
+        "--device=all"
+    ],
+    "build-options": {
+        "cflags": "-O3 -DSQLITE_HAS_CODEC",
+        "cxxflags": "-O3"
+    },
+    "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/share/man"
+    ],
+    "modules": [
+        {
+            "name": "libv4l2",
+            "config-opts":
+            [
+                "--disable-libdvbv5",
+                "--disable-v4l-utils",
+                "--disable-qv4l2"
+            ],
+            "sources":
+            [
+                {
+                    "type": "archive",
+                    "url": "https://linuxtv.org/downloads/v4l-utils/v4l-utils-1.14.2.tar.bz2",
+                    "sha256" : "e6b962c4b1253cf852c31da13fd6b5bb7cbe5aa9e182881aec55123bae680692"
+                }
+            ]
+        },
+        {
+            "name": "ffmpeg",
+            "config-opts": [
+                "--disable-everything",
+                "--enable-gpl",
+                "--disable-debug",
+                "--enable-optimizations",
+                "--enable-shared",
+                "--disable-programs",
+                "--disable-protocols",
+                "--disable-doc",
+                "--disable-avfilter",
+                "--disable-avresample",
+                "--disable-filters",
+                "--disable-iconv",
+                "--disable-network",
+                "--disable-postproc",
+                "--enable-libv4l2",
+                "--enable-indev=v4l2",
+                "--enable-libxcb",
+                "--enable-indev=xcbgrab",
+                "--enable-demuxer=h264",
+                "--enable-demuxer=mjpeg",
+                "--enable-parser=h264",
+                "--enable-parser=mjpeg",
+                "--enable-decoder=h264",
+                "--enable-decoder=mjpeg",
+                "--enable-decoder=rawvideo"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://ffmpeg.org/releases/ffmpeg-4.0.1.tar.bz2",
+                    "sha256" : "7ee591b1e7fb66f055fa514fbd5d98e092ddb3dbe37d2e50ea5c16ab51c21670"
+                }
+            ]
+        },
+        {
+            "name": "sqlcipher",
+            "rm-configure": true,
+            "config-opts": [
+                "--enable-tempstore=yes",
+                "--disable-tcl"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/sqlcipher/sqlcipher",
+                    "tag": "v3.4.2",
+                    "commit": "c6f709fca81c910ba133aaf6330c28e01ccfe5f8",
+                    "disable-fsckobjects" : true
+                },
+                {
+                    "type": "script",
+                    "dest-filename": "autogen.sh",
+                    "commands": [
+                        "AUTOMAKE=\"automake --foreign\" autoreconf -vfi"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "libsodium",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/jedisct1/libsodium",
+                    "tag": "1.0.16",
+                    "commit": "675149b9b8b66ff44152553fb3ebf9858128363d"
+                }
+            ]
+        },
+        {
+            "name": "libqrencode",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/fukuchi/libqrencode",
+                    "tag": "v4.0.2",
+                    "commit": "59ee597f913fcfda7a010a6e106fbee2595f68e4"
+                }
+            ]
+        },
+        {
+            "name": "c-toxcore",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/toktok/c-toxcore",
+                    "tag": "v0.2.3",
+                    "commit": "ae7899cab8104fa3c3078a3e61ddfa58a826e39a"
+                }
+            ]
+        },
+        {
+            "name": "qTox",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "/build/qtox/"
+                }
+            ]
+        }
+    ]
+}
+
