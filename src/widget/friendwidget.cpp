@@ -25,7 +25,6 @@
 
 #include "src/core/core.h"
 #include "src/friendlist.h"
-#include "src/grouplist.h"
 #include "src/model/about/aboutfriend.h"
 #include "src/model/chatroom/friendchatroom.h"
 #include "src/model/friend.h"
@@ -39,7 +38,6 @@
 
 #include <QApplication>
 #include <QBitmap>
-#include <QCollator>
 #include <QContextMenuEvent>
 #include <QDebug>
 #include <QDrag>
@@ -50,10 +48,6 @@
 
 #include <cassert>
 #include <memory>
-
-namespace {
-constexpr auto MAX_NAME_LENGTH = 30;
-}
 
 /**
  * @class FriendWidget
@@ -131,14 +125,10 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     connect(newGroupAction, &QAction::triggered, chatroom, &FriendChatroom::inviteToNewGroup);
     inviteMenu->addSeparator();
 
-    for (const auto group : GroupList::getAllGroups()) {
-        auto name = group->getName();
-        if (name.length() > MAX_NAME_LENGTH) {
-            name = name.left(MAX_NAME_LENGTH).trimmed() + "..";
-        }
-        const auto groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(name));
+    for (const auto group : chatroom->getGroups()) {
+        const auto groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(group.name));
         connect(groupAction, &QAction::triggered, [=]() {
-            chatroom->inviteFriend(friendId, group);
+            chatroom->inviteFriend(group.group);
         });
     }
 
@@ -160,26 +150,11 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     circleMenu->addSeparator();
 
-    QList<QAction*> circleActionList;
-    for (int i = 0; i < s.getCircleCount(); ++i) {
-        if (i == circleId) {
-            continue;
-        }
-
-        const auto name = s.getCircleName(i);
-        QAction* action = new QAction(tr("Move  to circle \"%1\"").arg(name), circleMenu);
-        connect(action, &QAction::triggered, [=]() { moveToCircle(i); });
-        circleActionList.push_back(action);
+    for (const auto circle : chatroom->getOtherCircles()) {
+        QAction* action = new QAction(tr("Move  to circle \"%1\"").arg(circle.name), circleMenu);
+        connect(action, &QAction::triggered, [=]() { moveToCircle(circle.circleId); });
+        circleMenu->addAction(action);
     }
-
-    std::sort(circleActionList.begin(), circleActionList.end(),
-              [](const QAction* lhs, const QAction* rhs) -> bool {
-                  QCollator collator;
-                  collator.setNumericMode(true);
-                  return collator.compare(lhs->text(), rhs->text()) < 0;
-              });
-
-    circleMenu->addActions(circleActionList);
 
     const auto setAlias = menu.addAction(tr("Set alias..."));
     connect(setAlias, &QAction::triggered, nameLabel, &CroppingLabel::editBegin);
@@ -187,12 +162,12 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     menu.addSeparator();
     auto autoAccept =
         menu.addAction(tr("Auto accept files from this friend", "context menu entry"));
-    const auto dir = s.getAutoAcceptDir(pk);
     autoAccept->setCheckable(true);
-    autoAccept->setChecked(!dir.isEmpty());
+    autoAccept->setChecked(!chatroom->autoAcceptEnabled());
     connect(autoAccept, &QAction::triggered, this, &FriendWidget::changeAutoAccept);
     menu.addSeparator();
 
+    // TODO: move to model
     if (!contentDialog || !contentDialog->hasFriendWidget(friendId, this)) {
         const auto removeAction =
             menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
@@ -219,11 +194,6 @@ void FriendWidget::removeChatWindow()
     const auto friendId = frnd->getId();
     ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
     contentDialog->removeFriend(friendId);
-}
-
-void FriendWidget::inviteFriend(uint32_t friendId, const Group* group)
-{
-    Core::getInstance()->groupInviteFriend(friendId, group->getId());
 }
 
 namespace {

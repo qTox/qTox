@@ -59,7 +59,6 @@ protected:
 
 private slots:
     void removeChatWindow();
-    void inviteFriend(uint32_t friendId, const Group* group);
     void moveToNewCircle();
     void removeFromCircle();
     void moveToCircle(int circleId);

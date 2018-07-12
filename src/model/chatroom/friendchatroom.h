@@ -22,9 +22,22 @@
 
 #include <QObject>
 #include <QString>
+#include <QVector>
 
 class Friend;
 class Group;
+
+struct GroupToDisplay
+{
+    QString name;
+    Group* group;
+};
+
+struct CircleToDisplay
+{
+    QString name;
+    int circleId;
+};
 
 class FriendChatroom : public QObject
 {
@@ -43,12 +56,15 @@ public slots:
     QString getCircleName() const;
 
     void inviteToNewGroup();
-    void inviteFriend(uint32_t friendId, const Group* group);
+    void inviteFriend(const Group* group);
 
     bool autoAcceptEnabled() const;
     QString getAutoAcceptDir() const;
     void disableAutoAccept();
     void setAutoAcceptDir(const QString& dir);
+
+    QVector<GroupToDisplay> getGroups() const;
+    QVector<CircleToDisplay> getOtherCircles() const;
 
 signals:
     void activeChanged(bool activated);
