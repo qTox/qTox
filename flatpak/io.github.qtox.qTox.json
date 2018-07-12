@@ -109,6 +109,18 @@
             ]
         },
         {
+            "name": "snorenotify",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/KDE/snorenotify",
+                    "tag": "v0.7.0",
+                    "commit": "9124e016f4f7615af5e8fca962994f7ed85de3cc"
+                }
+            ]
+        },
+        {
             "name": "libsodium",
             "sources": [
                 {
