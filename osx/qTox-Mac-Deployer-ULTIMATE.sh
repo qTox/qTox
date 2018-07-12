@@ -41,6 +41,8 @@ QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
+SNORE_DIR="${MAIN_DIR}/snorenotify" # Change to Git location
+SNORE_VERSION=0.7.0
 
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
@@ -79,6 +81,46 @@ build_toxcore() {
     fcho "Installing toxcore."
     make install > /dev/null || exit 1
 }
+
+download_snore() {
+    if [[ -e $SNORE_DIR/.git/index ]]
+    then
+        fcho "snorenotify git repo already in place!"
+        cd $SNORE_DIR
+        git fetch --tags origin ${SNORE_VERSION} --depth=1
+        git reset --hard ${SNORE_VERSION}
+    else
+        fcho "Cloning snorenotify..."
+        git clone --branch "v${SNORE_VERSION}" --depth=1 https://github.com/KDE/snorenotify "$SNORE_DIR"
+    fi
+    fcho "Applying compilation fix patch"
+    # apple clang fix needed to compile on newer versions, but not yet released
+    git fetch origin ad9ca8c0c6a6a8de982b842c639d3c6f276d8d21
+    git cherry-pick ad9ca8c0c6a6a8de982b842c639d3c6f276d8d21
+}
+
+build_snore() {
+    echo "Starting snorenotify build and install"
+    cd $SNORE_DIR
+    mkdir -p _build && cd _build
+    echo "Now working in: ${PWD}"
+
+    [[ $TRAVIS != true ]] \
+    && sleep 3
+
+    fcho "Configuring..."
+    cmake -DCMAKE_INSTALL_PREFIX="$LIB_INSTALL_PREFIX" \
+          -DCMAKE_PREFIX_PATH="$(brew --prefix qt5)" \
+          -DBUILD_daemon=OFF \
+          -DBUILD_settings=OFF \
+          -DBUILD_snoresend=OFF \
+          ..
+    fcho "Compiling snorenotify."
+    make /dev/null || exit 1
+    fcho "Installing snorenotify."
+    make install > /dev/null || exit 1
+}
+
 
 install() {
     fcho "=============================="
@@ -163,12 +205,16 @@ install() {
         fi
     fi
 
+    if [[ $TRAVIS = false ]]
+    then
+        fcho "If all went well you should now have all the tools needed to compile qTox!"
+    fi
+
     # toxcore build
     if [[ $TRAVIS = true ]]
     then
         build_toxcore
     else
-        fcho "If all went well you should now have all the tools needed to compile qTox!"
         read -r -p "Would you like to install toxcore now? [y/N] " response
         if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
         then
@@ -187,24 +233,24 @@ install() {
     fi
 
     # needed for kf5-sonnet
-    brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git
+    brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git --force-auto-update
 
-    # brew install qt5 might take a long time to build Qt. Travis kills us if
-    # we don't output for 10 minutes. Travis also kills us if we output too much,
-    # so verbose isn't an option. So just output some dots...
+    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet
+
+    download_snore
+
+    # snorenotify build
     if [[ $TRAVIS = true ]]
     then
-        echo "outputting dots to keep travis from killing us..."
-        while true; do
-            echo -n "."
-            sleep 10
-        done &
-        DOT_PID=$!
-    fi
-    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft #kf5-sonnet
-    if [[ $TRAVIS = true ]]
-    then
-        kill $DOT_PID
+        build_snore
+    else
+        read -r -p "Would you like to install snorenotify now? [y/N] " response
+        if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+        then
+            build_snore
+        else
+            fcho "You can simply use the -u command and say [Yes/n] when prompted"
+        fi
     fi
 
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
@@ -215,24 +261,34 @@ install() {
     sudo ./bootstrap-osx.sh
 }
 
-update() {
-    fcho "------------------------------"
-    fcho "Starting update process ..."
-    #First update Toxcore from git
-    cd $TOXCORE_DIR
+update_repo() {
+    repo_path=$1
+    project_name=$2
+    build_func=$3
+
+    cd $repo_path
     fcho "Now in ${PWD}"
     fcho "Pulling ..."
     # make sure that pull can be applied, i.e. clean up files from any
     # changes that could have been applied to them
     git checkout -f
     git pull
-    read -r -p "Did Toxcore update from git? [y/N] " response
+    read -r -p "Did $project_name update from git? [y/N] " response
     if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
     then
-        build_toxcore
+        $build_func
     else
         fcho "Moving on!"
     fi
+}
+
+update() {
+    fcho "------------------------------"
+    fcho "Starting update process ..."
+
+    update_repo TOXCORE_DIR Toxcore build_toxcore
+
+    update_repo SNORE_DIR Snorenotify build_snore
 
     #Now let's update qTox!
     cd $QTOX_DIR
@@ -261,7 +317,6 @@ build() {
     cd $BUILD_DIR
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
-    export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
 
     if [[ $TRAVIS = true ]]
     then
@@ -269,7 +324,15 @@ build() {
     else
         STRICT_OPTIONS="OFF"
     fi
-    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
+
+    cmake -H$QTOX_DIR -B. \
+        -DCMAKE_PREFIX_PATH="$(brew --prefix qt5);${LIB_INSTALL_PREFIX}" \
+        -DUPDATE_CHECK=ON \
+        -DSPELL_CHECK=OFF \
+        -DDESKTOP_NOTIFICATIONS=ON \
+        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+        -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
+
     make -j$(sysctl -n hw.ncpu)
 }
 
@@ -293,6 +356,9 @@ bootstrap() {
 
     #Toxcore
     build_toxcore
+
+    #Snore
+    build_snore
 
     #Boot Strap
     fcho "Running: sudo ${QTOX_DIR}/bootstrap-osx.sh"
