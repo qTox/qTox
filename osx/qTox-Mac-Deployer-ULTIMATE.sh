@@ -167,7 +167,11 @@ install() {
     else
         brew install cmake
     fi
-    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft
+
+    # needed for kf5-sonnet
+    brew tap kde-mac/kde
+
+    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet
 
     fcho "Cloning filter_audio ... "
     git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio "$FILTERAUIO_DIR"
@@ -230,8 +234,7 @@ build() {
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
     export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
-# Spell check on MaxOS currently not supported
-    cmake -H$QTOX_DIR -B. -DSPELL_CHECK=OFF
+    cmake -H$QTOX_DIR -B.
     make -j$(sysctl -n hw.ncpu)
 }
 
