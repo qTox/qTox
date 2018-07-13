@@ -214,6 +214,13 @@
               </item>
              </layout>
             </item>
+            <item>
+             <widget class="QCheckBox" name="desktopNotify">
+              <property name="text">
+               <string>Notify via desktop notifications</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
