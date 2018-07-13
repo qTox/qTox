@@ -49,6 +49,7 @@ private slots:
     void on_textStyleComboBox_currentTextChanged();
     void on_useEmoticons_stateChanged();
     void on_notify_stateChanged();
+    void on_desktopNotify_stateChanged();
     void on_notifySound_stateChanged();
     void on_busySound_stateChanged();
     void on_showWindow_stateChanged();
@@ -63,7 +64,6 @@ private slots:
 
     void on_txtChatFont_currentFontChanged(const QFont& f);
     void on_txtChatFontSize_valueChanged(int arg1);
-
 
 private:
     void retranslateUi();

@@ -1,5 +1,7 @@
 #include "desktopnotify.h"
 
+#include <src/persistence/settings.h>
+
 #include <libsnore/snore.h>
 
 #include <QDebug>
@@ -31,6 +33,11 @@ DesktopNotify::NotificationPtr DesktopNotify::createNotification(const QString& 
 
 void DesktopNotify::notifyGroupMessage()
 {
+    const Settings& s = Settings::getInstance();
+    if(!(s.getNotify() && s.getDesktopNotify())) {
+        return;
+    }
+
     const QString text{};
     const QString title = tr("New group message received");
     NotificationPtr newNote = createNotification(title, text);
@@ -43,6 +50,11 @@ void DesktopNotify::notifyGroupMessage()
 
 void DesktopNotify::notifyFriendRequest()
 {
+    const Settings& s = Settings::getInstance();
+    if(!(s.getNotify() && s.getDesktopNotify())) {
+        return;
+    }
+
     const QString title = tr("New message received");
     const QString text{};
     NotificationPtr newNote = createNotification(title, text);
@@ -56,6 +68,11 @@ void DesktopNotify::notifyFriendRequest()
 
 void DesktopNotify::notifyGroupInvite()
 {
+    const Settings& s = Settings::getInstance();
+    if(!(s.getNotify() && s.getDesktopNotify())) {
+        return;
+    }
+
     const QString title = tr("New message received");
     const QString text{};
     NotificationPtr newNote = createNotification(title, text);
@@ -69,6 +86,11 @@ void DesktopNotify::notifyGroupInvite()
 
 void DesktopNotify::notifyFriendMessage()
 {
+    const Settings& s = Settings::getInstance();
+    if(!(s.getNotify() && s.getDesktopNotify())) {
+        return;
+    }
+
     const QString title = tr("New message received");
     const QString text{};
     NotificationPtr newNote = createNotification(title, text);
