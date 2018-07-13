@@ -49,6 +49,7 @@ private slots:
     void on_textStyleComboBox_currentTextChanged();
     void on_useEmoticons_stateChanged();
     void on_notify_stateChanged();
+    void on_desktopNotify_stateChanged();
     void on_notifySound_stateChanged();
     void on_busySound_stateChanged();
     void on_showWindow_stateChanged();
