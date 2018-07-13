@@ -70,6 +70,25 @@ Some of them are:
 * [Translating, it's easy]
 * [Reviewing and testing pull requests] – you don't need to be able to code to
   do that :wink:
+* Take a task from our Roadmap below
+
+### Roadmap
+
+Currently qTox is under a feature freeze to clean up our codebase and tools.
+During this time we want to prepare qTox for upcoming new features of toxcore.
+
+The next steps are:
+
+
+* remove support for toxcore < 0.2.0
+* move all toxcore abstractions into their own subproject
+* write basic tests for this Core
+* format the code base
+* rework our TravisCI setup for faster PR checks
+* rethink our Issue tracker
+
+The current state is tracked in the [Code cleanup] project.
+
 
 
 ### Screenshots
@@ -169,3 +188,4 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 [Translating, it's easy]: /translations/README.md
 [User Manual]: /doc/user_manual_en.md
 [voice it in the issues that need it]: https://github.com/qTox/qTox/labels/I-feedback-wanted
+[Code cleanup]: https://github.com/qTox/qTox/projects/3?fullscreen=true
