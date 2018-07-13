@@ -97,7 +97,6 @@ private:
     QFont defFont;
     QString defStyleSheet;
     QColor color;
-    const QColor colorHighlight{"#ff7626"};
 };
 
 #endif // TEXT_H

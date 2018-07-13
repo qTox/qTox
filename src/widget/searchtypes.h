@@ -49,18 +49,18 @@ public:
     static QString generateFilterWordsOnly(const QString &phrase) {
         QString filter = QRegularExpression::escape(phrase);
 
-        QString symbols = {"\\[]/^$.|?*+(){}"};
+        const QString symbols = QStringLiteral("\\[]/^$.|?*+(){}");
 
         if (filter != phrase) {
             if (filter.left(1) != QLatin1String("\\")) {
-                filter = "\\b" + filter;
+                filter = QLatin1String("\\b") + filter;
             } else {
-                filter = "(^|\\s)" + filter;
+                filter = QLatin1String("(^|\\s)") + filter;
             }
             if (!symbols.contains(filter.right(1))) {
-                filter += "\\b";
+                filter += QLatin1String("\\b");
             } else {
-                filter += "($|\\s)";
+                filter += QLatin1String("($|\\s)");
             }
         } else {
             filter = QStringLiteral("\\b%1\\b").arg(filter);

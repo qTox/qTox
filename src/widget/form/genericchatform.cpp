@@ -540,7 +540,7 @@ void GenericChatForm::addSystemDateMessage()
 QDate GenericChatForm::getDate(const ChatLine::Ptr &chatLine) const
 {
     if (chatLine) {
-        Timestamp* timestamp = qobject_cast<Timestamp*>(chatLine->getContent(2));
+        Timestamp* const timestamp = qobject_cast<Timestamp*>(chatLine->getContent(2));
 
         if (timestamp) {
             return timestamp->getTime().date();
@@ -589,20 +589,26 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
     if (parameter.period == PeriodSearch::WithTheFirst) {
         startLine = 0;
     } else if (parameter.period == PeriodSearch::AfterDate) {
-        for (int i = 0; i < lines.size(); ++i) {
-            auto d = getDate(lines[i]);
-            if (d.isValid() && parameter.date <= d) {
-                startLine = i;
-                break;
-            }
+        auto lambda = [=](const ChatLine::Ptr& item) {
+            auto d = getDate(item);
+            return d.isValid() && parameter.date <= d;
+          };
+
+        auto find = std::find_if(lines.begin(), lines.end(), lambda);
+
+        if (find != lines.end()) {
+            startLine = static_cast<int>(std::distance(lines.begin(), find));
         }
     } else if (parameter.period == PeriodSearch::BeforeDate) {
-        for (int i = lines.size() - 1; i >= 0; --i) {
-            auto d = getDate(lines[i]);
-            if (d.isValid() && parameter.date >= d) {
-                startLine = i;
-                break;
-            }
+        auto lambda = [=](const ChatLine::Ptr& item) {
+            auto d = getDate(item);
+            return d.isValid() && parameter.date >= d;
+          };
+
+        auto find = std::find_if(lines.rbegin(), lines.rend(), lambda);
+
+        if (find != lines.rend()) {
+            startLine = static_cast<int>(std::distance(find, lines.rend())) - 1;
         }
     }
 

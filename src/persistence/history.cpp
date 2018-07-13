@@ -325,9 +325,9 @@ QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk
  */
 QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase, const ParameterSearch& parameter)
 {
-    QList<QDateTime> counts;
-    auto rowCallback = [&counts](const QVector<QVariant>& row) {
-        counts.append(QDateTime::fromMSecsSinceEpoch(row[0].toLongLong()));
+    QDateTime result;
+    auto rowCallback = [&result](const QVector<QVariant>& row) {
+        result = QDateTime::fromMSecsSinceEpoch(row[0].toLongLong());
     };
 
     phrase.replace("'", "''");
@@ -389,11 +389,8 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
             .arg(period);
 
     db->execNow({queryText, rowCallback});
-    if (!counts.isEmpty()) {
-        return counts[0];
-    }
 
-    return QDateTime();
+    return result;
 }
 
 /**
@@ -403,9 +400,9 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
  */
 QDateTime History::getStartDateChatHistory(const QString &friendPk)
 {
-    QList<QDateTime> counts;
-    auto rowCallback = [&counts](const QVector<QVariant>& row) {
-        counts.append(QDateTime::fromMSecsSinceEpoch(row[0].toLongLong()));
+    QDateTime result;
+    auto rowCallback = [&result](const QVector<QVariant>& row) {
+        result = QDateTime::fromMSecsSinceEpoch(row[0].toLongLong());
     };
 
     QString queryText =
@@ -418,11 +415,7 @@ QDateTime History::getStartDateChatHistory(const QString &friendPk)
 
     db->execNow({queryText, rowCallback});
 
-    if (!counts.isEmpty()) {
-        return counts[0];
-    }
-
-    return QDateTime();
+    return result;
 }
 
 /**

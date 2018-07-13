@@ -29,13 +29,6 @@
 #include <QMetaObject>
 #include <QMutexLocker>
 
-/// The two following defines are required to use SQLCipher
-/// They are used by the sqlite3.h header
-#define SQLITE_HAS_CODEC
-#define SQLITE_TEMP_STORE 2
-
-#include <sqlite3.h>
-
 
 /**
  * @class RawDatabase
