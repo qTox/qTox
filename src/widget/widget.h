@@ -54,6 +54,7 @@ class FriendWidget;
 class GenericChatroomWidget;
 class Group;
 class GroupChatForm;
+class GroupChatroom;
 class GroupInvite;
 class GroupInviteForm;
 class GroupWidget;
@@ -309,6 +310,7 @@ private:
     QMap<uint32_t, ChatForm*> chatForms;
 
     QMap<uint32_t, GroupWidget*> groupWidgets;
+    QMap<uint32_t, GroupChatroom*> groupChatrooms;
     QMap<uint32_t, GroupChatForm*> groupChatForms;
 
 #ifdef Q_OS_MAC

@@ -31,6 +31,16 @@ Friend* FriendChatroom::getFriend()
     return frnd;
 }
 
+Contact* FriendChatroom::getContact()
+{
+    return frnd;
+}
+
+bool FriendChatroom::getCompact() const
+{
+    return Settings::getInstance().getCompactLayout();
+}
+
 void FriendChatroom::setActive(bool _active)
 {
     if (active != _active) {

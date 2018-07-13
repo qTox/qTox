@@ -39,6 +39,7 @@ class FriendWidget;
 class GenericChatForm;
 class GenericChatroomWidget;
 class Group;
+class GroupChatroom;
 class GroupWidget;
 class QSplitter;
 class QVBoxLayout;
@@ -53,7 +54,7 @@ public:
     ~ContentDialog() override;
 
     FriendWidget* addFriend(FriendChatroom* chatroom, GenericChatForm* form);
-    GroupWidget* addGroup(const Group* g, GenericChatForm* form);
+    GroupWidget* addGroup(GroupChatroom* chatroom, GenericChatForm* form);
     void removeFriend(int friendId);
     void removeGroup(int groupId);
     bool hasFriendWidget(int friendId, const GenericChatroomWidget* chatroomWidget) const;

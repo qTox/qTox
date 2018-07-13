@@ -165,10 +165,9 @@ ContentDialog::~ContentDialog()
 
 FriendWidget* ContentDialog::addFriend(FriendChatroom* chatroom, GenericChatForm* form)
 {
-    auto compact = Settings::getInstance().getCompactLayout();
     auto frnd = chatroom->getFriend();
     auto friendId = frnd->getId();
-    auto friendWidget = new FriendWidget(chatroom, compact);
+    auto friendWidget = new FriendWidget(chatroom);
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
     friendChatForms[friendId] = form;
 
@@ -189,12 +188,11 @@ FriendWidget* ContentDialog::addFriend(FriendChatroom* chatroom, GenericChatForm
     return friendWidget;
 }
 
-GroupWidget* ContentDialog::addGroup(const Group* g, GenericChatForm* form)
+GroupWidget* ContentDialog::addGroup(GroupChatroom* chatroom, GenericChatForm* form)
 {
+    const auto g = chatroom->getGroup();
     const auto groupId = g->getId();
-    const auto name = g->getName();
-    const auto compact = Settings::getInstance().getCompactLayout();
-    GroupWidget* groupWidget = new GroupWidget(groupId, name, compact);
+    GroupWidget* groupWidget = new GroupWidget(chatroom);
     groupLayout.addSortedWidget(groupWidget);
     groupChatForms[groupId] = form;
 

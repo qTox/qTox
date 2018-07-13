@@ -29,7 +29,7 @@ class FriendWidget : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
-    FriendWidget(FriendChatroom* chatform, bool compact);
+    FriendWidget(FriendChatroom* chatform);
     void contextMenuEvent(QContextMenuEvent* event) override final;
     void setAsActiveChatroom() override final;
     void setAsInactiveChatroom() override final;

@@ -52,6 +52,7 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/model/chatroom/friendchatroom.h"
+#include "src/model/chatroom/groupchatroom.h"
 #include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/grouplist.h"
@@ -984,9 +985,8 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     s.updateFriendAddress(friendPk.toString());
 
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
-    bool compact = s.getCompactLayout();
     auto chatroom = new FriendChatroom(newfriend);
-    auto widget = new FriendWidget(chatroom, compact);
+    auto widget = new FriendWidget(chatroom);
     auto history = Nexus::getProfile()->getHistory();
     auto friendForm = new ChatForm(newfriend, history);
 
@@ -1302,7 +1302,8 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
     }
 
     auto chatForm = groupChatForms[groupId];
-    auto groupWidget = dialog->addGroup(group, chatForm);
+    auto chatroom = groupChatrooms[groupId];
+    auto groupWidget = dialog->addGroup(chatroom, chatForm);
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
     auto removeGroup = QOverload<int>::of(&Widget::removeGroup);
 #else
@@ -1916,11 +1917,11 @@ Group* Widget::createGroup(int groupId)
 
     bool enabled = coreAv->isGroupAvEnabled(groupId);
     Group* newgroup = GroupList::addGroup(groupId, groupName, enabled, core->getUsername());
-    bool compact = Settings::getInstance().getCompactLayout();
-    GroupWidget* widget = new GroupWidget(groupId, groupName, compact);
-    groupWidgets[groupId] = widget;
-
+    auto chatroom = new GroupChatroom(newgroup);
+    auto widget = new GroupWidget(chatroom);
     auto form = new GroupChatForm(newgroup);
+    groupWidgets[groupId] = widget;
+    groupChatrooms[groupId] = chatroom;
     groupChatForms[groupId] = form;
 
     contactListWidget->addGroupWidget(widget);

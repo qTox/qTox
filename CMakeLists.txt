@@ -272,8 +272,11 @@ set(${PROJECT_NAME}_SOURCES
   src/model/about/aboutfriend.cpp
   src/model/about/aboutfriend.h
   src/model/about/iaboutfriend.h
+  src/model/chatroom/chatroom.h
   src/model/chatroom/friendchatroom.cpp
   src/model/chatroom/friendchatroom.h
+  src/model/chatroom/groupchatroom.cpp
+  src/model/chatroom/groupchatroom.h
   src/model/contact.cpp
   src/model/contact.h
   src/model/friend.cpp

@@ -22,11 +22,13 @@
 
 #include "genericchatroomwidget.h"
 
+#include "src/model/chatroom/groupchatroom.h"
+
 class GroupWidget final : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
-    GroupWidget(int GroupId, const QString& Name, bool compact);
+    GroupWidget(GroupChatroom* chatroom);
     ~GroupWidget();
     void setAsInactiveChatroom() final override;
     void setAsActiveChatroom() final override;
@@ -51,12 +53,14 @@ protected:
 
 private slots:
     void retranslateUi();
-    void setTitle(const QString& newName);
     void updateTitle(uint32_t groupId, const QString& author, const QString& newName);
     void updateUserCount();
 
 public:
     int groupId;
+
+private:
+    GroupChatroom* chatroom;
 };
 
 #endif // GROUPWIDGET_H

@@ -56,8 +56,8 @@
  * For example, used on friend list.
  * When you click should open the chat with friend. Widget has a context menu.
  */
-FriendWidget::FriendWidget(FriendChatroom* chatroom, bool compact)
-    : GenericChatroomWidget(compact)
+FriendWidget::FriendWidget(FriendChatroom* chatroom)
+    : GenericChatroomWidget(chatroom->getCompact())
     , chatroom{chatroom}
     , frnd{chatroom->getFriend()}
     , isDefaultAvatar{true}

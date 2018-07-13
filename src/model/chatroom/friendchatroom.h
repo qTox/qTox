@@ -20,6 +20,8 @@
 #ifndef FRIEND_CHATROOM_H
 #define FRIEND_CHATROOM_H
 
+#include "chatroom.h"
+
 #include <QObject>
 #include <QString>
 #include <QVector>
@@ -39,13 +41,17 @@ struct CircleToDisplay
     int circleId;
 };
 
-class FriendChatroom : public QObject
+class FriendChatroom : public QObject, public Chatroom
 {
     Q_OBJECT
 public:
     FriendChatroom(Friend* frnd);
 
+    Contact* getContact() override;
+    bool getCompact() const override;
+
 public slots:
+
     Friend* getFriend();
 
     void setActive(bool active);
