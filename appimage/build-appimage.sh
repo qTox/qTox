@@ -22,8 +22,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
- 
-+set -exo pipefail
+# usage: ./appimage/build-appimage.sh [Debug]
+#
+# If [Debug] is set to "Debug" the container will run in interactive mode and
+# stay open to poke around in the filesystem.
+
+readonly DEBUG="$1"
+
+# Fail out on error
+set -exo pipefail
 
 # This script should be run from the root of the repository
 
@@ -38,12 +45,24 @@ fi
 
 mkdir -p ./output
 
-docker run --rm \
-    -v $PWD:/qtox \
-    -v $PWD/output:/output \
-    debian:stretch-slim \
-    /bin/bash -c "/qtox/appimage/build.sh"
-    
+if [ "$DEBUG" == "Debug" ]
+then
+    echo "Execute: /qtox/appimage/build.sh to start the build script"
+    echo "Execute: exit to leave the container"
+
+    docker run --rm -it \
+        -v $PWD:/qtox \
+        -v $PWD/output:/output \
+        debian:stretch-slim \
+        /bin/bash
+else
+    docker run --rm \
+        -v $PWD:/qtox \
+        -v $PWD/output:/output \
+        debian:stretch-slim \
+        /bin/bash -c "/qtox/appimage/build.sh"
+fi
+
 # use the version number in the name when building a tag on Travis CI
 if [ -n "$TRAVIS_TAG" ]
 then
