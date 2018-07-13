@@ -83,6 +83,12 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
     bodyUI->notifySound->setEnabled(s.getNotify());
     bodyUI->busySound->setChecked(s.getBusySound());
     bodyUI->busySound->setEnabled(s.getNotifySound() && s.getNotify());
+#if DESKTOP_NOTIFICATIONS
+    bodyUI->desktopNotify->setChecked(s.getDesktopNotify());
+    bodyUI->desktopNotify->setEnabled(s.getNotify());
+#else
+    bodyUI->desktopNotify->hide();
+#endif
 
     bodyUI->showWindow->setChecked(s.getShowWindow());
 
@@ -278,6 +284,12 @@ void UserInterfaceForm::on_notifySound_stateChanged()
     const bool notify = bodyUI->notifySound->isChecked();
     Settings::getInstance().setNotifySound(notify);
     bodyUI->busySound->setEnabled(notify);
+}
+
+void UserInterfaceForm::on_desktopNotify_stateChanged()
+{
+    const bool notify = bodyUI->desktopNotify->isChecked();
+    Settings::getInstance().setDesktopNotify(notify);
 }
 
 void UserInterfaceForm::on_busySound_stateChanged()

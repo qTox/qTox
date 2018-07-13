@@ -208,6 +208,7 @@ void Settings::loadGlobal()
     {
         showWindow = s.value("showWindow", true).toBool();
         notify = s.value("notify", true).toBool();
+        desktopNotify = s.value("desktopNotify", false).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", true).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
         separateWindow = s.value("separateWindow", false).toBool();
@@ -526,6 +527,7 @@ void Settings::saveGlobal()
     {
         s.setValue("showWindow", showWindow);
         s.setValue("notify", notify);
+        s.setValue("desktopNotify", desktopNotify);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("separateWindow", separateWindow);
         s.setValue("dontGroupWindows", dontGroupWindows);
@@ -1697,6 +1699,22 @@ void Settings::setShowWindow(bool newValue)
     if (newValue != showWindow) {
         showWindow = newValue;
         emit showWindowChanged(showWindow);
+    }
+}
+
+bool Settings::getDesktopNotify() const
+{
+    QMutexLocker locker{&bigLock};
+    return desktopNotify;
+}
+
+void Settings::setDesktopNotify(bool enabled)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (enabled != desktopNotify) {
+        desktopNotify = enabled;
+        emit desktopNotifyChanged(desktopNotify);
     }
 }
 

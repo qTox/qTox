@@ -168,6 +168,7 @@ signals:
     void lightTrayIconChanged(bool enabled);
     void minimizeToTrayChanged(bool enabled);
     void notifyChanged(bool enabled);
+    void desktopNotifyChanged(bool enabled);
     void showWindowChanged(bool enabled);
     void makeToxPortableChanged(bool enabled);
     void busySoundChanged(bool enabled);
@@ -323,6 +324,9 @@ public:
 
     bool getShowWindow() const;
     void setShowWindow(bool newValue);
+
+    bool getDesktopNotify() const;
+    void setDesktopNotify(bool enabled);
 
     bool getNotifySound() const;
     void setNotifySound(bool newValue);
@@ -589,6 +593,7 @@ private:
     bool useEmoticons;
     bool checkUpdates;
     bool notify;
+    bool desktopNotify;
     bool showWindow;
     bool notifySound;
     bool busySound;
