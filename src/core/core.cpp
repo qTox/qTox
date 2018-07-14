@@ -213,8 +213,8 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
     assert(core->tox != nullptr);
 
     // toxcore is successfully created, create toxav
-    core->av = std::unique_ptr<CoreAV>(new CoreAV(core->tox.get()));
-    if (!core->av || !core->av->getToxAv()) {
+    core->av = CoreAV::makeCoreAV(core->tox.get());
+    if (!core->av) {
         qCritical() << "Toxav failed to start";
         if (err) {
             *err = ToxCoreErrors::FAILED_TO_START;
@@ -483,15 +483,15 @@ void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, Tox_Message_T
 }
 
 #if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
-void Core::onGroupPeerListChange(Tox*, uint32_t groupId, void* core)
+void Core::onGroupPeerListChange(Tox*, uint32_t groupId, void* user)
 {
-    const auto coreAv = static_cast<Core*>(core)->getAv();
-    if (coreAv->isGroupAvEnabled(groupId)) {
+    const auto core = static_cast<Core*>(user);
+    if (core->getGroupAvEnabled(groupId)) {
         CoreAV::invalidateGroupCallSources(groupId);
     }
 
     qDebug() << QString("Group %1 peerlist changed").arg(groupId);
-    emit static_cast<Core*>(core)->groupPeerlistChanged(groupId);
+    emit core->groupPeerlistChanged(groupId);
 }
 
 void Core::onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* name,
@@ -1192,6 +1192,30 @@ QStringList Core::getGroupPeerNames(int groupId) const
 }
 
 /**
+ * @brief Check, that group has audio or video stream
+ * @param groupId Id of group to check
+ * @return True for AV groups, false for text-only groups
+ */
+bool Core::getGroupAvEnabled(int groupId) const
+{
+    QMutexLocker ml{coreLoopLock.get()};
+    TOX_ERR_CONFERENCE_GET_TYPE error;
+    TOX_CONFERENCE_TYPE type = tox_conference_get_type(tox.get(), groupId, &error);
+    switch (error) {
+    case TOX_ERR_CONFERENCE_GET_TYPE_OK:
+        break;
+    case TOX_ERR_CONFERENCE_GET_TYPE_CONFERENCE_NOT_FOUND:
+        qWarning() << "Conference not found";
+        break;
+    default:
+        qWarning() << "Unknown error code:" << QString::number(error);
+        break;
+    }
+
+    return type == TOX_CONFERENCE_TYPE_AV;
+}
+
+/**
  * @brief Print in console text of error.
  * @param error Error to handle.
  * @return True if no error, false otherwise.
@@ -1450,7 +1474,7 @@ QString Core::getPeerName(const ToxPk& id) const
  */
 bool Core::isReady() const
 {
-    return av && av->getToxAv() && tox;
+    return av && tox;
 }
 
 /**
