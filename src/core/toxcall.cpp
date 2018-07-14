@@ -31,6 +31,7 @@
 ToxCall::ToxCall(bool VideoEnabled, CoreAV& av)
     : av{&av}
     , videoEnabled{VideoEnabled}
+    , audioSource{Audio::getInstance()}
 {
 }
 
@@ -38,18 +39,18 @@ ToxCall::ToxCall(bool VideoEnabled, CoreAV& av)
  * @brief ToxCall move constructor
  * @param other object moved from
  */
-ToxCall::ToxCall(ToxCall&& other) noexcept : active{other.active},
-                                             av{other.av},
-                                             audioInConn{other.audioInConn},
-                                             muteMic{other.muteMic},
-                                             muteVol{other.muteVol},
-                                             videoSource{other.videoSource},
-                                             videoInConn{other.videoInConn},
-                                             videoEnabled{other.videoEnabled},
-                                             nullVideoBitrate{other.nullVideoBitrate}
+ToxCall::ToxCall(ToxCall&& other) noexcept
+    : active{other.active}
+    , av{other.av}
+    , audioInConn{other.audioInConn}
+    , muteMic{other.muteMic}
+    , muteVol{other.muteVol}
+    , videoSource{other.videoSource}
+    , videoInConn{other.videoInConn}
+    , videoEnabled{other.videoEnabled}
+    , nullVideoBitrate{other.nullVideoBitrate}
+    , audioSource{std::move(other.audioSource)}
 {
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
     other.audioInConn = QMetaObject::Connection();
     other.videoInConn = QMetaObject::Connection();
     other.videoEnabled = false; // we don't need to subscribe video because other won't unsubscribe
@@ -59,10 +60,7 @@ ToxCall::ToxCall(ToxCall&& other) noexcept : active{other.active},
 
 ToxCall::~ToxCall()
 {
-    Audio& audio = Audio::getInstance();
-
     QObject::disconnect(audioInConn);
-    audio.unsubscribeInput();
     if (videoEnabled) {
         QObject::disconnect(videoInConn);
         CameraSource::getInstance().unsubscribe();
@@ -84,7 +82,7 @@ ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
     muteMic = other.muteMic;
     muteVol = other.muteVol;
 
-    Audio::getInstance().subscribeInput();
+    audioSource = std::move(other.audioSource);
 
     videoInConn = other.videoInConn;
     other.videoInConn = QMetaObject::Connection();
@@ -154,22 +152,11 @@ CoreVideoSource* ToxCall::getVideoSource() const
     return videoSource;
 }
 
-quint32 ToxFriendCall::getAlSource() const
-{
-    return alSource;
-}
-
-void ToxFriendCall::setAlSource(const quint32& value)
-{
-    alSource = value;
-}
-
 ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     : ToxCall(VideoEnabled, av)
+    , sink(Audio::getInstance())
 {
-    // register audio
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
+    // TODO(sudden6): move this to audio source
     audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
     [&av, FriendNum](const int16_t* pcm, size_t samples, uint8_t chans,
             uint32_t rate) {
@@ -179,8 +166,6 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     if (!audioInConn) {
        qDebug() << "Audio input connection not working";
     }
-
-    audio.subscribeOutput(alSource);
 
     // register video
     if (videoEnabled) {
@@ -203,24 +188,20 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
 
 ToxFriendCall::ToxFriendCall(ToxFriendCall &&other) noexcept
     : ToxCall(std::move(other))
-    , alSource{other.alSource}
+    , sink{std::move(other.sink)}
 {
-    other.alSource = 0;
 }
 
 ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall &&other) noexcept
 {
     ToxCall::operator=(std::move(other));
-    alSource = other.alSource;
-    other.alSource = 0;
+    sink = std::move(other.sink);
 
     return *this;
 }
 
 ToxFriendCall::~ToxFriendCall()
 {
-    auto& audio = Audio::getInstance();
-    audio.unsubscribeOutput(alSource);
 }
 
 void ToxFriendCall::startTimeout(uint32_t callId)
@@ -256,12 +237,15 @@ void ToxFriendCall::setState(const TOXAV_FRIEND_CALL_STATE& value)
     state = value;
 }
 
+const AudioSink &ToxFriendCall::getAudioSink() const
+{
+    return sink;
+}
+
 ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
     : ToxCall(false, av)
 {
     // register audio
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
     audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
     [&av, GroupNum](const int16_t* pcm, size_t samples, uint8_t chans,
             uint32_t rate) {
@@ -274,74 +258,56 @@ ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
 }
 
 ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept
-    : ToxCall(std::move(other)), peers{other.peers}
+    : ToxCall(std::move(other))
 {
-    // all peers were moved, this ensures audio output is unsubscribed only once
-    other.peers.clear();
+    peers = std::move(other.peers);
 }
 
 ToxGroupCall::~ToxGroupCall()
 {
-    Audio& audio = Audio::getInstance();
-
-    for (quint32 v : peers) {
-        audio.unsubscribeOutput(v);
-    }
 }
 
 ToxGroupCall& ToxGroupCall::operator=(ToxGroupCall&& other) noexcept
 {
     ToxCall::operator=(std::move(other));
-    peers = other.peers;
-    other.peers.clear();
+    peers = std::move(other.peers);
 
     return *this;
 }
 
 void ToxGroupCall::removePeer(int peerId)
 {
-    auto& audio = Audio::getInstance();
-    const auto& sourceId = peers.find(peerId);
-    if(sourceId == peers.constEnd()) {
+    const auto& source = peers.find(peerId);
+    if(source == peers.cend()) {
         qDebug() << "Peer:" << peerId << "does not have a source, can't remove";
         return;
     }
 
-    audio.unsubscribeOutput(sourceId.value());
-    peers.remove(peerId);
+    peers.erase(source);
 }
 
 void ToxGroupCall::addPeer(int peerId)
 {
     auto& audio = Audio::getInstance();
-    uint sourceId = 0;
-    audio.subscribeOutput(sourceId);
-    peers.insert(peerId, sourceId);
+    peers.emplace(peerId, AudioSink(audio));
 }
 
 bool ToxGroupCall::havePeer(int peerId)
 {
-    const auto& sourceId = peers.find(peerId);
-    return sourceId != peers.constEnd();
+    const auto& source = peers.find(peerId);
+    return source != peers.cend();
 }
 
 void ToxGroupCall::clearPeers()
 {
-    Audio& audio = Audio::getInstance();
-
-    for (quint32 v : peers) {
-        audio.unsubscribeOutput(v);
-    }
-
     peers.clear();
 }
 
-quint32 ToxGroupCall::getAlSource(int peer)
+const AudioSink& ToxGroupCall::getAudioSink(int peerId)
 {
-    if(!havePeer(peer)) {
-        qWarning() << "Getting alSource for non-existant peer";
-        return 0;
+    if(!havePeer(peerId)) {
+        addPeer(peerId);
     }
-
-    return peers[peer];
+    const auto& source = peers.find(peerId);
+    return source->second;
 }
