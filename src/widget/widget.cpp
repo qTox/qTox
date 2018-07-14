@@ -1912,9 +1912,8 @@ Group* Widget::createGroup(int groupId)
 
     const auto groupName = tr("Groupchat #%1").arg(groupId);
     Core* core = Nexus::getCore();
-    CoreAV* coreAv = core->getAv();
 
-    bool enabled = coreAv->isGroupAvEnabled(groupId);
+    bool enabled = core->getGroupAvEnabled(groupId);
     Group* newgroup = GroupList::addGroup(groupId, groupName, enabled, core->getUsername());
     bool compact = Settings::getInstance().getCompactLayout();
     GroupWidget* widget = new GroupWidget(groupId, groupName, compact);

@@ -36,7 +36,7 @@ class CoreVideoSource;
 class CameraSource;
 class VideoSource;
 class VideoFrame;
-class CoreAV;
+class Core;
 struct vpx_image;
 
 class CoreAV : public QObject
@@ -44,10 +44,11 @@ class CoreAV : public QObject
     Q_OBJECT
 
 public:
-    explicit CoreAV(Tox* tox);
-    ~CoreAV();
 
-    const ToxAV* getToxAv() const;
+    using CoreAVPtr = std::unique_ptr<CoreAV>;
+    static CoreAVPtr makeCoreAV(Tox* core);
+
+    ~CoreAV();
 
     bool anyActiveCalls() const;
     bool isCallStarted(const Friend* f) const;
@@ -71,7 +72,6 @@ public:
     void muteCallOutput(const Group* g, bool mute);
     bool isGroupCallInputMuted(const Group* g) const;
     bool isGroupCallOutputMuted(const Group* g) const;
-    bool isGroupAvEnabled(int groupNum) const;
 
     bool isCallInputMuted(const Friend* f) const;
     bool isCallOutputMuted(const Friend* f) const;
@@ -111,6 +111,9 @@ private slots:
     void killTimerFromThread();
 
 private:
+    explicit CoreAV(ToxAV &tox);
+    void connectCallbacks(ToxAV& toxav);
+
     void process();
     static void audioFrameCallback(ToxAV* toxAV, uint32_t friendNum, const int16_t* pcm,
                                    size_t sampleCount, uint8_t channels, uint32_t samplingRate,
@@ -123,7 +126,15 @@ private:
     static constexpr uint32_t VIDEO_DEFAULT_BITRATE = 2500;
 
 private:
-    ToxAV* toxav;
+    struct ToxAVDeleter
+    {
+        void operator()(ToxAV* tox)
+        {
+            toxav_kill(tox);
+        }
+    };
+
+    std::unique_ptr<ToxAV, ToxAVDeleter> toxav;
     std::unique_ptr<QThread> coreavThread;
     std::unique_ptr<QTimer> iterateTimer;
     static std::map<uint32_t, ToxFriendCall> calls;
