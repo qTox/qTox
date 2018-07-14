@@ -122,6 +122,9 @@ git clone git@github.com:<YOUR_USER>/qTox.git
 # Add the "upstream" remote to be able to fetch from the qTox upstream repository:
 git remote add upstream https://github.com/qTox/qTox.git
 
+# Fetch from the "upstream" repository
+git fetch upstream
+
 # Point the local "master" branch to the "upstream" repository
 git branch master --set-upstream-to=upstream/master
 ```
