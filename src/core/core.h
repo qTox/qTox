@@ -81,6 +81,7 @@ public:
     QString getGroupPeerName(int groupId, int peerId) const;
     ToxPk getGroupPeerPk(int groupId, int peerId) const;
     QStringList getGroupPeerNames(int groupId) const;
+    bool getGroupAvEnabled(int groupId) const;
     ToxPk getFriendPublicKey(uint32_t friendNumber) const;
     QString getFriendUsername(uint32_t friendNumber) const;
 
