@@ -1911,9 +1911,8 @@ Group* Widget::createGroup(int groupId)
 
     const auto groupName = tr("Groupchat #%1").arg(groupId);
     Core* core = Nexus::getCore();
-    CoreAV* coreAv = core->getAv();
 
-    bool enabled = coreAv->isGroupAvEnabled(groupId);
+    bool enabled = core->getGroupAvEnabled(groupId);
     Group* newgroup = GroupList::addGroup(groupId, groupName, enabled, core->getUsername());
     std::shared_ptr<GroupChatroom> chatroom(new GroupChatroom(newgroup));
     const auto compact = Settings::getInstance().getCompactLayout();
