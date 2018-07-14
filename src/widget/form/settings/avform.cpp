@@ -28,6 +28,7 @@
 #include <QShowEvent>
 
 #include "src/audio/audio.h"
+#include "src/audio/audiosource.h"
 #include "src/audio/iaudiosettings.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -120,9 +121,10 @@ void AVForm::hideEvent(QHideEvent* event)
     if (subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
         audio->unsubscribeOutput(alSource);
-        audio->unsubscribeInput();
         subscribedToAudioIn = false;
     }
+
+    audioSrc.reset();
 
     if (camVideoSurface) {
         camVideoSurface->setSource(nullptr);
@@ -143,8 +145,11 @@ void AVForm::showEvent(QShowEvent* event)
     if (!subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
         audio->subscribeOutput(alSource);
-        audio->subscribeInput();
         subscribedToAudioIn = true;
+    }
+
+    if(audioSrc == nullptr && audio != nullptr) {
+        audioSrc.reset(new AudioSource(*audio));
     }
 
     GenericForm::showEvent(event);
