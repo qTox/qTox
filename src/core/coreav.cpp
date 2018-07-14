@@ -293,7 +293,7 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     if (!toxav_call(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate, nullptr))
         return false;
 
-    auto ret = calls.insert(std::make_pair(friendNum, ToxFriendCall(friendNum, video, *this)));
+    auto ret = calls.emplace(friendNum, ToxFriendCall(friendNum, video, *this));
     ret.first->second.startTimeout(friendNum);
     return true;
 }
@@ -500,12 +500,7 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
         return;
     }
 
-    Audio& audio = Audio::getInstance();
-    if(!call.havePeer(peer)) {
-        call.addPeer(peer);
-    }
-
-    audio.playAudioBuffer(call.getAlSource(peer), data, samples, channels, sample_rate);
+    call.getAudioSink(peer).playAudioBuffer(data, samples, channels, sample_rate);
 }
 
 /**
@@ -694,8 +689,8 @@ void CoreAV::invalidateCallSources()
     }
 
     for (auto& kv : calls) {
-        // TODO: this is wrong, "0" is a valid source id
-        kv.second.setAlSource(0);
+        // TODO(sudden6): find a way to invalidate call sources
+        //kv.second.setAlSource(0);
     }
 }
 
@@ -890,14 +885,7 @@ void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, 
         return;
     }
 
-    Audio& audio = Audio::getInstance();
-    if (!call.getAlSource()) {
-        quint32 sourceId;
-        audio.subscribeOutput(sourceId);
-        call.setAlSource(sourceId);
-    }
-
-    audio.playAudioBuffer(call.getAlSource(), pcm, sampleCount, channels, samplingRate);
+    call.getAudioSink().playAudioBuffer(pcm, sampleCount, channels, samplingRate);
 }
 
 void CoreAV::videoFrameCallback(ToxAV*, uint32_t friendNum, uint16_t w, uint16_t h,
