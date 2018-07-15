@@ -589,23 +589,23 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
     if (parameter.period == PeriodSearch::WithTheFirst) {
         startLine = 0;
     } else if (parameter.period == PeriodSearch::AfterDate) {
-        auto lambda = [=](const ChatLine::Ptr& item) {
-            auto d = getDate(item);
+        const auto lambda = [=](const ChatLine::Ptr& item) {
+            const auto d = getDate(item);
             return d.isValid() && parameter.date <= d;
           };
 
-        auto find = std::find_if(lines.begin(), lines.end(), lambda);
+        const auto find = std::find_if(lines.begin(), lines.end(), lambda);
 
         if (find != lines.end()) {
             startLine = static_cast<int>(std::distance(lines.begin(), find));
         }
     } else if (parameter.period == PeriodSearch::BeforeDate) {
-        auto lambda = [=](const ChatLine::Ptr& item) {
-            auto d = getDate(item);
+        const auto lambda = [=](const ChatLine::Ptr& item) {
+            const auto d = getDate(item);
             return d.isValid() && parameter.date >= d;
           };
 
-        auto find = std::find_if(lines.rbegin(), lines.rend(), lambda);
+        const auto find = std::find_if(lines.rbegin(), lines.rend(), lambda);
 
         if (find != lines.rend()) {
             startLine = static_cast<int>(std::distance(find, lines.rend())) - 1;
@@ -733,7 +733,7 @@ std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, co
             auto matchIt = exp.globalMatch(txt);
 
             while (matchIt.hasNext()) {
-                auto match = matchIt.next();
+                const auto match = matchIt.next();
 
                 int sizeItem = match.capturedLength();
                 int indexItem = match.capturedStart();
@@ -777,7 +777,7 @@ std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, co
         }
 
         if (!exp.pattern().isEmpty()) {
-            auto match = exp.match(txt, startIndex);
+            const auto match = exp.match(txt, startIndex);
             if (match.hasMatch()) {
                 size = match.capturedLength(0);
                 index = match.capturedEnd() - size;

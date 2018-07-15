@@ -1,5 +1,6 @@
 #include "searchsettingsform.h"
 #include "ui_searchsettingsform.h"
+#include "src/persistence/settings.h"
 #include "src/widget/style.h"
 #include "src/widget/form/loadhistorydialog.h"
 
@@ -76,7 +77,7 @@ ParameterSearch SearchSettingsForm::getParameterSearch()
 
 void SearchSettingsForm::updateStartDateLabel()
 {
-    ui->startDateLabel->setText(startDate.toString(QStringLiteral("dd.MM.yyyy")));
+    ui->startDateLabel->setText(startDate.toString(Settings::getInstance().getDateFormat()));
 }
 
 void SearchSettingsForm::setUpdate(const bool isUpdate)
