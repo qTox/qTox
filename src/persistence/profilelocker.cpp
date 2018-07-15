@@ -91,8 +91,7 @@ void ProfileLocker::unlock()
         return;
 
     lockfile->unlock();
-    delete lockfile.release();
-    lockfile = nullptr;
+    lockfile.reset();
     curLockName.clear();
 }
 
