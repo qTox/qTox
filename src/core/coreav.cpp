@@ -183,7 +183,7 @@ void CoreAV::killTimerFromThread()
     if (QThread::currentThread() != coreavThread.get())
         return (void)QMetaObject::invokeMethod(this, "killTimerFromThread",
                                                Qt::BlockingQueuedConnection);
-    iterateTimer.release();
+    iterateTimer.reset();
 }
 
 void CoreAV::process()
