@@ -1,8 +1,25 @@
+#include "src/grouplist.h"
 #include "src/model/chatroom/friendchatroom.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentdialog.h"
+
+#include <QCollator>
+
+namespace {
+
+QString getShortName(const QString& name)
+{
+    constexpr auto MAX_NAME_LENGTH = 30;
+    if (name.length() <= MAX_NAME_LENGTH) {
+        return name;
+    }
+
+    return name.left(MAX_NAME_LENGTH).trimmed() + "…";
+}
+
+}
 
 FriendChatroom::FriendChatroom(Friend* frnd)
     : frnd{frnd}
@@ -10,6 +27,11 @@ FriendChatroom::FriendChatroom(Friend* frnd)
 }
 
 Friend* FriendChatroom::getFriend()
+{
+    return frnd;
+}
+
+Contact* FriendChatroom::getContact()
 {
     return frnd;
 }
@@ -68,7 +90,54 @@ bool FriendChatroom::autoAcceptEnabled() const
     return getAutoAcceptDir().isEmpty();
 }
 
-void FriendChatroom::inviteFriend(uint32_t friendId, const Group* group)
+void FriendChatroom::inviteFriend(const Group* group)
 {
-    Core::getInstance()->groupInviteFriend(friendId, group->getId());
+    const auto friendId = frnd->getId();
+    const auto groupId = group->getId();
+    Core::getInstance()->groupInviteFriend(friendId, groupId);
+}
+
+QVector<GroupToDisplay> FriendChatroom::getGroups() const
+{
+    QVector<GroupToDisplay> groups;
+    for (const auto group : GroupList::getAllGroups()) {
+        const auto name = getShortName(group->getName());
+        const GroupToDisplay groupToDisplay = { name, group };
+        groups.push_back(groupToDisplay);
+    }
+
+    return groups;
+}
+
+/**
+ * @brief Return sorted list of circles exclude current circle.
+ */
+QVector<CircleToDisplay> FriendChatroom::getOtherCircles() const
+{
+    QVector<CircleToDisplay> circles;
+    const auto currentCircleId = getCircleId();
+    const auto& s = Settings::getInstance();
+    for (int i = 0; i < s.getCircleCount(); ++i) {
+        if (i == currentCircleId) {
+            continue;
+        }
+
+        const auto name = getShortName(s.getCircleName(i));
+        const CircleToDisplay circle = { name, i };
+        circles.push_back(circle);
+    }
+
+    std::sort(circles.begin(), circles.end(),
+              [](const CircleToDisplay& a, const CircleToDisplay& b) -> bool {
+                  QCollator collator;
+                  collator.setNumericMode(true);
+                  return collator.compare(a.name, b.name) < 0;
+              });
+
+    return circles;
+}
+
+void FriendChatroom::resetEventFlags()
+{
+    frnd->setEventFlag(false);
 }

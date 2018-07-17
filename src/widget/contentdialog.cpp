@@ -163,9 +163,9 @@ ContentDialog::~ContentDialog()
     Translator::unregister(this);
 }
 
-FriendWidget* ContentDialog::addFriend(FriendChatroom* chatroom, GenericChatForm* form)
+FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form)
 {
-    auto compact = Settings::getInstance().getCompactLayout();
+    const auto compact = Settings::getInstance().getCompactLayout();
     auto frnd = chatroom->getFriend();
     auto friendId = frnd->getId();
     auto friendWidget = new FriendWidget(chatroom, compact);
@@ -189,12 +189,12 @@ FriendWidget* ContentDialog::addFriend(FriendChatroom* chatroom, GenericChatForm
     return friendWidget;
 }
 
-GroupWidget* ContentDialog::addGroup(const Group* g, GenericChatForm* form)
+GroupWidget* ContentDialog::addGroup(std::shared_ptr<GroupChatroom> chatroom, GenericChatForm* form)
 {
+    const auto g = chatroom->getGroup();
     const auto groupId = g->getId();
-    const auto name = g->getName();
     const auto compact = Settings::getInstance().getCompactLayout();
-    GroupWidget* groupWidget = new GroupWidget(groupId, name, compact);
+    GroupWidget* groupWidget = new GroupWidget(chatroom, compact);
     groupLayout.addSortedWidget(groupWidget);
     groupChatForms[groupId] = form;
 

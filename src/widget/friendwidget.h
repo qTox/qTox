@@ -21,6 +21,8 @@
 #include "genericchatroomwidget.h"
 #include "src/core/toxpk.h"
 
+#include <memory>
+
 class FriendChatroom;
 class QPixmap;
 class MaskablePixmapWidget;
@@ -29,7 +31,8 @@ class FriendWidget : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
-    FriendWidget(FriendChatroom* chatform, bool compact);
+    FriendWidget(std::shared_ptr<FriendChatroom> chatform, bool compact);
+
     void contextMenuEvent(QContextMenuEvent* event) override final;
     void setAsActiveChatroom() override final;
     void setAsInactiveChatroom() override final;
@@ -59,7 +62,6 @@ protected:
 
 private slots:
     void removeChatWindow();
-    void inviteFriend(uint32_t friendId, const Group* group);
     void moveToNewCircle();
     void removeFromCircle();
     void moveToCircle(int circleId);
@@ -67,8 +69,7 @@ private slots:
     void showDetails();
 
 public:
-    FriendChatroom* chatroom;
-    Friend* frnd;
+    std::shared_ptr<FriendChatroom> chatroom;
     bool isDefaultAvatar;
 };
 

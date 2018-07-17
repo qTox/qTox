@@ -20,10 +20,11 @@
 #ifndef CONTENTDIALOG_H
 #define CONTENTDIALOG_H
 
-#include <tuple>
-
 #include "src/widget/genericchatitemlayout.h"
 #include "src/widget/tool/activatedialog.h"
+
+#include <memory>
+#include <tuple>
 
 template <typename K, typename V>
 class QHash;
@@ -39,6 +40,7 @@ class FriendWidget;
 class GenericChatForm;
 class GenericChatroomWidget;
 class Group;
+class GroupChatroom;
 class GroupWidget;
 class QSplitter;
 class QVBoxLayout;
@@ -52,8 +54,8 @@ public:
     explicit ContentDialog(QWidget* parent = nullptr);
     ~ContentDialog() override;
 
-    FriendWidget* addFriend(FriendChatroom* chatroom, GenericChatForm* form);
-    GroupWidget* addGroup(const Group* g, GenericChatForm* form);
+    FriendWidget* addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form);
+    GroupWidget* addGroup(std::shared_ptr<GroupChatroom> chatroom, GenericChatForm* form);
     void removeFriend(int friendId);
     void removeGroup(int groupId);
     bool hasFriendWidget(int friendId, const GenericChatroomWidget* chatroomWidget) const;
