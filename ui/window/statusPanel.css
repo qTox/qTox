@@ -7,7 +7,8 @@ QLineEdit
     border-radius: 4px;
 }
 
-QToolButton {
+QToolButton
+{
     background: none;
     background-color: @themeMedium;
     color: white;
@@ -15,17 +16,20 @@ QToolButton {
     border-radius: 4px;
 }
 
-QToolButton:pressed {
+QToolButton:pressed
+{
     background-color: @themeMediumDark;
     border-radius: 4px;
     color: white;
 }
 
-QToolButton::menu-indicator {
+QToolButton::menu-indicator
+{
     image: none
 }
 
-QPushButton#green {
+QPushButton#green
+{
     background: none;
     background-color: #6bc260;
     color: white;
@@ -48,12 +52,14 @@ QPushButton#green:pressed
 /**
   Uncomment this after https://github.com/qTox/qTox/pull/1640
   is merged!
-QComboBox:down-arrow {
+QComboBox:down-arrow
+{
     image: url(ui/css/down_arrow.png);
 }
 **/
 
-QListView {
+QListView
+{
     background-color: @themeLight;
     border-style: none;
     border-radius: 4px;
@@ -69,13 +75,15 @@ QListView {
   background-color: @themeDark;
 }
 
-#statusPanel > #statusHead > #nameLabel {
+#statusPanel > #statusHead > #nameLabel
+{
   background-color: @themeDark;
   font: @extraBig;
   color: @white;
 }
 
-#statusPanel > #statusHead > #statusLabel {
+#statusPanel > #statusHead > #statusLabel
+{
   background-color: @themeDark;
   font: @medium;
   color: @lightGrey;
@@ -102,7 +110,8 @@ QListView {
   background-color: @themeMedium;
 }
 
-#statusPanel > #statusHead > #statusButton:focus {
+#statusPanel > #statusHead > #statusButton:focus
+{
   outline: none;
 }
 
@@ -116,4 +125,3 @@ QListView {
   position: relative;
   bottom: 2px;
 }
-
