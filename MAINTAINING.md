@@ -189,6 +189,12 @@ Follow steps for adding translations from Weblate up to step 5. Next:
 - Update download links on https://tox.chat to point to the new release.
 - Write a short blog post for https://github.com/qTox/blog/ and advertise the post
   on Tox IRC channels, popular Tox groups, reddit, or whatever other platforms.
+- Open a PR to update the Flatpak manifest of our [Flathub repository] with the 
+  changes from [`./flatpak/io.github.qtox.qTox.json`].
+- Comment to the PR with `bot, build` to execute a test build
+- After the build passed for qTox on all architectures on
+  [the Flathub build bot], merge the PR into the master branch of our
+  [Flathub repository].
 
 
 # How to become a maintainer?
@@ -210,3 +216,6 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`./tools/deweblate-translation-file.sh`]: /tools/deweblate-translation-file.sh
 [`./tools/create-tarball.sh`]: /tools/create-tarball.sh
 [`./tools/update-versions.sh`]: /tools/update-versions.sh
+[Flathub repository]: https://github.com/flathub/io.github.qtox.qTox
+[`./flatpak/io.github.qtox.qTox.json`]: flatpak/io.github.qtox.qTox.json
+[the Flathub build bot]: https://flathub.org/builds/#/
