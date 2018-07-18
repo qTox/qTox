@@ -111,6 +111,7 @@ search_dependency(LIBSODIUM           PACKAGE libsodium)
 search_dependency(LIBSWSCALE          PACKAGE libswscale)
 search_dependency(SQLCIPHER           PACKAGE sqlcipher)
 search_dependency(VPX                 PACKAGE vpx)
+search_dependency(QTSPELL             PACKAGE QtSpell-qt5)
 
 # Try to find cmake toxcore libraries
 if(WIN32)
