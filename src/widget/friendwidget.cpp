@@ -133,7 +133,6 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
         });
     }
 
-    const auto& s = Settings::getInstance();
     const auto circleId = chatroom->getCircleId();
     auto circleMenu =
         menu.addMenu(tr("Move to circle...", "Menu to move a friend into a different circle"));
@@ -280,9 +279,6 @@ void FriendWidget::moveToCircle(int newCircleId)
 
 void FriendWidget::changeAutoAccept(bool enable)
 {
-    const auto frnd = chatroom->getFriend();
-    const auto pk = frnd->getPublicKey();
-    auto& s = Settings::getInstance();
     if (enable) {
         const auto oldDir = chatroom->getAutoAcceptDir();
         const auto newDir = QFileDialog::getExistingDirectory(
