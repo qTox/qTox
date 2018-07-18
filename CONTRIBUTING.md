@@ -16,7 +16,7 @@
         - [Body](#body)
     - [Reviewing](#reviewing)
     - [Testing PRs](#testing-prs)
-  - [Git config](#git-config)
+- [Git config](#git-config)
 - [Coding guidelines](#coding-guidelines)
 
 
