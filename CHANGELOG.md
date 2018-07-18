@@ -1,4 +1,11 @@
 <a name=""></a>
+##  (2018-07-18)
+
+This point release fixes flatpak build. No feature changes.
+
+
+
+<a name=""></a>
 ##  (2018-07-15)
 
 This point release fixes dialog spam from receiving invalid filenames and logs
