@@ -97,10 +97,9 @@ public:
     virtual void subscribeInput() = 0;
     virtual void unsubscribeInput() = 0;
 
-    virtual void startLoop() = 0;
-    virtual void stopLoop() = 0;
-    virtual void playMono16Sound(const QByteArray& data) = 0;
-    virtual void playMono16Sound(const QString& path) = 0;
+    virtual void startLoop(uint sourceId) = 0;
+    virtual void stopLoop(uint sourceId) = 0;
+    virtual void playMono16Sound(uint sourceId, const Sound& sound) = 0;
 
     virtual void stopActive() = 0;
 

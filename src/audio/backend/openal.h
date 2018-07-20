@@ -82,10 +82,9 @@ public:
     void subscribeInput();
     void unsubscribeInput();
 
-    void startLoop();
-    void stopLoop();
-    void playMono16Sound(const QByteArray& data);
-    void playMono16Sound(const QString& path);
+    void startLoop(uint sourceId);
+    void stopLoop(uint sourceId);
+    void playMono16Sound(uint sourceId, const Sound& sound);
     void stopActive();
 
     void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
@@ -116,21 +115,22 @@ private:
     void playMono16SoundCleanup();
     float getVolume();
 
+    void cleanupBuffers(uint sourceId);
 protected:
     QThread* audioThread;
     mutable QMutex audioLock;
 
     ALCdevice* alInDev = nullptr;
     quint32 inSubscriptions = 0;
-    QTimer captureTimer, playMono16Timer;
+    QTimer captureTimer;
 
     ALCdevice* alOutDev = nullptr;
     ALCcontext* alOutContext = nullptr;
-    ALuint alMainSource = 0;
-    ALuint alMainBuffer = 0;
     bool outputInitialized = false;
 
+    // TODO(sudden6): remove
     QList<ALuint> peerSources;
+
     int channels = 0;
     qreal gain = 0;
     qreal gainFactor = 1;

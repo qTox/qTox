@@ -42,6 +42,33 @@ void AudioSink::playAudioBuffer(const int16_t *data, int samples, unsigned chann
     }
 }
 
+void AudioSink::playMono16Sound(const Audio::Sound &sound)
+{
+    if(audio == nullptr) {
+        qCritical() << "Trying to play sound on an invalid sink";
+    } else {
+        audio->playMono16Sound(sourceId, sound);
+    }
+}
+
+void AudioSink::startLoop()
+{
+    if(audio == nullptr) {
+        qCritical() << "Trying to start loop on an invalid sink";
+    } else {
+        audio->startLoop(sourceId);
+    }
+}
+
+void AudioSink::stopLoop()
+{
+    if(audio == nullptr) {
+        qCritical() << "Trying to stop loop on an invalid sink";
+    } else {
+        audio->stopLoop(sourceId);
+    }
+}
+
 AudioSink::operator bool() const
 {
     return audio != nullptr;
