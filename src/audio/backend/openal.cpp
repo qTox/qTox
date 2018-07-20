@@ -18,6 +18,7 @@
 */
 
 #include "openal.h"
+#include "src/audio/iaudiosink.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/persistence/settings.h"
@@ -75,7 +76,7 @@ OpenAL::OpenAL()
     voiceTimer.setSingleShot(true);
     voiceTimer.moveToThread(audioThread);
     connect(this, &Audio::startActive, &voiceTimer, static_cast<void (QTimer::*)(int)>(&QTimer::start));
-    connect(&voiceTimer, &QTimer::timeout, this, &Audio::stopActive);
+    connect(&voiceTimer, &QTimer::timeout, this, &OpenAL::stopActive);
 
     connect(&captureTimer, &QTimer::timeout, this, &OpenAL::doAudio);
     captureTimer.setInterval(AUDIO_FRAME_DURATION / 2);
@@ -209,16 +210,91 @@ qreal OpenAL::maxInputThreshold() const
 
 void OpenAL::reinitInput(const QString& inDevDesc)
 {
+    // this must happen outside `audioLock`, to avoid a race condition when
+    // AlSink has checked `killLock` already, but not yet locked `audioLock`
+    for(auto& source : sources) {
+        source->kill();
+    }
     QMutexLocker locker(&audioLock);
+
+    sources.clear();
     cleanupInput();
     initInput(inDevDesc);
 }
 
 bool OpenAL::reinitOutput(const QString& outDevDesc)
 {
+    // this must happen outside `audioLock`, to avoid a race condition when
+    // AlSink has checked `killLock` already, but not yet locked `audioLock`
+    for(auto& sink : sinks) {
+        sink->kill();
+    }
+
     QMutexLocker locker(&audioLock);
+
+    sinks.clear();
     cleanupOutput();
     return initOutput(outDevDesc);
+}
+
+/**
+ * @brief Allocates ressources for a new audio output
+ * @return AudioSink on success, nullptr on failure
+ */
+IAudioSink *OpenAL::makeSink()
+{
+    QMutexLocker locker(&audioLock);
+
+    if (!autoInitOutput()) {
+        qWarning("Failed to subscribe to audio output device.");
+        return {};
+    }
+
+    ALuint sid;
+    alGenSources(1, &sid);
+
+    auto sink = new AlSink(*this);
+    if (sink == nullptr) {
+        return {};
+    }
+
+    sinks.insert(sink);
+    qDebug() << "Audio source" << sid << "created. Sources active:" << sinks.size();
+
+    return sink;
+}
+
+/**
+ * @brief Must be called by the destructor of AlSink to remove the internal ressources.
+ *        If no sinks are opened, the output is closed afterwards.
+ * @param sink Audio sink to remove.
+ */
+void OpenAL::destroySink(AlSink& sink)
+{
+    QMutexLocker locker(&audioLock);
+
+    auto s = sinks.find(&sink);
+    if(s == sinks.end()) {
+        qWarning() << "Destroying non-existant source";
+        return;
+    }
+
+    sinks.erase(s);
+
+    uint sid = sink.getSourceId();
+
+    if (alIsSource(sid)) {
+        // stop playing, marks all buffers as processed
+        alSourceStop(sid);
+        cleanupBuffers(sid);
+        qDebug() << "Audio source" << sid << "deleted. Sources active:" << sources.size();
+    } else {
+        qWarning() << "Trying to delete invalid audio source" << sid;
+    }
+
+    if (sinks.empty()) {
+        cleanupOutput();
+    }
 }
 
 /**
@@ -226,17 +302,25 @@ bool OpenAL::reinitOutput(const QString& outDevDesc)
  *
  * If the input device is not open, it will be opened before capturing.
  */
-void OpenAL::subscribeInput()
+IAudioSource *OpenAL::makeSource()
 {
     QMutexLocker locker(&audioLock);
 
     if (!autoInitInput()) {
         qWarning("Failed to subscribe to audio input device.");
-        return;
+        return {};
     }
 
-    ++inSubscriptions;
-    qDebug() << "Subscribed to audio input device [" << inSubscriptions << "subscriptions ]";
+    auto source = new AlSource(*this);
+    if (source == nullptr) {
+        return {};
+    }
+
+    sources.insert(source);
+
+    qDebug() << "Subscribed to audio input device [" << sources.size() << "subscriptions ]";
+
+    return source;
 }
 
 /**
@@ -244,19 +328,24 @@ void OpenAL::subscribeInput()
  *
  * If the input device has no more subscriptions, it will be closed.
  */
-void OpenAL::unsubscribeInput()
+void OpenAL::destroySource(AlSource &source)
 {
     QMutexLocker locker(&audioLock);
 
-    if (!inSubscriptions)
+    auto s = sources.find(&source);
+    if(s == sources.end()) {
+        qWarning() << "Destroyed non-existant source";
         return;
+    }
 
-    inSubscriptions--;
-    qDebug() << "Unsubscribed from audio input device [" << inSubscriptions
+    sources.erase(s);
+
+    qDebug() << "Unsubscribed from audio input device [" << sources.size()
              << "subscriptions left ]";
 
-    if (!inSubscriptions)
+    if (sources.empty()) {
         cleanupInput();
+    }
 }
 
 /**
@@ -327,7 +416,8 @@ bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
  */
 bool OpenAL::initOutput(const QString& deviceName)
 {
-    peerSources.clear();
+    // there should be no sinks when initializing the output
+    assert(sinks.size() == 0);
 
     outputInitialized = false;
     if (!Settings::getInstance().getAudioOutDevEnabled())
@@ -371,9 +461,9 @@ bool OpenAL::initOutput(const QString& deviceName)
 /**
  * @brief Play a 44100Hz mono 16bit PCM sound
  */
-void OpenAL::playMono16Sound(uint sourceId, const Sound &sound)
+void OpenAL::playMono16Sound(uint sourceId, const IAudioSink::Sound &sound)
 {
-    QFile sndFile(Audio::getSound(sound));
+    QFile sndFile(IAudioSink::getSound(sound));
     if(!sndFile.exists()) {
         qDebug() << "Trying to open non existent sound file";
         return;
@@ -553,7 +643,10 @@ void OpenAL::doInput()
         return;
     }
 
-    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL, channels, AUDIO_SAMPLE_RATE);
+    for(auto source : sources) {
+        emit source->frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL, channels, AUDIO_SAMPLE_RATE);
+    }
+
 }
 
 void OpenAL::doOutput()
@@ -568,10 +661,7 @@ void OpenAL::doAudio()
 {
     QMutexLocker lock(&audioLock);
 
-    // Output section
-    if (outputInitialized && !peerSources.isEmpty()) {
-        doOutput();
-    }
+    // Output section does nothing
 
     // Input section
     if (alInDev && inSubscriptions) {
@@ -627,22 +717,6 @@ QStringList OpenAL::inDeviceNames()
     return list;
 }
 
-void OpenAL::subscribeOutput(uint& sid)
-{
-    QMutexLocker locker(&audioLock);
-
-    if (!autoInitOutput()) {
-        qWarning("Failed to subscribe to audio output device.");
-        return;
-    }
-
-    alGenSources(1, &sid);
-    assert(sid);
-    peerSources << sid;
-
-    qDebug() << "Audio source" << sid << "created. Sources active:" << peerSources.size();
-}
-
 /**
  * @brief Free all buffers that finished playing on a source
  * @param sourceId where to remove the buffers from
@@ -656,29 +730,6 @@ void OpenAL::cleanupBuffers(uint sourceId) {
     // delete all buffers
     alDeleteBuffers(processed, bufids);
     delete[] bufids;
-}
-
-void OpenAL::unsubscribeOutput(uint& sid)
-{
-    QMutexLocker locker(&audioLock);
-
-    peerSources.removeAll(sid);
-
-    if (sid) {
-        if (alIsSource(sid)) {
-            // stop playing, marks all buffers as processed
-            alSourceStop(sid);
-            cleanupBuffers(sid);
-            qDebug() << "Audio source" << sid << "deleted. Sources active:" << peerSources.size();
-        } else {
-            qWarning() << "Trying to delete invalid audio source" << sid;
-        }
-
-        sid = 0;
-    }
-
-    if (peerSources.isEmpty())
-        cleanupOutput();
 }
 
 void OpenAL::startLoop(uint sourceId)

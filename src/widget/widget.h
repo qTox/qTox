@@ -29,7 +29,7 @@
 
 #include "genericchatitemwidget.h"
 
-#include "src/audio/audiosink.h"
+#include "src/audio/iaudiosink.h"
 #include "src/core/core.h"
 #include "src/core/toxfile.h"
 #include "src/core/toxid.h"
@@ -41,7 +41,7 @@ class MainWindow;
 }
 
 class AddFriendForm;
-class AudioSink;
+class AlSink;
 class Camera;
 class ChatForm;
 class CircleWidget;
@@ -254,7 +254,7 @@ private:
     void retranslateUi();
     void focusChatInput();
     void openDialog(GenericChatroomWidget* widget, bool newWindow);
-    void playNotificationSound(Audio::Sound sound, bool loop = false);
+    void playNotificationSound(IAudioSink::Sound sound, bool loop = false);
 
 private:
     SystemTrayIcon* icon = nullptr;
@@ -306,7 +306,7 @@ private:
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
     int icon_size;
-    std::unique_ptr<AudioSink> audioNotification = nullptr;
+    std::unique_ptr<IAudioSink> audioNotification = nullptr;
 
     QMap<uint32_t, FriendWidget*> friendWidgets;
     QMap<uint32_t, FriendChatroom*> friendChatrooms;

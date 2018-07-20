@@ -530,7 +530,7 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
         return;
     }
 
-    call.getAudioSink(peer).playAudioBuffer(data, samples, channels, sample_rate);
+    call.getAudioSink(peer)->playAudioBuffer(data, samples, channels, sample_rate);
 }
 #else
 void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* data,
@@ -554,7 +554,7 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
         return;
     }
 
-    call.getAudioSink(peer).playAudioBuffer(data, samples, channels, sample_rate);
+    call.getAudioSink(peer)->playAudioBuffer(data, samples, channels, sample_rate);
 }
 #endif
 
@@ -944,7 +944,7 @@ void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, 
         return;
     }
 
-    call.getAudioSink().playAudioBuffer(pcm, sampleCount, channels, samplingRate);
+    call.getAudioSink()->playAudioBuffer(pcm, sampleCount, channels, samplingRate);
 }
 
 void CoreAV::videoFrameCallback(ToxAV*, uint32_t friendNum, uint16_t w, uint16_t h,
