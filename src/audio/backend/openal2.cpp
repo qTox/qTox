@@ -243,9 +243,6 @@ bool OpenAL2::initOutput(const QString& deviceName)
         alProxyContext = alOutContext;
     }
 
-    alGenSources(1, &alMainSource);
-    checkAlError();
-
     // init master volume
     alListenerf(AL_GAIN, Settings::getInstance().getOutVolume() * 0.01f);
     checkAlError();
