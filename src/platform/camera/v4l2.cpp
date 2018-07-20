@@ -22,6 +22,8 @@
 
 #include "v4l2.h"
 
+#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+
 #include <QDebug>
 #include <dirent.h>
 #include <errno.h>
@@ -217,3 +219,5 @@ bool v4l2::betterPixelFormat(uint32_t a, uint32_t b)
     }
     return pixFmtToQuality.at(a) > pixFmtToQuality.at(b);
 }
+
+#endif

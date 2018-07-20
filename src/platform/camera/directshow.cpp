@@ -21,6 +21,8 @@
 
 #include "directshow.h"
 
+#ifdef Q_OS_WIN
+
 // Because of replacing to incorrect order, which leads to building failing,
 // this region is ignored for clang-format
 // clang-format off
@@ -255,3 +257,5 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
 
     return modes;
 }
+
+#endif  // Q_OS_WIN
