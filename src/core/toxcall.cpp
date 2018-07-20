@@ -31,7 +31,7 @@
 ToxCall::ToxCall(bool VideoEnabled, CoreAV& av)
     : av{&av}
     , videoEnabled{VideoEnabled}
-    , audioSource{Audio::getInstance()}
+    , audioSource{Audio::getInstance().makeSource()}
 {
 }
 
@@ -154,10 +154,10 @@ CoreVideoSource* ToxCall::getVideoSource() const
 
 ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     : ToxCall(VideoEnabled, av)
-    , sink(Audio::getInstance())
+    , sink(Audio::getInstance().makeSink())
 {
     // TODO(sudden6): move this to audio source
-    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
+    audioInConn = QObject::connect(audioSource.get(), &IAudioSource::frameAvailable,
     [&av, FriendNum](const int16_t* pcm, size_t samples, uint8_t chans,
             uint32_t rate) {
         av.sendCallAudio(FriendNum, pcm, samples, chans, rate);
@@ -237,7 +237,7 @@ void ToxFriendCall::setState(const TOXAV_FRIEND_CALL_STATE& value)
     state = value;
 }
 
-const AudioSink &ToxFriendCall::getAudioSink() const
+const std::unique_ptr<IAudioSink> &ToxFriendCall::getAudioSink() const
 {
     return sink;
 }
@@ -246,7 +246,7 @@ ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
     : ToxCall(false, av)
 {
     // register audio
-    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
+    audioInConn = QObject::connect(audioSource.get(), &IAudioSource::frameAvailable,
     [&av, GroupNum](const int16_t* pcm, size_t samples, uint8_t chans,
             uint32_t rate) {
         av.sendGroupCallAudio(GroupNum, pcm, samples, chans, rate);
@@ -289,7 +289,7 @@ void ToxGroupCall::removePeer(int peerId)
 void ToxGroupCall::addPeer(int peerId)
 {
     auto& audio = Audio::getInstance();
-    peers.emplace(peerId, AudioSink(audio));
+    peers.emplace(peerId, std::unique_ptr<IAudioSink>(audio.makeSink()));
 }
 
 bool ToxGroupCall::havePeer(int peerId)
@@ -303,7 +303,7 @@ void ToxGroupCall::clearPeers()
     peers.clear();
 }
 
-const AudioSink& ToxGroupCall::getAudioSink(int peerId)
+const std::unique_ptr<IAudioSink> &ToxGroupCall::getAudioSink(int peerId)
 {
     if(!havePeer(peerId)) {
         addPeer(peerId);

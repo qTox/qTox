@@ -50,7 +50,7 @@
 #include "systemtrayicon.h"
 #include "form/groupchatform.h"
 #include "src/audio/audio.h"
-#include "src/audio/audiosink.h"
+#include "src/audio/iaudiosink.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/model/chatroom/friendchatroom.h"
@@ -950,9 +950,9 @@ void Widget::reloadHistory()
  * @param sound Sound to play
  * @param loop if true, loop the sound until onStopNotification() is called
  */
-void Widget::playNotificationSound(Audio::Sound sound, bool loop) {
+void Widget::playNotificationSound(IAudioSink::Sound sound, bool loop) {
     if(audioNotification == nullptr) {
-        audioNotification = std::unique_ptr<AudioSink>(new AudioSink(Audio::getInstance()));
+        audioNotification = std::unique_ptr<IAudioSink>(Audio::getInstance().makeSink());
         if(audioNotification == nullptr) {
             qDebug() << "Failed to allocate AudioSink";
             return;
@@ -970,18 +970,18 @@ void Widget::incomingNotification(uint32_t friendId)
 {
     newFriendMessageAlert(friendId, false);
     // loop until call answered or rejected
-    playNotificationSound(Audio::Sound::IncomingCall, true);
+    playNotificationSound(IAudioSink::Sound::IncomingCall, true);
 }
 
 void Widget::outgoingNotification()
 {
     // loop until call answered or rejected
-    playNotificationSound(Audio::Sound::OutgoingCall, true);
+    playNotificationSound(IAudioSink::Sound::OutgoingCall, true);
 }
 
 void Widget::onCallEnd()
 {
-    playNotificationSound(Audio::Sound::CallEnd);
+    playNotificationSound(IAudioSink::Sound::CallEnd);
 }
 
 /**
@@ -1479,7 +1479,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
             bool notifySound = Settings::getInstance().getNotifySound();
 
             if (notifySound && sound && (!isBusy || busySound)) {
-                playNotificationSound(Audio::Sound::NewMessage);
+                playNotificationSound(IAudioSink::Sound::NewMessage);
             }
         }
     }
