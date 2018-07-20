@@ -205,7 +205,7 @@ bool OpenAL2::initOutputEchoCancel()
  */
 bool OpenAL2::initOutput(const QString& deviceName)
 {
-    peerSources.clear();
+    assert(sinks.empty());
 
     outputInitialized = false;
     if (!Settings::getInstance().getAudioOutDevEnabled()) {

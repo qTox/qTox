@@ -28,7 +28,7 @@
 #include <QShowEvent>
 
 #include "src/audio/audio.h"
-#include "src/audio/audiosource.h"
+#include "src/audio/iaudiosource.h"
 #include "src/audio/iaudiosettings.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -138,11 +138,11 @@ void AVForm::showEvent(QShowEvent* event)
 
     if(audio != nullptr) {
         if(audioSrc == nullptr) {
-            audioSrc.reset(new AudioSource(*audio));
+            audioSrc.reset(audio->makeSource());
         }
 
         if(audioSink == nullptr) {
-            audioSink.reset(new AudioSink(*audio));
+            audioSink.reset(audio->makeSink());
         }
     }
 
@@ -575,7 +575,7 @@ void AVForm::on_playbackSlider_valueChanged(int sliderSteps)
         audio->setOutputVolume(volume);
 
         if (cbEnableTestSound->isChecked() && audioSink) {
-            audioSink->playMono16Sound(Audio::Sound::Test);
+            audioSink->playMono16Sound(IAudioSink::Sound::Test);
         }
     }
 }
@@ -585,7 +585,7 @@ void AVForm::on_cbEnableTestSound_stateChanged()
     audioSettings->setEnableTestSound(cbEnableTestSound->isChecked());
 
     if (cbEnableTestSound->isChecked() && audio->isOutputReady() && audioSink)
-        audioSink->playMono16Sound(Audio::Sound::Test);
+        audioSink->playMono16Sound(IAudioSink::Sound::Test);
 }
 
 void AVForm::on_microphoneSlider_valueChanged(int sliderSteps)
