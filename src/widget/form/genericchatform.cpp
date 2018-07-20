@@ -600,6 +600,7 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
             startLine = static_cast<int>(std::distance(lines.begin(), find));
         }
     } else if (parameter.period == PeriodSearch::BeforeDate) {
+#if QT_VERSION > QT_VERSION_CHECK(5, 6, 0)
         const auto lambda = [=](const ChatLine::Ptr& item) {
             const auto d = getDate(item);
             return d.isValid() && parameter.date >= d;
@@ -610,6 +611,15 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
         if (find != lines.rend()) {
             startLine = static_cast<int>(std::distance(find, lines.rend())) - 1;
         }
+#else
+        for (int i = lines.size() - 1; i >= 0; --i) {
+            auto d = getDate(lines[i]);
+            if (d.isValid() && parameter.date >= d) {
+                startLine = i;
+                break;
+            }
+        }
+#endif
     }
 
     if (startLine < 0 || startLine >= numLines) {
