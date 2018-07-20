@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class Audio;
+#include "src/audio/audio.h"
 class AudioSink : public QObject
 {
     Q_OBJECT
@@ -18,6 +18,10 @@ public:
 
     void playAudioBuffer(const int16_t* data, int samples, unsigned channels,
                          int sampleRate) const;
+    void playMono16Sound(const Audio::Sound& sound);
+    void startLoop();
+    void stopLoop();
+
 
     operator bool() const;
 

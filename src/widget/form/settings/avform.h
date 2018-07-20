@@ -32,6 +32,7 @@
 
 class Audio;
 class AudioSource;
+class AudioSink;
 class CameraSource;
 class CoreAV;
 class IAudioSettings;
@@ -101,8 +102,8 @@ private:
     CoreAV* coreAV;
     IAudioSettings* audioSettings;
     IVideoSettings* videoSettings;
-    bool subscribedToAudioIn;
     std::unique_ptr<AudioSource> audioSrc = nullptr;
+    std::unique_ptr<AudioSink> audioSink = nullptr;
     VideoSurface* camVideoSurface;
     CameraSource& camera;
     QVector<QPair<QString, QString>> videoDeviceList;
