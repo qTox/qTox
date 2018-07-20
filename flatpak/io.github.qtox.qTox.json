@@ -2,7 +2,7 @@
     "app-id": "io.github.qtox.qTox",
     "runtime": "org.kde.Platform",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "5.10",
+    "runtime-version": "5.11",
     "command": "qtox",
     "rename-icon": "qtox",
     "finish-args": [

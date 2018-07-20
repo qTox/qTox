@@ -1,4 +1,24 @@
 <a name=""></a>
+##  (2018-07-18)
+
+This point release fixes flatpak build. No feature changes.
+
+
+
+<a name=""></a>
+##  (2018-07-15)
+
+This point release fixes dialog spam from receiving invalid filenames and logs
+spam. No feature changes.
+
+#### Bug Fixes
+
+* **logging:**  only log toxcore messages above TRACE level ([4dc74201](https://github.com/qTox/qTox/commit/4dc7420162e69095942b392048c309e6246d6b21))
+* **ui:**  don't emit filename change windows for every chat ([c1701345](https://github.com/qTox/qTox/commit/c1701345455ad5b253beeaa3d487daa01b8b1b21))
+
+
+
+<a name=""></a>
 ##  (2018-07-04)
 
 This point release fixes our deployment of Flapak and AppImage on Github. No

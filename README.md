@@ -159,8 +159,8 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 ```
 
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
-[64 bit release]: https://github.com/qTox/qTox/releases/download/v1.16.1/setup-qtox-x86_64-release.exe
-[32 bit release]: https://github.com/qTox/qTox/releases/download/v1.16.1/setup-qtox-i686-release.exe
+[64 bit release]: https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-x86_64-release.exe
+[32 bit release]: https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-i686-release.exe
 [32nightly]: https://build.tox.chat/view/qtox/job/qTox-cmake-nightly_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox-cmake-nightly_build_windows_x86_release.zip
 [64nightly]: https://build.tox.chat/view/qtox/job/qTox-cmake-nightly_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox-cmake-nightly_build_windows_x86-64_release.zip
 [Flatpak]: https://github.com/qTox/qTox/releases/download/v1.16.1/qTox-v1.16.1.x86_64.flatpak
@@ -169,7 +169,7 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 [Building instructions]: /INSTALL.md#os-x
 [Contributing]: /CONTRIBUTING.md#how-to-start-contributing
 [easy issues]: https://github.com/qTox/qTox/labels/E-easy
-[Latest release]: https://github.com/qTox/qTox/releases/download/v1.16.1/qTox.dmg
+[Latest release]: https://github.com/qTox/qTox/releases/download/v1.16.3/qTox.dmg
 [Fedora]: /INSTALL.md#fedora
 [Gentoo]: /INSTALL.md#gentoo
 [openSUSE]: /INSTALL.md#opensuse
