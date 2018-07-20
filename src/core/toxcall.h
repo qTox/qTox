@@ -9,8 +9,8 @@
 
 #include <tox/toxav.h>
 
-#include "src/audio/audiosource.h"
-#include "src/audio/audiosink.h"
+#include "src/audio/iaudiosource.h"
+#include "src/audio/iaudiosink.h"
 
 class QTimer;
 class AudioFilterer;
@@ -60,7 +60,7 @@ protected:
     QMetaObject::Connection videoInConn;
     bool videoEnabled{false};
     bool nullVideoBitrate{false};
-    AudioSource audioSource;
+    std::unique_ptr<IAudioSource> audioSource = nullptr;
 };
 
 class ToxFriendCall : public ToxCall
@@ -78,7 +78,7 @@ public:
     TOXAV_FRIEND_CALL_STATE getState() const;
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
-    const AudioSink& getAudioSink() const;
+    const std::unique_ptr<IAudioSink> &getAudioSink() const;
 
 protected:
     std::unique_ptr<QTimer> timeoutTimer;
@@ -86,7 +86,7 @@ protected:
 private:
     TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
     static constexpr int CALL_TIMEOUT = 45000;
-    AudioSink sink;
+    std::unique_ptr<IAudioSink> sink = nullptr;
 };
 
 class ToxGroupCall : public ToxCall
@@ -103,11 +103,11 @@ public:
     void addPeer(int peerId);
     bool havePeer(int peerId);
     void clearPeers();
-    const AudioSink &getAudioSink(int peerId);
+    const std::unique_ptr<IAudioSink> &getAudioSink(int peerId);
 
 private:
     // need std::map here, because QMap needs a copy constructor
-    std::map<int, AudioSink> peers;
+    std::map<int, std::unique_ptr<IAudioSink>> peers;
 
     // If you add something here, don't forget to override the ctors and move operators!
 };

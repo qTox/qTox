@@ -22,15 +22,15 @@
 #define OPENAL_H
 
 #include "src/audio/audio.h"
+#include "src/audio/backend/alsink.h"
+#include "src/audio/backend/alsource.h"
 
-#include <atomic>
-#include <cmath>
+#include <memory>
+#include <unordered_set>
 
 #include <QMutex>
 #include <QObject>
 #include <QTimer>
-
-#include <cassert>
 
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -76,15 +76,15 @@ public:
     QStringList outDeviceNames();
     QStringList inDeviceNames();
 
-    void subscribeOutput(uint& sourceId);
-    void unsubscribeOutput(uint& sourceId);
+    IAudioSink* makeSink();
+    void destroySink(AlSink& sink);
 
-    void subscribeInput();
-    void unsubscribeInput();
+    IAudioSource* makeSource();
+    void destroySource(AlSource& source);
 
     void startLoop(uint sourceId);
     void stopLoop(uint sourceId);
-    void playMono16Sound(uint sourceId, const Sound& sound);
+    void playMono16Sound(uint sourceId, const IAudioSink::Sound& sound);
     void stopActive();
 
     void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
@@ -128,8 +128,12 @@ protected:
     ALCcontext* alOutContext = nullptr;
     bool outputInitialized = false;
 
-    // TODO(sudden6): remove
-    QList<ALuint> peerSources;
+    // TODO(sudden6): why does QSet not work here?
+    std::unordered_set<AlSink*> sinks;
+    std::unordered_set<AlSource*> sources;
+
+    // number of output sources
+    int outCount = 0;
 
     int channels = 0;
     qreal gain = 0;
@@ -143,6 +147,8 @@ protected:
     const qreal minInThreshold = 0.0;
     const qreal maxInThreshold = 0.4;
     int16_t* inputBuffer = nullptr;
+
+
 };
 
 #endif // OPENAL_H

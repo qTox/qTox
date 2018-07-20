@@ -21,7 +21,7 @@
 #ifndef OPENAL2_H
 #define OPENAL2_H
 
-#include "openal.h"
+#include "src/audio/backend/openal.h"
 #include "src/audio/audio.h"
 
 #include <atomic>
