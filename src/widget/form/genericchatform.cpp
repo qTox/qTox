@@ -45,6 +45,7 @@
 #include <QFileDialog>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QStringBuilder>
 
 #ifdef SPELL_CHECKING
 #include <KF5/SonnetUi/sonnet/spellcheckdecorator.h>
@@ -503,7 +504,7 @@ void GenericChatForm::onSaveLogClicked()
 
         QString timestamp = (rightCol == nullptr) ? tr("Not sent") : rightCol->getText();
 
-        plainText += QString("%1\t%3\t%2\n").arg(nick, timestamp, msg);
+        plainText += QString{nick % "\t" % timestamp % "\t" % msg % "\n"};
     }
 
     file.write(plainText.toUtf8());
