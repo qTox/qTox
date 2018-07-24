@@ -70,10 +70,6 @@ protected:
     static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL =
         AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
     uint32_t AUDIO_FRAME_SAMPLE_COUNT_TOTAL = 0;
-
-signals:
-    void volumeAvailable(float value);
-    void startActive(qreal msec);
 };
 
 #endif // AUDIO_H

@@ -75,7 +75,7 @@ OpenAL::OpenAL()
 
     voiceTimer.setSingleShot(true);
     voiceTimer.moveToThread(audioThread);
-    connect(this, &Audio::startActive, &voiceTimer, static_cast<void (QTimer::*)(int)>(&QTimer::start));
+    connect(this, &OpenAL::startActive, &voiceTimer, static_cast<void (QTimer::*)(int)>(&QTimer::start));
     connect(&voiceTimer, &QTimer::timeout, this, &OpenAL::stopActive);
 
     connect(&captureTimer, &QTimer::timeout, this, &OpenAL::doAudio);
@@ -253,7 +253,7 @@ IAudioSink *OpenAL::makeSink()
     ALuint sid;
     alGenSources(1, &sid);
 
-    auto sink = new AlSink(*this);
+    auto sink = new AlSink(*this, sid);
     if (sink == nullptr) {
         return {};
     }
@@ -638,7 +638,11 @@ void OpenAL::doInput()
         volume = 0;
     }
 
-    emit Audio::volumeAvailable(volume);
+    // TODO(sudden6): these loops don't scale too well
+    for(auto source : sources) {
+        emit source->volumeAvailable(volume);
+    }
+
     if (!isActive) {
         return;
     }
