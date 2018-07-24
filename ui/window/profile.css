@@ -1,4 +1,5 @@
-#selfAvatar:hover {
+#selfAvatar:hover
+{
     border-radius: 6px;
     background-color: #ccc;
 }

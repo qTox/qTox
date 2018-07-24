@@ -1,9 +1,3 @@
-QWidget
-{
-    color: black;
-    font: @big;
-}
-
 QTextEdit
 {
     border-color: @lightGrey;
@@ -15,17 +9,17 @@ QTextEdit
 
 QListWidget
 {
-    background: white;
+    background-color: white;
 }
 
 QMessageBox
 {
-    background: white;
+    background-color: white;
 }
 
 QCheckBox
 {
-    background: white;
+    background-color: white;
     color: black;
 }
 
@@ -36,17 +30,12 @@ QCheckBox:disabled
 
 QSpinBox
 {
-    background: white;
+    background-color: white;
 }
 
 QSpinBox:disabled
 {
-    background: lightGrey;
-}
-
-QPushButton
-{
-    background: white;
+    background-color: lightGrey;
 }
 
 QGroupBox
@@ -59,11 +48,11 @@ QGroupBox
 QComboBox
 {
     color: black;
-    background: white;
+    background-color: white;
 }
 
 QComboBox QAbstractItemView {
-    background: white;
+    background-color: white;
 }
 
 QLineEdit
@@ -81,15 +70,9 @@ QTabWidget
     background-color: white;
 }
 
-QTabBar
-{
-    background-color: white;
-}
-
 QScrollArea
 {
     background-color: white;
-    background: transparent;
 }
 
 QScrollArea > QWidget > QWidget
@@ -99,7 +82,7 @@ QScrollArea > QWidget > QWidget
 
 QScrollArea::corner
 {
-    background: white;
+    background-color: white;
     border: none;
 }
 
@@ -113,7 +96,7 @@ QScrollBar:vertical
 
 QScrollBar::handle:vertical
 {
-    background: #d1d1d1;
+    background-color: #d1d1d1;
     min-height: 20px;
     border-radius: 3px;
     margin-left: 2px;
@@ -121,17 +104,17 @@ QScrollBar::handle:vertical
 
 QScrollBar::handle:vertical:hover
 {
-    background: #e3e3e3;
+    background-color: #e3e3e3;
 }
 
 QScrollBar::handle:vertical:pressed
 {
-    background: #b1b1b1;
+    background-color: #b1b1b1;
 }
 
 QScrollBar::add-line:vertical
 {
-    background: white;
+    background-color: white;
     height: 0px;
     subcontrol-position: bottom;
     subcontrol-origin: margin;
@@ -139,7 +122,7 @@ QScrollBar::add-line:vertical
 
 QScrollBar::sub-line:vertical
 {
-    background: white;
+    background-color: white;
     height: 0px;
     subcontrol-position: top;
     subcontrol-origin: margin;
@@ -149,14 +132,14 @@ QScrollBar:QScrollBar::down-arrow:vertical
 {
     width: 10;
     height: 10px;
-    background: white;
+    background-color: white;
 }
 
 QScrollBar:QScrollBar::up-arrow:vertical
 {
     width: 10px;
     height: 10px;
-    background: white;
+    background-color: white;
 }
 
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
@@ -167,31 +150,31 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 
 QScrollBar:horizontal
 {
-    background: white;
+    background-color: white;
     height: 10px;
     margin: 0 2px 0 2px;
 }
 
 QScrollBar::handle:horizontal
 {
-    background: #d1d1d1;
+    background-color: #d1d1d1;
     min-width: 20px;
     border-radius: 2px;
 }
 
 QScrollBar::handle:horizontal:hover
 {
-    background: #e3e3e3;
+    background-color: #e3e3e3;
 }
 
 QScrollBar::handle:horizontal:pressed
 {
-    background: #b1b1b1;
+    background-color: #b1b1b1;
 }
 
 QScrollBar::add-line:horizontal
 {
-    background: white;
+    background-color: white;
     width: 0px;
     subcontrol-position: right;
     subcontrol-origin: margin;
@@ -199,7 +182,7 @@ QScrollBar::add-line:horizontal
 
 QScrollBar::sub-line:horizontal
 {
-    background: white;
+    background-color: white;
     width: 0px;
     subcontrol-position: left;
     subcontrol-origin: margin;
@@ -209,14 +192,14 @@ QScrollBar:QScrollBar::down-arrow:horizontal
 {
     width: 10;
     height: 10px;
-    background: white;
+    background-color: white;
 }
 
 QScrollBar:QScrollBar::up-arrow:horizontal
 {
     width: 10px;
     height: 10px;
-    background: white;
+    background-color: white;
 }
 
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
