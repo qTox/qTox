@@ -89,6 +89,8 @@ public:
 
     void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
                          int sampleRate);
+signals:
+    void startActive(qreal msec);
 
 protected:
     static void checkAlError() noexcept;

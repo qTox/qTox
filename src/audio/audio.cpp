@@ -31,21 +31,6 @@
 /**
  * @class Audio
  *
- * @enum Audio::Sound
- * @brief Provides the different sounds for use in the getSound function.
- * @see getSound
- *
- * @value NewMessage Returns the new message notification sound.
- * @value Test Returns the test sound.
- * @value IncomingCall Returns the incoming call sound.
- * @value OutgoingCall Returns the outgoing call sound.
- *
- * @fn QString Audio::getSound(Sound s)
- * @brief Function to get the path of the requested sound.
- *
- * @param s Name of the sound to get the path of.
- * @return The path of the requested sound.
- *
  * @fn void Audio::frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels,
  * uint32_t sampling_rate);
  *
@@ -99,27 +84,6 @@
  *
  * If the input device has no more subscriptions, it will be closed.
  *
- * @fn void Audio::playMono16Sound(const QString& path)
- * @brief Play a 44100Hz mono 16bit PCM sound from a file
- *
- * @param[in] path the path to the sound file
- *
- * @fn void Audio::playMono16Sound(const QByteArray& data)
- * @brief Play a 44100Hz mono 16bit PCM sound
- *
- * @param[in] data 44100Hz mono 16bit PCM data in host byte order
- *
- * @fn void Audio::playAudioBuffer(uint sourceId, const int16_t* data, int samples,
- *                                  unsigned channels, int sampleRate)
- * @brief adds a number of audio frames to the play buffer
- *
- * @param[in] sourceId id obtained by subscribeOutput(uint &)
- * @param[in] data 16bit mono or stereo PCM data with alternating channel
- *            mapping for stereo (LRLR)
- * @param[in] samples number of samples per channel
- * @param[in] channels number of channels, currently 1 or 2 is supported
- * @param[in] sampleRate sample rate in Hertz
- *
  * @fn bool Audio::isOutputReady() const
  * @brief check if the output is ready to play audio
  *
@@ -134,24 +98,6 @@
  * @brief Get the names of available input devices
  *
  * @return list of input devices
- *
- * @fn void Audio::subscribeOutput(uint& sid)
- * @brief register a new output source
- *
- * param[out] sid contains the sourceId if source creation was successful,
- *                unchanged otherwise
- *
- * @fn void Audio::unsubscribeOutput(uint& sid)
- * @brief unregisters an output source
- *
- * param[out] sid contains 0 if source deletion was successful,
- *                unchanged otherwise
- *
- * @fn void Audio::startLoop()
- * @brief starts looping the sound played with playMono16Sound()
- *
- * @fn void Audio::stopLoop()
- * @brief stops looping the sound played with playMono16Sound()
  *
  * @fn qreal Audio::inputGain() const
  * @brief get the current input gain
