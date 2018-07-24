@@ -95,7 +95,8 @@ AVForm::AVForm(Audio* audio, CoreAV* coreAV, CameraSource& camera,
     audioThresholdSlider->setTracking(false);
     audioThresholdSlider->installEventFilter(this);
 
-    connect(audio, &Audio::volumeAvailable, this, &AVForm::setVolume);
+    // TODO(sudden6): connect to audioSrc
+    //connect(audio, &Audio::volumeAvailable, this, &AVForm::setVolume);
     volumeDisplay->setMaximum(totalSliderSteps);
 
     fillAudioQualityComboBox();
