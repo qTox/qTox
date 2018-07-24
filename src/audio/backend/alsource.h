@@ -1,11 +1,11 @@
 #ifndef ALSOURCE_H
 #define ALSOURCE_H
 
-#include <QObject>
+#include "src/audio/iaudiosource.h"
 
 class OpenAL;
 class QMutex;
-class AlSource : public QObject
+class AlSource : public IAudioSource
 {
     Q_OBJECT
 public:
