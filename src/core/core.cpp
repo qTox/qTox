@@ -52,21 +52,17 @@ Core::Core(QThread* coreThread)
 {
     toxTimer.setSingleShot(true);
     connect(&this->toxTimer, &QTimer::timeout, this, &Core::process);
+    connect(coreThread, &QThread::finished, &toxTimer, &QTimer::stop);
 }
 
 Core::~Core()
 {
-    if (QThread::currentThread() == coreThread.get()) {
-        killTimers();
-    } else {
-        // ensure the timer is stopped, even if not called from this thread
-        QMetaObject::invokeMethod(this, "killTimers", Qt::BlockingQueuedConnection);
-    }
-
-    coreThread->exit(0);
-
     // need to reset av first, because it uses tox
     av.reset();
+
+    coreThread->exit(0);
+    coreThread->wait();
+
     tox.reset();
 }
 
@@ -308,10 +304,6 @@ void Core::process()
     QMutexLocker ml{coreLoopLock.get()};
 
     ASSERT_CORE_THREAD;
-    if (!isReady()) {
-        av->stop();
-        return;
-    }
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
     tox_iterate(tox.get(), this);
@@ -1481,16 +1473,4 @@ void Core::setNospam(uint32_t nospam)
 
     tox_self_set_nospam(tox.get(), nospam);
     emit idSet(getSelfId());
-}
-
-/**
- * @brief Stops the AV thread and the timer here
- */
-void Core::killTimers()
-{
-    ASSERT_CORE_THREAD;
-    if (av) {
-        av->stop();
-    }
-    toxTimer.stop();
 }

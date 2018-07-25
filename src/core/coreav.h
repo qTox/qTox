@@ -108,7 +108,6 @@ private slots:
                                 void* self);
     static void audioBitrateCallback(ToxAV* toxAV, uint32_t friendNum, uint32_t rate, void* self);
     static void videoBitrateCallback(ToxAV* toxAV, uint32_t friendNum, uint32_t rate, void* self);
-    void killTimerFromThread();
 
 private:
     void process();
