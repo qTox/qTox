@@ -91,6 +91,7 @@ CoreAV::CoreAV(Tox* tox)
 
     iterateTimer->setSingleShot(true);
     connect(iterateTimer.get(), &QTimer::timeout, this, &CoreAV::process);
+    connect(coreavThread.get(), &QThread::finished, iterateTimer.get(), &QTimer::stop);
 
     toxav = toxav_new(tox, nullptr);
 
@@ -113,13 +114,10 @@ CoreAV::~CoreAV()
     for (const auto& call : calls) {
         cancelCall(call.first);
     }
-    killTimerFromThread();
-    toxav_kill(toxav);
+
     coreavThread->exit(0);
-    while (coreavThread->isRunning()) {
-        qApp->processEvents();
-        coreavThread->wait(100);
-    }
+    coreavThread->wait();
+    toxav_kill(toxav);
 }
 
 const ToxAV* CoreAV::getToxAv() const
@@ -147,18 +145,6 @@ void CoreAV::stop()
     if (QThread::currentThread() != coreavThread.get())
         return (void)QMetaObject::invokeMethod(this, "stop", Qt::BlockingQueuedConnection);
     iterateTimer->stop();
-}
-
-/**
- * @brief Calls itself blocking queued on the coreav thread
- */
-void CoreAV::killTimerFromThread()
-{
-    // Timers can only be touched from their own thread
-    if (QThread::currentThread() != coreavThread.get())
-        return (void)QMetaObject::invokeMethod(this, "killTimerFromThread",
-                                               Qt::BlockingQueuedConnection);
-    iterateTimer.release();
 }
 
 void CoreAV::process()

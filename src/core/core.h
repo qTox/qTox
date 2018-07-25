@@ -257,7 +257,6 @@ private:
     static void registerCallbacks(Tox* tox);
 
 private slots:
-    void killTimers();
     void process();
     void onStarted();
 
