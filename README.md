@@ -163,8 +163,8 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 [32 bit release]: https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-i686-release.exe
 [32nightly]: https://build.tox.chat/view/qtox/job/qTox-cmake-nightly_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox-cmake-nightly_build_windows_x86_release.zip
 [64nightly]: https://build.tox.chat/view/qtox/job/qTox-cmake-nightly_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox-cmake-nightly_build_windows_x86-64_release.zip
-[Flatpak]: https://github.com/qTox/qTox/releases/download/v1.16.1/qTox-v1.16.1.x86_64.flatpak
-[AppImage]: https://github.com/qTox/qTox/releases/download/v1.16.1/qTox-v1.16.1.x86_64.AppImage
+[Flatpak]: https://github.com/qTox/qTox/releases/download/v1.16.3/qTox-v1.16.3.x86_64.flatpak
+[AppImage]: https://github.com/qTox/qTox/releases/download/v1.16.3/qTox-v1.16.3.x86_64.AppImage
 [Arch]: /INSTALL.md#arch
 [Building instructions]: /INSTALL.md#os-x
 [Contributing]: /CONTRIBUTING.md#how-to-start-contributing

@@ -51,6 +51,8 @@ update_osx() {
 update_readme() {
     cd "$BASE_DIR"
     sed -ri "s|(github.com/qTox/qTox/releases/download/v)$VERSION_PATTERN|\1$@|g" README.md
+    # for flatpak and AppImage
+    sed -ri "s|(github.com/qTox/qTox/releases/download/v$VERSION_PATTERN/qTox-v)$VERSION_PATTERN|\1$@|g" README.md
 }
 
 # exit if supplied arg is not a version
