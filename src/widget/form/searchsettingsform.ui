@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>473</width>
-    <height>83</height>
+    <height>84</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -52,12 +52,12 @@
        </property>
        <item>
         <property name="text">
-         <string>with the end</string>
+         <string>from the end</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>with the first</string>
+         <string>from the beginning</string>
         </property>
        </item>
        <item>
@@ -82,7 +82,7 @@
      <item>
       <widget class="QPushButton" name="choiceDateButton">
        <property name="text">
-        <string>Choice</string>
+        <string/>
        </property>
       </widget>
      </item>

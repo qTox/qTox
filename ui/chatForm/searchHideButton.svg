@@ -9,37 +9,35 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="5.5071211mm"
-   height="5.5071211mm"
-   viewBox="0 0 5.5071209 5.5071212"
+   width="26"
+   height="26"
+   viewBox="0 0 26 26"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="hideButton.svg">
-  <defs
-     id="defs2" />
+   sodipodi:docname="searchHideButton.svg"
+   inkscape:version="0.92.2 2405546, 2018-03-11">
   <sodipodi:namedview
-     id="base"
      pagecolor="#ffffff"
      bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="186.40227"
-     inkscape:cy="-38.76831"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
      inkscape:window-width="1920"
      inkscape:window-height="1015"
+     id="namedview9"
+     showgrid="false"
+     inkscape:zoom="9.0769231"
+     inkscape:cx="13"
+     inkscape:cy="13"
      inkscape:window-x="0"
-     inkscape:window-y="876"
-     inkscape:window-maximized="1" />
+     inkscape:window-y="36"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -48,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -59,7 +57,7 @@
      transform="translate(59.891963,-41.449704)">
     <g
        id="g30"
-       transform="matrix(0.42362466,0.42362466,-0.42362466,0.42362466,-22.854056,42.277356)"
+       transform="matrix(1.9999999,1.9999999,-1.9999999,1.9999999,114.96993,45.355829)"
        style="fill:#ffffff">
       <rect
          y="41.988605"

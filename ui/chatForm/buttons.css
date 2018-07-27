@@ -103,10 +103,10 @@ QAbstractButton#searchDownButton
 
 QAbstractButton#choiceDateButton
 {
+    background-image: url(":/ui/chatForm/searchCalendarButton.svg");
     border-radius: 5px;
-    width: 55px;
-    height: 25px;
-    color: #fff
+    width: 45px;
+    height: 35px;
 }
 
 QAbstractButton#startButton

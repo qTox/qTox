@@ -67,6 +67,7 @@
         <file>ui/chatForm/emoteButton.svg</file>
         <file>ui/chatForm/fileButton.svg</file>
         <file>ui/chatForm/screenshotButton.svg</file>
+        <file>ui/chatForm/searchCalendarButton.svg</file>
         <file>ui/chatForm/searchDownButton.svg</file>
         <file>ui/chatForm/searchHideButton.svg</file>
         <file>ui/chatForm/searchSettingsButton.svg</file>
