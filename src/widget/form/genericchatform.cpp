@@ -224,6 +224,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
     connect(searchForm, &SearchForm::searchDown, this, &GenericChatForm::onSearchDown);
     connect(searchForm, &SearchForm::visibleChanged, this, &GenericChatForm::onSearchTriggered);
+    connect(this, &GenericChatForm::messageNotFoundShow, searchForm, &SearchForm::showMessageNotFound);
 
     connect(chatWidget, &ChatLog::workerTimeoutFinished, this, &GenericChatForm::onContinueSearch);
 

@@ -557,6 +557,7 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
         const QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
         if (!newBaseDate.isValid()) {
+            emit messageNotFoundShow(true);
             return;
         }
 
@@ -568,7 +569,9 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
 
 void ChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
 {
-    searchInText(phrase, parameter, false);
+    if (!searchInText(phrase, parameter, false)) {
+        emit messageNotFoundShow(false);
+    }
 }
 
 void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)

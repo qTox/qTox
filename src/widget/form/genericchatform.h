@@ -83,6 +83,7 @@ signals:
     void sendAction(uint32_t, QString);
     void chatAreaCleared();
     void messageInserted();
+    void messageNotFoundShow(const bool searchUp);
 
 public slots:
     void focusInput();
