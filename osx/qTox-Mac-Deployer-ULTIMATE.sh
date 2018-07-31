@@ -169,10 +169,10 @@ install() {
         brew install cmake
     fi
 
-    # needed for kf5-sonnet
+    # needed for kf5-sonnet and kf5-extra-cmake-modules
     brew tap kde-mac/kde
 
-    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet
+    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet kf5-extra-cmake-modules
 
     fcho "Cloning filter_audio ..."
     git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio "$FILTERAUIO_DIR"
