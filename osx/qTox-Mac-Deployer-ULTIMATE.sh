@@ -187,8 +187,10 @@ install() {
         brew install cmake
     fi
 
-    # needed for kf5-sonnet
-    brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git
+    # needed for kf5-sonnet and kf5-extra-cmake-modules
+    brew tap kde-mac/kde
+
+    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet kf5-extra-cmake-modules
 
     # brew install qt5 might take a long time to build Qt. Travis kills us if
     # we don't output for 10 minutes. Travis also kills us if we output too much,
