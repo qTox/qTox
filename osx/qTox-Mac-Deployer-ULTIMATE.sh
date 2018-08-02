@@ -180,17 +180,6 @@ install() {
     fcho "Installing filter_audio ..."
     make install PREFIX="$LIB_INSTALL_PREFIX"
 
-    fcho "Cloning snorenotify ..."
-
-    git clone https://github.com/KDE/snorenotify "$SNORE_DIR"
-    cd "$SNORE_DIR"
-    git checkout tags/v0.7.0
-    cmake -DCMAKE_INSTALL_PREFIX="$LIB_INSTALL_PREFIX" -DDESKTOP_NOTIFICATIONS=True .
-    make
-    make install
-
-    fcho "Installing snorenotify ..."
-
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
     QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
