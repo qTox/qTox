@@ -73,7 +73,7 @@ git clone "$SNORE_GIT" "$SNORE_BUILD_DIR"
 cd "$SNORE_BUILD_DIR"
 git checkout tags/v0.7.0
 # HACK: Kids, don't do this at your home system
-cmake -DCMAKE_INSTALL_PREFIX=/usr/lib/.
+cmake -DCMAKE_INSTALL_PREFIX=/usr/
 make
 make install
 
