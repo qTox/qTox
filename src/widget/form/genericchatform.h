@@ -83,7 +83,7 @@ signals:
     void sendAction(uint32_t, QString);
     void chatAreaCleared();
     void messageInserted();
-    void messageNotFoundShow(const bool searchUp);
+    void messageNotFoundShow(SearchDirection direction);
 
 public slots:
     void focusInput();
@@ -137,8 +137,8 @@ protected:
     virtual void resizeEvent(QResizeEvent* event) final override;
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
     void disableSearchText();
-    bool searchInText(const QString& phrase, const ParameterSearch& parameter, bool searchUp);
-    std::pair<int, int> indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, bool searchUp);
+    bool searchInText(const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
+    std::pair<int, int> indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
 
 protected:
     bool audioInputFlag;
