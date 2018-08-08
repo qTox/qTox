@@ -356,7 +356,7 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
     }
 
     QDateTime date = from;
-    if (parameter.period != PeriodSearch::None) {
+    if (parameter.period == PeriodSearch::AfterDate || parameter.period == PeriodSearch::BeforeDate) {
         date = QDateTime(parameter.date);
     }
 

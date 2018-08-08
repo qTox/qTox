@@ -71,6 +71,7 @@ private:
     bool isActiveSettings{false};
     bool isChangedPhrase{false};
     bool isSearchInBegin{true};
+    bool isPrevSearch{false};
 
 private slots:
     void changedSearchPhrase(const QString& text);
@@ -82,7 +83,7 @@ private slots:
     void changedState(const bool isUpdate);
 
 public slots:
-    void showMessageNotFound(const bool searchUp);
+    void showMessageNotFound(const SearchDirection direction);
 
 signals:
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter);

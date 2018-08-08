@@ -26,7 +26,7 @@
 #include <QLabel>
 #include <QKeyEvent>
 
-const QString STATE_NAME[] = {
+static std::array<QString, 3> STATE_NAME = {
     QString{},
     QStringLiteral("green"),
     QStringLiteral("red"),
@@ -151,7 +151,7 @@ ParameterSearch SearchForm::getAndCheckParametrSearch()
 
 void SearchForm::setStateName(QPushButton *btn, ToolButtonState state)
 {
-    const int index = static_cast<int>(state);
+    const auto index = static_cast<unsigned long>(state);
     btn->setProperty("state", STATE_NAME[index]);
     btn->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
     btn->setEnabled(index != 0);
@@ -162,6 +162,7 @@ void SearchForm::useBeginState()
     setStateName(upButton, ToolButtonState::Common);
     setStateName(downButton, ToolButtonState::Common);
     messageLabel->setVisible(false);
+    isPrevSearch = false;
 }
 
 void SearchForm::changedSearchPhrase(const QString& text)
@@ -192,8 +193,13 @@ void SearchForm::changedSearchPhrase(const QString& text)
 
 void SearchForm::clickedUp()
 {
-    setStateName(downButton, ToolButtonState::Common);
-    messageLabel->setVisible(false);
+    if (downButton->isEnabled()) {
+        isPrevSearch = false;
+    } else {
+        isPrevSearch = true;
+        setStateName(downButton, ToolButtonState::Common);
+        messageLabel->setVisible(false);
+    }
 
     if (startButton->isHidden()) {
         isSearchInBegin = false;
@@ -205,8 +211,13 @@ void SearchForm::clickedUp()
 
 void SearchForm::clickedDown()
 {
-    setStateName(upButton, ToolButtonState::Common);
-    messageLabel->setVisible(false);
+    if (upButton->isEnabled()) {
+        isPrevSearch = false;
+    } else {
+        isPrevSearch = true;
+        setStateName(upButton, ToolButtonState::Common);
+        messageLabel->setVisible(false);
+    }
 
     if (startButton->isHidden()) {
         isSearchInBegin = false;
@@ -258,12 +269,21 @@ void SearchForm::changedState(const bool isUpdate)
     useBeginState();
 }
 
-void SearchForm::showMessageNotFound(const bool searchUp)
+void SearchForm::showMessageNotFound(const SearchDirection direction)
 {
     if (isSearchInBegin) {
+        if (parameter.period == PeriodSearch::AfterDate) {
+            setStateName(downButton, ToolButtonState::Disabled);
+        } else if (parameter.period == PeriodSearch::BeforeDate) {
+            setStateName(upButton, ToolButtonState::Disabled);
+        } else {
+            setStateName(upButton, ToolButtonState::Disabled);
+            setStateName(downButton, ToolButtonState::Disabled);
+        }
+    } else if (isPrevSearch) {
         setStateName(upButton, ToolButtonState::Disabled);
         setStateName(downButton, ToolButtonState::Disabled);
-    } else if (searchUp) {
+    } else if (direction == SearchDirection::Up) {
         setStateName(upButton, ToolButtonState::Disabled);
     } else {
         setStateName(downButton, ToolButtonState::Disabled);
