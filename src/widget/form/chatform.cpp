@@ -550,14 +550,14 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
         return;
     }
 
-    bool isSearch = searchInText(phrase, parameter, true);
+    bool isSearch = searchInText(phrase, parameter, SearchDirection::Up);
 
     if (!isSearch) {
         const QString pk = f->getPublicKey().toString();
         const QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
         if (!newBaseDate.isValid()) {
-            emit messageNotFoundShow(true);
+            emit messageNotFoundShow(SearchDirection::Up);
             return;
         }
 
@@ -569,8 +569,8 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
 
 void ChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
 {
-    if (!searchInText(phrase, parameter, false)) {
-        emit messageNotFoundShow(false);
+    if (!searchInText(phrase, parameter, SearchDirection::Down)) {
+        emit messageNotFoundShow(SearchDirection::Down);
     }
 }
 

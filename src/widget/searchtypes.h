@@ -21,6 +21,11 @@ enum class PeriodSearch {
     BeforeDate
 };
 
+enum class SearchDirection {
+    Up,
+    Down
+};
+
 struct ParameterSearch {
     FilterSearch filter{FilterSearch::None};
     PeriodSearch period{PeriodSearch::None};

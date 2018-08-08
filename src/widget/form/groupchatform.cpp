@@ -214,15 +214,15 @@ void GroupChatForm::searchInBegin(const QString& phrase, const ParameterSearch& 
 
 void GroupChatForm::onSearchUp(const QString& phrase, const ParameterSearch& parameter)
 {
-    if (!searchInText(phrase, parameter, true)) {
-        emit messageNotFoundShow(true);
+    if (!searchInText(phrase, parameter, SearchDirection::Up)) {
+        emit messageNotFoundShow(SearchDirection::Up);
     }
 }
 
 void GroupChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
 {
-    if (!searchInText(phrase, parameter, false)) {
-        emit messageNotFoundShow(false);
+    if (!searchInText(phrase, parameter, SearchDirection::Down)) {
+        emit messageNotFoundShow(SearchDirection::Down);
     }
 }
 

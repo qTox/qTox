@@ -570,7 +570,7 @@ void GenericChatForm::disableSearchText()
     }
 }
 
-bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch& parameter, bool searchUp)
+bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch& parameter, const SearchDirection& direction)
 {
     bool isSearch = false;
 
@@ -586,8 +586,11 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
 
     int numLines = lines.size();
 
-    int startLine = numLines - searchPoint.x();
-    if (parameter.period == PeriodSearch::WithTheFirst) {
+    int startLine = -1;
+
+    if (parameter.period == PeriodSearch::WithTheEnd || parameter.period == PeriodSearch::None) {
+        startLine = numLines - searchPoint.x();
+    } else if (parameter.period == PeriodSearch::WithTheFirst) {
         startLine = 0;
     } else if (parameter.period == PeriodSearch::AfterDate) {
         const auto lambda = [=](const ChatLine::Ptr& item) {
@@ -627,6 +630,7 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
         return isSearch;
     }
 
+    bool searchUp = (direction == SearchDirection::Up);
     for (int i = startLine; searchUp ? i >= 0 : i < numLines; searchUp ? --i : ++i) {
         ChatLine::Ptr l = lines[i];
 
@@ -681,7 +685,7 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
             continue;
         }
 
-        auto point = indexForSearchInLine(txt, phrase, parameter, searchUp);
+        auto point = indexForSearchInLine(txt, phrase, parameter, direction);
         if ((point.first == -1 && searchPoint.y() > -1)) {
             text->deselectText();
             searchPoint.setY(-1);
@@ -705,7 +709,7 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
     return isSearch;
 }
 
-std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, bool searchUp)
+std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, const SearchDirection& direction)
 {
     int index = -1;
     int size = 0;
@@ -713,7 +717,7 @@ std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, co
     QRegularExpression exp;
     auto flagIns = QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption;
     auto flag = QRegularExpression::UseUnicodePropertiesOption;
-    if (searchUp) {
+    if (direction == SearchDirection::Up) {
         int startIndex = -1;
         if (searchPoint.y() > -1) {
             startIndex = searchPoint.y() - 1;
