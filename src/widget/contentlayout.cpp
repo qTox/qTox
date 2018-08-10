@@ -98,7 +98,6 @@ void ContentLayout::init()
     mainHLine.setFrameShadow(QFrame::Plain);
     QPalette palette = mainHLine.palette();
     palette.setBrush(QPalette::WindowText, QBrush(QColor(193, 193, 193)));
-    palette.setBrush(QPalette::WindowText, QBrush(QColor(193, 193, 193)));
     mainHLine.setPalette(palette);
 
     mainContent = new QWidget();
