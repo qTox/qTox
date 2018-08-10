@@ -105,6 +105,11 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
 #else
     bodyUI->checkUpdates->setVisible(false);
 #endif
+
+#ifndef SPELL_CHECKING
+    bodyUI->cbSpellChecking->setVisible(false);
+#endif
+
     bodyUI->checkUpdates->setChecked(s.getCheckUpdates());
 
     for (int i = 0; i < locales.size(); ++i) {
@@ -126,6 +131,7 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
 
     bodyUI->cbAutorun->setChecked(s.getAutorun());
 
+    bodyUI->cbSpellChecking->setChecked(s.getSpellCheckingEnabled());
     bodyUI->lightTrayIcon->setChecked(s.getLightTrayIcon());
     bool showSystemTray = s.getShowSystemTray();
 
@@ -170,6 +176,11 @@ void GeneralForm::on_transComboBox_currentIndexChanged(int index)
 void GeneralForm::on_cbAutorun_stateChanged()
 {
     Settings::getInstance().setAutorun(bodyUI->cbAutorun->isChecked());
+}
+
+void GeneralForm::on_cbSpellChecking_stateChanged()
+{
+    Settings::getInstance().setSpellCheckingEnabled(bodyUI->cbSpellChecking->isChecked());
 }
 
 void GeneralForm::on_showSystemTray_stateChanged()

@@ -103,14 +103,20 @@ matrix:
       cache:
         directories:
           - /opt/build-windows/x86_64
-    - stage: "macOS and AppImage"
+    - stage: "macOS, AppImage and Flatpak"
       os: osx
       osx_image: xcode7.3
       env: JOB=build-osx
-    - stage: "macOS and AppImage"
+    - stage: "macOS, AppImage and Flatpak"
       os: linux
       env: JOB=APPIMAGE
       script: ./appimage/build-appimage.sh
+      services:
+        - docker
+    - stage: "macOS, AppImage and Flatpak"
+      os: linux
+      env: JOB=FLATPAK
+      script: ./flatpak/build-flatpak.sh
       services:
         - docker
 
@@ -121,9 +127,22 @@ deploy:
   - provider: releases
     api_key:
       secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
-    file: ./output/qTox-"$TRAVIS_TAG".AppImage
+    file_glob: true
+    file: ./output/*
     on:
       condition: $JOB == APPIMAGE
+      repo: qTox/qTox
+      tags: true
+    skip_cleanup: true
+
+  # Linux Flatpak
+  - provider: releases
+    api_key:
+      secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+    file_glob: true
+    file: ./output/*
+    on:
+      condition: $JOB == FLATPAK
       repo: qTox/qTox
       tags: true
     skip_cleanup: true

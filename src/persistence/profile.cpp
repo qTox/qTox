@@ -32,6 +32,7 @@
 #include "profilelocker.h"
 #include "settings.h"
 #include "src/core/core.h"
+#include "src/core/corefile.h"
 #include "src/net/avatarbroadcaster.h"
 #include "src/nexus.h"
 #include "src/widget/gui.h"
@@ -51,6 +52,35 @@
 
 QStringList Profile::profiles;
 
+void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s)
+{
+    Core::ToxCoreErrors err;
+    core = Core::makeToxCore(toxsave, &s, &err);
+    if (!core) {
+        switch (err) {
+        case Core::ToxCoreErrors::BAD_PROXY:
+            emit badProxy();
+            break;
+        case Core::ToxCoreErrors::ERROR_ALLOC:
+        case Core::ToxCoreErrors::FAILED_TO_START:
+        case Core::ToxCoreErrors::INVALID_SAVE:
+        default:
+            emit failedToStart();
+        }
+
+        qDebug() << "failed to start ToxCore";
+        return;
+    }
+
+    // save tox file when Core requests it
+    connect(core.get(), &Core::saveRequest, this, &Profile::onSaveToxSave);
+    // react to avatar changes
+    connect(core.get(), &Core::friendAvatarRemoved, this, &Profile::removeAvatar);
+    connect(core.get(), &Core::friendAvatarData, this, &Profile::saveAvatar);
+    connect(core.get(), &Core::fileAvatarOfferReceived, this, &Profile::onAvatarOfferReceived,
+            Qt::ConnectionType::QueuedConnection);
+}
+
 Profile::Profile(QString name, const QString& password, bool isNewProfile, const QByteArray& toxsave)
     : name{name}
     , newProfile{isNewProfile}
@@ -60,24 +90,10 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile, const
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    coreThread = new QThread();
-    coreThread->setObjectName("qTox Core");
-    core = new Core(coreThread, *this, &Settings::getInstance());
-    QObject::connect(core, &Core::idSet, this,
-                     [this, password](const ToxId& id) { loadDatabase(id, password); },
-                     Qt::QueuedConnection);
-    core->moveToThread(coreThread);
-    QObject::connect(coreThread, &QThread::started, core, [=]() {
-        core->start(toxsave);
+    initCore(toxsave, s);
 
-        const ToxPk selfPk = core->getSelfPublicKey();
-        QByteArray data = loadAvatarData(selfPk);
-        if (data.isEmpty()) {
-            qDebug() << "Self avatar not found, will broadcast empty avatar to friends";
-        }
-
-        setAvatar(data, selfPk);
-    });
+    const ToxId& selfId = core->getSelfId();
+    loadDatabase(selfId, password);
 }
 
 /**
@@ -91,8 +107,7 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile, const
 Profile* Profile::loadProfile(QString name, const QString& password)
 {
     if (ProfileLocker::hasLock()) {
-        qCritical() << "Tried to load profile " << name
-                    << ", but another profile is already locked!";
+        qCritical() << "Tried to load profile " << name << ", but another profile is already locked!";
         return nullptr;
     }
 
@@ -186,8 +201,7 @@ Profile* Profile::createProfile(QString name, QString password)
     }
 
     if (ProfileLocker::hasLock()) {
-        qCritical() << "Tried to create profile " << name
-                    << ", but another profile is already locked!";
+        qCritical() << "Tried to create profile " << name << ", but another profile is already locked!";
         return nullptr;
     }
 
@@ -214,14 +228,9 @@ Profile* Profile::createProfile(QString name, QString password)
 Profile::~Profile()
 {
     if (!isRemoved && core->isReady()) {
-        saveToxSave();
+        onSaveToxSave();
     }
 
-    core->deleteLater();
-    while (coreThread->isRunning())
-        qApp->processEvents();
-
-    delete coreThread;
     if (!isRemoved) {
         Settings::getInstance().savePersonal(this);
         Settings::getInstance().sync();
@@ -275,7 +284,8 @@ QStringList Profile::getProfiles()
 
 Core* Profile::getCore()
 {
-    return core;
+    // TODO(sudden6): this is evil
+    return core.get();
 }
 
 QString Profile::getName() const
@@ -288,7 +298,18 @@ QString Profile::getName() const
  */
 void Profile::startCore()
 {
-    coreThread->start();
+    core->start();
+
+    const ToxId& selfId = core->getSelfId();
+    const ToxPk& selfPk = selfId.getPublicKey();
+    const QByteArray data = loadAvatarData(selfPk);
+    if (data.isEmpty()) {
+        qDebug() << "Self avatar not found, will broadcast empty avatar to friends";
+    }
+    // TODO(sudden6): moved here, because it crashes in the constructor
+    // reason: Core::getInstance() returns nullptr, because it's not yet initialized
+    // solution: kill Core::getInstance
+    setAvatar(data);
 }
 
 bool Profile::isNewProfile()
@@ -300,7 +321,7 @@ bool Profile::isNewProfile()
  * @brief Saves the profile's .tox save, encrypted if needed.
  * @warning Invalid on deleted profiles.
  */
-void Profile::saveToxSave()
+void Profile::onSaveToxSave()
 {
     assert(core->isReady());
     QByteArray data = core->getToxSaveData();
@@ -308,12 +329,21 @@ void Profile::saveToxSave()
     saveToxSave(data);
 }
 
+// TODO(sudden6): handle this better maybe?
+void Profile::onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash)
+{
+    // accept if we don't have it already
+    const bool accept = getAvatarHash(core->getFriendPublicKey(friendId)) != avatarHash;
+    CoreFile::handleAvatarOffer(friendId, fileId, accept);
+}
+
 /**
  * @brief Write the .tox save, encrypted if needed.
  * @param data Byte array of profile save.
+ * @return true if successfully saved, false otherwise
  * @warning Invalid on deleted profiles.
  */
-void Profile::saveToxSave(QByteArray data)
+bool Profile::saveToxSave(QByteArray data)
 {
     assert(!isRemoved);
     ProfileLocker::assertLock();
@@ -324,7 +354,7 @@ void Profile::saveToxSave(QByteArray data)
     QSaveFile saveFile(path);
     if (!saveFile.open(QIODevice::WriteOnly)) {
         qCritical() << "Tox save file " << path << " couldn't be opened";
-        return;
+        return false;
     }
 
     if (encrypted) {
@@ -332,7 +362,7 @@ void Profile::saveToxSave(QByteArray data)
         if (data.isEmpty()) {
             qCritical() << "Failed to encrypt, can't save!";
             saveFile.cancelWriting();
-            return;
+            return false;
         }
     }
 
@@ -345,7 +375,9 @@ void Profile::saveToxSave(QByteArray data)
     } else {
         saveFile.cancelWriting();
         qCritical() << "Failed to write, can't save!";
+        return false;
     }
+    return true;
 }
 
 /**
@@ -374,8 +406,7 @@ QString Profile::avatarPath(const ToxPk& owner, bool forceUnencrypted)
     QByteArray hash(hashSize, 0);
     crypto_generichash((uint8_t*)hash.data(), hashSize, (uint8_t*)idData.data(), idData.size(),
                        (uint8_t*)pubkeyData.data(), pubkeyData.size());
-    return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper()
-           + ".png";
+    return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
 }
 
 /**
@@ -465,26 +496,31 @@ void Profile::loadDatabase(const ToxId& id, QString password)
     }
 }
 
-void Profile::setAvatar(QByteArray pic, const ToxPk& owner)
+/**
+ * @brief Sets our own avatar
+ * @param pic Picture to use as avatar, if empty an Identicon will be used depending on settings
+ * @param owner
+ */
+void Profile::setAvatar(QByteArray pic)
 {
     QPixmap pixmap;
     QByteArray avatarData;
+    const ToxPk& selfPk = core->getSelfPublicKey();
     if (!pic.isEmpty()) {
         pixmap.loadFromData(pic);
         avatarData = pic;
     } else {
         if (Settings::getInstance().getShowIdenticons()) {
             // with IDENTICON_ROWS=5 this gives a 160x160 image file
-            const QImage identicon = Identicon(owner.getKey()).toImage(32);
+            const QImage identicon = Identicon(selfPk.getKey()).toImage(32);
             pixmap = QPixmap::fromImage(identicon);
 
         } else {
             pixmap.load(":/img/contact_dark.svg");
         }
-
     }
 
-    saveAvatar(avatarData, owner);
+    saveAvatar(selfPk, avatarData);
 
     emit selfAvatarChanged(pixmap);
     AvatarBroadcaster::setAvatar(avatarData);
@@ -514,11 +550,10 @@ void Profile::onRequestSent(const ToxPk& friendPk, const QString& message)
  * @param pic Picture to save.
  * @param owner PK of avatar owner.
  */
-void Profile::saveAvatar(QByteArray pic, const ToxPk& owner)
+void Profile::saveAvatar(const ToxPk& owner, const QByteArray& avatar)
 {
-    if (encrypted && !pic.isEmpty()) {
-        pic = passkey->encrypt(pic);
-    }
+    const bool needEncrypt = encrypted && !avatar.isEmpty();
+    const QByteArray& pic = needEncrypt ? passkey->encrypt(avatar) : avatar;
 
     QString path = avatarPath(owner);
     QDir(Settings::getInstance().getSettingsDirPath()).mkdir("avatars");
@@ -551,7 +586,7 @@ QByteArray Profile::getAvatarHash(const ToxPk& owner)
 /**
  * @brief Removes our own avatar.
  */
-void Profile::removeAvatar()
+void Profile::removeSelfAvatar()
 {
     removeAvatar(core->getSelfId().getPublicKey());
 }
@@ -583,7 +618,7 @@ void Profile::removeAvatar(const ToxPk& owner)
 {
     QFile::remove(avatarPath(owner));
     if (owner == core->getSelfId().getPublicKey()) {
-        setAvatar({}, core->getSelfPublicKey());
+        setAvatar({});
     }
 }
 
@@ -716,11 +751,23 @@ const ToxEncrypt* Profile::getPasskey() const
 void Profile::restartCore()
 {
     GUI::setEnabled(false); // Core::reset re-enables it
-    if (!isRemoved && core->isReady()) {
-        saveToxSave();
+
+    if (core && !isRemoved) {
+        // TODO(sudden6): there's a potential race condition between unlocking the core loop
+        // and killing the core
+        const QByteArray& savedata = core->getToxSaveData();
+
+        // save to disk just in case
+        if (saveToxSave(savedata)) {
+            qDebug() << "Restarting Core";
+            initCore(savedata, Settings::getInstance());
+            core->start();
+        } else {
+            qCritical() << "Failed to save, not restarting core";
+        }
     }
 
-    QMetaObject::invokeMethod(core, "reset");
+    GUI::setEnabled(true);
 }
 
 /**
@@ -749,7 +796,7 @@ QString Profile::setPassword(const QString& newPassword)
     }
 
     // apply new encryption
-    saveToxSave();
+    onSaveToxSave();
 
     bool dbSuccess = false;
 
@@ -767,13 +814,13 @@ QString Profile::setPassword(const QString& newPassword)
     Nexus::getDesktopGUI()->reloadHistory();
 
     QByteArray avatar = loadAvatarData(core->getSelfId().getPublicKey());
-    saveAvatar(avatar, core->getSelfId().getPublicKey());
+    saveAvatar(core->getSelfId().getPublicKey(), avatar);
 
     QVector<uint32_t> friendList = core->getFriendList();
     QVectorIterator<uint32_t> i(friendList);
     while (i.hasNext()) {
         const ToxPk friendPublicKey = core->getFriendPublicKey(i.next());
-        saveAvatar(loadAvatarData(friendPublicKey), friendPublicKey);
+        saveAvatar(friendPublicKey, loadAvatarData(friendPublicKey));
     }
     return error;
 }

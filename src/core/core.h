@@ -24,18 +24,21 @@
 #include "toxfile.h"
 #include "toxid.h"
 
+#include "src/core/dhtserver.h"
 #include <tox/tox.h>
 
 #include <QMutex>
 #include <QObject>
+#include <QThread>
+#include <QTimer>
 
 #include <functional>
+#include <memory>
 
 class CoreAV;
 class ICoreSettings;
 class GroupInvite;
 class Profile;
-class QTimer;
 
 enum class Status
 {
@@ -45,11 +48,24 @@ enum class Status
     Offline
 };
 
+class Core;
+
+using ToxCorePtr = std::unique_ptr<Core>;
+
 class Core : public QObject
 {
     Q_OBJECT
 public:
-    Core(QThread* coreThread, Profile& profile, const ICoreSettings* const settings);
+    enum class ToxCoreErrors
+    {
+        BAD_PROXY,
+        INVALID_SAVE,
+        FAILED_TO_START,
+        ERROR_ALLOC
+    };
+
+    static ToxCorePtr makeToxCore(const QByteArray& savedata, const ICoreSettings* const settings,
+                                  ToxCoreErrors* err = nullptr);
     static Core* getInstance();
     const CoreAV* getAv() const;
     CoreAV* getAv();
@@ -85,10 +101,7 @@ public:
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
 
 public slots:
-    void start(const QByteArray& savedata);
-    void reset();
-    void process();
-    void bootstrapDht();
+    void start();
 
     QByteArray getToxSaveData();
 
@@ -126,51 +139,23 @@ signals:
     void disconnected();
 
     void friendRequestReceived(const ToxPk& friendPk, const QString& message);
-    void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
+    void friendAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
+    void friendAvatarData(const ToxPk& friendPk, const QByteArray& data);
+    void friendAvatarRemoved(const ToxPk& friendPk);
 
-    void friendAdded(uint32_t friendId, const ToxPk& friendPk);
     void requestSent(const ToxPk& friendPk, const QString& message);
-
-    void friendStatusChanged(uint32_t friendId, Status status);
-    void friendStatusMessageChanged(uint32_t friendId, const QString& message);
-    void friendUsernameChanged(uint32_t friendId, const QString& username);
-    void friendTypingChanged(uint32_t friendId, bool isTyping);
-    void friendAvatarChanged(uint32_t friendId, const QPixmap& pic);
-    void friendAvatarRemoved(uint32_t friendId);
-
-    void friendRemoved(uint32_t friendId);
-
-    void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
-
-    void emptyGroupCreated(int groupnumber);
-    void groupInviteReceived(const GroupInvite& inviteInfo);
-    void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
-    void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
-    void groupPeerlistChanged(int groupnumber);
-    void groupPeerNameChanged(int groupnumber, int peernumber, const QString& newName);
-    void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
-    void groupPeerAudioPlaying(int groupnumber, int peernumber);
+    void failedToAddFriend(const ToxPk& friendPk, const QString& errorInfo = QString());
 
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
     void statusSet(Status status);
     void idSet(const ToxId& id);
 
-    void messageSentResult(uint32_t friendId, const QString& message, int messageId);
-    void groupSentFailed(int groupId);
-    void actionSentResult(uint32_t friendId, const QString& action, int success);
-
-    void receiptRecieved(int friedId, int receipt);
-
-    void failedToAddFriend(const ToxPk& friendPk, const QString& errorInfo = QString());
-    void failedToRemoveFriend(uint32_t friendId);
     void failedToSetUsername(const QString& username);
     void failedToSetStatusMessage(const QString& message);
     void failedToSetStatus(Status status);
     void failedToSetTyping(bool typing);
 
-    void failedToStart();
-    void badProxy();
     void avReady();
 
     void fileSendStarted(ToxFile file);
@@ -184,11 +169,50 @@ signals:
     void fileTransferInfo(ToxFile file);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
     void fileTransferBrokenUnbroken(ToxFile file, bool broken);
-    void fileNameChanged();
+    void fileNameChanged(const ToxPk& friendPk);
+
+    void saveRequest();
+
+    /**
+     * @deprecated prefer signals using ToxPk
+     */
+
+    void fileAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash);
+
+    void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
+    void friendAdded(uint32_t friendId, const ToxPk& friendPk);
+
+    void friendStatusChanged(uint32_t friendId, Status status);
+    void friendStatusMessageChanged(uint32_t friendId, const QString& message);
+    void friendUsernameChanged(uint32_t friendId, const QString& username);
+    void friendTypingChanged(uint32_t friendId, bool isTyping);
+
+    void friendAvatarChangedDeprecated(uint32_t friendId, const QPixmap& pic);
+    void friendRemoved(uint32_t friendId);
+    void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
+
+    void emptyGroupCreated(int groupnumber);
+    void groupInviteReceived(const GroupInvite& inviteInfo);
+    void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
+    void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
+    void groupPeerlistChanged(int groupnumber);
+    void groupPeerNameChanged(int groupnumber, int peernumber, const QString& newName);
+    void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
+    void groupPeerAudioPlaying(int groupnumber, int peernumber);
+
+    void messageSentResult(uint32_t friendId, const QString& message, int messageId);
+    void groupSentFailed(int groupId);
+    void actionSentResult(uint32_t friendId, const QString& action, int success);
+
+    void receiptRecieved(int friedId, int receipt);
+
+    void failedToRemoveFriend(uint32_t friendId);
 
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
 private:
+    Core(QThread* coreThread);
+
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
                                 size_t cMessageSize, void* core);
     static void onFriendMessage(Tox* tox, uint32_t friendId, TOX_MESSAGE_TYPE type,
@@ -208,8 +232,8 @@ private:
                                const uint8_t* cMessage, size_t length, void* vCore);
 #if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
     static void onGroupPeerListChange(Tox*, uint32_t groupId, void* core);
-    static void onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId,
-                                 const uint8_t* name, size_t length, void* core);
+    static void onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* name,
+                                      size_t length, void* core);
 #else
     static void onGroupNamelistChange(Tox* tox, uint32_t groupId, uint32_t peerId,
                                       TOX_CONFERENCE_STATE_CHANGE change, void* core);
@@ -224,28 +248,41 @@ private:
     bool checkConnection();
 
     void checkEncryptedHistory();
-    void makeTox(QByteArray savedata);
+    void makeTox(QByteArray savedata, ICoreSettings* s);
     void makeAv();
     void loadFriends();
+    void bootstrapDht();
 
     void checkLastOnline(uint32_t friendId);
 
-    void deadifyTox();
     QString getFriendRequestErrorMessage(const ToxId& friendId, const QString& message) const;
+    static void registerCallbacks(Tox* tox);
 
 private slots:
-    void killTimers(bool onlyStop);
+    void killTimers();
+    void process();
+    void onStarted();
 
 private:
-    Tox* tox;
-    CoreAV* av;
-    QTimer* toxTimer;
-    Profile& profile;
-    QMutex messageSendMutex;
-    bool ready;
-    const ICoreSettings* const s;
+    struct ToxDeleter
+    {
+        void operator()(Tox* tox)
+        {
+            tox_kill(tox);
+        }
+    };
 
-    static QThread* coreThread;
+    using ToxPtr = std::unique_ptr<Tox, ToxDeleter>;
+    ToxPtr tox;
+
+    std::unique_ptr<CoreAV> av;
+    QTimer toxTimer;
+    // recursive, since we might call our own functions
+    // pointer so we can circumvent const functions
+    std::unique_ptr<QMutex> coreLoopLock = nullptr;
+
+    std::unique_ptr<QThread> coreThread = nullptr;
+    QList<DhtServer> bootstrapNodes{};
 
     friend class Audio;    ///< Audio can access our calls directly to reduce latency
     friend class CoreFile; ///< CoreFile can access tox* and emit our signals

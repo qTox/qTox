@@ -4,10 +4,10 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-AboutFriendForm::AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent)
+AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::AboutFriendForm)
-    , about{about}
+    , about{std::move(_about)}
 {
     ui->setupUi(this);
     ui->label_4->hide();
@@ -19,7 +19,7 @@ AboutFriendForm::AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent)
     connect(ui->autogroupinvite, &QCheckBox::clicked, this, &AboutFriendForm::onAutoGroupInvite);
     connect(ui->selectSaveDir, &QPushButton::clicked, this, &AboutFriendForm::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutFriendForm::onRemoveHistoryClicked);
-    about.data()->connectTo_autoAcceptDirChanged([=](const QString& dir){ onAutoAcceptDirChanged(dir); });
+    about->connectTo_autoAcceptDirChanged([=](const QString& dir){ onAutoAcceptDirChanged(dir); });
 
     const QString dir = about->getAutoAcceptDir();
     ui->autoacceptfile->setChecked(!dir.isEmpty());

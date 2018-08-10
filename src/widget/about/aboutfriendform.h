@@ -6,6 +6,8 @@
 #include <QDialog>
 #include <QPointer>
 
+#include <memory>
+
 namespace Ui {
 class AboutFriendForm;
 }
@@ -15,12 +17,12 @@ class AboutFriendForm : public QDialog
     Q_OBJECT
 
 public:
-    AboutFriendForm(QPointer<IAboutFriend> about, QWidget* parent = 0);
+    AboutFriendForm(std::unique_ptr<IAboutFriend> about, QWidget* parent = 0);
     ~AboutFriendForm();
 
 private:
     Ui::AboutFriendForm* ui;
-    QPointer<IAboutFriend> about;
+    const std::unique_ptr<IAboutFriend> about;
 
 private slots:
     void onAutoAcceptDirChanged(const QString& path);

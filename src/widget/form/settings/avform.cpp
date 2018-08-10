@@ -191,10 +191,7 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
             return;
         }
 
-        // note: grabber is self-managed and will destroy itself when done
-        ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber;
-
-        auto onGrabbed = [screenshotGrabber, devName, this](QRect region) {
+        auto onGrabbed = [devName, this](QRect region) {
             VideoMode mode(region);
             mode.width = mode.width / 2 * 2;
             mode.height = mode.height / 2 * 2;
@@ -209,6 +206,9 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
 
             open(devName, mode);
         };
+
+        // note: grabber is self-managed and will destroy itself when done
+        ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber;
 
         connect(screenshotGrabber, &ScreenshotGrabber::regionChosen, this, onGrabbed,
                 Qt::QueuedConnection);

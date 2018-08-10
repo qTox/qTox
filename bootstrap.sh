@@ -31,8 +31,8 @@ readonly INSTALL_DIR=libs
 readonly BASE_DIR="${SCRIPT_DIR}/${INSTALL_DIR}"
 
 # versions of libs to checkout
-readonly TOXCORE_VERSION="v0.2.2"
-readonly SQLCIPHER_VERSION="v3.4.0"
+readonly TOXCORE_VERSION="v0.2.3"
+readonly SQLCIPHER_VERSION="v3.4.2"
 
 # directory names of cloned repositories
 readonly TOXCORE_DIR="libtoxcore-$TOXCORE_VERSION"
@@ -93,32 +93,16 @@ install_toxcore() {
             "${BASE_DIR}/${TOXCORE_DIR}"
 
         pushd ${BASE_DIR}/${TOXCORE_DIR}
-        ./autogen.sh
 
-        # configure
+        # compile and install
         if [[ $SYSTEM_WIDE = "false" ]]
         then
-            ./configure --prefix=${BASE_DIR}
-        else
-            ./configure
-        fi
-
-        # ensure A/V support is enabled
-        if ! grep -Fxq "BUILD_AV_TRUE=''" config.log
-        then
-            echo "A/V support of libtoxcore is disabled but required by qTox.  Aborting."
-            echo "Maybe the dev-packages of libopus and libvpx are not installed?"
-            exit 1
-        fi
-
-        # compile
-        make -j $(nproc)
-
-        # install
-        if [[ $SYSTEM_WIDE = "false" ]]
-        then
+            cmake . -DCMAKE_INSTALL_PREFIX=${BASE_DIR}
+            make -j $(nproc)
             make install
         else
+            cmake .
+            make -j $(nproc)
             sudo make install
             sudo ldconfig
         fi

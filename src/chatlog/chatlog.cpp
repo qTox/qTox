@@ -197,8 +197,14 @@ void ChatLog::mousePressEvent(QMouseEvent* ev)
         clearSelection();
     }
 
-    // Counts only single clicks and first click of doule click
-    clickCount++;
+    if (lastClickButton == ev->button()) {
+        // Counts only single clicks and first click of doule click
+        clickCount++;
+    }
+    else {
+        clickCount = 1; // restarting counter
+        lastClickButton = ev->button();
+    }
     lastClickPos = ev->pos();
 
     // Triggers on odd click counts
@@ -477,8 +483,14 @@ void ChatLog::mouseDoubleClickEvent(QMouseEvent* ev)
         emit selectionChanged();
     }
 
-    // Counts the second click of double click
-    clickCount++;
+    if (lastClickButton == ev->button()) {
+        // Counts the second click of double click
+        clickCount++;
+    }
+    else {
+        clickCount = 1; // restarting counter
+        lastClickButton = ev->button();
+    }
     lastClickPos = ev->pos();
 
     // Triggers on even click counts

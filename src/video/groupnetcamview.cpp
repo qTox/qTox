@@ -20,8 +20,8 @@
 #include "groupnetcamview.h"
 #include "src/audio/audio.h"
 #include "src/core/core.h"
-#include "src/model/friend.h"
 #include "src/friendlist.h"
+#include "src/model/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/video/videosurface.h"
@@ -56,9 +56,7 @@ public:
         layout->addWidget(label);
     }
 
-    ~LabeledVideo()
-    {
-    }
+    ~LabeledVideo() {}
 
     VideoSurface* getVideoSurface() const
     {
@@ -117,6 +115,9 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
     videoLabelSurface->layout()->setMargin(0);
     videoLabelSurface->setStyleSheet("QFrame { background-color: black; }");
 
+    // remove full screen button in audio group chat since it's useless there
+    enterFullScreenButton->hide();
+
     QSplitter* splitter = new QSplitter(Qt::Vertical, this);
     splitter->setChildrenCollapsible(false);
     verLayout->insertWidget(0, splitter, 1);
@@ -153,7 +154,7 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
         setActive();
     });
 
-    connect(Core::getInstance(), &Core::friendAvatarChanged, this,
+    connect(Core::getInstance(), &Core::friendAvatarChangedDeprecated, this,
             &GroupNetCamView::friendAvatarChanged);
 
     selfVideoSurface->setText(Core::getInstance()->getUsername());

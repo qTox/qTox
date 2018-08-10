@@ -18,7 +18,7 @@ class ToxCall
 {
 protected:
     ToxCall() = delete;
-    ToxCall(uint32_t CallId, bool VideoEnabled, CoreAV& av);
+    ToxCall(bool VideoEnabled, CoreAV& av);
     ~ToxCall();
 
 public:
@@ -45,9 +45,6 @@ public:
 
     CoreVideoSource* getVideoSource() const;
 
-    quint32 getAlSource() const;
-    void setAlSource(const quint32& value);
-
 protected:
     bool active{false};
     CoreAV* av{nullptr};
@@ -55,7 +52,6 @@ protected:
     QMetaObject::Connection audioInConn;
     bool muteMic{false};
     bool muteVol{false};
-    quint32 alSource{0};
     // video
     CoreVideoSource* videoSource{nullptr};
     QMetaObject::Connection videoInConn;
@@ -68,8 +64,9 @@ class ToxFriendCall : public ToxCall
 public:
     ToxFriendCall() = delete;
     ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av);
-    ToxFriendCall(ToxFriendCall&& other) noexcept = default;
-    ToxFriendCall& operator=(ToxFriendCall&& other) noexcept = default;
+    ToxFriendCall(ToxFriendCall&& other) noexcept;
+    ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
+    ~ToxFriendCall();
 
     void startTimeout(uint32_t callId);
     void stopTimeout();
@@ -77,12 +74,16 @@ public:
     TOXAV_FRIEND_CALL_STATE getState() const;
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
+    quint32 getAlSource() const;
+    void setAlSource(const quint32& value);
+
 protected:
     std::unique_ptr<QTimer> timeoutTimer;
 
 private:
     TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
     static constexpr int CALL_TIMEOUT = 45000;
+    quint32 alSource{0};
 };
 
 class ToxGroupCall : public ToxCall
@@ -96,8 +97,11 @@ public:
     ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
 
     void removePeer(int peerId);
+    void addPeer(int peerId);
+    bool havePeer(int peerId);
+    void clearPeers();
 
-    QMap<int, quint32>& getPeers();
+    quint32 getAlSource(int peer);
 
 private:
     QMap<int, quint32> peers;

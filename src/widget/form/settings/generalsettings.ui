@@ -120,6 +120,13 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
+             <widget class="QCheckBox" name="cbSpellChecking">
+              <property name="text">
+               <string>Spell checking</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QCheckBox" name="lightTrayIcon">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">

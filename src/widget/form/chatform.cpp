@@ -27,21 +27,21 @@
 #include "src/core/coreav.h"
 #include "src/model/friend.h"
 #include "src/nexus.h"
+#include "src/persistence/history.h"
 #include "src/persistence/offlinemsgengine.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
-#include "src/persistence/history.h"
 #include "src/video/netcamview.h"
 #include "src/widget/chatformheader.h"
 #include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/maskablepixmapwidget.h"
+#include "src/widget/searchform.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/callconfirmwidget.h"
 #include "src/widget/tool/chattextedit.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
-#include "src/widget/searchform.h"
 
 #include <QClipboard>
 #include <QFileDialog>
@@ -158,7 +158,8 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
 
     const Core* core = Core::getInstance();
     connect(core, &Core::fileReceiveRequested, this, &ChatForm::onFileRecvRequest);
-    connect(core, &Core::friendAvatarChanged, this, &ChatForm::onAvatarChange);
+    // TODO(sudden6): update slot to new API
+    connect(core, &Core::friendAvatarChangedDeprecated, this, &ChatForm::onAvatarChange);
     connect(core, &Core::friendAvatarRemoved, this, &ChatForm::onAvatarRemoved);
     connect(core, &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
@@ -196,12 +197,10 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     });
 
     // reflect name changes in the header
-    connect(headWidget, &ChatFormHeader::nameChanged, this, [=](const QString& newName) {
-        f->setAlias(newName);
-    });
-    connect(headWidget, &ChatFormHeader::callAccepted, this, [this] {
-        onAnswerCallTriggered(lastCallIsVideo);
-    });
+    connect(headWidget, &ChatFormHeader::nameChanged, this,
+            [=](const QString& newName) { f->setAlias(newName); });
+    connect(headWidget, &ChatFormHeader::callAccepted, this,
+            [this] { onAnswerCallTriggered(lastCallIsVideo); });
     connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
 
     updateCallButtons();
@@ -219,6 +218,7 @@ ChatForm::~ChatForm()
     Translator::unregister(this);
     delete netcam;
     netcam = nullptr;
+    delete offlineEngine;
 }
 
 void ChatForm::setStatusMessage(const QString& newMessage)
@@ -233,8 +233,12 @@ void ChatForm::onSendTriggered()
     SendMessageStr(msgEdit->toPlainText());
     msgEdit->clear();
 }
-void ChatForm::onFileNameChanged()
+void ChatForm::onFileNameChanged(const ToxPk& friendPk)
 {
+    if(friendPk != f->getPublicKey()) {
+        return;
+    }
+
     QMessageBox::warning(this, tr("Filename contained illegal characters"),
                          tr("Illegal characters have been changed to _ \n"
                             "so you can save the file on windows."));
@@ -263,7 +267,8 @@ void ChatForm::onTextEditChanged()
 
 void ChatForm::onAttachClicked()
 {
-    QStringList paths = QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"), QDir::homePath(), 0, 0);
+    QStringList paths =
+        QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"), QDir::homePath(), 0, 0);
 
     if (paths.isEmpty()) {
         return;
@@ -709,8 +714,9 @@ void ChatForm::dropEvent(QDropEvent* ev)
 
         file.close();
         if (file.isSequential()) {
-            QMessageBox::critical(0, tr("Bad idea"), tr("You're trying to send a sequential file, "
-                                                        "which is not going to work!"));
+            QMessageBox::critical(0, tr("Bad idea"),
+                                  tr("You're trying to send a sequential file, "
+                                     "which is not going to work!"));
             continue;
         }
 
@@ -720,9 +726,9 @@ void ChatForm::dropEvent(QDropEvent* ev)
     }
 }
 
-void ChatForm::onAvatarRemoved(uint32_t friendId)
+void ChatForm::onAvatarRemoved(const ToxPk& friendPk)
 {
-    if (friendId != f->getId()) {
+    if (friendPk != f->getPublicKey()) {
         return;
     }
 
@@ -818,7 +824,9 @@ void ChatForm::insertChatlines(QList<ChatLine::Ptr> chatLines)
     verticalBar->setValue(savedSliderPos);
 }
 
-QDate ChatForm::addDateLineIfNeeded(QList<ChatLine::Ptr> msgs, QDate const& lastDate, History::HistMessage const& newMessage, MessageMetadata const& metadata)
+QDate ChatForm::addDateLineIfNeeded(QList<ChatLine::Ptr> msgs, QDate const& lastDate,
+                                    History::HistMessage const& newMessage,
+                                    MessageMetadata const& metadata)
 {
     // Show the date every new day
     QDate newDate = metadata.msgDateTime.date();
@@ -842,11 +850,13 @@ ChatForm::MessageMetadata ChatForm::getMessageMetadata(History::HistMessage cons
     return {isSelf, needSending, isAction, id, authorPk, msgDateTime};
 }
 
-ChatMessage::Ptr ChatForm::chatMessageFromHistMessage(History::HistMessage const& histMessage, MessageMetadata const& metadata)
+ChatMessage::Ptr ChatForm::chatMessageFromHistMessage(History::HistMessage const& histMessage,
+                                                      MessageMetadata const& metadata)
 {
     ToxPk authorPk(ToxId(histMessage.sender).getPublicKey());
     QString authorStr = getMsgAuthorDispName(authorPk, histMessage.dispName);
-    QString messageText = metadata.isAction ? histMessage.message.mid(ACTION_PREFIX.length()) : histMessage.message;
+    QString messageText =
+        metadata.isAction ? histMessage.message.mid(ACTION_PREFIX.length()) : histMessage.message;
     ChatMessage::MessageType type = metadata.isAction ? ChatMessage::ACTION : ChatMessage::NORMAL;
     QDateTime dateTime = metadata.needSending ? QDateTime() : metadata.msgDateTime;
     auto msg = ChatMessage::createChatMessage(authorStr, messageText, type, metadata.isSelf, dateTime);
@@ -986,8 +996,7 @@ void ChatForm::stopCounter(bool error)
     QString mess = error ? tr("Call with %1 ended unexpectedly. %2") : tr("Call with %1 ended. %2");
     // TODO: add notification once notifications are implemented
 
-    addSystemInfoMessage(mess.arg(name, dhms), ChatMessage::INFO,
-                         QDateTime::currentDateTime());
+    addSystemInfoMessage(mess.arg(name, dhms), ChatMessage::INFO, QDateTime::currentDateTime());
     callDurationTimer->stop();
     callDuration->setText("");
     callDuration->hide();
@@ -1062,9 +1071,9 @@ void ChatForm::SendMessageStr(QString msg)
             QString pk = f->getPublicKey().toString();
             QString name = Core::getInstance()->getUsername();
             history->addNewMessage(pk, historyPart, selfPk, timestamp, status, name,
-                                                 [offMsgEngine, rec, ma](int64_t id) {
-                                                     offMsgEngine->registerReceipt(rec, id, ma);
-                                                 });
+                                   [offMsgEngine, rec, ma](int64_t id) {
+                                       offMsgEngine->registerReceipt(rec, id, ma);
+                                   });
         } else {
             // TODO: Make faux-offline messaging work partially with the history disabled
             ma->markAsSent(QDateTime::currentDateTime());
@@ -1124,12 +1133,12 @@ void ChatForm::onExportChat()
 
     QString buffer;
     for (const auto& it : msgs) {
-        QString timestamp = it.timestamp.toString();
+        QString timestamp = it.timestamp.time().toString("hh:mm:ss");
+        QString datestamp = it.timestamp.date().toString("yyyy-MM-dd");
         ToxPk authorPk(ToxId(it.sender).getPublicKey());
         QString author = getMsgAuthorDispName(authorPk, it.dispName);
 
-        QString line = QString("%1\t%2\t%3\n").arg(timestamp, author, it.message);
-        buffer = buffer % line;
+        buffer = buffer % QString{datestamp % '\t' % timestamp % '\t' % author % '\t' % it.message % '\n'};
     }
     file.write(buffer.toUtf8());
     file.close();

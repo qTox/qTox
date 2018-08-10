@@ -231,6 +231,7 @@ void Settings::loadGlobal()
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
+        spellCheckingEnabled = s.value("spellCheckingEnabled", true).toBool();
         themeColor = s.value("themeColor", 0).toInt();
         style = s.value("style", "").toString();
         if (style == "") // Default to Fusion if available, otherwise no style
@@ -547,6 +548,7 @@ void Settings::saveGlobal()
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
+        s.setValue("spellCheckingEnabled", spellCheckingEnabled);
     }
     s.endGroup();
 
@@ -1042,6 +1044,22 @@ void Settings::setStatusChangeNotificationEnabled(bool newValue)
 
     if (newValue != statusChangeNotificationEnabled) {
         statusChangeNotificationEnabled = newValue;
+        emit statusChangeNotificationEnabledChanged(statusChangeNotificationEnabled);
+    }
+}
+
+bool Settings::getSpellCheckingEnabled() const
+{
+    const QMutexLocker locker{&bigLock};
+    return spellCheckingEnabled;
+}
+
+void Settings::setSpellCheckingEnabled(bool newValue)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (newValue != spellCheckingEnabled) {
+        spellCheckingEnabled = newValue;
         emit statusChangeNotificationEnabledChanged(statusChangeNotificationEnabled);
     }
 }

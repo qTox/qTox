@@ -73,8 +73,8 @@ public slots:
     void onAvStart(uint32_t friendId, bool video);
     void onAvEnd(uint32_t friendId, bool error);
     void onAvatarChange(uint32_t friendId, const QPixmap& pic);
-    void onAvatarRemoved(uint32_t friendId);
-    void onFileNameChanged();
+    void onAvatarRemoved(const ToxPk& friendPk);
+    void onFileNameChanged(const ToxPk& friendPk);
 
 protected slots:
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter) override;
@@ -110,25 +110,30 @@ private slots:
     void onExportChat();
 
 private:
-    struct MessageMetadata {
+    struct MessageMetadata
+    {
         const bool isSelf;
         const bool needSending;
         const bool isAction;
         const qint64 id;
         const ToxPk authorPk;
         const QDateTime msgDateTime;
-        MessageMetadata(bool isSelf, bool needSending, bool isAction, qint64 id, ToxPk authorPk, QDateTime msgDateTime) :
-            isSelf{isSelf},
-            needSending{needSending},
-            isAction{isAction},
-            id{id},
-            authorPk{authorPk},
-            msgDateTime{msgDateTime} {}
+        MessageMetadata(bool isSelf, bool needSending, bool isAction, qint64 id, ToxPk authorPk,
+                        QDateTime msgDateTime)
+            : isSelf{isSelf}
+            , needSending{needSending}
+            , isAction{isAction}
+            , id{id}
+            , authorPk{authorPk}
+            , msgDateTime{msgDateTime}
+        {}
     };
     void handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered);
-    QDate addDateLineIfNeeded(QList<ChatLine::Ptr> msgs, QDate const& lastDate, History::HistMessage const& newMessage, MessageMetadata const& metadata);
+    QDate addDateLineIfNeeded(QList<ChatLine::Ptr> msgs, QDate const& lastDate,
+                              History::HistMessage const& newMessage, MessageMetadata const& metadata);
     MessageMetadata getMessageMetadata(History::HistMessage const& histMessage);
-    ChatMessage::Ptr chatMessageFromHistMessage(History::HistMessage const& histMessage, MessageMetadata const& metadata);
+    ChatMessage::Ptr chatMessageFromHistMessage(History::HistMessage const& histMessage,
+                                                MessageMetadata const& metadata);
     void sendLoadedMessage(ChatMessage::Ptr chatMsg, MessageMetadata const& metadata);
     void insertChatlines(QList<ChatLine::Ptr> chatLines);
     void updateMuteMicButton();

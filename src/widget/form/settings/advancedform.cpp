@@ -55,18 +55,19 @@ AdvancedForm::AdvancedForm()
     Settings& s = Settings::getInstance();
     bodyUI->cbEnableIPv6->setChecked(s.getEnableIPv6());
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
-    const bool udpEnabled = !s.getForceTCP();
-    bodyUI->cbEnableUDP->setChecked(udpEnabled);
-    bodyUI->cbEnableLanDiscovery->setChecked(s.getEnableLanDiscovery());
-    bodyUI->cbEnableLanDiscovery->setEnabled(udpEnabled);
     bodyUI->proxyAddr->setText(s.getProxyAddr());
     quint16 port = s.getProxyPort();
-    if (port > 0)
+    if (port > 0) {
         bodyUI->proxyPort->setValue(port);
+    }
 
     int index = static_cast<int>(s.getProxyType());
     bodyUI->proxyType->setCurrentIndex(index);
     on_proxyType_currentIndexChanged(index);
+    const bool udpEnabled = !s.getForceTCP() && (s.getProxyType() == Settings::ProxyType::ptNone);
+    bodyUI->cbEnableUDP->setChecked(udpEnabled);
+    bodyUI->cbEnableLanDiscovery->setChecked(s.getEnableLanDiscovery() && udpEnabled);
+    bodyUI->cbEnableLanDiscovery->setEnabled(udpEnabled);
 
     QString warningBody = tr("Unless you %1 know what you are doing, "
                              "please do %2 change anything here. Changes "
@@ -176,7 +177,9 @@ void AdvancedForm::on_cbEnableUDP_stateChanged()
 {
     const bool enableUdp = bodyUI->cbEnableUDP->isChecked();
     Settings::getInstance().setForceTCP(!enableUdp);
+    const bool enableLanDiscovery = Settings::getInstance().getEnableLanDiscovery();
     bodyUI->cbEnableLanDiscovery->setEnabled(enableUdp);
+    bodyUI->cbEnableLanDiscovery->setChecked(enableUdp && enableLanDiscovery);
 }
 
 void AdvancedForm::on_cbEnableLanDiscovery_stateChanged()
@@ -191,8 +194,9 @@ void AdvancedForm::on_proxyAddr_editingFinished()
 
 void AdvancedForm::on_proxyPort_valueChanged(int port)
 {
-    if (port <= 0)
+    if (port <= 0) {
         port = 0;
+    }
 
     Settings::getInstance().setProxyPort(port);
 }
@@ -200,9 +204,14 @@ void AdvancedForm::on_proxyPort_valueChanged(int port)
 void AdvancedForm::on_proxyType_currentIndexChanged(int index)
 {
     Settings::ProxyType proxytype = static_cast<Settings::ProxyType>(index);
+    const bool proxyEnabled = proxytype != Settings::ProxyType::ptNone;
 
-    bodyUI->proxyAddr->setEnabled(proxytype != Settings::ProxyType::ptNone);
-    bodyUI->proxyPort->setEnabled(proxytype != Settings::ProxyType::ptNone);
+    bodyUI->proxyAddr->setEnabled(proxyEnabled);
+    bodyUI->proxyPort->setEnabled(proxyEnabled);
+    // enabling UDP and proxy can be a privacy issue
+    bodyUI->cbEnableUDP->setEnabled(!proxyEnabled);
+    bodyUI->cbEnableUDP->setChecked(!proxyEnabled);
+
     Settings::getInstance().setProxyType(proxytype);
 }
 

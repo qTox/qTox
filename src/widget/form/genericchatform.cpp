@@ -46,6 +46,11 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QRegularExpression>
+#include <QStringBuilder>
+
+#ifdef SPELL_CHECKING
+#include <KF5/SonnetUi/sonnet/spellcheckdecorator.h>
+#endif
 
 /**
  * @class GenericChatForm
@@ -143,6 +148,11 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     connect(&s, &Settings::chatMessageFontChanged, this, &GenericChatForm::onChatMessageFontChanged);
 
     msgEdit = new ChatTextEdit();
+#ifdef SPELL_CHECKING
+    if (s.getSpellCheckingEnabled()) {
+        decorator = new Sonnet::SpellCheckDecorator(msgEdit);
+    }
+#endif
 
     sendButton = createButton("sendButton", this, &GenericChatForm::onSendTriggered);
     emoteButton = createButton("emoteButton", this, &GenericChatForm::onEmoteButtonClicked);
@@ -481,17 +491,16 @@ void GenericChatForm::onSaveLogClicked()
     for (ChatLine::Ptr l : lines) {
         Timestamp* rightCol = qobject_cast<Timestamp*>(l->getContent(2));
 
-        if (!rightCol)
-            break;
-
         ChatLineContent* middleCol = l->getContent(1);
         ChatLineContent* leftCol = l->getContent(0);
 
-        QString timestamp = rightCol->getTime().isNull() ? tr("Not sent") : rightCol->getText();
-        QString nick = leftCol->getText();
+        QString nick = leftCol->getText().isNull() ? tr("[System message]") : leftCol->getText();
+
         QString msg = middleCol->getText();
 
-        plainText += QString("[%2] %1\n%3\n\n").arg(nick, timestamp, msg);
+        QString timestamp = (rightCol == nullptr) ? tr("Not sent") : rightCol->getText();
+
+        plainText += QString{nick % "\t" % timestamp % "\t" % msg % "\n"};
     }
 
     file.write(plainText.toUtf8());

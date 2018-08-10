@@ -21,6 +21,7 @@
 #ifndef PROFILE_H
 #define PROFILE_H
 
+#include "src/core/core.h"
 #include "src/core/toxencrypt.h"
 #include "src/core/toxid.h"
 
@@ -32,9 +33,6 @@
 #include <QString>
 #include <QVector>
 #include <memory>
-
-class Core;
-class QThread;
 
 class Profile : public QObject
 {
@@ -55,17 +53,12 @@ public:
     QString setPassword(const QString& newPassword);
     const ToxEncrypt* getPasskey() const;
 
-    void saveToxSave();
-    void saveToxSave(QByteArray data);
-
     QPixmap loadAvatar();
     QPixmap loadAvatar(const ToxPk& owner);
     QByteArray loadAvatarData(const ToxPk& owner);
-    void setAvatar(QByteArray pic, const ToxPk& owner);
-    void saveAvatar(QByteArray pic, const ToxPk& owner);
+    void setAvatar(QByteArray pic);
     QByteArray getAvatarHash(const ToxPk& owner);
-    void removeAvatar(const ToxPk& owner);
-    void removeAvatar();
+    void removeSelfAvatar();
 
     bool isHistoryEnabled();
     History* getHistory();
@@ -84,20 +77,30 @@ public:
 signals:
     void selfAvatarChanged(const QPixmap& pixmap);
 
+    // TODO(sudden6): this doesn't seem to be the right place for Core errors
+    void failedToStart();
+    void badProxy();
+
 public slots:
     void onRequestSent(const ToxPk& friendPk, const QString& message);
 
 private slots:
     void loadDatabase(const ToxId& id, QString password);
+    void saveAvatar(const ToxPk& owner, const QByteArray& avatar);
+    void removeAvatar(const ToxPk& owner);
+    void onSaveToxSave();
+    // TODO(sudden6): use ToxPk instead of friendId
+    void onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash);
 
 private:
     Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave);
     static QStringList getFilesByExt(QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
+    bool saveToxSave(QByteArray data);
+    void initCore(const QByteArray& toxsave, ICoreSettings& s);
 
 private:
-    Core* core;
-    QThread* coreThread;
+    std::unique_ptr<Core> core = nullptr;
     QString name;
     std::unique_ptr<ToxEncrypt> passkey = nullptr;
     std::shared_ptr<RawDatabase> database;

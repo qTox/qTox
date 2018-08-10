@@ -35,9 +35,10 @@ public slots:
     void setEditable(bool editable);
     void setElideMode(Qt::TextElideMode elide);
 
-    void setText(const QString& text);
     QString fullText();
 
+public slots:
+    void setText(const QString& text);
     void minimizeMaximumWidth();
 
 signals:

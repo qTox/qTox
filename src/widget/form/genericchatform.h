@@ -55,6 +55,12 @@ namespace Ui {
 class MainWindow;
 }
 
+#ifdef SPELL_CHECKING
+namespace Sonnet {
+class SpellCheckDecorator;
+}
+#endif
+
 class GenericChatForm : public QWidget
 {
     Q_OBJECT
@@ -170,6 +176,9 @@ protected:
     SearchForm *searchForm;
     ChatLog* chatWidget;
     ChatTextEdit* msgEdit;
+#ifdef SPELL_CHECKING
+    Sonnet::SpellCheckDecorator* decorator{nullptr};
+#endif
     FlyoutOverlayWidget* fileFlyout;
     GenericNetCamView* netcam;
     Widget* parent;

@@ -12,6 +12,7 @@ option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 # AUTOUPDATE is currently broken and thus disabled
 option(AUTOUPDATE "Enable the auto updater" OFF)
 option(USE_CCACHE "Use ccache when available" ON)
+option(SPELL_CHECK "Enable spell cheching support" ON)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -256,6 +257,10 @@ set(${PROJECT_NAME}_SOURCES
   src/core/toxfile.h
   src/core/toxid.cpp
   src/core/toxid.h
+  src/core/toxlogger.cpp
+  src/core/toxlogger.h
+  src/core/toxoptions.cpp
+  src/core/toxoptions.h
   src/core/toxpk.cpp
   src/core/toxpk.h
   src/core/toxstring.cpp
@@ -269,6 +274,11 @@ set(${PROJECT_NAME}_SOURCES
   src/model/about/aboutfriend.cpp
   src/model/about/aboutfriend.h
   src/model/about/iaboutfriend.h
+  src/model/chatroom/chatroom.h
+  src/model/chatroom/friendchatroom.cpp
+  src/model/chatroom/friendchatroom.h
+  src/model/chatroom/groupchatroom.cpp
+  src/model/chatroom/groupchatroom.h
   src/model/contact.cpp
   src/model/contact.h
   src/model/friend.cpp
