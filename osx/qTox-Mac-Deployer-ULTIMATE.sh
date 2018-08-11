@@ -32,7 +32,8 @@ then
     MAIN_DIR="${TRAVIS_BUILD_DIR}"
     QTOX_DIR="${MAIN_DIR}"
 else
-    MAIN_DIR="/Users/${USER}"
+    # the directory which qTox is cloned in, wherever that is
+    MAIN_DIR="$(dirname $(readlink -f $0))/../.."
     QTOX_DIR="${MAIN_DIR}/qTox${SUBGIT}"
 fi
 QT_DIR="/usr/local/Cellar/qt5" # Folder name of QT install
@@ -70,11 +71,10 @@ build_toxcore() {
     [[ $TRAVIS != true ]] \
     && sleep 3
 
-    autoreconf -if
-
+    mkdir _build && cd _build
+    fcho "Starting cmake ..."
     #Make sure the correct version of libsodium is used
-    ./configure --with-libsodium-headers="${LS_DIR_VER}/include/" --with-libsodium-libs="${LS_DIR_VER}/lib/" --prefix="${LIB_INSTALL_PREFIX}"
-
+    cmake -DBOOTSTRAP_DAEMON=OFF -DLIBSODIUM_CFLAGS="-I${LS_DIR_VER}/include/" -DLIBSODIUM_LDFLAGS="L${LS_DIR_VER}/lib/" -DCMAKE_INSTALL_PREFIX="${LIB_INSTALL_PREFIX}" ..
     make clean &> /dev/null
     fcho "Compiling toxcore."
     make > /dev/null || exit 1
@@ -112,7 +112,7 @@ install() {
     if [[ $TRAVIS != true ]]
     then
         sleep 3
-        brew install git wget libtool autoconf automake pkgconfig
+        brew install git wget libtool cmake pkgconfig
     fi
     brew install check libvpx opus libsodium
 
@@ -167,7 +167,11 @@ install() {
     else
         brew install cmake
     fi
-    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft
+
+    # needed for kf5-sonnet
+    brew tap kde-mac/kde
+
+    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet
 
     fcho "Cloning filter_audio ... "
     git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio "$FILTERAUIO_DIR"

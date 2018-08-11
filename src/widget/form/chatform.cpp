@@ -1087,12 +1087,12 @@ void ChatForm::onExportChat()
 
     QString buffer;
     for (const auto& it : msgs) {
-        QString timestamp = it.timestamp.toString();
+        QString timestamp = it.timestamp.time().toString("hh:mm:ss");
+        QString datestamp = it.timestamp.date().toString("yyyy-MM-dd");
         ToxPk authorPk(ToxId(it.sender).getPublicKey());
         QString author = getMsgAuthorDispName(authorPk, it.dispName);
 
-        QString line = QString("%1\t%2\t%3\n").arg(timestamp, author, it.message);
-        buffer = buffer % line;
+        buffer = buffer % QString{datestamp % '\t' % timestamp % '\t' % author % '\t' % it.message % '\n'};
     }
     file.write(buffer.toUtf8());
     file.close();

@@ -124,7 +124,7 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString& rawMessage,
 
     msg->addColumn(new Image(QSize(18, 18), img),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text("<b>" + text + "</b>", baseFont, false, ""),
+    msg->addColumn(new Text("<b>" + text + "</b>", baseFont, false, text),
                    ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
     msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), baseFont),
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));

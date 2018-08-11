@@ -63,6 +63,18 @@ dependencies are missing.
 |---------|---------|
 | [Check] | >= 0.9  |
 
+### Spell checking support
+
+| Name     | Version |
+|----------|---------|
+| [sonnet] | >= 5.45 |
+
+Use `-DSPELL_CHECK=OFF` to disable it.
+
+**Note:** Specified version was tested and works well. You can try to use older
+version, but in this case you may have some errors (including a complete lack
+of spell check).
+
 ### Linux
 
 #### Auto-away support
@@ -299,6 +311,7 @@ sudo apt-get install \
     libexif-dev \
     libgdk-pixbuf2.0-dev \
     libgtk2.0-dev \
+    libkdeui5 \
     libopenal-dev \
     libopus-dev \
     libqrencode-dev \
@@ -337,6 +350,7 @@ sudo dnf install \
     check-devel \
     ffmpeg-devel \
     gtk2-devel \
+    kf5-sonnet \
     libexif-devel \
     libsodium-devel \
     libtool \
@@ -381,7 +395,8 @@ sudo zypper install \
     openal-soft-devel \
     patterns-openSUSE-devel_basis \
     qrencode-devel \
-    sqlcipher-devel
+    sqlcipher-devel \
+    sonnet-devel
 ```
 
 <a name="slackware-other-deps" />
@@ -414,6 +429,7 @@ sudo apt-get install \
     libgdk-pixbuf2.0-dev \
     libglib2.0-dev \
     libgtk2.0-dev \
+    libkdeui5 \
     libopenal-dev \
     libopus-dev \
     libqrencode-dev \
@@ -447,6 +463,7 @@ sudo apt-get install \
     libgdk-pixbuf2.0-dev \
     libglib2.0-dev \
     libgtk2.0-dev \
+    libkdeui5 \
     libopenal-dev \
     libopus-dev \
     libqrencode-dev \
@@ -805,3 +822,4 @@ Switches:
 [sqlcipher]: https://www.zetetic.net/sqlcipher/
 [toxcore]: https://github.com/TokTok/c-toxcore/
 [filteraudio]: https://github.com/irungentoo/filter_audio
+[sonnet]: https://github.com/KDE/sonnet
