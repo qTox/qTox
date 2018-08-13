@@ -27,21 +27,22 @@
 #include <QShortcut>
 #include <QSplitter>
 
-#include "contentlayout.h"
-#include "friendwidget.h"
-#include "groupwidget.h"
-#include "style.h"
-#include "widget.h"
 #include "src/core/core.h"
-#include "src/model/friend.h"
 #include "src/friendlist.h"
-#include "src/model/group.h"
 #include "src/grouplist.h"
+#include "src/model/chatroom/friendchatroom.h"
+#include "src/model/friend.h"
+#include "src/model/group.h"
 #include "src/persistence/settings.h"
+#include "src/widget/contentlayout.h"
+#include "src/widget/friendwidget.h"
+#include "src/widget/groupwidget.h"
 #include "src/widget/form/chatform.h"
 #include "src/widget/friendlistlayout.h"
+#include "src/widget/style.h"
+#include "src/widget/tool/adjustingscrollarea.h"
 #include "src/widget/translator.h"
-#include "tool/adjustingscrollarea.h"
+#include "src/widget/widget.h"
 
 QString ContentDialog::username = "";
 ContentDialog* ContentDialog::currentDialog = nullptr;
@@ -162,11 +163,12 @@ ContentDialog::~ContentDialog()
     Translator::unregister(this);
 }
 
-FriendWidget* ContentDialog::addFriend(const Friend* frnd, GenericChatForm* form)
+FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form)
 {
-    bool compact = Settings::getInstance().getCompactLayout();
-    uint32_t friendId = frnd->getId();
-    FriendWidget* friendWidget = new FriendWidget(frnd, compact);
+    const auto compact = Settings::getInstance().getCompactLayout();
+    auto frnd = chatroom->getFriend();
+    auto friendId = frnd->getId();
+    auto friendWidget = new FriendWidget(chatroom, compact);
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
     friendChatForms[friendId] = form;
 
@@ -187,12 +189,12 @@ FriendWidget* ContentDialog::addFriend(const Friend* frnd, GenericChatForm* form
     return friendWidget;
 }
 
-GroupWidget* ContentDialog::addGroup(const Group* g, GenericChatForm* form)
+GroupWidget* ContentDialog::addGroup(std::shared_ptr<GroupChatroom> chatroom, GenericChatForm* form)
 {
+    const auto g = chatroom->getGroup();
     const auto groupId = g->getId();
-    const auto name = g->getName();
     const auto compact = Settings::getInstance().getCompactLayout();
-    GroupWidget* groupWidget = new GroupWidget(groupId, name, compact);
+    GroupWidget* groupWidget = new GroupWidget(chatroom, compact);
     groupLayout.addSortedWidget(groupWidget);
     groupChatForms[groupId] = form;
 

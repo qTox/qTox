@@ -20,8 +20,8 @@
 #include "netcamview.h"
 #include "camerasource.h"
 #include "src/core/core.h"
-#include "src/model/friend.h"
 #include "src/friendlist.h"
+#include "src/model/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
@@ -75,7 +75,7 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     connections += connect(Nexus::getProfile(), &Profile::selfAvatarChanged,
                            [this](const QPixmap& pixmap) { selfVideoSurface->setAvatar(pixmap); });
 
-    connections += connect(Core::getInstance(), &Core::friendAvatarChanged,
+    connections += connect(Core::getInstance(), &Core::friendAvatarChangedDeprecated,
                            [this](int FriendId, const QPixmap& pixmap) {
                                if (this->friendId == FriendId)
                                    videoSurface->setAvatar(pixmap);

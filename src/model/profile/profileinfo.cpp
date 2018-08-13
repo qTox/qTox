@@ -19,14 +19,14 @@
 
 #include "profileinfo.h"
 #include "src/core/core.h"
+#include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
-#include "src/nexus.h"
 
 #include <QApplication>
+#include <QBuffer>
 #include <QClipboard>
 #include <QFile>
-#include <QBuffer>
 
 /**
  * @class ProfileInfo
@@ -41,7 +41,7 @@
  * @param profile Pointer to Profile.
  * @note All pointers parameters shouldn't be null.
  */
-ProfileInfo::ProfileInfo(Core* core, Profile *profile)
+ProfileInfo::ProfileInfo(Core* core, Profile* profile)
     : profile{profile}
     , core{core}
 {
@@ -55,7 +55,7 @@ ProfileInfo::ProfileInfo(Core* core, Profile *profile)
  * @param password New password.
  * @return True on success, false otherwise.
  */
-bool ProfileInfo::setPassword(const QString &password)
+bool ProfileInfo::setPassword(const QString& password)
 {
     QString errorMsg = profile->setPassword(password);
     return errorMsg.isEmpty();
@@ -98,7 +98,7 @@ void ProfileInfo::copyId() const
  * @brief Set self user name.
  * @param name New name.
  */
-void ProfileInfo::setUsername(const QString &name)
+void ProfileInfo::setUsername(const QString& name)
 {
     core->setUsername(name);
 }
@@ -107,7 +107,7 @@ void ProfileInfo::setUsername(const QString &name)
  * @brief Set self status message.
  * @param status New status message.
  */
-void ProfileInfo::setStatusMessage(const QString &status)
+void ProfileInfo::setStatusMessage(const QString& status)
 {
     core->setStatusMessage(status);
 }
@@ -152,7 +152,7 @@ static QString sanitize(const QString& src)
  * @param name New profile name.
  * @return Result code of rename operation.
  */
-IProfileInfo::RenameResult ProfileInfo::renameProfile(const QString &name)
+IProfileInfo::RenameResult ProfileInfo::renameProfile(const QString& name)
 {
     QString cur = profile->getName();
     if (name.isEmpty()) {
@@ -191,7 +191,7 @@ static bool tryRemoveFile(const QString& filepath)
  * @param path Path to save profile.
  * @return Result code of save operation.
  */
-IProfileInfo::SaveResult ProfileInfo::exportProfile(const QString &path) const
+IProfileInfo::SaveResult ProfileInfo::exportProfile(const QString& path) const
 {
     QString current = profile->getName() + Core::TOX_EXT;
     if (path.isEmpty()) {
@@ -284,7 +284,7 @@ QByteArray picToPng(const QPixmap& pic)
  * @param path Path to image, which should be the new avatar.
  * @return Code of set avatar operation.
  */
-IProfileInfo::SetAvatarResult ProfileInfo::setAvatar(const QString &path)
+IProfileInfo::SetAvatarResult ProfileInfo::setAvatar(const QString& path)
 {
     if (path.isEmpty()) {
         return SetAvatarResult::EmptyPath;
@@ -327,7 +327,7 @@ IProfileInfo::SetAvatarResult ProfileInfo::setAvatar(const QString &path)
         return SetAvatarResult::TooLarge;
     }
 
-    profile->setAvatar(bytes, core->getSelfPublicKey());
+    profile->setAvatar(bytes);
     return SetAvatarResult::OK;
 }
 
@@ -336,5 +336,5 @@ IProfileInfo::SetAvatarResult ProfileInfo::setAvatar(const QString &path)
  */
 void ProfileInfo::removeAvatar()
 {
-    profile->removeAvatar();
+    profile->removeSelfAvatar();
 }

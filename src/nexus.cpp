@@ -61,8 +61,7 @@ Nexus::Nexus(QObject* parent)
     , profile{nullptr}
     , widget{nullptr}
     , running{true}
-{
-}
+{}
 
 Nexus::~Nexus()
 {
@@ -194,9 +193,9 @@ void Nexus::showMainGUI()
 
     connect(core, &Core::connected, widget, &Widget::onConnected);
     connect(core, &Core::disconnected, widget, &Widget::onDisconnected);
-    connect(core, &Core::failedToStart, widget, &Widget::onFailedToStartCore,
+    connect(profile, &Profile::failedToStart, widget, &Widget::onFailedToStartCore,
             Qt::BlockingQueuedConnection);
-    connect(core, &Core::badProxy, widget, &Widget::onBadProxyCore, Qt::BlockingQueuedConnection);
+    connect(profile, &Profile::badProxy, widget, &Widget::onBadProxyCore, Qt::BlockingQueuedConnection);
     connect(core, &Core::statusSet, widget, &Widget::onStatusSet);
     connect(core, &Core::usernameSet, widget, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, widget, &Widget::setStatusMessage);
@@ -209,7 +208,8 @@ void Nexus::showMainGUI()
     connect(core, &Core::friendMessageReceived, widget, &Widget::onFriendMessageReceived);
     connect(core, &Core::groupInviteReceived, widget, &Widget::onGroupInviteReceived);
     connect(core, &Core::groupMessageReceived, widget, &Widget::onGroupMessageReceived);
-    connect(core, &Core::groupNamelistChanged, widget, &Widget::onGroupNamelistChangedOld);    // TODO(sudden6): toxcore < 0.2.0, remove
+    connect(core, &Core::groupNamelistChanged, widget,
+            &Widget::onGroupNamelistChangedOld); // TODO(sudden6): toxcore < 0.2.0, remove
     connect(core, &Core::groupPeerlistChanged, widget, &Widget::onGroupPeerlistChanged);
     connect(core, &Core::groupPeerNameChanged, widget, &Widget::onGroupPeerNameChanged);
     connect(core, &Core::groupTitleChanged, widget, &Widget::onGroupTitleChanged);
@@ -224,6 +224,8 @@ void Nexus::showMainGUI()
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
     profile->startCore();
+
+    GUI::setEnabled(true);
 }
 
 /**

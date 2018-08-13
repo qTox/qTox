@@ -110,42 +110,16 @@ translations, on the other, it lessened problems that were happening with
 
 To get translations into qTox:
 
-1. Add Weblate: `git remote add weblate
-   https://hosted.weblate.org/git/tox/qtox/`
-2. Fetch newest: `git fetch weblate`
-3. Check what has been changed compared to master: `git log --no-merges
-   master..weblate/master`
-4. Cherry-pick from the oldest commit.
-   - check if there are multiple commits from the same author for the same
-     translation. If there are, cherry-pick them accordingly:
-     
-     ```
-     git cherry-pick <commit1> <commit2>
-     ```
-     
-5. If there were multiple commits, squash them into a single one, leaving only
-   a single `feat(l10n): …` line in the commit message.
-6. Get rid of Weblate's formatting and amend the commit using
-   [`./tools/deweblate-translation-file.sh`], i.e.:
-   
-   ```
-   ./tools/deweblate-translation-file.sh
-   ```
-   
-7. For translations that haven't yet been cherry-picked repeat steps 4-6.
-8. Once done with cherry-picking, update all translation files, so that Weblate
-   would get newest strings that changed in qTox:
-   
-   ```
-   ./tools/update-translation-files.sh ALL
-   ```
-   
-9. Once PR with translation gets merged, `Reset` Weblate to current `master`,
-   since without reset there would be a git conflict that would prevent Weblate
-   from getting new strings.
-    
-**It's a good idea to lock translations on Weblate while they're in merge
-process, so that no translation effort would be lost when resetting Weblate.**
+1. Go to `https://hosted.weblate.org/projects/tox/qtox/#repository` and lock
+   the repository for translations.
+2. Make sure you have git setup to automatically gpg sign commits
+3. In the root of the qTox repository execute the script
+   `tools/update-weblate.sh`
+4. Check what has been changed compared to master: `git diff upstream/master`
+5. Checkout a new branch with e.g. `git checkout -b update_weblate` and open
+   a Pull Request for it on Github.
+6. After the Pull Request has been merged, unlock Weblate and `reset` it to
+   master
 
 ## Adding new translations
 
@@ -215,6 +189,12 @@ Follow steps for adding translations from Weblate up to step 5. Next:
 - Update download links on https://tox.chat to point to the new release.
 - Write a short blog post for https://github.com/qTox/blog/ and advertise the post
   on Tox IRC channels, popular Tox groups, reddit, or whatever other platforms.
+- Open a PR to update the Flatpak manifest of our [Flathub repository] with the 
+  changes from [`./flatpak/io.github.qtox.qTox.json`].
+- Comment to the PR with `bot, build` to execute a test build
+- After the build passed for qTox on all architectures on
+  [the Flathub build bot], merge the PR into the master branch of our
+  [Flathub repository].
 
 
 # How to become a maintainer?
@@ -236,3 +216,6 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`./tools/deweblate-translation-file.sh`]: /tools/deweblate-translation-file.sh
 [`./tools/create-tarball.sh`]: /tools/create-tarball.sh
 [`./tools/update-versions.sh`]: /tools/update-versions.sh
+[Flathub repository]: https://github.com/flathub/io.github.qtox.qTox
+[`./flatpak/io.github.qtox.qTox.json`]: flatpak/io.github.qtox.qTox.json
+[the Flathub build bot]: https://flathub.org/builds/#/

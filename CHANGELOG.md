@@ -1,3 +1,99 @@
+<a name=""></a>
+## v1.16.3 (2018-07-18)
+
+This point release fixes flatpak build. No feature changes.
+
+
+
+<a name=""></a>
+## v1.16.2 (2018-07-15)
+
+This point release fixes dialog spam from receiving invalid filenames and logs
+spam. No feature changes.
+
+#### Bug Fixes
+
+* **logging:**  only log toxcore messages above TRACE level ([4dc74201](https://github.com/qTox/qTox/commit/4dc7420162e69095942b392048c309e6246d6b21))
+* **ui:**  don't emit filename change windows for every chat ([c1701345](https://github.com/qTox/qTox/commit/c1701345455ad5b253beeaa3d487daa01b8b1b21))
+
+
+
+<a name=""></a>
+## v1.16.1 (2018-07-04)
+
+This point release fixes our deployment of Flapak and AppImage on Github. No
+feature changes.
+
+#### Features
+
+* **deploy:**  upload Flatpak bundle to Github releases ([59b5578c](https://github.com/qTox/qTox/commit/59b5578c7bffc56f6227c60bfcb38f97d39ec8d9))
+
+#### Bug Fixes
+
+* **deploy:**  fix file path in AppImage deployment ([64602f38](https://github.com/qTox/qTox/commit/64602f38f154a3f3d2429146ae5d370b2202d1b8))
+
+
+
+<a name=""></a>
+## v1.16.0 (2018-07-02)
+
+The most notable additions in this release are a new fullscreen mode for
+video calls, a new call end sound and support for more camera resolutions. To
+distribute qTox in a more user friendly manner we now publish Flatpak and
+AppImage packages.
+
+#### Bug Fixes
+
+*   remove full screen btn from audio group chat ([0d3f061b](https://github.com/qTox/qTox/commit/0d3f061ba80d9f3f8a971d2b8e11a7d9b59d180a))
+*   local toxcore install with bootstrap.sh ([9ca38750](https://github.com/qTox/qTox/commit/9ca3875079adf175f31f568e45aabc37e3409000), closes [#5199](https://github.com/qTox/qTox/issues/5199))
+*   simple_make.sh script ([ead2152d](https://github.com/qTox/qTox/commit/ead2152d6f0d15f7e662975fb3ed8525109794c3))
+*   Fix PR #5182. Eliminating the 'new' operator at ToxOptionsWrapper ([9b6cd1c0](https://github.com/qTox/qTox/commit/9b6cd1c0227006308d4fe556f2b721865c2d9b21))
+*   Fix usage of unitialized functions ([06ae7ead](https://github.com/qTox/qTox/commit/06ae7ead0c7c23935c1c05c75d9cb11ed516224b))
+*   two crashes, uncovered by the persistent groupchat patch ([48179b6a](https://github.com/qTox/qTox/commit/48179b6a19807383e298661a21f97db3b140eb44))
+*   delete double initialization callDuration ([dc1f5ea0](https://github.com/qTox/qTox/commit/dc1f5ea0a319bf4cbf05989c414ccaea898b4826))
+* **Core:**  fix use after free of proxyAddrData ([26b59d31](https://github.com/qTox/qTox/commit/26b59d312375ad6391228308aabe45f0a85a1194))
+* **appimage:**  build sqlcipher form source ([64a7c24b](https://github.com/qTox/qTox/commit/64a7c24b2b5ad11a6df5dbb11da6e3aa7c0fd6f3))
+* **audio:**
+  *  fix error introduced in 67f2605971cf43093c72f811e4df90ab70544dd6 ([40d30153](https://github.com/qTox/qTox/commit/40d30153aed223b65b596dc7d3bf17573b04f3e9))
+  *  connect the correct audio callbacks ([a00af087](https://github.com/qTox/qTox/commit/a00af087778c6315ef55ed77c4209cbb63a6323d))
+  *  close the audio device after playing a sound ([a3370173](https://github.com/qTox/qTox/commit/a3370173df24cd6880e3e3845ddbbc7c090b7aed))
+* **build:**
+  *  Elimination the build warnings (Wunused-variable, Wreorder) ([2cd65610](https://github.com/qTox/qTox/commit/2cd65610fcce0c3dcf8a5e9cb9f313a76167c09a))
+  *  correct install script nsis for win64 ([25e69572](https://github.com/qTox/qTox/commit/25e69572f89d816cfab5a8c0d1c261bae34d3cdd))
+  *  make qTox compile with ffmpeg 4.0 and newer ([44193176](https://github.com/qTox/qTox/commit/441931765ffe3de349b28a28bf10a006edcc9949))
+* **chatform:**
+  *  name in window title and close detached chats ([39968a31](https://github.com/qTox/qTox/commit/39968a313d78c727046837901e6cc3d6c31d18e0))
+  *  check for empty path when exporting profile ([757791ee](https://github.com/qTox/qTox/commit/757791eea4be390bb6d1cdc908d1cd3c4b18728d), closes [#5146](https://github.com/qTox/qTox/issues/5146))
+* **core:**  Clean illegal chars from filenames ([ab85716f](https://github.com/qTox/qTox/commit/ab85716f00acfe00ff8035670919dd548d7f7f83))
+* **docs:**  update toxcore build instructions ([b00cbc1d](https://github.com/qTox/qTox/commit/b00cbc1d6f3a7f8406e4a96e732c534068fde22c))
+* **file:**  don't clean the filenames of avatar transfer ([2a8ab03e](https://github.com/qTox/qTox/commit/2a8ab03e46dd08efc4051a01bea56fe6a4c38a11))
+* **history:**  don't save both action prefix and displayed name ([dfd2de83](https://github.com/qTox/qTox/commit/dfd2de836eae605e02a1afb270620dd9274f6385))
+* **leak:**  Fix few memory leaks ([daaa5518](https://github.com/qTox/qTox/commit/daaa5518dd7c02c2de45690daa3f592206fc4023))
+* **login:**  start login screen on profile select by -p option ([1af3ad69](https://github.com/qTox/qTox/commit/1af3ad69e884bc4e74a4fcdd452a6aff10bffd62))
+* **settings:**
+  *  automatically disable UDP when a proxy is set ([977b7fc9](https://github.com/qTox/qTox/commit/977b7fc9a02b2b44164ffb77ab35f4cdfae90542))
+  *  prevent segfault on wrong proxy settings ([dfd5232e](https://github.com/qTox/qTox/commit/dfd5232e2fb727685a20804d7ca3b932ea239332))
+* **simple_make:**  correct variable initialization ([1537f83e](https://github.com/qTox/qTox/commit/1537f83e85ff28dd73fb66161ae2cd5eeef692d1))
+* **theme:**  clear stylesheet cache on theme colour change ([8ba8ce91](https://github.com/qTox/qTox/commit/8ba8ce91f3317794b72fb4937c459dac2856d367))
+* **ui:**  increase number of low res camera options ([72931514](https://github.com/qTox/qTox/commit/72931514695a8691593d6a5abd2df1e340f95002))
+* **video:**  unsubscribe the video device correctly ([e55f86c6](https://github.com/qTox/qTox/commit/e55f86c6a5b0344642fcb3d7a2550df6e899a6e5))
+* **wayland:**  Fix desktop file name in Qt properties ([c1caeb58](https://github.com/qTox/qTox/commit/c1caeb585a8845eaa72c7db79fb334262eafdb8f))
+
+#### Features
+
+*   Add ability to remove dialog from content dialog with middle click ([aae567ed](https://github.com/qTox/qTox/commit/aae567ed8e299fc0cdd700e2e0020042ee1cba11))
+*   Add ability to quit group with middle click ([228c431c](https://github.com/qTox/qTox/commit/228c431c890a7e68d078b441311892c691643926))
+*   Add middle mouse clicked signal for GenericChatroom ([65fc1dc2](https://github.com/qTox/qTox/commit/65fc1dc266da29e0679f2b645c31bc428f0cf575))
+* **appimage:**  build appimage on TravisCI ([f7345e4d](https://github.com/qTox/qTox/commit/f7345e4db264a5681490b9094981a65cac68d317))
+* **call:**  add call end sound ([65896e45](https://github.com/qTox/qTox/commit/65896e45017f8f748bc5b9db10a4400d7fd418dc))
+* **chat:**
+  *  add UI option to mute group peers ([2fae2a30](https://github.com/qTox/qTox/commit/2fae2a30f76978ce722c5b24236384c8052ebfc4))
+  *  full screen video chat ([d6df8883](https://github.com/qTox/qTox/commit/d6df8883e399b95a55c5a5870497c1dcd45a3917))
+* **core:**  put c-toxcore log messages in the qTox log ([4faab075](https://github.com/qTox/qTox/commit/4faab0750d3841beeb08c7d17e85044b5013aea8))
+* **history:**  load set number of messages from history ([ca32e77d](https://github.com/qTox/qTox/commit/ca32e77d7400e23a6a839f6a8d1f322bfe48bbf0))
+
+
+
 <a name="v1.15.0"></a>
 ## v1.15.0 (2018-04-18)
 
@@ -45,88 +141,7 @@
 
 
 <a name=""></a>
-##  (2018-03-12)
-
-
-#### Bug Fixes
-
-*   Not quit on close if this setting is enabled ([e73dc10c](https://github.com/qTox/qTox/commit/e73dc10c7fd23b887cc5e2d5d4021bc02c8555ec))
-*   add search symbol ' in history ([3e05279c](https://github.com/qTox/qTox/commit/3e05279c097b33b09cedcebae4150c839a23af35))
-*   Use real channels number ([e74cc37a](https://github.com/qTox/qTox/commit/e74cc37a2d02e9d4cbd016bac9dbb7697e8445e7))
-*   Allocate memory to input buffer ([900f2a1a](https://github.com/qTox/qTox/commit/900f2a1ad3b328359a0ae089e778b15280512a9d))
-*   Call doAudio on timer timeout ([2353a66f](https://github.com/qTox/qTox/commit/2353a66fded32174421c9663ced5cfe4ceabe00b))
-*   [un]subscribe output in avform ([8c05399e](https://github.com/qTox/qTox/commit/8c05399e418f2c0147ce2d9c7dd220a0cdc97765))
-*   Correct display the call confirm window (CallConfirmWidget) ([f4fe343e](https://github.com/qTox/qTox/commit/f4fe343eca3eaf84f9ce300b59be9e83a70c204e))
-*   elimination of warning '-Wreorder' ([0869d3d8](https://github.com/qTox/qTox/commit/0869d3d8fdc9e9de2f1df51c377ddba71a1ce523))
-*   Use epsilon to compare float ([91dabf11](https://github.com/qTox/qTox/commit/91dabf11d31807f499d6e949373bf22762e80f5b))
-* **UI:**  prevent deadlocks on logout and profile delete ([a49e3458](https://github.com/qTox/qTox/commit/a49e34589f40edfb3fc46d5700573f87d5dfe3d0))
-* **build:**
-  *  move Appdata file installation to /usr/share/metainfo ([5db0bdd3](https://github.com/qTox/qTox/commit/5db0bdd381f0f08c5685501702f2a2eb9d2f5674))
-  *  add needed ffmpeg decoder to configuration ([8973a521](https://github.com/qTox/qTox/commit/8973a5216f49e65adc48d5fada8a574db598cced))
-  *  Add missing dependency for openSUSE ([f7e089f7](https://github.com/qTox/qTox/commit/f7e089f7a71c41ff31d311fe7148e57b5c6fb60a))
-* **chatform:**  Broaden URL matching to include unicode ([e564b85e](https://github.com/qTox/qTox/commit/e564b85e3c485b283855bfdf00dfc0ec5427fad4))
-* **chatlog:**
-  *  Match multi-character emoticons again ([9643e48e](https://github.com/qTox/qTox/commit/9643e48ef1d68948d52feec4e1be28c3ad61c0da))
-  *  parse multi-length emoji properly ([5df63f9c](https://github.com/qTox/qTox/commit/5df63f9c2e6d78f4799447b0a22cdb9fb70c3fea))
-* **chatwidget:**  fix send file button not working ([af1aebfd](https://github.com/qTox/qTox/commit/af1aebfd1a7409ea821be2a616067561b62751c0))
-* **cmake:**
-  *  fix platform extensions for windows ([7ad68e2f](https://github.com/qTox/qTox/commit/7ad68e2f43b458cd00ca27b9cfb20abf0b9ae46c))
-  *  add missing dependency ([423f0956](https://github.com/qTox/qTox/commit/423f095622824a34d081fb69bddd83cddf83ca03))
-* **core:**
-  *  Adapt qtox to new conferences state change callback. ([1111949f](https://github.com/qTox/qTox/commit/1111949f450fb4fe63321386f7f452ee1663f07a))
-  *  Use new callback API for bitrate set ([d2deec7c](https://github.com/qTox/qTox/commit/d2deec7c554b3df651fe789dfb7964748329eff4))
-  *  Use new API for bitrate set ([2c8f03da](https://github.com/qTox/qTox/commit/2c8f03dada443e30d6189050c7cf6d42e01827c5))
-* **cpu:**  Reduce CPU usage by avatar render ([8db61f96](https://github.com/qTox/qTox/commit/8db61f96ec78ac53479dd8db36eb192f6a1ddbcd))
-* **friendwidget:**  Use queued connection to avoid removing 'this' ([9b4972e0](https://github.com/qTox/qTox/commit/9b4972e0459de2921370cda9de645eb64e37ecfc))
-* **group:**  Show correct count of user on first creation ([0a590336](https://github.com/qTox/qTox/commit/0a590336b1467405a903464085dcdfc4474f93e6))
-* **install:**  Fix gzip invalid usage ([266f63f6](https://github.com/qTox/qTox/commit/266f63f6dfb1869aa2339d48cdc9b52ece3597ce))
-* **l10n:**
-  *  Correction of the translation into Russian ([3fb42b75](https://github.com/qTox/qTox/commit/3fb42b75d75bf6c0240748ffff368b912b14a838))
-  *  Correction of the translation into Russian ([9229fdd1](https://github.com/qTox/qTox/commit/9229fdd17e013a8bd60102648a200734890c2140))
-* **smiley:**  change license of classic smileys to CC BY-SA 4.0 ([da7c12e2](https://github.com/qTox/qTox/commit/da7c12e20cac1ac7340b4bb4ec89f782e2e4a159))
-* **travis:**
-  *  try working around Travis + gitstats issue ([4c980945](https://github.com/qTox/qTox/commit/4c98094551ff4a1e7377a206b72fedd470b8be96))
-  *  switch back to older Ubuntu Image ([378daeaa](https://github.com/qTox/qTox/commit/378daeaad4c5992a7acd2b650ff081d213556e10))
-* **video:**
-  *  improve debug message ([ff2fc18b](https://github.com/qTox/qTox/commit/ff2fc18be164fcbc89bfd46d64f4b0096a97aee5))
-  *  choose first available resolution in preview automatically ([81522dea](https://github.com/qTox/qTox/commit/81522deabdc3fb11fd8d3e1feb59274a96583121))
-  *  use float framerates also for V4L2 ([a2927de2](https://github.com/qTox/qTox/commit/a2927de27d4776b52303e07c07ce89e8dadf86c5))
-  *  allow not integer framerates ([db7ee65d](https://github.com/qTox/qTox/commit/db7ee65d0efbe23a45e385a148b20701e521a5c5))
-  *  Fix square form of a video ([8de8c14a](https://github.com/qTox/qTox/commit/8de8c14a76908cf84a322a0bfd9e2c7ad2b4fa16))
-* **widget:**  Fix status pic alignment ([d9118cfc](https://github.com/qTox/qTox/commit/d9118cfc71e2b030914187df7fd9fb3d98378cf1))
-* **windows:**  %APPDATA -> %APPDATA% in template ([f53b8282](https://github.com/qTox/qTox/commit/f53b82825bf76be5a6793d18f2d102ed7b222313))
-
-#### Features
-
-*   Add the cmake option USE_CCACHE ([aa9cff31](https://github.com/qTox/qTox/commit/aa9cff315d659a7ca2010fb4791893abc8c5abdb))
-*   update to the new c-toxcore 0.2.0 conferences api ([d3d81bbd](https://github.com/qTox/qTox/commit/d3d81bbdf3c198a7c1258c6ad6405c6ab61cedd4))
-*   add hot keys for search ([ffb51e8a](https://github.com/qTox/qTox/commit/ffb51e8a0ea7dc3fb01f1f7650edc80b779a9be2))
-*   optimise search in history ([18fa8a74](https://github.com/qTox/qTox/commit/18fa8a745bdafddc00ba2f577c36451f40edfd61))
-*   add search in text in group chats ([7718734c](https://github.com/qTox/qTox/commit/7718734c9ab9705c1a1274b2a447611c1a2e22b4))
-*   remove search button and add line in context menu ([8bb80c77](https://github.com/qTox/qTox/commit/8bb80c770c1d21d1bdfc03c3d0569fabe6535e8f))
-*   edit load history for search ([de9c9061](https://github.com/qTox/qTox/commit/de9c9061175c97a9ee203d18a39e73f77544d5e6))
-*   add text search ([b881d32d](https://github.com/qTox/qTox/commit/b881d32d1bddb7352b8d24e2442ef6277ff0d583))
-*   add form for search ([863c46c7](https://github.com/qTox/qTox/commit/863c46c73d1a2fc677f9142ba8d7a2e8dc659c2a))
-*   add a button to search ([47d9da98](https://github.com/qTox/qTox/commit/47d9da98cf6811a30d35a1204e5342a4f7f4bf94))
-*   Prefere new line as message break ([3b52402f](https://github.com/qTox/qTox/commit/3b52402fa20d2d5418e129e5f001b626401a9ae5))
-* **UI:**  new status icons for message notifications ([4288785d](https://github.com/qTox/qTox/commit/4288785d31e215bc379223577f7d4dd65664ed86))
-* **avatar:**  Add outline hightlight on mouse hover ([bb26485d](https://github.com/qTox/qTox/commit/bb26485db6fed706f4ebccaffe35740394210032))
-* **groupchat:**  mark blocked users with different color ([a729f2f8](https://github.com/qTox/qTox/commit/a729f2f8c00d29d2837b6e380f5af1b95c344bad))
-* **l10n:**
-  *  add Macedonian translation ([1a06f85d](https://github.com/qTox/qTox/commit/1a06f85d3ccc91ff6f759a38534483fa40aaaa29))
-  *  add Macedonian translation using Weblate ([41420331](https://github.com/qTox/qTox/commit/414203310a30720e02e06719bfcafbb8bcff9018))
-  *  update French translation from Weblate ([a7e90969](https://github.com/qTox/qTox/commit/a7e9096919d4c0b89f061e8b77741d517f574838))
-  *  update Portuguese translation from Weblate ([3bad087b](https://github.com/qTox/qTox/commit/3bad087bbff2fbff4c4d543df1f96931784c93df))
-  *  update Portuguese translation from Weblate ([8c3be522](https://github.com/qTox/qTox/commit/8c3be5225f484469aed43dde04f03bc588ca2c15))
-
-#### Performance
-
-* **widget:**  don't save on setExpanded if categorywidget is unchanged Fix #4932 ([b9845e1d](https://github.com/qTox/qTox/commit/b9845e1d23eb23380f447692e3a813413e897c2d))
-
-
-
-<a name=""></a>
-##  (2018-03-12)
+## v1.14.0 (2018-03-12)
 
 
 #### Bug Fixes

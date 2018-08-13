@@ -50,11 +50,11 @@ public slots:
 protected:
     QVBoxLayout* verLayout;
     VideoSurface* videoSurface;
+    QPushButton* enterFullScreenButton = nullptr;
 
 private:
     QHBoxLayout* buttonLayout = nullptr;
     QPushButton* toggleMessagesButton = nullptr;
-    QPushButton* enterFullScreenButton = nullptr;
     QFrame* buttonPanel = nullptr;
     QPushButton* videoPreviewButton = nullptr;
     QPushButton* volumeButton = nullptr;

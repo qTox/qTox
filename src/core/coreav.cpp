@@ -487,7 +487,7 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
     const Settings& s = Settings::getInstance();
     // don't play the audio if it comes from a muted peer
     if (s.getBlackList().contains(peerPk.toString())) {
-         return;
+        return;
     }
 
     CoreAV* cav = c->getAv();
@@ -506,12 +506,11 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
     }
 
     Audio& audio = Audio::getInstance();
-    if (!call.getPeers()[peer]) {
-        // FIXME: 0 is a valid sourceId, we shouldn't necessarily re-subscribe just because we have 0
-        audio.subscribeOutput(call.getPeers()[peer]);
+    if(!call.havePeer(peer)) {
+        call.addPeer(peer);
     }
 
-    audio.playAudioBuffer(call.getPeers()[peer], data, samples, channels, sample_rate);
+    audio.playAudioBuffer(call.getAlSource(peer), data, samples, channels, sample_rate);
 }
 #else
 void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* data,
@@ -536,12 +535,11 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
     }
 
     Audio& audio = Audio::getInstance();
-    if (!call.getPeers()[peer]) {
-        // FIXME: 0 is a valid sourceId, we shouldn't necessarily re-subscribe just because we have 0
-        audio.subscribeOutput(call.getPeers()[peer]);
+    if(!call.havePeer(peer)) {
+        call.addPeer(peer);
     }
 
-    audio.playAudioBuffer(call.getPeers()[peer], data, samples, channels, sample_rate);
+    audio.playAudioBuffer(call.getAlSource(peer), data, samples, channels, sample_rate);
 }
 #endif
 
@@ -556,9 +554,7 @@ void CoreAV::invalidateGroupCallPeerSource(int group, int peer)
     if (it == groupCalls.end()) {
         return;
     }
-    Audio& audio = Audio::getInstance();
-    audio.unsubscribeOutput(it->second.getPeers()[peer]);
-    it->second.getPeers()[peer] = 0;
+    it->second.removePeer(peer);
 }
 
 /**
@@ -700,7 +696,7 @@ bool CoreAV::isGroupCallOutputMuted(const Group* g) const
  */
 bool CoreAV::isGroupAvEnabled(int groupId) const
 {
-    Tox* tox = Core::getInstance()->tox;
+    Tox* tox = Core::getInstance()->tox.get();
     TOX_ERR_CONFERENCE_GET_TYPE error;
     TOX_CONFERENCE_TYPE type = tox_conference_get_type(tox, groupId, &error);
     switch (error) {
@@ -752,7 +748,7 @@ bool CoreAV::isCallOutputMuted(const Friend* f) const
 void CoreAV::invalidateCallSources()
 {
     for (auto& kv : groupCalls) {
-        kv.second.getPeers().clear();
+        kv.second.clearPeers();
     }
 
     for (auto& kv : calls) {
@@ -801,7 +797,8 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         return;
     }
 
-    auto it = self->calls.insert(std::pair<uint32_t, ToxFriendCall>(friendNum, ToxFriendCall{friendNum, video, *self}));
+    auto it = self->calls.insert(
+        std::pair<uint32_t, ToxFriendCall>(friendNum, ToxFriendCall{friendNum, video, *self}));
     if (it.second == false) {
         /// Hanging up from a callback is supposed to be UB,
         /// but since currently the toxav callbacks are fired from the toxcore thread,
@@ -923,8 +920,7 @@ void CoreAV::audioBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rat
                                                Q_ARG(uint32_t, rate), Q_ARG(void*, vSelf));
     }
 
-    qDebug() << "Recommended audio bitrate with" << friendNum << " is now " << rate
-             << ", ignoring it";
+    qDebug() << "Recommended audio bitrate with" << friendNum << " is now " << rate << ", ignoring it";
 }
 
 void CoreAV::videoBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rate, void* vSelf)
@@ -938,8 +934,7 @@ void CoreAV::videoBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rat
                                                Q_ARG(uint32_t, rate), Q_ARG(void*, vSelf));
     }
 
-    qDebug() << "Recommended video bitrate with" << friendNum << " is now " << rate
-             << ", ignoring it";
+    qDebug() << "Recommended video bitrate with" << friendNum << " is now " << rate << ", ignoring it";
 }
 
 void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, size_t sampleCount,

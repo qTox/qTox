@@ -5,6 +5,7 @@
     - [Arch](#arch-easy)
     - [Fedora](#fedora-easy)
     - [Gentoo](#gentoo-easy)
+    - [openSUSE](#opensuse-easy)
     - [Slackware](#slackware-easy)
     - [FreeBSD](#freebsd-easy)
   - [Install git](#install-git)
@@ -22,13 +23,6 @@
     - [Slackware](#slackware-other-deps)
     - [Ubuntu >=15.04](#ubuntu-other-deps)
     - [Ubuntu >=16.04](#ubuntu-other-1604-deps)
-  - [toxcore dependencies](#toxcore-dependencies)
-    - [Arch](#arch-toxcore)
-    - [Debian](#debian-toxcore)
-    - [Fedora](#fedora-toxcore)
-    - [openSUSE](#opensuse-toxcore)
-    - [Slackware](#slackware-toxcore)
-    - [Ubuntu >=15.04](#ubuntu-toxcore)
   - [sqlcipher](#sqlcipher)
   - [Compile toxcore](#compile-toxcore)
   - [Compile qTox](#compile-qtox)
@@ -68,6 +62,18 @@ dependencies are missing.
 | Name    | Version |
 |---------|---------|
 | [Check] | >= 0.9  |
+
+### Spell checking support
+
+| Name     | Version |
+|----------|---------|
+| [sonnet] | >= 5.45 |
+
+Use `-DSPELL_CHECK=OFF` to disable it.
+
+**Note:** Specified version was tested and works well. You can try to use older
+version, but in this case you may have some errors (including a complete lack
+of spell check).
 
 ### Linux
 
@@ -155,6 +161,24 @@ To install:
 emerge qtox
 ```
 
+<a name="opensuse-easy" />
+
+#### openSUSE
+
+qTox is available in openSUSE Factory.
+
+To install in openSUSE 15.0 or newer:
+
+```bash
+zypper in qtox
+```
+
+To install in openSUSE 42.3:
+
+```bash
+zypper ar -f https://download.opensuse.org/repositories/server:/messaging/openSUSE_Leap_42.3 server:messaging
+zypper in qtox
+```
 
 <a name="slackware-easy" />
 
@@ -263,7 +287,7 @@ corresponding parts.
 #### Arch Linux
 
 ```bash
-sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
+sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg opus libvpx libsodium
 ```
 
 
@@ -275,18 +299,28 @@ sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 
 ```bash
 sudo apt-get install \
+    automake \
+    autotools-dev \
     build-essential \
+    check \
+    checkinstall \
     cmake \
     ffmpeg \
     libavcodec-dev \
+    libavdevice-dev \
     libexif-dev \
     libgdk-pixbuf2.0-dev \
     libgtk2.0-dev \
+    libkdeui5 \
     libopenal-dev \
+    libopus-dev \
     libqrencode-dev \
     libqt5opengl5-dev \
     libqt5svg5-dev \
+    libsodium-dev \
     libsqlcipher-dev \
+    libtool \
+    libvpx-dev \
     libxss-dev \
     pkg-config \
     qrencode \
@@ -310,20 +344,28 @@ have to compile it yourself, otherwise compiling qTox will fail.**
 sudo dnf groupinstall "Development Tools" "C Development Tools and Libraries"
 # (can also use sudo dnf install @"Development Tools")
 sudo dnf install \
+    autoconf \
+    automake \
+    check \
+    check-devel \
     ffmpeg-devel \
     gtk2-devel \
+    kf5-sonnet \
     libexif-devel \
-    libXScrnSaver-devel \
+    libsodium-devel \
     libtool \
+    libvpx-devel \
+    libXScrnSaver-devel \
     openal-soft-devel \
     openssl-devel \
+    opus-devel \
     qrencode-devel \
-    qt-creator \
-    qt-devel \
-    qt-doc \
     qt5-linguist \
     qt5-qtsvg \
     qt5-qtsvg-devel \
+    qt-creator \
+    qt-devel \
+    qt-doc \
     qtsingleapplication \
     sqlcipher \
     sqlcipher-devel
@@ -338,24 +380,31 @@ sudo dnf install \
 ```bash
 sudo zypper install \
     libexif-devel \
+    libffmpeg-devel \
+    libopus-devel \
     libQt5Concurrent-devel \
+    libqt5-linguist \
     libQt5Network-devel \
     libQt5OpenGL-devel \
-    libQt5Xml-devel \
-    libXScrnSaver-devel \
-    libffmpeg-devel \
-    libqt5-linguist \
     libqt5-qtbase-common-devel \
     libqt5-qtsvg-devel \
+    libQt5Xml-devel \
+    libsodium-devel \
+    libvpx-devel \
+    libXScrnSaver-devel \
     openal-soft-devel \
     patterns-openSUSE-devel_basis \
     qrencode-devel \
-    sqlcipher-devel
+    sqlcipher-devel \
+    sonnet-devel
 ```
 
 <a name="slackware-other-deps" />
 
 #### Slackware
+
+List of all the toxcore dependencies and their SlackBuilds can be found
+here: http://slackbuilds.org/repository/14.2/network/toxcore/
 
 List of all the qTox dependencies and their SlackBuilds can be found here:
 http://slackbuilds.org/repository/14.2/network/qTox/
@@ -367,7 +416,11 @@ http://slackbuilds.org/repository/14.2/network/qTox/
 
 ```bash
 sudo apt-get install \
+    automake \
+    autotools-dev \
     build-essential cmake \
+    check \
+    checkinstall \
     libavcodec-ffmpeg-dev \
     libavdevice-ffmpeg-dev \
     libavfilter-ffmpeg-dev \
@@ -376,13 +429,18 @@ sudo apt-get install \
     libgdk-pixbuf2.0-dev \
     libglib2.0-dev \
     libgtk2.0-dev \
+    libkdeui5 \
     libopenal-dev \
+    libopus-dev \
     libqrencode-dev \
     libqt5opengl5-dev \
     libqt5svg5-dev \
+    libsodium-dev \
     libsqlcipher-dev \
     libswresample-ffmpeg-dev \
     libswscale-ffmpeg-dev \
+    libtool \
+    libvpx-dev \
     libxss-dev \
     qrencode \
     qt5-default \
@@ -405,76 +463,23 @@ sudo apt-get install \
     libgdk-pixbuf2.0-dev \
     libglib2.0-dev \
     libgtk2.0-dev \
+    libkdeui5 \
     libopenal-dev \
+    libopus-dev \
     libqrencode-dev \
     libqt5opengl5-dev \
     libqt5svg5-dev \
+    libsodium-dev \
     libsqlcipher-dev \
     libswresample-dev \
     libswscale-dev \
+    libvpx-dev \
     libxss-dev \
     qrencode \
     qt5-default \
     qttools5-dev-tools \
     qttools5-dev
 ```
-
-### toxcore dependencies
-
-Install all of the toxcore dependencies.
-
-<a name="arch-toxcore" />
-
-#### Arch Linux
-
-```bash
-sudo pacman -S --needed opus libvpx libsodium
-```
-
-<a name="debian-toxcore" />
-
-#### Debian
-
-```bash
-sudo apt-get install libtool autotools-dev automake checkinstall check \
-libopus-dev libvpx-dev libsodium-dev libavdevice-dev
-```
-
-<a name="fedora-toxcore" />
-
-#### Fedora
-
-```bash
-sudo dnf install libtool autoconf automake check check-devel libsodium-devel \
-opus-devel libvpx-devel
-```
-
-<a name="opensuse-toxcore" />
-
-#### openSUSE
-
-```bash
-sudo zypper install libsodium-devel libvpx-devel libopus-devel \
-patterns-openSUSE-devel_basis
-```
-
-<a name="slackware-toxcore" />
-
-#### Slackware
-
-List of all the toxcore dependencies and their SlackBuilds can be found
-here: http://slackbuilds.org/repository/14.2/network/toxcore/
-
-
-<a name="ubuntu-toxcore" />
-
-#### Ubuntu >=15.04
-
-```bash
-sudo apt-get install libtool autotools-dev automake checkinstall check \
-libopus-dev libvpx-dev libsodium-dev
-```
-
 
 ### sqlcipher
 
@@ -494,12 +499,14 @@ cd ..
 
 ### Compile toxcore
 
+Normally you don't want to do that, `bootstrap.sh` will do it for you.
+
 Provided that you have all required dependencies installed, you can simply run:
 
 ```bash
 git clone https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
-git checkout v0.2.2
+git checkout v0.2.3
 cmake .
 make -j$(nproc)
 sudo make install
@@ -720,9 +727,9 @@ Download the MinGW installer for Windows from
 [sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/). Make
 sure to install MSYS (a set of Unix tools for Windows). The following steps
 assume that MinGW is installed at `C:\MinGW`. If you decided to choose another
-location, replace corresponding parts. Select `mingw-developer-toolkit`, 
-`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32` 
-packages using MinGW Installation Manager (`mingw-get.exe`). Check that the 
+location, replace corresponding parts. Select `mingw-developer-toolkit`,
+`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32`
+packages using MinGW Installation Manager (`mingw-get.exe`). Check that the
 version of MinGW, corresponds to the version of the QT component!
 
 #### Wget
@@ -750,7 +757,7 @@ second box search for the `PATH` variable and press `Edit...`. The input box
 separated with a semicolon. Extend the input box by adding
 `;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files (x86)\GnuWin32\bin`.
 The very first semicolon must only be added if it is missing. CMake may be added
-by installer automatically. Make sure that paths containing alternative `sh`, 
+by installer automatically. Make sure that paths containing alternative `sh`,
 `bash` implementations such as `C:\Program Files\OpenSSH\bin` are at the end of
 `PATH` or build may fail.
 
@@ -815,3 +822,4 @@ Switches:
 [sqlcipher]: https://www.zetetic.net/sqlcipher/
 [toxcore]: https://github.com/TokTok/c-toxcore/
 [filteraudio]: https://github.com/irungentoo/filter_audio
+[sonnet]: https://github.com/KDE/sonnet

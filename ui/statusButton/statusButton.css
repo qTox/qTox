@@ -10,21 +10,22 @@ QPushButton
 
 QPushButton:default
 {
-   background-color: @themeMediumDark;
+    background-color: @themeMediumDark;
 }
 
 /*Bugged in Qt, but it's probably better to leave enabled so that users can tell it's clickable*/
 QPushButton:hover
 {
-   background-color: @themeMedium;
+    background-color: @themeMedium;
 }
 
 QPushButton:pressed
 {
-   background-color: @themeMediumDark;
+    background-color: @themeMediumDark;
 }
 
-QPushButton:focus {
+QPushButton:focus
+{
     outline: none;
 }
 
@@ -32,9 +33,9 @@ QPushButton::menu-indicator {image: none;}
 
 QPushButton::menu-indicator:pressed, QPushButton::menu-indicator:open
 {
-  image: url(":ui/statusButton/menu_indicator.svg");
-  subcontrol-origin: padding;
-  subcontrol-position: bottom center;
-  position: relative;
+    image: url(":ui/statusButton/menu_indicator.svg");
+    subcontrol-origin: padding;
+    subcontrol-position: bottom center;
+    position: relative;
     bottom: 2px;
 }
