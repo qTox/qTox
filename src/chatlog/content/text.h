@@ -36,7 +36,8 @@ public:
     virtual ~Text();
 
     void setText(const QString& txt);
-    void selectText(const QString& txt, const int index);
+    void selectText(const QString& txt, const std::pair<int, int>& point);
+    void selectText(const QRegularExpression& exp, const std::pair<int, int>& point);
     void deselectText();
 
     virtual void setWidth(qreal width) final;
@@ -78,6 +79,8 @@ protected:
     QString extractImgTooltip(int pos) const;
 
 private:
+    void selectText(QTextCursor& cursor, const std::pair<int, int>& point);
+
     QTextDocument* doc = nullptr;
     QString text;
     QString rawText;

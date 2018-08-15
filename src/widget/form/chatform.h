@@ -77,8 +77,9 @@ public slots:
     void onFileNameChanged(const ToxPk& friendPk);
 
 protected slots:
-    void onSearchUp(const QString& phrase) override;
-    void onSearchDown(const QString& phrase) override;
+    void searchInBegin(const QString& phrase, const ParameterSearch& parameter) override;
+    void onSearchUp(const QString& phrase, const ParameterSearch& parameter) override;
+    void onSearchDown(const QString& phrase, const ParameterSearch& parameter) override;
 
 private slots:
     void clearChatArea(bool notInForm) override final;
@@ -143,6 +144,7 @@ private:
     void stopCounter(bool error = false);
     void updateCallButtons();
     void SendMessageStr(QString msg);
+    bool loadHistory(const QString& phrase, const ParameterSearch& parameter);
 
 protected:
     GenericNetCamView* createNetcam() final override;

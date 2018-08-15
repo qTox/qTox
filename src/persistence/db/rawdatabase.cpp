@@ -28,14 +28,6 @@
 #include <QFile>
 #include <QMetaObject>
 #include <QMutexLocker>
-#include <QRegularExpression>
-
-/// The two following defines are required to use SQLCipher
-/// They are used by the sqlite3.h header
-#define SQLITE_HAS_CODEC
-#define SQLITE_TEMP_STORE 2
-
-#include <sqlite3.h>
 
 
 /**
@@ -168,6 +160,18 @@ bool RawDatabase::open(const QString& path, const QString& hexKey)
                         SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_NOMUTEX, nullptr)
         != SQLITE_OK) {
         qWarning() << "Failed to open database" << path << "with error:" << sqlite3_errmsg(sqlite);
+        return false;
+    }
+
+    if (sqlite3_create_function(sqlite, "regexp", 2, SQLITE_UTF8, NULL, &RawDatabase::regexpInsensitive, NULL, NULL)) {
+        qWarning() << "Failed to create function regexp";
+        close();
+        return false;
+    }
+
+    if (sqlite3_create_function(sqlite, "regexpsensitive", 2, SQLITE_UTF8, NULL, &RawDatabase::regexpSensitive, NULL, NULL)) {
+        qWarning() << "Failed to create function regexpsensitive";
+        close();
         return false;
     }
 
@@ -703,5 +707,45 @@ QVariant RawDatabase::extractData(sqlite3_stmt* stmt, int col)
         const char* data = reinterpret_cast<const char*>(sqlite3_column_blob(stmt, col));
         int len = sqlite3_column_bytes(stmt, col);
         return QByteArray::fromRawData(data, len);
+    }
+}
+
+/**
+ * @brief Use for create function in db for search data use regular experessions without case sensitive
+ * @param ctx ctx the context in which an SQL function executes
+ * @param argc number of arguments
+ * @param argv arguments
+ */
+void RawDatabase::regexpInsensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv)
+{
+    regexp(ctx, argc, argv, QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
+}
+
+/**
+ * @brief Use for create function in db for search data use regular experessions without case sensitive
+ * @param ctx the context in which an SQL function executes
+ * @param argc number of arguments
+ * @param argv arguments
+ */
+void RawDatabase::regexpSensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv)
+{
+    regexp(ctx, argc, argv, QRegularExpression::UseUnicodePropertiesOption);
+}
+
+void RawDatabase::regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const QRegularExpression::PatternOptions cs)
+{
+    QRegularExpression regex;
+    const QString str1(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
+    const QString str2(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));
+
+    regex.setPattern(str1);
+    regex.setPatternOptions(cs);
+
+    const bool b = str2.contains(regex);
+
+    if (b) {
+        sqlite3_result_int(ctx, 1);
+    } else {
+        sqlite3_result_int(ctx, 0);
     }
 }

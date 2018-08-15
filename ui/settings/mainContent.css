@@ -223,3 +223,9 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 {
     background: none;
 }
+
+QRadioButton
+{
+    background: white;
+    color: black;
+}

@@ -9,37 +9,35 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="7.0183306mm"
-   height="4.1245208mm"
-   viewBox="0 0 7.0183304 4.1245209"
+   width="26.525974"
+   height="15.58874"
+   viewBox="0 0 26.525974 15.58874"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="searchUpButton.svg">
-  <defs
-     id="defs2" />
+   sodipodi:docname="searchUpButton.svg"
+   inkscape:version="0.92.2 2405546, 2018-03-11">
   <sodipodi:namedview
-     id="base"
      pagecolor="#ffffff"
      bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="185.76311"
-     inkscape:cy="-116.1932"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
      inkscape:window-width="1920"
      inkscape:window-height="1015"
+     id="namedview9"
+     showgrid="false"
+     inkscape:zoom="12.817625"
+     inkscape:cx="0.81918401"
+     inkscape:cy="7.79437"
      inkscape:window-x="0"
-     inkscape:window-y="876"
-     inkscape:window-maximized="1" />
+     inkscape:window-y="36"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -48,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,11 +54,11 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(59.722852,-41.245778)">
+     transform="translate(59.722851,-41.245778)">
     <g
        id="g11"
        style="fill:#ffffff"
-       transform="matrix(0.03267961,0,0,-0.03267961,-57.771132,46.718195)">
+       transform="matrix(0.12336383,0,0,-0.12336383,-52.355211,61.903867)">
       <rect
          transform="rotate(-44.285246)"
          style="fill:#ffffff;stroke-width:0.36410955"

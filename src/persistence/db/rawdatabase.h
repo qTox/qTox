@@ -9,12 +9,18 @@
 #include <QThread>
 #include <QVariant>
 #include <QVector>
+#include <QRegularExpression>
 #include <atomic>
 #include <functional>
 #include <memory>
 
-struct sqlite3;
-struct sqlite3_stmt;
+/// The two following defines are required to use SQLCipher
+/// They are used by the sqlite3.h header
+#define SQLITE_HAS_CODEC
+#define SQLITE_TEMP_STORE 2
+
+#include <sqlite3.h>
+
 
 class RawDatabase : QObject
 {
@@ -85,8 +91,12 @@ protected:
     static QString deriveKey(const QString& password, const QByteArray& salt);
     static QString deriveKey(const QString& password);
     static QVariant extractData(sqlite3_stmt* stmt, int col);
+    static void regexpInsensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv);
+    static void regexpSensitive(sqlite3_context* ctx, int argc, sqlite3_value** argv);
 
 private:
+    static void regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const QRegularExpression::PatternOptions cs);
+
     struct Transaction
     {
         QVector<Query> queries;

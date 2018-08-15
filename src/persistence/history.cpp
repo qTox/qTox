@@ -315,35 +315,107 @@ QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk
     return counts;
 }
 
-QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase)
+/**
+ * @brief Search phrase in chat messages
+ * @param friendPk Friend public key
+ * @param from a date message where need to start a search
+ * @param phrase what need to find
+ * @param parameter for search
+ * @return date of the message where the phrase was found
+ */
+QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase, const ParameterSearch& parameter)
 {
-    QList<QDateTime> counts;
-    auto rowCallback = [&counts](const QVector<QVariant>& row) {
-        counts.append(QDateTime::fromMSecsSinceEpoch(row[0].toLongLong()));
+    QDateTime result;
+    auto rowCallback = [&result](const QVector<QVariant>& row) {
+        result = QDateTime::fromMSecsSinceEpoch(row[0].toLongLong());
     };
 
     phrase.replace("'", "''");
 
+    QString message;
+
+    switch (parameter.filter) {
+    case FilterSearch::Register:
+        message = QStringLiteral("message LIKE '%%1%'").arg(phrase);
+        break;
+    case FilterSearch::WordsOnly:
+        message = QStringLiteral("message REGEXP '%1'").arg(SearchExtraFunctions::generateFilterWordsOnly(phrase).toLower());
+        break;
+    case FilterSearch::RegisterAndWordsOnly:
+        message = QStringLiteral("REGEXPSENSITIVE(message, '%1')").arg(SearchExtraFunctions::generateFilterWordsOnly(phrase));
+        break;
+    case FilterSearch::Regular:
+        message = QStringLiteral("message REGEXP '%1'").arg(phrase);
+        break;
+    case FilterSearch::RegisterAndRegular:
+        message = QStringLiteral("REGEXPSENSITIVE(message '%1')").arg(phrase);
+        break;
+    default:
+        message = QStringLiteral("LOWER(message) LIKE '%%1%'").arg(phrase.toLower());
+        break;
+    }
+
+    QDateTime date = from;
+    if (parameter.period == PeriodSearch::AfterDate || parameter.period == PeriodSearch::BeforeDate) {
+        date = QDateTime(parameter.date);
+    }
+
+    QString period;
+    switch (parameter.period) {
+    case PeriodSearch::WithTheFirst:
+        period = QStringLiteral("ORDER BY timestamp ASC LIMIT 1;");
+        break;
+    case PeriodSearch::AfterDate:
+        period = QStringLiteral("AND timestamp > '%1' ORDER BY timestamp ASC LIMIT 1;").arg(date.toMSecsSinceEpoch());
+        break;
+    case PeriodSearch::BeforeDate:
+        period = QStringLiteral("AND timestamp < '%1' ORDER BY timestamp DESC LIMIT 1;").arg(date.toMSecsSinceEpoch());
+        break;
+    default:
+        period = QStringLiteral("AND timestamp < '%1' ORDER BY timestamp DESC LIMIT 1;").arg(date.toMSecsSinceEpoch());
+        break;
+    }
+
     QString queryText =
-        QString("SELECT timestamp "
+        QStringLiteral("SELECT timestamp "
                 "FROM history "
                 "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                 "JOIN peers chat ON chat_id = chat.id "
                 "WHERE chat.public_key='%1' "
-                "AND message LIKE '%%2%' "
-                "AND timestamp < '%3' ORDER BY timestamp DESC LIMIT 1;")
+                "AND %2 "
+                "%3")
             .arg(friendPk)
-            .arg(phrase)
-            .arg(from.toMSecsSinceEpoch());
-
+            .arg(message)
+            .arg(period);
 
     db->execNow({queryText, rowCallback});
 
-    if (!counts.isEmpty()) {
-        return counts[0];
-    }
+    return result;
+}
 
-    return QDateTime();
+/**
+ * @brief get start date of correspondence
+ * @param friendPk Friend public key
+ * @return start date of correspondence
+ */
+QDateTime History::getStartDateChatHistory(const QString &friendPk)
+{
+    QDateTime result;
+    auto rowCallback = [&result](const QVector<QVariant>& row) {
+        result = QDateTime::fromMSecsSinceEpoch(row[0].toLongLong());
+    };
+
+    QString queryText =
+            QStringLiteral("SELECT timestamp "
+                    "FROM history "
+                    "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+                    "JOIN peers chat ON chat_id = chat.id "
+                    "WHERE chat.public_key='%1' ORDER BY timestamp ASC LIMIT 1;")
+            .arg(friendPk);
+
+    db->execNow({queryText, rowCallback});
+
+    return result;
 }
 
 /**

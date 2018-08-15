@@ -18,25 +18,64 @@
 */
 
 #include "searchform.h"
+#include "form/searchsettingsform.h"
 #include "src/widget/style.h"
+
+#include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QLabel>
 #include <QKeyEvent>
+
+#include <array>
+
+static std::array<QString, 3> STATE_NAME = {
+    QString{},
+    QStringLiteral("green"),
+    QStringLiteral("red"),
+};
 
 SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
 {
-    QHBoxLayout *layout = new QHBoxLayout();
+    QVBoxLayout* layout = new QVBoxLayout();
+    QHBoxLayout* layoutNavigation = new QHBoxLayout();
+    QHBoxLayout* layoutMessage = new QHBoxLayout();
+    QSpacerItem *lSpacer = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Ignored);
+    QSpacerItem *rSpacer = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Ignored);
     searchLine = new LineEdit();
+    settings = new SearchSettingsForm();
+    messageLabel = new QLabel();
 
+    settings->setVisible(false);
+    messageLabel->setProperty("state", QStringLiteral("red"));
+    messageLabel->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/labels.css")));
+    messageLabel->setText(tr("The text could not be found."));
+    messageLabel->setVisible(false);
+
+    settingsButton = createButton("searchSettingsButton", "green");
     upButton = createButton("searchUpButton", "green");
     downButton = createButton("searchDownButton", "green");
     hideButton = createButton("searchHideButton", "red");
+    startButton = createButton("startButton", "green");
+    startButton->setText(tr("Start"));
 
-    layout->setMargin(0);
-    layout->addWidget(searchLine);
-    layout->addWidget(upButton);
-    layout->addWidget(downButton);
-    layout->addWidget(hideButton);
+    layoutNavigation->setMargin(0);
+    layoutNavigation->addWidget(settingsButton);
+    layoutNavigation->addWidget(searchLine);
+    layoutNavigation->addWidget(startButton);
+    layoutNavigation->addWidget(upButton);
+    layoutNavigation->addWidget(downButton);
+    layoutNavigation->addWidget(hideButton);
+
+    layout->addLayout(layoutNavigation);
+    layout->addWidget(settings);
+
+    layoutMessage->addSpacerItem(lSpacer);
+    layoutMessage->addWidget(messageLabel);
+    layoutMessage->addSpacerItem(rSpacer);
+    layout->addLayout(layoutMessage);
+
+    startButton->setHidden(true);
 
     setLayout(layout);
 
@@ -48,6 +87,10 @@ SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
     connect(upButton, &QPushButton::clicked, this, &SearchForm::clickedUp);
     connect(downButton, &QPushButton::clicked, this, &SearchForm::clickedDown);
     connect(hideButton, &QPushButton::clicked, this, &SearchForm::clickedHide);
+    connect(startButton, &QPushButton::clicked, this, &SearchForm::clickedStart);
+    connect(settingsButton, &QPushButton::clicked, this, &SearchForm::clickedSearch);
+
+    connect(settings, &SearchSettingsForm::updateSettings, this, &SearchForm::changedState);
 }
 
 void SearchForm::removeSearchPhrase()
@@ -58,6 +101,11 @@ void SearchForm::removeSearchPhrase()
 QString SearchForm::getSearchPhrase() const
 {
     return searchPhrase;
+}
+
+ParameterSearch SearchForm::getParameterSearch()
+{
+    return parameter;
 }
 
 void SearchForm::setFocusEditor()
@@ -87,26 +135,163 @@ QPushButton *SearchForm::createButton(const QString& name, const QString& state)
     return btn;
 }
 
+ParameterSearch SearchForm::getAndCheckParametrSearch()
+{
+    if (isActiveSettings) {
+        auto sendParam = settings->getParameterSearch();
+        if (!isChangedPhrase && !sendParam.isUpdate) {
+            sendParam.period = PeriodSearch::None;
+        }
+
+        isChangedPhrase = false;
+        parameter = sendParam;
+
+        return sendParam;
+    }
+
+    return ParameterSearch();
+}
+
+void SearchForm::setStateName(QPushButton *btn, ToolButtonState state)
+{
+    const auto index = static_cast<unsigned long>(state);
+    btn->setProperty("state", STATE_NAME[index]);
+    btn->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatForm/buttons.css")));
+    btn->setEnabled(index != 0);
+}
+
+void SearchForm::useBeginState()
+{
+    setStateName(upButton, ToolButtonState::Common);
+    setStateName(downButton, ToolButtonState::Common);
+    messageLabel->setVisible(false);
+    isPrevSearch = false;
+}
+
 void SearchForm::changedSearchPhrase(const QString& text)
 {
+    useBeginState();
+
+    if (searchPhrase == text) {
+        return;
+    }
+
+    QString l = text.right(1);
+    if (!l.isEmpty() && l != " " && l[0].isSpace()) {
+        searchLine->setText(searchPhrase);
+        return;
+    }
+
     searchPhrase = text;
-    emit searchInBegin(searchPhrase);
+    isChangedPhrase = true;
+    if (isActiveSettings) {
+        if (startButton->isHidden()) {
+            changedState(true);
+        }
+    } else {
+        isSearchInBegin = true;
+        emit searchInBegin(searchPhrase, getAndCheckParametrSearch());
+    }
 }
 
 void SearchForm::clickedUp()
 {
-    emit searchUp(searchPhrase);
+    if (downButton->isEnabled()) {
+        isPrevSearch = false;
+    } else {
+        isPrevSearch = true;
+        setStateName(downButton, ToolButtonState::Common);
+        messageLabel->setVisible(false);
+    }
+
+    if (startButton->isHidden()) {
+        isSearchInBegin = false;
+        emit searchUp(searchPhrase, getAndCheckParametrSearch());
+    } else {
+        clickedStart();
+    }
 }
 
 void SearchForm::clickedDown()
 {
-    emit searchDown(searchPhrase);
+    if (upButton->isEnabled()) {
+        isPrevSearch = false;
+    } else {
+        isPrevSearch = true;
+        setStateName(upButton, ToolButtonState::Common);
+        messageLabel->setVisible(false);
+    }
+
+    if (startButton->isHidden()) {
+        isSearchInBegin = false;
+        emit searchDown(searchPhrase, getAndCheckParametrSearch());
+    } else {
+        clickedStart();
+    }
 }
 
 void SearchForm::clickedHide()
 {
     hide();
     emit visibleChanged();
+}
+
+void SearchForm::clickedStart()
+{
+    changedState(false);
+    isSearchInBegin = true;
+    emit searchInBegin(searchPhrase, getAndCheckParametrSearch());
+}
+
+void SearchForm::clickedSearch()
+{
+    isActiveSettings = !isActiveSettings;
+    settings->setVisible(isActiveSettings);
+    useBeginState();
+
+    if (isActiveSettings) {
+        setStateName(settingsButton, ToolButtonState::Active);
+    } else {
+        setStateName(settingsButton, ToolButtonState::Common);
+        changedState(false);
+    }
+}
+
+void SearchForm::changedState(bool isUpdate)
+{
+    if (isUpdate) {
+        startButton->setHidden(false);
+        upButton->setHidden(true);
+        downButton->setHidden(true);
+    } else {
+        startButton->setHidden(true);
+        upButton->setHidden(false);
+        downButton->setHidden(false);
+    }
+
+    useBeginState();
+}
+
+void SearchForm::showMessageNotFound(SearchDirection direction)
+{
+    if (isSearchInBegin) {
+        if (parameter.period == PeriodSearch::AfterDate) {
+            setStateName(downButton, ToolButtonState::Disabled);
+        } else if (parameter.period == PeriodSearch::BeforeDate) {
+            setStateName(upButton, ToolButtonState::Disabled);
+        } else {
+            setStateName(upButton, ToolButtonState::Disabled);
+            setStateName(downButton, ToolButtonState::Disabled);
+        }
+    } else if (isPrevSearch) {
+        setStateName(upButton, ToolButtonState::Disabled);
+        setStateName(downButton, ToolButtonState::Disabled);
+    } else if (direction == SearchDirection::Up) {
+        setStateName(upButton, ToolButtonState::Disabled);
+    } else {
+        setStateName(downButton, ToolButtonState::Disabled);
+    }
+    messageLabel->setVisible(true);
 }
 
 LineEdit::LineEdit(QWidget* parent) : QLineEdit(parent)

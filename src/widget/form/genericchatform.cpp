@@ -45,6 +45,7 @@
 #include <QFileDialog>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QRegularExpression>
 #include <QStringBuilder>
 
 #ifdef SPELL_CHECKING
@@ -233,6 +234,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
     connect(searchForm, &SearchForm::searchDown, this, &GenericChatForm::onSearchDown);
     connect(searchForm, &SearchForm::visibleChanged, this, &GenericChatForm::onSearchTriggered);
+    connect(this, &GenericChatForm::messageNotFoundShow, searchForm, &SearchForm::showMessageNotFound);
 
     connect(chatWidget, &ChatLog::workerTimeoutFinished, this, &GenericChatForm::onContinueSearch);
 
@@ -283,18 +285,12 @@ void GenericChatForm::hideFileMenu()
 
 QDate GenericChatForm::getLatestDate() const
 {
-    ChatLine::Ptr chatLine = chatWidget->getLatestLine();
+    return getDate(chatWidget->getLatestLine());
+}
 
-    if (chatLine) {
-        Timestamp* timestamp = qobject_cast<Timestamp*>(chatLine->getContent(2));
-
-        if (timestamp)
-            return timestamp->getTime().date();
-        else
-            return QDate::currentDate();
-    }
-
-    return QDate();
+QDate GenericChatForm::getFirstDate() const
+{
+    return getDate(chatWidget->getFirstLine());
 }
 
 void GenericChatForm::setName(const QString& newName)
@@ -551,6 +547,21 @@ void GenericChatForm::addSystemDateMessage()
     insertChatMessage(ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime()));
 }
 
+QDate GenericChatForm::getDate(const ChatLine::Ptr &chatLine) const
+{
+    if (chatLine) {
+        Timestamp* const timestamp = qobject_cast<Timestamp*>(chatLine->getContent(2));
+
+        if (timestamp) {
+            return timestamp->getTime().date();
+        } else {
+            return QDate::currentDate();
+        }
+    }
+
+    return QDate();
+}
+
 void GenericChatForm::disableSearchText()
 {
     if (searchPoint != QPoint(1, -1)) {
@@ -568,7 +579,7 @@ void GenericChatForm::disableSearchText()
     }
 }
 
-bool GenericChatForm::searchInText(const QString& phrase, bool searchUp)
+bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch& parameter, SearchDirection direction)
 {
     bool isSearch = false;
 
@@ -576,19 +587,59 @@ bool GenericChatForm::searchInText(const QString& phrase, bool searchUp)
         disableSearchText();
     }
 
-    QVector<ChatLine::Ptr> lines = chatWidget->getLines();
+    auto lines = chatWidget->getLines();
 
     if (lines.isEmpty()) {
         return isSearch;
     }
 
     int numLines = lines.size();
-    int startLine = numLines - searchPoint.x();
+
+    int startLine = -1;
+
+    if (parameter.period == PeriodSearch::WithTheEnd || parameter.period == PeriodSearch::None) {
+        startLine = numLines - searchPoint.x();
+    } else if (parameter.period == PeriodSearch::WithTheFirst) {
+        startLine = 0;
+    } else if (parameter.period == PeriodSearch::AfterDate) {
+        const auto lambda = [=](const ChatLine::Ptr& item) {
+            const auto d = getDate(item);
+            return d.isValid() && parameter.date <= d;
+          };
+
+        const auto find = std::find_if(lines.begin(), lines.end(), lambda);
+
+        if (find != lines.end()) {
+            startLine = static_cast<int>(std::distance(lines.begin(), find));
+        }
+    } else if (parameter.period == PeriodSearch::BeforeDate) {
+#if QT_VERSION > QT_VERSION_CHECK(5, 6, 0)
+        const auto lambda = [=](const ChatLine::Ptr& item) {
+            const auto d = getDate(item);
+            return d.isValid() && parameter.date >= d;
+          };
+
+        const auto find = std::find_if(lines.rbegin(), lines.rend(), lambda);
+
+        if (find != lines.rend()) {
+            startLine = static_cast<int>(std::distance(find, lines.rend())) - 1;
+        }
+#else
+        for (int i = lines.size() - 1; i >= 0; --i) {
+            auto d = getDate(lines[i]);
+            if (d.isValid() && parameter.date >= d) {
+                startLine = i;
+                break;
+            }
+        }
+#endif
+    }
 
     if (startLine < 0 || startLine >= numLines) {
         return isSearch;
     }
 
+    const bool searchUp = (direction == SearchDirection::Up);
     for (int i = startLine; searchUp ? i >= 0 : i < numLines; searchUp ? --i : ++i) {
         ChatLine::Ptr l = lines[i];
 
@@ -608,19 +659,56 @@ bool GenericChatForm::searchInText(const QString& phrase, bool searchUp)
 
         QString txt = content->getText();
 
-        if (!txt.contains(phrase, Qt::CaseInsensitive)) {
+        bool find = false;
+        QRegularExpression exp;
+        QRegularExpressionMatch match;
+
+        auto flagIns = QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption;
+        auto flag = QRegularExpression::UseUnicodePropertiesOption;
+        switch (parameter.filter) {
+        case FilterSearch::Register:
+            find = txt.contains(phrase, Qt::CaseSensitive);
+            break;
+        case FilterSearch::WordsOnly:
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flagIns);
+            find = txt.contains(exp);
+            break;
+        case FilterSearch::RegisterAndWordsOnly:
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flag);
+            find = txt.contains(exp);
+            break;
+        case FilterSearch::RegisterAndRegular:
+            exp = QRegularExpression(phrase, flag);
+            find = txt.contains(exp);
+            break;
+        case FilterSearch::Regular:
+            exp = QRegularExpression(phrase, flagIns);
+            find = txt.contains(exp);
+            break;
+        default:
+            find = txt.contains(phrase, Qt::CaseInsensitive);
+            break;
+        }
+
+        if (!find) {
             continue;
         }
 
-        int index = indexForSearchInLine(txt, phrase, searchUp);
-        if ((index == -1 && searchPoint.y() > -1)) {
+        auto point = indexForSearchInLine(txt, phrase, parameter, direction);
+        if ((point.first == -1 && searchPoint.y() > -1)) {
             text->deselectText();
             searchPoint.setY(-1);
         } else {
             chatWidget->scrollToLine(l);
             text->deselectText();
-            text->selectText(phrase, index);
-            searchPoint = QPoint(numLines - i, index);
+
+            if (exp.pattern().isEmpty()) {
+                text->selectText(phrase, point);
+            } else {
+                text->selectText(exp, point);
+            }
+
+            searchPoint = QPoint(numLines - i, point.first);
             isSearch = true;
 
             break;
@@ -630,27 +718,100 @@ bool GenericChatForm::searchInText(const QString& phrase, bool searchUp)
     return isSearch;
 }
 
-int GenericChatForm::indexForSearchInLine(const QString& txt, const QString& phrase, bool searchUp)
+std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, SearchDirection direction)
 {
-    int index = 0;
+    int index = -1;
+    int size = 0;
 
-    if (searchUp) {
+    QRegularExpression exp;
+    auto flagIns = QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption;
+    auto flag = QRegularExpression::UseUnicodePropertiesOption;
+    if (direction == SearchDirection::Up) {
         int startIndex = -1;
         if (searchPoint.y() > -1) {
             startIndex = searchPoint.y() - 1;
         }
 
-        index = txt.lastIndexOf(phrase, startIndex, Qt::CaseInsensitive);
+        switch (parameter.filter) {
+        case FilterSearch::Register:
+            index = txt.lastIndexOf(phrase, startIndex, Qt::CaseSensitive);
+            break;
+        case FilterSearch::WordsOnly:
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flagIns);
+            break;
+        case FilterSearch::RegisterAndWordsOnly:
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flag);
+            break;
+        case FilterSearch::RegisterAndRegular:
+            exp = QRegularExpression(phrase, flag);
+            break;
+        case FilterSearch::Regular:
+            exp = QRegularExpression(phrase, flagIns);
+            break;
+        default:
+            index = txt.lastIndexOf(phrase, startIndex, Qt::CaseInsensitive);
+            break;
+        }
+
+        if (!exp.pattern().isEmpty()) {
+            auto matchIt = exp.globalMatch(txt);
+
+            while (matchIt.hasNext()) {
+                const auto match = matchIt.next();
+
+                int sizeItem = match.capturedLength();
+                int indexItem = match.capturedStart();
+
+                if (startIndex == -1 || indexItem < startIndex) {
+                    index = indexItem;
+                    size = sizeItem;
+                } else {
+                    break;
+                }
+            }
+        } else {
+            size = phrase.size();
+        }
+
     } else {
         int startIndex = 0;
         if (searchPoint.y() > -1) {
             startIndex = searchPoint.y() + 1;
         }
 
-        index = txt.indexOf(phrase, startIndex, Qt::CaseInsensitive);
+        switch (parameter.filter) {
+        case FilterSearch::Register:
+            index = txt.indexOf(phrase, startIndex, Qt::CaseSensitive);
+            break;
+        case FilterSearch::WordsOnly:
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flagIns);
+            break;
+        case FilterSearch::RegisterAndWordsOnly:
+            exp = QRegularExpression(SearchExtraFunctions::generateFilterWordsOnly(phrase), flag);
+            break;
+        case FilterSearch::RegisterAndRegular:
+            exp = QRegularExpression(phrase, flag);
+            break;
+        case FilterSearch::Regular:
+            exp = QRegularExpression(phrase, flagIns);
+            break;
+        default:
+            index = txt.indexOf(phrase, startIndex, Qt::CaseInsensitive);
+            break;
+        }
+
+        if (!exp.pattern().isEmpty()) {
+            const auto match = exp.match(txt, startIndex);
+            if (match.hasMatch()) {
+                size = match.capturedLength(0);
+                index = match.capturedEnd() - size;
+            }
+        } else {
+            size = phrase.size();
+        }
     }
 
-    return index;
+    return std::make_pair(index, size);
 }
 
 void GenericChatForm::clearChatArea()
@@ -815,20 +976,17 @@ void GenericChatForm::onSearchTriggered()
     }
 }
 
-void GenericChatForm::searchInBegin(const QString& phrase)
-{
-    disableSearchText();
-
-    searchPoint = QPoint(1, -1);
-    onSearchUp(phrase);
-}
-
 void GenericChatForm::onContinueSearch()
 {
-    QString phrase = searchForm->getSearchPhrase();
+    const QString phrase = searchForm->getSearchPhrase();
+    const ParameterSearch parameter = searchForm->getParameterSearch();
     if (!phrase.isEmpty() && searchAfterLoadHistory) {
-        searchAfterLoadHistory = false;
-        onSearchUp(phrase);
+        if (parameter.period == PeriodSearch::WithTheFirst || parameter.period == PeriodSearch::AfterDate) {
+            searchAfterLoadHistory = false;
+            onSearchDown(phrase, parameter);
+        } else {
+            onSearchUp(phrase, parameter);
+        }
     }
 }
 

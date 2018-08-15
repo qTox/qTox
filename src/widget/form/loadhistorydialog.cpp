@@ -37,6 +37,13 @@ LoadHistoryDialog::LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent)
             &LoadHistoryDialog::highlightDates);
 }
 
+LoadHistoryDialog::LoadHistoryDialog(QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui::LoadHistoryDialog)
+{
+    ui->setupUi(this);
+}
+
 LoadHistoryDialog::~LoadHistoryDialog()
 {
     delete ui;
@@ -52,6 +59,16 @@ QDateTime LoadHistoryDialog::getFromDate()
     }
 
     return res;
+}
+
+void LoadHistoryDialog::setTitle(const QString& title)
+{
+    setWindowTitle(title);
+}
+
+void LoadHistoryDialog::setInfoLabel(const QString& info)
+{
+    ui->fromLabel->setText(info);
 }
 
 void LoadHistoryDialog::highlightDates(int year, int month)

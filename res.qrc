@@ -55,6 +55,7 @@
         <file>ui/chatForm/buttons.css</file>
         <file>ui/chatForm/fullScreenButtons.css</file>
         <file>ui/chatForm/callButton.svg</file>
+        <file>ui/chatForm/labels.css</file>
         <file>ui/chatForm/micButton.svg</file>
         <file>ui/chatForm/micButtonRed.svg</file>
         <file>ui/chatForm/videoButton.svg</file>
@@ -66,8 +67,10 @@
         <file>ui/chatForm/emoteButton.svg</file>
         <file>ui/chatForm/fileButton.svg</file>
         <file>ui/chatForm/screenshotButton.svg</file>
+        <file>ui/chatForm/searchCalendarButton.svg</file>
         <file>ui/chatForm/searchDownButton.svg</file>
         <file>ui/chatForm/searchHideButton.svg</file>
+        <file>ui/chatForm/searchSettingsButton.svg</file>
         <file>ui/chatForm/searchUpButton.svg</file>
         <file>ui/chatForm/sendButton.svg</file>
         <file>ui/chatForm/exitFullScreenButton.svg</file>

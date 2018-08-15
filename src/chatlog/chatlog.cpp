@@ -553,6 +553,14 @@ ChatLine::Ptr ChatLog::getLatestLine() const
     return nullptr;
 }
 
+ChatLine::Ptr ChatLog::getFirstLine() const
+{
+    if (!lines.empty()) {
+        return lines.first();
+    }
+    return nullptr;
+}
+
 /**
  * @brief Finds the chat line object at a position on screen
  * @param pos Position on screen in global coordinates

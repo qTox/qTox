@@ -34,9 +34,12 @@ class LoadHistoryDialog : public QDialog
 
 public:
     explicit LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent = 0);
+    explicit LoadHistoryDialog(QWidget* parent = 0);
     ~LoadHistoryDialog();
 
     QDateTime getFromDate();
+    void setTitle(const QString& title);
+    void setInfoLabel(const QString& info);
 
 public slots:
     void highlightDates(int year, int month);

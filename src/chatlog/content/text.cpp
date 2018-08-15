@@ -33,6 +33,8 @@
 
 #include "src/widget/style.h"
 
+static const QString COLOR_HIGHLIGHT = QStringLiteral("#ff7626");
+
 Text::Text(const QString& txt, const QFont& font, bool enableElide, const QString& rwText,
            const QColor c)
     : rawText(rwText)
@@ -58,7 +60,7 @@ void Text::setText(const QString& txt)
     dirty = true;
 }
 
-void Text::selectText(const QString &txt, const int index)
+void Text::selectText(const QString& txt, const std::pair<int, int>& point)
 {
     regenerate();
 
@@ -66,21 +68,22 @@ void Text::selectText(const QString &txt, const int index)
         return;
     }
 
-    auto cursor = doc->find(txt, index);
+    auto cursor = doc->find(txt, point.first);
 
-    if (!cursor.isNull()) {
-        cursor.beginEditBlock();
-        cursor.setPosition(index);
-        cursor.setPosition(index + txt.size(), QTextCursor::KeepAnchor);
-        cursor.endEditBlock();
+    selectText(cursor, point);
+}
 
-        QTextCharFormat format;
-        format.setBackground(QBrush(QColor("#ff7626")));
-        cursor.mergeCharFormat(format);
+void Text::selectText(const QRegularExpression &exp, const std::pair<int, int>& point)
+{
+    regenerate();
 
-        regenerate();
-        update();
+    if (!doc) {
+        return;
     }
+
+    auto cursor = doc->find(exp, point.first);
+
+    selectText(cursor, point);
 }
 
 void Text::deselectText()
@@ -438,4 +441,21 @@ QString Text::extractImgTooltip(int pos) const
     }
 
     return QString();
+}
+
+void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
+{
+    if (!cursor.isNull()) {
+        cursor.beginEditBlock();
+        cursor.setPosition(point.first);
+        cursor.setPosition(point.first + point.second, QTextCursor::KeepAnchor);
+        cursor.endEditBlock();
+
+        QTextCharFormat format;
+        format.setBackground(QBrush(QColor(COLOR_HIGHLIGHT)));
+        cursor.mergeCharFormat(format);
+
+        regenerate();
+        update();
+    }
 }
