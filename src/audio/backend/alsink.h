@@ -29,10 +29,6 @@ public:
     uint getSourceId() const;
     void kill();
 
-signals:
-    void finishedPlaying();
-    void invalidated();
-
 private:
     OpenAL* audio;
     uint sourceId;

@@ -958,11 +958,19 @@ void Widget::playNotificationSound(IAudioSink::Sound sound, bool loop) {
         }
     }
 
+    connect(audioNotification.get(), &IAudioSink::finishedPlaying,
+            this, &Widget::cleanupNotificationSound);
+
     if(loop) {
         audioNotification->startLoop();
     }
 
     audioNotification->playMono16Sound(sound);
+}
+
+void Widget::cleanupNotificationSound()
+{
+    audioNotification.reset();
 }
 
 void Widget::incomingNotification(uint32_t friendId)
