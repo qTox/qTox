@@ -84,7 +84,7 @@ public:
 
     void startLoop(uint sourceId);
     void stopLoop(uint sourceId);
-    void playMono16Sound(uint sourceId, const IAudioSink::Sound& sound);
+    void playMono16Sound(AlSink& sink, const IAudioSink::Sound& sound);
     void stopActive();
 
     void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
@@ -114,17 +114,20 @@ protected:
 private:
     virtual bool initInput(const QString& deviceName);
     virtual bool initOutput(const QString& outDevDescr);
-    void playMono16SoundCleanup();
     float getVolume();
 
     void cleanupBuffers(uint sourceId);
+    void cleanupSound();
 protected:
     QThread* audioThread;
     mutable QMutex audioLock;
+    QString inDev{};
+    QString outDev{};
 
     ALCdevice* alInDev = nullptr;
     quint32 inSubscriptions = 0;
     QTimer captureTimer;
+    QTimer cleanupTimer;
 
     ALCdevice* alOutDev = nullptr;
     ALCcontext* alOutContext = nullptr;
@@ -132,6 +135,7 @@ protected:
 
     // TODO(sudden6): why does QSet not work here?
     std::unordered_set<AlSink*> sinks;
+    std::unordered_set<AlSink*> soundSinks;
     std::unordered_set<AlSource*> sources;
 
     // number of output sources

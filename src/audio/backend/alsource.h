@@ -2,9 +2,9 @@
 #define ALSOURCE_H
 
 #include "src/audio/iaudiosource.h"
+#include <QMutex>
 
 class OpenAL;
-class QMutex;
 class AlSource : public IAudioSource
 {
     Q_OBJECT
@@ -20,14 +20,9 @@ public:
 
     void kill();
 
-signals:
-    void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
-                        uint32_t sampling_rate);
-    void invalidated();
-
 private:
     OpenAL* audio;
-    QMutex* killLock;
+    QMutex killLock;
 };
 
 #endif // ALSOURCE_H

@@ -42,7 +42,7 @@ void AlSink::playMono16Sound(const IAudioSink::Sound &sound)
     if(audio == nullptr) {
         qCritical() << "Trying to play sound on an invalid sink";
     } else {
-        audio->playMono16Sound(sourceId, sound);
+        audio->playMono16Sound(*this, sound);
     }
 
     killLock->unlock();
@@ -102,7 +102,7 @@ void AlSink::kill()
 AlSink::AlSink(OpenAL& al, uint sourceId)
     : audio{&al}
     , sourceId{sourceId}
-    , killLock{new QMutex}
+    , killLock{new QMutex(QMutex::Recursive)}
 {
     assert(killLock != nullptr);
 }

@@ -85,6 +85,12 @@ OpenAL::OpenAL()
     // TODO for Qt 5.6+: use qOverload
     connect(audioThread, &QThread::started, &captureTimer, static_cast<void (QTimer::*)(void)>(&QTimer::start));
 
+    cleanupTimer.setInterval(1000);
+    cleanupTimer.setSingleShot(false);
+    connect(&cleanupTimer, &QTimer::timeout, this, &OpenAL::cleanupSound);
+    // TODO for Qt 5.6+: use qOverload
+    connect(audioThread, &QThread::started, &cleanupTimer, static_cast<void (QTimer::*)(void)>(&QTimer::start));
+
     audioThread->start();
 }
 
@@ -212,7 +218,7 @@ void OpenAL::reinitInput(const QString& inDevDesc)
 {
     // this must happen outside `audioLock`, to avoid a race condition when
     // AlSink has checked `killLock` already, but not yet locked `audioLock`
-    for(auto& source : sources) {
+    for (auto& source : sources) {
         source->kill();
     }
     QMutexLocker locker(&audioLock);
@@ -226,7 +232,7 @@ bool OpenAL::reinitOutput(const QString& outDevDesc)
 {
     // this must happen outside `audioLock`, to avoid a race condition when
     // AlSink has checked `killLock` already, but not yet locked `audioLock`
-    for(auto& sink : sinks) {
+    for (auto& sink : sinks) {
         sink->kill();
     }
 
@@ -253,7 +259,7 @@ IAudioSink *OpenAL::makeSink()
     ALuint sid;
     alGenSources(1, &sid);
 
-    auto sink = new AlSink(*this, sid);
+    auto const sink = new AlSink(*this, sid);
     if (sink == nullptr) {
         return {};
     }
@@ -273,13 +279,13 @@ void OpenAL::destroySink(AlSink& sink)
 {
     QMutexLocker locker(&audioLock);
 
-    auto s = sinks.find(&sink);
-    if(s == sinks.end()) {
+    const auto sinksErased = sinks.erase(&sink);
+    const auto soundSinksErased = soundSinks.erase(&sink);
+
+    if (sinksErased == 0 && soundSinksErased == 0) {
         qWarning() << "Destroying non-existant source";
         return;
     }
-
-    sinks.erase(s);
 
     uint sid = sink.getSourceId();
 
@@ -292,7 +298,7 @@ void OpenAL::destroySink(AlSink& sink)
         qWarning() << "Trying to delete invalid audio source" << sid;
     }
 
-    if (sinks.empty()) {
+    if (sinks.empty() && soundSinks.empty()) {
         cleanupOutput();
     }
 }
@@ -311,7 +317,7 @@ IAudioSource *OpenAL::makeSource()
         return {};
     }
 
-    auto source = new AlSource(*this);
+    auto const source = new AlSource(*this);
     if (source == nullptr) {
         return {};
     }
@@ -332,7 +338,7 @@ void OpenAL::destroySource(AlSource &source)
 {
     QMutexLocker locker(&audioLock);
 
-    auto s = sources.find(&source);
+    const auto s = sources.find(&source);
     if(s == sources.end()) {
         qWarning() << "Destroyed non-existant source";
         return;
@@ -461,8 +467,9 @@ bool OpenAL::initOutput(const QString& deviceName)
 /**
  * @brief Play a 44100Hz mono 16bit PCM sound
  */
-void OpenAL::playMono16Sound(uint sourceId, const IAudioSink::Sound &sound)
+void OpenAL::playMono16Sound(AlSink& sink, const IAudioSink::Sound &sound)
 {
+    const uint sourceId = sink.getSourceId();
     QFile sndFile(IAudioSink::getSound(sound));
     if(!sndFile.exists()) {
         qDebug() << "Trying to open non existent sound file";
@@ -470,7 +477,7 @@ void OpenAL::playMono16Sound(uint sourceId, const IAudioSink::Sound &sound)
     }
 
     sndFile.open(QIODevice::ReadOnly);
-    QByteArray data{sndFile.readAll()};
+    const QByteArray data{sndFile.readAll()};
     if(data.isEmpty()) {
         qDebug() << "Sound file contained no data";
         return;
@@ -499,6 +506,27 @@ void OpenAL::playMono16Sound(uint sourceId, const IAudioSink::Sound &sound)
     alBufferData(bufid, AL_FORMAT_MONO16, data.constData(), data.size(), 44100);
     alSourcei(sourceId, AL_BUFFER, bufid);
     alSourcePlay(sourceId);
+    soundSinks.insert(&sink);
+}
+
+void OpenAL::cleanupSound()
+{
+    QMutexLocker locker(&audioLock);
+
+    auto sinkIt = soundSinks.begin();
+    while (sinkIt != soundSinks.end()) {
+        auto sink = *sinkIt;
+        ALuint sourceId = sink->getSourceId();
+        ALint state = 0;
+
+        alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
+        if (state != AL_PLAYING) {
+            sinkIt = soundSinks.erase(sinkIt);
+            emit sink->finishedPlaying();
+        } else {
+            ++sinkIt;
+        }
+    }
 }
 
 void OpenAL::playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
@@ -668,7 +696,7 @@ void OpenAL::doAudio()
     // Output section does nothing
 
     // Input section
-    if (alInDev && inSubscriptions) {
+    if (alInDev && !sources.empty()) {
         doInput();
     }
 }
