@@ -119,7 +119,7 @@ void CoreAV::connectCallbacks(ToxAV& toxav) {
 CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core)
 {
     TOXAV_ERR_NEW err;
-    ToxAV* toxav = toxav_new(core, &err);
+    ToxAV* const toxav = toxav_new(core, &err);
     switch (err) {
     case TOXAV_ERR_NEW_OK:
         break;

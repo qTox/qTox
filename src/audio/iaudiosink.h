@@ -48,6 +48,7 @@
 
 class IAudioSink : public QObject
 {
+    Q_OBJECT
 public:
     enum class Sound
     {
