@@ -12,15 +12,13 @@
  */
 AlSource::AlSource(OpenAL &al)
     : audio{&al}
-    , killLock{new QMutex}
 {
-    assert(killLock != nullptr);
 }
 
 AlSource::~AlSource()
 {
     // unsubscribe only if not already killed
-    if(killLock->tryLock() && audio != nullptr) {
+    if(killLock.tryLock() && audio != nullptr) {
         audio->destroySource(*this);
     }
 }
@@ -34,7 +32,7 @@ AlSource::operator bool() const
 void AlSource::kill()
 {
     // this lock is only locked once here, afterwards the object is considered dead
-    killLock->lock();
+    killLock.lock();
     audio = nullptr;
     emit invalidated();
 }

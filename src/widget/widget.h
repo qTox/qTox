@@ -255,6 +255,7 @@ private:
     void focusChatInput();
     void openDialog(GenericChatroomWidget* widget, bool newWindow);
     void playNotificationSound(IAudioSink::Sound sound, bool loop = false);
+    void cleanupNotificationSound();
 
 private:
     SystemTrayIcon* icon = nullptr;

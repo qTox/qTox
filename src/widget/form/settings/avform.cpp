@@ -532,14 +532,17 @@ void AVForm::on_inDevCombobox_currentIndexChanged(int deviceIndex)
     const bool inputEnabled = deviceIndex > 0;
     audioSettings->setAudioInDevEnabled(inputEnabled);
 
-    QString deviceName;
+    QString deviceName{};
     if (inputEnabled) {
         deviceName = inDevCombobox->itemText(deviceIndex);
     }
 
-    audioSettings->setInDev(deviceName);
+    QString oldName = audioSettings->getInDev();
+    if(oldName != deviceName) {
+        audioSettings->setInDev(deviceName);
+        audio->reinitInput(deviceName);
+    }
 
-    audio->reinitInput(deviceName);
     microphoneSlider->setEnabled(inputEnabled);
     if (!inputEnabled) {
         volumeDisplay->setValue(volumeDisplay->minimum());
@@ -552,14 +555,18 @@ void AVForm::on_outDevCombobox_currentIndexChanged(int deviceIndex)
     const bool outputEnabled = deviceIndex > 0;
     audioSettings->setAudioOutDevEnabled(outputEnabled);
 
-    QString deviceName;
+    QString deviceName{};
     if (outputEnabled) {
         deviceName = outDevCombobox->itemText(deviceIndex);
     }
 
-    audioSettings->setOutDev(deviceName);
+    QString oldName = audioSettings->getOutDev();
 
-    audio->reinitOutput(deviceName);
+    if(oldName != deviceName) {
+        audioSettings->setOutDev(deviceName);
+        audio->reinitOutput(deviceName);
+    }
+
     playbackSlider->setEnabled(outputEnabled);
     playbackSlider->setSliderPosition(getStepsFromValue(audio->outputVolume(),
             audio->minOutputVolume(), audio->maxOutputVolume()));

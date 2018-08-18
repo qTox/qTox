@@ -1177,7 +1177,7 @@ QStringList Core::getGroupPeerNames(int groupId) const
  */
 bool Core::getGroupAvEnabled(int groupId) const
 {
-    QMutexLocker ml{coreLoopLock.get()};
+    const QMutexLocker ml{coreLoopLock.get()};
     TOX_ERR_CONFERENCE_GET_TYPE error;
     TOX_CONFERENCE_TYPE type = tox_conference_get_type(tox.get(), groupId, &error);
     switch (error) {
