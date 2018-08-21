@@ -297,7 +297,7 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     if (!toxav_call(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate, nullptr))
         return false;
 
-    auto ret = calls.emplace(friendNum, ToxFriendCall(friendNum, video, *this));
+    auto ret = calls.emplace(friendNum, ToxFriendCall{friendNum, video, *this});
     ret.first->second.startTimeout(friendNum);
     return true;
 }
@@ -791,8 +791,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         return;
     }
 
-    auto it = self->calls.insert(
-        std::pair<uint32_t, ToxFriendCall>(friendNum, ToxFriendCall{friendNum, video, *self}));
+    auto it = self->calls.emplace(friendNum, ToxFriendCall{friendNum, video, *self});
     if (it.second == false) {
         /// Hanging up from a callback is supposed to be UB,
         /// but since currently the toxav callbacks are fired from the toxcore thread,

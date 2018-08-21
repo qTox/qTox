@@ -61,6 +61,7 @@ protected:
     bool videoEnabled{false};
     bool nullVideoBitrate{false};
     std::unique_ptr<IAudioSource> audioSource = nullptr;
+    QMetaObject::Connection audioSrcInvalid;
 };
 
 class ToxFriendCall : public ToxCall
@@ -87,6 +88,8 @@ private:
     TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
     static constexpr int CALL_TIMEOUT = 45000;
     std::unique_ptr<IAudioSink> sink = nullptr;
+    uint32_t friendId;
+    void onAudioSourceInvalidated();
 };
 
 class ToxGroupCall : public ToxCall
