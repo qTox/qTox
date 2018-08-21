@@ -216,16 +216,20 @@ qreal OpenAL::maxInputThreshold() const
 
 void OpenAL::reinitInput(const QString& inDevDesc)
 {
-    // this must happen outside `audioLock`, to avoid a race condition when
-    // AlSink has checked `killLock` already, but not yet locked `audioLock`
-    for (auto& source : sources) {
-        source->kill();
-    }
     QMutexLocker locker(&audioLock);
 
+    auto bakSources = sources;
     sources.clear();
     cleanupInput();
     initInput(inDevDesc);
+
+    locker.unlock();
+    // this must happen outside `audioLock`, to avoid a deadlock when
+    // a slot on AlSource::invalidate tries to create a new source immedeately.
+    for (auto& source : bakSources) {
+        source->kill();
+    }
+
 }
 
 bool OpenAL::reinitOutput(const QString& outDevDesc)
