@@ -128,6 +128,7 @@ QAbstractButton
 
 QAbstractButton:disabled
 {
+    color: gray;
     background-color: #919191;
 }
 
