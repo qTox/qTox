@@ -51,9 +51,8 @@ void Group::updatePeer(int peerId, QString name)
     if (f != nullptr) {
         // use the displayed name from the friends list
         toxpks[peerKey] = f->getDisplayedName();
-    } else {
-        emit userListChanged(groupId, toxpks);
     }
+    emit userListChanged(groupId, toxpks);
 }
 
 void Group::setName(const QString& newTitle)
