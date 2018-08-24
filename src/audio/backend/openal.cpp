@@ -218,7 +218,7 @@ void OpenAL::reinitInput(const QString& inDevDesc)
 {
     QMutexLocker locker(&audioLock);
 
-    auto bakSources = sources;
+    const auto bakSources = sources;
     sources.clear();
     cleanupInput();
     initInput(inDevDesc);
@@ -234,17 +234,23 @@ void OpenAL::reinitInput(const QString& inDevDesc)
 
 bool OpenAL::reinitOutput(const QString& outDevDesc)
 {
-    // this must happen outside `audioLock`, to avoid a race condition when
-    // AlSink has checked `killLock` already, but not yet locked `audioLock`
-    for (auto& sink : sinks) {
-        sink->kill();
-    }
 
     QMutexLocker locker(&audioLock);
 
+    const auto bakSinks = sinks;
+
     sinks.clear();
     cleanupOutput();
-    return initOutput(outDevDesc);
+    const bool result = initOutput(outDevDesc);
+
+    locker.unlock();
+    // this must happen outside `audioLock`, to avoid a deadlock when
+    // a slot on AlSink::invalidate tries to create a new source immedeately.
+    for (auto& sink : bakSinks) {
+        sink->kill();
+    }
+
+    return result;
 }
 
 /**
