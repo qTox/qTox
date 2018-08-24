@@ -249,7 +249,7 @@ ToxFriendCall::~ToxFriendCall()
 
 void ToxFriendCall::onAudioSourceInvalidated()
 {
-    const auto newSrc{Audio::getInstance().makeSource()};
+    const auto newSrc = Audio::getInstance().makeSource();
     // TODO(sudden6): move this to audio source
     audioInConn = QObject::connect(newSrc, &IAudioSource::frameAvailable,
     [this](const int16_t* pcm, size_t samples, uint8_t chans,
@@ -266,12 +266,13 @@ void ToxFriendCall::onAudioSourceInvalidated()
 
 void ToxFriendCall::onAudioSinkInvalidated()
 {
-    sink.reset(Audio::getInstance().makeSink());
+    const auto newSink = Audio::getInstance().makeSink();
 
-    audioSinkInvalid = QObject::connect(sink.get(), &IAudioSink::invalidated,
+    audioSinkInvalid = QObject::connect(newSink, &IAudioSink::invalidated,
        [this]() {
            this->onAudioSinkInvalidated();
     });
+    sink.reset(newSink);
 }
 
 void ToxFriendCall::startTimeout(uint32_t callId)
