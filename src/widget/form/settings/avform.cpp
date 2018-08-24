@@ -536,6 +536,7 @@ void AVForm::on_inDevCombobox_currentIndexChanged(int deviceIndex)
     if(oldName != deviceName) {
         audioSettings->setInDev(deviceName);
         audio->reinitInput(deviceName);
+        audioSrc.reset(Audio::getInstance().makeSource());
     }
 
     microphoneSlider->setEnabled(inputEnabled);
@@ -560,6 +561,7 @@ void AVForm::on_outDevCombobox_currentIndexChanged(int deviceIndex)
     if(oldName != deviceName) {
         audioSettings->setOutDev(deviceName);
         audio->reinitOutput(deviceName);
+        audioSink.reset(Audio::getInstance().makeSink());
     }
 
     playbackSlider->setEnabled(outputEnabled);
