@@ -89,7 +89,9 @@ private:
     static constexpr int CALL_TIMEOUT = 45000;
     std::unique_ptr<IAudioSink> sink = nullptr;
     uint32_t friendId;
+    QMetaObject::Connection audioSinkInvalid;
     void onAudioSourceInvalidated();
+    void onAudioSinkInvalidated();
 };
 
 class ToxGroupCall : public ToxCall
