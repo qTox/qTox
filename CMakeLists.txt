@@ -13,9 +13,15 @@ option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 option(AUTOUPDATE "Enable the auto updater" OFF)
 option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
+option(ASAN "Compile with AddressSanitizer" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+if(ASAN)
+    set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+    set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 endif()
 
 set(ENV{PKG_CONFIG_PATH}
