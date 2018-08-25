@@ -18,8 +18,6 @@
 */
 
 #include "openal2.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 
 #include <QDebug>
@@ -246,12 +244,6 @@ bool OpenAL2::initOutput(const QString& deviceName)
     // init master volume
     alListenerf(AL_GAIN, Settings::getInstance().getOutVolume() * 0.01f);
     checkAlError();
-
-    Core* core = Core::getInstance();
-    if (core) {
-        // reset each call's audio source
-        core->getAv()->invalidateCallSources();
-    }
 
     // ensure alProxyContext is active
     alcMakeContextCurrent(alProxyContext);
