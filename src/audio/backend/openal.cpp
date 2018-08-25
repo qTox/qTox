@@ -19,8 +19,6 @@
 
 #include "openal.h"
 #include "src/audio/iaudiosink.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 
 #include <QDebug>
@@ -463,12 +461,6 @@ bool OpenAL::initOutput(const QString& deviceName)
     // init master volume
     alListenerf(AL_GAIN, Settings::getInstance().getOutVolume() * 0.01f);
     checkAlError();
-
-    Core* core = Core::getInstance();
-    if (core) {
-        // reset each call's audio source
-        core->getAv()->invalidateCallSources();
-    }
 
     outputInitialized = true;
     return true;

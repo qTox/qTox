@@ -737,21 +737,6 @@ bool CoreAV::isCallOutputMuted(const Friend* f) const
 }
 
 /**
- * @brief Forces to regenerate each call's audio sources.
- */
-void CoreAV::invalidateCallSources()
-{
-    for (auto& kv : groupCalls) {
-        kv.second.clearPeers();
-    }
-
-    for (auto& kv : calls) {
-        // TODO(sudden6): find a way to invalidate call sources
-        //kv.second.setAlSource(0);
-    }
-}
-
-/**
  * @brief Signal to all peers that we're not sending video anymore.
  * @note The next frame sent cancels this.
  */
