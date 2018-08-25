@@ -26,10 +26,10 @@ protected:
 
 public:
     ToxCall(const ToxCall& other) = delete;
-    ToxCall(ToxCall&& other) noexcept;
+    ToxCall(ToxCall&& other) = delete;
 
     ToxCall& operator=(const ToxCall& other) = delete;
-    ToxCall& operator=(ToxCall&& other) noexcept;
+    ToxCall& operator=(ToxCall&& other) = delete;
 
     bool isActive() const;
     void setActive(bool value);
@@ -69,8 +69,8 @@ class ToxFriendCall : public ToxCall
 public:
     ToxFriendCall() = delete;
     ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av);
-    ToxFriendCall(ToxFriendCall&& other) noexcept;
-    ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
+    ToxFriendCall(ToxFriendCall&& other) = delete;
+    ToxFriendCall& operator=(ToxFriendCall&& other) = delete;
     ~ToxFriendCall();
 
     void startTimeout(uint32_t callId);
@@ -99,10 +99,10 @@ class ToxGroupCall : public ToxCall
 public:
     ToxGroupCall() = delete;
     ToxGroupCall(int GroupNum, CoreAV& av);
-    ToxGroupCall(ToxGroupCall&& other) noexcept;
+    ToxGroupCall(ToxGroupCall&& other) = delete;
     ~ToxGroupCall();
 
-    ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
+    ToxGroupCall& operator=(ToxGroupCall&& other) = delete;
 
     void removePeer(int peerId);
     void addPeer(int peerId);
@@ -111,9 +111,6 @@ public:
     const std::unique_ptr<IAudioSink> &getAudioSink(int peerId);
 
 private:
-    // If you add something here, don't forget to override the ctors and move operators!
-    // need std::map here, because QMap needs a copy constructor
-
     std::map<int, std::unique_ptr<IAudioSink>> peers;
     std::map<int, QMetaObject::Connection> sinkInvalid;
     int groupId;
