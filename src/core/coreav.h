@@ -135,8 +135,10 @@ private:
     std::unique_ptr<ToxAV, ToxAVDeleter> toxav;
     std::unique_ptr<QThread> coreavThread;
     QTimer* iterateTimer = nullptr;
-    static std::map<uint32_t, ToxFriendCall> calls;
-    static std::map<int, ToxGroupCall> groupCalls;
+    using ToxFriendCallPtr = std::unique_ptr<ToxFriendCall>;
+    static std::map<uint32_t, ToxFriendCallPtr> calls;
+    using ToxGroupCallPtr = std::unique_ptr<ToxGroupCall>;
+    static std::map<int, ToxGroupCallPtr> groupCalls;
     std::atomic_flag threadSwitchLock;
 
     friend class Audio;

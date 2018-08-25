@@ -26,6 +26,8 @@
 #include "src/persistence/settings.h"
 #include "src/video/corevideosource.h"
 #include "src/video/videoframe.h"
+
+#include <memory>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QThread>
@@ -73,13 +75,13 @@
  * @brief Maps friend IDs to ToxFriendCall.
  * @note Need to use STL container here, because Qt containers need a copy constructor.
  */
-std::map<uint32_t, ToxFriendCall> CoreAV::calls;
+std::map<uint32_t, CoreAV::ToxFriendCallPtr> CoreAV::calls;
 
 /**
  * @brief Maps group IDs to ToxGroupCalls.
  * @note Need to use STL container here, because Qt containers need a copy constructor.
  */
-std::map<int, ToxGroupCall> CoreAV::groupCalls;
+std::map<int, CoreAV::ToxGroupCallPtr> CoreAV::groupCalls;
 
 CoreAV::CoreAV(ToxAV &toxav)
     : toxav{&toxav}
@@ -212,7 +214,7 @@ bool CoreAV::isCallActive(const Friend* f) const
     if (it == calls.end()) {
         return false;
     }
-    return isCallStarted(f) && it->second.isActive();
+    return isCallStarted(f) && it->second->isActive();
 }
 
 /**
@@ -226,13 +228,13 @@ bool CoreAV::isCallActive(const Group* g) const
     if (it == groupCalls.end()) {
         return false;
     }
-    return isCallStarted(g) && it->second.isActive();
+    return isCallStarted(g) && it->second->isActive();
 }
 
 bool CoreAV::isCallVideoEnabled(const Friend* f) const
 {
     auto it = calls.find(f->getId());
-    return isCallStarted(f) && it->second.getVideoEnabled();
+    return isCallStarted(f) && it->second->getVideoEnabled();
 }
 
 bool CoreAV::answerCall(uint32_t friendNum, bool video)
@@ -259,7 +261,7 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
 
     const uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
     if (toxav_answer(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate, &err)) {
-        it->second.setActive(true);
+        it->second->setActive(true);
         return true;
     } else {
         qWarning() << "Failed to answer call with error" << err;
@@ -297,8 +299,10 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     if (!toxav_call(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate, nullptr))
         return false;
 
-    auto ret = calls.emplace(friendNum, ToxFriendCall{friendNum, video, *this});
-    ret.first->second.startTimeout(friendNum);
+    ToxFriendCallPtr call{new ToxFriendCall{friendNum, video, *this}};
+
+    auto ret = calls.emplace(friendNum, std::move(call));
+    ret.first->second->startTimeout(friendNum);
     return true;
 }
 
@@ -363,10 +367,10 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, 
         return false;
     }
 
-    ToxFriendCall const& call = it->second;
+    ToxFriendCallPtr const& call = it->second;
 
-    if (call.getMuteMic() || !call.isActive()
-        || !(call.getState() & TOXAV_FRIEND_CALL_STATE_ACCEPTING_A)) {
+    if (call->getMuteMic() || !call->isActive()
+        || !(call->getState() & TOXAV_FRIEND_CALL_STATE_ACCEPTING_A)) {
         return true;
     }
 
@@ -399,21 +403,21 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
         return;
     }
 
-    ToxFriendCall& call = it->second;
+    ToxFriendCallPtr& call = it->second;
 
-    if (!call.getVideoEnabled() || !call.isActive()
-        || !(call.getState() & TOXAV_FRIEND_CALL_STATE_ACCEPTING_V)) {
+    if (!call->getVideoEnabled() || !call->isActive()
+        || !(call->getState() & TOXAV_FRIEND_CALL_STATE_ACCEPTING_V)) {
         return;
     }
 
-    if (call.getNullVideoBitrate()) {
+    if (call->getNullVideoBitrate()) {
         qDebug() << "Restarting video stream to friend" << callId;
 #if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
         toxav_video_set_bit_rate(toxav.get(), callId, VIDEO_DEFAULT_BITRATE, nullptr);
 #else
         toxav_bit_rate_set(toxav.get(), callId, -1, VIDEO_DEFAULT_BITRATE, nullptr);
 #endif
-        call.setNullVideoBitrate(false);
+        call->setNullVideoBitrate(false);
     }
 
     ToxYUVFrame frame = vframe->toToxYUVFrame();
@@ -450,8 +454,8 @@ void CoreAV::toggleMuteCallInput(const Friend* f)
 {
     auto it = calls.find(f->getId());
     if (f && (it != calls.end())) {
-        ToxCall& call = it->second;
-        call.setMuteMic(!call.getMuteMic());
+        ToxCall* call = it->second.get();
+        call->setMuteMic(!call->getMuteMic());
     }
 }
 
@@ -463,8 +467,8 @@ void CoreAV::toggleMuteCallOutput(const Friend* f)
 {
     auto it = calls.find(f->getId());
     if (f && (it != calls.end())) {
-        ToxCall& call = it->second;
-        call.setMuteVol(!call.getMuteVol());
+        ToxCall* call = it->second.get();
+        call->setMuteVol(!call->getMuteVol());
     }
 }
 
@@ -501,15 +505,15 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
         return;
     }
 
-    ToxGroupCall& call = it->second;
+    ToxGroupCallPtr& call = it->second;
 
     emit c->groupPeerAudioPlaying(group, peer);
 
-    if (call.getMuteVol() || !call.isActive()) {
+    if (call->getMuteVol() || !call->isActive()) {
         return;
     }
 
-    call.getAudioSink(peer)->playAudioBuffer(data, samples, channels, sample_rate);
+    call->getAudioSink(peer)->playAudioBuffer(data, samples, channels, sample_rate);
 }
 #else
 void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* data,
@@ -525,15 +529,15 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
         return;
     }
 
-    ToxGroupCall& call = it->second;
+    ToxGroupCallPtr& call = it->second;
 
     emit c->groupPeerAudioPlaying(group, peer);
 
-    if (call.getMuteVol() || !call.isActive()) {
+    if (call->getMuteVol() || !call->isActive()) {
         return;
     }
 
-    call.getAudioSink(peer)->playAudioBuffer(data, samples, channels, sample_rate);
+    call->getAudioSink(peer)->playAudioBuffer(data, samples, channels, sample_rate);
 }
 #endif
 
@@ -548,7 +552,7 @@ void CoreAV::invalidateGroupCallPeerSource(int group, int peer)
     if (it == groupCalls.end()) {
         return;
     }
-    it->second.removePeer(peer);
+    it->second->removePeer(peer);
 }
 
 /**
@@ -575,7 +579,7 @@ VideoSource* CoreAV::getVideoSourceFromCall(int friendNum) const
         return nullptr;
     }
 
-    return it->second.getVideoSource();
+    return it->second->getVideoSource();
 }
 
 /**
@@ -587,12 +591,16 @@ void CoreAV::joinGroupCall(int groupId)
 {
     qDebug() << QString("Joining group call %1").arg(groupId);
 
-    auto ret = groupCalls.insert(std::pair<int, ToxGroupCall>(groupId, ToxGroupCall{groupId, *this}));
+    ToxGroupCallPtr call = ToxGroupCallPtr(new ToxGroupCall{groupId, *this});
+
+    assert(call != nullptr);
+
+    auto ret = groupCalls.emplace(groupId, std::move(call));
     if (ret.second == false) {
         qWarning() << "This group call already exists, not joining!";
         return;
     }
-    ret.first->second.setActive(true);
+    ret.first->second->setActive(true);
 }
 
 /**
@@ -610,12 +618,12 @@ void CoreAV::leaveGroupCall(int groupId)
 bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples, uint8_t chans,
                                 uint32_t rate) const
 {
-    std::map<int, ToxGroupCall>::const_iterator it = groupCalls.find(groupId);
+    std::map<int, ToxGroupCallPtr>::const_iterator it = groupCalls.find(groupId);
     if (it == groupCalls.end()) {
         return false;
     }
 
-    if (!it->second.isActive() || it->second.getMuteMic()) {
+    if (!it->second->isActive() || it->second->getMuteMic()) {
         return true;
     }
 
@@ -634,7 +642,7 @@ void CoreAV::muteCallInput(const Group* g, bool mute)
 {
     auto it = groupCalls.find(g->getId());
     if (g && (it != groupCalls.end())) {
-        it->second.setMuteMic(mute);
+        it->second->setMuteMic(mute);
     }
 }
 
@@ -647,7 +655,7 @@ void CoreAV::muteCallOutput(const Group* g, bool mute)
 {
     auto it = groupCalls.find(g->getId());
     if (g && (it != groupCalls.end())) {
-        it->second.setMuteVol(mute);
+        it->second->setMuteVol(mute);
     }
 }
 
@@ -664,7 +672,7 @@ bool CoreAV::isGroupCallInputMuted(const Group* g) const
 
     const uint32_t groupId = g->getId();
     auto it = groupCalls.find(groupId);
-    return (it != groupCalls.end()) && it->second.getMuteMic();
+    return (it != groupCalls.end()) && it->second->getMuteMic();
 }
 
 /**
@@ -680,7 +688,7 @@ bool CoreAV::isGroupCallOutputMuted(const Group* g) const
 
     const uint32_t groupId = g->getId();
     auto it = groupCalls.find(groupId);
-    return (it != groupCalls.end()) && it->second.getMuteVol();
+    return (it != groupCalls.end()) && it->second->getMuteVol();
 }
 
 /**
@@ -718,7 +726,7 @@ bool CoreAV::isCallInputMuted(const Friend* f) const
     }
     const uint32_t friendId = f->getId();
     auto it = calls.find(friendId);
-    return (it != calls.end()) && it->second.getMuteMic();
+    return (it != calls.end()) && it->second->getMuteMic();
 }
 
 /**
@@ -733,7 +741,7 @@ bool CoreAV::isCallOutputMuted(const Friend* f) const
     }
     const uint32_t friendId = f->getId();
     auto it = calls.find(friendId);
-    return (it != calls.end()) && it->second.getMuteVol();
+    return (it != calls.end()) && it->second->getMuteVol();
 }
 
 /**
@@ -745,13 +753,13 @@ void CoreAV::sendNoVideo()
     // We don't change the audio bitrate, but we signal that we're not sending video anymore
     qDebug() << "CoreAV: Signaling end of video sending";
     for (auto& kv : calls) {
-        ToxFriendCall& call = kv.second;
+        ToxFriendCallPtr& call = kv.second;
 #if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
         toxav_video_set_bit_rate(toxav.get(), kv.first, 0, nullptr);
 #else
         toxav_bit_rate_set(toxav.get(), kv.first, -1, 0, nullptr);
 #endif
-        call.setNullVideoBitrate(true);
+        call->setNullVideoBitrate(true);
     }
 }
 
@@ -776,7 +784,11 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         return;
     }
 
-    auto it = self->calls.emplace(friendNum, ToxFriendCall{friendNum, video, *self});
+    ToxFriendCallPtr call{new ToxFriendCall{friendNum, video, *self}};
+
+    assert(call != nullptr);
+
+    auto it = self->calls.emplace(friendNum, std::move(call));
     if (it.second == false) {
         /// Hanging up from a callback is supposed to be UB,
         /// but since currently the toxav callbacks are fired from the toxcore thread,
@@ -794,7 +806,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         state |= TOXAV_FRIEND_CALL_STATE_SENDING_A | TOXAV_FRIEND_CALL_STATE_ACCEPTING_A;
     if (video)
         state |= TOXAV_FRIEND_CALL_STATE_SENDING_V | TOXAV_FRIEND_CALL_STATE_ACCEPTING_V;
-    it.first->second.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
+    it.first->second->setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
     // note: changed to self->
 
     emit reinterpret_cast<CoreAV*>(self)->avInvite(friendNum, video);
@@ -829,7 +841,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
         return;
     }
 
-    ToxFriendCall& call = it->second;
+    ToxFriendCallPtr& call = it->second;
 
     if (state & TOXAV_FRIEND_CALL_STATE_ERROR) {
         qWarning() << "Call with friend" << friendNum << "died of unnatural causes!";
@@ -843,29 +855,29 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
         emit self->avEnd(friendNum);
     } else {
         // If our state was null, we started the call and were still ringing
-        if (!call.getState() && state) {
-            call.stopTimeout();
-            call.setActive(true);
-            emit self->avStart(friendNum, call.getVideoEnabled());
-        } else if ((call.getState() & TOXAV_FRIEND_CALL_STATE_SENDING_V)
+        if (!call->getState() && state) {
+            call->stopTimeout();
+            call->setActive(true);
+            emit self->avStart(friendNum, call->getVideoEnabled());
+        } else if ((call->getState() & TOXAV_FRIEND_CALL_STATE_SENDING_V)
                    && !(state & TOXAV_FRIEND_CALL_STATE_SENDING_V)) {
             qDebug() << "Friend" << friendNum << "stopped sending video";
-            if (call.getVideoSource()) {
-                call.getVideoSource()->stopSource();
+            if (call->getVideoSource()) {
+                call->getVideoSource()->stopSource();
             }
-        } else if (!(call.getState() & TOXAV_FRIEND_CALL_STATE_SENDING_V)
+        } else if (!(call->getState() & TOXAV_FRIEND_CALL_STATE_SENDING_V)
                    && (state & TOXAV_FRIEND_CALL_STATE_SENDING_V)) {
             // Workaround toxav sometimes firing callbacks for "send last frame" -> "stop sending
             // video"
             // out of orders (even though they were sent in order by the other end).
             // We simply stop the videoSource from emitting anything while the other end says it's
             // not sending
-            if (call.getVideoSource()) {
-                call.getVideoSource()->restartSource();
+            if (call->getVideoSource()) {
+                call->getVideoSource()->restartSource();
             }
         }
 
-        call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
+        call->setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
     }
     self->threadSwitchLock.clear(std::memory_order_release);
 }
@@ -924,13 +936,13 @@ void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, 
         return;
     }
 
-    ToxFriendCall& call = it->second;
+    ToxFriendCallPtr& call = it->second;
 
-    if (call.getMuteVol()) {
+    if (call->getMuteVol()) {
         return;
     }
 
-    call.getAudioSink()->playAudioBuffer(pcm, sampleCount, channels, samplingRate);
+    call->getAudioSink()->playAudioBuffer(pcm, sampleCount, channels, samplingRate);
 }
 
 void CoreAV::videoFrameCallback(ToxAV*, uint32_t friendNum, uint16_t w, uint16_t h,
@@ -942,7 +954,7 @@ void CoreAV::videoFrameCallback(ToxAV*, uint32_t friendNum, uint16_t w, uint16_t
         return;
     }
 
-    CoreVideoSource* videoSource = it->second.getVideoSource();
+    CoreVideoSource* videoSource = it->second->getVideoSource();
     if (!videoSource) {
         return;
     }
