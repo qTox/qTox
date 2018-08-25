@@ -48,15 +48,15 @@ public:
     {
         switch (s) {
         case Sound::Test:
-            return QStringLiteral(":/audio/notification.pcm");
+            return QStringLiteral(":/audio/notification.s16le.pcm");
         case Sound::NewMessage:
-            return QStringLiteral(":/audio/notification.pcm");
+            return QStringLiteral(":/audio/notification.s16le.pcm");
         case Sound::IncomingCall:
-            return QStringLiteral(":/audio/ToxIncomingCall.pcm");
+            return QStringLiteral(":/audio/ToxIncomingCall.s16le.pcm");
         case Sound::OutgoingCall:
-            return QStringLiteral(":/audio/ToxOutgoingCall.pcm");
+            return QStringLiteral(":/audio/ToxOutgoingCall.s16le.pcm");
         case Sound::CallEnd:
-            return QStringLiteral(":/audio/ToxEndCall.pcm");
+            return QStringLiteral(":/audio/ToxEndCall.s16le.pcm");
         }
         assert(false);
         return QString();
@@ -109,6 +109,7 @@ public:
 
 protected:
     // Public default audio settings
+    // Samplerate for Tox calls and sounds
     static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000;
     static constexpr uint32_t AUDIO_FRAME_DURATION = 20;
     static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL =

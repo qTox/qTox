@@ -377,7 +377,7 @@ bool OpenAL::initOutput(const QString& deviceName)
 }
 
 /**
- * @brief Play a 44100Hz mono 16bit PCM sound from a file
+ * @brief Play a 48kHz mono 16bit PCM sound from a file
  *
  * @param[in] path the path to the sound file
  */
@@ -389,7 +389,7 @@ void OpenAL::playMono16Sound(const QString& path)
 }
 
 /**
- * @brief Play a 44100Hz mono 16bit PCM sound
+ * @brief Play a 48kHz mono 16bit PCM sound
  */
 void OpenAL::playMono16Sound(const QByteArray& data)
 {
@@ -408,11 +408,11 @@ void OpenAL::playMono16Sound(const QByteArray& data)
         alSourcei(alMainSource, AL_BUFFER, AL_NONE);
     }
 
-    alBufferData(alMainBuffer, AL_FORMAT_MONO16, data.constData(), data.size(), 44100);
+    alBufferData(alMainBuffer, AL_FORMAT_MONO16, data.constData(), data.size(), AUDIO_SAMPLE_RATE);
     alSourcei(alMainSource, AL_BUFFER, static_cast<ALint>(alMainBuffer));
     alSourcePlay(alMainSource);
 
-    int durationMs = data.size() * 1000 / 2 / 44100;
+    int durationMs = data.size() * 1000 / 2 / AUDIO_SAMPLE_RATE;
     QMetaObject::invokeMethod(&playMono16Timer, "start", Q_ARG(int, durationMs + 50));
 }
 
