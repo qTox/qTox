@@ -111,10 +111,15 @@ public:
     const std::unique_ptr<IAudioSink> &getAudioSink(int peerId);
 
 private:
-    // need std::map here, because QMap needs a copy constructor
-    std::map<int, std::unique_ptr<IAudioSink>> peers;
-
     // If you add something here, don't forget to override the ctors and move operators!
+    // need std::map here, because QMap needs a copy constructor
+
+    std::map<int, std::unique_ptr<IAudioSink>> peers;
+    std::map<int, QMetaObject::Connection> sinkInvalid;
+    int groupId;
+
+    void onAudioSourceInvalidated();
+    void onAudioSinkInvalidated(int peerId);
 };
 
 #endif // TOXCALL_H
