@@ -15,7 +15,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Create a `lzip` archive and make a detached GPG signature for it.
+# Create a `lzip` and a `gzip` archive and make a detached GPG signature for them.
 #
 # When tag name is supplied, it's used to create archive. If there is no tag
 # name supplied, latest tag is used.
@@ -24,6 +24,7 @@
 #   * GPG
 #   * git
 #   * lzip
+#   * gzip
 
 # usage:
 #   ./$script [$tag_name]
@@ -33,24 +34,33 @@
 set -eu -o pipefail
 
 
-archive_from_tag() {
+archives_from_tag() {
     git archive --format=tar "$@" \
     | lzip --best \
     > "$@".tar.lz
     echo "$@.tar.lz archive has been created."
+    git archive --format=tar "$@" \
+    | gzip --best \
+    > "$@".tar.gz
+    echo "$@.tar.gz archive has been created."
 }
 
-sign_archive() {
+sign_archives() {
     gpg \
         --armor \
         --detach-sign \
         "$@".tar.lz
     echo "$@.tar.lz.asc signature has been created."
+    gpg \
+        --armor \
+        --detach-sign \
+        "$@".tar.gz
+    echo "$@.tar.gz.asc signature has been created."
 }
 
 create_and_sign() {
-    archive_from_tag "$@"
-    sign_archive "$@"
+    archives_from_tag "$@"
+    sign_archives "$@"
 }
 
 get_tag() {
