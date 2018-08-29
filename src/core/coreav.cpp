@@ -697,8 +697,8 @@ bool CoreAV::isGroupCallOutputMuted(const Group* g) const
 bool CoreAV::isGroupAvEnabled(int groupId) const
 {
     Tox* tox = Core::getInstance()->tox.get();
-    TOX_ERR_CONFERENCE_GET_TYPE error;
-    TOX_CONFERENCE_TYPE type = tox_conference_get_type(tox, groupId, &error);
+    Tox_Err_Conference_Get_Type error;
+    Tox_Conference_Type type = tox_conference_get_type(tox, groupId, &error);
     switch (error) {
     case TOX_ERR_CONFERENCE_GET_TYPE_OK:
         break;

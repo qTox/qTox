@@ -80,7 +80,7 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
     tox_hash(avatarHash, (uint8_t*)data.data(), data.size());
     uint64_t filesize = data.size();
 
-    TOX_ERR_FILE_SEND error;
+    Tox_Err_File_Send error;
     uint32_t fileNum = tox_file_send(core->tox.get(), friendId, TOX_FILE_KIND_AVATAR, filesize,
                                      avatarHash, avatarHash, TOX_HASH_LENGTH, &error);
 
@@ -367,7 +367,7 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
 }
 
 void CoreFile::onFileControlCallback(Tox*, uint32_t friendId, uint32_t fileId,
-                                     TOX_FILE_CONTROL control, void* core)
+                                     Tox_File_Control control, void* core)
 {
     ToxFile* file = findFile(friendId, fileId);
     if (!file) {
