@@ -25,7 +25,7 @@ QByteArray cleanPath(const char *file)
  * @brief Log message handler for toxcore log messages
  * @note See tox.h for the parameter definitions
  */
-void onLogMessage(Tox *tox, TOX_LOG_LEVEL level, const char *file, uint32_t line,
+void onLogMessage(Tox *tox, Tox_Log_Level level, const char *file, uint32_t line,
                   const char *func, const char *message, void *user_data)
 {
     const QByteArray cleanedPath = cleanPath(file);
