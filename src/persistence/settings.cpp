@@ -207,7 +207,7 @@ void Settings::loadGlobal()
     s.beginGroup("GUI");
     {
         showWindow = s.value("showWindow", true).toBool();
-        showInFront = s.value("showInFront", true).toBool();
+        showInFront = s.value("showInFront", false).toBool();
         notify = s.value("notify", true).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", true).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
