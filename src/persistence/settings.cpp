@@ -400,8 +400,7 @@ void Settings::loadPersonal(Profile* profile)
 
     ps.beginGroup("Proxy");
     {
-        int type = ps.value("proxyType", static_cast<int>(getProxyType())).toInt();
-        setProxyType(static_cast<ProxyType>(type));
+        proxyType = static_cast<ProxyType>(ps.value("proxyType", 0 /* ProxyType::None */).toInt());
         proxyAddr = ps.value("proxyAddr", proxyAddr).toString();
         proxyPort = static_cast<quint16>(ps.value("proxyPort", proxyPort).toUInt());
     }
