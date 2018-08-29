@@ -132,7 +132,7 @@ sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.8 --nodoc -y
 sudo ldconfig
 cd ..
 # toxcore
-git clone --branch v0.2.2 --depth=1 https://github.com/toktok/c-toxcore.git toxcore
+git clone --branch v0.2.7 --depth=1 https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
 autoreconf -if
 CC="ccache $CC" CXX="ccache $CXX" ./configure
