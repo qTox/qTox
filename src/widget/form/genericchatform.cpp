@@ -56,7 +56,7 @@
 #include <QDebug>
 
 #ifdef SPELL_CHECKING
-#include <KF5/SonnetUi/sonnet/spellcheckdecorator.h>
+#include <SonnetUi/sonnet/spellcheckdecorator.h>
 #endif
 
 /**

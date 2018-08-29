@@ -137,6 +137,7 @@ apt-get install -y --no-install-recommends \
                    git \
                    libtool \
                    nsis \
+                   gettext \
                    pkg-config \
                    tclsh \
                    unzip \
@@ -809,6 +810,152 @@ else
   echo "Using cached build of Exif `cat $EXIF_PREFIX_DIR/done`"
 fi
 
+# Hunspell
+
+HUNSPELL_PREFIX_DIR="$DEP_DIR/Hunspell"
+HUNSPELL_VERSION=1.6.2
+HUNSPELL_DLL_VERSION=1.6-0
+HUNSPELL_HASH="3cd9ceb062fe5814f668e4f22b2fa6e3ba0b339b921739541ce180cac4d6f4c4"
+HUNSPELL_FILENAME="v$HUNSPELL_VERSION.tar.gz"
+if [ ! -f "$HUNSPELL_PREFIX_DIR/done" ]
+then
+  rm -rf "$HUNSPELL_PREFIX_DIR"
+  mkdir -p "$HUNSPELL_PREFIX_DIR"
+
+  wget "https://github.com/hunspell/hunspell/archive/v$HUNSPELL_VERSION.tar.gz"
+  check_sha256 "$HUNSPELL_HASH" "$HUNSPELL_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$HUNSPELL_FILENAME"
+  rm $HUNSPELL_FILENAME
+  cd hunspell*
+  autoreconf -vfi
+  ./configure --host="$ARCH-w64-mingw32" \
+              --prefix=$HUNSPELL_PREFIX_DIR \
+              --disable-static \
+              --enable-shared
+  make
+  make install
+  ldconfig
+  echo -n $HUNSPELL_VERSION > $HUNSPELL_PREFIX_DIR/done
+
+  cd ..
+  rm -rf ./hunspell*
+else
+  echo "Using cached build of Hunspell `cat $HUNSPELL_PREFIX_DIR/done`"
+fi
+
+# Dictionaries
+DICTIONARY_PREFIX_DIR="$DEP_DIR/Dictionaries"
+
+# EN_US
+EN_US_PREFIX_DIR="$DICTIONARY_PREFIX_DIR/en_US/hunspell"
+EN_US_HASH="17452350eeced560ab6f1300dfe1a15c52c884635839cca85ce0307fe4e2f5f2"
+EN_US_VERSION="2019-03-01gb"
+EN_US_FILENAME="$EN_US_VERSION.tar.gz"
+
+if [ ! -f "$EN_US_PREFIX_DIR/done" ]
+then
+  rm -rf "$EN_US_PREFIX_DIR"
+  mkdir -p "$EN_US_PREFIX_DIR"
+
+  wget "https://github.com/marcoagpinto/aoo-mozilla-en-dict/archive/$EN_US_FILENAME"
+  check_sha256 "$EN_US_HASH" "$EN_US_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$EN_US_FILENAME"
+  rm $EN_US_FILENAME
+  cd aoo-mozilla*/en_US*
+  cp en_US.aff $EN_US_PREFIX_DIR
+  cp en_US.dic $EN_US_PREFIX_DIR
+  echo -n $EN_US_VERSION > $EN_US_PREFIX_DIR/done
+  cd ../..
+  rm -rf ./aoo-mozilla*
+else
+  echo "Using cached en_US dictionary `cat $EN_US_PREFIX_DIR/done`"
+fi
+
+# extra-cmake-modules
+# version available in debian stretch repos is not new enough
+ECM_PREFIX_DIR="$DEP_DIR/ECM"
+KDE_FRAMEWORK_VERSION=5.49
+ECM_VERSION=$KDE_FRAMEWORK_VERSION.0
+ECM_HASH="c09fb851751f2e1c1231130dbce62d5dab396444fce7ed18662ada9ebd7ced1e"
+ECM_FILENAME="extra-cmake-modules-$ECM_VERSION.tar.xz"
+if [ ! -f "$ECM_PREFIX_DIR/done" ]
+then
+  rm -rf "$ECM_PREFIX_DIR"
+  mkdir -p "$ECM_PREFIX_DIR"
+
+  wget "https://download.kde.org/stable/frameworks/$KDE_FRAMEWORK_VERSION/$ECM_FILENAME"
+  check_sha256 "$ECM_HASH" "$ECM_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$ECM_FILENAME"
+  rm $ECM_FILENAME
+  cd extra-cmake-modules*
+  mkdir build
+  cd build
+
+  echo "
+      SET(CMAKE_SYSTEM_NAME Windows)
+      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32)
+  " > toolchain.cmake
+
+  cmake -DCMAKE_INSTALL_PREFIX=$ECM_PREFIX_DIR \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
+        ..
+  make
+  make install
+  cd ..
+
+  echo -n $ECM_VERSION > $ECM_PREFIX_DIR/done
+
+  cd ..
+  rm -rf ./extra-cmake-modules*
+else
+  echo "Using cached build of extra-cmake-modules `cat $ECM_PREFIX_DIR/done`"
+fi
+
+# KF5Sonnet
+
+KF5SONNET_PREFIX_DIR="$DEP_DIR/sonnet"
+KF5SONNET_VERSION=$KDE_FRAMEWORK_VERSION.0
+KF5SONNET_HASH="63053a671a8dc7a2a97cd49fe915e02e4b37fe41a06f3cd8785a7218d4acb754"
+KF5SONNET_FILENAME="sonnet-$KF5SONNET_VERSION.tar.xz"
+if [ ! -f "$KF5SONNET_PREFIX_DIR/done" ]
+then
+  rm -rf "$KF5SONNET_PREFIX_DIR"
+  mkdir -p "$KF5SONNET_PREFIX_DIR"
+
+  wget "https://download.kde.org/stable/frameworks/$KDE_FRAMEWORK_VERSION/$KF5SONNET_FILENAME"
+  check_sha256 "$KF5SONNET_HASH" "$KF5SONNET_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$KF5SONNET_FILENAME"
+  rm $KF5SONNET_FILENAME
+  cd sonnet*
+  mkdir build
+  cd build
+  echo "
+      SET(CMAKE_SYSTEM_NAME Windows)
+      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $ECM_PREFIX_DIR $QT_PREFIX_DIR $HUNSPELL_PREFIX_DIR)
+  " > toolchain.cmake
+
+  cmake -DCMAKE_INSTALL_PREFIX=$KF5SONNET_PREFIX_DIR \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
+        ..
+  make
+  make install
+  cd ..
+
+  echo -n $KF5SONNET_VERSION > $KF5SONNET_PREFIX_DIR/done
+
+  cd ..
+  rm -rf ./sonnet*
+else
+  echo "Using cached build of KF5Sonnet `cat $KF5SONNET_PREFIX_DIR/done`"
+fi
 
 # Opus
 
@@ -1100,19 +1247,16 @@ then
 fi
 set -u
 
-# Spell check on windows currently not supported, disable
 if [[ "$BUILD_TYPE" == "release" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Release \
-        -DSPELL_CHECK=OFF \
         -DUPDATE_CHECK=ON \
         ..
 elif [[ "$BUILD_TYPE" == "debug" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Debug \
-        -DSPELL_CHECK=OFF \
         -DUPDATE_CHECK=ON \
         ..
 fi
@@ -1135,6 +1279,12 @@ cp $OPENAL_PREFIX_DIR/bin/OpenAL32.dll $QTOX_PREFIX_DIR
 cp $OPENSSL_PREFIX_DIR/bin/libssl-*.dll \
    $OPENSSL_PREFIX_DIR/bin/libcrypto-*.dll \
    $QTOX_PREFIX_DIR
+cp $HUNSPELL_PREFIX_DIR/bin/libhunspell-$HUNSPELL_DLL_VERSION.dll $QTOX_PREFIX_DIR
+cp $KF5SONNET_PREFIX_DIR/bin/libKF5SonnetUi.dll \
+   $KF5SONNET_PREFIX_DIR/bin/libKF5SonnetCore.dll \
+   $QTOX_PREFIX_DIR
+cp -r $KF5SONNET_PREFIX_DIR/lib/plugins/kf5 $QTOX_PREFIX_DIR
+cp -r $DICTIONARY_PREFIX_DIR/en_US/hunspell $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
 cp /usr/$ARCH-w64-mingw32/lib/libwinpthread-1.dll $QTOX_PREFIX_DIR
