@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  dependencies:
+    save_cache:
+      key: dependency-cache
+      paths:
+        - "~/cache"
+    pre:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get install zip
+      - run: docker info
+      - run: ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage1
+      - run: ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage2
+      - run: ls -al ~/cache
+  build:
+    - checkout
+    - run: ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage3
+    - run: ls -al ~/
+  
+    - run: ls -al /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/
+    - run: ls -al /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe
+    
+    - run: mkdir -p $CIRCLE_ARTIFACTS/"$BUILD__"/
+    - run: cp -av /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BTYPE__".exe
+    - run: cd /home/ubuntu/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/ ; zip -r $CIRCLE_ARTIFACTS/"$BUILD__"/qtox_"$BUILD__"_"$BTYPE__".zip *
+    - run: echo "Download Artifacts for this PR at https://circleci.com/api/v1/project/qTox/qTox/latest/artifacts/0/\$CIRCLE_ARTIFACTS/x86_64/qtox_x86_64_release.zip?filter=completed&branch=$CIRCLE_BRANCH"
+  test:
+    override:
+      - "true"
