@@ -871,11 +871,15 @@ void ChatForm::sendLoadedMessage(ChatMessage::Ptr chatMsg, MessageMetadata const
     if (!metadata.needSending) {
         return;
     }
-    Core* core = Core::getInstance();
-    uint32_t friendId = f->getId();
-    QString stringMsg = chatMsg->toString();
-    int receipt = metadata.isAction ? core->sendAction(friendId, stringMsg)
+
+    int receipt = 0;
+    if (f->getStatus() != Status::Offline) {
+        Core* core = Core::getInstance();
+        uint32_t friendId = f->getId();
+        QString stringMsg = chatMsg->toString();
+        receipt = metadata.isAction ? core->sendAction(friendId, stringMsg)
                                     : core->sendMessage(friendId, stringMsg);
+    }
     getOfflineMsgEngine()->registerReceipt(receipt, metadata.id, chatMsg);
 }
 
@@ -1059,18 +1063,22 @@ void ChatForm::SendMessageStr(QString msg)
             historyPart = ACTION_PREFIX + part;
         }
 
-        bool status = !Settings::getInstance().getFauxOfflineMessaging();
-        ChatMessage::Ptr ma = createSelfMessage(part, timestamp, isAction, false);
-        Core* core = Core::getInstance();
-        uint32_t friendId = f->getId();
-        int rec = isAction ? core->sendAction(friendId, part) : core->sendMessage(friendId, part);
+        int rec = 0;
+        if (f->getStatus() != Status::Offline) {
+            Core* core = Core::getInstance();
+            uint32_t friendId = f->getId();
+            rec = isAction ? core->sendAction(friendId, part) : core->sendMessage(friendId, part);
+        }
 
+        ChatMessage::Ptr ma = createSelfMessage(part, timestamp, isAction, false);
+        
         if (history && Settings::getInstance().getEnableLogging()) {
             auto* offMsgEngine = getOfflineMsgEngine();
             QString selfPk = Core::getInstance()->getSelfId().toString();
             QString pk = f->getPublicKey().toString();
             QString name = Core::getInstance()->getUsername();
-            history->addNewMessage(pk, historyPart, selfPk, timestamp, status, name,
+            bool isSent = !Settings::getInstance().getFauxOfflineMessaging();
+            history->addNewMessage(pk, historyPart, selfPk, timestamp, isSent, name,
                                    [offMsgEngine, rec, ma](int64_t id) {
                                        offMsgEngine->registerReceipt(rec, id, ma);
                                    });
