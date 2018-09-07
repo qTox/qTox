@@ -64,7 +64,7 @@ IPC::IPC(uint32_t profileId)
             IPCMemory* mem = global();
             memset(mem, 0, sizeof(IPCMemory));
             mem->globalId = globalId;
-            mem->lastProcessed = time(0);
+            mem->lastProcessed = time(nullptr);
             globalMemory.unlock();
         } else {
             qWarning() << "Couldn't lock to take ownership";
@@ -122,7 +122,7 @@ time_t IPC::postEvent(const QString& name, const QByteArray& data, uint32_t dest
             memset(evt, 0, sizeof(IPCEvent));
             memcpy(evt->name, binName.constData(), binName.length());
             memcpy(evt->data, data.constData(), data.length());
-            mem->lastEvent = evt->posted = result = qMax(mem->lastEvent + 1, time(0));
+            mem->lastEvent = evt->posted = result = qMax(mem->lastEvent + 1, time(nullptr));
             evt->dest = dest;
             evt->sender = getpid();
             qDebug() << "postEvent " << name << "to" << dest;
@@ -177,11 +177,11 @@ bool IPC::isEventAccepted(time_t time)
 bool IPC::waitUntilAccepted(time_t postTime, int32_t timeout /*=-1*/)
 {
     bool result = false;
-    time_t start = time(0);
+    time_t start = time(nullptr);
     forever
     {
         result = isEventAccepted(postTime);
-        if (result || (timeout > 0 && difftime(time(0), start) >= timeout))
+        if (result || (timeout > 0 && difftime(time(nullptr), start) >= timeout))
             break;
 
         qApp->processEvents();
@@ -213,8 +213,8 @@ IPC::IPCEvent* IPC::fetchEvent()
         // Garbage-collect events that were not processed in EVENT_GC_TIMEOUT
         // and events that were processed and EVENT_GC_TIMEOUT passed after
         // so sending instance has time to react to those events.
-        if ((evt->processed && difftime(time(0), evt->processed) > EVENT_GC_TIMEOUT)
-            || (!evt->processed && difftime(time(0), evt->posted) > EVENT_GC_TIMEOUT))
+        if ((evt->processed && difftime(time(nullptr), evt->processed) > EVENT_GC_TIMEOUT)
+            || (!evt->processed && difftime(time(nullptr), evt->posted) > EVENT_GC_TIMEOUT))
             memset(evt, 0, sizeof(IPCEvent));
 
         if (evt->posted && !evt->processed && evt->sender != getpid()
@@ -245,17 +245,17 @@ void IPC::processEvents()
 
         if (mem->globalId == globalId) {
             // We're the owner, let's process those events
-            mem->lastProcessed = time(0);
+            mem->lastProcessed = time(nullptr);
         } else {
             // Only the owner processes events. But if the previous owner's dead, we can take
             // ownership now
-            if (difftime(time(0), mem->lastProcessed) >= OWNERSHIP_TIMEOUT_S) {
+            if (difftime(time(nullptr), mem->lastProcessed) >= OWNERSHIP_TIMEOUT_S) {
                 qDebug() << "Previous owner timed out, taking ownership" << mem->globalId << "->"
                          << globalId;
                 // Ignore events that were not meant for this instance
                 memset(mem, 0, sizeof(IPCMemory));
                 mem->globalId = globalId;
-                mem->lastProcessed = time(0);
+                mem->lastProcessed = time(nullptr);
             }
             // Non-main instance is limited to events destined for specific profile it runs
         }
@@ -271,9 +271,9 @@ void IPC::processEvents()
                     // Otherwise global
                     // event would be consumed by very first instance that gets to check it.
                     if (evt->accepted)
-                        evt->processed = time(0);
+                        evt->processed = time(nullptr);
                 } else {
-                    evt->processed = time(0);
+                    evt->processed = time(nullptr);
                 }
             }
         }

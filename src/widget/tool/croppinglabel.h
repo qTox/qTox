@@ -28,7 +28,7 @@ class CroppingLabel : public QLabel
 {
     Q_OBJECT
 public:
-    explicit CroppingLabel(QWidget* parent = 0);
+    explicit CroppingLabel(QWidget* parent = nullptr);
 
 public slots:
     void editBegin();

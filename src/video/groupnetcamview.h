@@ -32,7 +32,7 @@ class QHBoxLayout;
 class GroupNetCamView : public GenericNetCamView
 {
 public:
-    GroupNetCamView(int group, QWidget* parent = 0);
+    GroupNetCamView(int group, QWidget* parent = nullptr);
     void clearPeers();
     void addPeer(const ToxPk& peer, const QString& name);
     void removePeer(const ToxPk& peer);

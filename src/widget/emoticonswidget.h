@@ -33,7 +33,7 @@ class EmoticonsWidget : public QMenu
 {
     Q_OBJECT
 public:
-    explicit EmoticonsWidget(QWidget* parent = 0);
+    explicit EmoticonsWidget(QWidget* parent = nullptr);
 
 signals:
     void insertEmoticon(QString str);

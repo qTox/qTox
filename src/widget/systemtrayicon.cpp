@@ -120,7 +120,7 @@ GdkPixbuf* SystemTrayIcon::convertQIconToPixbuf(const QIcon& icon)
 
     return gdk_pixbuf_new_from_data(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(), 8,
                                     image.width(), image.height(), image.bytesPerLine(),
-                                    callbackFreeImage, NULL);
+                                    callbackFreeImage, nullptr);
 }
 #endif
 
@@ -231,8 +231,8 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
         app_indicator_set_menu(unityIndicator, GTK_MENU(unityMenu));
         DbusmenuServer* menuServer;
         DbusmenuMenuitem* rootMenuItem;
-        g_object_get(unityIndicator, "dbus-menu-server", &menuServer, NULL);
-        g_object_get(menuServer, "root-node", &rootMenuItem, NULL);
+        g_object_get(unityIndicator, "dbus-menu-server", &menuServer, nullptr);
+        g_object_get(menuServer, "root-node", &rootMenuItem, nullptr);
         void (*callback)(DbusmenuMenuitem*, gpointer) = [](DbusmenuMenuitem*, gpointer data) {
             static_cast<SystemTrayIcon*>(data)->activated(QSystemTrayIcon::Unknown);
         };

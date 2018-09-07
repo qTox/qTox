@@ -163,13 +163,13 @@ bool RawDatabase::open(const QString& path, const QString& hexKey)
         return false;
     }
 
-    if (sqlite3_create_function(sqlite, "regexp", 2, SQLITE_UTF8, NULL, &RawDatabase::regexpInsensitive, NULL, NULL)) {
+    if (sqlite3_create_function(sqlite, "regexp", 2, SQLITE_UTF8, nullptr, &RawDatabase::regexpInsensitive, nullptr, nullptr)) {
         qWarning() << "Failed to create function regexp";
         close();
         return false;
     }
 
-    if (sqlite3_create_function(sqlite, "regexpsensitive", 2, SQLITE_UTF8, NULL, &RawDatabase::regexpSensitive, NULL, NULL)) {
+    if (sqlite3_create_function(sqlite, "regexpsensitive", 2, SQLITE_UTF8, nullptr, &RawDatabase::regexpSensitive, nullptr, nullptr)) {
         qWarning() << "Failed to create function regexpsensitive";
         close();
         return false;

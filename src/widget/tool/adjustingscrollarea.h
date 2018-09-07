@@ -26,7 +26,7 @@ class AdjustingScrollArea : public QScrollArea
 {
     Q_OBJECT
 public:
-    explicit AdjustingScrollArea(QWidget* parent = 0);
+    explicit AdjustingScrollArea(QWidget* parent = nullptr);
     virtual ~AdjustingScrollArea() = default;
 
 protected:

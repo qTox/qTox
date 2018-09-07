@@ -38,7 +38,7 @@
 ScreenshotGrabber::ScreenshotGrabber()
     : QObject()
     , mKeysBlocked(false)
-    , scene(0)
+    , scene(nullptr)
     , mQToxVisible(true)
 {
     window = new QGraphicsView(scene); // Top-level widget

@@ -17,7 +17,7 @@ class AboutFriendForm : public QDialog
     Q_OBJECT
 
 public:
-    AboutFriendForm(std::unique_ptr<IAboutFriend> about, QWidget* parent = 0);
+    AboutFriendForm(std::unique_ptr<IAboutFriend> about, QWidget* parent = nullptr);
     ~AboutFriendForm();
 
 private:

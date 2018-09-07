@@ -47,13 +47,13 @@ public:
 
     static QString itemInputDialog(QWidget* parent, const QString& title, const QString& label,
                                    const QStringList& items, int current = 0, bool editable = true,
-                                   bool* ok = 0, Qt::WindowFlags flags = 0,
+                                   bool* ok = nullptr, Qt::WindowFlags flags = nullptr,
                                    Qt::InputMethodHints hints = Qt::ImhNone);
 
     static QString passwordDialog(const QString& cancel, const QString& body);
 
 private:
-    explicit GUI(QObject* parent = 0);
+    explicit GUI(QObject* parent = nullptr);
 
 private slots:
     // Private implementation, those must be called from the GUI thread
@@ -71,7 +71,7 @@ private slots:
                       const QString& button2, bool defaultAns = false, bool warning = true);
     QString _itemInputDialog(QWidget* parent, const QString& title, const QString& label,
                              const QStringList& items, int current = 0, bool editable = true,
-                             bool* ok = 0, Qt::WindowFlags flags = 0,
+                             bool* ok = nullptr, Qt::WindowFlags flags = nullptr,
                              Qt::InputMethodHints inputMethodHints = Qt::ImhNone);
     QString _passwordDialog(const QString& cancel, const QString& body);
 };

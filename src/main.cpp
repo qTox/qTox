@@ -181,7 +181,7 @@ int main(int argc, char* argv[])
     osx::migrateProfiles();
 #endif
 
-    qsrand(time(0));
+    qsrand(time(nullptr));
     Settings::getInstance();
     QString locale = Settings::getInstance().getTranslation();
     Translator::translate(locale);
