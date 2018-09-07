@@ -142,6 +142,7 @@ public:
     void resetIcon();
 
 public slots:
+    void onFriendChatAreaCleared(const uint32_t friendId);
     void onShowSettings();
     void onSeparateWindowClicked(bool separate);
     void onSeparateWindowChanged(bool separate, bool clicked);
