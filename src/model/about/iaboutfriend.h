@@ -13,6 +13,7 @@ public:
     virtual QString getName() const = 0;
     virtual QString getStatusMessage() const = 0;
     virtual QString getPublicKey() const = 0;
+    virtual uint32_t getId() const = 0;
 
     virtual QPixmap getAvatar() const = 0;
 
@@ -29,8 +30,11 @@ public:
     virtual void setAutoGroupInvite(bool enabled) = 0;
 
     virtual bool clearHistory() = 0;
+    virtual bool isHistoryExistence() = 0;
 
     /* signals */
+    DECLARE_SIGNAL(historyCleared, const QString&);
+
     DECLARE_SIGNAL(nameChanged, const QString&);
     DECLARE_SIGNAL(statusChanged, const QString&);
     DECLARE_SIGNAL(publicKeyChanged, const QString&);

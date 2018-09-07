@@ -73,6 +73,8 @@ public:
     bool isValid();
     void import(const HistoryKeeper& oldHistory);
 
+    bool isHistoryExistence(const QString& friendPk);
+
     void eraseHistory();
     void removeFriendHistory(const QString& friendPk);
     void addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
