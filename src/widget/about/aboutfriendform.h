@@ -8,6 +8,8 @@
 
 #include <memory>
 
+class Widget;
+
 namespace Ui {
 class AboutFriendForm;
 }
@@ -23,6 +25,9 @@ public:
 private:
     Ui::AboutFriendForm* ui;
     const std::unique_ptr<IAboutFriend> about;
+
+signals:
+    void clearFriendChatLogArea(const uint32_t friendId);
 
 private slots:
     void onAutoAcceptDirChanged(const QString& path);

@@ -49,6 +49,8 @@ public:
     void loadHistoryByDateRange(const QDateTime& since, bool processUndelivered = false);
     void loadHistoryDefaultNum(bool processUndelivered = false);
 
+    void clearFriendChatLog();
+
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
     OfflineMsgEngine* getOfflineMsgEngine();
@@ -82,7 +84,6 @@ protected slots:
     void onSearchDown(const QString& phrase, const ParameterSearch& parameter) override;
 
 private slots:
-    void clearChatArea(bool notInForm) override final;
     void onSendTriggered() override;
     void onAttachClicked() override;
     void onScreenshotClicked() override;
