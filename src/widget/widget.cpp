@@ -943,6 +943,11 @@ void Widget::reloadHistory()
     }
 }
 
+void Widget::onFriendChatAreaCleared(const uint32_t friendId)
+{
+    chatForms[friendId]->clearFriendChatLog();
+}
+
 void Widget::incomingNotification(uint32_t friendId)
 {
     newFriendMessageAlert(friendId, false);
@@ -1631,7 +1636,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
             connect(Core::getInstance(), &Core::usernameSet, this, &Dialog::retranslateUi);
         }
 
-        ~Dialog()
+        ~Dialog() override
         {
             Translator::unregister(this);
         }
