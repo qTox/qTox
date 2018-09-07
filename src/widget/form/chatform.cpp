@@ -735,12 +735,6 @@ void ChatForm::onAvatarRemoved(const ToxPk& friendPk)
     headWidget->setAvatar(QPixmap(":/img/contact_dark.svg"));
 }
 
-void ChatForm::clearChatArea(bool notInForm)
-{
-    GenericChatForm::clearChatArea(notInForm);
-    offlineEngine->removeAllReceipts();
-}
-
 QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName)
 {
     QString authorStr;
@@ -765,6 +759,12 @@ void ChatForm::loadHistoryDefaultNum(bool processUndelivered)
         earliestMessage = msgs.first().timestamp;
     }
     handleLoadedMessages(msgs, processUndelivered);
+}
+
+void ChatForm::clearFriendChatLog()
+{
+    GenericChatForm::clearChatArea(false, true);
+    offlineEngine->removeAllReceipts();
 }
 
 void ChatForm::loadHistoryByDateRange(const QDateTime& since, bool processUndelivered)

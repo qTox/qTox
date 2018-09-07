@@ -39,6 +39,11 @@ QString AboutFriend::getPublicKey() const
     return f->getPublicKey().toString();
 }
 
+uint32_t AboutFriend::getId() const
+{
+    return f->getId();
+}
+
 QPixmap AboutFriend::getAvatar() const
 {
     const ToxPk pk = f->getPublicKey();
@@ -106,6 +111,17 @@ bool AboutFriend::clearHistory()
     if (history) {
         history->removeFriendHistory(pk.toString());
         return true;
+    }
+
+    return false;
+}
+
+bool AboutFriend::isHistoryExistence()
+{
+    History* const history = Nexus::getProfile()->getHistory();
+    if (history) {
+        const ToxPk pk = f->getPublicKey();
+        return history->isHistoryExistence(pk.toString());
     }
 
     return false;
