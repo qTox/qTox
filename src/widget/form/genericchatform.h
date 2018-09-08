@@ -104,7 +104,7 @@ protected slots:
     void onEmoteInsertRequested(QString str);
     void onSaveLogClicked();
     void onCopyLogClicked();
-    virtual void clearChatArea(bool);
+    void clearChatArea(bool confirm, bool inform);
     void clearChatArea();
     void onSelectAllClicked();
     void showFileMenu();

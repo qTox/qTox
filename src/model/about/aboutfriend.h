@@ -20,6 +20,7 @@ public:
     QString getName() const override;
     QString getStatusMessage() const override;
     QString getPublicKey() const override;
+    uint32_t getId() const override;
 
     QPixmap getAvatar() const override;
 
@@ -36,6 +37,9 @@ public:
     void setAutoGroupInvite(bool enabled) override;
 
     bool clearHistory() override;
+    bool isHistoryExistence() override;
+
+    SIGNAL_IMPL(AboutFriend, historyCleared, const QString&)
 
     SIGNAL_IMPL(AboutFriend, nameChanged, const QString&)
     SIGNAL_IMPL(AboutFriend, statusChanged, const QString&)
