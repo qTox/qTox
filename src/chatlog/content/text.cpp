@@ -40,7 +40,7 @@ Text::Text(const QString& txt, const QFont& font, bool enableElide, const QStrin
     : rawText(rwText)
     , elide(enableElide)
     , defFont(font)
-    , defStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatArea/innerStyle.css"), font))
+    , defStyleSheet(Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), font))
     , color(c)
 {
     setText(txt);

@@ -297,7 +297,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../res.qrc">
-            <normaloff>:/ui/fileTransferInstance/no.svg</normaloff>:/ui/fileTransferInstance/no.svg</iconset>
+            <normaloff>:themes/default/fileTransferInstance/no.svg</normaloff>:themes/default/fileTransferInstance/no.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -383,7 +383,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../res.qrc">
-             <normaloff>:/ui/fileTransferInstance/no.svg</normaloff>:/ui/fileTransferInstance/no.svg</iconset>
+             <normaloff>:themes/default/fileTransferInstance/no.svg</normaloff>:themes/default/fileTransferInstance/no.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -421,7 +421,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../res.qrc">
-             <normaloff>:/ui/fileTransferInstance/no.svg</normaloff>:/ui/fileTransferInstance/no.svg</iconset>
+             <normaloff>:themes/default/fileTransferInstance/no.svg</normaloff>:themes/default/fileTransferInstance/no.svg</iconset>
            </property>
            <property name="iconSize">
             <size>

@@ -19,6 +19,7 @@
 
 
 #include "callconfirmwidget.h"
+#include "src/widget/style.h"
 #include "src/widget/widget.h"
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
@@ -89,8 +90,8 @@ CallConfirmWidget::CallConfirmWidget(const QWidget* anchor)
     reject->setFlat(true);
     accept->setStyleSheet("QPushButton{border:none;}");
     reject->setStyleSheet("QPushButton{border:none;}");
-    accept->setIcon(QIcon(":/ui/acceptCall/acceptCall.svg"));
-    reject->setIcon(QIcon(":/ui/rejectCall/rejectCall.svg"));
+    accept->setIcon(QIcon(Style::getImagePath("acceptCall/acceptCall.svg")));
+    reject->setIcon(QIcon(Style::getImagePath("rejectCall/rejectCall.svg")));
     accept->setIconSize(accept->size());
     reject->setIconSize(reject->size());
 

@@ -20,13 +20,14 @@
 #include "filesform.h"
 #include "src/widget/contentlayout.h"
 #include "src/widget/translator.h"
+#include "src/widget/style.h"
 #include "src/widget/widget.h"
 #include <QFileInfo>
 #include <QWindow>
 
 FilesForm::FilesForm()
     : QObject()
-    , doneIcon(":/ui/fileTransferWidget/fileDone.svg")
+    , doneIcon(Style::getImagePath("fileTransferWidget/fileDone.svg"))
 {
     head = new QWidget();
     QFont bold;
