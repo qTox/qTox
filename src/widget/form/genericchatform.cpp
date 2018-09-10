@@ -58,7 +58,7 @@
  * elements and methods to work with chat messages.
  */
 
-#define SET_STYLESHEET(x) (x)->setStyleSheet(Style::getStylesheet(":/ui/" #x "/" #x ".css"))
+#define SET_STYLESHEET(x) (x)->setStyleSheet(Style::getStylesheet(":/themes/default/" #x "/" #x ".css"))
 
 static const QSize FILE_FLYOUT_SIZE{24, 24};
 static const short FOOT_BUTTONS_SPACING = 2;
@@ -108,7 +108,7 @@ QString GenericChatForm::resolveToxPk(const ToxPk& pk)
 
 namespace
 {
-const QString STYLE_PATH = QStringLiteral(":/ui/chatForm/buttons.css");
+const QString STYLE_PATH = QStringLiteral("chatForm/buttons.css");
 }
 
 namespace
@@ -170,7 +170,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     fileLayout->setSpacing(0);
     fileLayout->setMargin(0);
 
-    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css")
+    msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
                            + fontToCss(s.getChatMessageFont(), "QTextEdit"));
     msgEdit->setFixedHeight(MESSAGE_EDIT_HEIGHT);
     msgEdit->setFrameStyle(QFrame::NoFrame);
@@ -238,8 +238,8 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
 
     connect(chatWidget, &ChatLog::workerTimeoutFinished, this, &GenericChatForm::onContinueSearch);
 
-    chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
-    headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
+    chatWidget->setStyleSheet(Style::getStylesheet("chatArea/chatArea.css"));
+    headWidget->setStyleSheet(Style::getStylesheet("chatArea/chatHead.css"));
 
     fileFlyout->setFixedSize(FILE_FLYOUT_SIZE);
     fileFlyout->setParent(this);
@@ -523,7 +523,7 @@ void GenericChatForm::onChatMessageFontChanged(const QFont& font)
     chatWidget->fontChanged(font);
     chatWidget->forceRelayout();
     // message editor
-    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css")
+    msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
                            + fontToCss(font, "QTextEdit"));
 }
 

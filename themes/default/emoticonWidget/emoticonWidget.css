@@ -15,22 +15,22 @@ QRadioButton::indicator
 
 QRadioButton::indicator:unchecked
 {
-     image: url(:/ui/emoticonWidget/dot_page.svg);
+     image: url(@getImagePath(emoticonWidget/dot_page.svg));
 }
 
 QRadioButton::indicator:unchecked:hover
 {
-     image: url(:/ui/emoticonWidget/dot_page_hover.svg);
+     image: url(@getImagePath(emoticonWidget/dot_page_hover.svg));
 }
 
 QRadioButton::indicator:unchecked:pressed
 {
-     image: url(:/ui/emoticonWidget/dot_page_hover.svg);
+     image: url(@getImagePath(emoticonWidget/dot_page_hover.svg));
 }
 
 QRadioButton::indicator:checked
 {
-     image: url(:/ui/emoticonWidget/dot_page_current.svg);
+     image: url(@getImagePath(emoticonWidget/dot_page_current.svg));
 }
 
 QMenu

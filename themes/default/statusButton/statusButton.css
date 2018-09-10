@@ -33,7 +33,7 @@ QPushButton::menu-indicator {image: none;}
 
 QPushButton::menu-indicator:pressed, QPushButton::menu-indicator:open
 {
-    image: url(":ui/statusButton/menu_indicator.svg");
+    image: url("@getImagePath(statusButton/menu_indicator.svg)");
     subcontrol-origin: padding;
     subcontrol-position: bottom center;
     position: relative;

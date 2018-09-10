@@ -144,7 +144,7 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
     profilePicture->installEventFilter(this);
     profilePicture->setAccessibleName("Profile avatar");
     profilePicture->setAccessibleDescription("Set a profile avatar shown to all contacts");
-    profilePicture->setStyleSheet(Style::getStylesheet(":ui/window/profile.css"));
+    profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css"));
     connect(profilePicture, &MaskablePixmapWidget::clicked, this, &ProfileForm::onAvatarClicked);
     connect(profilePicture, &MaskablePixmapWidget::customContextMenuRequested,
             this, &ProfileForm::showProfilePictureContextMenu);
