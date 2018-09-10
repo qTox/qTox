@@ -60,6 +60,9 @@ public:
 
     static QStringList getThemeColorNames();
     static const QString getStylesheet(const QString& filename, const QFont& baseFont = QFont());
+    static const QString getImagePath(const QString& filename);
+    static QString getThemePath();
+    static QString getThemeName();
     static QColor getColor(ColorPalette entry);
     static QFont getFont(Font font);
     static const QString resolve(const QString& filename, const QFont& baseFont = QFont());

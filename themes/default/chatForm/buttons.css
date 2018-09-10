@@ -2,7 +2,7 @@
 
 QAbstractButton#emoteButton
 {
-    background-image: url(":/ui/chatForm/emoteButton.svg");
+    background-image: url("@getImagePath(chatForm/emoteButton.svg)");
     border-top-right-radius: 5px;
     width: 24px;
     height: 24px;
@@ -10,7 +10,7 @@ QAbstractButton#emoteButton
 
 QAbstractButton#fileButton
 {
-    background-image: url(":/ui/chatForm/fileButton.svg");
+    background-image: url("@getImagePath(chatForm/fileButton.svg)");
     border-bottom-right-radius: 5px;
     width: 24px;
     height: 24px;
@@ -18,7 +18,7 @@ QAbstractButton#fileButton
 
 QAbstractButton#screenshotButton
 {
-    background-image: url(":/ui/chatForm/screenshotButton.svg");
+    background-image: url("@getImagePath(chatForm/screenshotButton.svg)");
     border-top-left-radius: 5px;
     width: 24px;
     height: 24px;
@@ -26,7 +26,7 @@ QAbstractButton#screenshotButton
 
 QAbstractButton#sendButton
 {
-    background-image: url(":/ui/chatForm/sendButton.svg");
+    background-image: url("@getImagePath(chatForm/sendButton.svg)");
     border-radius: 5px;
     width: 50px;
     height: 50px;
@@ -37,7 +37,7 @@ QAbstractButton#sendButton
 
 QAbstractButton#volButton
 {
-    border-image: url(":/ui/chatForm/volButton.svg");
+    border-image: url("@getImagePath(chatForm/volButton.svg)");
     border-radius: 5px;
     width: 22px;
     height: 18px;
@@ -45,7 +45,7 @@ QAbstractButton#volButton
 
 QAbstractButton#micButton
 {
-    border-image: url(":/ui/chatForm/micButton.svg");
+    border-image: url("@getImagePath(chatForm/micButton.svg)");
     border-radius: 5px;
     width: 22px;
     height: 18px;
@@ -53,7 +53,7 @@ QAbstractButton#micButton
 
 QAbstractButton#videoButton
 {
-    background-image: url(":/ui/chatForm/videoButton.svg");
+    background-image: url("@getImagePath(chatForm/videoButton.svg)");
     border-radius: 5px;
     width: 50px;
     height: 40px;
@@ -61,7 +61,7 @@ QAbstractButton#videoButton
 
 QAbstractButton#callButton
 {
-    background-image: url(":/ui/chatForm/callButton.svg");
+    background-image: url("@getImagePath(chatForm/callButton.svg)");
     border-radius: 5px;
     width: 50px;
     height: 40px;
@@ -71,7 +71,7 @@ QAbstractButton#callButton
 
 QAbstractButton#searchSettingsButton
 {
-    background-image: url(":/ui/chatForm/searchSettingsButton.svg");
+    background-image: url("@getImagePath(chatForm/searchSettingsButton.svg)");
     border-radius: 5px;
     width: 35px;
     height: 35px;
@@ -79,7 +79,7 @@ QAbstractButton#searchSettingsButton
 
 QAbstractButton#searchHideButton
 {
-    background-image: url(":/ui/chatForm/searchHideButton.svg");
+    background-image: url("@getImagePath(chatForm/searchHideButton.svg)");
     border-radius: 5px;
     width: 35px;
     height: 35px;
@@ -87,7 +87,7 @@ QAbstractButton#searchHideButton
 
 QAbstractButton#searchUpButton
 {
-    background-image: url(":/ui/chatForm/searchUpButton.svg");
+    background-image: url("@getImagePath(chatForm/searchUpButton.svg)");
     border-radius: 5px;
     width: 35px;
     height: 35px;
@@ -95,7 +95,7 @@ QAbstractButton#searchUpButton
 
 QAbstractButton#searchDownButton
 {
-    background-image: url(":/ui/chatForm/searchDownButton.svg");
+    background-image: url("@getImagePath(chatForm/searchDownButton.svg)");
     border-radius: 5px;
     width: 35px;
     height: 35px;
@@ -103,7 +103,7 @@ QAbstractButton#searchDownButton
 
 QAbstractButton#choiceDateButton
 {
-    background-image: url(":/ui/chatForm/searchCalendarButton.svg");
+    background-image: url("@getImagePath(chatForm/searchCalendarButton.svg)");
     border-radius: 5px;
     width: 45px;
     height: 35px;

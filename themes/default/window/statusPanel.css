@@ -119,7 +119,7 @@ QListView
 
 #statusPanel > #statusHead > #statusButton::menu-indicator:pressed, #statusPanel > #statusHead > #statusButton::menu-indicator:open
 {
-  image: url(":ui/statusButton/menu_indicator.png");
+  image: url("@getImagePath(statusButton/menu_indicator.svg)");
   subcontrol-origin: padding;
   subcontrol-position: bottom center;
   position: relative;
