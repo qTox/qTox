@@ -1,16 +1,16 @@
 QPushButton
 {
     background-color: #6bc260;
-    background-image: url(":/ui/fileButton/fileButton.svg");
+    background-image: url("@getImagePath(sendButton/sendButton.svg)");
     background-repeat: none;
     background-position: center;
-    border-bottom-right-radius: 5px;
     border: none;
-    width: 24px;
-    height: 24px;
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
 }
 
-QAbstractButton:hover
+QPushButton:hover
 {
     background-color: #79c76f;
 }
@@ -20,11 +20,7 @@ QPushButton:pressed
     background-color: #51b244;
 }
 
-QPushButton[enabled="false"]
+QPushButton:focus
 {
-    background-color: #919191;
-}
-
-QPushButton:focus {
     outline: none;
 }
