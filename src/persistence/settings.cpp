@@ -207,7 +207,6 @@ void Settings::loadGlobal()
     s.beginGroup("GUI");
     {
         showWindow = s.value("showWindow", true).toBool();
-        showInFront = s.value("showInFront", false).toBool();
         notify = s.value("notify", true).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", true).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
@@ -526,7 +525,6 @@ void Settings::saveGlobal()
     s.beginGroup("GUI");
     {
         s.setValue("showWindow", showWindow);
-        s.setValue("showInFront", showInFront);
         s.setValue("notify", notify);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("separateWindow", separateWindow);
@@ -1060,22 +1058,6 @@ void Settings::setSpellCheckingEnabled(bool newValue)
     if (newValue != spellCheckingEnabled) {
         spellCheckingEnabled = newValue;
         emit statusChangeNotificationEnabledChanged(statusChangeNotificationEnabled);
-    }
-}
-
-bool Settings::getShowInFront() const
-{
-    QMutexLocker locker{&bigLock};
-    return showInFront;
-}
-
-void Settings::setShowInFront(bool newValue)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (newValue != showInFront) {
-        showInFront = newValue;
-        emit showInFrontChanged(showInFront);
     }
 }
 

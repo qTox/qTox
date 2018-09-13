@@ -1448,9 +1448,6 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
     if (notify) {
         if (Settings::getInstance().getShowWindow()) {
             currentWindow->show();
-            if (inactiveWindow && Settings::getInstance().getShowInFront()) {
-                currentWindow->activateWindow();
-            }
         }
 
         if (Settings::getInstance().getNotify()) {

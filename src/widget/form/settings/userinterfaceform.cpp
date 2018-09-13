@@ -84,11 +84,7 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
     bodyUI->busySound->setChecked(s.getBusySound());
     bodyUI->busySound->setEnabled(s.getNotifySound() && s.getNotify());
 
-    bool showWindow = s.getShowWindow();
-
-    bodyUI->showWindow->setChecked(showWindow);
-    bodyUI->showInFront->setChecked(s.getShowInFront());
-    bodyUI->showInFront->setEnabled(showWindow);
+    bodyUI->showWindow->setChecked(s.getShowWindow());
 
     bodyUI->cbGroupchatPosition->setChecked(s.getGroupchatPosition());
     bodyUI->cbCompactLayout->setChecked(s.getCompactLayout());
@@ -291,14 +287,7 @@ void UserInterfaceForm::on_busySound_stateChanged()
 
 void UserInterfaceForm::on_showWindow_stateChanged()
 {
-    bool isChecked = bodyUI->showWindow->isChecked();
-    Settings::getInstance().setShowWindow(isChecked);
-    bodyUI->showInFront->setEnabled(isChecked);
-}
-
-void UserInterfaceForm::on_showInFront_stateChanged()
-{
-    Settings::getInstance().setShowInFront(bodyUI->showInFront->isChecked());
+    Settings::getInstance().setShowWindow(bodyUI->showWindow->isChecked());
 }
 
 void UserInterfaceForm::on_groupOnlyNotfiyWhenMentioned_stateChanged()
