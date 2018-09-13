@@ -219,23 +219,6 @@
             </property>
            </widget>
           </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_15">
-            <property name="leftMargin">
-             <number>40</number>
-            </property>
-            <item>
-             <widget class="QCheckBox" name="showInFront">
-              <property name="toolTip">
-               <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
-              </property>
-              <property name="text">
-               <string>Focus window</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
          </layout>
         </widget>
        </item>
@@ -615,7 +598,6 @@
   <tabstop>notifySound</tabstop>
   <tabstop>busySound</tabstop>
   <tabstop>showWindow</tabstop>
-  <tabstop>showInFront</tabstop>
   <tabstop>cbGroupchatPosition</tabstop>
   <tabstop>cbCompactLayout</tabstop>
   <tabstop>cbSeparateWindow</tabstop>

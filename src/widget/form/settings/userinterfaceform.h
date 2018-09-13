@@ -52,7 +52,6 @@ private slots:
     void on_notifySound_stateChanged();
     void on_busySound_stateChanged();
     void on_showWindow_stateChanged();
-    void on_showInFront_stateChanged();
     void on_groupOnlyNotfiyWhenMentioned_stateChanged();
     void on_cbCompactLayout_stateChanged();
     void on_cbSeparateWindow_stateChanged();
