@@ -112,7 +112,7 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
     aduration = fctx->max_analyze_duration = 0;
 #endif
 
-    if (avformat_find_stream_info(fctx, NULL) < 0) {
+    if (avformat_find_stream_info(fctx, nullptr) < 0) {
         avformat_close_input(&fctx);
         goto out;
     }
@@ -297,7 +297,7 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
             av_opt_set_defaults(s->priv_data);
         }
     } else {
-        s->priv_data = NULL;
+        s->priv_data = nullptr;
     }
 
     // List the devices for this context

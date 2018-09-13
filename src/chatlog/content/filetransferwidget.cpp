@@ -331,7 +331,7 @@ void FileTransferWidget::onFileTransferCancelled(ToxFile file)
     setupButtons();
     hideWidgets();
 
-    disconnect(Core::getInstance(), 0, this, 0);
+    disconnect(Core::getInstance(), nullptr, this, nullptr);
 }
 
 void FileTransferWidget::onFileTransferPaused(ToxFile file)
@@ -401,7 +401,7 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
     if (fileInfo.direction == ToxFile::RECEIVING)
         showPreview(fileInfo.filePath);
 
-    disconnect(Core::getInstance(), 0, this, 0);
+    disconnect(Core::getInstance(), nullptr, this, nullptr);
 }
 
 void FileTransferWidget::fileTransferRemotePausedUnpaused(ToxFile file, bool paused)

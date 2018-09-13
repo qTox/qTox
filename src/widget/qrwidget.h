@@ -28,7 +28,7 @@ class QRWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit QRWidget(QWidget* parent = 0);
+    explicit QRWidget(QWidget* parent = nullptr);
     ~QRWidget();
     void setQRData(const QString& data);
     QImage* getImage();

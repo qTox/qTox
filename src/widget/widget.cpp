@@ -699,7 +699,7 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
 
         if (contentLayout) {
             contentLayout->clear();
-            contentLayout->parentWidget()->setParent(0); // Remove from splitter.
+            contentLayout->parentWidget()->setParent(nullptr); // Remove from splitter.
             contentLayout->parentWidget()->hide();
             contentLayout->parentWidget()->deleteLater();
             contentLayout->deleteLater();
@@ -1043,7 +1043,7 @@ void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
         info = info + QStringLiteral(": ") + errorInfo;
     }
 
-    QMessageBox::critical(0, "Error", info);
+    QMessageBox::critical(nullptr, "Error", info);
 }
 
 void Widget::onFriendStatusChanged(int friendId, Status status)

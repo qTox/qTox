@@ -34,7 +34,7 @@ class NetCamView : public GenericNetCamView
     Q_OBJECT
 
 public:
-    NetCamView(int friendId, QWidget* parent = 0);
+    NetCamView(int friendId, QWidget* parent = nullptr);
     ~NetCamView();
 
     virtual void show(VideoSource* source, const QString& title);

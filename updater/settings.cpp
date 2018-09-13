@@ -38,14 +38,14 @@ Settings::Settings()
     DWORD dwLastErr = 0;
 
     // Enable SeIncreaseQuotaPrivilege
-    HANDLE hProcessToken = NULL;
+    HANDLE hProcessToken = nullptr;
     if (!OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES, &hProcessToken))
         goto unelevateFail;
     TOKEN_PRIVILEGES tkp;
     tkp.PrivilegeCount = 1;
-    LookupPrivilegeValueW(NULL, SE_INCREASE_QUOTA_NAME, &tkp.Privileges[0].Luid);
+    LookupPrivilegeValueW(nullptr, SE_INCREASE_QUOTA_NAME, &tkp.Privileges[0].Luid);
     tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-    AdjustTokenPrivileges(hProcessToken, FALSE, &tkp, 0, NULL, NULL);
+    AdjustTokenPrivileges(hProcessToken, FALSE, &tkp, 0, nullptr, nullptr);
     dwLastErr = GetLastError();
     CloseHandle(hProcessToken);
     if (ERROR_SUCCESS != dwLastErr)
@@ -68,7 +68,7 @@ Settings::Settings()
     // Duplicate the shell's process token to get a primary token.
     // Based on experimentation, this is the minimal set of rights required for
     // CreateProcessWithTokenW (contrary to current documentation).
-    if (!DuplicateTokenEx(hShellProcessToken, dwTokenRights, NULL, SecurityImpersonation,
+    if (!DuplicateTokenEx(hShellProcessToken, dwTokenRights, nullptr, SecurityImpersonation,
                           TokenPrimary, &hPrimaryToken))
         goto unelevateFail;
 

@@ -164,7 +164,7 @@ bool OpenAL2::initOutputEchoCancel()
                       Audio::AUDIO_SAMPLE_RATE,
                       0}; // End of List
 
-    alProxyDev = alcLoopbackOpenDeviceSOFT(NULL);
+    alProxyDev = alcLoopbackOpenDeviceSOFT(nullptr);
     checkAlcError(alProxyDev);
     if (!alProxyDev) {
         qDebug() << "Couldn't create proxy device";

@@ -633,9 +633,9 @@ bool OpenAL::isOutputReady() const
 QStringList OpenAL::outDeviceNames()
 {
     QStringList list;
-    const ALchar* pDeviceList = (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
-                                    ? alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER)
-                                    : alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+    const ALchar* pDeviceList = (alcIsExtensionPresent(nullptr, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
+                                    ? alcGetString(nullptr, ALC_ALL_DEVICES_SPECIFIER)
+                                    : alcGetString(nullptr, ALC_DEVICE_SPECIFIER);
 
     if (pDeviceList) {
         while (*pDeviceList) {
@@ -651,7 +651,7 @@ QStringList OpenAL::outDeviceNames()
 QStringList OpenAL::inDeviceNames()
 {
     QStringList list;
-    const ALchar* pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
+    const ALchar* pDeviceList = alcGetString(nullptr, ALC_CAPTURE_DEVICE_SPECIFIER);
 
     if (pDeviceList) {
         while (*pDeviceList) {

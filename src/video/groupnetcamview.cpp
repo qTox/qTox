@@ -36,11 +36,11 @@
 class LabeledVideo : public QFrame
 {
 public:
-    LabeledVideo(const QPixmap& avatar, QWidget* parent = 0, bool expanding = true)
+    LabeledVideo(const QPixmap& avatar, QWidget* parent = nullptr, bool expanding = true)
         : QFrame(parent)
     {
         qDebug() << "Created expanding? " << expanding;
-        videoSurface = new VideoSurface(avatar, 0, expanding);
+        videoSurface = new VideoSurface(avatar, nullptr, expanding);
         videoSurface->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         videoSurface->setMinimumHeight(32);
 

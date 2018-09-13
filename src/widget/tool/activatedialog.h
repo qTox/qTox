@@ -26,7 +26,7 @@ class ActivateDialog : public QDialog
 {
     Q_OBJECT
 public:
-    ActivateDialog(QWidget* parent = 0, Qt::WindowFlags f = 0);
+    ActivateDialog(QWidget* parent = nullptr, Qt::WindowFlags f = nullptr);
     bool event(QEvent* event) override;
 
 signals:

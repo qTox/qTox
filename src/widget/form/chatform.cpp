@@ -268,7 +268,7 @@ void ChatForm::onTextEditChanged()
 void ChatForm::onAttachClicked()
 {
     QStringList paths =
-        QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"), QDir::homePath(), 0, 0);
+        QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"), QDir::homePath(), nullptr, nullptr);
 
     if (paths.isEmpty()) {
         return;
@@ -714,7 +714,7 @@ void ChatForm::dropEvent(QDropEvent* ev)
 
         file.close();
         if (file.isSequential()) {
-            QMessageBox::critical(0, tr("Bad idea"),
+            QMessageBox::critical(nullptr, tr("Bad idea"),
                                   tr("You're trying to send a sequential file, "
                                      "which is not going to work!"));
             continue;

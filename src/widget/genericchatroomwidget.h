@@ -34,7 +34,7 @@ class GenericChatroomWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    explicit GenericChatroomWidget(bool compact, QWidget* parent = 0);
+    explicit GenericChatroomWidget(bool compact, QWidget* parent = nullptr);
 
 public slots:
     virtual void setAsActiveChatroom() = 0;

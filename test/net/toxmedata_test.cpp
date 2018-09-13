@@ -116,8 +116,8 @@ Q_DECLARE_METATYPE(ToxId)
 void TestToxmeData::lookup_data()
 {
     qRegisterMetaType<ToxId>("ToxId");
-    QTest::addColumn<QString>("input");
-    QTest::addColumn<ToxId>("result");
+    QTest::addColumn<QString>("input", nullptr);
+    QTest::addColumn<ToxId>("result", nullptr);
     QString sToxId = testToxId.toHex();
 
     QTest::newRow("Valid ToxId") << QStringLiteral(R"({"tox_id": "%1"})").arg(sToxId)
@@ -149,8 +149,8 @@ Q_DECLARE_METATYPE(ToxmeData::ExecCode)
 void TestToxmeData::extractCode_data()
 {
     qRegisterMetaType<ToxmeData::ExecCode>("ToxmeData::ExecCode");
-    QTest::addColumn<QString>("input");
-    QTest::addColumn<ToxmeData::ExecCode>("result");
+    QTest::addColumn<QString>("input", nullptr);
+    QTest::addColumn<ToxmeData::ExecCode>("result", nullptr);
 
     QTest::newRow("Custom code") << QStringLiteral(R"({"c": 123})")
                                  << ToxmeData::ExecCode(123);
@@ -205,7 +205,7 @@ void TestToxmeData::createAddressRequest()
     QCOMPARE(bioRes, bio);
 
     int timeRes = json["timestamp"].toInt();
-    // Test will be failed if `createAddressRequest` will take more 
+    // Test will be failed if `createAddressRequest` will take more
     // than 100 seconds
     QVERIFY(qAbs(timeRes - timestamp) < 100);
 }
@@ -216,9 +216,9 @@ void TestToxmeData::createAddressRequest()
 void TestToxmeData::getPassTest_data()
 {
     qRegisterMetaType<ToxmeData::ExecCode>("ToxmeData::ExecCode");
-    QTest::addColumn<QString>("input");
-    QTest::addColumn<QString>("result");
-    QTest::addColumn<ToxmeData::ExecCode>("code");
+    QTest::addColumn<QString>("input", nullptr);
+    QTest::addColumn<QString>("result", nullptr);
+    QTest::addColumn<ToxmeData::ExecCode>("code", nullptr);
 
     QTest::newRow("Valid password") << QStringLiteral(R"({"password": "123qwe"})")
                                     << QStringLiteral("123qwe")
@@ -280,7 +280,7 @@ void TestToxmeData::deleteAddressRequestTest()
     QCOMPARE(pkRes, testPublicKey);
 
     int timeRes = json["timestamp"].toInt();
-    // Test will be failed if `deleteAddressRequest` will take more 
+    // Test will be failed if `deleteAddressRequest` will take more
     // than 100 seconds
     QVERIFY(qAbs(timeRes - timestamp) < 100);
 }
