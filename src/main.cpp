@@ -59,6 +59,15 @@ QMutex* logBufferMutex = new QMutex();
 
 void cleanup()
 {
+    // force save early even though destruction saves, because Windows OS will
+    // close qTox before cleanup() is finished if logging out or shutting down,
+    // once the top level window has exited, which occurs in ~Widget within
+    // ~Nexus. Re-ordering Nexus destruction is not trivial.
+    auto& s = Settings::getInstance();
+    s.saveGlobal();
+    s.savePersonal();
+    s.sync();
+
     Nexus::destroyInstance();
     CameraSource::destroyInstance();
     Settings::destroyInstance();
