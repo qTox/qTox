@@ -1115,7 +1115,7 @@ echo "
     SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
     SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
 
-    SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $CMAKE_FIND_ROOT_PATH)
+    SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32;$CMAKE_FIND_ROOT_PATH)
 " > toolchain.cmake
 
 set +u

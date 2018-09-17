@@ -169,6 +169,7 @@ build_qtox() {
     # first build qTox without support for optional dependencies
     echo '*** BUILDING "MINIMAL" VERSION ***'
     cmake -H. -B"$BUILDDIR" \
+        -DCMAKE_PREFIX_PATH=${PREFIX_DIR} \
         -DSMILEYS=DISABLED \
         -DENABLE_STATUSNOTIFIER=False \
         -DENABLE_GTK_SYSTRAY=False \
@@ -180,7 +181,7 @@ build_qtox() {
     rm -rf "$BUILDDIR"
 
     echo '*** BUILDING "FULL" VERSION ***'
-    cmake -H. -B"$BUILDDIR"
+    cmake -H. -B"$BUILDDIR" -DCMAKE_PREFIX_PATH=${PREFIX_DIR}
     bdir
 }
 

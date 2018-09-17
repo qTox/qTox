@@ -27,7 +27,9 @@
 #include "src/widget/style.h"
 #include "src/widget/widget.h"
 
+#if defined(USE_EXIF)
 #include <libexif/exif-loader.h>
+#endif
 
 #include <QBuffer>
 #include <QDebug>
@@ -610,6 +612,7 @@ QPixmap FileTransferWidget::scaleCropIntoSquare(const QPixmap& source, const int
 
 int FileTransferWidget::getExifOrientation(const char* data, const int size)
 {
+#if defined(USE_EXIF)
     ExifData* exifData = exif_data_new_from_data(reinterpret_cast<const unsigned char*>(data), size);
 
     if (!exifData)
@@ -623,6 +626,9 @@ int FileTransferWidget::getExifOrientation(const char* data, const int size)
     }
     exif_data_free(exifData);
     return orientation;
+#else
+	return 0;
+#endif
 }
 
 void FileTransferWidget::applyTransformation(const int orientation, QImage& image)

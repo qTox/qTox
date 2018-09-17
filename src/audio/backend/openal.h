@@ -32,12 +32,12 @@
 
 #include <cassert>
 
-#include <AL/al.h>
-#include <AL/alc.h>
+#include <al.h>
+#include <alc.h>
 
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 // compatibility with older versions of OpenAL
-#include <AL/alext.h>
+#include <alext.h>
 #endif
 
 class OpenAL : public Audio
