@@ -19,6 +19,9 @@
 
 
 #include "install_osx.h"
+
+#ifdef Q_OS_OSX
+
 #include <QApplication>
 #include <QDebug>
 #include <QDir>
@@ -120,3 +123,5 @@ void osx::migrateProfiles()
     }
 }
 // End migrateProfiles() compatibility code
+
+#endif  // Q_OS_OSX

@@ -21,10 +21,6 @@
 
 #include <QtCore/qsystemdetection.h>
 
-#ifndef Q_OS_OSX
-#error "This file is only meant to be compiled for Mac OSX targets"
-#endif
-
 namespace osx {
 static constexpr int EXIT_UPDATE_MACX =
     218; // We track our state using unique exit codes when debugging
