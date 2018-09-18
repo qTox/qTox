@@ -5,7 +5,7 @@
 #include "src/persistence/profile.h"
 #include "src/persistence/ifriendsettings.h"
 
-AboutFriend::AboutFriend(const Friend* f, IFriendSettings* const s)
+AboutFriend::AboutFriend(Friend* const f, IFriendSettings* const s)
     : f{f}
     , settings{s}
 {
@@ -39,9 +39,9 @@ ToxPk AboutFriend::getPublicKey() const
     return f->getPublicKey();
 }
 
-uint32_t AboutFriend::getId() const
+Friend* AboutFriend::getFriend() const
 {
-    return f->getId();
+    return f;
 }
 
 QPixmap AboutFriend::getAvatar() const

@@ -27,7 +27,7 @@ private:
     const std::unique_ptr<IAboutFriend> about;
 
 signals:
-    void clearFriendChatLogArea(const uint32_t friendId);
+    void clearFriendChatLogArea(const Friend* f);
 
 private slots:
     void onAutoAcceptDirChanged(const QString& path);

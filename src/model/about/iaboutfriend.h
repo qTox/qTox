@@ -2,6 +2,7 @@
 #define I_ABOUT_FRIEND_H
 
 #include "src/model/interface.h"
+#include "src/model/friend.h"
 #include "src/persistence/ifriendsettings.h"
 #include <QObject>
 
@@ -10,9 +11,10 @@ class IAboutFriend : public QObject
     Q_OBJECT
 
 public:
+    virtual Friend* getFriend() const = 0;
+
     virtual QString getName() const = 0;
     virtual QString getStatusMessage() const = 0;
-    virtual uint32_t getId() const = 0;
     virtual ToxPk getPublicKey() const = 0;
 
     virtual QPixmap getAvatar() const = 0;

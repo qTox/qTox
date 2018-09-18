@@ -943,9 +943,9 @@ void Widget::reloadHistory()
     }
 }
 
-void Widget::onFriendChatAreaCleared(const uint32_t friendId)
+void Widget::onFriendChatAreaCleared(const Friend* f)
 {
-    chatForms[friendId]->clearFriendChatLog();
+    chatForms[f->getId()]->clearFriendChatLog();
 }
 
 void Widget::incomingNotification(uint32_t friendId)

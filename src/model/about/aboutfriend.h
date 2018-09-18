@@ -15,11 +15,12 @@ class AboutFriend : public IAboutFriend
     Q_OBJECT
 
 public:
-    AboutFriend(const Friend* f, IFriendSettings* const settings);
+    AboutFriend(Friend* const f, IFriendSettings* const settings);
+
+    Friend* getFriend() const override;
 
     QString getName() const override;
     QString getStatusMessage() const override;
-    uint32_t getId() const override;
     ToxPk getPublicKey() const override;
 
     QPixmap getAvatar() const override;
@@ -53,7 +54,7 @@ public:
     SIGNAL_IMPL(AboutFriend, autoGroupInviteChanged, bool)
 
 private:
-    const Friend* const f;
+    Friend* const f;
     IFriendSettings* const settings;
 };
 

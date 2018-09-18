@@ -127,7 +127,7 @@ void AboutFriendForm::onRemoveHistoryClicked()
         return;
     }
 
-    emit clearFriendChatLogArea(about->getId());
+    emit clearFriendChatLogArea(about->getFriend());
 
     ui->removeHistory->setEnabled(false); // For know clearly to has removed the history
 }
