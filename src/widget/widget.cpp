@@ -1006,6 +1006,8 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayedNameChanged);
 
+    connect(newfriend, &Friend::chatHistoryErased, friendForm, &ChatForm::clearChatArea);
+
     connect(friendForm, &ChatForm::incomingNotification, this, &Widget::incomingNotification);
     connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
     connect(friendForm, &ChatForm::stopNotification, this, &Widget::onStopNotification);

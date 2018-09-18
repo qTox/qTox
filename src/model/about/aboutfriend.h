@@ -36,6 +36,7 @@ public:
     void setAutoGroupInvite(bool enabled) override;
 
     bool clearHistory() override;
+    bool isHistoryExistence() override;
 
     SIGNAL_IMPL(AboutFriend, nameChanged, const QString&)
     SIGNAL_IMPL(AboutFriend, statusChanged, const QString&)

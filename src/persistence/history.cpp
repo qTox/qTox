@@ -86,6 +86,16 @@ bool History::isValid()
 }
 
 /**
+ * @brief Checks if a friend has chat history
+ * @param friendPk
+ * @return True if has, false otherwise.
+ */
+bool History::isHistoryExistence(const QString& friendPk)
+{
+    return !getChatHistoryDefaultNum(friendPk).isEmpty();
+}
+
+/**
  * @brief Erases all the chat history from the database.
  */
 void History::eraseHistory()

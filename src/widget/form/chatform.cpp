@@ -725,9 +725,9 @@ void ChatForm::dropEvent(QDropEvent* ev)
     }
 }
 
-void ChatForm::clearChatArea(bool notInForm)
+void ChatForm::clearChatArea()
 {
-    GenericChatForm::clearChatArea(notInForm);
+    GenericChatForm::clearChatArea(/* confirm = */ false, /* inform = */ true);
     offlineEngine->removeAllReceipts();
 }
 

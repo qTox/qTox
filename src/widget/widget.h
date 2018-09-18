@@ -104,7 +104,7 @@ private:
 
 public:
     explicit Widget(QWidget* parent = nullptr);
-    ~Widget();
+    ~Widget() override;
     void init();
     void setCentralWidget(QWidget* widget, const QString& widgetName);
     QString getUsername();

@@ -29,6 +29,7 @@ public:
     virtual void setAutoGroupInvite(bool enabled) = 0;
 
     virtual bool clearHistory() = 0;
+    virtual bool isHistoryExistence() = 0;
 
     /* signals */
     DECLARE_SIGNAL(nameChanged, const QString&);

@@ -153,3 +153,8 @@ Status Friend::getStatus() const
 {
     return friendStatus;
 }
+
+void Friend::emitChatHistoryErasedSignal() const
+{
+    emit chatHistoryErased();
+}
