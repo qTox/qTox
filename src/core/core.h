@@ -139,8 +139,7 @@ signals:
     void disconnected();
 
     void friendRequestReceived(const ToxPk& friendPk, const QString& message);
-    void friendAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
-    void friendAvatarData(const ToxPk& friendPk, const QByteArray& data);
+    void friendAvatarChanged(const ToxPk& friendPk, const QByteArray& pic);
     void friendAvatarRemoved(const ToxPk& friendPk);
 
     void requestSent(const ToxPk& friendPk, const QString& message);
@@ -187,7 +186,6 @@ signals:
     void friendUsernameChanged(uint32_t friendId, const QString& username);
     void friendTypingChanged(uint32_t friendId, bool isTyping);
 
-    void friendAvatarChangedDeprecated(uint32_t friendId, const QPixmap& pic);
     void friendRemoved(uint32_t friendId);
     void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
 
@@ -215,20 +213,20 @@ private:
 
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
                                 size_t cMessageSize, void* core);
-    static void onFriendMessage(Tox* tox, uint32_t friendId, TOX_MESSAGE_TYPE type,
+    static void onFriendMessage(Tox* tox, uint32_t friendId, Tox_Message_Type type,
                                 const uint8_t* cMessage, size_t cMessageSize, void* core);
     static void onFriendNameChange(Tox* tox, uint32_t friendId, const uint8_t* cName,
                                    size_t cNameSize, void* core);
     static void onFriendTypingChange(Tox* tox, uint32_t friendId, bool isTyping, void* core);
     static void onStatusMessageChanged(Tox* tox, uint32_t friendId, const uint8_t* cMessage,
                                        size_t cMessageSize, void* core);
-    static void onUserStatusChanged(Tox* tox, uint32_t friendId, TOX_USER_STATUS userstatus,
+    static void onUserStatusChanged(Tox* tox, uint32_t friendId, Tox_User_Status userstatus,
                                     void* core);
-    static void onConnectionStatusChanged(Tox* tox, uint32_t friendId, TOX_CONNECTION status,
+    static void onConnectionStatusChanged(Tox* tox, uint32_t friendId, Tox_Connection status,
                                           void* core);
-    static void onGroupInvite(Tox* tox, uint32_t friendId, TOX_CONFERENCE_TYPE type,
+    static void onGroupInvite(Tox* tox, uint32_t friendId, Tox_Conference_Type type,
                               const uint8_t* cookie, size_t length, void* vCore);
-    static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_TYPE type,
+    static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, Tox_Message_Type type,
                                const uint8_t* cMessage, size_t length, void* vCore);
 #if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
     static void onGroupPeerListChange(Tox*, uint32_t groupId, void* core);
@@ -242,9 +240,9 @@ private:
                                    const uint8_t* cTitle, size_t length, void* vCore);
     static void onReadReceiptCallback(Tox* tox, uint32_t friendId, uint32_t receipt, void* core);
 
-    void sendGroupMessageWithType(int groupId, const QString& message, TOX_MESSAGE_TYPE type);
-    bool parsePeerQueryError(TOX_ERR_CONFERENCE_PEER_QUERY error) const;
-    bool parseConferenceJoinError(TOX_ERR_CONFERENCE_JOIN error) const;
+    void sendGroupMessageWithType(int groupId, const QString& message, Tox_Message_Type type);
+    bool parsePeerQueryError(Tox_Err_Conference_Peer_Query error) const;
+    bool parseConferenceJoinError(Tox_Err_Conference_Join error) const;
     bool checkConnection();
 
     void checkEncryptedHistory();

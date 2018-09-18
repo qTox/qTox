@@ -57,9 +57,10 @@ public:
     QPixmap loadAvatar(const ToxPk& owner);
     QByteArray loadAvatarData(const ToxPk& owner);
     void setAvatar(QByteArray pic);
+    void setFriendAvatar(const ToxPk& owner, QByteArray pic);
     QByteArray getAvatarHash(const ToxPk& owner);
     void removeSelfAvatar();
-
+    void removeFriendAvatar(const ToxPk& owner);
     bool isHistoryEnabled();
     History* getHistory();
 
@@ -76,7 +77,12 @@ public:
 
 signals:
     void selfAvatarChanged(const QPixmap& pixmap);
-
+    // emit on any change, including default avatar. Used by those that don't care about active on default avatar.
+    void friendAvatarChanged(const ToxPk& friendPk, const QPixmap& pixmap);
+    // emit on a set of avatar, including identicon, used by those two care about active for default, so can't use friendAvatarChanged
+    void friendAvatarSet(const ToxPk& friendPk, const QPixmap& pixmap);
+    // emit on set to default, used by those that modify on active
+    void friendAvatarRemoved(const ToxPk& friendPk);
     // TODO(sudden6): this doesn't seem to be the right place for Core errors
     void failedToStart();
     void badProxy();

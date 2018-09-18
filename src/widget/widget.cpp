@@ -699,7 +699,7 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
 
         if (contentLayout) {
             contentLayout->clear();
-            contentLayout->parentWidget()->setParent(0); // Remove from splitter.
+            contentLayout->parentWidget()->setParent(nullptr); // Remove from splitter.
             contentLayout->parentWidget()->hide();
             contentLayout->parentWidget()->deleteLater();
             contentLayout->deleteLater();
@@ -1023,16 +1023,16 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
     connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
     connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
-
-    Core* core = Core::getInstance();
-    connect(core, &Core::friendAvatarChanged, widget, &FriendWidget::onAvatarChange);
-    connect(core, &Core::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
+    
+    Profile* profile = Nexus::getProfile();
+    connect(profile, &Profile::friendAvatarSet, widget, &FriendWidget::onAvatarSet);
+    connect(profile, &Profile::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
     QPixmap avatar = Nexus::getProfile()->loadAvatar(friendPk);
     if (!avatar.isNull()) {
-        friendForm->onAvatarChange(friendId, avatar);
-        widget->onAvatarChange(friendPk, avatar);
+        friendForm->onAvatarChanged(friendPk, avatar);
+        widget->onAvatarSet(friendPk, avatar);
     }
 
     FilterCriteria filter = getFilterCriteria();
@@ -1048,7 +1048,7 @@ void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
         info = info + QStringLiteral(": ") + errorInfo;
     }
 
-    QMessageBox::critical(0, "Error", info);
+    QMessageBox::critical(nullptr, "Error", info);
 }
 
 void Widget::onFriendStatusChanged(int friendId, Status status)
@@ -1286,13 +1286,13 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
     // FIXME: emit should be removed
     emit widget->chatroomWidgetClicked(widget);
 
-    Core* core = Core::getInstance();
-    connect(core, &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
-    connect(core, &Core::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
+    Profile* profile = Nexus::getProfile();
+    connect(profile, &Profile::friendAvatarSet, friendWidget, &FriendWidget::onAvatarSet);
+    connect(profile, &Profile::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
 
     QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getPublicKey());
     if (!avatar.isNull()) {
-        friendWidget->onAvatarChange(frnd->getPublicKey(), avatar);
+        friendWidget->onAvatarSet(frnd->getPublicKey(), avatar);
     }
 }
 
@@ -1453,9 +1453,6 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
     if (notify) {
         if (Settings::getInstance().getShowWindow()) {
             currentWindow->show();
-            if (inactiveWindow && Settings::getInstance().getShowInFront()) {
-                currentWindow->activateWindow();
-            }
         }
 
         if (Settings::getInstance().getNotify()) {

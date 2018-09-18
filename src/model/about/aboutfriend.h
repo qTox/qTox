@@ -19,8 +19,8 @@ public:
 
     QString getName() const override;
     QString getStatusMessage() const override;
-    QString getPublicKey() const override;
     uint32_t getId() const override;
+    ToxPk getPublicKey() const override;
 
     QPixmap getAvatar() const override;
 

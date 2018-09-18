@@ -164,7 +164,6 @@ signals:
     void autorunChanged(bool enabled);
     void autoSaveEnabledChanged(bool enabled);
     void autostartInTrayChanged(bool enabled);
-    void showInFrontChanged(bool enabled);
     void closeToTrayChanged(bool enabled);
     void lightTrayIconChanged(bool enabled);
     void minimizeToTrayChanged(bool enabled);
@@ -324,9 +323,6 @@ public:
 
     bool getShowWindow() const;
     void setShowWindow(bool newValue);
-
-    bool getShowInFront() const;
-    void setShowInFront(bool newValue);
 
     bool getNotifySound() const;
     void setNotifySound(bool newValue);
@@ -594,7 +590,6 @@ private:
     bool checkUpdates;
     bool notify;
     bool showWindow;
-    bool showInFront;
     bool notifySound;
     bool busySound;
     bool groupAlwaysNotify;

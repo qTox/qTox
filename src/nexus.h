@@ -85,7 +85,7 @@ private:
 #endif
 
 private:
-    explicit Nexus(QObject* parent = 0);
+    explicit Nexus(QObject* parent = nullptr);
     ~Nexus();
 
 private:

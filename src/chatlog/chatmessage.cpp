@@ -144,7 +144,7 @@ ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, T
 
     msg->addColumn(new Text(sender, authorFont, true),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 320, 0.6f),
+    msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(nullptr, file), 320, 0.6f),
                    ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), baseFont),
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));

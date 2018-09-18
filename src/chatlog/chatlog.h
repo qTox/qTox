@@ -38,7 +38,7 @@ class ChatLog : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit ChatLog(QWidget* parent = 0);
+    explicit ChatLog(QWidget* parent = nullptr);
     virtual ~ChatLog();
 
     void insertChatlineAtBottom(ChatLine::Ptr l);

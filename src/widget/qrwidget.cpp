@@ -71,9 +71,8 @@ QImage* QRWidget::getImage()
  */
 bool QRWidget::saveImage(QString path)
 {
-    return image
-        ->save(path, 0,
-               75); // 0 - image format same as file extension, 75-quality, png file is ~6.3kb
+    // 0 - image format same as file extension, 75-quality, png file is ~6.3kb
+    return image->save(path, nullptr, 75);
 }
 
 // http://stackoverflow.com/questions/21400254/how-to-draw-a-qr-code-with-qt-in-native-c-c

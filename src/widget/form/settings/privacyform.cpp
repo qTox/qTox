@@ -62,7 +62,7 @@ void PrivacyForm::on_cbKeepHistory_stateChanged()
     if (!bodyUI->cbKeepHistory->isChecked()) {
         QMessageBox::StandardButton dialogDelHistory;
         dialogDelHistory =
-            QMessageBox::question(0, tr("Confirmation"),
+            QMessageBox::question(nullptr, tr("Confirmation"),
                                   tr("Do you want to permanently delete all chat history?"),
                                   QMessageBox::Yes | QMessageBox::No);
         if (dialogDelHistory == QMessageBox::Yes) {

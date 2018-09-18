@@ -103,7 +103,7 @@ private:
     };
 
 public:
-    explicit Widget(QWidget* parent = 0);
+    explicit Widget(QWidget* parent = nullptr);
     ~Widget();
     void init();
     void setCentralWidget(QWidget* widget, const QString& widgetName);

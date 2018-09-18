@@ -34,7 +34,7 @@ public:
         Bottom
     };
 
-    explicit NotificationEdgeWidget(Position position, QWidget* parent = 0);
+    explicit NotificationEdgeWidget(Position position, QWidget* parent = nullptr);
     void updateNotificationCount(int count);
 
 signals:

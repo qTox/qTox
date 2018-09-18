@@ -71,7 +71,7 @@ private:
                                       uint64_t filesize, const uint8_t* fname, size_t fnameLen,
                                       void* vCore);
     static void onFileControlCallback(Tox* tox, uint32_t friendId, uint32_t fileId,
-                                      TOX_FILE_CONTROL control, void* core);
+                                      Tox_File_Control control, void* core);
     static void onFileDataCallback(Tox* tox, uint32_t friendId, uint32_t fileId, uint64_t pos,
                                    size_t length, void* core);
     static void onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fileId, uint64_t position,

@@ -20,6 +20,7 @@
 #ifndef NETCAMVIEW_H
 #define NETCAMVIEW_H
 
+#include "src/core/toxpk.h"
 #include "genericnetcamview.h"
 #include <QVector>
 
@@ -34,7 +35,7 @@ class NetCamView : public GenericNetCamView
     Q_OBJECT
 
 public:
-    NetCamView(int friendId, QWidget* parent = 0);
+    NetCamView(int friendId, QWidget* parent = nullptr);
     ~NetCamView();
 
     virtual void show(VideoSource* source, const QString& title);
@@ -55,7 +56,7 @@ private:
 
     VideoSurface* selfVideoSurface;
     MovableWidget* selfFrame;
-    int friendId;
+    ToxPk friendPk;
     bool e;
     QVector<QMetaObject::Connection> connections;
 };

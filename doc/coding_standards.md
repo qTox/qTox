@@ -390,6 +390,16 @@ extern "C" {
 #include <limits>
 ```
 
+### Singletons
+
+Do not introduce new singleton classes. Prefer to move code in the direction
+of fewer singleton classes over time.
+
+Singletons complicate destruction, complicate making multiple instances of
+something in the future, i.e. having two Tox profiles loaded at once is
+difficult to implement in qTox because both Settings and Profile are singleton.
+Singleton's also make unit testing and reasoning more difficult by more
+tightly coupling classes.
 
 ## Documentation
 

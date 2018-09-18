@@ -614,7 +614,7 @@ void AVForm::killVideoSurface()
         return;
 
     QLayoutItem* child;
-    while ((child = gridLayout->takeAt(0)) != 0)
+    while ((child = gridLayout->takeAt(0)) != nullptr)
         delete child;
 
     camVideoSurface->close();

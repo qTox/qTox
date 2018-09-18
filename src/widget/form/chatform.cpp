@@ -157,10 +157,9 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
         menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onExportChat()));
 
     const Core* core = Core::getInstance();
+    const Profile* profile = Nexus::getProfile();
     connect(core, &Core::fileReceiveRequested, this, &ChatForm::onFileRecvRequest);
-    // TODO(sudden6): update slot to new API
-    connect(core, &Core::friendAvatarChangedDeprecated, this, &ChatForm::onAvatarChange);
-    connect(core, &Core::friendAvatarRemoved, this, &ChatForm::onAvatarRemoved);
+    connect(profile, &Profile::friendAvatarChanged, this, &ChatForm::onAvatarChanged);
     connect(core, &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(core, &Core::receiptRecieved, this, &ChatForm::onReceiptReceived);
@@ -268,7 +267,7 @@ void ChatForm::onTextEditChanged()
 void ChatForm::onAttachClicked()
 {
     QStringList paths =
-        QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"), QDir::homePath(), 0, 0);
+        QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"), QDir::homePath(), nullptr, nullptr);
 
     if (paths.isEmpty()) {
         return;
@@ -652,9 +651,9 @@ void ChatForm::onReceiptReceived(quint32 friendId, int receipt)
     }
 }
 
-void ChatForm::onAvatarChange(uint32_t friendId, const QPixmap& pic)
+void ChatForm::onAvatarChanged(const ToxPk &friendPk, const QPixmap& pic)
 {
-    if (friendId != f->getId()) {
+    if (friendPk != f->getPublicKey()) {
         return;
     }
 
@@ -714,7 +713,7 @@ void ChatForm::dropEvent(QDropEvent* ev)
 
         file.close();
         if (file.isSequential()) {
-            QMessageBox::critical(0, tr("Bad idea"),
+            QMessageBox::critical(nullptr, tr("Bad idea"),
                                   tr("You're trying to send a sequential file, "
                                      "which is not going to work!"));
             continue;
@@ -724,15 +723,6 @@ void ChatForm::dropEvent(QDropEvent* ev)
             core->sendFile(f->getId(), fileName, info.absoluteFilePath(), info.size());
         }
     }
-}
-
-void ChatForm::onAvatarRemoved(const ToxPk& friendPk)
-{
-    if (friendPk != f->getPublicKey()) {
-        return;
-    }
-
-    headWidget->setAvatar(QPixmap(":/img/contact_dark.svg"));
 }
 
 QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName)

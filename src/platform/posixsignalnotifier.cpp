@@ -88,7 +88,7 @@ void PosixSignalNotifier::watchSignal(int signum)
     action.sa_handler = detail::signalHandler;
     action.sa_mask = blockMask; // allow old signal to finish before new is raised
 
-    if (::sigaction(signum, &action, 0)) {
+    if (::sigaction(signum, &action, nullptr)) {
         qFatal("Failed to setup signal %d, error = %d", signum, errno);
     }
 }

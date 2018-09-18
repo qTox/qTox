@@ -49,7 +49,7 @@
 |---------------|-------------|----------------------------------------------------------|
 | [Qt]          | >= 5.5.0    | concurrent, core, gui, network, opengl, svg, widget, xml |
 | [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                            |
-| [toxcore]     | = 0.1.\*    | core, av                                                 |
+| [toxcore]     | >= 0.2.6    | core, av                                                 |
 | [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale             |
 | [CMake]       | >= 2.8.11   |                                                          |
 | [OpenAL Soft] | >= 1.16.0   |                                                          |
@@ -632,7 +632,7 @@ cd ..
 ```bash
 git clone https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
-git checkout v0.2.3
+git checkout v0.2.7
 autoreconf -if
 ./configure
 make -j$(nproc)

@@ -69,13 +69,13 @@ ContentLayout::~ContentLayout()
 void ContentLayout::clear()
 {
     QLayoutItem* item;
-    while ((item = mainHead->layout()->takeAt(0)) != 0) {
+    while ((item = mainHead->layout()->takeAt(0)) != nullptr) {
         item->widget()->hide();
         item->widget()->setParent(nullptr);
         delete item;
     }
 
-    while ((item = mainContent->layout()->takeAt(0)) != 0) {
+    while ((item = mainContent->layout()->takeAt(0)) != nullptr) {
         item->widget()->hide();
         item->widget()->setParent(nullptr);
         delete item;

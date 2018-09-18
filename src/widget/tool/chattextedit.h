@@ -26,7 +26,7 @@ class ChatTextEdit final : public QTextEdit
 {
     Q_OBJECT
 public:
-    explicit ChatTextEdit(QWidget* parent = 0);
+    explicit ChatTextEdit(QWidget* parent = nullptr);
     ~ChatTextEdit();
     void setLastMessage(QString lm);
     void sendKeyEvent(QKeyEvent* event);

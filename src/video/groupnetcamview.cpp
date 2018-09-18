@@ -20,6 +20,7 @@
 #include "groupnetcamview.h"
 #include "src/audio/audio.h"
 #include "src/core/core.h"
+#include "src/core/toxpk.h"
 #include "src/friendlist.h"
 #include "src/model/friend.h"
 #include "src/nexus.h"
@@ -36,11 +37,11 @@
 class LabeledVideo : public QFrame
 {
 public:
-    LabeledVideo(const QPixmap& avatar, QWidget* parent = 0, bool expanding = true)
+    LabeledVideo(const QPixmap& avatar, QWidget* parent = nullptr, bool expanding = true)
         : QFrame(parent)
     {
         qDebug() << "Created expanding? " << expanding;
-        videoSurface = new VideoSurface(avatar, 0, expanding);
+        videoSurface = new VideoSurface(avatar, nullptr, expanding);
         videoSurface->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         videoSurface->setMinimumHeight(32);
 
@@ -154,7 +155,7 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
         setActive();
     });
 
-    connect(Core::getInstance(), &Core::friendAvatarChangedDeprecated, this,
+    connect(Nexus::getProfile(), &Profile::friendAvatarChanged, this,
             &GroupNetCamView::friendAvatarChanged);
 
     selfVideoSurface->setText(Core::getInstance()->getUsername());
@@ -230,9 +231,8 @@ void GroupNetCamView::setActive(const ToxPk& peer)
 #endif
 }
 
-void GroupNetCamView::friendAvatarChanged(int friendId, const QPixmap& pixmap)
+void GroupNetCamView::friendAvatarChanged(ToxPk friendPk, const QPixmap& pixmap)
 {
-    const auto friendPk = Core::getInstance()->getFriendPublicKey(friendId);
     auto peerVideo = videoList.find(friendPk);
 
     if (peerVideo != videoList.end()) {

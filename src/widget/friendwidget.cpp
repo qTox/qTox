@@ -389,7 +389,7 @@ void FriendWidget::resetEventFlags()
     chatroom->resetEventFlags();
 }
 
-void FriendWidget::onAvatarChange(const ToxPk& friendPk, const QPixmap& pic)
+void FriendWidget::onAvatarSet(const ToxPk& friendPk, const QPixmap& pic)
 {
     const auto frnd = chatroom->getFriend();
     if (friendPk != frnd->getPublicKey()) {
