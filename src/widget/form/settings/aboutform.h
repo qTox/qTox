@@ -22,9 +22,11 @@
 
 #include "genericsettings.h"
 
+#include <memory>
 class Core;
 class QTimer;
 class QString;
+class UpdateCheck;
 
 namespace Ui {
 class AboutSettings;
@@ -41,6 +43,14 @@ public:
         return tr("About");
     }
 
+public slots:
+    void onUpdateAvailable(QString latestVersion, QUrl link);
+    void onUpToDate();
+    void onUpdateCheckFailed();
+
+signals:
+    void updateAvailable();
+
 protected:
 private slots:
     void showUpdateProgress();
@@ -50,11 +60,13 @@ private slots:
 private:
     void retranslateUi();
     void replaceVersions();
+    void checkForUpdate();
     inline QString createLink(QString path, QString text) const;
 
 private:
     Ui::AboutSettings* bodyUI;
     QTimer* progressTimer;
+    UpdateCheck* updateCheck{nullptr};
 };
 
 #endif // ABOUTFORM_H
