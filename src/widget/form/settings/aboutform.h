@@ -41,6 +41,9 @@ public:
         return tr("About");
     }
 
+signals:
+    void updateAvailable();
+
 protected:
 private slots:
     void showUpdateProgress();
@@ -50,6 +53,7 @@ private slots:
 private:
     void retranslateUi();
     void replaceVersions();
+    void checkForUpdate();
     inline QString createLink(QString path, QString text) const;
 
 private:

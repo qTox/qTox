@@ -20,13 +20,24 @@
 #include "aboutform.h"
 #include "ui_aboutsettings.h"
 
-#include <QDebug>
-#include <QTimer>
-#include <tox/tox.h>
-
 #include "src/core/recursivesignalblocker.h"
 #include "src/net/autoupdate.h"
 #include "src/widget/translator.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
+
+#include <tox/tox.h>
+
+#include <QDebug>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QDesktopServices> 
+#include <QTimer>
+#include <QPushButton>
+
+#include <memory>
 
 /**
  * @class AboutForm
@@ -83,6 +94,10 @@ void AboutForm::replaceVersions()
                               + QString::number(tox_version_patch());
 
     bodyUI->youAreUsing->setText(tr("You are using qTox version %1.").arg(QString(GIT_DESCRIBE)));
+
+#if UPDATE_CHECK_ENABLED
+    checkForUpdate();
+#endif
 
     QString commitLink = "https://github.com/qTox/qTox/commit/" + QString(GIT_VERSION);
     bodyUI->gitVersion->setText(
@@ -144,6 +159,47 @@ void AboutForm::replaceVersions()
                                     tr("contributors", "Replaces `%1` in `See a full list of…`"))));
 
     bodyUI->authorInfo->setText(authorInfo);
+}
+
+void AboutForm::checkForUpdate()
+{
+    auto manager = new QNetworkAccessManager(this);
+    manager->setProxy(Settings::getInstance().getProxy());
+    QNetworkRequest request{QStringLiteral("https://api.github.com/repos/qTox/qTox/releases/latest")};
+    auto reply = manager->get(request);
+
+    connect(reply, &QNetworkReply::finished, [this, reply](){
+        QByteArray result = reply->readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(result);
+        QJsonObject jObject = doc.object();
+        QVariantMap mainMap = jObject.toVariantMap();
+        QString latestVersion = mainMap["tag_name"].toString();
+
+        // capture tag name to avoid showing update available on dev builds which include hash as part of describe
+        QRegularExpression versionFormat{QStringLiteral("v[0-9]+.[0-9]+.[0-9]+")};
+        QString curVer = versionFormat.match(GIT_DESCRIBE).captured(0);
+        if (latestVersion != curVer) {
+            qInfo() << "Update available to version" << latestVersion;
+            emit updateAvailable();
+            QUrl link{mainMap["html_url"].toString()};
+            connect(bodyUI->updateLink, &QPushButton::clicked, [link](){
+                QDesktopServices::openUrl(link);
+            });
+            bodyUI->updateLink->setVisible(true);
+        }
+        else {
+            qInfo() << "qTox is up to date";
+            auto label = new QLabel("qTox is up to date ✓");
+            auto oldLayout = bodyUI->gridLayout->layout()->replaceWidget(bodyUI->updateLink, label);
+            delete bodyUI->updateLink;
+            if (oldLayout) {
+                delete oldLayout;
+            }
+            else {
+                qWarning() << "Couldn't find updateLink to replace with up to date notification";
+            }
+        }
+    });
 }
 
 /**

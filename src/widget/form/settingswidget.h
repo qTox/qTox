@@ -49,6 +49,12 @@ public:
 
     void showAbout();
 
+signals:
+    void updateAvailable(void);
+    
+public slots:
+    void onUpdateAvailable(void);
+
 private slots:
     void onTabChanged(int);
 

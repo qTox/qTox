@@ -11,6 +11,7 @@ option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra 
 option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 # AUTOUPDATE is currently broken and thus disabled
 option(AUTOUPDATE "Enable the auto updater" OFF)
+option(UPDATE_CHECK "Enable automatic update check" OFF)
 option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
 option(ASAN "Compile with AddressSanitizer" OFF)
@@ -604,6 +605,13 @@ if(${AUTOUPDATE} AND (WIN32 OR APPLE))
         src/net/autoupdate.cpp
         src/net/autoupdate.h)
     message(STATUS "using autoupdater")
+endif()
+
+if(${UPDATE_CHECK})
+  add_definitions(-DUPDATE_CHECK_ENABLED=1)
+  message(STATUS "using update check")
+else()
+  message(STATUS "NOT using update check")
 endif()
 
 if (MINGW)

@@ -79,6 +79,9 @@
           </item>
           <item row="2" column="1">
            <widget class="QLabel" name="qtVersion">
+            <property name="alignment">
+             <set>Qt::AlignRight</set>
+            </property>
             <property name="font">
              <font>
               <family>Noto Sans</family>
@@ -119,7 +122,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0" colspan="2">
+          <item row="0" column="0">
            <widget class="QLabel" name="youAreUsing">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -146,6 +149,25 @@
             </property>
             <property name="textInteractionFlags">
              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="updateLink">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="accessibleDescription">
+             <string>Open update download link</string>
+            </property>
+            <property name="text">
+             <string>Update available</string>
+            </property>
+            <property name="visible">
+             <bool>false</bool>
             </property>
            </widget>
           </item>

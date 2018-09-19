@@ -65,6 +65,8 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm());
     std::unique_ptr<AboutForm> abtfrm(new AboutForm());
 
+    connect(abtfrm.get(), &AboutForm::updateAvailable, this, &SettingsWidget::onUpdateAvailable);
+
     cfgForms = {{std::move(gfrm), std::move(uifrm), std::move(pfrm), std::move(avfrm), std::move(expfrm), std::move(abtfrm)}};
     for (auto& cfgForm : cfgForms)
         settingsWidgets->addTab(cfgForm.get(), cfgForm->getFormIcon(), cfgForm->getFormName());
@@ -109,6 +111,14 @@ void SettingsWidget::show(ContentLayout* contentLayout)
 void SettingsWidget::onTabChanged(int index)
 {
     settingsWidgets->setCurrentIndex(index);
+}
+
+void SettingsWidget::onUpdateAvailable(void)
+{
+    settingsWidgets->tabBar()->setProperty("update-available", true);
+    settingsWidgets->tabBar()->style()->unpolish(settingsWidgets->tabBar());
+    settingsWidgets->tabBar()->style()->polish(settingsWidgets->tabBar());
+    emit updateAvailable();
 }
 
 void SettingsWidget::retranslateUi()

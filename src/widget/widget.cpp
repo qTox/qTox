@@ -852,6 +852,7 @@ void Widget::onShowSettings()
 {
     if (!settingsWidget) {
         settingsWidget = new SettingsWidget(this);
+        connect(settingsWidget.data(), &SettingsWidget::updateAvailable, this, &Widget::onUpdateAvailable);
     }
 
     if (Settings::getInstance().getSeparateWindow()) {
@@ -1588,6 +1589,13 @@ void Widget::toggleFullscreen()
     } else {
         setWindowState(windowState() | Qt::WindowFullScreen);
     }
+}
+
+void Widget::onUpdateAvailable()
+{
+    ui->settingsButton->setProperty("update-available", true);
+    ui->settingsButton->style()->unpolish(ui->settingsButton);
+    ui->settingsButton->style()->polish(ui->settingsButton);
 }
 
 ContentDialog* Widget::createContentDialog() const
