@@ -97,6 +97,7 @@ protected:
 private:
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
                                       const QDateTime& to, int numMessages);
+    void dbSchemaUpgrade();
     std::shared_ptr<RawDatabase> db;
     QHash<QString, int64_t> peers;
 };
