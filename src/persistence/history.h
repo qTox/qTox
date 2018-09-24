@@ -48,8 +48,7 @@ public:
             , timestamp{timestamp}
             , id{id}
             , isSent{isSent}
-        {
-        }
+        {}
 
         QString chat;
         QString sender;
@@ -79,6 +78,11 @@ public:
                        const QDateTime& time, bool isSent, QString dispName,
                        const std::function<void(int64_t)>& insertIdCallback = {});
 
+    void addNewFileMessage(const QString& friendPk, const QString& fileId,
+           const QByteArray& fileName, const QString& filePath,
+           int64_t size, const QString& sender,
+           const QDateTime& time, QString const& dispName);
+
     QList<HistMessage> getChatHistoryFromDate(const QString& friendPk, const QDateTime& from,
                                       const QDateTime& to);
     QList<HistMessage> getChatHistoryDefaultNum(const QString& friendPk);
@@ -98,8 +102,10 @@ private:
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
                                       const QDateTime& to, int numMessages);
     void dbSchemaUpgrade();
+
     std::shared_ptr<RawDatabase> db;
-    QHash<QString, int64_t> peers;
+    using Peers = QHash<QString, int64_t>;
+    std::shared_ptr<Peers> peers;
 };
 
 #endif // HISTORY_H

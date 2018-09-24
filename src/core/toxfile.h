@@ -9,26 +9,29 @@ class QTimer;
 
 struct ToxFile
 {
+    // Note do not change order, these are directly inserted into the DB in their
+    // current form, changing order would mess up database state!
     enum FileStatus
     {
-        INITIALIZING,
-        PAUSED,
-        TRANSMITTING,
-        BROKEN,
-        CANCELED,
-        FINISHED,
+        INITIALIZING = 0,
+        PAUSED = 1,
+        TRANSMITTING = 2,
+        BROKEN = 3,
+        CANCELED = 4,
+        FINISHED = 5,
     };
 
+    // Note do not change order, these are directly inserted into the DB in their
+    // current form (can add fields though as db representation is an int)
     enum FileDirection : bool
     {
-        SENDING,
-        RECEIVING
+        SENDING = 0,
+        RECEIVING = 1,
     };
 
     ToxFile() = default;
     ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString filePath,
             FileDirection Direction);
-    ~ToxFile() {}
 
     bool operator==(const ToxFile& other) const;
     bool operator!=(const ToxFile& other) const;
