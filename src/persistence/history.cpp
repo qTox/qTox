@@ -34,8 +34,15 @@
  * Caches mappings to speed up message saving.
  */
 
-static constexpr int NUM_MESSAGES_DEFAULT = 100; // arbitrary number of messages loaded when not loading by date
-static constexpr int SCHEMA_VERSION = 0;
+static constexpr int NUM_MESSAGES_DEFAULT =
+    100; // arbitrary number of messages loaded when not loading by date
+static constexpr int SCHEMA_VERSION = 1;
+
+FileDbInsertionData::FileDbInsertionData()
+{
+    static int id = qRegisterMetaType<FileDbInsertionData>();
+    (void)id;
+}
 
 /**
  * @brief Prepares the database to work with the history.
@@ -56,14 +63,35 @@ History::History(std::shared_ptr<RawDatabase> db)
         return;
     }
 
+    connect(this, &History::fileInsertionReady, this, &History::onFileInsertionReady);
+
     db->execLater(
         "CREATE TABLE IF NOT EXISTS peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL "
         "UNIQUE);"
         "CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY, owner INTEGER,"
         "display_name BLOB NOT NULL, UNIQUE(owner, display_name));"
-        "CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, "
-        "chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, "
-        "message BLOB NOT NULL);"
+        "CREATE TABLE IF NOT EXISTS history "
+        "(id INTEGER PRIMARY KEY,"
+        "timestamp INTEGER NOT NULL,"
+        "chat_id INTEGER NOT NULL,"
+        "sender_alias INTEGER NOT NULL,"
+        // even though technically a message can be null for file transfer, we've opted
+        // to just insert an empty string when there's no content, this moderately simplifies
+        // implementation as currently our database doesn't have support for optional fields.
+        // We would either have to insert "?" or "null" based on if message exists and then
+        // ensure that our blob vector always has the right number of fields. Better to just
+        // leave this as NOT NULL for now.
+        "message BLOB NOT NULL,"
+        "file_id INTEGER);"
+        "CREATE TABLE IF NOT EXISTS file_transfers "
+        "(id INTEGER PRIMARY KEY,"
+        "chat_id INTEGER NOT NULL,"
+        "file_restart_id BLOB NOT NULL,"
+        "file_name BLOB NOT NULL, "
+        "file_path BLOB NOT NULL,"
+        "file_size INTEGER NOT NULL,"
+        "direction INTEGER NOT NULL,"
+        "file_state INTEGER NOT NULL);"
         "CREATE TABLE IF NOT EXISTS faux_offline_pending (id INTEGER PRIMARY KEY);");
 
     // Cache our current peers
@@ -106,6 +134,7 @@ void History::eraseHistory()
                 "DELETE FROM history;"
                 "DELETE FROM aliases;"
                 "DELETE FROM peers;"
+                "DELETE FROM file_transfers;"
                 "VACUUM;");
 }
 
@@ -134,6 +163,7 @@ void History::removeFriendHistory(const QString& friendPk)
                                 "DELETE FROM history WHERE chat_id=%1; "
                                 "DELETE FROM aliases WHERE owner=%1; "
                                 "DELETE FROM peers WHERE id=%1; "
+                                "DELETE FROM file_transfers WHERE chat_id=%1;"
                                 "VACUUM;")
                             .arg(id);
 
@@ -164,7 +194,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
     // Get the db id of the peer we're chatting with
     int64_t peerId;
     if (peers.contains(friendPk)) {
-        peerId = peers[friendPk];
+        peerId = (peers)[friendPk];
     } else {
         if (peers.isEmpty()) {
             peerId = 0;
@@ -172,7 +202,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
             peerId = *std::max_element(peers.begin(), peers.end()) + 1;
         }
 
-        peers[friendPk] = peerId;
+        (peers)[friendPk] = peerId;
         queries += RawDatabase::Query(("INSERT INTO peers (id, public_key) "
                                        "VALUES (%1, '"
                                        + friendPk + "');")
@@ -182,7 +212,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
     // Get the db id of the sender of the message
     int64_t senderId;
     if (peers.contains(sender)) {
-        senderId = peers[sender];
+        senderId = (peers)[sender];
     } else {
         if (peers.isEmpty()) {
             senderId = 0;
@@ -190,7 +220,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
             senderId = *std::max_element(peers.begin(), peers.end()) + 1;
         }
 
-        peers[sender] = senderId;
+        (peers)[sender] = senderId;
         queries += RawDatabase::Query{("INSERT INTO peers (id, public_key) "
                                        "VALUES (%1, '"
                                        + sender + "');")
@@ -226,6 +256,79 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
     return queries;
 }
 
+void History::onFileInsertionReady(FileDbInsertionData data)
+{
+
+    QVector<RawDatabase::Query> queries;
+    std::weak_ptr<History> weakThis = shared_from_this();
+
+    // peerId is guaranteed to be inserted since we just used it in addNewMessage
+    auto peerId = peers[data.friendPk];
+    queries +=
+        RawDatabase::Query(QStringLiteral("INSERT INTO file_transfers (chat_id, file_restart_id, "
+                                          "file_path, file_name, file_size, direction, file_state) "
+                                          "VALUES (%1, ?, ?, ?, %2, %3, %4);")
+                               .arg(peerId)
+                               .arg(data.size)
+                               .arg(static_cast<int>(data.direction))
+                               .arg(ToxFile::CANCELED),
+                           {data.fileId.toUtf8(), data.filePath.toUtf8(), data.fileName}, {});
+
+
+    queries += RawDatabase::Query(QStringLiteral("UPDATE history "
+                                                 "SET file_id = (last_insert_rowid()) "
+                                                 "WHERE id = %1")
+                                      .arg(data.historyId));
+
+    db->execLater(queries);
+}
+
+void History::addNewFileMessage(const QString& friendPk, const QString& fileId,
+                                const QByteArray& fileName, const QString& filePath, int64_t size,
+                                const QString& sender, const QDateTime& time, QString const& dispName)
+{
+    // This is an incredibly far from an optimal way of implementing this,
+    // but given the frequency that people are going to be initiating a file
+    // transfer we can probably live with it.
+
+    // Since both inserting an alias for a user and inserting a file transfer
+    // will generate new ids, there is no good way to inject both new ids into the
+    // history query without refactoring our RawDatabase::Query and processor loops.
+
+    // What we will do instead is chain callbacks to try to get reasonable behavior.
+    // We can call the generateNewMessageQueries() fn to insert a message with an empty
+    // message in it, and get the id with the callbck. Once we have the id we can ammend
+    // the data to have our newly inserted file_id as well
+
+    ToxFile::FileDirection direction;
+    if (sender == friendPk) {
+        direction = ToxFile::RECEIVING;
+    } else {
+        direction = ToxFile::SENDING;
+    }
+
+    std::weak_ptr<History> weakThis = shared_from_this();
+    FileDbInsertionData insertionData;
+    insertionData.friendPk = friendPk;
+    insertionData.fileId = fileId;
+    insertionData.fileName = fileName;
+    insertionData.filePath = filePath;
+    insertionData.size = size;
+    insertionData.direction = direction;
+
+    auto insertFileTransferFn = [weakThis, insertionData](int64_t messageId) {
+        auto insertionDataRw = std::move(insertionData);
+
+        insertionDataRw.historyId = messageId;
+
+        auto thisPtr = weakThis.lock();
+        if (thisPtr)
+            emit thisPtr->fileInsertionReady(std::move(insertionDataRw));
+    };
+
+    addNewMessage(friendPk, "", sender, time, true, dispName, insertFileTransferFn);
+}
+
 /**
  * @brief Saves a chat message in the database.
  * @param friendPk Friend publick key to save.
@@ -259,8 +362,8 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
  * @param to End of period to fetch.
  * @return List of messages.
  */
-QList<History::HistMessage> History::getChatHistoryFromDate(const QString& friendPk, const QDateTime& from,
-                                                    const QDateTime& to)
+QList<History::HistMessage> History::getChatHistoryFromDate(const QString& friendPk,
+                                                            const QDateTime& from, const QDateTime& to)
 {
     if (!isValid()) {
         return {};
@@ -278,7 +381,8 @@ QList<History::HistMessage> History::getChatHistoryDefaultNum(const QString& fri
     if (!isValid()) {
         return {};
     }
-    return getChatHistory(friendPk, QDateTime::fromMSecsSinceEpoch(0), QDateTime::currentDateTime(), NUM_MESSAGES_DEFAULT);
+    return getChatHistory(friendPk, QDateTime::fromMSecsSinceEpoch(0), QDateTime::currentDateTime(),
+                          NUM_MESSAGES_DEFAULT);
 }
 
 
@@ -331,7 +435,8 @@ QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk
  * @param parameter for search
  * @return date of the message where the phrase was found
  */
-QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase, const ParameterSearch& parameter)
+QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from,
+                                          QString phrase, const ParameterSearch& parameter)
 {
     QDateTime result;
     auto rowCallback = [&result](const QVector<QVariant>& row) {
@@ -347,10 +452,12 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
         message = QStringLiteral("message LIKE '%%1%'").arg(phrase);
         break;
     case FilterSearch::WordsOnly:
-        message = QStringLiteral("message REGEXP '%1'").arg(SearchExtraFunctions::generateFilterWordsOnly(phrase).toLower());
+        message = QStringLiteral("message REGEXP '%1'")
+                      .arg(SearchExtraFunctions::generateFilterWordsOnly(phrase).toLower());
         break;
     case FilterSearch::RegisterAndWordsOnly:
-        message = QStringLiteral("REGEXPSENSITIVE(message, '%1')").arg(SearchExtraFunctions::generateFilterWordsOnly(phrase));
+        message = QStringLiteral("REGEXPSENSITIVE(message, '%1')")
+                      .arg(SearchExtraFunctions::generateFilterWordsOnly(phrase));
         break;
     case FilterSearch::Regular:
         message = QStringLiteral("message REGEXP '%1'").arg(phrase);
@@ -374,24 +481,27 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
         period = QStringLiteral("ORDER BY timestamp ASC LIMIT 1;");
         break;
     case PeriodSearch::AfterDate:
-        period = QStringLiteral("AND timestamp > '%1' ORDER BY timestamp ASC LIMIT 1;").arg(date.toMSecsSinceEpoch());
+        period = QStringLiteral("AND timestamp > '%1' ORDER BY timestamp ASC LIMIT 1;")
+                     .arg(date.toMSecsSinceEpoch());
         break;
     case PeriodSearch::BeforeDate:
-        period = QStringLiteral("AND timestamp < '%1' ORDER BY timestamp DESC LIMIT 1;").arg(date.toMSecsSinceEpoch());
+        period = QStringLiteral("AND timestamp < '%1' ORDER BY timestamp DESC LIMIT 1;")
+                     .arg(date.toMSecsSinceEpoch());
         break;
     default:
-        period = QStringLiteral("AND timestamp < '%1' ORDER BY timestamp DESC LIMIT 1;").arg(date.toMSecsSinceEpoch());
+        period = QStringLiteral("AND timestamp < '%1' ORDER BY timestamp DESC LIMIT 1;")
+                     .arg(date.toMSecsSinceEpoch());
         break;
     }
 
     QString queryText =
         QStringLiteral("SELECT timestamp "
-                "FROM history "
-                "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
-                "JOIN peers chat ON chat_id = chat.id "
-                "WHERE chat.public_key='%1' "
-                "AND %2 "
-                "%3")
+                       "FROM history "
+                       "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+                       "JOIN peers chat ON chat_id = chat.id "
+                       "WHERE chat.public_key='%1' "
+                       "AND %2 "
+                       "%3")
             .arg(friendPk)
             .arg(message)
             .arg(period);
@@ -406,7 +516,7 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
  * @param friendPk Friend public key
  * @return start date of correspondence
  */
-QDateTime History::getStartDateChatHistory(const QString &friendPk)
+QDateTime History::getStartDateChatHistory(const QString& friendPk)
 {
     QDateTime result;
     auto rowCallback = [&result](const QVector<QVariant>& row) {
@@ -414,11 +524,11 @@ QDateTime History::getStartDateChatHistory(const QString &friendPk)
     };
 
     QString queryText =
-            QStringLiteral("SELECT timestamp "
-                    "FROM history "
-                    "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
-                    "JOIN peers chat ON chat_id = chat.id "
-                    "WHERE chat.public_key='%1' ORDER BY timestamp ASC LIMIT 1;")
+        QStringLiteral("SELECT timestamp "
+                       "FROM history "
+                       "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+                       "JOIN peers chat ON chat_id = chat.id "
+                       "WHERE chat.public_key='%1' ORDER BY timestamp ASC LIMIT 1;")
             .arg(friendPk);
 
     db->execNow({queryText, rowCallback});
@@ -481,8 +591,9 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
             .arg(to.toMSecsSinceEpoch())
             .arg(friendPk);
     if (numMessages) {
-        queryText = "SELECT * FROM (" + queryText +
-                QString(" ORDER BY history.id DESC limit %1) AS T1 ORDER BY T1.id ASC;").arg(numMessages);
+        queryText =
+            "SELECT * FROM (" + queryText
+            + QString(" ORDER BY history.id DESC limit %1) AS T1 ORDER BY T1.id ASC;").arg(numMessages);
     } else {
         queryText = queryText + ";";
     }
@@ -500,32 +611,31 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
 void History::dbSchemaUpgrade()
 {
     int64_t databaseSchemaVersion;
-    db->execNow(RawDatabase::Query("PRAGMA user_version", [&] (const QVector<QVariant>& row){
-                                    databaseSchemaVersion = row[0].toLongLong();
-                                  }));
+    db->execNow(RawDatabase::Query("PRAGMA user_version", [&](const QVector<QVariant>& row) {
+        databaseSchemaVersion = row[0].toLongLong();
+    }));
 
     if (databaseSchemaVersion > SCHEMA_VERSION) {
         qWarning() << "Database version is newer than we currently support. Please upgrade qTox";
         // We don't know what future versions have done, we have to disable db access until we re-upgrade
         db.reset();
-    }
-    else if (databaseSchemaVersion == SCHEMA_VERSION) {
+    } else if (databaseSchemaVersion == SCHEMA_VERSION) {
         // No work to do
         return;
     }
 
-    switch (databaseSchemaVersion)
-    {
-    //case 0:
-    //    do 0 -> 1 upgrade
-    //    //fallthrough
-    //case 1:
+    switch (databaseSchemaVersion) {
+    case 0:
+        db->execLater(RawDatabase::Query("ALTER TABLE history ADD file_id INTEGER;"));
+        // fallthrough
+    // case 1:
     //    do 1 -> 2 upgrade
     //    //fallthrough
     // etc.
     default:
-        db->execLater(RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION)));
-        qDebug() << "Database upgrade finished (databaseSchemaVersion "
-                 << databaseSchemaVersion << " -> " << SCHEMA_VERSION << ")";
+        db->execLater(
+            RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION)));
+        qDebug() << "Database upgrade finished (databaseSchemaVersion " << databaseSchemaVersion
+                 << " -> " << SCHEMA_VERSION << ")";
     }
 }
