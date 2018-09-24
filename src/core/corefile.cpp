@@ -123,10 +123,11 @@ void CoreFile::sendFile(Core* core, uint32_t friendId, QString filename, QString
     QMutexLocker mlocker(&fileSendMutex);
 
     QByteArray fileName = filename.toUtf8();
+    TOX_ERR_FILE_SEND sendErr;
     uint32_t fileNum = tox_file_send(core->tox.get(), friendId, TOX_FILE_KIND_DATA, filesize,
-                                     nullptr, (uint8_t*)fileName.data(), fileName.size(), nullptr);
-    if (fileNum == std::numeric_limits<uint32_t>::max()) {
-        qWarning() << "sendFile: Can't create the Tox file sender";
+                                     nullptr, (uint8_t*)fileName.data(), fileName.size(), &sendErr);
+    if (sendErr != TOX_ERR_FILE_SEND_OK) {
+        qWarning() << "sendFile: Can't create the Tox file sender (" << sendErr << ")";
         emit core->fileSendFailed(friendId, filename);
         return;
     }
