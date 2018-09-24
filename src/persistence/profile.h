@@ -110,7 +110,7 @@ private:
     QString name;
     std::unique_ptr<ToxEncrypt> passkey = nullptr;
     std::shared_ptr<RawDatabase> database;
-    std::unique_ptr<History> history;
+    std::shared_ptr<History> history;
     bool newProfile;
     bool isRemoved;
     bool encrypted = false;

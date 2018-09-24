@@ -34,8 +34,23 @@
 class Profile;
 class HistoryKeeper;
 
-class History
+struct FileDbInsertionData
 {
+    FileDbInsertionData();
+
+    int64_t historyId;
+    QString friendPk;
+    QString fileId;
+    QByteArray fileName;
+    QString filePath;
+    int64_t size;
+    int direction;
+};
+Q_DECLARE_METATYPE(FileDbInsertionData);
+
+class History : public QObject, public std::enable_shared_from_this<History>
+{
+    Q_OBJECT
 public:
     struct HistMessage
     {
@@ -48,8 +63,7 @@ public:
             , timestamp{timestamp}
             , id{id}
             , isSent{isSent}
-        {
-        }
+        {}
 
         QString chat;
         QString sender;
@@ -79,11 +93,16 @@ public:
                        const QDateTime& time, bool isSent, QString dispName,
                        const std::function<void(int64_t)>& insertIdCallback = {});
 
+    void addNewFileMessage(const QString& friendPk, const QString& fileId,
+                           const QByteArray& fileName, const QString& filePath, int64_t size,
+                           const QString& sender, const QDateTime& time, QString const& dispName);
+
     QList<HistMessage> getChatHistoryFromDate(const QString& friendPk, const QDateTime& from,
-                                      const QDateTime& to);
+                                              const QDateTime& to);
     QList<HistMessage> getChatHistoryDefaultNum(const QString& friendPk);
     QList<DateMessages> getChatHistoryCounts(const ToxPk& friendPk, const QDate& from, const QDate& to);
-    QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase, const ParameterSearch &parameter);
+    QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase,
+                                     const ParameterSearch& parameter);
     QDateTime getStartDateChatHistory(const QString& friendPk);
 
     void markAsSent(qint64 messageId);
@@ -94,11 +113,20 @@ protected:
                               const QString& sender, const QDateTime& time, bool isSent,
                               QString dispName, std::function<void(int64_t)> insertIdCallback = {});
 
+signals:
+    void fileInsertionReady(FileDbInsertionData data);
+
+private slots:
+    void onFileInsertionReady(FileDbInsertionData data);
+
 private:
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
                                       const QDateTime& to, int numMessages);
     void dbSchemaUpgrade();
+
     std::shared_ptr<RawDatabase> db;
+
+
     QHash<QString, int64_t> peers;
 };
 
