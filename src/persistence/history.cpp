@@ -35,6 +35,7 @@
  */
 
 static constexpr int NUM_MESSAGES_DEFAULT = 100; // arbitrary number of messages loaded when not loading by date
+static constexpr int SCHEMA_VERSION = 0;
 
 /**
  * @brief Prepares the database to work with the history.
@@ -45,6 +46,13 @@ History::History(std::shared_ptr<RawDatabase> db)
 {
     if (!isValid()) {
         qWarning() << "Database not open, init failed";
+        return;
+    }
+
+    dbSchemaUpgrade();
+
+    // dbSchemaUpgrade may have put us in an invalid state
+    if (!isValid()) {
         return;
     }
 
@@ -482,4 +490,37 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
     db->execNow({queryText, rowCallback});
 
     return messages;
+}
+
+void History::dbSchemaUpgrade()
+{
+    int64_t databaseSchemaVersion;
+    db->execNow(RawDatabase::Query("PRAGMA user_version", [&] (const QVector<QVariant>& row){
+                                    databaseSchemaVersion = row[0].toLongLong();
+                                  }));
+
+    if (databaseSchemaVersion > SCHEMA_VERSION) {
+        qWarning() << "Database version is newer than we currently support. Please upgrade qTox";
+        // We don't know what future versions have done, we have to disable db access until we re-upgrade
+        db.reset();
+    }
+    else if (databaseSchemaVersion == SCHEMA_VERSION) {
+        // No work to do
+        return;
+    }
+
+    switch (databaseSchemaVersion)
+    {
+    //case 0:
+    //    do 0 -> 1 upgrade
+    //    //fallthrough
+    //case 1:
+    //    do 1 -> 2 upgrade
+    //    //fallthrough
+    // etc.
+    default:
+        db->execLater(RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION)));
+        qDebug() << "Database upgrade finished (databaseSchemaVersion "
+                 << databaseSchemaVersion << " -> " << SCHEMA_VERSION << ")";
+    }
 }
