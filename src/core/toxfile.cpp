@@ -28,10 +28,9 @@ ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QByteArray filename, QStri
     , file{new QFile(filePath)}
     , bytesSent{0}
     , filesize{0}
-    , status{STOPPED}
+    , status{INITIALIZING}
     , direction{Direction}
-{
-}
+{}
 
 bool ToxFile::operator==(const ToxFile& other) const
 {
