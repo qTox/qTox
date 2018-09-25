@@ -11,10 +11,12 @@ struct ToxFile
 {
     enum FileStatus
     {
-        STOPPED,
+        INITIALIZING,
         PAUSED,
         TRANSMITTING,
-        BROKEN
+        BROKEN,
+        CANCELED,
+        FINISHED,
     };
 
     enum FileDirection : bool
@@ -26,9 +28,7 @@ struct ToxFile
     ToxFile() = default;
     ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString filePath,
             FileDirection Direction);
-    ~ToxFile()
-    {
-    }
+    ~ToxFile() {}
 
     bool operator==(const ToxFile& other) const;
     bool operator!=(const ToxFile& other) const;
