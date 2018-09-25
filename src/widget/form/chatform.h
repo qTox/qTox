@@ -68,11 +68,14 @@ signals:
 
 public slots:
     void startFileSend(ToxFile file);
+    void onFileTransferFinished(ToxFile file);
+    void onFileTransferCancelled(ToxFile file);
+    void onFileTransferBrokenUnbroken(ToxFile file, bool broken);
     void onFileRecvRequest(ToxFile file);
     void onAvInvite(uint32_t friendId, bool video);
     void onAvStart(uint32_t friendId, bool video);
     void onAvEnd(uint32_t friendId, bool error);
-    void onAvatarChanged(const ToxPk &friendPk, const QPixmap& pic);
+    void onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
     void onFileNameChanged(const ToxPk& friendPk);
 
 protected slots:
