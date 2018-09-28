@@ -30,7 +30,7 @@
 
 set -e -o pipefail
 
-readonly PR=$1
+readonly PR="${1###}"
 
 # make sure to add newlines to the message, otherwise merge message
 # will not look well
