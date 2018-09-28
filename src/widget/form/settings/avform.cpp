@@ -222,6 +222,11 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
 
 void AVForm::selectBestModes(QVector<VideoMode>& allVideoModes)
 {
+    if (allVideoModes.isEmpty()) {
+        qCritical() << "Trying to select best mode from empty modes list";
+        return;
+    }
+
     // Identify the best resolutions available for the supposed XXXXp resolutions.
     std::map<int, VideoMode> idealModes;
     idealModes[120] = VideoMode(160, 120);
