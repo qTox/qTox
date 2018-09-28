@@ -191,8 +191,9 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         av_dict_set(&options, "video_size", videoSize.c_str(), 0);
         av_dict_set(&options, "framerate", framerate.c_str(), 0);
         const std::string pixelFormatStr = v4l2::getPixelFormatString(mode.pixel_format).toStdString();
-        const char* pixel_format = pixelFormatStr.c_str();
-        if (strncmp(pixel_format, "unknown", 7) != 0) {
+        // don't try to set a format string that doesn't exist
+        if (pixelFormatStr != "unknown" && pixelFormatStr != "invalid") {
+            const char* pixel_format = pixelFormatStr.c_str();
             av_dict_set(&options, "pixel_format", pixel_format, 0);
         }
     }
