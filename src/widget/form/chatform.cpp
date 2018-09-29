@@ -814,7 +814,7 @@ void ChatForm::insertChatlines(QList<ChatLine::Ptr> chatLines)
     verticalBar->setValue(savedSliderPos);
 }
 
-QDate ChatForm::addDateLineIfNeeded(QList<ChatLine::Ptr> msgs, QDate const& lastDate,
+QDate ChatForm::addDateLineIfNeeded(QList<ChatLine::Ptr>& msgs, QDate const& lastDate,
                                     History::HistMessage const& newMessage,
                                     MessageMetadata const& metadata)
 {
