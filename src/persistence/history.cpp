@@ -64,6 +64,7 @@ History::History(std::shared_ptr<RawDatabase> db)
     }
 
     connect(this, &History::fileInsertionReady, this, &History::onFileInsertionReady);
+    connect(this, &History::fileInserted, this, &History::onFileInserted);
 
     db->execLater(
         "CREATE TABLE IF NOT EXISTS peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL "
@@ -264,6 +265,8 @@ void History::onFileInsertionReady(FileDbInsertionData data)
 
     // peerId is guaranteed to be inserted since we just used it in addNewMessage
     auto peerId = peers[data.friendPk];
+    // Copy to pass into labmda for later
+    auto fileId = data.fileId;
     queries +=
         RawDatabase::Query(QStringLiteral("INSERT INTO file_transfers (chat_id, file_restart_id, "
                                           "file_path, file_name, file_size, direction, file_state) "
@@ -272,7 +275,13 @@ void History::onFileInsertionReady(FileDbInsertionData data)
                                .arg(data.size)
                                .arg(static_cast<int>(data.direction))
                                .arg(ToxFile::CANCELED),
-                           {data.fileId.toUtf8(), data.filePath.toUtf8(), data.fileName}, {});
+                           {data.fileId.toUtf8(), data.filePath.toUtf8(), data.fileName},
+                           [weakThis, fileId](int64_t id) {
+                               auto pThis = weakThis.lock();
+                               if (pThis) {
+                                   emit pThis->fileInserted(id, fileId);
+                               }
+                           });
 
 
     queries += RawDatabase::Query(QStringLiteral("UPDATE history "
@@ -281,6 +290,37 @@ void History::onFileInsertionReady(FileDbInsertionData data)
                                       .arg(data.historyId));
 
     db->execLater(queries);
+}
+
+void History::onFileInserted(int64_t dbId, QString fileId)
+{
+    auto& fileInfo = fileInfos[fileId];
+    if (fileInfo.finished) {
+        db->execLater(generateFileFinished(dbId, fileInfo.success, fileInfo.filePath));
+        fileInfos.remove(fileId);
+    } else {
+        fileInfo.finished = false;
+        fileInfo.fileId = dbId;
+    }
+}
+
+RawDatabase::Query History::generateFileFinished(int64_t id, bool success, const QString& filePath)
+{
+    auto file_state = success ? ToxFile::FINISHED : ToxFile::CANCELED;
+    if (filePath.length()) {
+        return RawDatabase::Query(QStringLiteral("UPDATE file_transfers "
+                                                 "SET file_state = %1, file_path = ? "
+                                                 "WHERE id = %2")
+                                      .arg(file_state)
+                                      .arg(id),
+                                  {filePath.toUtf8()});
+    } else {
+        return RawDatabase::Query(QStringLiteral("UPDATE file_transfers "
+                                                 "SET finished = %1 "
+                                                 "WHERE id = %2")
+                                      .arg(file_state)
+                                      .arg(id));
+    }
 }
 
 void History::addNewFileMessage(const QString& friendPk, const QString& fileId,
@@ -355,6 +395,19 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
                                             insertIdCallback));
 }
 
+void History::setFileFinished(const QString& fileId, bool success, const QString& filePath)
+{
+    auto& fileInfo = fileInfos[fileId];
+    if (fileInfo.fileId == -1) {
+        fileInfo.finished = true;
+        fileInfo.success = success;
+        fileInfo.filePath = filePath;
+    } else {
+        db->execLater(generateFileFinished(fileInfo.fileId, success, filePath));
+    }
+
+    fileInfos.remove(fileId);
+}
 /**
  * @brief Fetches chat messages from the database.
  * @param friendPk Friend publick key to fetch.
@@ -566,26 +619,44 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
     QList<HistMessage> messages;
 
     auto rowCallback = [&messages](const QVector<QVariant>& row) {
-        // dispName and message could have null bytes, QString::fromUtf8
-        // truncates on null bytes so we strip them
-        messages += {row[0].toLongLong(),
-                     row[1].isNull(),
-                     QDateTime::fromMSecsSinceEpoch(row[2].toLongLong()),
-                     row[3].toString(),
-                     QString::fromUtf8(row[4].toByteArray().replace('\0', "")),
-                     row[5].toString(),
-                     QString::fromUtf8(row[6].toByteArray().replace('\0', ""))};
+        auto id = row[0].toLongLong();
+        auto isOfflineMessage = row[1].isNull();
+        auto timestamp = QDateTime::fromMSecsSinceEpoch(row[2].toLongLong());
+        auto friend_key = row[3].toString();
+        auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
+        auto sender_key = row[5].toString();
+        if (row[7].isNull()) {
+            messages += {id,           isOfflineMessage, timestamp,        friend_key,
+                         display_name, sender_key,       row[6].toString()};
+        } else {
+            ToxFile file;
+            file.fileKind = TOX_FILE_KIND_DATA;
+            file.resumeFileId = row[7].toString().toUtf8();
+            file.filePath = QString::fromUtf8(row[8].toByteArray().replace('\0', ""));
+            file.fileName =
+                QString::fromUtf8(row[9].toByteArray())
+                    .toUtf8(); // for some reason the path has to be utf8 parsed even though it went in as a straight array
+            file.filesize = row[10].toLongLong();
+            file.direction = static_cast<ToxFile::FileDirection>(row[11].toLongLong());
+            file.status = static_cast<ToxFile::FileStatus>(row[12].toInt());
+            messages +=
+                {id, isOfflineMessage, timestamp, friend_key, display_name, sender_key, file};
+        }
     };
 
     // Don't forget to update the rowCallback if you change the selected columns!
     QString queryText =
         QString("SELECT history.id, faux_offline_pending.id, timestamp, "
                 "chat.public_key, aliases.display_name, sender.public_key, "
-                "message FROM history "
+                "message, file_transfers.file_restart_id, "
+                "file_transfers.file_path, file_transfers.file_name, "
+                "file_transfers.file_size, file_transfers.direction, "
+                "file_transfers.file_state FROM history "
                 "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
-                "JOIN peers chat ON chat_id = chat.id "
+                "JOIN peers chat ON history.chat_id = chat.id "
                 "JOIN aliases ON sender_alias = aliases.id "
                 "JOIN peers sender ON aliases.owner = sender.id "
+                "LEFT JOIN file_transfers ON history.file_id = file_transfers.id "
                 "WHERE timestamp BETWEEN %1 AND %2 AND chat.public_key='%3'")
             .arg(from.toMSecsSinceEpoch())
             .arg(to.toMSecsSinceEpoch())
