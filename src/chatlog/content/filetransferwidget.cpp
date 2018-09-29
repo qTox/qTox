@@ -135,10 +135,11 @@ void FileTransferWidget::autoAcceptTransfer(const QString& path)
 
     // Do not automatically accept the file-transfer if the path is not writable.
     // The user can still accept it manually.
-    if (Nexus::tryRemoveFile(filepath))
+    if (Nexus::tryRemoveFile(filepath)) {
         Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
-    else
+    } else {
         qWarning() << "Cannot write to " << filepath;
+    }
 }
 
 bool FileTransferWidget::isActive() const
@@ -148,8 +149,9 @@ bool FileTransferWidget::isActive() const
 
 void FileTransferWidget::acceptTransfer(const QString& filepath)
 {
-    if (filepath.isEmpty())
+    if (filepath.isEmpty()) {
         return;
+    }
 
     // test if writable
     if (!Nexus::tryRemoveFile(filepath)) {
@@ -277,17 +279,19 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
 
 void FileTransferWidget::fileTransferRemotePausedUnpaused(ToxFile file, bool paused)
 {
-    if (paused)
+    if (paused) {
         onFileTransferPaused(file);
-    else
+    } else {
         onFileTransferResumed(file);
+    }
 }
 
 void FileTransferWidget::fileTransferBrokenUnbroken(ToxFile file, bool broken)
 {
     // TODO: Handle broken transfer differently once we have resuming code
-    if (broken)
+    if (broken) {
         onFileTransferCancelled(file);
+    }
 }
 
 QString FileTransferWidget::getHumanReadableSize(qint64 size)
@@ -295,16 +299,18 @@ QString FileTransferWidget::getHumanReadableSize(qint64 size)
     static const char* suffix[] = {"B", "kiB", "MiB", "GiB", "TiB"};
     int exp = 0;
 
-    if (size > 0)
+    if (size > 0) {
         exp = std::min((int)(log(size) / log(1024)), (int)(sizeof(suffix) / sizeof(suffix[0]) - 1));
+    }
 
     return QString().setNum(size / pow(1024, exp), 'f', exp > 1 ? 2 : 0).append(suffix[exp]);
 }
 
 void FileTransferWidget::updateWidgetColor(ToxFile const& file)
 {
-    if (lastStatus == file.status)
+    if (lastStatus == file.status) {
         return;
+    }
 
     switch (file.status) {
     case ToxFile::INITIALIZING:
@@ -319,13 +325,16 @@ void FileTransferWidget::updateWidgetColor(ToxFile const& file)
     case ToxFile::FINISHED:
         setBackgroundColor(Style::getColor(Style::Green), true);
         break;
+    default:
+        assert(false);
     }
 }
 
 void FileTransferWidget::updateWidgetText(ToxFile const& file)
 {
-    if (lastStatus == file.status)
+    if (lastStatus == file.status) {
         return;
+    }
 
     switch (file.status) {
     case ToxFile::INITIALIZING:
@@ -348,29 +357,33 @@ void FileTransferWidget::updateWidgetText(ToxFile const& file)
         break;
     case ToxFile::FINISHED:
         break;
+    default:
+        assert(false);
     }
 }
 
 void FileTransferWidget::updatePreview(ToxFile const& file)
 {
-    if (lastStatus == file.status)
+    if (lastStatus == file.status) {
         return;
-
-    switch (file.status) {
-        case ToxFile::INITIALIZING:
-        case ToxFile::PAUSED:
-        case ToxFile::TRANSMITTING:
-        case ToxFile::BROKEN:
-        case ToxFile::CANCELED:
-            if (file.direction == ToxFile::SENDING) {
-                showPreview(file.filePath);
-            }
-            break;
-        case ToxFile::FINISHED:
-            showPreview(file.filePath);
-            break;
     }
 
+    switch (file.status) {
+    case ToxFile::INITIALIZING:
+    case ToxFile::PAUSED:
+    case ToxFile::TRANSMITTING:
+    case ToxFile::BROKEN:
+    case ToxFile::CANCELED:
+        if (file.direction == ToxFile::SENDING) {
+            showPreview(file.filePath);
+        }
+        break;
+    case ToxFile::FINISHED:
+        showPreview(file.filePath);
+        break;
+    default:
+        assert(false);
+    }
 }
 
 void FileTransferWidget::updateFileProgress(ToxFile const& file)
@@ -382,8 +395,9 @@ void FileTransferWidget::updateFileProgress(ToxFile const& file)
         fileProgress.resetSpeed();
         break;
     case ToxFile::TRANSMITTING: {
-        if (!fileProgress.needsUpdate())
+        if (!fileProgress.needsUpdate()) {
             break;
+        }
 
         fileProgress.addSample(file);
         auto speed = fileProgress.getSpeed();
@@ -413,13 +427,16 @@ void FileTransferWidget::updateFileProgress(ToxFile const& file)
         ui->etaLabel->hide();
         break;
     }
+    default:
+        assert(false);
     }
 }
 
 void FileTransferWidget::updateSignals(ToxFile const& file)
 {
-    if (lastStatus == file.status)
+    if (lastStatus == file.status) {
         return;
+    }
 
     switch (file.status) {
     case ToxFile::CANCELED:
@@ -432,13 +449,16 @@ void FileTransferWidget::updateSignals(ToxFile const& file)
     case ToxFile::PAUSED:
     case ToxFile::TRANSMITTING:
         break;
+    default:
+        assert(false);
     }
 }
 
 void FileTransferWidget::setupButtons(ToxFile const& file)
 {
-    if (lastStatus == file.status)
+    if (lastStatus == file.status) {
         return;
+    }
 
     switch (file.status) {
     case ToxFile::TRANSMITTING:
@@ -497,27 +517,30 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
         ui->rightButton->show();
 
         break;
+    default:
+        assert(false);
     }
 }
 
 void FileTransferWidget::handleButton(QPushButton* btn)
 {
     if (fileInfo.direction == ToxFile::SENDING) {
-        if (btn->objectName() == "cancel")
+        if (btn->objectName() == "cancel") {
             Core::getInstance()->cancelFileSend(fileInfo.friendId, fileInfo.fileNum);
-        else if (btn->objectName() == "pause")
+        } else if (btn->objectName() == "pause") {
             Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
-        else if (btn->objectName() == "resume")
+        } else if (btn->objectName() == "resume") {
             Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
+        }
     } else // receiving or paused
     {
-        if (btn->objectName() == "cancel")
+        if (btn->objectName() == "cancel") {
             Core::getInstance()->cancelFileRecv(fileInfo.friendId, fileInfo.fileNum);
-        else if (btn->objectName() == "pause")
+        } else if (btn->objectName() == "pause") {
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
-        else if (btn->objectName() == "resume")
+        } else if (btn->objectName() == "resume") {
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
-        else if (btn->objectName() == "accept") {
+        } else if (btn->objectName() == "accept") {
             QString path =
                 QFileDialog::getSaveFileName(Q_NULLPTR,
                                              tr("Save a file", "Title of the file saving dialog"),
@@ -562,7 +585,8 @@ void FileTransferWidget::showPreview(const QString& filename)
         ui->previewButton->setIcon(QIcon(iconPixmap));
         ui->previewButton->setIconSize(iconPixmap.size());
         ui->previewButton->show();
-        // Show mouseover preview, but make sure it's not larger than 50% of the screen width/height
+        // Show mouseover preview, but make sure it's not larger than 50% of the screen
+        // width/height
         const QRect desktopSize = QApplication::desktop()->screenGeometry();
         const int maxPreviewWidth{desktopSize.width() / 2};
         const int maxPreviewHeight{desktopSize.height() / 2};
@@ -603,7 +627,8 @@ QPixmap FileTransferWidget::scaleCropIntoSquare(const QPixmap& source, const int
 {
     QPixmap result;
 
-    // Make sure smaller-than-icon images (at least one dimension is smaller) will not be upscaled
+    // Make sure smaller-than-icon images (at least one dimension is smaller) will not be
+    // upscaled
     if (source.width() < targetSize || source.height() < targetSize) {
         result = source;
     } else {
@@ -613,10 +638,11 @@ QPixmap FileTransferWidget::scaleCropIntoSquare(const QPixmap& source, const int
 
     // Then, image has to be cropped (if needed) so it will not overflow rectangle
     // Only one dimension will be bigger after Qt::KeepAspectRatioByExpanding
-    if (result.width() > targetSize)
+    if (result.width() > targetSize) {
         return result.copy((result.width() - targetSize) / 2, 0, targetSize, targetSize);
-    else if (result.height() > targetSize)
+    } else if (result.height() > targetSize) {
         return result.copy(0, (result.height() - targetSize) / 2, targetSize, targetSize);
+    }
 
     // Picture was rectangle in the first place, no cropping
     return result;
@@ -626,8 +652,9 @@ int FileTransferWidget::getExifOrientation(const char* data, const int size)
 {
     ExifData* exifData = exif_data_new_from_data(reinterpret_cast<const unsigned char*>(data), size);
 
-    if (!exifData)
+    if (!exifData) {
         return 0;
+    }
 
     int orientation = 0;
     const ExifByteOrder byteOrder = exif_data_get_byte_order(exifData);
@@ -676,8 +703,9 @@ void FileTransferWidget::applyTransformation(const int orientation, QImage& imag
 
 void FileTransferWidget::updateWidget(ToxFile const& file)
 {
-    if (fileInfo != file)
+    if (fileInfo != file) {
         return;
+    }
 
     fileInfo = file;
 
@@ -696,9 +724,10 @@ void FileTransferWidget::updateWidget(ToxFile const& file)
     // trigger repaint
     switch (file.status) {
     case ToxFile::TRANSMITTING:
-        if (!bTransmitNeedsUpdate)
+        if (!bTransmitNeedsUpdate) {
             break;
-        // fallthrough
+        }
+    // fallthrough
     default:
         update();
     }

@@ -22,17 +22,74 @@
 
 #include <QDateTime>
 #include <QHash>
+#include <QPointer>
 #include <QVector>
 
+#include <cassert>
 #include <cstdint>
 #include <tox/toxencryptsave.h>
 
+#include "src/core/toxfile.h"
 #include "src/core/toxpk.h"
 #include "src/persistence/db/rawdatabase.h"
 #include "src/widget/searchtypes.h"
 
 class Profile;
 class HistoryKeeper;
+
+enum class HistMessageContentType
+{
+    message,
+    file
+};
+
+class HistMessageContent
+{
+public:
+    HistMessageContent(QString message)
+        : data(std::make_shared<QString>(std::move(message)))
+        , type(HistMessageContentType::message)
+    {}
+
+    HistMessageContent(ToxFile file)
+        : data(std::make_shared<ToxFile>(std::move(file)))
+        , type(HistMessageContentType::file)
+    {}
+
+    HistMessageContentType getType() const
+    {
+        return type;
+    }
+
+    QString& asMessage()
+    {
+        assert(type == HistMessageContentType::message);
+        return *static_cast<QString*>(data.get());
+    }
+
+    ToxFile& asFile()
+    {
+        assert(type == HistMessageContentType::file);
+        return *static_cast<ToxFile*>(data.get());
+    }
+
+    const QString& asMessage() const
+    {
+        assert(type == HistMessageContentType::message);
+        return *static_cast<QString*>(data.get());
+    }
+
+    const ToxFile& asFile() const
+    {
+        assert(type == HistMessageContentType::file);
+        return *static_cast<ToxFile*>(data.get());
+    }
+
+private:
+    // Not really shared but shared_ptr has support for shared_ptr<void>
+    std::shared_ptr<void> data;
+    HistMessageContentType type;
+};
 
 struct FileDbInsertionData
 {
@@ -58,20 +115,32 @@ public:
                     QString sender, QString message)
             : chat{chat}
             , sender{sender}
-            , message{message}
             , dispName{dispName}
             , timestamp{timestamp}
             , id{id}
             , isSent{isSent}
+            , content(std::move(message))
         {}
+
+        HistMessage(qint64 id, bool isSent, QDateTime timestamp, QString chat, QString dispName,
+                    QString sender, ToxFile file)
+            : chat{chat}
+            , sender{sender}
+            , dispName{dispName}
+            , timestamp{timestamp}
+            , id{id}
+            , isSent{isSent}
+            , content(std::move(file))
+        {}
+
 
         QString chat;
         QString sender;
-        QString message;
         QString dispName;
         QDateTime timestamp;
         qint64 id;
         bool isSent;
+        HistMessageContent content;
     };
 
     struct DateMessages
@@ -97,6 +166,8 @@ public:
                            const QByteArray& fileName, const QString& filePath, int64_t size,
                            const QString& sender, const QDateTime& time, QString const& dispName);
 
+    void setFileFinished(const QString& fileId, bool success, const QString& filePath);
+
     QList<HistMessage> getChatHistoryFromDate(const QString& friendPk, const QDateTime& from,
                                               const QDateTime& to);
     QList<HistMessage> getChatHistoryDefaultNum(const QString& friendPk);
@@ -115,19 +186,34 @@ protected:
 
 signals:
     void fileInsertionReady(FileDbInsertionData data);
+    void fileInserted(int64_t dbId, QString fileId);
 
 private slots:
     void onFileInsertionReady(FileDbInsertionData data);
+    void onFileInserted(int64_t dbId, QString fileId);
 
 private:
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
                                       const QDateTime& to, int numMessages);
+
+    static RawDatabase::Query generateFileFinished(int64_t fileId, bool success,
+                                                   const QString& filePath);
     void dbSchemaUpgrade();
 
     std::shared_ptr<RawDatabase> db;
 
 
     QHash<QString, int64_t> peers;
+    struct FileInfo
+    {
+        bool finished = false;
+        bool success = false;
+        QString filePath;
+        int64_t fileId = -1;
+    };
+
+    // This needs to be a shared pointer to avoid callback lifetime issues
+    QHash<QString, FileInfo> fileInfos;
 };
 
 #endif // HISTORY_H

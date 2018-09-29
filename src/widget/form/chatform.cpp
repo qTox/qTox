@@ -161,6 +161,9 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(core, &Core::fileReceiveRequested, this, &ChatForm::onFileRecvRequest);
     connect(profile, &Profile::friendAvatarChanged, this, &ChatForm::onAvatarChanged);
     connect(core, &Core::fileSendStarted, this, &ChatForm::startFileSend);
+    connect(core, &Core::fileTransferFinished, this, &ChatForm::onFileTransferFinished);
+    connect(core, &Core::fileTransferCancelled, this, &ChatForm::onFileTransferCancelled);
+    connect(core, &Core::fileTransferBrokenUnbroken, this, &ChatForm::onFileTransferBrokenUnbroken);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(core, &Core::receiptRecieved, this, &ChatForm::onReceiptReceived);
     connect(core, &Core::friendMessageReceived, this, &ChatForm::onFriendMessageReceived);
@@ -234,7 +237,7 @@ void ChatForm::onSendTriggered()
 }
 void ChatForm::onFileNameChanged(const ToxPk& friendPk)
 {
-    if(friendPk != f->getPublicKey()) {
+    if (friendPk != f->getPublicKey()) {
         return;
     }
 
@@ -266,8 +269,8 @@ void ChatForm::onTextEditChanged()
 
 void ChatForm::onAttachClicked()
 {
-    QStringList paths =
-        QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"), QDir::homePath(), nullptr, nullptr);
+    QStringList paths = QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"),
+                                                      QDir::homePath(), nullptr, nullptr);
 
     if (paths.isEmpty()) {
         return;
@@ -312,7 +315,33 @@ void ChatForm::startFileSend(ToxFile file)
 
     insertChatMessage(
         ChatMessage::createFileTransferMessage(name, file, true, QDateTime::currentDateTime()));
+
+    if (history && Settings::getInstance().getEnableLogging()) {
+        auto selfPk = Core::getInstance()->getSelfId().toString();
+        auto pk = f->getPublicKey().toString();
+        auto name = Core::getInstance()->getUsername();
+        history->addNewFileMessage(pk, file.resumeFileId, file.fileName, file.filePath,
+                                   file.filesize, selfPk, QDateTime::currentDateTime(), name);
+    }
+
     Widget::getInstance()->updateFriendActivity(f);
+}
+
+void ChatForm::onFileTransferFinished(ToxFile file)
+{
+    history->setFileFinished(file.resumeFileId, true, file.filePath);
+}
+
+void ChatForm::onFileTransferBrokenUnbroken(ToxFile file, bool broken)
+{
+    if (broken) {
+        history->setFileFinished(file.resumeFileId, false, file.filePath);
+    }
+}
+
+void ChatForm::onFileTransferCancelled(ToxFile file)
+{
+    history->setFileFinished(file.resumeFileId, false, file.filePath);
 }
 
 void ChatForm::onFileRecvRequest(ToxFile file)
@@ -331,9 +360,17 @@ void ChatForm::onFileRecvRequest(ToxFile file)
 
     ChatMessage::Ptr msg =
         ChatMessage::createFileTransferMessage(name, file, false, QDateTime::currentDateTime());
+
     insertChatMessage(msg);
 
+    if (history && Settings::getInstance().getEnableLogging()) {
+        auto pk = f->getPublicKey().toString();
+        auto name = f->getDisplayedName();
+        history->addNewFileMessage(pk, file.resumeFileId, file.fileName, file.filePath,
+                                   file.filesize, pk, QDateTime::currentDateTime(), name);
+    }
     ChatLineContentProxy* proxy = static_cast<ChatLineContentProxy*>(msg->getContent(1));
+
     assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
     FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
 
@@ -512,8 +549,8 @@ void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& param
     if (isFirst || isAfter) {
         if (isFirst || (isAfter && parameter.date < getFirstDate())) {
             const QString pk = f->getPublicKey().toString();
-            if ((isFirst || parameter.date >= history->getStartDateChatHistory(pk).date()) &&
-                    loadHistory(phrase, parameter)) {
+            if ((isFirst || parameter.date >= history->getStartDateChatHistory(pk).date())
+                && loadHistory(phrase, parameter)) {
 
                 return;
             }
@@ -523,7 +560,8 @@ void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& param
     } else {
         if (parameter.period == PeriodSearch::BeforeDate && parameter.date < getFirstDate()) {
             const QString pk = f->getPublicKey().toString();
-            if (parameter.date >= history->getStartDateChatHistory(pk).date() && loadHistory(phrase, parameter)) {
+            if (parameter.date >= history->getStartDateChatHistory(pk).date()
+                && loadHistory(phrase, parameter)) {
                 return;
             }
         }
@@ -558,7 +596,8 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
 
     if (!isSearch) {
         const QString pk = f->getPublicKey().toString();
-        const QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+        const QDateTime newBaseDate =
+            history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
         if (!newBaseDate.isValid()) {
             emit messageNotFoundShow(SearchDirection::Up);
@@ -651,7 +690,7 @@ void ChatForm::onReceiptReceived(quint32 friendId, int receipt)
     }
 }
 
-void ChatForm::onAvatarChanged(const ToxPk &friendPk, const QPixmap& pic)
+void ChatForm::onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic)
 {
     if (friendPk != f->getPublicKey()) {
         return;
@@ -791,6 +830,11 @@ void ChatForm::handleLoadedMessages(QList<History::HistMessage> newHistMsgs, boo
         MessageMetadata const metadata = getMessageMetadata(histMessage);
         lastDate = addDateLineIfNeeded(chatLines, lastDate, histMessage, metadata);
         auto msg = chatMessageFromHistMessage(histMessage, metadata);
+
+        if (!msg) {
+            continue;
+        }
+
         if (processUndelivered) {
             sendLoadedMessage(msg, metadata);
         }
@@ -835,7 +879,9 @@ ChatForm::MessageMetadata ChatForm::getMessageMetadata(History::HistMessage cons
     const QDateTime msgDateTime = histMessage.timestamp.toLocalTime();
     const bool isSelf = Core::getInstance()->getSelfId().getPublicKey() == authorPk;
     const bool needSending = !histMessage.isSent && isSelf;
-    const bool isAction = histMessage.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
+    const bool isAction =
+        histMessage.content.getType() == HistMessageContentType::message
+        && histMessage.content.asMessage().startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
     const qint64 id = histMessage.id;
     return {isSelf, needSending, isAction, id, authorPk, msgDateTime};
 }
@@ -845,11 +891,30 @@ ChatMessage::Ptr ChatForm::chatMessageFromHistMessage(History::HistMessage const
 {
     ToxPk authorPk(ToxId(histMessage.sender).getPublicKey());
     QString authorStr = getMsgAuthorDispName(authorPk, histMessage.dispName);
-    QString messageText =
-        metadata.isAction ? histMessage.message.mid(ACTION_PREFIX.length()) : histMessage.message;
-    ChatMessage::MessageType type = metadata.isAction ? ChatMessage::ACTION : ChatMessage::NORMAL;
     QDateTime dateTime = metadata.needSending ? QDateTime() : metadata.msgDateTime;
-    auto msg = ChatMessage::createChatMessage(authorStr, messageText, type, metadata.isSelf, dateTime);
+
+
+    ChatMessage::Ptr msg;
+
+    switch (histMessage.content.getType()) {
+    case HistMessageContentType::message: {
+        ChatMessage::MessageType type = metadata.isAction ? ChatMessage::ACTION : ChatMessage::NORMAL;
+        auto& message = histMessage.content.asMessage();
+        QString messageText = metadata.isAction ? message.mid(ACTION_PREFIX.length()) : message;
+
+        msg = ChatMessage::createChatMessage(authorStr, messageText, type, metadata.isSelf, dateTime);
+        break;
+    }
+    case HistMessageContentType::file: {
+        auto& file = histMessage.content.asFile();
+        bool isMe = file.direction == ToxFile::SENDING;
+        msg = ChatMessage::createFileTransferMessage(authorStr, file, isMe, dateTime);
+        break;
+    }
+    default:
+        assert(false);
+    }
+
     if (!metadata.isAction && needsToHideName(authorPk, metadata.msgDateTime)) {
         msg->hideSender();
     }
@@ -1061,7 +1126,7 @@ void ChatForm::SendMessageStr(QString msg)
         }
 
         ChatMessage::Ptr ma = createSelfMessage(part, timestamp, isAction, false);
-        
+
         if (history && Settings::getInstance().getEnableLogging()) {
             auto* offMsgEngine = getOfflineMsgEngine();
             QString selfPk = Core::getInstance()->getSelfId().toString();
@@ -1086,7 +1151,8 @@ void ChatForm::SendMessageStr(QString msg)
 bool ChatForm::loadHistory(const QString& phrase, const ParameterSearch& parameter)
 {
     const QString pk = f->getPublicKey().toString();
-    const QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+    const QDateTime newBaseDate =
+        history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
     if (newBaseDate.isValid() && getFirstDate().isValid() && newBaseDate.date() < getFirstDate()) {
         searchAfterLoadHistory = true;
@@ -1131,12 +1197,19 @@ void ChatForm::onExportChat()
 
     QString buffer;
     for (const auto& it : msgs) {
+        if (it.content.getType() != HistMessageContentType::message) {
+            continue;
+        }
         QString timestamp = it.timestamp.time().toString("hh:mm:ss");
         QString datestamp = it.timestamp.date().toString("yyyy-MM-dd");
         ToxPk authorPk(ToxId(it.sender).getPublicKey());
         QString author = getMsgAuthorDispName(authorPk, it.dispName);
 
-        buffer = buffer % QString{datestamp % '\t' % timestamp % '\t' % author % '\t' % it.message % '\n'};
+        if (it.content.getType() == HistMessageContentType::message) {
+            buffer = buffer
+                     % QString{datestamp % '\t' % timestamp % '\t' % author % '\t'
+                               % it.content.asMessage() % '\n'};
+        }
     }
     file.write(buffer.toUtf8());
     file.close();

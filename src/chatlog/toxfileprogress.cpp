@@ -55,8 +55,9 @@ void ToxFileProgress::addSample(ToxFile const& file)
     meanData[meanIndex++] = bytesPerSec;
 
     double meanBytesPerSec = 0.0;
-    for (size_t i = 0; i < TRANSFER_ROLLING_AVG_COUNT; ++i)
+    for (size_t i = 0; i < TRANSFER_ROLLING_AVG_COUNT; ++i) {
         meanBytesPerSec += meanData[i];
+    }
     meanBytesPerSec /= static_cast<qreal>(TRANSFER_ROLLING_AVG_COUNT);
 
     lastTick = now;
