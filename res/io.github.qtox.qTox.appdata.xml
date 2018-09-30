@@ -21,7 +21,7 @@
     Nowadays, every government seems to be interested in what we're saying online.
     qTox is built on a "privacy goes first" agenda, and we make no compromises.
     Your safety is our top priority, and there isn't anything in the world that
-    will change that. 
+    will change that.
   </p>
   <p>Instant messaging, video conferencing, and more.</p>
   <ul>
@@ -63,5 +63,8 @@
  <url type="homepage">https://qtox.github.io</url>
  <update_contact>barrdetwix@gmail.com</update_contact>
  <project_group>qTox</project_group>
+ <releases>
+​  <release version="1.16.3" date="2018-07-21"/>
+ </releases>
 </component>
 
