@@ -17,7 +17,7 @@
 
 
 # script to change versions in the files for osx and windows "packages"
-# 
+#
 # it should be run before releasing a new version
 #
 # NOTE: it checkouts the files before appending a version to them!
@@ -55,6 +55,14 @@ update_readme() {
     sed -ri "s|(github.com/qTox/qTox/releases/download/v$VERSION_PATTERN/qTox-v)$VERSION_PATTERN|\1$@|g" README.md
 }
 
+update_appdata() {
+    cd "$BASE_DIR"/res/
+    local isodate="$(date --iso-8601)"
+    sed -ri "s|(<release version=\")$VERSION_PATTERN|\1$@|g" io.github.qtox.qTox.appdata.xml
+    sed -ri "s|(<release version=\"$VERSION_PATTERN\" date=\").{10}|\1"$isodate"|g" io.github.qtox.qTox.appdata.xml
+}
+
+
 # exit if supplied arg is not a version
 is_version() {
     if [[ ! $@ =~ $VERSION_PATTERN ]]
@@ -74,6 +82,7 @@ main() {
         update_osx "$@"
         update_windows "$@"
         update_readme "$@"
+        update_appdata "$@"
     else
         # TODO: actually check whether there is a GNU sed on osx
         echo "OSX's sed not supported. Get a proper one."
