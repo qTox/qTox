@@ -493,9 +493,9 @@ void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, Tox_Message_T
 }
 
 #if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
-void Core::onGroupPeerListChange(Tox*, uint32_t groupId, void* user)
+void Core::onGroupPeerListChange(Tox*, uint32_t groupId, void* vCore)
 {
-    const auto core = static_cast<Core*>(user);
+    const auto core = static_cast<Core*>(vCore);
     if (core->getGroupAvEnabled(groupId)) {
         CoreAV::invalidateGroupCallSources(groupId);
     }

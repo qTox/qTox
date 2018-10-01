@@ -95,8 +95,6 @@ AVForm::AVForm(Audio* audio, CoreAV* coreAV, CameraSource& camera,
     audioThresholdSlider->setTracking(false);
     audioThresholdSlider->installEventFilter(this);
 
-    // TODO(sudden6): connect to audioSrc
-    //connect(audio, &Audio::volumeAvailable, this, &AVForm::setVolume);
     volumeDisplay->setMaximum(totalSliderSteps);
 
     fillAudioQualityComboBox();
@@ -538,7 +536,7 @@ void AVForm::on_inDevCombobox_currentIndexChanged(int deviceIndex)
         deviceName = inDevCombobox->itemText(deviceIndex);
     }
 
-    QString oldName = audioSettings->getInDev();
+    const QString oldName = audioSettings->getInDev();
     if(oldName != deviceName) {
         audioSettings->setInDev(deviceName);
         audio->reinitInput(deviceName);
@@ -563,7 +561,7 @@ void AVForm::on_outDevCombobox_currentIndexChanged(int deviceIndex)
         deviceName = outDevCombobox->itemText(deviceIndex);
     }
 
-    QString oldName = audioSettings->getOutDev();
+    const QString oldName = audioSettings->getOutDev();
 
     if(oldName != deviceName) {
         audioSettings->setOutDev(deviceName);

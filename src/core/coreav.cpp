@@ -591,7 +591,7 @@ void CoreAV::joinGroupCall(int groupId)
 {
     qDebug() << QString("Joining group call %1").arg(groupId);
 
-    ToxGroupCallPtr call = ToxGroupCallPtr(new ToxGroupCall{groupId, *this});
+    ToxGroupCallPtr call = ToxGroupCallPtr{new ToxGroupCall{groupId, *this}};
 
     assert(call != nullptr);
 
