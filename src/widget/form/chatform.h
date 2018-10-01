@@ -128,7 +128,7 @@ private:
         {}
     };
     void handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered);
-    QDate addDateLineIfNeeded(QList<ChatLine::Ptr> msgs, QDate const& lastDate,
+    QDate addDateLineIfNeeded(QList<ChatLine::Ptr>& msgs, QDate const& lastDate,
                               History::HistMessage const& newMessage, MessageMetadata const& metadata);
     MessageMetadata getMessageMetadata(History::HistMessage const& histMessage);
     ChatMessage::Ptr chatMessageFromHistMessage(History::HistMessage const& histMessage,
