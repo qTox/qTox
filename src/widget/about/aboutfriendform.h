@@ -24,6 +24,9 @@ private:
     Ui::AboutFriendForm* ui;
     const std::unique_ptr<IAboutFriend> about;
 
+signals:
+    void histroyRemoved();
+
 private slots:
     void onAutoAcceptDirChanged(const QString& path);
     void onAcceptedClicked();
