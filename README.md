@@ -29,8 +29,8 @@ Week of Testing: Your mana regenerates!" />
 ---
 
 <p align="center"><b>
-qTox is a powerful Tox client that follows the Tox design guidelines
-while running on all major platforms.
+qTox is a chat, voice, video, and file transfer instant messaging client using
+the encrypted peer-to-peer Tox protocol.
 </b></p>
 
  **[User Manual] |**
