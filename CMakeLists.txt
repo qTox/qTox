@@ -263,6 +263,7 @@ set(${PROJECT_NAME}_SOURCES
   src/core/toxencrypt.h
   src/core/toxfile.cpp
   src/core/toxfile.h
+  src/core/toxfilepause.h
   src/core/toxid.cpp
   src/core/toxid.h
   src/core/toxlogger.cpp
