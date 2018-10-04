@@ -51,8 +51,7 @@ private:
     static void sendFile(Core* core, uint32_t friendId, QString filename, QString filePath,
                          long long filesize);
     static void sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& data);
-    static void pauseResumeFileSend(Core* core, uint32_t friendId, uint32_t fileId);
-    static void pauseResumeFileRecv(Core* core, uint32_t friendId, uint32_t fileId);
+    static void pauseResumeFile(Core* core, uint32_t friendId, uint32_t fileId);
     static void cancelFileSend(Core* core, uint32_t friendId, uint32_t fileId);
     static void cancelFileRecv(Core* core, uint32_t friendId, uint32_t fileId);
     static void rejectFileRecvRequest(Core* core, uint32_t friendId, uint32_t fileId);

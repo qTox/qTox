@@ -745,18 +745,11 @@ void Core::sendAvatarFile(uint32_t friendId, const QByteArray& data)
     CoreFile::sendAvatarFile(this, friendId, data);
 }
 
-void Core::pauseResumeFileSend(uint32_t friendId, uint32_t fileNum)
+void Core::pauseResumeFile(uint32_t friendId, uint32_t fileNum)
 {
     QMutexLocker ml{coreLoopLock.get()};
 
-    CoreFile::pauseResumeFileSend(this, friendId, fileNum);
-}
-
-void Core::pauseResumeFileRecv(uint32_t friendId, uint32_t fileNum)
-{
-    QMutexLocker ml{coreLoopLock.get()};
-
-    CoreFile::pauseResumeFileRecv(this, friendId, fileNum);
+    CoreFile::pauseResumeFile(this, friendId, fileNum);
 }
 
 void Core::cancelFileSend(uint32_t friendId, uint32_t fileNum)
