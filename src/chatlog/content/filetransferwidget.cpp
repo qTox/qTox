@@ -557,18 +557,18 @@ void FileTransferWidget::handleButton(QPushButton* btn)
         if (btn->objectName() == "cancel") {
             Core::getInstance()->cancelFileSend(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "pause") {
-            Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
+            Core::getInstance()->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "resume") {
-            Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
+            Core::getInstance()->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         }
     } else // receiving or paused
     {
         if (btn->objectName() == "cancel") {
             Core::getInstance()->cancelFileRecv(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "pause") {
-            Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
+            Core::getInstance()->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "resume") {
-            Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
+            Core::getInstance()->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "accept") {
             QString path =
                 QFileDialog::getSaveFileName(Q_NULLPTR,
