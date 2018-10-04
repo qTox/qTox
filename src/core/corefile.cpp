@@ -147,7 +147,7 @@ void CoreFile::sendFile(Core* core, uint32_t friendId, QString filename, QString
     emit core->fileSendStarted(file);
 }
 
-void CoreFile::pauseResumeFileSend(Core* core, uint32_t friendId, uint32_t fileId)
+void CoreFile::pauseResumeFile(Core* core, uint32_t friendId, uint32_t fileId)
 {
     ToxFile* file = findFile(friendId, fileId);
     if (!file) {
@@ -177,11 +177,6 @@ void CoreFile::pauseResumeFileSend(Core* core, uint32_t friendId, uint32_t fileI
         tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME,
                          nullptr);
     }
-}
-
-void CoreFile::pauseResumeFileRecv(Core* core, uint32_t friendId, uint32_t fileId)
-{
-    pauseResumeFileSend(core, friendId, fileId);
 }
 
 void CoreFile::cancelFileSend(Core* core, uint32_t friendId, uint32_t fileId)
