@@ -1,6 +1,8 @@
 #ifndef CORESTRUCTS_H
 #define CORESTRUCTS_H
 
+#include "src/core/toxfilepause.h"
+
 #include <QString>
 #include <memory>
 
@@ -51,6 +53,7 @@ struct ToxFile
     FileDirection direction;
     QByteArray avatarData;
     QByteArray resumeFileId;
+    ToxFilePause pauseStatus;
 };
 
 #endif // CORESTRUCTS_H
