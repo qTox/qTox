@@ -154,41 +154,36 @@ void CoreFile::pauseResumeFileSend(Core* core, uint32_t friendId, uint32_t fileI
         qWarning("pauseResumeFileSend: No such file in queue");
         return;
     }
-    if (file->status == ToxFile::TRANSMITTING) {
+
+    if (file->status != ToxFile::TRANSMITTING && file->status != ToxFile::PAUSED) {
+        qWarning() << "pauseResumeFileSend: File is stopped";
+        return;
+    }
+
+    file->pauseStatus = file->pauseStatus & ToxFile::US_PAUSE
+            ? file->pauseStatus & ~ToxFile::US_PAUSE
+            : file->pauseStatus | ToxFile::US_PAUSE;
+
+    if (file->pauseStatus != ToxFile::NO_PAUSE) {
         file->status = ToxFile::PAUSED;
         emit core->fileTransferPaused(*file);
-        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_PAUSE,
-                         nullptr);
-    } else if (file->status == ToxFile::PAUSED) {
+    } else {
         file->status = ToxFile::TRANSMITTING;
         emit core->fileTransferAccepted(*file);
-        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME,
+    }
+
+    if (file->pauseStatus & ToxFile::US_PAUSE) {
+        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_PAUSE,
                          nullptr);
     } else {
-        qWarning() << "pauseResumeFileSend: File is stopped";
+        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME,
+                         nullptr);
     }
 }
 
 void CoreFile::pauseResumeFileRecv(Core* core, uint32_t friendId, uint32_t fileId)
 {
-    ToxFile* file = findFile(friendId, fileId);
-    if (!file) {
-        qWarning("cancelFileRecv: No such file in queue");
-        return;
-    }
-    if (file->status == ToxFile::TRANSMITTING) {
-        file->status = ToxFile::PAUSED;
-        emit core->fileTransferPaused(*file);
-        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_PAUSE,
-                         nullptr);
-    } else if (file->status == ToxFile::PAUSED) {
-        file->status = ToxFile::TRANSMITTING;
-        emit core->fileTransferAccepted(*file);
-        tox_file_control(core->tox.get(), file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME,
-                         nullptr);
-    } else {
-        qWarning() << "pauseResumeFileRecv: File is stopped or broken";
-    }
+    pauseResumeFileSend(core, friendId, fileId);
 }
 
 void CoreFile::cancelFileSend(Core* core, uint32_t friendId, uint32_t fileId)
@@ -384,6 +379,7 @@ void CoreFile::onFileControlCallback(Tox*, uint32_t friendId, uint32_t fileId,
         removeFile(friendId, fileId);
     } else if (control == TOX_FILE_CONTROL_PAUSE) {
         qDebug() << "onFileControlCallback: Received pause for file " << friendId << ":" << fileId;
+        file->pauseStatus |= ToxFile::THEM_PAUSE;
         file->status = ToxFile::PAUSED;
         emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, true);
     } else if (control == TOX_FILE_CONTROL_RESUME) {
@@ -391,7 +387,10 @@ void CoreFile::onFileControlCallback(Tox*, uint32_t friendId, uint32_t fileId,
             qDebug() << "Avatar transfer" << fileId << "to friend" << friendId << "accepted";
         else
             qDebug() << "onFileControlCallback: Received resume for file " << friendId << ":" << fileId;
-        file->status = ToxFile::TRANSMITTING;
+        file->pauseStatus &= ~ToxFile::THEM_PAUSE;
+        file->status = file->pauseStatus == ToxFile::NO_PAUSE
+                ? ToxFile::TRANSMITTING
+                : ToxFile::PAUSED;
         emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, false);
     } else {
         qWarning() << "Unhandled file control " << control << " for file " << friendId << ':' << fileId;

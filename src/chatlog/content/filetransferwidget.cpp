@@ -330,7 +330,7 @@ void FileTransferWidget::updateWidgetColor(ToxFile const& file)
 
 void FileTransferWidget::updateWidgetText(ToxFile const& file)
 {
-    if (lastStatus == file.status) {
+    if (lastStatus == file.status && file.status != ToxFile::PAUSED) {
         return;
     }
 
@@ -344,7 +344,11 @@ void FileTransferWidget::updateWidgetText(ToxFile const& file)
         break;
     case ToxFile::PAUSED:
         ui->etaLabel->setText("");
-        ui->progressLabel->setText(tr("Paused", "file transfer widget"));
+        if (file.pauseStatus & ToxFile::US_PAUSE) {
+            ui->progressLabel->setText(tr("Paused", "file transfer widget"));
+        } else {
+            ui->progressLabel->setText(tr("Remote Paused", "file transfer widget"));
+        }
         break;
     case ToxFile::TRANSMITTING:
         ui->etaLabel->setText("");
@@ -446,7 +450,7 @@ void FileTransferWidget::updateSignals(ToxFile const& file)
 
 void FileTransferWidget::setupButtons(ToxFile const& file)
 {
-    if (lastStatus == file.status) {
+    if (lastStatus == file.status && file.status != ToxFile::PAUSED) {
         return;
     }
 
@@ -464,9 +468,15 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
         break;
 
     case ToxFile::PAUSED:
-        ui->leftButton->setIcon(QIcon(":/ui/fileTransferInstance/arrow_white.svg"));
-        ui->leftButton->setObjectName("resume");
-        ui->leftButton->setToolTip(tr("Resume transfer"));
+        if (file.pauseStatus & ToxFile::US_PAUSE) {
+            ui->leftButton->setIcon(QIcon(":/ui/fileTransferInstance/arrow_white.svg"));
+            ui->leftButton->setObjectName("resume");
+            ui->leftButton->setToolTip(tr("Resume transfer"));
+        } else {
+            ui->leftButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
+            ui->leftButton->setObjectName("pause");
+            ui->leftButton->setToolTip(tr("Pause transfer"));
+        }
 
         ui->rightButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
         ui->rightButton->setObjectName("cancel");
