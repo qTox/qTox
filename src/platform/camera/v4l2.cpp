@@ -126,8 +126,10 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
 
     int error = 0;
     int fd = deviceOpen(devName, &error);
-    if (fd < 0 || error != 0)
+    if (fd < 0 || error != 0) {
         return modes;
+    }
+
     v4l2_fmtdesc vfd{};
     vfd.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
@@ -156,10 +158,18 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
 
             QVector<float> rates =
                 getDeviceModeFramerates(fd, mode.width, mode.height, vfd.pixelformat);
+
+            // insert dummy FPS value to have the mode in the list even if we don't know the FPS
+            // this fixes support for some webcams, see #5082
+            if (rates.isEmpty()) {
+                rates.append(0.0f);
+            }
+
             for (float rate : rates) {
                 mode.FPS = rate;
-                if (!modes.contains(mode))
+                if (!modes.contains(mode)) {
                     modes.append(std::move(mode));
+                }
             }
             vfse.index++;
         }
