@@ -361,17 +361,19 @@ https://github.com/qTox/qTox/wiki/Testing
 
 *Not a requirement, just a friendly tip. :wink:*
 
-It's nice when commits are being GPG-signed.  Github has a few articles about
-configuring & signing.
+It's nice when commits and tags are being GPG-signed.  Github has a few articles
+about configuring & signing.
 
 https://help.github.com/articles/signing-commits-using-gpg/
 
 And *tl;dr* version:
 
-```
+```sh
 gpg --gen-key
 gpg --send-keys <your generated key ID>
-git config --global commit.gpgsign true
+git config --local commit.gpgsign true
+# also force signing tags
+git config --local tag.forceSignAnnotated true
 ```
 
 
