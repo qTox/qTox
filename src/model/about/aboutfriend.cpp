@@ -110,3 +110,14 @@ bool AboutFriend::clearHistory()
 
     return false;
 }
+
+bool AboutFriend::isHistoryExistence()
+{
+    History* const history = Nexus::getProfile()->getHistory();
+    if (history) {
+        const ToxPk pk = f->getPublicKey();
+        return history->isHistoryExistence(pk.toString());
+    }
+
+    return false;
+}

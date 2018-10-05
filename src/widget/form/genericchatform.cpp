@@ -220,7 +220,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     saveChatAction = menu.addAction(QIcon::fromTheme("document-save"), QString(),
                                     this, SLOT(onSaveLogClicked()));
     clearAction = menu.addAction(QIcon::fromTheme("edit-clear"), QString(),
-                                 this, SLOT(clearChatArea(bool)),
+                                 this, SLOT(clearChatArea()),
                                  QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_L));
     addAction(clearAction);
 
@@ -816,27 +816,28 @@ std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, co
 
 void GenericChatForm::clearChatArea()
 {
-    clearChatArea(true);
+    clearChatArea(/* confirm = */ true, /* inform = */ true);
 }
 
-void GenericChatForm::clearChatArea(bool notinform)
+void GenericChatForm::clearChatArea(bool confirm, bool inform)
 {
-    QMessageBox::StandardButton mboxResult =
-        QMessageBox::question(this, tr("Confirmation"),
-                              tr("You are sure that you want to clear all displayed messages?"),
-                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-    if (mboxResult == QMessageBox::No) {
-        return;
+    if (confirm) {
+        QMessageBox::StandardButton mboxResult =
+                QMessageBox::question(this, tr("Confirmation"),
+                                      tr("You are sure that you want to clear all displayed messages?"),
+                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        if (mboxResult == QMessageBox::No) {
+            return;
+        }
     }
+
     chatWidget->clear();
     previousId = ToxPk();
 
-    if (!notinform)
+    if (inform)
         addSystemInfoMessage(tr("Cleared"), ChatMessage::INFO, QDateTime::currentDateTime());
 
     earliestMessage = QDateTime(); // null
-
-    emit chatAreaCleared();
 }
 
 void GenericChatForm::onSelectAllClicked()
