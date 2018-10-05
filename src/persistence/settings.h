@@ -186,6 +186,7 @@ signals:
     void enableLoggingChanged(bool enabled);
     void autoAwayTimeChanged(int minutes);
     void globalAutoAcceptDirChanged(const QString& path);
+    void autoAcceptMaxSizeChanged(size_t size);
     void checkUpdatesChanged(bool enabled);
     void widgetDataChanged(const QString& key);
 
@@ -438,6 +439,9 @@ public:
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
 
+    size_t getMaxAutoAcceptSize() const;
+    void setMaxAutoAcceptSize(size_t size);
+
     bool getAutoGroupInvite(const ToxPk& id) const override;
     void setAutoGroupInvite(const ToxPk& id, bool accept) override;
 
@@ -627,6 +631,7 @@ private:
     QHash<QString, QString> autoAccept;
     bool autoSaveEnabled;
     QString globalAutoAcceptDir;
+    size_t autoAcceptMaxSize;
 
     QList<Request> friendRequests;
 

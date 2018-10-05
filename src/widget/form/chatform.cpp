@@ -339,12 +339,16 @@ void ChatForm::onFileRecvRequest(ToxFile file)
 
     const Settings& settings = Settings::getInstance();
     QString autoAcceptDir = settings.getAutoAcceptDir(f->getPublicKey());
-    // there is auto-accept for that contact
-    if (!autoAcceptDir.isEmpty()) {
+
+    if (autoAcceptDir.isEmpty() && settings.getAutoSaveEnabled()) {
+        autoAcceptDir = settings.getGlobalAutoAcceptDir();
+    }
+
+    auto maxAutoAcceptSize = settings.getMaxAutoAcceptSize();
+    bool autoAcceptSizeCheckPassed = maxAutoAcceptSize == 0 || maxAutoAcceptSize >= file.filesize;
+
+    if (!autoAcceptDir.isEmpty() && autoAcceptSizeCheckPassed) {
         tfWidget->autoAcceptTransfer(autoAcceptDir);
-        // global autosave to global directory
-    } else if (settings.getAutoSaveEnabled()) {
-        tfWidget->autoAcceptTransfer(settings.getGlobalAutoAcceptDir());
     }
 
     Widget::getInstance()->updateFriendActivity(f);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1312</width>
-    <height>580</height>
+    <height>511</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1276</width>
-        <height>587</height>
+        <width>1298</width>
+        <height>497</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
@@ -278,6 +278,13 @@ instead of closing itself.</string>
             <property name="leftMargin">
              <number>0</number>
             </property>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Default directory to save files:</string>
+              </property>
+             </widget>
+            </item>
             <item row="2" column="1">
              <widget class="QPushButton" name="autoSaveFilesDir">
               <property name="sizePolicy">
@@ -288,13 +295,6 @@ instead of closing itself.</string>
               </property>
               <property name="toolTip">
                <string>Set where files will be saved.</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Default directory to save files:</string>
               </property>
              </widget>
             </item>
@@ -311,6 +311,20 @@ instead of closing itself.</string>
               </property>
               <property name="text">
                <string>Autoaccept files</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="maxAutoAcceptSizeLabel">
+              <property name="text">
+               <string>Max autoaccept file size (0 to disable):</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QDoubleSpinBox" name="maxAutoAcceptSizeMB">
+              <property name="suffix">
+               <string> MB</string>
               </property>
              </widget>
             </item>

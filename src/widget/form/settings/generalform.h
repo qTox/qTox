@@ -53,6 +53,7 @@ private slots:
     void on_cbFauxOfflineMessaging_stateChanged();
 
     void on_autoacceptFiles_stateChanged();
+    void on_maxAutoAcceptSizeMB_editingFinished();
     void on_autoSaveFilesDir_clicked();
     void on_checkUpdates_stateChanged();
 
