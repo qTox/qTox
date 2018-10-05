@@ -294,6 +294,7 @@ void FriendWidget::showDetails()
     const auto iabout = new AboutFriend(frnd, &Settings::getInstance());
     std::unique_ptr<IAboutFriend> about = std::unique_ptr<IAboutFriend>(iabout);
     const auto aboutUser = new AboutFriendForm(std::move(about), Widget::getInstance());
+    connect(aboutUser, &AboutFriendForm::histroyRemoved, this, &FriendWidget::friendHistoryRemoved);
     aboutUser->show();
 }
 

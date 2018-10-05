@@ -1,4 +1,5 @@
 #include "aboutfriendform.h"
+#include "src/widget/gui.h"
 #include "ui_aboutfriendform.h"
 #include "src/core/core.h"
 
@@ -24,6 +25,8 @@ AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* 
 
     const QString dir = about->getAutoAcceptDir();
     ui->autoacceptfile->setChecked(!dir.isEmpty());
+
+    ui->removeHistory->setEnabled(about->isHistoryExistence());
 
     const int index = static_cast<int>(about->getAutoAcceptCall());
     ui->autoacceptcall->setCurrentIndex(index);
@@ -105,10 +108,24 @@ void AboutFriendForm::onAcceptedClicked()
 
 void AboutFriendForm::onRemoveHistoryClicked()
 {
-    about->clearHistory();
+   const bool retYes = GUI::askQuestion(tr("Confirmation"),
+                                   tr("Are you sure to remove %1 chat history?").arg(about->getName()),
+                                   /* defaultAns = */ false, /* warning = */ true, /* yesno = */ true);
+    if (!retYes) {
+        return;
+    }
 
-    QMessageBox::information(this, tr("History removed"), tr("Chat history with %1 removed!")
-                             .arg(about->getName().toHtmlEscaped()), QMessageBox::Ok);
+   const bool result = about->clearHistory();
+
+    if (!result) {
+        GUI::showWarning(tr("History removed"),
+                         tr("Failed to remove chat history with %1!").arg(about->getName()).toHtmlEscaped());
+        return;
+    }
+
+    emit histroyRemoved();
+
+    ui->removeHistory->setEnabled(false); // For know clearly to has removed the history
 }
 
 AboutFriendForm::~AboutFriendForm()

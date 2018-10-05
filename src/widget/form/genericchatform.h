@@ -87,7 +87,6 @@ public:
 signals:
     void sendMessage(uint32_t, QString);
     void sendAction(uint32_t, QString);
-    void chatAreaCleared();
     void messageInserted();
     void messageNotFoundShow(SearchDirection direction);
 
@@ -104,8 +103,8 @@ protected slots:
     void onEmoteInsertRequested(QString str);
     void onSaveLogClicked();
     void onCopyLogClicked();
-    virtual void clearChatArea(bool);
     void clearChatArea();
+    void clearChatArea(bool confirm, bool inform);
     void onSelectAllClicked();
     void showFileMenu();
     void hideFileMenu();
