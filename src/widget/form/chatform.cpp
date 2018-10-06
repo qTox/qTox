@@ -374,9 +374,6 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         headWidget->createCallConfirm(video);
         headWidget->showCallConfirm();
         lastCallIsVideo = video;
-        auto msg = ChatMessage::createChatInfoMessage(tr("%1 calling").arg(displayedName),
-                                                      ChatMessage::INFO, QDateTime::currentDateTime());
-        insertChatMessage(msg);
         emit incomingNotification(friendId);
     }
 }
