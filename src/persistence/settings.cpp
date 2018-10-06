@@ -175,8 +175,8 @@ void Settings::loadGlobal()
         }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", true).toBool();
-        notifySound = s.value("notifySound", true).toBool(); // note: notifySound and busySound UI elements are now under UI settings
-        busySound = s.value("busySound", false).toBool();    // page, but kept under General in settings file to be backwards compatible
+        notifySound = s.value("notifySound", true).toBool();
+        busySound = s.value("busySound", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
@@ -272,9 +272,9 @@ void Settings::loadGlobal()
         enableTestSound = s.value("enableTestSound", true).toBool();
         audioBitrate = s.value("audioBitrate", 64).toInt();
         enableBackend2 = false;
-        #ifdef USE_FILTERAUDIO
+#ifdef USE_FILTERAUDIO
         enableBackend2 = s.value("enableBackend2", false).toBool();
-        #endif
+#endif
     }
     s.endGroup();
 

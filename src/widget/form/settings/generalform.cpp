@@ -151,8 +151,7 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
     bodyUI->autoacceptFiles->setChecked(s.getAutoSaveEnabled());
 
 #ifndef QTOX_PLATFORM_EXT
-    bodyUI->autoAwayLabel->setEnabled(
-        false); // these don't seem to change the appearance of the widgets,
+    bodyUI->autoAwayLabel->setEnabled(false); // these don't seem to change the appearance of the widgets,
     bodyUI->autoAwaySpinBox->setEnabled(false); // though they are unusable
 #endif
 
