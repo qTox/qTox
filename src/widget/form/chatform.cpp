@@ -234,7 +234,7 @@ void ChatForm::onSendTriggered()
 }
 void ChatForm::onFileNameChanged(const ToxPk& friendPk)
 {
-    if(friendPk != f->getPublicKey()) {
+    if (friendPk != f->getPublicKey()) {
         return;
     }
 
@@ -266,8 +266,8 @@ void ChatForm::onTextEditChanged()
 
 void ChatForm::onAttachClicked()
 {
-    QStringList paths =
-        QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"), QDir::homePath(), nullptr, nullptr);
+    QStringList paths = QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Send a file"),
+                                                      QDir::homePath(), nullptr, nullptr);
 
     if (paths.isEmpty()) {
         return;
@@ -512,8 +512,8 @@ void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& param
     if (isFirst || isAfter) {
         if (isFirst || (isAfter && parameter.date < getFirstDate())) {
             const QString pk = f->getPublicKey().toString();
-            if ((isFirst || parameter.date >= history->getStartDateChatHistory(pk).date()) &&
-                    loadHistory(phrase, parameter)) {
+            if ((isFirst || parameter.date >= history->getStartDateChatHistory(pk).date())
+                && loadHistory(phrase, parameter)) {
 
                 return;
             }
@@ -523,7 +523,8 @@ void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& param
     } else {
         if (parameter.period == PeriodSearch::BeforeDate && parameter.date < getFirstDate()) {
             const QString pk = f->getPublicKey().toString();
-            if (parameter.date >= history->getStartDateChatHistory(pk).date() && loadHistory(phrase, parameter)) {
+            if (parameter.date >= history->getStartDateChatHistory(pk).date()
+                && loadHistory(phrase, parameter)) {
                 return;
             }
         }
@@ -558,7 +559,8 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
 
     if (!isSearch) {
         const QString pk = f->getPublicKey().toString();
-        const QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+        const QDateTime newBaseDate =
+            history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
         if (!newBaseDate.isValid()) {
             emit messageNotFoundShow(SearchDirection::Up);
@@ -651,7 +653,7 @@ void ChatForm::onReceiptReceived(quint32 friendId, int receipt)
     }
 }
 
-void ChatForm::onAvatarChanged(const ToxPk &friendPk, const QPixmap& pic)
+void ChatForm::onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic)
 {
     if (friendPk != f->getPublicKey()) {
         return;
@@ -1061,7 +1063,7 @@ void ChatForm::SendMessageStr(QString msg)
         }
 
         ChatMessage::Ptr ma = createSelfMessage(part, timestamp, isAction, false);
-        
+
         if (history && Settings::getInstance().getEnableLogging()) {
             auto* offMsgEngine = getOfflineMsgEngine();
             QString selfPk = Core::getInstance()->getSelfId().toString();
@@ -1086,7 +1088,8 @@ void ChatForm::SendMessageStr(QString msg)
 bool ChatForm::loadHistory(const QString& phrase, const ParameterSearch& parameter)
 {
     const QString pk = f->getPublicKey().toString();
-    const QDateTime newBaseDate = history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+    const QDateTime newBaseDate =
+        history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
     if (newBaseDate.isValid() && getFirstDate().isValid() && newBaseDate.date() < getFirstDate()) {
         searchAfterLoadHistory = true;
@@ -1136,7 +1139,8 @@ void ChatForm::onExportChat()
         ToxPk authorPk(ToxId(it.sender).getPublicKey());
         QString author = getMsgAuthorDispName(authorPk, it.dispName);
 
-        buffer = buffer % QString{datestamp % '\t' % timestamp % '\t' % author % '\t' % it.message % '\n'};
+        buffer = buffer
+                 % QString{datestamp % '\t' % timestamp % '\t' % author % '\t' % it.message % '\n'};
     }
     file.write(buffer.toUtf8());
     file.close();
