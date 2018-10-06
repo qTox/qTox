@@ -272,9 +272,9 @@ void Settings::loadGlobal()
         enableTestSound = s.value("enableTestSound", true).toBool();
         audioBitrate = s.value("audioBitrate", 64).toInt();
         enableBackend2 = false;
-        #ifdef USE_FILTERAUDIO
+#ifdef USE_FILTERAUDIO
         enableBackend2 = s.value("enableBackend2", false).toBool();
-        #endif
+#endif
     }
     s.endGroup();
 
