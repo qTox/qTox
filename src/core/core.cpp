@@ -47,12 +47,14 @@ const QString Core::TOX_EXT = ".tox";
 Core::Core(QThread* coreThread)
     : tox(nullptr)
     , av(nullptr)
+    , toxTimer{new QTimer{this}}
     , coreLoopLock(new QMutex(QMutex::Recursive))
     , coreThread(coreThread)
 {
-    toxTimer.setSingleShot(true);
-    connect(&this->toxTimer, &QTimer::timeout, this, &Core::process);
-    connect(coreThread, &QThread::finished, &toxTimer, &QTimer::stop);
+    assert(toxTimer);
+    toxTimer->setSingleShot(true);
+    connect(toxTimer, &QTimer::timeout, this, &Core::process);
+    connect(coreThread, &QThread::finished, toxTimer, &QTimer::stop);
 }
 
 Core::~Core()
@@ -225,8 +227,6 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
     // connect the thread with the Core
     connect(thread, &QThread::started, core.get(), &Core::onStarted);
     core->moveToThread(thread);
-    // since this is allocated in the constructor move it to the other thread too
-    core->toxTimer.moveToThread(thread);
 
     // when leaving this function 'core' should be ready for it's start() action or
     // a nullptr
@@ -323,7 +323,7 @@ void Core::process()
 
     unsigned sleeptime =
         qMin(tox_iteration_interval(tox.get()), CoreFile::corefileIterationInterval());
-    toxTimer.start(sleeptime);
+    toxTimer->start(sleeptime);
 }
 
 bool Core::checkConnection()

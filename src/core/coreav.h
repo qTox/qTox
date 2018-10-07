@@ -30,8 +30,8 @@
 
 class Friend;
 class Group;
-class QTimer;
 class QThread;
+class QTimer;
 class CoreVideoSource;
 class CameraSource;
 class VideoSource;
@@ -94,7 +94,6 @@ public slots:
     bool cancelCall(uint32_t friendNum);
     void timeoutCall(uint32_t friendNum);
     void start();
-    void stop();
 
 signals:
     void avInvite(uint32_t friendId, bool video);
@@ -124,7 +123,7 @@ private:
 private:
     ToxAV* toxav;
     std::unique_ptr<QThread> coreavThread;
-    std::unique_ptr<QTimer> iterateTimer;
+    QTimer* iterateTimer = nullptr;
     static std::map<uint32_t, ToxFriendCall> calls;
     static std::map<int, ToxGroupCall> groupCalls;
     std::atomic_flag threadSwitchLock;

@@ -82,16 +82,20 @@ std::map<uint32_t, ToxFriendCall> CoreAV::calls;
 std::map<int, ToxGroupCall> CoreAV::groupCalls;
 
 CoreAV::CoreAV(Tox* tox)
-    : coreavThread{new QThread}
+    : coreavThread{new QThread{this}}
     , iterateTimer{new QTimer{this}}
     , threadSwitchLock{false}
 {
+    assert(coreavThread);
+    assert(iterateTimer);
+
     coreavThread->setObjectName("qTox CoreAV");
     moveToThread(coreavThread.get());
 
     iterateTimer->setSingleShot(true);
-    connect(iterateTimer.get(), &QTimer::timeout, this, &CoreAV::process);
-    connect(coreavThread.get(), &QThread::finished, iterateTimer.get(), &QTimer::stop);
+
+    connect(iterateTimer, &QTimer::timeout, this, &CoreAV::process);
+    connect(coreavThread.get(), &QThread::finished, iterateTimer, &QTimer::stop);
 
     toxav = toxav_new(tox, nullptr);
 
@@ -134,17 +138,6 @@ void CoreAV::start()
     if (QThread::currentThread() != coreavThread.get())
         return (void)QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection);
     iterateTimer->start();
-}
-
-/**
- * @brief Stops the main loop
- */
-void CoreAV::stop()
-{
-    // Timers can only be touched from their own thread
-    if (QThread::currentThread() != coreavThread.get())
-        return (void)QMetaObject::invokeMethod(this, "stop", Qt::BlockingQueuedConnection);
-    iterateTimer->stop();
 }
 
 void CoreAV::process()
