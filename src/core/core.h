@@ -273,7 +273,7 @@ private:
     ToxPtr tox;
 
     std::unique_ptr<CoreAV> av;
-    QTimer toxTimer;
+    QTimer toxTimer{this};
     // recursive, since we might call our own functions
     // pointer so we can circumvent const functions
     std::unique_ptr<QMutex> coreLoopLock = nullptr;

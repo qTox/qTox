@@ -23,6 +23,7 @@
 
 #include "src/core/toxcall.h"
 #include <QObject>
+#include <QTimer>
 #include <atomic>
 #include <memory>
 #include <tox/tox.h> // for TOX_VERSION_IS_API_COMPATIBLE macro
@@ -30,7 +31,6 @@
 
 class Friend;
 class Group;
-class QTimer;
 class QThread;
 class CoreVideoSource;
 class CameraSource;
@@ -124,7 +124,7 @@ private:
 private:
     ToxAV* toxav;
     std::unique_ptr<QThread> coreavThread;
-    std::unique_ptr<QTimer> iterateTimer;
+    QTimer iterateTimer{this};
     static std::map<uint32_t, ToxFriendCall> calls;
     static std::map<int, ToxGroupCall> groupCalls;
     std::atomic_flag threadSwitchLock;
