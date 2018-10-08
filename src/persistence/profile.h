@@ -68,6 +68,8 @@ public:
 
     bool rename(QString newName);
 
+    QString hashedFriendId(const QString& ownerStr) const;
+
     static void scanProfiles();
     static QStringList getProfiles();
 

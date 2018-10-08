@@ -26,6 +26,9 @@ public:
     QString getNote() const override;
     void setNote(const QString& note) override;
 
+    bool getAutoAcceptEnable() const override;
+    void setAutoAcceptEnable(bool enable) override;
+
     QString getAutoAcceptDir() const override;
     void setAutoAcceptDir(const QString& path) override;
 

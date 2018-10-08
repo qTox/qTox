@@ -338,9 +338,11 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
 
     const Settings& settings = Settings::getInstance();
-    QString autoAcceptDir = settings.getAutoAcceptDir(f->getPublicKey());
+    auto pk = f->getPublicKey();
+    auto autoAcceptEnable = settings.getAutoAcceptEnable(pk);
+    QString autoAcceptDir = settings.getAutoAcceptDir(pk);
     // there is auto-accept for that contact
-    if (!autoAcceptDir.isEmpty()) {
+    if (autoAcceptEnable) {
         tfWidget->autoAcceptTransfer(autoAcceptDir);
         // global autosave to global directory
     } else if (settings.getAutoSaveEnabled()) {
@@ -892,14 +894,12 @@ void ChatForm::doScreenshot()
 
 void ChatForm::sendImage(const QPixmap& pixmap)
 {
-    QDir(Settings::getInstance().getAppDataDirPath()).mkpath("images");
-
     // use ~ISO 8601 for screenshot timestamp, considering FS limitations
     // https://en.wikipedia.org/wiki/ISO_8601
     // Windows has to be supported, thus filename can't have `:` in it :/
     // Format should be: `qTox_Screenshot_yyyy-MM-dd HH-mm-ss.zzz.png`
-    QString filepath = QString("%1images%2qTox_Image_%3.png")
-                           .arg(Settings::getInstance().getAppDataDirPath())
+    QString filepath = QString("%1%2qTox_Image_%3.png")
+                           .arg(Settings::getInstance().getAutoAcceptDir(f->getPublicKey()))
                            .arg(QDir::separator())
                            .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd HH-mm-ss.zzz"));
     QFile file(filepath);

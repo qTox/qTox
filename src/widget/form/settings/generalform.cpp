@@ -20,6 +20,7 @@
 #include "generalform.h"
 #include "ui_generalsettings.h"
 
+#include <QDesktopServices>
 #include <QFileDialog>
 
 #include "src/core/core.h"
@@ -151,8 +152,7 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
     bodyUI->autoacceptFiles->setChecked(s.getAutoSaveEnabled());
 
 #ifndef QTOX_PLATFORM_EXT
-    bodyUI->autoAwayLabel->setEnabled(
-        false); // these don't seem to change the appearance of the widgets,
+    bodyUI->autoAwayLabel->setEnabled(false); // these don't seem to change the appearance of the widgets,
     bodyUI->autoAwaySpinBox->setEnabled(false); // though they are unusable
 #endif
 
@@ -243,6 +243,12 @@ void GeneralForm::on_autoSaveFilesDir_clicked()
 
     Settings::getInstance().setGlobalAutoAcceptDir(directory);
     bodyUI->autoSaveFilesDir->setText(directory);
+}
+
+void GeneralForm::on_openAutoSaveFilesDir_clicked()
+{
+    auto dir = Settings::getInstance().getGlobalAutoAcceptDir();
+    QDesktopServices::openUrl(QUrl::fromLocalFile(dir));
 }
 
 void GeneralForm::on_checkUpdates_stateChanged()
