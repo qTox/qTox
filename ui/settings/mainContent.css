@@ -19,7 +19,6 @@ QMessageBox
 
 QCheckBox
 {
-    background-color: white;
     color: black;
 }
 
@@ -146,7 +145,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 {
     background: none;
 }
-
 
 QScrollBar:horizontal
 {
