@@ -19,6 +19,9 @@ public:
     virtual QString getNote() const = 0;
     virtual void setNote(const QString& note) = 0;
 
+    virtual bool getAutoAcceptEnable() const = 0;
+    virtual void setAutoAcceptEnable(bool enable) = 0;
+
     virtual QString getAutoAcceptDir() const = 0;
     virtual void setAutoAcceptDir(const QString& path) = 0;
 

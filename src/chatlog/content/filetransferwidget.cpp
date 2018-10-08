@@ -21,6 +21,8 @@
 #include "ui_filetransferwidget.h"
 
 #include "src/core/core.h"
+#include "src/friendlist.h"
+#include "src/model/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
@@ -40,6 +42,7 @@
 #include <QPainter>
 #include <QVariantAnimation>
 
+#include <cassert>
 #include <math.h>
 
 // The leftButton is used to accept, pause, or resume a file transfer, as well as to open a
@@ -503,12 +506,18 @@ void FileTransferWidget::handleButton(QPushButton* btn)
         else if (btn->objectName() == "resume")
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
         else if (btn->objectName() == "accept") {
-            QString path =
-                QFileDialog::getSaveFileName(Q_NULLPTR,
-                                             tr("Save a file", "Title of the file saving dialog"),
-                                             Settings::getInstance().getGlobalAutoAcceptDir() + "/"
-                                                 + fileInfo.fileName);
-            acceptTransfer(path);
+            auto f = FriendList::findFriend(fileInfo.friendId);
+            assert(f);
+
+            if (f) {
+                QString path = QFileDialog::getSaveFileName(Q_NULLPTR,
+                                                            tr("Save a file",
+                                                               "Title of the file saving dialog"),
+                                                            Settings::getInstance().getAutoAcceptDir(
+                                                                f->getPublicKey())
+                                                                + "/" + fileInfo.fileName);
+                acceptTransfer(path);
+            }
         }
     }
 
@@ -536,7 +545,8 @@ void FileTransferWidget::showPreview(const QString& filename)
         }
         const QByteArray imageFileData = imageFile.readAll();
         QImage image = QImage::fromData(imageFileData);
-        const int exifOrientation = getExifOrientation(imageFileData.constData(), imageFileData.size());
+        const int exifOrientation =
+            getExifOrientation(imageFileData.constData(), imageFileData.size());
         if (exifOrientation) {
             applyTransformation(exifOrientation, image);
         }
@@ -549,13 +559,12 @@ void FileTransferWidget::showPreview(const QString& filename)
         // Show mouseover preview, but make sure it's not larger than 50% of the screen width/height
         const QRect desktopSize = QApplication::desktop()->screenGeometry();
         const int maxPreviewWidth{desktopSize.width() / 2};
-        const int maxPreviewHeight{desktopSize.height() /2};
+        const int maxPreviewHeight{desktopSize.height() / 2};
         const QImage previewImage = [&image, maxPreviewWidth, maxPreviewHeight]() {
             if (image.width() > maxPreviewWidth || image.height() > maxPreviewHeight) {
-                return image.scaled(maxPreviewWidth, maxPreviewHeight,
-                                                     Qt::KeepAspectRatio, Qt::SmoothTransformation);
-            }
-            else {
+                return image.scaled(maxPreviewWidth, maxPreviewHeight, Qt::KeepAspectRatio,
+                                    Qt::SmoothTransformation);
+            } else {
                 return image;
             }
         }();
@@ -565,8 +574,7 @@ void FileTransferWidget::showPreview(const QString& filename)
         buffer.open(QIODevice::WriteOnly);
         previewImage.save(&buffer, "PNG");
         buffer.close();
-        ui->previewButton->setToolTip("<img src=data:image/png;base64," + imageData.toBase64()
-                                      + "/>");
+        ui->previewButton->setToolTip("<img src=data:image/png;base64," + imageData.toBase64() + "/>");
     }
 }
 
@@ -628,12 +636,11 @@ int FileTransferWidget::getExifOrientation(const char* data, const int size)
 void FileTransferWidget::applyTransformation(const int orientation, QImage& image)
 {
     QTransform exifTransform;
-    switch(static_cast<ExifOrientation>(orientation))
-    {
+    switch (static_cast<ExifOrientation>(orientation)) {
     case ExifOrientation::TopLeft:
         break;
     case ExifOrientation::TopRight:
-        image = image.mirrored(1,0);
+        image = image.mirrored(1, 0);
         break;
     case ExifOrientation::BottomRight:
         exifTransform.rotate(180);

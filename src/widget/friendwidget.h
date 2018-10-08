@@ -68,6 +68,7 @@ private slots:
     void removeFromCircle();
     void moveToCircle(int circleId);
     void changeAutoAccept(bool enable);
+    void changeAutoAcceptDir();
     void showDetails();
 
 public:

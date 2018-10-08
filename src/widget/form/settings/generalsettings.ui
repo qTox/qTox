@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1298</width>
-        <height>497</height>
+        <width>1284</width>
+        <height>524</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
@@ -298,7 +298,7 @@ instead of closing itself.</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="0">
+            <item row="4" column="0">
              <widget class="QCheckBox" name="autoacceptFiles">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -314,14 +314,21 @@ instead of closing itself.</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
+            <item row="3" column="1">
+             <widget class="QPushButton" name="openAutoSaveFilesDir">
+              <property name="text">
+               <string>Open Directory</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
              <widget class="QLabel" name="maxAutoAcceptSizeLabel">
               <property name="text">
                <string>Max autoaccept file size (0 to disable):</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="1">
+            <item row="5" column="1">
              <widget class="QDoubleSpinBox" name="maxAutoAcceptSizeMB">
               <property name="suffix">
                <string> MB</string>
