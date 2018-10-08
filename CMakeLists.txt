@@ -333,6 +333,8 @@ set(${PROJECT_NAME}_SOURCES
   src/persistence/smileypack.h
   src/persistence/toxsave.cpp
   src/persistence/toxsave.h
+  src/persistence/upgradablesetting.cpp
+  src/persistence/upgradablesetting.h
   src/video/cameradevice.cpp
   src/video/cameradevice.h
   src/video/camerasource.cpp

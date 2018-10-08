@@ -3,6 +3,7 @@
 #include "src/core/core.h"
 #include "src/widget/gui.h"
 
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QMessageBox>
 
@@ -16,27 +17,25 @@ AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* 
     ui->aliases->hide();
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutFriendForm::onAcceptedClicked);
-    connect(ui->autoacceptfile, &QCheckBox::clicked, this, &AboutFriendForm::onAutoAcceptDirClicked);
+    connect(ui->autoacceptfile, &QCheckBox::clicked, this, &AboutFriendForm::onAutoAcceptClicked);
     connect(ui->autoacceptcall, SIGNAL(activated(int)), this, SLOT(onAutoAcceptCallClicked(void)));
     connect(ui->autogroupinvite, &QCheckBox::clicked, this, &AboutFriendForm::onAutoGroupInvite);
     connect(ui->selectSaveDir, &QPushButton::clicked, this, &AboutFriendForm::onSelectDirClicked);
+    connect(ui->openDir, &QPushButton::clicked, this, &AboutFriendForm::onOpenDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutFriendForm::onRemoveHistoryClicked);
+    connect(ui->resetSaveDir, &QPushButton::clicked, this, &AboutFriendForm::onResetSaveDirClicked);
     about->connectTo_autoAcceptDirChanged([=](const QString& dir) { onAutoAcceptDirChanged(dir); });
 
-    const QString dir = about->getAutoAcceptDir();
-    ui->autoacceptfile->setChecked(!dir.isEmpty());
+    ui->autoacceptfile->setChecked(about->getAutoAcceptEnable());
 
     ui->removeHistory->setEnabled(about->isHistoryExistence());
 
     const int index = static_cast<int>(about->getAutoAcceptCall());
     ui->autoacceptcall->setCurrentIndex(index);
 
-    ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
     ui->autogroupinvite->setChecked(about->getAutoGroupInvite());
 
-    if (ui->autoacceptfile->isChecked()) {
-        ui->selectSaveDir->setText(about->getAutoAcceptDir());
-    }
+    ui->selectSaveDir->setText(about->getAutoAcceptDir());
 
     const QString name = about->getName();
     setWindowTitle(name);
@@ -55,25 +54,16 @@ static QString getAutoAcceptDir(const QString& dir)
     return QFileDialog::getExistingDirectory(Q_NULLPTR, title, dir);
 }
 
-void AboutFriendForm::onAutoAcceptDirClicked()
+void AboutFriendForm::onAutoAcceptClicked()
 {
-    const QString dir = [&] {
-        if (!ui->autoacceptfile->isChecked()) {
-            return QString{};
-        }
-
-        return getAutoAcceptDir(about->getAutoAcceptDir());
-    }();
-
-    about->setAutoAcceptDir(dir);
+    about->setAutoAcceptEnable(ui->autoacceptfile->isChecked());
 }
 
 void AboutFriendForm::onAutoAcceptDirChanged(const QString& path)
 {
-    const bool enabled = path.isNull();
-    ui->autoacceptfile->setChecked(enabled);
-    ui->selectSaveDir->setEnabled(enabled);
-    ui->selectSaveDir->setText(enabled ? path : tr("Auto accept for this contact is disabled"));
+    if (!path.isNull()) {
+        ui->selectSaveDir->setText(path);
+    }
 }
 
 
@@ -95,7 +85,22 @@ void AboutFriendForm::onAutoGroupInvite()
 void AboutFriendForm::onSelectDirClicked()
 {
     const QString dir = getAutoAcceptDir(about->getAutoAcceptDir());
+    if (dir.isNull()) {
+        return;
+    }
+
     about->setAutoAcceptDir(dir);
+}
+
+void AboutFriendForm::onOpenDirClicked()
+{
+    auto dir = about->getAutoAcceptDir();
+    QDesktopServices::openUrl(QUrl::fromLocalFile(dir));
+}
+
+void AboutFriendForm::onResetSaveDirClicked()
+{
+    about->setAutoAcceptDir(QString());
 }
 
 /**

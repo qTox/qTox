@@ -30,10 +30,12 @@ signals:
 private slots:
     void onAutoAcceptDirChanged(const QString& path);
     void onAcceptedClicked();
-    void onAutoAcceptDirClicked();
+    void onAutoAcceptClicked();
     void onAutoAcceptCallClicked();
     void onAutoGroupInvite();
     void onSelectDirClicked();
+    void onOpenDirClicked();
+    void onResetSaveDirClicked();
     void onRemoveHistoryClicked();
 };
 

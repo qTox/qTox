@@ -79,14 +79,16 @@ void FriendChatroom::setAutoAcceptDir(const QString& dir)
     Settings::getInstance().setAutoAcceptDir(pk, dir);
 }
 
-void FriendChatroom::disableAutoAccept()
+void FriendChatroom::setAutoAccept(bool enable)
 {
-    setAutoAcceptDir(QString{});
+    const auto pk = frnd->getPublicKey();
+    Settings::getInstance().setAutoAcceptEnable(pk, enable);
 }
 
 bool FriendChatroom::autoAcceptEnabled() const
 {
-    return getAutoAcceptDir().isEmpty();
+    const auto pk = frnd->getPublicKey();
+    return Settings::getInstance().getAutoAcceptEnable(pk);
 }
 
 void FriendChatroom::inviteFriend(const Group* group)
