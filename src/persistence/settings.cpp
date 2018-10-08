@@ -26,6 +26,7 @@
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settingsserializer.h"
 #include "src/persistence/smileypack.h"
+#include "src/persistence/upgradablesetting.h"
 #include "src/widget/gui.h"
 #include "src/widget/style.h"
 #ifdef QTOX_PLATFORM_EXT
@@ -57,10 +58,20 @@
  * @brief Toxme info like name@server
  */
 
-const QString Settings::globalSettingsFile = "qtox.ini";
-Settings* Settings::settings{nullptr};
-QMutex Settings::bigLock{QMutex::Recursive};
-QThread* Settings::settingsThread{nullptr};
+namespace {
+const QString globalSettingsFile = QStringLiteral("qtox.ini");
+Settings* settings{nullptr};
+QMutex bigLock{QMutex::Recursive};
+QThread* settingsThread{nullptr};
+const char* autoAcceptUpgradeMessage =
+    "In an attempt to protect your file transfer history qTox has changed it's default download "
+    "directory to an application specific directory. Would you like to switch your current "
+    "downloads directory to the new default?\n";
+const char* friendAutoAcceptUpgradeMessage =
+    "In an attempt to protect your file transfer history qTox has changed the default "
+    "per-friend download directory to an application specific directory. Would you like to switch "
+    "your current downloads directory to the new default?\n";
+} // namespace
 
 Settings::Settings()
     : loaded(false)
@@ -183,12 +194,35 @@ void Settings::loadGlobal()
                 .toBool(); // page, but kept under General in settings file to be backwards compatible
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
-        globalAutoAcceptDir = s.value("globalAutoAcceptDir",
-                                      QStandardPaths::locate(QStandardPaths::HomeLocation, QString(),
-                                                             QStandardPaths::LocateDirectory))
-                                  .toString();
+
+        auto newDefaultTransfersDir = getDefaultTransfersDir();
+        auto oldAutoAcceptDir = s.value("globalAutoAcceptDir").toString();
+
+        auto onSettingsUpgrade = [&](UpgradableSettingResponse<QString, QString> const& response) {
+            if (response.isUpgraded()) {
+                globalAutoAcceptDir = response.asNewType();
+            } else {
+                globalAutoAcceptDir = response.asOldType();
+            }
+        };
+
+        auto autoAcceptUpgrader = UpgradableSetting<QString, QString>::Builder()
+                                      // Same field used for old/new value
+                                      .oldSettingsName("globalAutoAcceptDir")
+                                      .newSettingsName("globalAutoAcceptDir")
+                                      .upgradeHasHappenedName("globalAutoAcceptUpgraded")
+                                      .upgradeMessage(QString(tr(autoAcceptUpgradeMessage)))
+                                      .defaultConstructedIsNull()
+                                      .build();
+
+        autoAcceptUpgrader.addItem(s, "", newDefaultTransfersDir, QString(), onSettingsUpgrade);
+        autoAcceptUpgrader.requestUpgrade();
+
+        QDir().mkpath(globalAutoAcceptDir);
+
         autoAcceptMaxSize =
             static_cast<size_t>(s.value("autoAcceptMaxSize", 20 << 20 /*20 MB*/).toLongLong());
+
         stylePreference = static_cast<StyleType>(s.value("stylePreference", 1).toInt());
     }
     s.endGroup();
@@ -356,16 +390,55 @@ void Settings::loadPersonal(Profile* profile)
     {
         int size = ps.beginReadArray("Friend");
         friendLst.reserve(size);
+        auto autoAcceptDirUpgrader = UpgradableSetting<QString, QString>::Builder()
+                                         .oldSettingsName("autoAcceptDir")
+                                         .newSettingsName("autoAcceptDir")
+                                         .upgradeHasHappenedName("autoAcceptUpgraded")
+                                         .upgradeMessage(QString(tr(friendAutoAcceptUpgradeMessage)))
+                                         .defaultConstructedIsNull()
+                                         .build();
+
         for (int i = 0; i < size; i++) {
             ps.setArrayIndex(i);
             friendProp fp;
             fp.addr = ps.value("addr").toString();
             fp.alias = ps.value("alias").toString();
             fp.note = ps.value("note").toString();
-            fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
 
-            if (fp.autoAcceptDir == "")
-                fp.autoAcceptDir = ps.value("autoAccept").toString();
+
+            auto newDefaultTransfersDir = defaultAutoAcceptDir(fp);
+            auto oldAutoAcceptDir = fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
+
+            // Previously this was tied to the auto accept dir, from now on we manage this
+            // separately. This is because we now have a default autoaccept directory for each
+            // friend which is separate from whether or not we actually use it
+            // This allows us to enable/disable autoaccept and have the user use the default
+            // directory
+            fp.autoAcceptEnabled = ps.value("autoAccept", !oldAutoAcceptDir.isEmpty()).toBool();
+
+            auto friendPk = ToxId(fp.addr).getPublicKey();
+            auto friendName = Core::getInstance()->getPeerName(friendPk);
+
+            auto onSettingsUpgradeResponse =
+                [=](UpgradableSettingResponse<QString, QString> const& response) {
+                    auto savedFp = friendLst[ToxId(fp.addr).getPublicKey().getKey()];
+                    if (response.isUpgraded()) {
+                        savedFp.autoAcceptDir = response.asNewType();
+                    } else {
+                        savedFp.autoAcceptDir = response.asOldType();
+                    }
+
+                    if (savedFp.autoAcceptDir.isEmpty()) {
+                        QDir().mkpath(defaultAutoAcceptDir(savedFp));
+                    } else {
+                        QDir().mkpath(savedFp.autoAcceptDir);
+                    }
+
+                    friendLst[ToxId(fp.addr).getPublicKey().getKey()] = savedFp;
+                };
+
+            autoAcceptDirUpgrader.addItem(ps, friendName, QString(), defaultAutoAcceptDir(fp),
+                                          onSettingsUpgradeResponse);
 
             fp.autoAcceptCall =
                 Settings::AutoAcceptCallFlags(QFlag(ps.value("autoAcceptCall", 0).toInt()));
@@ -376,6 +449,10 @@ void Settings::loadPersonal(Profile* profile)
                 fp.activity = ps.value("activity", QDate()).toDate();
             friendLst[ToxId(fp.addr).getPublicKey().getKey()] = fp;
         }
+
+        // Batch the requests to upgrade all dirs at once
+        autoAcceptDirUpgrader.requestUpgrade();
+
         ps.endArray();
     }
     ps.endGroup();
@@ -507,6 +584,8 @@ void Settings::saveGlobal()
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("autoAcceptMaxSize", static_cast<qlonglong>(autoAcceptMaxSize));
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
+        // Unconditionally set to true since our old/new values share the same field
+        s.setValue("globalAutoAcceptUpgraded", true);
         s.setValue("stylePreference", static_cast<int>(stylePreference));
     }
     s.endGroup();
@@ -643,7 +722,10 @@ void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
             ps.setValue("addr", frnd.addr);
             ps.setValue("alias", frnd.alias);
             ps.setValue("note", frnd.note);
+            ps.setValue("autoAccept", frnd.autoAcceptEnabled);
             ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
+            // Unconditionally set to true since our old/new values share the same field
+            ps.setValue("autoAcceptUpgraded", true);
             ps.setValue("autoAcceptCall", static_cast<int>(frnd.autoAcceptCall));
             ps.setValue("autoGroupInvite", frnd.autoGroupInvite);
             ps.setValue("circle", frnd.circleID);
@@ -1387,15 +1469,57 @@ void Settings::setAutoAwayTime(int newValue)
     }
 }
 
+bool Settings::getAutoAcceptEnable(const ToxPk& id) const
+{
+    QMutexLocker locker{&bigLock};
+
+    auto it = friendLst.find(id.getKey());
+    if (it == friendLst.end()) {
+        return false;
+    }
+
+    return it->autoAcceptEnabled;
+}
+
+void Settings::setAutoAcceptEnable(const ToxPk& id, bool enable)
+{
+    QMutexLocker locker{&bigLock};
+
+    auto it = friendLst.find(id.getKey());
+
+    if (it == friendLst.end()) {
+        updateFriendAddress(id.toString());
+        setAutoAcceptEnable(id, enable);
+        return;
+    }
+
+    if (it->autoAcceptEnabled != enable) {
+        it->autoAcceptEnabled = enable;
+        emit autoAcceptEnableChanged(id, enable);
+    }
+}
+
+QString Settings::defaultAutoAcceptDir(Settings::friendProp const& fp) const
+{
+    auto profile = Nexus::getProfile();
+    auto hashedFriendId = profile->hashedFriendId(fp.addr);
+    return QDir::cleanPath(globalAutoAcceptDir + QDir::separator() + hashedFriendId);
+}
+
 QString Settings::getAutoAcceptDir(const ToxPk& id) const
 {
     QMutexLocker locker{&bigLock};
 
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end())
-        return it->autoAcceptDir;
+    if (it == friendLst.end()) {
+        return QString();
+    }
 
-    return QString();
+    if (it->autoAcceptDir.isEmpty()) {
+        return defaultAutoAcceptDir(*it);
+    }
+
+    return it->autoAcceptDir;
 }
 
 void Settings::setAutoAcceptDir(const ToxPk& id, const QString& dir)
@@ -1411,7 +1535,11 @@ void Settings::setAutoAcceptDir(const ToxPk& id, const QString& dir)
 
     if (it->autoAcceptDir != dir) {
         it->autoAcceptDir = dir;
-        emit autoAcceptDirChanged(id, dir);
+        if (dir.isEmpty()) {
+            emit autoAcceptDirChanged(id, defaultAutoAcceptDir(*it));
+        } else {
+            emit autoAcceptDirChanged(id, dir);
+        }
     }
 }
 
@@ -2466,4 +2594,9 @@ void Settings::sync()
 
     QMutexLocker locker{&bigLock};
     qApp->processEvents();
+}
+
+QString Settings::getDefaultTransfersDir() const
+{
+    return QDir::cleanPath(getAppDataDirPath() + "transfers");
 }

@@ -26,6 +26,9 @@ public:
     virtual QString getAutoAcceptDir(const ToxPk& pk) const = 0;
     virtual void setAutoAcceptDir(const ToxPk& pk, const QString& dir) = 0;
 
+    virtual bool getAutoAcceptEnable(const ToxPk& id) const = 0;
+    virtual void setAutoAcceptEnable(const ToxPk& id, bool enable) = 0;
+
     virtual AutoAcceptCallFlags getAutoAcceptCall(const ToxPk& pk) const = 0;
     virtual void setAutoAcceptCall(const ToxPk& pk, AutoAcceptCallFlags accept) = 0;
 
@@ -47,6 +50,7 @@ public:
 signals:
     DECLARE_SIGNAL(autoAcceptCallChanged, const ToxPk& pk, AutoAcceptCallFlags accept);
     DECLARE_SIGNAL(autoGroupInviteChanged, const ToxPk& pk, bool accept);
+    DECLARE_SIGNAL(autoAcceptEnableChanged, const ToxPk& pk, bool enable);
     DECLARE_SIGNAL(autoAcceptDirChanged, const ToxPk& pk, const QString& dir);
     DECLARE_SIGNAL(contactNoteChanged, const ToxPk& pk, const QString& note);
 };

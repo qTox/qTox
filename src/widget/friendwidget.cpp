@@ -162,8 +162,11 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     auto autoAccept =
         menu.addAction(tr("Auto accept files from this friend", "context menu entry"));
     autoAccept->setCheckable(true);
-    autoAccept->setChecked(!chatroom->autoAcceptEnabled());
+    autoAccept->setChecked(chatroom->autoAcceptEnabled());
     connect(autoAccept, &QAction::triggered, this, &FriendWidget::changeAutoAccept);
+
+    auto autoAcceptDir = menu.addAction(tr("Change auto accept dir...", "context menu entry"));
+    connect(autoAcceptDir, &QAction::triggered, this, &FriendWidget::changeAutoAcceptDir);
     menu.addSeparator();
 
     // TODO: move to model
@@ -278,15 +281,18 @@ void FriendWidget::moveToCircle(int newCircleId)
 
 void FriendWidget::changeAutoAccept(bool enable)
 {
-    if (enable) {
-        const auto oldDir = chatroom->getAutoAcceptDir();
-        const auto newDir =
-            QFileDialog::getExistingDirectory(Q_NULLPTR,
-                                              tr("Choose an auto accept directory", "popup title"),
-                                              oldDir);
+    chatroom->setAutoAccept(enable);
+}
+
+void FriendWidget::changeAutoAcceptDir()
+{
+    const auto oldDir = chatroom->getAutoAcceptDir();
+    const auto newDir =
+        QFileDialog::getExistingDirectory(Q_NULLPTR,
+                                          tr("Choose an auto accept directory", "popup title"),
+                                          oldDir);
+    if (!newDir.isEmpty()) {
         chatroom->setAutoAcceptDir(newDir);
-    } else {
-        chatroom->disableAutoAccept();
     }
 }
 void FriendWidget::showDetails()
