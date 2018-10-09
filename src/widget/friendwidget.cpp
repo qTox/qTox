@@ -129,9 +129,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     for (const auto group : chatroom->getGroups()) {
         const auto groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(group.name));
-        connect(groupAction, &QAction::triggered, [=]() {
-            chatroom->inviteFriend(group.group);
-        });
+        connect(groupAction, &QAction::triggered, [=]() { chatroom->inviteFriend(group.group); });
     }
 
     const auto circleId = chatroom->getCircleId();
@@ -282,8 +280,10 @@ void FriendWidget::changeAutoAccept(bool enable)
 {
     if (enable) {
         const auto oldDir = chatroom->getAutoAcceptDir();
-        const auto newDir = QFileDialog::getExistingDirectory(
-            Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), oldDir);
+        const auto newDir =
+            QFileDialog::getExistingDirectory(Q_NULLPTR,
+                                              tr("Choose an auto accept directory", "popup title"),
+                                              oldDir);
         chatroom->setAutoAcceptDir(newDir);
     } else {
         chatroom->disableAutoAccept();
@@ -313,8 +313,8 @@ void FriendWidget::setActive(bool active)
 {
     GenericChatroomWidget::setActive(active);
     if (isDefaultAvatar) {
-        const auto uri = active ? QStringLiteral(":img/contact_dark.svg")
-                                : QStringLiteral(":img/contact.svg");
+        const auto uri =
+            active ? QStringLiteral(":img/contact_dark.svg") : QStringLiteral(":img/contact.svg");
         avatar->setPixmap(QPixmap{uri});
     }
 }

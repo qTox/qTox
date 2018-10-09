@@ -1,7 +1,7 @@
 #include "aboutfriendform.h"
-#include "src/widget/gui.h"
 #include "ui_aboutfriendform.h"
 #include "src/core/core.h"
+#include "src/widget/gui.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -21,7 +21,7 @@ AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* 
     connect(ui->autogroupinvite, &QCheckBox::clicked, this, &AboutFriendForm::onAutoGroupInvite);
     connect(ui->selectSaveDir, &QPushButton::clicked, this, &AboutFriendForm::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutFriendForm::onRemoveHistoryClicked);
-    about->connectTo_autoAcceptDirChanged([=](const QString& dir){ onAutoAcceptDirChanged(dir); });
+    about->connectTo_autoAcceptDirChanged([=](const QString& dir) { onAutoAcceptDirChanged(dir); });
 
     const QString dir = about->getAutoAcceptDir();
     ui->autoacceptfile->setChecked(!dir.isEmpty());
@@ -57,7 +57,7 @@ static QString getAutoAcceptDir(const QString& dir)
 
 void AboutFriendForm::onAutoAcceptDirClicked()
 {
-    const QString dir = [&]{
+    const QString dir = [&] {
         if (!ui->autoacceptfile->isChecked()) {
             return QString{};
         }
@@ -108,14 +108,15 @@ void AboutFriendForm::onAcceptedClicked()
 
 void AboutFriendForm::onRemoveHistoryClicked()
 {
-   const bool retYes = GUI::askQuestion(tr("Confirmation"),
-                                   tr("Are you sure to remove %1 chat history?").arg(about->getName()),
-                                   /* defaultAns = */ false, /* warning = */ true, /* yesno = */ true);
+    const bool retYes =
+        GUI::askQuestion(tr("Confirmation"),
+                         tr("Are you sure to remove %1 chat history?").arg(about->getName()),
+                         /* defaultAns = */ false, /* warning = */ true, /* yesno = */ true);
     if (!retYes) {
         return;
     }
 
-   const bool result = about->clearHistory();
+    const bool result = about->clearHistory();
 
     if (!result) {
         GUI::showWarning(tr("History removed"),
