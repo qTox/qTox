@@ -1,5 +1,5 @@
-#include "src/grouplist.h"
 #include "src/model/chatroom/friendchatroom.h"
+#include "src/grouplist.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
 #include "src/persistence/settings.h"
@@ -19,12 +19,11 @@ QString getShortName(const QString& name)
     return name.left(MAX_NAME_LENGTH).trimmed() + "…";
 }
 
-}
+} // namespace
 
 FriendChatroom::FriendChatroom(Friend* frnd)
     : frnd{frnd}
-{
-}
+{}
 
 Friend* FriendChatroom::getFriend()
 {
@@ -102,7 +101,7 @@ QVector<GroupToDisplay> FriendChatroom::getGroups() const
     QVector<GroupToDisplay> groups;
     for (const auto group : GroupList::getAllGroups()) {
         const auto name = getShortName(group->getName());
-        const GroupToDisplay groupToDisplay = { name, group };
+        const GroupToDisplay groupToDisplay = {name, group};
         groups.push_back(groupToDisplay);
     }
 
@@ -123,7 +122,7 @@ QVector<CircleToDisplay> FriendChatroom::getOtherCircles() const
         }
 
         const auto name = getShortName(s.getCircleName(i));
-        const CircleToDisplay circle = { name, i };
+        const CircleToDisplay circle = {name, i};
         circles.push_back(circle);
     }
 
