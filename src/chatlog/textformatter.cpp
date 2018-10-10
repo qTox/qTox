@@ -79,7 +79,7 @@ static const QString HREF_WRAPPER = QStringLiteral(R"(<a href="%1">%1</a>)");
 static const QString WWW_WRAPPER = QStringLiteral(R"(<a href="http://%1">%1</a>)");
 
 static const QVector<QRegularExpression> WWW_WORD_PATTERN = {
-        QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*((www)\S+))"))
+        QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*((www\.)\S+))"))
 };
 
 static const QVector<QRegularExpression> URI_WORD_PATTERNS = {
