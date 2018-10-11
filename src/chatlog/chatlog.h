@@ -104,6 +104,7 @@ protected:
     virtual void showEvent(QShowEvent*) final override;
     virtual void focusInEvent(QFocusEvent* ev) final override;
     virtual void focusOutEvent(QFocusEvent* ev) final override;
+    virtual void contextMenuEvent(QContextMenuEvent *event) final override;
 
     void updateMultiSelectionRect();
     void updateTypingNotification();

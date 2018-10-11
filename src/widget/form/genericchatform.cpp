@@ -227,9 +227,6 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     copyLinkAction = menu.addAction(QIcon(), QString(), this, SLOT(copyLink()));
     menu.addSeparator();
 
-    connect(chatWidget, &ChatLog::customContextMenuRequested, this,
-            &GenericChatForm::onChatContextMenuRequested);
-
     connect(searchForm, &SearchForm::searchInBegin, this, &GenericChatForm::searchInBegin);
     connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
     connect(searchForm, &SearchForm::searchDown, this, &GenericChatForm::onSearchDown);
@@ -329,27 +326,6 @@ bool GenericChatForm::event(QEvent* e)
         }
     }
     return QWidget::event(e);
-}
-
-void GenericChatForm::onChatContextMenuRequested(QPoint pos)
-{
-    QWidget* sender = static_cast<QWidget*>(QObject::sender());
-    pos = sender->mapToGlobal(pos);
-
-    // If we right-clicked on a link, give the option to copy it
-    bool clickedOnLink = false;
-    Text* clickedText = qobject_cast<Text*>(chatWidget->getContentFromGlobalPos(pos));
-    if (clickedText) {
-        QPointF scenePos = chatWidget->mapToScene(chatWidget->mapFromGlobal(pos));
-        QString linkTarget = clickedText->getLinkAt(scenePos);
-        if (!linkTarget.isEmpty()) {
-            clickedOnLink = true;
-            copyLinkAction->setData(linkTarget);
-        }
-    }
-    copyLinkAction->setVisible(clickedOnLink);
-
-    menu.exec(pos);
 }
 
 /**
@@ -812,6 +788,29 @@ std::pair<int, int> GenericChatForm::indexForSearchInLine(const QString& txt, co
     }
 
     return std::make_pair(index, size);
+}
+
+void GenericChatForm::contextMenuEvent(QContextMenuEvent *event)
+{
+    const bool isChatWidgetEmpty = chatWidget->isEmpty();
+    quoteAction->setEnabled(chatWidget->hasTextToBeCopied());
+    searchAction->setEnabled(!isChatWidgetEmpty);
+    saveChatAction->setEnabled(!isChatWidgetEmpty);
+    clearAction->setEnabled(!isChatWidgetEmpty);
+
+    const QPoint pos = event->globalPos();
+    // If we right-clicked on a link, give the option to copy it
+    bool clickedOnLink = false;
+    Text* clickedText = qobject_cast<Text*>(chatWidget->getContentFromGlobalPos(pos));
+    if (clickedText) {
+        QPointF scenePos = chatWidget->mapToScene(chatWidget->mapFromGlobal(pos));
+        QString linkTarget = clickedText->getLinkAt(scenePos);
+        if (!linkTarget.isEmpty()) {
+            clickedOnLink = true;
+            copyLinkAction->setData(linkTarget);
+        }
+    }
+    copyLinkAction->setVisible(clickedOnLink);
 }
 
 void GenericChatForm::clearChatArea()

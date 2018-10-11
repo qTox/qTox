@@ -62,6 +62,7 @@ protected:
     // drag & drop
     virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
     virtual void dropEvent(QDropEvent* ev) final override;
+    virtual void contextMenuEvent(QContextMenuEvent *event) final override;
 
 private:
     void retranslateUi();

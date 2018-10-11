@@ -357,6 +357,12 @@ void GroupChatForm::dropEvent(QDropEvent* ev)
     }
 }
 
+void GroupChatForm::contextMenuEvent(QContextMenuEvent *event)
+{
+  GenericChatForm::contextMenuEvent(event);
+  menu.exec(event->globalPos());
+}
+
 void GroupChatForm::onMicMuteToggle()
 {
     if (audioInputFlag) {

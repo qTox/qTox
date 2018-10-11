@@ -152,6 +152,7 @@ protected:
     void dropEvent(QDropEvent* ev) final override;
     void hideEvent(QHideEvent* event) final override;
     void showEvent(QShowEvent* event) final override;
+    void contextMenuEvent(QContextMenuEvent *event) override;
 
 private:
     Friend* f;
@@ -162,8 +163,8 @@ private:
     QTimer typingTimer;
     QElapsedTimer timeElapsed;
     OfflineMsgEngine* offlineEngine;
-    QAction* loadHistoryAction;
     QAction* copyStatusAction;
+    QAction* loadHistoryAction;
     QAction* exportChatAction;
 
     History* history;

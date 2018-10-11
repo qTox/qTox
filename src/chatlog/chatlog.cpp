@@ -64,7 +64,6 @@ ChatLog::ChatLog(QWidget* parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setDragMode(QGraphicsView::NoDrag);
     setViewportUpdateMode(MinimalViewportUpdate);
-    setContextMenuPolicy(Qt::CustomContextMenu);
     setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
 
     // The selection rect for multi-line selection
@@ -899,6 +898,12 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
         for (int i = selFirstRow; i <= selLastRow; ++i)
             lines[i]->selectionFocusChanged(false);
     }
+}
+
+void ChatLog::contextMenuEvent(QContextMenuEvent *event)
+{
+    selectAllAction->setEnabled(!isEmpty());
+    event->ignore();
 }
 
 void ChatLog::retranslateUi()

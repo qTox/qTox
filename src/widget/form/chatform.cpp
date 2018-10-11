@@ -168,7 +168,6 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
     connect(core, &Core::fileNameChanged, this, &ChatForm::onFileNameChanged);
 
-
     const CoreAV* av = core->getAv();
     connect(av, &CoreAV::avInvite, this, &ChatForm::onAvInvite);
     connect(av, &CoreAV::avStart, this, &ChatForm::onAvStart);
@@ -1024,6 +1023,15 @@ void ChatForm::show(ContentLayout* contentLayout)
 void ChatForm::showEvent(QShowEvent* event)
 {
     GenericChatForm::showEvent(event);
+}
+
+void ChatForm::contextMenuEvent(QContextMenuEvent* event)
+{
+    GenericChatForm::contextMenuEvent(event);
+    const bool isHistoryExist = history->isHistoryExistence(f->getPublicKey().toString());
+    loadHistoryAction->setEnabled(isHistoryExist);
+    exportChatAction->setEnabled(isHistoryExist);
+    menu.exec(event->globalPos());
 }
 
 void ChatForm::hideEvent(QHideEvent* event)

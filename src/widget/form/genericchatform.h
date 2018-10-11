@@ -95,7 +95,6 @@ public slots:
     void onChatMessageFontChanged(const QFont& font);
 
 protected slots:
-    void onChatContextMenuRequested(QPoint pos);
     virtual void onScreenshotClicked() = 0;
     virtual void onSendTriggered() = 0;
     virtual void onAttachClicked() = 0;
@@ -141,6 +140,7 @@ protected:
     virtual bool event(QEvent*) final override;
     virtual void resizeEvent(QResizeEvent* event) final override;
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
+    virtual void contextMenuEvent(QContextMenuEvent *event) override;
     void disableSearchText();
     bool searchInText(const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
     std::pair<int, int> indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
@@ -150,11 +150,11 @@ protected:
     bool audioOutputFlag;
     int curRow;
 
+    QAction* quoteAction;
+    QAction* searchAction;
     QAction* saveChatAction;
     QAction* clearAction;
-    QAction* quoteAction;
     QAction* copyLinkAction;
-    QAction* searchAction;
 
     ToxPk previousId;
 
