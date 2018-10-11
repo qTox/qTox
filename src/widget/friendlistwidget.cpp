@@ -296,6 +296,7 @@ void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleInde
         moveWidget(w, s, true);
     else
         circleWidget->addFriendWidget(w, s);
+    connect(w, &FriendWidget::friendWidgetRenamed, this, &FriendListWidget::onFriendWidgetRenamed);
 }
 
 void FriendListWidget::removeGroupWidget(GroupWidget* w)
@@ -393,6 +394,31 @@ void FriendListWidget::renameCircleWidget(CircleWidget* circleWidget, const QStr
     circleLayout->removeSortedWidget(circleWidget);
     circleWidget->setName(newName);
     circleLayout->addSortedWidget(circleWidget);
+}
+
+void FriendListWidget::onFriendWidgetRenamed(FriendWidget* friendWidget)
+{
+    const Friend* contact = friendWidget->getFriend();
+    auto status = contact->getStatus();
+    if (mode == Activity) {
+        QDate activityDate = getDateFriend(contact);
+        int time = static_cast<int>(getTime(activityDate));
+        QWidget* widget = activityLayout->itemAt(time)->widget();
+        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
+        categoryWidget->removeFriendWidget(friendWidget, status);
+        categoryWidget->addFriendWidget(friendWidget, status);
+    } else {
+        int id = Settings::getInstance().getFriendCircleID(contact->getPublicKey());
+        CircleWidget* circleWidget = CircleWidget::getFromID(id);
+        if (circleWidget != nullptr) {
+            circleWidget->removeFriendWidget(friendWidget, status);
+            circleWidget->addFriendWidget(friendWidget, status);
+            Widget::getInstance()->searchCircle(circleWidget);
+        } else {
+            listLayout->removeFriendWidget(friendWidget, status);
+            listLayout->addFriendWidget(friendWidget, status);
+        }
+    }
 }
 
 void FriendListWidget::onGroupchatPositionChanged(bool top)

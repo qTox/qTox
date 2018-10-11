@@ -70,6 +70,7 @@ signals:
 public slots:
     void renameGroupWidget(GroupWidget* groupWidget, const QString& newName);
     void renameCircleWidget(CircleWidget* circleWidget, const QString& newName);
+    void onFriendWidgetRenamed(FriendWidget* friendWidget);
     void onGroupchatPositionChanged(bool top);
     void moveWidget(FriendWidget* w, Status s, bool add = false);
 

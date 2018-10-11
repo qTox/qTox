@@ -49,6 +49,7 @@ signals:
     void copyFriendIdToClipboard(int friendId);
     void contextMenuCalled(QContextMenuEvent* event);
     void friendHistoryRemoved();
+    void friendWidgetRenamed(FriendWidget* friendWidget);
 
 public slots:
     void onAvatarSet(const ToxPk& friendPk, const QPixmap& pic);
