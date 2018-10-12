@@ -21,6 +21,7 @@
 #include "ui_generalsettings.h"
 
 #include <QFileDialog>
+#include <cmath>
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -148,11 +149,12 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
 
     bodyUI->autoAwaySpinBox->setValue(s.getAutoAwayTime());
     bodyUI->autoSaveFilesDir->setText(s.getGlobalAutoAcceptDir());
+    bodyUI->maxAutoAcceptSizeMB->setValue(static_cast<double>(s.getMaxAutoAcceptSize()) / 1024 / 1024);
     bodyUI->autoacceptFiles->setChecked(s.getAutoSaveEnabled());
 
+
 #ifndef QTOX_PLATFORM_EXT
-    bodyUI->autoAwayLabel->setEnabled(
-        false); // these don't seem to change the appearance of the widgets,
+    bodyUI->autoAwayLabel->setEnabled(false); // these don't seem to change the appearance of the widgets,
     bodyUI->autoAwaySpinBox->setEnabled(false); // though they are unusable
 #endif
 
@@ -243,6 +245,14 @@ void GeneralForm::on_autoSaveFilesDir_clicked()
 
     Settings::getInstance().setGlobalAutoAcceptDir(directory);
     bodyUI->autoSaveFilesDir->setText(directory);
+}
+
+void GeneralForm::on_maxAutoAcceptSizeMB_editingFinished()
+{
+    auto newMaxSizeMB = bodyUI->maxAutoAcceptSizeMB->value();
+    auto newMaxSizeB = std::lround(newMaxSizeMB * 1024 * 1024);
+
+    Settings::getInstance().setMaxAutoAcceptSize(newMaxSizeB);
 }
 
 void GeneralForm::on_checkUpdates_stateChanged()

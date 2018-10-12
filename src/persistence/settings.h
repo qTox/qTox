@@ -43,8 +43,11 @@ namespace Db {
 enum class syncType;
 }
 
-class Settings : public QObject, public ICoreSettings, public IFriendSettings, 
-    public IAudioSettings, public IVideoSettings
+class Settings : public QObject,
+                 public ICoreSettings,
+                 public IFriendSettings,
+                 public IAudioSettings,
+                 public IVideoSettings
 {
     Q_OBJECT
 
@@ -91,8 +94,8 @@ class Settings : public QObject, public ICoreSettings, public IFriendSettings,
     Q_PROPERTY(QString dateFormat READ getDateFormat WRITE setDateFormat NOTIFY dateFormatChanged FINAL)
     Q_PROPERTY(bool statusChangeNotificationEnabled READ getStatusChangeNotificationEnabled WRITE
                    setStatusChangeNotificationEnabled NOTIFY statusChangeNotificationEnabledChanged FINAL)
-    Q_PROPERTY(bool spellCheckingEnabled READ getSpellCheckingEnabled WRITE
-                   setSpellCheckingEnabled NOTIFY spellCheckingEnabledChanged FINAL)
+    Q_PROPERTY(bool spellCheckingEnabled READ getSpellCheckingEnabled WRITE setSpellCheckingEnabled
+                   NOTIFY spellCheckingEnabledChanged FINAL)
 
     // Privacy
     Q_PROPERTY(bool typingNotification READ getTypingNotification WRITE setTypingNotification NOTIFY
@@ -105,8 +108,8 @@ class Settings : public QObject, public ICoreSettings, public IFriendSettings,
                    audioInDevEnabledChanged FINAL)
     Q_PROPERTY(qreal audioInGainDecibel READ getAudioInGainDecibel WRITE setAudioInGainDecibel
                    NOTIFY audioInGainDecibelChanged FINAL)
-    Q_PROPERTY(qreal audioThreshold READ getAudioThreshold WRITE setAudioThreshold
-                   NOTIFY audioThresholdChanged FINAL)
+    Q_PROPERTY(qreal audioThreshold READ getAudioThreshold WRITE setAudioThreshold NOTIFY
+                   audioThresholdChanged FINAL)
     Q_PROPERTY(QString outDev READ getOutDev WRITE setOutDev NOTIFY outDevChanged FINAL)
     Q_PROPERTY(bool audioOutDevEnabled READ getAudioOutDevEnabled WRITE setAudioOutDevEnabled NOTIFY
                    audioOutDevEnabledChanged FINAL)
@@ -183,6 +186,7 @@ signals:
     void enableLoggingChanged(bool enabled);
     void autoAwayTimeChanged(int minutes);
     void globalAutoAcceptDirChanged(const QString& path);
+    void autoAcceptMaxSizeChanged(size_t size);
     void checkUpdatesChanged(bool enabled);
     void widgetDataChanged(const QString& key);
 
@@ -352,8 +356,14 @@ public:
     void setAudioThreshold(qreal percent) override;
 
     int getOutVolume() const override;
-    int getOutVolumeMin() const override { return 0; }
-    int getOutVolumeMax() const override { return 100; }
+    int getOutVolumeMin() const override
+    {
+        return 0;
+    }
+    int getOutVolumeMax() const override
+    {
+        return 100;
+    }
     void setOutVolume(int volume) override;
 
     int getAudioBitrate() const override;
@@ -429,6 +439,9 @@ public:
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
 
+    size_t getMaxAutoAcceptSize() const;
+    void setMaxAutoAcceptSize(size_t size);
+
     bool getAutoGroupInvite(const ToxPk& id) const override;
     void setAutoGroupInvite(const ToxPk& id, bool accept) override;
 
@@ -491,8 +504,8 @@ public:
     void saveFriendSettings(const ToxPk& id) override;
     void removeFriendSettings(const ToxPk& id) override;
 
-    SIGNAL_IMPL(Settings, autoAcceptCallChanged,
-                const ToxPk& id, IFriendSettings::AutoAcceptCallFlags accept)
+    SIGNAL_IMPL(Settings, autoAcceptCallChanged, const ToxPk& id,
+                IFriendSettings::AutoAcceptCallFlags accept)
     SIGNAL_IMPL(Settings, autoGroupInviteChanged, const ToxPk& id, bool accept)
     SIGNAL_IMPL(Settings, autoAcceptDirChanged, const ToxPk& id, const QString& dir)
     SIGNAL_IMPL(Settings, contactNoteChanged, const ToxPk& id, const QString& note)
@@ -508,10 +521,10 @@ public:
 
     bool getDontGroupWindows() const;
     void setDontGroupWindows(bool value);
-    
+
     bool getGroupchatPosition() const;
     void setGroupchatPosition(bool value);
-    
+
     bool getShowIdenticons() const;
     void setShowIdenticons(bool value);
 
@@ -618,6 +631,7 @@ private:
     QHash<QString, QString> autoAccept;
     bool autoSaveEnabled;
     QString globalAutoAcceptDir;
+    size_t autoAcceptMaxSize;
 
     QList<Request> friendRequests;
 

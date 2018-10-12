@@ -183,6 +183,8 @@ void Settings::loadGlobal()
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(),
                                                              QStandardPaths::LocateDirectory))
                                   .toString();
+        autoAcceptMaxSize =
+            static_cast<size_t>(s.value("autoAcceptMaxSize", 20 << 20 /*20 MB*/).toLongLong());
         stylePreference = static_cast<StyleType>(s.value("stylePreference", 1).toInt());
     }
     s.endGroup();
@@ -272,9 +274,9 @@ void Settings::loadGlobal()
         enableTestSound = s.value("enableTestSound", true).toBool();
         audioBitrate = s.value("audioBitrate", 64).toInt();
         enableBackend2 = false;
-        #ifdef USE_FILTERAUDIO
+#ifdef USE_FILTERAUDIO
         enableBackend2 = s.value("enableBackend2", false).toBool();
-        #endif
+#endif
     }
     s.endGroup();
 
@@ -499,6 +501,7 @@ void Settings::saveGlobal()
         s.setValue("busySound", busySound);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
+        s.setValue("autoAcceptMaxSize", static_cast<qlonglong>(autoAcceptMaxSize));
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
         s.setValue("stylePreference", static_cast<int>(stylePreference));
     }
@@ -1506,6 +1509,22 @@ void Settings::setGlobalAutoAcceptDir(const QString& newValue)
     if (newValue != globalAutoAcceptDir) {
         globalAutoAcceptDir = newValue;
         emit globalAutoAcceptDirChanged(globalAutoAcceptDir);
+    }
+}
+
+size_t Settings::getMaxAutoAcceptSize() const
+{
+    QMutexLocker locker{&bigLock};
+    return autoAcceptMaxSize;
+}
+
+void Settings::setMaxAutoAcceptSize(size_t size)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (size != autoAcceptMaxSize) {
+        autoAcceptMaxSize = size;
+        emit autoAcceptMaxSizeChanged(autoAcceptMaxSize);
     }
 }
 
