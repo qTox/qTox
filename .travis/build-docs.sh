@@ -20,6 +20,7 @@
 set -eu -o pipefail
 
 # Obtain doxygen and its deps
+sudo apt-get update -qq
 sudo apt-get install doxygen graphviz
 
 # can fail due to travis cloning only `depth=50`
