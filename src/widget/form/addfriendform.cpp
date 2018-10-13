@@ -38,6 +38,25 @@
 #include <QTabWidget>
 #include <QWindow>
 
+namespace
+{
+    QString getToxId(const QString& id)
+    {
+        const QString toxUriPrefix{"tox:"};
+        QString strippedId = id.trimmed();
+        if (strippedId.startsWith(toxUriPrefix)) {
+            strippedId.remove(0, toxUriPrefix.length());
+        }
+        return strippedId;
+    }
+
+    bool checkIsValidId(const QString& id)
+    {
+        static const QRegularExpression dnsIdExpression("^\\S+@\\S+$");
+        return ToxId::isToxId(id) || id.contains(dnsIdExpression);
+    }
+}
+
 /**
  * @var QString AddFriendForm::lastUsername
  * @brief Cached username so we can retranslate the invite message
@@ -202,8 +221,8 @@ void AddFriendForm::addFriend(const QString& idText)
 
 void AddFriendForm::onSendTriggered()
 {
-    const QString idText = toxId.text().trimmed();
-    addFriend(idText);
+    const QString id = getToxId(toxId.text());
+    addFriend(id);
 
     this->toxId.clear();
     this->message.clear();
@@ -211,19 +230,13 @@ void AddFriendForm::onSendTriggered()
 
 void AddFriendForm::onImportSendClicked()
 {
-    for (const QString& idText : contactsToImport) {
-        addFriend(idText);
+    for (const QString& id : contactsToImport) {
+        addFriend(id);
     }
 
     contactsToImport.clear();
     importMessage.clear();
     retranslateUi(); // Update the importFileLabel
-}
-
-static inline bool checkIsValidId(const QString& id)
-{
-    static const QRegularExpression dnsIdExpression("^\\S+@\\S+$");
-    return ToxId::isToxId(id) || id.contains(dnsIdExpression);
 }
 
 void AddFriendForm::onImportOpenClicked()
@@ -244,7 +257,7 @@ void AddFriendForm::onImportOpenClicked()
     contactsToImport = QString::fromUtf8(contactFile.readAll()).split('\n');
     qDebug() << "Import list:";
     for (auto it = contactsToImport.begin(); it != contactsToImport.end();) {
-        const QString id = it->trimmed();
+        const QString id = getToxId(*it);
         if (checkIsValidId(id)) {
             *it = id;
             qDebug() << *it;
@@ -267,8 +280,10 @@ void AddFriendForm::onImportOpenClicked()
 
 void AddFriendForm::onIdChanged(const QString& id)
 {
-    const QString tId = id.trimmed();
-    const bool isValidId = tId.isEmpty() || checkIsValidId(tId);
+    const QString strippedId = getToxId(id);
+
+    const bool isValidId = checkIsValidId(strippedId);
+    const bool isValidOrEmpty = strippedId.isEmpty() || isValidId;
 
     //: Tox ID of the person you're sending a friend request to
     const QString toxIdText(tr("Tox ID"));
@@ -278,21 +293,22 @@ void AddFriendForm::onIdChanged(const QString& id)
     const QString labelText =
         isValidId ? QStringLiteral("%1 (%2)") : QStringLiteral("%1 <font color='red'>(%2)</font>");
     toxIdLabel.setText(labelText.arg(toxIdText, toxIdComment));
-    toxId.setStyleSheet(isValidId ? QStringLiteral("")
+    toxId.setStyleSheet(isValidOrEmpty ? QStringLiteral("")
                                   : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
-    toxId.setToolTip(isValidId ? QStringLiteral("") : tr("Invalid Tox ID format"));
+    toxId.setToolTip(isValidOrEmpty ? QStringLiteral("") : tr("Invalid Tox ID format"));
 
-    sendButton.setEnabled(isValidId && !tId.isEmpty());
+    sendButton.setEnabled(isValidId);
 }
 
 void AddFriendForm::setIdFromClipboard()
 {
     const QClipboard* clipboard = QApplication::clipboard();
-    const QString id = clipboard->text().trimmed();
+    const QString trimmedId = clipboard->text().trimmed();
+    const QString strippedId = getToxId(trimmedId);
     const Core* core = Core::getInstance();
-    const bool isSelf = core->isReady() && ToxId(id) != core->getSelfId();
-    if (!id.isEmpty() && ToxId::isToxId(id) && isSelf) {
-        toxId.setText(id);
+    const bool isSelf = core->isReady() && ToxId(strippedId) != core->getSelfId();
+    if (!strippedId.isEmpty() && ToxId::isToxId(strippedId) && isSelf) {
+        toxId.setText(trimmedId);
     }
 }
 
