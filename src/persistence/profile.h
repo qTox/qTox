@@ -48,7 +48,6 @@ public:
 
     void startCore();
     void restartCore();
-    bool isNewProfile();
     bool isEncrypted() const;
     QString setPassword(const QString& newPassword);
     const ToxEncrypt* getPasskey() const;
@@ -103,7 +102,7 @@ private:
     static QStringList getFilesByExt(QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
-    void initCore(const QByteArray& toxsave, ICoreSettings& s);
+    void initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewProfile);
 
 private:
     std::unique_ptr<Core> core = nullptr;
@@ -111,7 +110,6 @@ private:
     std::unique_ptr<ToxEncrypt> passkey = nullptr;
     std::shared_ptr<RawDatabase> database;
     std::unique_ptr<History> history;
-    bool newProfile;
     bool isRemoved;
     bool encrypted = false;
     static QStringList profiles;

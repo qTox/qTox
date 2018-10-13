@@ -52,8 +52,18 @@
 
 QStringList Profile::profiles;
 
-void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s)
+void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewProfile)
 {
+    if (toxsave.isEmpty() && !isNewProfile) {
+        qCritical() << "Existing toxsave is empty";
+        emit failedToStart();
+    }
+
+    if (!toxsave.isEmpty() && isNewProfile) {
+        qCritical() << "New profile has toxsave data";
+        emit failedToStart();
+    }
+
     Core::ToxCoreErrors err;
     core = Core::makeToxCore(toxsave, &s, &err);
     if (!core) {
@@ -72,6 +82,11 @@ void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s)
         return;
     }
 
+    if (isNewProfile) {
+        core->setStatusMessage(tr("Toxing on qTox"));
+        core->setUsername(name); 
+    }
+
     // save tox file when Core requests it
     connect(core.get(), &Core::saveRequest, this, &Profile::onSaveToxSave);
     // react to avatar changes
@@ -83,14 +98,13 @@ void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s)
 
 Profile::Profile(QString name, const QString& password, bool isNewProfile, const QByteArray& toxsave)
     : name{name}
-    , newProfile{isNewProfile}
     , isRemoved{false}
 {
     Settings& s = Settings::getInstance();
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    initCore(toxsave, s);
+    initCore(toxsave, s, isNewProfile);
 
     const ToxId& selfId = core->getSelfId();
     loadDatabase(selfId, password);
@@ -312,11 +326,6 @@ void Profile::startCore()
     setAvatar(data);
 }
 
-bool Profile::isNewProfile()
-{
-    return newProfile;
-}
-
 /**
  * @brief Saves the profile's .tox save, encrypted if needed.
  * @warning Invalid on deleted profiles.
@@ -371,7 +380,6 @@ bool Profile::saveToxSave(QByteArray data)
     // check if everything got written
     if (saveFile.flush()) {
         saveFile.commit();
-        newProfile = false;
     } else {
         saveFile.cancelWriting();
         qCritical() << "Failed to write, can't save!";
@@ -794,7 +802,8 @@ void Profile::restartCore()
         // save to disk just in case
         if (saveToxSave(savedata)) {
             qDebug() << "Restarting Core";
-            initCore(savedata, Settings::getInstance());
+            const bool isNewProfile{false};
+            initCore(savedata, Settings::getInstance(), isNewProfile);
             core->start();
         } else {
             qCritical() << "Failed to save, not restarting core";
