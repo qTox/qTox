@@ -20,7 +20,6 @@
 #include "addfriendform.h"
 #include "src/core/core.h"
 #include "src/net/toxme.h"
-#include "src/net/toxme.h"
 #include "src/nexus.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
@@ -30,15 +29,14 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QErrorMessage>
-#include <QFont>
 #include <QFileDialog>
+#include <QFont>
 #include <QMessageBox>
 #include <QRegularExpression>
 #include <QScrollArea>
 #include <QSignalMapper>
 #include <QTabWidget>
 #include <QWindow>
-#include <tox/tox.h>
 
 /**
  * @var QString AddFriendForm::lastUsername
@@ -187,8 +185,7 @@ void AddFriendForm::addFriend(const QString& idText)
         friendId = Toxme::lookup(idText); // Try Toxme
         if (!friendId.isValid()) {
             GUI::showWarning(tr("Couldn't add friend"),
-                             tr("%1 Tox ID is invalid or does not exist", "Toxme error")
-                             .arg(idText));
+                             tr("%1 Tox ID is invalid or does not exist", "Toxme error").arg(idText));
             return;
         }
     }
@@ -278,8 +275,8 @@ void AddFriendForm::onIdChanged(const QString& id)
     //: Tox ID format description
     const QString toxIdComment(tr("either 76 hexadecimal characters or name@example.com"));
 
-    const QString labelText = isValidId ? QStringLiteral("%1 (%2)")
-                                        : QStringLiteral("%1 <font color='red'>(%2)</font>");
+    const QString labelText =
+        isValidId ? QStringLiteral("%1 (%2)") : QStringLiteral("%1 <font color='red'>(%2)</font>");
     toxIdLabel.setText(labelText.arg(toxIdText, toxIdComment));
     toxId.setStyleSheet(isValidId ? QStringLiteral("")
                                   : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
@@ -359,11 +356,11 @@ void AddFriendForm::retranslateUi()
     message.setPlaceholderText(tr("%1 here! Tox me maybe?").arg(lastUsername));
     importMessage.setPlaceholderText(message.placeholderText());
 
-    importFileLabel.setText(contactsToImport.isEmpty()
+    importFileLabel.setText(
+        contactsToImport.isEmpty()
             ? tr("Import a list of contacts, one Tox ID per line")
             //: Shows the number of contacts we're about to import from a file (at least one)
-            : tr("Ready to import %n contact(s), click send to confirm", "",
-                 contactsToImport.size()));
+            : tr("Ready to import %n contact(s), click send to confirm", "", contactsToImport.size()));
 
     onIdChanged(toxId.text());
 
