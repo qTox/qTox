@@ -100,15 +100,6 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 include(Dependencies)
 
-# Copy themes
-if (UNIX AND NOT APPLE)
-	file(COPY ${CMAKE_SOURCE_DIR}/themes DESTINATION $ENV{HOME}/.config/qtox)
-elseif (APPLE)
-	file(COPY ${CMAKE_SOURCE_DIR}/themes DESTINATION "$ENV{HOME}/Library/Application Support/qtox")
-elseif (WIN32)
-	file(COPY ${CMAKE_SOURCE_DIR}/themes DESTINATION C:\\users\\%username%\\AppData\\roaming\\qtox)
-endif()
-
 ################################################################################
 #
 # :: qTox main library sources

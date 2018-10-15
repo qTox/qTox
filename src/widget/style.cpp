@@ -28,6 +28,7 @@
 #include <QMap>
 #include <QPainter>
 #include <QRegularExpression>
+#include <QStandardPaths>
 #include <QStringBuilder>
 #include <QStyle>
 #include <QSvgRenderer>
@@ -56,7 +57,15 @@
  *
  * @var SmallLight
  * @brief [SystemDefault - 2]px, light
+ *
+ * @var BuiltinThemePath
+ * @brief Path to the theme built into the application binary
  */
+
+namespace {
+    const QLatin1Literal ThemeSubFolder{"themes/"};
+    const QLatin1Literal BuiltinThemePath{":themes/default/"};
+}
 
 // helper functions
 QFont appFont(int pixelSize, int weight)
@@ -98,22 +107,19 @@ QString Style::getThemeName()
     return QStringLiteral("default");
 }
 
-QString Style::getThemePath()
+QString Style::getThemeFolder()
 {
     const QString themeName = getThemeName();
-    const QString homePath = QDir::homePath();
+    const QString themeFolder = ThemeSubFolder % themeName;
+    const QString fullPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
+                                  themeFolder, QStandardPaths::LocateDirectory);
 
-#if defined(Q_OS_UNIX) and not defined(Q_OS_MACOS)
-    const QString themePath = homePath % QLatin1String("/.config/qtox/themes/") % themeName % '/';
-#elif defined(Q_OS_MACOS)
-    const QString themePath = homePath % QLatin1String("/Library/Application Support/qtox/themes/")
-                                                       % themeName % '/';
-#elif defined(Q_OS_WIN32)
-    const QString themePath = homePath % QLatin1String("/AppData/roaming/qtox/themes/")
-                                                       % themeName % '/';
-#endif
+    // No themes available, fallback to builtin
+    if(fullPath.isEmpty()) {
+        return BuiltinThemePath;
+    }
 
-    return themePath;
+    return fullPath % QDir::separator();
 }
 
 QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"),
@@ -125,7 +131,7 @@ std::map<std::pair<const QString, const QFont>, const QString> Style::stylesheet
 
 const QString Style::getStylesheet(const QString& filename, const QFont& baseFont)
 {
-    const QString fullPath = getThemePath() + filename;
+    const QString fullPath = getThemeFolder() + filename;
     const std::pair<const QString, const QFont> cacheKey(fullPath, baseFont);
     auto it = stylesheetsCache.find(cacheKey);
     if (it != stylesheetsCache.end())
@@ -142,7 +148,7 @@ const QString Style::getStylesheet(const QString& filename, const QFont& baseFon
 static QStringList existingImagesCache;
 const QString Style::getImagePath(const QString& filename)
 {
-    QString fullPath = getThemePath() + filename;
+    QString fullPath = getThemeFolder() + filename;
 
     // search for image in cache
     if (existingImagesCache.contains(fullPath)) {
@@ -156,7 +162,7 @@ const QString Style::getImagePath(const QString& filename)
     } else {
         qWarning() << "Failed to open file (using defaults):" << fullPath;
 
-        fullPath = QLatin1String(":themes/default/") % filename;
+        fullPath = BuiltinThemePath % filename;
 
         if (QFileInfo::exists(fullPath)) {
             return fullPath;
@@ -194,7 +200,7 @@ QFont Style::getFont(Style::Font font)
 
 const QString Style::resolve(const QString& filename, const QFont& baseFont)
 {
-    QString themePath = getThemePath();
+    QString themePath = getThemeFolder();
     QString fullPath = themePath + filename;
     QString qss;
 
@@ -204,7 +210,7 @@ const QString Style::resolve(const QString& filename, const QFont& baseFont)
     } else {
         qWarning() << "Failed to open file (using defaults):" << fullPath;
 
-        fullPath = QLatin1String(":themes/default/") % filename;
+        fullPath = BuiltinThemePath;
         QFile file{fullPath};
 
         if (file.open(QFile::ReadOnly | QFile::Text)) {
@@ -260,14 +266,14 @@ const QString Style::resolve(const QString& filename, const QFont& baseFont)
         path.remove(QStringLiteral("@getImagePath("));
         path.chop(1);
 
-        QString fullImagePath = getThemePath() + path;
+        QString fullImagePath = getThemeFolder() + path;
         // image not in cache
         if (!existingImagesCache.contains(fullPath)) {
             if (QFileInfo::exists(fullImagePath)) {
                 existingImagesCache << fullImagePath;
             } else {
                 qWarning() << "Failed to open file (using defaults):" << fullImagePath;
-                fullImagePath = QLatin1String(":themes/default/") % path;
+                fullImagePath = BuiltinThemePath % path;
             }
         }
 
