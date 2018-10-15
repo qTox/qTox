@@ -14,6 +14,8 @@ option(AUTOUPDATE "Enable the auto updater" OFF)
 option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
 option(ASAN "Compile with AddressSanitizer" OFF)
+# this option is intended for developers wanting to modify the default theme
+option(COPY_THEMES "Copy the default theme to the local folder for editing" OFF)
 
 # process generated files if cmake >= 3.10
 if(POLICY CMP0071)
@@ -99,15 +101,6 @@ include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
 
 include(Dependencies)
-
-# Copy themes
-if (UNIX AND NOT APPLE)
-	file(COPY ${CMAKE_SOURCE_DIR}/themes DESTINATION $ENV{HOME}/.config/qtox)
-elseif (APPLE)
-	file(COPY ${CMAKE_SOURCE_DIR}/themes DESTINATION "$ENV{HOME}/Library/Application Support/qtox")
-elseif (WIN32)
-	file(COPY ${CMAKE_SOURCE_DIR}/themes DESTINATION C:\\users\\%username%\\AppData\\roaming\\qtox)
-endif()
 
 ################################################################################
 #
