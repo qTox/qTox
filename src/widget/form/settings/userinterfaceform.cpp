@@ -26,7 +26,6 @@
 #include <QFont>
 #include <QMessageBox>
 #include <QRegularExpressionValidator>
-#include <QStandardPaths>
 #include <QStyleFactory>
 #include <QTime>
 #include <QVector>

@@ -28,7 +28,6 @@
 #include <QMetaObject>
 #include <QProcess>
 #include <QSettings>
-#include <QStandardPaths>
 
 #include "update.h"
 
