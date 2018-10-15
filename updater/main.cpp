@@ -26,7 +26,6 @@
 #include <QDir>
 #include <QFile>
 #include <QMutex>
-#include <QStandardPaths>
 #include <memory>
 #include <windows.h>
 
