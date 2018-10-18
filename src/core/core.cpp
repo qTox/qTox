@@ -460,21 +460,11 @@ void Core::onGroupInvite(Tox* tox, uint32_t friendId, Tox_Conference_Type type,
     switch (type) {
     case TOX_CONFERENCE_TYPE_TEXT:
         qDebug() << QString("Text group invite by %1").arg(friendId);
-        if (friendId == UINT32_MAX) {
-            // Rejoining existing (persistent) conference after disconnect and reconnect.
-            tox_conference_join(tox, friendId, cookie, length, nullptr);
-            return;
-        }
         emit core->groupInviteReceived(inviteInfo);
         break;
 
     case TOX_CONFERENCE_TYPE_AV:
         qDebug() << QString("AV group invite by %1").arg(friendId);
-        if (friendId == UINT32_MAX) {
-            // Rejoining existing (persistent) AV conference after disconnect and reconnect.
-            toxav_join_av_groupchat(tox, friendId, cookie, length, CoreAV::groupCallCallback, core);
-            return;
-        }
         emit core->groupInviteReceived(inviteInfo);
         break;
 
