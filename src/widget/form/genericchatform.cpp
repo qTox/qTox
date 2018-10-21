@@ -58,8 +58,6 @@
  * elements and methods to work with chat messages.
  */
 
-#define SET_STYLESHEET(x) (x)->setStyleSheet(Style::getStylesheet(":/themes/default/" #x "/" #x ".css"))
-
 static const QSize FILE_FLYOUT_SIZE{24, 24};
 static const short FOOT_BUTTONS_SPACING = 2;
 static const short MESSAGE_EDIT_HEIGHT = 50;
