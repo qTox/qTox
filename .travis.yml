@@ -105,7 +105,7 @@ matrix:
           - /opt/build-windows/x86_64
     - stage: "macOS, AppImage and Flatpak"
       os: osx
-      osx_image: xcode7.3
+      osx_image: xcode9.2
       env: JOB=build-osx
     - stage: "macOS, AppImage and Flatpak"
       os: linux
