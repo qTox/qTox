@@ -17,7 +17,7 @@
 #
 
 # Fail out on error
-set -e -o pipefail
+set -eu -o pipefail
 
 # accelerate builds with ccache
 install_ccache() {
@@ -45,10 +45,10 @@ check() {
 
 # The system ruby in Travis CI is too old, use latest stable
 get_ruby_version() {
-    rvm get stable
-    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-    rvm use ruby --install --default
+    rvm reload
     echo rvm_auto_reload_flag=1 >> ~/.rvmrc
+    rvm get stable
+    rvm use ruby --install --default
 }
 
 main() {

@@ -579,11 +579,10 @@ password for sudo.
 
 ## OS X
 
-Supported OS X versions: >=10.8.
+Supported OS X versions: >=10.8. (NOTE: only 10.12 is tested during CI)
 
-Compiling qTox on OS X for development requires 3 tools:
-[Xcode](https://developer.apple.com/xcode/),
-[Qt 5.4+](https://www.qt.io/qt5-4/) and [homebrew](https://brew.sh).
+Compiling qTox on OS X for development requires 2 tools:
+[Xcode](https://developer.apple.com/xcode/) and [homebrew](https://brew.sh).
 
 ### Automated Script
 
