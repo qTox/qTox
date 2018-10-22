@@ -75,11 +75,11 @@ public:
     virtual void show(ContentLayout* contentLayout);
 
     void addMessage(const ToxPk& author, const QString& message, const QDateTime& datetime,
-                    bool isAction);
+                    bool isAction, bool colorizeName = false);
     void addSelfMessage(const QString& message, const QDateTime& datetime, bool isAction);
     void addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                               const QDateTime& datetime);
-    void addAlertMessage(const ToxPk& author, const QString& message, const QDateTime& datetime);
+    void addAlertMessage(const ToxPk& author, const QString& message, const QDateTime& datetime, bool colorizeName = false);
     static QString resolveToxPk(const ToxPk& pk);
     QDate getLatestDate() const;
     QDate getFirstDate() const;
@@ -127,7 +127,7 @@ private:
 
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
-                                   const QDateTime& datetime, bool isAction, bool isSent);
+                                   const QDateTime& datetime, bool isAction, bool isSent, bool colorizeName = false);
     ChatMessage::Ptr createSelfMessage(const QString& message, const QDateTime& datetime,
                                        bool isAction, bool isSent);
     bool needsToHideName(const ToxPk& messageAuthor, const QDateTime& messageTime) const;
