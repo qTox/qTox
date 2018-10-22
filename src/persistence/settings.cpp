@@ -242,7 +242,7 @@ void Settings::loadGlobal()
             else
                 style = "None";
         }
-        groupNameColors = s.value("groupNameColors", false).toBool();
+        nameColors = s.value("nameColors", false).toBool();
     }
     s.endGroup();
 
@@ -548,7 +548,7 @@ void Settings::saveGlobal()
         s.setValue("useEmoticons", useEmoticons);
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
-        s.setValue("groupNameColors", groupNameColors);
+        s.setValue("nameColors", nameColors);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
         s.setValue("spellCheckingEnabled", spellCheckingEnabled);
     }
@@ -2422,12 +2422,12 @@ void Settings::setAutoLogin(bool state)
 void Settings::setEnableGroupChatsColor(bool state)
 {
     QMutexLocker locker{&bigLock};
-    groupNameColors = state;
+    nameColors = state;
 }
 
 bool Settings::getEnableGroupChatsColor() const
 {
-    return groupNameColors;
+    return nameColors;
 }
 
 /**
