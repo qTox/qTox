@@ -73,7 +73,7 @@ public:
     bool isValid();
     void import(const HistoryKeeper& oldHistory);
 
-    bool isHistoryExistence(const QString& friendPk);
+    bool historyExists(const QString& friendPk);
 
     void eraseHistory();
     void removeFriendHistory(const QString& friendPk);

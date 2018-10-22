@@ -227,9 +227,6 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     copyLinkAction = menu.addAction(QIcon(), QString(), this, SLOT(copyLink()));
     menu.addSeparator();
 
-    connect(chatWidget, &ChatLog::customContextMenuRequested, this,
-            &GenericChatForm::onChatContextMenuRequested);
-
     connect(searchForm, &SearchForm::searchInBegin, this, &GenericChatForm::searchInBegin);
     connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
     connect(searchForm, &SearchForm::searchDown, this, &GenericChatForm::onSearchDown);
@@ -333,8 +330,11 @@ bool GenericChatForm::event(QEvent* e)
 
 void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 {
-    QWidget* sender = static_cast<QWidget*>(QObject::sender());
-    pos = sender->mapToGlobal(pos);
+    const bool chatLogEmpty = chatWidget->isEmpty();
+    quoteAction->setEnabled(chatWidget->hasTextToBeCopied());
+    searchAction->setEnabled(!chatLogEmpty);
+    saveChatAction->setEnabled(!chatLogEmpty);
+    clearAction->setEnabled(!chatLogEmpty);
 
     // If we right-clicked on a link, give the option to copy it
     bool clickedOnLink = false;
@@ -348,8 +348,6 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
         }
     }
     copyLinkAction->setVisible(clickedOnLink);
-
-    menu.exec(pos);
 }
 
 /**

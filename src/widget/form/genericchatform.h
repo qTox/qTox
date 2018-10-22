@@ -150,11 +150,11 @@ protected:
     bool audioOutputFlag;
     int curRow;
 
+    QAction* quoteAction;
+    QAction* searchAction;
     QAction* saveChatAction;
     QAction* clearAction;
-    QAction* quoteAction;
     QAction* copyLinkAction;
-    QAction* searchAction;
 
     ToxPk previousId;
 

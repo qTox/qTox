@@ -56,6 +56,7 @@ private slots:
     void onLabelContextMenuRequested(const QPoint& localPos);
 
 protected:
+    void onChatContextMenuRequested(QPoint pos);
     virtual GenericNetCamView* createNetcam() final override;
     virtual void keyPressEvent(QKeyEvent* ev) final override;
     virtual void keyReleaseEvent(QKeyEvent* ev) final override;

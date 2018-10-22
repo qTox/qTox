@@ -117,6 +117,8 @@ ChatLog::ChatLog(QWidget* parent)
         copySelectedText(true);
     });
 
+    connect(this, &ChatLog::customContextMenuRequested, this, &ChatLog::onCustomContextMenuRequested);
+
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
 }
@@ -843,6 +845,11 @@ void ChatLog::onWorkerTimeout()
 void ChatLog::onMultiClickTimeout()
 {
     clickCount = 0;
+}
+
+void ChatLog::onCustomContextMenuRequested()
+{
+    selectAllAction->setEnabled(!isEmpty());
 }
 
 void ChatLog::handleMultiClickEvent()

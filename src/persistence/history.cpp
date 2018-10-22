@@ -90,7 +90,7 @@ bool History::isValid()
  * @param friendPk
  * @return True if has, false otherwise.
  */
-bool History::isHistoryExistence(const QString& friendPk)
+bool History::historyExists(const QString& friendPk)
 {
     return !getChatHistoryDefaultNum(friendPk).isEmpty();
 }

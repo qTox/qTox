@@ -128,6 +128,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(group, &Group::userListChanged, this, &GroupChatForm::onUserListChanged);
     connect(group, &Group::titleChanged, this, &GroupChatForm::onTitleChanged);
     connect(&Settings::getInstance(), &Settings::blackListChanged, this, &GroupChatForm::updateUserNames);
+    connect(chatWidget, &ChatLog::customContextMenuRequested, this, &GroupChatForm::onChatContextMenuRequested);
 
     onUserListChanged();
     setAcceptDrops(true);
@@ -517,4 +518,12 @@ void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)
 
         s.setBlackList(blackList);
     }
+}
+
+void GroupChatForm::onChatContextMenuRequested(QPoint pos)
+{
+    QWidget* sender = static_cast<QWidget*>(QObject::sender());
+    pos = sender->mapToGlobal(pos);
+    GenericChatForm::onChatContextMenuRequested(pos);
+    menu.exec(pos);
 }

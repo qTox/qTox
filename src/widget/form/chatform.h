@@ -80,6 +80,7 @@ protected slots:
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter) override;
     void onSearchUp(const QString& phrase, const ParameterSearch& parameter) override;
     void onSearchDown(const QString& phrase, const ParameterSearch& parameter) override;
+    void onChatContextMenuRequested(QPoint pos);
 
 private slots:
     void onSendTriggered() override;
@@ -162,8 +163,8 @@ private:
     QTimer typingTimer;
     QElapsedTimer timeElapsed;
     OfflineMsgEngine* offlineEngine;
-    QAction* loadHistoryAction;
     QAction* copyStatusAction;
+    QAction* loadHistoryAction;
     QAction* exportChatAction;
 
     History* history;

@@ -168,7 +168,6 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
     connect(core, &Core::fileNameChanged, this, &ChatForm::onFileNameChanged);
 
-
     const CoreAV* av = core->getAv();
     connect(av, &CoreAV::avInvite, this, &ChatForm::onAvInvite);
     connect(av, &CoreAV::avStart, this, &ChatForm::onAvStart);
@@ -201,6 +200,8 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     connect(headWidget, &ChatFormHeader::callAccepted, this,
             [this] { onAnswerCallTriggered(lastCallIsVideo); });
     connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
+
+    connect(chatWidget, &ChatLog::customContextMenuRequested, this, &ChatForm::onChatContextMenuRequested);
 
     updateCallButtons();
     if (Nexus::getProfile()->isHistoryEnabled()) {
@@ -579,6 +580,18 @@ void ChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parame
     if (!searchInText(phrase, parameter, SearchDirection::Down)) {
         emit messageNotFoundShow(SearchDirection::Down);
     }
+}
+
+void ChatForm::onChatContextMenuRequested(QPoint pos)
+{
+    QWidget* sender = static_cast<QWidget*>(QObject::sender());
+    pos = sender->mapToGlobal(pos);
+    GenericChatForm::onChatContextMenuRequested(pos);
+
+    const bool historyExists = history->historyExists(f->getPublicKey().toString());
+    loadHistoryAction->setEnabled(historyExists);
+    exportChatAction->setEnabled(historyExists);
+    menu.exec(pos);
 }
 
 void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)

@@ -39,7 +39,7 @@ class ChatLog : public QGraphicsView
     Q_OBJECT
 public:
     explicit ChatLog(QWidget* parent = nullptr);
-    virtual ~ChatLog();
+    virtual ~ChatLog() override;
 
     void insertChatlineAtBottom(ChatLine::Ptr l);
     void insertChatlineOnTop(ChatLine::Ptr l);
@@ -77,6 +77,7 @@ private slots:
     void onSelectionTimerTimeout();
     void onWorkerTimeout();
     void onMultiClickTimeout();
+    void onCustomContextMenuRequested();
 
 protected:
     QRectF calculateSceneRect() const;
