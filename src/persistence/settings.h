@@ -608,7 +608,7 @@ private:
     bool notifySound;
     bool busySound;
     bool groupAlwaysNotify;
-	bool groupNameColors;
+    bool nameColors;
 
     bool forceTCP;
     bool enableLanDiscovery;
