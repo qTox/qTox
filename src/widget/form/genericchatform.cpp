@@ -372,7 +372,7 @@ bool GenericChatForm::needsToHideName(const ToxPk& messageAuthor, const QDateTim
  * @return ChatMessage object
  */
 ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QString& message,
-                                                const QDateTime& dt, bool isAction, bool isSent)
+                                                const QDateTime& dt, bool isAction, bool isSent, bool colorizeName)
 {
     const Core* core = Core::getInstance();
     bool isSelf = author == core->getSelfId().getPublicKey();
@@ -383,10 +383,10 @@ ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QStri
 
     ChatMessage::Ptr msg;
     if (isAction) {
-        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION, isSelf);
+        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION, isSelf, QDateTime(), colorizeName);
         previousId = ToxPk{};
     } else {
-        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, isSelf);
+        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, isSelf, QDateTime(), colorizeName);
         const QDateTime newMsgDateTime = QDateTime::currentDateTime();
         if (needsToHideName(author, newMsgDateTime)) {
             msg->hideSender();
@@ -418,9 +418,9 @@ ChatMessage::Ptr GenericChatForm::createSelfMessage(const QString& message, cons
  * @brief Inserts message into ChatLog
  */
 void GenericChatForm::addMessage(const ToxPk& author, const QString& message, const QDateTime& dt,
-                                 bool isAction)
+                                 bool isAction, bool colorizeName)
 {
-    createMessage(author, message, dt, isAction, true);
+    createMessage(author, message, dt, isAction, true, colorizeName);
 }
 
 /**
@@ -431,11 +431,11 @@ void GenericChatForm::addSelfMessage(const QString& message, const QDateTime& da
     createSelfMessage(message, datetime, isAction, true);
 }
 
-void GenericChatForm::addAlertMessage(const ToxPk& author, const QString& msg, const QDateTime& dt)
+void GenericChatForm::addAlertMessage(const ToxPk& author, const QString& msg, const QDateTime& dt, bool colorizeName)
 {
     QString authorStr = resolveToxPk(author);
     bool isSelf = author == Core::getInstance()->getSelfId().getPublicKey();
-    auto chatMsg = ChatMessage::createChatMessage(authorStr, msg, ChatMessage::ALERT, isSelf, dt);
+    auto chatMsg = ChatMessage::createChatMessage(authorStr, msg, ChatMessage::ALERT, isSelf, dt, colorizeName);
     const QDateTime newMsgDateTime = QDateTime::currentDateTime();
     if (needsToHideName(author, newMsgDateTime)) {
         chatMsg->hideSender();

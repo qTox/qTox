@@ -44,7 +44,7 @@ ChatMessage::ChatMessage()
 }
 
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
-                                                MessageType type, bool isMe, const QDateTime& date)
+                                                MessageType type, bool isMe, const QDateTime& date, bool colorizeName)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
@@ -91,7 +91,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
 
     QColor color = QColor(0, 0, 0);
 
-    if (Settings::getInstance().getEnableGroupChatsColor())
+    if (colorizeName && Settings::getInstance().getEnableGroupChatsColor())
     {
         QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Md5);
         quint8 *data = (quint8*)hash.data();
