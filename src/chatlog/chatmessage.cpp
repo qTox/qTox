@@ -28,12 +28,15 @@
 #include "content/timestamp.h"
 
 #include <QDebug>
+#include <QCryptographicHash>
 
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
 
 #define NAME_COL_WIDTH 90.0
 #define TIME_COL_WIDTH 90.0
+
+QMap <QString, QColor> authorColor;
 
 ChatMessage::ChatMessage()
 {
@@ -85,8 +88,22 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     if (isMe)
         authorFont.setBold(true);
 
+    QColor color = QColor(0, 0, 0);
+
+    if (Settings::getInstance().getEnableGroupChatsColor())
+    {
+        QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Md5);
+        quint8 *data = (quint8*)hash.data();
+
+        if (!authorColor[sender].isValid())
+            authorColor[sender] = QColor(data[0], data[1], data[2]);
+
+        if (!isMe)
+            color = authorColor[sender];
+    }
+
     msg->addColumn(new Text(senderText, authorFont, true, sender,
-                            type == ACTION ? actionColor : Qt::black),
+                            type == ACTION ? actionColor : color),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(text, baseFont, false, ((type == ACTION) && isMe)
                                                        ? QString("%1 %2").arg(sender, rawMessage)
