@@ -376,7 +376,7 @@ void UserInterfaceForm::on_txtChatFontSize_valueChanged(int px)
     }
 }
 
-void UserInterfaceForm::on_useNameColors_stateChanged(int arg1)
+void UserInterfaceForm::on_useNameColors_stateChanged(int value)
 {
-    Settings::getInstance().setEnableGroupChatsColor(arg1);
+    Settings::getInstance().setEnableGroupChatsColor(value);
 }
