@@ -98,8 +98,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
 
         if (!authorColor[sender].isValid())
         {
-            color.setHsv(data[0], data[1], data[2]);
-            authorColor[sender] = color;
+            authorColor[sender].setHsv(data[0], 255, 196);
         }
 
         if (!isMe)
