@@ -92,14 +92,19 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
 
     if (colorizeName && Settings::getInstance().getEnableGroupChatsColor())
     {
-        QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Md5);
+        QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Sha256);
         quint8 *data = (quint8*)hash.data();
 
         if (!authorColor[sender].isValid())
-            authorColor[sender] = QColor(data[0], data[1], data[2]);
+        {
+            color.setHsv(data[0], data[1], data[2]);
+            authorColor[sender] = color;
+        }
 
         if (!isMe)
+        {
             color = authorColor[sender];
+        }
     }
 
     msg->addColumn(new Text(senderText, authorFont, true, sender,
