@@ -101,12 +101,8 @@ CoreAV::CoreAV(Tox* tox)
 
     toxav_callback_call(toxav, CoreAV::callCallback, this);
     toxav_callback_call_state(toxav, CoreAV::stateCallback, this);
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
     toxav_callback_audio_bit_rate(toxav, CoreAV::audioBitrateCallback, this);
     toxav_callback_video_bit_rate(toxav, CoreAV::videoBitrateCallback, this);
-#else
-    toxav_callback_bit_rate_status(toxav, CoreAV::bitrateCallback, this);
-#endif
     toxav_callback_audio_receive_frame(toxav, CoreAV::audioFrameCallback, this);
     toxav_callback_video_receive_frame(toxav, CoreAV::videoFrameCallback, this);
 
@@ -383,11 +379,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
     if (call.getNullVideoBitrate()) {
         qDebug() << "Restarting video stream to friend" << callId;
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
         toxav_video_set_bit_rate(toxav, callId, VIDEO_DEFAULT_BITRATE, nullptr);
-#else
-        toxav_bit_rate_set(toxav, callId, -1, VIDEO_DEFAULT_BITRATE, nullptr);
-#endif
         call.setNullVideoBitrate(false);
     }
 
@@ -455,7 +447,6 @@ void CoreAV::toggleMuteCallOutput(const Friend* f)
  * @param[in] sample_rate  the audio sample rate
  * @param[in] core         the qTox Core class
  */
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
 void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const int16_t* data,
                                unsigned samples, uint8_t channels, uint32_t sample_rate, void* core)
 {
@@ -491,36 +482,6 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
 
     audio.playAudioBuffer(call.getAlSource(peer), data, samples, channels, sample_rate);
 }
-#else
-void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* data,
-                               unsigned samples, uint8_t channels, unsigned sample_rate, void* core)
-{
-    Q_UNUSED(tox);
-
-    Core* c = static_cast<Core*>(core);
-    CoreAV* cav = c->getAv();
-
-    auto it = cav->groupCalls.find(group);
-    if (it == cav->groupCalls.end()) {
-        return;
-    }
-
-    ToxGroupCall& call = it->second;
-
-    emit c->groupPeerAudioPlaying(group, peer);
-
-    if (call.getMuteVol() || !call.isActive()) {
-        return;
-    }
-
-    Audio& audio = Audio::getInstance();
-    if(!call.havePeer(peer)) {
-        call.addPeer(peer);
-    }
-
-    audio.playAudioBuffer(call.getAlSource(peer), data, samples, channels, sample_rate);
-}
-#endif
 
 /**
  * @brief Called from core to make sure the source for that peer is invalidated when they leave.
@@ -746,11 +707,7 @@ void CoreAV::sendNoVideo()
     qDebug() << "CoreAV: Signaling end of video sending";
     for (auto& kv : calls) {
         ToxFriendCall& call = kv.second;
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
         toxav_video_set_bit_rate(toxav, kv.first, 0, nullptr);
-#else
-        toxav_bit_rate_set(toxav, kv.first, -1, 0, nullptr);
-#endif
         call.setNullVideoBitrate(true);
     }
 }

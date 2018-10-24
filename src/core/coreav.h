@@ -25,7 +25,6 @@
 #include <QObject>
 #include <atomic>
 #include <memory>
-#include <tox/tox.h> // for TOX_VERSION_IS_API_COMPATIBLE macro
 #include <tox/toxav.h>
 
 class Friend;
@@ -77,14 +76,9 @@ public:
     bool isCallOutputMuted(const Friend* f) const;
     void toggleMuteCallInput(const Friend* f);
     void toggleMuteCallOutput(const Friend* f);
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
     static void groupCallCallback(void* tox, uint32_t group, uint32_t peer, const int16_t* data,
                                   unsigned samples, uint8_t channels, uint32_t sample_rate,
                                   void* core);
-#else
-    static void groupCallCallback(void* tox, int group, int peer, const int16_t* data, unsigned samples,
-                                  uint8_t channels, unsigned sample_rate, void* core);
-#endif
     static void invalidateGroupCallPeerSource(int group, int peer);
     static void invalidateGroupCallSources(int group);
 
