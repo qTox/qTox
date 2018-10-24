@@ -84,12 +84,8 @@ void Core::registerCallbacks(Tox* tox)
     tox_callback_friend_read_receipt(tox, onReadReceiptCallback);
     tox_callback_conference_invite(tox, onGroupInvite);
     tox_callback_conference_message(tox, onGroupMessage);
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
     tox_callback_conference_peer_list_changed(tox, onGroupPeerListChange);
     tox_callback_conference_peer_name(tox, onGroupPeerNameChange);
-#else
-    tox_callback_conference_namelist_change(tox, onGroupNamelistChange);
-#endif
     tox_callback_conference_title(tox, onGroupTitleChange);
     tox_callback_file_chunk_request(tox, CoreFile::onFileDataCallback);
     tox_callback_file_recv(tox, CoreFile::onFileReceiveCallback);
@@ -492,7 +488,6 @@ void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, Tox_Message_T
     emit core->groupMessageReceived(groupId, peerId, message, isAction);
 }
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 2, 0)
 void Core::onGroupPeerListChange(Tox*, uint32_t groupId, void* core)
 {
     const auto coreAv = static_cast<Core*>(core)->getAv();
@@ -511,22 +506,6 @@ void Core::onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId, const 
     qDebug() << QString("Group %1, Peer %2, name changed to %3").arg(groupId).arg(peerId).arg(newName);
     emit static_cast<Core*>(core)->groupPeerNameChanged(groupId, peerId, newName);
 }
-
-#else
-// for toxcore < 0.2.0, aka old groups
-void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
-                                 TOX_CONFERENCE_STATE_CHANGE change, void* core)
-{
-    CoreAV* coreAv = static_cast<Core*>(core)->getAv();
-    const auto changed = change == TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT;
-    if (changed && coreAv->isGroupAvEnabled(groupId)) {
-        CoreAV::invalidateGroupCallPeerSource(groupId, peerId);
-    }
-
-    qDebug() << QString("Group namelist change %1:%2 %3").arg(groupId).arg(peerId).arg(change);
-    emit static_cast<Core*>(core)->groupNamelistChanged(groupId, peerId, change);
-}
-#endif
 
 void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* cTitle,
                               size_t length, void* vCore)
