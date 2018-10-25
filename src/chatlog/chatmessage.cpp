@@ -37,7 +37,6 @@
 #define NAME_COL_WIDTH 90.0
 #define TIME_COL_WIDTH 90.0
 
-QMap <QString, QColor> authorColor;
 
 ChatMessage::ChatMessage()
 {
@@ -90,20 +89,18 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
         authorFont.setBold(true);
 
     QColor color = QColor(0, 0, 0);
+    QColor authorColor;
 
     if (colorizeName && Settings::getInstance().getEnableGroupChatsColor())
     {
         QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Sha256);
         quint8 *data = (quint8*)hash.data();
 
-        if (!authorColor[sender].isValid())
-        {
-            authorColor[sender].setHsv(data[0], 255, 196);
-        }
+        authorColor.setHsv(data[0], 255, 196);
 
         if (!isMe)
         {
-            color = authorColor[sender];
+            color = authorColor;
         }
     }
 
