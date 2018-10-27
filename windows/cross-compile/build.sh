@@ -2,7 +2,7 @@
 
 # MIT License
 #
-# Copyright (c) 2017 Maxim Biro <nurupo.contributions@gmail.com>
+# Copyright (c) 2017-2018 Maxim Biro <nurupo.contributions@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -210,9 +210,9 @@ strip_all()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.0.2o
+OPENSSL_VERSION=1.0.2p
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="ec3f5c9714ba0fd45cb4e087301eb1336c317e0d20b575a125050470e8089e4d"
+OPENSSL_HASH="50a98e07b1a89eb8f6a99477f262df71c6fa7bef77df4dc83025a2845c827d00"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
