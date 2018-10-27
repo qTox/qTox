@@ -2,7 +2,7 @@
 
 # MIT License
 #
-# Copyright (c) 2017 Maxim Biro <nurupo.contributions@gmail.com>
+# Copyright (c) 2017-2018 Maxim Biro <nurupo.contributions@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -210,9 +210,9 @@ strip_all()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.0.2o
+OPENSSL_VERSION=1.0.2p
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="ec3f5c9714ba0fd45cb4e087301eb1336c317e0d20b575a125050470e8089e4d"
+OPENSSL_HASH="50a98e07b1a89eb8f6a99477f262df71c6fa7bef77df4dc83025a2845c827d00"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
@@ -253,10 +253,10 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=9
-QT_PATCH=6
+QT_PATCH=7
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.9/5.9.6/single/qt-everywhere-opensource-src-5.9.6.tar.xz.mirrorlist
-QT_HASH="dacc995ae3a7cdad80eb9fdf6470299a8fac41f468a9bb941670ece523b62af4"
+# hash from https://download.qt.io/archive/qt/5.9/5.9.7/single/qt-everywhere-opensource-src-5.9.7.tar.xz.mirrorlist
+QT_HASH="1c3852aa48b5a1310108382fb8f6185560cefc3802e81ecc099f4e62ee38516c"
 QT_FILENAME="qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
@@ -430,8 +430,8 @@ fi
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
-FFMPEG_VERSION=4.0.1
-FFMPEG_HASH="605f5c01c60db35d3b617a79cabb2c7032412be243554602eeed1b628125c0ee"
+FFMPEG_VERSION=4.0.2
+FFMPEG_HASH="a95c0cc9eb990e94031d2183f2e6e444cc61c99f6f182d1575c433d62afb2f97"
 FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
@@ -773,8 +773,8 @@ fi
 # Opus
 
 OPUS_PREFIX_DIR="$DEP_DIR/libopus"
-OPUS_VERSION=1.2.1
-OPUS_HASH="cfafd339ccd9c5ef8d6ab15d7e1a412c054bf4cb4ecbbbcc78c12ef2def70732"
+OPUS_VERSION=1.3
+OPUS_HASH="4f3d69aefdf2dbaf9825408e452a8a414ffc60494c70633560700398820dc550"
 OPUS_FILENAME="opus-$OPUS_VERSION.tar.gz"
 if [ ! -f "$OPUS_PREFIX_DIR/done" ]
 then
@@ -884,8 +884,8 @@ fi
 # Toxcore
 
 TOXCORE_PREFIX_DIR="$DEP_DIR/libtoxcore"
-TOXCORE_VERSION=0.2.7
-TOXCORE_HASH=bef6dbb06d921af58c6a2d7629e6f8eeafa1e541d379e4ff2ccb4ff5d3499cd1
+TOXCORE_VERSION=0.2.8
+TOXCORE_HASH="47fe125d8558775a03a3ded58e9faa07a01cfecd65257e24b544b4b5698d9362"
 TOXCORE_FILENAME="c-toxcore-$TOXCORE_VERSION.tar.gz"
 if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]
 then
@@ -916,7 +916,6 @@ then
 
   cmake -DCMAKE_INSTALL_PREFIX=$TOXCORE_PREFIX_DIR \
         -DBOOTSTRAP_DAEMON=OFF \
-        -DWARNINGS=OFF \
         -DCMAKE_BUILD_TYPE=Release \
         -DENABLE_STATIC=ON \
         -DENABLE_SHARED=OFF \
