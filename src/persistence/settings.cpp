@@ -1248,6 +1248,8 @@ void Settings::setEnableLanDiscovery(bool enabled)
 
 QNetworkProxy Settings::getProxy() const
 {
+    QMutexLocker locker{&bigLock};
+
     QNetworkProxy proxy;
     switch (Settings::getProxyType()) {
     case ProxyType::ptNone:
@@ -2074,6 +2076,7 @@ void Settings::setFriendAlias(const ToxPk& id, const QString& alias)
 
 int Settings::getFriendCircleID(const ToxPk& id) const
 {
+    QMutexLocker locker{&bigLock};
     auto it = friendLst.find(id.getKey());
     if (it != friendLst.end())
         return it->circleID;
@@ -2083,6 +2086,7 @@ int Settings::getFriendCircleID(const ToxPk& id) const
 
 void Settings::setFriendCircleID(const ToxPk& id, int circleID)
 {
+    QMutexLocker locker{&bigLock};
     auto& frnd = getOrInsertFriendPropRef(id);
     frnd.circleID = circleID;
 }
@@ -2098,6 +2102,7 @@ QDate Settings::getFriendActivity(const ToxPk& id) const
 
 void Settings::setFriendActivity(const ToxPk& id, const QDate& activity)
 {
+    QMutexLocker locker{&bigLock};
     auto& frnd = getOrInsertFriendPropRef(id);
     frnd.activity = activity;
 }
@@ -2212,22 +2217,27 @@ void Settings::setShowIdenticons(bool value)
 
 int Settings::getCircleCount() const
 {
+    QMutexLocker locker{&bigLock};
     return circleLst.size();
 }
 
 QString Settings::getCircleName(int id) const
 {
+    QMutexLocker locker{&bigLock};
     return circleLst[id].name;
 }
 
 void Settings::setCircleName(int id, const QString& name)
 {
+    QMutexLocker locker{&bigLock};
     circleLst[id].name = name;
     savePersonal();
 }
 
 int Settings::addCircle(const QString& name)
 {
+    QMutexLocker locker{&bigLock};
+
     circleProp cp;
     cp.expanded = false;
 
@@ -2243,11 +2253,13 @@ int Settings::addCircle(const QString& name)
 
 bool Settings::getCircleExpanded(int id) const
 {
+    QMutexLocker locker{&bigLock};
     return circleLst[id].expanded;
 }
 
 void Settings::setCircleExpanded(int id, bool expanded)
 {
+    QMutexLocker locker{&bigLock};
     circleLst[id].expanded = expanded;
 }
 
@@ -2365,6 +2377,8 @@ void Settings::setAutoLogin(bool state)
  */
 void Settings::createPersonal(QString basename)
 {
+    QMutexLocker locker{&bigLock};
+
     QString path = getSettingsDirPath() + QDir::separator() + basename + ".ini";
     qDebug() << "Creating new profile settings in " << path;
 
@@ -2384,6 +2398,8 @@ void Settings::createPersonal(QString basename)
  */
 void Settings::createSettingsDir()
 {
+    QMutexLocker locker{&bigLock};
+
     QString dir = Settings::getSettingsDirPath();
     QDir directory(dir);
     if (!directory.exists() && !directory.mkpath(directory.absolutePath()))
