@@ -67,6 +67,12 @@ public:
 
     bool rename(QString newName);
 
+    /**
+     * @brief Hashes a friend Id (ownerStr) using our own public key as the hash key
+     * @param[in] ownerStr A stringized public key of a friend (pk.toHex().toUppercase())
+     */
+    QString hashedFriendId(const QString& ownerStr) const;
+
     static void scanProfiles();
     static QStringList getProfiles();
 

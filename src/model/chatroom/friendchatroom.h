@@ -65,7 +65,7 @@ public slots:
 
     bool autoAcceptEnabled() const;
     QString getAutoAcceptDir() const;
-    void disableAutoAccept();
+    void setAutoAccept(bool enable);
     void setAutoAcceptDir(const QString& dir);
 
     QVector<GroupToDisplay> getGroups() const;

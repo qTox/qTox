@@ -20,6 +20,7 @@
 #include "generalform.h"
 #include "ui_generalsettings.h"
 
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <cmath>
 
@@ -245,6 +246,12 @@ void GeneralForm::on_autoSaveFilesDir_clicked()
 
     Settings::getInstance().setGlobalAutoAcceptDir(directory);
     bodyUI->autoSaveFilesDir->setText(directory);
+}
+
+void GeneralForm::on_openAutoSaveFilesDir_clicked()
+{
+    auto dir = Settings::getInstance().getGlobalAutoAcceptDir();
+    QDesktopServices::openUrl(QUrl::fromLocalFile(dir));
 }
 
 void GeneralForm::on_maxAutoAcceptSizeMB_editingFinished()
