@@ -530,6 +530,8 @@ public:
 
     bool getAutoLogin() const;
     void setAutoLogin(bool state);
+    void setEnableGroupChatsColor(bool state);
+    bool getEnableGroupChatsColor() const;
 
     int getCircleCount() const;
     int addCircle(const QString& name = QString());
@@ -606,6 +608,7 @@ private:
     bool notifySound;
     bool busySound;
     bool groupAlwaysNotify;
+    bool nameColors;
 
     bool forceTCP;
     bool enableLanDiscovery;

@@ -73,6 +73,7 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
     bodyUI->txtChatFont->setCurrentFont(chatBaseFont);
     int index = static_cast<int>(s.getStylePreference());
     bodyUI->textStyleComboBox->setCurrentIndex(index);
+    bodyUI->useNameColors->setChecked(s.getEnableGroupChatsColor());
 
     bodyUI->notify->setChecked(s.getNotify());
     // Note: UI is boolean inversed from settings to maintain setting file backwards compatibility
@@ -373,4 +374,9 @@ void UserInterfaceForm::on_txtChatFontSize_valueChanged(int px)
         tmpFont.setPixelSize(px);
         s.setChatMessageFont(tmpFont);
     }
+}
+
+void UserInterfaceForm::on_useNameColors_stateChanged(int value)
+{
+    Settings::getInstance().setEnableGroupChatsColor(value);
 }

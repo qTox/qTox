@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>664</width>
-        <height>796</height>
+        <width>650</width>
+        <height>892</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0,0">
@@ -147,6 +147,13 @@
               <string>Don't show formatting characters</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="useNameColors">
+            <property name="text">
+             <string>Use colored nicknames in chats</string>
+            </property>
            </widget>
           </item>
          </layout>

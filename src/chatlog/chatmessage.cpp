@@ -29,6 +29,7 @@
 #include "src/widget/style.h"
 
 #include <QDebug>
+#include <QCryptographicHash>
 
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
@@ -36,12 +37,13 @@
 #define NAME_COL_WIDTH 90.0
 #define TIME_COL_WIDTH 90.0
 
+
 ChatMessage::ChatMessage()
 {
 }
 
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
-                                                MessageType type, bool isMe, const QDateTime& date)
+                                                MessageType type, bool isMe, const QDateTime& date, bool colorizeName)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
@@ -86,8 +88,24 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     if (isMe)
         authorFont.setBold(true);
 
+    QColor color = QColor(0, 0, 0);
+    QColor authorColor;
+
+    if (colorizeName && Settings::getInstance().getEnableGroupChatsColor())
+    {
+        QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Sha256);
+        quint8 *data = (quint8*)hash.data();
+
+        authorColor.setHsv(data[0], 255, 196);
+
+        if (!isMe)
+        {
+            color = authorColor;
+        }
+    }
+
     msg->addColumn(new Text(senderText, authorFont, true, sender,
-                            type == ACTION ? actionColor : Qt::black),
+                            type == ACTION ? actionColor : color),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(text, baseFont, false, ((type == ACTION) && isMe)
                                                        ? QString("%1 %2").arg(sender, rawMessage)
