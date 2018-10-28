@@ -354,8 +354,7 @@ void Settings::loadPersonal(Profile* profile)
         friendLst.reserve(size);
         for (int i = 0; i < size; i++) {
             ps.setArrayIndex(i);
-            friendProp fp;
-            fp.addr = ps.value("addr").toString();
+            friendProp fp(ps.value("addr").toString());
             fp.alias = ps.value("alias").toString();
             fp.note = ps.value("note").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
@@ -370,7 +369,7 @@ void Settings::loadPersonal(Profile* profile)
 
             if (getEnableLogging())
                 fp.activity = ps.value("activity", QDate()).toDate();
-            friendLst[ToxId(fp.addr).getPublicKey().getKey()] = fp;
+            friendLst.insert(ToxId(fp.addr).getPublicKey().getKey(), fp);
         }
         ps.endArray();
     }
@@ -1398,15 +1397,10 @@ void Settings::setAutoAcceptDir(const ToxPk& id, const QString& dir)
 {
     QMutexLocker locker{&bigLock};
 
-    auto it = friendLst.find(id.getKey());
-    if (it == friendLst.end()) {
-        updateFriendAddress(id.toString());
-        setAutoAcceptDir(id, dir);
-        return;
-    }
+    auto& frnd = getOrInsertFriendPropRef(id);
 
-    if (it->autoAcceptDir != dir) {
-        it->autoAcceptDir = dir;
+    if (frnd.autoAcceptDir != dir) {
+        frnd.autoAcceptDir = dir;
         emit autoAcceptDirChanged(id, dir);
     }
 }
@@ -1426,15 +1420,10 @@ void Settings::setAutoAcceptCall(const ToxPk& id, AutoAcceptCallFlags accept)
 {
     QMutexLocker locker{&bigLock};
 
-    auto it = friendLst.find(id.getKey());
-    if (it == friendLst.end()) {
-        updateFriendAddress(id.toString());
-        setAutoAcceptCall(id, accept);
-        return;
-    }
+    auto& frnd = getOrInsertFriendPropRef(id);
 
-    if (it->autoAcceptCall != accept) {
-        it->autoAcceptCall = accept;
+    if (frnd.autoAcceptCall != accept) {
+        frnd.autoAcceptCall = accept;
         emit autoAcceptCallChanged(id, accept);
     }
 }
@@ -1455,15 +1444,10 @@ void Settings::setAutoGroupInvite(const ToxPk& id, bool accept)
 {
     QMutexLocker locker{&bigLock};
 
-    auto it = friendLst.find(id.getKey());
-    if (it == friendLst.end()) {
-        updateFriendAddress(id.toString());
-        setAutoGroupInvite(id, accept);
-        return;
-    }
+    auto& frnd = getOrInsertFriendPropRef(id);
 
-    if (it->autoGroupInvite != accept) {
-        it->autoGroupInvite = accept;
+    if (frnd.autoGroupInvite != accept) {
+        frnd.autoGroupInvite = accept;
         emit autoGroupInviteChanged(id, accept);
     }
 }
@@ -1483,15 +1467,10 @@ void Settings::setContactNote(const ToxPk& id, const QString& note)
 {
     QMutexLocker locker{&bigLock};
 
-    auto it = friendLst.find(id.getKey());
-    if (it == friendLst.end()) {
-        updateFriendAddress(id.toString());
-        setContactNote(id, note);
-        return;
-    }
+    auto& frnd = getOrInsertFriendPropRef(id);
 
-    if (it->note != note) {
-        it->note = note;
+    if (frnd.note != note) {
+        frnd.note = note;
         emit contactNoteChanged(id, note);
     }
 }
@@ -2071,18 +2050,9 @@ void Settings::updateFriendAddress(const QString& newAddr)
 {
     QMutexLocker locker{&bigLock};
     // TODO: using ToxId here is a hack
-    QByteArray key = ToxId(newAddr).getPublicKey().getKey();
-    auto it = friendLst.find(key);
-    if (it != friendLst.end()) {
-        it->addr = newAddr;
-    } else {
-        friendProp fp;
-        fp.addr = newAddr;
-        fp.alias = "";
-        fp.note = "";
-        fp.autoAcceptDir = "";
-        friendLst[key] = fp;
-    }
+    auto key = ToxId(newAddr).getPublicKey();
+    auto& frnd = getOrInsertFriendPropRef(key);
+    frnd.addr = newAddr;
 }
 
 QString Settings::getFriendAlias(const ToxPk& id) const
@@ -2098,17 +2068,8 @@ QString Settings::getFriendAlias(const ToxPk& id) const
 void Settings::setFriendAlias(const ToxPk& id, const QString& alias)
 {
     QMutexLocker locker{&bigLock};
-    auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
-        it->alias = alias;
-    } else {
-        friendProp fp;
-        fp.addr = id.toString();
-        fp.alias = alias;
-        fp.note = "";
-        fp.autoAcceptDir = "";
-        friendLst[id.getKey()] = fp;
-    }
+    auto& frnd = getOrInsertFriendPropRef(id);
+    frnd.alias = alias;
 }
 
 int Settings::getFriendCircleID(const ToxPk& id) const
@@ -2122,18 +2083,8 @@ int Settings::getFriendCircleID(const ToxPk& id) const
 
 void Settings::setFriendCircleID(const ToxPk& id, int circleID)
 {
-    auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
-        it->circleID = circleID;
-    } else {
-        friendProp fp;
-        fp.addr = id.toString();
-        fp.alias = "";
-        fp.note = "";
-        fp.autoAcceptDir = "";
-        fp.circleID = circleID;
-        friendLst[id.getKey()] = fp;
-    }
+    auto& frnd = getOrInsertFriendPropRef(id);
+    frnd.circleID = circleID;
 }
 
 QDate Settings::getFriendActivity(const ToxPk& id) const
@@ -2147,19 +2098,8 @@ QDate Settings::getFriendActivity(const ToxPk& id) const
 
 void Settings::setFriendActivity(const ToxPk& id, const QDate& activity)
 {
-    auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
-        it->activity = activity;
-    } else {
-        friendProp fp;
-        fp.addr = id.toString();
-        fp.alias = "";
-        fp.note = "";
-        fp.autoAcceptDir = "";
-        fp.circleID = -1;
-        fp.activity = activity;
-        friendLst[id.getKey()] = fp;
-    }
+    auto& frnd = getOrInsertFriendPropRef(id);
+    frnd.activity = activity;
 }
 
 void Settings::saveFriendSettings(const ToxPk& id)
@@ -2462,4 +2402,16 @@ void Settings::sync()
 
     QMutexLocker locker{&bigLock};
     qApp->processEvents();
+}
+
+Settings::friendProp& Settings::getOrInsertFriendPropRef(const ToxPk& id)
+{
+    // No mutex lock, this is a private fn that should only be called by other
+    // public functions that already locked the mutex
+    auto it = friendLst.find(id.getKey());
+    if (it == friendLst.end()) {
+        it = friendLst.insert(id.getKey(), friendProp(id.toString()));
+    }
+
+    return *it;
 }
