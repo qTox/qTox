@@ -25,7 +25,6 @@
 #include <QKeyEvent>
 #include <QRegExp>
 
-#include "src/core/core.h"
 #include "src/model/group.h"
 #include "src/widget/tool/chattextedit.h"
 
@@ -72,7 +71,11 @@ void TabCompleter::buildCompletionList()
     QRegExp regex(QString("^[-_\\[\\]{}|`^.\\\\]*").append(QRegExp::escape(tabAbbrev)),
                   Qt::CaseInsensitive);
 
-    for (auto name : group->getPeerList()) {
+    const QString ownNick = group->getSelfName();
+    for (const auto& name : group->getPeerList()) {
+        if (name == ownNick) {
+            continue;   // don't auto complete own name
+        }
         if (regex.indexIn(name) > -1) {
             SortableString lower = SortableString(name.toLower());
             completionMap[lower] = name;
@@ -96,8 +99,9 @@ void TabCompleter::complete()
         auto cur = msgEdit->textCursor();
         cur.setPosition(cur.selectionEnd());
         msgEdit->setTextCursor(cur);
-        for (int i = 0; i < lastCompletionLength; ++i)
+        for (int i = 0; i < lastCompletionLength; ++i) {
             msgEdit->textCursor().deletePreviousChar();
+        }
 
         // insert completion
         msgEdit->insertPlainText(*nextCompletion);
@@ -127,12 +131,6 @@ void TabCompleter::reset()
 // this determines the sort order
 bool TabCompleter::SortableString::operator<(const SortableString& other) const
 {
-    QString name = Core::getInstance()->getUsername();
-    if (this->contents == name)
-        return false;
-    else if (other.contents == name)
-        return true;
-
     /*  QDateTime thisTime = thisUser->lastChannelActivity(_currentBufferId);
     QDateTime thatTime = thatUser->lastChannelActivity(_currentBufferId);
 

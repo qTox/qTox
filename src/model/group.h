@@ -55,6 +55,7 @@ public:
     const ToxPk resolvePeerId(int peerId) const;
     QString resolveToxId(const ToxPk& id) const;
     void setSelfName(const QString& name);
+    QString getSelfName() const;
 
 signals:
     void titleChangedByUser(uint32_t groupId, const QString& title);
