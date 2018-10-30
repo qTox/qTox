@@ -310,7 +310,7 @@ private:
 
     QMap<uint32_t, GroupWidget*> groupWidgets;
     QMap<uint32_t, std::shared_ptr<GroupChatroom>> groupChatrooms;
-    QMap<uint32_t, GroupChatForm*> groupChatForms;
+    QMap<uint32_t, QSharedPointer<GroupChatForm>> groupChatForms;
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;
