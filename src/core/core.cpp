@@ -250,6 +250,7 @@ void Core::onStarted()
     emit idSet(id);
 
     loadFriends();
+    loadGroups();
 
     process(); // starts its own timer
     av->start();
@@ -990,16 +991,15 @@ void Core::loadFriends()
 {
     QMutexLocker ml{coreLoopLock.get()};
 
-    const uint32_t friendCount = tox_self_get_friend_list_size(tox.get());
+    const size_t friendCount = tox_self_get_friend_list_size(tox.get());
     if (friendCount == 0) {
         return;
     }
 
-    // assuming there are not that many friends to fill up the whole stack
     uint32_t* ids = new uint32_t[friendCount];
     tox_self_get_friend_list(tox.get(), ids);
     uint8_t friendPk[TOX_PUBLIC_KEY_SIZE] = {0x00};
-    for (uint32_t i = 0; i < friendCount; ++i) {
+    for (size_t i = 0; i < friendCount; ++i) {
         if (!tox_friend_get_public_key(tox.get(), ids[i], friendPk, nullptr)) {
             continue;
         }
@@ -1010,6 +1010,23 @@ void Core::loadFriends()
         checkLastOnline(ids[i]);
     }
     delete[] ids;
+}
+
+void Core::loadGroups()
+{
+    QMutexLocker ml{coreLoopLock.get()};
+
+    const size_t groupCnt = tox_conference_get_chatlist_size(tox.get());
+    if (groupCnt == 0) {
+        return;
+    }
+
+    uint32_t* groupIds = new uint32_t[groupCnt];
+    tox_conference_get_chatlist(tox.get(), groupIds);
+
+    for(size_t i = 0; i < groupCnt; ++i) {
+        emit emptyGroupCreated(static_cast<int>(groupIds[i]));
+    }
 }
 
 void Core::checkLastOnline(uint32_t friendId)

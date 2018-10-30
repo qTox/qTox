@@ -245,6 +245,7 @@ private:
     void makeTox(QByteArray savedata, ICoreSettings* s);
     void makeAv();
     void loadFriends();
+    void loadGroups();
     void bootstrapDht();
 
     void checkLastOnline(uint32_t friendId);
