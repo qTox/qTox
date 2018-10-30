@@ -30,7 +30,7 @@ class Friend : public Contact
 {
     Q_OBJECT
 public:
-    Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias);
+    Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias = {}, const QString &userName = {});
     Friend(const Friend& other) = delete;
     Friend& operator=(const Friend& other) = delete;
 

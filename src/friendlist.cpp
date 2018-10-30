@@ -30,8 +30,9 @@ QHash<QByteArray, uint32_t> FriendList::key2id;
 Friend* FriendList::addFriend(uint32_t friendId, const ToxPk& friendPk)
 {
     auto friendChecker = friendList.find(friendId);
-    if (friendChecker != friendList.end())
+    if (friendChecker != friendList.end()) {
         qWarning() << "addFriend: friendId already taken";
+    }
 
     QString alias = Settings::getInstance().getFriendAlias(friendPk);
     Friend* newfriend = new Friend(friendId, friendPk, alias);
@@ -44,8 +45,9 @@ Friend* FriendList::addFriend(uint32_t friendId, const ToxPk& friendPk)
 Friend* FriendList::findFriend(uint32_t friendId)
 {
     auto f_it = friendList.find(friendId);
-    if (f_it != friendList.end())
+    if (f_it != friendList.end()) {
         return *f_it;
+    }
 
     return nullptr;
 }

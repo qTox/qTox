@@ -19,15 +19,13 @@
 
 
 #include "friend.h"
-#include "src/core/core.h"
 #include "src/model/group.h"
 #include "src/grouplist.h"
-#include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/widget/form/chatform.h"
 
-Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias)
-    : userName{Core::getInstance()->getPeerName(friendPk)}
+Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias, const QString& userName)
+    : userName{userName}
     , userAlias{userAlias}
     , friendPk{friendPk}
     , friendId{friendId}
@@ -35,7 +33,7 @@ Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlia
     , friendStatus{Status::Offline}
 {
     if (userName.isEmpty()) {
-        userName = friendPk.toString();
+        this->userName = friendPk.toString();
     }
 }
 
