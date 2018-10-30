@@ -183,3 +183,8 @@ void Group::setSelfName(const QString& name)
 {
     selfName = name;
 }
+
+QString Group::getSelfName() const
+{
+    return selfName;
+}
