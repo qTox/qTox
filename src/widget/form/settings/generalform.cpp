@@ -27,7 +27,6 @@
 #include "src/core/coreav.h"
 #include "src/core/recursivesignalblocker.h"
 #include "src/net/autoupdate.h"
-#include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"

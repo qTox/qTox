@@ -22,7 +22,6 @@
 #include "ui_mainwindow.h"
 #include "src/core/core.h"
 #include "src/model/groupinvite.h"
-#include "src/nexus.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
 #include "src/widget/form/groupinvitewidget.h"
