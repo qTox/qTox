@@ -284,15 +284,6 @@ Widget* Nexus::getDesktopGUI()
     return getInstance().widget;
 }
 
-QString Nexus::getSupportedImageFilter()
-{
-    QString res;
-    for (auto type : QImageReader::supportedImageFormats())
-        res += QString("*.%1 ").arg(QString(type));
-
-    return tr("Images (%1)", "filetype filter").arg(res.left(res.size() - 1));
-}
-
 /**
  * @brief Dangerous way to find out if a path is writable.
  * @param filepath Path to file which should be deleted.

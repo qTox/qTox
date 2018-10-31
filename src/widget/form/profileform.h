@@ -20,7 +20,6 @@
 #ifndef IDENTITYFORM_H
 #define IDENTITYFORM_H
 
-#include "src/core/core.h"
 #include "src/widget/qrwidget.h"
 #include <QLabel>
 #include <QLineEdit>
@@ -35,7 +34,7 @@ class MaskablePixmapWidget;
 namespace Ui {
 class IdentitySettings;
 }
-
+class ToxId;
 class ClickableTE : public QLabel
 {
     Q_OBJECT
@@ -87,10 +86,12 @@ private:
     void showExistingToxme();
     void retranslateUi();
     void prFileLabelUpdate();
-
-private:
     bool eventFilter(QObject* object, QEvent* event);
     void refreshProfiles();
+    void showRegisterToxme();
+    static QString getSupportedImageFilter();
+
+private:
     Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;
     QTimer timer;
@@ -98,7 +99,6 @@ private:
     QRWidget* qr;
     ClickableTE* toxId;
     IProfileInfo* profileInfo;
-    void showRegisterToxme();
 };
 
 #endif

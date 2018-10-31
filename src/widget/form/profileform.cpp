@@ -22,7 +22,6 @@
 #include "src/core/core.h"
 #include "src/model/profile/iprofileinfo.h"
 #include "src/net/toxme.h"
-#include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settings.h"
@@ -41,6 +40,7 @@
 #include <QComboBox>
 #include <QFileDialog>
 #include <QGroupBox>
+#include <QImageReader>
 #include <QInputDialog>
 #include <QLabel>
 #include <QLineEdit>
@@ -310,9 +310,19 @@ void ProfileForm::setToxId(const ToxId& id)
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
 }
 
+QString ProfileForm::getSupportedImageFilter()
+{
+    QString res;
+    for (auto type : QImageReader::supportedImageFormats()) {
+        res += QString("*.%1 ").arg(QString(type));
+    }
+
+    return tr("Images (%1)", "filetype filter").arg(res.left(res.size() - 1));
+}
+
 void ProfileForm::onAvatarClicked()
 {
-    const QString filter = Nexus::getSupportedImageFilter();
+    const QString filter = getSupportedImageFilter();
     const QString path = QFileDialog::getOpenFileName(Q_NULLPTR, tr("Choose a profile picture"),
                                                 QDir::homePath(), filter, nullptr);
 

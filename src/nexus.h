@@ -49,7 +49,6 @@ public:
     static Profile* getProfile();
     static void setProfile(Profile* profile);
     static Widget* getDesktopGUI();
-    static QString getSupportedImageFilter();
     static bool tryRemoveFile(const QString& filepath);
 
 public slots:
