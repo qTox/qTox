@@ -279,10 +279,6 @@ int main(int argc, char* argv[])
 
     QString profileName;
     bool autoLogin = Settings::getInstance().getAutoLogin();
-    // Inter-process communication
-    ipc.registerEventHandler("uri", &toxURIEventHandler);
-    ipc.registerEventHandler("save", &toxSaveEventHandler);
-    ipc.registerEventHandler("activate", &toxActivateEventHandler);
 
     uint32_t ipcDest = 0;
     bool doIpc = true;
@@ -362,6 +358,11 @@ int main(int argc, char* argv[])
     Nexus& nexus = Nexus::getInstance();
     nexus.start();
 
+    // Start to accept Inter-process communication
+    ipc.registerEventHandler("uri", &toxURIEventHandler);
+    ipc.registerEventHandler("save", &toxSaveEventHandler);
+    ipc.registerEventHandler("activate", &toxActivateEventHandler);
+
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri")
         handleToxURI(firstParam.toUtf8());
@@ -370,10 +371,8 @@ int main(int argc, char* argv[])
 
     QObject::connect(a.get(), &QApplication::aboutToQuit, cleanup);
 
-    // Run (unless we already quit before starting!)
-    int errorcode = 0;
-    if (nexus.isRunning())
-        errorcode = a->exec();
+    // Run
+    int errorcode = a->exec();
 
     qDebug() << "Exit with status" << errorcode;
     return errorcode;
