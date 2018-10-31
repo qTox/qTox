@@ -325,6 +325,10 @@ QString getDecryptionError(TOX_ERR_DECRYPTION error)
             "The input data was shorter than TOX_PASS_ENCRYPTION_EXTRA_LENGTH bytes.");
     case TOX_ERR_DECRYPTION_BAD_FORMAT:
         return QStringLiteral("The input data is missing the magic number or is corrupted.");
+    case TOX_ERR_DECRYPTION_KEY_DERIVATION_FAILED:
+        return QStringLiteral("The crypto lib was unable to derive a key from the given passphrase.");
+    case TOX_ERR_DECRYPTION_FAILED:
+        return QStringLiteral("Decryption failed. Either the data was corrupted or the password/key was incorrect.");
     default:
         return QStringLiteral("Unknown decryption error.");
     }

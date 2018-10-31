@@ -17,11 +17,11 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QByteArray>
-#include <QString>
-
 #ifndef TOXENCRYPT_H
 #define TOXENCRYPT_H
+
+#include <QByteArray>
+#include <QString>
 
 #include <memory>
 
