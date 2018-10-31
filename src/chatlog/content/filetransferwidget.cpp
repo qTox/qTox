@@ -21,7 +21,6 @@
 #include "ui_filetransferwidget.h"
 
 #include "src/core/core.h"
-#include "src/nexus.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 #include "src/widget/style.h"
@@ -124,6 +123,20 @@ FileTransferWidget::~FileTransferWidget()
     delete ui;
 }
 
+// TODO(sudden6): remove file IO from the UI
+/**
+ * @brief Dangerous way to find out if a path is writable.
+ * @param filepath Path to file which should be deleted.
+ * @return True, if file writeable, false otherwise.
+ */
+bool FileTransferWidget::tryRemoveFile(const QString& filepath)
+{
+    QFile tmp(filepath);
+    bool writable = tmp.open(QIODevice::WriteOnly);
+    tmp.remove();
+    return writable;
+}
+
 void FileTransferWidget::autoAcceptTransfer(const QString& path)
 {
     QString filepath;
@@ -142,7 +155,7 @@ void FileTransferWidget::autoAcceptTransfer(const QString& path)
 
     // Do not automatically accept the file-transfer if the path is not writable.
     // The user can still accept it manually.
-    if (Nexus::tryRemoveFile(filepath))
+    if (tryRemoveFile(filepath))
         Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
     else
         qWarning() << "Cannot write to " << filepath;
@@ -159,7 +172,7 @@ void FileTransferWidget::acceptTransfer(const QString& filepath)
         return;
 
     // test if writable
-    if (!Nexus::tryRemoveFile(filepath)) {
+    if (!tryRemoveFile(filepath)) {
         GUI::showWarning(tr("Location not writable", "Title of permissions popup"),
                          tr("You do not have permission to write that location. Choose another, or "
                             "cancel the save dialog.",

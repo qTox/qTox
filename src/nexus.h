@@ -49,7 +49,6 @@ public:
     static Profile* getProfile();
     static void setProfile(Profile* profile);
     static Widget* getDesktopGUI();
-    static bool tryRemoveFile(const QString& filepath);
 
 public slots:
     void showLogin();
