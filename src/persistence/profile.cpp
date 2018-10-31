@@ -436,11 +436,11 @@ QPixmap Profile::loadAvatar(const ToxPk& owner)
     QPixmap pic;
     if (Settings::getInstance().getShowIdenticons()) {
 
-        const QByteArray avataData = loadAvatarData(owner);
-        if (avataData.isEmpty()) {
+        const QByteArray avatarData = loadAvatarData(owner);
+        if (avatarData.isEmpty()) {
             pic = QPixmap::fromImage(Identicon(owner.getKey()).toImage(16));
         } else {
-            pic.loadFromData(avataData);
+            pic.loadFromData(avatarData);
         }
 
     } else {
@@ -473,6 +473,9 @@ QByteArray Profile::loadAvatarData(const ToxPk& owner)
     QByteArray pic = file.readAll();
     if (avatarEncrypted && !pic.isEmpty()) {
         pic = passkey->decrypt(pic);
+        if (pic.isEmpty()) {
+            qWarning() << "Failed to decrypt avatar at" << path;
+        }
     }
 
     return pic;
