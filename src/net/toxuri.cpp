@@ -56,18 +56,12 @@ bool handleToxURI(const QString& toxURI)
     Core* core = nexus.getCore();
 
     while (!core) {
-        if (!nexus.isRunning())
-            return false;
-
         core = nexus.getCore();
         qApp->processEvents();
         QThread::msleep(10);
     }
 
     while (!core->isReady()) {
-        if (!nexus.isRunning())
-            return false;
-
         qApp->processEvents();
         QThread::msleep(10);
     }

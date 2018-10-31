@@ -18,17 +18,15 @@
 */
 
 #include "toxsave.h"
-#include "src/core/core.h"
-#include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 #include "src/widget/tool/profileimporter.h"
 #include <QCoreApplication>
-#include <QFileInfo>
 
 bool toxSaveEventHandler(const QByteArray& eventData)
 {
-    if (!eventData.endsWith(".tox"))
+    if (!eventData.endsWith(".tox")) {
         return false;
+    }
 
     handleToxSave(eventData);
     return true;
@@ -42,16 +40,6 @@ bool toxSaveEventHandler(const QByteArray& eventData)
  */
 bool handleToxSave(const QString& path)
 {
-    Core* core = Core::getInstance();
-
-    while (!core) {
-        core = Core::getInstance();
-        qApp->processEvents();
-    }
-
-    while (!core->isReady())
-        qApp->processEvents();
-
     ProfileImporter importer(GUI::getMainWidget());
     return importer.importProfile(path);
 }

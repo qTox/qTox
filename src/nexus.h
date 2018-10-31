@@ -43,7 +43,6 @@ public:
     void start();
     void showMainGUI();
     void quit();
-    bool isRunning();
 
     static Nexus& getInstance();
     static void destroyInstance();
@@ -91,7 +90,6 @@ private:
 private:
     Profile* profile;
     Widget* widget;
-    bool running;
 };
 
 #endif // NEXUS_H

@@ -60,7 +60,6 @@ Nexus::Nexus(QObject* parent)
     : QObject(parent)
     , profile{nullptr}
     , widget{nullptr}
-    , running{true}
 {}
 
 Nexus::~Nexus()
@@ -231,19 +230,7 @@ void Nexus::showMainGUI()
  */
 void Nexus::quit()
 {
-    running = false;
     qApp->quit();
-}
-
-/**
- * @brief Returns true until Nexus::quit is called.
- *
- * Any blocking processEvents() loop should check this as a return condition,
- * since the application can not quit until control is returned to the event loop.
- */
-bool Nexus::isRunning()
-{
-    return running;
 }
 
 /**
