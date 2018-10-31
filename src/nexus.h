@@ -42,7 +42,6 @@ class Nexus : public QObject
 public:
     void start();
     void showMainGUI();
-    void quit();
 
     static Nexus& getInstance();
     static void destroyInstance();

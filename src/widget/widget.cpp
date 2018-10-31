@@ -589,7 +589,7 @@ void Widget::closeEvent(QCloseEvent* event)
         saveWindowGeometry();
         saveSplitterGeometry();
         QWidget::closeEvent(event);
-        Nexus::getInstance().quit();
+        qApp->quit();
     }
 }
 
@@ -638,7 +638,7 @@ void Widget::onFailedToStartCore()
         "toxcore failed to start, the application will terminate after you close this message."));
     critical.setIcon(QMessageBox::Critical);
     critical.exec();
-    Nexus::getInstance().quit();
+    qApp->exit(EXIT_FAILURE);
 }
 
 void Widget::onBadProxyCore()

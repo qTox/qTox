@@ -163,7 +163,7 @@ void Nexus::showLogin()
         Settings::getInstance().setCurrentProfile(profile->getName());
         showMainGUI();
     } else {
-        quit();
+        qApp->quit();
     }
 }
 
@@ -223,14 +223,6 @@ void Nexus::showMainGUI()
     profile->startCore();
 
     GUI::setEnabled(true);
-}
-
-/**
- * @brief Calls QApplication::quit(), and causes Nexus::isRunning() to return false
- */
-void Nexus::quit()
-{
-    qApp->quit();
 }
 
 /**
