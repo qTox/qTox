@@ -31,8 +31,6 @@
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
-#include <QFile>
-#include <QImageReader>
 #include <QThread>
 #include <cassert>
 #include <vpx/vpx_image.h>
@@ -282,19 +280,6 @@ void Nexus::setProfile(Profile* profile)
 Widget* Nexus::getDesktopGUI()
 {
     return getInstance().widget;
-}
-
-/**
- * @brief Dangerous way to find out if a path is writable.
- * @param filepath Path to file which should be deleted.
- * @return True, if file writeable, false otherwise.
- */
-bool Nexus::tryRemoveFile(const QString& filepath)
-{
-    QFile tmp(filepath);
-    bool writable = tmp.open(QIODevice::WriteOnly);
-    tmp.remove();
-    return writable;
 }
 
 #ifdef Q_OS_MAC

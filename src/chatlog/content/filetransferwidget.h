@@ -77,6 +77,7 @@ private:
     static QPixmap scaleCropIntoSquare(const QPixmap& source, int targetSize);
     static int getExifOrientation(const char* data, const int size);
     static void applyTransformation(const int oritentation, QImage& image);
+    static bool tryRemoveFile(const QString &filepath);
 
 private:
     Ui::FileTransferWidget* ui;
