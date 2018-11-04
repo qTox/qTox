@@ -1254,13 +1254,13 @@ QNetworkProxy Settings::getProxy() const
 
     QNetworkProxy proxy;
     switch (Settings::getProxyType()) {
-    case ProxyType::ptNone:
+    case ProxyType::None:
         proxy.setType(QNetworkProxy::NoProxy);
         break;
-    case ProxyType::ptSOCKS5:
+    case ProxyType::SOCKS5:
         proxy.setType(QNetworkProxy::Socks5Proxy);
         break;
-    case ProxyType::ptHTTP:
+    case ProxyType::HTTP:
         proxy.setType(QNetworkProxy::HttpProxy);
         break;
     default:

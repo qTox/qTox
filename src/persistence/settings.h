@@ -23,6 +23,7 @@
 
 #include "src/audio/iaudiosettings.h"
 #include "src/core/icoresettings.h"
+#include "src/core/iproxysettings.h"
 #include "src/core/toxencrypt.h"
 #include "src/core/toxfile.h"
 #include "src/persistence/ifriendsettings.h"
@@ -294,8 +295,8 @@ public:
     QString getProxyAddr() const override;
     void setProxyAddr(const QString& address) override;
 
-    ICoreSettings::ProxyType getProxyType() const override;
-    void setProxyType(ICoreSettings::ProxyType type) override;
+    IProxySettings::ProxyType getProxyType() const override;
+    void setProxyType(IProxySettings::ProxyType type) override;
 
     quint16 getProxyPort() const override;
     void setProxyPort(quint16 port) override;
@@ -305,7 +306,7 @@ public:
     SIGNAL_IMPL(Settings, enableIPv6Changed, bool enabled)
     SIGNAL_IMPL(Settings, forceTCPChanged, bool enabled)
     SIGNAL_IMPL(Settings, enableLanDiscoveryChanged, bool enabled)
-    SIGNAL_IMPL(Settings, proxyTypeChanged, ICoreSettings::ProxyType type)
+    SIGNAL_IMPL(Settings, proxyTypeChanged, IProxySettings::ProxyType type)
     SIGNAL_IMPL(Settings, proxyAddressChanged, const QString& address)
     SIGNAL_IMPL(Settings, proxyPortChanged, quint16 port)
     SIGNAL_IMPL(Settings, dhtServerListChanged, const QList<DhtServer>& servers)

@@ -90,15 +90,15 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
     tox_options_set_proxy_host(*toxOptions, nullptr);
     tox_options_set_proxy_port(*toxOptions, 0);
 
-    if (proxyType != ICoreSettings::ProxyType::ptNone) {
+    if (proxyType != ICoreSettings::ProxyType::None) {
         if (proxyAddr.length() > MAX_PROXY_ADDRESS_LENGTH) {
             qWarning() << "proxy address" << proxyAddr << "is too long";
         } else if (!proxyAddr.isEmpty() && proxyPort > 0) {
             qDebug() << "using proxy" << proxyAddr << ":" << proxyPort;
             // protection against changings in Tox_Proxy_Type enum
-            if (proxyType == ICoreSettings::ProxyType::ptSOCKS5) {
+            if (proxyType == ICoreSettings::ProxyType::SOCKS5) {
                 tox_options_set_proxy_type(*toxOptions, TOX_PROXY_TYPE_SOCKS5);
-            } else if (proxyType == ICoreSettings::ProxyType::ptHTTP) {
+            } else if (proxyType == ICoreSettings::ProxyType::HTTP) {
                 tox_options_set_proxy_type(*toxOptions, TOX_PROXY_TYPE_HTTP);
             }
 

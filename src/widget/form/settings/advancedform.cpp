@@ -64,7 +64,7 @@ AdvancedForm::AdvancedForm()
     int index = static_cast<int>(s.getProxyType());
     bodyUI->proxyType->setCurrentIndex(index);
     on_proxyType_currentIndexChanged(index);
-    const bool udpEnabled = !s.getForceTCP() && (s.getProxyType() == Settings::ProxyType::ptNone);
+    const bool udpEnabled = !s.getForceTCP() && (s.getProxyType() == Settings::ProxyType::None);
     bodyUI->cbEnableUDP->setChecked(udpEnabled);
     bodyUI->cbEnableLanDiscovery->setChecked(s.getEnableLanDiscovery() && udpEnabled);
     bodyUI->cbEnableLanDiscovery->setEnabled(udpEnabled);
@@ -204,7 +204,7 @@ void AdvancedForm::on_proxyPort_valueChanged(int port)
 void AdvancedForm::on_proxyType_currentIndexChanged(int index)
 {
     Settings::ProxyType proxytype = static_cast<Settings::ProxyType>(index);
-    const bool proxyEnabled = proxytype != Settings::ProxyType::ptNone;
+    const bool proxyEnabled = proxytype != Settings::ProxyType::None;
 
     bodyUI->proxyAddr->setEnabled(proxyEnabled);
     bodyUI->proxyPort->setEnabled(proxyEnabled);
