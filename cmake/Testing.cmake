@@ -23,6 +23,8 @@ auto_test(core toxid)
 auto_test(core toxstring)
 auto_test(chatlog textformatter)
 auto_test(net toxmedata)
+auto_test(net bsu)
+
 if (UNIX)
   auto_test(platform posixsignalnotifier)
 endif()
