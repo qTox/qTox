@@ -303,6 +303,8 @@ set(${PROJECT_NAME}_SOURCES
   src/model/profile/iprofileinfo.h
   src/model/profile/profileinfo.cpp
   src/model/profile/profileinfo.h
+  src/net/bootstrapnodeupdater.cpp
+  src/net/bootstrapnodeupdater.h
   src/net/avatarbroadcaster.cpp
   src/net/avatarbroadcaster.h
   src/net/toxme.cpp
