@@ -319,6 +319,8 @@ set(${PROJECT_NAME}_SOURCES
   src/persistence/ifriendsettings.h
   src/persistence/offlinemsgengine.cpp
   src/persistence/offlinemsgengine.h
+  src/persistence/paths.cpp
+  src/persistence/paths.h
   src/persistence/profile.cpp
   src/persistence/profile.h
   src/persistence/profilelocker.cpp
