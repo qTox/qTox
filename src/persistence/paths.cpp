@@ -38,14 +38,17 @@ const QLatin1Literal TCSToxFileFolder{"~/.config/tox/"};
  * @code
  *  <BASE_PATH>/themes/
  *             /profiles/
+ *             /profiles/avatars/
  *             /...
  * @endcode
  *
  * Example file layout for portable mode:
  * @code
- *  <BASE_PATH>/themes/
- *             /profiles/
- *             /qtox.ini
+ *  /qTox.bin
+ *  /themes/
+ *  /profiles/
+ *  /profiles/avatars/
+ *  /qtox.ini
  * @endcode
  *
  * All qTox or Tox specific directories should be looked up through this module.
@@ -191,7 +194,7 @@ QString Paths::getAvatarsDir() const
         return {};
     }
 
-    return path % QDir::separator() % avatarsFolder % QDir::separator();
+    return path % avatarsFolder % QDir::separator();
 }
 
 /**
