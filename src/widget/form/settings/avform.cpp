@@ -43,11 +43,10 @@
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
 #endif
 
-AVForm::AVForm(Audio* audio, CoreAV* coreAV, CameraSource& camera,
+AVForm::AVForm(Audio* audio, CameraSource& camera,
                IAudioSettings* audioSettings, IVideoSettings* videoSettings)
     : GenericForm(QPixmap(":/img/settings/av.png"))
     , audio{audio}
-    , coreAV{coreAV}
     , audioSettings{audioSettings}
     , videoSettings{videoSettings}
     , subscribedToAudioIn(false)

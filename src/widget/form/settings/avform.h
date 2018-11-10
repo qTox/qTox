@@ -30,7 +30,6 @@
 
 class Audio;
 class CameraSource;
-class CoreAV;
 class IAudioSettings;
 class IVideoSettings;
 class VideoSurface;
@@ -39,7 +38,7 @@ class AVForm : public GenericForm, private Ui::AVForm
 {
     Q_OBJECT
 public:
-    AVForm(Audio* audio, CoreAV* coreAV, CameraSource& camera,
+    AVForm(Audio* audio, CameraSource& camera,
            IAudioSettings* audioSettings, IVideoSettings* videoSettings);
     ~AVForm() override;
     QString getFormName() final override
@@ -95,7 +94,6 @@ private:
 
 private:
     Audio* audio;
-    CoreAV* coreAV;
     IAudioSettings* audioSettings;
     IVideoSettings* videoSettings;
 

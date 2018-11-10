@@ -20,8 +20,6 @@
 #include "settingswidget.h"
 
 #include "src/audio/audio.h"
-#include "src/core/coreav.h"
-#include "src/core/core.h"
 #include "src/persistence/settings.h"
 #include "src/video/camerasource.h"
 #include "src/widget/contentlayout.h"
@@ -44,7 +42,6 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent, Qt::Window)
 {
     Audio* audio = &Audio::getInstance();
-    CoreAV* coreAV = Core::getInstance()->getAv();
     IAudioSettings* audioSettings = &Settings::getInstance();
     IVideoSettings* videoSettings = &Settings::getInstance();
     CameraSource& camera = CameraSource::getInstance();
@@ -60,7 +57,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     std::unique_ptr<GeneralForm> gfrm(new GeneralForm(this));
     std::unique_ptr<UserInterfaceForm> uifrm(new UserInterfaceForm(this));
     std::unique_ptr<PrivacyForm> pfrm(new PrivacyForm());
-    AVForm* rawAvfrm = new AVForm(audio, coreAV, camera, audioSettings, videoSettings);
+    AVForm* rawAvfrm = new AVForm(audio, camera, audioSettings, videoSettings);
     std::unique_ptr<AVForm> avfrm(rawAvfrm);
     std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm());
     std::unique_ptr<AboutForm> abtfrm(new AboutForm());
