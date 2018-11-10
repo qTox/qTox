@@ -24,8 +24,8 @@
 #include <QTimer>
 #include <tox/tox.h>
 
-#include "src/core/recursivesignalblocker.h"
 #include "src/net/autoupdate.h"
+#include "src/widget/tool/recursivesignalblocker.h"
 #include "src/widget/translator.h"
 
 /**
@@ -110,7 +110,7 @@ void AboutForm::replaceVersions()
                                 "More information on how to write good bug reports in the wiki: "
                                 "https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports.\n\n"
                                 "Please remove any unnecessary template section before submitting.")
-                            .arg(QSysInfo::prettyProductName(),  GIT_DESCRIBE, GIT_VERSION,
+                            .arg(QSysInfo::prettyProductName(), GIT_DESCRIBE, GIT_VERSION,
                                  TOXCORE_VERSION, QT_VERSION_STR);
 
     issueBody.replace("#", "%23").replace(":", "%3A");

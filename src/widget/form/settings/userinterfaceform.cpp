@@ -32,13 +32,13 @@
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
-#include "src/core/recursivesignalblocker.h"
 #include "src/net/autoupdate.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/style.h"
+#include "src/widget/tool/recursivesignalblocker.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
@@ -142,7 +142,7 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
 
     QStringList dateFormats;
     dateFormats << QStringLiteral("yyyy-MM-dd") // ISO 8601
-                // format strings from system locale
+                                                // format strings from system locale
                 << ql.dateFormat(QLocale::LongFormat) << ql.dateFormat(QLocale::ShortFormat)
                 << ql.dateFormat(QLocale::NarrowFormat) << "dd-MM-yyyy"
                 << "d-MM-yyyy"
