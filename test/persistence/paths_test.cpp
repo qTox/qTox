@@ -41,6 +41,7 @@ private:
 
 namespace {
 const QLatin1Literal globalSettingsFile{"qtox.ini"};
+const QLatin1Literal logFile{"qtox.log"};
 const QLatin1Literal profileFolder{"profiles"};
 const QLatin1Literal themeFolder{"themes"};
 const QLatin1Literal avatarsFolder{"avatars"};
@@ -112,10 +113,11 @@ void TestPaths::checkPathsNonPortable()
 
     const QString appData{QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)};
     const QString appConfig{QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)};
-
+    const QString cache{QStandardPaths::writableLocation(QStandardPaths::CacheLocation)};
 
     verifyqToxPath(paths->getProfilesDir(), appData, profileFolder % sep);
     verifyqToxPath(paths->getGlobalSettingsPath(), appConfig, globalSettingsFile);
+    verifyqToxPath(paths->getLogFilePath(), cache, logFile);
     verifyqToxPath(paths->getScreenshotsDir(), appData, screenshotsFolder % sep);
     verifyqToxPath(paths->getTransfersDir(), appData, transfersFolder % sep);
 
@@ -153,6 +155,7 @@ void TestPaths::checkPathsPortable()
 
     verifyqToxPath(paths->getProfilesDir(), basePath, profileFolder % sep);
     verifyqToxPath(paths->getGlobalSettingsPath(), basePath, globalSettingsFile);
+    verifyqToxPath(paths->getLogFilePath(), basePath, logFile);
     verifyqToxPath(paths->getScreenshotsDir(), basePath, screenshotsFolder % sep);
     verifyqToxPath(paths->getTransfersDir(), basePath, transfersFolder % sep);
 
