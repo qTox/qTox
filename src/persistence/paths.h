@@ -17,6 +17,7 @@ public:
 
     bool isPortable() const;
     QString getGlobalSettingsPath() const;
+    QString getLogFilePath() const;
     QString getProfilesDir() const;
     QString getToxSaveDir() const;
     QString getAvatarsDir() const;
