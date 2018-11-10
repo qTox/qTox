@@ -258,8 +258,6 @@ set(${PROJECT_NAME}_SOURCES
   src/core/dhtserver.cpp
   src/core/dhtserver.h
   src/core/icoresettings.h
-  src/core/recursivesignalblocker.cpp
-  src/core/recursivesignalblocker.h
   src/core/toxcall.cpp
   src/core/toxcall.h
   src/core/toxencrypt.cpp
@@ -472,6 +470,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/tool/movablewidget.h
   src/widget/tool/profileimporter.cpp
   src/widget/tool/profileimporter.h
+  src/widget/tool/recursivesignalblocker.cpp
+  src/widget/tool/recursivesignalblocker.h
   src/widget/tool/removefrienddialog.cpp
   src/widget/tool/removefrienddialog.h
   src/widget/tool/screengrabberchooserrectitem.cpp

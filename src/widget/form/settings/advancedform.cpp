@@ -29,11 +29,11 @@
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
-#include "src/core/recursivesignalblocker.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
+#include "src/widget/tool/recursivesignalblocker.h"
 #include "src/widget/translator.h"
 
 /**
@@ -157,9 +157,8 @@ void AdvancedForm::on_btnCopyDebug_clicked()
 void AdvancedForm::on_resetButton_clicked()
 {
     const QString titile = tr("Reset settings");
-    bool result =
-        GUI::askQuestion(titile, tr("All settings will be reset to default. Are you sure?"),
-                         tr("Yes"), tr("No"));
+    bool result = GUI::askQuestion(titile, tr("All settings will be reset to default. Are you sure?"),
+                                   tr("Yes"), tr("No"));
 
     if (!result)
         return;

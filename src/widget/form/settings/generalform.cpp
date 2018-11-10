@@ -25,13 +25,13 @@
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
-#include "src/core/recursivesignalblocker.h"
 #include "src/net/autoupdate.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/style.h"
+#include "src/widget/tool/recursivesignalblocker.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
@@ -153,7 +153,8 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
 
 
 #ifndef QTOX_PLATFORM_EXT
-    bodyUI->autoAwayLabel->setEnabled(false); // these don't seem to change the appearance of the widgets,
+    bodyUI->autoAwayLabel->setEnabled(
+        false); // these don't seem to change the appearance of the widgets,
     bodyUI->autoAwaySpinBox->setEnabled(false); // though they are unusable
 #endif
 

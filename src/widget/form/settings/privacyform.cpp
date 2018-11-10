@@ -25,7 +25,6 @@
 #include <QMessageBox>
 
 #include "src/core/core.h"
-#include "src/core/recursivesignalblocker.h"
 #include "src/nexus.h"
 #include "src/persistence/history.h"
 #include "src/persistence/profile.h"
@@ -33,6 +32,7 @@
 #include "src/widget/form/setpassworddialog.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/gui.h"
+#include "src/widget/tool/recursivesignalblocker.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
