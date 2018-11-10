@@ -11,6 +11,7 @@
 
 namespace {
 const QLatin1Literal globalSettingsFile{"qtox.ini"};
+const QLatin1Literal logFile{"qtox.log"};
 const QLatin1Literal profileFolder{"profiles"};
 const QLatin1Literal themeFolder{"themes"};
 const QLatin1Literal avatarsFolder{"avatars"};
@@ -132,6 +133,29 @@ QString Paths::getGlobalSettingsPath() const
     // we assume a writeable path for portable mode
 
     return path % QDir::separator() % globalSettingsFile;
+}
+
+/**
+ * @brief Returns the path to the log file "qtox.log"
+ * @return The path to the folder.
+ */
+QString Paths::getLogFilePath() const
+{
+    QString path;
+
+    if (portable) {
+        path = basePath;
+    } else {
+        path = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        if (path.isEmpty()) {
+            qDebug() << "Can't find writable location for log file";
+            return {};
+        }
+    }
+
+    // we assume a writeable path for portable mode
+
+    return path % QDir::separator() % logFile;
 }
 
 /**
