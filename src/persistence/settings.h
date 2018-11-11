@@ -139,7 +139,6 @@ public:
     ~Settings();
     static Settings& getInstance();
     QString getSettingsDirPath() const;
-    QString getAppDataDirPath() const;
     QString getAppCacheDirPath() const;
 
     void createSettingsDir();
@@ -569,6 +568,7 @@ public:
     }
 
     static uint32_t makeProfileId(const QString& profile);
+    const Paths& getPaths() const;
 
 private:
     struct friendProp;
