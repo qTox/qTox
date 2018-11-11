@@ -22,6 +22,7 @@
 #include "src/core/core.h"
 #include "src/core/corefile.h"
 #include "src/nexus.h"
+#include "src/persistence/paths.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settingsserializer.h"
@@ -62,8 +63,20 @@ Settings* Settings::settings{nullptr};
 QMutex Settings::bigLock{QMutex::Recursive};
 QThread* Settings::settingsThread{nullptr};
 
-Settings::Settings()
-    : loaded(false)
+/**
+ * @brief Factory method for the Settings class
+ * @param paths Paths object, providing all important paths
+ * @return Settings object on success, nullptr else
+ */
+Settings* Settings::makeSettings(const Paths& paths) {
+    Settings* s = new Settings{paths};
+    settings = s;
+    return s;
+}
+
+Settings::Settings(const Paths& paths)
+    : paths{paths}
+    , loaded(false)
     , useCustomDhtList{false}
     , makeToxPortable{false}
     , currentProfileId(0)
@@ -81,6 +94,7 @@ Settings::~Settings()
     settingsThread->exit(0);
     settingsThread->wait();
     delete settingsThread;
+    settings = nullptr;
 }
 
 /**
@@ -88,16 +102,7 @@ Settings::~Settings()
  */
 Settings& Settings::getInstance()
 {
-    if (!settings)
-        settings = new Settings();
-
     return *settings;
-}
-
-void Settings::destroyInstance()
-{
-    delete settings;
-    settings = nullptr;
 }
 
 void Settings::loadGlobal()
@@ -153,8 +158,12 @@ void Settings::loadGlobal()
         }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", true).toBool();
-        notifySound = s.value("notifySound", true).toBool(); // note: notifySound and busySound UI elements are now under UI settings
-        busySound = s.value("busySound", false).toBool();    // page, but kept under General in settings file to be backwards compatible
+        notifySound =
+            s.value("notifySound", true)
+                .toBool(); // note: notifySound and busySound UI elements are now under UI settings
+        busySound = s.value("busySound", false).toBool(); // page, but kept under General in
+                                                          // settings file to be backwards
+                                                          // compatible
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
