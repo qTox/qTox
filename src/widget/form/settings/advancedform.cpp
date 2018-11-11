@@ -55,7 +55,6 @@ AdvancedForm::AdvancedForm()
 
     Settings& s = Settings::getInstance();
     bodyUI->cbEnableIPv6->setChecked(s.getEnableIPv6());
-    bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->proxyAddr->setText(s.getProxyAddr());
     quint16 port = s.getProxyPort();
     if (port > 0) {
@@ -94,10 +93,6 @@ AdvancedForm::~AdvancedForm()
     delete bodyUI;
 }
 
-void AdvancedForm::on_cbMakeToxPortable_stateChanged()
-{
-    Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
-}
 void AdvancedForm::on_btnExportLog_clicked()
 {
     QString savefile =
