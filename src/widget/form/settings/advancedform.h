@@ -40,8 +40,6 @@ public:
     }
 
 private slots:
-    // Portable
-    void on_cbMakeToxPortable_stateChanged();
     void on_resetButton_clicked();
     // Debug
     void on_btnCopyDebug_clicked();

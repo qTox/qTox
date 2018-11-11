@@ -171,7 +171,6 @@ signals:
     void minimizeToTrayChanged(bool enabled);
     void notifyChanged(bool enabled);
     void showWindowChanged(bool enabled);
-    void makeToxPortableChanged(bool enabled);
     void busySoundChanged(bool enabled);
     void notifySoundChanged(bool enabled);
     void groupAlwaysNotifyChanged(bool enabled);
@@ -225,9 +224,6 @@ signals:
     void blackListChanged(QStringList& blist);
 
 public:
-    bool getMakeToxPortable() const;
-    void setMakeToxPortable(bool newValue);
-
     bool getAutorun() const;
     void setAutorun(bool newValue);
 
@@ -601,7 +597,6 @@ private:
     bool showIdenticons;
     bool enableIPv6;
     QString translation;
-    bool makeToxPortable;
     bool autostartInTray;
     bool closeToTray;
     bool minimizeToTray;
