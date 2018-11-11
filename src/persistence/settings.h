@@ -37,6 +37,7 @@
 #include <QObject>
 #include <QPixmap>
 
+class Paths;
 class Profile;
 
 namespace Db {
@@ -134,8 +135,8 @@ public:
     };
 
 public:
+    static Settings* makeSettings(const Paths& paths);
     static Settings& getInstance();
-    static void destroyInstance();
     QString getSettingsDirPath() const;
     QString getAppDataDirPath() const;
     QString getAppCacheDirPath() const;
@@ -572,7 +573,7 @@ public:
 private:
     struct friendProp;
 
-    Settings();
+    Settings(const Paths &paths);
     ~Settings();
     Settings(Settings& settings) = delete;
     Settings& operator=(const Settings&) = delete;
@@ -583,6 +584,7 @@ public slots:
     void savePersonal(Profile* profile);
 
 private:
+    const Paths& paths;
     bool loaded;
 
     bool useCustomDhtList;
@@ -693,7 +695,8 @@ private:
         friendProp() = delete;
         friendProp(QString addr)
             : addr(addr)
-        {}
+        {
+        }
         QString alias = "";
         QString addr = "";
         QString autoAcceptDir = "";
