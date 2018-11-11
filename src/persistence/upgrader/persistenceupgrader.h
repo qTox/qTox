@@ -5,7 +5,9 @@
 
 class PersistenceUpgrader
 {
+public:
     static bool runUpgrade(bool portable);
+
 private:
     PersistenceUpgrader(bool portable);
     bool isUpgradeNeeded();
@@ -25,7 +27,6 @@ private:
 private:
     bool portable;
     QString curVersion{};
-
 };
 
 #endif // PERSISTENCEUPGRADER_H

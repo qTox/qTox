@@ -25,6 +25,7 @@
 #include "src/persistence/paths.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/toxsave.h"
+#include "src/persistence/upgrader/persistenceupgrader.h"
 #include "src/video/camerasource.h"
 #include "src/widget/loginscreen.h"
 #include "src/widget/translator.h"
@@ -40,9 +41,9 @@
 #include <QMutexLocker>
 
 #include <ctime>
+#include <memory>
 #include <sodium.h>
 #include <stdio.h>
-#include <memory>
 
 #if defined(Q_OS_OSX)
 #include "platform/install_osx.h"
@@ -183,7 +184,8 @@ void createLogFile(const Paths& paths)
             qWarning() << "Unable to remove old log file";
         }
 
-        if (!logFileDir.rename(logFileDir.absolutePath() + "qtox.log", logFileDir.absolutePath() + "qtox.log.1")) {
+        if (!logFileDir.rename(logFileDir.absolutePath() + "qtox.log",
+                               logFileDir.absolutePath() + "qtox.log.1")) {
             qCritical() << "Unable to move logs";
         }
 
@@ -248,6 +250,11 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    if (!PersistenceUpgrader::runUpgrade(paths->isPortable())) {
+        qCritical() << "Couldn't upgrade settings";
+        exit(EXIT_FAILURE);
+    }
+
     std::unique_ptr<Settings> settings{Settings::makeSettings(*paths)};
     if (settings == nullptr) {
         qCritical() << "Couldn't start Settings module";
@@ -281,8 +288,7 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    QObject::connect(settings.get(), &Settings::currentProfileIdChanged, &ipc,
-                     &IPC::setProfileId);
+    QObject::connect(settings.get(), &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId);
 
     // For the auto-updater
     if (sodium_init() < 0) {
