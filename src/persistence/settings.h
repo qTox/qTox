@@ -139,7 +139,6 @@ public:
     ~Settings() override;
     static Settings& getInstance();
     QString getSettingsDirPath() const;
-    QString getAppCacheDirPath() const;
 
     void createSettingsDir();
     void createPersonal(QString basename);
