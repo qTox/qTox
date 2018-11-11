@@ -58,7 +58,6 @@
  * @brief Toxme info like name@server
  */
 
-const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
 QMutex Settings::bigLock{QMutex::Recursive};
 QThread* Settings::settingsThread{nullptr};
@@ -114,25 +113,12 @@ void Settings::loadGlobal()
 
     createSettingsDir();
 
-    QString localSettingsPath = qApp->applicationDirPath() + QDir::separator() + globalSettingsFile;
-
-    if (QFile(localSettingsPath).exists()) {
-        QSettings ps(localSettingsPath, QSettings::IniFormat);
-        ps.setIniCodec("UTF-8");
-        ps.beginGroup("Advanced");
-        makeToxPortable = ps.value("makeToxPortable", false).toBool();
-        ps.endGroup();
-    } else {
-        makeToxPortable = false;
-    }
-
-    QDir dir(getSettingsDirPath());
-    QString filePath = dir.filePath(globalSettingsFile);
+    QString filePath = paths.getGlobalSettingsPath();
 
     // If no settings file exist -- use the default one
     if (!QFile(filePath).exists()) {
         qDebug() << "No settings file found, using defaults";
-        filePath = ":/conf/" + globalSettingsFile;
+        filePath = ":/conf/qtox.ini";
     }
 
     qDebug() << "Loading settings from " + filePath;
@@ -336,13 +322,7 @@ void Settings::loadPersonal(Profile* profile)
 {
     QMutexLocker locker{&bigLock};
 
-    QDir dir(getSettingsDirPath());
-    QString filePath = dir.filePath(globalSettingsFile);
-
-    // load from a profile specific friend data list if possible
-    QString tmp = dir.filePath(profile->getName() + ".ini");
-    if (QFile(tmp).exists()) // otherwise, filePath remains the global file
-        filePath = tmp;
+    const QString filePath{paths.getProfilesDir()};
 
     qDebug() << "Loading personal settings from" << filePath;
 
@@ -468,7 +448,7 @@ void Settings::saveGlobal()
     if (!loaded)
         return;
 
-    QString path = getSettingsDirPath() + globalSettingsFile;
+    QString path = paths.getGlobalSettingsPath();
     qDebug() << "Saving global settings at " + path;
 
     QSettings s(path, QSettings::IniFormat);
@@ -741,25 +721,8 @@ uint32_t Settings::makeProfileId(const QString& profile)
 QString Settings::getSettingsDirPath() const
 {
     QMutexLocker locker{&bigLock};
-    if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
-
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-#ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
-#else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#endif
+    QString settingsFile {paths.getGlobalSettingsPath()};
+    return QFileInfo{settingsFile}.dir().absolutePath();
 }
 
 /**
@@ -876,15 +839,7 @@ bool Settings::getMakeToxPortable() const
 
 void Settings::setMakeToxPortable(bool newValue)
 {
-    QMutexLocker locker{&bigLock};
-
-    if (newValue != makeToxPortable) {
-        QFile(getSettingsDirPath() + globalSettingsFile).remove();
-        makeToxPortable = newValue;
-        saveGlobal();
-
-        emit makeToxPortableChanged(makeToxPortable);
-    }
+    // TODO(sudden6): to be removed
 }
 
 bool Settings::getAutorun() const
