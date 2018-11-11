@@ -22,6 +22,7 @@
 #include "src/core/core.h"
 #include "src/model/profile/iprofileinfo.h"
 #include "src/net/toxme.h"
+#include "src/persistence/paths.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settings.h"
@@ -227,10 +228,7 @@ void ProfileForm::show(ContentLayout* contentLayout)
     contentLayout->mainContent->layout()->addWidget(this);
     QWidget::show();
     prFileLabelUpdate();
-    bool portable = Settings::getInstance().getMakeToxPortable();
-    QString defaultPath = QDir(Settings::getInstance().getSettingsDirPath()).path().trimmed();
-    QString appPath = QApplication::applicationDirPath();
-    QString dirPath = portable ? appPath : defaultPath;
+    QString dirPath = Settings::getInstance().getPaths().getProfilesDir();
 
     QString dirPrLink =
         tr("Current profile location: %1").arg(QString("<a href=\"file://%1\">%1</a>").arg(dirPath));

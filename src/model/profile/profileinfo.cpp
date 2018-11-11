@@ -20,6 +20,7 @@
 #include "profileinfo.h"
 #include "src/core/core.h"
 #include "src/nexus.h"
+#include "src/persistence/paths.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 
@@ -202,7 +203,7 @@ IProfileInfo::SaveResult ProfileInfo::exportProfile(const QString& path) const
         return SaveResult::NoWritePermission;
     }
 
-    if (!QFile::copy(Settings::getInstance().getSettingsDirPath() + current, path)) {
+    if (!QFile::copy(Settings::getInstance().getPaths().getProfilesDir() + current, path)) {
         return SaveResult::Error;
     }
 
