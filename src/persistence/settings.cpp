@@ -725,7 +725,7 @@ QString Settings::getSettingsDirPath() const
 {
     QMutexLocker locker{&bigLock};
     QString settingsFile {paths.getGlobalSettingsPath()};
-    return QFileInfo{settingsFile}.dir().absolutePath();
+    return QFileInfo{settingsFile}.dir().absolutePath() + QDir::separator();
 }
 
 const QList<DhtServer>& Settings::getDhtServerList() const

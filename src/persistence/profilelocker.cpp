@@ -19,6 +19,7 @@
 
 
 #include "profilelocker.h"
+#include "src/persistence/paths.h"
 #include "src/persistence/settings.h"
 #include <QDebug>
 #include <QDir>
@@ -38,7 +39,7 @@ QString ProfileLocker::curLockName;
 
 QString ProfileLocker::lockPathFromName(const QString& name)
 {
-    return Settings::getInstance().getSettingsDirPath() + '/' + name + ".lock";
+    return Settings::getInstance().getPaths().getProfilesDir() + name + ".lock";
 }
 
 /**

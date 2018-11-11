@@ -25,6 +25,7 @@
 #include <QPushButton>
 
 #include "src/core/core.h"
+#include "src/persistence/paths.h"
 #include "src/persistence/settings.h"
 
 /**
@@ -105,8 +106,8 @@ bool ProfileImporter::importProfile(const QString& path)
         return false; // ingore importing non-tox file
     }
 
-    QString settingsPath = Settings::getInstance().getSettingsDirPath();
-    QString profilePath = QDir(settingsPath).filePath(profile + Core::TOX_EXT);
+    QString profileDir = Settings::getInstance().getPaths().getProfilesDir();
+    QString profilePath = QDir(profileDir).filePath(profile + Core::TOX_EXT);
 
     if (QFileInfo(profilePath).exists()) {
         QString title = tr("Profile already exists", "import confirm title");
