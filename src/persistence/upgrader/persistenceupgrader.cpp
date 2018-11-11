@@ -13,19 +13,19 @@
 #include <memory>
 
 namespace {
-    QLatin1Literal lastVersion{"1.17.0"};
+QLatin1Literal lastVersion{"1.17.0"};
 }
 
 
 bool PersistenceUpgrader::runUpgrade(bool portable)
 {
     PersistenceUpgrader p{portable};
-    if(!p.isUpgradeNeeded()) {
+    if (!p.isUpgradeNeeded()) {
         // No upgrade needed
         return true;
     }
 
-    if(p.doUpgrade()) {
+    if (p.doUpgrade()) {
         return true;
     }
 
@@ -36,7 +36,6 @@ bool PersistenceUpgrader::runUpgrade(bool portable)
 PersistenceUpgrader::PersistenceUpgrader(bool portable)
     : portable{portable}
 {
-
 }
 
 bool PersistenceUpgrader::isUpgradeNeeded()
@@ -50,12 +49,13 @@ bool PersistenceUpgrader::isUpgradeNeeded()
     return curVersion < lastVersion;
 }
 
-bool PersistenceUpgrader::isVersion1_16_3() {
-    if(QFile(getSettingsPath_1_17_0()).exists()) {
+bool PersistenceUpgrader::isVersion1_16_3()
+{
+    if (QFile(getSettingsPath_1_17_0()).exists()) {
         return false;
     }
 
-    if(QFile(getSettingsDir_1_16_3() % "qtox.ini").exists()) {
+    if (QFile(getSettingsDir_1_16_3() % "qtox.ini").exists()) {
         return true;
     }
 
@@ -90,12 +90,18 @@ bool PersistenceUpgrader::checkedMove(QString source, QString dest)
 {
     QFile srcFile{source};
 
-    if(!srcFile.exists()) {
+    if (!srcFile.exists()) {
         qCritical() << "Source file doesn't exist";
         return false;
     }
 
-    if(!srcFile.rename(dest)) {
+    // ensure the destination path exists
+    QFileInfo destFile{dest};
+    QDir destDir{destFile.dir()};
+    QString destDirPath{destDir.absolutePath()};
+    QDir{}.mkpath(destDirPath);
+
+    if (!srcFile.rename(dest)) {
         qCritical() << "Couldn't rename file";
         return false;
     }
@@ -103,41 +109,43 @@ bool PersistenceUpgrader::checkedMove(QString source, QString dest)
     return true;
 }
 
-QString PersistenceUpgrader::getSettingsPath_1_17_0() {
+QString PersistenceUpgrader::getSettingsPath_1_17_0()
+{
     const QString path{QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)};
     if (path.isEmpty()) {
         qDebug() << "Can't find writable location for settings file";
         return {};
     }
 
-    const QString newPath{path % QDir::separator() % "qtox.ini"};
+    return path % QDir::separator() % "qtox.ini";
 }
 
-QString PersistenceUpgrader::versionFromFile() {
+QString PersistenceUpgrader::versionFromFile()
+{
 
     QString settingsPath{};
 
-    if(portable) {
+    if (portable) {
         settingsPath = qApp->applicationDirPath() + QDir::separator() + "qtox.ini";
     } else {
         settingsPath = getSettingsPath_1_17_0();
     }
 
-    if(!QFile(settingsPath).exists()) {
+    if (!QFile(settingsPath).exists()) {
         return "1.16.3";
     }
 
     QSettings s(settingsPath, QSettings::IniFormat);
     s.setIniCodec("UTF-8");
 
-    return s.value("Version", "1.16.3").toString();
+    return s.value("Version", "1.17.0").toString();
 }
 
 bool PersistenceUpgrader::doUpgrade()
 {
     assert(!curVersion.isEmpty());
 
-    if(curVersion < "1.17.0" && !upgradeFrom_1_16_3()) {
+    if (curVersion < "1.17.0" && !upgradeFrom_1_16_3()) {
         return false;
     }
 
@@ -161,13 +169,19 @@ QString PersistenceUpgrader::getGlobalSettingsPath_1_17_0() const
 
 bool PersistenceUpgrader::upgradeFrom_1_16_3()
 {
-    if(portable) {
+    if (portable) {
         // portable didn't work correctly in 1.16.3 so there's nothing to upgrade
         return true;
     }
 
-    QString oldBase{getSettingsPath_1_17_0() % QDir::separator() % "profiles" % QDir::separator()};
+    QString oldBase{getSettingsDir_1_16_3()};
     QString newBase{getProfilesDir_1_17_0()};
+
+    // move qtox.ini
+
+    if (!checkedMove(oldBase % "qtox.ini", getGlobalSettingsPath_1_17_0())) {
+        return false;
+    }
 
     // move <profile>.ini and <profile.db>
 
@@ -176,19 +190,10 @@ bool PersistenceUpgrader::upgradeFrom_1_16_3()
     oldDir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
     QStringList files{oldDir.entryList()};
 
-    for(auto file : files) {
-        checkedMove(oldBase % QDir::separator() % file, newBase % QDir::separator() % file);
-    }
-
-    // move qtox.ini
-
-    if(!checkedMove(oldBase % QDir::separator() % "qtox.ini", getGlobalSettingsPath_1_17_0())) {
-        return false;
+    for (auto file : files) {
+        checkedMove(oldBase % file, newBase % file);
     }
 
     curVersion = "1.17.0";
     return true;
 }
-
-
-
