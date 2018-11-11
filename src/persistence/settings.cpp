@@ -714,6 +714,11 @@ uint32_t Settings::makeProfileId(const QString& profile)
     return dwords[0] ^ dwords[1] ^ dwords[2] ^ dwords[3];
 }
 
+const Paths &Settings::getPaths() const
+{
+    return paths;
+}
+
 /**
  * @brief Get path to directory, where the settings files are stored.
  * @return Path to settings directory, ends with a directory separator.
@@ -723,38 +728,6 @@ QString Settings::getSettingsDirPath() const
     QMutexLocker locker{&bigLock};
     QString settingsFile {paths.getGlobalSettingsPath()};
     return QFileInfo{settingsFile}.dir().absolutePath();
-}
-
-/**
- * @brief Get path to directory, where the application data are stored.
- * @return Path to application data, ends with a directory separator.
- */
-QString Settings::getAppDataDirPath() const
-{
-    QMutexLocker locker{&bigLock};
-    if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
-
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-#ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
-#else
-    /*
-     * TODO: Change QStandardPaths::DataLocation to AppDataLocation when upgrate Qt to 5.4+
-     * For now we need support Qt 5.3, so we use deprecated DataLocation
-     * BTW, it's not a big deal since for linux AppDataLocation and DataLocation are equal
-     */
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation))
-           + QDir::separator();
-#endif
 }
 
 /**
