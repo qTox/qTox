@@ -136,6 +136,7 @@ public:
 
 public:
     static Settings* makeSettings(const Paths& paths);
+    ~Settings();
     static Settings& getInstance();
     QString getSettingsDirPath() const;
     QString getAppDataDirPath() const;
@@ -573,7 +574,6 @@ private:
     struct friendProp;
 
     Settings(const Paths &paths);
-    ~Settings();
     Settings(Settings& settings) = delete;
     Settings& operator=(const Settings&) = delete;
     void savePersonal(QString profileName, const ToxEncrypt* passkey);
