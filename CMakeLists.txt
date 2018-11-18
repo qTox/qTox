@@ -80,6 +80,8 @@ if (UNIX AND NOT APPLE)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro")
 endif()
 
+include(CheckAtomic)
+
 
 # Use ccache when available to speed up builds.
 if (USE_CCACHE)
