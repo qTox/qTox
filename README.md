@@ -45,7 +45,7 @@ the encrypted peer-to-peer Tox protocol.
 
 Windows | Linux | OS X | FreeBSD
 --------|-------|------|--------
-**[64 bit release]**| **[Arch]**, **[Fedora]**, **[Gentoo]**, **[openSUSE]** | **[Latest release]**  | **[Package & Port]**
+**[64 bit release]**| **[Arch]**, , **[Debian]**, **[Fedora]**, **[Gentoo]**, **[openSUSE]**, **[Ubuntu]** | **[Latest release]**  | **[Package & Port]**
 [32 bit release]|**[AppImage]**, [Flatpak] | [Building instructions] |
 [64 bit][64nightly], [32 bit][32nightly] nightly | [From Source] | |
 
@@ -168,6 +168,7 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 [Arch]: /INSTALL.md#arch
 [Building instructions]: /INSTALL.md#os-x
 [Contributing]: /CONTRIBUTING.md#how-to-start-contributing
+[Debian]: https://packages.debian.org/search?keywords=qtox
 [easy issues]: https://github.com/qTox/qTox/labels/E-easy
 [Latest release]: https://github.com/qTox/qTox/releases/download/v1.16.3/qTox.dmg
 [Fedora]: /INSTALL.md#fedora
@@ -190,5 +191,6 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 [Testing]: https://github.com/qTox/qTox/wiki/Testing
 [Translating, it's easy]: /translations/README.md
 [User Manual]: /doc/user_manual_en.md
+[Ubuntu]: https://packages.ubuntu.com/search?keywords=qtox
 [voice it in the issues that need it]: https://github.com/qTox/qTox/labels/I-feedback-wanted
 [Code cleanup]: https://github.com/qTox/qTox/projects/3?fullscreen=true
