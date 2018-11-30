@@ -438,6 +438,7 @@ void CoreFile::onFileDataCallback(Tox* tox, uint32_t friendId, uint32_t fileId, 
             return;
         }
         file->bytesSent += length;
+        file->hashGenerator->addData((const char*)data.get(), length);
     }
 
     if (!tox_file_send_chunk(tox, friendId, fileId, pos, data.get(), nread, nullptr)) {
@@ -492,6 +493,7 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
     else
         file->file->write((char*)data, length);
     file->bytesSent += length;
+    file->hashGenerator->addData((const char*)data, length);
 
     if (file->fileKind != TOX_FILE_KIND_AVATAR)
         emit static_cast<Core*>(core)->fileTransferInfo(*file);

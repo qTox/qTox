@@ -90,6 +90,7 @@ History::History(std::shared_ptr<RawDatabase> db)
         "file_restart_id BLOB NOT NULL,"
         "file_name BLOB NOT NULL, "
         "file_path BLOB NOT NULL,"
+        "file_hash BLOB NOT NULL,"
         "file_size INTEGER NOT NULL,"
         "direction INTEGER NOT NULL,"
         "file_state INTEGER NOT NULL);"
@@ -269,13 +270,13 @@ void History::onFileInsertionReady(FileDbInsertionData data)
     auto fileId = data.fileId;
     queries +=
         RawDatabase::Query(QStringLiteral("INSERT INTO file_transfers (chat_id, file_restart_id, "
-                                          "file_path, file_name, file_size, direction, file_state) "
-                                          "VALUES (%1, ?, ?, ?, %2, %3, %4);")
+                                          "file_path, file_name, file_hash, file_size, direction, file_state) "
+                                          "VALUES (%1, ?, ?, ?, ?, %2, %3, %4);")
                                .arg(peerId)
                                .arg(data.size)
                                .arg(static_cast<int>(data.direction))
                                .arg(ToxFile::CANCELED),
-                           {data.fileId.toUtf8(), data.filePath.toUtf8(), data.fileName},
+                           {data.fileId.toUtf8(), data.filePath.toUtf8(), data.fileName, QByteArray()},
                            [weakThis, fileId](int64_t id) {
                                auto pThis = weakThis.lock();
                                if (pThis) {
@@ -296,7 +297,7 @@ void History::onFileInserted(int64_t dbId, QString fileId)
 {
     auto& fileInfo = fileInfos[fileId];
     if (fileInfo.finished) {
-        db->execLater(generateFileFinished(dbId, fileInfo.success, fileInfo.filePath));
+        db->execLater(generateFileFinished(dbId, fileInfo.success, fileInfo.filePath, fileInfo.fileHash));
         fileInfos.remove(fileId);
     } else {
         fileInfo.finished = false;
@@ -304,16 +305,16 @@ void History::onFileInserted(int64_t dbId, QString fileId)
     }
 }
 
-RawDatabase::Query History::generateFileFinished(int64_t id, bool success, const QString& filePath)
+RawDatabase::Query History::generateFileFinished(int64_t id, bool success, const QString& filePath, const QByteArray& fileHash)
 {
     auto file_state = success ? ToxFile::FINISHED : ToxFile::CANCELED;
     if (filePath.length()) {
         return RawDatabase::Query(QStringLiteral("UPDATE file_transfers "
-                                                 "SET file_state = %1, file_path = ? "
+                                                 "SET file_state = %1, file_path = ?, file_hash = ?"
                                                  "WHERE id = %2")
                                       .arg(file_state)
                                       .arg(id),
-                                  {filePath.toUtf8()});
+                                  {filePath.toUtf8(), fileHash});
     } else {
         return RawDatabase::Query(QStringLiteral("UPDATE file_transfers "
                                                  "SET finished = %1 "
@@ -395,15 +396,16 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
                                             insertIdCallback));
 }
 
-void History::setFileFinished(const QString& fileId, bool success, const QString& filePath)
+void History::setFileFinished(const QString& fileId, bool success, const QString& filePath, const QByteArray& fileHash)
 {
     auto& fileInfo = fileInfos[fileId];
     if (fileInfo.fileId == -1) {
         fileInfo.finished = true;
         fileInfo.success = success;
         fileInfo.filePath = filePath;
+        fileInfo.fileHash = fileHash;
     } else {
-        db->execLater(generateFileFinished(fileInfo.fileId, success, filePath));
+        db->execLater(generateFileFinished(fileInfo.fileId, success, filePath, fileHash));
     }
 
     fileInfos.remove(fileId);
