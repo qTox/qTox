@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <memory>
+#include <QCryptographicHash>
 
 class QFile;
 class QTimer;
@@ -51,6 +52,7 @@ struct ToxFile
     FileDirection direction;
     QByteArray avatarData;
     QByteArray resumeFileId;
+    std::shared_ptr<QCryptographicHash> hashGenerator = std::make_shared<QCryptographicHash>(QCryptographicHash::Sha256);
 };
 
 #endif // CORESTRUCTS_H

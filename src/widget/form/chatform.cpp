@@ -329,19 +329,19 @@ void ChatForm::startFileSend(ToxFile file)
 
 void ChatForm::onFileTransferFinished(ToxFile file)
 {
-    history->setFileFinished(file.resumeFileId, true, file.filePath);
+    history->setFileFinished(file.resumeFileId, true, file.filePath, file.hashGenerator->result());
 }
 
 void ChatForm::onFileTransferBrokenUnbroken(ToxFile file, bool broken)
 {
     if (broken) {
-        history->setFileFinished(file.resumeFileId, false, file.filePath);
+        history->setFileFinished(file.resumeFileId, false, file.filePath, file.hashGenerator->result());
     }
 }
 
 void ChatForm::onFileTransferCancelled(ToxFile file)
 {
-    history->setFileFinished(file.resumeFileId, false, file.filePath);
+    history->setFileFinished(file.resumeFileId, false, file.filePath, file.hashGenerator->result());
 }
 
 void ChatForm::onFileRecvRequest(ToxFile file)

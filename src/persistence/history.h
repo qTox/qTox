@@ -167,7 +167,7 @@ public:
                            const QByteArray& fileName, const QString& filePath, int64_t size,
                            const QString& sender, const QDateTime& time, QString const& dispName);
 
-    void setFileFinished(const QString& fileId, bool success, const QString& filePath);
+    void setFileFinished(const QString& fileId, bool success, const QString& filePath, const QByteArray& fileHash);
 
     QList<HistMessage> getChatHistoryFromDate(const QString& friendPk, const QDateTime& from,
                                               const QDateTime& to);
@@ -198,7 +198,7 @@ private:
                                       const QDateTime& to, int numMessages);
 
     static RawDatabase::Query generateFileFinished(int64_t fileId, bool success,
-                                                   const QString& filePath);
+                                                   const QString& filePath, const QByteArray& fileHash);
     void dbSchemaUpgrade();
 
     std::shared_ptr<RawDatabase> db;
@@ -210,6 +210,7 @@ private:
         bool finished = false;
         bool success = false;
         QString filePath;
+        QByteArray fileHash;
         int64_t fileId = -1;
     };
 
