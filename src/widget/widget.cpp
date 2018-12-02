@@ -1920,6 +1920,15 @@ void Widget::onEmptyGroupCreated(int groupId)
     }
 }
 
+void Widget::onGroupLoaded(int groupId, const QString& title)
+{
+    Group* group = createGroup(groupId);
+    if (!group) {
+        return;
+    }
+    group->setTitle(QString(), title);
+}
+
 /**
  * @brief Used to reset the blinking icon.
  */
