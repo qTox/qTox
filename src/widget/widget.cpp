@@ -1907,16 +1907,19 @@ Group* Widget::createGroup(int groupId)
     return newgroup;
 }
 
-void Widget::onEmptyGroupCreated(int groupId)
+void Widget::onEmptyGroupCreated(int groupId, const QString& title)
 {
     Group* group = createGroup(groupId);
     if (!group) {
         return;
     }
-
-    // Only rename group if groups are visible.
-    if (Widget::getInstance()->groupsVisible()) {
-        groupWidgets[groupId]->editName();
+    if (title.isEmpty()) {
+        // Only rename group if groups are visible.
+        if (Widget::getInstance()->groupsVisible()) {
+            groupWidgets[groupId]->editName();
+        }
+    } else {
+        group->setTitle(QString(), title);
     }
 }
 

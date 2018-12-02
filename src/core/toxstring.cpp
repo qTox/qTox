@@ -24,6 +24,7 @@
 
 #include <cassert>
 #include <climits>
+#include <vector>
 
 /**
  * @class ToxString
