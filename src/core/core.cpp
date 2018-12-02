@@ -44,6 +44,26 @@ const QString Core::TOX_EXT = ".tox";
 
 #define ASSERT_CORE_THREAD assert(QThread::currentThread() == coreThread.get())
 
+namespace {
+    bool LogConferenceTitleError(TOX_ERR_CONFERENCE_TITLE error)
+    {
+        switch(error)
+        {
+        case TOX_ERR_CONFERENCE_TITLE_OK:
+            break;
+        case TOX_ERR_CONFERENCE_TITLE_CONFERENCE_NOT_FOUND:
+            qWarning() << "Conference title not found";
+            break;
+        case TOX_ERR_CONFERENCE_TITLE_INVALID_LENGTH:
+            qWarning() << "Invalid conference title length";
+            break;
+        case TOX_ERR_CONFERENCE_TITLE_FAIL_SEND:
+            qWarning() << "Failed to send title packet";
+        }
+        return error;
+    }
+} // namespace
+
 Core::Core(QThread* coreThread)
     : tox(nullptr)
     , av(nullptr)
@@ -1025,7 +1045,18 @@ void Core::loadGroups()
     tox_conference_get_chatlist(tox.get(), groupIds);
 
     for(size_t i = 0; i < groupCount; ++i) {
-        emit emptyGroupCreated(static_cast<int>(groupIds[i]));
+        TOX_ERR_CONFERENCE_TITLE error;
+        size_t titleSize = tox_conference_get_title_size(tox.get(), groupIds[i], &error);
+        if (LogConferenceTitleError(error)) {
+            continue;
+        }
+
+        std::vector<uint8_t> name(titleSize);
+        if (!tox_conference_get_title(tox.get(), groupIds[i], name.data(), &error))
+        if (LogConferenceTitleError(error)) {
+            continue;
+        }
+        emit emptyGroupCreated(static_cast<int>(groupIds[i]), ToxString(name).getQString());
     }
 
     delete[] groupIds;

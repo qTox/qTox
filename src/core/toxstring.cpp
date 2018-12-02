@@ -24,6 +24,7 @@
 
 #include <cassert>
 #include <climits>
+#include <vector>
 
 /**
  * @class ToxString
@@ -46,6 +47,16 @@ ToxString::ToxString(const QString& text)
 ToxString::ToxString(const QByteArray& text)
     : string(text)
 {
+}
+
+/**
+ * @brief Created a ToxString from a std::vector<uint8_t>.
+ * @param text Input text bytes.
+ */
+ToxString::ToxString(const std::vector<uint8_t>& text)
+    : string(reinterpret_cast<const char*>(text.data()), text.size())
+{
+
 }
 
 /**
