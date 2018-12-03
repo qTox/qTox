@@ -18,7 +18,6 @@
 */
 
 #include <QApplication>
-#ifdef Q_OS_WIN32
 #include "src/persistence/settings.h"
 #include "src/platform/autorun.h"
 #include <string>
@@ -101,5 +100,3 @@ bool Platform::getAutorun()
     RegCloseKey(key);
     return result;
 }
-
-#endif // Q_OS_WIN32
