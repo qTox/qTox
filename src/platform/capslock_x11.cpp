@@ -18,7 +18,6 @@
 */
 
 #include <QtCore/qsystemdetection.h>
-#if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
 #include "src/platform/capslock.h"
 #include "src/platform/x11_display.h"
 #include <X11/XKBlib.h>
@@ -39,6 +38,3 @@ bool Platform::capsLockEnabled()
     X11Display::unlock();
     return caps_state;
 }
-
-
-#endif // defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)

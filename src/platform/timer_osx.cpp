@@ -24,7 +24,6 @@
 */
 
 #include <QtCore/qsystemdetection.h>
-#if defined(__APPLE__) && defined(__MACH__)
 #include "src/platform/timer.h"
 #include <CoreFoundation/CoreFoundation.h>
 #include <IOKit/IOKitLib.h>
@@ -50,5 +49,3 @@ uint32_t Platform::getIdleTime()
 
     return idleTime_ns / 1000000;
 }
-
-#endif // defined(__APPLE__) && defined(__MACH__)

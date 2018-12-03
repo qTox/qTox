@@ -18,7 +18,6 @@
 */
 
 #include <QtCore/qsystemdetection.h>
-#if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
 #include "src/platform/x11_display.h"
 #include <QMutex>
 #include <X11/Xlib.h>
@@ -60,5 +59,3 @@ void X11Display::unlock()
     X11DisplayPrivate::getSingleInstance().mutex.unlock();
 }
 }
-
-#endif // Q_OS_UNIX && !defined(__APPLE__) && !defined(__MACH__)
