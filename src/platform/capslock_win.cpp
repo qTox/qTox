@@ -18,7 +18,6 @@
 */
 
 #include <QtCore/qsystemdetection.h>
-#ifdef Q_OS_WIN32
 #include "src/platform/capslock.h"
 #include <windows.h>
 
@@ -26,5 +25,3 @@ bool Platform::capsLockEnabled()
 {
     return GetKeyState(VK_CAPITAL) == 1;
 }
-
-#endif // Q_OS_WIN32

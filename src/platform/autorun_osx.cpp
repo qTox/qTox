@@ -17,7 +17,6 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#if defined(__APPLE__) && defined(__MACH__)
 #include "src/platform/autorun.h"
 #include <QCoreApplication>
 #include <QDir>
@@ -48,5 +47,3 @@ bool Platform::getAutorun()
 {
     return state;
 }
-
-#endif // defined(__APPLE__) && defined(__MACH__)

@@ -524,17 +524,27 @@ if (PLATFORM_EXTENSIONS)
     src/platform/autorun.h
     src/platform/capslock.h
     src/platform/timer.h
-    src/platform/autorun_osx.cpp
-    src/platform/autorun_win.cpp
-    src/platform/autorun_xdg.cpp
-    src/platform/capslock_osx.cpp
-    src/platform/capslock_win.cpp
-    src/platform/capslock_x11.cpp
-    src/platform/timer_osx.cpp
-    src/platform/timer_win.cpp
-    src/platform/timer_x11.cpp
-    src/platform/x11_display.cpp
   )
+  if (WIN32)
+    set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+      src/platform/autorun_win.cpp
+      src/platform/capslock_win.cpp
+      src/platform/timer_win.cpp
+    )
+  elseif (${X11_EXT})
+    set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+      src/platform/autorun_xdg.cpp
+      src/platform/capslock_x11.cpp
+      src/platform/timer_x11.cpp
+      src/platform/x11_display.cpp
+    )
+  elseif (${APPLE_EXT})
+    set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+      src/platform/autorun_osx.cpp
+      src/platform/capslock_osx.cpp
+      src/platform/timer_osx.cpp
+    )
+  endif()
 endif()
 
 add_definitions(-DQT_MESSAGELOGCONTEXT=1)
