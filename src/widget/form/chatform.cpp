@@ -913,6 +913,7 @@ ChatMessage::Ptr ChatForm::chatMessageFromHistMessage(History::HistMessage const
         break;
     }
     default:
+        qCritical() << "Invalid HistMessageContentType";
         assert(false);
     }
 
@@ -1206,11 +1207,9 @@ void ChatForm::onExportChat()
         ToxPk authorPk(ToxId(it.sender).getPublicKey());
         QString author = getMsgAuthorDispName(authorPk, it.dispName);
 
-        if (it.content.getType() == HistMessageContentType::message) {
-            buffer = buffer
-                     % QString{datestamp % '\t' % timestamp % '\t' % author % '\t'
-                               % it.content.asMessage() % '\n'};
-        }
+        buffer = buffer
+                 % QString{datestamp % '\t' % timestamp % '\t' % author % '\t'
+                           % it.content.asMessage() % '\n'};
     }
     file.write(buffer.toUtf8());
     file.close();

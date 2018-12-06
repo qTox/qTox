@@ -108,7 +108,6 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
     lastStatus = file.status == ToxFile::FINISHED ? ToxFile::INITIALIZING : ToxFile::FINISHED;
     updateWidget(file);
 
-    // preview
     setFixedHeight(64);
 }
 
@@ -340,6 +339,7 @@ void FileTransferWidget::updateWidgetColor(ToxFile const& file)
         setBackgroundColor(Style::getColor(Style::Green), true);
         break;
     default:
+        qCritical() << "Invalid file status";
         assert(false);
     }
 }
@@ -372,6 +372,7 @@ void FileTransferWidget::updateWidgetText(ToxFile const& file)
     case ToxFile::FINISHED:
         break;
     default:
+        qCritical() << "Invalid file status";
         assert(false);
     }
 }
@@ -396,6 +397,7 @@ void FileTransferWidget::updatePreview(ToxFile const& file)
         showPreview(file.filePath);
         break;
     default:
+        qCritical() << "Invalid file status";
         assert(false);
     }
 }
@@ -442,6 +444,7 @@ void FileTransferWidget::updateFileProgress(ToxFile const& file)
         break;
     }
     default:
+        qCritical() << "Invalid file status";
         assert(false);
     }
 }
@@ -464,6 +467,7 @@ void FileTransferWidget::updateSignals(ToxFile const& file)
     case ToxFile::TRANSMITTING:
         break;
     default:
+        qCritical() << "Invalid file status";
         assert(false);
     }
 }
@@ -532,6 +536,7 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
 
         break;
     default:
+        qCritical() << "Invalid file status";
         assert(false);
     }
 }
@@ -583,7 +588,6 @@ void FileTransferWidget::showPreview(const QString& filename)
 
         QFile imageFile(filename);
         if (!imageFile.open(QIODevice::ReadOnly)) {
-            qCritical() << "Failed to open file for preview";
             return;
         }
         const QByteArray imageFileData = imageFile.readAll();

@@ -279,9 +279,10 @@ void History::onFileInsertionReady(FileDbInsertionData data)
     // Copy to pass into labmda for later
     auto fileId = data.fileId;
     queries +=
-        RawDatabase::Query(QStringLiteral("INSERT INTO file_transfers (chat_id, file_restart_id, "
-                                          "file_path, file_name, file_hash, file_size, direction, file_state) "
-                                          "VALUES (%1, ?, ?, ?, ?, %2, %3, %4);")
+        RawDatabase::Query(QStringLiteral(
+                               "INSERT INTO file_transfers (chat_id, file_restart_id, "
+                               "file_path, file_name, file_hash, file_size, direction, file_state) "
+                               "VALUES (%1, ?, ?, ?, ?, %2, %3, %4);")
                                .arg(peerId)
                                .arg(data.size)
                                .arg(static_cast<int>(data.direction))
@@ -307,7 +308,8 @@ void History::onFileInserted(int64_t dbId, QString fileId)
 {
     auto& fileInfo = fileInfos[fileId];
     if (fileInfo.finished) {
-        db->execLater(generateFileFinished(dbId, fileInfo.success, fileInfo.filePath, fileInfo.fileHash));
+        db->execLater(
+            generateFileFinished(dbId, fileInfo.success, fileInfo.filePath, fileInfo.fileHash));
         fileInfos.remove(fileId);
     } else {
         fileInfo.finished = false;
@@ -315,7 +317,8 @@ void History::onFileInserted(int64_t dbId, QString fileId)
     }
 }
 
-RawDatabase::Query History::generateFileFinished(int64_t id, bool success, const QString& filePath, const QByteArray& fileHash)
+RawDatabase::Query History::generateFileFinished(int64_t id, bool success, const QString& filePath,
+                                                 const QByteArray& fileHash)
 {
     auto file_state = success ? ToxFile::FINISHED : ToxFile::CANCELED;
     if (filePath.length()) {
@@ -406,7 +409,8 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
                                             insertIdCallback));
 }
 
-void History::setFileFinished(const QString& fileId, bool success, const QString& filePath, const QByteArray& fileHash)
+void History::setFileFinished(const QString& fileId, bool success, const QString& filePath,
+                              const QByteArray& fileHash)
 {
     auto& fileInfo = fileInfos[fileId];
     if (fileInfo.fileId == -1) {
@@ -704,13 +708,17 @@ void History::dbSchemaUpgrade()
         qWarning() << "Database version is newer than we currently support. Please upgrade qTox";
         // We don't know what future versions have done, we have to disable db access until we re-upgrade
         db.reset();
+        return;
     } else if (databaseSchemaVersion == SCHEMA_VERSION) {
         // No work to do
         return;
     }
 
+    // Make sure to handle the un-created case as well in the following upgrade code
     switch (databaseSchemaVersion) {
     case 0:
+        // This will generate a warning on new profiles, but we have no easy way to chain execs. I
+        // don't want to block the rest of the program on db creation so I guess we can just live with the warning for now
         db->execLater(RawDatabase::Query("ALTER TABLE history ADD file_id INTEGER;"));
         // fallthrough
     // case 1:
