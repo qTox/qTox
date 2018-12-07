@@ -72,11 +72,6 @@ public slots:
     void onFileNameChanged(const ToxPk& friendPk);
     void clearChatArea();
 
-protected slots:
-    void searchInBegin(const QString& phrase, const ParameterSearch& parameter) override;
-    void onSearchUp(const QString& phrase, const ParameterSearch& parameter) override;
-    void onSearchDown(const QString& phrase, const ParameterSearch& parameter) override;
-
 private slots:
     void onSendTriggered() override;
     void onAttachClicked() override;
@@ -101,9 +96,6 @@ private slots:
     void sendImage(const QPixmap& pixmap);
     void doScreenshot();
     void onCopyStatusMessage();
-    void onExportChat();
-
-    void onLoadHistory();
 
 private:
  
@@ -123,7 +115,7 @@ private:
     void stopCounter(bool error = false);
     void updateCallButtons();
     void SendMessageStr(QString msg);
-    bool loadHistory(const QString& phrase, const ParameterSearch& parameter);
+
 
 protected:
     GenericNetCamView* createNetcam() final override;
@@ -142,9 +134,8 @@ private:
     QTimer typingTimer;
     QElapsedTimer timeElapsed;
     OfflineMsgEngine* offlineEngine;
-    QAction* loadHistoryAction;
     QAction* copyStatusAction;
-    QAction* exportChatAction;
+
 
     History* history;
     QHash<uint, FileTransferInstance*> ftransWidgets;
