@@ -68,6 +68,7 @@ private:
     void retranslateUi();
     void updateUserCount();
     void updateUserNames();
+    void sendMessageStr(QString msg);
 
 private:
     Group* group;

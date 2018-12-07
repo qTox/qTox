@@ -46,16 +46,12 @@ public:
     ChatForm(Friend* chatFriend, History* history);
     ~ChatForm();
     void setStatusMessage(const QString& newMessage);
-    void loadHistoryByDateRange(const QDateTime& since, bool processUndelivered = false);
-    void loadHistoryDefaultNum(bool processUndelivered = false);
-
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
     OfflineMsgEngine* getOfflineMsgEngine();
 
     virtual void show(ContentLayout* contentLayout) final override;
 
-    static const QString ACTION_PREFIX;
 
 signals:
 
@@ -101,32 +97,16 @@ private slots:
     void onFriendMessageReceived(quint32 friendId, const QString& message, bool isAction);
     void onStatusMessage(const QString& message);
     void onReceiptReceived(quint32 friendId, int receipt);
-    void onLoadHistory();
     void onUpdateTime();
     void sendImage(const QPixmap& pixmap);
     void doScreenshot();
     void onCopyStatusMessage();
     void onExportChat();
 
+    void onLoadHistory();
+
 private:
-    struct MessageMetadata
-    {
-        const bool isSelf;
-        const bool needSending;
-        const bool isAction;
-        const qint64 id;
-        const ToxPk authorPk;
-        const QDateTime msgDateTime;
-        MessageMetadata(bool isSelf, bool needSending, bool isAction, qint64 id, ToxPk authorPk,
-                        QDateTime msgDateTime)
-            : isSelf{isSelf}
-            , needSending{needSending}
-            , isAction{isAction}
-            , id{id}
-            , authorPk{authorPk}
-            , msgDateTime{msgDateTime}
-        {}
-    };
+ 
     void handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered);
     QDate addDateLineIfNeeded(QList<ChatLine::Ptr>& msgs, QDate const& lastDate,
                               History::HistMessage const& newMessage, MessageMetadata const& metadata);

@@ -84,10 +84,10 @@ public:
     static QString resolveToxPk(const ToxPk& pk);
     QDate getLatestDate() const;
     QDate getFirstDate() const;
+    void loadHistoryDefaultNum(bool processUndelivered);
+    void loadHistoryByDateRange(const QDateTime& since, bool processUndelivered = false);
 
 signals:
-    void sendMessage(uint32_t, QString);
-    void sendAction(uint32_t, QString);
     void messageInserted();
     void messageNotFoundShow(SearchDirection direction);
 
@@ -127,6 +127,25 @@ private:
     QDate getDate(const ChatLine::Ptr& chatLine) const;
 
 protected:
+   struct MessageMetadata
+    {
+        const bool isSelf;
+        const bool needSending;
+        const bool isAction;
+        const qint64 id;
+        const ToxPk authorPk;
+        const QDateTime msgDateTime;
+        MessageMetadata(bool isSelf, bool needSending, bool isAction, qint64 id, ToxPk authorPk,
+                        QDateTime msgDateTime)
+            : isSelf{isSelf}
+            , needSending{needSending}
+            , isAction{isAction}
+            , id{id}
+            , authorPk{authorPk}
+            , msgDateTime{msgDateTime}
+        {}
+    };
+
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
                                    const QDateTime& datetime, bool isAction, bool isSent, bool colorizeName = false);
     ChatMessage::Ptr createSelfMessage(const QString& message, const QDateTime& datetime,
@@ -134,6 +153,14 @@ protected:
     bool needsToHideName(const ToxPk& messageAuthor, const QDateTime& messageTime) const;
     void showNetcam();
     void hideNetcam();
+    void handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered);
+    void insertChatlines(QList<ChatLine::Ptr> chatLines);
+    QDate addDateLineIfNeeded(QList<ChatLine::Ptr>& msgs, QDate const& lastDate,
+                                    History::HistMessage const& newMessage,
+                                    MessageMetadata const& metadata);
+    MessageMetadata getMessageMetadata(History::HistMessage const& histMessage);
+    ChatMessage::Ptr chatMessageFromHistMessage(History::HistMessage const& histMessage,
+                                                      MessageMetadata const& metadata);
     virtual GenericNetCamView* createNetcam() = 0;
     virtual void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
@@ -145,7 +172,11 @@ protected:
     void disableSearchText();
     bool searchInText(const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
     std::pair<int, int> indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
+    QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName);
 
+
+public:
+    static const QString ACTION_PREFIX;
 protected:
     bool audioInputFlag;
     bool audioOutputFlag;

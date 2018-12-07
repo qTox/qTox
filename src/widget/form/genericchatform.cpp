@@ -46,6 +46,7 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QRegularExpression>
+#include <QScrollBar>
 #include <QStringBuilder>
 
 #ifdef SPELL_CHECKING
@@ -57,6 +58,7 @@
  * @brief Parent class for all chatforms. It's provide the minimum required UI
  * elements and methods to work with chat messages.
  */
+const QString GenericChatForm::ACTION_PREFIX = QStringLiteral("/me ");
 
 static const QSize FILE_FLYOUT_SIZE{24, 24};
 static const short FOOT_BUTTONS_SPACING = 2;
@@ -219,6 +221,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, History* history, QWidg
 
     saveChatAction = menu.addAction(QIcon::fromTheme("document-save"), QString(),
                                     this, SLOT(onSaveLogClicked()));
+
     clearAction = menu.addAction(QIcon::fromTheme("edit-clear"), QString(),
                                  this, SLOT(clearChatArea()),
                                  QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_L));
@@ -1034,4 +1037,129 @@ void GenericChatForm::hideNetcam()
     netcam->hide();
     delete netcam;
     netcam = nullptr;
+}
+
+QString GenericChatForm::getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName)
+{
+    QString authorStr;
+    const Core* core = Core::getInstance();
+    bool isSelf = authorPk == core->getSelfId().getPublicKey();
+
+    if (!dispName.isEmpty()) {
+        authorStr = dispName;
+    } else if (isSelf) {
+        authorStr = core->getUsername();
+    } else {
+        authorStr = GenericChatForm::resolveToxPk(authorPk);
+    }
+    return authorStr;
+}
+
+void GenericChatForm::loadHistoryDefaultNum(bool processUndelivered)
+{
+    const QString persistentId = contact->getPersistentId().toString();
+    QList<History::HistMessage> msgs = history->getChatHistoryDefaultNum(persistentId);
+    if (!msgs.isEmpty()) {
+        earliestMessage = msgs.first().timestamp;
+    }
+    handleLoadedMessages(msgs, processUndelivered);
+}
+
+void GenericChatForm::loadHistoryByDateRange(const QDateTime& since, bool processUndelivered)
+{
+    QDateTime now = QDateTime::currentDateTime();
+    if (since > now) {
+        return;
+    }
+
+    if (!earliestMessage.isNull()) {
+        if (earliestMessage < since) {
+            return;
+        }
+
+        if (earliestMessage < now) {
+            now = earliestMessage;
+            now = now.addMSecs(-1);
+        }
+    }
+
+    QString persistentId = contact->getPersistentId().toString();
+    earliestMessage = since;
+    QList<History::HistMessage> msgs = history->getChatHistoryFromDate(persistentId, since, now);
+    handleLoadedMessages(msgs, processUndelivered);
+}
+
+void GenericChatForm::handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered)
+{
+    ToxPk prevIdBackup = previousId;
+    previousId = ToxPk{};
+    QList<ChatLine::Ptr> chatLines;
+    QDate lastDate(1, 0, 0);
+    for (const auto& histMessage : newHistMsgs) {
+        MessageMetadata const metadata = getMessageMetadata(histMessage);
+        lastDate = addDateLineIfNeeded(chatLines, lastDate, histMessage, metadata);
+        auto msg = chatMessageFromHistMessage(histMessage, metadata);
+        if (processUndelivered) {
+            // sendLoadedMessage(msg, metadata);
+        }
+        chatLines.append(msg);
+        previousId = metadata.authorPk;
+        prevMsgDateTime = metadata.msgDateTime;
+    }
+    previousId = prevIdBackup;
+    insertChatlines(chatLines);
+    if (searchAfterLoadHistory && chatLines.isEmpty()) {
+        onContinueSearch();
+    }
+}
+
+void GenericChatForm::insertChatlines(QList<ChatLine::Ptr> chatLines)
+{
+    QScrollBar* verticalBar = chatWidget->verticalScrollBar();
+    int savedSliderPos = verticalBar->maximum() - verticalBar->value();
+    chatWidget->insertChatlinesOnTop(chatLines);
+    savedSliderPos = verticalBar->maximum() - savedSliderPos;
+    verticalBar->setValue(savedSliderPos);
+}
+
+QDate GenericChatForm::addDateLineIfNeeded(QList<ChatLine::Ptr>& msgs, QDate const& lastDate,
+                                    History::HistMessage const& newMessage,
+                                    MessageMetadata const& metadata)
+{
+    // Show the date every new day
+    QDate newDate = metadata.msgDateTime.date();
+    if (newDate > lastDate) {
+        QString dateText = newDate.toString(Settings::getInstance().getDateFormat());
+        auto msg = ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime());
+        msgs.append(msg);
+        return newDate;
+    }
+    return lastDate;
+}
+
+GenericChatForm::MessageMetadata GenericChatForm::getMessageMetadata(History::HistMessage const& histMessage)
+{
+    const ToxPk authorPk = ToxId(histMessage.sender).getPublicKey();
+    const QDateTime msgDateTime = histMessage.timestamp.toLocalTime();
+    const bool isSelf = Core::getInstance()->getSelfId().getPublicKey() == authorPk;
+    const bool needSending = !histMessage.isSent && isSelf;
+    const bool isAction = histMessage.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
+    const qint64 id = histMessage.id;
+    return {isSelf, needSending, isAction, id, authorPk, msgDateTime};
+}
+
+ChatMessage::Ptr GenericChatForm::chatMessageFromHistMessage(History::HistMessage const& histMessage,
+                                                      MessageMetadata const& metadata)
+{
+    ToxPk authorPk(ToxId(histMessage.sender).getPublicKey());
+    QString authorStr = getMsgAuthorDispName(authorPk, histMessage.dispName);
+    QString messageText =
+        metadata.isAction ? histMessage.message.mid(ACTION_PREFIX.length()) : histMessage.message;
+    ChatMessage::MessageType type = metadata.isAction ? ChatMessage::ACTION : ChatMessage::NORMAL;
+    QDateTime dateTime = metadata.needSending ? QDateTime() : metadata.msgDateTime;
+    auto msg = ChatMessage::createChatMessage(authorStr, messageText, type, metadata.isSelf, dateTime);
+    if (!metadata.isAction && needsToHideName(authorPk, metadata.msgDateTime)) {
+        msg->hideSender();
+    }
+    return msg;
 }

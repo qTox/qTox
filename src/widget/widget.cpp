@@ -1757,6 +1757,25 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         form->addMessage(author, message, date, isAction, true);
     }
 
+    QDateTime timestamp = QDateTime::currentDateTime();
+    Profile* profile = Nexus::getProfile();
+    if (profile->isHistoryEnabled()) {
+        QString persistentId = g->getPersistentId().toString();
+        auto peerList = g->getPeerList();
+        auto it = peerList.find(author);
+        if (it == peerList.end()) {
+            assert(false);
+            qCritical() << "Received a group message from someone not in the group peer list, ignoring";
+            return;
+        }
+        QString authorName = *it;
+        QString text = message;
+        if (isAction) {
+            text = ChatForm::ACTION_PREFIX + text;
+        }
+        profile->getHistory()->addNewMessage(persistentId, text, author.toString(), timestamp, true, authorName);
+    }
+
     newGroupMessageAlert(groupId, targeted || Settings::getInstance().getGroupAlwaysNotify());
 }
 
@@ -1901,8 +1920,6 @@ Group* Widget::createGroup(int groupId, const ToxPk& groupPersistentId)
     connect(widget, &GroupWidget::removeGroup, this, widgetRemoveGroup);
     connect(widget, &GroupWidget::middleMouseClicked, this, [=]() { removeGroup(groupId); });
     connect(widget, &GroupWidget::chatroomWidgetClicked, form, &ChatForm::focusInput);
-    connect(form, &GroupChatForm::sendMessage, core, &Core::sendGroupMessage);
-    connect(form, &GroupChatForm::sendAction, core, &Core::sendGroupAction);
     connect(newgroup, &Group::titleChangedByUser, core, &Core::changeGroupTitle);
     connect(core, &Core::usernameSet, newgroup, &Group::setSelfName);
 
