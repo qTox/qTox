@@ -115,10 +115,11 @@ protected slots:
     void copyLink();
     void searchFormShow();
     void onSearchTriggered();
-
-    virtual void searchInBegin(const QString& phrase, const ParameterSearch& parameter) = 0;
-    virtual void onSearchUp(const QString& phrase, const ParameterSearch& parameter) = 0;
-    virtual void onSearchDown(const QString& phrase, const ParameterSearch& parameter) = 0;
+    void onExportChat();
+    void onLoadHistory();
+    void searchInBegin(const QString& phrase, const ParameterSearch& parameter);
+    void onSearchUp(const QString& phrase, const ParameterSearch& parameter);
+    void onSearchDown(const QString& phrase, const ParameterSearch& parameter);
     void onContinueSearch();
 
 private:
@@ -173,7 +174,7 @@ protected:
     bool searchInText(const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
     std::pair<int, int> indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
     QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName);
-
+    bool loadHistory(const QString& phrase, const ParameterSearch& parameter);
 
 public:
     static const QString ACTION_PREFIX;
@@ -218,6 +219,8 @@ protected:
     bool searchAfterLoadHistory;
     const Contact* contact;
     History* history;
+    QAction* exportChatAction;
+    QAction* loadHistoryAction;
 };
 
 #endif // GENERICCHATFORM_H

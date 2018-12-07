@@ -228,33 +228,6 @@ void GroupChatForm::onTitleChanged(uint32_t groupId, const QString& author, cons
     addSystemInfoMessage(message, ChatMessage::INFO, curTime);
 }
 
-void GroupChatForm::searchInBegin(const QString& phrase, const ParameterSearch& parameter)
-{
-    disableSearchText();
-
-    searchPoint = QPoint(1, -1);
-
-    if (parameter.period == PeriodSearch::WithTheFirst || parameter.period == PeriodSearch::AfterDate) {
-        onSearchDown(phrase, parameter);
-    } else {
-        onSearchUp(phrase, parameter);
-    }
-}
-
-void GroupChatForm::onSearchUp(const QString& phrase, const ParameterSearch& parameter)
-{
-    if (!searchInText(phrase, parameter, SearchDirection::Up)) {
-        emit messageNotFoundShow(SearchDirection::Up);
-    }
-}
-
-void GroupChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
-{
-    if (!searchInText(phrase, parameter, SearchDirection::Down)) {
-        emit messageNotFoundShow(SearchDirection::Down);
-    }
-}
-
 void GroupChatForm::onScreenshotClicked()
 {
     // Unsupported

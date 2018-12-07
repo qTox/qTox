@@ -33,7 +33,6 @@
 #include "src/persistence/settings.h"
 #include "src/video/netcamview.h"
 #include "src/widget/chatformheader.h"
-#include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/searchform.h"
 #include "src/widget/style.h"
@@ -148,11 +147,7 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     headWidget->addWidget(callDuration, 1, Qt::AlignCenter);
     callDuration->hide();
 
-    loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
     copyStatusAction = statusMessageMenu.addAction(QString(), this, SLOT(onCopyStatusMessage()));
-
-    exportChatAction =
-        menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onExportChat()));
 
     const Core* core = Core::getInstance();
     const Profile* profile = Nexus::getProfile();
@@ -500,85 +495,6 @@ void ChatForm::onVolMuteToggle()
     updateMuteVolButton();
 }
 
-void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& parameter)
-{
-    disableSearchText();
-
-    searchPoint = QPoint(1, -1);
-
-    const bool isFirst = (parameter.period == PeriodSearch::WithTheFirst);
-    const bool isAfter = (parameter.period == PeriodSearch::AfterDate);
-    if (isFirst || isAfter) {
-        if (isFirst || (isAfter && parameter.date < getFirstDate())) {
-            const QString pk = f->getPublicKey().toString();
-            if ((isFirst || parameter.date >= history->getStartDateChatHistory(pk).date())
-                && loadHistory(phrase, parameter)) {
-
-                return;
-            }
-        }
-
-        onSearchDown(phrase, parameter);
-    } else {
-        if (parameter.period == PeriodSearch::BeforeDate && parameter.date < getFirstDate()) {
-            const QString pk = f->getPublicKey().toString();
-            if (parameter.date >= history->getStartDateChatHistory(pk).date()
-                && loadHistory(phrase, parameter)) {
-                return;
-            }
-        }
-
-        onSearchUp(phrase, parameter);
-    }
-}
-
-void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& parameter)
-{
-    if (phrase.isEmpty()) {
-        disableSearchText();
-    }
-
-    QVector<ChatLine::Ptr> lines = chatWidget->getLines();
-    int numLines = lines.size();
-
-    int startLine;
-
-    if (searchAfterLoadHistory) {
-        startLine = 1;
-        searchAfterLoadHistory = false;
-    } else {
-        startLine = numLines - searchPoint.x();
-    }
-
-    if (startLine == 0 && loadHistory(phrase, parameter)) {
-        return;
-    }
-
-    const bool isSearch = searchInText(phrase, parameter, SearchDirection::Up);
-
-    if (!isSearch) {
-        const QString pk = f->getPublicKey().toString();
-        const QDateTime newBaseDate =
-            history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
-
-        if (!newBaseDate.isValid()) {
-            emit messageNotFoundShow(SearchDirection::Up);
-            return;
-        }
-
-        searchPoint.setX(numLines);
-        searchAfterLoadHistory = true;
-        GenericChatForm::loadHistoryByDateRange(newBaseDate);
-    }
-}
-
-void ChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
-{
-    if (!searchInText(phrase, parameter, SearchDirection::Down)) {
-        emit messageNotFoundShow(SearchDirection::Down);
-    }
-}
-
 void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)
 {
     if (friendId != f->getId()) {
@@ -791,19 +707,6 @@ void ChatForm::sendImage(const QPixmap& pixmap)
     }
 }
 
-void ChatForm::onLoadHistory()
-{
-    if (!history) {
-        return;
-    }
-
-    LoadHistoryDialog dlg(f->getPublicKey());
-    if (dlg.exec()) {
-        QDateTime fromTime = dlg.getFromDate();
-        loadHistoryByDateRange(fromTime);
-    }
-}
-
 void ChatForm::insertChatMessage(ChatMessage::Ptr msg)
 {
     GenericChatForm::insertChatMessage(msg);
@@ -959,27 +862,10 @@ void ChatForm::SendMessageStr(QString msg)
     }
 }
 
-bool ChatForm::loadHistory(const QString& phrase, const ParameterSearch& parameter)
-{
-    const QString pk = f->getPublicKey().toString();
-    const QDateTime newBaseDate =
-        history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
-
-    if (newBaseDate.isValid() && getFirstDate().isValid() && newBaseDate.date() < getFirstDate()) {
-        searchAfterLoadHistory = true;
-        GenericChatForm::loadHistoryByDateRange(newBaseDate);
-
-        return true;
-    }
-
-    return false;
-}
-
 void ChatForm::retranslateUi()
 {
-    loadHistoryAction->setText(tr("Load chat history..."));
     copyStatusAction->setText(tr("Copy"));
-    exportChatAction->setText(tr("Export to file"));
+
 
     updateMuteMicButton();
     updateMuteVolButton();
@@ -987,35 +873,4 @@ void ChatForm::retranslateUi()
     if (netcam) {
         netcam->setShowMessages(chatWidget->isVisible());
     }
-}
-
-void ChatForm::onExportChat()
-{
-    QString pk = f->getPublicKey().toString();
-    QDateTime epochStart = QDateTime::fromMSecsSinceEpoch(0);
-    QDateTime now = QDateTime::currentDateTime();
-    QList<History::HistMessage> msgs = history->getChatHistoryFromDate(pk, epochStart, now);
-
-    QString path = QFileDialog::getSaveFileName(Q_NULLPTR, tr("Save chat log"));
-    if (path.isEmpty()) {
-        return;
-    }
-
-    QFile file(path);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        return;
-    }
-
-    QString buffer;
-    for (const auto& it : msgs) {
-        QString timestamp = it.timestamp.time().toString("hh:mm:ss");
-        QString datestamp = it.timestamp.date().toString("yyyy-MM-dd");
-        ToxPk authorPk(ToxId(it.sender).getPublicKey());
-        QString author = getMsgAuthorDispName(authorPk, it.dispName);
-
-        buffer = buffer
-                 % QString{datestamp % '\t' % timestamp % '\t' % author % '\t' % it.message % '\n'};
-    }
-    file.write(buffer.toUtf8());
-    file.close();
 }

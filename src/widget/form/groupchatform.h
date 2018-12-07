@@ -51,9 +51,6 @@ private slots:
     void onCallClicked();
     void onUserListChanged();
     void onTitleChanged(uint32_t groupId, const QString& author, const QString& title);
-    void searchInBegin(const QString& phrase, const ParameterSearch& parameter) override;
-    void onSearchUp(const QString& phrase, const ParameterSearch& parameter) override;
-    void onSearchDown(const QString& phrase, const ParameterSearch& parameter) override;
     void onLabelContextMenuRequested(const QPoint& localPos);
 
 protected:
