@@ -20,18 +20,19 @@
 #include "grouplist.h"
 #include "src/model/group.h"
 #include <QDebug>
+#include <QByteArray>
 #include <QHash>
 
 QHash<int, Group*> GroupList::groupList;
 
-Group* GroupList::addGroup(int groupId, const QString& name, bool isAvGroupchat,
+Group* GroupList::addGroup(int groupId, const ToxPk& persistentGroupId, const QString& name, bool isAvGroupchat,
                            const QString& selfName)
 {
     auto checker = groupList.find(groupId);
     if (checker != groupList.end())
         qWarning() << "addGroup: groupId already taken";
 
-    Group* newGroup = new Group(groupId, name, isAvGroupchat, selfName);
+    Group* newGroup = new Group(groupId, persistentGroupId, name, isAvGroupchat, selfName);
     groupList[groupId] = newGroup;
 
     return newGroup;

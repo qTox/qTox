@@ -1721,6 +1721,8 @@ void Widget::onGroupInviteAccepted(const GroupInvite& inviteInfo)
         qWarning() << "onGroupInviteAccepted: Unable to accept group invite";
         return;
     }
+    auto persistentGroupId = Core::getInstance()->getGroupPersistentId(groupId);
+    createGroup(groupId, persistentGroupId);
 }
 
 void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QString& message,
@@ -1861,7 +1863,7 @@ void Widget::removeGroup(int groupId)
     removeGroup(GroupList::findGroup(groupId));
 }
 
-Group* Widget::createGroup(int groupId)
+Group* Widget::createGroup(int groupId, const ToxPk& groupPersistentId)
 {
     Group* g = GroupList::findGroup(groupId);
     if (g) {
@@ -1873,7 +1875,7 @@ Group* Widget::createGroup(int groupId)
     Core* core = Nexus::getCore();
 
     bool enabled = core->getGroupAvEnabled(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, enabled, core->getUsername());
+    Group* newgroup = GroupList::addGroup(groupId, groupPersistentId, groupName, enabled, core->getUsername());
     std::shared_ptr<GroupChatroom> chatroom(new GroupChatroom(newgroup));
     const auto compact = Settings::getInstance().getCompactLayout();
     auto widget = new GroupWidget(chatroom, compact);
@@ -1907,9 +1909,9 @@ Group* Widget::createGroup(int groupId)
     return newgroup;
 }
 
-void Widget::onEmptyGroupCreated(int groupId, const QString& title)
+void Widget::onEmptyGroupCreated(int groupId, const ToxPk& groupPersistentId, const QString& title)
 {
-    Group* group = createGroup(groupId);
+    Group* group = createGroup(groupId, groupPersistentId);
     if (!group) {
         return;
     }

@@ -167,7 +167,7 @@ public slots:
     void updateFriendActivity(const Friend* frnd);
     void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
     void onReceiptRecieved(int friendId, int receipt);
-    void onEmptyGroupCreated(int groupId, const QString& title);
+    void onEmptyGroupCreated(int groupId, const ToxPk& groupPersistentId, const QString& title);
     void onGroupInviteReceived(const GroupInvite& inviteInfo);
     void onGroupInviteAccepted(const GroupInvite& inviteInfo);
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
@@ -236,7 +236,7 @@ private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
     void hideMainForms(GenericChatroomWidget* chatroomWidget);
-    Group* createGroup(int groupId);
+    Group* createGroup(int groupId, const ToxPk& groupPersistentId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
