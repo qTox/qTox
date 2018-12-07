@@ -38,6 +38,9 @@
 #include "src/widget/translator.h"
 #include "src/persistence/settings.h"
 
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
+
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QRegularExpression>
@@ -131,6 +134,9 @@ GroupChatForm::GroupChatForm(Group* chatGroup, History* history)
     connect(&Settings::getInstance(), &Settings::blackListChanged, this, &GroupChatForm::updateUserNames);
 
     onUserListChanged();
+    if (Nexus::getProfile()->isHistoryEnabled()) {
+        loadHistoryDefaultNum(true);
+    }
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
 }
@@ -142,26 +148,48 @@ GroupChatForm::~GroupChatForm()
 
 void GroupChatForm::onSendTriggered()
 {
-    QString msg = msgEdit->toPlainText();
-    if (msg.isEmpty())
-        return;
-
-    msgEdit->setLastMessage(msg);
+    sendMessageStr(msgEdit->toPlainText());
     msgEdit->clear();
+}
 
-    if (group->getPeersCount() != 1) {
-        if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive)) {
-            msg.remove(0, ChatForm::ACTION_PREFIX.length());
-            emit sendAction(group->getId(), msg);
-        } else {
-            emit sendMessage(group->getId(), msg);
+void GroupChatForm::sendMessageStr(QString msg)
+{
+    if (msg.isEmpty()) {
+        return;
+    }
+
+    bool isAction = msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive);
+    if (isAction) {
+        msg.remove(0, ChatForm::ACTION_PREFIX.length());
+    }
+
+    QStringList splittedMsg = Core::splitMessage(msg, tox_max_message_length());
+    QDateTime timestamp = QDateTime::currentDateTime();
+
+    for (const QString& part : splittedMsg) {
+        QString historyPart = part;
+        if (isAction) {
+            historyPart = ChatForm::ACTION_PREFIX + part;
         }
-    } else {
-        if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive))
-            addSelfMessage(msg.mid(ChatForm::ACTION_PREFIX.length()), QDateTime::currentDateTime(),
-                           true);
-        else
-            addSelfMessage(msg, QDateTime::currentDateTime(), false);
+
+        Core* core = Core::getInstance();
+        uint32_t groupId = group->getId();
+        if (group->getPeersCount() != 1) {
+            isAction ? core->sendGroupAction(groupId, part) : core->sendGroupMessage(groupId, part);
+        } else {
+            // NOTE: we are considered our own group peer by toxcore, so will receive our own message, so we only add
+            // the message ourselves if we're not sending it.
+            addSelfMessage(part, timestamp, isAction);
+            if (history && Settings::getInstance().getEnableLogging()) {
+                QString selfPk = Core::getInstance()->getSelfId().toString();
+                QString persistentId = group->getPersistentId().toString();
+                QString name = Core::getInstance()->getUsername();
+                history->addNewMessage(persistentId, historyPart, selfPk, timestamp, true, name, nullptr);
+            }
+        }
+
+        // set last message only when sending it
+        msgEdit->setLastMessage(msg);
     }
 }
 
