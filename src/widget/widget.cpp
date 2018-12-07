@@ -1729,7 +1729,9 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
                                     bool isAction)
 {
     Group* g = GroupList::findGroup(groupnumber);
+    assert(g);
     if (!g) {
+        qCritical() << "onGroupMessageReceived called for unknown group number, ignoring";
         return;
     }
 
@@ -1761,12 +1763,10 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
 void Widget::onGroupPeerlistChanged(int groupnumber)
 {
     Group* g = GroupList::findGroup(groupnumber);
+    assert(g);
     if (!g) {
-        qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
-        g = createGroup(groupnumber);
-        if (!g) {
-            return;
-        }
+        qCritical() << "onGroupPeerlistChanged called for unknown group number, ignoring";
+        return;
     }
     g->regeneratePeerList();
 }
@@ -1774,12 +1774,10 @@ void Widget::onGroupPeerlistChanged(int groupnumber)
 void Widget::onGroupPeerNameChanged(int groupnumber, int peernumber, const QString& newName)
 {
     Group* g = GroupList::findGroup(groupnumber);
+    assert(g);
     if (!g) {
-        qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
-        g = createGroup(groupnumber);
-        if (!g) {
-            return;
-        }
+        qCritical() << "onGroupPeerNameChanged called for unknown group number, ignoring";
+        return;
     }
 
     QString setName = newName;
@@ -1793,7 +1791,9 @@ void Widget::onGroupPeerNameChanged(int groupnumber, int peernumber, const QStri
 void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const QString& title)
 {
     Group* g = GroupList::findGroup(groupnumber);
+    assert(g);
     if (!g) {
+        qCritical() << "onGroupTitleChanged called for unknown group number, ignoring";
         return;
     }
 
@@ -1810,7 +1810,9 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
 void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
 {
     Group* g = GroupList::findGroup(groupnumber);
+    assert(g);
     if (!g) {
+        qCritical() << "onGroupPeerAudioPlaying called for unknown group number, ignoring";
         return;
     }
 
@@ -2085,7 +2087,9 @@ void Widget::onMessageSendResult(uint32_t friendId, const QString& message, int 
 void Widget::onGroupSendFailed(int groupId)
 {
     Group* g = GroupList::findGroup(groupId);
+    assert(g);
     if (!g) {
+        qCritical() << "onGroupSendFailed called for unknown group number, ignoring";
         return;
     }
 
