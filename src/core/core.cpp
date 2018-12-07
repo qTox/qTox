@@ -1055,7 +1055,7 @@ void Core::loadGroups()
         if (LogConferenceTitleError(error)) {
             continue;
         }
-        emit emptyGroupCreated(static_cast<int>(groupIds[i]), ToxString(name).getQString());
+        emit emptyGroupCreated(static_cast<int>(groupIds[i]), getGroupPersistentId(groupIds[i]), ToxString(name).getQString());
     }
 
     delete[] groupIds;
@@ -1110,6 +1110,17 @@ bool Core::parsePeerQueryError(Tox_Err_Conference_Peer_Query error) const
     default:
         qCritical() << "Unknow error code:" << error;
         return false;
+    }
+}
+
+ToxPk Core::getGroupPersistentId(uint32_t groupNumber) {
+    size_t conferenceIdSize = TOX_CONFERENCE_UID_SIZE;
+    QByteArray groupPersistentId(conferenceIdSize, Qt::Uninitialized);
+    if (tox_conference_get_id(tox.get(), groupNumber, reinterpret_cast<uint8_t*>(groupPersistentId.data()))) {
+        return ToxPk{groupPersistentId};
+    } else {
+        qCritical() << "Failed to get conference ID of group" << groupNumber;
+        return {};
     }
 }
 
@@ -1354,7 +1365,7 @@ int Core::createGroup(uint8_t type)
 
         switch (error) {
         case TOX_ERR_CONFERENCE_NEW_OK:
-            emit emptyGroupCreated(groupId);
+            emit emptyGroupCreated(groupId, getGroupPersistentId(groupId));
             return groupId;
 
         case TOX_ERR_CONFERENCE_NEW_INIT:
@@ -1366,7 +1377,7 @@ int Core::createGroup(uint8_t type)
         }
     } else if (type == TOX_CONFERENCE_TYPE_AV) {
         uint32_t groupId = toxav_add_av_groupchat(tox.get(), CoreAV::groupCallCallback, this);
-        emit emptyGroupCreated(groupId);
+        emit emptyGroupCreated(groupId, getGroupPersistentId(groupId));
         return groupId;
     } else {
         qWarning() << "createGroup: Unknown type " << type;
