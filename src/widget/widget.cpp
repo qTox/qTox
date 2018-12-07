@@ -1880,8 +1880,9 @@ Group* Widget::createGroup(int groupId, const ToxPk& groupPersistentId)
     Group* newgroup = GroupList::addGroup(groupId, groupPersistentId, groupName, enabled, core->getUsername());
     std::shared_ptr<GroupChatroom> chatroom(new GroupChatroom(newgroup));
     const auto compact = Settings::getInstance().getCompactLayout();
+    auto history = Nexus::getProfile()->getHistory();
     auto widget = new GroupWidget(chatroom, compact);
-    auto form = new GroupChatForm(newgroup);
+    auto form = new GroupChatForm(newgroup, history);
     groupWidgets[groupId] = widget;
     groupChatrooms[groupId] = chatroom;
     groupChatForms[groupId] = QSharedPointer<GroupChatForm>(form);
