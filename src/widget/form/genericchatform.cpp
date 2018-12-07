@@ -49,6 +49,9 @@
 #include <QScrollBar>
 #include <QStringBuilder>
 
+#include <QScrollBar>
+#include "src/widget/form/loadhistorydialog.h"
+
 #ifdef SPELL_CHECKING
 #include <KF5/SonnetUi/sonnet/spellcheckdecorator.h>
 #endif
@@ -221,6 +224,10 @@ GenericChatForm::GenericChatForm(const Contact* contact, History* history, QWidg
 
     saveChatAction = menu.addAction(QIcon::fromTheme("document-save"), QString(),
                                     this, SLOT(onSaveLogClicked()));
+    addAction(saveChatAction);
+
+    loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
+    addAction(loadHistoryAction);
 
     clearAction = menu.addAction(QIcon::fromTheme("edit-clear"), QString(),
                                  this, SLOT(clearChatArea()),
@@ -229,6 +236,9 @@ GenericChatForm::GenericChatForm(const Contact* contact, History* history, QWidg
 
     copyLinkAction = menu.addAction(QIcon(), QString(), this, SLOT(copyLink()));
     menu.addSeparator();
+
+    exportChatAction =
+        menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onExportChat()));
 
     connect(chatWidget, &ChatLog::customContextMenuRequested, this,
             &GenericChatForm::onChatContextMenuRequested);
@@ -1005,6 +1015,8 @@ void GenericChatForm::retranslateUi()
     quoteAction->setText(tr("Quote selected text"));
     copyLinkAction->setText(tr("Copy link address"));
     searchAction->setText(tr("Search in text"));
+    exportChatAction->setText(tr("Export to file"));
+    loadHistoryAction->setText(tr("Load chat history..."));
 }
 
 void GenericChatForm::showNetcam()
@@ -1162,4 +1174,142 @@ ChatMessage::Ptr GenericChatForm::chatMessageFromHistMessage(History::HistMessag
         msg->hideSender();
     }
     return msg;
+}
+
+void GenericChatForm::onLoadHistory()
+{
+    if (!history) {
+        return;
+    }
+
+    LoadHistoryDialog dlg(contact->getPersistentId());
+    if (dlg.exec()) {
+        QDateTime fromTime = dlg.getFromDate();
+        loadHistoryByDateRange(fromTime);
+    }
+}
+
+void GenericChatForm::onExportChat()
+{
+    QString pk = contact->getPersistentId().toString();
+    QDateTime epochStart = QDateTime::fromMSecsSinceEpoch(0);
+    QDateTime now = QDateTime::currentDateTime();
+    QList<History::HistMessage> msgs = history->getChatHistoryFromDate(pk, epochStart, now);
+
+    QString path = QFileDialog::getSaveFileName(Q_NULLPTR, tr("Save chat log"));
+    if (path.isEmpty()) {
+        return;
+    }
+
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        return;
+    }
+
+    QString buffer;
+    for (const auto& it : msgs) {
+        QString timestamp = it.timestamp.time().toString("hh:mm:ss");
+        QString datestamp = it.timestamp.date().toString("yyyy-MM-dd");
+        ToxPk authorPk(ToxId(it.sender).getPublicKey());
+        QString author = getMsgAuthorDispName(authorPk, it.dispName);
+
+        buffer = buffer
+                 % QString{datestamp % '\t' % timestamp % '\t' % author % '\t' % it.message % '\n'};
+    }
+    file.write(buffer.toUtf8());
+    file.close();
+}
+
+void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch& parameter)
+{
+    disableSearchText();
+
+    searchPoint = QPoint(1, -1);
+
+    const bool isFirst = (parameter.period == PeriodSearch::WithTheFirst);
+    const bool isAfter = (parameter.period == PeriodSearch::AfterDate);
+    if (isFirst || isAfter) {
+        if (isFirst || (isAfter && parameter.date < getFirstDate())) {
+            const QString pk = contact->getPersistentId().toString();
+            if ((isFirst || parameter.date >= history->getStartDateChatHistory(pk).date())
+                && loadHistory(phrase, parameter)) {
+
+                return;
+            }
+        }
+
+        onSearchDown(phrase, parameter);
+    } else {
+        if (parameter.period == PeriodSearch::BeforeDate && parameter.date < getFirstDate()) {
+            const QString pk = contact->getPersistentId().toString();
+            if (parameter.date >= history->getStartDateChatHistory(pk).date()
+                && loadHistory(phrase, parameter)) {
+                return;
+            }
+        }
+
+        onSearchUp(phrase, parameter);
+    }
+}
+
+void GenericChatForm::onSearchUp(const QString& phrase, const ParameterSearch& parameter)
+{
+    if (phrase.isEmpty()) {
+        disableSearchText();
+    }
+
+    QVector<ChatLine::Ptr> lines = chatWidget->getLines();
+    int numLines = lines.size();
+
+    int startLine;
+
+    if (searchAfterLoadHistory) {
+        startLine = 1;
+        searchAfterLoadHistory = false;
+    } else {
+        startLine = numLines - searchPoint.x();
+    }
+
+    if (startLine == 0 && loadHistory(phrase, parameter)) {
+        return;
+    }
+
+    const bool isSearch = searchInText(phrase, parameter, SearchDirection::Up);
+
+    if (!isSearch) {
+        const QString pk = contact->getPersistentId().toString();
+        const QDateTime newBaseDate =
+            history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+
+        if (!newBaseDate.isValid()) {
+            emit messageNotFoundShow(SearchDirection::Up);
+            return;
+        }
+
+        searchPoint.setX(numLines);
+        searchAfterLoadHistory = true;
+        loadHistoryByDateRange(newBaseDate);
+    }
+}
+
+void GenericChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
+{
+    if (!searchInText(phrase, parameter, SearchDirection::Down)) {
+        emit messageNotFoundShow(SearchDirection::Down);
+    }
+}
+bool GenericChatForm::loadHistory(const QString& phrase, const ParameterSearch& parameter)
+{
+    const QString pk = contact->getPersistentId().toString();
+    const QDateTime newBaseDate =
+        history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+
+    if (newBaseDate.isValid() && getFirstDate().isValid() && newBaseDate.date() < getFirstDate()) {
+        searchAfterLoadHistory = true;
+        GenericChatForm::loadHistoryByDateRange(newBaseDate);
+
+        return true;
+    }
+
+    return false;
 }
