@@ -118,7 +118,7 @@ QString secondsToDHMS(quint32 duration)
 
 
 ChatForm::ChatForm(Friend* chatFriend, History* history)
-    : GenericChatForm(chatFriend)
+    : GenericChatForm(chatFriend, history)
     , f(chatFriend)
     , history{history}
     , isTyping{false}

@@ -23,6 +23,7 @@
 #include "src/chatlog/chatmessage.h"
 #include "src/core/toxpk.h"
 #include "src/widget/searchtypes.h"
+#include "src/persistence/history.h"
 
 #include <QMenu>
 #include <QWidget>
@@ -65,7 +66,7 @@ class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GenericChatForm(const Contact* contact, QWidget* parent = nullptr);
+    explicit GenericChatForm(const Contact* contact, History* history, QWidget* parent = nullptr);
     ~GenericChatForm() override;
 
     void setName(const QString& newName);
@@ -184,6 +185,8 @@ protected:
 
     QPoint searchPoint;
     bool searchAfterLoadHistory;
+    const Contact* contact;
+    History* history;
 };
 
 #endif // GENERICCHATFORM_H
