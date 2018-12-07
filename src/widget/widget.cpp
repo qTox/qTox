@@ -1749,9 +1749,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
                                     bool isAction)
 {
     Group* g = GroupList::findGroup(groupnumber);
-    if (!g) {
-        return;
-    }
+    assert(g);
 
     const Core* core = Core::getInstance();
     ToxPk author = core->getGroupPeerPk(groupnumber, peernumber);
@@ -1780,26 +1778,14 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
 void Widget::onGroupPeerlistChanged(int groupnumber)
 {
     Group* g = GroupList::findGroup(groupnumber);
-    if (!g) {
-        qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
-        g = createGroup(groupnumber);
-        if (!g) {
-            return;
-        }
-    }
+    assert(g);
     g->regeneratePeerList();
 }
 
 void Widget::onGroupPeerNameChanged(int groupnumber, int peernumber, const QString& newName)
 {
     Group* g = GroupList::findGroup(groupnumber);
-    if (!g) {
-        qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
-        g = createGroup(groupnumber);
-        if (!g) {
-            return;
-        }
-    }
+    assert(g);
 
     QString setName = newName;
     if (newName.isEmpty()) {
@@ -1812,9 +1798,7 @@ void Widget::onGroupPeerNameChanged(int groupnumber, int peernumber, const QStri
 void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const QString& title)
 {
     Group* g = GroupList::findGroup(groupnumber);
-    if (!g) {
-        return;
-    }
+    assert(g);
 
     GroupWidget* widget = groupWidgets[groupnumber];
     if (widget->isActive()) {
@@ -1829,9 +1813,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
 void Widget::onGroupPeerAudioPlaying(int groupnumber, ToxPk peerPk)
 {
     Group* g = GroupList::findGroup(groupnumber);
-    if (!g) {
-        return;
-    }
+    assert(g);
 
     auto form = groupChatForms[g->getId()].data();
     form->peerAudioPlaying(peerPk);
@@ -2095,9 +2077,7 @@ void Widget::setStatusBusy()
 void Widget::onGroupSendFailed(int groupId)
 {
     Group* g = GroupList::findGroup(groupId);
-    if (!g) {
-        return;
-    }
+    assert(g);
 
     const auto message = tr("Message failed to send");
     const auto curTime = QDateTime::currentDateTime();
