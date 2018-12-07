@@ -128,10 +128,12 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
 
 }
 
-GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
+GenericChatForm::GenericChatForm(const Contact* contact, History* history, QWidget* parent)
     : QWidget(parent, Qt::Window)
     , audioInputFlag(false)
     , audioOutputFlag(false)
+    , contact(contact)
+    , history(history)
 {
     curRow = 0;
     headWidget = new ChatFormHeader();

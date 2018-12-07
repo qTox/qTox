@@ -81,10 +81,11 @@ QString editName(const QString& name)
  * @brief Timeout = peer stopped sending audio.
  */
 
-GroupChatForm::GroupChatForm(Group* chatGroup)
-    : GenericChatForm (chatGroup)
+GroupChatForm::GroupChatForm(Group* chatGroup, History* history)
+    : GenericChatForm (chatGroup, history)
     , group(chatGroup)
     , inCall(false)
+    , history(history)
 {
     nusersLabel = new QLabel();
 
