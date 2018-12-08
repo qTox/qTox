@@ -76,6 +76,7 @@ public:
 
     void eraseHistory();
     void removeFriendHistory(const QString& friendPk);
+    void removeGroupHistory(const QString& groupPersistentId);
     void addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
                        const QDateTime& time, bool isSent, QString dispName,
                        const std::function<void(int64_t)>& insertIdCallback = {});
@@ -101,6 +102,7 @@ private:
                                       const QDateTime& to, int numMessages);
     std::shared_ptr<RawDatabase> db;
     QHash<QString, int64_t> peers;
+    QHash<QString, int64_t> groups;
 };
 
 #endif // HISTORY_H

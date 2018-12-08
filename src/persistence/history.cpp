@@ -127,19 +127,27 @@ void History::removeFriendHistory(const QString& friendPk)
 
     int64_t id = peers[friendPk];
 
-    QString queryText = QString("DELETE FROM faux_offline_pending "
-                                "WHERE faux_offline_pending.id IN ( "
-                                "    SELECT faux_offline_pending.id FROM faux_offline_pending "
-                                "    LEFT JOIN history ON faux_offline_pending.id = history.id "
-                                "    WHERE chat_id=%1 "
-                                "); "
-                                "DELETE FROM history WHERE chat_id=%1; "
-                                "DELETE FROM aliases WHERE owner=%1; "
-                                "DELETE FROM peers WHERE id=%1; "
-                                "VACUUM;")
-                            .arg(id);
+    QVector<RawDatabase::Query> queries;
+    // remove select chat (friend or group)
+    queries += QString("DELETE FROM faux_offline_pending "
+                        "WHERE faux_offline_pending.id IN ( "
+                        "    SELECT faux_offline_pending.id FROM faux_offline_pending "
+                        "    LEFT JOIN history ON faux_offline_pending.id = history.id "
+                        "    WHERE chat_id=%1 "
+                        "); "
+                        "DELETE FROM history WHERE chat_id=%1; "
+                        "VACUUM;")
+                    .arg(id);
+    // then if there are peers who no longer author any messages, we don't need their PK or alias
+    // this could happen either because we have no group messages from a friend we removed, or because
+    // we have no messages in other groups or individual messages from some of the peers in the group we removed
+    queries += QString("DELETE FROM aliases WHERE "
+                        "    aliases.id NOT IN (SELECT DISTINCT sender_alias FROM history);");
+    queries += QString("DELETE FROM peers WHERE "
+                        "    peers.id NOT IN (SELECT DISTINCT owner FROM alias);");
+    queries += QString("VACUUM;");
 
-    if (db->execNow(queryText)) {
+    if (db->execNow(queries)) {
         peers.remove(friendPk);
     } else {
         qWarning() << "Failed to remove friend's history";
