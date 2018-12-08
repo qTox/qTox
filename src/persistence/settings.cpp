@@ -402,6 +402,7 @@ void Settings::loadPersonal(Profile* profile)
     ps.beginGroup("Proxy");
     {
         proxyType = static_cast<ProxyType>(ps.value("proxyType", 0 /* ProxyType::None */).toInt());
+        proxyType = fixInvalidProxyType(proxyType);
         proxyAddr = ps.value("proxyAddr", proxyAddr).toString();
         proxyPort = static_cast<quint16>(ps.value("proxyPort", proxyPort).toUInt());
     }
@@ -2443,4 +2444,18 @@ Settings::friendProp& Settings::getOrInsertFriendPropRef(const ToxPk& id)
     }
 
     return *it;
+}
+
+ICoreSettings::ProxyType Settings::fixInvalidProxyType(ICoreSettings::ProxyType proxyType)
+{
+    // Repair uninitialized enum that was saved to settings due to bug (https://github.com/qTox/qTox/issues/5311)
+    switch (proxyType) {
+    case ICoreSettings::ProxyType::ptNone:
+    case ICoreSettings::ProxyType::ptSOCKS5:
+    case ICoreSettings::ProxyType::ptHTTP:
+        return proxyType;
+    default:
+        qWarning() << "Repairing invalid ProxyType, UDP will be enabled";
+        return ICoreSettings::ProxyType::ptNone;
+    }
 }
