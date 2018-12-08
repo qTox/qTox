@@ -181,6 +181,15 @@ bool RawDatabase::open(const QString& path, const QString& hexKey)
             return false;
         }
 
+        // #5451 SQLCipher 4.x has new crypto defaults that won't work with DBs saved with 3.x.
+        // manually use existing 3.x defaults for now, until SQLCipher upgrade is functional.
+        if (!execNow("PRAGMA cipher_page_size = 1024; PRAGMA kdf_iter = 64000;"
+                     " PRAGMA cipher_hmac_algorithm = HMAC_SHA1; PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_SHA1;")) {
+            qWarning() << "Failed to prepare SQLCipher for version 3.x";
+            close();
+            return false;
+        }
+
         if (!execNow("SELECT count(*) FROM sqlite_master")) {
             qWarning() << "Database is unusable, check that the password is correct";
             close();
