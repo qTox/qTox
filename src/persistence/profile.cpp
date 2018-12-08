@@ -572,7 +572,6 @@ void Profile::onRequestSent(const ToxPk& friendPk, const QString& message)
     if (!isHistoryEnabled()) {
         return;
     }
-
     QString pkStr = friendPk.toString();
     QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(message);
     QString selfStr = core->getSelfPublicKey().toString();
