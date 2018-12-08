@@ -12,6 +12,7 @@ class ICoreSettings {
 public:
     enum class ProxyType
     {
+        // If changed, don't forget to update Settings::fixInvalidProxyType
         ptNone = 0,
         ptSOCKS5 = 1,
         ptHTTP = 2
