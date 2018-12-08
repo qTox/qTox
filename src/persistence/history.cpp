@@ -127,18 +127,24 @@ void History::removeFriendHistory(const QString& friendPk)
 
     int64_t id = peers[friendPk];
 
-    QString queryText = QString("DELETE FROM faux_offline_pending "
-                                "WHERE faux_offline_pending.id IN ( "
-                                "    SELECT faux_offline_pending.id FROM faux_offline_pending "
-                                "    LEFT JOIN history ON faux_offline_pending.id = history.id "
-                                "    WHERE chat_id=%1 "
-                                "); "
-                                "DELETE FROM history WHERE chat_id=%1; "
-                                "DELETE FROM aliases WHERE owner=%1; "
-                                "DELETE FROM peers WHERE id=%1; "
-                                "VACUUM;")
-                            .arg(id);
-
+    QString queryText = QString(
+        // remove select chat (friend or group)
+        "DELETE FROM faux_offline_pending "
+        "WHERE faux_offline_pending.id IN ( "
+        "    SELECT faux_offline_pending.id FROM faux_offline_pending "
+        "    LEFT JOIN history ON faux_offline_pending.id = history.id "
+        "    WHERE chat_id=%1 "
+        "); "
+        "DELETE FROM history WHERE chat_id=%1; "
+        // then if there are peers who no longer author any messages, we don't need their alias
+        "DELETE FROM aliases WHERE "
+        "aliases.id NOT IN (SELECT DISTINCT sender_alias FROM history); "
+        // if it's a friend that now doesn't author any messages (no alias) or a group that now doesn't exist,
+        // remove it as a peer
+        "DELETE FROM peers WHERE "
+        "peers.id NOT IN (SELECT DISTINCT owner FROM aliases UNION SELECT chat_id FROM history); "
+        "VACUUM;")
+        .arg(id);
     if (db->execNow(queryText)) {
         peers.remove(friendPk);
     } else {

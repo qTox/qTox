@@ -3,7 +3,7 @@
 
 
 #include "ui_removefrienddialog.h"
-#include "src/model/friend.h"
+#include "src/model/contact.h"
 #include <QDialog>
 
 
@@ -11,7 +11,7 @@ class RemoveFriendDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit RemoveFriendDialog(QWidget* parent, const Friend* f);
+    explicit RemoveFriendDialog(QWidget* parent, const Contact* f);
 
     inline bool removeHistory()
     {

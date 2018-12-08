@@ -1842,6 +1842,19 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
 
 void Widget::removeGroup(Group* g, bool fake)
 {
+    if (!fake) {
+        RemoveFriendDialog ask(this, g);
+        ask.exec();
+
+        if (!ask.accepted()) {
+            return;
+        }
+
+        if (ask.removeHistory()) {
+            Nexus::getProfile()->getHistory()->removeFriendHistory(g->getPersistentId().toString());
+        }
+    }
+
     auto groupId = g->getId();
     auto groupWidgetIt = groupWidgets.find(groupId);
     if (groupWidgetIt == groupWidgets.end()) {
