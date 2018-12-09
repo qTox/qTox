@@ -1211,7 +1211,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     QDateTime timestamp = QDateTime::currentDateTime();
     Profile* profile = Nexus::getProfile();
     if (profile->isHistoryEnabled()) {
-        QString publicKey = f->getPublicKey().toString();
+        ToxPk publicKey = f->getPublicKey();
         QString name = f->getDisplayedName();
         QString text = message;
         if (isAction) {
@@ -1499,7 +1499,7 @@ void Widget::removeFriend(Friend* f, bool fake)
         }
 
         if (ask.removeHistory()) {
-            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getPublicKey().toString());
+            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getPublicKey());
         }
     }
 
@@ -1760,7 +1760,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     QDateTime timestamp = QDateTime::currentDateTime();
     Profile* profile = Nexus::getProfile();
     if (profile->isHistoryEnabled()) {
-        QString persistentId = g->getPersistentId().toString();
+        ToxPk persistentId = g->getPersistentId();
         auto peerList = g->getPeerList();
         auto it = peerList.find(author);
         if (it == peerList.end()) {
@@ -1773,7 +1773,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         if (isAction) {
             text = ChatForm::ACTION_PREFIX + text;
         }
-        profile->getHistory()->addNewMessage(persistentId, text, author.toString(), timestamp, true, authorName);
+        profile->getHistory()->addNewMessage(persistentId, text, author, timestamp, true, authorName);
     }
 
     newGroupMessageAlert(groupId, targeted || Settings::getInstance().getGroupAlwaysNotify());
@@ -1851,7 +1851,7 @@ void Widget::removeGroup(Group* g, bool fake)
         }
 
         if (ask.removeHistory()) {
-            Nexus::getProfile()->getHistory()->removeFriendHistory(g->getPersistentId().toString());
+            Nexus::getProfile()->getHistory()->removeFriendHistory(g->getPersistentId());
         }
     }
 
