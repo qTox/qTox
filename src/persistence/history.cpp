@@ -24,6 +24,7 @@
 #include "profile.h"
 #include "settings.h"
 #include "db/rawdatabase.h"
+#include "src/core/toxpk.h"
 
 namespace {
 static constexpr int SCHEMA_VERSION = 4;
@@ -332,7 +333,10 @@ History::History(std::shared_ptr<RawDatabase> db_)
     // Cache our current peers
     db->execLater(RawDatabase::Query{"SELECT public_key, id FROM peers;",
                                      [this](const QVector<QVariant>& row) {
-                                         peers[row[0].toString()] = row[1].toInt();
+                                         // HACK: we previously accidentally put Tox IDs in the db. So instead of
+                                         // constructing as a ToxPk which will enforce the correct length, construct
+                                         // as ToxId which will allow either length, and then convert to ToxPk.
+                                         peers[ToxId{QByteArray::fromHex(row[0].toByteArray())}.getPublicKey()] = row[1].toInt();
                                      }});
 }
 
@@ -392,7 +396,7 @@ void History::eraseHistory()
  * @brief Erases the chat history with one friend.
  * @param friendPk Friend public key to erase.
  */
-void History::removeFriendHistory(const QString& friendPk)
+void History::removeFriendHistory(const ToxPk& friendPk)
 {
     if (!isValid()) {
         return;
@@ -441,8 +445,8 @@ void History::removeFriendHistory(const QString& friendPk)
  * @param insertIdCallback Function, called after query execution.
  */
 QVector<RawDatabase::Query>
-History::generateNewMessageQueries(const QString& friendPk, const QString& message,
-                                   const QString& sender, const QDateTime& time, bool isDelivered,
+History::generateNewMessageQueries(const ToxPk& friendPk, const QString& message,
+                                   const ToxPk& sender, const QDateTime& time, bool isDelivered,
                                    QString dispName, std::function<void(RowId)> insertIdCallback)
 {
     QVector<RawDatabase::Query> queries;
@@ -461,7 +465,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
         (peers)[friendPk] = peerId;
         queries += RawDatabase::Query(("INSERT INTO peers (id, public_key) "
                                        "VALUES (%1, '"
-                                       + friendPk + "');")
+                                       + friendPk.toString() + "');")
                                           .arg(peerId));
     }
 
@@ -479,7 +483,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
         (peers)[sender] = senderId;
         queries += RawDatabase::Query{("INSERT INTO peers (id, public_key) "
                                        "VALUES (%1, '"
-                                       + sender + "');")
+                                       + sender.toString() + "');")
                                           .arg(senderId)};
     }
 
@@ -581,9 +585,9 @@ RawDatabase::Query History::generateFileFinished(RowId id, bool success, const Q
     }
 }
 
-void History::addNewFileMessage(const QString& friendPk, const QString& fileId,
+void History::addNewFileMessage(const ToxPk& friendPk, const QString& fileId,
                                 const QString& fileName, const QString& filePath, int64_t size,
-                                const QString& sender, const QDateTime& time, QString const& dispName)
+                                const ToxPk& sender, const QDateTime& time, QString const& dispName)
 {
     if (historyAccessBlocked()) {
         return;
@@ -641,7 +645,7 @@ void History::addNewFileMessage(const QString& friendPk, const QString& fileId,
  * @param dispName Name, which should be displayed.
  * @param insertIdCallback Function, called after query execution.
  */
-void History::addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
+void History::addNewMessage(const ToxPk& friendPk, const QString& message, const ToxPk& sender,
                             const QDateTime& time, bool isDelivered, QString dispName,
                             const std::function<void(RowId)>& insertIdCallback)
 {
@@ -823,7 +827,7 @@ QList<History::HistMessage> History::getUndeliveredMessagesForFriend(const ToxPk
  * @param parameter for search
  * @return date of the message where the phrase was found
  */
-QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from,
+QDateTime History::getDateWhereFindPhrase(const ToxPk& friendPk, const QDateTime& from,
                                           QString phrase, const ParameterSearch& parameter)
 {
     if (historyAccessBlocked()) {
@@ -893,13 +897,13 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
 
     QString queryText =
         QStringLiteral("SELECT timestamp "
-                       "FROM history "
-                       "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
-                       "JOIN peers chat ON chat_id = chat.id "
-                       "WHERE chat.public_key='%1' "
-                       "AND %2 "
-                       "%3")
-            .arg(friendPk)
+                "FROM history "
+                "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+                "JOIN peers chat ON chat_id = chat.id "
+                "WHERE chat.public_key='%1' "
+                "AND %2 "
+                "%3")
+            .arg(friendPk.toString())
             .arg(message)
             .arg(period);
 

@@ -114,7 +114,7 @@ ToxId::ToxId(const QByteArray& rawId)
  * If the given rawId isn't a valid Public Key or Tox ID a ToxId with all zero bytes is created.
  *
  * @param rawId Pointer to bytes to convert to ToxId object
- * @param len Number of bytes to read. Must be TOX_SECRET_KEY_SIZE for a Public Key or
+ * @param len Number of bytes to read. Must be TOX_PUBLIC_KEY_SIZE for a Public Key or
  *            TOX_ADDRESS_SIZE for a Tox ID.
  */
 ToxId::ToxId(const uint8_t* rawId, int len)
@@ -127,7 +127,7 @@ ToxId::ToxId(const uint8_t* rawId, int len)
 void ToxId::constructToxId(const QByteArray& rawId)
 {
     // TODO: remove construction from PK only
-    if (rawId.length() == TOX_SECRET_KEY_SIZE) {
+    if (rawId.length() == TOX_PUBLIC_KEY_SIZE) {
         toxId = QByteArray(rawId); // construct from PK only
     } else if (rawId.length() == TOX_ADDRESS_SIZE && isToxId(rawId.toHex().toUpper())) {
         toxId = QByteArray(rawId); // construct from full toxid

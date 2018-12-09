@@ -50,6 +50,7 @@ private slots:
     void copyTest();
     void dataTest();
     void sizeTest();
+    void hashableTest();
 };
 
 void TestContactId::toStringTest()
@@ -98,6 +99,15 @@ void TestContactId::sizeTest()
     GroupId id;
     QVERIFY(pk.getSize() == TOX_PUBLIC_KEY_SIZE);
     QVERIFY(id.getSize() == TOX_CONFERENCE_UID_SIZE);
+}
+
+void TestContactId::hashableTest()
+{
+    ToxPk pk1{testPkArray};
+    ToxPk pk2{testPk};
+    QVERIFY(qHash(pk1) == qHash(pk2));
+    ToxPk pk3{echoPk};
+    QVERIFY(qHash(pk1) != qHash(pk3));
 }
 
 QTEST_GUILESS_MAIN(TestContactId)

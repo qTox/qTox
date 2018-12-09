@@ -155,7 +155,7 @@ SearchResult ChatHistory::searchBackward(SearchPos startIdx, const QString& phra
     // If the double disk access is real bad we can optimize this by adding
     // another function to history
     auto dateWherePhraseFound =
-        history->getDateWhereFindPhrase(f.getPublicKey().toString(), earliestMessageDate, phrase,
+        history->getDateWhereFindPhrase(f.getPublicKey(), earliestMessageDate, phrase,
                                         parameter);
 
     if (dateWherePhraseFound.isValid()) {
@@ -219,8 +219,8 @@ void ChatHistory::onFileUpdated(const ToxPk& sender, const ToxFile& file)
             // chat log. Both rely on generating a new id based on the state of
             // initializing. If this is changed in the session chat log we'll end up
             // with a different order when loading from history
-            history->addNewFileMessage(f.getPublicKey().toString(), file.resumeFileId, file.fileName,
-                                       file.filePath, file.filesize, sender.toString(),
+            history->addNewFileMessage(f.getPublicKey(), file.resumeFileId, file.fileName,
+                                       file.filePath, file.filesize, sender,
                                        QDateTime::currentDateTime(), f.getDisplayedName());
             break;
         }
@@ -256,7 +256,7 @@ void ChatHistory::onFileTransferBrokenUnbroken(const ToxPk& sender, const ToxFil
 void ChatHistory::onMessageReceived(const ToxPk& sender, const Message& message)
 {
     if (canUseHistory()) {
-        auto friendPk = f.getPublicKey().toString();
+        auto friendPk = f.getPublicKey();
         auto displayName = f.getDisplayedName();
         auto content = message.content;
         if (message.isAction) {
@@ -272,8 +272,8 @@ void ChatHistory::onMessageReceived(const ToxPk& sender, const Message& message)
 void ChatHistory::onMessageSent(DispatchedMessageId id, const Message& message)
 {
     if (canUseHistory()) {
-        auto selfPk = coreIdHandler.getSelfPublicKey().toString();
-        auto friendPk = f.getPublicKey().toString();
+        auto selfPk = coreIdHandler.getSelfPublicKey();
+        auto friendPk = f.getPublicKey();
 
         auto content = message.content;
         if (message.isAction) {
