@@ -1069,7 +1069,7 @@ QString GenericChatForm::getMsgAuthorDispName(const ToxPk& authorPk, const QStri
 
 void GenericChatForm::loadHistoryDefaultNum(bool processUndelivered)
 {
-    const QString persistentId = contact->getPersistentId().toString();
+    const ToxPk persistentId = contact->getPersistentId();
     QList<History::HistMessage> msgs = history->getChatHistoryDefaultNum(persistentId);
     if (!msgs.isEmpty()) {
         earliestMessage = msgs.first().timestamp;
@@ -1095,7 +1095,7 @@ void GenericChatForm::loadHistoryByDateRange(const QDateTime& since, bool proces
         }
     }
 
-    QString persistentId = contact->getPersistentId().toString();
+    ToxPk persistentId = contact->getPersistentId();
     earliestMessage = since;
     QList<History::HistMessage> msgs = history->getChatHistoryFromDate(persistentId, since, now);
     handleLoadedMessages(msgs, processUndelivered);
@@ -1191,7 +1191,7 @@ void GenericChatForm::onLoadHistory()
 
 void GenericChatForm::onExportChat()
 {
-    QString pk = contact->getPersistentId().toString();
+    ToxPk pk = contact->getPersistentId();
     QDateTime epochStart = QDateTime::fromMSecsSinceEpoch(0);
     QDateTime now = QDateTime::currentDateTime();
     QList<History::HistMessage> msgs = history->getChatHistoryFromDate(pk, epochStart, now);
@@ -1230,7 +1230,7 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
     const bool isAfter = (parameter.period == PeriodSearch::AfterDate);
     if (isFirst || isAfter) {
         if (isFirst || (isAfter && parameter.date < getFirstDate())) {
-            const QString pk = contact->getPersistentId().toString();
+            const ToxPk pk = contact->getPersistentId();
             if ((isFirst || parameter.date >= history->getStartDateChatHistory(pk).date())
                 && loadHistory(phrase, parameter)) {
 
@@ -1241,7 +1241,7 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
         onSearchDown(phrase, parameter);
     } else {
         if (parameter.period == PeriodSearch::BeforeDate && parameter.date < getFirstDate()) {
-            const QString pk = contact->getPersistentId().toString();
+            const ToxPk pk = contact->getPersistentId();
             if (parameter.date >= history->getStartDateChatHistory(pk).date()
                 && loadHistory(phrase, parameter)) {
                 return;
@@ -1277,7 +1277,7 @@ void GenericChatForm::onSearchUp(const QString& phrase, const ParameterSearch& p
     const bool isSearch = searchInText(phrase, parameter, SearchDirection::Up);
 
     if (!isSearch) {
-        const QString pk = contact->getPersistentId().toString();
+        const ToxPk pk = contact->getPersistentId();
         const QDateTime newBaseDate =
             history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
@@ -1300,7 +1300,7 @@ void GenericChatForm::onSearchDown(const QString& phrase, const ParameterSearch&
 }
 bool GenericChatForm::loadHistory(const QString& phrase, const ParameterSearch& parameter)
 {
-    const QString pk = contact->getPersistentId().toString();
+    const ToxPk pk = contact->getPersistentId();
     const QDateTime newBaseDate =
         history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
