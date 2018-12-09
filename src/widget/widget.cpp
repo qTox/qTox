@@ -75,7 +75,7 @@
 #include "src/widget/gui.h"
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
-#include "tool/removefrienddialog.h"
+#include "tool/removecontactdialog.h"
 
 bool toxActivateEventHandler(const QByteArray&)
 {
@@ -1491,7 +1491,7 @@ void Widget::updateFriendActivity(const Friend* frnd)
 void Widget::removeFriend(Friend* f, bool fake)
 {
     if (!fake) {
-        RemoveFriendDialog ask(this, f);
+        RemoveContactDialog ask(this, f);
         ask.exec();
 
         if (!ask.accepted()) {
@@ -1843,7 +1843,7 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
 void Widget::removeGroup(Group* g, bool fake)
 {
     if (!fake) {
-        RemoveFriendDialog ask(this, g);
+        RemoveContactDialog ask(this, g);
         ask.exec();
 
         if (!ask.accepted()) {

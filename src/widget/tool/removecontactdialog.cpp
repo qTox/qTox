@@ -1,8 +1,8 @@
-#include "removefrienddialog.h"
+#include "removecontactdialog.h"
 #include <QPushButton>
 
 
-RemoveFriendDialog::RemoveFriendDialog(QWidget* parent, const Contact* contact)
+RemoveContactDialog::RemoveContactDialog(QWidget* parent, const Contact* contact)
     : QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -18,12 +18,12 @@ RemoveFriendDialog::RemoveFriendDialog(QWidget* parent, const Contact* contact)
     removeButton->setText(tr("Remove"));
     cancelButton->setDefault(true);
     adjustSize();
-    connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &RemoveFriendDialog::onAccepted);
-    connect(ui.buttonBox, &QDialogButtonBox::rejected, this, &RemoveFriendDialog::close);
+    connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &RemoveContactDialog::onAccepted);
+    connect(ui.buttonBox, &QDialogButtonBox::rejected, this, &RemoveContactDialog::close);
     setFocus();
 }
 
-void RemoveFriendDialog::onAccepted()
+void RemoveContactDialog::onAccepted()
 {
     _accepted = true;
     close();

@@ -1,17 +1,17 @@
-#ifndef DELETEFRIENDDIALOG_H
-#define DELETEFRIENDDIALOG_H
+#ifndef DELETECONTACTDIALOG_H
+#define DELETECONTACTDIALOG_H
 
 
-#include "ui_removefrienddialog.h"
+#include "ui_removecontactdialog.h"
 #include "src/model/contact.h"
 #include <QDialog>
 
 
-class RemoveFriendDialog : public QDialog
+class RemoveContactDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit RemoveFriendDialog(QWidget* parent, const Contact* f);
+    explicit RemoveContactDialog(QWidget* parent, const Contact* contact);
 
     inline bool removeHistory()
     {
@@ -27,8 +27,8 @@ public slots:
     void onAccepted();
 
 protected:
-    Ui_RemoveFriendDialog ui;
+    Ui_RemoveContactDialog ui;
     bool _accepted = false;
 };
 
-#endif // DELETEFRIENDDIALOG_H
+#endif // DELETECONTACTDIALOG_H
