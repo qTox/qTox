@@ -26,6 +26,7 @@
 #include "src/persistence/toxsave.h"
 #include "src/video/camerasource.h"
 #include "src/widget/loginscreen.h"
+#include "src/widget/style.h"
 #include "src/widget/translator.h"
 #include "widget/widget.h"
 #include <QApplication>
@@ -370,6 +371,8 @@ int main(int argc, char* argv[])
         handleToxSave(firstParam.toUtf8());
 
     QObject::connect(a.get(), &QApplication::aboutToQuit, cleanup);
+
+    a->setStyleSheet(Style::getStylesheet(QStringLiteral("global.css")));
 
     // Run
     int errorcode = a->exec();
