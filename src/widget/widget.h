@@ -53,6 +53,7 @@ class FriendListWidget;
 class FriendWidget;
 class GenericChatroomWidget;
 class Group;
+class Contact;
 class GroupChatForm;
 class GroupChatroom;
 class GroupInvite;
@@ -239,6 +240,7 @@ private:
     Group* createGroup(int groupId, const ToxPk& groupPersistentId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
+    void removeContactHistory(Contact* c);
     void saveWindowGeometry();
     void saveSplitterGeometry();
     void cycleContacts(bool forward);

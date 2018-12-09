@@ -1491,16 +1491,7 @@ void Widget::updateFriendActivity(const Friend* frnd)
 void Widget::removeFriend(Friend* f, bool fake)
 {
     if (!fake) {
-        RemoveContactDialog ask(this, f);
-        ask.exec();
-
-        if (!ask.accepted()) {
-            return;
-        }
-
-        if (ask.removeHistory()) {
-            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getPublicKey());
-        }
+        removeContactHistory(f);
     }
 
     const uint32_t friendId = f->getId();
@@ -1843,16 +1834,7 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
 void Widget::removeGroup(Group* g, bool fake)
 {
     if (!fake) {
-        RemoveContactDialog ask(this, g);
-        ask.exec();
-
-        if (!ask.accepted()) {
-            return;
-        }
-
-        if (ask.removeHistory()) {
-            Nexus::getProfile()->getHistory()->removeFriendHistory(g->getPersistentId());
-        }
+        removeContactHistory(g);
     }
 
     auto groupId = g->getId();
@@ -2537,5 +2519,19 @@ void Widget::focusChatInput()
         } else if (Group* g = activeChatroomWidget->getGroup()) {
             groupChatForms[g->getId()]->focusInput();
         }
+    }
+}
+
+void Widget::removeContactHistory(Contact* c)
+{
+    RemoveContactDialog ask(this, c);
+    ask.exec();
+
+    if (!ask.accepted()) {
+        return;
+    }
+
+    if (ask.removeHistory()) {
+        Nexus::getProfile()->getHistory()->removeFriendHistory(c->getPersistentId());
     }
 }
