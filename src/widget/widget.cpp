@@ -2537,6 +2537,6 @@ void Widget::removeContactHistory(Contact* c)
     }
 
     if (ask.removeHistory()) {
-        Nexus::getProfile()->getHistory()->removeFriendHistory(c->getPersistentId());
+        Nexus::getProfile()->getHistory()->removeContactHistory(c->getPersistentId());
     }
 }
