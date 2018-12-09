@@ -80,5 +80,5 @@ QWidget#circleWidgetContainer > QLabel#name
 }
 
 QLabel {
-    color: white
+    color: white;
 }

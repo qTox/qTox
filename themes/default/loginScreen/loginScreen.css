@@ -64,12 +64,12 @@ QLabel, QCheckBox, QProgressBar
 
 QLineEdit
 {
-    color: #f1f1f1
+    color: #f1f1f1;
 }
 
 QListView
 {
-    color: #f1f1f1
+    color: #f1f1f1;
 }
 
 QCheckBox:disabled
