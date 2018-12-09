@@ -24,6 +24,7 @@
 #include "profile.h"
 #include "settings.h"
 #include "db/rawdatabase.h"
+#include "src/core/toxpk.h"
 
 /**
  * @class History
@@ -61,7 +62,7 @@ History::History(std::shared_ptr<RawDatabase> db)
     // Cache our current peers
     db->execLater(RawDatabase::Query{"SELECT public_key, id FROM peers;",
                                      [this](const QVector<QVariant>& row) {
-                                         peers[row[0].toString()] = row[1].toInt();
+                                         peers[ToxPk{row[0].toByteArray()}] = row[1].toInt();
                                      }});
 }
 
@@ -90,7 +91,7 @@ bool History::isValid()
  * @param friendPk
  * @return True if has, false otherwise.
  */
-bool History::isHistoryExistence(const QString& friendPk)
+bool History::isHistoryExistence(const ToxPk& friendPk)
 {
     return !getChatHistoryDefaultNum(friendPk).isEmpty();
 }
@@ -115,7 +116,7 @@ void History::eraseHistory()
  * @brief Erases the chat history with one friend.
  * @param friendPk Friend public key to erase.
  */
-void History::removeFriendHistory(const QString& friendPk)
+void History::removeFriendHistory(const ToxPk& friendPk)
 {
     if (!isValid()) {
         return;
@@ -165,8 +166,8 @@ void History::removeFriendHistory(const QString& friendPk)
  * @param insertIdCallback Function, called after query execution.
  */
 QVector<RawDatabase::Query>
-History::generateNewMessageQueries(const QString& friendPk, const QString& message,
-                                   const QString& sender, const QDateTime& time, bool isSent,
+History::generateNewMessageQueries(const ToxPk& friendPk, const QString& message,
+                                   const ToxPk& sender, const QDateTime& time, bool isSent,
                                    QString dispName, std::function<void(int64_t)> insertIdCallback)
 {
     QVector<RawDatabase::Query> queries;
@@ -185,7 +186,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
         peers[friendPk] = peerId;
         queries += RawDatabase::Query(("INSERT INTO peers (id, public_key) "
                                        "VALUES (%1, '"
-                                       + friendPk + "');")
+                                       + friendPk.toString() + "');")
                                           .arg(peerId));
     }
 
@@ -203,7 +204,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
         peers[sender] = senderId;
         queries += RawDatabase::Query{("INSERT INTO peers (id, public_key) "
                                        "VALUES (%1, '"
-                                       + sender + "');")
+                                       + sender.toString() + "');")
                                           .arg(senderId)};
     }
 
@@ -246,7 +247,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
  * @param dispName Name, which should be displayed.
  * @param insertIdCallback Function, called after query execution.
  */
-void History::addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
+void History::addNewMessage(const ToxPk& friendPk, const QString& message, const ToxPk& sender,
                             const QDateTime& time, bool isSent, QString dispName,
                             const std::function<void(int64_t)>& insertIdCallback)
 {
@@ -269,7 +270,7 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
  * @param to End of period to fetch.
  * @return List of messages.
  */
-QList<History::HistMessage> History::getChatHistoryFromDate(const QString& friendPk, const QDateTime& from,
+QList<History::HistMessage> History::getChatHistoryFromDate(const ToxPk& friendPk, const QDateTime& from,
                                                     const QDateTime& to)
 {
     if (!isValid()) {
@@ -283,7 +284,7 @@ QList<History::HistMessage> History::getChatHistoryFromDate(const QString& frien
  * @param friendPk Friend public key to fetch.
  * @return List of messages.
  */
-QList<History::HistMessage> History::getChatHistoryDefaultNum(const QString& friendPk)
+QList<History::HistMessage> History::getChatHistoryDefaultNum(const ToxPk& friendPk)
 {
     if (!isValid()) {
         return {};
@@ -341,7 +342,7 @@ QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk
  * @param parameter for search
  * @return date of the message where the phrase was found
  */
-QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase, const ParameterSearch& parameter)
+QDateTime History::getDateWhereFindPhrase(const ToxPk& friendPk, const QDateTime& from, QString phrase, const ParameterSearch& parameter)
 {
     QDateTime result;
     auto rowCallback = [&result](const QVector<QVariant>& row) {
@@ -402,7 +403,7 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
                 "WHERE chat.public_key='%1' "
                 "AND %2 "
                 "%3")
-            .arg(friendPk)
+            .arg(friendPk.toString())
             .arg(message)
             .arg(period);
 
@@ -416,7 +417,7 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
  * @param friendPk Friend public key
  * @return start date of correspondence
  */
-QDateTime History::getStartDateChatHistory(const QString &friendPk)
+QDateTime History::getStartDateChatHistory(const ToxPk &friendPk)
 {
     QDateTime result;
     auto rowCallback = [&result](const QVector<QVariant>& row) {
@@ -429,7 +430,7 @@ QDateTime History::getStartDateChatHistory(const QString &friendPk)
                     "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                     "JOIN peers chat ON chat_id = chat.id "
                     "WHERE chat.public_key='%1' ORDER BY timestamp ASC LIMIT 1;")
-            .arg(friendPk);
+            .arg(friendPk.toString());
 
     db->execNow({queryText, rowCallback});
 
@@ -460,7 +461,7 @@ void History::markAsSent(qint64 messageId)
  * @param numMessages max number of messages to fetch.
  * @return List of messages.
  */
-QList<History::HistMessage> History::getChatHistory(const QString& friendPk, const QDateTime& from,
+QList<History::HistMessage> History::getChatHistory(const ToxPk& friendPk, const QDateTime& from,
                                                     const QDateTime& to, int numMessages)
 {
     QList<HistMessage> messages;
@@ -489,7 +490,7 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
                 "WHERE timestamp BETWEEN %1 AND %2 AND chat.public_key='%3'")
             .arg(from.toMSecsSinceEpoch())
             .arg(to.toMSecsSinceEpoch())
-            .arg(friendPk);
+            .arg(friendPk.toString());
     if (numMessages) {
         queryText = "SELECT * FROM (" + queryText +
                 QString(" ORDER BY history.id DESC limit %1) AS T1 ORDER BY T1.id ASC;").arg(numMessages);

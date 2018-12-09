@@ -843,8 +843,8 @@ void ChatForm::SendMessageStr(QString msg)
 
         if (history && Settings::getInstance().getEnableLogging()) {
             auto* offMsgEngine = getOfflineMsgEngine();
-            QString selfPk = Core::getInstance()->getSelfPublicKey().toString();
-            QString pk = f->getPublicKey().toString();
+            ToxPk selfPk = Core::getInstance()->getSelfPublicKey();
+            ToxPk pk = f->getPublicKey();
             QString name = Core::getInstance()->getUsername();
             bool isSent = !Settings::getInstance().getFauxOfflineMessaging();
             history->addNewMessage(pk, historyPart, selfPk, timestamp, isSent, name,

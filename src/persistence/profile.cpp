@@ -573,11 +573,10 @@ void Profile::onRequestSent(const ToxPk& friendPk, const QString& message)
         return;
     }
     qDebug() << "Sending friend request to:" << friendPk.toString() << "with length:" << friendPk.toString().length();
-    QString pkStr = friendPk.toString();
     QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(message);
-    QString selfStr = core->getSelfPublicKey().toString();
+    ToxPk selfPk = core->getSelfPublicKey();
     QDateTime datetime = QDateTime::currentDateTime();
-    history->addNewMessage(pkStr, inviteStr, selfStr, datetime, true, QString());
+    history->addNewMessage(friendPk, inviteStr, selfPk, datetime, true, QString());
 }
 
 /**
