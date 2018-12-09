@@ -104,7 +104,7 @@ bool AboutFriend::clearHistory()
     const ToxPk pk = f->getPublicKey();
     History* const history = Nexus::getProfile()->getHistory();
     if (history) {
-        history->removeFriendHistory(pk);
+        history->removeContactHistory(pk);
         return true;
     }
 
