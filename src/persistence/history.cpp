@@ -287,7 +287,7 @@ void History::onFileInsertionReady(FileDbInsertionData data)
                                .arg(data.size)
                                .arg(static_cast<int>(data.direction))
                                .arg(ToxFile::CANCELED),
-                           {data.fileId.toUtf8(), data.filePath.toUtf8(), data.fileName, QByteArray()},
+                           {data.fileId.toUtf8(), data.filePath.toUtf8(), data.fileName.toUtf8(), QByteArray()},
                            [weakThis, fileId](int64_t id) {
                                auto pThis = weakThis.lock();
                                if (pThis) {
@@ -338,7 +338,7 @@ RawDatabase::Query History::generateFileFinished(int64_t id, bool success, const
 }
 
 void History::addNewFileMessage(const QString& friendPk, const QString& fileId,
-                                const QByteArray& fileName, const QString& filePath, int64_t size,
+                                const QString& fileName, const QString& filePath, int64_t size,
                                 const QString& sender, const QDateTime& time, QString const& dispName)
 {
     // This is an incredibly far from an optimal way of implementing this,
@@ -644,16 +644,14 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
         if (row[7].isNull()) {
-            messages += {id,           isOfflineMessage, timestamp,        friend_key,
-                         display_name, sender_key,       row[6].toString()};
+            messages +=
+                {id, isOfflineMessage, timestamp, friend_key, display_name, sender_key, row[6].toString()};
         } else {
             ToxFile file;
             file.fileKind = TOX_FILE_KIND_DATA;
             file.resumeFileId = row[7].toString().toUtf8();
-            file.filePath = QString::fromUtf8(row[8].toByteArray().replace('\0', ""));
-            file.fileName =
-                QString::fromUtf8(row[9].toByteArray())
-                    .toUtf8(); // for some reason the path has to be utf8 parsed even though it went in as a straight array
+            file.filePath = row[8].toString();
+            file.fileName = row[9].toString();
             file.filesize = row[10].toLongLong();
             file.direction = static_cast<ToxFile::FileDirection>(row[11].toLongLong());
             file.status = static_cast<ToxFile::FileStatus>(row[12].toInt());

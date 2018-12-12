@@ -98,7 +98,7 @@ struct FileDbInsertionData
     int64_t historyId;
     QString friendPk;
     QString fileId;
-    QByteArray fileName;
+    QString fileName;
     QString filePath;
     int64_t size;
     int direction;
@@ -164,7 +164,7 @@ public:
                        const std::function<void(int64_t)>& insertIdCallback = {});
 
     void addNewFileMessage(const QString& friendPk, const QString& fileId,
-                           const QByteArray& fileName, const QString& filePath, int64_t size,
+                           const QString& fileName, const QString& filePath, int64_t size,
                            const QString& sender, const QDateTime& time, QString const& dispName);
 
     void setFileFinished(const QString& fileId, bool success, const QString& filePath, const QByteArray& fileHash);
