@@ -31,7 +31,7 @@ struct ToxFile
     };
 
     ToxFile() = default;
-    ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString filePath,
+    ToxFile(uint32_t FileNum, uint32_t FriendId, QString FileName, QString filePath,
             FileDirection Direction);
 
     bool operator==(const ToxFile& other) const;
@@ -43,7 +43,7 @@ struct ToxFile
     uint8_t fileKind;
     uint32_t fileNum;
     uint32_t friendId;
-    QByteArray fileName;
+    QString fileName;
     QString filePath;
     std::shared_ptr<QFile> file;
     quint64 bytesSent;

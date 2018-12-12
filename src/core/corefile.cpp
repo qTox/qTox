@@ -108,7 +108,7 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
 
     ToxFile file{fileNum, friendId, "", "", ToxFile::SENDING};
     file.filesize = filesize;
-    file.fileName = QByteArray((char*)avatarHash, TOX_HASH_LENGTH);
+    file.fileName = QString::fromUtf8((char*)avatarHash, TOX_HASH_LENGTH);
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.avatarData = data;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
@@ -122,10 +122,10 @@ void CoreFile::sendFile(Core* core, uint32_t friendId, QString filename, QString
 {
     QMutexLocker mlocker(&fileSendMutex);
 
-    QByteArray fileName = filename.toUtf8();
+    QByteArray fileNameBytes = filename.toUtf8();
     TOX_ERR_FILE_SEND sendErr;
     uint32_t fileNum = tox_file_send(core->tox.get(), friendId, TOX_FILE_KIND_DATA, filesize,
-                                     nullptr, (uint8_t*)fileName.data(), fileName.size(), &sendErr);
+                                     nullptr, (uint8_t*)fileNameBytes.data(), fileNameBytes.size(), &sendErr);
     if (sendErr != TOX_ERR_FILE_SEND_OK) {
         qWarning() << "sendFile: Can't create the Tox file sender (" << sendErr << ")";
         emit core->fileSendFailed(friendId, filename);
@@ -133,7 +133,7 @@ void CoreFile::sendFile(Core* core, uint32_t friendId, QString filename, QString
     }
     qDebug() << QString("sendFile: Created file sender %1 with friend %2").arg(fileNum).arg(friendId);
 
-    ToxFile file{fileNum, friendId, fileName, filePath, ToxFile::SENDING};
+    ToxFile file{fileNum, friendId, filename, filePath, ToxFile::SENDING};
     file.filesize = filesize;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
     tox_file_get_file_id(core->tox.get(), friendId, fileNum, (uint8_t*)file.resumeFileId.data(),

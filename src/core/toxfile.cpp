@@ -18,7 +18,7 @@
 /**
  * @brief ToxFile constructor
  */
-ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QByteArray filename, QString filePath,
+ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QString filename, QString filePath,
                  FileDirection Direction)
     : fileKind{TOX_FILE_KIND_DATA}
     , fileNum(fileNum)
