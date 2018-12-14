@@ -24,6 +24,7 @@
 #include <QWidget>
 
 #include "src/chatlog/chatlinecontent.h"
+#include "src/chatlog/toxfileprogress.h"
 #include "src/core/toxfile.h"
 
 
@@ -56,8 +57,12 @@ protected slots:
 
 protected:
     QString getHumanReadableSize(qint64 size);
-    void hideWidgets();
-    void setupButtons();
+    void updateWidgetColor(ToxFile const& file);
+    void updateWidgetText(ToxFile const& file);
+    void updateFileProgress(ToxFile const& file);
+    void updateSignals(ToxFile const& file);
+    void updatePreview(ToxFile const& file);
+    void setupButtons(ToxFile const& file);
     void handleButton(QPushButton* btn);
     void showPreview(const QString& filename);
     void acceptTransfer(const QString& filepath);
@@ -79,28 +84,29 @@ private:
     static void applyTransformation(const int oritentation, QImage& image);
     static bool tryRemoveFile(const QString &filepath);
 
+    void updateWidget(ToxFile const& file);
+
 private:
     Ui::FileTransferWidget* ui;
+    ToxFileProgress fileProgress;
     ToxFile fileInfo;
-    QTime lastTick;
-    quint64 lastBytesSent = 0;
     QVariantAnimation* backgroundColorAnimation = nullptr;
     QVariantAnimation* buttonColorAnimation = nullptr;
     QColor backgroundColor;
     QColor buttonColor;
     QColor buttonBackgroundColor;
 
-    static const uint8_t TRANSFER_ROLLING_AVG_COUNT = 4;
-    uint8_t meanIndex = 0;
-    qreal meanData[TRANSFER_ROLLING_AVG_COUNT] = {0.0};
-
     bool active;
-    enum class ExifOrientation {
+    ToxFile::FileStatus lastStatus = ToxFile::INITIALIZING;
+
+    enum class ExifOrientation
+    {
         /* do not change values, this is exif spec
          *
          * name corresponds to where the 0 row and 0 column is in form row-column
-         * i.e. entry 5 here means that the 0'th row corresponds to the left side of the scene and the 0'th column corresponds
-         * to the top of the captured scene. This means that the image needs to be mirrored and rotated to be displayed.
+         * i.e. entry 5 here means that the 0'th row corresponds to the left side of the scene and
+         * the 0'th column corresponds to the top of the captured scene. This means that the image
+         * needs to be mirrored and rotated to be displayed.
          */
         TopLeft = 1,
         TopRight = 2,

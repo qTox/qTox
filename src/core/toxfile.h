@@ -3,32 +3,36 @@
 
 #include <QString>
 #include <memory>
+#include <QCryptographicHash>
 
 class QFile;
 class QTimer;
 
 struct ToxFile
 {
+    // Note do not change values, these are directly inserted into the DB in their
+    // current form, changing order would mess up database state!
     enum FileStatus
     {
-        STOPPED,
-        PAUSED,
-        TRANSMITTING,
-        BROKEN
+        INITIALIZING = 0,
+        PAUSED = 1,
+        TRANSMITTING = 2,
+        BROKEN = 3,
+        CANCELED = 4,
+        FINISHED = 5,
     };
 
+    // Note do not change values, these are directly inserted into the DB in their
+    // current form (can add fields though as db representation is an int)
     enum FileDirection : bool
     {
-        SENDING,
-        RECEIVING
+        SENDING = 0,
+        RECEIVING = 1,
     };
 
     ToxFile() = default;
-    ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString filePath,
+    ToxFile(uint32_t FileNum, uint32_t FriendId, QString FileName, QString filePath,
             FileDirection Direction);
-    ~ToxFile()
-    {
-    }
 
     bool operator==(const ToxFile& other) const;
     bool operator!=(const ToxFile& other) const;
@@ -39,7 +43,7 @@ struct ToxFile
     uint8_t fileKind;
     uint32_t fileNum;
     uint32_t friendId;
-    QByteArray fileName;
+    QString fileName;
     QString filePath;
     std::shared_ptr<QFile> file;
     quint64 bytesSent;
@@ -48,6 +52,7 @@ struct ToxFile
     FileDirection direction;
     QByteArray avatarData;
     QByteArray resumeFileId;
+    std::shared_ptr<QCryptographicHash> hashGenerator = std::make_shared<QCryptographicHash>(QCryptographicHash::Sha256);
 };
 
 #endif // CORESTRUCTS_H

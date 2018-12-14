@@ -748,7 +748,7 @@ QStringList Profile::remove()
         qWarning() << "Could not remove file " << dbPath;
     }
 
-    history.release();
+    history.reset();
     database.reset();
 
     return ret;

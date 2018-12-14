@@ -249,6 +249,8 @@ set(${PROJECT_NAME}_SOURCES
   src/chatlog/documentcache.h
   src/chatlog/pixmapcache.cpp
   src/chatlog/pixmapcache.h
+  src/chatlog/toxfileprogress.cpp
+  src/chatlog/toxfileprogress.h
   src/chatlog/textformatter.cpp
   src/chatlog/textformatter.h
   src/core/coreav.cpp

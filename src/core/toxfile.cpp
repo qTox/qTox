@@ -18,7 +18,7 @@
 /**
  * @brief ToxFile constructor
  */
-ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QByteArray filename, QString filePath,
+ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QString filename, QString filePath,
                  FileDirection Direction)
     : fileKind{TOX_FILE_KIND_DATA}
     , fileNum(fileNum)
@@ -28,10 +28,9 @@ ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QByteArray filename, QStri
     , file{new QFile(filePath)}
     , bytesSent{0}
     , filesize{0}
-    , status{STOPPED}
+    , status{INITIALIZING}
     , direction{Direction}
-{
-}
+{}
 
 bool ToxFile::operator==(const ToxFile& other) const
 {
