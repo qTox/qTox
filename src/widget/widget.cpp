@@ -146,6 +146,7 @@ void Widget::init()
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
     layout()->setContentsMargins(0, 0, 0, 0);
+    ui->centralwidget->setStyleSheet(Style::getStylesheet(QStringLiteral("centralWidget/centralWidget.css")));
     ui->friendList->setStyleSheet(Style::getStylesheet("friendList/friendList.css"));
 
     profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg");

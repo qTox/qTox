@@ -62,16 +62,6 @@ QLabel, QCheckBox, QProgressBar
     color: black;
 }
 
-QLineEdit
-{
-    color: #f1f1f1;
-}
-
-QListView
-{
-    color: #f1f1f1;
-}
-
 QCheckBox:disabled
 {
     color: gray;
