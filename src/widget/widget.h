@@ -69,6 +69,7 @@ class QTimer;
 class SettingsWidget;
 class SystemTrayIcon;
 class VideoSurface;
+class UpdateCheck;
 
 class Widget final : public QMainWindow
 {
@@ -182,6 +183,7 @@ public slots:
     void onFriendDialogShown(const Friend* f);
     void onGroupDialogShown(Group* g);
     void toggleFullscreen();
+    void onUpdateAvailable(QString latestVersion, QUrl link);
 
 signals:
     void friendRequestAccepted(const ToxPk& friendPk);
@@ -287,6 +289,7 @@ private:
     ProfileForm* profileForm;
 
     QPointer<SettingsWidget> settingsWidget;
+    std::unique_ptr<UpdateCheck> updateCheck; // ownership should be moved outside Widget once non-singleton
     FilesForm* filesForm;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;

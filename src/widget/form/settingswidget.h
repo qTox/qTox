@@ -35,12 +35,13 @@ class AVForm;
 class QLabel;
 class QTabWidget;
 class ContentLayout;
+class UpdateCheck;
 
 class SettingsWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SettingsWidget(QWidget* parent = nullptr);
+    SettingsWidget(UpdateCheck* updateCheck, QWidget* parent = nullptr);
     ~SettingsWidget();
 
     bool isShown() const;
@@ -48,6 +49,9 @@ public:
     void setBodyHeadStyle(QString style);
 
     void showAbout();
+
+public slots:
+    void onUpdateAvailable(void);
 
 private slots:
     void onTabChanged(int);
