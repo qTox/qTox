@@ -1,6 +1,8 @@
 #ifndef CORESTRUCTS_H
 #define CORESTRUCTS_H
 
+#include "src/core/toxfilepause.h"
+
 #include <QString>
 #include <memory>
 #include <QCryptographicHash>
@@ -53,6 +55,7 @@ struct ToxFile
     QByteArray avatarData;
     QByteArray resumeFileId;
     std::shared_ptr<QCryptographicHash> hashGenerator = std::make_shared<QCryptographicHash>(QCryptographicHash::Sha256);
+    ToxFilePause pauseStatus;
 };
 
 #endif // CORESTRUCTS_H
