@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>489</width>
-        <height>549</height>
+        <width>485</width>
+        <height>545</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -121,19 +121,19 @@
               </property>
              </widget>
             </item>
-            <item> 
-              <layout class="QVBoxLayout" name="verticalLayout_6">
-               <property name="leftMargin">
-                <number>40</number>
-               </property>
-               <item>
-                <widget class="QCheckBox" name="cbEnableLanDiscovery"> 
-                 <property name="text"> 
-                  <string>Enable LAN discovery</string> 
-                 </property> 
-                </widget> 
-               </item>
-              </layout>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <property name="leftMargin">
+               <number>40</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="cbEnableLanDiscovery">
+                <property name="text">
+                 <string>Enable LAN discovery</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>

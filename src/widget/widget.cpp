@@ -61,6 +61,7 @@
 #include "src/model/groupinvite.h"
 #include "src/model/profile/profileinfo.h"
 #include "src/net/autoupdate.h"
+#include "src/net/updatecheck.h"
 #include "src/nexus.h"
 #include "src/persistence/offlinemsgengine.h"
 #include "src/persistence/profile.h"
@@ -102,6 +103,11 @@ Widget::Widget(QWidget* parent)
     installEventFilter(this);
     QString locale = Settings::getInstance().getTranslation();
     Translator::translate(locale);
+
+#if UPDATE_CHECK_ENABLED && !AUTOUPDATE_ENABLED
+    updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(Settings::getInstance()));
+    connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
+#endif
 }
 
 void Widget::init()
@@ -846,8 +852,11 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 
 void Widget::onShowSettings()
 {
-    if (!settingsWidget) {
-        settingsWidget = new SettingsWidget(this);
+    if (!settingsWidget) {       
+        settingsWidget = new SettingsWidget(updateCheck.get(), this);
+#if UPDATE_CHECK_ENABLED 
+        updateCheck->checkForUpdate();
+#endif
     }
 
     if (Settings::getInstance().getSeparateWindow()) {
@@ -1585,6 +1594,13 @@ void Widget::toggleFullscreen()
     } else {
         setWindowState(windowState() | Qt::WindowFullScreen);
     }
+}
+
+void Widget::onUpdateAvailable(QString /*latestVersion*/, QUrl /*link*/)
+{
+    ui->settingsButton->setProperty("update-available", true);
+    ui->settingsButton->style()->unpolish(ui->settingsButton);
+    ui->settingsButton->style()->polish(ui->settingsButton);
 }
 
 ContentDialog* Widget::createContentDialog() const
