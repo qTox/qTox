@@ -105,6 +105,13 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
+             <widget class="QCheckBox" name="cbEnableUpdateCheck">
+              <property name="text">
+               <string extracomment="Text on a checkbox to enable automatic update check">Enable update check</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QCheckBox" name="cbEnableIPv6">
               <property name="text">
                <string extracomment="Text on a checkbox to enable IPv6">Enable IPv6 (recommended)</string>

@@ -93,6 +93,17 @@ QScrollBar:vertical
     margin-bottom: 2px;
 }
 
+/* using last is a bit of a hack, but QTabBar otherwise doesn't allow selecting single tabs */
+QTabBar::tab:last:!selected[update-available=true]
+{
+    background-color: #80c580;
+}
+
+QPushButton#updateAvailableButton
+{
+    background-color: #21da21;
+}
+
 QScrollBar::handle:vertical
 {
     background-color: #d1d1d1;

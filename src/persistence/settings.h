@@ -282,6 +282,9 @@ public:
     const QList<DhtServer>& getDhtServerList() const override;
     void setDhtServerList(const QList<DhtServer>& servers) override;
 
+    bool getEnableUpdateCheck() const override;
+    void setEnableUpdateCheck(bool enabled) override;
+
     bool getEnableIPv6() const override;
     void setEnableIPv6(bool enabled) override;
 
@@ -302,6 +305,7 @@ public:
 
     QNetworkProxy getProxy() const override;
 
+    SIGNAL_IMPL(Settings, enableUpdateCheckChanged, bool enabled)
     SIGNAL_IMPL(Settings, enableIPv6Changed, bool enabled)
     SIGNAL_IMPL(Settings, forceTCPChanged, bool enabled)
     SIGNAL_IMPL(Settings, enableLanDiscoveryChanged, bool enabled)
@@ -598,6 +602,7 @@ private:
     bool separateWindow;
     bool dontGroupWindows;
     bool showIdenticons;
+    bool enableUpdateCheck;
     bool enableIPv6;
     QString translation;
     bool makeToxPortable;

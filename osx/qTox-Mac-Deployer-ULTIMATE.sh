@@ -234,7 +234,7 @@ build() {
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
     export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
-    cmake -H$QTOX_DIR -B.
+    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON
     make -j$(sysctl -n hw.ncpu)
 }
 

@@ -53,6 +53,11 @@ AdvancedForm::AdvancedForm()
     const RecursiveSignalBlocker signalBlocker(this);
 
     Settings& s = Settings::getInstance();
+#if UPDATE_CHECK_ENABLED
+    bodyUI->cbEnableUpdateCheck->setChecked(s.getEnableUpdateCheck());
+#else
+    bodyUI->cbEnableUpdateCheck->setVisible(false);
+#endif
     bodyUI->cbEnableIPv6->setChecked(s.getEnableIPv6());
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->proxyAddr->setText(s.getProxyAddr());
@@ -165,6 +170,11 @@ void AdvancedForm::on_resetButton_clicked()
 
     Settings::getInstance().resetToDefault();
     GUI::showInfo(titile, "Changes will take effect after restart");
+}
+
+void AdvancedForm::on_cbEnableUpdateCheck_stateChanged()
+{
+    Settings::getInstance().setEnableUpdateCheck(bodyUI->cbEnableUpdateCheck->isChecked());
 }
 
 void AdvancedForm::on_cbEnableIPv6_stateChanged()

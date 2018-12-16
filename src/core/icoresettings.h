@@ -18,6 +18,9 @@ public:
         ptHTTP = 2
     };
 
+    virtual bool getEnableUpdateCheck() const = 0;
+    virtual void setEnableUpdateCheck(bool enable) = 0;
+
     virtual bool getEnableIPv6() const = 0;
     virtual void setEnableIPv6(bool enable) = 0;
 
@@ -41,6 +44,7 @@ public:
 
     virtual QNetworkProxy getProxy() const = 0;
 
+    DECLARE_SIGNAL(enableUpdateCheckChanged, bool enabled);
     DECLARE_SIGNAL(enableIPv6Changed, bool enabled);
     DECLARE_SIGNAL(forceTCPChanged, bool enabled);
     DECLARE_SIGNAL(enableLanDiscoveryChanged, bool enabled);

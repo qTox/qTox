@@ -192,6 +192,7 @@ void Settings::loadGlobal()
     s.beginGroup("Advanced");
     {
         makeToxPortable = s.value("makeToxPortable", false).toBool();
+        enableUpdateCheck = s.value("enableUpdateCheck", true).toBool();
         enableIPv6 = s.value("enableIPv6", true).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
         enableLanDiscovery = s.value("enableLanDiscovery", true).toBool();
@@ -511,6 +512,7 @@ void Settings::saveGlobal()
     s.beginGroup("Advanced");
     {
         s.setValue("makeToxPortable", makeToxPortable);
+        s.setValue("enableUpdateCheck", enableUpdateCheck);
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("forceTCP", forceTCP);
         s.setValue("enableLanDiscovery", enableLanDiscovery);
@@ -841,6 +843,21 @@ void Settings::setEnableTestSound(bool newValue)
     if (newValue != enableTestSound) {
         enableTestSound = newValue;
         emit enableTestSoundChanged(enableTestSound);
+    }
+}
+
+bool Settings::getEnableUpdateCheck() const
+{
+    QMutexLocker locker{&bigLock};
+    return enableUpdateCheck;
+}
+
+void Settings::setEnableUpdateCheck(bool enabled)
+{
+    QMutexLocker locker{&bigLock};
+    if (enabled != enableUpdateCheck) {
+        enableUpdateCheck = enabled;
+        emit enableUpdateCheckChanged(enableUpdateCheck);
     }
 }
 

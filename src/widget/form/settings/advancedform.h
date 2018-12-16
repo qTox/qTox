@@ -47,6 +47,7 @@ private slots:
     void on_btnCopyDebug_clicked();
     void on_btnExportLog_clicked();
     // Connection
+    void on_cbEnableUpdateCheck_stateChanged();
     void on_cbEnableIPv6_stateChanged();
     void on_cbEnableUDP_stateChanged();
     void on_cbEnableLanDiscovery_stateChanged();

@@ -104,6 +104,9 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
     case QtDebugMsg:
         LogMsg += "Debug";
         break;
+    case QtInfoMsg:
+        LogMsg += "Info";
+        break;
     case QtWarningMsg:
         LogMsg += "Warning";
         break;
