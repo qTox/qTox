@@ -101,7 +101,23 @@ Paths* Paths::makePaths(Portable mode)
 Paths::Paths(const QString& basePath, bool portable)
     : basePath{basePath}
     , portable{portable}
-{}
+{
+    QStringList allDirs{
+        getGlobalSettingsPath(),
+        getLogFilePath(),
+        getProfilesDir(),
+        getToxSaveDir(),
+        getAvatarsDir(),
+        getTransfersDir(),
+        getScreenshotsDir()
+        };
+    allDirs += getThemeDirs();
+    for (auto& dir : allDirs) {
+        if (!QDir{}.mkpath(dir)) {
+            qCritical() << "Couldn't create dir:" << dir;
+        }
+    }
+}
 
 /**
  * @brief Check if qTox is running in portable mode.

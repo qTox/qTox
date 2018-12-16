@@ -608,7 +608,6 @@ void Profile::saveAvatar(const ToxPk& owner, const QByteArray& avatar)
     const QByteArray& pic = needEncrypt ? passkey->encrypt(avatar) : avatar;
 
     QString path = avatarPath(owner);
-    QDir{}.mkpath(Settings::getInstance().getPaths().getAvatarsDir());
     if (pic.isEmpty()) {
         QFile::remove(path);
     } else {

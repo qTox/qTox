@@ -139,7 +139,6 @@ public:
     ~Settings() override;
     static Settings& getInstance();
 
-    void createSettingsDir();
     void createPersonal(QString basename);
 
     void savePersonal();

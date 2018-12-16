@@ -110,8 +110,6 @@ void Settings::loadGlobal()
     if (loaded)
         return;
 
-    createSettingsDir();
-
     QString filePath = paths.getGlobalSettingsPath();
 
     // If no settings file exist -- use the default one
@@ -2312,19 +2310,6 @@ void Settings::createPersonal(QString basename)
 
     ps.beginGroup("Privacy");
     ps.endGroup();
-}
-
-/**
- * @brief Creates a path to the settings dir, if it doesn't already exist
- */
-void Settings::createSettingsDir()
-{
-    QMutexLocker locker{&bigLock};
-
-    QString dir = Settings::getSettingsDirPath();
-    QDir directory(dir);
-    if (!directory.exists() && !directory.mkpath(directory.absolutePath()))
-        qCritical() << "Error while creating directory " << dir;
 }
 
 /**
