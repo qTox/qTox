@@ -69,53 +69,55 @@ static constexpr int TYPING_NOTIFICATION_DURATION = 3000;
 
 const QString ChatForm::ACTION_PREFIX = QStringLiteral("/me ");
 
-QString statusToString(const Status status)
+namespace
 {
-    QString result;
-    switch (status) {
-    case Status::Online:
-        result = ChatForm::tr("online", "contact status");
-        break;
-    case Status::Away:
-        result = ChatForm::tr("away", "contact status");
-        break;
-    case Status::Busy:
-        result = ChatForm::tr("busy", "contact status");
-        break;
-    case Status::Offline:
-        result = ChatForm::tr("offline", "contact status");
-        break;
-    }
-    return result;
-}
-
-QString secondsToDHMS(quint32 duration)
-{
-    QString res;
-    QString cD = ChatForm::tr("Call duration: ");
-    quint32 seconds = duration % 60;
-    duration /= 60;
-    quint32 minutes = duration % 60;
-    duration /= 60;
-    quint32 hours = duration % 24;
-    quint32 days = duration / 24;
-
-    // I assume no one will ever have call longer than a month
-    if (days) {
-        return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
+    QString statusToString(const Status status)
+    {
+        QString result;
+        switch (status) {
+        case Status::Online:
+            result = ChatForm::tr("online", "contact status");
+            break;
+        case Status::Away:
+            result = ChatForm::tr("away", "contact status");
+            break;
+        case Status::Busy:
+            result = ChatForm::tr("busy", "contact status");
+            break;
+        case Status::Offline:
+            result = ChatForm::tr("offline", "contact status");
+            break;
+        }
+        return result;
     }
 
-    if (hours) {
-        return cD + res.sprintf("%02dh %02dm %02ds", hours, minutes, seconds);
+    QString secondsToDHMS(quint32 duration)
+    {
+        QString res;
+        QString cD = ChatForm::tr("Call duration: ");
+        quint32 seconds = duration % 60;
+        duration /= 60;
+        quint32 minutes = duration % 60;
+        duration /= 60;
+        quint32 hours = duration % 24;
+        quint32 days = duration / 24;
+
+        // I assume no one will ever have call longer than a month
+        if (days) {
+            return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
+        }
+
+        if (hours) {
+            return cD + res.sprintf("%02dh %02dm %02ds", hours, minutes, seconds);
+        }
+
+        if (minutes) {
+            return cD + res.sprintf("%02dm %02ds", minutes, seconds);
+        }
+
+        return cD + res.sprintf("%02ds", seconds);
     }
-
-    if (minutes) {
-        return cD + res.sprintf("%02dm %02ds", minutes, seconds);
-    }
-
-    return cD + res.sprintf("%02ds", seconds);
-}
-
+} // namespace
 
 ChatForm::ChatForm(Friend* chatFriend, History* history)
     : GenericChatForm(chatFriend)
