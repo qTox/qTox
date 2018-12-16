@@ -159,11 +159,6 @@ void createLogFile(const Paths& paths)
     QFileInfo logFile{logFilePath};
     QDir logFileDir{logFile.dir()};
 
-    if (!logFileDir.mkpath(".")) {
-        qCritical() << "Couldn't create path for log file";
-        return;
-    }
-
     QByteArray logFilePathLocal{logFile.absoluteFilePath().toLocal8Bit()};
     FILE* mainLogFilePtr = fopen(logFilePathLocal.constData(), "a");
 
