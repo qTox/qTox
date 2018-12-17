@@ -45,6 +45,7 @@
         <file>img/taskbar/light/taskbar_event.svg</file>
         <file>img/transfer.svg</file>
         <file>themes/default/fileTransferWidget/fileDone.svg</file>
+        <file>themes/default/centralWidget/centralWidget.css</file>
         <file>themes/default/chatArea/chatArea.css</file>
         <file>themes/default/chatArea/chatHead.css</file>
         <file>themes/default/chatArea/innerStyle.css</file>

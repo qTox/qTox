@@ -78,3 +78,7 @@ QWidget#circleWidgetContainer > QLabel#name
     font: @big;
     color: @white;
 }
+
+QLabel {
+    color: white;
+}

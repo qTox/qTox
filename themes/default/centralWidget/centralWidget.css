@@ -1,0 +1,24 @@
+QLabel
+{
+    color: black;
+}
+
+QLineEdit
+{
+    color: black;
+}
+
+QTextEdit
+{
+    color: black;
+}
+
+QSpinBox
+{
+    color: black;
+} 
+
+QListView
+{
+    color: black;
+}
