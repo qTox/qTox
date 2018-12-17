@@ -66,7 +66,7 @@ SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, QWidget* parent)
     std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm());
     std::unique_ptr<AboutForm> abtfrm(new AboutForm(updateCheck));
 
-#if UPDATE_CHECK_ENABLED && !AUTOUPDATE_ENABLED
+#if UPDATE_CHECK_ENABLED
     if (updateCheck != nullptr) {
         connect(updateCheck, &UpdateCheck::updateAvailable, this, &SettingsWidget::onUpdateAvailable);
     } else {
