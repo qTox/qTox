@@ -24,7 +24,6 @@
 #include <QTimer>
 #include <tox/tox.h>
 
-#include "src/net/autoupdate.h"
 #include "src/widget/tool/recursivesignalblocker.h"
 #include "src/net/updatecheck.h"
 #include "src/widget/translator.h"
@@ -72,16 +71,6 @@ AboutForm::AboutForm(UpdateCheck* updateCheck)
 
     if (QString(GIT_VERSION).indexOf(" ") > -1)
         bodyUI->gitVersion->setOpenExternalLinks(false);
-
-#if AUTOUPDATE_ENABLED
-    showUpdateProgress();
-    progressTimer->setInterval(500);
-    progressTimer->setSingleShot(false);
-    connect(progressTimer, &QTimer::timeout, this, &AboutForm::showUpdateProgress);
-#else
-    bodyUI->updateProgress->setVisible(false);
-    bodyUI->updateText->setVisible(false);
-#endif
 
     eventsInit();
     Translator::registerHandler(std::bind(&AboutForm::retranslateUi, this), this);
@@ -217,51 +206,10 @@ AboutForm::~AboutForm()
 }
 
 /**
- * @brief Update information about update.
- */
-void AboutForm::showUpdateProgress()
-{
-#if AUTOUPDATE_ENABLED
-    QString version = AutoUpdater::getProgressVersion();
-    int value = AutoUpdater::getProgressValue();
-
-    if (version.isEmpty()) {
-        bodyUI->updateProgress->setVisible(value != 0);
-        bodyUI->updateText->setVisible(value != 0);
-    } else {
-        if (value == 100)
-            bodyUI->updateText->setText(tr("Restart qTox to install version %1").arg(version));
-        else
-            bodyUI->updateText->setText(
-                tr("qTox is downloading update %1", "%1 is the version of the update").arg(version));
-        bodyUI->updateProgress->setValue(value);
-
-        bodyUI->updateProgress->setVisible(value != 0 && value != 100);
-        bodyUI->updateText->setVisible(value != 0);
-    }
-#endif
-}
-
-void AboutForm::hideEvent(QHideEvent*)
-{
-#if AUTOUPDATE_ENABLED
-    progressTimer->stop();
-#endif
-}
-
-void AboutForm::showEvent(QShowEvent*)
-{
-#if AUTOUPDATE_ENABLED
-    progressTimer->start();
-#endif
-}
-
-/**
  * @brief Retranslate all elements in the form.
  */
 void AboutForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
     replaceVersions();
-    showUpdateProgress();
 }
