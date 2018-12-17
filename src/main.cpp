@@ -19,7 +19,6 @@
 
 #include "persistence/settings.h"
 #include "src/ipc.h"
-#include "src/net/autoupdate.h"
 #include "src/net/toxuri.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
@@ -271,14 +270,6 @@ int main(int argc, char* argv[])
     a->addLibraryPath("platforms");
 
     qDebug() << "commit: " << GIT_VERSION;
-
-
-// Check whether we have an update waiting to be installed
-#ifdef AUTOUPDATE_ENABLED
-    if (AutoUpdater::isLocalUpdateReady())
-        AutoUpdater::installLocalUpdate(); ///< NORETURN
-#endif
-
 
     QString profileName;
     bool autoLogin = Settings::getInstance().getAutoLogin();
