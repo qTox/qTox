@@ -70,6 +70,7 @@ class SettingsWidget;
 class SystemTrayIcon;
 class VideoSurface;
 class UpdateCheck;
+class Settings;
 
 class Widget final : public QMainWindow
 {
@@ -306,6 +307,7 @@ private:
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
     int icon_size;
+    Settings& settings;
 
     QMap<uint32_t, FriendWidget*> friendWidgets;
     QMap<uint32_t, std::shared_ptr<FriendChatroom>> friendChatrooms;
