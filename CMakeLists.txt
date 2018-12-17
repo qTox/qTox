@@ -9,8 +9,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra dependencies" ON)
 option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
-# AUTOUPDATE is currently broken and thus disabled
-option(AUTOUPDATE "Enable the auto updater" OFF)
 option(UPDATE_CHECK "Enable automatic update check" ON)
 option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
@@ -623,14 +621,6 @@ if(${USE_FILTERAUDIO})
     else()
          message(STATUS "not using filteraudio, libfilteraudio not found")
     endif()
-endif()
-
-if(${AUTOUPDATE} AND (WIN32 OR APPLE))
-    add_definitions(-DAUTOUPDATE_ENABLED=1)
-    set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-        src/net/autoupdate.cpp
-        src/net/autoupdate.h)
-    message(STATUS "using autoupdater")
 endif()
 
 if(${UPDATE_CHECK})

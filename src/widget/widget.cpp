@@ -60,7 +60,6 @@
 #include "src/model/group.h"
 #include "src/model/groupinvite.h"
 #include "src/model/profile/profileinfo.h"
-#include "src/net/autoupdate.h"
 #include "src/net/updatecheck.h"
 #include "src/nexus.h"
 #include "src/persistence/offlinemsgengine.h"
@@ -378,11 +377,6 @@ void Widget::init()
     SplitterRestorer restorer(ui->mainSplitter);
     restorer.restore(s.getSplitterState(), size());
 
-#if (AUTOUPDATE_ENABLED)
-    if (s.getCheckUpdates())
-        AutoUpdater::checkUpdatesAsyncInteractive();
-#endif
-
     friendRequestsButton = nullptr;
     groupInvitesButton = nullptr;
     unreadGroupInvites = 0;
@@ -517,9 +511,6 @@ Widget::~Widget()
     }
 
     Translator::unregister(this);
-#ifdef AUTOUPDATE_ENABLED
-    AutoUpdater::abortUpdates();
-#endif
     if (icon) {
         icon->hide();
     }
