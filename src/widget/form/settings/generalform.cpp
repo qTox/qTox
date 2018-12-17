@@ -25,7 +25,6 @@
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
-#include "src/net/autoupdate.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
@@ -100,7 +99,7 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
 
     Settings& s = Settings::getInstance();
 
-#if !defined(AUTOUPDATE_ENABLED) &&  !defined(UPDATE_CHECK_ENABLED)
+#ifndef UPDATE_CHECK_ENABLED
     bodyUI->checkUpdates->setVisible(false);
 #endif
 

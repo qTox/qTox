@@ -60,7 +60,6 @@
 #include "src/model/group.h"
 #include "src/model/groupinvite.h"
 #include "src/model/profile/profileinfo.h"
-#include "src/net/autoupdate.h"
 #include "src/net/updatecheck.h"
 #include "src/nexus.h"
 #include "src/persistence/offlinemsgengine.h"
@@ -104,7 +103,7 @@ Widget::Widget(QWidget* parent)
     QString locale = Settings::getInstance().getTranslation();
     Translator::translate(locale);
 
-#if UPDATE_CHECK_ENABLED && !AUTOUPDATE_ENABLED
+#if UPDATE_CHECK_ENABLED
     updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(Settings::getInstance()));
     connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
 #endif
@@ -374,11 +373,6 @@ void Widget::init()
     SplitterRestorer restorer(ui->mainSplitter);
     restorer.restore(s.getSplitterState(), size());
 
-#if (AUTOUPDATE_ENABLED)
-    if (s.getCheckUpdates())
-        AutoUpdater::checkUpdatesAsyncInteractive();
-#endif
-
     friendRequestsButton = nullptr;
     groupInvitesButton = nullptr;
     unreadGroupInvites = 0;
@@ -513,9 +507,6 @@ Widget::~Widget()
     }
 
     Translator::unregister(this);
-#ifdef AUTOUPDATE_ENABLED
-    AutoUpdater::abortUpdates();
-#endif
     if (icon) {
         icon->hide();
     }

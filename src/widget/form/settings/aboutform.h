@@ -49,12 +49,6 @@ public slots:
     void onUpToDate();
     void onUpdateCheckFailed();
 
-protected:
-private slots:
-    void showUpdateProgress();
-    virtual void hideEvent(QHideEvent*) final override;
-    virtual void showEvent(QShowEvent*) final override;
-
 private:
     void retranslateUi();
     void replaceVersions();
