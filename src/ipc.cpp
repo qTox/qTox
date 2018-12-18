@@ -82,14 +82,15 @@ IPC::IPC(uint32_t profileId)
 
 IPC::~IPC()
 {
-    if (globalMemory.lock()) {
-        if (isCurrentOwnerNoLock()) {
-            global()->globalId = 0;
-        }
-        globalMemory.unlock();
-    } else {
+    if (!globalMemory.lock()) {
         qWarning() << "Failed to lock in ~IPC";
+        return;
     }
+
+    if (isCurrentOwnerNoLock()) {
+        global()->globalId = 0;
+    }
+    globalMemory.unlock();
 }
 
 /**
@@ -97,42 +98,46 @@ IPC::~IPC()
  * @param name Name to set in IPC event.
  * @param data Data to set in IPC event (default QByteArray()).
  * @param dest Settings::getCurrentProfileId() or 0 (main instance, default).
- * @return Time the event finished.
+ * @return Time the event finished or 0 on error.
  */
 time_t IPC::postEvent(const QString& name, const QByteArray& data, uint32_t dest)
 {
     QByteArray binName = name.toUtf8();
-    if (binName.length() > (int32_t)sizeof(IPCEvent::name))
+    if (binName.length() > (int32_t)sizeof(IPCEvent::name)) {
         return 0;
+    }
 
-    if (data.length() > (int32_t)sizeof(IPCEvent::data))
+    if (data.length() > (int32_t)sizeof(IPCEvent::data)) {
         return 0;
+    }
 
-    if (globalMemory.lock()) {
-        IPCEvent* evt = nullptr;
-        IPCMemory* mem = global();
-        time_t result = 0;
-
-        for (uint32_t i = 0; !evt && i < EVENT_QUEUE_SIZE; ++i) {
-            if (mem->events[i].posted == 0)
-                evt = &mem->events[i];
-        }
-
-        if (evt) {
-            memset(evt, 0, sizeof(IPCEvent));
-            memcpy(evt->name, binName.constData(), binName.length());
-            memcpy(evt->data, data.constData(), data.length());
-            mem->lastEvent = evt->posted = result = qMax(mem->lastEvent + 1, time(nullptr));
-            evt->dest = dest;
-            evt->sender = getpid();
-            qDebug() << "postEvent " << name << "to" << dest;
-        }
-        globalMemory.unlock();
-        return result;
-    } else
+    if (!globalMemory.lock()) {
         qDebug() << "Failed to lock in postEvent()";
+        return 0;
+    }
 
-    return 0;
+    IPCEvent* evt = nullptr;
+    IPCMemory* mem = global();
+    time_t result = 0;
+
+    for (uint32_t i = 0; !evt && i < EVENT_QUEUE_SIZE; ++i) {
+        if (mem->events[i].posted == 0) {
+            evt = &mem->events[i];
+        }
+    }
+
+    if (evt) {
+        memset(evt, 0, sizeof(IPCEvent));
+        memcpy(evt->name, binName.constData(), binName.length());
+        memcpy(evt->data, data.constData(), data.length());
+        mem->lastEvent = evt->posted = result = qMax(mem->lastEvent + 1, time(nullptr));
+        evt->dest = dest;
+        evt->sender = getpid();
+        qDebug() << "postEvent " << name << "to" << dest;
+    }
+
+    globalMemory.unlock();
+    return result;
 }
 
 bool IPC::isCurrentOwner()
@@ -159,18 +164,21 @@ void IPC::registerEventHandler(const QString& name, IPCEventHandler handler)
 bool IPC::isEventAccepted(time_t time)
 {
     bool result = false;
-    if (globalMemory.lock()) {
-        if (difftime(global()->lastProcessed, time) > 0) {
-            IPCMemory* mem = global();
-            for (uint32_t i = 0; i < EVENT_QUEUE_SIZE; ++i) {
-                if (mem->events[i].posted == time && mem->events[i].processed) {
-                    result = mem->events[i].accepted;
-                    break;
-                }
+    if (!globalMemory.lock()) {
+        return result;
+    }
+
+    if (difftime(global()->lastProcessed, time) > 0) {
+        IPCMemory* mem = global();
+        for (uint32_t i = 0; i < EVENT_QUEUE_SIZE; ++i) {
+            if (mem->events[i].posted == time && mem->events[i].processed) {
+                result = mem->events[i].accepted;
+                break;
             }
         }
-        globalMemory.unlock();
     }
+    globalMemory.unlock();
+
     return result;
 }
 
@@ -181,8 +189,9 @@ bool IPC::waitUntilAccepted(time_t postTime, int32_t timeout /*=-1*/)
     forever
     {
         result = isEventAccepted(postTime);
-        if (result || (timeout > 0 && difftime(time(nullptr), start) >= timeout))
+        if (result || (timeout > 0 && difftime(time(nullptr), start) >= timeout)) {
             break;
+        }
 
         qApp->processEvents();
         QThread::msleep(0);
@@ -214,12 +223,14 @@ IPC::IPCEvent* IPC::fetchEvent()
         // and events that were processed and EVENT_GC_TIMEOUT passed after
         // so sending instance has time to react to those events.
         if ((evt->processed && difftime(time(nullptr), evt->processed) > EVENT_GC_TIMEOUT)
-            || (!evt->processed && difftime(time(nullptr), evt->posted) > EVENT_GC_TIMEOUT))
+            || (!evt->processed && difftime(time(nullptr), evt->posted) > EVENT_GC_TIMEOUT)) {
             memset(evt, 0, sizeof(IPCEvent));
+        }
 
         if (evt->posted && !evt->processed && evt->sender != getpid()
-            && (evt->dest == profileId || (evt->dest == 0 && isCurrentOwnerNoLock())))
+            && (evt->dest == profileId || (evt->dest == 0 && isCurrentOwnerNoLock()))) {
             return evt;
+        }
     }
 
     return nullptr;
@@ -228,58 +239,67 @@ IPC::IPCEvent* IPC::fetchEvent()
 bool IPC::runEventHandler(IPCEventHandler handler, const QByteArray& arg)
 {
     bool result = false;
-    if (QThread::currentThread() == qApp->thread())
+    if (QThread::currentThread() == qApp->thread()) {
         result = handler(arg);
-    else
+    } else {
         QMetaObject::invokeMethod(this, "runEventHandler", Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, result), Q_ARG(IPCEventHandler, handler),
                                   Q_ARG(const QByteArray&, arg));
+    }
 
     return result;
 }
 
 void IPC::processEvents()
 {
-    if (globalMemory.lock()) {
-        IPCMemory* mem = global();
+    if (!globalMemory.lock()) {
+        timer.start();
+        return;
+    }
 
-        if (mem->globalId == globalId) {
-            // We're the owner, let's process those events
+    IPCMemory* mem = global();
+
+    if (mem->globalId == globalId) {
+        // We're the owner, let's process those events
+        mem->lastProcessed = time(nullptr);
+    } else {
+        // Only the owner processes events. But if the previous owner's dead, we can take
+        // ownership now
+        if (difftime(time(nullptr), mem->lastProcessed) >= OWNERSHIP_TIMEOUT_S) {
+            qDebug() << "Previous owner timed out, taking ownership" << mem->globalId << "->"
+                     << globalId;
+            // Ignore events that were not meant for this instance
+            memset(mem, 0, sizeof(IPCMemory));
+            mem->globalId = globalId;
             mem->lastProcessed = time(nullptr);
-        } else {
-            // Only the owner processes events. But if the previous owner's dead, we can take
-            // ownership now
-            if (difftime(time(nullptr), mem->lastProcessed) >= OWNERSHIP_TIMEOUT_S) {
-                qDebug() << "Previous owner timed out, taking ownership" << mem->globalId << "->"
-                         << globalId;
-                // Ignore events that were not meant for this instance
-                memset(mem, 0, sizeof(IPCMemory));
-                mem->globalId = globalId;
-                mem->lastProcessed = time(nullptr);
-            }
-            // Non-main instance is limited to events destined for specific profile it runs
         }
+        // Non-main instance is limited to events destined for specific profile it runs
+    }
 
-        while (IPCEvent* evt = fetchEvent()) {
-            QString name = QString::fromUtf8(evt->name);
-            auto it = eventHandlers.find(name);
-            if (it != eventHandlers.end()) {
-                qDebug() << "Processing event: " << name << ":" << evt->posted << "=" << evt->accepted;
-                evt->accepted = runEventHandler(it.value(), evt->data);
-                if (evt->dest == 0) {
-                    // Global events should be processed only by instance that accepted event.
-                    // Otherwise global
-                    // event would be consumed by very first instance that gets to check it.
-                    if (evt->accepted)
-                        evt->processed = time(nullptr);
-                } else {
+    while (IPCEvent* evt = fetchEvent()) {
+        QString name = QString::fromUtf8(evt->name);
+        auto it = eventHandlers.find(name);
+        if (it != eventHandlers.end()) {
+            evt->accepted = runEventHandler(it.value(), evt->data);
+            qDebug() << "Processed event:" << name << "posted:" << evt->posted
+                     << "accepted:" << evt->accepted;
+            if (evt->dest == 0) {
+                // Global events should be processed only by instance that accepted event.
+                // Otherwise global
+                // event would be consumed by very first instance that gets to check it.
+                if (evt->accepted) {
                     evt->processed = time(nullptr);
                 }
+            } else {
+                evt->processed = time(nullptr);
             }
+        } else {
+            qDebug() << "Received event:" << name << "without handler";
+            qDebug() << "Available handlers:" << eventHandlers.keys();
         }
-
-        globalMemory.unlock();
     }
+
+    globalMemory.unlock();
     timer.start();
 }
 
