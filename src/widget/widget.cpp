@@ -81,10 +81,12 @@
 bool toxActivateEventHandler(const QByteArray&)
 {
     Widget* widget = Nexus::getDesktopGUI();
-    if (!widget)
+    if (!widget) {
         return true;
-    if (!widget->isActiveWindow())
-        widget->forceShow();
+    }
+
+    qDebug() << "Handling [activate] event from other instance";
+    widget->forceShow();
 
     return true;
 }
