@@ -44,9 +44,6 @@
 #include <QTimer>
 #include <QToolButton>
 
-QMap <uint32_t, QMap <ToxPk, QString>> groups;
-QMap <uint32_t, QMap <ToxPk, bool>> firstTime;
-
 namespace
 {
 const auto LABEL_PEER_TYPE_OUR = QVariant(QStringLiteral("our"));
@@ -139,8 +136,6 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
 GroupChatForm::~GroupChatForm()
 {
-    groups[group->getId()].clear();
-    firstTime[group->getId()].clear();
     Translator::unregister(this);
 }
 
@@ -323,37 +318,35 @@ void GroupChatForm::sendJoinLeaveMessages()
     }
 
     // generate user list from the current group if it's empty
-    if (!groups.contains(group->getId()))
+    if (groupLast.isEmpty())
     {
-        groups[group->getId()] = group->getPeerList();
+        groupLast = group->getPeerList();
         return;
     }
 
-    auto &current = groups[group->getId()];
-    auto &ft = firstTime[group->getId()];
     // user joins
     for (const auto& peerPk : peers.keys()) {
         const QString name = peers.value(peerPk);
         // ignore weird issue: when user joins the group, the name is empty, then it's renamed to normal nickname (why?)
         // so, just ignore the first insertion
-        if (!ft.value(peerPk, false))
+        if (!firstTime.value(peerPk, false))
         {
-            ft[peerPk] = true;
+            firstTime[peerPk] = true;
             continue;
         }
-        if (!current.contains(peerPk))
+        if (!groupLast.contains(peerPk))
         {
-            current.insert(peerPk, name);
+            groupLast.insert(peerPk, name);
             addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
         }
     }
     // user leaves
-    for (const auto& peerPk : current.keys()) {
-        const QString name = current.value(peerPk);
+    for (const auto& peerPk : groupLast.keys()) {
+        const QString name = groupLast.value(peerPk);
         if (!peers.contains(peerPk))
         {
-            current.remove(peerPk);
-            ft.remove(peerPk);
+            groupLast.remove(peerPk);
+            firstTime.remove(peerPk);
             addSystemInfoMessage(tr("%1 has left the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
         }
     }
