@@ -73,6 +73,8 @@ private:
     Group* group;
     QMap<ToxPk, QLabel*> peerLabels;
     QMap<ToxPk, QTimer*> peerAudioTimers;
+    QMap<ToxPk, QString> groupLast;
+    QMap<ToxPk, bool> firstTime;
     FlowLayout* namesListLayout;
     QLabel* nusersLabel;
     TabCompleter* tabber;
