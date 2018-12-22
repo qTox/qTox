@@ -344,7 +344,7 @@ void GroupChatForm::sendJoinLeaveMessages()
         if (!current.contains(peerPk))
         {
             current.insert(peerPk, name);
-            addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime());
+            addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
         }
     }
     // user leaves
@@ -354,7 +354,7 @@ void GroupChatForm::sendJoinLeaveMessages()
         {
             current.remove(peerPk);
             ft.remove(peerPk);
-            addSystemInfoMessage(tr("%1 has left the group").arg(name), ChatMessage::INFO, QDateTime());
+            addSystemInfoMessage(tr("%1 has left the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
         }
     }
 }
