@@ -44,6 +44,9 @@
 #include <QTimer>
 #include <QToolButton>
 
+QMap <uint32_t, QMap <ToxPk, QString>> groups;
+QMap <uint32_t, QMap <ToxPk, bool>> firstTime;
+
 namespace
 {
 const auto LABEL_PEER_TYPE_OUR = QVariant(QStringLiteral("our"));
@@ -136,6 +139,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
 GroupChatForm::~GroupChatForm()
 {
+    groups[group->getId()].clear();
+    firstTime[group->getId()].clear();
     Translator::unregister(this);
 }
 
@@ -176,6 +181,7 @@ void GroupChatForm::onUserListChanged()
 {
     updateUserCount();
     updateUserNames();
+    sendJoinLeaveMessages();
 
     // Enable or disable call button
     const int peersCount = group->getPeersCount();
@@ -304,6 +310,52 @@ void GroupChatForm::updateUserNames()
     lastLabel->setText(labelText);
     for (QLabel* l : nickLabelList) {
         namesListLayout->addWidget(l);
+    }
+}
+
+void GroupChatForm::sendJoinLeaveMessages()
+{
+    const auto peers = group->getPeerList();
+
+    // no need to do anything without any peers
+    if (peers.isEmpty()) {
+        return;
+    }
+
+    // generate user list from the current group if it's empty
+    if (!groups.contains(group->getId()))
+    {
+        groups[group->getId()] = group->getPeerList();
+        return;
+    }
+
+    auto &current = groups[group->getId()];
+    auto &ft = firstTime[group->getId()];
+    // user joins
+    for (const auto& peerPk : peers.keys()) {
+        const QString name = peers.value(peerPk);
+        // ignore weird issue: when user joins the group, the name is empty, then it's renamed to normal nickname (why?)
+        // so, just ignore the first insertion
+        if (!ft.value(peerPk, false))
+        {
+            ft[peerPk] = true;
+            continue;
+        }
+        if (!current.contains(peerPk))
+        {
+            current.insert(peerPk, name);
+            addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime());
+        }
+    }
+    // user leaves
+    for (const auto& peerPk : current.keys()) {
+        const QString name = current.value(peerPk);
+        if (!peers.contains(peerPk))
+        {
+            current.remove(peerPk);
+            ft.remove(peerPk);
+            addSystemInfoMessage(tr("%1 has left the group").arg(name), ChatMessage::INFO, QDateTime());
+        }
     }
 }
 

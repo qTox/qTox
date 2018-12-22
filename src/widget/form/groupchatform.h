@@ -67,6 +67,7 @@ private:
     void retranslateUi();
     void updateUserCount();
     void updateUserNames();
+    void sendJoinLeaveMessages();
 
 private:
     Group* group;
