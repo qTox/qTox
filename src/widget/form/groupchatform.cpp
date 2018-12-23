@@ -318,8 +318,7 @@ void GroupChatForm::sendJoinLeaveMessages()
     }
 
     // generate user list from the current group if it's empty
-    if (groupLast.isEmpty())
-    {
+    if (groupLast.isEmpty()) {
         groupLast = group->getPeerList();
         return;
     }
@@ -329,13 +328,11 @@ void GroupChatForm::sendJoinLeaveMessages()
         const QString name = peers.value(peerPk);
         // ignore weird issue: when user joins the group, the name is empty, then it's renamed to normal nickname (why?)
         // so, just ignore the first insertion
-        if (!firstTime.value(peerPk, false))
-        {
+        if (!firstTime.value(peerPk, false)) {
             firstTime[peerPk] = true;
             continue;
         }
-        if (!groupLast.contains(peerPk))
-        {
+        if (!groupLast.contains(peerPk)) {
             groupLast.insert(peerPk, name);
             addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
         }
@@ -343,8 +340,7 @@ void GroupChatForm::sendJoinLeaveMessages()
     // user leaves
     for (const auto& peerPk : groupLast.keys()) {
         const QString name = groupLast.value(peerPk);
-        if (!peers.contains(peerPk))
-        {
+        if (!peers.contains(peerPk)) {
             groupLast.remove(peerPk);
             firstTime.remove(peerPk);
             addSystemInfoMessage(tr("%1 has left the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
