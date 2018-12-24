@@ -158,6 +158,7 @@ FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom,
 
     // TODO(sudden6): move this connection to the Friend::displayedNameChanged signal
     connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
+    connect(frnd, &Friend::statusMessageChanged, this, &ContentDialog::setStatusMessage);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
 
     // FIXME: emit should be removed
