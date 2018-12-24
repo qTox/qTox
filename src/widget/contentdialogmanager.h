@@ -57,9 +57,6 @@ private slots:
 private:
     ContentDialog* focusDialog(int id, const QHash<int, ContentDialog*>& list);
     bool existsWidget(int id, const QHash<int, ContactInfo>& list);
-    void updateStatus(int id, const QHash<int, ContactInfo>& list);
-    bool isWidgetActive(int id, const QHash<int, ContactInfo>& list);
-    ContentDialog* getDialog(int id, const QHash<int, ContactInfo>& list) const;
 
     ContentDialog* currentDialog = nullptr;
 
