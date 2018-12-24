@@ -165,12 +165,10 @@ void ContentDialogManager::updateFriendStatus(int friendId)
  */
 void ContentDialogManager::updateFriendStatusMessage(int friendId, const QString& message)
 {
-    auto iter = friendList.find(friendId);
-    if (iter == friendList.end()) {
-        return;
+    auto dialog = friendDialogs.value(friendId);
+    if (dialog != nullptr) {
+        dialog->setStatusMessage(friendId, message);
     }
-
-    std::get<1>(iter.value())->setStatusMsg(message);
 }
 
 void ContentDialogManager::updateGroupStatus(int groupId)

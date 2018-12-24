@@ -87,6 +87,8 @@ public:
     bool isFriendWidgetActive(int friendId);
     bool isGroupWidgetActive(int groupId);
 
+    void setStatusMessage(int friendId, const QString& message);
+
 signals:
     void friendDialogShown(const Friend* f);
     void groupDialogShown(Group* g);
