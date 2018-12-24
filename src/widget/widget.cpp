@@ -1261,6 +1261,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
             [=]() { dialog->removeFriend(friendId); });
     connect(friendWidget, &FriendWidget::copyFriendIdToClipboard, this,
             &Widget::copyFriendIdToClipboard);
+    connect(friendWidget, &FriendWidget::newWindowOpened, this, &Widget::openNewDialog);
 
     // Signal transmission from the created `friendWidget` (which shown in
     // ContentDialog) to the `widget` (which shown in main widget)
@@ -1313,6 +1314,7 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
     connect(groupWidget, &GroupWidget::middleMouseClicked, dialog,
             [=]() { dialog->removeGroup(groupId); });
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, chatForm, &ChatForm::focusInput);
+    connect(groupWidget, &GroupWidget::newWindowOpened, this, &Widget::openNewDialog);
 
     // Signal transmission from the created `groupWidget` (which shown in
     // ContentDialog) to the `widget` (which shown in main widget)

@@ -102,8 +102,6 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
-    void activate(GenericChatroomWidget* widget);
-    void openNewDialog(GenericChatroomWidget* widget);
     void updateFriendWidget(uint32_t friendId, QString alias);
     void onGroupchatPositionChanged(bool top);
 
