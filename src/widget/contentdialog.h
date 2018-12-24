@@ -58,8 +58,8 @@ public:
 
     FriendWidget* addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form);
     GroupWidget* addGroup(std::shared_ptr<GroupChatroom> chatroom, GenericChatForm* form);
-    void removeFriend(FriendWidget* chatroomWidget);
-    void removeGroup(GroupWidget* chatroomWidget);
+    void removeFriend(int friendId);
+    void removeGroup(int groupId);
     int chatroomWidgetCount() const;
     void ensureSplitterVisible();
     void updateTitleAndStatusIcon();
@@ -71,9 +71,8 @@ public:
     void addFriendWidget(FriendWidget* widget, Status status);
     bool isActiveWidget(GenericChatroomWidget* widget);
 
-    bool hasWidget(int id, const GenericChatroomWidget* chatroomWidget,
-                   const QHash<int, ContactInfo>& list) const;
-
+    bool hasFriendWidget(int friendId) const;
+    bool hasGroupWidget(int groupId) const;
 
 signals:
     void friendDialogShown(const Friend* f);
@@ -104,6 +103,7 @@ private slots:
     void onGroupchatPositionChanged(bool top);
 
 private:
+    void closeIfEmpty();
     void closeEvent(QCloseEvent* event) override;
 
     void retranslateUi();
@@ -120,6 +120,9 @@ private:
     GenericChatroomWidget* activeChatroomWidget;
     QSize videoSurfaceSize;
     int videoCount;
+
+    QHash<int, GenericChatroomWidget*> friendWidgets;
+    QHash<int, GenericChatroomWidget*> groupWidgets;
 
     QHash<int, GenericChatForm*> friendChatForms;
     QHash<int, GenericChatForm*> groupChatForms;

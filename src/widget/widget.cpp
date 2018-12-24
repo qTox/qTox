@@ -1131,12 +1131,12 @@ void Widget::onFriendAliasChanged(uint32_t friendId, const QString& alias)
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget* widget)
 {
-    openDialog(widget, false);
+    openDialog(widget, /* newWindow = */ false);
 }
 
 void Widget::openNewDialog(GenericChatroomWidget* widget)
 {
-    openDialog(widget, true);
+    openDialog(widget, /* newWindow = */ true);
 }
 
 void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
@@ -1248,7 +1248,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 
     auto form = chatForms[friendId];
     auto chatroom = friendChatrooms[friendId];
-    FriendWidget* friendWidget = dialog->addFriend(chatroom, form);
+    FriendWidget* friendWidget = ContentDialogManager::getInstance()->addFriendToDialog(dialog, chatroom, form);
 
     friendWidget->setStatusMsg(widget->getStatusMsg());
 
@@ -1259,7 +1259,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 #endif
     connect(friendWidget, &FriendWidget::removeFriend, this, widgetRemoveFriend);
     connect(friendWidget, &FriendWidget::middleMouseClicked, dialog,
-            [=]() { ContentDialogManager::getInstance()->removeFriend(friendId); });
+            [=]() { dialog->removeFriend(friendId); });
     connect(friendWidget, &FriendWidget::copyFriendIdToClipboard, this,
             &Widget::copyFriendIdToClipboard);
     connect(friendWidget, &FriendWidget::newWindowOpened, this, &Widget::openNewDialog);
@@ -1304,7 +1304,8 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
 
     auto chatForm = groupChatForms[groupId].data();
     auto chatroom = groupChatrooms[groupId];
-    auto groupWidget = dialog->addGroup(chatroom, chatForm);
+    auto groupWidget = ContentDialogManager::getInstance()->addGroupToDialog(dialog, chatroom, chatForm);
+
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
     auto removeGroup = QOverload<int>::of(&Widget::removeGroup);
 #else
@@ -1313,7 +1314,7 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
     connect(groupWidget, &GroupWidget::removeGroup, this, removeGroup);
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, chatForm, &GroupChatForm::focusInput);
     connect(groupWidget, &GroupWidget::middleMouseClicked, dialog,
-            [=]() { ContentDialogManager::getInstance()->removeGroup(groupId); });
+            [=]() { dialog->removeGroup(groupId); });
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, chatForm, &ChatForm::focusInput);
     connect(groupWidget, &GroupWidget::newWindowOpened, this, &Widget::openNewDialog);
 
