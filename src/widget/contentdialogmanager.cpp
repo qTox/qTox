@@ -144,16 +144,18 @@ ContentDialog* ContentDialogManager::focusDialog(int id, const QHash<int, Conten
 
 void ContentDialogManager::updateFriendStatus(int friendId)
 {
-    updateStatus(friendId, friendList);
-    ContentDialog* contentDialog = getFriendDialog(friendId);
-    if (contentDialog) {
-        auto iter = friendList.find(friendId).value();
-        GenericChatroomWidget* widget = std::get<1>(iter);
-        FriendWidget* friendWidget = static_cast<FriendWidget*>(widget);
-
-        Friend* f = FriendList::findFriend(friendId);
-        contentDialog->addFriendWidget(friendWidget, f->getStatus());
+    auto dialog = friendDialogs.value(friendId);
+    if (dialog == nullptr) {
+        return;
     }
+
+    dialog->updateFriendStatusLight(friendId);
+    if (dialog->isFriendWidgetActive(friendId)) {
+        dialog->updateTitleAndStatusIcon();
+    }
+
+    Friend* f = FriendList::findFriend(friendId);
+    dialog->updateFriendStatus(friendId, f->getStatus());
 }
 
 /**
@@ -173,7 +175,15 @@ void ContentDialogManager::updateFriendStatusMessage(int friendId, const QString
 
 void ContentDialogManager::updateGroupStatus(int groupId)
 {
-    updateStatus(groupId, groupList);
+    auto dialog = friendDialogs.value(groupId);
+    if (dialog == nullptr) {
+        return;
+    }
+
+    dialog->updateGroupStatusLight(groupId);
+    if (dialog->isGroupWidgetActive(groupId)) {
+        dialog->updateTitleAndStatusIcon();
+    }
 }
 
 bool ContentDialogManager::isFriendWidgetActive(int friendId)
@@ -212,27 +222,6 @@ ContentDialog* ContentDialogManager::getFriendDialog(int friendId) const
 ContentDialog* ContentDialogManager::getGroupDialog(int groupId) const
 {
     return groupDialogs.value(groupId);
-}
-
-/**
- * @brief Update widget status and dialog title for current user.
- * @param id User Id.
- * @param list List with contact info.
- */
-void ContentDialogManager::updateStatus(int id, const QHash<int, ContactInfo>& list)
-{
-    auto iter = list.find(id);
-    if (iter == list.end()) {
-        return;
-    }
-
-    GenericChatroomWidget* chatroomWidget = std::get<1>(*iter);
-    chatroomWidget->updateStatusLight();
-
-    if (chatroomWidget->isActive()) {
-        ContentDialog* dialog = std::get<0>(*iter);
-        dialog->updateTitleAndStatusIcon();
-    }
 }
 
 ContentDialogManager* ContentDialogManager::getInstance()
