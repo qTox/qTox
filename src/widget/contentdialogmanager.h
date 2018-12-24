@@ -56,15 +56,11 @@ private slots:
 
 private:
     ContentDialog* focusDialog(int id, const QHash<int, ContentDialog*>& list);
-    bool existsWidget(int id, const QHash<int, ContactInfo>& list);
 
     ContentDialog* currentDialog = nullptr;
 
     QHash<int, ContentDialog*> friendDialogs;
     QHash<int, ContentDialog*> groupDialogs;
-
-    QHash<int, ContactInfo> friendList;
-    QHash<int, ContactInfo> groupList;
 
     static ContentDialogManager* instance;
 };

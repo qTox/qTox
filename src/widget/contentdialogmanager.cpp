@@ -11,17 +11,6 @@
 
 namespace
 {
-void removeDialog(ContentDialog* dialog, QHash<int, ContactInfo>& infos)
-{
-    for (auto it = infos.begin(); it != infos.end();) {
-        if (std::get<0>(*it) == dialog) {
-            it = infos.erase(it);
-        } else {
-            ++it;
-        }
-    }
-}
-
 void removeDialog(ContentDialog* dialog, QHash<int, ContentDialog*>& dialogs)
 {
     for (auto it = dialogs.begin(); it != dialogs.end();) {
@@ -73,7 +62,6 @@ FriendWidget* ContentDialogManager::addFriendToDialog(ContentDialog* dialog,
     }
 
     friendDialogs[friendId] = dialog;
-    friendList.insert(friendId, std::make_tuple(dialog, friendWidget));
     return friendWidget;
 }
 
@@ -89,20 +77,7 @@ GroupWidget* ContentDialogManager::addGroupToDialog(ContentDialog* dialog,
     }
 
     groupDialogs[groupId] = dialog;
-    groupList.insert(groupId, std::make_tuple(dialog, groupWidget));
     return groupWidget;
-}
-
-/**
- * @brief Check, if widget is exists.
- * @param id User Id.
- * @param list List with contact info.
- * @return True is widget exists, false otherwise.
- */
-bool ContentDialogManager::existsWidget(int id, const QHash<int, ContactInfo>& list)
-{
-    auto iter = list.find(id);
-    return iter != list.end();
 }
 
 void ContentDialogManager::focusFriend(int friendId)
@@ -242,9 +217,6 @@ void ContentDialogManager::onDialogClose()
     if (currentDialog == dialog) {
         currentDialog = nullptr;
     }
-
-    removeDialog(dialog, friendList);
-    removeDialog(dialog, groupList);
 
     removeDialog(dialog, friendDialogs);
     removeDialog(dialog, groupDialogs);
