@@ -53,11 +53,6 @@ public:
 
     static ContentDialogManager* getInstance();
 
-    bool hasFriendWidget(ContentDialog* dialog, int friendId, const GenericChatroomWidget* chatroomWidget) const;
-    bool hasGroupWidget(ContentDialog* dialog, int groupId, const GenericChatroomWidget* chatroomWidget) const;
-
-    FriendWidget* getFriendWidget(int friendId) const;
-
 private slots:
     void onDialogClose();
     void onDialogActivate();
@@ -70,6 +65,10 @@ private:
     ContentDialog* getDialog(int id, const QHash<int, ContactInfo>& list) const;
 
     ContentDialog* currentDialog = nullptr;
+
+    QHash<int, ContentDialog*> friendDialogs;
+    QHash<int, ContentDialog*> groupDialogs;
+
     QHash<int, ContactInfo> friendList;
     QHash<int, ContactInfo> groupList;
 

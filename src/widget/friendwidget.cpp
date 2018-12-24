@@ -115,7 +115,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     }
 
     // TODO: move to model
-    if (contentDialog && ContentDialogManager::getInstance()->hasFriendWidget(contentDialog, friendId, this)) {
+    if (contentDialog && contentDialog->hasFriendWidget(friendId)) {
         const auto removeChatWindow = menu.addAction(tr("Remove chat from this window"));
         connect(removeChatWindow, &QAction::triggered, this, &FriendWidget::removeChatWindow);
     }
@@ -170,7 +170,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     menu.addSeparator();
 
     // TODO: move to model
-    if (!contentDialog || !ContentDialogManager::getInstance()->hasFriendWidget(contentDialog, friendId, this)) {
+    if (!contentDialog || !contentDialog->hasFriendWidget(friendId)) {
         const auto removeAction =
             menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
         connect(removeAction, &QAction::triggered, this, [=]() { emit removeFriend(friendId); },

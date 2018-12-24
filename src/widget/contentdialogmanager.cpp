@@ -21,6 +21,17 @@ void removeDialog(ContentDialog* dialog, QHash<int, ContactInfo>& infos)
         }
     }
 }
+
+void removeDialog(ContentDialog* dialog, QHash<int, ContentDialog*>& dialogs)
+{
+    for (auto it = dialogs.begin(); it != dialogs.end();) {
+        if (*it == dialog) {
+            it = dialogs.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
 }
 
 ContentDialogManager* ContentDialogManager::instance;
@@ -48,9 +59,10 @@ FriendWidget* ContentDialogManager::addFriendToDialog(ContentDialog* dialog,
 
     ContentDialog* lastDialog = getFriendDialog(friendId);
     if (lastDialog) {
-        lastDialog->removeFriend(friendWidget);
+        lastDialog->removeFriend(friendId);
     }
 
+    friendDialogs[friendId] = dialog;
     friendList.insert(friendId, std::make_tuple(dialog, friendWidget));
     return friendWidget;
 }
@@ -63,9 +75,10 @@ GroupWidget* ContentDialogManager::addGroupToDialog(ContentDialog* dialog,
 
     ContentDialog* lastDialog = getGroupDialog(groupId);
     if (lastDialog) {
-        lastDialog->removeGroup(groupWidget);
+        lastDialog->removeGroup(groupId);
     }
 
+    groupDialogs[groupId] = dialog;
     groupList.insert(groupId, std::make_tuple(dialog, groupWidget));
     return groupWidget;
 }
@@ -80,7 +93,7 @@ void ContentDialogManager::removeFriend(int friendId)
 
     auto friendWidget = static_cast<FriendWidget*>(std::get<1>(iter.value()));
     auto dialog = getFriendDialog(friendId);
-    dialog->removeFriend(friendWidget);
+    dialog->removeFriend(friendId);
     friendList.remove(friendId);
 }
 
@@ -93,7 +106,7 @@ void ContentDialogManager::removeGroup(int groupId)
 
     auto groupWidget = static_cast<GroupWidget*>(std::get<1>(iter.value()));
     auto dialog = getGroupDialog(groupId);
-    dialog->removeGroup(groupWidget);
+    dialog->removeGroup(groupId);
     groupList.remove(groupId);
 }
 
@@ -163,7 +176,6 @@ void ContentDialogManager::updateFriendStatus(int friendId)
 void ContentDialogManager::updateFriendStatusMessage(int friendId, const QString& message)
 {
     auto iter = friendList.find(friendId);
-
     if (iter == friendList.end()) {
         return;
     }
@@ -282,25 +294,7 @@ void ContentDialogManager::onDialogClose()
 
     removeDialog(dialog, friendList);
     removeDialog(dialog, groupList);
-}
 
-bool ContentDialogManager::hasFriendWidget(ContentDialog* dialog, int friendId, const GenericChatroomWidget* chatroomWidget) const
-{
-    return dialog->hasWidget(friendId, chatroomWidget, friendList);
-}
-
-bool ContentDialogManager::hasGroupWidget(ContentDialog* dialog, int groupId, const GenericChatroomWidget* chatroomWidget) const
-{
-    return dialog->hasWidget(groupId, chatroomWidget, groupList);
-}
-
-FriendWidget* ContentDialogManager::getFriendWidget(int friendId) const
-{
-    auto iter = friendList.find(friendId);
-    if (iter == friendList.end()) {
-        return nullptr;
-    }
-
-    GenericChatroomWidget* widget = std::get<1>(*iter);
-    return qobject_cast<FriendWidget*>(widget);
+    removeDialog(dialog, friendDialogs);
+    removeDialog(dialog, groupDialogs);
 }
