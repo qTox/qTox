@@ -45,10 +45,6 @@
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
-// TODO: Remove. Never do this
-// HACK: To check, if dialog contains widget
-#include "src/widget/contentdialogmanager.h"
-
 static const int minWidget = 220;
 static const int minHeight = 220;
 static const QSize minSize(minHeight, minWidget);
