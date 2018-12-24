@@ -36,7 +36,6 @@ public:
     void focusFriend(int friendId);
     void focusGroup(int groupId);
     void updateFriendStatus(int friendId);
-    void updateFriendStatusMessage(int friendId, const QString& message);
     void updateGroupStatus(int groupId);
     bool isFriendWidgetActive(int friendId);
     bool isGroupWidgetActive(int groupId);
