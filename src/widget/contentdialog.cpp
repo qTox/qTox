@@ -663,6 +663,15 @@ bool ContentDialog::isGroupWidgetActive(int groupId)
     return widget->isActive();
 }
 
+// TODO: Connect to widget directly
+void ContentDialog::setStatusMessage(int friendId, const QString& message)
+{
+    auto widget = friendWidgets.value(friendId);
+    if (widget != nullptr) {
+        widget->setStatusMsg(message);
+    }
+}
+
 /**
  * @brief Update friend widget name and position.
  * @param friendId Friend Id.
