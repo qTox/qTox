@@ -1085,8 +1085,6 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
 
     friendWidgets[friendId]->setStatusMsg(str);
     chatForms[friendId]->setStatusMessage(str);
-
-    ContentDialogManager::getInstance()->updateFriendStatusMessage(friendId, message);
 }
 
 void Widget::onFriendDisplayedNameChanged(const QString& displayed)

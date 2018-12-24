@@ -133,19 +133,6 @@ void ContentDialogManager::updateFriendStatus(int friendId)
     dialog->updateFriendStatus(friendId, f->getStatus());
 }
 
-/**
- * @brief Update friend status message.
- * @param friendId Id friend, whose status was changed.
- * @param message Status message.
- */
-void ContentDialogManager::updateFriendStatusMessage(int friendId, const QString& message)
-{
-    auto dialog = friendDialogs.value(friendId);
-    if (dialog != nullptr) {
-        dialog->setStatusMessage(friendId, message);
-    }
-}
-
 void ContentDialogManager::updateGroupStatus(int groupId)
 {
     auto dialog = friendDialogs.value(groupId);
