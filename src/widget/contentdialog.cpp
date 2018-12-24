@@ -175,7 +175,6 @@ FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom,
     // TODO(sudden6): move this connection to the Friend::displayedNameChanged signal
     connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
-    connect(friendWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDialog);
 
     ContentDialog* lastDialog = getFriendDialog(friendId);
     if (lastDialog) {
@@ -199,7 +198,6 @@ GroupWidget* ContentDialog::addGroup(std::shared_ptr<GroupChatroom> chatroom, Ge
     groupChatForms[groupId] = form;
 
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
-    connect(groupWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDialog);
 
     ContentDialog* lastDialog = getGroupDialog(groupId);
 
@@ -684,27 +682,6 @@ void ContentDialog::keyPressEvent(QKeyEvent* event)
     if (event->key() != Qt::Key_Escape) {
         QDialog::keyPressEvent(event);
     }
-}
-
-/**
- * @brief Open a new dialog window associated with widget
- * @param widget Widget associated with contact.
- */
-void ContentDialog::openNewDialog(GenericChatroomWidget* widget)
-{
-    ContentDialog* contentDialog = new ContentDialog();
-    contentDialog->show();
-
-    if (widget->getFriend()) {
-        removeFriend(widget->getFriend()->getId());
-        Widget::getInstance()->addFriendDialog(widget->getFriend(), contentDialog);
-    } else {
-        removeGroup(widget->getGroup()->getId());
-        Widget::getInstance()->addGroupDialog(widget->getGroup(), contentDialog);
-    }
-
-    contentDialog->raise();
-    contentDialog->activateWindow();
 }
 
 /**
