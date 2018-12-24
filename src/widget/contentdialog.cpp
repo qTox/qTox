@@ -611,6 +611,16 @@ void ContentDialog::activate(GenericChatroomWidget* widget)
     updateTitleAndStatusIcon();
 }
 
+bool ContentDialog::containsFriend(int friendId) const
+{
+    return friendWidgets.contains(friendId);
+}
+
+bool ContentDialog::containsGroup(int groupId) const
+{
+    return groupWidgets.contains(groupId);
+}
+
 /**
  * @brief Update friend widget name and position.
  * @param friendId Friend Id.
