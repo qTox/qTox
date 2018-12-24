@@ -196,7 +196,7 @@ void FriendWidget::removeChatWindow()
     const auto frnd = chatroom->getFriend();
     const auto friendId = frnd->getId();
     ContentDialog* contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendId);
-    ContentDialogManager::getInstance()->removeFriend(friendId);
+    contentDialog->removeFriend(friendId);
 }
 
 namespace {

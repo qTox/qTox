@@ -83,33 +83,6 @@ GroupWidget* ContentDialogManager::addGroupToDialog(ContentDialog* dialog,
     return groupWidget;
 }
 
-// TODO: Remove method. Move logic in ContentDialog
-void ContentDialogManager::removeFriend(int friendId)
-{
-    auto iter = friendList.find(friendId);
-    if (iter == friendList.end()) {
-        return;
-    }
-
-    auto friendWidget = static_cast<FriendWidget*>(std::get<1>(iter.value()));
-    auto dialog = getFriendDialog(friendId);
-    dialog->removeFriend(friendId);
-    friendList.remove(friendId);
-}
-
-void ContentDialogManager::removeGroup(int groupId)
-{
-    auto iter = friendList.find(groupId);
-    if (iter == friendList.end()) {
-        return;
-    }
-
-    auto groupWidget = static_cast<GroupWidget*>(std::get<1>(iter.value()));
-    auto dialog = getGroupDialog(groupId);
-    dialog->removeGroup(groupId);
-    groupList.remove(groupId);
-}
-
 /**
  * @brief Check, if widget is exists.
  * @param id User Id.
