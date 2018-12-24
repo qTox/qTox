@@ -97,34 +97,39 @@ bool ContentDialogManager::existsWidget(int id, const QHash<int, ContactInfo>& l
 
 void ContentDialogManager::focusFriend(int friendId)
 {
-    focusDialog(friendId, friendList);
+    auto dialog = focusDialog(friendId, friendDialogs);
+    if (dialog != nullptr)
+        dialog->focusFriend(friendId);
 }
 
 void ContentDialogManager::focusGroup(int groupId)
 {
-    focusDialog(groupId, groupList);
+    auto dialog = focusDialog(groupId, groupDialogs);
+    if (dialog != nullptr)
+        dialog->focusGroup(groupId);
 }
 
 /**
  * @brief Focus the dialog if it exists.
  * @param id User Id.
- * @param list List with contact info.
+ * @param list List with dialogs
+ * @return ContentDialog if found, nullptr otherwise
  */
-void ContentDialogManager::focusDialog(int id, const QHash<int, ContactInfo>& list)
+ContentDialog* ContentDialogManager::focusDialog(int id, const QHash<int, ContentDialog*>& list)
 {
     auto iter = list.find(id);
     if (iter == list.end()) {
-        return;
+        return nullptr;
     }
 
-    ContentDialog* dialog = std::get<0>(*iter);
+    ContentDialog* dialog = *iter;
     if (dialog->windowState() & Qt::WindowMinimized) {
         dialog->showNormal();
     }
 
     dialog->raise();
     dialog->activateWindow();
-    dialog->activate(std::get<1>(iter.value()));
+    return dialog;
 }
 
 void ContentDialogManager::updateFriendStatus(int friendId)
