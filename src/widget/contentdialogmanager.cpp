@@ -206,12 +206,12 @@ bool ContentDialogManager::isWidgetActive(int id, const QHash<int, ContactInfo>&
 
 ContentDialog* ContentDialogManager::getFriendDialog(int friendId) const
 {
-    return getDialog(friendId, friendList);
+    return friendDialogs.value(friendId);
 }
 
 ContentDialog* ContentDialogManager::getGroupDialog(int groupId) const
 {
-    return getDialog(groupId, groupList);
+    return groupDialogs.value(groupId);
 }
 
 /**
@@ -233,22 +233,6 @@ void ContentDialogManager::updateStatus(int id, const QHash<int, ContactInfo>& l
         ContentDialog* dialog = std::get<0>(*iter);
         dialog->updateTitleAndStatusIcon();
     }
-}
-
-/**
- * @brief Select ContentDialog by id from the list.
- * @param id User Id.
- * @param list List with contact info.
- * @return ContentDialog for user and nullptr if not found.
- */
-ContentDialog* ContentDialogManager::getDialog(int id, const QHash<int, ContactInfo>& list) const
-{
-    auto iter = list.find(id);
-    if (iter == list.end()) {
-        return nullptr;
-    }
-
-    return std::get<0>(iter.value());
 }
 
 ContentDialogManager* ContentDialogManager::getInstance()
