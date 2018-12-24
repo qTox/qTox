@@ -66,6 +66,7 @@
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/platform/timer.h"
+#include "src/widget/contentdialogmanager.h"
 #include "src/widget/form/addfriendform.h"
 #include "src/widget/form/chatform.h"
 #include "src/widget/form/filesform.h"
@@ -310,8 +311,8 @@ void Widget::init()
     Nexus::getInstance().windowMenu->insertAction(frontAction, nextConversationAction);
     nextConversationAction->setShortcut(QKeySequence::SelectNextPage);
     connect(nextConversationAction, &QAction::triggered, [this]() {
-        if (ContentDialog::current() == QApplication::activeWindow())
-            ContentDialog::current()->cycleContacts(true);
+        if (ContentDialogManager::getInstance()->current() == QApplication::activeWindow())
+            ContentDialogManager::getInstance()->current()->cycleContacts(true);
         else if (QApplication::activeWindow() == this)
             cycleContacts(true);
     });
@@ -320,8 +321,8 @@ void Widget::init()
     Nexus::getInstance().windowMenu->insertAction(frontAction, previousConversationAction);
     previousConversationAction->setShortcut(QKeySequence::SelectPreviousPage);
     connect(previousConversationAction, &QAction::triggered, [this] {
-        if (ContentDialog::current() == QApplication::activeWindow())
-            ContentDialog::current()->cycleContacts(false);
+        if (ContentDialogManager::getInstance()->current() == QApplication::activeWindow())
+            ContentDialogManager::getInstance()->current()->cycleContacts(false);
         else if (QApplication::activeWindow() == this)
             cycleContacts(false);
     });
@@ -1068,7 +1069,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
         setWindowTitle(widget->getTitle());
     }
 
-    ContentDialog::updateFriendStatus(friendId);
+    ContentDialogManager::getInstance()->updateFriendStatus(friendId);
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
@@ -1085,7 +1086,7 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     friendWidgets[friendId]->setStatusMsg(str);
     chatForms[friendId]->setStatusMessage(str);
 
-    ContentDialog::updateFriendStatusMessage(friendId, message);
+    ContentDialogManager::getInstance()->updateFriendStatusMessage(friendId, message);
 }
 
 void Widget::onFriendDisplayedNameChanged(const QString& displayed)
@@ -1157,11 +1158,11 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
 
     bool chatFormIsSet;
     if (frnd) {
-        ContentDialog::focusFriend(id);
-        chatFormIsSet = ContentDialog::friendWidgetExists(id);
+        ContentDialogManager::getInstance()->focusFriend(id);
+        chatFormIsSet = ContentDialogManager::getInstance()->friendWidgetExists(id);
     } else {
-        ContentDialog::focusGroup(id);
-        chatFormIsSet = ContentDialog::groupWidgetExists(id);
+        ContentDialogManager::getInstance()->focusGroup(id);
+        chatFormIsSet = ContentDialogManager::getInstance()->groupWidgetExists(id);
     }
 
     if ((chatFormIsSet || form->isVisible()) && !newWindow) {
@@ -1172,7 +1173,7 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
         ContentDialog* dialog = nullptr;
 
         if (!Settings::getInstance().getDontGroupWindows() && !newWindow) {
-            dialog = ContentDialog::current();
+            dialog = ContentDialogManager::getInstance()->current();
         }
 
         if (dialog == nullptr) {
@@ -1237,7 +1238,7 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
 void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 {
     uint32_t friendId = frnd->getId();
-    ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
+    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendId);
     bool isSeparate = Settings::getInstance().getSeparateWindow();
     FriendWidget* widget = friendWidgets[friendId];
     bool isCurrent = activeChatroomWidget == widget;
@@ -1258,7 +1259,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 #endif
     connect(friendWidget, &FriendWidget::removeFriend, this, widgetRemoveFriend);
     connect(friendWidget, &FriendWidget::middleMouseClicked, dialog,
-            [=]() { dialog->removeFriend(friendId); });
+            [=]() { ContentDialogManager::getInstance()->removeFriend(friendId); });
     connect(friendWidget, &FriendWidget::copyFriendIdToClipboard, this,
             &Widget::copyFriendIdToClipboard);
     connect(friendWidget, &FriendWidget::newWindowOpened, this, &Widget::openNewDialog);
@@ -1293,7 +1294,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
 {
     int groupId = group->getId();
-    ContentDialog* groupDialog = ContentDialog::getGroupDialog(groupId);
+    ContentDialog* groupDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
     bool separated = Settings::getInstance().getSeparateWindow();
     GroupWidget* widget = groupWidgets[groupId];
     bool isCurrentWindow = activeChatroomWidget == widget;
@@ -1312,7 +1313,7 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
     connect(groupWidget, &GroupWidget::removeGroup, this, removeGroup);
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, chatForm, &GroupChatForm::focusInput);
     connect(groupWidget, &GroupWidget::middleMouseClicked, dialog,
-            [=]() { dialog->removeGroup(groupId); });
+            [=]() { ContentDialogManager::getInstance()->removeGroup(groupId); });
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, chatForm, &ChatForm::focusInput);
     connect(groupWidget, &GroupWidget::newWindowOpened, this, &Widget::openNewDialog);
 
@@ -1337,18 +1338,18 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
 {
     bool hasActive;
     QWidget* currentWindow;
-    ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
+    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendId);
     Friend* f = FriendList::findFriend(friendId);
 
     if (contentDialog != nullptr) {
         currentWindow = contentDialog->window();
-        hasActive = ContentDialog::isFriendWidgetActive(friendId);
+        hasActive = ContentDialogManager::getInstance()->isFriendWidgetActive(friendId);
     } else {
         if (Settings::getInstance().getSeparateWindow() && Settings::getInstance().getShowWindow()) {
             if (Settings::getInstance().getDontGroupWindows()) {
                 contentDialog = createContentDialog();
             } else {
-                contentDialog = ContentDialog::current();
+                contentDialog = ContentDialogManager::getInstance()->current();
                 if (!contentDialog) {
                     contentDialog = createContentDialog();
                 }
@@ -1356,7 +1357,7 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
 
             addFriendDialog(f, contentDialog);
             currentWindow = contentDialog->window();
-            hasActive = ContentDialog::isFriendWidgetActive(friendId);
+            hasActive = ContentDialogManager::getInstance()->isFriendWidgetActive(friendId);
         } else {
             currentWindow = window();
             FriendWidget* widget = friendWidgets[friendId];
@@ -1375,7 +1376,7 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
                 setWindowTitle(widget->getTitle());
             }
         } else {
-            ContentDialog::updateFriendStatus(friendId);
+            ContentDialogManager::getInstance()->updateFriendStatus(friendId);
         }
 
         return true;
@@ -1388,13 +1389,13 @@ bool Widget::newGroupMessageAlert(int groupId, bool notify)
 {
     bool hasActive;
     QWidget* currentWindow;
-    ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
+    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
     Group* g = GroupList::findGroup(groupId);
     GroupWidget* widget = groupWidgets[groupId];
 
     if (contentDialog != nullptr) {
         currentWindow = contentDialog->window();
-        hasActive = ContentDialog::isGroupWidgetActive(groupId);
+        hasActive = ContentDialogManager::getInstance()->isGroupWidgetActive(groupId);
     } else {
         currentWindow = window();
         hasActive = widget == activeChatroomWidget;
@@ -1412,7 +1413,7 @@ bool Widget::newGroupMessageAlert(int groupId, bool notify)
             setWindowTitle(widget->getTitle());
         }
     } else {
-        ContentDialog::updateGroupStatus(groupId);
+        ContentDialogManager::getInstance()->updateGroupStatus(groupId);
     }
 
     return true;
@@ -1516,10 +1517,10 @@ void Widget::removeFriend(Friend* f, bool fake)
 
     contactListWidget->removeFriendWidget(widget);
 
-    ContentDialog* lastDialog = ContentDialog::getFriendDialog(friendId);
+    ContentDialog* lastDialog = ContentDialogManager::getInstance()->getFriendDialog(friendId);
 
     if (lastDialog != nullptr) {
-        lastDialog->removeFriend(friendId);
+        ContentDialogManager::getInstance()->removeFriend(friendId);
     }
 
     FriendList::removeFriend(friendId, fake);
@@ -1593,6 +1594,8 @@ void Widget::toggleFullscreen()
 ContentDialog* Widget::createContentDialog() const
 {
     ContentDialog* contentDialog = new ContentDialog();
+    ContentDialogManager::getInstance()->addContentDialog(contentDialog);
+
     connect(contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
     connect(contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
     connect(Core::getInstance(), &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
@@ -1836,9 +1839,9 @@ void Widget::removeGroup(Group* g, bool fake)
     }
 
     GroupList::removeGroup(groupId, fake);
-    ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
+    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
     if (contentDialog != nullptr) {
-        contentDialog->removeGroup(groupId);
+        ContentDialogManager::getInstance()->removeGroup(groupId);
     }
 
     Nexus::getCore()->removeGroup(groupId, fake);

@@ -371,6 +371,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/circlewidget.h
   src/widget/contentdialog.cpp
   src/widget/contentdialog.h
+  src/widget/contentdialogmanager.cpp
+  src/widget/contentdialogmanager.h
   src/widget/contentlayout.cpp
   src/widget/contentlayout.h
   src/widget/emoticonswidget.cpp

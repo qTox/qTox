@@ -35,6 +35,7 @@
 #include "src/friendlist.h"
 #include "src/model/group.h"
 #include "src/grouplist.h"
+#include "src/widget/contentdialogmanager.h"
 #include "src/widget/friendwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
@@ -87,14 +88,14 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
     QAction* removeChatWindow = nullptr;
 
     // TODO: Move to model
-    ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
+    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
     const bool notAlone = contentDialog != nullptr && contentDialog->chatroomWidgetCount() > 1;
 
     if (contentDialog == nullptr || notAlone) {
         openChatWindow = menu.addAction(tr("Open chat in new window"));
     }
 
-    if (contentDialog && contentDialog->hasGroupWidget(groupId, this)) {
+    if (contentDialog && ContentDialogManager::getInstance()->hasGroupWidget(contentDialog, groupId, this)) {
         removeChatWindow = menu.addAction(tr("Remove chat from this window"));
     }
 
@@ -121,8 +122,8 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
         emit newWindowOpened(this);
     } else if (selectedItem == removeChatWindow) {
         // TODO: move to model
-        ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
-        contentDialog->removeGroup(groupId);
+        ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
+        ContentDialogManager::getInstance()->removeGroup(groupId);
     } else if (selectedItem == setTitle) {
         editName();
     }
