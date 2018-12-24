@@ -43,9 +43,6 @@ public:
     ContentDialog* getFriendDialog(int friendId) const;
     ContentDialog* getGroupDialog(int groupId) const;
 
-    void removeFriend(int friendId);
-    void removeGroup(int groupId);
-
     FriendWidget* addFriendToDialog(ContentDialog* dialog, std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form);
     GroupWidget* addGroupToDialog(ContentDialog* dialog, std::shared_ptr<GroupChatroom> chatroom, GenericChatForm* form);
 

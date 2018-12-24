@@ -123,7 +123,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
     } else if (selectedItem == removeChatWindow) {
         // TODO: move to model
         ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
-        ContentDialogManager::getInstance()->removeGroup(groupId);
+        contentDialog->removeGroup(groupId);
     } else if (selectedItem == setTitle) {
         editName();
     }

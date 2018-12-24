@@ -1519,9 +1519,8 @@ void Widget::removeFriend(Friend* f, bool fake)
     contactListWidget->removeFriendWidget(widget);
 
     ContentDialog* lastDialog = ContentDialogManager::getInstance()->getFriendDialog(friendId);
-
     if (lastDialog != nullptr) {
-        ContentDialogManager::getInstance()->removeFriend(friendId);
+        lastDialog->removeFriend(friendId);
     }
 
     FriendList::removeFriend(friendId, fake);
@@ -1842,7 +1841,7 @@ void Widget::removeGroup(Group* g, bool fake)
     GroupList::removeGroup(groupId, fake);
     ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
     if (contentDialog != nullptr) {
-        ContentDialogManager::getInstance()->removeGroup(groupId);
+        contentDialog->removeGroup(groupId);
     }
 
     Nexus::getCore()->removeGroup(groupId, fake);
