@@ -80,6 +80,13 @@ public:
     bool containsFriend(int friendId) const;
     bool containsGroup(int groupId) const;
 
+    void updateFriendStatus(int friendId, Status status);
+    void updateFriendStatusLight(int friendId);
+    void updateGroupStatusLight(int groupId);
+
+    bool isFriendWidgetActive(int friendId);
+    bool isGroupWidgetActive(int groupId);
+
 signals:
     void friendDialogShown(const Friend* f);
     void groupDialogShown(Group* g);

@@ -621,6 +621,48 @@ bool ContentDialog::containsGroup(int groupId) const
     return groupWidgets.contains(groupId);
 }
 
+void ContentDialog::updateFriendStatus(int friendId, Status status)
+{
+    auto widget = qobject_cast<FriendWidget*>(friendWidgets.value(friendId));
+    addFriendWidget(widget, status);
+}
+
+void ContentDialog::updateFriendStatusLight(int friendId)
+{
+    auto widget = friendWidgets.value(friendId);
+    if (widget != nullptr) {
+        widget->updateStatusLight();
+    }
+}
+
+void ContentDialog::updateGroupStatusLight(int groupId)
+{
+    auto widget = groupWidgets.value(groupId);
+    if (widget != nullptr) {
+        widget->updateStatusLight();
+    }
+}
+
+bool ContentDialog::isFriendWidgetActive(int friendId)
+{
+    auto widget = friendWidgets.value(friendId);
+    if (widget == nullptr) {
+        return false;
+    }
+
+    return widget->isActive();
+}
+
+bool ContentDialog::isGroupWidgetActive(int groupId)
+{
+    auto widget = friendWidgets.value(groupId);
+    if (widget == nullptr) {
+        return false;
+    }
+
+    return widget->isActive();
+}
+
 /**
  * @brief Update friend widget name and position.
  * @param friendId Friend Id.
