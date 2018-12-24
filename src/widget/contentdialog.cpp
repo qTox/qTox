@@ -557,6 +557,26 @@ void ContentDialog::keyPressEvent(QKeyEvent* event)
     }
 }
 
+void ContentDialog::focusFriend(int friendId)
+{
+    focusCommon(friendId, friendWidgets);
+}
+
+void ContentDialog::focusGroup(int groupId)
+{
+    focusCommon(groupId, groupWidgets);
+}
+
+void ContentDialog::focusCommon(int id, QHash<int, GenericChatroomWidget*> list)
+{
+    auto it = list.find(id);
+    if (it == list.end()) {
+        return;
+    }
+
+    activate(*it);
+}
+
 /**
  * @brief Show ContentDialog, activate chatroom widget.
  * @param widget Widget which should be activated.
