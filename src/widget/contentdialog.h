@@ -77,6 +77,9 @@ public:
     void focusFriend(int friendId);
     void focusGroup(int groupId);
 
+    bool containsFriend(int friendId) const;
+    bool containsGroup(int groupId) const;
+
 signals:
     void friendDialogShown(const Friend* f);
     void groupDialogShown(Group* g);

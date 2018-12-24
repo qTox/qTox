@@ -43,12 +43,22 @@ ContentDialog* ContentDialogManager::current()
 
 bool ContentDialogManager::friendWidgetExists(int friendId)
 {
-    return existsWidget(friendId, friendList);
+    const auto dialog = friendDialogs.value(friendId, nullptr);
+    if (dialog == nullptr) {
+        return false;
+    }
+
+    return dialog->containsFriend(friendId);
 }
 
 bool ContentDialogManager::groupWidgetExists(int groupId)
 {
-    return existsWidget(groupId, groupList);
+    const auto dialog = groupDialogs.value(groupId, nullptr);
+    if (dialog == nullptr) {
+        return false;
+    }
+
+    return dialog->containsGroup(groupId);
 }
 
 FriendWidget* ContentDialogManager::addFriendToDialog(ContentDialog* dialog, 
