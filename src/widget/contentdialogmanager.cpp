@@ -186,30 +186,22 @@ void ContentDialogManager::updateGroupStatus(int groupId)
 
 bool ContentDialogManager::isFriendWidgetActive(int friendId)
 {
-    return isWidgetActive(friendId, friendList);
+    const auto dialog = friendDialogs.value(friendId);
+    if (dialog == nullptr) {
+        return false;
+    }
+
+    return dialog->isFriendWidgetActive(friendId);
 }
 
 bool ContentDialogManager::isGroupWidgetActive(int groupId)
 {
-    return isWidgetActive(groupId, groupList);
-}
-
-/**
- * @brief Check, if user dialog is active.
- * @param id User Id.
- * @param list List with contact info.
- * @return True if user dialog is active, false otherwise.
- */
-bool ContentDialogManager::isWidgetActive(int id, const QHash<int, ContactInfo>& list)
-{
-    auto iter = list.find(id);
-    if (iter == list.end()) {
+    const auto dialog = groupDialogs.value(groupId);
+    if (dialog == nullptr) {
         return false;
     }
 
-    const auto dialog = std::get<0>(iter.value());
-    const auto widget = std::get<1>(iter.value());
-    return dialog->isActiveWidget(widget);
+    return dialog->isGroupWidgetActive(groupId);
 }
 
 ContentDialog* ContentDialogManager::getFriendDialog(int friendId) const
