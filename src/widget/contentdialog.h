@@ -74,6 +74,9 @@ public:
     bool hasFriendWidget(int friendId) const;
     bool hasGroupWidget(int groupId) const;
 
+    void focusFriend(int friendId);
+    void focusGroup(int groupId);
+
 signals:
     void friendDialogShown(const Friend* f);
     void groupDialogShown(Group* g);
@@ -111,6 +114,9 @@ private:
     void saveSplitterState();
     QLayout* nextLayout(QLayout* layout, bool forward) const;
     int getCurrentLayout(QLayout*& layout);
+    void focusCommon(int id, QHash<int, GenericChatroomWidget*> list);
+
+private:
 
     QList<QLayout*> layouts;
     QSplitter* splitter;
