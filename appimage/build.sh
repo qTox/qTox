@@ -100,7 +100,7 @@ make install
 # is master as of 2018-04-25
 AITOOL_HASH="5d93115f279d94a4d23dfd64fb8ccd109e98f039"
 # build appimagetool
-git clone -b appimagetool/master --single-branch --recursive \
+git clone -b master --single-branch --recursive \
 https://github.com/AppImage/AppImageKit "$AITOOL_BUILD_DIR"
 
 cd "$AITOOL_BUILD_DIR"
