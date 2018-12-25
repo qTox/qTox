@@ -50,7 +50,7 @@ bool ContentDialogManager::groupWidgetExists(int groupId)
     return dialog->containsGroup(groupId);
 }
 
-FriendWidget* ContentDialogManager::addFriendToDialog(ContentDialog* dialog, 
+FriendWidget* ContentDialogManager::addFriendToDialog(ContentDialog* dialog,
     std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form)
 {
     auto friendWidget = dialog->addFriend(chatroom, form);
@@ -83,15 +83,17 @@ GroupWidget* ContentDialogManager::addGroupToDialog(ContentDialog* dialog,
 void ContentDialogManager::focusFriend(int friendId)
 {
     auto dialog = focusDialog(friendId, friendDialogs);
-    if (dialog != nullptr)
+    if (dialog != nullptr) {
         dialog->focusFriend(friendId);
+    }
 }
 
 void ContentDialogManager::focusGroup(int groupId)
 {
     auto dialog = focusDialog(groupId, groupDialogs);
-    if (dialog != nullptr)
+    if (dialog != nullptr) {
         dialog->focusGroup(groupId);
+    }
 }
 
 /**
