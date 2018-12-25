@@ -87,3 +87,13 @@ QList<Friend*> FriendList::getAllFriends()
 {
     return friendList.values();
 }
+
+QString FriendList::decideNickname(ToxPk peerPk, const QString origName)
+{
+    Friend* f = FriendList::findFriend(peerPk);
+    if (f != nullptr && f->hasAlias()) {
+        return f->getDisplayedName();
+    } else {
+        return origName;
+    }
+}

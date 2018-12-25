@@ -262,7 +262,7 @@ void GroupChatForm::updateUserNames()
      * and then sort them by their text and add them to the layout in that order */
     const auto selfPk = Core::getInstance()->getSelfPublicKey();
     for (const auto& peerPk : peers.keys()) {
-        const QString fullName = peers.value(peerPk);
+        const QString fullName = FriendList::decideNickname(peerPk, peers.value(peerPk));
         const QString editedName = editName(fullName).append(QLatin1String(", "));
         QLabel* const label = new QLabel(editedName);
         if (editedName != fullName) {
@@ -325,21 +325,27 @@ void GroupChatForm::sendJoinLeaveMessages()
 
     // user joins
     for (const auto& peerPk : peers.keys()) {
-        const QString name = peers.value(peerPk);
         // ignore weird issue: when user joins the group, the name is empty, then it's renamed to normal nickname (why?)
         // so, just ignore the first insertion
         if (!firstTime.value(peerPk, false)) {
             firstTime[peerPk] = true;
             continue;
         }
+        const QString name = FriendList::decideNickname(peerPk, peers.value(peerPk));
         if (!groupLast.contains(peerPk)) {
             groupLast.insert(peerPk, name);
             addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
         }
+        else {
+            if (groupLast[peerPk] != name && peers.value(peerPk) == name) {
+                addSystemInfoMessage(tr("%1 is now known as %2").arg(groupLast[peerPk], name), ChatMessage::INFO, QDateTime::currentDateTime());
+                groupLast[peerPk] = name;
+            }
+        }
     }
     // user leaves
     for (const auto& peerPk : groupLast.keys()) {
-        const QString name = groupLast.value(peerPk);
+        const QString name = FriendList::decideNickname(peerPk, groupLast.value(peerPk));
         if (!peers.contains(peerPk)) {
             groupLast.remove(peerPk);
             firstTime.remove(peerPk);
