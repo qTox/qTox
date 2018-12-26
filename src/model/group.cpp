@@ -119,6 +119,12 @@ void Group::regeneratePeerList()
     emit userListChanged(groupId, toxpks);
 }
 
+void Group::updateUsername(ToxPk pk, const QString newName)
+{
+    toxpks[pk] = newName;
+    emit userListChanged(groupId, toxpks);
+}
+
 bool Group::isAvGroupchat() const
 {
     return avGroupchat;

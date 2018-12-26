@@ -2503,3 +2503,10 @@ void Widget::focusChatInput()
         }
     }
 }
+
+void Widget::refreshPeerListsLocal(const QString &username)
+{
+    for (Group* g : GroupList::getAllGroups()) {
+        g->updateUsername(Core::getInstance()->getSelfPublicKey(), username);
+    }
+}

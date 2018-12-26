@@ -337,7 +337,12 @@ void GroupChatForm::sendJoinLeaveMessages()
             addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
         }
         else {
-            if (groupLast[peerPk] != name && peers.value(peerPk) == name) {
+            Friend *f = FriendList::findFriend(peerPk);
+            if (groupLast[peerPk] != name 
+                    && peers.value(peerPk) == name 
+                    && peerPk != Core::getInstance()->getSelfPublicKey() // ignore myself
+                    && !(f != nullptr && f->hasAlias()) // ignore friends with aliases
+                    ) {
                 addSystemInfoMessage(tr("%1 is now known as %2").arg(groupLast[peerPk], name), ChatMessage::INFO, QDateTime::currentDateTime());
                 groupLast[peerPk] = name;
             }
