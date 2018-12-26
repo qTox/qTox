@@ -1742,7 +1742,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
     }
 
-    const auto mention = message.contains(nameMention) || message.contains(sanitizedNameMention);
+    const auto mention = !core->getUsername().isEmpty() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     const auto targeted = !isSelf && mention;
     const auto groupId = g->getId();
     const auto date = QDateTime::currentDateTime();
