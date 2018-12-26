@@ -325,9 +325,10 @@ void GroupChatForm::sendJoinLeaveMessages()
 
     // user joins
     for (const auto& peerPk : peers.keys()) {
-        // ignore weird issue: when user joins the group, the name is empty, then it's renamed to normal nickname (why?)
-        // so, just ignore the first insertion
         if (!firstTime.value(peerPk, false)) {
+            if (!groupLast.contains(peerPk)) {
+                addSystemInfoMessage(tr("A new user has connected to the group"), ChatMessage::INFO, QDateTime::currentDateTime());
+            }
             firstTime[peerPk] = true;
             continue;
         }
