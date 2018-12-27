@@ -336,8 +336,7 @@ void GroupChatForm::sendJoinLeaveMessages()
         if (!groupLast.contains(peerPk)) {
             groupLast.insert(peerPk, name);
             addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
-        }
-        else {
+        } else {
             Friend *f = FriendList::findFriend(peerPk);
             if (groupLast[peerPk] != name 
                     && peers.value(peerPk) == name 
