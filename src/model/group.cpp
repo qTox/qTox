@@ -46,12 +46,7 @@ void Group::updatePeer(int peerId, QString name)
 {
     ToxPk peerKey = Core::getInstance()->getGroupPeerPk(groupId, peerId);
     toxpks[peerKey] = name;
-
-    Friend* f = FriendList::findFriend(peerKey);
-    if (f != nullptr) {
-        // use the displayed name from the friends list
-        toxpks[peerKey] = f->getDisplayedName();
-    }
+    qDebug() << "name change: " + name; 
     emit userListChanged(groupId, toxpks);
 }
 
@@ -121,6 +116,12 @@ void Group::regeneratePeerList()
         }
     }
 
+    emit userListChanged(groupId, toxpks);
+}
+
+void Group::updateUsername(ToxPk pk, const QString newName)
+{
+    toxpks[pk] = newName;
     emit userListChanged(groupId, toxpks);
 }
 

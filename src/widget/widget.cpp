@@ -1745,7 +1745,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
     }
 
-    const auto mention = message.contains(nameMention) || message.contains(sanitizedNameMention);
+    const auto mention = !core->getUsername().isEmpty() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     const auto targeted = !isSelf && mention;
     const auto groupId = g->getId();
     const auto date = QDateTime::currentDateTime();
@@ -2504,5 +2504,12 @@ void Widget::focusChatInput()
         } else if (Group* g = activeChatroomWidget->getGroup()) {
             groupChatForms[g->getId()]->focusInput();
         }
+    }
+}
+
+void Widget::refreshPeerListsLocal(const QString &username)
+{
+    for (Group* g : GroupList::getAllGroups()) {
+        g->updateUsername(Core::getInstance()->getSelfPublicKey(), username);
     }
 }

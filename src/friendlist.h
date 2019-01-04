@@ -28,6 +28,7 @@ template <class A, class B>
 class QHash;
 class Friend;
 class QByteArray;
+class QString;
 class ToxPk;
 
 class FriendList
@@ -39,6 +40,7 @@ public:
     static QList<Friend*> getAllFriends();
     static void removeFriend(uint32_t friendId, bool fake = false);
     static void clear();
+    static QString decideNickname(ToxPk peerPk, const QString origName); 
 
 private:
     static QHash<uint32_t, Friend*> friendList;

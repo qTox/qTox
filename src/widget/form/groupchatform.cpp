@@ -176,6 +176,7 @@ void GroupChatForm::onUserListChanged()
 {
     updateUserCount();
     updateUserNames();
+    sendJoinLeaveMessages();
 
     // Enable or disable call button
     const int peersCount = group->getPeersCount();
@@ -261,7 +262,7 @@ void GroupChatForm::updateUserNames()
      * and then sort them by their text and add them to the layout in that order */
     const auto selfPk = Core::getInstance()->getSelfPublicKey();
     for (const auto& peerPk : peers.keys()) {
-        const QString fullName = peers.value(peerPk);
+        const QString fullName = FriendList::decideNickname(peerPk, peers.value(peerPk));
         const QString editedName = editName(fullName).append(QLatin1String(", "));
         QLabel* const label = new QLabel(editedName);
         if (editedName != fullName) {
@@ -304,6 +305,57 @@ void GroupChatForm::updateUserNames()
     lastLabel->setText(labelText);
     for (QLabel* l : nickLabelList) {
         namesListLayout->addWidget(l);
+    }
+}
+
+void GroupChatForm::sendJoinLeaveMessages()
+{
+    const auto peers = group->getPeerList();
+
+    // no need to do anything without any peers
+    if (peers.isEmpty()) {
+        return;
+    }
+
+    // generate user list from the current group if it's empty
+    if (groupLast.isEmpty()) {
+        groupLast = group->getPeerList();
+        return;
+    }
+
+    // user joins
+    for (const auto& peerPk : peers.keys()) {
+        if (!firstTime.value(peerPk, false)) {
+            if (!groupLast.contains(peerPk)) {
+                addSystemInfoMessage(tr("A new user has connected to the group"), ChatMessage::INFO, QDateTime::currentDateTime());
+            }
+            firstTime[peerPk] = true;
+            continue;
+        }
+        const QString name = FriendList::decideNickname(peerPk, peers.value(peerPk));
+        if (!groupLast.contains(peerPk)) {
+            groupLast.insert(peerPk, name);
+            addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
+        } else {
+            Friend *f = FriendList::findFriend(peerPk);
+            if (groupLast[peerPk] != name 
+                    && peers.value(peerPk) == name 
+                    && peerPk != Core::getInstance()->getSelfPublicKey() // ignore myself
+                    && !(f != nullptr && f->hasAlias()) // ignore friends with aliases
+                    ) {
+                addSystemInfoMessage(tr("%1 is now known as %2").arg(groupLast[peerPk], name), ChatMessage::INFO, QDateTime::currentDateTime());
+                groupLast[peerPk] = name;
+            }
+        }
+    }
+    // user leaves
+    for (const auto& peerPk : groupLast.keys()) {
+        const QString name = FriendList::decideNickname(peerPk, groupLast.value(peerPk));
+        if (!peers.contains(peerPk)) {
+            groupLast.remove(peerPk);
+            firstTime.remove(peerPk);
+            addSystemInfoMessage(tr("%1 has left the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
+        }
     }
 }
 

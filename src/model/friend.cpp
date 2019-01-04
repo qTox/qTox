@@ -84,6 +84,14 @@ void Friend::setAlias(const QString& alias)
     if (oldDisplayed != newDisplayed) {
         emit displayedNameChanged(newDisplayed);
     }
+
+    for (Group* g : GroupList::getAllGroups()) {
+        if (userAlias.isEmpty()) {
+            g->updateUsername(friendPk, userName);
+            continue;
+        }
+        g->updateUsername(friendPk, userAlias);
+    }
 }
 
 void Friend::setStatusMessage(const QString& message)
