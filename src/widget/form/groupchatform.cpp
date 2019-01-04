@@ -331,6 +331,7 @@ void GroupChatForm::sendJoinLeaveMessages()
                 if (name != tr("<Empty>", "Placeholder when someone's name in a group chat is empty")) {
                     firstTime[peerPk] = true;
                     groupLast.insert(peerPk, name);
+                    addSystemInfoMessage(tr("%1 is online").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
                     continue;
                 }
                 addSystemInfoMessage(tr("A new user has connected to the group"), ChatMessage::INFO, QDateTime::currentDateTime());
