@@ -43,6 +43,7 @@ static std::map<uint32_t, uint8_t> createPixFmtToQuality()
     m[V4L2_PIX_FMT_H264] = 3;
     m[V4L2_PIX_FMT_MJPEG] = 2;
     m[V4L2_PIX_FMT_YUYV] = 1;
+    m[V4L2_PIX_FMT_UYVY] = 1;
     return m;
 }
 const std::map<uint32_t, uint8_t> pixFmtToQuality = createPixFmtToQuality();
@@ -53,6 +54,7 @@ static std::map<uint32_t, QString> createPixFmtToName()
     m[V4L2_PIX_FMT_H264] = QString("h264");
     m[V4L2_PIX_FMT_MJPEG] = QString("mjpeg");
     m[V4L2_PIX_FMT_YUYV] = QString("yuyv422");
+    m[V4L2_PIX_FMT_UYVY] = QString("uyvy422");
     return m;
 }
 const std::map<uint32_t, QString> pixFmtToName = createPixFmtToName();
