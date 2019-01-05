@@ -377,7 +377,8 @@ ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QStri
 {
     const Core* core = Core::getInstance();
     bool isSelf = author == core->getSelfId().getPublicKey();
-    QString authorStr = isSelf ? core->getUsername() : resolveToxPk(author);
+    QString myNickName = core->getUsername().isEmpty() ? author.toString() : core->getUsername();
+    QString authorStr = isSelf ? myNickName : resolveToxPk(author);
     if (getLatestDate() != QDate::currentDate()) {
         addSystemDateMessage();
     }
