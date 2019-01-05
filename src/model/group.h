@@ -39,6 +39,7 @@ public:
     int getPeersCount() const;
     void regeneratePeerList();
     const QMap<ToxPk, QString>& getPeerList() const;
+    bool peerHasNickname(ToxPk pk);
 
     void setEventFlag(bool f) override;
     bool getEventFlag() const override;
@@ -66,6 +67,7 @@ signals:
 private:
     QString selfName;
     QString title;
+    QString emptyName;
     QMap<ToxPk, QString> toxpks;
     bool hasNewMessages;
     bool userWasMentioned;

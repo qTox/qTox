@@ -39,6 +39,7 @@ Group::Group(int groupId, const QString& name, bool isAvGroupchat, const QString
     // on naming is appropriate
     hasNewMessages = 0;
     userWasMentioned = 0;
+    emptyName = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
     regeneratePeerList();
 }
 
@@ -106,8 +107,7 @@ void Group::regeneratePeerList()
 
         toxpks[pk] = peers[i];
         if (toxpks[pk].isEmpty()) {
-            toxpks[pk] =
-                tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+            toxpks[pk] = emptyName;
         }
 
         Friend* f = FriendList::findFriend(pk);
@@ -117,6 +117,11 @@ void Group::regeneratePeerList()
     }
 
     emit userListChanged(groupId, toxpks);
+}
+
+bool Group::peerHasNickname(ToxPk pk)
+{
+    return toxpks[pk] != emptyName;
 }
 
 void Group::updateUsername(ToxPk pk, const QString newName)

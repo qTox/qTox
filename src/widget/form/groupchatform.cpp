@@ -328,7 +328,7 @@ void GroupChatForm::sendJoinLeaveMessages()
         const QString name = FriendList::decideNickname(peerPk, peers.value(peerPk));
         if (!firstTime.value(peerPk, false)) {
             if (!groupLast.contains(peerPk)) {
-                if (name != tr("<Empty>", "Placeholder when someone's name in a group chat is empty")) {
+                if (group->peerHasNickname(peerPk)) {
                     firstTime[peerPk] = true;
                     groupLast.insert(peerPk, name);
                     addSystemInfoMessage(tr("%1 is online").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
