@@ -266,7 +266,7 @@ void GroupChatForm::updateUserNames()
         const QString editedName = editName(fullName).append(QLatin1String(", "));
         QLabel* const label = new QLabel(editedName);
         if (editedName != fullName) {
-            label->setToolTip(fullName);
+            label->setToolTip(fullName + " (" + peerPk.toString() + ")");
         }
         label->setTextFormat(Qt::PlainText);
         label->setContextMenuPolicy(Qt::CustomContextMenu);
