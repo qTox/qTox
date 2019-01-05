@@ -104,19 +104,27 @@ void Group::regeneratePeerList()
     for (int i = 0; i < nPeers; ++i) {
         const auto pk = core->getGroupPeerPk(groupId, i);
 
-        toxpks[pk] = peers[i];
-        if (toxpks[pk].isEmpty()) {
-            toxpks[pk] =
-                tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
-        }
-
         Friend* f = FriendList::findFriend(pk);
         if (f != nullptr && f->hasAlias()) {
             toxpks[pk] = f->getDisplayedName();
+            empty_nick[pk] = false;
+            continue;
+        }
+
+        empty_nick[pk] = peers[i].isEmpty();
+        if (empty_nick[pk]) {
+            toxpks[pk] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+        } else {
+            toxpks[pk] = peers[i];
         }
     }
 
     emit userListChanged(groupId, toxpks);
+}
+
+bool Group::peerHasNickname(ToxPk pk)
+{
+    return !empty_nick[pk];
 }
 
 void Group::updateUsername(ToxPk pk, const QString newName)
