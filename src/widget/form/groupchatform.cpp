@@ -182,7 +182,7 @@ void GroupChatForm::onUserListChanged()
     const int peersCount = group->getPeersCount();
     const bool online = peersCount > 1;
     headWidget->updateCallButtons(online, inCall);
-    if (!online || !group->isAvGroupchat()) {
+    if (inCall && (!online || !group->isAvGroupchat())) {
         Core::getInstance()->getAv()->leaveGroupCall(group->getId());
         hideNetcam();
     }
