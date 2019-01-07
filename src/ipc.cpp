@@ -23,7 +23,11 @@
 #include <QThread>
 #include <ctime>
 #include <random>
+#if _MSC_VER
+#include <process.h>
+#else
 #include <unistd.h>
+#endif
 
 /**
  * @var time_t IPC::lastEvent
