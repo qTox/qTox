@@ -266,7 +266,7 @@ void GroupChatForm::updateUserNames()
         const QString editedName = editName(fullName).append(QLatin1String(", "));
         QLabel* const label = new QLabel(editedName);
         if (editedName != fullName) {
-            label->setToolTip(fullName);
+            label->setToolTip(fullName + " (" + peerPk.toString() + ")");
         }
         label->setTextFormat(Qt::PlainText);
         label->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -325,14 +325,20 @@ void GroupChatForm::sendJoinLeaveMessages()
 
     // user joins
     for (const auto& peerPk : peers.keys()) {
+        const QString name = FriendList::decideNickname(peerPk, peers.value(peerPk));
         if (!firstTime.value(peerPk, false)) {
             if (!groupLast.contains(peerPk)) {
+                if (group->peerHasNickname(peerPk)) {
+                    firstTime[peerPk] = true;
+                    groupLast.insert(peerPk, name);
+                    addSystemInfoMessage(tr("%1 is online").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
+                    continue;
+                }
                 addSystemInfoMessage(tr("A new user has connected to the group"), ChatMessage::INFO, QDateTime::currentDateTime());
             }
             firstTime[peerPk] = true;
             continue;
         }
-        const QString name = FriendList::decideNickname(peerPk, peers.value(peerPk));
         if (!groupLast.contains(peerPk)) {
             groupLast.insert(peerPk, name);
             addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
