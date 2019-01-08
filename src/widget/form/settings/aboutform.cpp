@@ -20,13 +20,29 @@
 #include "aboutform.h"
 #include "ui_aboutsettings.h"
 
-#include <QDebug>
-#include <QTimer>
+#include "src/widget/tool/recursivesignalblocker.h"
+#include "src/net/autoupdate.h"
+#include "src/net/updatecheck.h"
+#include "src/widget/translator.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
+
 #include <tox/tox.h>
 
-#include "src/net/autoupdate.h"
-#include "src/widget/tool/recursivesignalblocker.h"
-#include "src/widget/translator.h"
+#include <QDebug>
+#include <QDesktopServices> 
+#include <QPushButton>
+#include <QTimer>
+
+#include <memory>
+
+// index of UI in the QStackedWidget
+enum class updateIndex
+{
+    available = 0,
+    upToDate = 1,
+    failed = 2
+};
 
 /**
  * @class AboutForm
@@ -38,10 +54,11 @@
 /**
  * @brief Constructor of AboutForm.
  */
-AboutForm::AboutForm()
+AboutForm::AboutForm(UpdateCheck* updateCheck)
     : GenericForm(QPixmap(":/img/settings/general.png"))
     , bodyUI(new Ui::AboutSettings)
     , progressTimer(new QTimer(this))
+    , updateCheck(updateCheck)
 {
     bodyUI->setupUi(this);
 
@@ -83,6 +100,18 @@ void AboutForm::replaceVersions()
                               + QString::number(tox_version_patch());
 
     bodyUI->youAreUsing->setText(tr("You are using qTox version %1.").arg(QString(GIT_DESCRIBE)));
+
+#if UPDATE_CHECK_ENABLED && !AUTOUPDATE_ENABLED
+    if (updateCheck != nullptr) {
+        connect(updateCheck, &UpdateCheck::updateAvailable, this, &AboutForm::onUpdateAvailable);
+        connect(updateCheck, &UpdateCheck::upToDate, this, &AboutForm::onUpToDate);
+        connect(updateCheck, &UpdateCheck::updateCheckFailed, this, &AboutForm::onUpdateCheckFailed);
+    } else {
+        qWarning() << "AboutForm passed null UpdateCheck!";
+    }
+#else
+    qDebug() << "AboutForm not showing updates, qTox built without UPDATE_CHECK";
+#endif
 
     QString commitLink = "https://github.com/qTox/qTox/commit/" + QString(GIT_VERSION);
     bodyUI->gitVersion->setText(
@@ -144,6 +173,25 @@ void AboutForm::replaceVersions()
                                     tr("contributors", "Replaces `%1` in `See a full list of…`"))));
 
     bodyUI->authorInfo->setText(authorInfo);
+}
+
+void AboutForm::onUpdateAvailable(QString latestVersion, QUrl link)
+{
+    QObject::disconnect(linkConnection);
+    linkConnection = connect(bodyUI->updateAvailableButton, &QPushButton::clicked, [link](){
+        QDesktopServices::openUrl(link);
+    });
+    bodyUI->updateStack->setCurrentIndex(static_cast<int>(updateIndex::available));
+}
+
+void AboutForm::onUpToDate()
+{
+    bodyUI->updateStack->setCurrentIndex(static_cast<int>(updateIndex::upToDate));
+}
+
+void AboutForm::onUpdateCheckFailed()
+{
+    bodyUI->updateStack->setCurrentIndex(static_cast<int>(updateIndex::failed));
 }
 
 /**

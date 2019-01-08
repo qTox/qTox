@@ -22,6 +22,7 @@
 #include "src/audio/audio.h"
 #include "src/core/coreav.h"
 #include "src/core/core.h"
+#include "src/net/updatecheck.h"
 #include "src/persistence/settings.h"
 #include "src/video/camerasource.h"
 #include "src/widget/contentlayout.h"
@@ -40,7 +41,7 @@
 
 #include <memory>
 
-SettingsWidget::SettingsWidget(QWidget* parent)
+SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, QWidget* parent)
     : QWidget(parent, Qt::Window)
 {
     Audio* audio = &Audio::getInstance();
@@ -63,7 +64,15 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     AVForm* rawAvfrm = new AVForm(audio, coreAV, camera, audioSettings, videoSettings);
     std::unique_ptr<AVForm> avfrm(rawAvfrm);
     std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm());
-    std::unique_ptr<AboutForm> abtfrm(new AboutForm());
+    std::unique_ptr<AboutForm> abtfrm(new AboutForm(updateCheck));
+
+#if UPDATE_CHECK_ENABLED && !AUTOUPDATE_ENABLED
+    if (updateCheck != nullptr) {
+        connect(updateCheck, &UpdateCheck::updateAvailable, this, &SettingsWidget::onUpdateAvailable);
+    } else {
+        qWarning() << "SettingsWidget passed null UpdateCheck!";
+    }
+#endif
 
     cfgForms = {{std::move(gfrm), std::move(uifrm), std::move(pfrm), std::move(avfrm), std::move(expfrm), std::move(abtfrm)}};
     for (auto& cfgForm : cfgForms)
@@ -109,6 +118,13 @@ void SettingsWidget::show(ContentLayout* contentLayout)
 void SettingsWidget::onTabChanged(int index)
 {
     settingsWidgets->setCurrentIndex(index);
+}
+
+void SettingsWidget::onUpdateAvailable(void)
+{
+    settingsWidgets->tabBar()->setProperty("update-available", true);
+    settingsWidgets->tabBar()->style()->unpolish(settingsWidgets->tabBar());
+    settingsWidgets->tabBar()->style()->polish(settingsWidgets->tabBar());
 }
 
 void SettingsWidget::retranslateUi()

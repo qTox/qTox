@@ -111,7 +111,7 @@
             <item>
              <widget class="QCheckBox" name="checkUpdates">
               <property name="text">
-               <string>Check for updates on startup</string>
+               <string>Check for updates</string>
               </property>
              </widget>
             </item>

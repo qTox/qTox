@@ -180,7 +180,7 @@ build_qtox() {
     rm -rf "$BUILDDIR"
 
     echo '*** BUILDING "FULL" VERSION ***'
-    cmake -H. -B"$BUILDDIR"
+    cmake -H. -B"$BUILDDIR" -DUPDATE_CHECK=ON
     bdir
 }
 
