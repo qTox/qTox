@@ -61,6 +61,7 @@
 #include "src/model/groupinvite.h"
 #include "src/model/profile/profileinfo.h"
 #include "src/net/autoupdate.h"
+#include "src/net/updatecheck.h"
 #include "src/nexus.h"
 #include "src/persistence/offlinemsgengine.h"
 #include "src/persistence/profile.h"
@@ -232,6 +233,14 @@ void Widget::init()
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
     groupInviteForm = new GroupInviteForm;
+#if UPDATE_CHECK_ENABLED
+    updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(Settings::getInstance()));
+    connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
+#endif
+    settingsWidget = new SettingsWidget(updateCheck.get(), this);
+#if UPDATE_CHECK_ENABLED 
+    updateCheck->checkForUpdate();
+#endif
 
     Core* core = Nexus::getCore();
     Profile* profile = Nexus::getProfile();
@@ -848,10 +857,6 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 
 void Widget::onShowSettings()
 {
-    if (!settingsWidget) {
-        settingsWidget = new SettingsWidget(this);
-    }
-
     if (Settings::getInstance().getSeparateWindow()) {
         if (!settingsWidget->isShown()) {
             settingsWidget->show(createContentDialog(DialogType::SettingDialog));
@@ -1587,6 +1592,13 @@ void Widget::toggleFullscreen()
     } else {
         setWindowState(windowState() | Qt::WindowFullScreen);
     }
+}
+
+void Widget::onUpdateAvailable(QString /*latestVersion*/, QUrl /*link*/)
+{
+    ui->settingsButton->setProperty("update-available", true);
+    ui->settingsButton->style()->unpolish(ui->settingsButton);
+    ui->settingsButton->style()->polish(ui->settingsButton);
 }
 
 ContentDialog* Widget::createContentDialog() const

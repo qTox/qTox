@@ -1130,12 +1130,14 @@ then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DSPELL_CHECK=OFF \
+        -DUPDATE_CHECK=ON \
         ..
 elif [[ "$BUILD_TYPE" == "debug" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Debug \
         -DSPELL_CHECK=OFF \
+        -DUPDATE_CHECK=ON \
         ..
 fi
 

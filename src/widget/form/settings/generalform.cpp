@@ -100,9 +100,7 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
 
     Settings& s = Settings::getInstance();
 
-#ifdef AUTOUPDATE_ENABLED
-    bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
-#else
+#if !defined(AUTOUPDATE_ENABLED) &&  !defined(UPDATE_CHECK_ENABLED)
     bodyUI->checkUpdates->setVisible(false);
 #endif
 

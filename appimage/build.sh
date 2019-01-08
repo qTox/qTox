@@ -117,7 +117,7 @@ cd build
 export PKG_CONFIG_PATH=/deps/lib/pkgconfig/
 
 cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING=ON \
--DAPPIMAGEKIT_PACKAGE_DEBS=ON
+-DAPPIMAGEKIT_PACKAGE_DEBS=ON -DUPDATE_CHECK=ON
 
 make
 make install
