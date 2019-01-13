@@ -21,7 +21,12 @@ set -eu -o pipefail
 
 # accelerate builds with ccache
 install_ccache() {
-    echo "Installing ccache ..."
+    # manually update even though `install` will already update, due to bug:
+        # Please don't worry, you likely hit a bug auto-updating from an old version.
+        # Rerun your command, everything is up-to-date and fine now.
+    echo "Updating brew..."
+    brew update
+    echo "Installing ccache..."
     brew install ccache
 }
 
