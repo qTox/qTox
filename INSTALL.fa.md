@@ -632,7 +632,7 @@ cd ..
 ```bash
 git clone https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
-git checkout v0.2.7
+git checkout v0.2.9
 autoreconf -if
 ./configure
 make -j$(nproc)

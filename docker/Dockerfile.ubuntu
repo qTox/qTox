@@ -31,7 +31,7 @@ RUN apt-get update && \
 
 RUN git clone https://github.com/toktok/c-toxcore.git /toxcore
 WORKDIR /toxcore
-RUN git checkout v0.2.2 && \
+RUN git checkout v0.2.9 && \
         cmake . && \
         cmake --build . && \
         make install && \
