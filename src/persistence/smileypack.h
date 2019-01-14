@@ -23,6 +23,7 @@
 #include <QIcon>
 #include <QMap>
 #include <QMutex>
+#include <QRegularExpression>
 
 #include <memory>
 
@@ -52,12 +53,14 @@ private:
     ~SmileyPack() override;
 
     bool load(const QString& filename);
+    void constructRegex();
 
     mutable std::map<QString, std::shared_ptr<QIcon>> cachedIcon;
     QHash<QString, QString> emoticonToPath;
     QList<QStringList> emoticons;
     QString path;
     QTimer* cleanupTimer;
+    QRegularExpression smilify;
     mutable QMutex loadingMutex;
 };
 
