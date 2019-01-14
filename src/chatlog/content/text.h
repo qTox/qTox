@@ -70,7 +70,7 @@ protected:
     void regenerate();
     void freeResources();
 
-    QSizeF idealSize();
+    virtual QSizeF idealSize();
     int cursorFromPos(QPointF scenePos, bool fuzzy = true) const;
     int getSelectionEnd() const;
     int getSelectionStart() const;
@@ -78,14 +78,16 @@ protected:
     QString extractSanitizedText(int from, int to) const;
     QString extractImgTooltip(int pos) const;
 
+    QTextDocument* doc = nullptr;
+    QSizeF size;
+    qreal width = 0.0;
+
 private:
     void selectText(QTextCursor& cursor, const std::pair<int, int>& point);
 
-    QTextDocument* doc = nullptr;
     QString text;
     QString rawText;
     QString selectedText;
-    QSizeF size;
     bool keepInMemory = false;
     bool elide = false;
     bool dirty = false;
@@ -93,7 +95,6 @@ private:
     int selectionEnd = -1;
     int selectionAnchor = -1;
     qreal ascent = 0.0;
-    qreal width = 0.0;
     QFont defFont;
     QString defStyleSheet;
     QColor color;

@@ -29,3 +29,11 @@ QDateTime Timestamp::getTime()
 {
     return time;
 }
+
+QSizeF Timestamp::idealSize()
+{
+    if (doc) {
+        return QSizeF(qMin(doc->idealWidth(), width), doc->size().height());
+    }
+    return size;
+}
