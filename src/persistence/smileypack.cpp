@@ -24,6 +24,7 @@
 #include <QDomElement>
 #include <QRegularExpression>
 #include <QStandardPaths>
+#include <QStringBuilder>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QTimer>
 
@@ -257,26 +258,33 @@ QString SmileyPack::smileyfied(const QString& msg)
 {
     QMutexLocker locker(&loadingMutex);
     QString result(msg);
+    QRegularExpression exp;
+    QString allPattern = QStringLiteral("(");
+
+
     for ( auto r = emoticonToPath.begin(); r != emoticonToPath.end(); ++r) {
-        QRegularExpression exp;
         if (r.key().toUcs4().length() == 1) {
             // UTF-8 emoji
-            exp.setPattern(r.key());
-        }
-        else {
+            allPattern = allPattern % r.key();
+        } else {
             // patterns like ":)" or ":smile:", don't match inside a word or else will hit punctuation and html tags
-            exp.setPattern(QStringLiteral(R"((?<=^|\s))") + QRegularExpression::escape(r.key()) + QStringLiteral(R"((?=$|\s))"));
+            allPattern = allPattern % QStringLiteral(R"((?<=^|\s))") % QRegularExpression::escape(r.key()) % QStringLiteral(R"((?=$|\s))");
         }
-        int replaceDiff = 0;
-        QRegularExpressionMatchIterator iter = exp.globalMatch(result);
-        while (iter.hasNext()) {
-            QRegularExpressionMatch match = iter.next();
-            int startPos = match.capturedStart();
-            int keyLength = r.key().length();
-            QString imgRichText = getAsRichText(r.key());
-            result.replace(startPos + replaceDiff, keyLength, imgRichText);
-            replaceDiff += imgRichText.length() - keyLength;
-        }
+        allPattern = allPattern % QStringLiteral("|");
+    }
+
+    allPattern[allPattern.size() - 1] = QChar(')');
+
+    exp.setPattern(allPattern);
+    int replaceDiff = 0;
+    QRegularExpressionMatchIterator iter = exp.globalMatch(result);
+    while (iter.hasNext()) {
+        QRegularExpressionMatch match = iter.next();
+        int startPos = match.capturedStart();
+        int keyLength = match.capturedLength();
+        QString imgRichText = getAsRichText(match.captured());
+        result.replace(startPos + replaceDiff, keyLength, imgRichText);
+        replaceDiff += imgRichText.length() - keyLength;
     }
     return result;
 }
