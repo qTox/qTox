@@ -245,8 +245,36 @@ bool SmileyPack::load(const QString& filename)
         emoticons.append(emoticonList);
     }
 
+    constructRegex();
+
     loadingMutex.unlock();
     return true;
+}
+
+/**
+ * @brief Creates the regex for replacing emoticons with the path to their pictures
+ */
+void SmileyPack::constructRegex()
+{
+    QString allPattern = QStringLiteral("(");
+
+    // construct one big regex that matches on every emoticon
+    for (const QString& emote : emoticonToPath.keys()) {
+        if (emote.toUcs4().length() == 1) {
+            // UTF-8 emoji
+            allPattern = allPattern % emote;
+        } else {
+            // patterns like ":)" or ":smile:", don't match inside a word or else will hit punctuation and html tags
+            allPattern = allPattern % QStringLiteral(R"((?<=^|\s))") % QRegularExpression::escape(emote) % QStringLiteral(R"((?=$|\s))");
+        }
+        allPattern = allPattern % QStringLiteral("|");
+    }
+
+    allPattern[allPattern.size() - 1] = QChar(')');
+
+    // compile and optimize regex
+    smilify.setPattern(allPattern);
+    smilify.optimize();
 }
 
 /**
@@ -258,26 +286,9 @@ QString SmileyPack::smileyfied(const QString& msg)
 {
     QMutexLocker locker(&loadingMutex);
     QString result(msg);
-    QRegularExpression exp;
-    QString allPattern = QStringLiteral("(");
 
-
-    for ( auto r = emoticonToPath.begin(); r != emoticonToPath.end(); ++r) {
-        if (r.key().toUcs4().length() == 1) {
-            // UTF-8 emoji
-            allPattern = allPattern % r.key();
-        } else {
-            // patterns like ":)" or ":smile:", don't match inside a word or else will hit punctuation and html tags
-            allPattern = allPattern % QStringLiteral(R"((?<=^|\s))") % QRegularExpression::escape(r.key()) % QStringLiteral(R"((?=$|\s))");
-        }
-        allPattern = allPattern % QStringLiteral("|");
-    }
-
-    allPattern[allPattern.size() - 1] = QChar(')');
-
-    exp.setPattern(allPattern);
     int replaceDiff = 0;
-    QRegularExpressionMatchIterator iter = exp.globalMatch(result);
+    QRegularExpressionMatchIterator iter = smilify.globalMatch(result);
     while (iter.hasNext()) {
         QRegularExpressionMatch match = iter.next();
         int startPos = match.capturedStart();

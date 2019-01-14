@@ -23,6 +23,7 @@
 #include <QIcon>
 #include <QMap>
 #include <QMutex>
+#include <QRegularExpression>
 
 #include <memory>
 
@@ -44,6 +45,7 @@ public:
 private slots:
     void onSmileyPackChanged();
     void cleanupIconsCache();
+    void constructRegex();
 
 private:
     SmileyPack();
@@ -58,6 +60,7 @@ private:
     QList<QStringList> emoticons;
     QString path;
     QTimer* cleanupTimer;
+    QRegularExpression smilify;
     mutable QMutex loadingMutex;
 };
 
