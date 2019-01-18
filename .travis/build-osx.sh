@@ -19,6 +19,8 @@
 # Fail out on error
 set -eu -o pipefail
 
+readonly BIN_NAME="qTox.dmg"
+
 # accelerate builds with ccache
 install_ccache() {
     # manually update even though `install` will already update, due to bug:
@@ -40,7 +42,6 @@ build() {
 
 # check if binary was built
 check() {
-    local BIN_NAME="qTox.dmg"
     if [[ ! -s "$BIN_NAME" ]]
     then
         echo "There's no $BIN_NAME !"
@@ -48,9 +49,14 @@ check() {
     fi
 }
 
+make_hash() {
+    shasum -a 256 "$BIN_NAME" > "$BIN_NAME".sha256
+}
+
 main() {
     install_ccache
     build
     check
+    make_hash
 }
 main
