@@ -66,5 +66,7 @@ fi
 # use the version number in the name when building a tag on Travis CI
 if [ -n "$TRAVIS_TAG" ]
 then
-    mv ./output/*.AppImage ./output/qTox-"$TRAVIS_TAG".x86_64.AppImage
+    readonly OUTFILE=./output/qTox-"$TRAVIS_TAG".x86_64.AppImage
+    mv ./output/*.AppImage "$OUTFILE"
+    sha256sum "$OUTFILE" > "$OUTFILE".sha256
 fi
