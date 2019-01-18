@@ -134,6 +134,14 @@ then
   sha256sum windows/cross-compile/build.sh > "$CACHE_DIR"/hash
 fi
 
+# Generate checksum files for releases
+if [ "$STAGE" == "stage3" && "$BUILD_TYPE" == "release" ]
+then
+  readonly OUT_DIR=./workspace/"$ARCH"/qtox/"$BUILD_TYPE"/
+  readonly NAME=setup-qtox-"$ARCH"-"$BUILD_TYPE".exe
+  sha256sum "$OUT_DIR""$NAME" > "$OUT_DIR""$NAME".sha256
+fi
+
 # Purely for debugging
 touch "$CACHE_DIR"/"$STAGE"
 ls -lbh "$CACHE_DIR"
