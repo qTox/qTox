@@ -90,6 +90,7 @@ static const QVector<QRegularExpression> URI_WORD_PATTERNS = {
     QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*(tox:[a-zA-Z\d]{76}))")),
     QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*(mailto:\S+@\S+\.\S+))")),
     QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*(tox:\S+@\S+))")),
+    QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*(magnet:[?]((xt(.\d)?=urn:)|(mt=)|(kt=)|(tr=)|(dn=)|(xl=)|(xs=)|(as=)|(x.))[\S| ]+))")),
 };
 
 
