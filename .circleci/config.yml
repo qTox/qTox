@@ -5,7 +5,7 @@ jobs:
     machine: true
     steps:
       - run:
-          name : Export env
+          name : Export environment variables
           command: |
             echo 'export MAKEFLAGS="j4"' >> $BASH_ENV
             echo 'export BUILD__="x86_64"' >> $BASH_ENV
