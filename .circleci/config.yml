@@ -38,6 +38,9 @@ jobs:
           name: Build stage 3
           command: |
             ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage3
+      - run:
+          name: Debug info
+          command: |
             ls -al ~/
             ls -al ~/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/
             ls -al ~/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe
