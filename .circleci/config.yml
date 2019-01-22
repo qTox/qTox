@@ -4,6 +4,7 @@ jobs:
   build:
     machine: true
     steps:
+      - checkout
       - run:
           name : Export environment variables
           command: |
@@ -19,6 +20,7 @@ jobs:
           name: Build stage 1
           command: |
             docker info
+            ls -al
             ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage1
       - run:
           name: Build stage 2
