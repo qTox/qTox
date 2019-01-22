@@ -4,43 +4,49 @@ jobs:
   build:
     machine: true
     steps:
+      - checkout
       - run:
-          name : Export env
+          name : Export environment variables
           command: |
             echo 'export MAKEFLAGS="j4"' >> $BASH_ENV
             echo 'export BUILD__="x86_64"' >> $BASH_ENV
             echo 'export BTYPE__="release"' >> $BASH_ENV
+            docker info
       - run:
           name: Install zip
           command: |
             sudo apt-get update
-            sudo apt-get install zip
+            sudo apt-get install zip tree
+      - restore_cache:
+          key: dependency-cache
+          paths:
+            - ~/cache
       - run:
           name: Build stage 1
           command: |
-            docker info
-            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage1
+            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "~/cache/${BUILD__}" stage1
       - run:
           name: Build stage 2
           command: |
-            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage2
+            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "~/cache/${BUILD__}" stage2
             ls -al ~/cache
+      - save_cache:
+          key: dependency-cache
+          paths:
+            - ~/cache
       - run:
           name: Build stage 3
           command: |
-            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage3
-            ls -al ~/
-            ls -al ~/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/
-            ls -al ~/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe
+            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "~/cache/${BUILD__}" stage3
       - run:
-          name: Zip artifacts
+          name: Debug info
           command: |
-            cd ~/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/
-            zip -r qtox_"$BUILD__"_"$BTYPE__".zip *
+            ls -al ~/
+            tree ~/project/workspace -L 4
       - store_artifacts:
-          path: ~/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox.exe
+          path: "/home/circleci/project/workspace/x86_64/qtox/release/qtox-x86_64-release.zip"
       - store_artifacts:
-          path: ~/qTox/workspace/"$BUILD__"/qtox/"$BTYPE__"/qtox_"$BUILD__"_"$BTYPE__".zip
+          path: "/home/circleci/project/workspace/x86_64/qtox/release/setup-qtox-x86_64-release.exe"
 workflows:
   version: 2
   build:
