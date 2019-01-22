@@ -11,22 +11,29 @@ jobs:
             echo 'export MAKEFLAGS="j4"' >> $BASH_ENV
             echo 'export BUILD__="x86_64"' >> $BASH_ENV
             echo 'export BTYPE__="release"' >> $BASH_ENV
+            docker info
       - run:
           name: Install zip
           command: |
             sudo apt-get update
             sudo apt-get install zip
+      - restore_cache:
+          key: dependency-cache
+          paths:
+            - ~/cache
       - run:
           name: Build stage 1
           command: |
-            docker info
-            ls -al
             ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage1
       - run:
           name: Build stage 2
           command: |
             ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" ~/cache/"$BUILD__" stage2
             ls -al ~/cache
+      - save_cache:
+          key: dependency-cache
+          paths:
+            - ~/cache
       - run:
           name: Build stage 3
           command: |
