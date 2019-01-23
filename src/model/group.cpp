@@ -21,6 +21,7 @@
 #include "friend.h"
 #include "src/friendlist.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 #include "src/widget/form/groupchatform.h"
 #include "src/widget/groupwidget.h"
@@ -46,7 +47,7 @@ void Group::updatePeer(int peerId, QString name)
 {
     ToxPk peerKey = Core::getInstance()->getGroupPeerPk(groupId, peerId);
     toxpks[peerKey] = name;
-    qDebug() << "name change: " + name; 
+    qDebug() << "name change: " + name;
     emit userListChanged(groupId, toxpks);
 }
 
@@ -99,6 +100,7 @@ void Group::regeneratePeerList()
     const Core* core = Core::getInstance();
 
     QStringList peers = core->getGroupPeerNames(groupId);
+    const auto oldPeers = toxpks.keys();
     toxpks.clear();
     const int nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i) {
@@ -118,7 +120,9 @@ void Group::regeneratePeerList()
             toxpks[pk] = peers[i];
         }
     }
-
+    if (avGroupchat) {
+        stopAudioOfDepartedPeers(oldPeers, toxpks);
+    }
     emit userListChanged(groupId, toxpks);
 }
 
@@ -196,4 +200,14 @@ void Group::setSelfName(const QString& name)
 QString Group::getSelfName() const
 {
     return selfName;
+}
+
+void Group::stopAudioOfDepartedPeers(const QList<ToxPk>& oldPks, const QMap<ToxPk, QString>& newPks)
+{
+    Core* core = Core::getInstance();
+    for(const auto& pk: oldPks) {
+        if(!newPks.contains(pk)) {
+            core->getAv()->invalidateGroupCallPeerSource(groupId, pk);
+        }
+    }
 }

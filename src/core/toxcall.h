@@ -1,13 +1,15 @@
 #ifndef TOXCALL_H
 #define TOXCALL_H
 
-#include <memory>
+#include <src/core/toxpk.h>
+#include <tox/toxav.h>
+
 #include <QMap>
 #include <QMetaObject>
 #include <QtGlobal>
-#include <cstdint>
 
-#include <tox/toxav.h>
+#include <cstdint>
+#include <memory>
 
 class QTimer;
 class AudioFilterer;
@@ -96,15 +98,15 @@ public:
 
     ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
 
-    void removePeer(int peerId);
-    void addPeer(int peerId);
-    bool havePeer(int peerId);
+    void removePeer(ToxPk peerId);
+    void addPeer(ToxPk peerId);
+    bool havePeer(ToxPk peerId);
     void clearPeers();
 
-    quint32 getAlSource(int peer);
+    quint32 getAlSource(ToxPk peer);
 
 private:
-    QMap<int, quint32> peers;
+    QMap<ToxPk, quint32> peers;
 
     // If you add something here, don't forget to override the ctors and move operators!
 };

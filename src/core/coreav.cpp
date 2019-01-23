@@ -501,11 +501,11 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
     }
 
     Audio& audio = Audio::getInstance();
-    if(!call.havePeer(peer)) {
-        call.addPeer(peer);
+    if(!call.havePeer(peerPk)) {
+        call.addPeer(peerPk);
     }
 
-    audio.playAudioBuffer(call.getAlSource(peer), data, samples, channels, sample_rate);
+    audio.playAudioBuffer(call.getAlSource(peerPk), data, samples, channels, sample_rate);
 }
 
 /**
@@ -513,23 +513,13 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
  * @param group Group Index
  * @param peer Peer Index
  */
-void CoreAV::invalidateGroupCallPeerSource(int group, int peer)
+void CoreAV::invalidateGroupCallPeerSource(int group, ToxPk peerPk)
 {
     auto it = groupCalls.find(group);
     if (it == groupCalls.end()) {
         return;
     }
-    it->second.removePeer(peer);
-}
-
-/**
- * @brief Called from core to make sure the sources for that group are invalidated when
- *        the peer list changes.
- * @param group Group Index
- */
-void CoreAV::invalidateGroupCallSources(int group)
-{
-    groupCalls.erase(group);
+    it->second.removePeer(peerPk);
 }
 
 /**
