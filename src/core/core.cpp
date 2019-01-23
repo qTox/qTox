@@ -501,10 +501,6 @@ void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, Tox_Message_T
 void Core::onGroupPeerListChange(Tox*, uint32_t groupId, void* vCore)
 {
     const auto core = static_cast<Core*>(vCore);
-    if (core->getGroupAvEnabled(groupId)) {
-        CoreAV::invalidateGroupCallSources(groupId);
-    }
-
     qDebug() << QString("Group %1 peerlist changed").arg(groupId);
     emit core->groupPeerlistChanged(groupId);
 }

@@ -65,6 +65,9 @@ signals:
     void userListChanged(uint32_t groupId, const QMap<ToxPk, QString>& toxpks);
 
 private:
+    void stopAudioOfDepartedPeers(const QList<ToxPk>& oldPks, const QMap<ToxPk, QString>& newPks);
+
+private:
     QString selfName;
     QString title;
     QMap<ToxPk, QString> toxpks;
