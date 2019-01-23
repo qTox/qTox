@@ -467,17 +467,8 @@ void GroupChatForm::onCallClicked()
 
 GenericNetCamView* GroupChatForm::createNetcam()
 {
-    GroupNetCamView* view = new GroupNetCamView(group->getId(), this);
-
-    const auto& names = group->getPeerList();
-    const auto ownPk = Core::getInstance()->getSelfPublicKey();
-    for (const auto& peerPk : names.keys()) {
-        if (peerPk != ownPk) {
-            static_cast<GroupNetCamView*>(view)->addPeer(peerPk, names.find(peerPk).value());
-        }
-    }
-
-    return view;
+    // leave view empty, it will pe populated once we receive audio from peers
+    return new GroupNetCamView(group->getId(), this);
 }
 
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)
