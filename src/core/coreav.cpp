@@ -485,6 +485,8 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
         return;
     }
 
+    emit c->groupPeerAudioPlaying(group, peer);
+
     CoreAV* cav = c->getAv();
 
     auto it = cav->groupCalls.find(group);
@@ -493,8 +495,6 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
     }
 
     ToxGroupCall& call = it->second;
-
-    emit c->groupPeerAudioPlaying(group, peer);
 
     if (call.getMuteVol() || !call.isActive()) {
         return;
