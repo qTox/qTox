@@ -42,12 +42,12 @@ jobs:
           name: Debug info
           command: |
             ls -al ~/
-            ls -al "{CIRCLE_WORKING_DIRECTORY}/workspace/${BUILD__}/qtox/${BTYPE__}/"
-            ls -al "{CIRCLE_WORKING_DIRECTORY}/workspace/${BUILD__}/qtox/${BTYPE__}/qtox.exe"
+            ls -al "${CIRCLE_WORKING_DIRECTORY}/workspace/${BUILD__}/qtox/${BTYPE__}/"
+            ls -al "${CIRCLE_WORKING_DIRECTORY}/workspace/${BUILD__}/qtox/${BTYPE__}/qtox.exe"
       - run:
           name: Zip artifacts
           command: |
-            cd "{CIRCLE_WORKING_DIRECTORY}/workspace/${BUILD__}/qtox/${BTYPE__}/"
+            cd "${CIRCLE_WORKING_DIRECTORY}/workspace/${BUILD__}/qtox/${BTYPE__}/"
             zip -r "qtox_${BUILD__}_${BTYPE__}.zip" *
       - store_artifacts:
           path: "${CIRCLE_WORKING_DIRECTORY}/workspace/${BUILD__}/qtox/${BTYPE__}/qtox.exe"
