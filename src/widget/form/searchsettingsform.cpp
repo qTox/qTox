@@ -1,5 +1,7 @@
 #include "searchsettingsform.h"
 #include "ui_searchsettingsform.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/widget/style.h"
 #include "src/widget/form/loadhistorydialog.h"
@@ -142,7 +144,8 @@ void SearchSettingsForm::onRegularClicked(const bool checked)
 
 void SearchSettingsForm::onChoiceDate()
 {
-    LoadHistoryDialog dlg;
+    // FIXME(sudden6): this is a hack, pass in History without the need for Nexus
+    LoadHistoryDialog dlg{*Nexus::getProfile()->getHistory()};
     dlg.setTitle(tr("Select Date Dialog"));
     dlg.setInfoLabel(tr("Select a date"));
     if (dlg.exec()) {

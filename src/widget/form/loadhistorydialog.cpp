@@ -19,28 +19,28 @@
 
 #include "loadhistorydialog.h"
 #include "ui_loadhistorydialog.h"
-#include "src/nexus.h"
 #include "src/persistence/history.h"
-#include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include <QDate>
 #include <QLabel>
 #include <QTextCharFormat>
 #include <QCalendarWidget>
 
-LoadHistoryDialog::LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent)
+LoadHistoryDialog::LoadHistoryDialog(const ToxPk& friendPk, History &history, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::LoadHistoryDialog)
     , friendPk(friendPk)
+    , history{history}
 {
     ui->setupUi(this);
     getYears();
     ui->yearsTree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
-LoadHistoryDialog::LoadHistoryDialog(QWidget* parent)
+LoadHistoryDialog::LoadHistoryDialog(History &history, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::LoadHistoryDialog)
+    , history{history}
 {
     ui->setupUi(this);
 }
@@ -73,8 +73,7 @@ void LoadHistoryDialog::setInfoLabel(const QString& info)
 
 void LoadHistoryDialog::getYears()
 {
-    History* history = Nexus::getProfile()->getHistory();
-    auto counts = history->getChatHistoryYears(this->friendPk);
+    auto counts = history.getChatHistoryYears(this->friendPk);
 
     auto tree = ui->yearsTree;
 
@@ -90,7 +89,7 @@ void LoadHistoryDialog::getYears()
 
         const QDate start(count.year, 1, 1);
         const QDate end = start.addYears(1);
-        QList<History::DateMessages> date_counts = history->getChatHistoryCounts(this->friendPk, start, end);
+        QList<History::DateMessages> date_counts = history.getChatHistoryCounts(this->friendPk, start, end);
 
         for(auto elem: date_counts) {
             QTreeWidgetItem* dayItem = new QTreeWidgetItem(year);
