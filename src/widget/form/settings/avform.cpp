@@ -544,6 +544,11 @@ void AVForm::on_inDevCombobox_currentIndexChanged(int deviceIndex)
     audioSettings->setInDev(deviceName);
 
     audio->reinitInput(deviceName);
+    subscribedToAudioIn = inputEnabled;
+    if (inputEnabled) {
+        audio->subscribeInput();
+    }
+
     microphoneSlider->setEnabled(inputEnabled);
     if (!inputEnabled) {
         volumeDisplay->setValue(volumeDisplay->minimum());
