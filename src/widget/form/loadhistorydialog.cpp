@@ -22,7 +22,9 @@
 #include "src/nexus.h"
 #include "src/persistence/history.h"
 #include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
 #include <QDate>
+#include <QLabel>
 #include <QTextCharFormat>
 #include <QCalendarWidget>
 
@@ -32,9 +34,8 @@ LoadHistoryDialog::LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent)
     , friendPk(friendPk)
 {
     ui->setupUi(this);
-    highlightDates(QDate::currentDate().year(), QDate::currentDate().month());
-    connect(ui->fromDate, &QCalendarWidget::currentPageChanged, this,
-            &LoadHistoryDialog::highlightDates);
+    getYears();
+    ui->yearsTree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 LoadHistoryDialog::LoadHistoryDialog(QWidget* parent)
@@ -51,14 +52,13 @@ LoadHistoryDialog::~LoadHistoryDialog()
 
 QDateTime LoadHistoryDialog::getFromDate()
 {
-    QDateTime res(ui->fromDate->selectedDate());
-    if (res.date().month() != ui->fromDate->monthShown()
-        || res.date().year() != ui->fromDate->yearShown()) {
-        QDate newDate(ui->fromDate->yearShown(), ui->fromDate->monthShown(), 1);
-        res.setDate(newDate);
+    auto selection = ui->yearsTree->selectedItems();
+    if(selection.size() == 0) {
+        qDebug() << "No element selected, returning default value";
+        return{};
     }
 
-    return res;
+    return selection[0]->data(0, Qt::UserRole).toDateTime();
 }
 
 void LoadHistoryDialog::setTitle(const QString& title)
@@ -71,20 +71,33 @@ void LoadHistoryDialog::setInfoLabel(const QString& info)
     ui->fromLabel->setText(info);
 }
 
-void LoadHistoryDialog::highlightDates(int year, int month)
+void LoadHistoryDialog::getYears()
 {
     History* history = Nexus::getProfile()->getHistory();
-    QDate monthStart(year, month, 1);
-    QDate monthEnd(year, month + 1, 1);
-    QList<History::DateMessages> counts =
-        history->getChatHistoryCounts(this->friendPk, monthStart, monthEnd);
+    auto counts = history->getChatHistoryYears(this->friendPk);
 
-    QTextCharFormat format;
-    format.setFontWeight(QFont::Bold);
+    auto tree = ui->yearsTree;
 
-    QCalendarWidget* calendar = ui->fromDate;
-    for (History::DateMessages p : counts) {
-        format.setToolTip(tr("%1 messages").arg(p.count));
-        calendar->setDateTextFormat(monthStart.addDays(p.offsetDays), format);
+    for (auto count : counts) {
+        QTreeWidgetItem* year = new QTreeWidgetItem(tree);
+
+        const Qt::ItemFlags newFlags = year->flags() &~ Qt::ItemIsSelectable;
+        year->setFlags(newFlags);
+
+        year->setData(0, Qt::DisplayRole, count.year);
+        year->setData(1, Qt::DisplayRole, count.count);
+        tree->addTopLevelItem(year);
+
+        const QDate start(count.year, 1, 1);
+        const QDate end = start.addYears(1);
+        QList<History::DateMessages> date_counts = history->getChatHistoryCounts(this->friendPk, start, end);
+
+        for(auto elem: date_counts) {
+            QTreeWidgetItem* dayItem = new QTreeWidgetItem(year);
+            QDate exact = start.addDays(elem.offsetDays);
+            dayItem->setData(0, Qt::DisplayRole, exact.toString(Settings::getInstance().getDateFormat()));
+            dayItem->setData(1, Qt::DisplayRole, elem.count);
+            dayItem->setData(0, Qt::UserRole, exact);   // store date in machine form here
+        }
     }
 }

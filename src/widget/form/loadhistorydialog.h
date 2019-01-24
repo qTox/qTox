@@ -41,10 +41,8 @@ public:
     void setTitle(const QString& title);
     void setInfoLabel(const QString& info);
 
-public slots:
-    void highlightDates(int year, int month);
-
 private:
+    void getYears();
     Ui::LoadHistoryDialog* ui;
     const ToxPk friendPk;
 };

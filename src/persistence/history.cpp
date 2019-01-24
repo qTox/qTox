@@ -497,6 +497,39 @@ QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk
 }
 
 /**
+ * @brief Fetches chat messages counts for each day from the database.
+ * @param friendPk Friend public key to fetch.
+ * @return List of integers containing the years for which a history exists
+ */
+QList<History::YearMessages> History::getChatHistoryYears(const ToxPk& friendPk)
+{
+    if (!isValid()) {
+        return {};
+    }
+
+    QList<YearMessages> years;
+
+    auto rowCallback = [&years](const QVector<QVariant>& row) {
+        YearMessages msgs;
+        msgs.year = row[0].toUInt();
+        msgs.count = row[1].toUInt();
+        years.append(msgs);
+    };
+
+    QString queryText =
+        QString("SELECT strftime('%Y', history.timestamp/1000, 'unixepoch') as year, COUNT(history.id) "
+                "FROM history "
+                "JOIN peers chat ON chat_id = chat.id "
+                "WHERE chat.public_key='%1' "
+                "GROUP BY year")
+            .arg(friendPk.toString());
+
+    db->execNow({queryText, rowCallback});
+
+    return years;
+}
+
+/**
  * @brief Search phrase in chat messages
  * @param friendPk Friend public key
  * @param from a date message where need to start a search
