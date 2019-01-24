@@ -145,7 +145,7 @@ void SearchSettingsForm::onRegularClicked(const bool checked)
 void SearchSettingsForm::onChoiceDate()
 {
     // FIXME(sudden6): this is a hack, pass in History without the need for Nexus
-    LoadHistoryDialog dlg{*Nexus::getProfile()->getHistory()};
+    LoadHistoryDialog dlg{*Nexus::getProfile()->getHistory(), &Settings::getInstance()};
     dlg.setTitle(tr("Select Date Dialog"));
     dlg.setInfoLabel(tr("Select a date"));
     if (dlg.exec()) {

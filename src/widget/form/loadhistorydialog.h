@@ -29,14 +29,15 @@ class LoadHistoryDialog;
 }
 
 class History;
+class Settings;
 
 class LoadHistoryDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit LoadHistoryDialog(const ToxPk& friendPk, History& history, QWidget* parent = nullptr);
-    explicit LoadHistoryDialog(History& history, QWidget* parent = nullptr);
+    explicit LoadHistoryDialog(const ToxPk& friendPk, History& history, Settings* settings = nullptr, QWidget* parent = nullptr);
+    explicit LoadHistoryDialog(History& history, Settings* settings = nullptr, QWidget* parent = nullptr);
     ~LoadHistoryDialog();
 
     QDateTime getFromDate();
@@ -48,6 +49,7 @@ private:
     Ui::LoadHistoryDialog* ui;
     const ToxPk friendPk;
     History& history;
+    Settings* settings = nullptr;
 };
 
 #endif // LOADHISTORYDIALOG_H
