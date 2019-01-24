@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>347</width>
-    <height>264</height>
+    <width>404</width>
+    <height>316</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,10 +25,29 @@
     </widget>
    </item>
    <item>
-    <widget class="QCalendarWidget" name="fromDate">
-     <property name="gridVisible">
-      <bool>false</bool>
+    <widget class="QTreeWidget" name="yearsTree">
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
      </property>
+     <attribute name="headerCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="headerStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Date</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Messages</string>
+      </property>
+     </column>
     </widget>
    </item>
    <item>

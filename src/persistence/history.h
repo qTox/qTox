@@ -149,6 +149,12 @@ public:
         uint count;
     };
 
+    struct YearMessages
+    {
+        uint year;
+        uint count;
+    };
+
 public:
     explicit History(std::shared_ptr<RawDatabase> db);
     ~History();
@@ -179,6 +185,7 @@ public:
 
     void markAsSent(RowId messageId);
 
+    QList<YearMessages> getChatHistoryYears(const ToxPk &friendPk);
 protected:
     QVector<RawDatabase::Query>
     generateNewMessageQueries(const QString& friendPk, const QString& message,
