@@ -199,14 +199,6 @@ add_definitions(
   -DGIT_VERSION="${GIT_VERSION}"
 )
 
-if (NOT TIMESTAMP)
-  execute_process(
-    COMMAND date +%s
-    OUTPUT_VARIABLE TIMESTAMP
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-  )
-endif()
-
 set(APPLE_EXT False)
 if (FOUNDATION_FOUND AND IOKIT_FOUND)
   set(APPLE_EXT True)
@@ -230,6 +222,5 @@ if (PLATFORM_EXTENSIONS)
 endif()
 
 add_definitions(
-  -DTIMESTAMP=${TIMESTAMP}
   -DLOG_TO_FILE=1
 )

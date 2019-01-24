@@ -69,6 +69,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-overflow")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-aliasing")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
 
+# avoid timestamps in binary for reproducible builds, not added until GCC 4.9
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG(-Wdate-time COMPILER_SUPPORTS_WDATE_TIME)
+if(COMPILER_SUPPORTS_WDATE_TIME)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdate-time")
+endif()
+
 if (NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstack-protector")
@@ -100,6 +107,15 @@ include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
 
 include(Dependencies)
+
+if(NOT Qt5Widgets_VERSION VERSION_LESS "5.9")
+  # Drop the file modification time of source files from generated files
+  # to help with reproducible builds. We do not use QFileInfo.lastModified
+  # so this has no unwanted side effects. This mtime started appearing in
+  # Qt 5.8. The option to force the old file format without mtime was
+  # added in Qt 5.9. See https://bugreports.qt.io/browse/QTBUG-58769
+  set(RCC_OPTIONS ${RCC_OPTIONS} -format-version 1)
+endif()
 
 ################################################################################
 #
