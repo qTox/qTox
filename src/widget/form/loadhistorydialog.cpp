@@ -26,21 +26,23 @@
 #include <QTextCharFormat>
 #include <QCalendarWidget>
 
-LoadHistoryDialog::LoadHistoryDialog(const ToxPk& friendPk, History &history, QWidget* parent)
+LoadHistoryDialog::LoadHistoryDialog(const ToxPk& friendPk, History &history, Settings* settings, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::LoadHistoryDialog)
     , friendPk(friendPk)
     , history{history}
+    , settings{settings}
 {
     ui->setupUi(this);
     getYears();
     ui->yearsTree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
-LoadHistoryDialog::LoadHistoryDialog(History &history, QWidget* parent)
+LoadHistoryDialog::LoadHistoryDialog(History &history, Settings* settings, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::LoadHistoryDialog)
     , history{history}
+    , settings{settings}
 {
     ui->setupUi(this);
 }
@@ -94,7 +96,15 @@ void LoadHistoryDialog::getYears()
         for(auto elem: date_counts) {
             QTreeWidgetItem* dayItem = new QTreeWidgetItem(year);
             QDate exact = start.addDays(elem.offsetDays);
-            dayItem->setData(0, Qt::DisplayRole, exact.toString(Settings::getInstance().getDateFormat()));
+
+            QString date{};
+            if(settings == nullptr) {
+                date = exact.toString();
+            } else {
+                date = exact.toString(settings->getDateFormat());
+            }
+
+            dayItem->setData(0, Qt::DisplayRole, date);
             dayItem->setData(1, Qt::DisplayRole, elem.count);
             dayItem->setData(0, Qt::UserRole, exact);   // store date in machine form here
         }
