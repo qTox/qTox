@@ -28,13 +28,15 @@ namespace Ui {
 class LoadHistoryDialog;
 }
 
+class History;
+
 class LoadHistoryDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent = nullptr);
-    explicit LoadHistoryDialog(QWidget* parent = nullptr);
+    explicit LoadHistoryDialog(const ToxPk& friendPk, History& history, QWidget* parent = nullptr);
+    explicit LoadHistoryDialog(History& history, QWidget* parent = nullptr);
     ~LoadHistoryDialog();
 
     QDateTime getFromDate();
@@ -45,6 +47,7 @@ private:
     void getYears();
     Ui::LoadHistoryDialog* ui;
     const ToxPk friendPk;
+    History& history;
 };
 
 #endif // LOADHISTORYDIALOG_H
