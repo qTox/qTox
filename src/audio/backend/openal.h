@@ -118,7 +118,7 @@ private:
 
 protected:
     QThread* audioThread;
-    mutable QMutex audioLock;
+    mutable QMutex audioLock{QMutex::Recursive};
 
     ALCdevice* alInDev = nullptr;
     quint32 inSubscriptions = 0;
