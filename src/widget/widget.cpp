@@ -2075,16 +2075,6 @@ void Widget::setStatusBusy()
     Nexus::getCore()->setStatus(Status::Busy);
 }
 
-void Widget::onMessageSendResult(uint32_t friendId, const QString& message, int messageId)
-{
-    Q_UNUSED(message)
-    Q_UNUSED(messageId)
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f) {
-        return;
-    }
-}
-
 void Widget::onGroupSendFailed(int groupId)
 {
     Group* g = GroupList::findGroup(groupId);
