@@ -15,6 +15,7 @@ profile qtox /usr{,/local}/bin/qtox {
   #include <abstractions/ibus>
   #include <abstractions/kde>
   #include <abstractions/nameservice>
+  #include <abstractions/openssl>
   #include <abstractions/video>
 
   # Site-specific additions and overrides. See local/README for details.
