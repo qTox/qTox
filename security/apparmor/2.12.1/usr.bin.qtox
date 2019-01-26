@@ -11,6 +11,7 @@ profile qtox /usr{,/local}/bin/qtox {
   #include <abstractions/dbus-session-strict>
   #include <abstractions/dri-enumerate>
   #include <abstractions/gnome>
+  #include <abstractions/ibus>
   #include <abstractions/kde>
   #include <abstractions/nameservice>
   #include <abstractions/video>
