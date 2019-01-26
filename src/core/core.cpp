@@ -62,6 +62,62 @@ namespace {
         }
         return error;
     }
+
+    bool parseFriendSendMessageError(Tox_Err_Friend_Send_Message  error)
+    {
+        switch (error) {
+        case TOX_ERR_FRIEND_SEND_MESSAGE_OK:
+            return true;
+        case TOX_ERR_FRIEND_SEND_MESSAGE_NULL:
+            qCritical() << "Send friend message passed an unexpected null argument";
+            return false;
+        case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_FOUND:
+            qCritical() << "Send friend message could not find friend";
+            return false;
+        case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_CONNECTED:
+            qCritical() << "Send friend message: friend is offline";
+            return false;
+        case TOX_ERR_FRIEND_SEND_MESSAGE_SENDQ:
+            qCritical() << "Failed to allocate more message queue";
+            return false;
+        case TOX_ERR_FRIEND_SEND_MESSAGE_TOO_LONG:
+            qCritical() << "Attemped to send message that's too long";
+            return false;
+        case TOX_ERR_FRIEND_SEND_MESSAGE_EMPTY:
+            qCritical() << "Attempted to send an empty message";
+            return false;
+        default:
+            qCritical() << "Unknown friend send message error:" << static_cast<int>(error);
+            return false;
+        }
+    }
+
+    bool parseConferenceSendMessageError(Tox_Err_Conference_Send_Message  error)
+    {
+        switch (error) {
+        case TOX_ERR_CONFERENCE_SEND_MESSAGE_OK:
+            return true;
+
+        case TOX_ERR_CONFERENCE_SEND_MESSAGE_CONFERENCE_NOT_FOUND:
+            qCritical() << "Conference not found";
+            return false;
+
+        case TOX_ERR_CONFERENCE_SEND_MESSAGE_FAIL_SEND:
+            qCritical() << "Conference message failed to send";
+            return false;
+
+        case TOX_ERR_CONFERENCE_SEND_MESSAGE_NO_CONNECTION:
+            qCritical() << "No connection";
+            return false;
+
+        case TOX_ERR_CONFERENCE_SEND_MESSAGE_TOO_LONG:
+            qCritical() << "Message too long";
+            return false;
+        default:
+            qCritical() << "Unknown Tox_Err_Conference_Send_Message  error:" << static_cast<int>(error);
+            return false;
+        }
+    }
 } // namespace
 
 Core::Core(QThread* coreThread)
@@ -600,24 +656,33 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
     emit saveRequest();
 }
 
+int Core::sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type)
+{
+    int size = message.toUtf8().size();
+    auto maxSize = tox_max_message_length();
+    if (size > maxSize) {
+        qCritical() << "Core::sendMessageWithType called with message of size:" << size << "when max is:" << maxSize <<". Ignoring.";
+        return 0;
+    }
+
+    ToxString cMessage(message);
+    Tox_Err_Friend_Send_Message error;
+    int receipt = tox_friend_send_message(tox.get(), friendId, type,
+                                          cMessage.data(), cMessage.size(), &error);
+    parseFriendSendMessageError(error);
+    return receipt;
+}
+
 int Core::sendMessage(uint32_t friendId, const QString& message)
 {
     QMutexLocker ml(coreLoopLock.get());
-    ToxString cMessage(message);
-    int receipt = tox_friend_send_message(tox.get(), friendId, TOX_MESSAGE_TYPE_NORMAL,
-                                          cMessage.data(), cMessage.size(), nullptr);
-    emit messageSentResult(friendId, message, receipt);
-    return receipt;
+    return sendMessageWithType(friendId, message, TOX_MESSAGE_TYPE_NORMAL);
 }
 
 int Core::sendAction(uint32_t friendId, const QString& action)
 {
     QMutexLocker ml(coreLoopLock.get());
-    ToxString cMessage(action);
-    int receipt = tox_friend_send_message(tox.get(), friendId, TOX_MESSAGE_TYPE_ACTION,
-                                          cMessage.data(), cMessage.size(), nullptr);
-    emit messageSentResult(friendId, action, receipt);
-    return receipt;
+    return sendMessageWithType(friendId, action, TOX_MESSAGE_TYPE_ACTION);
 }
 
 void Core::sendTyping(uint32_t friendId, bool typing)
@@ -626,34 +691,6 @@ void Core::sendTyping(uint32_t friendId, bool typing)
 
     if (!tox_self_set_typing(tox.get(), friendId, typing, nullptr)) {
         emit failedToSetTyping(typing);
-    }
-}
-
-bool parseConferenceSendMessageError(Tox_Err_Conference_Send_Message  error)
-{
-    switch (error) {
-    case TOX_ERR_CONFERENCE_SEND_MESSAGE_OK:
-        return true;
-
-    case TOX_ERR_CONFERENCE_SEND_MESSAGE_CONFERENCE_NOT_FOUND:
-        qCritical() << "Conference not found";
-        return false;
-
-    case TOX_ERR_CONFERENCE_SEND_MESSAGE_FAIL_SEND:
-        qCritical() << "Conference message failed to send";
-        return false;
-
-    case TOX_ERR_CONFERENCE_SEND_MESSAGE_NO_CONNECTION:
-        qCritical() << "No connection";
-        return false;
-
-    case TOX_ERR_CONFERENCE_SEND_MESSAGE_TOO_LONG:
-        qCritical() << "Message too long";
-        return false;
-
-    default:
-        qCritical() << "Unknown Tox_Err_Conference_Send_Message  error";
-        return false;
     }
 }
 

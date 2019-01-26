@@ -197,8 +197,6 @@ signals:
     void groupPeerNameChanged(int groupnumber, int peernumber, const QString& newName);
     void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void groupPeerAudioPlaying(int groupnumber, int peernumber);
-
-    void messageSentResult(uint32_t friendId, const QString& message, int messageId);
     void groupSentFailed(int groupId);
     void actionSentResult(uint32_t friendId, const QString& action, int success);
 
@@ -236,6 +234,7 @@ private:
     static void onReadReceiptCallback(Tox* tox, uint32_t friendId, uint32_t receipt, void* core);
 
     void sendGroupMessageWithType(int groupId, const QString& message, Tox_Message_Type type);
+    int sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type);
     bool parsePeerQueryError(Tox_Err_Conference_Peer_Query error) const;
     bool parseConferenceJoinError(Tox_Err_Conference_Join error) const;
     bool checkConnection();
