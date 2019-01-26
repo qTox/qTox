@@ -1,0 +1,103 @@
+#include <tunables/global>
+#include <tunables/usr.bin.qtox>
+
+# using variables in profile name is not yet recommended due to issues with
+# AppArmor tools
+# TODO: use this alternative in the future when available
+#profile qtox @{qtox_prefix}/bin/qtox {
+profile qtox /usr{,/local}/bin/qtox {
+  #include <abstractions/audio>
+  #include <abstractions/base>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/dri-enumerate>
+  #include <abstractions/gnome>
+  #include <abstractions/kde-globals-write>
+  #include <abstractions/kde-icon-cache-write>
+  #include <abstractions/kde>
+  #include <abstractions/mesa>
+  #include <abstractions/nameservice>
+  #include <abstractions/qt5-compose-cache-write>
+  #include <abstractions/qt5-settings-write>
+  #include <abstractions/recent-documents-write>
+  #include <abstractions/video>
+
+  # Site-specific additions and overrides. See local/README for details.
+  #include if exists <local/usr.bin.qtox>
+
+  # Main executable
+
+  @{qtox_prefix}/bin mr,
+
+  # Other executables
+
+  #TODO: use xdg-open abstraction when it's available
+  /usr/bin/xdg-open PUx,
+
+  # Networking
+
+  network tcp,
+  network udp,
+
+  # System files
+
+  @{qtox_additional_rw_dirs}/ r,
+  @{qtox_additional_rw_dirs}/** rw,
+
+  # Sensitive directory access!!!
+  # Allow navigating directories with file dialog, to access directory you
+  # can write (read) file to, for most convenience (though against maximum
+  # security). Note: this allows reading only directory contents (list),
+  # not the files itself.
+  /{,**/} r,
+
+  /dev/ r,
+  /dev/dri/ r,
+  /dev/video[0-9]* rw, # webcam
+  /etc/fstab r, # file dialog
+  /etc/xdg/menus/ r, # file dialog
+  /proc/sys/kernel/core_pattern r, # for  KCrash::initialize()
+  /proc/sys/kernel/random/boot_id r, # for QSysInfo::bootUniqueId(), mvoe to qt5 abstraction?
+  /run/udev/data/*:* r, # libKF5KIOFileWidgets.so -> libudev.so (KDE file dialog)
+  /sys/bus/ r, # file dialog
+  /sys/bus/usb/devices/ r, # file dialog
+  /sys/class/ r, # file dialog
+  /sys/devices/system/node/ r,  # for ld-linux-x86-64.so -> libnuma1.so
+  /sys/devices/system/node/node[0-9]*/meminfo r, # for ld-linux-x86-64.so -> libnuma1.so
+  /usr/share/emoticons/{,**} r,
+  /usr/share/kservices5/{,**} r, # file dialog
+  /usr/share/mime/ r, # file dialog
+  /usr/share/plasma/look-and-feel/*/contents/defaults r, # TODO: move to kde abstraction?
+  /usr/share/sounds/ r, # file dialog (alert)
+
+  # User files
+
+  # Sensitive file access!!!
+  # Allow reading & writing into $HOME, EXCEPT for dot files and directories,
+  # for most convenience (though against maximum security).
+  owner @{HOME}/ r,
+  owner @{HOME}/[^.]* rw,
+  owner @{HOME}/[^.]*/{,**} rw,
+  # QSaveFile security measures? While saving log file
+  owner @{HOME}/[^.]* l -> @{HOME}/#[0-9]*[0-9],
+  owner @{HOME}/[^.]*/** l -> @{HOME}/#[0-9]*[0-9],
+
+  owner /{,var/}run/user/@{uid}/#[0-9]*[0-9] rw, # file dialog
+  owner /{,var/}run/user/@{uid}/qTox*.slave-socket rwl -> /{,var/}run/user/@{uid}/#[0-9]*[0-9], # file dialog
+  owner @{HOME}/.cache/Tox/ w,
+  owner @{HOME}/.cache/Tox/qTox/{,**} rw,
+  owner @{HOME}/.cache/thumbnails/** rw, # receiving image file produces thumbnail?
+  owner @{HOME}/.config/menus/ r, # file dialog
+  owner @{HOME}/.config/menus/applications-merged/ r, # file dialog
+  owner @{HOME}/.config/qToxrc rw,
+  owner @{HOME}/.config/qToxrc.?????? rwl -> @{HOME}/.config/#[0-9]*[0-9], # QSaveFile?
+  owner @{HOME}/.config/qToxrc.lock rwk,
+  owner @{HOME}/.config/tox/** l -> @{HOME}/.config/tox/**, # QSaveFile?
+  owner @{HOME}/.config/tox/{,**} rwk,
+  owner @{HOME}/.local/share/user-places.xbel r, # file dialog
+  owner @{PROC}/@{pid}/cmdline r,
+
+  # Backport from more recent qt5-compose-cache-write abstraction
+  # commit 1250402471d9d83134b0faa90239a733a37f23f0
+  owner @{HOME}/.cache/qt_compose_cache_{little,big}_endian_* rwl -> @{HOME}/.cache/#[0-9]*[0-9],
+  owner @{HOME}/.cache/#[0-9]*[0-9] rw, # QSaveFile (anonymous shared memory)
+}
