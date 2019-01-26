@@ -33,6 +33,11 @@ profile qtox /usr{,/local}/bin/qtox {
   #TODO: use xdg-open abstraction when it's available
   /usr/bin/xdg-open PUx,
 
+  # Additional libraries
+
+  # Allow /usr/local/lib/libtoxcore.so...
+  @{qtox_prefix}/lib/*.so* mr,
+
   # Networking
 
   network tcp,
