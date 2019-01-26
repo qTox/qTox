@@ -189,6 +189,7 @@ profile qtox /usr{,/local}/bin/qtox {
   owner @{HOME}/.config/qToxrc.lock rwk,
   owner @{HOME}/.config/tox/** l -> @{HOME}/.config/tox/**, # QSaveFile?
   owner @{HOME}/.config/tox/{,**} rwk,
+  owner @{HOME}/.local/share/qTox/{,**} rw,
   owner @{HOME}/.local/share/user-places.xbel r, # file dialog
   owner @{PROC}/@{pid}/cmdline r,
 
