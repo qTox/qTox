@@ -1038,16 +1038,26 @@ void Core::loadGroups()
         QString name;
         const auto groupNumber = groupNumbers[i];
         size_t titleSize = tox_conference_get_title_size(tox.get(), groupNumber, &error);
+        const GroupId persistentId = getGroupPersistentId(groupNumber);
+        const QString defaultName = tr("Groupchat %1").arg(persistentId.toString().left(8));
         if (LogConferenceTitleError(error)) {
-            name = tr("Groupchat %1").arg(getGroupPersistentId(groupNumber).toString().left(8));
+            name = defaultName;
         } else {
             QByteArray nameByteArray = QByteArray(static_cast<int>(titleSize), Qt::Uninitialized);
             tox_conference_get_title(tox.get(), groupNumber,
                                      reinterpret_cast<uint8_t*>(nameByteArray.data()), &error);
-            name = ToxString(nameByteArray).getQString();
+            if (LogConferenceTitleError(error)) {
+                name = defaultName;
+            } else {
+                name = ToxString(nameByteArray).getQString();
+            }
         }
-
-        emit emptyGroupCreated(groupNumber, getGroupPersistentId(groupNumber), name);
+        if (getGroupAvEnabled(groupNumber)) {
+            if (toxav_groupchat_enable_av(tox.get(), groupNumber, CoreAV::groupCallCallback, this)) {
+                qCritical() << "Failed to enable audio on loaded group" << groupNumber;
+            }
+        }
+        emit emptyGroupCreated(groupNumber, persistentId, name);
     }
 
     delete[] groupNumbers;
