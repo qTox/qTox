@@ -50,6 +50,7 @@ profile qtox /usr{,/local}/bin/qtox {
 
   # System files
 
+  /usr/share/hunspell/* r,
   @{qtox_additional_rw_dirs}/ r,
   @{qtox_additional_rw_dirs}/** rw,
 
