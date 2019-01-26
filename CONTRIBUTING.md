@@ -244,6 +244,7 @@ Must be one of the following:
 * **test**: Adding missing tests
 * **chore**: Changes to the build process or auxiliary tools and libraries such
   as documentation generation
+* **security**: Security related changes, like AppArmor, Firejail, SELinux profiles, etc.
 
 ##### Revert
 
@@ -269,6 +270,7 @@ For example:
 * `build` – change affects build system / scripts, e.g. `CMakeLists.txt`,
   `simple_make.sh`, etc.
 * `travis` – change affects Travis CI
+* `apparmor` – change AppArmor profile
 * `CONTRIBUTING` – change to the contributing guidelines
 
 Since people were abusing length of the scope, it's limited to 12 characters.
