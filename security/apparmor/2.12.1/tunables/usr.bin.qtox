@@ -8,5 +8,5 @@
 # needed, such as:
 # @{qtox_prefix} += @{HOME}/opt/qtox
 # @{qtox_additional_rw_dirs} = /data/nfs_storage
-#include if exists <tunables/usr.bin.qtox.d/>
+#include <tunables/usr.bin.qtox.d/>
 

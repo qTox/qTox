@@ -11,18 +11,12 @@ profile qtox /usr{,/local}/bin/qtox {
   #include <abstractions/dbus-session-strict>
   #include <abstractions/dri-enumerate>
   #include <abstractions/gnome>
-  #include <abstractions/kde-globals-write>
-  #include <abstractions/kde-icon-cache-write>
   #include <abstractions/kde>
-  #include <abstractions/mesa>
   #include <abstractions/nameservice>
-  #include <abstractions/qt5-compose-cache-write>
-  #include <abstractions/qt5-settings-write>
-  #include <abstractions/recent-documents-write>
   #include <abstractions/video>
 
   # Site-specific additions and overrides. See local/README for details.
-  #include if exists <local/usr.bin.qtox>
+  #include <local/usr.bin.qtox>
 
   # Main executable
 
@@ -81,8 +75,8 @@ profile qtox /usr{,/local}/bin/qtox {
   owner @{HOME}/[^.]* l -> @{HOME}/#[0-9]*[0-9],
   owner @{HOME}/[^.]*/** l -> @{HOME}/#[0-9]*[0-9],
 
-  owner /{,var/}run/user/@{uid}/#[0-9]*[0-9] rw, # file dialog
-  owner /{,var/}run/user/@{uid}/qTox*.slave-socket rwl -> /{,var/}run/user/@{uid}/#[0-9]*[0-9], # file dialog
+  owner /{,var/}run/user/[0-9]*[0-9]/#[0-9]*[0-9] rw, # file dialog
+  owner /{,var/}run/user/[0-9]*[0-9]/qTox*.slave-socket rwl -> /{,var/}run/user/[0-9]*[0-9]/#[0-9]*[0-9], # file dialog
   owner @{HOME}/.cache/Tox/ w,
   owner @{HOME}/.cache/Tox/qTox/{,**} rw,
   owner @{HOME}/.cache/thumbnails/** rw, # receiving image file produces thumbnail?
@@ -100,4 +94,51 @@ profile qtox /usr{,/local}/bin/qtox {
   # commit 1250402471d9d83134b0faa90239a733a37f23f0
   owner @{HOME}/.cache/qt_compose_cache_{little,big}_endian_* rwl -> @{HOME}/.cache/#[0-9]*[0-9],
   owner @{HOME}/.cache/#[0-9]*[0-9] rw, # QSaveFile (anonymous shared memory)
+
+  # Backport kde-globals-write abstraction
+  # commit fae93f1b6c7a28bb77ad186ab1de41372630272b
+  owner @{HOME}/.config/#[0-9]* rw,
+  owner @{HOME}/.config/kdeglobals rw,
+  owner @{HOME}/.config/kdeglobals.?????? rwl -> @{HOME}/.config/#[0-9]*,
+  owner @{HOME}/.config/kdeglobals.lock rwk,
+
+  # Backport kde-icon-cache-write abstraction
+  # commit 94014c09f09fc63229bb10fea3f0727113fe5bae
+  owner @{HOME}/.cache/icon-cache.kcache rw, # for KIconLoader
+
+  # Backport mesa abstraction
+  # commit b5be5964609b4e0927af7c9e4f0276e50ccdc3e3
+
+  # System files
+  /dev/dri/ r, # libGLX_mesa.so calls drmGetDevice2()
+  /usr/share/drirc.d/{,*.conf} r,
+
+  # User files
+  owner @{HOME}/.cache/ w, # if user clears all caches
+  owner @{HOME}/.cache/mesa_shader_cache/ w,
+  owner @{HOME}/.cache/mesa_shader_cache/index rw,
+  owner @{HOME}/.cache/mesa_shader_cache/??/ w,
+  owner @{HOME}/.cache/mesa_shader_cache/??/* rwk,
+  # End of backported mesa abstraction
+
+  # Backport qt5-compose-cache-write abstraction
+  # commit 1250402471d9d83134b0faa90239a733a37f23f0
+  owner @{HOME}/.cache/qt_compose_cache_{little,big}_endian_* rwl -> @{HOME}/.cache/#[0-9]*[0-9],
+  owner @{HOME}/.cache/#[0-9]*[0-9] rw, # QSaveFile (anonymous shared memory)
+
+  # Backport qt5-settings-write abstraction
+  # commit 8f6a8fb1942122705af4c45168922c4afd696c8a
+  owner @{HOME}/.config/#[0-9]*[0-9] rw,
+  owner @{HOME}/.config/QtProject.conf rwl -> @{HOME}/.config/#[0-9]*[0-9],
+  # for temporary files like QtProject.conf.Aqrgeb
+  owner @{HOME}/.config/QtProject.conf.?????? rwl -> @{HOME}/.config/#[0-9]*[0-9],
+  owner @{HOME}/.config/QtProject.conf.lock rwk,
+
+  # Backport recent-documents-write
+  # commit 4fe8ae97c43d72d7f5a948c7149f5ea35339832a
+  owner @{HOME}/.local/share/RecentDocuments/ rw,
+  owner @{HOME}/.local/share/RecentDocuments/#[0-9]* rw,
+  owner @{HOME}/.local/share/RecentDocuments/*.desktop rwl -> @{HOME}/.local/share/RecentDocuments/#[0-9]*,
+  owner @{HOME}/.local/share/RecentDocuments/*.lock rwk,
+
 }
