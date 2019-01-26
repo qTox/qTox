@@ -91,6 +91,7 @@ profile qtox /usr{,/local}/bin/qtox {
   owner /{,var/}run/user/@{uid}/qTox*.slave-socket rwl -> /{,var/}run/user/@{uid}/#[0-9]*[0-9], # file dialog
   owner @{HOME}/.cache/Tox/ w,
   owner @{HOME}/.cache/Tox/qTox/{,**} rw,
+  owner @{HOME}/.cache/qTox/{,**} rw,
   owner @{HOME}/.cache/thumbnails/** rw, # receiving image file produces thumbnail?
   owner @{HOME}/.config/menus/ r, # file dialog
   owner @{HOME}/.config/menus/applications-merged/ r, # file dialog
