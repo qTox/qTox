@@ -18,6 +18,7 @@ profile qtox /usr{,/local}/bin/qtox {
   #include <abstractions/kde>
   #include <abstractions/mesa>
   #include <abstractions/nameservice>
+  #include <abstractions/openssl>
   #include <abstractions/qt5-compose-cache-write>
   #include <abstractions/qt5-settings-write>
   #include <abstractions/recent-documents-write>
