@@ -8,6 +8,7 @@
 profile qtox /usr{,/local}/bin/qtox {
   #include <abstractions/audio>
   #include <abstractions/base>
+  #include <abstractions/dbus-accessibility>
   #include <abstractions/dbus-session-strict>
   #include <abstractions/dri-enumerate>
   #include <abstractions/gnome>
@@ -43,6 +44,15 @@ profile qtox /usr{,/local}/bin/qtox {
 
   network tcp,
   network udp,
+
+  # DBus
+
+  dbus send
+    bus=session
+    path=/org/a11y/bus
+    interface=org.freedesktop.DBus.Properties
+    member=Get
+    peer=(label=unconfined),
 
   # System files
 
