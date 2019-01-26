@@ -68,6 +68,7 @@ private:
     void updateUserCount();
     void updateUserNames();
     void sendJoinLeaveMessages();
+    void leaveGroupCall();
 
 private:
     Group* group;

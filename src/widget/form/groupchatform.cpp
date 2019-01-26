@@ -183,8 +183,7 @@ void GroupChatForm::onUserListChanged()
     const bool online = peersCount > 1;
     headWidget->updateCallButtons(online, inCall);
     if (inCall && (!online || !group->isAvGroupchat())) {
-        Core::getInstance()->getAv()->leaveGroupCall(group->getId());
-        hideNetcam();
+        leaveGroupCall();
     }
 }
 
@@ -446,11 +445,7 @@ void GroupChatForm::onCallClicked()
         inCall = true;
         showNetcam();
     } else {
-        av->leaveGroupCall(group->getId());
-        audioInputFlag = false;
-        audioOutputFlag = false;
-        inCall = false;
-        hideNetcam();
+        leaveGroupCall();
     }
 
     const int peersCount = group->getPeersCount();
@@ -574,4 +569,14 @@ void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)
 
         s.setBlackList(blackList);
     }
+}
+
+void GroupChatForm::leaveGroupCall()
+{
+    CoreAV* av = Core::getInstance()->getAv();
+    av->leaveGroupCall(group->getId());
+    audioInputFlag = false;
+    audioOutputFlag = false;
+    inCall = false;
+    hideNetcam();
 }
