@@ -48,6 +48,83 @@ profile qtox /usr{,/local}/bin/qtox {
     member=Get
     peer=(label=unconfined),
 
+  dbus receive
+    bus=session
+    path=/
+    interface=org.freedesktop.DBus.Introspectable
+    member=Introspect
+    peer=(label=unconfined),
+
+  dbus send
+    bus=session
+    path=/StatusNotifierWatcher
+    interface=org.freedesktop.DBus.Introspectable
+    member=Introspect
+    peer=(label=unconfined),
+
+  dbus send
+    bus=session
+    path=/StatusNotifierWatcher
+    interface=org.freedesktop.DBus.Properties
+    member=Get
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/NetworkManager
+    interface=org.freedesktop.DBus.Properties
+    member=GetAll
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/NetworkManager
+    interface=org.freedesktop.NetworkManager
+    member=GetDevices
+    peer=(label=unconfined),
+
+  dbus receive
+    bus=system
+    path=/org/freedesktop/NetworkManager
+    interface=org.freedesktop.NetworkManager
+    member=PropertiesChanged
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/NetworkManager/Settings
+    interface=org.freedesktop.NetworkManager.Settings
+    member=ListConnections
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/NetworkManager/Settings/[0-9]*
+    interface=org.freedesktop.NetworkManager.Settings.Connection
+    member=GetSettings
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/NetworkManager/ActiveConnection/[0-9]*
+    interface=org.freedesktop.DBus.Properties
+    member=GetAll
+    peer=(label=unconfined),
+
+  dbus receive
+    bus=system
+    path=/org/freedesktop/NetworkManager/ActiveConnection/[0-9]*
+    interface=org.freedesktop.NetworkManager.Connection.Active
+    member=PropertiesChanged
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/NetworkManager/Devices/[0-9]*
+    interface=org.freedesktop.DBus.Properties
+    member=GetAll
+    peer=(label=unconfined),
+
   # System files
 
   /usr/share/hunspell/* r,
