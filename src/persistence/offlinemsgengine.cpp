@@ -33,34 +33,26 @@ OfflineMsgEngine::OfflineMsgEngine(Friend* frnd)
 {
 }
 
-void OfflineMsgEngine::dischargeReceipt(ReceiptNum receipt)
+void OfflineMsgEngine::onReceiptReceived(ReceiptNum receipt)
 {
     QMutexLocker ml(&mutex);
-
-    auto it = receipts.find(receipt);
-    if (it == receipts.end()) {
-        it = receipts.insert(receipt, Receipt());
-    } else if (it->bRecepitReceived) {
-        qWarning() << "Received duplicate receipt";
-    }
-    it->bRecepitReceived = true;
-    processReceipt(receipt);
+    assert(!receivedReceipts.contains(receipt));
+    receivedReceipts.append(receipt);
+    checkForCompleteMessages(receipt);
 }
 
-void OfflineMsgEngine::registerReceipt(ReceiptNum receipt, RowId messageID, ChatMessage::Ptr msg)
+void OfflineMsgEngine::addSavedMessage(RowId messageID, ChatMessage::Ptr chatMessage)
 {
     QMutexLocker ml(&mutex);
+    unsentSavedMessages.append(Message{chatMessage, messageID});
+}
 
-    auto it = receipts.find(receipt);
-    if (it == receipts.end()) {
-        it = receipts.insert(receipt, Receipt());
-    } else if (it->bRowValid && receipt.get() != 0 /* offline receipt */) {
-        qWarning() << "Received duplicate registration of receipt";
-    }
-    it->rowId = messageID;
-    it->bRowValid = true;
-    undeliveredMsgs[messageID] = {msg, receipt};
-    processReceipt(receipt);
+void OfflineMsgEngine::addSentSavedMessage(ReceiptNum receipt, RowId messageID, ChatMessage::Ptr chatMessage)
+{
+    QMutexLocker ml(&mutex);
+    assert(!sentSavedMessages.contains(receipt));
+    sentSavedMessages.insert(receipt, {chatMessage, messageID});
+    checkForCompleteMessages(receipt);
 }
 
 void OfflineMsgEngine::deliverOfflineMsgs()
@@ -73,71 +65,66 @@ void OfflineMsgEngine::deliverOfflineMsgs()
     if (f->getStatus() == Status::Offline)
         return;
 
-    if (undeliveredMsgs.size() == 0)
+    if (sentSavedMessages.empty() && unsentSavedMessages.empty())
         return;
 
-    QMap<RowId, MsgPtr> msgs = undeliveredMsgs;
-    removeAllReceipts();
-    undeliveredMsgs.clear();
+    QVector<Message> messages = sentSavedMessages.values().toVector() + unsentSavedMessages;
+    removeAllMessages();
 
-    for (auto iter = msgs.begin(); iter != msgs.end(); ++iter) {
-        auto val = iter.value();
-        auto key = iter.key();
-        QString messageText = val.msg->toString();
-        ReceiptNum rec;
-        if (val.msg->isAction()) {
-            Core::getInstance()->sendAction(f->getId(), messageText, rec);
+    for (const auto& message : messages) {
+        QString messageText = message.chatMessage->toString();
+        ReceiptNum receipt;
+        bool messageSent{false};
+        if (message.chatMessage->isAction()) {
+            messageSent = Core::getInstance()->sendAction(f->getId(), messageText, receipt);
         } else {
-            Core::getInstance()->sendMessage(f->getId(), messageText, rec);
+            messageSent = Core::getInstance()->sendMessage(f->getId(), messageText, receipt);
         }
-
-        registerReceipt(rec, key, val.msg);
+        if (messageSent) {
+            addSentSavedMessage(receipt, message.rowId, message.chatMessage);
+        } else {
+            qCritical() << "deliverOfflineMsgs failed to send message";
+            addSavedMessage(message.rowId, message.chatMessage);
+        }
     }
 }
 
-void OfflineMsgEngine::removeAllReceipts()
+void OfflineMsgEngine::removeAllMessages()
 {
     QMutexLocker ml(&mutex);
-
-    receipts.clear();
+    receivedReceipts.clear();
+    sentSavedMessages.clear();
+    unsentSavedMessages.clear();
 }
 
-void OfflineMsgEngine::updateTimestamp(ReceiptNum receiptId)
+void OfflineMsgEngine::completeMessage(QMap<ReceiptNum, Message>::iterator msgIt)
 {
-    QMutexLocker ml(&mutex);
-
-    auto receipt = receipts.find(receiptId);
-    const auto msg = undeliveredMsgs.constFind(receipt->rowId);
-    if (msg == undeliveredMsgs.end()) {
-        // this should never occur as registerReceipt adds the msg before processReceipt calls updateTimestamp
-        qCritical() << "Message was not in undeliveredMsgs map when attempting to update its timestamp!";
-        return;
-    }
-    msg->msg->markAsSent(QDateTime::currentDateTime());
-    undeliveredMsgs.remove(receipt->rowId);
-    receipts.erase(receipt);
-}
-
-void OfflineMsgEngine::processReceipt(ReceiptNum receiptId)
-{
-    const auto receipt = receipts.constFind(receiptId);
-    if (receipt == receipts.end()) {
-        // this should never occur as callers ensure receipts contains receiptId
-        qCritical() << "Receipt was not added to map prior to attempting to process it!";
-        return;
-    }
-
-    if (!receipt->bRecepitReceived || !receipt->bRowValid)
-        return;
-
     Profile* const profile = Nexus::getProfile();
     if (profile->isHistoryEnabled()) {
-        profile->getHistory()->markAsSent(receipt->rowId);
+        profile->getHistory()->markAsSent(msgIt->rowId);
     }
 
     if (QThread::currentThread() == QCoreApplication::instance()->thread()) {
-        updateTimestamp(receiptId);
+        updateTimestamp(msgIt->chatMessage);
     } else {
-        QMetaObject::invokeMethod(this, "updateTimestamp", Qt::QueuedConnection, Q_ARG(ReceiptNum, receiptId));
+        QMetaObject::invokeMethod(this, "updateTimestamp", Qt::QueuedConnection, Q_ARG(ChatMessage::Ptr, msgIt->chatMessage));
     }
+    sentSavedMessages.erase(msgIt);
+    receivedReceipts.removeOne(msgIt.key());
+}
+
+void OfflineMsgEngine::checkForCompleteMessages(ReceiptNum receipt)
+{
+    auto msgIt = sentSavedMessages.find(receipt);
+    const bool receiptReceived = receivedReceipts.contains(receipt);
+    if (!receiptReceived || msgIt == sentSavedMessages.end()) {
+        return;
+    }
+    assert(!unsentSavedMessages.contains(*msgIt));
+    completeMessage(msgIt);
+}
+
+void OfflineMsgEngine::updateTimestamp(ChatMessage::Ptr msg)
+{
+    msg->markAsSent(QDateTime::currentDateTime());
 }

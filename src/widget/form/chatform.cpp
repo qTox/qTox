@@ -689,7 +689,7 @@ void ChatForm::onStatusMessage(const QString& message)
 void ChatForm::onReceiptReceived(quint32 friendId, ReceiptNum receipt)
 {
     if (friendId == f->getId()) {
-        offlineEngine->dischargeReceipt(receipt);
+        offlineEngine->onReceiptReceived(receipt);
     }
 }
 
@@ -770,7 +770,7 @@ void ChatForm::dropEvent(QDropEvent* ev)
 void ChatForm::clearChatArea()
 {
     GenericChatForm::clearChatArea(/* confirm = */ false, /* inform = */ true);
-    offlineEngine->removeAllReceipts();
+    offlineEngine->removeAllMessages();
 }
 
 QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName)
@@ -931,15 +931,23 @@ void ChatForm::sendLoadedMessage(ChatMessage::Ptr chatMsg, MessageMetadata const
         return;
     }
 
-    ReceiptNum receipt{0};
+    ReceiptNum receipt;
+    bool  messageSent{false};
     if (f->getStatus() != Status::Offline) {
         Core* core = Core::getInstance();
         uint32_t friendId = f->getId();
         QString stringMsg = chatMsg->toString();
-        metadata.isAction ? core->sendAction(friendId, stringMsg, receipt)
-                          : core->sendMessage(friendId, stringMsg, receipt);
+        messageSent = metadata.isAction ? core->sendAction(friendId, stringMsg, receipt)
+                                        : core->sendMessage(friendId, stringMsg, receipt);
+        if (!messageSent) {
+            qWarning() << "Failed to send loaded message, adding to offline messaging";
+        }
     }
-    getOfflineMsgEngine()->registerReceipt(receipt, metadata.id, chatMsg);
+    if (messageSent) {
+        getOfflineMsgEngine()->addSentSavedMessage(receipt, metadata.id, chatMsg);
+    } else {
+        getOfflineMsgEngine()->addSavedMessage(metadata.id, chatMsg);
+    }
 }
 
 void ChatForm::onScreenshotClicked()
@@ -1122,11 +1130,15 @@ void ChatForm::SendMessageStr(QString msg)
             historyPart = ACTION_PREFIX + part;
         }
 
-        ReceiptNum receipt{0};
+        ReceiptNum receipt;
+        bool messageSent{false};
         if (f->getStatus() != Status::Offline) {
             Core* core = Core::getInstance();
             uint32_t friendId = f->getId();
-            isAction ? core->sendAction(friendId, part, receipt) : core->sendMessage(friendId, part, receipt);
+            messageSent = isAction ? core->sendAction(friendId, part, receipt) : core->sendMessage(friendId, part, receipt);
+            if (!messageSent) {
+                qCritical() << "Failed to send message, adding to offline messaging";
+            }
         }
 
         ChatMessage::Ptr ma = createSelfMessage(part, timestamp, isAction, false);
@@ -1138,8 +1150,12 @@ void ChatForm::SendMessageStr(QString msg)
             QString name = Core::getInstance()->getUsername();
             bool isSent = !Settings::getInstance().getFauxOfflineMessaging();
             history->addNewMessage(pk, historyPart, selfPk, timestamp, isSent, name,
-                                   [offMsgEngine, receipt, ma](RowId id) {
-                                       offMsgEngine->registerReceipt(receipt, id, ma);
+                                   [messageSent, offMsgEngine, receipt, ma](RowId id) {
+                                        if (messageSent) {
+                                            offMsgEngine->addSentSavedMessage(receipt, id, ma);
+                                        } else {
+                                            offMsgEngine->addSavedMessage(id, ma);
+                                        }
                                    });
         } else {
             // TODO: Make faux-offline messaging work partially with the history disabled
