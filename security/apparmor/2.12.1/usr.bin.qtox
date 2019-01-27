@@ -62,11 +62,18 @@ profile qtox /usr{,/local}/bin/qtox {
     member=Introspect
     peer=(label=unconfined),
 
-  dbus send
+  dbus (send,receive)
     bus=session
     path=/StatusNotifierWatcher
     interface=org.freedesktop.DBus.Properties
     member=Get
+    peer=(label=unconfined),
+
+  dbus receive
+    bus=session
+    path=/StatusNotifierItem
+    interface=org.freedesktop.DBus.Properties
+    member=GetAll
     peer=(label=unconfined),
 
   dbus send
@@ -123,6 +130,41 @@ profile qtox /usr{,/local}/bin/qtox {
     path=/org/freedesktop/NetworkManager/Devices/[0-9]*
     interface=org.freedesktop.DBus.Properties
     member=GetAll
+    peer=(label=unconfined),
+
+  dbus send
+    bus=session
+    path=/StatusNotifierWatcher
+    interface=org.kde.StatusNotifierWatcher
+    member=RegisterStatusNotifierItem
+    peer=(label=unconfined),
+
+  dbus receive
+    bus=session
+    path=/StatusNotifierItem
+    interface=org.kde.StatusNotifierItem
+    member=Activate
+    peer=(label=unconfined),
+
+  dbus (send,receive)
+    bus=session
+    path=/MenuBar
+    interface=com.canonical.dbusmenu
+    member=GetLayout
+    peer=(label=unconfined),
+
+  dbus (send,receive)
+    bus=session
+    path=/MenuBar
+    interface=com.canonical.dbusmenu
+    member={AboutToShow,Event}
+    peer=(label=unconfined),
+
+  dbus send
+    bus=session
+    path=/StatusNotifierItem
+    interface=org.kde.StatusNotifierItem
+    member={NewIcon,NewToolTip}
     peer=(label=unconfined),
 
   # System files
