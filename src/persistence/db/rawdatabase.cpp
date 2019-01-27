@@ -645,7 +645,7 @@ void RawDatabase::process()
             }
 
             if (query.insertCallback)
-                query.insertCallback(sqlite3_last_insert_rowid(sqlite));
+                query.insertCallback(RowId{sqlite3_last_insert_rowid(sqlite)});
         }
 
         if (trans.success != nullptr)

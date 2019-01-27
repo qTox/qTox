@@ -103,7 +103,7 @@ private slots:
     void onFriendNameChanged(const QString& name);
     void onFriendMessageReceived(quint32 friendId, const QString& message, bool isAction);
     void onStatusMessage(const QString& message);
-    void onReceiptReceived(quint32 friendId, int receipt);
+    void onReceiptReceived(quint32 friendId, ReceiptNum receipt);
     void onLoadHistory();
     void onUpdateTime();
     void sendImage(const QPixmap& pixmap);
@@ -117,10 +117,10 @@ private:
         const bool isSelf;
         const bool needSending;
         const bool isAction;
-        const qint64 id;
+        const RowId id;
         const ToxPk authorPk;
         const QDateTime msgDateTime;
-        MessageMetadata(bool isSelf, bool needSending, bool isAction, qint64 id, ToxPk authorPk,
+        MessageMetadata(bool isSelf, bool needSending, bool isAction, RowId id, ToxPk authorPk,
                         QDateTime msgDateTime)
             : isSelf{isSelf}
             , needSending{needSending}

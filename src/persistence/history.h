@@ -95,7 +95,7 @@ struct FileDbInsertionData
 {
     FileDbInsertionData();
 
-    int64_t historyId;
+    RowId historyId;
     QString friendPk;
     QString fileId;
     QString fileName;
@@ -111,7 +111,7 @@ class History : public QObject, public std::enable_shared_from_this<History>
 public:
     struct HistMessage
     {
-        HistMessage(qint64 id, bool isSent, QDateTime timestamp, QString chat, QString dispName,
+        HistMessage(RowId id, bool isSent, QDateTime timestamp, QString chat, QString dispName,
                     QString sender, QString message)
             : chat{chat}
             , sender{sender}
@@ -122,7 +122,7 @@ public:
             , content(std::move(message))
         {}
 
-        HistMessage(qint64 id, bool isSent, QDateTime timestamp, QString chat, QString dispName,
+        HistMessage(RowId id, bool isSent, QDateTime timestamp, QString chat, QString dispName,
                     QString sender, ToxFile file)
             : chat{chat}
             , sender{sender}
@@ -138,7 +138,7 @@ public:
         QString sender;
         QString dispName;
         QDateTime timestamp;
-        qint64 id;
+        RowId id;
         bool isSent;
         HistMessageContent content;
     };
@@ -161,7 +161,7 @@ public:
     void removeFriendHistory(const QString& friendPk);
     void addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
                        const QDateTime& time, bool isSent, QString dispName,
-                       const std::function<void(int64_t)>& insertIdCallback = {});
+                       const std::function<void(RowId)>& insertIdCallback = {});
 
     void addNewFileMessage(const QString& friendPk, const QString& fileId,
                            const QString& fileName, const QString& filePath, int64_t size,
@@ -177,27 +177,27 @@ public:
                                      const ParameterSearch& parameter);
     QDateTime getStartDateChatHistory(const QString& friendPk);
 
-    void markAsSent(qint64 messageId);
+    void markAsSent(RowId messageId);
 
 protected:
     QVector<RawDatabase::Query>
     generateNewMessageQueries(const QString& friendPk, const QString& message,
                               const QString& sender, const QDateTime& time, bool isSent,
-                              QString dispName, std::function<void(int64_t)> insertIdCallback = {});
+                              QString dispName, std::function<void(RowId)> insertIdCallback = {});
 
 signals:
     void fileInsertionReady(FileDbInsertionData data);
-    void fileInserted(int64_t dbId, QString fileId);
+    void fileInserted(RowId dbId, QString fileId);
 
 private slots:
     void onFileInsertionReady(FileDbInsertionData data);
-    void onFileInserted(int64_t dbId, QString fileId);
+    void onFileInserted(RowId dbId, QString fileId);
 
 private:
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
                                       const QDateTime& to, int numMessages);
 
-    static RawDatabase::Query generateFileFinished(int64_t fileId, bool success,
+    static RawDatabase::Query generateFileFinished(RowId fileId, bool success,
                                                    const QString& filePath, const QByteArray& fileHash);
     void dbSchemaUpgrade();
 
@@ -211,7 +211,7 @@ private:
         bool success = false;
         QString filePath;
         QByteArray fileHash;
-        int64_t fileId = -1;
+        RowId fileId{-1};
     };
 
     // This needs to be a shared pointer to avoid callback lifetime issues
