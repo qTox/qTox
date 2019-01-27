@@ -1218,7 +1218,7 @@ void Widget::onReceiptRecieved(int friendId, ReceiptNum receipt)
         return;
     }
 
-    chatForms[friendId]->getOfflineMsgEngine()->dischargeReceipt(receipt);
+    chatForms[friendId]->getOfflineMsgEngine()->onReceiptReceived(receipt);
 }
 
 void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
@@ -2177,7 +2177,7 @@ void Widget::clearAllReceipts()
 {
     QList<Friend*> frnds = FriendList::getAllFriends();
     for (Friend* f : frnds) {
-        chatForms[f->getId()]->getOfflineMsgEngine()->removeAllReceipts();
+        chatForms[f->getId()]->getOfflineMsgEngine()->removeAllMessages();
     }
 }
 

@@ -28,6 +28,7 @@
 #include <QMutex>
 #include <QObject>
 #include <QSet>
+#include <chrono>
 
 class Friend;
 
@@ -36,36 +37,35 @@ class OfflineMsgEngine : public QObject
     Q_OBJECT
 public:
     explicit OfflineMsgEngine(Friend*);
-    virtual ~OfflineMsgEngine() = default;
-
-    void dischargeReceipt(ReceiptNum receipt);
-    void registerReceipt(ReceiptNum receipt, RowId messageID, ChatMessage::Ptr msg);
+    void addSavedMessage(RowId messageID, ChatMessage::Ptr msg);
+    void addSentSavedMessage(ReceiptNum receipt, RowId messageID, ChatMessage::Ptr msg);
     void deliverOfflineMsgs();
 
 public slots:
-    void removeAllReceipts();
-    void updateTimestamp(ReceiptNum receiptId);
+    void removeAllMessages();
+    void onReceiptReceived(ReceiptNum receipt);
 
 private:
-    void processReceipt(ReceiptNum receiptId);
-    struct Receipt
+    struct Message
     {
-        bool bRowValid{false};
-        RowId rowId{0};
-        bool bRecepitReceived{false};
+        bool operator==(const Message& rhs) const { return rhs.rowId == rowId; }
+        ChatMessage::Ptr chatMessage;
+        RowId rowId;
+        std::chrono::time_point<std::chrono::steady_clock> authorshipTime;
     };
 
-    struct MsgPtr
-    {
-        ChatMessage::Ptr msg;
-        ReceiptNum receipt;
-    };
+private slots:
+    void completeMessage(QMap<ReceiptNum, Message>::iterator msgIt);
+
+private:
+    void updateTimestamp(ChatMessage::Ptr msg);
+    void checkForCompleteMessages(ReceiptNum receipt);
+
     QMutex mutex;
-    Friend* f;
-    QHash<ReceiptNum, Receipt> receipts;
-    QMap<RowId, MsgPtr> undeliveredMsgs;
-
-    static const int offlineTimeout;
+    const Friend* f;
+    QVector<ReceiptNum> receivedReceipts;
+    QMap<ReceiptNum, Message> sentSavedMessages;
+    QVector<Message> unsentSavedMessages;
 };
 
 #endif // OFFLINEMSGENGINE_H
