@@ -240,7 +240,7 @@ void Widget::init()
     connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
 #endif
     settingsWidget = new SettingsWidget(updateCheck.get(), this);
-#if UPDATE_CHECK_ENABLED 
+#if UPDATE_CHECK_ENABLED
     updateCheck->checkForUpdate();
 #endif
 
@@ -1013,7 +1013,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
     connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
     connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
-    
+
     Profile* profile = Nexus::getProfile();
     connect(profile, &Profile::friendAvatarSet, widget, &FriendWidget::onAvatarSet);
     connect(profile, &Profile::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
@@ -1218,7 +1218,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     newFriendMessageAlert(friendId);
 }
 
-void Widget::onReceiptRecieved(int friendId, int receipt)
+void Widget::onReceiptRecieved(int friendId, ReceiptNum receipt)
 {
     Friend* f = FriendList::findFriend(friendId);
     if (!f) {
