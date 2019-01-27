@@ -700,6 +700,10 @@ void ChatLog::checkVisibility()
     // if (!visibleLines.empty())
     //  qDebug() << "visible from " << visibleLines.first()->getRow() << "to " <<
     //  visibleLines.last()->getRow() << " total " << visibleLines.size();
+
+    if (!visibleLines.isEmpty()) {
+        emit firstVisibleLineChanged(visibleLines.at(0));
+    }
 }
 
 void ChatLog::scrollContentsBy(int dx, int dy)
