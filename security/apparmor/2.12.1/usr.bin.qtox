@@ -10,7 +10,6 @@ profile qtox /usr{,/local}/bin/qtox {
   #include <abstractions/base>
   #include <abstractions/dbus-accessibility>
   #include <abstractions/dbus-session-strict>
-  #include <abstractions/dri-enumerate>
   #include <abstractions/gnome>
   #include <abstractions/ibus>
   #include <abstractions/kde>
@@ -259,5 +258,9 @@ profile qtox /usr{,/local}/bin/qtox {
   owner @{HOME}/.local/share/RecentDocuments/#[0-9]* rw,
   owner @{HOME}/.local/share/RecentDocuments/*.desktop rwl -> @{HOME}/.local/share/RecentDocuments/#[0-9]*,
   owner @{HOME}/.local/share/RecentDocuments/*.lock rwk,
+
+  # Backport dri-enumerate abstraction
+  # commit b0456adbd86aab73e4a19013fdfed22da98ed455
+  /sys/devices/pci[0-9]*/**/{device,subsystem_device,subsystem_vendor,uevent,vendor} r,
 
 }
