@@ -25,10 +25,10 @@ protected:
 
 public:
     ToxCall(const ToxCall& other) = delete;
-    ToxCall(ToxCall&& other) noexcept;
+    ToxCall(ToxCall&& other) = delete;
 
     ToxCall& operator=(const ToxCall& other) = delete;
-    ToxCall& operator=(ToxCall&& other) noexcept;
+    ToxCall& operator=(ToxCall&& other) = delete;
 
     bool isActive() const;
     void setActive(bool value);
@@ -66,8 +66,8 @@ class ToxFriendCall : public ToxCall
 public:
     ToxFriendCall() = delete;
     ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av);
-    ToxFriendCall(ToxFriendCall&& other) noexcept;
-    ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
+    ToxFriendCall(ToxFriendCall&& other) = delete;
+    ToxFriendCall& operator=(ToxFriendCall&& other) = delete;
     ~ToxFriendCall();
 
     void startTimeout(uint32_t callId);
@@ -93,10 +93,10 @@ class ToxGroupCall : public ToxCall
 public:
     ToxGroupCall() = delete;
     ToxGroupCall(int GroupNum, CoreAV& av);
-    ToxGroupCall(ToxGroupCall&& other) noexcept;
+    ToxGroupCall(ToxGroupCall&& other) = delete;
     ~ToxGroupCall();
 
-    ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
+    ToxGroupCall& operator=(ToxGroupCall&& other) = delete;
 
     void removePeer(ToxPk peerId);
     void addPeer(ToxPk peerId);
