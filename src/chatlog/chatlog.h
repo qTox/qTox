@@ -69,6 +69,7 @@ public:
 signals:
     void selectionChanged();
     void workerTimeoutFinished();
+    void firstVisibleLineChanged(const ChatLine::Ptr&);
 
 public slots:
     void forceRelayout();

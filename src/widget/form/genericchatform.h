@@ -114,6 +114,7 @@ protected slots:
     void copyLink();
     void searchFormShow();
     void onSearchTriggered();
+    void updateShowDateInfo(const ChatLine::Ptr& line);
 
     virtual void searchInBegin(const QString& phrase, const ParameterSearch& parameter) = 0;
     virtual void onSearchUp(const QString& phrase, const ParameterSearch& parameter) = 0;
@@ -173,6 +174,7 @@ protected:
     ChatFormHeader* headWidget;
 
     SearchForm *searchForm;
+    QLabel *dateInfo;
     ChatLog* chatWidget;
     ChatTextEdit* msgEdit;
 #ifdef SPELL_CHECKING
