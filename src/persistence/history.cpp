@@ -199,7 +199,7 @@ void History::removeFriendHistory(const QString& friendPk)
 QVector<RawDatabase::Query>
 History::generateNewMessageQueries(const QString& friendPk, const QString& message,
                                    const QString& sender, const QDateTime& time, bool isSent,
-                                   QString dispName, std::function<void(int64_t)> insertIdCallback)
+                                   QString dispName, std::function<void(RowId)> insertIdCallback)
 {
     QVector<RawDatabase::Query> queries;
 
@@ -288,7 +288,7 @@ void History::onFileInsertionReady(FileDbInsertionData data)
                                .arg(static_cast<int>(data.direction))
                                .arg(ToxFile::CANCELED),
                            {data.fileId.toUtf8(), data.filePath.toUtf8(), data.fileName.toUtf8(), QByteArray()},
-                           [weakThis, fileId](int64_t id) {
+                           [weakThis, fileId](RowId id) {
                                auto pThis = weakThis.lock();
                                if (pThis) {
                                    emit pThis->fileInserted(id, fileId);
@@ -299,12 +299,12 @@ void History::onFileInsertionReady(FileDbInsertionData data)
     queries += RawDatabase::Query(QStringLiteral("UPDATE history "
                                                  "SET file_id = (last_insert_rowid()) "
                                                  "WHERE id = %1")
-                                      .arg(data.historyId));
+                                      .arg(data.historyId.get()));
 
     db->execLater(queries);
 }
 
-void History::onFileInserted(int64_t dbId, QString fileId)
+void History::onFileInserted(RowId dbId, QString fileId)
 {
     auto& fileInfo = fileInfos[fileId];
     if (fileInfo.finished) {
@@ -317,7 +317,7 @@ void History::onFileInserted(int64_t dbId, QString fileId)
     }
 }
 
-RawDatabase::Query History::generateFileFinished(int64_t id, bool success, const QString& filePath,
+RawDatabase::Query History::generateFileFinished(RowId id, bool success, const QString& filePath,
                                                  const QByteArray& fileHash)
 {
     auto file_state = success ? ToxFile::FINISHED : ToxFile::CANCELED;
@@ -326,14 +326,14 @@ RawDatabase::Query History::generateFileFinished(int64_t id, bool success, const
                                                  "SET file_state = %1, file_path = ?, file_hash = ?"
                                                  "WHERE id = %2")
                                       .arg(file_state)
-                                      .arg(id),
+                                      .arg(id.get()),
                                   {filePath.toUtf8(), fileHash});
     } else {
         return RawDatabase::Query(QStringLiteral("UPDATE file_transfers "
                                                  "SET finished = %1 "
                                                  "WHERE id = %2")
                                       .arg(file_state)
-                                      .arg(id));
+                                      .arg(id.get()));
     }
 }
 
@@ -370,7 +370,7 @@ void History::addNewFileMessage(const QString& friendPk, const QString& fileId,
     insertionData.size = size;
     insertionData.direction = direction;
 
-    auto insertFileTransferFn = [weakThis, insertionData](int64_t messageId) {
+    auto insertFileTransferFn = [weakThis, insertionData](RowId messageId) {
         auto insertionDataRw = std::move(insertionData);
 
         insertionDataRw.historyId = messageId;
@@ -395,7 +395,7 @@ void History::addNewFileMessage(const QString& friendPk, const QString& fileId,
  */
 void History::addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
                             const QDateTime& time, bool isSent, QString dispName,
-                            const std::function<void(int64_t)>& insertIdCallback)
+                            const std::function<void(RowId)>& insertIdCallback)
 {
     if (!Settings::getInstance().getEnableLogging()) {
         qWarning() << "Blocked a message from being added to database while history is disabled";
@@ -413,7 +413,7 @@ void History::setFileFinished(const QString& fileId, bool success, const QString
                               const QByteArray& fileHash)
 {
     auto& fileInfo = fileInfos[fileId];
-    if (fileInfo.fileId == -1) {
+    if (fileInfo.fileId.get() == -1) {
         fileInfo.finished = true;
         fileInfo.success = success;
         fileInfo.filePath = filePath;
@@ -616,13 +616,13 @@ QDateTime History::getStartDateChatHistory(const QString& friendPk)
  *
  * @param id Message ID.
  */
-void History::markAsSent(qint64 messageId)
+void History::markAsSent(RowId messageId)
 {
     if (!isValid()) {
         return;
     }
 
-    db->execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;").arg(messageId));
+    db->execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;").arg(messageId.get()));
 }
 
 
@@ -642,7 +642,7 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
     auto rowCallback = [&messages](const QVector<QVariant>& row) {
         // dispName and message could have null bytes, QString::fromUtf8
         // truncates on null bytes so we strip them
-        auto id = row[0].toLongLong();
+        auto id = RowId{row[0].toLongLong()};
         auto isOfflineMessage = row[1].isNull();
         auto timestamp = QDateTime::fromMSecsSinceEpoch(row[2].toLongLong());
         auto friend_key = row[3].toString();

@@ -21,6 +21,8 @@
 #define OFFLINEMSGENGINE_H
 
 #include "src/chatlog/chatmessage.h"
+#include "src/core/core.h"
+#include "src/persistence/db/rawdatabase.h"
 #include <QDateTime>
 #include <QMap>
 #include <QMutex>
@@ -36,32 +38,32 @@ public:
     explicit OfflineMsgEngine(Friend*);
     virtual ~OfflineMsgEngine() = default;
 
-    void dischargeReceipt(int receipt);
-    void registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg);
+    void dischargeReceipt(ReceiptNum receipt);
+    void registerReceipt(ReceiptNum receipt, RowId messageID, ChatMessage::Ptr msg);
     void deliverOfflineMsgs();
 
 public slots:
     void removeAllReceipts();
-    void updateTimestamp(int receiptId);
+    void updateTimestamp(ReceiptNum receiptId);
 
 private:
-    void processReceipt(int receiptId);
+    void processReceipt(ReceiptNum receiptId);
     struct Receipt
     {
         bool bRowValid{false};
-        int64_t rowId{0};
+        RowId rowId{0};
         bool bRecepitReceived{false};
     };
 
     struct MsgPtr
     {
         ChatMessage::Ptr msg;
-        int receipt;
+        ReceiptNum receipt;
     };
     QMutex mutex;
     Friend* f;
-    QHash<int, Receipt> receipts;
-    QMap<int64_t, MsgPtr> undeliveredMsgs;
+    QHash<ReceiptNum, Receipt> receipts;
+    QMap<RowId, MsgPtr> undeliveredMsgs;
 
     static const int offlineTimeout;
 };

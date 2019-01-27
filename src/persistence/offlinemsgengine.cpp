@@ -33,7 +33,7 @@ OfflineMsgEngine::OfflineMsgEngine(Friend* frnd)
 {
 }
 
-void OfflineMsgEngine::dischargeReceipt(int receipt)
+void OfflineMsgEngine::dischargeReceipt(ReceiptNum receipt)
 {
     QMutexLocker ml(&mutex);
 
@@ -47,14 +47,14 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
     processReceipt(receipt);
 }
 
-void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg)
+void OfflineMsgEngine::registerReceipt(ReceiptNum receipt, RowId messageID, ChatMessage::Ptr msg)
 {
     QMutexLocker ml(&mutex);
 
     auto it = receipts.find(receipt);
     if (it == receipts.end()) {
         it = receipts.insert(receipt, Receipt());
-    } else if (it->bRowValid && receipt != 0 /* offline receipt */) {
+    } else if (it->bRowValid && receipt.get() != 0 /* offline receipt */) {
         qWarning() << "Received duplicate registration of receipt";
     }
     it->rowId = messageID;
@@ -76,7 +76,7 @@ void OfflineMsgEngine::deliverOfflineMsgs()
     if (undeliveredMsgs.size() == 0)
         return;
 
-    QMap<int64_t, MsgPtr> msgs = undeliveredMsgs;
+    QMap<RowId, MsgPtr> msgs = undeliveredMsgs;
     removeAllReceipts();
     undeliveredMsgs.clear();
 
@@ -84,11 +84,11 @@ void OfflineMsgEngine::deliverOfflineMsgs()
         auto val = iter.value();
         auto key = iter.key();
         QString messageText = val.msg->toString();
-        int rec;
+        ReceiptNum rec;
         if (val.msg->isAction()) {
-            rec = Core::getInstance()->sendAction(f->getId(), messageText);
+            Core::getInstance()->sendAction(f->getId(), messageText, rec);
         } else {
-            rec = Core::getInstance()->sendMessage(f->getId(), messageText);
+            Core::getInstance()->sendMessage(f->getId(), messageText, rec);
         }
 
         registerReceipt(rec, key, val.msg);
@@ -102,7 +102,7 @@ void OfflineMsgEngine::removeAllReceipts()
     receipts.clear();
 }
 
-void OfflineMsgEngine::updateTimestamp(int receiptId)
+void OfflineMsgEngine::updateTimestamp(ReceiptNum receiptId)
 {
     QMutexLocker ml(&mutex);
 
@@ -118,7 +118,7 @@ void OfflineMsgEngine::updateTimestamp(int receiptId)
     receipts.erase(receipt);
 }
 
-void OfflineMsgEngine::processReceipt(int receiptId)
+void OfflineMsgEngine::processReceipt(ReceiptNum receiptId)
 {
     const auto receipt = receipts.constFind(receiptId);
     if (receipt == receipts.end()) {
@@ -138,6 +138,6 @@ void OfflineMsgEngine::processReceipt(int receiptId)
     if (QThread::currentThread() == QCoreApplication::instance()->thread()) {
         updateTimestamp(receiptId);
     } else {
-        QMetaObject::invokeMethod(this, "updateTimestamp", Qt::QueuedConnection, Q_ARG(int, receiptId));
+        QMetaObject::invokeMethod(this, "updateTimestamp", Qt::QueuedConnection, Q_ARG(ReceiptNum, receiptId));
     }
 }

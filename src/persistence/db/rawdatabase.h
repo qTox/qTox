@@ -13,6 +13,7 @@
 #include <atomic>
 #include <functional>
 #include <memory>
+#include "src/util/strongtype.h"
 
 /// The two following defines are required to use SQLCipher
 /// They are used by the sqlite3.h header
@@ -21,6 +22,8 @@
 
 #include <sqlite3.h>
 
+using RowId = NamedType<int64_t, struct RowIdTag>;
+Q_DECLARE_METATYPE(RowId);
 
 class RawDatabase : QObject
 {
@@ -31,13 +34,13 @@ public:
     {
     public:
         Query(QString query, QVector<QByteArray> blobs = {},
-              const std::function<void(int64_t)>& insertCallback = {})
+              const std::function<void(RowId)>& insertCallback = {})
             : query{query.toUtf8()}
             , blobs{blobs}
             , insertCallback{insertCallback}
         {
         }
-        Query(QString query, const std::function<void(int64_t)>& insertCallback)
+        Query(QString query, const std::function<void(RowId)>& insertCallback)
             : query{query.toUtf8()}
             , insertCallback{insertCallback}
         {
@@ -52,7 +55,7 @@ public:
     private:
         QByteArray query;
         QVector<QByteArray> blobs;
-        std::function<void(int64_t)> insertCallback;
+        std::function<void(RowId)> insertCallback;
         std::function<void(const QVector<QVariant>&)> rowCallback;
         QVector<sqlite3_stmt*> statements;
 

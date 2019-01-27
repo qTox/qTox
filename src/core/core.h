@@ -25,6 +25,7 @@
 #include "toxid.h"
 
 #include "src/core/dhtserver.h"
+#include "src/util/strongtype.h"
 #include <tox/tox.h>
 
 #include <QMutex>
@@ -51,6 +52,8 @@ enum class Status
 class Core;
 
 using ToxCorePtr = std::unique_ptr<Core>;
+using ReceiptNum = NamedType<uint32_t, struct ReceiptNumTag>;
+Q_DECLARE_METATYPE(ReceiptNum);
 
 class Core : public QObject
 {
@@ -118,11 +121,11 @@ public slots:
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
 
-    int sendMessage(uint32_t friendId, const QString& message);
+    bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt);
     void sendGroupMessage(int groupId, const QString& message);
     void sendGroupAction(int groupId, const QString& message);
     void changeGroupTitle(int groupId, const QString& title);
-    int sendAction(uint32_t friendId, const QString& action);
+    bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt);
     void sendTyping(uint32_t friendId, bool typing);
 
     void sendAvatarFile(uint32_t friendId, const QByteArray& data);
@@ -200,7 +203,7 @@ signals:
     void groupSentFailed(int groupId);
     void actionSentResult(uint32_t friendId, const QString& action, int success);
 
-    void receiptRecieved(int friedId, int receipt);
+    void receiptRecieved(int friedId, ReceiptNum receipt);
 
     void failedToRemoveFriend(uint32_t friendId);
 
@@ -234,7 +237,7 @@ private:
     static void onReadReceiptCallback(Tox* tox, uint32_t friendId, uint32_t receipt, void* core);
 
     void sendGroupMessageWithType(int groupId, const QString& message, Tox_Message_Type type);
-    int sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type);
+    bool sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type, ReceiptNum& receipt);
     bool parsePeerQueryError(Tox_Err_Conference_Peer_Query error) const;
     bool parseConferenceJoinError(Tox_Err_Conference_Join error) const;
     bool checkConnection();

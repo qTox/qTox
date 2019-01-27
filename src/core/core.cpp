@@ -28,6 +28,7 @@
 #include "src/model/groupinvite.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
+#include "src/util/strongtype.h"
 
 #include <QCoreApplication>
 #include <QRegularExpression>
@@ -579,7 +580,7 @@ void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uin
 
 void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void* core)
 {
-    emit static_cast<Core*>(core)->receiptRecieved(friendId, receipt);
+    emit static_cast<Core*>(core)->receiptRecieved(friendId, ReceiptNum{receipt});
 }
 
 void Core::acceptFriendRequest(const ToxPk& friendPk)
@@ -652,33 +653,35 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
     emit saveRequest();
 }
 
-int Core::sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type)
+bool Core::sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type, ReceiptNum& receipt)
 {
     int size = message.toUtf8().size();
     auto maxSize = tox_max_message_length();
     if (size > maxSize) {
         qCritical() << "Core::sendMessageWithType called with message of size:" << size << "when max is:" << maxSize <<". Ignoring.";
-        return 0;
+        return false;
     }
 
     ToxString cMessage(message);
     Tox_Err_Friend_Send_Message error;
-    int receipt = tox_friend_send_message(tox.get(), friendId, type,
-                                          cMessage.data(), cMessage.size(), &error);
-    parseFriendSendMessageError(error);
-    return receipt;
+    receipt = ReceiptNum{tox_friend_send_message(tox.get(), friendId, type,
+                                          cMessage.data(), cMessage.size(), &error)};
+    if (parseFriendSendMessageError(error)) {
+        return true;
+    }
+    return false;
 }
 
-int Core::sendMessage(uint32_t friendId, const QString& message)
+bool Core::sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt)
 {
     QMutexLocker ml(coreLoopLock.get());
-    return sendMessageWithType(friendId, message, TOX_MESSAGE_TYPE_NORMAL);
+    return sendMessageWithType(friendId, message, TOX_MESSAGE_TYPE_NORMAL, receipt);
 }
 
-int Core::sendAction(uint32_t friendId, const QString& action)
+bool Core::sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt)
 {
     QMutexLocker ml(coreLoopLock.get());
-    return sendMessageWithType(friendId, action, TOX_MESSAGE_TYPE_ACTION);
+    return sendMessageWithType(friendId, action, TOX_MESSAGE_TYPE_ACTION, receipt);
 }
 
 void Core::sendTyping(uint32_t friendId, bool typing)
