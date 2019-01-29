@@ -53,8 +53,6 @@ public:
     void setTitle(const QString& author, const QString& newTitle);
     QString getName() const;
     QString getDisplayedName() const override;
-
-    const ToxPk resolvePeerId(int peerId) const;
     QString resolveToxId(const ToxPk& id) const;
     void setSelfName(const QString& name);
     QString getSelfName() const;

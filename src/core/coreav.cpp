@@ -485,7 +485,7 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
         return;
     }
 
-    emit c->groupPeerAudioPlaying(group, peer);
+    emit c->groupPeerAudioPlaying(group, peerPk);
 
     CoreAV* cav = c->getAv();
 

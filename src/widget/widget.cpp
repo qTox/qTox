@@ -1810,7 +1810,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
     widget->searchName(ui->searchContactText->text(), filterGroups(filter));
 }
 
-void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
+void Widget::onGroupPeerAudioPlaying(int groupnumber, ToxPk peerPk)
 {
     Group* g = GroupList::findGroup(groupnumber);
     if (!g) {
@@ -1819,7 +1819,7 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
 
     auto form = groupChatForms[g->getId()].data();
     // TODO(sudden6): switch to ToxPk here
-    form->peerAudioPlaying(g->resolvePeerId(peernumber));
+    form->peerAudioPlaying(peerPk);
 }
 
 void Widget::removeGroup(Group* g, bool fake)

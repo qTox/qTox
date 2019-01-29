@@ -1175,10 +1175,10 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
     QByteArray name(length, Qt::Uninitialized);
     uint8_t* namePtr = reinterpret_cast<uint8_t*>(name.data());
     bool success = tox_conference_peer_get_name(tox.get(), groupId, peerId, namePtr, &error);
-    if (!parsePeerQueryError(error) || !success) {
-        qWarning() << "getGroupPeerName: Unknown error";
+    if (!parsePeerQueryError(error)) {
         return QString{};
     }
+    assert(success);
 
     return ToxString(name).getQString();
 }
@@ -1193,10 +1193,10 @@ ToxPk Core::getGroupPeerPk(int groupId, int peerId) const
     uint8_t friendPk[TOX_PUBLIC_KEY_SIZE] = {0x00};
     Tox_Err_Conference_Peer_Query error;
     bool success = tox_conference_peer_get_public_key(tox.get(), groupId, peerId, friendPk, &error);
-    if (!parsePeerQueryError(error) || !success) {
-        qWarning() << "getGroupPeerToxId: Unknown error";
+    if (!parsePeerQueryError(error)) {
         return ToxPk{};
     }
+    assert(success);
 
     return ToxPk(friendPk);
 }

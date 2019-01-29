@@ -82,19 +82,6 @@ QString Group::getDisplayedName() const
     return getName();
 }
 
-/**
- * @brief performs a peerId to ToxPk lookup
- * @param peerId peerId to lookup
- * @return ToxPk if peerId found
- * @note should not be used, reference peers by their ToxPk instead
- * @todo remove this function
- */
-const ToxPk Group::resolvePeerId(int peerId) const
-{
-    const Core* core = Core::getInstance();
-    return core->getGroupPeerPk(groupId, peerId);
-}
-
 void Group::regeneratePeerList()
 {
     const Core* core = Core::getInstance();
