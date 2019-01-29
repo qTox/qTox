@@ -1818,7 +1818,6 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, ToxPk peerPk)
     }
 
     auto form = groupChatForms[g->getId()].data();
-    // TODO(sudden6): switch to ToxPk here
     form->peerAudioPlaying(peerPk);
 }
 
