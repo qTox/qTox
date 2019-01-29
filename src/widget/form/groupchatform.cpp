@@ -376,8 +376,10 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
             if (netcam) {
                 static_cast<GroupNetCamView*>(netcam)->removePeer(peerPk);
             }
-
-            peerLabels[peerPk]->setProperty("playingAudio", LABEL_PEER_NOT_PLAYING_AUDIO);
+            auto it = peerLabels.find(peerPk);
+            if (it != peerLabels.end()) {
+                peerLabels[peerPk]->setProperty("playingAudio", LABEL_PEER_NOT_PLAYING_AUDIO);
+            }
             delete peerAudioTimers[peerPk];
             peerAudioTimers[peerPk] = nullptr;
         });
