@@ -365,6 +365,8 @@ void GroupChatForm::sendJoinLeaveMessages()
 void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
 {
     peerLabels[peerPk]->setProperty("playingAudio", LABEL_PEER_PLAYING_AUDIO);
+    peerLabels[peerPk]->style()->unpolish(peerLabels[peerPk]);
+    peerLabels[peerPk]->style()->polish(peerLabels[peerPk]);
     // TODO(sudden6): check if this can ever be false, cause [] default constructs
     if (!peerAudioTimers[peerPk]) {
         peerAudioTimers[peerPk] = new QTimer(this);
@@ -376,6 +378,8 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
             auto it = peerLabels.find(peerPk);
             if (it != peerLabels.end()) {
                 peerLabels[peerPk]->setProperty("playingAudio", LABEL_PEER_NOT_PLAYING_AUDIO);
+                peerLabels[peerPk]->style()->unpolish(peerLabels[peerPk]);
+                peerLabels[peerPk]->style()->polish(peerLabels[peerPk]);
             }
             delete peerAudioTimers[peerPk];
             peerAudioTimers[peerPk] = nullptr;
