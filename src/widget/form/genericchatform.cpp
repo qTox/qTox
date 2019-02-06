@@ -137,9 +137,12 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     curRow = 0;
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
+    dateInfo = new QLabel(this);
     chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
     searchForm->hide();
+    dateInfo->setAlignment(Qt::AlignHCenter);
+    dateInfo->setVisible(false);
 
     // settings
     const Settings& s = Settings::getInstance();
@@ -199,6 +202,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
 
     QVBoxLayout* contentLayout = new QVBoxLayout(contentWidget);
     contentLayout->addWidget(searchForm);
+    contentLayout->addWidget(dateInfo);
     contentLayout->addWidget(chatWidget);
     contentLayout->addLayout(mainFootLayout);
 
@@ -228,6 +232,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
 
     connect(chatWidget, &ChatLog::customContextMenuRequested, this,
             &GenericChatForm::onChatContextMenuRequested);
+    connect(chatWidget, &ChatLog::firstVisibleLineChanged, this, &GenericChatForm::updateShowDateInfo);
 
     connect(searchForm, &SearchForm::searchInBegin, this, &GenericChatForm::searchInBegin);
     connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
@@ -974,6 +979,19 @@ void GenericChatForm::onSearchTriggered()
     } else {
         searchPoint = QPoint(1, -1);
         searchAfterLoadHistory = false;
+    }
+}
+
+void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& line)
+{
+    const auto date = getDate(line);
+
+    if (date.isValid() && date != QDate::currentDate()) {
+        const auto dateText = QStringLiteral("<b>%1<\b>").arg(date.toString(Settings::getInstance().getDateFormat()));
+        dateInfo->setText(dateText);
+        dateInfo->setVisible(true);
+    } else {
+        dateInfo->setVisible(false);
     }
 }
 
