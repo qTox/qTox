@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>AboutFriendForm</class>
- <widget class="QDialog" name="AboutUser">
+ <widget class="QDialog" name="AboutFriendForm">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>506</width>
-    <height>473</height>
+    <height>521</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -111,11 +111,14 @@
      </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label_5">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
-        <string>Public key:</string>
+        <string>Public key (no ToxID):</string>
        </property>
       </widget>
      </item>
@@ -284,7 +287,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>AboutUser</receiver>
+   <receiver>AboutFriendForm</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -300,7 +303,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>AboutUser</receiver>
+   <receiver>AboutFriendForm</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
