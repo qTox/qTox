@@ -145,6 +145,7 @@
         {
             "name": "qTox",
             "buildsystem": "cmake-ninja",
+            "config-opts": ["-DSVGZ_ICON=OFF"],
             "sources": [
                 {
                     "type": "dir",

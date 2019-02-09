@@ -12,6 +12,7 @@ option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 option(UPDATE_CHECK "Enable automatic update check" ON)
 option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
+option(SVGZ_ICON "Compress the SVG icon of qTox" ON)
 option(ASAN "Compile with AddressSanitizer" OFF)
 
 # process generated files if cmake >= 3.10

@@ -46,10 +46,17 @@ else()
     install(FILES ${path_from} DESTINATION ${path_to})
   endforeach(size)
 
+  # process the icon, compress if enabled
   set(SVG_SRC "${CMAKE_SOURCE_DIR}/img/icons/qtox.svg")
-  set(SVG_GZIP "${CMAKE_BINARY_DIR}/qtox.svgz")
-  install(CODE "
-  execute_process(COMMAND gzip -S z INPUT_FILE ${SVG_SRC} OUTPUT_FILE ${SVG_GZIP})
-  " COMPONENT Runtime)
-  install(FILES "${SVG_GZIP}" DESTINATION "share/icons/hicolor/scalable/apps")
+  if(${SVGZ_ICON})
+    set(SVG_GZIP "${CMAKE_BINARY_DIR}/qtox.svgz")
+    install(CODE "
+    execute_process(COMMAND gzip -S z INPUT_FILE ${SVG_SRC} OUTPUT_FILE ${SVG_GZIP})
+    " COMPONENT Runtime)
+    set(SVG_DEST "${SVG_GZIP}")
+  else()
+    set(SVG_DEST "${SVG_SRC}")
+  endif()
+  install(FILES "${SVG_DEST}" DESTINATION "share/icons/hicolor/scalable/apps")
+
 endif()
