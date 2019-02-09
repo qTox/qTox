@@ -26,7 +26,7 @@ echo "deb http://ftp.debian.org/debian stretch-backports main" > /etc/apt/source
 
 # Get packages
 apt-get update
-apt-get install $APT_FLAGS ca-certificates git elfutils wget xz-utils patch bzip2
+apt-get install $APT_FLAGS ca-certificates git elfutils wget xz-utils patch bzip2 librsvg2-2 librsvg2-common
 
 # install recent flatpak packages
 apt-get install $APT_FLAGS -t stretch-backports flatpak flatpak-builder
