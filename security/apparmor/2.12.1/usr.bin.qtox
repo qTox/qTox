@@ -313,4 +313,18 @@ profile qtox /usr{,/local}/bin/qtox {
   # commit b0456adbd86aab73e4a19013fdfed22da98ed455
   /sys/devices/pci[0-9]*/**/{device,subsystem_device,subsystem_vendor,uevent,vendor} r,
 
+  # Backport kde abstraction
+  # commit aae838faca57905d2dbc27db7bffd595c09d26f0
+  # commit dc3b73daf9f648336a6f9ab90103acc962c0bf40
+  /etc/xdg/kdeglobals r,
+  /usr/share/knotifications5/*.notifyrc r, # KNotification::sendEvent()
+  /usr/share/kubuntu-default-settings/kf5-settings/* r,
+  owner @{HOME}/.cache/ksycoca5_??_* r, # KDE System Configuration Cache
+  owner @{HOME}/.config/baloofilerc r, # indexing options (excludes, etc), used by KFileWidget
+  owner @{HOME}/.config/dolphinrc r, # settings used by KFileWidget
+  owner @{HOME}/.config/kde.org/libphonon.conf r, # for KNotifications::sendEvent()
+  owner @{HOME}/.config/kdeglobals r, # global settings, used by Breeze style, etc.
+  owner @{HOME}/.config/klanguageoverridesrc r, # per-application languages, for KDEPrivate::initializeLanguages() from libKF5XmlGui.so
+  owner @{HOME}/.config/trashrc r, # Used by KFileWidget
+
 }
