@@ -226,6 +226,10 @@ profile qtox /usr{,/local}/bin/qtox {
   # so we deny this path to protect from loading exploits from /tmp.
   deny /tmp/#[0-9][0-9][0-9][0-9][0-9] m,
 
+  # libfontconfig bug? Should not write to root-owned dirs.
+  deny /usr/share/fonts/** w,
+  deny /var/cache/fontconfig/ w,
+
   # System files
 
   /usr/share/hunspell/* r,
@@ -276,6 +280,7 @@ profile qtox /usr{,/local}/bin/qtox {
   owner /{,var/}run/user/[0-9]*[0-9]/qTox*.slave-socket rwl -> /{,var/}run/user/[0-9]*[0-9]/#[0-9]*[0-9], # file dialog
   owner @{HOME}/.cache/Tox/ w,
   owner @{HOME}/.cache/Tox/qTox/{,**} rw,
+  owner @{HOME}/.cache/fontconfig/** rwk,
   owner @{HOME}/.cache/qTox/{,**} rw,
   owner @{HOME}/.cache/thumbnails/** rw, # receiving image file produces thumbnail?
   owner @{HOME}/.config/menus/ r, # file dialog
@@ -285,6 +290,9 @@ profile qtox /usr{,/local}/bin/qtox {
   owner @{HOME}/.config/qToxrc.lock rwk,
   owner @{HOME}/.config/tox/** l -> @{HOME}/.config/tox/**, # QSaveFile?
   owner @{HOME}/.config/tox/{,**} rwk,
+  owner @{HOME}/.fonts/.uuid* rw,
+  owner @{HOME}/.fonts/.uuid.* l -> @{HOME}/.fonts/.uuid.*,
+  owner @{HOME}/.fonts/.uuid.*/ rw,
   owner @{HOME}/.local/share/qTox/{,**} rw,
   owner @{HOME}/.local/share/user-places.xbel r, # file dialog
   owner @{PROC}/@{pid}/cmdline r,
