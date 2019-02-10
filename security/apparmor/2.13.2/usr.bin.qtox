@@ -35,6 +35,8 @@ profile qtox /usr{,/local}/bin/qtox {
 
   #TODO: use xdg-open abstraction when it's available
   /usr/bin/xdg-open PUx,
+  #TODO: use named profile or abstraction when it's available
+  /usr/lib/@{multiarch}/libexec/kf5/kioslave PUx,
 
   # Additional libraries
 
