@@ -176,6 +176,55 @@ profile qtox /usr{,/local}/bin/qtox {
     member={NewIcon,NewToolTip}
     peer=(label=unconfined),
 
+  dbus send
+    bus=system
+    path=/org/freedesktop/UPower
+    interface=org.freedesktop.DBus.Introspectable
+    member=Introspect
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/UDisks2/{block_devices,block_devices/*,drives,drives/*}
+    interface=org.freedesktop.DBus.Introspectable
+    member=Introspect
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/UDisks2/{block_devices,drives}/*
+    interface=org.freedesktop.DBus.Properties
+    member={Get,GetAll}
+    peer=(label=unconfined),
+
+  dbus send
+    bus=session
+    path=/org/freedesktop/DBus
+    interface=org.freedesktop.DBus
+    member=GetConnectionUnixUser
+    peer=(label=unconfined),
+
+  dbus send
+    bus=session
+    path=/
+    interface=org.kde.KDirNotify
+    member={enteredDirectory,leftDirectory}
+    peer=(label=unconfined),
+
+  dbus receive
+    bus=session
+    path=/
+    interface=org.kde.KDirNotify
+    member=FilesAdded
+    peer=(label=unconfined),
+
+  dbus send
+    bus=session
+    path=/KLauncher
+    interface=org.kde.KSlaveLauncher
+    member=requestSlave
+    peer=(label=unconfined),
+
   # Denied files
 
   # libpcre2 on openSUSE tries to mmap() shared memory on directory.
@@ -208,6 +257,7 @@ profile qtox /usr{,/local}/bin/qtox {
   /sys/bus/ r, # file dialog
   /sys/bus/usb/devices/ r, # file dialog
   /sys/class/ r, # file dialog
+  /sys/devices/**/uevent r, # file dialog
   /sys/devices/system/node/ r,  # for ld-linux-x86-64.so -> libnuma1.so
   /sys/devices/system/node/node[0-9]*/meminfo r, # for ld-linux-x86-64.so -> libnuma1.so
   /usr/share/emoticons/{,**} r,
@@ -215,6 +265,7 @@ profile qtox /usr{,/local}/bin/qtox {
   /usr/share/mime/ r, # file dialog
   /usr/share/plasma/look-and-feel/*/contents/defaults r, # TODO: move to kde abstraction?
   /usr/share/sounds/ r, # file dialog (alert)
+  /{,var/}run/udev/data/* r, # file dialog
 
   # User files
 
