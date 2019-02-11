@@ -148,7 +148,7 @@ void CallConfirmWidget::paintEvent(QPaintEvent*)
     painter.setBrush(brush);
     painter.setPen(Qt::NoPen);
 
-    painter.drawRoundRect(mainRect, roundedFactor * rectRatio, roundedFactor);
+    painter.drawRoundedRect(mainRect, roundedFactor * rectRatio, roundedFactor);
     painter.drawPolygon(spikePoly);
 }
 

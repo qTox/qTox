@@ -115,8 +115,8 @@ GdkPixbuf* SystemTrayIcon::convertQIconToPixbuf(const QIcon& icon)
     QImage image = icon.pixmap(64, 64).toImage();
     if (image.format() != QImage::Format_RGBA8888_Premultiplied)
         image = image.convertToFormat(QImage::Format_RGBA8888_Premultiplied);
-    guchar* image_bytes = new guchar[image.byteCount()];
-    memcpy(image_bytes, image.bits(), image.byteCount());
+    guchar* image_bytes = new guchar[image.sizeInBytes()];
+    memcpy(image_bytes, image.bits(), image.sizeInBytes());
 
     return gdk_pixbuf_new_from_data(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(), 8,
                                     image.width(), image.height(), image.bytesPerLine(),

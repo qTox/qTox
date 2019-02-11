@@ -68,7 +68,7 @@ ContentDialog::ContentDialog(QWidget* parent)
                friendLayout->getLayoutOffline()};
 
     if (s.getGroupchatPosition()) {
-        layouts.swap(0, 1);
+        layouts.swapItemsAt(0, 1);
     }
 
     QWidget* friendWidget = new QWidget();
@@ -403,7 +403,7 @@ void ContentDialog::reorderLayouts(bool newGroupOnTop)
 {
     bool oldGroupOnTop = layouts.first() == groupLayout.getLayout();
     if (newGroupOnTop != oldGroupOnTop) {
-        layouts.swap(0, 1);
+        layouts.swapItemsAt(0, 1);
     }
 }
 

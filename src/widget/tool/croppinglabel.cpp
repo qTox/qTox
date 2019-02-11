@@ -100,7 +100,7 @@ QSize CroppingLabel::sizeHint() const
 
 QSize CroppingLabel::minimumSizeHint() const
 {
-    return QSize(fontMetrics().width("..."), QLabel::minimumSizeHint().height());
+    return QSize(fontMetrics().horizontalAdvance("..."), QLabel::minimumSizeHint().height());
 }
 
 void CroppingLabel::mouseReleaseEvent(QMouseEvent* e)
@@ -161,7 +161,7 @@ void CroppingLabel::minimizeMaximumWidth()
 {
     // This function chooses the smallest possible maximum width.
     // Text width + padding. Without padding, we'll have elipses.
-    setMaximumWidth(fontMetrics().width(origText) + fontMetrics().width("..."));
+    setMaximumWidth(fontMetrics().horizontalAdvance(origText) + fontMetrics().horizontalAdvance("..."));
 }
 
 void CroppingLabel::editingFinished()

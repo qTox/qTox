@@ -293,7 +293,7 @@ void GroupChatForm::updateUserNames()
     // add the labels in alphabetical order into the layout
     auto nickLabelList = peerLabels.values();
 
-    qSort(nickLabelList.begin(), nickLabelList.end(), [](const QLabel* a, const QLabel* b)
+    std::sort(nickLabelList.begin(), nickLabelList.end(), [](const QLabel* a, const QLabel* b)
     {
         return a->text().toLower() < b->text().toLower();
     });
