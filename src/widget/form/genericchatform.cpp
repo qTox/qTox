@@ -128,6 +128,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     : QWidget(parent, Qt::Window)
     , audioInputFlag(false)
     , audioOutputFlag(false)
+    , searchAfterLoadHistory(false)
 {
     curRow = 0;
     headWidget = new ChatFormHeader();
