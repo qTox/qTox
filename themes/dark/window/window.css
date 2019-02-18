@@ -1,0 +1,72 @@
+Widget#activeWindow
+{
+    background-color: #DFDFDF;
+    border: 2px solid #ABABAB;
+}
+
+Widget#inactiveWindow
+{
+    background-color: #f4f4f4;
+    border: 2px solid #ABABAB;
+}
+/*
+Widget#titleBar
+{
+    border: 10px solid #ABABAB;
+    border-top: 0px solid transparent;
+    background-color: #DFDFDF;
+}
+
+Widget#titleBarInactive
+{
+    border: 5px solid #ABABAB;
+    border-top: 0px solid transparent;
+    background-color: #F1F1F1;
+}*/
+
+QToolButton#tbMenu
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+}
+
+
+QPushButton#minimizeButton
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url("@getImagePath(window/minimizeButton.png)");
+}
+QPushButton#minimizeButton:hover {image: url("@getImagePath(window/minimizeButtonHover.png)");}
+QPushButton#minimizeButton:pressed {image: url("@getImagePath(window/minimizeButtonPressed.png)");}
+QPushButton#minimizeButton:focus {outline: none;}
+
+QPushButton#maximizeButton
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url("@getImagePath(window/maximizeButton.png");
+}
+QPushButton#maximizeButton:hover {image: url("@getImagePath(window/maximizeButtonHover.png)");}
+QPushButton#maximizeButton:pressed {image: url("@getImagePath(window/maximizeButtonPressed.png)");}
+QPushButton#maximizeButton:focus {outline: none;}
+
+QPushButton#closeButton
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url("@getImagePath(window/closeButton.png");
+}
+QPushButton#closeButton:hover {image: url("@getImagePath(window/closeButtonHover.png)");}
+QPushButton#closeButton:pressed {image: url("@getImagePath(window/closeButtonPressed.png)");}
+QPushButton#closeButton:focus {outline: none;}
+
+QPushButton#restoreButton
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url("@getImagePath(window/restoreButton.png)");
+}
+QPushButton#restoreButton:hover {image: url("@getImagePath(window/restoreButtonHover.png)");}
+QPushButton#restoreButton:pressed {image: url("@getImagePath(window/restoreButtonPressed.png)");}
+QPushButton#restoreButton:focus {outline: none;}

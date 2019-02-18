@@ -170,6 +170,8 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     fileLayout->setSpacing(0);
     fileLayout->setMargin(0);
 
+    setStyleSheet(Style::getStylesheet("genericChatForm/genericChatForm.css"));
+
     msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
                            + fontToCss(s.getChatMessageFont(), "QTextEdit"));
     msgEdit->setFixedHeight(MESSAGE_EDIT_HEIGHT);

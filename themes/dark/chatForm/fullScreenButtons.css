@@ -1,0 +1,78 @@
+QFrame
+{
+    background-color: rgba(50, 50, 50, 0.6);
+    border-radius: 20px;
+}
+
+QAbstractButton
+{
+    background-color: transparent;
+    background-repeat: none;
+    background-position: center;
+    border: none;
+    border-radius: 5px;
+}
+
+QAbstractButton:hover
+{
+    background-color: rgba(255,255,255, 0.2);
+}
+
+QAbstractButton:pressed
+{
+    background-color: rgba(0,0,0, 0.2);
+}
+
+QAbstractButton#volButtonFullScreen
+{
+    background-image: url("@getImagePath(chatForm/volButton.svg)");
+    width: 11px;
+    height: 9px;
+    padding: 12px;
+}
+
+QAbstractButton#micButtonFullScreen
+{
+    background-image: url("@getImagePath(chatForm/micButton.svg)");
+    width: 11px;
+    height: 9px;
+    padding: 12px;
+}
+
+QAbstractButton#videoButtonFullScreen
+{
+    background-image: url("@getImagePath(chatForm/videoButtonRed.svg)");
+    width: 37px;
+    height: 33px;
+}
+
+QAbstractButton#videoPreviewButton
+{
+    background-image: url("@getImagePath(chatForm/videoPreview.svg)");
+    width: 13px;
+    height: 13px;
+    padding: 10px;
+}
+
+QAbstractButton#exitFullScreenButton
+{
+    background-image: url("@getImagePath(chatForm/exitFullScreenButton.svg)");
+    width: 30px;
+    height: 30px;
+    padding: 1px;
+}
+
+QAbstractButton#volButtonFullScreen[state="red"]
+{
+    background-image: url("@getImagePath(chatForm/volButtonRed.svg)");
+}
+
+QAbstractButton#micButtonFullScreen[state="red"]
+{
+    background-image: url("@getImagePath(chatForm/micButtonRed.svg)");
+}
+
+QAbstractButton#videoPreviewButton[state="red"]
+{
+    background-image: url("@getImagePath(chatForm/videoPreviewRed.svg)");
+}

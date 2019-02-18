@@ -677,6 +677,8 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
         }
 
         QWidget* contentWidget = new QWidget(this);
+        contentWidget->setObjectName("contentWidget");
+
         contentLayout = new ContentLayout(contentWidget);
         ui->mainSplitter->addWidget(contentWidget);
 

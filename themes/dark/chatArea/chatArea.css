@@ -1,0 +1,15 @@
+QTextEdit
+{
+    background: white;
+    color: black;
+}
+
+QGraphicsView
+{
+    border: none;
+}
+
+QWidget
+{
+    background: #201f1f;
+}

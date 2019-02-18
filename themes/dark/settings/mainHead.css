@@ -1,0 +1,5 @@
+QWidget .QLabel, QWidget .QLineEdit
+{
+    color: #c3c3c3;
+    background: #201f1f;
+}

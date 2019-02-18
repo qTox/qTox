@@ -1,0 +1,14 @@
+QLabel
+{
+    color: #000;
+}
+
+QLabel:disabled
+{
+    color: #ddd;
+}
+
+QLabel[state="red"]
+{
+    color: #e84747;
+}

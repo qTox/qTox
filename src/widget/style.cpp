@@ -64,7 +64,7 @@
 
 namespace {
     const QLatin1Literal ThemeSubFolder{"themes/"};
-    const QLatin1Literal BuiltinThemePath{":themes/default/"};
+    const QLatin1Literal BuiltinThemePath{":themes/dark/"};
 }
 
 // helper functions
@@ -83,13 +83,22 @@ QString qssifyFont(QFont font)
 
 // colors as defined in
 // https://github.com/ItsDuke/Tox-UI/blob/master/UI%20GUIDELINES.md
-static QColor palette[] = {
-    QColor("#6bc260"), QColor("#cebf44"), QColor("#c84e4e"), QColor("#000000"), QColor("#1c1c1c"),
-    QColor("#414141"), QColor("#414141").lighter(120), QColor("#d1d1d1"), QColor("#ffffff"),
+//static QColor palette[] = { // NOTE: Default
+//    QColor("#6bc260"), QColor("#cebf44"), QColor("#c84e4e"), QColor("#000000"), QColor("#1c1c1c"),
+//    QColor("#414141"), QColor("#414141").lighter(120), QColor("#d1d1d1"), QColor("#ffffff"),
+//    QColor("#ff7700"),
+
+//    // Theme colors
+//    QColor("#1c1c1c"), QColor("#2a2a2a"), QColor("#414141"), QColor("#4e4e4e"),
+//};
+
+static QColor palette[] = { // NOTE: Dark
+    QColor("#6bc260"), QColor("#cebf44"), QColor("#c84e4e"), QColor("#000000"), QColor("#c3c3c3"),
+    QColor("#d1d1d1"), QColor("#100f0f").lighter(120), QColor("#d1d1d1"), QColor("#201f1f"),
     QColor("#ff7700"),
 
     // Theme colors
-    QColor("#1c1c1c"), QColor("#2a2a2a"), QColor("#414141"), QColor("#4e4e4e"),
+    QColor("#1c1c1c"), QColor("#2a2a2a"), QColor("#100f0f"), QColor("#201f1f"),
 };
 
 static QMap<QString, QString> dict;
@@ -318,8 +327,10 @@ void Style::setThemeColor(const QColor& color)
         // Reset to default
         palette[ThemeDark] = QColor("#1c1c1c");
         palette[ThemeMediumDark] = QColor("#2a2a2a");
-        palette[ThemeMedium] = QColor("#414141");
-        palette[ThemeLight] = QColor("#4e4e4e");
+//        palette[ThemeMedium] = QColor("#414141"); // NOTE: Default
+        palette[ThemeMedium] = QColor("#100f0f"); // NOTE: Dark
+//        palette[ThemeLight] = QColor("#4e4e4e"); // MOTE: Default
+        palette[ThemeLight] = QColor("#201f1f"); // MOTE: Dark
     } else {
         palette[ThemeDark] = color.darker(155);
         palette[ThemeMediumDark] = color.darker(135);

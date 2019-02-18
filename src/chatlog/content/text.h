@@ -32,7 +32,8 @@ class Text : public ChatLineContent
 
 public:
     Text(const QString& txt = "", const QFont& font = QFont(), bool enableElide = false,
-         const QString& rawText = QString(), const QColor c = Qt::black);
+//         const QString& rawText = QString(), const QColor c = Qt::black); // NOTE: Default
+         const QString& rawText = QString(), const QColor c = QColor("#c3c3c3")); // NOTE: Dark
     virtual ~Text();
 
     void setText(const QString& txt);

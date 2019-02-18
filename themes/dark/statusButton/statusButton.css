@@ -1,0 +1,41 @@
+QPushButton
+{
+    background: none;
+    background-color: @themeMediumDark;
+    border: none;
+    border-radius: 6px;
+    width: 20px;
+    height: 40px;
+}
+
+QPushButton:default
+{
+    background-color: @themeMediumDark;
+}
+
+/*Bugged in Qt, but it's probably better to leave enabled so that users can tell it's clickable*/
+QPushButton:hover
+{
+    background-color: @themeMedium;
+}
+
+QPushButton:pressed
+{
+    background-color: @themeMediumDark;
+}
+
+QPushButton:focus
+{
+    outline: none;
+}
+
+QPushButton::menu-indicator {image: none;}
+
+QPushButton::menu-indicator:pressed, QPushButton::menu-indicator:open
+{
+    image: url("@getImagePath(statusButton/menu_indicator.svg)");
+    subcontrol-origin: padding;
+    subcontrol-position: bottom center;
+    position: relative;
+    bottom: 2px;
+}

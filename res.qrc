@@ -44,7 +44,71 @@
         <file>img/taskbar/light/taskbar_offline.svg</file>
         <file>img/taskbar/light/taskbar_event.svg</file>
         <file>img/transfer.svg</file>
-        <file>themes/default/fileTransferWidget/fileDone.svg</file>
+        <file>themes/dark/fileTransferWidget/fileDone.svg</file>
+        <file>themes/dark/centralWidget/centralWidget.css</file>
+        <file>themes/dark/chatArea/chatArea.css</file>
+        <file>themes/dark/chatArea/chatHead.css</file>
+        <file>themes/dark/chatArea/innerStyle.css</file>
+        <file>themes/dark/chatArea/scrollBarUpArrow.svg</file>
+        <file>themes/dark/chatArea/scrollBarDownArrow.svg</file>
+        <file>themes/dark/chatArea/scrollBarLeftArrow.svg</file>
+        <file>themes/dark/chatArea/scrollBarRightArrow.svg</file>
+        <file>themes/dark/chatForm/buttons.css</file>
+        <file>themes/dark/chatForm/fullScreenButtons.css</file>
+        <file>themes/dark/chatForm/callButton.svg</file>
+        <file>themes/dark/chatForm/labels.css</file>
+        <file>themes/dark/chatForm/micButton.svg</file>
+        <file>themes/dark/chatForm/micButtonRed.svg</file>
+        <file>themes/dark/chatForm/videoButton.svg</file>
+        <file>themes/dark/chatForm/videoButtonRed.svg</file>
+        <file>themes/dark/chatForm/volButton.svg</file>
+        <file>themes/dark/chatForm/volButtonRed.svg</file>
+        <file>themes/dark/chatForm/videoPreview.svg</file>
+        <file>themes/dark/chatForm/videoPreviewRed.svg</file>
+        <file>themes/dark/chatForm/emoteButton.svg</file>
+        <file>themes/dark/chatForm/fileButton.svg</file>
+        <file>themes/dark/chatForm/screenshotButton.svg</file>
+        <file>themes/dark/chatForm/searchCalendarButton.svg</file>
+        <file>themes/dark/chatForm/searchDownButton.svg</file>
+        <file>themes/dark/chatForm/searchHideButton.svg</file>
+        <file>themes/dark/chatForm/searchSettingsButton.svg</file>
+        <file>themes/dark/chatForm/searchUpButton.svg</file>
+        <file>themes/dark/chatForm/sendButton.svg</file>
+        <file>themes/dark/chatForm/exitFullScreenButton.svg</file>
+        <file>themes/dark/emoticonWidget/dot_page.svg</file>
+        <file>themes/dark/emoticonWidget/dot_page_current.svg</file>
+        <file>themes/dark/emoticonWidget/dot_page_hover.svg</file>
+        <file>themes/dark/emoticonWidget/emoticonWidget.css</file>
+        <file>themes/dark/fileTransferWidget/fileTransferWidget.css</file>
+        <file>themes/dark/friendList/friendList.css</file>
+        <file>themes/dark/msgEdit/msgEdit.css</file>
+        <file>themes/dark/settings/mainContent.css</file>
+        <file>themes/dark/settings/mainHead.css</file>
+        <file>themes/dark/statusButton/statusButton.css</file>
+        <file>themes/dark/statusButton/menu_indicator.svg</file>
+        <file>themes/dark/window/general.css</file>
+        <file>themes/dark/window/profile.css</file>
+        <file>themes/dark/window/statusPanel.css</file>
+        <file>themes/dark/window/window.css</file>
+        <file>themes/dark/chatArea/info.svg</file>
+        <file>themes/dark/chatArea/spinner.svg</file>
+        <file>themes/dark/chatArea/typing.svg</file>
+        <file>themes/dark/chatArea/error.svg</file>
+        <file>themes/dark/fileTransferInstance/no.svg</file>
+        <file>themes/dark/fileTransferInstance/pause.svg</file>
+        <file>themes/dark/fileTransferInstance/yes.svg</file>
+        <file>themes/dark/fileTransferInstance/dir.svg</file>
+        <file>themes/dark/fileTransferInstance/arrow_white.svg</file>
+        <file>themes/dark/fileTransferInstance/browse.svg</file>
+        <file>themes/dark/fileTransferInstance/filetransferWidget.css</file>
+        <file>themes/dark/genericChatForm/genericChatForm.css</file>
+        <file>themes/dark/acceptCall/acceptCall.svg</file>
+        <file>themes/dark/rejectCall/rejectCall.svg</file>
+        <file>themes/dark/notificationEdge/notificationEdge.css</file>
+        <file>themes/dark/loginScreen/loginScreen.css</file>
+        <file>themes/dark/contentDialog/contentDialog.css</file>
+        <file>themes/dark/tooliconsZone/tooliconsZone.css</file>
+	<file>themes/default/fileTransferWidget/fileDone.svg</file>
         <file>themes/default/centralWidget/centralWidget.css</file>
         <file>themes/default/chatArea/chatArea.css</file>
         <file>themes/default/chatArea/chatHead.css</file>
@@ -101,6 +165,7 @@
         <file>themes/default/fileTransferInstance/arrow_white.svg</file>
         <file>themes/default/fileTransferInstance/browse.svg</file>
         <file>themes/default/fileTransferInstance/filetransferWidget.css</file>
+        <file>themes/default/genericChatForm/genericChatForm.css</file>
         <file>themes/default/acceptCall/acceptCall.svg</file>
         <file>themes/default/rejectCall/rejectCall.svg</file>
         <file>img/login_logo.svg</file>

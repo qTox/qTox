@@ -43,6 +43,7 @@ Text::Text(const QString& txt, const QFont& font, bool enableElide, const QStrin
     , defStyleSheet(Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), font))
     , color(c)
 {
+    QString ct = c.name();
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton);
     setAcceptHoverEvents(true);

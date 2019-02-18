@@ -1,0 +1,37 @@
+body {
+    font: @baseFont;
+}
+
+p {
+    white-space: pre-wrap;
+}
+
+.action {
+    color: #546eff;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.typing {
+    color: @mediumGreyLight;
+}
+
+.quote {
+    color: #279419;
+}
+
+.alert {
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: @orange;
+}
+
+.alert_name {
+    background-color: @orange;
+    font: @bigBold;
+}
+
+a {
+    color: #d292ff;
+    font-weight: bold
+}

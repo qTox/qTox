@@ -1,0 +1,242 @@
+QTextEdit
+{
+    border-color: @lightGrey;
+    border-style: solid;
+    border-width: 1px 0 1px 1px;
+    background: #201f1f;
+    border: 1px solid #c4c1bd;
+}
+
+QListWidget
+{
+    background-color: #201f1f;
+}
+
+QMessageBox
+{
+    background-color: #201f1f;
+}
+
+QCheckBox
+{
+    color: #c3c3c3;
+}
+
+QCheckBox:disabled
+{
+    color: grey;
+}
+
+QSpinBox
+{
+    background-color: #201f1f;
+}
+
+QSpinBox:disabled
+{
+    background-color: lightGrey;
+}
+
+QGroupBox
+{
+    color: #c3c3c3;
+    background-color: #201f1f;
+    font: @bigBold;
+}
+
+QComboBox
+{
+    color: #c3c3c3;
+    background-color: #201f1f;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #201f1f;
+}
+
+QLineEdit
+{
+    background-color: #201f1f;
+}
+
+QLineEdit:disabled
+{
+    background-color: #262424
+    color: #201f1f;
+}
+
+QTabWidget
+{
+    background-color: #100f0f;
+}
+
+QTabBar::tab:selected 
+{
+    background: #100f0f;
+    color: #c3c3c3;
+}
+
+QTabBar::tab:!selected 
+{
+    background: #444242;
+    color: #8e8e8e;
+}
+
+QScrollArea
+{
+    background-color: #201f1f;
+}
+
+QScrollArea > QWidget > QWidget
+{
+    background: transparent;
+}
+
+QScrollArea::corner
+{
+    background-color: #201f1f;
+    border: none;
+}
+
+QScrollBar:vertical
+{
+    background: transparent;
+    width: 12px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+/* using last is a bit of a hack, but QTabBar otherwise doesn't allow selecting single tabs */
+QTabBar::tab:last:!selected[update-available=true]
+{
+    background-color: #80c580;
+}
+
+QPushButton#updateAvailableButton
+{
+    background-color: #21da21;
+}
+
+QScrollBar::handle:vertical
+{
+    background-color: #d1d1d1;
+    min-height: 20px;
+    border-radius: 3px;
+    margin-left: 2px;
+}
+
+QScrollBar::handle:vertical:hover
+{
+    background-color: #e3e3e3;
+}
+
+QScrollBar::handle:vertical:pressed
+{
+    background-color: #b1b1b1;
+}
+
+QScrollBar::add-line:vertical
+{
+    background-color: white;
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical
+{
+    background-color: white;
+    height: 0px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:QScrollBar::down-arrow:vertical
+{
+    width: 10;
+    height: 10px;
+    background-color: white;
+}
+
+QScrollBar:QScrollBar::up-arrow:vertical
+{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+{
+    background: none;
+}
+
+QScrollBar:horizontal
+{
+    background-color: white;
+    height: 10px;
+    margin: 0 2px 0 2px;
+}
+
+QScrollBar::handle:horizontal
+{
+    background-color: #d1d1d1;
+    min-width: 20px;
+    border-radius: 2px;
+}
+
+QScrollBar::handle:horizontal:hover
+{
+    background-color: #e3e3e3;
+}
+
+QScrollBar::handle:horizontal:pressed
+{
+    background-color: #b1b1b1;
+}
+
+QScrollBar::add-line:horizontal
+{
+    background-color: white;
+    width: 0px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal
+{
+    background-color: white;
+    width: 0px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:QScrollBar::down-arrow:horizontal
+{
+    width: 10;
+    height: 10px;
+    background-color: white;
+}
+
+QScrollBar:QScrollBar::up-arrow:horizontal
+{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
+{
+    background: none;
+}
+
+QRadioButton
+{
+    background: #201f1f;
+    color: #c3c3c3;
+}
+
+QPushButton
+{
+    background: #323030;
+    color: #c3c3c3;
+}

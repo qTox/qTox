@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="25"
+   height="15"
+   viewBox="0 0 25 15"
+   id="Layer_1"
+   xml:space="preserve"><metadata
+     id="metadata13"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+     id="defs11" /><g
+     transform="matrix(1.1065089,0,0,1.0395229,0,0.03502821)"
+     id="g3"><path
+       d="m 8.845,2 c 0,-1.1 0.9,-2 2,-2 h 9.78 c 1.1,0 2,0.9 2,2 v 10.396 c 0,1.1 -0.9,2 -2,2 h -9.78 c -1.1,0 -2,-0.9 -2,-2 V 2 z"
+       id="path5"
+       style="fill:#ffffff" /><polygon
+       points="0,12.916 7.509,8.581 7.509,5.814 0,1.48 "
+       id="polygon7"
+       style="fill:#ffffff" /></g></svg>

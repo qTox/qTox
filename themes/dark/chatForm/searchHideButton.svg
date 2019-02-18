@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="26"
+   height="26"
+   viewBox="0 0 26 26"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="searchHideButton.svg"
+   inkscape:version="0.92.2 2405546, 2018-03-11">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1015"
+     id="namedview9"
+     showgrid="false"
+     inkscape:zoom="9.0769231"
+     inkscape:cx="13"
+     inkscape:cy="13"
+     inkscape:window-x="0"
+     inkscape:window-y="36"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(59.891963,-41.449704)">
+    <g
+       id="g30"
+       transform="matrix(1.9999999,1.9999999,-1.9999999,1.9999999,114.96993,45.355829)"
+       style="fill:#ffffff">
+      <rect
+         y="41.988605"
+         x="-43.942345"
+         height="1.5"
+         width="11.5"
+         id="rect11"
+         style="fill:#ffffff;stroke-width:0.26458332" />
+      <rect
+         transform="rotate(-90)"
+         y="-38.942345"
+         x="-48.488605"
+         height="1.5"
+         width="11.500001"
+         id="rect11-3"
+         style="fill:#ffffff;stroke-width:0.26458332" />
+    </g>
+  </g>
+</svg>
