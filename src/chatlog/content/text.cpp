@@ -31,8 +31,6 @@
 #include <QTextBlock>
 #include <QTextFragment>
 
-#include "src/widget/style.h"
-
 static const QString COLOR_HIGHLIGHT = QStringLiteral("#ff7626");
 
 Text::Text(const QString& txt, const QFont& font, bool enableElide, const QString& rwText,

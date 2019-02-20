@@ -44,6 +44,7 @@
         <file>img/taskbar/light/taskbar_offline.svg</file>
         <file>img/taskbar/light/taskbar_event.svg</file>
         <file>img/transfer.svg</file>
+        <file>themes/dark/palette.ini</file>
         <file>themes/dark/fileTransferWidget/fileDone.svg</file>
         <file>themes/dark/centralWidget/centralWidget.css</file>
         <file>themes/dark/chatArea/chatArea.css</file>
@@ -108,7 +109,8 @@
         <file>themes/dark/loginScreen/loginScreen.css</file>
         <file>themes/dark/contentDialog/contentDialog.css</file>
         <file>themes/dark/tooliconsZone/tooliconsZone.css</file>
-	<file>themes/default/fileTransferWidget/fileDone.svg</file>
+        <file>themes/default/palette.ini</file>
+        <file>themes/default/fileTransferWidget/fileDone.svg</file>
         <file>themes/default/centralWidget/centralWidget.css</file>
         <file>themes/default/chatArea/chatArea.css</file>
         <file>themes/default/chatArea/chatHead.css</file>

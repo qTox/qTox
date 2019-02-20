@@ -7,7 +7,7 @@ p {
 }
 
 .action {
-    color: #1818FF;
+    color: @action;
     font-style: italic;
 }
 

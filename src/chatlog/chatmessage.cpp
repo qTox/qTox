@@ -50,9 +50,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     QString text = rawMessage.toHtmlEscaped();
     QString senderText = sender;
 
-    const QColor actionColor =
-//        QColor("#1818FF"); // has to match the color in innerStyle.css (div.action) // NOTE: Default
-        QColor("#546eff"); // NOTE: Dark
+    const QColor actionColor = Style::getColor(Style::Action);
 
     // smileys
     if (Settings::getInstance().getUseEmoticons())
@@ -89,8 +87,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     if (isMe)
         authorFont.setBold(true);
 
-//    QColor color = QColor(0, 0, 0); // NOTE: Default
-    QColor color = QColor("#c3c3c3"); // NOTE: Dark
+    QColor color = Style::getColor(Style::Black);
     QColor authorColor;
 
     if (colorizeName && Settings::getInstance().getEnableGroupChatsColor())
