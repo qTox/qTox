@@ -119,6 +119,13 @@ void ChatLine::fontChanged(const QFont& font)
         c->fontChanged(font);
 }
 
+void ChatLine::reloadTheme()
+{
+    for (ChatLineContent* c : content) {
+        c->reloadTheme();
+    }
+}
+
 int ChatLine::getColumnCount()
 {
     return content.size();

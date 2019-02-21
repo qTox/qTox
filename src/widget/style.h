@@ -73,6 +73,8 @@ public:
     static void applyTheme();
     static QPixmap scaleSvgImage(const QString& path, uint32_t width, uint32_t height);
     static void initPalette();
+    static void initDictColor();
+    static QString getThemePath();
 
 signals:
     void themeChanged();

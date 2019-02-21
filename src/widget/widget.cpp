@@ -150,14 +150,11 @@ void Widget::init()
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
     layout()->setContentsMargins(0, 0, 0, 0);
-    ui->centralwidget->setStyleSheet(Style::getStylesheet(QStringLiteral("centralWidget/centralWidget.css")));
-    ui->friendList->setStyleSheet(Style::getStylesheet("friendList/friendList.css"));
 
     profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
     profilePicture->setClickable(true);
     profilePicture->setObjectName("selfAvatar");
-    profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css"));
     ui->myProfile->insertWidget(0, profilePicture);
     ui->myProfile->insertSpacing(1, 7);
 
@@ -200,18 +197,12 @@ void Widget::init()
 
     ui->searchContactFilterBox->setMenu(filterMenu);
 
-#ifndef Q_OS_MAC
-    ui->statusHead->setStyleSheet(Style::getStylesheet("window/statusPanel.css"));
-#endif
-
     contactListWidget = new FriendListWidget(this, settings.getGroupchatPosition());
     ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
     ui->friendList->setContextMenuPolicy(Qt::CustomContextMenu);
 
     ui->statusLabel->setEditable(true);
-
-    ui->statusPanel->setStyleSheet(Style::getStylesheet("window/statusPanel.css"));
 
     QMenu* statusButtonMenu = new QMenu(ui->statusButton);
     statusButtonMenu->addAction(statusOnline);
@@ -2176,12 +2167,19 @@ void Widget::reloadTheme()
 {
     this->setStyleSheet(Style::getStylesheet("window/general.css"));
     QString statusPanelStyle = Style::getStylesheet("window/statusPanel.css");
+    ui->centralwidget->setStyleSheet(Style::getStylesheet(QStringLiteral("centralWidget/centralWidget.css")));
     ui->tooliconsZone->setStyleSheet(Style::getStylesheet("tooliconsZone/tooliconsZone.css"));
     ui->statusPanel->setStyleSheet(statusPanelStyle);
     ui->statusHead->setStyleSheet(statusPanelStyle);
     ui->friendList->setStyleSheet(Style::getStylesheet("friendList/friendList.css"));
     ui->statusButton->setStyleSheet(Style::getStylesheet("statusButton/statusButton.css"));
     contactListWidget->reDraw();
+
+    profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css"));
+
+    if (contentLayout != nullptr) {
+        contentLayout->reloadTheme();
+    }
 
     for (Friend* f : FriendList::getAllFriends()) {
         uint32_t friendId = f->getId();
@@ -2191,6 +2189,15 @@ void Widget::reloadTheme()
     for (Group* g : GroupList::getAllGroups()) {
         uint32_t groupId = g->getId();
         groupWidgets[groupId]->reloadTheme();
+    }
+
+
+    for (auto f : FriendList::getAllFriends()) {
+        chatForms[f->getId()]->reloadTheme();
+    }
+
+    for (auto g : GroupList::getAllGroups()) {
+        groupChatForms[g->getId()]->reloadTheme();
     }
 }
 

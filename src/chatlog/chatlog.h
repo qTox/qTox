@@ -53,6 +53,7 @@ public:
     void scrollToLine(ChatLine::Ptr line);
     void selectAll();
     void fontChanged(const QFont& font);
+    void reloadTheme();
 
     QString getSelectedText() const;
 

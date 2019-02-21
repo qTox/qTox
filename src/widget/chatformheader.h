@@ -72,6 +72,8 @@ public:
     void setAvatar(const QPixmap& img);
     QSize getAvatarSize() const;
 
+    void reloadTheme();
+
     // TODO: Remove
     void addWidget(QWidget* widget, int stretch = 0, Qt::Alignment alignment = Qt::Alignment());
     void addLayout(QLayout* layout);

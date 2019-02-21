@@ -83,6 +83,7 @@ public:
     static QString resolveToxPk(const ToxPk& pk);
     QDate getLatestDate() const;
     QDate getFirstDate() const;
+    void reloadTheme();
 
 signals:
     void sendMessage(uint32_t, QString);

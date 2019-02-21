@@ -118,6 +118,17 @@ void SearchForm::insertEditor(const QString &text)
     searchLine->insert(text);
 }
 
+void SearchForm::reloadTheme()
+{
+    settingsButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
+    upButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
+    downButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
+    hideButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
+    startButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
+
+    settings->reloadTheme();
+}
+
 void SearchForm::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);

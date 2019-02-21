@@ -660,6 +660,15 @@ void ChatLog::fontChanged(const QFont& font)
     }
 }
 
+void ChatLog::reloadTheme()
+{
+    setBackgroundBrush(QBrush(Style::getColor(Style::White), Qt::SolidPattern));
+
+    for (ChatLine::Ptr l : lines) {
+        l->reloadTheme();
+    }
+}
+
 void ChatLog::forceRelayout()
 {
     startResizeWorker();

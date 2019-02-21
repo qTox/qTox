@@ -50,8 +50,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     QString text = rawMessage.toHtmlEscaped();
     QString senderText = sender;
 
-    const QColor actionColor = Style::getColor(Style::Action);
-
+    auto textType = Text::NORMAL;
     // smileys
     if (Settings::getInstance().getUseEmoticons())
         text = SmileyPack::getInstance().smileyfied(text);
@@ -72,6 +71,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
         text = wrapDiv(text, "msg");
         break;
     case ACTION:
+        textType = Text::ACTION;
         senderText = "*";
         text = wrapDiv(QString("%1 %2").arg(sender.toHtmlEscaped(), text), "action");
         msg->setAsAction();
@@ -88,23 +88,18 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
         authorFont.setBold(true);
 
     QColor color = Style::getColor(Style::Black);
-    QColor authorColor;
-
-    if (colorizeName && Settings::getInstance().getEnableGroupChatsColor())
-    {
+    if (colorizeName && Settings::getInstance().getEnableGroupChatsColor()) {
         QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Sha256);
         quint8 *data = (quint8*)hash.data();
 
-        authorColor.setHsv(data[0], 255, 196);
+        color.setHsv(data[0], 255, 196);
 
-        if (!isMe)
-        {
-            color = authorColor;
+        if (!isMe && textType == Text::NORMAL) {
+                textType = Text::CUSTOM;
         }
     }
 
-    msg->addColumn(new Text(senderText, authorFont, true, sender,
-                            type == ACTION ? actionColor : color),
+    msg->addColumn(new Text(senderText, authorFont, true, sender, textType, color),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(text, baseFont, false, ((type == ACTION) && isMe)
                                                        ? QString("%1 %2").arg(sender, rawMessage)
