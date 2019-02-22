@@ -1,27 +1,27 @@
 [fontColor="white"] QLabel {
-	color:white;
-	font:@big;
+        color: white;
+        font: @big;
 }
 
 [fontColor="black"] QLabel {
-	color:@mediumGrey;
-	font:@big;
+        color: @statusActive;
+        font: @big;
 }
 
 QPushButton {
-	margin:0;
+        margin: 0;
         border: none;
 }
 
 
 
 QProgressBar {
-	border: 2px solid @mediumGrey;
+        border: 2px solid @statusActive;
 	border-radius: 0px;
-	background-color: @mediumGrey;
+        background-color: @statusActive;
 }
 
 QProgressBar::chunk {
-	background-color: @lightGrey;
+        background-color: @groundExtra;
 	width: 1px;
 }

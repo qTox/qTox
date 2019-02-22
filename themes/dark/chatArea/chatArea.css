@@ -11,5 +11,5 @@ QGraphicsView
 
 QWidget
 {
-    background: #201f1f;
+    background: @groundBase;
 }

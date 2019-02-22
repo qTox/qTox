@@ -1,27 +1,27 @@
 QLineEdit
 {
-    color: @black;
+    color: @mainText;
     background: white;
     border: 0px;
 }
 
 #nameLabel
 {
-    color: @black;
+    color: @mainText;
     font: @mediumBold;
     font-size:12px;
 }
 
 #statusLabel
 {
-    color: @mediumGrey;
+    color: @statusActive;
     font: @medium;
     font-size:12px;
 }
 
 #peersLabel
 {
-    color: @mediumGrey;
+    color: @statusActive;
     font: @medium;
     font-size:12px;
 }

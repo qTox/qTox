@@ -8,6 +8,6 @@ QToolTip
 
 QWidget#contentWidget
 {
-    background: #201f1f;
+    background: @groundBase;
 }
 

@@ -1,24 +1,24 @@
 QLabel
 {
-    color: #c3c3c3;
+    color: @mainText;
 }
 
 QLineEdit
 {
-    color: #c3c3c3;
+    color: @mainText;
 }
 
 QTextEdit
 {
-    color: #c3c3c3;
+    color: @mainText;
 }
 
 QSpinBox
 {
-    color: #c3c3c3;
+    color: @mainText;
 } 
 
 QListView
 {
-    color: #c3c3c3;
+    color: @mainText;
 }

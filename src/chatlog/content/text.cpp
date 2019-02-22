@@ -471,7 +471,7 @@ void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
 
 QColor Text::textColor() const
 {
-    QColor c = Style::getColor(Style::Black);
+    QColor c = Style::getColor(Style::MainText);
     if (textType == ACTION) {
         c = Style::getColor(Style::Action);
     } else if (textType == CUSTOM) {

@@ -59,7 +59,7 @@ QStackedWidget QPushButton
 
 QLabel
 {
-    color: #c3c3c3;
+    color: @mainText;
     background: #100f0f;
 }
 
@@ -70,8 +70,8 @@ QLabel#label_7
 
 QCheckBox, QProgressBar, QComboBox, QLineEdit, QListView
 {
-    color: #c3c3c3;
-    background: #201f1f;
+    color: @mainText;
+    background: @groundBase;
 }
 
 QCheckBox:disabled

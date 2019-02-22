@@ -87,7 +87,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     if (isMe)
         authorFont.setBold(true);
 
-    QColor color = Style::getColor(Style::Black);
+    QColor color = Style::getColor(Style::MainText);
     if (colorizeName && Settings::getInstance().getEnableGroupChatsColor()) {
         QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Sha256);
         quint8 *data = (quint8*)hash.data();

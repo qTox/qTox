@@ -79,14 +79,14 @@ QListView
 {
   background-color: @themeDark;
   font: @extraBig;
-  color: @white;
+  color: @groundBase;
 }
 
 #statusPanel > #statusHead > #statusLabel
 {
   background-color: @themeDark;
   font: @medium;
-  color: @lightGrey;
+  color: @groundExtra;
 }
 
 #statusPanel > #statusHead > #statusButton

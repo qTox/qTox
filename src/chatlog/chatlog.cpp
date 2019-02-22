@@ -66,7 +66,7 @@ ChatLog::ChatLog(QWidget* parent)
     setDragMode(QGraphicsView::NoDrag);
     setViewportUpdateMode(MinimalViewportUpdate);
     setContextMenuPolicy(Qt::CustomContextMenu);
-    setBackgroundBrush(QBrush(Style::getColor(Style::White), Qt::SolidPattern));
+    setBackgroundBrush(QBrush(Style::getColor(Style::GroundBase), Qt::SolidPattern));
 
     // The selection rect for multi-line selection
     selGraphItem = scene->addRect(0, 0, 0, 0, selectionRectColor.darker(120), selectionRectColor);
@@ -662,7 +662,7 @@ void ChatLog::fontChanged(const QFont& font)
 
 void ChatLog::reloadTheme()
 {
-    setBackgroundBrush(QBrush(Style::getColor(Style::White), Qt::SolidPattern));
+    setBackgroundBrush(QBrush(Style::getColor(Style::GroundBase), Qt::SolidPattern));
 
     for (ChatLine::Ptr l : lines) {
         l->reloadTheme();

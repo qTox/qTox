@@ -1,24 +1,24 @@
 QLabel
 {
-    color: black;
+    color: @mainText;
 }
 
 QLineEdit
 {
-    color: black;
+    color: @mainText;
 }
 
 QTextEdit
 {
-    color: black;
+    color: @mainText;
 }
 
 QSpinBox
 {
-    color: black;
+    color: @mainText;
 } 
 
 QListView
 {
-    color: black;
+    color: @mainText;
 }
