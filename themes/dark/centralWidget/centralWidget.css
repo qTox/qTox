@@ -13,7 +13,7 @@ QTextEdit
     color: @mainText;
 }
 
-QSpinBox
+QSpinBox, QDoubleSpinBox
 {
     color: @mainText;
 } 

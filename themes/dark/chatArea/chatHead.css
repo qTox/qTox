@@ -1,7 +1,7 @@
 QLineEdit
 {
     color: @mainText;
-    background: white;
+    background: @groundBase;
     border: 0px;
 }
 

@@ -11,3 +11,19 @@ QWidget#contentWidget
     background: @groundBase;
 }
 
+QTabWidget
+{
+    background-color: @groundBase;
+}
+
+QTabBar::tab:selected 
+{
+    background: #100f0f;
+    color: @mainText;
+}
+
+QTabBar::tab:!selected 
+{
+    background: #444242;
+    color: #8e8e8e;
+}

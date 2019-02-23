@@ -27,12 +27,12 @@ QCheckBox:disabled
     color: grey;
 }
 
-QSpinBox
+QSpinBox, QDoubleSpinBox
 {
     background-color: @groundBase;
 }
 
-QSpinBox:disabled
+QSpinBox:disabled, QDoubleSpinBox:disabled
 {
     background-color: lightGrey;
 }
@@ -61,7 +61,7 @@ QLineEdit
 
 QLineEdit:disabled
 {
-    background-color: #262424
+    background-color: #262424;
     color: @groundBase;
 }
 
@@ -119,7 +119,7 @@ QPushButton#updateAvailableButton
 
 QScrollBar::handle:vertical
 {
-    background-color: #d1d1d1;
+    background-color: #343232;
     min-height: 20px;
     border-radius: 3px;
     margin-left: 2px;
@@ -127,12 +127,12 @@ QScrollBar::handle:vertical
 
 QScrollBar::handle:vertical:hover
 {
-    background-color: #e3e3e3;
+    background-color: #3e3c3c;
 }
 
 QScrollBar::handle:vertical:pressed
 {
-    background-color: #b1b1b1;
+    background-color: #474545;
 }
 
 QScrollBar::add-line:vertical
@@ -179,19 +179,19 @@ QScrollBar:horizontal
 
 QScrollBar::handle:horizontal
 {
-    background-color: #d1d1d1;
+    background-color: #343232;
     min-width: 20px;
     border-radius: 2px;
 }
 
 QScrollBar::handle:horizontal:hover
 {
-    background-color: #e3e3e3;
+    background-color: #3e3c3c;
 }
 
 QScrollBar::handle:horizontal:pressed
 {
-    background-color: #b1b1b1;
+    background-color: #474545;
 }
 
 QScrollBar::add-line:horizontal
