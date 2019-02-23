@@ -44,7 +44,8 @@ public:
         ThemeMediumDark,
         ThemeMedium,
         ThemeLight,
-        Action
+        Action,
+        Link
     };
 
     enum Font

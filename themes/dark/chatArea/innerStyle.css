@@ -32,6 +32,6 @@ p {
 }
 
 a {
-    color: #d292ff;
+    color: @link;
     font-weight: bold
 }

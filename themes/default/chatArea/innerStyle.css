@@ -31,5 +31,5 @@ p {
 }
 
 a {
-    color: blue;
+    color: @link;
 }

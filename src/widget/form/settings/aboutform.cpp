@@ -22,6 +22,7 @@
 
 #include "src/widget/tool/recursivesignalblocker.h"
 #include "src/net/updatecheck.h"
+#include "src/widget/style.h"
 #include "src/widget/translator.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
@@ -192,8 +193,8 @@ void AboutForm::onUpdateCheckFailed()
 QString AboutForm::createLink(QString path, QString text) const
 {
     return QString::fromUtf8(
-               "<a href=\"%1\" style=\"text-decoration: underline; color:#0000ff;\">%2</a>")
-        .arg(path, text);
+               "<a href=\"%1\" style=\"text-decoration: underline; color:%2;\">%3</a>")
+        .arg(path, Style::getColor(Style::Link).name(), text);
 }
 
 AboutForm::~AboutForm()
