@@ -21,12 +21,14 @@
 #include "core.h"
 #include "corefile.h"
 #include "src/core/coreav.h"
+#include "src/core/dhtserver.h"
 #include "src/core/icoresettings.h"
 #include "src/core/toxlogger.h"
 #include "src/core/toxoptions.h"
 #include "src/core/toxstring.h"
 #include "src/model/groupinvite.h"
 #include "src/nexus.h"
+#include "src/net/bootstrapnodeupdater.h"
 #include "src/persistence/profile.h"
 #include "src/util/strongtype.h"
 
@@ -279,9 +281,6 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
         return {};
     }
 
-    // provide a list of bootstrap nodes
-    core->bootstrapNodes = settings->getDhtServerList();
-
     // tox should be valid by now
     assert(core->tox != nullptr);
 
@@ -423,6 +422,9 @@ bool Core::checkConnection()
 void Core::bootstrapDht()
 {
     ASSERT_CORE_THREAD;
+
+    QList<DhtServer> bootstrapNodes = BootstrapNodeUpdater::loadDefaultBootstrapNodes();
+
     int listSize = bootstrapNodes.size();
     if (!listSize) {
         qWarning() << "no bootstrap list?!?";

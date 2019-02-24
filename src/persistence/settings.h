@@ -279,9 +279,6 @@ public:
     bool getAutoSaveEnabled() const;
 
     // ICoreSettings
-    const QList<DhtServer>& getDhtServerList() const override;
-    void setDhtServerList(const QList<DhtServer>& servers) override;
-
     bool getEnableIPv6() const override;
     void setEnableIPv6(bool enabled) override;
 
@@ -308,7 +305,6 @@ public:
     SIGNAL_IMPL(Settings, proxyTypeChanged, ICoreSettings::ProxyType type)
     SIGNAL_IMPL(Settings, proxyAddressChanged, const QString& address)
     SIGNAL_IMPL(Settings, proxyPortChanged, quint16 port)
-    SIGNAL_IMPL(Settings, dhtServerListChanged, const QList<DhtServer>& servers)
 
     bool getEnableLogging() const;
     void setEnableLogging(bool newValue);
@@ -587,7 +583,6 @@ private:
     bool loaded;
 
     bool useCustomDhtList;
-    QList<DhtServer> dhtServerList;
     int dhtServerId;
     bool dontShowDhtDialog;
 
