@@ -34,11 +34,14 @@ public:
     TestBootstrapNodesUpdater();
 private slots:
     void testOnline();
+    void testLocal();
 };
 
 TestBootstrapNodesUpdater::TestBootstrapNodesUpdater()
 {
     qRegisterMetaType<QList<DhtServer>>("QList<DhtServer>");
+    // Contains the builtin nodes list
+    Q_INIT_RESOURCE(res);
 }
 
 void TestBootstrapNodesUpdater::testOnline()
@@ -53,6 +56,12 @@ void TestBootstrapNodesUpdater::testOnline()
     QCOMPARE(spy.count(), 1); // make sure the signal was emitted exactly one time
     QList<DhtServer> result = qvariant_cast<QList<DhtServer>>(spy.at(0).at(0));
     QVERIFY(result.size() > 0); // some data should be returned
+}
+
+void TestBootstrapNodesUpdater::testLocal()
+{
+    QList<DhtServer> defaultNodes = BootstrapNodeUpdater::loadDefaultBootstrapNodes();
+    QVERIFY(defaultNodes.size() > 0);
 }
 
 QTEST_GUILESS_MAIN(TestBootstrapNodesUpdater)
