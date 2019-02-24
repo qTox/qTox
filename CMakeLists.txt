@@ -668,7 +668,8 @@ add_library(${PROJECT_NAME}_static
   STATIC
   ${${PROJECT_NAME}_FORMS}
   ${${PROJECT_NAME}_SOURCES}
-  ${${PROJECT_NAME}_QM_FILES})
+  ${${PROJECT_NAME}_QM_FILES}
+  ${${PROJECT_NAME}_RESOURCES})
 target_link_libraries(${PROJECT_NAME}_static
   ${ALL_LIBRARIES})
 
