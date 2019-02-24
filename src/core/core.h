@@ -24,7 +24,6 @@
 #include "toxfile.h"
 #include "toxid.h"
 
-#include "src/core/dhtserver.h"
 #include "src/util/strongtype.h"
 #include <tox/tox.h>
 
@@ -277,7 +276,6 @@ private:
     std::unique_ptr<QMutex> coreLoopLock = nullptr;
 
     std::unique_ptr<QThread> coreThread = nullptr;
-    QList<DhtServer> bootstrapNodes{};
 
     friend class Audio;    ///< Audio can access our calls directly to reduce latency
     friend class CoreFile; ///< CoreFile can access tox* and emit our signals

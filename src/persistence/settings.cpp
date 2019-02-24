@@ -141,28 +141,6 @@ void Settings::loadGlobal()
     }
     s.endGroup();
 
-    s.beginGroup("DHT Server");
-    {
-        if (s.value("useCustomList").toBool()) {
-            useCustomDhtList = true;
-            qDebug() << "Using custom bootstrap nodes list";
-            int serverListSize = s.beginReadArray("dhtServerList");
-            for (int i = 0; i < serverListSize; i++) {
-                s.setArrayIndex(i);
-                DhtServer server;
-                server.name = s.value("name").toString();
-                server.userId = s.value("userId").toString();
-                server.address = s.value("address").toString();
-                server.port = static_cast<quint16>(s.value("port").toUInt());
-                dhtServerList << server;
-            }
-            s.endArray();
-        } else {
-            useCustomDhtList = false;
-        }
-    }
-    s.endGroup();
-
     s.beginGroup("General");
     {
         translation = s.value("translation", "en").toString();
@@ -290,25 +268,6 @@ void Settings::loadGlobal()
         camVideoFPS = static_cast<quint16>(s.value("camVideoFPS", 0).toUInt());
     }
     s.endGroup();
-
-    // Read the embedded DHT bootstrap nodes list if needed
-    if (dhtServerList.isEmpty()) {
-        QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
-        rcs.setIniCodec("UTF-8");
-        rcs.beginGroup("DHT Server");
-        int serverListSize = rcs.beginReadArray("dhtServerList");
-        for (int i = 0; i < serverListSize; i++) {
-            rcs.setArrayIndex(i);
-            DhtServer server;
-            server.name = rcs.value("name").toString();
-            server.userId = rcs.value("userId").toString();
-            server.address = rcs.value("address").toString();
-            server.port = static_cast<quint16>(rcs.value("port").toUInt());
-            dhtServerList << server;
-        }
-        rcs.endArray();
-        rcs.endGroup();
-    }
 
     loaded = true;
 }
@@ -471,21 +430,6 @@ void Settings::saveGlobal()
     s.beginGroup("Login");
     {
         s.setValue("autoLogin", autoLogin);
-    }
-    s.endGroup();
-
-    s.beginGroup("DHT Server");
-    {
-        s.setValue("useCustomList", useCustomDhtList);
-        s.beginWriteArray("dhtServerList", dhtServerList.size());
-        for (int i = 0; i < dhtServerList.size(); i++) {
-            s.setArrayIndex(i);
-            s.setValue("name", dhtServerList[i].name);
-            s.setValue("userId", dhtServerList[i].userId);
-            s.setValue("address", dhtServerList[i].address);
-            s.setValue("port", dhtServerList[i].port);
-        }
-        s.endArray();
     }
     s.endGroup();
 
@@ -813,21 +757,6 @@ QString Settings::getAppCacheDirPath() const
 #endif
 }
 
-const QList<DhtServer>& Settings::getDhtServerList() const
-{
-    QMutexLocker locker{&bigLock};
-    return dhtServerList;
-}
-
-void Settings::setDhtServerList(const QList<DhtServer>& servers)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (servers != dhtServerList) {
-        dhtServerList = servers;
-        emit dhtServerListChanged(dhtServerList);
-    }
-}
 bool Settings::getEnableTestSound() const
 {
     QMutexLocker locker{&bigLock};
