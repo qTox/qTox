@@ -59,6 +59,18 @@ public:
         SmallLight
     };
 
+    enum MainTheme
+    {
+        Light,
+        Dark
+    };
+
+    struct ThemeNameColor {
+        MainTheme type;
+        QString name;
+        QColor color;
+    };
+
     static QStringList getThemeColorNames();
     static const QString getStylesheet(const QString& filename, const QFont& baseFont = QFont());
     static const QString getImagePath(const QString& filename);
@@ -83,7 +95,7 @@ private:
     Style();
 
 private:
-    static QList<QColor> themeColorColors;
+    static QList<ThemeNameColor> themeNameColors;
     static std::map<std::pair<const QString, const QFont>, const QString> stylesheetsCache;
     static QMap<ColorPalette, QString> aliasColors;
 };

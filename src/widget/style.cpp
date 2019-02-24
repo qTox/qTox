@@ -89,11 +89,28 @@ static QMap<QString, QString> dictColor;
 static QMap<QString, QString> dictFont;
 static QMap<QString, QString> dictTheme;
 
+QList<Style::ThemeNameColor> Style::themeNameColors = {
+    {Style::Light, QObject::tr("Default"), QColor()},
+    {Style::Light, QObject::tr("Blue"), QColor("#004aa4")},
+    {Style::Light, QObject::tr("Olive"), QColor("#97ba00")},
+    {Style::Light, QObject::tr("Red"), QColor("#c23716")},
+    {Style::Light, QObject::tr("Violet"), QColor("#4617b5")},
+    {Style::Dark, QObject::tr("Dark"), QColor()},
+    {Style::Dark, QObject::tr("Dark blue"), QColor("#00336d")},
+    {Style::Dark, QObject::tr("Dark olive"), QColor("#4d5f00")},
+    {Style::Dark, QObject::tr("Dark red"), QColor("#7a210d")},
+    {Style::Dark, QObject::tr("Dark violet"), QColor("#280d6c")}
+};
+
 QStringList Style::getThemeColorNames()
 {
-    return {QObject::tr("Default"), QObject::tr("Blue"), QObject::tr("Olive"), QObject::tr("Red"),
-            QObject::tr("Violet"), QObject::tr("Dark"), QObject::tr("Dark blue"), QObject::tr("Dark olive"),
-            QObject::tr("Dark red"), QObject::tr("Dark violet")};
+    QStringList l;
+
+    for (auto t : themeNameColors) {
+        l << t.name;
+    }
+
+    return l;
 }
 
 QString Style::getThemeName()
@@ -118,10 +135,6 @@ QString Style::getThemeFolder()
     return fullPath % QDir::separator();
 }
 
-QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"),
-                                         QColor("#c23716"), QColor("#4617b5"),
-                                         QColor(), QColor("#00336d"), QColor("#4d5f00"),
-                                         QColor("#7a210d"), QColor("#280d6c")};
 
 QMap<Style::ColorPalette, QString> Style::aliasColors = {{Green, "green"},
                                                          {Yellow, "yellow"},
@@ -318,10 +331,10 @@ void Style::setThemeColor(int color)
     dictColor.clear();
     initPalette();
     initDictColor();
-    if (color < 0 || color >= themeColorColors.size())
+    if (color < 0 || color >= themeNameColors.size())
         setThemeColor(QColor());
     else
-        setThemeColor(themeColorColors[color]);
+        setThemeColor(themeNameColors[color].color);
 }
 
 /**
@@ -404,7 +417,8 @@ void Style::initDictColor()
 
 QString Style::getThemePath()
 {
-    if (Settings::getInstance().getThemeColor() > 4) {
+    const int num = Settings::getInstance().getThemeColor();
+    if (themeNameColors[num].type == Dark) {
         return BuiltinThemeDarkPath;
     }
 
