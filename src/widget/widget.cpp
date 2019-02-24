@@ -220,8 +220,6 @@ void Widget::init()
     ui->statusButton->setEnabled(false);
 
     Style::setThemeColor(settings.getThemeColor());
-    reloadTheme();
-    updateIcons();
 
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
@@ -388,6 +386,8 @@ void Widget::init()
     connect(&settings, &Settings::groupchatPositionChanged, contactListWidget,
             &FriendListWidget::onGroupchatPositionChanged);
 
+    reloadTheme();
+    updateIcons();
     retranslateUi();
     Translator::registerHandler(std::bind(&Widget::retranslateUi, this), this);
 
