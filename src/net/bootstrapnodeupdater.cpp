@@ -1,5 +1,7 @@
 #include "bootstrapnodeupdater.h"
 
+#include <QDirIterator>
+#include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -12,6 +14,7 @@ const QUrl NodeListAddress{"https://nodes.tox.chat/json"};
 const QLatin1Literal jsonNodeArrayName{"nodes"};
 const QLatin1Literal emptyAddress{"-"};
 const QRegularExpression ToxPkRegEx(QString("(^|\\s)[A-Fa-f0-9]{%1}($|\\s)").arg(64));
+const QLatin1Literal builtinNodesFile{":/conf/nodes.json"};
 } // namespace
 
 namespace NodeFields {
@@ -45,6 +48,29 @@ void BootstrapNodeUpdater::requestBootstrapNodes()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     nam.get(request);
+}
+
+/**
+ * @brief Loads the list of built in boostrap nodes
+ * @return List of bootstrapnodes on success, empty list on error
+ */
+QList<DhtServer> BootstrapNodeUpdater::loadDefaultBootstrapNodes()
+{
+    QFile nodesFile{builtinNodesFile};
+    if (!nodesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't read bootstrap nodes";
+        return {};
+    }
+
+    QString nodesJson = nodesFile.readAll();
+    nodesFile.close();
+    QJsonDocument d = QJsonDocument::fromJson(nodesJson.toUtf8());
+    if (d.isNull()) {
+        qWarning() << "Failed to parse JSON document";
+        return {};
+    }
+
+    return jsonToNodeList(d);
 }
 
 void BootstrapNodeUpdater::onRequestComplete(QNetworkReply* reply)

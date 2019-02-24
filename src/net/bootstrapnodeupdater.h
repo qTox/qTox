@@ -16,6 +16,7 @@ class BootstrapNodeUpdater : public QObject
 public:
     explicit BootstrapNodeUpdater(const QNetworkProxy& proxy, QObject* parent = nullptr);
     void requestBootstrapNodes();
+    static QList<DhtServer> loadDefaultBootstrapNodes();
 
 signals:
     void availableBootstrapNodes(QList<DhtServer> nodes);
