@@ -135,7 +135,7 @@ then
 fi
 
 # Generate checksum files for releases
-if [ "$STAGE" == "stage3" && "$BUILD_TYPE" == "release" ]
+if [ "$STAGE" == "stage3" ] && [ "$BUILD_TYPE" == "release" ]
 then
   readonly OUT_DIR=./workspace/"$ARCH"/qtox/"$BUILD_TYPE"/
   readonly NAME=setup-qtox-"$ARCH"-"$BUILD_TYPE".exe
