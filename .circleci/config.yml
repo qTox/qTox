@@ -20,24 +20,24 @@ jobs:
       - restore_cache:
           key: dependency-cache
           paths:
-            - ~/cache
+            - cache
       - run:
           name: Build stage 1
           command: |
-            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "~/cache/${BUILD__}" stage1
+            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "cache/${BUILD__}" stage1
       - run:
           name: Build stage 2
           command: |
-            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "~/cache/${BUILD__}" stage2
-            ls -al ~/cache
+            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "cache/${BUILD__}" stage2
+            ls -al cache
       - save_cache:
           key: dependency-cache
           paths:
-            - ~/cache
+            - cache
       - run:
           name: Build stage 3
           command: |
-            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "~/cache/${BUILD__}" stage3
+            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "cache/${BUILD__}" stage3
       - run:
           name: Debug info
           command: |
