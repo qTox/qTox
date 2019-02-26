@@ -1,0 +1,80 @@
+#LoginScreen
+{
+    background-color: #1c1c1c;
+}
+
+#line
+{
+     color: #757575;
+}
+
+#stackedWidget
+{
+    background-color: #100f0f;
+}
+
+#labelNewProfile,
+#labelLoadProfile
+{
+    border-style: solid;
+    border-width: 15px 0 15px 15px;
+    border-color: #100f0f #100f0f #100f0f #1c1c1c;
+}
+#labelNewProfile
+{
+    margin-top:125px;
+    margin-bottom:45px;
+}
+#labelLoadProfile
+{
+    margin-top:165px;
+    margin-bottom:5px;
+}
+
+LoginScreen > QPushButton,
+QStackedWidget QPushButton
+{
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 9pt;
+    font-weight: bold;
+}
+
+#loginButton,
+#importButton,
+#createAccountButton
+{
+    border-radius:5px;
+    padding:5px;
+    background-color: #529449;
+}
+
+#loginButton:hover,
+#importButton:hover,
+#createAccountButton:hover
+{
+    background: #589f4e;
+}
+
+QMessageBox, QLabel
+{
+    color: @mainText;
+    background: #100f0f;
+}
+
+QLabel#label_7
+{
+    background: #1c1c1c;
+}
+
+QCheckBox, QProgressBar, QComboBox, QLineEdit, QListView
+{
+    color: @mainText;
+    background: @groundBase;
+}
+
+QCheckBox:disabled
+{
+    color: gray;
+}

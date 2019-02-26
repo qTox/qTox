@@ -1,0 +1,21 @@
+QSplitter
+{
+    color: @groundExtra;
+    background-color: @groundExtra;
+    alternate-background-color: @groundExtra;
+    border-color: @groundExtra;
+    gridline-color: @groundExtra;
+    selection-color: @groundExtra;
+    selection-background-color: @groundExtra;
+}
+
+QSplitter:handle
+{
+    color: @groundExtra;
+    background-color: @groundExtra;
+}
+
+QWidget
+{
+    background: @groundBase;
+}

@@ -31,18 +31,18 @@
 #include <QTextBlock>
 #include <QTextFragment>
 
-#include "src/widget/style.h"
-
 static const QString COLOR_HIGHLIGHT = QStringLiteral("#ff7626");
 
 Text::Text(const QString& txt, const QFont& font, bool enableElide, const QString& rwText,
-           const QColor c)
+           const TextType& type, const QColor& custom)
     : rawText(rwText)
     , elide(enableElide)
     , defFont(font)
     , defStyleSheet(Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), font))
-    , color(c)
+    , textType(type)
+    , customColor(custom)
 {
+    color = textColor();
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton);
     setAcceptHoverEvents(true);
@@ -244,6 +244,15 @@ void Text::visibilityChanged(bool visible)
 {
     keepInMemory = visible;
 
+    regenerate();
+    update();
+}
+
+void Text::reloadTheme()
+{
+    defStyleSheet = Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), defFont);
+    color = textColor();
+    dirty = true;
     regenerate();
     update();
 }
@@ -458,4 +467,16 @@ void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
         regenerate();
         update();
     }
+}
+
+QColor Text::textColor() const
+{
+    QColor c = Style::getColor(Style::MainText);
+    if (textType == ACTION) {
+        c = Style::getColor(Style::Action);
+    } else if (textType == CUSTOM) {
+        c = customColor;
+    }
+
+    return c;
 }

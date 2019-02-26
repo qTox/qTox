@@ -17,6 +17,7 @@ public:
     ~SearchSettingsForm();
 
     ParameterSearch getParameterSearch();
+    void reloadTheme();
 
 private:
     Ui::SearchSettingsForm *ui;

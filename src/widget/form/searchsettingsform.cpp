@@ -15,9 +15,8 @@ SearchSettingsForm::SearchSettingsForm(QWidget *parent) :
 
     ui->choiceDateButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->choiceDateButton->setObjectName(QStringLiteral("choiceDateButton"));
-    ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
 
-    ui->startDateLabel->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/labels.css")));
+    reloadTheme();
 
     connect(ui->startSearchComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &SearchSettingsForm::onStartSearchSelected);
@@ -73,6 +72,12 @@ ParameterSearch SearchSettingsForm::getParameterSearch()
     isUpdate = false;
 
     return ps;
+}
+
+void SearchSettingsForm::reloadTheme()
+{
+    ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
+    ui->startDateLabel->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/labels.css")));
 }
 
 void SearchSettingsForm::updateStartDateLabel()

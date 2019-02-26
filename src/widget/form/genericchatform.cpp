@@ -173,8 +173,6 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     fileLayout->setSpacing(0);
     fileLayout->setMargin(0);
 
-    msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
-                           + fontToCss(s.getChatMessageFont(), "QTextEdit"));
     msgEdit->setFixedHeight(MESSAGE_EDIT_HEIGHT);
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
@@ -243,8 +241,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
 
     connect(chatWidget, &ChatLog::workerTimeoutFinished, this, &GenericChatForm::onContinueSearch);
 
-    chatWidget->setStyleSheet(Style::getStylesheet("chatArea/chatArea.css"));
-    headWidget->setStyleSheet(Style::getStylesheet("chatArea/chatHead.css"));
+    reloadTheme();
 
     fileFlyout->setFixedSize(FILE_FLYOUT_SIZE);
     fileFlyout->setParent(this);
@@ -296,6 +293,26 @@ QDate GenericChatForm::getLatestDate() const
 QDate GenericChatForm::getFirstDate() const
 {
     return getDate(chatWidget->getFirstLine());
+}
+
+void GenericChatForm::reloadTheme()
+{
+    const Settings& s = Settings::getInstance();
+    setStyleSheet(Style::getStylesheet("genericChatForm/genericChatForm.css"));
+
+    msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
+                           + fontToCss(s.getChatMessageFont(), "QTextEdit"));
+
+    chatWidget->setStyleSheet(Style::getStylesheet("chatArea/chatArea.css"));
+    headWidget->setStyleSheet(Style::getStylesheet("chatArea/chatHead.css"));
+    chatWidget->reloadTheme();
+    headWidget->reloadTheme();
+    searchForm->reloadTheme();
+
+    emoteButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    fileButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    screenshotButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    sendButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
 }
 
 void GenericChatForm::setName(const QString& newName)

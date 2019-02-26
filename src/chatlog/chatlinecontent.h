@@ -59,6 +59,7 @@ public:
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) = 0;
 
     virtual void visibilityChanged(bool visible);
+    virtual void reloadTheme();
 
 private:
     friend class ChatLine;

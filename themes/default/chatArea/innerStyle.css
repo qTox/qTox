@@ -7,12 +7,12 @@ p {
 }
 
 .action {
-    color: #1818FF;
+    color: @action;
     font-style: italic;
 }
 
 .typing {
-    color: @mediumGreyLight;
+    color: #4e4e4e;
 }
 
 .quote {
@@ -31,5 +31,5 @@ p {
 }
 
 a {
-    color: blue;
+    color: @link;
 }

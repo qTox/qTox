@@ -1,0 +1,15 @@
+QTextEdit
+{
+    background: @groundBase;
+    color: @mainText;
+}
+
+QGraphicsView
+{
+    border: none;
+}
+
+QWidget
+{
+    background: @groundBase;
+}

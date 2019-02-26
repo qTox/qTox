@@ -66,6 +66,14 @@ ContentLayout::~ContentLayout()
     mainContent->deleteLater();
 }
 
+void ContentLayout::reloadTheme()
+{
+#ifndef Q_OS_MAC
+    mainHead->setStyleSheet(Style::getStylesheet("settings/mainHead.css"));
+    mainContent->setStyleSheet(Style::getStylesheet("settings/mainContent.css"));
+#endif
+}
+
 void ContentLayout::clear()
 {
     QLayoutItem* item;
@@ -110,10 +118,7 @@ void ContentLayout::init()
         mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
     }
 
-#ifndef Q_OS_MAC
-    mainHead->setStyleSheet(Style::getStylesheet("settings/mainHead.css"));
-    mainContent->setStyleSheet(Style::getStylesheet("settings/mainContent.css"));
-#endif
+    reloadTheme();
 
     mainHLineLayout.addWidget(&mainHLine);
     mainHLineLayout.addSpacing(5);

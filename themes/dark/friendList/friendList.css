@@ -1,0 +1,84 @@
+QScrollArea
+{
+    background: @themeMedium;
+}
+
+QScrollBar:vertical
+{
+    background: @themeMedium;
+    width: 16px;
+    padding: 0px 3px 0px 3px;
+}
+
+QScrollBar:handle:vertical
+{
+    background: @themeDark;
+    min-height: 20px;
+    border-radius: 5px;
+    margin: 3px 0px 3px 0px;
+}
+
+QScrollBar:handle:vertical:hover
+{
+    background: @themeMediumDark;
+}
+
+QScrollBar:handle:vertical:pressed
+{
+    background: @themeDark;
+}
+
+QScrollBar:add-line:vertical
+{
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:sub-line:vertical
+{
+    height: 0px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:add-page:vertical, QScrollBar::sub-page:vertical
+{
+    background: none;
+}
+
+QWidget#circleWidgetContainer > QFrame#line
+{
+    color: white;
+}
+
+QWidget#circleWidgetContainer
+{
+    background-color: @themeMedium;
+}
+
+QWidget#circleWidgetContainer:hover
+{
+    background-color: @themeLight;
+}
+
+QWidget#circleWidgetContainer QLineEdit
+{
+    background-color: @themeLight;
+}
+
+QWidget#circleWidgetContainer > QLabel#status
+{
+    font: @small;
+    color: @mainText;
+}
+
+QWidget#circleWidgetContainer > QLabel#name
+{
+    font: @big;
+    color: #a3a3a3;
+}
+
+QLabel {
+    color: white;
+}

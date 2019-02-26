@@ -163,19 +163,19 @@ void GenericChatroomWidget::reloadTheme()
     QPalette p;
 
     p = statusMessageLabel->palette();
-    p.setColor(QPalette::WindowText, Style::getColor(Style::LightGrey));       // Base color
-    p.setColor(QPalette::HighlightedText, Style::getColor(Style::MediumGrey)); // Color when active
+    p.setColor(QPalette::WindowText, Style::getColor(Style::GroundExtra));       // Base color
+    p.setColor(QPalette::HighlightedText, Style::getColor(Style::StatusActive)); // Color when active
     statusMessageLabel->setPalette(p);
 
     p = nameLabel->palette();
-    p.setColor(QPalette::WindowText, Style::getColor(Style::White));         // Base color
-    p.setColor(QPalette::HighlightedText, Style::getColor(Style::DarkGrey)); // Color when active
+    p.setColor(QPalette::WindowText, Style::getColor(Style::GroundBase));           // Base color
+    p.setColor(QPalette::HighlightedText, Style::getColor(Style::NameActive)); // Color when active
     nameLabel->setPalette(p);
 
     p = palette();
     p.setColor(QPalette::Window, Style::getColor(Style::ThemeMedium));   // Base background color
     p.setColor(QPalette::Highlight, Style::getColor(Style::ThemeLight)); // On mouse over
-    p.setColor(QPalette::Light, Style::getColor(Style::White));          // When active
+    p.setColor(QPalette::Light, Style::getColor(Style::GroundBase));          // When active
     setPalette(p);
 }
 

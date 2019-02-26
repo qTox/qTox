@@ -21,6 +21,7 @@
 #define TEXT_H
 
 #include "../chatlinecontent.h"
+#include "src/widget/style.h"
 
 #include <QFont>
 
@@ -31,8 +32,15 @@ class Text : public ChatLineContent
     Q_OBJECT
 
 public:
+    enum TextType
+    {
+        NORMAL,
+        ACTION,
+        CUSTOM
+    };
+
     Text(const QString& txt = "", const QFont& font = QFont(), bool enableElide = false,
-         const QString& rawText = QString(), const QColor c = Qt::black);
+         const QString& rawText = QString(), const TextType& type = NORMAL, const QColor& custom = Style::getColor(Style::MainText));
     virtual ~Text();
 
     void setText(const QString& txt);
@@ -56,11 +64,12 @@ public:
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final;
 
     virtual void visibilityChanged(bool keepInMemory) final;
+    virtual void reloadTheme() final override;
 
     virtual qreal getAscent() const final;
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) final override;
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) final override;
-    void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;
+    void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;    
 
     virtual QString getText() const final;
     QString getLinkAt(QPointF scenePos) const;
@@ -84,6 +93,7 @@ protected:
 
 private:
     void selectText(QTextCursor& cursor, const std::pair<int, int>& point);
+    QColor textColor() const;
 
     QString text;
     QString rawText;
@@ -97,7 +107,9 @@ private:
     qreal ascent = 0.0;
     QFont defFont;
     QString defStyleSheet;
+    TextType textType;
     QColor color;
+    QColor customColor;
 };
 
 #endif // TEXT_H

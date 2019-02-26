@@ -1,0 +1,40 @@
+QPushButton
+{
+    background-color: transparent;
+    background-repeat: none;
+    border: none;
+    width: 24px;
+    height: 24px;
+}
+
+QRadioButton::indicator
+{
+     width: 10px;
+     height: 10px;
+}
+
+QRadioButton::indicator:unchecked
+{
+     image: url(@getImagePath(emoticonWidget/dot_page.svg));
+}
+
+QRadioButton::indicator:unchecked:hover
+{
+     image: url(@getImagePath(emoticonWidget/dot_page_hover.svg));
+}
+
+QRadioButton::indicator:unchecked:pressed
+{
+     image: url(@getImagePath(emoticonWidget/dot_page_hover.svg));
+}
+
+QRadioButton::indicator:checked
+{
+     image: url(@getImagePath(emoticonWidget/dot_page_current.svg));
+}
+
+QMenu
+{
+     background-color: #363434; /* sets background of the menu */
+     border: 0px solid;
+}

@@ -70,13 +70,13 @@ QWidget#circleWidgetContainer QLineEdit
 QWidget#circleWidgetContainer > QLabel#status
 {
     font: @small;
-    color: @lightGrey;
+    color: @groundExtra;
 }
 
 QWidget#circleWidgetContainer > QLabel#name
 {
     font: @big;
-    color: @white;
+    color: @groundBase;
 }
 
 QLabel {

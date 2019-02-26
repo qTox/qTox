@@ -23,6 +23,7 @@
 #include "chatmessage.h"
 #include "content/filetransferwidget.h"
 #include "src/widget/translator.h"
+#include "src/widget/style.h"
 
 #include <QAction>
 #include <QApplication>
@@ -65,7 +66,7 @@ ChatLog::ChatLog(QWidget* parent)
     setDragMode(QGraphicsView::NoDrag);
     setViewportUpdateMode(MinimalViewportUpdate);
     setContextMenuPolicy(Qt::CustomContextMenu);
-    setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
+    setBackgroundBrush(QBrush(Style::getColor(Style::GroundBase), Qt::SolidPattern));
 
     // The selection rect for multi-line selection
     selGraphItem = scene->addRect(0, 0, 0, 0, selectionRectColor.darker(120), selectionRectColor);
@@ -656,6 +657,15 @@ void ChatLog::fontChanged(const QFont& font)
 {
     for (ChatLine::Ptr l : lines) {
         l->fontChanged(font);
+    }
+}
+
+void ChatLog::reloadTheme()
+{
+    setBackgroundBrush(QBrush(Style::getColor(Style::GroundBase), Qt::SolidPattern));
+
+    for (ChatLine::Ptr l : lines) {
+        l->reloadTheme();
     }
 }
 

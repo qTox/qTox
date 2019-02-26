@@ -30,6 +30,7 @@ public:
     explicit ContentLayout(QWidget* parent);
     ~ContentLayout();
 
+    void reloadTheme();
     void clear();
 
     QFrame mainHLine;

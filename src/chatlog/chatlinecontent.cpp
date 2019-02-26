@@ -88,6 +88,10 @@ void ChatLineContent::visibilityChanged(bool)
 {
 }
 
+void ChatLineContent::reloadTheme()
+{
+}
+
 QString ChatLineContent::getText() const
 {
     return QString();

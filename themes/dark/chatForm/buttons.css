@@ -1,0 +1,183 @@
+/* Message edit */
+
+QAbstractButton#emoteButton
+{
+    background-image: url("@getImagePath(chatForm/emoteButton.svg)");
+    border-top-right-radius: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+QAbstractButton#fileButton
+{
+    background-image: url("@getImagePath(chatForm/fileButton.svg)");
+    border-bottom-right-radius: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+QAbstractButton#screenshotButton
+{
+    background-image: url("@getImagePath(chatForm/screenshotButton.svg)");
+    border-top-left-radius: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+QAbstractButton#sendButton
+{
+    background-image: url("@getImagePath(chatForm/sendButton.svg)");
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+
+}
+
+/* Header */
+
+QAbstractButton#volButton
+{
+    border-image: url("@getImagePath(chatForm/volButton.svg)");
+    border-radius: 5px;
+    width: 22px;
+    height: 18px;
+}
+
+QAbstractButton#micButton
+{
+    border-image: url("@getImagePath(chatForm/micButton.svg)");
+    border-radius: 5px;
+    width: 22px;
+    height: 18px;
+}
+
+QAbstractButton#videoButton
+{
+    background-image: url("@getImagePath(chatForm/videoButton.svg)");
+    border-radius: 5px;
+    width: 50px;
+    height: 40px;
+}
+
+QAbstractButton#callButton
+{
+    background-image: url("@getImagePath(chatForm/callButton.svg)");
+    border-radius: 5px;
+    width: 50px;
+    height: 40px;
+}
+
+/* SearchLine */
+
+QAbstractButton#searchSettingsButton
+{
+    background-image: url("@getImagePath(chatForm/searchSettingsButton.svg)");
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+}
+
+QAbstractButton#searchHideButton
+{
+    background-image: url("@getImagePath(chatForm/searchHideButton.svg)");
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+}
+
+QAbstractButton#searchUpButton
+{
+    background-image: url("@getImagePath(chatForm/searchUpButton.svg)");
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+}
+
+QAbstractButton#searchDownButton
+{
+    background-image: url("@getImagePath(chatForm/searchDownButton.svg)");
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+}
+
+QAbstractButton#choiceDateButton
+{
+    background-image: url("@getImagePath(chatForm/searchCalendarButton.svg)");
+    border-radius: 5px;
+    width: 45px;
+    height: 35px;
+}
+
+QAbstractButton#startButton
+{
+    border-radius: 5px;
+    width: 60px;
+    height: 35px;
+    color: #fff
+}
+
+/* Common */
+
+QAbstractButton
+{
+    background-repeat: none;
+    background-position: center;
+    border: none;
+}
+
+QAbstractButton:disabled
+{
+    color: gray;
+    background-color: #515151;
+}
+
+QAbstractButton:focus
+{
+    outline: none;
+}
+
+QAbstractButton[state="green"]
+{
+    background-color: #529449;
+}
+
+QAbstractButton[state="green"]:hover
+{
+    background-color: #589f4e;
+}
+
+QAbstractButton[state="green"]:pressed
+{
+    background-color: #437a3c;
+}
+
+QAbstractButton[state="red"]
+{
+    background-color: #9e2525;
+}
+
+QAbstractButton[state="red"]:hover
+{
+    background-color: #bd2c2c;
+}
+
+QAbstractButton[state="red"]:pressed
+{
+    background-color: #8f2121;
+}
+
+QAbstractButton[state="yellow"]
+{
+    background-color: #e6a850;
+}
+
+QAbstractButton[state="yellow"]:hover
+{
+    background-color: #e6bd5d;
+}
+
+QAbstractButton[state="yellow"]:pressed
+{
+    background-color: #e6843e;
+}

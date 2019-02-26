@@ -1,0 +1,42 @@
+QLineEdit
+{
+    color: @mainText;
+    background: @groundBase;
+    border: 0px;
+}
+
+#nameLabel
+{
+    color: @mainText;
+    font: @mediumBold;
+    font-size:12px;
+}
+
+#statusLabel
+{
+    color: @statusActive;
+    font: @medium;
+    font-size:12px;
+}
+
+#peersLabel
+{
+    color: @statusActive;
+    font: @medium;
+    font-size:12px;
+}
+
+QLabel[peerType="our"]
+{
+    color: green;
+}
+
+QLabel[peerType="muted"]
+{
+    color: darkred;
+}
+
+QLabel[playingAudio="true"]
+{
+    font-weight: bold;
+}

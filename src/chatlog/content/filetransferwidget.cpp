@@ -52,9 +52,9 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
     : QWidget(parent)
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)
-    , backgroundColor(Style::getColor(Style::LightGrey))
+    , backgroundColor(Style::getColor(Style::GroundExtra))
     , buttonColor(Style::getColor(Style::Yellow))
-    , buttonBackgroundColor(Style::getColor(Style::White))
+    , buttonBackgroundColor(Style::getColor(Style::GroundBase))
     , active(true)
 {
     ui->setupUi(this);
@@ -329,7 +329,7 @@ void FileTransferWidget::updateWidgetColor(ToxFile const& file)
     case ToxFile::INITIALIZING:
     case ToxFile::PAUSED:
     case ToxFile::TRANSMITTING:
-        setBackgroundColor(Style::getColor(Style::LightGrey), false);
+        setBackgroundColor(Style::getColor(Style::GroundExtra), false);
         break;
     case ToxFile::BROKEN:
     case ToxFile::CANCELED:
@@ -510,7 +510,7 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
         ui->rightButton->setObjectName("cancel");
         ui->rightButton->setToolTip(tr("Cancel transfer"));
 
-        setButtonColor(Style::getColor(Style::LightGrey));
+        setButtonColor(Style::getColor(Style::GroundExtra));
         break;
 
     case ToxFile::INITIALIZING:

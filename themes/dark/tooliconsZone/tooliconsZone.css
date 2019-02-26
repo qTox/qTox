@@ -1,0 +1,35 @@
+QPushButton[update-available=true]
+{
+    background-color: #115508;
+    border: none;
+}
+
+QPushButton:hover[update-available=true]
+{
+    background-color: #2b9e1c;
+    border: none;
+}
+
+QPushButton
+{
+    background-color: @themeDark;
+    border: none;
+}
+
+QPushButton:hover
+{
+    background-color: @themeMediumDark;
+    border: none;
+}
+
+QPushButton:checked
+{
+    background-color: @themeMedium;
+    border: none;
+}
+
+QPushButton:pressed
+{
+    background-color: @themeMediumLight;
+    border: none;
+}

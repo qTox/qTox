@@ -5,3 +5,20 @@ QToolTip
     color: black;
     background: #ffffdc;
 }
+
+QTabWidget
+{
+    background-color: white;
+}
+
+QTabBar::tab:selected 
+{
+    background: #2d3136;
+    color: #f1f1f1;
+}
+
+QTabBar::tab:!selected 
+{
+    background: #d0d1d1;
+    color: #5e5e5e;
+}

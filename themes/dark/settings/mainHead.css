@@ -1,0 +1,5 @@
+QWidget .QLabel, QWidget .QLineEdit
+{
+    color: @mainText;
+    background: @groundBase;
+}

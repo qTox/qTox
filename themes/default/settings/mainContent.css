@@ -1,6 +1,6 @@
 QTextEdit
 {
-    border-color: @lightGrey;
+    border-color: @groundExtra;
     border-style: solid;
     border-width: 1px 0 1px 1px;
     background: white;
@@ -27,12 +27,12 @@ QCheckBox:disabled
     color: grey;
 }
 
-QSpinBox
+QSpinBox, QDoubleSpinBox
 {
     background-color: white;
 }
 
-QSpinBox:disabled
+QSpinBox:disabled, QDoubleSpinBox:disabled
 {
     background-color: lightGrey;
 }
@@ -62,23 +62,6 @@ QLineEdit
 QLineEdit:disabled
 {
     background-color: lightGrey;
-}
-
-QTabWidget
-{
-    background-color: white;
-}
-
-QTabBar::tab:selected 
-{
-    background: #2d3136;
-    color: #f1f1f1;
-}
-
-QTabBar::tab:!selected 
-{
-    background: #d0d1d1;
-    color: #5e5e5e;
 }
 
 QScrollArea

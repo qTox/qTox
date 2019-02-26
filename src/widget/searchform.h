@@ -45,6 +45,7 @@ public:
     ParameterSearch getParameterSearch();
     void setFocusEditor();
     void insertEditor(const QString &text);
+    void reloadTheme();
 
 protected:
     virtual void showEvent(QShowEvent* event) final override;

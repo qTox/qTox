@@ -281,6 +281,14 @@ QSize ChatFormHeader::getAvatarSize() const
     return QSize{avatar->width(), avatar->height()};
 }
 
+void ChatFormHeader::reloadTheme()
+{
+    callButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    videoButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    volButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    micButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+}
+
 void ChatFormHeader::addWidget(QWidget* widget, int stretch, Qt::Alignment alignment)
 {
     headTextLayout->addWidget(widget, stretch, alignment);
