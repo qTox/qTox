@@ -54,6 +54,7 @@ public:
     OfflineMsgEngine* getOfflineMsgEngine();
 
     virtual void show(ContentLayout* contentLayout) final override;
+    virtual void reloadTheme() final override;
 
     static const QString ACTION_PREFIX;
 

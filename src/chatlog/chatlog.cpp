@@ -663,6 +663,9 @@ void ChatLog::fontChanged(const QFont& font)
 void ChatLog::reloadTheme()
 {
     setBackgroundBrush(QBrush(Style::getColor(Style::GroundBase), Qt::SolidPattern));
+    selectionRectColor = Style::getColor(Style::SelectText);
+    selGraphItem->setBrush(QBrush(selectionRectColor));
+    selGraphItem->setPen(QPen(selectionRectColor.darker(120)));
 
     for (ChatLine::Ptr l : lines) {
         l->reloadTheme();
