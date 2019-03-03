@@ -113,8 +113,8 @@ public slots:
     void groupInviteFriend(uint32_t friendId, int groupId);
     int createGroup(uint8_t type = TOX_CONFERENCE_TYPE_AV);
 
-    void removeFriend(uint32_t friendId, bool fake = false);
-    void removeGroup(int groupId, bool fake = false);
+    void removeFriend(uint32_t friendId);
+    void removeGroup(int groupId);
 
     void setStatus(Status status);
     void setUsername(const QString& username);

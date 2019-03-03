@@ -1510,7 +1510,9 @@ void Widget::removeFriend(Friend* f, bool fake)
     }
 
     FriendList::removeFriend(friendId, fake);
-    Nexus::getCore()->removeFriend(friendId, fake);
+    if (!fake) {
+        Nexus::getCore()->removeFriend(friendId);
+    }
 
     friendWidgets.remove(friendId);
     delete widget;
@@ -1835,7 +1837,9 @@ void Widget::removeGroup(Group* g, bool fake)
         contentDialog->removeGroup(groupId);
     }
 
-    Nexus::getCore()->removeGroup(groupId, fake);
+    if (!fake) {
+        Nexus::getCore()->removeGroup(groupId);
+    }
     contactListWidget->removeGroupWidget(widget); // deletes widget
 
     groupWidgets.remove(groupId);
