@@ -912,9 +912,7 @@ QPair<QByteArray, QByteArray> Core::getKeypair() const
     QMutexLocker ml{&coreLoopLock};
 
     QPair<QByteArray, QByteArray> keypair;
-    if (!tox) {
-        return keypair;
-    }
+    assert(tox != nullptr);
 
     QByteArray pk(TOX_PUBLIC_KEY_SIZE, 0x00);
     QByteArray sk(TOX_SECRET_KEY_SIZE, 0x00);
@@ -932,15 +930,15 @@ QString Core::getStatusMessage() const
 {
     QMutexLocker ml{&coreLoopLock};
 
-    QString sname;
-    if (!tox) {
-        return sname;
-    }
+    assert(tox != nullptr);
 
     size_t size = tox_self_get_status_message_size(tox.get());
+    if (size == 0) {
+        return {};
+    }
     uint8_t* name = new uint8_t[size];
     tox_self_get_status_message(tox.get(), name);
-    sname = ToxString(name, size).getQString();
+    QString sname = ToxString(name, size).getQString();
     delete[] name;
     return sname;
 }
@@ -1201,10 +1199,7 @@ QStringList Core::getGroupPeerNames(int groupId) const
 {
     QMutexLocker ml{&coreLoopLock};
 
-    if (!tox) {
-        qWarning() << "Can't get group peer names, tox is null";
-        return {};
-    }
+    assert(tox != nullptr);
 
     uint32_t nPeers = getGroupNumberPeers(groupId);
     if (nPeers == std::numeric_limits<uint32_t>::max()) {
@@ -1212,19 +1207,9 @@ QStringList Core::getGroupPeerNames(int groupId) const
         return {};
     }
 
-    Tox_Err_Conference_Peer_Query error;
-    uint32_t count = tox_conference_peer_count(tox.get(), groupId, &error);
-    if (!parsePeerQueryError(error)) {
-        return {};
-    }
-
-    if (count != nPeers) {
-        qWarning() << "getGroupPeerNames: Unexpected peer count";
-        return {};
-    }
-
     QStringList names;
     for (uint32_t i = 0; i < nPeers; ++i) {
+        TOX_ERR_CONFERENCE_PEER_QUERY error;
         size_t length = tox_conference_peer_get_name_size(tox.get(), groupId, i, &error);
         if (!parsePeerQueryError(error)) {
             continue;
@@ -1403,8 +1388,8 @@ bool Core::isFriendOnline(uint32_t friendId) const
 {
     QMutexLocker ml{&coreLoopLock};
 
-    Tox_Connection connetion = tox_friend_get_connection_status(tox.get(), friendId, nullptr);
-    return connetion != TOX_CONNECTION_NONE;
+    Tox_Connection connection = tox_friend_get_connection_status(tox.get(), friendId, nullptr);
+    return connection != TOX_CONNECTION_NONE;
 }
 
 /**
