@@ -241,17 +241,15 @@ Profile* Profile::createProfile(QString name, QString password)
 
 Profile::~Profile()
 {
-    if (!isRemoved && core->isReady()) {
-        onSaveToxSave();
+    if (isRemoved) {
+        return;
     }
 
-    if (!isRemoved) {
-        Settings::getInstance().savePersonal(this);
-        Settings::getInstance().sync();
-        ProfileLocker::assertLock();
-        assert(ProfileLocker::getCurLockName() == name);
-        ProfileLocker::unlock();
-    }
+    Settings::getInstance().savePersonal(this);
+    Settings::getInstance().sync();
+    ProfileLocker::assertLock();
+    assert(ProfileLocker::getCurLockName() == name);
+    ProfileLocker::unlock();
 }
 
 /**
@@ -332,7 +330,6 @@ void Profile::startCore()
  */
 void Profile::onSaveToxSave()
 {
-    assert(core->isReady());
     QByteArray data = core->getToxSaveData();
     assert(data.size());
     saveToxSave(data);
