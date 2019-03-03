@@ -811,10 +811,6 @@ void Core::removeFriend(uint32_t friendId)
 {
     QMutexLocker ml{coreLoopLock.get()};
 
-    if (!isReady()) {
-        return;
-    }
-
     if (!tox_friend_delete(tox.get(), friendId, nullptr)) {
         emit failedToRemoveFriend(friendId);
         return;
@@ -827,10 +823,6 @@ void Core::removeFriend(uint32_t friendId)
 void Core::removeGroup(int groupId)
 {
     QMutexLocker ml{coreLoopLock.get()};
-
-    if (!isReady()) {
-        return;
-    }
 
     Tox_Err_Conference_Delete error;
     bool success = tox_conference_delete(tox.get(), groupId, &error);
@@ -1526,14 +1518,6 @@ QString Core::getPeerName(const ToxPk& id) const
     name = ToxString(cname, nameSize).getQString();
     delete[] cname;
     return name;
-}
-
-/**
- * @brief Most of the API shouldn't be used until Core is ready, call start() first
- */
-bool Core::isReady() const
-{
-    return av && tox;
 }
 
 /**

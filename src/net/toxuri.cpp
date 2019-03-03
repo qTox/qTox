@@ -61,11 +61,6 @@ bool handleToxURI(const QString& toxURI)
         QThread::msleep(10);
     }
 
-    while (!core->isReady()) {
-        qApp->processEvents();
-        QThread::msleep(10);
-    }
-
     QString toxaddr = toxURI.mid(4);
 
     ToxId toxId(toxaddr);
