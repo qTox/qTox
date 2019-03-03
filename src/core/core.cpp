@@ -807,11 +807,11 @@ void Core::acceptFileRecvRequest(uint32_t friendId, uint32_t fileNum, QString pa
     CoreFile::acceptFileRecvRequest(this, friendId, fileNum, path);
 }
 
-void Core::removeFriend(uint32_t friendId, bool fake)
+void Core::removeFriend(uint32_t friendId)
 {
     QMutexLocker ml{coreLoopLock.get()};
 
-    if (!isReady() || fake) {
+    if (!isReady()) {
         return;
     }
 
@@ -824,11 +824,11 @@ void Core::removeFriend(uint32_t friendId, bool fake)
     emit friendRemoved(friendId);
 }
 
-void Core::removeGroup(int groupId, bool fake)
+void Core::removeGroup(int groupId)
 {
     QMutexLocker ml{coreLoopLock.get()};
 
-    if (!isReady() || fake) {
+    if (!isReady()) {
         return;
     }
 
