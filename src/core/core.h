@@ -36,6 +36,7 @@
 #include <memory>
 
 class CoreAV;
+class CoreFile;
 class ICoreSettings;
 class GroupInvite;
 class Profile;
@@ -71,6 +72,7 @@ public:
     static Core* getInstance();
     const CoreAV* getAv() const;
     CoreAV* getAv();
+    CoreFile* getCoreFile() const;
     ~Core();
 
     static const QString TOX_EXT;
@@ -125,13 +127,6 @@ public slots:
     bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt);
     void sendTyping(uint32_t friendId, bool typing);
 
-    void sendAvatarFile(uint32_t friendId, const QByteArray& data);
-    void cancelFileSend(uint32_t friendId, uint32_t fileNum);
-    void cancelFileRecv(uint32_t friendId, uint32_t fileNum);
-    void rejectFileRecvRequest(uint32_t friendId, uint32_t fileNum);
-    void acceptFileRecvRequest(uint32_t friendId, uint32_t fileNum, QString path);
-    void pauseResumeFile(uint32_t friendId, uint32_t fileNum);
-
     void setNospam(uint32_t nospam);
 
 signals:
@@ -156,19 +151,6 @@ signals:
     void failedToSetTyping(bool typing);
 
     void avReady();
-
-    void fileSendStarted(ToxFile file);
-    void fileReceiveRequested(ToxFile file);
-    void fileTransferAccepted(ToxFile file);
-    void fileTransferCancelled(ToxFile file);
-    void fileTransferFinished(ToxFile file);
-    void fileUploadFinished(const QString& path);
-    void fileDownloadFinished(const QString& path);
-    void fileTransferPaused(ToxFile file);
-    void fileTransferInfo(ToxFile file);
-    void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
-    void fileTransferBrokenUnbroken(ToxFile file, bool broken);
-    void fileNameChanged(const ToxPk& friendPk);
 
     void saveRequest();
 
@@ -204,8 +186,6 @@ signals:
 
     void failedToRemoveFriend(uint32_t friendId);
 
-    void fileSendFailed(uint32_t friendId, const QString& fname);
-
 private:
     Core(QThread* coreThread);
 
@@ -221,7 +201,7 @@ private:
     static void onUserStatusChanged(Tox* tox, uint32_t friendId, Tox_User_Status userstatus,
                                     void* core);
     static void onConnectionStatusChanged(Tox* tox, uint32_t friendId, Tox_Connection status,
-                                          void* core);
+                                          void* vCore);
     static void onGroupInvite(Tox* tox, uint32_t friendId, Tox_Conference_Type type,
                               const uint8_t* cookie, size_t length, void* vCore);
     static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, Tox_Message_Type type,
@@ -241,7 +221,6 @@ private:
 
     void checkEncryptedHistory();
     void makeTox(QByteArray savedata, ICoreSettings* s);
-    void makeAv();
     void loadFriends();
     void loadGroups();
     void bootstrapDht();
@@ -267,6 +246,7 @@ private:
     using ToxPtr = std::unique_ptr<Tox, ToxDeleter>;
     ToxPtr tox;
 
+    std::unique_ptr<CoreFile> file;
     std::unique_ptr<CoreAV> av;
     QTimer* toxTimer = nullptr;
     // recursive, since we might call our own functions
@@ -275,7 +255,6 @@ private:
     std::unique_ptr<QThread> coreThread = nullptr;
 
     friend class Audio;    ///< Audio can access our calls directly to reduce latency
-    friend class CoreFile; ///< CoreFile can access tox* and emit our signals
     friend class CoreAV;   ///< CoreAV accesses our toxav* for now
 };
 

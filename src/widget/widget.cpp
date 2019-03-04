@@ -51,6 +51,7 @@
 #include "src/audio/audio.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
+#include "src/core/corefile.h"
 #include "src/model/chatroom/friendchatroom.h"
 #include "src/model/chatroom/groupchatroom.h"
 #include "src/model/friend.h"
@@ -234,6 +235,7 @@ void Widget::init()
 #endif
 
     Core* core = Nexus::getCore();
+    CoreFile* coreFile = core->getCoreFile();
     Profile* profile = Nexus::getProfile();
     profileInfo = new ProfileInfo(core, profile);
     profileForm = new ProfileForm(profileInfo);
@@ -243,8 +245,8 @@ void Widget::init()
 
     connect(profile, &Profile::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
 
-    connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
-    connect(core, &Core::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
+    connect(coreFile, &CoreFile::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
+    connect(coreFile, &CoreFile::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
     connect(ui->addButton, &QPushButton::clicked, this, &Widget::onAddClicked);
     connect(ui->groupButton, &QPushButton::clicked, this, &Widget::onGroupClicked);
     connect(ui->transferButton, &QPushButton::clicked, this, &Widget::onTransferClicked);

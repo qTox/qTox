@@ -21,6 +21,7 @@
 #include "ui_filetransferwidget.h"
 
 #include "src/core/core.h"
+#include "src/core/corefile.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 #include "src/widget/style.h"
@@ -85,19 +86,21 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
         update();
     });
 
-    connect(Core::getInstance(), &Core::fileTransferInfo, this,
+    CoreFile* coreFile = Core::getInstance()->getCoreFile();
+
+    connect(coreFile, &CoreFile::fileTransferInfo, this,
             &FileTransferWidget::onFileTransferInfo);
-    connect(Core::getInstance(), &Core::fileTransferAccepted, this,
+    connect(coreFile, &CoreFile::fileTransferAccepted, this,
             &FileTransferWidget::onFileTransferAccepted);
-    connect(Core::getInstance(), &Core::fileTransferCancelled, this,
+    connect(coreFile, &CoreFile::fileTransferCancelled, this,
             &FileTransferWidget::onFileTransferCancelled);
-    connect(Core::getInstance(), &Core::fileTransferPaused, this,
+    connect(coreFile, &CoreFile::fileTransferPaused, this,
             &FileTransferWidget::onFileTransferPaused);
-    connect(Core::getInstance(), &Core::fileTransferFinished, this,
+    connect(coreFile, &CoreFile::fileTransferFinished, this,
             &FileTransferWidget::onFileTransferFinished);
-    connect(Core::getInstance(), &Core::fileTransferRemotePausedUnpaused, this,
+    connect(coreFile, &CoreFile::fileTransferRemotePausedUnpaused, this,
             &FileTransferWidget::fileTransferRemotePausedUnpaused);
-    connect(Core::getInstance(), &Core::fileTransferBrokenUnbroken, this,
+    connect(coreFile, &CoreFile::fileTransferBrokenUnbroken, this,
             &FileTransferWidget::fileTransferBrokenUnbroken);
     connect(ui->leftButton, &QPushButton::clicked, this, &FileTransferWidget::onLeftButtonClicked);
     connect(ui->rightButton, &QPushButton::clicked, this, &FileTransferWidget::onRightButtonClicked);
@@ -149,7 +152,8 @@ void FileTransferWidget::autoAcceptTransfer(const QString& path)
     // Do not automatically accept the file-transfer if the path is not writable.
     // The user can still accept it manually.
     if (tryRemoveFile(filepath)) {
-        Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
+        CoreFile* coreFile = Core::getInstance()->getCoreFile();
+        coreFile->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
     } else {
         qWarning() << "Cannot write to " << filepath;
     }
@@ -176,7 +180,8 @@ void FileTransferWidget::acceptTransfer(const QString& filepath)
     }
 
     // everything ok!
-    Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
+    CoreFile* coreFile = Core::getInstance()->getCoreFile();
+    coreFile->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
 }
 
 void FileTransferWidget::setBackgroundColor(const QColor& c, bool whiteFont)
@@ -464,7 +469,7 @@ void FileTransferWidget::updateSignals(ToxFile const& file)
     case ToxFile::BROKEN:
     case ToxFile::FINISHED:
         active = false;
-        disconnect(Core::getInstance(), nullptr, this, nullptr);
+        disconnect(Core::getInstance()->getCoreFile(), nullptr, this, nullptr);
         break;
     case ToxFile::INITIALIZING:
     case ToxFile::PAUSED:
@@ -553,22 +558,23 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
 
 void FileTransferWidget::handleButton(QPushButton* btn)
 {
+    CoreFile* coreFile = Core::getInstance()->getCoreFile();
     if (fileInfo.direction == ToxFile::SENDING) {
         if (btn->objectName() == "cancel") {
-            Core::getInstance()->cancelFileSend(fileInfo.friendId, fileInfo.fileNum);
+            coreFile->cancelFileSend(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "pause") {
-            Core::getInstance()->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
+            coreFile->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "resume") {
-            Core::getInstance()->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
+            coreFile->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         }
     } else // receiving or paused
     {
         if (btn->objectName() == "cancel") {
-            Core::getInstance()->cancelFileRecv(fileInfo.friendId, fileInfo.fileNum);
+            coreFile->cancelFileRecv(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "pause") {
-            Core::getInstance()->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
+            coreFile->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "resume") {
-            Core::getInstance()->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
+            coreFile->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "accept") {
             QString path =
                 QFileDialog::getSaveFileName(Q_NULLPTR,
