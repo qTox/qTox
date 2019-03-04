@@ -165,10 +165,6 @@ void Core::registerCallbacks(Tox* tox)
     tox_callback_conference_peer_list_changed(tox, onGroupPeerListChange);
     tox_callback_conference_peer_name(tox, onGroupPeerNameChange);
     tox_callback_conference_title(tox, onGroupTitleChange);
-    tox_callback_file_chunk_request(tox, CoreFile::onFileDataCallback);
-    tox_callback_file_recv(tox, CoreFile::onFileReceiveCallback);
-    tox_callback_file_recv_chunk(tox, CoreFile::onFileRecvChunkCallback);
-    tox_callback_file_recv_control(tox, CoreFile::onFileControlCallback);
 }
 
 /**
@@ -293,6 +289,16 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
         return {};
     }
 
+    // create CoreFile
+    core->file = CoreFile::makeCoreFile(core.get(), core->tox.get(), core->coreLoopLock);
+    if (!core->file) {
+        qCritical() << "Toxav failed to start";
+        if (err) {
+            *err = ToxCoreErrors::FAILED_TO_START;
+        }
+        return {};
+    }
+
     registerCallbacks(core->tox.get());
 
     // connect the thread with the Core
@@ -359,6 +365,11 @@ CoreAV* Core::getAv()
     return av.get();
 }
 
+CoreFile* Core::getCoreFile() const
+{
+    return file.get();
+}
+
 /* Using the now commented out statements in checkConnection(), I watched how
  * many ticks disconnects-after-initial-connect lasted. Out of roughly 15 trials,
  * 5 disconnected; 4 were DCd for less than 20 ticks, while the 5th was ~50 ticks.
@@ -394,7 +405,7 @@ void Core::process()
     }
 
     unsigned sleeptime =
-        qMin(tox_iteration_interval(tox.get()), CoreFile::corefileIterationInterval());
+        qMin(tox_iteration_interval(tox.get()), getCoreFile()->corefileIterationInterval());
     toxTimer->start(sleeptime);
 }
 
@@ -513,15 +524,15 @@ void Core::onUserStatusChanged(Tox*, uint32_t friendId, Tox_User_Status userstat
     emit static_cast<Core*>(core)->friendStatusChanged(friendId, status);
 }
 
-void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection status, void* core)
+void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection status, void* vCore)
 {
+    Core* core = static_cast<Core*>(vCore);
     Status friendStatus = status != TOX_CONNECTION_NONE ? Status::Online : Status::Offline;
     // Ignore Online because it will be emited from onUserStatusChanged
     bool isOffline = friendStatus == Status::Offline;
     if (isOffline) {
-        emit static_cast<Core*>(core)->friendStatusChanged(friendId, friendStatus);
-        static_cast<Core*>(core)->checkLastOnline(friendId);
-        CoreFile::onConnectionStatusChanged(static_cast<Core*>(core), friendId, !isOffline);
+        emit core->friendStatusChanged(friendId, friendStatus);
+        core->checkLastOnline(friendId);
     }
 }
 
@@ -755,55 +766,6 @@ void Core::changeGroupTitle(int groupId, const QString& title)
     default:
         break;
     }
-}
-
-void Core::sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize)
-{
-    QMutexLocker ml{&coreLoopLock};
-
-    CoreFile::sendFile(this, friendId, filename, filePath, filesize);
-}
-
-void Core::sendAvatarFile(uint32_t friendId, const QByteArray& data)
-{
-    QMutexLocker ml{&coreLoopLock};
-
-    CoreFile::sendAvatarFile(this, friendId, data);
-}
-
-void Core::pauseResumeFile(uint32_t friendId, uint32_t fileNum)
-{
-    QMutexLocker ml{&coreLoopLock};
-
-    CoreFile::pauseResumeFile(this, friendId, fileNum);
-}
-
-void Core::cancelFileSend(uint32_t friendId, uint32_t fileNum)
-{
-    QMutexLocker ml{&coreLoopLock};
-
-    CoreFile::cancelFileSend(this, friendId, fileNum);
-}
-
-void Core::cancelFileRecv(uint32_t friendId, uint32_t fileNum)
-{
-    QMutexLocker ml{&coreLoopLock};
-
-    CoreFile::cancelFileRecv(this, friendId, fileNum);
-}
-
-void Core::rejectFileRecvRequest(uint32_t friendId, uint32_t fileNum)
-{
-    QMutexLocker ml{&coreLoopLock};
-
-    CoreFile::rejectFileRecvRequest(this, friendId, fileNum);
-}
-
-void Core::acceptFileRecvRequest(uint32_t friendId, uint32_t fileNum, QString path)
-{
-    QMutexLocker ml{&coreLoopLock};
-
-    CoreFile::acceptFileRecvRequest(this, friendId, fileNum, path);
 }
 
 void Core::removeFriend(uint32_t friendId)

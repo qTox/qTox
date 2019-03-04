@@ -20,6 +20,7 @@
 
 #include "avatarbroadcaster.h"
 #include "src/core/core.h"
+#include "src/core/corefile.h"
 #include <QDebug>
 #include <QObject>
 
@@ -66,7 +67,8 @@ void AvatarBroadcaster::sendAvatarTo(uint32_t friendId)
         return;
     if (!Core::getInstance()->isFriendOnline(friendId))
         return;
-    Core::getInstance()->sendAvatarFile(friendId, avatarData);
+    CoreFile* coreFile = Core::getInstance()->getCoreFile();
+    coreFile->sendAvatarFile(friendId, avatarData);
     friendsSentTo[friendId] = true;
 }
 

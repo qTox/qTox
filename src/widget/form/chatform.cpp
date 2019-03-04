@@ -25,6 +25,7 @@
 #include "src/chatlog/content/text.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
+#include "src/core/corefile.h"
 #include "src/model/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/history.h"
@@ -160,18 +161,19 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
 
     const Core* core = Core::getInstance();
     const Profile* profile = Nexus::getProfile();
-    connect(core, &Core::fileReceiveRequested, this, &ChatForm::onFileRecvRequest);
+    const CoreFile* coreFile = core->getCoreFile();
+    connect(coreFile, &CoreFile::fileReceiveRequested, this, &ChatForm::onFileRecvRequest);
     connect(profile, &Profile::friendAvatarChanged, this, &ChatForm::onAvatarChanged);
-    connect(core, &Core::fileSendStarted, this, &ChatForm::startFileSend);
-    connect(core, &Core::fileTransferFinished, this, &ChatForm::onFileTransferFinished);
-    connect(core, &Core::fileTransferCancelled, this, &ChatForm::onFileTransferCancelled);
-    connect(core, &Core::fileTransferBrokenUnbroken, this, &ChatForm::onFileTransferBrokenUnbroken);
-    connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
+    connect(coreFile, &CoreFile::fileSendStarted, this, &ChatForm::startFileSend);
+    connect(coreFile, &CoreFile::fileTransferFinished, this, &ChatForm::onFileTransferFinished);
+    connect(coreFile, &CoreFile::fileTransferCancelled, this, &ChatForm::onFileTransferCancelled);
+    connect(coreFile, &CoreFile::fileTransferBrokenUnbroken, this, &ChatForm::onFileTransferBrokenUnbroken);
+    connect(coreFile, &CoreFile::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(core, &Core::receiptRecieved, this, &ChatForm::onReceiptReceived);
     connect(core, &Core::friendMessageReceived, this, &ChatForm::onFriendMessageReceived);
     connect(core, &Core::friendTypingChanged, this, &ChatForm::onFriendTypingChanged);
     connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
-    connect(core, &Core::fileNameChanged, this, &ChatForm::onFileNameChanged);
+    connect(coreFile, &CoreFile::fileNameChanged, this, &ChatForm::onFileNameChanged);
 
 
     const CoreAV* av = core->getAv();
@@ -297,7 +299,7 @@ void ChatForm::onAttachClicked()
         }
 
         qint64 filesize = file.size();
-        core->sendFile(f->getId(), fileName, path, filesize);
+        core->getCoreFile()->sendFile(f->getId(), fileName, path, filesize);
     }
 }
 
@@ -762,7 +764,7 @@ void ChatForm::dropEvent(QDropEvent* ev)
         }
 
         if (info.exists()) {
-            core->sendFile(f->getId(), fileName, info.absoluteFilePath(), info.size());
+            core->getCoreFile()->sendFile(f->getId(), fileName, info.absoluteFilePath(), info.size());
         }
     }
 }
@@ -976,7 +978,8 @@ void ChatForm::sendImage(const QPixmap& pixmap)
         qint64 filesize = file.size();
         file.close();
         QFileInfo fi(file);
-        Core::getInstance()->sendFile(f->getId(), fi.fileName(), fi.filePath(), filesize);
+        CoreFile* coreFile = Core::getInstance()->getCoreFile();
+        coreFile->sendFile(f->getId(), fi.fileName(), fi.filePath(), filesize);
     } else {
         QMessageBox::warning(this,
                              tr("Failed to open temporary file", "Temporary file for screenshot"),

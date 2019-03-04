@@ -340,7 +340,7 @@ void Profile::onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QB
 {
     // accept if we don't have it already
     const bool accept = getAvatarHash(core->getFriendPublicKey(friendId)) != avatarHash;
-    CoreFile::handleAvatarOffer(friendId, fileId, accept);
+    core->getCoreFile()->handleAvatarOffer(friendId, fileId, accept);
 }
 
 /**

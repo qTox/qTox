@@ -27,60 +27,85 @@
 #include <tox/tox.h>
 
 #include "toxfile.h"
+#include "src/core/core.h"
+#include "src/core/toxpk.h"
 
 #include <QHash>
 #include <QMutex>
+#include <QObject>
 #include <QString>
 
 struct Tox;
-class Core;
+class CoreFile;
 
-class CoreFile
+using CoreFilePtr = std::unique_ptr<CoreFile>;
+
+class CoreFile : public QObject
 {
-    friend class Core;
-
+    Q_OBJECT
 
 public:
-    static void handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept);
+    void handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept);
+    static CoreFilePtr makeCoreFile(Core* core, Tox* tox, QMutex& coreLoopLock);
 
-private:
-    CoreFile() = delete;
-
-    // Internal file sending APIs, used by Core. Public API in core.h
-private:
-    static void sendFile(Core* core, uint32_t friendId, QString filename, QString filePath,
+    void sendFile(uint32_t friendId, QString filename, QString filePath,
                          long long filesize);
-    static void sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& data);
-    static void pauseResumeFile(Core* core, uint32_t friendId, uint32_t fileId);
-    static void cancelFileSend(Core* core, uint32_t friendId, uint32_t fileId);
-    static void cancelFileRecv(Core* core, uint32_t friendId, uint32_t fileId);
-    static void rejectFileRecvRequest(Core* core, uint32_t friendId, uint32_t fileId);
-    static void acceptFileRecvRequest(Core* core, uint32_t friendId, uint32_t fileId, QString path);
-    static ToxFile* findFile(uint32_t friendId, uint32_t fileId);
-    static void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
-    static void removeFile(uint32_t friendId, uint32_t fileId);
-    static unsigned corefileIterationInterval();
+    void sendAvatarFile(uint32_t friendId, const QByteArray& data);
+    void pauseResumeFile(uint32_t friendId, uint32_t fileId);
+    void cancelFileSend(uint32_t friendId, uint32_t fileId);
+
+    void cancelFileRecv(uint32_t friendId, uint32_t fileId);
+    void rejectFileRecvRequest(uint32_t friendId, uint32_t fileId);
+    void acceptFileRecvRequest(uint32_t friendId, uint32_t fileId, QString path);
+
+    unsigned corefileIterationInterval();
+
+signals:
+    void fileSendStarted(ToxFile file);
+    void fileReceiveRequested(ToxFile file);
+    void fileTransferAccepted(ToxFile file);
+    void fileTransferCancelled(ToxFile file);
+    void fileTransferFinished(ToxFile file);
+    void fileUploadFinished(const QString& path);
+    void fileDownloadFinished(const QString& path);
+    void fileTransferPaused(ToxFile file);
+    void fileTransferInfo(ToxFile file);
+    void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
+    void fileTransferBrokenUnbroken(ToxFile file, bool broken);
+    void fileNameChanged(const ToxPk& friendPk);
+    void fileSendFailed(uint32_t friendId, const QString& fname);
+
+private:
+    CoreFile(Tox* core, QMutex& coreLoopLock);
+
+    ToxFile* findFile(uint32_t friendId, uint32_t fileId);
+    void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
+    void removeFile(uint32_t friendId, uint32_t fileId);
     static constexpr uint64_t getFriendKey(uint32_t friendId, uint32_t fileId)
     {
         return (static_cast<std::uint64_t>(friendId) << 32) + fileId;
     }
 
-private:
-    static void onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, uint32_t kind,
+    static void connectCallbacks(Tox& tox);
+    static void onFileReceiveCallback(Tox*tox, uint32_t friendId, uint32_t fileId, uint32_t kind,
                                       uint64_t filesize, const uint8_t* fname, size_t fnameLen,
                                       void* vCore);
     static void onFileControlCallback(Tox* tox, uint32_t friendId, uint32_t fileId,
-                                      Tox_File_Control control, void* core);
+                                      Tox_File_Control control, void* vCore);
     static void onFileDataCallback(Tox* tox, uint32_t friendId, uint32_t fileId, uint64_t pos,
-                                   size_t length, void* core);
+                                   size_t length, void* vCore);
     static void onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fileId, uint64_t position,
                                         const uint8_t* data, size_t length, void* vCore);
-    static void onConnectionStatusChanged(Core* core, uint32_t friendId, bool online);
+
+    static QString getCleanFileName(QString filename);
+
+private slots:
+    void onConnectionStatusChanged(uint32_t friendId, Status state);
 
 private:
-    static QMutex fileSendMutex;
-    static QHash<uint64_t, ToxFile> fileMap;
-    static QString getCleanFileName(QString filename);
+    QHash<uint64_t, ToxFile> fileMap;
+    Tox* tox;
+    QMutex* coreLoopLock = nullptr;
 };
 
 #endif // COREFILE_H
