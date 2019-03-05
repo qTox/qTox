@@ -278,8 +278,6 @@ void GroupChatForm::updateUserNames()
             label->setProperty("peerType", LABEL_PEER_TYPE_OUR);
         } else if (s.getBlackList().contains(peerPk.toString())) {
             label->setProperty("peerType", LABEL_PEER_TYPE_MUTED);
-        } else if (netcam != nullptr) {
-            static_cast<GroupNetCamView*>(netcam)->addPeer(peerPk, fullName);
         }
 
         label->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH));
@@ -383,12 +381,11 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
             delete peerAudioTimers[peerPk];
             peerAudioTimers[peerPk] = nullptr;
         });
-
-        if (netcam) {
-            static_cast<GroupNetCamView*>(netcam)->removePeer(peerPk);
-            const auto nameIt = group->getPeerList().find(peerPk);
-            static_cast<GroupNetCamView*>(netcam)->addPeer(peerPk, nameIt.value());
-        }
+    }
+    if (netcam) {
+        static_cast<GroupNetCamView*>(netcam)->removePeer(peerPk);
+        const auto nameIt = group->getPeerList().find(peerPk);
+        static_cast<GroupNetCamView*>(netcam)->addPeer(peerPk, nameIt.value());
     }
 
     peerLabels[peerPk]->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH));
