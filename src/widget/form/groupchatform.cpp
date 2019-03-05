@@ -381,11 +381,11 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
             delete peerAudioTimers[peerPk];
             peerAudioTimers[peerPk] = nullptr;
         });
-    }
-    if (netcam) {
-        static_cast<GroupNetCamView*>(netcam)->removePeer(peerPk);
-        const auto nameIt = group->getPeerList().find(peerPk);
-        static_cast<GroupNetCamView*>(netcam)->addPeer(peerPk, nameIt.value());
+        if (netcam) {
+            static_cast<GroupNetCamView*>(netcam)->removePeer(peerPk);
+            const auto nameIt = group->getPeerList().find(peerPk);
+            static_cast<GroupNetCamView*>(netcam)->addPeer(peerPk, nameIt.value());
+        }
     }
 
     peerLabels[peerPk]->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH));
@@ -466,8 +466,17 @@ void GroupChatForm::onCallClicked()
 
 GenericNetCamView* GroupChatForm::createNetcam()
 {
-    // leave view empty, it will pe populated once we receive audio from peers
-    return new GroupNetCamView(group->getId(), this);
+    auto view = new GroupNetCamView(group->getId(), this);
+
+    const auto& names = group->getPeerList();
+    const auto ownPk = Core::getInstance()->getSelfPublicKey();
+    for (const auto& peerPk : names.keys()) {
+        auto timerIt = peerAudioTimers.find(peerPk);
+        if (peerPk != ownPk && timerIt != peerAudioTimers.end()) {
+            static_cast<GroupNetCamView*>(view)->addPeer(peerPk, names.find(peerPk).value());
+        }
+    }
+    return view;
 }
 
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)
