@@ -1087,6 +1087,12 @@ void ChatForm::show(ContentLayout* contentLayout)
     GenericChatForm::show(contentLayout);
 }
 
+void ChatForm::reloadTheme()
+{
+    chatWidget->setTypingNotification(ChatMessage::createTypingNotification());
+    GenericChatForm::reloadTheme();
+}
+
 void ChatForm::showEvent(QShowEvent* event)
 {
     GenericChatForm::showEvent(event);

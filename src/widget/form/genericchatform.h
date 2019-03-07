@@ -73,6 +73,7 @@ public:
     {
     }
     virtual void show(ContentLayout* contentLayout);
+    virtual void reloadTheme();
 
     void addMessage(const ToxPk& author, const QString& message, const QDateTime& datetime,
                     bool isAction, bool colorizeName = false);
@@ -83,7 +84,6 @@ public:
     static QString resolveToxPk(const ToxPk& pk);
     QDate getLatestDate() const;
     QDate getFirstDate() const;
-    void reloadTheme();
 
 signals:
     void sendMessage(uint32_t, QString);

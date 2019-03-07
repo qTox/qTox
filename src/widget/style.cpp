@@ -150,7 +150,9 @@ QMap<Style::ColorPalette, QString> Style::aliasColors = {{Green, "green"},
                                                          {ThemeMedium, "themeMedium"},
                                                          {ThemeLight, "themeLight"},
                                                          {Action, "action"},
-                                                         {Link, "link"}};
+                                                         {Link, "link"},
+                                                         {SearchHighlighted, "searchHighlighted"},
+                                                         {SelectText, "selectText"}};
 
 // stylesheet filename, font -> stylesheet
 // QString implicit sharing deduplicates stylesheets rather than constructing a new one each time
@@ -412,7 +414,9 @@ void Style::initDictColor()
             {"@groundBase", Style::getColor(Style::GroundBase).name()},
             {"@orange", Style::getColor(Style::Orange).name()},
             {"@action", Style::getColor(Style::Action).name()},
-            {"@link", Style::getColor(Style::Link).name()}};
+            {"@link", Style::getColor(Style::Link).name()},
+            {"@searchHighlighted", Style::getColor(Style::SearchHighlighted).name()},
+            {"@selectText", Style::getColor(Style::SelectText).name()}};
 }
 
 QString Style::getThemePath()
