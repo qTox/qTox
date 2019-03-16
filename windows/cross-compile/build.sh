@@ -97,9 +97,30 @@ fi
 
 readonly BUILD_DIR="/build"
 readonly DEP_DIR="$WORKSPACE_DIR/$ARCH/dep-cache"
+readonly APT_CACHE_DIR="$WORKSPACE_DIR/$ARCH/apt_cache"
 
+# Create the expected directory structure
+
+# Just make sure those exist
+mkdir -p "$WORKSPACE_DIR"
+mkdir -p "$DEP_DIR"
+mkdir -p "$APT_CACHE_DIR"
+
+# Build dir should be empty
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR"
+cd "$BUILD_DIR"
 
 set -x
+
+echo "Restoring package cache"
+# ensure at least one file exists
+touch "$APT_CACHE_DIR"/dummy
+# restore apt cache
+cp -r "$APT_CACHE_DIR"/* /var/cache/
+
+# remove docker specific config file, this file prevents usage of the package cache
+rm /etc/apt/apt.conf.d/docker-clean
 
 
 # Get packages
@@ -143,18 +164,6 @@ then
   apt-get install -y wine wine32 wine64
 fi
 set -u
-
-
-# Create the expected directory structure
-
-# Just make sure those exist
-mkdir -p "$WORKSPACE_DIR"
-mkdir -p "$DEP_DIR"
-
-# Build dir should be empty
-rm -rf "$BUILD_DIR"
-mkdir -p "$BUILD_DIR"
-cd "$BUILD_DIR"
 
 
 # Use all cores for building
@@ -204,6 +213,14 @@ strip_all()
     $ARCH-w64-mingw32-strip --strip-unneeded $PREFIX_DIR/lib/*
   done
   set -e
+}
+
+# Store apt cache
+store_apt_cache()
+{
+  # prevent old packages from polluting the cache
+  apt-get autoclean
+  cp -r /var/cache/apt/ "$APT_CACHE_DIR"
 }
 
 
@@ -360,6 +377,7 @@ if [[ "$TRAVIS_CI_STAGE" == "stage1" ]]
 then
   # Strip to reduce cache size
   strip_all
+  store_apt_cache
   # Chmod since everything is root:root
   chmod 777 -R "$WORKSPACE_DIR"
   exit 0
@@ -1070,6 +1088,7 @@ if [[ "$TRAVIS_CI_STAGE" == "stage2" ]]
 then
   # Strip to reduce cache size
   strip_all
+  store_apt_cache
   # Chmod since everything is root:root
   chmod 777 -R "$WORKSPACE_DIR"
   exit 0
@@ -1235,6 +1254,9 @@ fi
 
 cd ..
 rm -rf ./qtox
+
+# Cache APT packages for future runs
+store_apt_cache
 
 # Chmod since everything is root:root
 chmod 777 -R "$WORKSPACE_DIR"
