@@ -1,7 +1,7 @@
 ---
 version: 2.1
 jobs:
-  build:
+  dependencies64:
     machine: true
     steps:
       - checkout
@@ -18,7 +18,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install zip tree
       - restore_cache:
-          key: dependency-cache
+          key: dependency-cache-64
           paths:
             - cache
       - run:
@@ -31,9 +31,27 @@ jobs:
             ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "cache/${BUILD__}" stage2
             ls -al cache
       - save_cache:
-          key: dependency-cache
+          key: dependency-cache-64
           paths:
             - cache
+  release64:
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-64
+          paths:
+            - cache
+      - run:
+          name : Export environment variables
+          command: |
+            echo 'export BUILD__="x86_64"' >> $BASH_ENV
+            echo 'export BTYPE__="release"' >> $BASH_ENV
+      - run:
+          name: Install zip
+          command: |
+            sudo apt-get update
+            sudo apt-get install zip tree
       - run:
           name: Build stage 3
           command: |
@@ -47,8 +65,43 @@ jobs:
           path: "/home/circleci/project/workspace/x86_64/qtox/release/qtox-x86_64-release.zip"
       - store_artifacts:
           path: "/home/circleci/project/workspace/x86_64/qtox/release/setup-qtox-x86_64-release.exe"
+  debug64:
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-64
+          paths:
+            - cache
+      - run:
+          name : Export environment variables
+          command: |
+            echo 'export BUILD__="x86_64"' >> $BASH_ENV
+            echo 'export BTYPE__="debug"' >> $BASH_ENV
+      - run:
+          name: Install zip
+          command: |
+            sudo apt-get update
+            sudo apt-get install zip tree
+      - run:
+          name: Build stage 3
+          command: |
+            ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "cache/${BUILD__}" stage3
+      - run:
+          name: Debug info
+          command: |
+            ls -al ~/
+            tree ~/project/workspace -L 4
+      - store_artifacts:
+          path: "/home/circleci/project/workspace/x86_64/qtox/debug/qtox-x86_64-debug.zip"
 workflows:
   version: 2
   build:
     jobs:
-      - build
+      - dependencies64
+      - release64:
+          requires:
+            - dependencies64
+      - debug64:
+          requires:
+            - dependencies64
