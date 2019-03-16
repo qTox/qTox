@@ -23,6 +23,8 @@
 #include "src/net/bootstrapnodeupdater.h"
 
 #include <QtTest/QtTest>
+#include <QtGlobal>
+#include <limits>
 #include <QSignalSpy>
 #include <src/persistence/settings.h>
 #include <iostream>
@@ -46,14 +48,14 @@ public:
     bool getEnableLanDiscovery() const override { return false; }
     void setEnableLanDiscovery(bool) override { }
 
-    QString getProxyAddr() const override { return QString(""); }
-    void setProxyAddr(const QString &) override { }
+    QString getProxyAddr() const override { return Addr; }
+    void setProxyAddr(const QString &Addr) override { this->Addr = Addr; }
 
-    ProxyType getProxyType() const override { return ProxyType::ptNone; }
-    void setProxyType(ProxyType) override { }
+    ProxyType getProxyType() const override { return type; }
+    void setProxyType(ProxyType type) override { this->type = type; }
 
-    quint16 getProxyPort() const override { return 0; }
-    void setProxyPort(quint16) override { }
+    quint16 getProxyPort() const override { return port; }
+    void setProxyPort(quint16 port) override { this->port = port; }
 
     QNetworkProxy getProxy() const override { return QNetworkProxy(QNetworkProxy::ProxyType::NoProxy); }
 
@@ -66,7 +68,9 @@ public:
 
 private:
     QList<DhtServer> dhtServerList;
-
+    QString Addr;
+    ProxyType type;
+    quint16 port;
 };
 
 
@@ -75,6 +79,7 @@ class TestCore : public QObject
 Q_OBJECT
 private slots:
     void startup_without_proxy();
+    void startup_with_invalid_proxy();
 
 private:
     /* Test Variables */
@@ -91,8 +96,13 @@ namespace {
 
 void TestCore::startup_without_proxy()
 {
-    settings = new MockSettings();
     Q_INIT_RESOURCE(res);
+    settings = new MockSettings();
+
+    // No proxy
+    settings->setProxyAddr("1.2.3.4");
+    settings->setProxyPort(1234);
+    settings->setProxyType(MockSettings::ProxyType::ptNone);
 
     test_core = Core::makeToxCore(savedata, settings, err);
 
@@ -108,6 +118,40 @@ void TestCore::startup_without_proxy()
     QVERIFY(spyCore.wait(timeout)); //wait 90seconds
 
     QCOMPARE(spyCore.count(), 1); // make sure the signal was emitted exactly one time
+
+    test_core.reset();
+}
+
+void TestCore::startup_with_invalid_proxy()
+{
+    Q_INIT_RESOURCE(res);
+    settings = new MockSettings();
+
+
+    // Test invalid proxy SOCKS5
+    settings->setProxyAddr("Test");
+    settings->setProxyPort(9985);
+    settings->setProxyType(MockSettings::ProxyType::ptSOCKS5);
+
+    test_core = Core::makeToxCore(savedata, settings, err);
+
+    if(test_core != ToxCorePtr{}) {
+        QFAIL("ToxCore initialisation passed with invalid SOCKS5 proxy address");
+    }
+
+
+    // Test invalid proxy HTTP
+    settings->setProxyAddr("Test");
+    settings->setProxyPort(9985);
+    settings->setProxyType(MockSettings::ProxyType::ptHTTP);
+
+    test_core = Core::makeToxCore(savedata, settings, err);
+
+    if(test_core != ToxCorePtr{}) {
+        QFAIL("ToxCore initialisation passed with invalid HTTP proxy address");
+    }
+
+    test_core.reset();
 }
 
 QTEST_GUILESS_MAIN(TestCore)
