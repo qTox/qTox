@@ -173,7 +173,7 @@ install() {
 
     # verbose so that build output is shown, otherwise qt5 build has no output for >10 mins
     # and is killed by Travis CI
-    brew install --verbose ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet
+    brew install --verbose ffmpeg libexif qrencode qt5 sqlcipher openal-soft #kf5-sonnet
 
     fcho "Cloning filter_audio ... "
     git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio "$FILTERAUIO_DIR"
@@ -236,7 +236,7 @@ build() {
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
     export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
-    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON
+    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF
     make -j$(sysctl -n hw.ncpu)
 }
 
