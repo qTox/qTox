@@ -18,6 +18,7 @@ function(auto_test subsystem module)
     COMMAND ${TEST_CROSSCOMPILING_EMULATOR} test_${module})
 endfunction()
 
+auto_test(core core)
 auto_test(core toxpk)
 auto_test(core toxid)
 auto_test(core toxstring)
