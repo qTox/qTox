@@ -9,15 +9,25 @@ branches:
     - master
     - /^v(\d+\.){2}\d+$/
 
-matrix:
-  fast_finish: true
+stages:
+  - Linux
+  - name: "Windows Stage 1: Dependencies (OpenSSL, Qt)"
+    if: type = push AND branch = master
+  - name: "Windows Stage 2: Dependencies (other)"
+    if: type = push AND branch = master
+  - name: "Windows Stage 3: qTox"
+    if: type = push AND branch = master
+
+jobs:
   include:
     - stage: Linux
       os: linux
       env: JOB=verify-commit-format
+      script: "./.travis/$JOB.sh"
     - stage: Linux
       os: linux
       env: JOB=build-docs DOXYGEN_CONFIG_FILE=doxygen.conf
+      script: "./.travis/$JOB.sh"
     - stage: Linux
       os: linux
       env: JOB=build-gitstats GITSTATS_DIR=gitstats
@@ -25,10 +35,12 @@ matrix:
         apt:
           packages:
             - gitstats
+      script: "./.travis/$JOB.sh"
     # the actual compilin'
     - stage: Linux
       os: linux
       env: JOB=build-ubuntu-14-04
+      script: "./.travis/$JOB.sh"
     - stage: "Windows Stage 1: Dependencies (OpenSSL, Qt)"
       os: linux
       # Makes the cache this job creates avaiable only to jobs with WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=i686,
@@ -107,6 +119,7 @@ matrix:
       os: osx
       osx_image: xcode9.2
       env: JOB=build-osx
+      script: "./.travis/$JOB.sh"
     - stage: "macOS, AppImage and Flatpak"
       os: linux
       env: JOB=APPIMAGE
@@ -120,7 +133,7 @@ matrix:
       services:
         - docker
 
-script: "./.travis/$JOB.sh"
+
 
 deploy:
   # Linux AppImage
