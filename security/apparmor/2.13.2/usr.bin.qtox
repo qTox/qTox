@@ -325,4 +325,8 @@ profile qtox /usr{,/local}/bin/qtox {
   owner @{HOME}/.config/klanguageoverridesrc r, # per-application languages, for KDEPrivate::initializeLanguages() from libKF5XmlGui.so
   owner @{HOME}/.config/trashrc r, # Used by KFileWidget
 
+  # Backport dri-common abstraction
+  # commit 2d8d2f06d5697d9692330686bb5ddb0095621144
+  /usr/share/drirc.d/{,*.conf} r,
+
 }
