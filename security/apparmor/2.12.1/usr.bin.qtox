@@ -295,6 +295,7 @@ profile qtox /usr{,/local}/bin/qtox {
   owner @{HOME}/.fonts/.uuid* rw,
   owner @{HOME}/.fonts/.uuid.* l -> @{HOME}/.fonts/.uuid.*,
   owner @{HOME}/.fonts/.uuid.*/ rw,
+  owner @{HOME}/.local/share/Tox/{,**} rw,
   owner @{HOME}/.local/share/qTox/{,**} rw,
   owner @{HOME}/.local/share/user-places.xbel r, # file dialog
   owner @{PROC}/@{pid}/cmdline r,
