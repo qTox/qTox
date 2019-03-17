@@ -36,6 +36,7 @@ class MockSettings : public QObject, public ICoreSettings
 Q_OBJECT
 public:
     MockSettings() {
+        Q_INIT_RESOURCE(res);
         qRegisterMetaType<QList<DhtServer>>("QList<DhtServer>");
     }
 
@@ -96,17 +97,16 @@ namespace {
 
 void TestCore::startup_without_proxy()
 {
-    Q_INIT_RESOURCE(res);
     settings = new MockSettings();
 
     // No proxy
-    settings->setProxyAddr("1.2.3.4");
-    settings->setProxyPort(1234);
+    settings->setProxyAddr("");
+    settings->setProxyPort(0);
     settings->setProxyType(MockSettings::ProxyType::ptNone);
 
     test_core = Core::makeToxCore(savedata, settings, err);
 
-    if(test_core == ToxCorePtr{}) {
+    if(test_core == nullptr) {
         QFAIL("ToxCore initialisation failed");
     }
 
@@ -118,13 +118,10 @@ void TestCore::startup_without_proxy()
     QVERIFY(spyCore.wait(timeout)); //wait 90seconds
 
     QCOMPARE(spyCore.count(), 1); // make sure the signal was emitted exactly one time
-
-    test_core.reset();
 }
 
 void TestCore::startup_with_invalid_proxy()
 {
-    Q_INIT_RESOURCE(res);
     settings = new MockSettings();
 
 
@@ -135,7 +132,7 @@ void TestCore::startup_with_invalid_proxy()
 
     test_core = Core::makeToxCore(savedata, settings, err);
 
-    if(test_core != ToxCorePtr{}) {
+    if(test_core != nullptr) {
         QFAIL("ToxCore initialisation passed with invalid SOCKS5 proxy address");
     }
 
@@ -147,11 +144,9 @@ void TestCore::startup_with_invalid_proxy()
 
     test_core = Core::makeToxCore(savedata, settings, err);
 
-    if(test_core != ToxCorePtr{}) {
+    if(test_core != nullptr) {
         QFAIL("ToxCore initialisation passed with invalid HTTP proxy address");
     }
-
-    test_core.reset();
 }
 
 QTEST_GUILESS_MAIN(TestCore)
