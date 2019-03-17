@@ -26,8 +26,7 @@ Select AppArmor profile from appropriate `security/apparmor/X` subdirectory depe
 To enable AppArmor profile on your system, run prepared install script:
 
 ```
-cd security/apparmor/x.y.z
-sudo ./install.sh
+sudo security/apparmor/x.y.z/install.sh
 ```
 Restart `qTox` if it was already running before enabling AppArmor profile.
 
