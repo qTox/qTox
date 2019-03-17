@@ -8,6 +8,16 @@ branches:
   only:
     - master
     - /^v(\d+\.){2}\d+$/
+   
+stages:
+  - Linux
+  - "Windows Stage 1: Dependencies (OpenSSL, Qt)"
+    if: branch = master
+  - "Windows Stage 2: Dependencies (other)"
+    if: branch = master
+  - "Windows Stage 3: qTox"
+    if: branch = master
+  - "macOS, AppImage and Flatpak"
 
 matrix:
   fast_finish: true
