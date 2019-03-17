@@ -30,6 +30,7 @@ install_ccache() {
     brew update
     echo "Installing ccache..."
     brew install ccache
+    brew --cache
 }
 
 # Build OSX

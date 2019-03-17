@@ -107,6 +107,13 @@ matrix:
       os: osx
       osx_image: xcode9.2
       env: JOB=build-osx
+      cache:
+        ccache: true
+        directories:
+          - $HOME/Library/Caches/Homebrew
+      before_cache:
+        - brew cleanup
+
     - stage: "macOS, AppImage and Flatpak"
       os: linux
       env: JOB=APPIMAGE
