@@ -113,7 +113,7 @@ sudo apparmor_parser -r /etc/apparmor.d/usr.bin.qtox
 
 For custom installations, when `qTox` executable is not `/usr/bin/qtox` or `/usr/local/bin/qtox`:
 1. create `/etc/apparmor.d/tunables/usr.bin.qtox.d/local`, adding `@{qtox_prefix} += /path/to/your/custom/install/prefix` line.
-2. modify `/etc/apparmor.d/usr.bin.qtox` profile attachement path: `profile qtox /usr{,local}/bin/qtox,/path/to/your/qtox_executable {`
+2. modify `/etc/apparmor.d/usr.bin.qtox` profile attachement path: `profile qtox /{usr{,local}/bin/qtox,path/to/your/qtox_executable} {`
 
 Restart AppArmor and [check](#checking-if-qtox-is-actually-confined) if `qTox` process under custom path is actually confined.
 
