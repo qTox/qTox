@@ -22,7 +22,7 @@ profile qtox /usr{,/local}/bin/qtox {
 
   # Main executable
 
-  @{qtox_prefix}/bin mr,
+  @{qtox_prefix}/bin/qtox mr,
 
   # Other executables
 
