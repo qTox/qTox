@@ -19,17 +19,14 @@ public slots:
     void notifyGroupInvite();
 
 private:
-    using NotificationPtr = std::unique_ptr<Snore::Notification>;
-
-    NotificationPtr createNotification(const QString& title, const QString& text,
-                                       Snore::Notification* old = nullptr);
+    Snore::Notification createNotification(const QString& title, const QString& text);
 
 private:
     Snore::SnoreCore& notifyCore;
-    NotificationPtr groupInvite = {nullptr};
-    NotificationPtr groupMessage = {nullptr};
-    NotificationPtr friendRequest = {nullptr};
-    NotificationPtr friendMessage = {nullptr};
+    Snore::Notification groupInvite = {};
+    Snore::Notification groupMessage = {};
+    Snore::Notification friendRequest = {};
+    Snore::Notification friendMessage = {};
     Snore::Application snoreApp;
     Snore::Icon snoreIcon;
 };

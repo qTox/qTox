@@ -19,16 +19,9 @@ DesktopNotify::DesktopNotify()
     notifyCore.registerApplication(snoreApp);
 }
 
-DesktopNotify::NotificationPtr DesktopNotify::createNotification(const QString& title,
-                                                                 const QString& text,
-                                                                 Snore::Notification* old)
+Snore::Notification DesktopNotify::createNotification(const QString& title, const QString& text)
 {
-    if (old == nullptr) {
-        return NotificationPtr(
-            new Snore::Notification(snoreApp, Snore::Alert(), title, text, snoreIcon));
-    } else {
-        return NotificationPtr(new Snore::Notification(*old, title, text, snoreIcon));
-    }
+    return Snore::Notification(snoreApp, Snore::Alert(), title, text, snoreIcon);
 }
 
 void DesktopNotify::notifyGroupMessage()
@@ -40,12 +33,8 @@ void DesktopNotify::notifyGroupMessage()
 
     const QString text{};
     const QString title = tr("New group message received");
-    NotificationPtr newNote = createNotification(title, text);
-    if (!newNote) {
-        qDebug() << "Failed to allocate group message notification";
-        return;
-    }
-    groupInvite = std::move(newNote);
+    groupMessage = createNotification(title, text);
+    notifyCore.broadcastNotification(groupMessage);
 }
 
 void DesktopNotify::notifyFriendRequest()
@@ -57,13 +46,8 @@ void DesktopNotify::notifyFriendRequest()
 
     const QString title = tr("New friend request received");
     const QString text{};
-    NotificationPtr newNote = createNotification(title, text);
-    if (!newNote) {
-        qDebug() << "Failed to allocate friend message notification";
-        return;
-    }
-    friendMessage = std::move(newNote);
-    notifyCore.broadcastNotification(*friendMessage);
+    friendRequest = createNotification(title, text);
+    notifyCore.broadcastNotification(friendRequest);
 }
 
 void DesktopNotify::notifyGroupInvite()
@@ -75,13 +59,8 @@ void DesktopNotify::notifyGroupInvite()
 
     const QString title = tr("New group invite received");
     const QString text{};
-    NotificationPtr newNote = createNotification(title, text);
-    if (!newNote) {
-        qDebug() << "Failed to allocate friend message notification";
-        return;
-    }
-    friendMessage = std::move(newNote);
-    notifyCore.broadcastNotification(*friendMessage);
+    groupInvite = createNotification(title, text);
+    notifyCore.broadcastNotification(groupInvite);
 }
 
 void DesktopNotify::notifyFriendMessage()
@@ -93,11 +72,6 @@ void DesktopNotify::notifyFriendMessage()
 
     const QString title = tr("New message received");
     const QString text{};
-    NotificationPtr newNote = createNotification(title, text);
-    if (!newNote) {
-        qDebug() << "Failed to allocate friend message notification";
-        return;
-    }
-    friendMessage = std::move(newNote);
-    notifyCore.broadcastNotification(*friendMessage);
+    friendMessage = createNotification(title, text);
+    notifyCore.broadcastNotification(friendMessage);
 }

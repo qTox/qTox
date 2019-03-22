@@ -188,7 +188,7 @@ void Settings::loadGlobal()
     {
         showWindow = s.value("showWindow", true).toBool();
         notify = s.value("notify", true).toBool();
-        desktopNotify = s.value("desktopNotify", false).toBool();
+        desktopNotify = s.value("desktopNotify", true).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", true).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
         separateWindow = s.value("separateWindow", false).toBool();
