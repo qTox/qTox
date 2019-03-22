@@ -275,6 +275,7 @@ void UserInterfaceForm::on_notify_stateChanged()
     bodyUI->groupOnlyNotfiyWhenMentioned->setEnabled(notify);
     bodyUI->notifySound->setEnabled(notify);
     bodyUI->busySound->setEnabled(notify && bodyUI->notifySound->isChecked());
+    bodyUI->desktopNotify->setEnabled(notify);
 }
 
 void UserInterfaceForm::on_notifySound_stateChanged()

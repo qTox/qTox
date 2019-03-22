@@ -1446,7 +1446,13 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
         if (settings.getNotify()) {
             if (inactiveWindow) {
+#if DESKTOP_NOTIFICATIONS
+                if (!settings.getDesktopNotify()) {
+                    QApplication::alert(currentWindow);
+                }
+#else
                 QApplication::alert(currentWindow);
+#endif
                 eventFlag = true;
             }
             bool isBusy = Nexus::getCore()->getStatus() == Status::Busy;
