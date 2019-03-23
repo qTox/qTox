@@ -171,10 +171,13 @@ install() {
     # needed for kf5-sonnet
     brew tap kde-mac/kde
 
+    set +e
     # verbose so that build output is shown, otherwise qt5 build has no output for >10 mins
     # and is killed by Travis CI
     brew install --verbose ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet
+    brew gist-logs kf5-sonnet
 
+    set -e
     fcho "Cloning filter_audio ... "
     git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio "$FILTERAUIO_DIR"
     cd "$FILTERAUIO_DIR"
