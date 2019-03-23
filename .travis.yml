@@ -120,6 +120,7 @@ jobs:
       osx_image: xcode9.2
       env: JOB=build-osx
       cache:
+        timeout: 300 # seconds
         ccache: true
         directories:
           - $HOME/Library/Caches/Homebrew
