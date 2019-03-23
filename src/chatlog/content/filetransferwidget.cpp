@@ -52,8 +52,8 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
     : QWidget(parent)
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)
-    , backgroundColor(Style::getColor(Style::GroundExtra))
-    , buttonColor(Style::getColor(Style::Yellow))
+    , backgroundColor(Style::getColor(Style::TransferMiddle))
+    , buttonColor(Style::getColor(Style::TransferWait))
     , buttonBackgroundColor(Style::getColor(Style::GroundBase))
     , active(true)
 {
@@ -329,14 +329,14 @@ void FileTransferWidget::updateWidgetColor(ToxFile const& file)
     case ToxFile::INITIALIZING:
     case ToxFile::PAUSED:
     case ToxFile::TRANSMITTING:
-        setBackgroundColor(Style::getColor(Style::GroundExtra), false);
+        setBackgroundColor(Style::getColor(Style::TransferMiddle), false);
         break;
     case ToxFile::BROKEN:
     case ToxFile::CANCELED:
-        setBackgroundColor(Style::getColor(Style::Red), true);
+        setBackgroundColor(Style::getColor(Style::TransferBad), true);
         break;
     case ToxFile::FINISHED:
-        setBackgroundColor(Style::getColor(Style::Green), true);
+        setBackgroundColor(Style::getColor(Style::TransferGood), true);
         break;
     default:
         qCritical() << "Invalid file status";
@@ -492,7 +492,7 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
         ui->rightButton->setObjectName("cancel");
         ui->rightButton->setToolTip(tr("Cancel transfer"));
 
-        setButtonColor(Style::getColor(Style::Green));
+        setButtonColor(Style::getColor(Style::TransferGood));
         break;
 
     case ToxFile::PAUSED:
@@ -510,7 +510,7 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
         ui->rightButton->setObjectName("cancel");
         ui->rightButton->setToolTip(tr("Cancel transfer"));
 
-        setButtonColor(Style::getColor(Style::GroundExtra));
+        setButtonColor(Style::getColor(Style::TransferMiddle));
         break;
 
     case ToxFile::INITIALIZING:

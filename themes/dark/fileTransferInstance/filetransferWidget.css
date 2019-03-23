@@ -1,5 +1,5 @@
 [fontColor="white"] QLabel {
-        color: white;
+        color: @mainText;
         font: @big;
 }
 
@@ -22,6 +22,6 @@ QProgressBar {
 }
 
 QProgressBar::chunk {
-        background-color: @groundExtra;
+        background-color: @transferMiddle;
 	width: 1px;
 }
