@@ -18,7 +18,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install zip tree
       - restore_cache:
-          key: dependency-cache-64
+          key: deps64-{{ checksum "windows/cross-compile/build.sh" }}-{{ checksum ".travis/build-windows.sh" }}
           paths:
             - cache
       - run:
@@ -31,7 +31,7 @@ jobs:
             ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "cache/${BUILD__}" stage2
             ls -al cache
       - save_cache:
-          key: dependency-cache-64
+          key: deps64-{{ checksum "windows/cross-compile/build.sh" }}-{{ checksum ".travis/build-windows.sh" }}
           paths:
             - cache
   release64:
@@ -39,7 +39,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-64
+          key: deps64-{{ checksum "windows/cross-compile/build.sh" }}-{{ checksum ".travis/build-windows.sh" }}
           paths:
             - cache
       - run:
@@ -70,7 +70,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-64
+          key: deps64-{{ checksum "windows/cross-compile/build.sh" }}-{{ checksum ".travis/build-windows.sh" }}
           paths:
             - cache
       - run:
@@ -111,7 +111,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install zip tree
       - restore_cache:
-          key: dependency-cache-32
+          key: deps32-{{ checksum "windows/cross-compile/build.sh" }}-{{ checksum ".travis/build-windows.sh" }}
           paths:
             - cache
       - run:
@@ -124,7 +124,7 @@ jobs:
             ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "cache/${BUILD__}" stage2
             ls -al cache
       - save_cache:
-          key: dependency-cache-32
+          key: deps32-{{ checksum "windows/cross-compile/build.sh" }}-{{ checksum ".travis/build-windows.sh" }}
           paths:
             - cache
   release32:
@@ -132,7 +132,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-32
+          key: deps32-{{ checksum "windows/cross-compile/build.sh" }}-{{ checksum ".travis/build-windows.sh" }}
           paths:
             - cache
       - run:
@@ -163,7 +163,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-32
+          key: deps32-{{ checksum "windows/cross-compile/build.sh" }}-{{ checksum ".travis/build-windows.sh" }}
           paths:
             - cache
       - run:
