@@ -172,6 +172,8 @@ install() {
     brew tap kde-mac/kde
 
     set +e
+    brew doctor
+    brew cleanup
     # verbose so that build output is shown, otherwise qt5 build has no output for >10 mins
     # and is killed by Travis CI
     brew install --verbose ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet
