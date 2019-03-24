@@ -136,9 +136,10 @@ QString Style::getThemeFolder()
 }
 
 
-QMap<Style::ColorPalette, QString> Style::aliasColors = {{Green, "green"},
-                                                         {Yellow, "yellow"},
-                                                         {Red, "red"},
+QMap<Style::ColorPalette, QString> Style::aliasColors = {{TransferGood, "transferGood"},
+                                                         {TransferWait, "transferWait"},
+                                                         {TransferBad, "transferBad"},
+                                                         {TransferMiddle, "transferMiddle"},
                                                          {MainText,"mainText"},
                                                          {NameActive, "nameActive"},
                                                          {StatusActive,"statusActive"},
@@ -404,9 +405,10 @@ void Style::initPalette()
 void Style::initDictColor()
 {
     dictColor = {
-            {"@green", Style::getColor(Style::Green).name()},
-            {"@yellow", Style::getColor(Style::Yellow).name()},
-            {"@red", Style::getColor(Style::Red).name()},
+            {"@transferGood", Style::getColor(Style::TransferGood).name()},
+            {"@transferWait", Style::getColor(Style::TransferWait).name()},
+            {"@transferBad", Style::getColor(Style::TransferBad).name()},
+            {"@transferMiddle", Style::getColor(Style::TransferMiddle).name()},
             {"@mainText", Style::getColor(Style::MainText).name()},
             {"@nameActive", Style::getColor(Style::NameActive).name()},
             {"@statusActive", Style::getColor(Style::StatusActive).name()},

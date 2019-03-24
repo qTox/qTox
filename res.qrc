@@ -80,7 +80,6 @@
         <file>themes/dark/emoticonWidget/dot_page_current.svg</file>
         <file>themes/dark/emoticonWidget/dot_page_hover.svg</file>
         <file>themes/dark/emoticonWidget/emoticonWidget.css</file>
-        <file>themes/dark/fileTransferWidget/fileTransferWidget.css</file>
         <file>themes/dark/friendList/friendList.css</file>
         <file>themes/dark/msgEdit/msgEdit.css</file>
         <file>themes/dark/settings/mainContent.css</file>
@@ -145,7 +144,6 @@
         <file>themes/default/emoticonWidget/dot_page_current.svg</file>
         <file>themes/default/emoticonWidget/dot_page_hover.svg</file>
         <file>themes/default/emoticonWidget/emoticonWidget.css</file>
-        <file>themes/default/fileTransferWidget/fileTransferWidget.css</file>
         <file>themes/default/friendList/friendList.css</file>
         <file>themes/default/msgEdit/msgEdit.css</file>
         <file>themes/default/settings/mainContent.css</file>

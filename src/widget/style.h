@@ -31,9 +31,10 @@ class Style
 public:
     enum ColorPalette
     {
-        Green,
-        Yellow,
-        Red,
+        TransferGood,
+        TransferWait,
+        TransferBad,
+        TransferMiddle,
         MainText,
         NameActive,
         StatusActive,
