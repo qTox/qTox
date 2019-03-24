@@ -172,7 +172,9 @@ install() {
     brew tap kde-mac/kde
 
     set +e
+    set -x
     brew doctor
+    brew missing
     brew cleanup
     # verbose so that build output is shown, otherwise qt5 build has no output for >10 mins
     # and is killed by Travis CI
