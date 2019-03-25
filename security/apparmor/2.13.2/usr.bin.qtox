@@ -45,8 +45,10 @@ profile qtox /usr{,/local}/bin/qtox {
 
   # Networking
 
-  network tcp,
-  network udp,
+  network inet udp,
+  network inet6 udp,
+  network inet tcp,
+  network inet6 tcp,
 
   # DBus
 
