@@ -1,12 +1,12 @@
 # Hardening qTox with AppArmor
 
-qTox can be confined with AppArmor on Linux to reduce attack vectors in case remote code execution exploit is being used. Please note that [MAC's](https://en.wikipedia.org/wiki/Mandatory_access_control) (of course) does not guarantee perfect security, but it will:
+qTox can be confined with AppArmor on Linux to reduce attack vectors in case remote code execution exploit is being used. Please note that [MAC's] (of course) does not guarantee perfect security, but it will:
 - Deny access to your `~/.bashrc`, `~/.ssh/*` `~/.config/path/to/your/password/manager/file`, etc.
 - Deny creating autostart entries (in `~/.config/autostart`, etc).
 - Deny launching random executables (like `sudo`, `su`, etc...).
 - And more.
 
-Consider using additional security measures like [Firejail](https://firejail.wordpress.com/) to improve security even more.
+Consider using additional security measures like [Firejail] to improve security even more.
 
 Please also note that not all distributions has full AppArmor feature set available. For example, Debian (at least up to Debian 10 (buster)) does not have network, DBus mediation available. Also, X Server, shared user configuration files (like `~/.config/QtProject.conf`, caches, etc), opening web links via unconfined browsers introduces additional attack vectors, too. So please be cautious even with number of security measures applied.
 
@@ -119,5 +119,10 @@ Restart AppArmor and [check](#checking-if-qtox-is-actually-confined) if `qTox` p
 
 ## Other resources
 
-Check [Debian](https://wiki.debian.org/AppArmor), [Ubuntu](https://wiki.ubuntu.com/AppArmor), [Upstream AppArmor](https://gitlab.com/apparmor/apparmor/wikis/home) Wiki pages for more info.
+Check [Debian], [Ubuntu], [Upstream AppArmor] Wiki pages for more info.
 
+[Debian]: https://wiki.debian.org/AppArmor
+[Firejail]: https://firejail.wordpress.com
+[MAC's]: https://en.wikipedia.org/wiki/Mandatory_access_control
+[Ubuntu]: https://wiki.ubuntu.com/AppArmor
+[Upstream AppArmor]: https://gitlab.com/apparmor/apparmor/wikis/home
