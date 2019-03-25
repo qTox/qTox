@@ -12,7 +12,7 @@ course) does not guarantee perfect security, but it will:
 Consider using additional security measures like [Firejail] to improve security
 even more.
 
-Please also note that not all distributions has full AppArmor feature set
+Please also note that not all distributions have full AppArmor feature set
 available. For example, Debian (at least up to Debian 10 (buster)) does not have
 network, DBus mediation available. Also, X Server, shared user configuration
 files (like `~/.config/QtProject.conf`, caches, etc), opening web links via
@@ -65,7 +65,7 @@ ps auxZ | fgrep qtox
 qtox (enforce)                  vincas   16315  2.0  1.1 1502292 180220 ?      SLl  12:21   0:38 /usr/bin/qtox
 ```
 
-If OK it's marked as `(enforce)`. `uncofined` means AppArmor profile is not
+If OK it's marked as `(enforce)`. `unconfined` means AppArmor profile is not
 attached to the process, no confinement is being applied.
 
 ## Troubleshooting
