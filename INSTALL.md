@@ -26,6 +26,7 @@
   - [sqlcipher](#sqlcipher)
   - [Compile toxcore](#compile-toxcore)
   - [Compile qTox](#compile-qtox)
+  - [Security hardening with AppArmor](#security-hardening-with-apparmor)
 - [OS X](#osx)
 - [Windows](#windows)
   - [Cross-compile from Linux](#cross-compile-from-linux)
@@ -585,6 +586,12 @@ After installing the required dependencies, run `bootstrap.sh` and then run the
 the packages necessary for building `.deb`s, so be prepared to type your
 password for sudo.
 
+---
+
+### Security hardening with AppArmor
+
+See [AppArmor] to enable confinement for increased security.
+
 
 <a name="osx" />
 
@@ -817,6 +824,7 @@ Switches:
     included
 
 
+[AppArmor]: /security/apparmor/README.md
 [Atk]: https://wiki.gnome.org/Accessibility
 [Cairo]: https://www.cairographics.org/
 [Check]: https://libcheck.github.io/check/
