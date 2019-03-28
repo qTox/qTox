@@ -828,8 +828,11 @@ then
   rm $HUNSPELL_FILENAME
   cd hunspell*
   autoreconf -vfi
+  # -g makes hunspell not crash, but it's unclear why
+  # https://github.com/hunspell/hunspell/issues/627
   ./configure --host="$ARCH-w64-mingw32" \
               --prefix=$HUNSPELL_PREFIX_DIR \
+                CXXFLAGS='-g' \
               --disable-static \
               --enable-shared
   make
