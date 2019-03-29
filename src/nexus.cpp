@@ -270,7 +270,7 @@ void Nexus::setProfile(Profile* profile)
 {
     getInstance().profile = profile;
     if (profile)
-        Settings::getInstance().loadPersonal(profile);
+        Settings::getInstance().loadPersonal(profile->getName(), profile->getPasskey());
 }
 
 /**

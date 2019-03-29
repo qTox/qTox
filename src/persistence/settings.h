@@ -146,8 +146,7 @@ public:
     void savePersonal();
 
     void loadGlobal();
-    void loadPersonal();
-    void loadPersonal(Profile* profile);
+    void loadPersonal(QString profileName, const ToxEncrypt* passKey);
 
     void resetToDefault();
 

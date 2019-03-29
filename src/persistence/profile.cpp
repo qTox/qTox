@@ -84,7 +84,7 @@ void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewPr
 
     if (isNewProfile) {
         core->setStatusMessage(tr("Toxing on qTox"));
-        core->setUsername(name); 
+        core->setUsername(name);
     }
 
     // save tox file when Core requests it
@@ -96,14 +96,16 @@ void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewPr
             Qt::ConnectionType::QueuedConnection);
 }
 
-Profile::Profile(QString name, const QString& password, bool isNewProfile, const QByteArray& toxsave)
+Profile::Profile(QString name, const QString& password, bool isNewProfile, const QByteArray& toxsave, std::unique_ptr<ToxEncrypt> passkey)
     : name{name}
+    , passkey{std::move(passkey)}
     , isRemoved{false}
+    , encrypted{this->passkey != nullptr}
 {
     Settings& s = Settings::getInstance();
     s.setCurrentProfile(name);
     s.saveGlobal();
-
+    s.loadPersonal(name, passkey.get());
     initCore(toxsave, s, isNewProfile);
 
     const ToxId& selfId = core->getSelfId();
@@ -180,12 +182,7 @@ Profile* Profile::loadProfile(QString name, const QString& password)
     }
 
     saveFile.close();
-    p = new Profile(name, password, false, data);
-    p->passkey = std::move(tmpKey);
-    if (p->passkey) {
-        p->encrypted = true;
-    }
-
+    p = new Profile(name, password, false, data, std::move(tmpKey));
     return p;
 
 // cleanup in case of error
@@ -230,12 +227,7 @@ Profile* Profile::createProfile(QString name, QString password)
     }
 
     Settings::getInstance().createPersonal(name);
-    Profile* p = new Profile(name, password, true, QByteArray());
-    p->passkey = std::move(tmpKey);
-    if (p->passkey) {
-        p->encrypted = true;
-    }
-
+    Profile* p = new Profile(name, password, true, QByteArray(), std::move(tmpKey));
     return p;
 }
 

@@ -273,17 +273,7 @@ void Settings::loadGlobal()
     loaded = true;
 }
 
-void Settings::loadPersonal()
-{
-    Profile* profile = Nexus::getProfile();
-    if (!profile) {
-        qCritical() << "No active profile, couldn't load personal settings";
-        return;
-    }
-    loadPersonal(profile);
-}
-
-void Settings::loadPersonal(Profile* profile)
+void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
 {
     QMutexLocker locker{&bigLock};
 
@@ -291,13 +281,13 @@ void Settings::loadPersonal(Profile* profile)
     QString filePath = dir.filePath(globalSettingsFile);
 
     // load from a profile specific friend data list if possible
-    QString tmp = dir.filePath(profile->getName() + ".ini");
+    QString tmp = dir.filePath(profileName + ".ini");
     if (QFile(tmp).exists()) // otherwise, filePath remains the global file
         filePath = tmp;
 
     qDebug() << "Loading personal settings from" << filePath;
 
-    SettingsSerializer ps(filePath, profile->getPasskey());
+    SettingsSerializer ps(filePath, passKey);
     ps.load();
     friendLst.clear();
 
