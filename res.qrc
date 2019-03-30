@@ -84,6 +84,8 @@
         <file>themes/dark/msgEdit/msgEdit.css</file>
         <file>themes/dark/settings/mainContent.css</file>
         <file>themes/dark/settings/mainHead.css</file>
+        <file>themes/dark/settings/checkboxChecked.svg</file>
+        <file>themes/dark/settings/checkboxCheckedDisabled.svg</file>
         <file>themes/dark/statusButton/statusButton.css</file>
         <file>themes/dark/statusButton/menu_indicator.svg</file>
         <file>themes/dark/window/general.css</file>
