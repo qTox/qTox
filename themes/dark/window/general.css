@@ -6,6 +6,11 @@ QToolTip
     background: #ffffdc;
 }
 
+QDialog
+{
+    background: @groundBase;
+}
+
 QWidget#contentWidget
 {
     background: @groundBase;
@@ -26,4 +31,29 @@ QTabBar::tab:!selected
 {
     background: #444242;
     color: #8e8e8e;
+}
+
+QLabel
+{
+    color: @mainText;
+}
+
+QLineEdit
+{
+    color: @mainText;
+}
+
+QTextEdit
+{
+    color: @mainText;
+}
+
+QSpinBox, QDoubleSpinBox
+{
+    color: @mainText;
+} 
+
+QListView
+{
+    color: @mainText;
 }

@@ -46,7 +46,6 @@
         <file>img/transfer.svg</file>
         <file>themes/dark/palette.ini</file>
         <file>themes/dark/fileTransferWidget/fileDone.svg</file>
-        <file>themes/dark/centralWidget/centralWidget.css</file>
         <file>themes/dark/chatArea/chatArea.css</file>
         <file>themes/dark/chatArea/chatHead.css</file>
         <file>themes/dark/chatArea/innerStyle.css</file>
@@ -113,7 +112,6 @@
         <file>themes/dark/tooliconsZone/tooliconsZone.css</file>
         <file>themes/default/palette.ini</file>
         <file>themes/default/fileTransferWidget/fileDone.svg</file>
-        <file>themes/default/centralWidget/centralWidget.css</file>
         <file>themes/default/chatArea/chatArea.css</file>
         <file>themes/default/chatArea/chatHead.css</file>
         <file>themes/default/chatArea/innerStyle.css</file>

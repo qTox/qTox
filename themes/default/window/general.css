@@ -22,3 +22,28 @@ QTabBar::tab:!selected
     background: #d0d1d1;
     color: #5e5e5e;
 }
+
+QLabel
+{
+    color: @mainText;
+}
+
+QLineEdit
+{
+    color: @mainText;
+}
+
+QTextEdit
+{
+    color: @mainText;
+}
+
+QSpinBox, QDoubleSpinBox
+{
+    color: @mainText;
+} 
+
+QListView
+{
+    color: @mainText;
+}

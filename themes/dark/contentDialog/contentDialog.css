@@ -18,4 +18,5 @@ QSplitter:handle
 QWidget
 {
     background: @groundBase;
+    color: @mainText;
 }
