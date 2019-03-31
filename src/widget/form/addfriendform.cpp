@@ -25,6 +25,7 @@
 #include "src/widget/contentlayout.h"
 #include "src/widget/gui.h"
 #include "src/widget/tool/croppinglabel.h"
+#include "src/widget/style.h"
 #include "src/widget/translator.h"
 #include <QApplication>
 #include <QClipboard>
@@ -294,7 +295,7 @@ void AddFriendForm::onIdChanged(const QString& id)
         isValidId ? QStringLiteral("%1 (%2)") : QStringLiteral("%1 <font color='red'>(%2)</font>");
     toxIdLabel.setText(labelText.arg(toxIdText, toxIdComment));
     toxId.setStyleSheet(isValidOrEmpty ? QStringLiteral("")
-                                  : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
+                                  : Style::getStylesheet("addFriendForm/toxId.css"));
     toxId.setToolTip(isValidOrEmpty ? QStringLiteral("") : tr("Invalid Tox ID format"));
 
     sendButton.setEnabled(isValidId);
