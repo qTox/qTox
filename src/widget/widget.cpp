@@ -1634,6 +1634,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
             Translator::registerHandler(std::bind(&Dialog::retranslateUi, this), this);
             retranslateUi();
             setWindowIcon(QIcon(":/img/icons/qtox.svg"));
+            setStyleSheet(Style::getStylesheet("window/general.css"));
 
             connect(Core::getInstance(), &Core::usernameSet, this, &Dialog::retranslateUi);
         }
@@ -2185,7 +2186,6 @@ void Widget::reloadTheme()
 {
     this->setStyleSheet(Style::getStylesheet("window/general.css"));
     QString statusPanelStyle = Style::getStylesheet("window/statusPanel.css");
-    ui->centralwidget->setStyleSheet(Style::getStylesheet(QStringLiteral("centralWidget/centralWidget.css")));
     ui->tooliconsZone->setStyleSheet(Style::getStylesheet("tooliconsZone/tooliconsZone.css"));
     ui->statusPanel->setStyleSheet(statusPanelStyle);
     ui->statusHead->setStyleSheet(statusPanelStyle);

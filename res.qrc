@@ -46,7 +46,6 @@
         <file>img/transfer.svg</file>
         <file>themes/dark/palette.ini</file>
         <file>themes/dark/fileTransferWidget/fileDone.svg</file>
-        <file>themes/dark/centralWidget/centralWidget.css</file>
         <file>themes/dark/chatArea/chatArea.css</file>
         <file>themes/dark/chatArea/chatHead.css</file>
         <file>themes/dark/chatArea/innerStyle.css</file>
@@ -105,6 +104,7 @@
         <file>themes/dark/fileTransferInstance/filetransferWidget.css</file>
         <file>themes/dark/genericChatForm/genericChatForm.css</file>
         <file>themes/dark/acceptCall/acceptCall.svg</file>
+        <file>themes/dark/addFriendForm/toxId.css</file>
         <file>themes/dark/rejectCall/rejectCall.svg</file>
         <file>themes/dark/notificationEdge/notificationEdge.css</file>
         <file>themes/dark/loginScreen/loginScreen.css</file>
@@ -112,7 +112,6 @@
         <file>themes/dark/tooliconsZone/tooliconsZone.css</file>
         <file>themes/default/palette.ini</file>
         <file>themes/default/fileTransferWidget/fileDone.svg</file>
-        <file>themes/default/centralWidget/centralWidget.css</file>
         <file>themes/default/chatArea/chatArea.css</file>
         <file>themes/default/chatArea/chatHead.css</file>
         <file>themes/default/chatArea/innerStyle.css</file>
@@ -169,6 +168,7 @@
         <file>themes/default/fileTransferInstance/filetransferWidget.css</file>
         <file>themes/default/genericChatForm/genericChatForm.css</file>
         <file>themes/default/acceptCall/acceptCall.svg</file>
+        <file>themes/default/addFriendForm/toxId.css</file>
         <file>themes/default/rejectCall/rejectCall.svg</file>
         <file>img/login_logo.svg</file>
         <file>themes/default/notificationEdge/notificationEdge.css</file>

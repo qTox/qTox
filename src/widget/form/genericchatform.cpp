@@ -299,7 +299,6 @@ void GenericChatForm::reloadTheme()
 {
     const Settings& s = Settings::getInstance();
     setStyleSheet(Style::getStylesheet("genericChatForm/genericChatForm.css"));
-
     msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
                            + fontToCss(s.getChatMessageFont(), "QTextEdit"));
 
