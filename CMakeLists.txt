@@ -683,6 +683,7 @@ add_library(${PROJECT_NAME}_static
   ${${PROJECT_NAME}_QM_FILES}
   ${${PROJECT_NAME}_RESOURCES})
 target_link_libraries(${PROJECT_NAME}_static
+  ${CMAKE_REQUIRED_LIBRARIES}
   ${ALL_LIBRARIES})
 
 add_executable(${PROJECT_NAME}
@@ -692,6 +693,7 @@ add_executable(${PROJECT_NAME}
   src/main.cpp)
 target_link_libraries(${PROJECT_NAME}
   ${PROJECT_NAME}_static
+  ${CMAKE_REQUIRED_LIBRARIES}
   ${ALL_LIBRARIES})
 
 include(Testing)
