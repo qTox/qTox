@@ -219,7 +219,6 @@ private:
     bool parseConferenceJoinError(Tox_Err_Conference_Join error) const;
     bool checkConnection();
 
-    void checkEncryptedHistory();
     void makeTox(QByteArray savedata, ICoreSettings* s);
     void loadFriends();
     void loadGroups();
@@ -253,9 +252,6 @@ private:
     mutable QMutex coreLoopLock{QMutex::Recursive};
 
     std::unique_ptr<QThread> coreThread = nullptr;
-
-    friend class Audio;    ///< Audio can access our calls directly to reduce latency
-    friend class CoreAV;   ///< CoreAV accesses our toxav* for now
 };
 
 #endif // CORE_HPP
