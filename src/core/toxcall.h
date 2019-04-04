@@ -1,6 +1,7 @@
 #ifndef TOXCALL_H
 #define TOXCALL_H
 
+#include "src/audio/iaudiosink.h"
 #include <src/core/toxpk.h>
 #include <tox/toxav.h>
 
@@ -76,16 +77,21 @@ public:
     TOXAV_FRIEND_CALL_STATE getState() const;
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
-    quint32 getAlSource() const;
-    void setAlSource(const quint32& value);
+    const std::unique_ptr<IAudioSink> &getAudioSink() const;
 
 protected:
     std::unique_ptr<QTimer> timeoutTimer;
 
 private:
+    QMetaObject::Connection audioSinkInvalid;
+    void onAudioSourceInvalidated();
+    void onAudioSinkInvalidated();
+
+private:
     TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
     static constexpr int CALL_TIMEOUT = 45000;
-    quint32 alSource{0};
+    std::unique_ptr<IAudioSink> sink = nullptr;
+    uint32_t friendId;
 };
 
 class ToxGroupCall : public ToxCall
@@ -103,12 +109,14 @@ public:
     bool havePeer(ToxPk peerId);
     void clearPeers();
 
-    quint32 getAlSource(ToxPk peer);
-
+    const std::unique_ptr<IAudioSink> &getAudioSink(ToxPk peer);
 private:
-    QMap<ToxPk, quint32> peers;
+    std::map<ToxPk, std::unique_ptr<IAudioSink>> peers;
+    std::map<ToxPk, QMetaObject::Connection> sinkInvalid;
+    int groupId;
 
-    // If you add something here, don't forget to override the ctors and move operators!
+    void onAudioSourceInvalidated();
+    void onAudioSinkInvalidated(ToxPk peerId);
 };
 
 #endif // TOXCALL_H

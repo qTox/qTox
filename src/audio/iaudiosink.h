@@ -63,15 +63,15 @@ public:
     {
         switch (s) {
         case Sound::Test:
-            return QStringLiteral(":/audio/notification.pcm");
+            return QStringLiteral(":/audio/notification.s16le.pcm");
         case Sound::NewMessage:
-            return QStringLiteral(":/audio/notification.pcm");
+            return QStringLiteral(":/audio/notification.s16le.pcm");
         case Sound::IncomingCall:
-            return QStringLiteral(":/audio/ToxIncomingCall.pcm");
+            return QStringLiteral(":/audio/ToxIncomingCall.s16le.pcm");
         case Sound::OutgoingCall:
-            return QStringLiteral(":/audio/ToxOutgoingCall.pcm");
+            return QStringLiteral(":/audio/ToxOutgoingCall.s16le.pcm");
         case Sound::CallEnd:
-            return QStringLiteral(":/audio/ToxEndCall.pcm");
+            return QStringLiteral(":/audio/ToxEndCall.s16le.pcm");
         }
         assert(false);
         return {};

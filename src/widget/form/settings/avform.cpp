@@ -122,10 +122,11 @@ void AVForm::hideEvent(QHideEvent* event)
 {
     if (subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
-        audio->unsubscribeOutput(alSource);
         audio->unsubscribeInput();
         subscribedToAudioIn = false;
     }
+
+    audioSink.reset();
 
     if (camVideoSurface) {
         camVideoSurface->setSource(nullptr);
@@ -145,9 +146,12 @@ void AVForm::showEvent(QShowEvent* event)
 
     if (!subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
-        audio->subscribeOutput(alSource);
         audio->subscribeInput();
         subscribedToAudioIn = true;
+    }
+
+    if(audioSink == nullptr) {
+        audioSink.reset(audio->makeSink());
     }
 
     GenericForm::showEvent(event);
@@ -560,14 +564,19 @@ void AVForm::on_outDevCombobox_currentIndexChanged(int deviceIndex)
     const bool outputEnabled = deviceIndex > 0;
     audioSettings->setAudioOutDevEnabled(outputEnabled);
 
-    QString deviceName;
+    QString deviceName{};
     if (outputEnabled) {
         deviceName = outDevCombobox->itemText(deviceIndex);
     }
 
-    audioSettings->setOutDev(deviceName);
+    const QString oldName = audioSettings->getOutDev();
 
-    audio->reinitOutput(deviceName);
+    if(oldName != deviceName) {
+        audioSettings->setOutDev(deviceName);
+        audio->reinitOutput(deviceName);
+        audioSink.reset(Audio::getInstance().makeSink());
+    }
+
     playbackSlider->setEnabled(outputEnabled);
     playbackSlider->setSliderPosition(
         getStepsFromValue(audio->outputVolume(), audio->minOutputVolume(), audio->maxOutputVolume()));
@@ -584,8 +593,9 @@ void AVForm::on_playbackSlider_valueChanged(int sliderSteps)
             getValueFromSteps(sliderSteps, audio->minOutputVolume(), audio->maxOutputVolume());
         audio->setOutputVolume(volume);
 
-        if (cbEnableTestSound->isChecked())
-            audio->playMono16Sound(Audio::getSound(Audio::Sound::Test));
+        if (cbEnableTestSound->isChecked() && audioSink) {
+            audioSink->playMono16Sound(IAudioSink::Sound::Test);
+        }
     }
 }
 
@@ -593,8 +603,9 @@ void AVForm::on_cbEnableTestSound_stateChanged()
 {
     audioSettings->setEnableTestSound(cbEnableTestSound->isChecked());
 
-    if (cbEnableTestSound->isChecked() && audio->isOutputReady())
-        audio->playMono16Sound(Audio::getSound(Audio::Sound::Test));
+    if (cbEnableTestSound->isChecked() && audio->isOutputReady() && audioSink) {
+        audioSink->playMono16Sound(IAudioSink::Sound::Test);
+    }
 }
 
 void AVForm::on_microphoneSlider_valueChanged(int sliderSteps)

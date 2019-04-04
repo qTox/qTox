@@ -236,6 +236,8 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
 set(${PROJECT_NAME}_SOURCES
   src/audio/audio.cpp
   src/audio/audio.h
+  src/audio/backend/alsink.cpp
+  src/audio/backend/alsink.h
   src/audio/backend/openal.cpp
   src/audio/backend/openal.h
   src/audio/iaudiosettings.h

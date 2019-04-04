@@ -928,27 +928,53 @@ void Widget::reloadHistory()
     }
 }
 
+/**
+ * @brief Plays a sound via the audioNotification AudioSink
+ * @param sound Sound to play
+ * @param loop if true, loop the sound until onStopNotification() is called
+ */
+void Widget::playNotificationSound(IAudioSink::Sound sound, bool loop) {
+    if(audioNotification == nullptr) {
+        audioNotification = std::unique_ptr<IAudioSink>(Audio::getInstance().makeSink());
+        if(audioNotification == nullptr) {
+            qDebug() << "Failed to allocate AudioSink";
+            return;
+        }
+    }
+
+    connect(audioNotification.get(), &IAudioSink::finishedPlaying,
+            this, &Widget::cleanupNotificationSound);
+
+    if(loop) {
+        audioNotification->startLoop();
+    }
+
+    audioNotification->playMono16Sound(sound);
+}
+
+void Widget::cleanupNotificationSound()
+{
+    audioNotification.reset();
+}
+
 void Widget::incomingNotification(uint32_t friendnumber)
 {
     const auto& friendId = FriendList::id2Key(friendnumber);
     newFriendMessageAlert(friendId, false);
 
-    Audio& audio = Audio::getInstance();
-    audio.startLoop();
-    audio.playMono16Sound(Audio::getSound(Audio::Sound::IncomingCall));
+    // loop until call answered or rejected
+    playNotificationSound(IAudioSink::Sound::IncomingCall, true);
 }
 
 void Widget::outgoingNotification()
 {
-    Audio& audio = Audio::getInstance();
-    audio.startLoop();
-    audio.playMono16Sound(Audio::getSound(Audio::Sound::OutgoingCall));
+    // loop until call answered or rejected
+    playNotificationSound(IAudioSink::Sound::OutgoingCall, true);
 }
 
 void Widget::onCallEnd()
 {
-    Audio& audio = Audio::getInstance();
-    audio.playMono16Sound(Audio::getSound(Audio::Sound::CallEnd));
+    playNotificationSound(IAudioSink::Sound::CallEnd);
 }
 
 /**
@@ -956,7 +982,7 @@ void Widget::onCallEnd()
  */
 void Widget::onStopNotification()
 {
-    Audio::getInstance().stopLoop();
+    audioNotification.reset();
 }
 
 void Widget::onRejectCall(uint32_t friendId)
@@ -1446,8 +1472,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
             bool notifySound = settings.getNotifySound();
 
             if (notifySound && sound && (!isBusy || busySound)) {
-                QString soundPath = Audio::getSound(Audio::Sound::NewMessage);
-                Audio::getInstance().playMono16Sound(soundPath);
+                playNotificationSound(IAudioSink::Sound::NewMessage);
             }
         }
     }
