@@ -62,17 +62,6 @@ GUI& GUI::getInstance()
 // Implementation of the public clean interface
 
 /**
- * @brief Clear the GUI's contact list.
- */
-void GUI::clearContacts()
-{
-    if (QThread::currentThread() == qApp->thread())
-        getInstance()._clearContacts();
-    else
-        QMetaObject::invokeMethod(&getInstance(), "_clearContacts", Qt::BlockingQueuedConnection);
-}
-
-/**
  * @brief Will enable or disable the GUI.
  * @note A disabled GUI can't be interacted with by the user.
  * @param state Enable/disable GUI.
@@ -112,19 +101,6 @@ void GUI::reloadTheme()
         getInstance()._reloadTheme();
     } else {
         QMetaObject::invokeMethod(&getInstance(), "_reloadTheme", Qt::BlockingQueuedConnection);
-    }
-}
-
-/**
- * @brief Optionally switches to a view of the qTox update being downloaded.
- */
-void GUI::showUpdateDownloadProgress()
-{
-    if (QThread::currentThread() == qApp->thread()) {
-        getInstance()._showUpdateDownloadProgress();
-    } else {
-        QMetaObject::invokeMethod(&getInstance(), "_showUpdateDownloadProgress",
-                                  Qt::BlockingQueuedConnection);
     }
 }
 
@@ -228,71 +204,7 @@ bool GUI::askQuestion(const QString& title, const QString& msg, const QString& b
     }
 }
 
-/**
- * @brief Asks the user to input text and returns the answer.
- *
- * The interface is equivalent to QInputDialog::getItem()
- * @param parent Is the dialog's parent widget
- * @param title Is the text which is displayed in the title bar of the dialog.
- * @param label Is the text which is shown to the user (it should say what should be entered).
- * @param items Is the string list which is inserted into the combobox.
- * @param current Is the number of the item which should be the current item.
- * @param editable If is true the user can enter their own text, otherwise the user may only select
- * one of the existing items.
- * @param ok If is nonnull will be set to true if the user pressed OK and to false if the user
- * pressed Cancel.
- * @param flags The dialog will uses to widget flags.
- * @param hints Is the input method hints that will be used if the combobox is editable and an input
- * method is active.
- * @return This function returns the text of the current item, or if editable is true, the current
- * text of the combobox.
- */
-QString GUI::itemInputDialog(QWidget* parent, const QString& title, const QString& label,
-                             const QStringList& items, int current, bool editable, bool* ok,
-                             Qt::WindowFlags flags, Qt::InputMethodHints hints)
-{
-    if (QThread::currentThread() == qApp->thread()) {
-        return getInstance()._itemInputDialog(parent, title, label, items, current, editable, ok,
-                                              flags, hints);
-    } else {
-        QString r;
-        QMetaObject::invokeMethod(&getInstance(), "_itemInputDialog", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(QString, r), Q_ARG(QWidget*, parent),
-                                  Q_ARG(const QString&, title), Q_ARG(const QString&, label),
-                                  Q_ARG(const QStringList&, items), Q_ARG(int, current),
-                                  Q_ARG(bool, editable), Q_ARG(bool*, ok),
-                                  Q_ARG(Qt::WindowFlags, flags), Q_ARG(Qt::InputMethodHints, hints));
-        return r;
-    }
-}
-
-/**
- * @brief Asks the user to answer a password.
- * @param cancel Is the text on the cancel button.
- * @param body Is descriptive text that will be shown to the user.
- * @return Entered password.
- */
-QString GUI::passwordDialog(const QString& cancel, const QString& body)
-{
-    if (QThread::currentThread() == qApp->thread()) {
-        return getInstance()._passwordDialog(cancel, body);
-    } else {
-        QString r;
-        QMetaObject::invokeMethod(&getInstance(), "_passwordDialog", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(QString, r), Q_ARG(const QString&, cancel),
-                                  Q_ARG(const QString&, body));
-        return r;
-    }
-}
-
 // Private implementations
-
-void GUI::_clearContacts()
-{
-    Widget* w = Nexus::getDesktopGUI();
-    if (w)
-        w->clearContactsList();
-}
 
 void GUI::_setEnabled(bool state)
 {
@@ -340,13 +252,6 @@ void GUI::_showError(const QString& title, const QString& msg)
     messageBox.exec();
 }
 
-void GUI::_showUpdateDownloadProgress()
-{
-    Widget* w = Nexus::getDesktopGUI();
-    if (w)
-        w->showUpdateDownloadProgress();
-}
-
 bool GUI::_askQuestion(const QString& title, const QString& msg, bool defaultAns, bool warning,
                        bool yesno)
 {
@@ -368,67 +273,6 @@ bool GUI::_askQuestion(const QString& title, const QString& msg, const QString& 
 
     box.exec();
     return box.clickedButton() == pushButton1;
-}
-
-QString GUI::_itemInputDialog(QWidget* parent, const QString& title, const QString& label,
-                              const QStringList& items, int current, bool editable, bool* ok,
-                              Qt::WindowFlags flags, Qt::InputMethodHints hints)
-{
-    return QInputDialog::getItem(parent, title, label, items, current, editable, ok, flags, hints);
-}
-
-QString GUI::_passwordDialog(const QString& cancel, const QString& body)
-{
-    // we use a hack. It is considered that closing the dialog without explicitly clicking
-    // disable history is confusing. But we can't distinguish between clicking the cancel
-    // button and closing the dialog. So instead, we reverse the Ok and Cancel roles,
-    // so that nothing but explicitly clicking disable history closes the dialog
-    QString ret;
-    QInputDialog dialog;
-    dialog.setWindowTitle(tr("Enter your password"));
-    dialog.setOkButtonText(cancel);
-    dialog.setCancelButtonText(tr("Decrypt"));
-    dialog.setInputMode(QInputDialog::TextInput);
-    dialog.setTextEchoMode(QLineEdit::Password);
-    dialog.setLabelText(body);
-
-    // problem with previous hack: the default button is disable history, not decrypt.
-    // use another hack to reverse the default buttons.
-    // http://www.qtcentre.org/threads/49924-Change-property-of-QInputDialog-button
-    QList<QDialogButtonBox*> l = dialog.findChildren<QDialogButtonBox*>();
-    if (!l.isEmpty()) {
-        QPushButton* ok = l.first()->button(QDialogButtonBox::Ok);
-        QPushButton* cancel = l.first()->button(QDialogButtonBox::Cancel);
-        if (ok && cancel) {
-            ok->setAutoDefault(false);
-            ok->setDefault(false);
-            ok->setText(QApplication::tr("Ok"));
-            cancel->setAutoDefault(true);
-            cancel->setDefault(true);
-            cancel->setText(QApplication::tr("Cancel"));
-        } else {
-            qWarning() << "PasswordDialog: Missing button!";
-        }
-    } else {
-        qWarning() << "PasswordDialog: No QDialogButtonBox!";
-    }
-
-    // using similar code, set QLabels to wrap
-    for (auto* label : dialog.findChildren<QLabel*>())
-        label->setWordWrap(true);
-
-    while (true) {
-        int val = dialog.exec();
-        if (val == QDialog::Accepted)
-            return QString();
-
-        ret = dialog.textValue();
-        if (!ret.isEmpty())
-            return ret;
-
-        dialog.setTextValue("");
-        dialog.setLabelText(body + "\n\n" + tr("You must enter a non-empty password:"));
-    }
 }
 
 // Other

@@ -25,7 +25,6 @@
 #include <QObject>
 #include <QSharedMemory>
 #include <QTimer>
-#include <QVector>
 #include <ctime>
 #include <functional>
 

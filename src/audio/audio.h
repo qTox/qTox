@@ -21,12 +21,7 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include <atomic>
-#include <cmath>
-
-#include <QMutex>
 #include <QObject>
-#include <QTimer>
 
 #include <cassert>
 
