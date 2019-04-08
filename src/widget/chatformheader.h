@@ -91,7 +91,6 @@ signals:
     void callRejected();
 
 private slots:
-    void onNameChanged(const QString& name);
     void retranslateUi();
     void updateButtonsView();
 

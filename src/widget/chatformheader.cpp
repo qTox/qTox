@@ -121,7 +121,7 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     nameLabel->setEditable(true);
     nameLabel->setTextFormat(Qt::PlainText);
-    connect(nameLabel, &CroppingLabel::editFinished, this, &ChatFormHeader::onNameChanged);
+    connect(nameLabel, &CroppingLabel::editFinished, this, &ChatFormHeader::nameChanged);
 
     headTextLayout = new QVBoxLayout();
     headTextLayout->addStretch();
@@ -302,12 +302,4 @@ void ChatFormHeader::addLayout(QLayout* layout)
 void ChatFormHeader::addStretch()
 {
     headTextLayout->addStretch();
-}
-
-void ChatFormHeader::onNameChanged(const QString& name)
-{
-    if (!name.isEmpty()) {
-        nameLabel->setText(name);
-        emit nameChanged(name);
-    }
 }
