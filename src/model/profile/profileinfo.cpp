@@ -27,6 +27,7 @@
 #include <QBuffer>
 #include <QClipboard>
 #include <QFile>
+#include <QImageReader>
 
 /**
  * @class ProfileInfo
@@ -265,11 +266,11 @@ IProfileInfo::SaveResult ProfileInfo::saveQr(const QImage& image, const QString&
 }
 
 /**
- * @brief Convert QPixmap to png image.
+ * @brief Convert QImage to png image.
  * @param pic Picture to convert.
  * @return Byte array with png image.
  */
-QByteArray picToPng(const QPixmap& pic)
+QByteArray picToPng(const QImage& pic)
 {
     QByteArray bytes;
     QBuffer buffer(&bytes);
@@ -295,39 +296,84 @@ IProfileInfo::SetAvatarResult ProfileInfo::setAvatar(const QString& path)
     if (!file.isOpen()) {
         return SetAvatarResult::CanNotOpen;
     }
+    QByteArray avatar;
+    const auto err = createAvatarFromFile(file, avatar);
+    if (err == SetAvatarResult::OK) {
+        profile->setAvatar(avatar);
+    }
+    return err;
+}
 
-    QPixmap pic;
-    if (!pic.loadFromData(file.readAll())) {
+/**
+ * @brief Create an avatar from an image file
+ * @param file Image file, which should be the new avatar.
+ * @param avatar Output avatar of correct file type and size.
+ * @return SetAvatarResult
+ */
+IProfileInfo::SetAvatarResult ProfileInfo::createAvatarFromFile(QFile& file, QByteArray& avatar)
+{
+    QByteArray fileContents{file.readAll()};
+    auto err = byteArrayToPng(fileContents, avatar);
+    if (err != SetAvatarResult::OK) {
+        return err;
+    }
+
+    err = scalePngToAvatar(avatar);
+    return err;
+}
+
+/**
+ * @brief Create a png from image data
+ * @param inData byte array from an image file.
+ * @param outPng byte array which the png will be written to.
+ * @return SetAvatarResult
+ */
+IProfileInfo::SetAvatarResult ProfileInfo::byteArrayToPng(QByteArray inData, QByteArray& outPng)
+{
+    QBuffer inBuffer{&inData};
+    QImageReader reader{&inBuffer};
+    QImage image;
+    const auto format = reader.format();
+    // read whole image even if we're not going to use the QImage, to make sure the image is valid
+    if (!reader.read(&image)) {
         return SetAvatarResult::CanNotRead;
     }
 
-    // Limit the avatar size to 64kB
+    if (format == "png") {
+        // FIXME: re-encode the png even though inData is already valid. This strips the metadata since
+        // we don't have a good png metadata stripping method currently.
+        outPng = picToPng(image);
+    } else {
+        outPng = picToPng(image);
+    }
+    return SetAvatarResult::OK;
+}
+
+/*
+ * @brief Scale a png to an acceptable file size.
+ * @param avatar byte array containing the avatar.
+ * @return SetAvatarResult
+ */
+IProfileInfo::SetAvatarResult ProfileInfo::scalePngToAvatar(QByteArray& avatar)
+{
+    // https://tox.gitbooks.io/tox-client-standard/content/user_identification/avatar.html
+    constexpr int maxSize = 65535;
     // We do a first rescale to 256x256 in case the image was huge, then keep tryng from here
-    // TODO: Refactor
-    QByteArray bytes{picToPng(pic)};
-    if (bytes.size() > 65535) {
-        pic = pic.scaled(256, 256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        bytes = picToPng(pic);
-    }
+    constexpr int scaleSizes[] = {256, 128, 64, 32};
 
-    if (bytes.size() > 65535) {
-        bytes = picToPng(pic.scaled(128, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    }
-
-    if (bytes.size() > 65535) {
-        bytes = picToPng(pic.scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    }
-
-    if (bytes.size() > 65535) {
-        bytes = picToPng(pic.scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    for (auto scaleSize : scaleSizes) {
+        if (avatar.size() <= maxSize)
+            break;
+        QImage image;
+        image.loadFromData(avatar);
+        image = image.scaled(scaleSize, scaleSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        avatar = picToPng(image);
     }
 
     // If this happens, you're really doing it on purpose.
-    if (bytes.size() > 65535) {
+    if (avatar.size() > maxSize) {
         return SetAvatarResult::TooLarge;
     }
-
-    profile->setAvatar(bytes);
     return SetAvatarResult::OK;
 }
 
