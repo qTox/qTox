@@ -94,6 +94,8 @@ void QRWidget::paintImage()
         painter.setPen(Qt::NoPen);
         painter.drawRect(0, 0, size.width(), size.height());
         painter.setBrush(fg);
+        painter.scale(0.96, 0.96);
+        painter.translate(size.width() * 0.02, size.height() * 0.02);
         const int s = qr->width > 0 ? qr->width : 1;
         const double w = width();
         const double h = height();
