@@ -102,7 +102,7 @@ void OfflineMsgEngine::deliverOfflineMsgs()
         return;
     }
 
-    if (f->getStatus() == Status::Offline) {
+    if (!f->isOnline()) {
         return;
     }
 

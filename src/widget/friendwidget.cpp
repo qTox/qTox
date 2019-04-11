@@ -62,7 +62,7 @@ FriendWidget::FriendWidget(std::shared_ptr<FriendChatroom> chatroom, bool compac
     , isDefaultAvatar{true}
 {
     avatar->setPixmap(QPixmap(":/img/contact.svg"));
-    statusPic.setPixmap(QPixmap(":/img/status/offline.svg"));
+    statusPic.setPixmap(QPixmap(Widget::getStatusIconPath(Status::Offline)));
     statusPic.setMargin(3);
 
     auto frnd = chatroom->getFriend();
@@ -322,23 +322,9 @@ void FriendWidget::setActive(bool active)
 
 void FriendWidget::updateStatusLight()
 {
-    // clang-format off
-    static const QString statuses[] = {
-        ":img/status/online.svg",
-        ":img/status/online_notification.svg",
-        ":img/status/away.svg",
-        ":img/status/away_notification.svg",
-        ":img/status/busy.svg",
-        ":img/status/busy_notification.svg",
-        ":img/status/offline.svg",
-        ":img/status/offline_notification.svg",
-    };
-    // clang-format on
-
     const auto frnd = chatroom->getFriend();
     const bool event = frnd->getEventFlag();
-    const int index = static_cast<int>(frnd->getStatus()) * 2 + event;
-    statusPic.setPixmap(QPixmap(statuses[index]));
+    statusPic.setPixmap(QPixmap(Widget::getStatusIconPath(frnd->getStatus(), event)));
 
     if (event) {
         const Settings& s = Settings::getInstance();

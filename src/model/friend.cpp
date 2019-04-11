@@ -164,3 +164,8 @@ Status Friend::getStatus() const
 {
     return friendStatus;
 }
+
+bool Friend::isOnline() const
+{
+    return friendStatus != Status::Offline && friendStatus != Status::Blocked;
+}

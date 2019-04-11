@@ -75,21 +75,7 @@ namespace
     QString statusToString(const Status status)
     {
         QString result;
-        switch (status) {
-        case Status::Online:
-            result = ChatForm::tr("online", "contact status");
-            break;
-        case Status::Away:
-            result = ChatForm::tr("away", "contact status");
-            break;
-        case Status::Busy:
-            result = ChatForm::tr("busy", "contact status");
-            break;
-        case Status::Offline:
-            result = ChatForm::tr("offline", "contact status");
-            break;
-        }
-        return result;
+        return ChatForm::tr(Widget::getStatusTitle(status).toLatin1().data(), "contact status");
     }
 
     QString secondsToDHMS(quint32 duration)
@@ -523,7 +509,7 @@ void ChatForm::updateCallButtons()
     CoreAV* av = Core::getInstance()->getAv();
     const bool audio = av->isCallActive(f);
     const bool video = av->isCallVideoEnabled(f);
-    const bool online = f->getStatus() != Status::Offline;
+    const bool online = f->isOnline();
     headWidget->updateCallButtons(online, audio, video);
     updateMuteMicButton();
     updateMuteVolButton();
@@ -935,7 +921,7 @@ void ChatForm::sendLoadedMessage(ChatMessage::Ptr chatMsg, MessageMetadata const
 
     ReceiptNum receipt;
     bool  messageSent{false};
-    if (f->getStatus() != Status::Offline) {
+    if (f->isOnline()) {
         Core* core = Core::getInstance();
         uint32_t friendId = f->getId();
         QString stringMsg = chatMsg->toString();
@@ -1141,7 +1127,7 @@ void ChatForm::SendMessageStr(QString msg)
 
         ReceiptNum receipt;
         bool messageSent{false};
-        if (f->getStatus() != Status::Offline) {
+        if (f->isOnline()) {
             Core* core = Core::getInstance();
             uint32_t friendId = f->getId();
             messageSent = isAction ? core->sendAction(friendId, part, receipt) : core->sendMessage(friendId, part, receipt);
