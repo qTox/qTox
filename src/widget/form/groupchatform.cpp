@@ -412,7 +412,7 @@ void GroupChatForm::dropEvent(QDropEvent* ev)
 
     int friendId = frnd->getId();
     int groupId = group->getId();
-    if (frnd->getStatus() != Status::Offline) {
+    if (frnd->isOnline()) {
         Core::getInstance()->groupInviteFriend(friendId, groupId);
     }
 }

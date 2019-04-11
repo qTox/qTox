@@ -135,7 +135,7 @@ public:
     void reloadHistory();
 
     void reloadTheme();
-    static QString getStatusIconPath(Status status);
+    static QString getStatusIconPath(Status status, bool event = false);
     static inline QIcon prepareIcon(QString path, int w = 0, int h = 0);
     static QPixmap getStatusIconPixmap(QString path, uint32_t w, uint32_t h);
     static QString getStatusTitle(Status status);

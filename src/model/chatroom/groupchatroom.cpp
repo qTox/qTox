@@ -43,7 +43,7 @@ void GroupChatroom::inviteFriend(const ToxPk& pk)
     const Friend* frnd = FriendList::findFriend(pk);
     const auto friendId = frnd->getId();
     const auto groupId = group->getId();
-    const auto canInvite = frnd->getStatus() != Status::Offline;
+    const auto canInvite = frnd->isOnline();
 
     if (canInvite) {
         Core::getInstance()->groupInviteFriend(friendId, groupId);
