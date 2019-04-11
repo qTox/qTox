@@ -122,7 +122,6 @@ public:
     bool newGroupMessageAlert(int groupId, bool notify);
     bool getIsWindowMinimized();
     void updateIcons();
-    void clearContactsList();
 
     static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog() const;
@@ -141,7 +140,6 @@ public:
     static Status getStatusFromString(QString status);
 
     void searchCircle(CircleWidget* circleWidget);
-    void searchItem(GenericChatItemWidget* chatItem, GenericChatItemWidget::ItemType type);
     bool groupsVisible() const;
 
     void resetIcon();
@@ -170,7 +168,6 @@ public slots:
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const ToxPk& friendPk, const QString& message);
     void updateFriendActivity(const Friend* frnd);
-    void onReceiptRecieved(int friendId, ReceiptNum receipt);
     void onEmptyGroupCreated(int groupId, const QString& title);
     void onGroupInviteReceived(const GroupInvite& inviteInfo);
     void onGroupInviteAccepted(const GroupInvite& inviteInfo);

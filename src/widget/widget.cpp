@@ -1213,16 +1213,6 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     newFriendMessageAlert(friendId);
 }
 
-void Widget::onReceiptRecieved(int friendId, ReceiptNum receipt)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f) {
-        return;
-    }
-
-    chatForms[friendId]->getOfflineMsgEngine()->onReceiptReceived(receipt);
-}
-
 void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 {
     uint32_t friendId = frnd->getId();
@@ -1549,21 +1539,6 @@ void Widget::removeFriend(Friend* f, bool fake)
 void Widget::removeFriend(int friendId)
 {
     removeFriend(FriendList::findFriend(friendId), false);
-}
-
-void Widget::clearContactsList()
-{
-    assert(QThread::currentThread() == qApp->thread());
-
-    QList<Friend*> friends = FriendList::getAllFriends();
-    for (Friend* f : friends) {
-        removeFriend(f, true);
-    }
-
-    QList<Group*> groups = GroupList::getAllGroups();
-    for (Group* g : groups) {
-        removeGroup(g, true);
-    }
 }
 
 void Widget::onDialogShown(GenericChatroomWidget* widget)
@@ -2373,21 +2348,6 @@ void Widget::searchCircle(CircleWidget* circleWidget)
     FilterCriteria filter = getFilterCriteria();
     QString text = ui->searchContactText->text();
     circleWidget->search(text, true, filterOnline(filter), filterOffline(filter));
-}
-
-void Widget::searchItem(GenericChatItemWidget* chatItem, GenericChatItemWidget::ItemType type)
-{
-    bool hide;
-    FilterCriteria filter = getFilterCriteria();
-    switch (type) {
-    case GenericChatItemWidget::GroupItem:
-        hide = filterGroups(filter);
-        break;
-    default:
-        hide = true;
-    }
-
-    chatItem->searchName(ui->searchContactText->text(), hide);
 }
 
 bool Widget::groupsVisible() const
