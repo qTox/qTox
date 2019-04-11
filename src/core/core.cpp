@@ -455,7 +455,7 @@ void Core::bootstrapDht()
         ToxPk pk = ToxId{dhtServer.userId}.getPublicKey();
 
 
-        const uint8_t* pkPtr = reinterpret_cast<const uint8_t*>(pk.getBytes());
+        const uint8_t* pkPtr = pk.getData();
 
         if (!tox_bootstrap(tox.get(), address.constData(), dhtServer.port, pkPtr, nullptr)) {
             qDebug() << "Error bootstrapping from " + dhtServer.name;
@@ -599,7 +599,7 @@ void Core::acceptFriendRequest(const ToxPk& friendPk)
 {
     QMutexLocker ml{&coreLoopLock};
     // TODO: error handling
-    uint32_t friendId = tox_friend_add_norequest(tox.get(), friendPk.getBytes(), nullptr);
+    uint32_t friendId = tox_friend_add_norequest(tox.get(), friendPk.getData(), nullptr);
     if (friendId == std::numeric_limits<uint32_t>::max()) {
         emit failedToAddFriend(friendPk);
     } else {
@@ -1027,17 +1027,18 @@ void Core::loadGroups()
 
     for(size_t i = 0; i < groupCount; ++i) {
         TOX_ERR_CONFERENCE_TITLE error;
-        size_t titleSize = tox_conference_get_title_size(tox.get(), groupIds[i], &error);
+        const auto groupId = static_cast<int>(groupIds[i]);
+        size_t titleSize = tox_conference_get_title_size(tox.get(), groupId, &error);
         if (LogConferenceTitleError(error)) {
             continue;
         }
 
         QByteArray name(titleSize, Qt::Uninitialized);
-        if (!tox_conference_get_title(tox.get(), groupIds[i], reinterpret_cast<uint8_t*>(name.data()), &error))
+        if (!tox_conference_get_title(tox.get(), groupId, reinterpret_cast<uint8_t*>(name.data()), &error))
         if (LogConferenceTitleError(error)) {
             continue;
         }
-        emit emptyGroupCreated(static_cast<int>(groupIds[i]), ToxString(name).getQString());
+        emit emptyGroupCreated(groupId, getGroupPersistentId(groupId), ToxString(name).getQString());
     }
 
     delete[] groupIds;
@@ -1092,6 +1093,19 @@ bool Core::parsePeerQueryError(Tox_Err_Conference_Peer_Query error) const
     default:
         qCritical() << "Unknow error code:" << error;
         return false;
+    }
+}
+
+GroupId Core::getGroupPersistentId(uint32_t groupNumber) {
+    QMutexLocker ml{&coreLoopLock};
+
+    size_t conferenceIdSize = TOX_CONFERENCE_UID_SIZE;
+    QByteArray groupPersistentId(conferenceIdSize, Qt::Uninitialized);
+    if (tox_conference_get_id(tox.get(), groupNumber, reinterpret_cast<uint8_t*>(groupPersistentId.data()))) {
+        return GroupId{groupPersistentId};
+    } else {
+        qCritical() << "Failed to get conference ID of group" << groupNumber;
+        return {};
     }
 }
 
@@ -1323,7 +1337,7 @@ int Core::createGroup(uint8_t type)
 
         switch (error) {
         case TOX_ERR_CONFERENCE_NEW_OK:
-            emit emptyGroupCreated(groupId);
+            emit emptyGroupCreated(groupId, getGroupPersistentId(groupId));
             return groupId;
 
         case TOX_ERR_CONFERENCE_NEW_INIT:
@@ -1335,7 +1349,7 @@ int Core::createGroup(uint8_t type)
         }
     } else if (type == TOX_CONFERENCE_TYPE_AV) {
         uint32_t groupId = toxav_add_av_groupchat(tox.get(), CoreAV::groupCallCallback, this);
-        emit emptyGroupCreated(groupId);
+        emit emptyGroupCreated(groupId, getGroupPersistentId(groupId));
         return groupId;
     } else {
         qWarning() << "createGroup: Unknown type " << type;
@@ -1366,7 +1380,7 @@ bool Core::hasFriendWithPublicKey(const ToxPk& publicKey) const
     }
 
     // TODO: error handling
-    uint32_t friendId = tox_friend_by_public_key(tox.get(), publicKey.getBytes(), nullptr);
+    uint32_t friendId = tox_friend_by_public_key(tox.get(), publicKey.getData(), nullptr);
     return friendId != std::numeric_limits<uint32_t>::max();
 }
 
@@ -1443,7 +1457,7 @@ QString Core::getPeerName(const ToxPk& id) const
     QMutexLocker ml{&coreLoopLock};
 
     QString name;
-    uint32_t friendId = tox_friend_by_public_key(tox.get(), id.getBytes(), nullptr);
+    uint32_t friendId = tox_friend_by_public_key(tox.get(), id.getData(), nullptr);
     if (friendId == std::numeric_limits<uint32_t>::max()) {
         qWarning() << "getPeerName: No such peer";
         return name;
