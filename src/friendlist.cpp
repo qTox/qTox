@@ -37,7 +37,7 @@ Friend* FriendList::addFriend(uint32_t friendId, const ToxPk& friendPk)
     QString alias = Settings::getInstance().getFriendAlias(friendPk);
     Friend* newfriend = new Friend(friendId, friendPk, alias);
     friendList[friendId] = newfriend;
-    key2id[friendPk.getKey()] = friendId;
+    key2id[friendPk.getByteArray()] = friendId;
 
     return newfriend;
 }
@@ -71,7 +71,7 @@ void FriendList::clear()
 
 Friend* FriendList::findFriend(const ToxPk& friendPk)
 {
-    auto id = key2id.find(friendPk.getKey());
+    auto id = key2id.find(friendPk.getByteArray());
     if (id != key2id.end()) {
         Friend* f = findFriend(*id);
         if (!f)

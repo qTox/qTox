@@ -1782,7 +1782,8 @@ void Widget::onGroupPeerlistChanged(int groupnumber)
     Group* g = GroupList::findGroup(groupnumber);
     if (!g) {
         qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
-        g = createGroup(groupnumber);
+        const auto groupId = Nexus::getCore()->getGroupPersistentId(groupnumber);
+        g = createGroup(groupnumber, groupId);
         if (!g) {
             return;
         }
@@ -1795,7 +1796,8 @@ void Widget::onGroupPeerNameChanged(int groupnumber, int peernumber, const QStri
     Group* g = GroupList::findGroup(groupnumber);
     if (!g) {
         qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
-        g = createGroup(groupnumber);
+        const auto groupId = Nexus::getCore()->getGroupPersistentId(groupnumber);
+        g = createGroup(groupnumber, groupId);
         if (!g) {
             return;
         }
@@ -1883,7 +1885,7 @@ void Widget::removeGroup(int groupId)
     removeGroup(GroupList::findGroup(groupId));
 }
 
-Group* Widget::createGroup(int groupId)
+Group* Widget::createGroup(int groupId, const GroupId& groupPersistentId)
 {
     Group* g = GroupList::findGroup(groupId);
     if (g) {
@@ -1895,7 +1897,7 @@ Group* Widget::createGroup(int groupId)
     Core* core = Nexus::getCore();
 
     bool enabled = core->getGroupAvEnabled(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, enabled, core->getUsername());
+    Group* newgroup = GroupList::addGroup(groupId, groupPersistentId, groupName, enabled, core->getUsername());
     std::shared_ptr<GroupChatroom> chatroom(new GroupChatroom(newgroup));
     const auto compact = settings.getCompactLayout();
     auto widget = new GroupWidget(chatroom, compact);
@@ -1929,9 +1931,9 @@ Group* Widget::createGroup(int groupId)
     return newgroup;
 }
 
-void Widget::onEmptyGroupCreated(int groupId, const QString& title)
+void Widget::onEmptyGroupCreated(int groupId, const GroupId& groupPersistentId, const QString& title)
 {
-    Group* group = createGroup(groupId);
+    Group* group = createGroup(groupId, groupPersistentId);
     if (!group) {
         return;
     }
