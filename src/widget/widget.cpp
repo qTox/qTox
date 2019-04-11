@@ -234,7 +234,7 @@ void Widget::init()
     updateCheck->checkForUpdate();
 #endif
 
-    Core* core = Nexus::getCore();
+    core = Nexus::getCore();
     CoreFile* coreFile = core->getCoreFile();
     Profile* profile = Nexus::getProfile();
     profileInfo = new ProfileInfo(core, profile);
@@ -256,7 +256,7 @@ void Widget::init()
     connect(ui->statusLabel, &CroppingLabel::editFinished, this, &Widget::onStatusMessageChanged);
     connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
     connect(addFriendForm, &AddFriendForm::friendRequested, this, &Widget::friendRequested);
-    connect(groupInviteForm, &GroupInviteForm::groupCreate, Core::getInstance(), &Core::createGroup);
+    connect(groupInviteForm, &GroupInviteForm::groupCreate, core, &Core::createGroup);
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
@@ -603,7 +603,7 @@ void Widget::resizeEvent(QResizeEvent* event)
 
 QString Widget::getUsername()
 {
-    return Nexus::getCore()->getUsername();
+    return core->getUsername();
 }
 
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
@@ -614,13 +614,13 @@ void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 void Widget::onConnected()
 {
     ui->statusButton->setEnabled(true);
-    emit statusSet(Nexus::getCore()->getStatus());
+    emit statusSet(core->getStatus());
 }
 
 void Widget::onDisconnected()
 {
     ui->statusButton->setEnabled(false);
-    emit Core::getInstance()->statusSet(Status::Offline);
+    emit core->statusSet(Status::Offline);
 }
 
 void Widget::onFailedToStartCore()
@@ -909,7 +909,7 @@ void Widget::setUsername(const QString& username)
 void Widget::onStatusMessageChanged(const QString& newStatusMessage)
 {
     // Keep old status message until Core tells us to set it.
-    Nexus::getCore()->setStatusMessage(newStatusMessage);
+    core->setStatusMessage(newStatusMessage);
 }
 
 void Widget::setStatusMessage(const QString& statusMessage)
@@ -965,7 +965,7 @@ void Widget::onStopNotification()
 
 void Widget::onRejectCall(uint32_t friendId)
 {
-    CoreAV* const av = Core::getInstance()->getAv();
+    CoreAV* const av = core->getAv();
     av->cancelCall(friendId);
 }
 
@@ -1447,7 +1447,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 #endif
                 eventFlag = true;
             }
-            bool isBusy = Nexus::getCore()->getStatus() == Status::Busy;
+            bool isBusy = core->getStatus() == Status::Busy;
             bool busySound = settings.getBusySound();
             bool notifySound = settings.getNotifySound();
 
@@ -1518,7 +1518,7 @@ void Widget::removeFriend(Friend* f, bool fake)
 
     FriendList::removeFriend(friendId, fake);
     if (!fake) {
-        Nexus::getCore()->removeFriend(friendId);
+        core->removeFriend(friendId);
     }
 
     friendWidgets.remove(friendId);
@@ -1585,7 +1585,7 @@ ContentDialog* Widget::createContentDialog() const
 
     connect(contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
     connect(contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
-    connect(Core::getInstance(), &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
+    connect(core, &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
     connect(&settings, &Settings::groupchatPositionChanged, contentDialog, &ContentDialog::reorderLayouts);
 
 #ifdef Q_OS_MAC
@@ -1604,10 +1604,11 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
     class Dialog : public ActivateDialog
     {
     public:
-        explicit Dialog(DialogType type, Settings& settings)
+        explicit Dialog(DialogType type, Settings& settings, Core* core)
             : ActivateDialog(nullptr, Qt::Window)
             , type(type)
             , settings(settings)
+            , core{core}
         {
             restoreGeometry(settings.getDialogSettingsGeometry());
             Translator::registerHandler(std::bind(&Dialog::retranslateUi, this), this);
@@ -1615,7 +1616,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
             setWindowIcon(QIcon(":/img/icons/qtox.svg"));
             setStyleSheet(Style::getStylesheet("window/general.css"));
 
-            connect(Core::getInstance(), &Core::usernameSet, this, &Dialog::retranslateUi);
+            connect(core, &Core::usernameSet, this, &Dialog::retranslateUi);
         }
 
         ~Dialog()
@@ -1627,7 +1628,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
 
         void retranslateUi()
         {
-            setWindowTitle(Core::getInstance()->getUsername() + QStringLiteral(" - ")
+            setWindowTitle(core->getUsername() + QStringLiteral(" - ")
                            + Widget::fromDialogType(type));
         }
 
@@ -1647,9 +1648,10 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
     private:
         DialogType type;
         Settings& settings;
+        Core* core;
     };
 
-    Dialog* dialog = new Dialog(type, settings);
+    Dialog* dialog = new Dialog(type, settings, core);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     ContentLayout* contentLayoutDialog = new ContentLayout(dialog);
 
@@ -1678,7 +1680,7 @@ void Widget::copyFriendIdToClipboard(int friendId)
     Friend* f = FriendList::findFriend(friendId);
     if (f != nullptr) {
         QClipboard* clipboard = QApplication::clipboard();
-        const ToxPk& pk = Nexus::getCore()->getFriendPublicKey(f->getId());
+        const ToxPk& pk = core->getFriendPublicKey(f->getId());
         clipboard->setText(pk.toString(), QClipboard::Clipboard);
     }
 }
@@ -1713,7 +1715,7 @@ void Widget::onGroupInviteReceived(const GroupInvite& inviteInfo)
 
 void Widget::onGroupInviteAccepted(const GroupInvite& inviteInfo)
 {
-    const uint32_t groupId = Core::getInstance()->joinGroupchat(inviteInfo);
+    const uint32_t groupId = core->joinGroupchat(inviteInfo);
     if (groupId == std::numeric_limits<uint32_t>::max()) {
         qWarning() << "onGroupInviteAccepted: Unable to accept group invite";
         return;
@@ -1726,7 +1728,6 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     Group* g = GroupList::findGroup(groupnumber);
     assert(g);
 
-    const Core* core = Core::getInstance();
     ToxPk author = core->getGroupPeerPk(groupnumber, peernumber);
     bool isSelf = author == core->getSelfId().getPublicKey();
 
@@ -1816,7 +1817,7 @@ void Widget::removeGroup(Group* g, bool fake)
     }
 
     if (!fake) {
-        Nexus::getCore()->removeGroup(groupId);
+        core->removeGroup(groupId);
     }
     contactListWidget->removeGroupWidget(widget); // deletes widget
 
@@ -1840,7 +1841,7 @@ void Widget::removeGroup(int groupId)
     removeGroup(GroupList::findGroup(groupId));
 }
 
-Group* Widget::createGroup(int groupId)
+Group* Widget::createGroup(int groupId, const GroupId& groupPersistentId)
 {
     Group* g = GroupList::findGroup(groupId);
     if (g) {
@@ -1849,10 +1850,10 @@ Group* Widget::createGroup(int groupId)
     }
 
     const auto groupName = tr("Groupchat #%1").arg(groupId);
-    Core* core = Nexus::getCore();
+    Core* core = core;
 
     bool enabled = core->getGroupAvEnabled(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, enabled, core->getUsername());
+    Group* newgroup = GroupList::addGroup(groupId, groupPersistentId, groupName, enabled, core->getUsername());
     std::shared_ptr<GroupChatroom> chatroom(new GroupChatroom(newgroup));
     const auto compact = settings.getCompactLayout();
     auto widget = new GroupWidget(chatroom, compact);
@@ -1886,9 +1887,9 @@ Group* Widget::createGroup(int groupId)
     return newgroup;
 }
 
-void Widget::onEmptyGroupCreated(int groupId, const QString& title)
+void Widget::onEmptyGroupCreated(int groupId, const GroupId& groupPersistentId, const QString& title)
 {
-    Group* group = createGroup(groupId);
+    Group* group = createGroup(groupId, groupPersistentId);
     if (!group) {
         return;
     }
@@ -2028,7 +2029,7 @@ void Widget::setStatusOnline()
         return;
     }
 
-    Nexus::getCore()->setStatus(Status::Online);
+    core->setStatus(Status::Online);
 }
 
 void Widget::setStatusAway()
@@ -2037,7 +2038,7 @@ void Widget::setStatusAway()
         return;
     }
 
-    Nexus::getCore()->setStatus(Status::Away);
+    core->setStatus(Status::Away);
 }
 
 void Widget::setStatusBusy()
@@ -2046,7 +2047,7 @@ void Widget::setStatusBusy()
         return;
     }
 
-    Nexus::getCore()->setStatus(Status::Busy);
+    core->setStatus(Status::Busy);
 }
 
 void Widget::onGroupSendFailed(int groupId)
@@ -2346,7 +2347,7 @@ void Widget::friendListContextMenu(const QPoint& pos)
     if (chosenAction == addCircleAction) {
         contactListWidget->addCircleWidget();
     } else if (chosenAction == createGroupAction) {
-        Nexus::getCore()->createGroup();
+        core->createGroup();
     }
 }
 
@@ -2411,7 +2412,7 @@ void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
 
 void Widget::retranslateUi()
 {
-    Core* core = Nexus::getCore();
+    Core* core = core;
     ui->retranslateUi(this);
     setUsername(core->getUsername());
     setStatusMessage(core->getStatusMessage());
@@ -2473,6 +2474,6 @@ void Widget::focusChatInput()
 void Widget::refreshPeerListsLocal(const QString &username)
 {
     for (Group* g : GroupList::getAllGroups()) {
-        g->updateUsername(Core::getInstance()->getSelfPublicKey(), username);
+        g->updateUsername(core->getSelfPublicKey(), username);
     }
 }

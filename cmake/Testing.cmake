@@ -19,7 +19,7 @@ function(auto_test subsystem module)
 endfunction()
 
 auto_test(core core)
-auto_test(core toxpk)
+auto_test(core contactid)
 auto_test(core toxid)
 auto_test(core toxstring)
 auto_test(chatlog textformatter)

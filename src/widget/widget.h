@@ -31,6 +31,8 @@
 
 #include "src/core/core.h"
 #include "src/core/toxfile.h"
+#include "src/core/groupid.h"
+#include "src/core/toxpk.h"
 #include "src/core/toxid.h"
 #if DESKTOP_NOTIFICATIONS
 #include "src/platform/desktop_notifications/desktopnotify.h"
@@ -168,7 +170,7 @@ public slots:
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const ToxPk& friendPk, const QString& message);
     void updateFriendActivity(const Friend* frnd);
-    void onEmptyGroupCreated(int groupId, const QString& title);
+    void onEmptyGroupCreated(int groupId, const GroupId& groupPersistentId, const QString& title);
     void onGroupInviteReceived(const GroupInvite& inviteInfo);
     void onGroupInviteAccepted(const GroupInvite& inviteInfo);
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
@@ -239,7 +241,7 @@ private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
     void hideMainForms(GenericChatroomWidget* chatroomWidget);
-    Group* createGroup(int groupId);
+    Group* createGroup(int groupId, const GroupId& groupPersistentId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
@@ -316,6 +318,7 @@ private:
     QMap<uint32_t, GroupWidget*> groupWidgets;
     QMap<uint32_t, std::shared_ptr<GroupChatroom>> groupChatrooms;
     QMap<uint32_t, QSharedPointer<GroupChatForm>> groupChatForms;
+    Core* core = nullptr;
 
 #if DESKTOP_NOTIFICATIONS
     DesktopNotify notifier;

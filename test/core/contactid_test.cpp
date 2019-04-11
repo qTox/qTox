@@ -17,7 +17,12 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "src/core/contactid.h"
+#include "src/core/toxpk.h"
 #include "src/core/toxid.h"
+#include "src/core/groupid.h"
+
+#include <tox/tox.h>
 
 #include <QtTest/QtTest>
 #include <QByteArray>
@@ -35,7 +40,7 @@ const QString echoStr =
     QStringLiteral("76518406F6A9F2217E8DC487CC783C25CC16A15EB36FF32E335A235342C48A39");
 const QByteArray echoPk = QByteArray::fromHex(echoStr.toLatin1());
 
-class TestToxPk : public QObject
+class TestContactId : public QObject
 {
     Q_OBJECT
 private slots:
@@ -43,16 +48,17 @@ private slots:
     void equalTest();
     void clearTest();
     void copyTest();
-    void publicKeyTest();
+    void dataTest();
+    void sizeTest();
 };
 
-void TestToxPk::toStringTest()
+void TestContactId::toStringTest()
 {
     ToxPk pk(testPk);
     QVERIFY(testStr == pk.toString());
 }
 
-void TestToxPk::equalTest()
+void TestContactId::equalTest()
 {
     ToxPk pk1(testPk);
     ToxPk pk2(testPk);
@@ -62,7 +68,7 @@ void TestToxPk::equalTest()
     QVERIFY(!(pk1 != pk2));
 }
 
-void TestToxPk::clearTest()
+void TestContactId::clearTest()
 {
     ToxPk empty;
     ToxPk pk(testPk);
@@ -70,22 +76,29 @@ void TestToxPk::clearTest()
     QVERIFY(!pk.isEmpty());
 }
 
-void TestToxPk::copyTest()
+void TestContactId::copyTest()
 {
     ToxPk src(testPk);
     ToxPk copy = src;
     QVERIFY(copy == src);
 }
 
-void TestToxPk::publicKeyTest()
+void TestContactId::dataTest()
 {
     ToxPk pk(testPk);
-    QVERIFY(testPk == pk.getKey());
-    for (int i = 0; i < ToxPk::getPkSize(); i++) {
-        QVERIFY(testPkArray[i] == pk.getBytes()[i]);
+    QVERIFY(testPk == pk.getByteArray());
+    for (int i = 0; i < pk.getSize(); i++) {
+        QVERIFY(testPkArray[i] == pk.getData()[i]);
     }
 }
 
-QTEST_GUILESS_MAIN(TestToxPk)
-#include "toxpk_test.moc"
+void TestContactId::sizeTest()
+{
+    ToxPk pk;
+    GroupId id;
+    QVERIFY(pk.getSize() == TOX_PUBLIC_KEY_SIZE);
+    QVERIFY(id.getSize() == TOX_CONFERENCE_UID_SIZE);
+}
 
+QTEST_GUILESS_MAIN(TestContactId)
+#include "contactid_test.moc"
