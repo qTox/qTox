@@ -288,12 +288,16 @@ set(${PROJECT_NAME}_SOURCES
   src/core/toxfilepause.h
   src/core/toxid.cpp
   src/core/toxid.h
+  src/core/groupid.cpp
+  src/core/groupid.h
   src/core/toxlogger.cpp
   src/core/toxlogger.h
   src/core/toxoptions.cpp
   src/core/toxoptions.h
   src/core/toxpk.cpp
   src/core/toxpk.h
+  src/core/contactid.cpp
+  src/core/contactid.h
   src/core/toxstring.cpp
   src/core/toxstring.h
   src/friendlist.cpp

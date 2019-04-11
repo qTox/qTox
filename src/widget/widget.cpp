@@ -234,7 +234,7 @@ void Widget::init()
     updateCheck->checkForUpdate();
 #endif
 
-    Core* core = Nexus::getCore();
+    core = Nexus::getCore();
     CoreFile* coreFile = core->getCoreFile();
     Profile* profile = Nexus::getProfile();
     profileInfo = new ProfileInfo(core, profile);
@@ -256,7 +256,7 @@ void Widget::init()
     connect(ui->statusLabel, &CroppingLabel::editFinished, this, &Widget::onStatusMessageChanged);
     connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
     connect(addFriendForm, &AddFriendForm::friendRequested, this, &Widget::friendRequested);
-    connect(groupInviteForm, &GroupInviteForm::groupCreate, Core::getInstance(), &Core::createGroup);
+    connect(groupInviteForm, &GroupInviteForm::groupCreate, core, &Core::createGroup);
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
@@ -620,7 +620,7 @@ void Widget::onConnected()
 void Widget::onDisconnected()
 {
     ui->statusButton->setEnabled(false);
-    emit Core::getInstance()->statusSet(Status::Offline);
+    emit core->statusSet(Status::Offline);
 }
 
 void Widget::onFailedToStartCore()
@@ -965,7 +965,7 @@ void Widget::onStopNotification()
 
 void Widget::onRejectCall(uint32_t friendId)
 {
-    CoreAV* const av = Core::getInstance()->getAv();
+    CoreAV* const av = core->getAv();
     av->cancelCall(friendId);
 }
 
@@ -1610,7 +1610,7 @@ ContentDialog* Widget::createContentDialog() const
 
     connect(contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
     connect(contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
-    connect(Core::getInstance(), &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
+    connect(core, &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
     connect(&settings, &Settings::groupchatPositionChanged, contentDialog, &ContentDialog::reorderLayouts);
 
 #ifdef Q_OS_MAC
@@ -1629,10 +1629,11 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
     class Dialog : public ActivateDialog
     {
     public:
-        explicit Dialog(DialogType type, Settings& settings)
+        explicit Dialog(DialogType type, Settings& settings, Core* core)
             : ActivateDialog(nullptr, Qt::Window)
             , type(type)
             , settings(settings)
+            , core{core}
         {
             restoreGeometry(settings.getDialogSettingsGeometry());
             Translator::registerHandler(std::bind(&Dialog::retranslateUi, this), this);
@@ -1640,7 +1641,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
             setWindowIcon(QIcon(":/img/icons/qtox.svg"));
             setStyleSheet(Style::getStylesheet("window/general.css"));
 
-            connect(Core::getInstance(), &Core::usernameSet, this, &Dialog::retranslateUi);
+            connect(core, &Core::usernameSet, this, &Dialog::retranslateUi);
         }
 
         ~Dialog()
@@ -1652,7 +1653,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
 
         void retranslateUi()
         {
-            setWindowTitle(Core::getInstance()->getUsername() + QStringLiteral(" - ")
+            setWindowTitle(core->getUsername() + QStringLiteral(" - ")
                            + Widget::fromDialogType(type));
         }
 
@@ -1672,9 +1673,10 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
     private:
         DialogType type;
         Settings& settings;
+        Core* core;
     };
 
-    Dialog* dialog = new Dialog(type, settings);
+    Dialog* dialog = new Dialog(type, settings, core);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     ContentLayout* contentLayoutDialog = new ContentLayout(dialog);
 
@@ -1738,7 +1740,7 @@ void Widget::onGroupInviteReceived(const GroupInvite& inviteInfo)
 
 void Widget::onGroupInviteAccepted(const GroupInvite& inviteInfo)
 {
-    const uint32_t groupId = Core::getInstance()->joinGroupchat(inviteInfo);
+    const uint32_t groupId = core->joinGroupchat(inviteInfo);
     if (groupId == std::numeric_limits<uint32_t>::max()) {
         qWarning() << "onGroupInviteAccepted: Unable to accept group invite";
         return;
@@ -1753,7 +1755,6 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
     }
 
-    const Core* core = Core::getInstance();
     ToxPk author = core->getGroupPeerPk(groupnumber, peernumber);
     bool isSelf = author == core->getSelfId().getPublicKey();
 
@@ -1782,7 +1783,8 @@ void Widget::onGroupPeerlistChanged(int groupnumber)
     Group* g = GroupList::findGroup(groupnumber);
     if (!g) {
         qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
-        g = createGroup(groupnumber);
+        const auto groupId = Nexus::getCore()->getGroupPersistentId(groupnumber);
+        g = createGroup(groupnumber, groupId);
         if (!g) {
             return;
         }
@@ -1795,7 +1797,8 @@ void Widget::onGroupPeerNameChanged(int groupnumber, int peernumber, const QStri
     Group* g = GroupList::findGroup(groupnumber);
     if (!g) {
         qDebug() << "onGroupNamelistChanged: Group " << groupnumber << " not found, creating it";
-        g = createGroup(groupnumber);
+        const auto groupId = Nexus::getCore()->getGroupPersistentId(groupnumber);
+        g = createGroup(groupnumber, groupId);
         if (!g) {
             return;
         }
@@ -1883,7 +1886,7 @@ void Widget::removeGroup(int groupId)
     removeGroup(GroupList::findGroup(groupId));
 }
 
-Group* Widget::createGroup(int groupId)
+Group* Widget::createGroup(int groupId, const GroupId& groupPersistentId)
 {
     Group* g = GroupList::findGroup(groupId);
     if (g) {
@@ -1895,7 +1898,7 @@ Group* Widget::createGroup(int groupId)
     Core* core = Nexus::getCore();
 
     bool enabled = core->getGroupAvEnabled(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, enabled, core->getUsername());
+    Group* newgroup = GroupList::addGroup(groupId, groupPersistentId, groupName, enabled, core->getUsername());
     std::shared_ptr<GroupChatroom> chatroom(new GroupChatroom(newgroup));
     const auto compact = settings.getCompactLayout();
     auto widget = new GroupWidget(chatroom, compact);
@@ -1929,9 +1932,9 @@ Group* Widget::createGroup(int groupId)
     return newgroup;
 }
 
-void Widget::onEmptyGroupCreated(int groupId, const QString& title)
+void Widget::onEmptyGroupCreated(int groupId, const GroupId& groupPersistentId, const QString& title)
 {
-    Group* group = createGroup(groupId);
+    Group* group = createGroup(groupId, groupPersistentId);
     if (!group) {
         return;
     }
@@ -2533,6 +2536,6 @@ void Widget::focusChatInput()
 void Widget::refreshPeerListsLocal(const QString &username)
 {
     for (Group* g : GroupList::getAllGroups()) {
-        g->updateUsername(Core::getInstance()->getSelfPublicKey(), username);
+        g->updateUsername(core->getSelfPublicKey(), username);
     }
 }

@@ -394,7 +394,7 @@ QString Profile::avatarPath(const ToxPk& owner, bool forceUnencrypted)
     }
 
     QByteArray idData = ownerStr.toUtf8();
-    QByteArray pubkeyData = core->getSelfId().getPublicKey().getKey();
+    QByteArray pubkeyData = core->getSelfId().getPublicKey().getByteArray();
     constexpr int hashSize = TOX_PUBLIC_KEY_SIZE;
     static_assert(hashSize >= crypto_generichash_BYTES_MIN && hashSize <= crypto_generichash_BYTES_MAX,
                   "Hash size not supported by libsodium");
@@ -428,7 +428,7 @@ QPixmap Profile::loadAvatar(const ToxPk& owner)
 
         const QByteArray avatarData = loadAvatarData(owner);
         if (avatarData.isEmpty()) {
-            pic = QPixmap::fromImage(Identicon(owner.getKey()).toImage(16));
+            pic = QPixmap::fromImage(Identicon(owner.getByteArray()).toImage(16));
         } else {
             pic.loadFromData(avatarData);
         }
@@ -478,7 +478,7 @@ void Profile::loadDatabase(const ToxId& id, QString password)
         return;
     }
 
-    QByteArray salt = id.getPublicKey().getKey();
+    QByteArray salt = id.getPublicKey().getByteArray();
     if (salt.size() != TOX_PASS_SALT_LENGTH) {
         qWarning() << "Couldn't compute salt from public key" << name;
         GUI::showError(QObject::tr("Error"),
@@ -511,7 +511,7 @@ void Profile::setAvatar(QByteArray pic)
         avatarData = pic;
     } else {
         if (Settings::getInstance().getShowIdenticons()) {
-            const QImage identicon = Identicon(selfPk.getKey()).toImage(32);
+            const QImage identicon = Identicon(selfPk.getByteArray()).toImage(32);
             pixmap = QPixmap::fromImage(identicon);
 
         } else {
@@ -541,7 +541,7 @@ void Profile::setFriendAvatar(const ToxPk& owner, QByteArray pic)
         avatarData = pic;
         emit friendAvatarSet(owner, pixmap);
     } else if (Settings::getInstance().getShowIdenticons()) {
-        const QImage identicon = Identicon(owner.getKey()).toImage(32);
+        const QImage identicon = Identicon(owner.getByteArray()).toImage(32);
         pixmap = QPixmap::fromImage(identicon);
         emit friendAvatarSet(owner, pixmap);
     } else {

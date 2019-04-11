@@ -17,6 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "src/core/contactid.h"
+#include "src/core/toxpk.h"
 #include "src/core/toxid.h"
 
 #include <QtTest/QtTest>
@@ -80,9 +82,9 @@ void TestToxPk::copyTest()
 void TestToxPk::publicKeyTest()
 {
     ToxPk pk(testPk);
-    QVERIFY(testPk == pk.getKey());
-    for (int i = 0; i < ToxPk::getPkSize(); i++) {
-        QVERIFY(testPkArray[i] == pk.getBytes()[i]);
+    QVERIFY(testPk == pk.getByteArray());
+    for (int i = 0; i < pk.getSize(); i++) {
+        QVERIFY(testPkArray[i] == pk.getData()[i]);
     }
 }
 

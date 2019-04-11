@@ -365,8 +365,6 @@ int main(int argc, char* argv[])
 
     QObject::connect(a.get(), &QApplication::aboutToQuit, cleanup);
 
-    qRegisterMetaType<ReceiptNum>();
-    qRegisterMetaType<RowId>();
     // Run
     int errorcode = a->exec();
 

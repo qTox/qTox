@@ -137,6 +137,11 @@ uint32_t Friend::getId() const
     return friendId;
 }
 
+const ContactId& Friend::getPersistentId() const
+{
+    return friendPk;
+}
+
 void Friend::setEventFlag(bool flag)
 {
     hasNewEvents = flag;

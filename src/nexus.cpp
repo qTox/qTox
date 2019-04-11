@@ -99,7 +99,11 @@ void Nexus::start()
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
     qRegisterMetaType<ToxPk>("ToxPk");
     qRegisterMetaType<ToxId>("ToxId");
+    qRegisterMetaType<ToxPk>("GroupId");
+    qRegisterMetaType<ToxPk>("ContactId");
     qRegisterMetaType<GroupInvite>("GroupInvite");
+    qRegisterMetaType<ReceiptNum>("ReceiptNum");
+    qRegisterMetaType<RowId>("RowId");
 
     qApp->setQuitOnLastWindowClosed(false);
 
