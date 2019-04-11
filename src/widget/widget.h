@@ -119,6 +119,7 @@ private:
         All = 0,
         Online,
         Offline,
+        Blocked,
         Friends,
         Groups
     };
@@ -284,6 +285,7 @@ private:
     static bool filterGroups(FilterCriteria index);
     static bool filterOnline(FilterCriteria index);
     static bool filterOffline(FilterCriteria index);
+    static bool filterBlocked(FilterCriteria index);
     void retranslateUi();
     void focusChatInput();
     void openDialog(GenericChatroomWidget* widget, bool newWindow);
@@ -314,6 +316,7 @@ private:
     QAction* filterAllAction;
     QAction* filterOnlineAction;
     QAction* filterOfflineAction;
+    QAction* filterBlockedAction;
     QAction* filterFriendsAction;
     QAction* filterGroupsAction;
 

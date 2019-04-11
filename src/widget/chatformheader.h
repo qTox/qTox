@@ -72,7 +72,8 @@ public:
     void removeCallConfirm();
 
     void updateExtensionSupport(ExtensionSet extensions);
-    void updateCallButtons(bool online, bool audio, bool video = false);
+    void updateCallButtonsOnline(bool audio, bool video = false);
+    void updateCallButtonsOffline();
     void updateMuteMicButton(bool active, bool inputMuted);
     void updateMuteVolButton(bool active, bool outputMuted);
 

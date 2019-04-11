@@ -355,7 +355,7 @@ void GroupChatForm::onCallClicked()
         leaveGroupCall();
     }
 
-    headWidget->updateCallButtons(true, inCall);
+    headWidget->updateCallButtonsOnline(inCall);
 
     const bool inMute = av->isGroupCallInputMuted(group);
     headWidget->updateMuteMicButton(inCall, inMute);
@@ -392,7 +392,7 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 void GroupChatForm::updateUserCount(int numPeers)
 {
     nusersLabel->setText(tr("%n user(s) in chat", "Number of users in chat", numPeers));
-    headWidget->updateCallButtons(true, inCall);
+    headWidget->updateCallButtonsOnline(inCall);
 }
 
 void GroupChatForm::retranslateUi()

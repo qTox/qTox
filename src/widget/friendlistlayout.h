@@ -36,22 +36,24 @@ public:
 
     void addFriendWidget(FriendWidget* widget, Status::Status s);
     void removeFriendWidget(FriendWidget* widget, Status::Status s);
-    int indexOfFriendWidget(GenericChatItemWidget* widget, bool online) const;
+    int indexOfFriendWidget(GenericChatItemWidget* widget, Status::Status s) const;
     void moveFriendWidgets(FriendListWidget* listWidget);
     int friendOnlineCount() const;
     int friendTotalCount() const;
 
     bool hasChatrooms() const;
     void searchChatrooms(const QString& searchString, bool hideOnline = false,
-                         bool hideOffline = false);
+                         bool hideOffline = false, bool hideBlocked = false);
 
     QLayout* getLayoutOnline() const;
     QLayout* getLayoutOffline() const;
+    QLayout* getLayoutBlocked() const;
+    QLayout* getFriendLayout(Status::Status s) const;
 
 private:
     void init();
-    QLayout* getFriendLayout(Status::Status s) const;
 
     GenericChatItemLayout friendOnlineLayout;
     GenericChatItemLayout friendOfflineLayout;
+    GenericChatItemLayout friendBlockedLayout;
 };

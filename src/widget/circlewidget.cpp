@@ -98,7 +98,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
     QAction* removeAction = menu.addAction(tr("Remove circle", "Menu for removing a circle"));
     QAction* openAction = nullptr;
 
-    if (friendOfflineLayout()->count() + friendOnlineLayout()->count() > 0)
+    if (friendOfflineLayout()->count() + friendOnlineLayout()->count() + friendBlockedLayout()->count() > 0)
         openAction = menu.addAction(tr("Open all in new window"));
 
     QAction* selectedItem = menu.exec(mapToGlobal(event->pos()));
@@ -135,6 +135,14 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
             }
             for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
                 QWidget* const widget = friendOfflineLayout()->itemAt(i)->widget();
+                FriendWidget* const friendWidget = qobject_cast<FriendWidget*>(widget);
+
+                if (friendWidget != nullptr) {
+                    friendWidget->activate();
+                }
+            }
+            for (int i = 0; i < friendBlockedLayout()->count(); ++i) {
+                QWidget* const widget = friendBlockedLayout()->itemAt(i)->widget();
                 FriendWidget* const friendWidget = qobject_cast<FriendWidget*>(widget);
 
                 if (friendWidget != nullptr) {
@@ -244,6 +252,16 @@ void CircleWidget::updateID(int index)
 
     for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
         const QWidget* w = friendOfflineLayout()->itemAt(i)->widget();
+        const FriendWidget* friendWidget = qobject_cast<const FriendWidget*>(w);
+
+        if (friendWidget) {
+            const Friend* f = friendWidget->getFriend();
+            settings.setFriendCircleID(f->getPublicKey(), id);
+        }
+    }
+
+    for (int i = 0; i < friendBlockedLayout()->count(); ++i) {
+        const QWidget* w = friendBlockedLayout()->itemAt(i)->widget();
         const FriendWidget* friendWidget = qobject_cast<const FriendWidget*>(w);
 
         if (friendWidget) {
