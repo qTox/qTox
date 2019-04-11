@@ -2191,17 +2191,24 @@ void Widget::previousContact()
     cycleContacts(false);
 }
 
-QString Widget::getStatusIconPath(Status status)
+QString Widget::getStatusIconPath(Status status, bool event)
 {
+    QString eventSuffix{""};
+    if (event) {
+        eventSuffix = "_notification";
+    }
+
     switch (status) {
     case Status::Online:
-        return ":/img/status/online.svg";
+        return ":/img/status/online" + eventSuffix + ".svg";
     case Status::Away:
-        return ":/img/status/away.svg";
+        return ":/img/status/away" + eventSuffix + ".svg";
     case Status::Busy:
-        return ":/img/status/busy.svg";
+        return ":/img/status/busy" + eventSuffix + ".svg";
     case Status::Offline:
-        return ":/img/status/offline.svg";
+        return ":/img/status/offline" + eventSuffix + ".svg";
+    case Status::Blocked:
+        return ":/img/status/blocked.svg";
     }
     qWarning() << "Status unknown";
     assert(false);
@@ -2253,6 +2260,8 @@ QString Widget::getStatusTitle(Status status)
         return QStringLiteral("busy");
     case Status::Offline:
         return QStringLiteral("offline");
+    case Status::Blocked:
+        return QStringLiteral("blocked");
     }
 
     assert(false);
@@ -2267,8 +2276,14 @@ Status Widget::getStatusFromString(QString status)
         return Status::Away;
     else if (status == QStringLiteral("busy"))
         return Status::Busy;
-    else
+    else if (status == QStringLiteral("offline"))
         return Status::Offline;
+    else if (status == QStringLiteral("blocked"))
+        return Status::Blocked;
+    else {
+        assert(false);
+        return Status::Offline;
+    }
 }
 
 void Widget::searchContacts()

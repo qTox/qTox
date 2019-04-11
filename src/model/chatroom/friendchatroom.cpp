@@ -46,7 +46,7 @@ void FriendChatroom::setActive(bool _active)
 
 bool FriendChatroom::canBeInvited() const
 {
-    return frnd->getStatus() != Status::Offline;
+    return frnd->isOnline();
 }
 
 int FriendChatroom::getCircleId() const

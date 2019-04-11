@@ -48,7 +48,8 @@ enum class Status
     Online = 0,
     Away,
     Busy,
-    Offline
+    Offline,
+    Blocked
 };
 
 class Core;

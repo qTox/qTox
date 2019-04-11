@@ -52,6 +52,7 @@ public:
 
     void setStatus(Status s);
     Status getStatus() const;
+    bool isOnline() const;
 
 signals:
     void nameChanged(uint32_t friendId, const QString& name);

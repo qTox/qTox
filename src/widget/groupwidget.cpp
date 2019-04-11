@@ -39,6 +39,7 @@
 #include "src/widget/friendwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
+#include "src/widget/widget.h"
 #include "tool/croppinglabel.h"
 
 GroupWidget::GroupWidget(std::shared_ptr<GroupChatroom> chatroom, bool compact)
@@ -47,7 +48,7 @@ GroupWidget::GroupWidget(std::shared_ptr<GroupChatroom> chatroom, bool compact)
     , chatroom{chatroom}
 {
     avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()));
-    statusPic.setPixmap(QPixmap(":img/status/online.svg"));
+    statusPic.setPixmap(QPixmap(Widget::getStatusIconPath(Status::Online)));
     statusPic.setMargin(3);
 
     Group* g = chatroom->getGroup();
@@ -178,13 +179,9 @@ void GroupWidget::updateStatusLight()
 {
     Group* g = chatroom->getGroup();
 
-    if (g->getEventFlag()) {
-        statusPic.setPixmap(QPixmap(":img/status/online_notification.svg"));
-        statusPic.setMargin(1);
-    } else {
-        statusPic.setPixmap(QPixmap(":img/status/online.svg"));
-        statusPic.setMargin(3);
-    }
+    const bool event = g->getEventFlag();
+    statusPic.setPixmap(QPixmap(Widget::getStatusIconPath(Status::Online, event)));
+    statusPic.setMargin(event ? 1 : 3);
 }
 
 QString GroupWidget::getStatusString() const
