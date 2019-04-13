@@ -1850,8 +1850,6 @@ Group* Widget::createGroup(int groupId, const GroupId& groupPersistentId)
     }
 
     const auto groupName = tr("Groupchat #%1").arg(groupId);
-    Core* core = core;
-
     bool enabled = core->getGroupAvEnabled(groupId);
     Group* newgroup = GroupList::addGroup(groupId, groupPersistentId, groupName, enabled, core->getUsername());
     std::shared_ptr<GroupChatroom> chatroom(new GroupChatroom(newgroup));
@@ -2412,7 +2410,6 @@ void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
 
 void Widget::retranslateUi()
 {
-    Core* core = core;
     ui->retranslateUi(this);
     setUsername(core->getUsername());
     setStatusMessage(core->getStatusMessage());
