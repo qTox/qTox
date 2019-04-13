@@ -1096,7 +1096,8 @@ bool Core::parsePeerQueryError(Tox_Err_Conference_Peer_Query error) const
     }
 }
 
-GroupId Core::getGroupPersistentId(uint32_t groupNumber) {
+GroupId Core::getGroupPersistentId(uint32_t groupNumber) const
+{
     QMutexLocker ml{&coreLoopLock};
 
     size_t conferenceIdSize = TOX_CONFERENCE_UID_SIZE;
@@ -1273,7 +1274,7 @@ bool Core::parseConferenceJoinError(Tox_Err_Conference_Join error) const
  *
  * @return Conference number on success, UINT32_MAX on failure.
  */
-uint32_t Core::joinGroupchat(const GroupInvite& inviteInfo) const
+uint32_t Core::joinGroupchat(const GroupInvite& inviteInfo)
 {
     QMutexLocker ml{&coreLoopLock};
 
@@ -1282,25 +1283,30 @@ uint32_t Core::joinGroupchat(const GroupInvite& inviteInfo) const
     const QByteArray invite = inviteInfo.getInvite();
     const uint8_t* const cookie = reinterpret_cast<const uint8_t*>(invite.data());
     const size_t cookieLength = invite.length();
+    uint32_t groupNum{std::numeric_limits<uint32_t>::max()};
     switch (confType) {
     case TOX_CONFERENCE_TYPE_TEXT: {
         qDebug() << QString("Trying to join text groupchat invite sent by friend %1").arg(friendId);
         Tox_Err_Conference_Join error;
-        uint32_t groupId = tox_conference_join(tox.get(), friendId, cookie, cookieLength, &error);
-        return parseConferenceJoinError(error) ? groupId : std::numeric_limits<uint32_t>::max();
+        groupNum = tox_conference_join(tox.get(), friendId, cookie, cookieLength, &error);
+        if (!parseConferenceJoinError(error)) {
+            groupNum = std::numeric_limits<uint32_t>::max();
+        }
+        break;
     }
-
     case TOX_CONFERENCE_TYPE_AV: {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendId);
-        return toxav_join_av_groupchat(tox.get(), friendId, cookie, cookieLength,
+        groupNum = toxav_join_av_groupchat(tox.get(), friendId, cookie, cookieLength,
                                        CoreAV::groupCallCallback, const_cast<Core*>(this));
+        break;
     }
-
     default:
         qWarning() << "joinGroupchat: Unknown groupchat type " << confType;
     }
-
-    return std::numeric_limits<uint32_t>::max();
+    if (groupNum != std::numeric_limits<uint32_t>::max()) {
+        emit groupJoined(groupNum, getGroupPersistentId(groupNum));
+    }
+    return groupNum;
 }
 
 void Core::groupInviteFriend(uint32_t friendId, int groupId)

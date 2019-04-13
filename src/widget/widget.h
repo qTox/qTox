@@ -170,7 +170,8 @@ public slots:
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const ToxPk& friendPk, const QString& message);
     void updateFriendActivity(const Friend* frnd);
-    void onEmptyGroupCreated(int groupId, const GroupId& groupPersistentId, const QString& title);
+    void onEmptyGroupCreated(int groupNum, const GroupId& groupId, const QString& title);
+    void onGroupJoined(int groupNum, const GroupId& groupId);
     void onGroupInviteReceived(const GroupInvite& inviteInfo);
     void onGroupInviteAccepted(const GroupInvite& inviteInfo);
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);

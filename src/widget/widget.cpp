@@ -1901,6 +1901,11 @@ void Widget::onEmptyGroupCreated(int groupId, const GroupId& groupPersistentId, 
     }
 }
 
+void Widget::onGroupJoined(int groupId, const GroupId& groupPersistentId)
+{
+    createGroup(groupId, groupPersistentId);
+}
+
 /**
  * @brief Used to reset the blinking icon.
  */

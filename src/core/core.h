@@ -81,7 +81,7 @@ public:
     static QStringList splitMessage(const QString& message, int maxLen);
     QString getPeerName(const ToxPk& id) const;
     QVector<uint32_t> getFriendList() const;
-    GroupId getGroupPersistentId(uint32_t groupNumber);
+    GroupId getGroupPersistentId(uint32_t groupNumber) const;
     uint32_t getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
     ToxPk getGroupPeerPk(int groupId, int peerId) const;
@@ -92,7 +92,7 @@ public:
 
     bool isFriendOnline(uint32_t friendId) const;
     bool hasFriendWithPublicKey(const ToxPk& publicKey) const;
-    uint32_t joinGroupchat(const GroupInvite& inviteInfo) const;
+    uint32_t joinGroupchat(const GroupInvite& inviteInfo);
     void quitGroupChat(int groupId) const;
 
     QString getUsername() const;
@@ -181,6 +181,7 @@ signals:
     void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void groupPeerAudioPlaying(int groupnumber, ToxPk peerPk);
     void groupSentFailed(int groupId);
+    void groupJoined(int groupnumber, GroupId groupId);
     void actionSentResult(uint32_t friendId, const QString& action, int success);
 
     void receiptRecieved(int friedId, ReceiptNum receipt);
