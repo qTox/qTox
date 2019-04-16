@@ -147,8 +147,9 @@ void GroupWidget::mouseMoveEvent(QMouseEvent* ev)
 
     if ((dragStartPos - ev->pos()).manhattanLength() > QApplication::startDragDistance()) {
         QMimeData* mdata = new QMimeData;
-        mdata->setText(getGroup()->getName());
-        mdata->setData("groupId", QByteArray::number(getGroup()->getId()));
+        const Group* group = getGroup();
+        mdata->setText(group->getName());
+        mdata->setData("groupId", group->getPersistentId().getByteArray());
 
         QDrag* drag = new QDrag(this);
         drag->setMimeData(mdata);
@@ -216,9 +217,10 @@ void GroupWidget::resetEventFlags()
 
 void GroupWidget::dragEnterEvent(QDragEnterEvent* ev)
 {
-    // TODO: Send ToxPk in mimeData
-    const ToxId toxId = ToxId(ev->mimeData()->text());
-    const ToxPk pk = toxId.getPublicKey();
+    if (!ev->mimeData()->hasFormat("toxPk")) {
+        return;
+    }
+    const ToxPk pk{ev->mimeData()->data("toxPk")};
     if (chatroom->friendExists(pk)) {
         ev->acceptProposedAction();
     }
@@ -237,8 +239,10 @@ void GroupWidget::dragLeaveEvent(QDragLeaveEvent*)
 
 void GroupWidget::dropEvent(QDropEvent* ev)
 {
-    const ToxId toxId = ToxId(ev->mimeData()->text());
-    const ToxPk pk = toxId.getPublicKey();
+    if (!ev->mimeData()->hasFormat("toxPk")) {
+        return;
+    }
+    const ToxPk pk{ev->mimeData()->data("toxPk")};
     if (!chatroom->friendExists(pk)) {
         return;
     }

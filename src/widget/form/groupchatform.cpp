@@ -398,16 +398,22 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
 
 void GroupChatForm::dragEnterEvent(QDragEnterEvent* ev)
 {
-    ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend* frnd = FriendList::findFriend(toxId.getPublicKey());
+    if (!ev->mimeData()->hasFormat("toxPk")) {
+        return;
+    }
+    ToxPk toxPk{ev->mimeData()->data("toxPk")};
+    Friend* frnd = FriendList::findFriend(toxPk);
     if (frnd)
         ev->acceptProposedAction();
 }
 
 void GroupChatForm::dropEvent(QDropEvent* ev)
 {
-    ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend* frnd = FriendList::findFriend(toxId.getPublicKey());
+    if (!ev->mimeData()->hasFormat("toxPk")) {
+        return;
+    }
+    ToxPk toxPk{ev->mimeData()->data("toxPk")};
+    Friend* frnd = FriendList::findFriend(toxPk);
     if (!frnd)
         return;
 

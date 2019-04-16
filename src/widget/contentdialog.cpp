@@ -458,8 +458,9 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent* event)
     FriendWidget* frnd = qobject_cast<FriendWidget*>(o);
     GroupWidget* group = qobject_cast<GroupWidget*>(o);
     if (frnd) {
-        ToxId toxId(event->mimeData()->text());
-        Friend* contact = FriendList::findFriend(toxId.getPublicKey());
+        assert(event->mimeData()->hasFormat("toxPk"));
+        ToxPk toxPk{event->mimeData()->data("toxPk")};
+        Friend* contact = FriendList::findFriend(toxPk);
         if (!contact) {
             return;
         }
@@ -471,11 +472,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent* event)
             event->acceptProposedAction();
         }
     } else if (group) {
-        qDebug() << event->mimeData()->formats();
-        if (!event->mimeData()->hasFormat("groupId")) {
-            return;
-        }
-
+        assert(event->mimeData()->hasFormat("groupId"));
         GroupId groupId = GroupId{event->mimeData()->data("groupId")};
         Group* contact = GroupList::findGroup(groupId);
         if (!contact) {
@@ -494,8 +491,9 @@ void ContentDialog::dropEvent(QDropEvent* event)
     FriendWidget* frnd = qobject_cast<FriendWidget*>(o);
     GroupWidget* group = qobject_cast<GroupWidget*>(o);
     if (frnd) {
-        ToxId toxId(event->mimeData()->text());
-        Friend* contact = FriendList::findFriend(toxId.getPublicKey());
+        assert(event->mimeData()->hasFormat("toxPk"));
+        const ToxPk toxId(event->mimeData()->data("toxPk"));
+        Friend* contact = FriendList::findFriend(toxId);
         if (!contact) {
             return;
         }
@@ -503,11 +501,8 @@ void ContentDialog::dropEvent(QDropEvent* event)
         Widget::getInstance()->addFriendDialog(contact, this);
         ensureSplitterVisible();
     } else if (group) {
-        if (!event->mimeData()->hasFormat("groupId")) {
-            return;
-        }
-
-        int groupId = event->mimeData()->data("groupId").toInt();
+        assert(event->mimeData()->hasFormat("groupId"));
+        const GroupId groupId(event->mimeData()->data("groupId"));
         Group* contact = GroupList::findGroup(groupId);
         if (!contact) {
             return;

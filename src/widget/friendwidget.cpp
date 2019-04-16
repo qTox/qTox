@@ -425,7 +425,9 @@ void FriendWidget::mouseMoveEvent(QMouseEvent* ev)
     const int distance = (dragStartPos - ev->pos()).manhattanLength();
     if (distance > QApplication::startDragDistance()) {
         QMimeData* mdata = new QMimeData;
-        mdata->setText(getFriend()->getPublicKey().toString());
+        const Friend* frnd = getFriend();
+        mdata->setText(frnd->getDisplayedName());
+        mdata->setData("toxPk", frnd->getPublicKey().getByteArray());
 
         QDrag* drag = new QDrag(this);
         drag->setMimeData(mdata);

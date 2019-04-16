@@ -565,8 +565,11 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
 
 void FriendListWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-    ToxId toxId(event->mimeData()->text());
-    Friend* frnd = FriendList::findFriend(toxId.getPublicKey());
+    if (!event->mimeData()->hasFormat("toxPk")) {
+        return;
+    }
+    ToxPk toxPk(event->mimeData()->data("toxPk"));;
+    Friend* frnd = FriendList::findFriend(toxPk);
     if (frnd)
         event->acceptProposedAction();
 }
@@ -580,8 +583,8 @@ void FriendListWidget::dropEvent(QDropEvent* event)
         return;
 
     // Check, that the user has a friend with the same ToxPk
-    const QByteArray data = QByteArray::fromHex(event->mimeData()->text().toLatin1());
-    const ToxPk toxPk{data};
+    assert(event->mimeData()->hasFormat("toxPk"));
+    const ToxPk toxPk{event->mimeData()->data("toxPk")};
     Friend* f = FriendList::findFriend(toxPk);
     if (!f)
         return;
