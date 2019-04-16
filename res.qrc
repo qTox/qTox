@@ -81,7 +81,6 @@
         <file>themes/dark/emoticonWidget/emoticonWidget.css</file>
         <file>themes/dark/friendList/friendList.css</file>
         <file>themes/dark/msgEdit/msgEdit.css</file>
-        <file>themes/dark/settings/mainContent.css</file>
         <file>themes/dark/settings/mainHead.css</file>
         <file>themes/dark/settings/checkboxChecked.svg</file>
         <file>themes/dark/settings/checkboxCheckedDisabled.svg</file>
@@ -147,7 +146,6 @@
         <file>themes/default/emoticonWidget/emoticonWidget.css</file>
         <file>themes/default/friendList/friendList.css</file>
         <file>themes/default/msgEdit/msgEdit.css</file>
-        <file>themes/default/settings/mainContent.css</file>
         <file>themes/default/settings/mainHead.css</file>
         <file>themes/default/statusButton/statusButton.css</file>
         <file>themes/default/statusButton/menu_indicator.svg</file>
