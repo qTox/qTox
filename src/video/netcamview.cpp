@@ -31,10 +31,10 @@
 #include <QFrame>
 #include <QLabel>
 
-NetCamView::NetCamView(int friendId, QWidget* parent)
+NetCamView::NetCamView(ToxPk friendPk, QWidget* parent)
     : GenericNetCamView(parent)
     , selfFrame{nullptr}
-    , friendPk{FriendList::findFriend(friendId)->getPublicKey()}
+    , friendPk{friendPk}
     , e(false)
 {
     videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(friendPk), this);

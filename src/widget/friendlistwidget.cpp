@@ -282,7 +282,7 @@ void FriendListWidget::addGroupWidget(GroupWidget* widget)
     groupLayout.addSortedWidget(widget);
     Group* g = widget->getGroup();
     connect(g, &Group::titleChanged,
-            [=](uint32_t groupId, const QString& author, const QString& name) {
+            [=](const GroupId& groupId, const QString& author, const QString& name) {
         Q_UNUSED(groupId);
         Q_UNUSED(author);
         renameGroupWidget(widget, name);

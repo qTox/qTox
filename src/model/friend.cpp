@@ -57,7 +57,7 @@ void Friend::setName(const QString& _name)
     }
     if (userName != name) {
         userName = name;
-        emit nameChanged(friendId, name);
+        emit nameChanged(friendPk, name);
     }
 
     const auto newDisplayed = getDisplayedName();
@@ -74,7 +74,7 @@ void Friend::setAlias(const QString& alias)
     if (userAlias == alias) {
         return;
     }
-    emit aliasChanged(friendId, alias);
+    emit aliasChanged(friendPk, alias);
 
     // save old displayed name to be able to compare for changes
     const auto oldDisplayed = getDisplayedName();
@@ -98,7 +98,7 @@ void Friend::setStatusMessage(const QString& message)
 {
     if (statusMessage != message) {
         statusMessage = message;
-        emit statusMessageChanged(friendId, message);
+        emit statusMessageChanged(friendPk, message);
     }
 }
 
@@ -156,7 +156,7 @@ void Friend::setStatus(Status s)
 {
     if (friendStatus != s) {
         friendStatus = s;
-        emit statusChanged(friendId, friendStatus);
+        emit statusChanged(friendPk, friendStatus);
     }
 }
 

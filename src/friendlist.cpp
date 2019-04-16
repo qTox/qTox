@@ -20,31 +20,33 @@
 #include "friendlist.h"
 #include "src/model/friend.h"
 #include "src/persistence/settings.h"
+#include "src/core/contactid.h"
+#include "src/core/toxpk.h"
 #include <QDebug>
 #include <QHash>
 #include <QMenu>
 
-QHash<uint32_t, Friend*> FriendList::friendList;
-QHash<QByteArray, uint32_t> FriendList::key2id;
+QHash<ToxPk, Friend*> FriendList::friendList;
+QHash<uint32_t, ToxPk> FriendList::id2key;
 
 Friend* FriendList::addFriend(uint32_t friendId, const ToxPk& friendPk)
 {
-    auto friendChecker = friendList.find(friendId);
+    auto friendChecker = friendList.find(friendPk);
     if (friendChecker != friendList.end()) {
-        qWarning() << "addFriend: friendId already taken";
+        qWarning() << "addFriend: friendPk already taken";
     }
 
     QString alias = Settings::getInstance().getFriendAlias(friendPk);
     Friend* newfriend = new Friend(friendId, friendPk, alias);
-    friendList[friendId] = newfriend;
-    key2id[friendPk.getByteArray()] = friendId;
+    friendList[friendPk] = newfriend;
+    id2key[friendId] = friendPk;
 
     return newfriend;
 }
 
-Friend* FriendList::findFriend(uint32_t friendId)
+Friend* FriendList::findFriend(const ToxPk& friendPk)
 {
-    auto f_it = friendList.find(friendId);
+    auto f_it = friendList.find(friendPk);
     if (f_it != friendList.end()) {
         return *f_it;
     }
@@ -52,9 +54,14 @@ Friend* FriendList::findFriend(uint32_t friendId)
     return nullptr;
 }
 
-void FriendList::removeFriend(uint32_t friendId, bool fake)
+const ToxPk& FriendList::id2Key(uint32_t friendId)
 {
-    auto f_it = friendList.find(friendId);
+    return id2key[friendId];
+}
+
+void FriendList::removeFriend(const ToxPk& friendPk, bool fake)
+{
+    auto f_it = friendList.find(friendPk);
     if (f_it != friendList.end()) {
         if (!fake)
             Settings::getInstance().removeFriendSettings(f_it.value()->getPublicKey());
@@ -69,28 +76,14 @@ void FriendList::clear()
     friendList.clear();
 }
 
-Friend* FriendList::findFriend(const ToxPk& friendPk)
-{
-    auto id = key2id.find(friendPk.getByteArray());
-    if (id != key2id.end()) {
-        Friend* f = findFriend(*id);
-        if (!f)
-            return nullptr;
-        if (f->getPublicKey() == friendPk)
-            return f;
-    }
-
-    return nullptr;
-}
-
 QList<Friend*> FriendList::getAllFriends()
 {
     return friendList.values();
 }
 
-QString FriendList::decideNickname(ToxPk peerPk, const QString origName)
+QString FriendList::decideNickname(const ToxPk& friendPk, const QString origName)
 {
-    Friend* f = FriendList::findFriend(peerPk);
+    Friend* f = FriendList::findFriend(friendPk);
     if (f != nullptr && f->hasAlias()) {
         return f->getDisplayedName();
     } else {

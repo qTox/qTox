@@ -55,10 +55,10 @@ public:
     bool isOnline() const;
 
 signals:
-    void nameChanged(uint32_t friendId, const QString& name);
-    void aliasChanged(uint32_t friendId, QString alias);
-    void statusChanged(uint32_t friendId, Status status);
-    void statusMessageChanged(uint32_t friendId, const QString& message);
+    void nameChanged(const ToxPk& friendId, const QString& name);
+    void aliasChanged(const ToxPk& friendId, QString alias);
+    void statusChanged(const ToxPk& friendId, Status status);
+    void statusMessageChanged(const ToxPk& friendId, const QString& message);
     void loadChatHistory();
 
 public slots:

@@ -33,13 +33,15 @@ class GroupList
 {
 public:
     static Group* addGroup(int groupId, const GroupId& persistentGroupId, const QString& name, bool isAvGroupchat, const QString& selfName);
-    static Group* findGroup(int groupId);
-    static void removeGroup(int groupId, bool fake = false);
+    static Group* findGroup(const GroupId& groupId);
+    static const GroupId& id2Key(uint32_t groupNum);
+    static void removeGroup(const GroupId& groupId, bool fake = false);
     static QList<Group*> getAllGroups();
     static void clear();
 
 private:
-    static QHash<int, Group*> groupList;
+    static QHash<const GroupId, Group*> groupList;
+    static QHash<uint32_t, GroupId> id2key;
 };
 
 #endif // GROUPLIST_H

@@ -22,22 +22,22 @@
 #include <QDebug>
 #include <QHash>
 
-QHash<int, Group*> GroupList::groupList;
-
-Group* GroupList::addGroup(int groupId, const GroupId& persistentGroupId, const QString& name, bool isAvGroupchat,
+QHash<const GroupId, Group*> GroupList::groupList;
+QHash<uint32_t, GroupId> GroupList::id2key;
+Group* GroupList::addGroup(int groupNum, const GroupId& groupId, const QString& name, bool isAvGroupchat,
                            const QString& selfName)
 {
     auto checker = groupList.find(groupId);
     if (checker != groupList.end())
         qWarning() << "addGroup: groupId already taken";
 
-    Group* newGroup = new Group(groupId, persistentGroupId, name, isAvGroupchat, selfName);
+    Group* newGroup = new Group(groupNum, groupId, name, isAvGroupchat, selfName);
     groupList[groupId] = newGroup;
-
+    id2key[groupNum] = groupId;
     return newGroup;
 }
 
-Group* GroupList::findGroup(int groupId)
+Group* GroupList::findGroup(const GroupId& groupId)
 {
     auto g_it = groupList.find(groupId);
     if (g_it != groupList.end())
@@ -46,7 +46,12 @@ Group* GroupList::findGroup(int groupId)
     return nullptr;
 }
 
-void GroupList::removeGroup(int groupId, bool /*fake*/)
+const GroupId& GroupList::id2Key(uint32_t groupNum)
+{
+    return id2key[groupNum];
+}
+
+void GroupList::removeGroup(const GroupId& groupId, bool /*fake*/)
 {
     auto g_it = groupList.find(groupId);
     if (g_it != groupList.end()) {

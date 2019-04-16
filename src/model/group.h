@@ -37,7 +37,7 @@ public:
     Group(int groupId, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat, const QString& selfName);
     bool isAvGroupchat() const;
     uint32_t getId() const override;
-    const ContactId& getPersistentId() const override;
+    const GroupId& getPersistentId() const override;
     int getPeersCount() const;
     void regeneratePeerList();
     const QMap<ToxPk, QString>& getPeerList() const;
@@ -60,9 +60,9 @@ public:
     QString getSelfName() const;
 
 signals:
-    void titleChangedByUser(uint32_t groupId, const QString& title);
-    void titleChanged(uint32_t groupId, const QString& author, const QString& title);
-    void userListChanged(uint32_t groupId, const QMap<ToxPk, QString>& toxpks);
+    void titleChangedByUser(const GroupId& groupId, const QString& title);
+    void titleChanged(const GroupId& groupId, const QString& author, const QString& title);
+    void userListChanged(const GroupId& groupId, const QMap<ToxPk, QString>& toxpks);
 
 private:
     void stopAudioOfDepartedPeers(const QList<ToxPk>& oldPks, const QMap<ToxPk, QString>& newPks);

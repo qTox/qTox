@@ -44,7 +44,7 @@
 
 GroupWidget::GroupWidget(std::shared_ptr<GroupChatroom> chatroom, bool compact)
     : GenericChatroomWidget(compact)
-    , groupId{static_cast<int>(chatroom->getGroup()->getId())}
+    , groupId{chatroom->getGroup()->getPersistentId()}
     , chatroom{chatroom}
 {
     avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()));
@@ -68,7 +68,7 @@ GroupWidget::~GroupWidget()
     Translator::unregister(this);
 }
 
-void GroupWidget::updateTitle(uint32_t groupId, const QString& author, const QString& newName)
+void GroupWidget::updateTitle(const GroupId& groupId, const QString& author, const QString& newName)
 {
     Q_UNUSED(groupId);
     Q_UNUSED(author);
@@ -96,7 +96,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
         openChatWindow = menu.addAction(tr("Open chat in new window"));
     }
 
-    if (contentDialog && contentDialog->hasGroupWidget(groupId)) {
+    if (contentDialog && contentDialog->hasContactWidget(groupId)) {
         removeChatWindow = menu.addAction(tr("Remove chat from this window"));
     }
 
@@ -202,6 +202,11 @@ void GroupWidget::editName()
 Group* GroupWidget::getGroup() const
 {
     return chatroom->getGroup();
+}
+
+const Contact* GroupWidget::getContact() const
+{
+    return getGroup();
 }
 
 void GroupWidget::resetEventFlags()

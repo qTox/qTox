@@ -340,7 +340,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         return;
     }
 
-    Widget::getInstance()->newFriendMessageAlert(file.friendId);
+    Widget::getInstance()->newFriendMessageAlert(f->getPublicKey());
     QString name;
     ToxPk friendId = f->getPublicKey();
     if (friendId != previousId) {
@@ -694,7 +694,7 @@ GenericNetCamView* ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
     uint32_t friendId = f->getId();
-    NetCamView* view = new NetCamView(friendId, this);
+    NetCamView* view = new NetCamView(f->getPublicKey(), this);
     CoreAV* av = Core::getInstance()->getAv();
     VideoSource* source = av->getVideoSourceFromCall(friendId);
     view->show(source, f->getDisplayedName());

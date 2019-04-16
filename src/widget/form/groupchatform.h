@@ -31,6 +31,7 @@ class Group;
 class TabCompleter;
 class FlowLayout;
 class QTimer;
+class GroupId;
 
 class GroupChatForm : public GenericChatForm
 {
@@ -49,7 +50,7 @@ private slots:
     void onVolMuteToggle();
     void onCallClicked();
     void onUserListChanged();
-    void onTitleChanged(uint32_t groupId, const QString& author, const QString& title);
+    void onTitleChanged(const GroupId& groupId, const QString& author, const QString& title);
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter) override;
     void onSearchUp(const QString& phrase, const ParameterSearch& parameter) override;
     void onSearchDown(const QString& phrase, const ParameterSearch& parameter) override;

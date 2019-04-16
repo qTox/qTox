@@ -28,9 +28,9 @@ protected:
     QByteArray id;
 };
 
-inline uint qHash(const std::shared_ptr<const ContactId> id)
+inline uint qHash(const ContactId& id)
 {
-    return qHash(id->getByteArray());
+    return qHash(id.getByteArray());
 }
 
 using ContactIdPtr = std::shared_ptr<const ContactId>;

@@ -29,7 +29,7 @@ class QHBoxLayout;
 class ContentLayout;
 class Friend;
 class Group;
-
+class Contact;
 class GenericChatroomWidget : public GenericChatItemWidget
 {
     Q_OBJECT
@@ -42,6 +42,7 @@ public slots:
     virtual void updateStatusLight() = 0;
     virtual void resetEventFlags() = 0;
     virtual QString getStatusString() const = 0;
+    virtual const Contact* getContact() const = 0;
     virtual const Friend* getFriend() const
     {
         return nullptr;

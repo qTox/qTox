@@ -20,8 +20,12 @@
 #ifndef _CONTENT_DIALOG_MANAGER_H_
 #define _CONTENT_DIALOG_MANAGER_H_
 
-#include <QObject>
+#include "src/core/contactid.h"
+#include "src/core/toxpk.h"
+#include "src/core/groupid.h"
 #include "contentdialog.h"
+
+#include <QObject>
 
 /**
  * @breaf Manage all content dialogs
@@ -31,16 +35,13 @@ class ContentDialogManager : public QObject
     Q_OBJECT
 public:
     ContentDialog* current();
-    bool friendWidgetExists(int friendId);
-    bool groupWidgetExists(int groupId);
-    void focusFriend(int friendId);
-    void focusGroup(int groupId);
-    void updateFriendStatus(int friendId);
-    void updateGroupStatus(int groupId);
-    bool isFriendWidgetActive(int friendId);
-    bool isGroupWidgetActive(int groupId);
-    ContentDialog* getFriendDialog(int friendId) const;
-    ContentDialog* getGroupDialog(int groupId) const;
+    bool contactWidgetExists(const ContactId& groupId);
+    void focusContact(const ContactId& contactId);
+    void updateFriendStatus(const ToxPk& friendPk);
+    void updateGroupStatus(const GroupId& friendPk);
+    bool isContactWidgetActive(const ContactId& contactId);
+    ContentDialog* getFriendDialog(const ToxPk& friendPk) const;
+    ContentDialog* getGroupDialog(const GroupId& friendPk) const;
 
     FriendWidget* addFriendToDialog(ContentDialog* dialog, std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form);
     GroupWidget* addGroupToDialog(ContentDialog* dialog, std::shared_ptr<GroupChatroom> chatroom, GenericChatForm* form);
@@ -54,12 +55,11 @@ private slots:
     void onDialogActivate();
 
 private:
-    ContentDialog* focusDialog(int id, const QHash<int, ContentDialog*>& list);
+    ContentDialog* focusDialog(const ContactId& id, const QHash<const ContactId&, ContentDialog*>& list);
 
     ContentDialog* currentDialog = nullptr;
 
-    QHash<int, ContentDialog*> friendDialogs;
-    QHash<int, ContentDialog*> groupDialogs;
+    QHash<const ContactId&, ContentDialog*> contactDialogs;
 
     static ContentDialogManager* instance;
 };

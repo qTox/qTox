@@ -52,7 +52,7 @@ void Group::updatePeer(int peerId, QString name)
     ToxPk peerKey = Core::getInstance()->getGroupPeerPk(groupId, peerId);
     toxpks[peerKey] = name;
     qDebug() << "name change: " + name;
-    emit userListChanged(groupId, toxpks);
+    emit userListChanged(persistentGroupId, toxpks);
 }
 
 void Group::setName(const QString& newTitle)
@@ -61,8 +61,8 @@ void Group::setName(const QString& newTitle)
     if (!shortTitle.isEmpty() && title != shortTitle) {
         title = shortTitle;
         emit displayedNameChanged(title);
-        emit titleChangedByUser(groupId, title);
-        emit titleChanged(groupId, selfName, title);
+        emit titleChangedByUser(persistentGroupId, title);
+        emit titleChanged(persistentGroupId, selfName, title);
     }
 }
 
@@ -72,7 +72,7 @@ void Group::setTitle(const QString& author, const QString& newTitle)
     if (!shortTitle.isEmpty() && title != shortTitle) {
         title = shortTitle;
         emit displayedNameChanged(title);
-        emit titleChanged(groupId, author, title);
+        emit titleChanged(persistentGroupId, author, title);
     }
 }
 
@@ -114,7 +114,7 @@ void Group::regeneratePeerList()
     if (avGroupchat) {
         stopAudioOfDepartedPeers(oldPeers, toxpks);
     }
-    emit userListChanged(groupId, toxpks);
+    emit userListChanged(persistentGroupId, toxpks);
 }
 
 bool Group::peerHasNickname(ToxPk pk)
@@ -125,7 +125,7 @@ bool Group::peerHasNickname(ToxPk pk)
 void Group::updateUsername(ToxPk pk, const QString newName)
 {
     toxpks[pk] = newName;
-    emit userListChanged(groupId, toxpks);
+    emit userListChanged(persistentGroupId, toxpks);
 }
 
 bool Group::isAvGroupchat() const
@@ -138,7 +138,7 @@ uint32_t Group::getId() const
     return groupId;
 }
 
-const ContactId& Group::getPersistentId() const
+const GroupId& Group::getPersistentId() const
 {
     return persistentGroupId;
 }

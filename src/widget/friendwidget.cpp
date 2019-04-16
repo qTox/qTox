@@ -105,8 +105,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     QMenu menu;
 
     const auto frnd = chatroom->getFriend();
-    const auto friendId = frnd->getId();
-    const auto contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendId);
+    const auto friendPk = frnd->getPublicKey();
+    const auto contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendPk);
 
     // TODO: move to model
     if (!contentDialog || contentDialog->chatroomWidgetCount() > 1) {
@@ -115,7 +115,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     }
 
     // TODO: move to model
-    if (contentDialog && contentDialog->hasFriendWidget(friendId)) {
+    if (contentDialog && contentDialog->hasContactWidget(friendPk)) {
         const auto removeChatWindow = menu.addAction(tr("Remove chat from this window"));
         connect(removeChatWindow, &QAction::triggered, this, &FriendWidget::removeChatWindow);
     }
@@ -170,10 +170,10 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     menu.addSeparator();
 
     // TODO: move to model
-    if (!contentDialog || !contentDialog->hasFriendWidget(friendId)) {
+    if (!contentDialog || !contentDialog->hasContactWidget(friendPk)) {
         const auto removeAction =
             menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
-        connect(removeAction, &QAction::triggered, this, [=]() { emit removeFriend(friendId); },
+        connect(removeAction, &QAction::triggered, this, [=]() { emit removeFriend(friendPk); },
                 Qt::QueuedConnection);
     }
 
@@ -194,9 +194,9 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 void FriendWidget::removeChatWindow()
 {
     const auto frnd = chatroom->getFriend();
-    const auto friendId = frnd->getId();
-    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendId);
-    contentDialog->removeFriend(friendId);
+    const auto friendPk = frnd->getPublicKey();
+    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendPk);
+    contentDialog->removeFriend(friendPk);
 }
 
 namespace {
@@ -359,6 +359,11 @@ QString FriendWidget::getStatusString() const
 const Friend* FriendWidget::getFriend() const
 {
     return chatroom->getFriend();
+}
+
+const Contact* FriendWidget::getContact() const
+{
+    return getFriend();
 }
 
 void FriendWidget::search(const QString& searchString, bool hide)

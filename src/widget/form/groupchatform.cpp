@@ -22,6 +22,7 @@
 #include "tabcompleter.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
+#include "src/core/groupid.h"
 #include "src/chatlog/chatlog.h"
 #include "src/chatlog/content/text.h"
 #include "src/model/friend.h"
@@ -187,7 +188,7 @@ void GroupChatForm::onUserListChanged()
     }
 }
 
-void GroupChatForm::onTitleChanged(uint32_t groupId, const QString& author, const QString& title)
+void GroupChatForm::onTitleChanged(const GroupId& groupId, const QString& author, const QString& title)
 {
     Q_UNUSED(groupId);
     if (author.isEmpty()) {
