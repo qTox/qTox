@@ -72,12 +72,6 @@ const QString ChatForm::ACTION_PREFIX = QStringLiteral("/me ");
 
 namespace
 {
-    QString statusToString(const Status status)
-    {
-        QString result;
-        return ChatForm::tr(Widget::getStatusTitle(status).toLatin1().data(), "contact status");
-    }
-
     QString secondsToDHMS(quint32 duration)
     {
         QString res;
@@ -635,7 +629,7 @@ void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
     updateCallButtons();
 
     if (Settings::getInstance().getStatusChangeNotificationEnabled()) {
-        QString fStatus = statusToString(status);
+        QString fStatus = Widget::getStatusTitle(status);
         addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"")
                                  .arg(f->getDisplayedName())
                                  .arg(fStatus),
