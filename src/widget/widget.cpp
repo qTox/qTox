@@ -2266,15 +2266,15 @@ QString Widget::getStatusTitle(Status status)
 {
     switch (status) {
     case Status::Online:
-        return QStringLiteral("online");
+        return tr("online", "contact status");
     case Status::Away:
-        return QStringLiteral("away");
+        return tr("away", "contact status");
     case Status::Busy:
-        return QStringLiteral("busy");
+        return tr("busy", "contact status");
     case Status::Offline:
-        return QStringLiteral("offline");
+        return tr("offline", "contact status");
     case Status::Blocked:
-        return QStringLiteral("blocked");
+        return tr("blocked", "contact status");
     }
 
     assert(false);
