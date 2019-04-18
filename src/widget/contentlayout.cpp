@@ -120,6 +120,7 @@ void ContentLayout::init()
 
     reloadTheme();
 
+    mainHLineLayout.addSpacing(4);
     mainHLineLayout.addWidget(&mainHLine);
     mainHLineLayout.addSpacing(5);
 

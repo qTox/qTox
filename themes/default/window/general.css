@@ -11,6 +11,11 @@ QDialog
     background: white;
 }
 
+QWidget#contentWidget
+{
+    background: white;
+}
+
 QTabWidget
 {
     background-color: white;
@@ -265,4 +270,10 @@ QPushButton
 {
     background: #ebebeb;
     color: @mainText;
+}
+
+QSplitter:handle
+{
+    color: white;
+    background-color: white;
 }

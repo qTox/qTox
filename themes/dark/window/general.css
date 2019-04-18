@@ -296,3 +296,9 @@ QPushButton
     background: #323030;
     color: @mainText;
 }
+
+QSplitter:handle
+{
+    color: @groundBase;
+    background-color: @groundBase;
+}

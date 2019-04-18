@@ -1,14 +1,3 @@
-QSplitter
-{
-    color: white;
-    background-color: white;
-    alternate-background-color: white;
-    border-color: white;
-    gridline-color: white;
-    selection-color: white;
-    selection-background-color: white;
-}
-
 QSplitter:handle
 {
     color: white;
