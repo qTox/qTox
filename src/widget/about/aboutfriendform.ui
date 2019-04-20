@@ -118,7 +118,7 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
-        <string>Public key (no ToxID):</string>
+        <string>Public key (not ToxID):</string>
        </property>
       </widget>
      </item>

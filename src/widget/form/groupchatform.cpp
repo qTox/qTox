@@ -513,11 +513,7 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 void GroupChatForm::updateUserCount()
 {
     const int peersCount = group->getPeersCount();
-    if (peersCount == 1) {
-        nusersLabel->setText(tr("1 user in chat", "Number of users in chat"));
-    } else {
-        nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
-    }
+    nusersLabel->setText(tr("%n user(s) in chat", "Number of users in chat", peersCount));
 }
 
 void GroupChatForm::retranslateUi()
