@@ -161,7 +161,11 @@ void GroupWidget::mouseMoveEvent(QMouseEvent* ev)
 void GroupWidget::updateUserCount()
 {
     int peersCount = chatroom->getGroup()->getPeersCount();
-    statusMessageLabel->setText(tr("%n user(s) in chat", "", peersCount));
+    if (peersCount == 1) {
+        statusMessageLabel->setText(tr("%n user in chat", "", peersCount));
+    } else {
+        statusMessageLabel->setText(tr("%n users in chat", "", peersCount));
+    }
 }
 
 void GroupWidget::setAsActiveChatroom()
