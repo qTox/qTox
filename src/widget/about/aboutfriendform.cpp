@@ -2,6 +2,7 @@
 #include "src/widget/gui.h"
 #include "ui_aboutfriendform.h"
 #include "src/core/core.h"
+#include "src/widget/style.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -46,6 +47,8 @@ AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* 
     ui->note->setPlainText(about->getNote());
     ui->statusMessage->setText(about->getStatusMessage());
     ui->avatar->setPixmap(about->getAvatar());
+
+    setStyleSheet(Style::getStylesheet("window/general.css"));
 }
 
 static QString getAutoAcceptDir(const QString& dir)

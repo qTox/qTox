@@ -70,7 +70,7 @@ void ContentLayout::reloadTheme()
 {
 #ifndef Q_OS_MAC
     mainHead->setStyleSheet(Style::getStylesheet("settings/mainHead.css"));
-    mainContent->setStyleSheet(Style::getStylesheet("settings/mainContent.css"));
+    mainContent->setStyleSheet(Style::getStylesheet("window/general.css"));
 #endif
 }
 
@@ -120,6 +120,7 @@ void ContentLayout::init()
 
     reloadTheme();
 
+    mainHLineLayout.addSpacing(4);
     mainHLineLayout.addWidget(&mainHLine);
     mainHLineLayout.addSpacing(5);
 
