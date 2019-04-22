@@ -47,24 +47,32 @@ namespace Status
         return QStringLiteral("");
     }
 
+    QString getAssetSuffix(Status status)
+    {
+        switch (status) {
+        case Status::Online:
+            return "online";
+        case Status::Away:
+            return "away";
+        case Status::Busy:
+            return "busy";
+        case Status::Offline:
+            return "offline";
+        case Status::Blocked:
+            return "blocked";
+        }
+        assert(false);
+        return QStringLiteral("");
+    }
+
     QString getIconPath(Status status, bool event)
     {
         const QString eventSuffix = event ? QStringLiteral("_notification") : QString();
-
-        switch (status) {
-        case Status::Online:
-            return ":/img/status/online" + eventSuffix + ".svg";
-        case Status::Away:
-            return ":/img/status/away" + eventSuffix + ".svg";
-        case Status::Busy:
-            return ":/img/status/busy" + eventSuffix + ".svg";
-        case Status::Offline:
-            return ":/img/status/offline" + eventSuffix + ".svg";
-        case Status::Blocked:
-            return ":/img/status/blocked.svg";
+        const QString statusSuffix = getAssetSuffix(status);
+        if (status == Status::Blocked) {
+            return ":/img/status/" + statusSuffix + ".svg";
+        } else {
+            return ":/img/status/" + statusSuffix + eventSuffix + ".svg";
         }
-        qWarning() << "Status unknown";
-        assert(false);
-        return QString{};
     }
 } // namespace Status
