@@ -34,6 +34,7 @@ Language | Status
 [Pirate](https://hosted.weblate.org/engage/tox/pr/) | [![Translation status](https://hosted.weblate.org/widgets/tox/pr/svg-badge.svg)](https://hosted.weblate.org/engage/tox/pr/?utm_source=widget)
 [Polski](https://hosted.weblate.org/engage/tox/pl/) | [![Translation status](https://hosted.weblate.org/widgets/tox/pl/svg-badge.svg)](https://hosted.weblate.org/engage/tox/pl/?utm_source=widget)
 [Português](https://hosted.weblate.org/engage/tox/pt/) | [![Translation status](https://hosted.weblate.org/widgets/tox/pt/svg-badge.svg)](https://hosted.weblate.org/engage/tox/pt/?utm_source=widget)
+[Português brasileiro](https://hosted.weblate.org/engage/tox/pt_BR/) | [![Translation status](https://hosted.weblate.org/widgets/tox/pt_BR/svg-badge.svg)](https://hosted.weblate.org/engage/tox/pt_BR/?utm_source=widget)
 [Română](https://hosted.weblate.org/engage/tox/ro/) | [![Translation status](https://hosted.weblate.org/widgets/tox/ro/svg-badge.svg)](https://hosted.weblate.org/engage/tox/ro/?utm_source=widget)
 [Русский](https://hosted.weblate.org/engage/tox/ru/) | [![Translation status](https://hosted.weblate.org/widgets/tox/ru/svg-badge.svg)](https://hosted.weblate.org/engage/tox/ru/?utm_source=widget)
 [Slovenčina](https://hosted.weblate.org/engage/tox/sk/) | [![Translation status](https://hosted.weblate.org/widgets/tox/sk/svg-badge.svg)](https://hosted.weblate.org/engage/tox/sk/?utm_source=widget)
