@@ -437,15 +437,9 @@ void Widget::updateIcons()
         return;
     }
 
-    QString status;
-    if (eventIcon) {
-        status = QStringLiteral("event");
-    } else {
-        status = ui->statusButton->property("status").toString();
-        if (!status.length()) {
-            status = QStringLiteral("offline");
-        }
-    }
+    const QString assetSuffix = eventIcon ? "event" :
+        Status::getAssetSuffix(static_cast<Status::Status>(ui->statusButton->property("status").toInt()));
+
 
     // Some builds of Qt appear to have a bug in icon loading:
     // QIcon::hasThemeIcon is sometimes unaware that the icon returned
@@ -474,11 +468,11 @@ void Widget::updateIcons()
     }
 
     QIcon ico;
-    if (!hasThemeIconBug && QIcon::hasThemeIcon("qtox-" + status)) {
-        ico = QIcon::fromTheme("qtox-" + status);
+    if (!hasThemeIconBug && QIcon::hasThemeIcon("qtox-" + assetSuffix)) {
+        ico = QIcon::fromTheme("qtox-" + assetSuffix);
     } else {
         QString color = settings.getLightTrayIcon() ? "light" : "dark";
-        QString path = ":/img/taskbar/" + color + "/taskbar_" + status + ".svg";
+        QString path = ":/img/taskbar/" + color + "/taskbar_" + assetSuffix + ".svg";
         QSvgRenderer renderer(path);
 
         // Prepare a QImage with desired characteritisc
@@ -649,7 +643,7 @@ void Widget::onBadProxyCore()
 
 void Widget::onStatusSet(Status::Status status)
 {
-    ui->statusButton->setProperty("status", getTitle(status));
+    ui->statusButton->setProperty("status", static_cast<int>(status));
     ui->statusButton->setIcon(prepareIcon(getIconPath(status), icon_size, icon_size));
     updateIcons();
 }
@@ -1968,7 +1962,7 @@ void Widget::onUserAwayCheck()
 {
 #ifdef QTOX_PLATFORM_EXT
     uint32_t autoAwayTime = settings.getAutoAwayTime() * 60 * 1000;
-    bool online = ui->statusButton->property("status").toString() == "online";
+    bool online = static_cast<Status::Status>(ui->statusButton->property("status").toInt()) == Status::Status::Online;
     bool away = autoAwayTime && Platform::getIdleTime() >= autoAwayTime;
 
     if (online && away) {

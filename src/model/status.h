@@ -37,6 +37,7 @@ namespace Status
 
     QString getIconPath(Status status, bool event = false);
     QString getTitle(Status status);
+    QString getAssetSuffix(Status status);
 }
 
 #endif // STATUS_H
