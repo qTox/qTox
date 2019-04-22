@@ -36,9 +36,7 @@ namespace Status
     };
 
     QString getIconPath(Status status, bool event = false);
-    QPixmap getIconPixmap(QString path, uint32_t w, uint32_t h);
     QString getTitle(Status status);
-    Status getFromString(QString status);
 }
 
 #endif // STATUS_H
