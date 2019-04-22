@@ -64,6 +64,7 @@ static QStringList locales = {
     "pr",
     "pl",
     "pt",
+    "pt_BR",
     "ro",
     "ru",
     "sk",
@@ -118,6 +119,8 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
             langName = QLatin1String("Lojban");
         else if (locales[i].startsWith(QLatin1String("pr")))
             langName = QLatin1String("Pirate");
+        else if (locales[i] == (QLatin1String("pt"))) // QTBUG-47891
+            langName = QStringLiteral("português");
         else
             langName = QLocale(locales[i]).nativeLanguageName();
 
