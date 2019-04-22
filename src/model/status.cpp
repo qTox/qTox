@@ -28,13 +28,6 @@
 
 namespace Status
 {
-    QPixmap getIconPixmap(QString path, uint32_t w, uint32_t h)
-    {
-        QPixmap pix(w, h);
-        pix.load(path);
-        return pix;
-    }
-
     QString getTitle(Status status)
     {
         switch (status) {
@@ -52,24 +45,6 @@ namespace Status
 
         assert(false);
         return QStringLiteral("");
-    }
-
-    Status getFromString(QString status)
-    {
-        if (status == QStringLiteral("online"))
-            return Status::Online;
-        else if (status == QStringLiteral("away"))
-            return Status::Away;
-        else if (status == QStringLiteral("busy"))
-            return Status::Busy;
-        else if (status == QStringLiteral("offline"))
-            return Status::Offline;
-        else if (status == QStringLiteral("blocked"))
-            return Status::Blocked;
-        else {
-            assert(false);
-            return Status::Offline;
-        }
     }
 
     QString getIconPath(Status status, bool event)
