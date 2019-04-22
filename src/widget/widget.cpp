@@ -60,6 +60,7 @@
 #include "src/model/friend.h"
 #include "src/model/group.h"
 #include "src/model/groupinvite.h"
+#include "src/model/status.h"
 #include "src/model/profile/profileinfo.h"
 #include "src/net/updatecheck.h"
 #include "src/nexus.h"
@@ -128,15 +129,15 @@ void Widget::init()
 
     // Preparing icons and set their size
     statusOnline = new QAction(this);
-    statusOnline->setIcon(prepareIcon(getStatusIconPath(Status::Online), icon_size, icon_size));
+    statusOnline->setIcon(prepareIcon(Status::getIconPath(Status::Status::Online), icon_size, icon_size));
     connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
 
     statusAway = new QAction(this);
-    statusAway->setIcon(prepareIcon(getStatusIconPath(Status::Away), icon_size, icon_size));
+    statusAway->setIcon(prepareIcon(Status::getIconPath(Status::Status::Away), icon_size, icon_size));
     connect(statusAway, &QAction::triggered, this, &Widget::setStatusAway);
 
     statusBusy = new QAction(this);
-    statusBusy->setIcon(prepareIcon(getStatusIconPath(Status::Busy), icon_size, icon_size));
+    statusBusy->setIcon(prepareIcon(Status::getIconPath(Status::Status::Busy), icon_size, icon_size));
     connect(statusBusy, &QAction::triggered, this, &Widget::setStatusBusy);
 
     actionLogout = new QAction(this);
@@ -215,7 +216,7 @@ void Widget::init()
     ui->mainSplitter->setStretchFactor(0, 0);
     ui->mainSplitter->setStretchFactor(1, 1);
 
-    onStatusSet(Status::Offline);
+    onStatusSet(Status::Status::Offline);
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -575,7 +576,7 @@ void Widget::closeEvent(QCloseEvent* event)
         QWidget::closeEvent(event);
     } else {
         if (autoAwayActive) {
-            emit statusSet(Status::Online);
+            emit statusSet(Status::Status::Online);
             autoAwayActive = false;
         }
         saveWindowGeometry();
@@ -620,7 +621,7 @@ void Widget::onConnected()
 void Widget::onDisconnected()
 {
     ui->statusButton->setEnabled(false);
-    emit core->statusSet(Status::Offline);
+    emit core->statusSet(Status::Status::Offline);
 }
 
 void Widget::onFailedToStartCore()
@@ -646,10 +647,10 @@ void Widget::onBadProxyCore()
     onShowSettings();
 }
 
-void Widget::onStatusSet(Status status)
+void Widget::onStatusSet(Status::Status status)
 {
-    ui->statusButton->setProperty("status", getStatusTitle(status));
-    ui->statusButton->setIcon(prepareIcon(getStatusIconPath(status), icon_size, icon_size));
+    ui->statusButton->setProperty("status", getTitle(status));
+    ui->statusButton->setIcon(prepareIcon(getIconPath(status), icon_size, icon_size));
     updateIcons();
 }
 
@@ -991,7 +992,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
         settings.setFriendActivity(friendPk, chatDate);
     }
 
-    contactListWidget->addFriendWidget(widget, Status::Offline, settings.getFriendCircleID(friendPk));
+    contactListWidget->addFriendWidget(widget, Status::Status::Offline, settings.getFriendCircleID(friendPk));
 
     connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayedNameChanged);
@@ -1037,7 +1038,7 @@ void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
     QMessageBox::critical(nullptr, "Error", info);
 }
 
-void Widget::onFriendStatusChanged(int friendId, Status status)
+void Widget::onFriendStatusChanged(int friendId, Status::Status status)
 {
     const auto& friendPk = FriendList::id2Key(friendId);
     Friend* f = FriendList::findFriend(friendPk);
@@ -1050,9 +1051,9 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     FriendWidget* widget = friendWidgets[f->getPublicKey()];
     if (isActualChange) {
         if (!f->isOnline()) {
-            contactListWidget->moveWidget(widget, Status::Online);
-        } else if (status == Status::Offline) {
-            contactListWidget->moveWidget(widget, Status::Offline);
+            contactListWidget->moveWidget(widget, Status::Status::Online);
+        } else if (status == Status::Status::Offline) {
+            contactListWidget->moveWidget(widget, Status::Status::Offline);
         }
     }
 
@@ -1110,10 +1111,10 @@ void Widget::onFriendAliasChanged(const ToxPk& friendId, const QString& alias)
 
     // TODO(sudden6): don't update the contact list here, make it update itself
     FriendWidget* friendWidget = friendWidgets[friendId];
-    Status status = f->getStatus();
+    Status::Status status = f->getStatus();
     contactListWidget->moveWidget(friendWidget, status);
     FilterCriteria criteria = getFilterCriteria();
-    bool filter = status == Status::Offline ? filterOffline(criteria) : filterOnline(criteria);
+    bool filter = status == Status::Status::Offline ? filterOffline(criteria) : filterOnline(criteria);
     friendWidget->searchName(ui->searchContactText->text(), filter);
 
     settings.setFriendAlias(friendId, alias);
@@ -1446,7 +1447,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 #endif
                 eventFlag = true;
             }
-            bool isBusy = core->getStatus() == Status::Busy;
+            bool isBusy = core->getStatus() == Status::Status::Busy;
             bool busySound = settings.getBusySound();
             bool notifySound = settings.getNotifySound();
 
@@ -1972,11 +1973,11 @@ void Widget::onUserAwayCheck()
 
     if (online && away) {
         qDebug() << "auto away activated at" << QTime::currentTime().toString();
-        emit statusSet(Status::Away);
+        emit statusSet(Status::Status::Away);
         autoAwayActive = true;
     } else if (autoAwayActive && !away) {
         qDebug() << "auto away deactivated at" << QTime::currentTime().toString();
-        emit statusSet(Status::Online);
+        emit statusSet(Status::Status::Online);
         autoAwayActive = false;
     }
 #endif
@@ -2042,7 +2043,7 @@ void Widget::setStatusOnline()
         return;
     }
 
-    core->setStatus(Status::Online);
+    core->setStatus(Status::Status::Online);
 }
 
 void Widget::setStatusAway()
@@ -2051,7 +2052,7 @@ void Widget::setStatusAway()
         return;
     }
 
-    core->setStatus(Status::Away);
+    core->setStatus(Status::Status::Away);
 }
 
 void Widget::setStatusBusy()
@@ -2060,7 +2061,7 @@ void Widget::setStatusBusy()
         return;
     }
 
-    core->setStatus(Status::Busy);
+    core->setStatus(Status::Status::Busy);
 }
 
 void Widget::onGroupSendFailed(uint32_t groupnumber)
@@ -2204,30 +2205,6 @@ void Widget::previousContact()
     cycleContacts(false);
 }
 
-QString Widget::getStatusIconPath(Status status, bool event)
-{
-    QString eventSuffix{""};
-    if (event) {
-        eventSuffix = "_notification";
-    }
-
-    switch (status) {
-    case Status::Online:
-        return ":/img/status/online" + eventSuffix + ".svg";
-    case Status::Away:
-        return ":/img/status/away" + eventSuffix + ".svg";
-    case Status::Busy:
-        return ":/img/status/busy" + eventSuffix + ".svg";
-    case Status::Offline:
-        return ":/img/status/offline" + eventSuffix + ".svg";
-    case Status::Blocked:
-        return ":/img/status/blocked.svg";
-    }
-    qWarning() << "Status unknown";
-    assert(false);
-    return QString{};
-}
-
 // Preparing needed to set correct size of icons for GTK tray backend
 inline QIcon Widget::prepareIcon(QString path, int w, int h)
 {
@@ -2253,50 +2230,6 @@ inline QIcon Widget::prepareIcon(QString path, int w, int h)
     }
 #endif
     return QIcon(path);
-}
-
-QPixmap Widget::getStatusIconPixmap(QString path, uint32_t w, uint32_t h)
-{
-    QPixmap pix(w, h);
-    pix.load(path);
-    return pix;
-}
-
-QString Widget::getStatusTitle(Status status)
-{
-    switch (status) {
-    case Status::Online:
-        return tr("online", "contact status");
-    case Status::Away:
-        return tr("away", "contact status");
-    case Status::Busy:
-        return tr("busy", "contact status");
-    case Status::Offline:
-        return tr("offline", "contact status");
-    case Status::Blocked:
-        return tr("blocked", "contact status");
-    }
-
-    assert(false);
-    return QStringLiteral("");
-}
-
-Status Widget::getStatusFromString(QString status)
-{
-    if (status == QStringLiteral("online"))
-        return Status::Online;
-    else if (status == QStringLiteral("away"))
-        return Status::Away;
-    else if (status == QStringLiteral("busy"))
-        return Status::Busy;
-    else if (status == QStringLiteral("offline"))
-        return Status::Offline;
-    else if (status == QStringLiteral("blocked"))
-        return Status::Blocked;
-    else {
-        assert(false);
-        return Status::Offline;
-    }
 }
 
 void Widget::searchContacts()

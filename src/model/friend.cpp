@@ -20,6 +20,7 @@
 
 #include "friend.h"
 #include "src/model/group.h"
+#include "src/model/status.h"
 #include "src/grouplist.h"
 #include "src/persistence/profile.h"
 #include "src/widget/form/chatform.h"
@@ -30,7 +31,7 @@ Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlia
     , friendPk{friendPk}
     , friendId{friendId}
     , hasNewEvents{false}
-    , friendStatus{Status::Offline}
+    , friendStatus{Status::Status::Offline}
 {
     if (userName.isEmpty()) {
         this->userName = friendPk.toString();
@@ -152,7 +153,7 @@ bool Friend::getEventFlag() const
     return hasNewEvents;
 }
 
-void Friend::setStatus(Status s)
+void Friend::setStatus(Status::Status s)
 {
     if (friendStatus != s) {
         friendStatus = s;
@@ -160,12 +161,12 @@ void Friend::setStatus(Status s)
     }
 }
 
-Status Friend::getStatus() const
+Status::Status Friend::getStatus() const
 {
     return friendStatus;
 }
 
 bool Friend::isOnline() const
 {
-    return friendStatus != Status::Offline && friendStatus != Status::Blocked;
+    return friendStatus != Status::Status::Offline && friendStatus != Status::Status::Blocked;
 }

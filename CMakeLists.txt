@@ -323,6 +323,8 @@ set(${PROJECT_NAME}_SOURCES
   src/model/groupinvite.h
   src/model/group.cpp
   src/model/group.h
+  src/model/status.cpp
+  src/model/status.h
   src/model/interface.h
   src/model/profile/iprofileinfo.h
   src/model/profile/profileinfo.cpp

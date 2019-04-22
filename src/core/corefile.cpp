@@ -23,6 +23,7 @@
 #include "toxfile.h"
 #include "toxstring.h"
 #include "src/persistence/settings.h"
+#include "src/model/status.h"
 #include <QDebug>
 #include <QDir>
 #include <QFile>
@@ -528,9 +529,9 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
     }
 }
 
-void CoreFile::onConnectionStatusChanged(uint32_t friendId, Status state)
+void CoreFile::onConnectionStatusChanged(uint32_t friendId, Status::Status state)
 {
-    bool isOffline = state == Status::Offline;
+    bool isOffline = state == Status::Status::Offline;
     // TODO: Actually resume broken file transfers
     // We need to:
     // - Start a new file transfer with the same 32byte file ID with toxcore

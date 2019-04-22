@@ -16,6 +16,7 @@
 #define FRIENDLISTLAYOUT_H
 
 #include "genericchatitemlayout.h"
+#include "src/model/status.h"
 #include "src/core/core.h"
 #include <QBoxLayout>
 
@@ -29,8 +30,8 @@ public:
     explicit FriendListLayout();
     explicit FriendListLayout(QWidget* parent);
 
-    void addFriendWidget(FriendWidget* widget, Status s);
-    void removeFriendWidget(FriendWidget* widget, Status s);
+    void addFriendWidget(FriendWidget* widget, Status::Status s);
+    void removeFriendWidget(FriendWidget* widget, Status::Status s);
     int indexOfFriendWidget(GenericChatItemWidget* widget, bool online) const;
     void moveFriendWidgets(FriendListWidget* listWidget);
     int friendOnlineCount() const;
@@ -45,7 +46,7 @@ public:
 
 private:
     void init();
-    QLayout* getFriendLayout(Status s) const;
+    QLayout* getFriendLayout(Status::Status s) const;
 
     GenericChatItemLayout friendOnlineLayout;
     GenericChatItemLayout friendOfflineLayout;

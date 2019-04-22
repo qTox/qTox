@@ -34,6 +34,7 @@
 #include "src/model/chatroom/friendchatroom.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
+#include "src/model/status.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
 #include "src/widget/friendwidget.h"
@@ -196,8 +197,8 @@ void ContentDialog::removeFriend(const ToxPk& friendPk)
         cycleContacts(/* forward = */ true, /* inverse = */ false);
     }
 
-    friendLayout->removeFriendWidget(chatroomWidget, Status::Offline);
-    friendLayout->removeFriendWidget(chatroomWidget, Status::Online);
+    friendLayout->removeFriendWidget(chatroomWidget, Status::Status::Offline);
+    friendLayout->removeFriendWidget(chatroomWidget, Status::Status::Online);
 
     chatroomWidget->deleteLater();
 
@@ -385,8 +386,8 @@ void ContentDialog::updateTitleAndStatusIcon()
         return;
     }
 
-    Status currentStatus = activeChatroomWidget->getFriend()->getStatus();
-    setWindowIcon(QIcon{Widget::getStatusIconPath(currentStatus)});
+    Status::Status currentStatus = activeChatroomWidget->getFriend()->getStatus();
+    setWindowIcon(QIcon{Status::getIconPath(currentStatus)});
 }
 
 /**
@@ -590,7 +591,7 @@ bool ContentDialog::containsContact(const ContactId& contactId) const
     return contactWidgets.contains(contactId);
 }
 
-void ContentDialog::updateFriendStatus(const ToxPk& friendPk, Status status)
+void ContentDialog::updateFriendStatus(const ToxPk& friendPk, Status::Status status)
 {
     auto widget = qobject_cast<FriendWidget*>(contactWidgets.value(friendPk));
     addFriendWidget(widget, status);
@@ -633,7 +634,7 @@ void ContentDialog::updateFriendWidget(const ToxPk& friendPk, QString alias)
     Friend* f = FriendList::findFriend(friendPk);
     FriendWidget* friendWidget = qobject_cast<FriendWidget*>(contactWidgets[friendPk]);
 
-    Status status = f->getStatus();
+    Status::Status status = f->getStatus();
     friendLayout->addFriendWidget(friendWidget, status);
 }
 
@@ -698,7 +699,7 @@ QLayout* ContentDialog::nextLayout(QLayout* layout, bool forward) const
     return layouts[next];
 }
 
-void ContentDialog::addFriendWidget(FriendWidget* widget, Status status)
+void ContentDialog::addFriendWidget(FriendWidget* widget, Status::Status status)
 {
     friendLayout->addFriendWidget(widget, status);
 }

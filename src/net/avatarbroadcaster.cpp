@@ -21,6 +21,7 @@
 #include "avatarbroadcaster.h"
 #include "src/core/core.h"
 #include "src/core/corefile.h"
+#include "src/model/status.h"
 #include <QDebug>
 #include <QObject>
 
@@ -36,7 +37,7 @@ QByteArray AvatarBroadcaster::avatarData;
 QMap<uint32_t, bool> AvatarBroadcaster::friendsSentTo;
 
 static QMetaObject::Connection autoBroadcastConn;
-static auto autoBroadcast = [](uint32_t friendId, Status) {
+static auto autoBroadcast = [](uint32_t friendId, Status::Status) {
     AvatarBroadcaster::sendAvatarTo(friendId);
 };
 

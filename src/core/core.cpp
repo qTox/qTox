@@ -27,6 +27,7 @@
 #include "src/core/toxoptions.h"
 #include "src/core/toxstring.h"
 #include "src/model/groupinvite.h"
+#include "src/model/status.h"
 #include "src/nexus.h"
 #include "src/net/bootstrapnodeupdater.h"
 #include "src/persistence/profile.h"
@@ -506,18 +507,18 @@ void Core::onStatusMessageChanged(Tox*, uint32_t friendId, const uint8_t* cMessa
 
 void Core::onUserStatusChanged(Tox*, uint32_t friendId, Tox_User_Status userstatus, void* core)
 {
-    Status status;
+    Status::Status status;
     switch (userstatus) {
     case TOX_USER_STATUS_AWAY:
-        status = Status::Away;
+        status = Status::Status::Away;
         break;
 
     case TOX_USER_STATUS_BUSY:
-        status = Status::Busy;
+        status = Status::Status::Busy;
         break;
 
     default:
-        status = Status::Online;
+        status = Status::Status::Online;
         break;
     }
 
@@ -527,9 +528,9 @@ void Core::onUserStatusChanged(Tox*, uint32_t friendId, Tox_User_Status userstat
 void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection status, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
-    Status friendStatus = status != TOX_CONNECTION_NONE ? Status::Online : Status::Offline;
+    Status::Status friendStatus = status != TOX_CONNECTION_NONE ? Status::Status::Online : Status::Status::Offline;
     // Ignore Online because it will be emited from onUserStatusChanged
-    bool isOffline = friendStatus == Status::Offline;
+    bool isOffline = friendStatus == Status::Status::Offline;
     if (isOffline) {
         emit core->friendStatusChanged(friendId, friendStatus);
         core->checkLastOnline(friendId);
@@ -908,11 +909,11 @@ QString Core::getStatusMessage() const
 /**
  * @brief Returns our user status
  */
-Status Core::getStatus() const
+Status::Status Core::getStatus() const
 {
     QMutexLocker ml{&coreLoopLock};
 
-    return static_cast<Status>(tox_self_get_status(tox.get()));
+    return static_cast<Status::Status>(tox_self_get_status(tox.get()));
 }
 
 void Core::setStatusMessage(const QString& message)
@@ -933,21 +934,21 @@ void Core::setStatusMessage(const QString& message)
     emit statusMessageSet(message);
 }
 
-void Core::setStatus(Status status)
+void Core::setStatus(Status::Status status)
 {
     QMutexLocker ml{&coreLoopLock};
 
     Tox_User_Status userstatus;
     switch (status) {
-    case Status::Online:
+    case Status::Status::Online:
         userstatus = TOX_USER_STATUS_NONE;
         break;
 
-    case Status::Away:
+    case Status::Status::Away:
         userstatus = TOX_USER_STATUS_AWAY;
         break;
 
-    case Status::Busy:
+    case Status::Status::Busy:
         userstatus = TOX_USER_STATUS_BUSY;
         break;
 

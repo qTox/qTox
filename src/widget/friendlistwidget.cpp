@@ -26,6 +26,7 @@
 #include "src/friendlist.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
+#include "src/model/status.h"
 #include "src/persistence/settings.h"
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
@@ -289,7 +290,7 @@ void FriendListWidget::addGroupWidget(GroupWidget* widget)
     });
 }
 
-void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleIndex)
+void FriendListWidget::addFriendWidget(FriendWidget* w, Status::Status s, int circleIndex)
 {
     CircleWidget* circleWidget = CircleWidget::getFromID(circleIndex);
     if (circleWidget == nullptr)
@@ -609,7 +610,7 @@ void FriendListWidget::dayTimeout()
     dayTimer->start(timeUntilTomorrow());
 }
 
-void FriendListWidget::moveWidget(FriendWidget* widget, Status s, bool add)
+void FriendListWidget::moveWidget(FriendWidget* widget, Status::Status s, bool add)
 {
     if (mode == Name) {
         const Friend* f = widget->getFriend();

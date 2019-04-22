@@ -27,6 +27,7 @@
 #include "groupid.h"
 
 #include "src/util/strongtype.h"
+#include "src/model/status.h"
 #include <tox/tox.h>
 
 #include <QMutex>
@@ -42,16 +43,6 @@ class CoreFile;
 class ICoreSettings;
 class GroupInvite;
 class Profile;
-
-enum class Status
-{
-    Online = 0,
-    Away,
-    Busy,
-    Offline,
-    Blocked
-};
-
 class Core;
 
 using ToxCorePtr = std::unique_ptr<Core>;
@@ -97,7 +88,7 @@ public:
     void quitGroupChat(int groupId) const;
 
     QString getUsername() const;
-    Status getStatus() const;
+    Status::Status getStatus() const;
     QString getStatusMessage() const;
     ToxId getSelfId() const;
     ToxPk getSelfPublicKey() const;
@@ -118,7 +109,7 @@ public slots:
     void removeFriend(uint32_t friendId);
     void removeGroup(int groupId);
 
-    void setStatus(Status status);
+    void setStatus(Status::Status status);
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
 
@@ -144,12 +135,12 @@ signals:
 
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
-    void statusSet(Status status);
+    void statusSet(Status::Status status);
     void idSet(const ToxId& id);
 
     void failedToSetUsername(const QString& username);
     void failedToSetStatusMessage(const QString& message);
-    void failedToSetStatus(Status status);
+    void failedToSetStatus(Status::Status status);
     void failedToSetTyping(bool typing);
 
     void avReady();
@@ -165,7 +156,7 @@ signals:
     void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
     void friendAdded(uint32_t friendId, const ToxPk& friendPk);
 
-    void friendStatusChanged(uint32_t friendId, Status status);
+    void friendStatusChanged(uint32_t friendId, Status::Status status);
     void friendStatusMessageChanged(uint32_t friendId, const QString& message);
     void friendUsernameChanged(uint32_t friendId, const QString& username);
     void friendTypingChanged(uint32_t friendId, bool isTyping);

@@ -22,7 +22,9 @@
 
 #include "src/widget/genericchatitemlayout.h"
 #include "src/widget/tool/activatedialog.h"
-#include "src/core/core.h" // Status
+#include "src/model/status.h"
+#include "src/core/groupid.h"
+#include "src/core/toxpk.h"
 
 #include <memory>
 #include <tuple>
@@ -68,13 +70,13 @@ public:
     void onVideoShow(QSize size);
     void onVideoHide();
 
-    void addFriendWidget(FriendWidget* widget, Status status);
+    void addFriendWidget(FriendWidget* widget, Status::Status status);
     bool isActiveWidget(GenericChatroomWidget* widget);
 
     bool hasContactWidget(const ContactId& contactId) const;
     void focusContact(const ContactId& friendPk);
     bool containsContact(const ContactId& friendPk) const;
-    void updateFriendStatus(const ToxPk& friendPk, Status status);
+    void updateFriendStatus(const ToxPk& friendPk, Status::Status status);
     void updateContactStatusLight(const ContactId& contactId);
     bool isContactWidgetActive(const ContactId& contactId);
 
