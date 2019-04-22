@@ -119,15 +119,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
 <context>
     <name>AboutForm</name>
     <message>
-        <source>Restart qTox to install version %1</source>
-        <translation>Taaskäivita qTox, et paigaldada versioon %1</translation>
-    </message>
-    <message>
-        <source>qTox is downloading update %1</source>
-        <comment>%1 is the version of the update</comment>
-        <translation>qTox laeb alla uuendust versiooninumbriga %1</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>Programmist lähemalt</translation>
     </message>
@@ -195,10 +186,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>status message</source>
         <translation>olekuteade</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Avalik võti:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -269,13 +256,29 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Ajalugu kustutatud</translation>
     </message>
     <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>Kasutajaga %1 peetud vestluste ajalugu on kustutatud!</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
         <translation>Vali automaatselt vastuvõetavate failide salvestuskaust</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key (not ToxID):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">Kinnitus</translation>
+    </message>
+    <message>
+        <source>Are you sure to remove %1 chat history?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to remove chat history with %1!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -283,10 +286,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Version</source>
         <translation>Versioon</translation>
-    </message>
-    <message>
-        <source>Downloading update: %p%</source>
-        <translation>Laen uuendust: %p%</translation>
     </message>
     <message>
         <source>License</source>
@@ -299,6 +298,18 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Known Issues</source>
         <translation>Teadaolevad probleemid</translation>
+    </message>
+    <message>
+        <source>Open update download link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>qTox is up to date ✓</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -566,6 +577,10 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>Copy Debug Log</source>
         <translation>Kopeeri veaotsingu logifail</translation>
     </message>
+    <message>
+        <source>Enable LAN discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatForm</name>
@@ -632,26 +647,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Sa üritad saata järjestikfaili, kuid see ei ole võimalik!</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>eemal</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>hõivatud</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>ühendamata</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>ühendatud</translation>
-    </message>
-    <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 on nüüd %2</translation>
@@ -667,6 +662,15 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Kõne %1-ga lõppes ootamatult. %2</translation>
+    </message>
+    <message>
+        <source>Filename contained illegal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illegal characters have been changed to _ 
+so you can save the file on windows.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -778,10 +782,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
 <context>
     <name>Core</name>
     <message>
-        <source>Toxing on qTox</source>
-        <translation>Toxi kasutatakse läbi rakenduse nimega qTox</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translatorcomment>peaks tõlkima?</translatorcomment>
         <translation>/me pakub sõprust, &quot;%1&quot;</translation>
@@ -805,6 +805,25 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
         <translation>Sõber on juba lisatud</translation>
+    </message>
+</context>
+<context>
+    <name>DesktopNotify</name>
+    <message>
+        <source>New group message received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New friend request received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New group invite received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New message received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -887,6 +906,11 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Salvesta fail</translation>
+    </message>
+    <message>
+        <source>Remote Paused</source>
+        <comment>file transfer widget</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1047,21 +1071,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
 </context>
 <context>
-    <name>GUI</name>
-    <message>
-        <source>Enter your password</source>
-        <translation>Sisesta oma salasõna</translation>
-    </message>
-    <message>
-        <source>Decrypt</source>
-        <translation>Dekrüpteeri</translation>
-    </message>
-    <message>
-        <source>You must enter a non-empty password:</source>
-        <translation>Pead sisestama salasõna:</translation>
-    </message>
-</context>
-<context>
     <name>GeneralForm</name>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1094,10 +1103,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Autostart</source>
         <translation>Automaatkäivitus</translation>
-    </message>
-    <message>
-        <source>Check for updates on startup</source>
-        <translation>Kontrolli käivitudes uuenduste olemasolu</translation>
     </message>
     <message>
         <source>Enable light tray icon.</source>
@@ -1172,14 +1177,6 @@ instead of closing itself.</source>
         <translation>Nõustu automaatselt failide vastuvõtmisega</translation>
     </message>
     <message>
-        <source>On new message:</source>
-        <translation>Uue sõnumi vastuvõtmisel:</translation>
-    </message>
-    <message>
-        <source>Play sound</source>
-        <translation>Mängi heli</translation>
-    </message>
-    <message>
         <source>Show contacts&apos; status changes</source>
         <translation>Näita muutusi kontaktide olekus</translation>
     </message>
@@ -1188,8 +1185,20 @@ instead of closing itself.</source>
         <translation>Sõnumite edastamine ühendamata olekus sõpradele</translation>
     </message>
     <message>
-        <source>Play sound while Busy</source>
-        <translation>Olles hõivatud, mängi heli</translation>
+        <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spell checking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max autoaccept file size (0 to disable):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> MB</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1234,6 +1243,22 @@ instead of closing itself.</source>
         <source>Copy link address</source>
         <translation>Kopeeri viida aadress</translation>
     </message>
+    <message>
+        <source>[System message]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">Kinnitus</translation>
+    </message>
+    <message>
+        <source>You are sure that you want to clear all displayed messages?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1249,6 +1274,30 @@ instead of closing itself.</source>
         <source>Hide Messages</source>
         <translation>Peida sõnumid</translation>
     </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Vaigista mikrofon</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Lõpeta videokõne</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1261,18 +1310,44 @@ instead of closing itself.</source>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <source>1 user in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>Vestluses osaleb 1 kasutaja</translation>
-    </message>
-    <message>
-        <source>%1 users in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>Vestluses osaleb %1 kasutajat</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 seadis pealkirjaks %2</translation>
+    </message>
+    <message>
+        <source>%1 is online</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new user has connected to the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unmute</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1324,13 +1399,21 @@ instead of closing itself.</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Lahku grupivestlusest</translation>
     </message>
-    <message>
-        <source>1 user in chat</source>
-        <translation>Vestluses osaleb 1 kasutaja</translation>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
-        <source>%1 users in chat</source>
-        <translation>Vestluses osaleb %1 kasutajat</translation>
+        <source>New Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation type="unfinished">Vestlusvalmis</translation>
     </message>
 </context>
 <context>
@@ -1842,11 +1925,6 @@ Võimalik, et peaksid selle looma.</translation>
 <context>
     <name>Nexus</name>
     <message>
-        <source>Images (%1)</source>
-        <comment>filetype filter</comment>
-        <translation>Pildid (%1)</translation>
-    </message>
-    <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
         <translation>Vaade</translation>
@@ -1975,6 +2053,10 @@ Kui saad hulgaliselt soovimatuid sõbrakutseid, muuda seda väärtust.</translat
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
         <translation>Salasõna vahetamine andmebaasis nurjus; andmebaas võib olla rikutud või kasutada vana salasõna.</translation>
+    </message>
+    <message>
+        <source>Toxing on qTox</source>
+        <translation type="unfinished">Toxi kasutatakse läbi rakenduse nimega qTox</translation>
     </message>
 </context>
 <context>
@@ -2194,6 +2276,11 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <extracomment>deletion confirmation text</extracomment>
         <translation>Oled sa kindel, et soovid oma salasõna kustutada?</translation>
     </message>
+    <message>
+        <source>Images (%1)</source>
+        <comment>filetype filter</comment>
+        <translation type="unfinished">Pildid (%1)</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2300,21 +2387,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <translation>profiil</translation>
     </message>
     <message>
-        <source>An update is available, do you want to download it now?
-It will be installed when qTox restarts.</source>
-        <translation>Saadaval on uuendus, kas soovid seda praegu alla laadida?
-See paigaldatakse qToxi taaskäivitamisel.</translation>
-    </message>
-    <message>
-        <source>Version %1, %2</source>
-        <translation>Versioon %1, %2</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <comment>The title of a message box</comment>
-        <translation>Uuendus</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Serveril puudub Toxme tugi</translation>
     </message>
@@ -2417,6 +2489,26 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <source>Starts new instance and opens the login screen.</source>
         <translation>Käivitab uue koopia ja avab sisselogimise ekraani.</translation>
     </message>
+    <message>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark olive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark violet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2467,6 +2559,68 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
         <translation>Enter</translation>
+    </message>
+</context>
+<context>
+    <name>SearchForm</name>
+    <message>
+        <source>The text could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchSettingsForm</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Aken</translation>
+    </message>
+    <message>
+        <source>Start search:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the beginning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>after date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>before date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>00.00.0000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use regular expressions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2616,26 +2770,8 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <translation>Ava aken</translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>Sõnumi saabumisel sea fookus qToxi aknale.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Sea fookus aknale</translation>
-    </message>
-    <message>
         <source>Contact list</source>
         <translation>Kontaktide nimistu</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Uutest grupivestlustes vastuvõetud sõnumitest antakse alati teada.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Grupivestluste puhul teavita alati</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2712,6 +2848,40 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Use identicons instead of empty avatars</source>
         <translation>Kasuta tühjade avataride asemel identiteedipilte</translation>
+    </message>
+    <message>
+        <source>Use colored nicknames in chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a notification when you receive a new message and the window is not selected.</source>
+        <comment>tooltip for Notify setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Onlys notify about new messages in groupchats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group chats only notify when mentioned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play sound</source>
+        <translation type="unfinished">Mängi heli</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished">Olles hõivatud, mängi heli</translation>
+    </message>
+    <message>
+        <source>Notify via desktop notifications</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2912,6 +3082,31 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Minu profiil</translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">ühendatud</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">eemal</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">hõivatud</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">ühendamata</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

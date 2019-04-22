@@ -123,15 +123,6 @@ which may lead to problems with video calls.</source>
         <translation>درباره</translation>
     </message>
     <message>
-        <source>Restart qTox to install version %1</source>
-        <translation>برنامه qTox را مجدد راه اندازی کنید تا ورژن %1 نصب گردد</translation>
-    </message>
-    <message>
-        <source>qTox is downloading update %1</source>
-        <comment>%1 is the version of the update</comment>
-        <translation>qTox در حال دانلود به روزرسانی %1 میباشد</translation>
-    </message>
-    <message>
         <source>Original author: %1</source>
         <translation>خالق اصلی: %1</translation>
     </message>
@@ -195,10 +186,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>status message</source>
         <translation>پیام وضعیت</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>کلید عمومی:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -269,13 +256,29 @@ which may lead to problems with video calls.</source>
         <translation>تاریخچه پاک شد</translation>
     </message>
     <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>تاریخچه گفت و گو با %1 پاک شد!</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
         <translation>پوشه دریافت خودکار را انتخاب کنید</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key (not ToxID):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">تأیید</translation>
+    </message>
+    <message>
+        <source>Are you sure to remove %1 chat history?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to remove chat history with %1!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -283,10 +286,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Version</source>
         <translation>نسخه</translation>
-    </message>
-    <message>
-        <source>Downloading update: %p%</source>
-        <translation>دانلود به روز رسانی: %p%</translation>
     </message>
     <message>
         <source>License</source>
@@ -299,6 +298,18 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Known Issues</source>
         <translation>مشکلات شناسایی شده</translation>
+    </message>
+    <message>
+        <source>Open update download link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>qTox is up to date ✓</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -418,9 +429,10 @@ which may lead to problems with video calls.</source>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation><numerusform>در حال ایمپورت کردن %n مخاطب، در صورت تایید روی ارسال کلیک کنید</numerusform>
-        <numerusform>در حال ایمپورت کردن تعداد %n مخاطب، در صورت تایید روی ارسال کلیک کنید</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>در حال ایمپورت کردن %n مخاطب، در صورت تایید روی ارسال کلیک کنید</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Import contacts</source>
         <translation>ایمپورت کردن مخاطبان</translation>
@@ -564,6 +576,10 @@ which may lead to problems with video calls.</source>
         <source>Copy Debug Log</source>
         <translation>لاگ خطایابی را کپی کن</translation>
     </message>
+    <message>
+        <source>Enable LAN discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatForm</name>
@@ -630,26 +646,6 @@ which may lead to problems with video calls.</source>
         <translation>شما در تلاش برای ارسال یک فایل سلسله مراتبی هستید که، که امکان پذیر نیست!</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>پای سیستم نیست</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>سرش شلوغه</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>دستگاهش خاموشه</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>آنلاین هستش</translation>
-    </message>
-    <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 الان %2</translation>
@@ -665,6 +661,15 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>تماس با %1 ناگهانی و غیر منتظره تموم شد. %2</translation>
+    </message>
+    <message>
+        <source>Filename contained illegal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illegal characters have been changed to _ 
+so you can save the file on windows.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -776,10 +781,6 @@ which may lead to problems with video calls.</source>
 <context>
     <name>Core</name>
     <message>
-        <source>Toxing on qTox</source>
-        <translation>در حال Tox کردن روی qTox</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me درخواست دوستی دارد، «%1»</translation>
     </message>
@@ -802,6 +803,25 @@ which may lead to problems with video calls.</source>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
         <translation>این دوست از قبل وجود دارد</translation>
+    </message>
+</context>
+<context>
+    <name>DesktopNotify</name>
+    <message>
+        <source>New group message received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New friend request received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New group invite received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New message received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -889,6 +909,11 @@ which may lead to problems with video calls.</source>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>ذخیره کردن یک فایل</translation>
+    </message>
+    <message>
+        <source>Remote Paused</source>
+        <comment>file transfer widget</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1050,21 +1075,6 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>GUI</name>
-    <message>
-        <source>Enter your password</source>
-        <translation>رمز عبور خود را وارد کنید</translation>
-    </message>
-    <message>
-        <source>Decrypt</source>
-        <translation>رمزگشایی کن</translation>
-    </message>
-    <message>
-        <source>You must enter a non-empty password:</source>
-        <translation>پسورد نمیتواند خالی باشد:</translation>
-    </message>
-</context>
-<context>
     <name>GeneralForm</name>
     <message>
         <source>General</source>
@@ -1139,10 +1149,6 @@ instead of system taskbar.</source>
         <translation>آغاز به شکل خودکار</translation>
     </message>
     <message>
-        <source>Check for updates on startup</source>
-        <translation>بررسی به روز رسانی های برنامه در زمان آغاز برنامه</translation>
-    </message>
-    <message>
         <source>Set where files will be saved.</source>
         <translation>فایلها باید در کجا ذخیره شوند.</translation>
     </message>
@@ -1172,14 +1178,6 @@ instead of system taskbar.</source>
         <translation>تغیر وضعیت مخاطب را نشان بده</translation>
     </message>
     <message>
-        <source>On new message:</source>
-        <translation>درهنگام دریافت پیام جدید:</translation>
-    </message>
-    <message>
-        <source>Play sound</source>
-        <translation>یک آوای صوتی اجرا کن</translation>
-    </message>
-    <message>
         <source>Faux offline messaging</source>
         <translation>پیام رسانی برون خط Faux</translation>
     </message>
@@ -1192,8 +1190,20 @@ instead of system taskbar.</source>
         <translation>پوشه پیش فرض ذخیره فایلها:</translation>
     </message>
     <message>
-        <source>Play sound while Busy</source>
-        <translation>پخش صوت هنگامی که مشغول است</translation>
+        <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spell checking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max autoaccept file size (0 to disable):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> MB</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1238,6 +1248,22 @@ instead of system taskbar.</source>
         <source>Copy link address</source>
         <translation>کپی کردن لینک</translation>
     </message>
+    <message>
+        <source>[System message]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">تأیید</translation>
+    </message>
+    <message>
+        <source>You are sure that you want to clear all displayed messages?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1253,6 +1279,30 @@ instead of system taskbar.</source>
         <source>Hide Messages</source>
         <translation>مخفی کردن پیام ها</translation>
     </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">میکروفن را خاموش کن</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">پایان تماس تصویری</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1265,18 +1315,43 @@ instead of system taskbar.</source>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <source>1 user in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>1 کاربر در گفت و گو</translation>
-    </message>
-    <message>
-        <source>%1 users in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>%1 کاربر در گفت و گو</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 عنوان را به %2 تغییر داد</translation>
+    </message>
+    <message>
+        <source>%1 is online</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new user has connected to the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unmute</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1312,10 +1387,6 @@ instead of system taskbar.</source>
 <context>
     <name>GroupWidget</name>
     <message>
-        <source>%1 users in chat</source>
-        <translation>%1 کاربر در گفت و گو</translation>
-    </message>
-    <message>
         <source>Set title...</source>
         <translation>تخصیص عنوان...</translation>
     </message>
@@ -1332,9 +1403,20 @@ instead of system taskbar.</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>جدا شدن از گروه</translation>
     </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <source>1 user in chat</source>
-        <translation>1 کاربر در چت</translation>
+        <source>New Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation type="unfinished">آنلاین</translation>
     </message>
 </context>
 <context>
@@ -1847,11 +1929,6 @@ You may want to create one.</source>
 <context>
     <name>Nexus</name>
     <message>
-        <source>Images (%1)</source>
-        <comment>filetype filter</comment>
-        <translation>تصاویر (%1)</translation>
-    </message>
-    <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
         <translation>نما</translation>
@@ -1884,9 +1961,10 @@ You may want to create one.</source>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation><numerusform>پیام(های) خوانده نشده</numerusform>
-        <numerusform>پیامهای خوانده نشده</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>پیام(های) خوانده نشده</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>PasswordEdit</name>
@@ -1977,6 +2055,10 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
         <translation>امکان تغییر رمز روی پایگاه داده ها وجود ندارد، امکان دارد این پایگاه خراب شده باشد، یا شاید باید از رمز قبلی خود استفاده کنید.</translation>
+    </message>
+    <message>
+        <source>Toxing on qTox</source>
+        <translation type="unfinished">در حال Tox کردن روی qTox</translation>
     </message>
 </context>
 <context>
@@ -2196,6 +2278,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation>آیا مطمئن هستید که میخواهید رمز عبور خود را پاک کنید؟</translation>
     </message>
+    <message>
+        <source>Images (%1)</source>
+        <comment>filetype filter</comment>
+        <translation type="unfinished">تصاویر (%1)</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2288,21 +2375,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Version %1, %2</source>
-        <translation>ویرایش %1، %2</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <comment>The title of a message box</comment>
-        <translation>به روز رسانی</translation>
-    </message>
-    <message>
-        <source>An update is available, do you want to download it now?
-It will be installed when qTox restarts.</source>
-        <translation>یک نسخه جدید و به روز برنامه آماده است، آیا تمایلی به دانلود آن دارید؟
-به روز رسانی برنامه بعد از خارج شدن از برنامه به شکل کامل و اجرای مجدد آن انجام خواهد شد.</translation>
-    </message>
     <message>
         <source>Tox URI to parse</source>
         <translation>آدرس (URI ) Tox به جهت پردازش</translation>
@@ -2418,6 +2490,26 @@ It will be installed when qTox restarts.</source>
         <source>Starts new instance and opens the login screen.</source>
         <translation>یک اجرای جدید را آغاز خواهد کرد و صفحه ورود را نشان خواهد داد.</translation>
     </message>
+    <message>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark olive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark violet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2468,6 +2560,68 @@ It will be installed when qTox restarts.</source>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
         <translation>کلید Enter</translation>
+    </message>
+</context>
+<context>
+    <name>SearchForm</name>
+    <message>
+        <source>The text could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchSettingsForm</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">فرم</translation>
+    </message>
+    <message>
+        <source>Start search:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the beginning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>after date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>before date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>00.00.0000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use regular expressions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2617,26 +2771,8 @@ It will be installed when qTox restarts.</source>
         <translation>پنجره را باز کن</translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>وقتی یک پیام جدید دریافت می شود، پنجره qTox را به جلو بیاور.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>به جلو آوردن پنجره</translation>
-    </message>
-    <message>
         <source>Contact list</source>
         <translation>لیست مخاطبین</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>در چت های گروهی همواره در مورد پیام های جدید به من اطلاع بده.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>همواره در مورد چت های گروهی اطلاع بده</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2714,6 +2850,40 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Use identicons instead of empty avatars</source>
         <translation>از تصاویر شناسه ای به جای آواتار های خالی استفاده کن</translation>
+    </message>
+    <message>
+        <source>Use colored nicknames in chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a notification when you receive a new message and the window is not selected.</source>
+        <comment>tooltip for Notify setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Onlys notify about new messages in groupchats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group chats only notify when mentioned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play sound</source>
+        <translation type="unfinished">یک آوای صوتی اجرا کن</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished">پخش صوت هنگامی که مشغول است</translation>
+    </message>
+    <message>
+        <source>Notify via desktop notifications</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2837,14 +3007,16 @@ It will be installed when qTox restarts.</source>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation><numerusform>%n درخواست دوستی جدید</numerusform>
-        <numerusform>%n عدد درخواست دوستی جدید</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n درخواست دوستی جدید</numerusform>
+        </translation>
+    </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation><numerusform>%n دعوت به گروه</numerusform>
-        <numerusform>%n دعوت به گروه ها</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n دعوت به گروه</numerusform>
+        </translation>
+    </message>
     <message>
         <source>By Name</source>
         <translation>بر اساس نام</translation>
@@ -2911,6 +3083,31 @@ It will be installed when qTox restarts.</source>
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>پروفایل من</translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">آنلاین هستش</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">پای سیستم نیست</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">سرش شلوغه</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">دستگاهش خاموشه</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

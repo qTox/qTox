@@ -119,15 +119,6 @@ which may lead to problems with video calls.</source>
         <translation>Om</translation>
     </message>
     <message>
-        <source>Restart qTox to install version %1</source>
-        <translation>Genstart qTox for at installere version %1</translation>
-    </message>
-    <message>
-        <source>qTox is downloading update %1</source>
-        <comment>%1 is the version of the update</comment>
-        <translation>qTox henter opdatering %1</translation>
-    </message>
-    <message>
         <source>Original author: %1</source>
         <translation>Original forfatter: %1</translation>
     </message>
@@ -191,10 +182,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>status message</source>
         <translation type="unfinished">statusmeddelelse</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation type="unfinished">Offentlig nøgle:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -265,12 +252,28 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished">Historik fjernet</translation>
     </message>
     <message>
-        <source>Chat history with %1 removed!</source>
+        <source>Choose an auto accept directory</source>
+        <extracomment>popup title</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose an auto accept directory</source>
-        <extracomment>popup title</extracomment>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key (not ToxID):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure to remove %1 chat history?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to remove chat history with %1!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -279,10 +282,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Version</source>
         <translation>Version</translation>
-    </message>
-    <message>
-        <source>Downloading update: %p%</source>
-        <translation>Henter opdatering: %p%</translation>
     </message>
     <message>
         <source>License</source>
@@ -295,6 +294,18 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Known Issues</source>
         <translation>Kendte problemer</translation>
+    </message>
+    <message>
+        <source>Open update download link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>qTox is up to date ✓</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -562,6 +573,10 @@ which may lead to problems with video calls.</source>
         <source>Copy Debug Log</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enable LAN discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatForm</name>
@@ -628,26 +643,6 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 er nu %2</translation>
@@ -662,6 +657,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filename contained illegal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illegal characters have been changed to _ 
+so you can save the file on windows.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -774,10 +778,6 @@ which may lead to problems with video calls.</source>
 <context>
     <name>Core</name>
     <message>
-        <source>Toxing on qTox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -800,6 +800,25 @@ which may lead to problems with video calls.</source>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
         <translation type="unfinished">Ven er allerede tilføjet</translation>
+    </message>
+</context>
+<context>
+    <name>DesktopNotify</name>
+    <message>
+        <source>New group message received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New friend request received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New group invite received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New message received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -887,6 +906,11 @@ which may lead to problems with video calls.</source>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Gem en fil</translation>
+    </message>
+    <message>
+        <source>Remote Paused</source>
+        <comment>file transfer widget</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1048,21 +1072,6 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>GUI</name>
-    <message>
-        <source>Enter your password</source>
-        <translation>Indtast dit kodeord</translation>
-    </message>
-    <message>
-        <source>Decrypt</source>
-        <translation>Dekrypter</translation>
-    </message>
-    <message>
-        <source>You must enter a non-empty password:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>GeneralForm</name>
     <message>
         <source>General</source>
@@ -1135,10 +1144,6 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Check for updates on startup</source>
-        <translation>Søg efter opdateringer ved opstart</translation>
-    </message>
-    <message>
         <source>Set where files will be saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1168,14 +1173,6 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On new message:</source>
-        <translation>Ved ny besked:</translation>
-    </message>
-    <message>
-        <source>Play sound</source>
-        <translation>Afspil lyd</translation>
-    </message>
-    <message>
         <source>Faux offline messaging</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1188,7 +1185,19 @@ instead of system taskbar.</source>
         <translation type="unfinished">Standardmappen til at gemme filer:</translation>
     </message>
     <message>
-        <source>Play sound while Busy</source>
+        <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spell checking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max autoaccept file size (0 to disable):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> MB</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1234,6 +1243,22 @@ instead of system taskbar.</source>
         <source>Copy link address</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>[System message]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are sure that you want to clear all displayed messages?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1249,6 +1274,30 @@ instead of system taskbar.</source>
         <source>Hide Messages</source>
         <translation>Skjul Beskeder</translation>
     </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Alfsut videoopkald</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1261,18 +1310,44 @@ instead of system taskbar.</source>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <source>1 user in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 users in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation type="unfinished">%1 har sat titlen til %2</translation>
+    </message>
+    <message>
+        <source>%1 is online</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new user has connected to the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unmute</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1308,29 +1383,37 @@ instead of system taskbar.</source>
 <context>
     <name>GroupWidget</name>
     <message>
-        <source>%1 users in chat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Set title...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Åben chat i nyt vindue</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fjern chat fra dette vindue</translation>
     </message>
     <message>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Forlad gruppe</translation>
     </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <source>1 user in chat</source>
+        <source>New Message</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation type="unfinished">Online</translation>
     </message>
 </context>
 <context>
@@ -1378,7 +1461,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ændre dit kodeord</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
@@ -1529,7 +1612,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Slet profil.</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -1587,7 +1670,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kodeord:</translation>
     </message>
     <message>
         <source>Confirm:</source>
@@ -1837,11 +1920,6 @@ You may want to create one.</source>
 <context>
     <name>Nexus</name>
     <message>
-        <source>Images (%1)</source>
-        <comment>filetype filter</comment>
-        <translation>Billeder (%1)</translation>
-    </message>
-    <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
         <translation>Se</translation>
@@ -1966,6 +2044,10 @@ Save format changes are possible, which may result in data loss.</source>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Toxing on qTox</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileForm</name>
@@ -1992,7 +2074,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fjern</translation>
     </message>
     <message>
         <source>Unable to read this image.</source>
@@ -2097,7 +2179,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opdater</translation>
     </message>
     <message>
         <source>Change password</source>
@@ -2134,7 +2216,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Profilen eksisterer allerede</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
@@ -2158,7 +2240,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eksporter profil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
@@ -2179,6 +2261,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images (%1)</source>
+        <comment>filetype filter</comment>
+        <translation type="unfinished">Billeder (%1)</translation>
     </message>
 </context>
 <context>
@@ -2273,21 +2360,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 <context>
     <name>QObject</name>
     <message>
-        <source>Version %1, %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <comment>The title of a message box</comment>
-        <translation>Opdater</translation>
-    </message>
-    <message>
-        <source>An update is available, do you want to download it now?
-It will be installed when qTox restarts.</source>
-        <translation>En opdatering er tilgængelig, vil du downloade den nu?
-Den vil blive installeret må qTox genstartes.</translation>
-    </message>
-    <message>
         <source>Tox URI to parse</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2380,7 +2452,7 @@ Den vil blive installeret må qTox genstartes.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
@@ -2400,6 +2472,26 @@ Den vil blive installeret må qTox genstartes.</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark olive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark violet</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2451,6 +2543,68 @@ Den vil blive installeret må qTox genstartes.</translation>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchForm</name>
+    <message>
+        <source>The text could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchSettingsForm</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Form</translation>
+    </message>
+    <message>
+        <source>Start search:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the beginning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>after date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>before date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>00.00.0000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use regular expressions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2509,7 +2663,7 @@ Den vil blive installeret må qTox genstartes.</translation>
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tilføj en ven</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
@@ -2531,7 +2685,7 @@ Den vil blive installeret må qTox genstartes.</translation>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annullér</translation>
     </message>
 </context>
 <context>
@@ -2589,7 +2743,7 @@ Den vil blive installeret må qTox genstartes.</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ny besked</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
@@ -2601,26 +2755,8 @@ Den vil blive installeret må qTox genstartes.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Contact list</source>
         <translation>Kontaktliste</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2698,6 +2834,40 @@ Den vil blive installeret må qTox genstartes.</translation>
         <source>Use identicons instead of empty avatars</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Use colored nicknames in chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a notification when you receive a new message and the window is not selected.</source>
+        <comment>tooltip for Notify setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Onlys notify about new messages in groupchats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group chats only notify when mentioned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play sound</source>
+        <translation type="unfinished">Afspil lyd</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notify via desktop notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2748,7 +2918,7 @@ Den vil blive installeret må qTox genstartes.</translation>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Log ud</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2845,7 +3015,7 @@ Den vil blive installeret må qTox genstartes.</translation>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;Tom&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
@@ -2897,6 +3067,31 @@ Den vil blive installeret må qTox genstartes.</translation>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
