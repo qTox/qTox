@@ -28,6 +28,7 @@
 #include "genericchatform.h"
 #include "src/core/core.h"
 #include "src/persistence/history.h"
+#include "src/model/status.h"
 #include "src/widget/tool/screenshotgrabber.h"
 
 class CallConfirmWidget;
@@ -99,7 +100,7 @@ private slots:
     void onVolMuteToggle();
 
     void onFileSendFailed(uint32_t friendId, const QString& fname);
-    void onFriendStatusChanged(quint32 friendId, Status status);
+    void onFriendStatusChanged(quint32 friendId, Status::Status status);
     void onFriendTypingChanged(quint32 friendId, bool isTyping);
     void onFriendNameChanged(const QString& name);
     void onFriendMessageReceived(quint32 friendId, const QString& message, bool isAction);

@@ -16,6 +16,7 @@
 #include "friendlistwidget.h"
 #include "friendwidget.h"
 #include "src/model/friend.h"
+#include "src/model/status.h"
 #include "src/friendlist.h"
 #include <cassert>
 
@@ -46,12 +47,12 @@ void FriendListLayout::init()
     addLayout(friendOfflineLayout.getLayout());
 }
 
-void FriendListLayout::addFriendWidget(FriendWidget* w, Status s)
+void FriendListLayout::addFriendWidget(FriendWidget* w, Status::Status s)
 {
     friendOfflineLayout.removeSortedWidget(w);
     friendOnlineLayout.removeSortedWidget(w);
 
-    if (s == Status::Offline) {
+    if (s == Status::Status::Offline) {
         friendOfflineLayout.addSortedWidget(w);
         return;
     }
@@ -59,9 +60,9 @@ void FriendListLayout::addFriendWidget(FriendWidget* w, Status s)
     friendOnlineLayout.addSortedWidget(w);
 }
 
-void FriendListLayout::removeFriendWidget(FriendWidget* widget, Status s)
+void FriendListLayout::removeFriendWidget(FriendWidget* widget, Status::Status s)
 {
-    if (s == Status::Offline)
+    if (s == Status::Status::Offline)
         friendOfflineLayout.removeSortedWidget(widget);
     else
         friendOnlineLayout.removeSortedWidget(widget);
@@ -123,7 +124,7 @@ QLayout* FriendListLayout::getLayoutOffline() const
     return friendOfflineLayout.getLayout();
 }
 
-QLayout* FriendListLayout::getFriendLayout(Status s) const
+QLayout* FriendListLayout::getFriendLayout(Status::Status s) const
 {
-    return s == Status::Offline ? friendOfflineLayout.getLayout() : friendOnlineLayout.getLayout();
+    return s == Status::Status::Offline ? friendOfflineLayout.getLayout() : friendOnlineLayout.getLayout();
 }

@@ -21,19 +21,21 @@
 #ifndef COREFILE_H
 #define COREFILE_H
 
-#include <cstddef>
-#include <cstdint>
-#include <memory>
 #include <tox/tox.h>
 
 #include "toxfile.h"
 #include "src/core/core.h"
 #include "src/core/toxpk.h"
+#include "src/model/status.h"
 
 #include <QHash>
 #include <QMutex>
 #include <QObject>
 #include <QString>
+
+#include <cstddef>
+#include <cstdint>
+#include <memory>
 
 struct Tox;
 class CoreFile;
@@ -100,7 +102,7 @@ private:
     static QString getCleanFileName(QString filename);
 
 private slots:
-    void onConnectionStatusChanged(uint32_t friendId, Status state);
+    void onConnectionStatusChanged(uint32_t friendId, Status::Status state);
 
 private:
     QHash<uint64_t, ToxFile> fileMap;

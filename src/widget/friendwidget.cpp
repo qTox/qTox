@@ -29,6 +29,7 @@
 #include "src/model/chatroom/friendchatroom.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
+#include "src/model/status.h"
 #include "src/persistence/settings.h"
 #include "src/widget/about/aboutfriendform.h"
 #include "src/widget/contentdialogmanager.h"
@@ -62,7 +63,7 @@ FriendWidget::FriendWidget(std::shared_ptr<FriendChatroom> chatroom, bool compac
     , isDefaultAvatar{true}
 {
     avatar->setPixmap(QPixmap(":/img/contact.svg"));
-    statusPic.setPixmap(QPixmap(Widget::getStatusIconPath(Status::Offline)));
+    statusPic.setPixmap(QPixmap(Status::getIconPath(Status::Status::Offline)));
     statusPic.setMargin(3);
 
     auto frnd = chatroom->getFriend();
@@ -324,7 +325,7 @@ void FriendWidget::updateStatusLight()
 {
     const auto frnd = chatroom->getFriend();
     const bool event = frnd->getEventFlag();
-    statusPic.setPixmap(QPixmap(Widget::getStatusIconPath(frnd->getStatus(), event)));
+    statusPic.setPixmap(QPixmap(Status::getIconPath(frnd->getStatus(), event)));
 
     if (event) {
         const Settings& s = Settings::getInstance();

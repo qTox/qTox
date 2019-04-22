@@ -34,6 +34,7 @@
 #include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/model/group.h"
+#include "src/model/status.h"
 #include "src/grouplist.h"
 #include "src/widget/contentdialogmanager.h"
 #include "src/widget/friendwidget.h"
@@ -48,7 +49,7 @@ GroupWidget::GroupWidget(std::shared_ptr<GroupChatroom> chatroom, bool compact)
     , chatroom{chatroom}
 {
     avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()));
-    statusPic.setPixmap(QPixmap(Widget::getStatusIconPath(Status::Online)));
+    statusPic.setPixmap(QPixmap(Status::getIconPath(Status::Status::Online)));
     statusPic.setMargin(3);
 
     Group* g = chatroom->getGroup();
@@ -181,7 +182,7 @@ void GroupWidget::updateStatusLight()
     Group* g = chatroom->getGroup();
 
     const bool event = g->getEventFlag();
-    statusPic.setPixmap(QPixmap(Widget::getStatusIconPath(Status::Online, event)));
+    statusPic.setPixmap(QPixmap(Status::getIconPath(Status::Status::Online, event)));
     statusPic.setMargin(event ? 1 : 3);
 }
 

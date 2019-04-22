@@ -21,6 +21,7 @@
 #include "friendlistlayout.h"
 #include "friendlistwidget.h"
 #include "friendwidget.h"
+#include "src/model/status.h"
 #include "src/widget/style.h"
 #include "tool/croppinglabel.h"
 #include <QBoxLayout>
@@ -126,7 +127,7 @@ void CategoryWidget::editName()
     nameLabel->setMaximumWidth(QWIDGETSIZE_MAX);
 }
 
-void CategoryWidget::addFriendWidget(FriendWidget* w, Status s)
+void CategoryWidget::addFriendWidget(FriendWidget* w, Status::Status s)
 {
     listLayout->addFriendWidget(w, s);
     updateStatus();
@@ -134,7 +135,7 @@ void CategoryWidget::addFriendWidget(FriendWidget* w, Status s)
     w->reloadTheme(); // Otherwise theme will change when moving to another circle.
 }
 
-void CategoryWidget::removeFriendWidget(FriendWidget* w, Status s)
+void CategoryWidget::removeFriendWidget(FriendWidget* w, Status::Status s)
 {
     listLayout->removeFriendWidget(w, s);
     updateStatus();

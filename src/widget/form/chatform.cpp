@@ -27,6 +27,7 @@
 #include "src/core/coreav.h"
 #include "src/core/corefile.h"
 #include "src/model/friend.h"
+#include "src/model/status.h"
 #include "src/nexus.h"
 #include "src/persistence/history.h"
 #include "src/persistence/offlinemsgengine.h"
@@ -40,10 +41,12 @@
 #include "src/widget/style.h"
 #include "src/widget/tool/callconfirmwidget.h"
 #include "src/widget/tool/chattextedit.h"
+#include "src/widget/tool/croppinglabel.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
+#include <QApplication>
 #include <QClipboard>
 #include <QFileDialog>
 #include <QFileInfo>
@@ -51,6 +54,7 @@
 #include <QMimeData>
 #include <QPushButton>
 #include <QScrollBar>
+#include <QSplitter>
 #include <QStringBuilder>
 
 #include <cassert>
@@ -612,7 +616,7 @@ void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)
                          QDateTime::currentDateTime());
 }
 
-void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
+void ChatForm::onFriendStatusChanged(uint32_t friendId, Status::Status status)
 {
     // Disable call buttons if friend is offline
     if (friendId != f->getId()) {
@@ -629,7 +633,7 @@ void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
     updateCallButtons();
 
     if (Settings::getInstance().getStatusChangeNotificationEnabled()) {
-        QString fStatus = Widget::getStatusTitle(status);
+        QString fStatus = Status::getTitle(status);
         addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"")
                                  .arg(f->getDisplayedName())
                                  .arg(fStatus),

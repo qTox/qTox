@@ -22,6 +22,7 @@
 
 #include "genericchatitemlayout.h"
 #include "src/core/core.h"
+#include "src/model/status.h"
 #include <QWidget>
 
 class QVBoxLayout;
@@ -50,7 +51,7 @@ public:
     Mode getMode() const;
 
     void addGroupWidget(GroupWidget* widget);
-    void addFriendWidget(FriendWidget* w, Status s, int circleIndex);
+    void addFriendWidget(FriendWidget* w, Status::Status s, int circleIndex);
     void removeGroupWidget(GroupWidget* w);
     void removeFriendWidget(FriendWidget* w);
     void addCircleWidget(int id);
@@ -72,7 +73,7 @@ public slots:
     void renameCircleWidget(CircleWidget* circleWidget, const QString& newName);
     void onFriendWidgetRenamed(FriendWidget* friendWidget);
     void onGroupchatPositionChanged(bool top);
-    void moveWidget(FriendWidget* w, Status s, bool add = false);
+    void moveWidget(FriendWidget* w, Status::Status s, bool add = false);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event) override;
