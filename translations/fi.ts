@@ -89,15 +89,15 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Äänenlaatu</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Välitetty äänenlaatu. Alenna tätä asetusta jos sinun siirtonopeus ei ole tarpeeksi nopea tai jos haluat vähentää internetin käyttöä.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Korkea (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
@@ -105,7 +105,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alhainen (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
@@ -113,7 +113,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Alaraja</translation>
     </message>
 </context>
 <context>
@@ -190,7 +190,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>käyttäjänimi</translation>
     </message>
     <message>
         <source>status message</source>
@@ -226,7 +226,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaattisesti hyväksy puhelu:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -234,11 +234,11 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Ääni</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Ääni + Video</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
@@ -246,7 +246,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaattisesti hyväksy ryhmäkutsut</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>

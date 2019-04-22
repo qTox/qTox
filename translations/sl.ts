@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Dehabilitirano</translation>
     </message>
     <message>
         <source>Select region</source>

@@ -169,12 +169,12 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">logiciel de suivi de bogue</translation>
+        <translation>Suivi de bogue</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Rédaction de rapports de bogues utiles</translation>
+        <translation>Comment rédiger un rapport de bogue</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -262,7 +262,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Vous pouvez enregistrer ici des commentaires sur ce contact.</translation>
+        <translation>Vous pouvez enregistrer ici des commentaires sur ce contact.</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -275,7 +275,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished">Sélectionner un répertoire d&apos;acceptation automatique</translation>
+        <translation>Sélectionner un répertoire d&apos;acceptation automatique</translation>
     </message>
 </context>
 <context>
@@ -390,7 +390,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished">soit 76 caractères hexadécimaux, soit nom@exemple.com</translation>
+        <translation>soit 76 caractères hexadécimaux, soit nom@exemple.com</translation>
     </message>
     <message>
         <source>Message</source>
@@ -409,7 +409,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished">Salut, c&apos;est %1. On se toxe ?</translation>
+        <translation>Salut, c&apos;est %1. Peut-on discuter ?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
@@ -1269,7 +1269,7 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 a modifié le titre en %2</translation>
+        <translation>%1 a modifié le titre en %2</translation>
     </message>
 </context>
 <context>
@@ -1960,7 +1960,7 @@ Les changements de format de sauvegarde sont possibles, ce qui pourrait entraine
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished">Filtrer le message de groupe par clé publique du membre du groupe. Mettre la clé publique ici, une par ligne.</translation>
+        <translation>Filtrer le message de groupe par clé publique du membre du groupe. Mettre la clé publique ici, une par ligne.</translation>
     </message>
 </context>
 <context>
@@ -2137,11 +2137,11 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished">Le chemin vide est indisponible</translation>
+        <translation>Un chemin vide n&apos;est pas valide</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Échec du renommage</translation>
+        <translation>Renommage échoué</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -2153,11 +2153,11 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished">Nom vide</translation>
+        <translation>Nom vide</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished">Le nom vide est indisponible</translation>
+        <translation>Le nom ne peut être vide</translation>
     </message>
     <message>
         <source>Empty path</source>
@@ -2165,7 +2165,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">Impossible de modifier le mot de passe dans la base de données, il peut être endommagé ou utiliser l&apos;ancien mot de passe.</translation>
+        <translation>Impossible de modifier le mot de passe dans la base de données, elle peut être endommagée, ou utilisez l&apos;ancien mot de passe.</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -2707,7 +2707,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished">Utiliser des identicons au lieu d&apos;avatars vides</translation>
+        <translation>Utiliser des identicons au lieu d&apos;avatars vides</translation>
     </message>
 </context>
 <context>

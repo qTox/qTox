@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Avspillingsenhet</translation>
+        <translation>Avspillingsenhet</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
@@ -168,72 +168,72 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">feilrettingssporer</translation>
+        <translation>feilrapporteringsside</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">skriving av nyttige feilrapporter</translation>
+        <translation>Hvordan skrive nyttige feilrapporter</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">bidragsytere</translation>
+        <translation>bidragsytere</translation>
     </message>
 </context>
 <context>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Dialogvindu</translation>
+        <translation>Dialogvindu</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished">brukernavn</translation>
+        <translation>brukernavn</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">statusmelding</translation>
+        <translation>statusmelding</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Offentlig nøkkel:</translation>
+        <translation>Offentlig nøkkel:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">Brukte alias:</translation>
+        <translation>Brukte alias:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">ALIAS-HISTORIKK</translation>
+        <translation>ALIASHISTORIKK</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Automatisk godta filer fra kontakt hvis valgt</translation>
+        <translation>Automatisk godta filer fra kontakt hvis valgt</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">Godta filer automatisk</translation>
+        <translation>Godta filer automatisk</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Forvalgt mappe å lagre filer:</translation>
+        <translation>Standard mappe for fillagring:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">Automatisk filgodkjenning for denne kontakten er avskrudd</translation>
+        <translation>Automatisk filgodkjenning for denne kontakten er deaktivert</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished">Svar på samtale automatisk:</translation>
+        <translation>Svar på samtale automatisk:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">Manuell</translation>
+        <translation>Manuell</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Lyd</translation>
+        <translation>Lyd</translation>
     </message>
     <message>
         <source>Audio + Video</source>
@@ -241,40 +241,40 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished">Godta gruppesludringsinvitasjoner fra denne kontakten automatisk hvis valgt.</translation>
+        <translation>Godta gruppesamtaleinvitasjoner fra denne kontakten automatisk hvis valgt.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished">Godta gruppeinvitasjoner automatisk</translation>
+        <translation>Godta gruppeinvitasjoner automatisk</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">Fjern historikk (kan ikke angres!)</translation>
+        <translation>Fjern historikk (kan ikke omgjøres!)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">Notiser</translation>
+        <translation>Notiser</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished">Inndatafelt for notiser om denne kontakten</translation>
+        <translation>Inndatafelt for notiser om denne kontakten</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Du kan lagre en kommentar om denne brukeren her.</translation>
+        <translation>Du kan lagre en kommentar om denne brukeren her.</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished">Historikk fjernet</translation>
+        <translation>Historikk fjernet</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">Sludrehistorikk med %1 fjernet!</translation>
+        <translation>Samtalehistorikk med %1 fjernet!</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished">Velg en mappe for auto-aksepterte filer</translation>
+        <translation>Velg en filsti for auto-aksepterte filer</translation>
     </message>
 </context>
 <context>
@@ -358,7 +358,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished">Du kan ikke legge deg selv til som venn!</translation>
+        <translation>Du kan ikke legge deg selv til som en venn!</translation>
     </message>
     <message>
         <source>Open contact list</source>
@@ -379,22 +379,22 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>Fant ingen kontakter å importere i denne fila.</translation>
+        <translation>Vi kunne ikke finne noen kontakter å importere fra filen!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished">Tox-ID</translation>
+        <translation>Tox-ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished">enten 76 heksadesimale tegn eller navn@eksempel.no</translation>
+        <translation>enten 76 heksadesimale tegn eller navn@eksempel.no</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished">Melding</translation>
+        <translation>Melding</translation>
     </message>
     <message>
         <source>Open</source>
@@ -408,7 +408,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished">%1 her! Tox meg kanskje?</translation>
+        <translation>%1 her! Tox meg kanskje?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
@@ -435,7 +435,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Med mindre du %1 vet hva du gjør, %2 endre noe her. Det kan føre til problemer med qTox, og selv datatap, f.eks. historikk.</translation>
+        <translation>Med mindre du %1 vet hva du gjør, %2 gjør endringer her. Endringer gjort her kan føre til problemer med qTox, og selv datatap, f.eks. historikk.</translation>
     </message>
     <message>
         <source>really</source>
@@ -673,7 +673,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Kan ikke starte lydsamtale</translation>
+        <translation>Kan ikke ringe</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -685,55 +685,55 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Avbryt audiosamtale</translation>
+        <translation>Avbryt lydsamtale</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Godta lydsamtale</translation>
+        <translation>Godta lydsamtale</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Kan ikke starte videosamtale</translation>
+        <translation>Kan ikke starte videosamtale</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Start videosamtale</translation>
+        <translation>Start videosamtale</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Avslutt videosamtale</translation>
+        <translation>Avslutt videosamtale</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Avbryt videosamtale</translation>
+        <translation>Avbryt videosamtale</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Godta lydsamtale</translation>
+        <translation>Godta videosamtale</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Lyd kan bare skrus av under en samtale</translation>
+        <translation>Lyd kan bare skrus av under en samtale</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Fjern demping av samtale</translation>
+        <translation>Deaktiver demping av samtale</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Demp samtale</translation>
+        <translation>Demp samtale</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Mikrofonen kan bare slås av under en samtale</translation>
+        <translation>Mikrofonen kan bare slås av under en samtale</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished">Fjern demping av mikrofon</translation>
+        <translation>Deaktiver demping av mikrofon</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Demp mikrofon</translation>
+        <translation>Demp mikrofon</translation>
     </message>
 </context>
 <context>
@@ -885,7 +885,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Open file directory</source>
-        <translation type="unfinished">Åpne mappe</translation>
+        <translation>Åpne filsystem</translation>
     </message>
 </context>
 <context>
@@ -916,7 +916,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">Siste 7 dager</translation>
+        <translation>Siste 7 dager</translation>
     </message>
     <message>
         <source>This month</source>
@@ -924,7 +924,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Eldre enn 6 måneder</translation>
+        <translation>Eldre enn 6 måneder</translation>
     </message>
     <message>
         <source>Never</source>
@@ -971,7 +971,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation type="unfinished">Flytt til sirkel…</translation>
+        <translation>Flytt til sirkel…</translation>
     </message>
     <message>
         <source>To new circle</source>
@@ -1176,7 +1176,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Faux offline messaging</source>
-        <translation type="unfinished">Falsk frakoblet meldingsforsendelse</translation>
+        <translation>Falsk sending av meldinger offline</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
@@ -1184,7 +1184,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Forvalgt mappe å lagre filer:</translation>
+        <translation>Standard filsti for lagring av filer:</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
@@ -1271,7 +1271,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 har endret navn på tittelen til %2</translation>
+        <translation>%1 har endret tittelen til %2</translation>
     </message>
 </context>
 <context>
@@ -1464,7 +1464,7 @@ Profile does not contain your history.</source>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished">Hvis ikke satt, er ToxMe-oppføringer synlige offentlig.</translation>
+        <translation>Hvis ikke satt, er ToxMe-oppføringer synlige offentlig.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
@@ -1715,7 +1715,7 @@ Det kan hende du ønsker å opprette en.</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished">Merk avkryssningsboks automatisk</translation>
+        <translation>Merk avkryssningsboks automatisk</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1956,7 +1956,7 @@ Endringer av lagringsformat er mulig, som kan forårsake data tap.</translation>
     </message>
     <message>
         <source>BlackList</source>
-        <translation type="unfinished">Svarteliste</translation>
+        <translation>Svarteliste</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
@@ -2028,7 +2028,7 @@ Velg et annet bilde.</translation>
     <message>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished">Virkelig slett profilen?</translation>
+        <translation>Vil du virkellig slette profilen?</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
@@ -2041,7 +2041,7 @@ Velg et annet bilde.</translation>
     <message>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished">Virkelig slett passordet?</translation>
+        <translation>Vil du virkelig slette passordet?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
@@ -2105,7 +2105,7 @@ Velg et annet bilde.</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Oppdater</translation>
+        <translation>Oppdater</translation>
     </message>
     <message>
         <source>Change password</source>
@@ -2141,15 +2141,15 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished">Endring av navn mislyktes</translation>
+        <translation>Endring av navn mislyktes</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished">Profilen finnes allerede</translation>
+        <translation>Profilen finnes allerede</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">En profil ved navn &quot;%1&quot; finnes allrede.</translation>
+        <translation>En profil ved navn &quot;%1&quot; finnes allerede.</translation>
     </message>
     <message>
         <source>Empty name</source>
@@ -2165,31 +2165,31 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished">Kunne ikke endre passord på databasen, den kan være skadet eller benytte seg av det gamle passordet.</translation>
+        <translation>Kunne ikke endre passord på databasen, den kan være skadet eller bruker det gamle passordet.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Eksporter profil</translation>
+        <translation>Eksporter profil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Tox-lagringsfil (*.tox)</translation>
+        <translation>Tox-lagringsfil (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished">Følgende filer kunne ikke slettes:</translation>
+        <translation>Følgende filer kunne ikke slettes:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished">Fjern dem manuelt.</translation>
+        <translation>Fjern dem manuelt.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Er du sikker på at du vil slette passordet ditt?</translation>
+        <translation>Er du sikker på at du vil slette passordet ditt?</translation>
     </message>
 </context>
 <context>
@@ -2207,7 +2207,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Ignorerer ikke-Tox-fil</translation>
+        <translation>Ignorerer ikke-Tox-fil</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
@@ -2245,7 +2245,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2407,7 +2407,7 @@ Den vil bli installert når qTox restarter.</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation>Endring av tekstformatering underveis…</translation>
+        <translation type="unfinished">Endring av tekstformatering pågår…</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
@@ -2434,7 +2434,7 @@ Den vil bli installert når qTox restarter.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Fjern all sludrehistorikk mellom deg og din venn hvis satt</translation>
+        <translation>Fjern all samtalehistorikk mellom deg vennen din hvis valgt</translation>
     </message>
 </context>
 <context>
@@ -2489,7 +2489,7 @@ Den vil bli installert når qTox restarter.</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation type="unfinished">Passordsstyrke: %p%</translation>
+        <translation>Passordsstyrke: %p%</translation>
     </message>
     <message>
         <source>Confirm password</source>
@@ -2505,7 +2505,7 @@ Den vil bli installert når qTox restarter.</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished">Passordsinntastingsfelt, minimum 6 tegn</translation>
+        <translation>Passordsinntastingsfelt, minimum 6 tegn</translation>
     </message>
 </context>
 <context>
@@ -2560,11 +2560,11 @@ Den vil bli installert når qTox restarter.</translation>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">Sludre</translation>
+        <translation>Samtale</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished">Vanlig skrift:</translation>
+        <translation>Standard skrift:</translation>
     </message>
     <message>
         <source>px</source>
@@ -2665,7 +2665,7 @@ Den vil bli installert når qTox restarter.</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished">Bruk humørsymboler</translation>
+        <translation>Bruk emojier</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
@@ -2678,7 +2678,7 @@ Den vil bli installert når qTox restarter.</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -2703,7 +2703,7 @@ Den vil bli installert når qTox restarter.</translation>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished">Hvis påskrudd, vil hver kontakt uten en avatar få en basert på deres Tox ID istedenfor forvalgt bilde. Krever omstart for å tre i effekt.</translation>
+        <translation>Hvis aktivert, vil hver kontakt uten en avatar få en basert på deres Tox ID istedenfor standardbildet. Krever omstart for å tre i effekt.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
@@ -2733,7 +2733,7 @@ Den vil bli installert når qTox restarter.</translation>
     </message>
     <message>
         <source>Add new circle...</source>
-        <translation type="unfinished">Legg til ny sirkel…</translation>
+        <translation>Legg til ny sirkel…</translation>
     </message>
     <message>
         <source>By Name</source>

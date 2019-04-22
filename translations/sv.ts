@@ -113,7 +113,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Tröskel</translation>
+        <translation>Tröskelvärde</translation>
     </message>
 </context>
 <context>
@@ -174,7 +174,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Skriva användbara felrapporter</translation>
+        <translation>Skriva användbara felrapporter</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -186,7 +186,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation>Dialogruta</translation>
     </message>
     <message>
         <source>username</source>
@@ -198,7 +198,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">Öppen nyckel:</translation>
+        <translation>Offentlig nyckel:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -222,7 +222,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation>Acceptera automatiskt för den här kontakten är inaktiverat</translation>
+        <translation>Acceptera automatiskt för den här kontakten är inaktiverad</translation>
     </message>
     <message>
         <source>Auto accept call:</source>

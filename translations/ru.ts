@@ -223,7 +223,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation>Автоматический приём файлов от этого контакта отключён</translation>
+        <translation>Автоматический прием файлов от этого контакта отключен</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
@@ -276,7 +276,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation>Выбрать папку для автоматического приёма</translation>
+        <translation>Выбрать папку для автоматического приема</translation>
     </message>
 </context>
 <context>
@@ -382,7 +382,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>Не удаётся найти каких-либо контактов для импорта в этом файле!</translation>
+        <translation>Не удается найти каких-либо контактов для импорта в этом файле!</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -470,7 +470,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation>Идёт звонок</translation>
+        <translation>Идет звонок</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
@@ -745,7 +745,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Выбрать всё</translation>
+        <translation>Выбрать все</translation>
     </message>
     <message>
         <source>pending</source>
@@ -1026,7 +1026,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Выбрать папку для автоматического приёма</translation>
+        <translation>Выбрать папку для автоматического приема</translation>
     </message>
     <message>
         <source>New message</source>
@@ -1038,7 +1038,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Away</source>
-        <translation>Отошёл</translation>
+        <translation>Отошел</translation>
     </message>
     <message>
         <source>Busy</source>
@@ -1069,7 +1069,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Выбрать папку для автоматического приёма</translation>
+        <translation>Выбрать папку для автоматического приема</translation>
     </message>
     <message>
         <source>General</source>
@@ -1121,7 +1121,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Можно настроить отдельно для каждого друга (щёлкнув правой кнопкой мыши по другу и выбрав соответствующий пункт меню).</translation>
+        <translation>Можно настроить отдельно для каждого друга (щелкнув правой кнопкой мыши по другу и выбрав соответствующий пункт меню).</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -1185,7 +1185,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Start in tray</source>
-        <translation>Запускать свёрнутым в трей</translation>
+        <translation>Запускать свернутым в трей</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
@@ -1605,7 +1605,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>Ещё раз:</translation>
+        <translation>Еще раз:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
@@ -1764,7 +1764,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation>Посмотреть завершённые передачи файлов</translation>
+        <translation>Посмотреть завершенные передачи файлов</translation>
     </message>
     <message>
         <source>Change your settings</source>
@@ -1971,7 +1971,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>BlackList</source>
-        <translation>Чёрный список</translation>
+        <translation>Черный список</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
@@ -2721,7 +2721,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation>Если включено, каждый контакт без аватара будет иметь сгенерированный аватар, основываясь на своём Tox ID, вместо картинки по умолчанию. Требуется перезагрузка для применения.</translation>
+        <translation>Если включено, каждый контакт без аватара будет иметь сгенерированный аватар, основываясь на своем Tox ID, вместо картинки по умолчанию. Требуется перезагрузка для применения.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
@@ -2743,7 +2743,7 @@ It will be installed when qTox restarts.</source>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translatorcomment>Вероятно, это не столь долгое путешествие</translatorcomment>
-        <translation>Отошёл</translation>
+        <translation>Отошел</translation>
     </message>
     <message>
         <source>Busy</source>

@@ -9,11 +9,11 @@
     </message>
     <message>
         <source>Default resolution</source>
-        <translation type="unfinished">ئەسلىي ئېنىقلىقى</translation>
+        <translation>ئىتىراپلىق ئېنىقلىقى</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished">مېيىپ</translation>
+        <translation>تاقاش</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -25,35 +25,35 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">ئۈن تەڭشەكلىرى</translation>
+        <translation>ئۈن تەڭشەكلىرى</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished">قۇۋۋەت</translation>
+        <translation>ئاشۇرۇش</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">قويۇش ئەسۋابى</translation>
+        <translation>قويۇش ئۈسكۈنىسى</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">توچكىنى سۈرۈپ ئۈنقويغۇنىڭ ئاۋازىنى تەڭشەڭ.</translation>
+        <translation>توچكىنى سۈرۈپ ئۈنقويغۇنىڭ ئاۋازىنى تەڭشەڭ.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">ئۈنئالغۇ ئەسۋابى</translation>
+        <translation>ئۈنئالغۇ ئەسۋابى</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished">ئۈن چوڭلۇقى</translation>
+        <translation>ئاۋاز مىقدارى</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">سىن تەڭشىكى</translation>
+        <translation>سىن تەڭشىگى</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">سىن ئەسۋابى</translation>
+        <translation>سىن ئەسۋابى</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -61,59 +61,59 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">سىنئالغۇ (كامېرا) سۈزۈكلۈكىنى تەڭشەڭ
-قانچە چوڭ بولسا، دوستىڭىزغا كۆرۈنىدىغان سىن شۇنچە سۈپەتلىك بولىدۇ
-لېكىن سۈپەتلىك سىن ئ‍ۈچۈن ياخشى تور ئۇلىنىشى زۆرۈر
-بەزىدە تور ئۇلىنىشىڭىزسىن سۈپىتىگە  يېتەرلىك بولمىسا
-سىنلىق پاراڭلىشىشىڭىز تەسىرگە ئۇچرىشى مۇمكىن</translation>
+        <translation>سىنئالغۇ (كامېرا) ئېنىقلىق تەڭشىگى.
+قانچە چوڭ بولسا، دوستىڭىزغا كۆرۈنىدىغان سىن شۇنچە سۈپەتلىك بولىدۇ.
+لېكىن سۈپەتلىك سىن ئ‍ۈچۈن ياخشى تور ئۇلىنىشى زۆرۈر.
+تور ئۇلىنىشىڭىز ياخىشى بولمىسا ئېنىقلىقى يۇقىرى بولغان سىننى يوللىيالمايدۇ
+بۇنىڭ بىلەن سىنلىق پاراڭلىشىشىڭىز تەسىرگە ئۇچرىشى مۇمكىن.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">سۈزۈكلىكى</translation>
+        <translation>سۈزۈكلىكى</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">ئەسۋابلارنى قايتا ئىزلەش</translation>
+        <translation>ئەسۋابلارنى قايتا ئىزدەش</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋاز سىناش</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>ئەكىس سادانى يوقۇتۇش ئىقتىدرىنى ئېچىش، qTox نى قايتا قوزغۇتىش كېرەك.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>تەجىرىبدىكى ئاۋاز سۇپىسىنى ئېچىش</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋاز سۈپىتى</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇزۇتىلىدىغان ئاۋاز سۈپىتى، ئەگەر تور تىزلكىلىڭىز بەك يۇقىرى بولمىسا تۆۋەنرەك تەڭشەك.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>يۇقىرى (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>ئوتتۇراھال (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>تۆۋەن (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>بەك تۆۋەن (8 kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>تۆۋەندىكى چەك</translation>
     </message>
 </context>
 <context>
@@ -129,153 +129,153 @@ which may lead to problems with video calls.</source>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation type="unfinished">qTox يېڭى زابچاسلارنى چۈشۈرۈۋاتىدۇ %1</translation>
+        <translation>qTox %1 يېڭىلىقنى چۈشۈرۈۋاتىدۇ</translation>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ئەسلى ئاپتور: %1</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished">ئىشلىتىۋاتقىنىڭىز qTox نۇسخىسى: %1</translation>
+        <translation>ئىشلىتىۋاتقان qTox نەشىرى: %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished">تاپشۇرۇش خاشى: %1</translation>
+        <translation>بۇ نەشىرنىڭ hash قىممىتى: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">toxcore نۇسخىسى: %1</translation>
+        <translation>يادرو نەشىرى: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished">Qt نۇسخىسى: %1</translation>
+        <translation>Qt نەشىرى: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>بارلىق مەسلىلەرنى بىرنىڭ GitHub بېتىمىزدىن %1 تاپالايسىز. ئەگەر سىز qTox نىڭ خاتالىقىنى بايقىسىڭىز، بىزنىڭ %2 بېتىمىزدىكى ئۇسۇل بويىچە مەلۇم قىلسىڭىز بولىدۇ.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ يەرنى بېسىپ خاتالىقنى مەلۇم قىلىڭ.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished"></translation>
+        <translation>بارلىق تېزىملىكنى Github تىكى %1 دىن كۆرۈڭ</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">مەسىلە-خاتېرىلىگۈچ</translation>
+        <translation>خاتالىق خاتىرىسى</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">پايدىلىق مەسىلە دوكلاتى يېزىش</translation>
+        <translation>پايدىلىق مەسىلە دوكلاتى يېزىش</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished"></translation>
+        <translation>ھەمكارلاشقانلار</translation>
     </message>
 </context>
 <context>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">دېئالوگ</translation>
+        <translation>دېئالوگ</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished">تور ئىسمى</translation>
+        <translation>ئىشلەتكۈچى ئىسىمى</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">ھالەت</translation>
+        <translation>ئۇچۇر ھالىتى</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished">ئاممىۋىي ئاچقۇچ:</translation>
+        <translation>ئاچقۇق كودى:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">ئىسىملار:</translation>
+        <translation>ئىشلەتكەن ئىسىملار:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">قوللانغان ئىسىملار</translation>
+        <translation>بۇرۇن قوللانغان ئىسىملار</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>دوستلار ئەۋەتكەن ھۆججەتنى ئاپتۇماتىك قۇبۇل قىلىش</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">ھۆججەتلەرنى ئاپتوماتىك قوبۇل قىلىش</translation>
+        <translation>ھۆججەتلەرنى ئۆزلۈكىدىن قوبۇل قىلىش</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">ھۆججەتلەرنى ساقلايدىغان ئورۇن:</translation>
+        <translation>ھۆججەتلەرنى ساقلايدىغان ئورۇن:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">بۇ</translation>
+        <translation>بۇ كىشىنڭ ھۆججىتىنى ئۆزلۈكىدىن قۇبۇل قىلماسلىق</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished"></translation>
+        <translation>چاقىرىشنى ئاپتۇماتىك قۇبۇل قىلىش:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>قولدا</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋاز</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋاز + سىن</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداشلارنىڭ توپ تەكلىپىنى ئاپتۇماتىك قۇبۇل قىلىش.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>توپ تەكلىپىنى ئاپتۇماتىك قۇبۇل قىلش</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">تارىخنى ئۆچۈرۈش (يېنىۋالالمايسىز!)</translation>
+        <translation>تارىخنى ئۆچۈرۈش (كېيىن ئەسلىگە كەلتۈرگىنى بولمايدۇ!)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished">خاتېرىلەر</translation>
+        <translation>ئەسكەرتمىلەر</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداش ئىزاھاتى كىرگۈزۈش رامكىسى</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">بۇ تۇنۇشىڭىز توغرىسىدا.</translation>
+        <translation>بۇ تۇنۇشىڭىز توغرىسىدا ئەسكەرتىش بەرسىڭىز بولىدۇ.</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished"></translation>
+        <translation>خاتىرىلەرنى تازىلاش</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished"></translation>
+        <translation>سۆھبەت خاتىرىسى %1 ئۆچۈرۈلدى!</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ئاپتۇماتىك قۇبۇل قىلىش مۇندەرىجىسىنى تاللاڭ</translation>
     </message>
 </context>
 <context>
@@ -305,183 +305,184 @@ which may lead to problems with video calls.</source>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست قوشۇش</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۈنۈمسىز Tox ID فورماتى</translation>
     </message>
     <message>
         <source>Send friend request</source>
-        <translation type="unfinished"></translation>
+        <translation>دوستلۇقنى ئىلتىماس قىلىش</translation>
     </message>
     <message>
         <source>Add a friend</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست قوشۇش</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>دوستلۇقنى ئىلتىماس قىلىش</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>قۇبۇل قىلىش</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation type="unfinished"></translation>
+        <translation>رەت قىلىش</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست قوشۇلمىدى</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID بولسا 76 خانىلىق 16 بىتلىق ھەررپتىن تۈزۈلگەن ياكى name@example.com شەكلىدە</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation>دوستىڭىزنىڭ Tox ID سىنى كىرگۈزۈڭ</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست قوشۇش ئىلتىماسى</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست ئىلتىماس ئۇچۇرىنى قۇشۇپ يوللىسىڭىز ياكى قۇرۇق قويۇپ يوللىسىڭىز بولىدۇ</translation>
     </message>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 بۇ Tox ID ئۈنۈمسىز ياكى يوق</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ئۆزىڭىزنى دوستقا قوشالمايسىز!</translation>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>دوستلار تىزىمكىنى ئېچىش</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت ئېچىلمىدى</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>دوستلار تىزىملىك ھۆججىتى ئېچىلمىدى</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۈنۈمسىز ھۆججەت</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ ھۆججەتتىن دوستلار ئۇچۇرى تېپىلمىدى!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tox كىملىگى</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>76 خانىلىق 16لىك سانلار سىستېمىسدىن تۈزۈلگەن ھەرپلەر، ياكى name@example.com</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر</translation>
     </message>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ئېچىش</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست قوشۇش ئىلتىماسى ئەۋەتىش</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>مەن %1 ! بىر Tox تا پاراڭلاشساق بولامدۇ؟</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation type="unfinished"></translation>
+        <translation>دوستلار تىزىملىكىنى كىرگۈزىش، ھەر بىر Tox ID بىر قۇر</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n كىشى كىرگۈشىزكە ھازىرلاندى، مۇقۇملاشتۇرامسىز</numerusform>
+            <numerusform>%n كىشىلەر كىرگۈشىزكە ھازىرلاندى، مۇقۇملاشتۇرامسىز</numerusform>
         </translation>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداشلار كىرگۈزۈش</translation>
     </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالىي</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۆزىڭىزنىڭ نىمە ئىش قىلىۋاتقانلىقىڭىزنى %1 بىلەگەندىن باشقا، بۇ يەردىكى باشقا تەڭشىكلەرنى %2. بۇ يەردىكى ئۆزگىرىشلەر qTox ئەجەللىك خاتالىق پەيدا قىلىشى مومكىن، ھەتتە ئۇچۇرلىرىڭىز، مەسىلەن سۆھبەت خاتىرىسى يوقاپ كىتىشى.</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>ھەئە</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>ياق</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>موھىم ئۇچۇر</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>ئەسلى ھالەتكە قايىتتۇرۇش</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>پۈتۈن تەڭشەلەرنى ئەسلى ھالىتىگە قايتۇرامسىز؟</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>ھەئە</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>ياق</translation>
     </message>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>سۆزلىشىۋاتىدۇ</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>پاراڭلىشىۋاتقاندا ئۈزىۋەتسىڭىز بولمايدۇ!</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت ساقلاش</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>خاتىرە (*.log)</translation>
     </message>
 </context>
 <context>
@@ -489,272 +490,272 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>خىزمەت مۇندەرجىسى، تەڭشەكلەر ساقلاش مۇندارجىسى ئەمەس</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox نى كۆچمە ئۈسكىنىلەردە ئىشلىتىش</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation type="unfinished"></translation>
+        <translation>ئەسلى ھالەتكە قايتۇرۇش</translation>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>كۆچمە ئۈسكىنە</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇلاش تەڭشىگى</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>IPv6 نى قوزغىتىش (تەۋسىيە)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>زۆرۈر بولغاندا بۇ تۈرنى تاقىۋىتىڭ، مەسىلەن Tor نى ئىشلەتكەندە ياكى تور ئېقىمى يىتەرلىك بولمىغاندا.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>UDP نى ئېچىش (تەۋسىيە)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished"></translation>
+        <translation>ۋەكىل تۈرى:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ئادرېس:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ئېغىز:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>يوق</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished"></translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished"></translation>
+        <translation>قايتا ئۇلاش</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>چاتاقنى تاپماق</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>چاتاق خاتىرىسىنى چىقىرىش</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>چاتاق خاتىرىسىنى كۆچۈرۈش</translation>
     </message>
 </context>
 <context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished"></translation>
+        <translation>پاراڭ خاتىرىسىنى كىرگۈزۈش...</translation>
     </message>
     <message>
         <source>Send a file</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت يوللاش</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox %1 ئاچالمىدى</translation>
     </message>
     <message>
         <source>Unable to open</source>
-        <translation type="unfinished"></translation>
+        <translation>ئېچىلمىدى</translation>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation type="unfinished"></translation>
+        <translation>قاملاشمىغان پىكىر</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 نى چاقىرىش</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ھازىر %1 نى چاقىرىۋاتىدۇ</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت %1 يوللاش مەغلۇب بولدى</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation type="unfinished"></translation>
+        <translation>ۋاقىتلىق ھۆججەت ئېچىلمىدى</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ئېكران رەسىمى ساقلانمىدى</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 بىلەن پاراڭ ئۈچۈلدى. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
-        <translation type="unfinished"></translation>
+        <translation>پاراڭ ۋاقتى: </translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 خەت كىرگۈزىۋاتىدۇ</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>كۆچۈرۈش</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>بىردىن يوللاپ سىناپ بېقىڭ، بۇ مەشغۇلاتنى تاماملىيالمىدى!</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>چىقىپ كىتىش</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئالدىراش</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>توردا يوق</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>توردا</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 ھازىر %2</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت چىقىرىش</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished"></translation>
+        <translation>پارڭ خاتىرىسىنى ساقلاش</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 بىلەن بولغان ئالاقە ئۈزۈلۈپ قالدى. %2</translation>
     </message>
 </context>
 <context>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋازلىق پاراڭلىشىش ئېچىلمىدى</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋازلىق چاقىرىش</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋازلىق چاقىرىش ئاخىرلاشتى</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋازلىق پاراڭنى بىكار قىلىش</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>قۇبۇل قىلىش</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>سىنلىق پاراڭ ئېچىلمىدى</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>سىنلىق پاراڭ</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished"></translation>
+        <translation>سىنلىق پاراڭنى ئاخىرلاشتۇرۇش</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished"></translation>
+        <translation>سىنلىق پاراڭنى بىكار قىلىش</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished"></translation>
+        <translation>سىنلىق پاراڭنى قۇبۇل قىلىش</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>پەقەت ئاۋازلىق پاراڭلاشقان ۋاقىتتا ئاۋاز تاقاش مەشغۇلاتنى قىلغىنى بولىدۇ</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋازنى ئېچىش</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋازنى تاقاش</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>پەقەت ئاۋازلىق پاراڭلاشقان ۋاقىتتا مىكروفۇن ئېتىۋىتىش مەشغۇلاتنى قىغىنى بولىدۇ</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>مىكروفون ئاۋازىنى ئېچىش</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>مىكروفون ئاۋازىنى تاقاش</translation>
     </message>
 </context>
 <context>
     <name>ChatLog</name>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>كۆچۈرۈش</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>ھەممىنى تاللاش</translation>
     </message>
     <message>
         <source>pending</source>
-        <translation type="unfinished"></translation>
+        <translation>ساقلاش</translation>
     </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر كىرگۈزۈڭ...</translation>
     </message>
 </context>
 <context>
@@ -762,47 +763,47 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>چەمبىرەك ئىسمىنى كۆزگەرتىش</translation>
     </message>
     <message>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>چەمبىرەك ئۆچۈرۈش</translation>
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>ھەممىنى يېڭى كۆزنەكتە ئېچىش</translation>
     </message>
 </context>
 <context>
     <name>Core</name>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox ئارقىلىق سۆھبەتلىشىش</translation>
     </message>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>/me ئالاقىداش تەمىنلىدى، &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئۈنۈمسىز Tox ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished"></translation>
+        <translation>بۇ ئىلتىماسقا بىر ئىزاھات بىرىشىڭىز كېرەك</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇرىڭىز بەك ئۇزۇنكەن!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداش قوشۇلدى</translation>
     </message>
 </context>
 <context>
@@ -810,86 +811,86 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Form</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>جەدۋەل</translation>
     </message>
     <message>
         <source>10Mb</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>10Mb</translation>
     </message>
     <message>
         <source>0kb/s</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>0kb/s</translation>
     </message>
     <message>
         <source>ETA:10:10</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ETA:10:10</translation>
     </message>
     <message>
         <source>Filename</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت ئىسمى</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>يوللاشنى ساقلاۋاتىدۇ...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەتنى قۇبۇل قىلىش</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation>بۇ ئورۇندا سالىغىنى بولمايدۇ</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation>بۇ ئورۇنغا ھۆججەت ساقلاش ھوقۇقىڭىز يوقكەن، باشقا ئورۇن تاللاڭ.</translation>
     </message>
     <message>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئەسلىگە كىلىۋاتىدۇ...</translation>
     </message>
     <message>
         <source>Cancel transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>يوللاشتىن چېكىنىش</translation>
     </message>
     <message>
         <source>Pause transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>يوللاشنى توختۇتۇش</translation>
     </message>
     <message>
         <source>Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>توختىدى</translation>
     </message>
     <message>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت ئېچىش</translation>
     </message>
     <message>
         <source>Open file directory</source>
-        <translation type="unfinished"></translation>
+        <translation>مۇندەرىجە ئېچىش</translation>
     </message>
     <message>
         <source>Resume transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>يوللاش</translation>
     </message>
     <message>
         <source>Accept transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>يوللاشقا قوشۇلۇش</translation>
     </message>
     <message>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت ساقلاش</translation>
     </message>
 </context>
 <context>
@@ -897,42 +898,42 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>يوللنغان ھۆججەتلەر</translation>
     </message>
     <message>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>چۈشۈرۈلگەنلەر</translation>
     </message>
     <message>
         <source>Uploads</source>
-        <translation type="unfinished"></translation>
+        <translation>يۈكلەنگەنلەر</translation>
     </message>
 </context>
 <context>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished"></translation>
+        <translation>بۈگۈن</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished"></translation>
+        <translation>تۈنۈگۈن</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاخىرقى 7 كۈنلۈك</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished"></translation>
+        <translation>مۇشۇ ئايلىق</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished"></translation>
+        <translation>6 ئاي بۇرۇنقى</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>ئەسلا</translation>
     </message>
 </context>
 <context>
@@ -940,29 +941,29 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداش ئىلتىماسى</translation>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
-        <translation type="unfinished"></translation>
+        <translation>بەزىلەر سىزنى ئالاقىداشقا قوشماقچى</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىشلەتكۈچى كىملىگى:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداش ئىلتىماس ئۇچۇرى:</translation>
     </message>
     <message>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>قوشۇلۇش</translation>
     </message>
     <message>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>رەت قىلىش</translation>
     </message>
 </context>
 <context>
@@ -970,287 +971,287 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
-        <translation type="unfinished"></translation>
+        <translation>توپقا كىرىش</translation>
     </message>
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>چەمبىرەككە يۆتكەش...</translation>
     </message>
     <message>
         <source>To new circle</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى چەمبىرەك قۇرۇش</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>چەمبىرەكتىن &apos;%1&apos; ئۆچۈرۈلدى</translation>
     </message>
     <message>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; چەمبىرەككە يۆتكەلدى</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى كۆزنەك ئېچىش</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ كۆزنەكنى ئۆچۈرىۋىتىش</translation>
     </message>
     <message>
         <source>To new group</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى توپ</translation>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; توپقا تەكلىپ قىلىش</translation>
     </message>
     <message>
         <source>Set alias...</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىزاھات...</translation>
     </message>
     <message>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئارقىداشلار ھۆججىتىنى ئاپتۇماتىك قۇبۇل قىلىش</translation>
     </message>
     <message>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداش ئۆچۈرۈش</translation>
     </message>
     <message>
         <source>Show details</source>
-        <translation type="unfinished"></translation>
+        <translation>تەپسىلاتى</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>قۇبۇل قىلىش مۇندەرىجىسى تاللاڭ</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى ئۇچۇر</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished"></translation>
+        <translation>توردا</translation>
     </message>
     <message>
         <source>Away</source>
-        <translation type="unfinished"></translation>
+        <translation>ئايرىلىش</translation>
     </message>
     <message>
         <source>Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالدىراش</translation>
     </message>
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تورسىز</translation>
     </message>
 </context>
 <context>
     <name>GUI</name>
     <message>
         <source>Enter your password</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول كىرگۈزۈڭ</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>يېشىش</translation>
     </message>
     <message>
         <source>You must enter a non-empty password:</source>
-        <translation type="unfinished"></translation>
+        <translation>پارولنى قۇرۇق قويماڭ:</translation>
     </message>
 </context>
 <context>
     <name>GeneralForm</name>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>ئورتاق</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>قۇبۇل قىلىش مۇندەرىجىسى تاللاڭ</translation>
     </message>
 </context>
 <context>
     <name>GeneralSettings</name>
     <message>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاساسىي تەڭشەكلەر</translation>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox قايتا قوزغاتقاندىن كېيىن كۈچكە ئىگە.</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>تىل:</translation>
     </message>
     <message>
         <source>Show system tray icon</source>
-        <translation type="unfinished"></translation>
+        <translation>سىستېما پاي سىنبەلگىسىنى كۆرسىتىش</translation>
     </message>
     <message>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>يورۇق پاي سىنبەلگىسىنى ئېچىش.</translation>
     </message>
     <message>
         <source>Light icon</source>
-        <translation type="unfinished"></translation>
+        <translation>يورۇق سىنبەلگە</translation>
     </message>
     <message>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>qTox نى پاي ھالەتتە قوزغۇتۇش.</translation>
     </message>
     <message>
         <source>Start in tray</source>
-        <translation type="unfinished"></translation>
+        <translation>پايدىن قوززۇتۇش</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>qTox نى (X) بىلەن تاقىغاندا، پاي ھالەتكە چۈشۈرۈش.</translation>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation type="unfinished"></translation>
+        <translation>پاينى تاقاش</translation>
     </message>
     <message>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>qTox نى ۋەزىپە ئىستونىغا چۈشۈرمەك، پاي ھالەتكە چۈشۈرۈش،.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
-        <translation type="unfinished"></translation>
+        <translation>پاي ھالەتكە چۈشۈرۈش</translation>
     </message>
     <message>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاپتۇماتىك قوزغۇتۇش</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>قوزغالغاندا يېڭىلاشنى تەكشۈرۈش</translation>
     </message>
     <message>
         <source>Set where files will be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت ساقلاش مۇندەرىجىسى بەلگىلەش.</translation>
     </message>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>مائوس ئوڭ كونۇپكىسىنى بېسىش ئارقىلىش ئالاقىداشلارنى تەڭشىسىڭىز بولىدۇ.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاپتۇماتىك ھۆججەت قۇبۇل قىلىش</translation>
     </message>
     <message>
         <source>Set to 0 to disable</source>
-        <translation type="unfinished"></translation>
+        <translation>0 قىلسىڭىز تاقىلىدۇ</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation type="unfinished"></translation>
+        <translation>بەلگىلەنگەن ۋاقىت ئىچىدە مەشغۇلات قىلمىسىڭىز ھالىتڭىز تورسىزغا ئۆزگىرىدۇ.</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>قانچىلىك ۋاقىتتىن كېيىن توردىن چۈشۈش (0 چەكلەنمەيدۇ):</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداشلار ھالىتىنى كۆرسىتىش</translation>
     </message>
     <message>
         <source>On new message:</source>
-        <translation type="unfinished"></translation>
+        <translation>ھازىرقى ئۇچۇر:</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاۋازنى قويۇش</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
-        <translation type="unfinished"></translation>
+        <translation>تورسىز ھالەتكى كىرىۋىلىش</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox نى ئپتۇماتىك قوزغىتىش (مۇشۇ ئىشكەتكۈچى).</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">ھۆججەتلەرنى ساقلايدىغان ئورۇن:</translation>
+        <translation>ھۆججەتلەرنى ساقلايدىغان ئورۇن:</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالدىراش ھالەتتە ئاۋازنى قويۇۋىرىش</translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
         <source>Send message</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر يوللاش</translation>
     </message>
     <message>
         <source>Smileys</source>
-        <translation type="unfinished"></translation>
+        <translation>يۈز ئىپادىلەر</translation>
     </message>
     <message>
         <source>Send file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت يوللاش</translation>
     </message>
     <message>
         <source>Send a screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>ئېكران كەسمىسى يوللاش</translation>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation type="unfinished"></translation>
+        <translation>پاراڭ خاتىرىسىنى ساقلاش</translation>
     </message>
     <message>
         <source>Clear displayed messages</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇرلارنى تازىلاش</translation>
     </message>
     <message>
         <source>Not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>يوللانمىدى</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished"></translation>
+        <translation>تازىلاندى</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>نەقىل ئېلىش</translation>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇلانما ئادرېسىنى كۆچۈرۈش</translation>
     </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
     <message>
         <source>Tox video</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox سىن</translation>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر كۆرۈش</translation>
     </message>
     <message>
         <source>Hide Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر يوشۇرۇش</translation>
     </message>
 </context>
 <context>
@@ -1258,7 +1259,7 @@ instead of system taskbar.</source>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;قۇرۇق&gt;</translation>
     </message>
 </context>
 <context>
@@ -1266,575 +1267,581 @@ instead of system taskbar.</source>
     <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
+        <translation>1 كىشى سۆھبەتتە</translation>
     </message>
     <message>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 كىشى سۆھبەتتە</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ماۋزۇنى %2 گە ئۆزگەرتتى</translation>
     </message>
 </context>
 <context>
     <name>GroupInviteForm</name>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>توپ</translation>
     </message>
     <message>
         <source>Create new group</source>
-        <translation type="unfinished"></translation>
+        <translation>توپ قۇرۇش</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>توپ تەكلىپى</translation>
     </message>
 </context>
 <context>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2 تەرىپىدىن %3 كە تەپلىپ قىلىندى.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>قېتىلىش</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>رەت قىلىش</translation>
     </message>
 </context>
 <context>
     <name>GroupWidget</name>
     <message>
         <source>%1 users in chat</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 كىشى سۆھبەتتە</translation>
     </message>
     <message>
         <source>Set title...</source>
-        <translation type="unfinished"></translation>
+        <translation>ماۋزۇ تەڭشەش...</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>سۆھبەتنى يېڭى كۆزنەكتە ئېچىش</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ كۆزنەكتىن سۆھبەتنى ئۆچۈرۈش</translation>
     </message>
     <message>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
-        <translation type="unfinished"></translation>
+        <translation>توپتىن چېكىنىش</translation>
     </message>
     <message>
         <source>1 user in chat</source>
-        <translation type="unfinished"></translation>
+        <translation>1 كىشى سۆھبەتتە</translation>
     </message>
 </context>
 <context>
     <name>IdentitySettings</name>
     <message>
         <source>Public Information</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاممىۋىي ئۇچۇر</translation>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox كىملىك</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>باشقا Tox ئەزالىرى بۇ ھەرپ-بەلگىلەر ئارقىلىق سىز بىلەن ئالاقىلىشالايدۇ.
+سىز بىلەن ئالاقىلىشىشى ئۈچۈن دوستلىرىڭىزغا ھەمبەھىرلەڭ.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation type="unfinished"></translation>
+        <translation>سىزنىڭ Tox  كىملىكىڭىز (مائۇسنى چەكسىڭىز كۆچۈرۈلىدۇ)</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق</translation>
     </message>
     <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئىسمىنى ئۆزگەرتىش.</translation>
     </message>
     <message>
         <source>Go back to the login screen</source>
         <comment>tooltip for logout button</comment>
-        <translation type="unfinished"></translation>
+        <translation>كىرىش كۆزنىكىگە قايتىش</translation>
     </message>
     <message>
         <source>Logout</source>
         <comment>import profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>چېكىنىش</translation>
     </message>
     <message>
         <source>Remove password</source>
-        <translation type="unfinished"></translation>
+        <translation>پارولنى ئۆچۈرۈش</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول ئۆزگەرتىش</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ  Tox كىملىكىڭىزنىڭ ئىككىلىك كودى، دوستىڭىز بىلەن ئورتاقلاشسىڭىز بولىدۇ.</translation>
     </message>
     <message>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>رەسىمنى ساقلاش</translation>
     </message>
     <message>
         <source>Copy image</source>
-        <translation type="unfinished"></translation>
+        <translation>رەسىمنى كۆچۈرۈش</translation>
     </message>
     <message>
         <source>Rename</source>
         <comment>rename profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئۆزگەرتىش</translation>
     </message>
     <message>
         <source>Delete profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىقنى ئۆچۈرۈش.</translation>
     </message>
     <message>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tox تەڭشەكلىرىڭىزنى بىر ھۆججەت قىلىپ ساقلايدۇ.
+بۇ ھۆججەت سۆھبەت خاتىرىسىنى ئۆز ئىچىگە ئالمايدۇ.</translation>
     </message>
     <message>
         <source>Export</source>
         <comment>export profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>چىقىرىش</translation>
     </message>
     <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئۆچۈرۈش</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>مۇلازىمېتىر</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاممىۋىي تىزىملىكتە ئىسىمنى يوشۇرۇش</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>تىزىملىتىش</translation>
     </message>
     <message>
         <source>Your password</source>
-        <translation type="unfinished"></translation>
+        <translation>پارولىڭىز</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭىلاش</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe غا تىزىملىتىش</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe دىكى ئىسمىڭىز.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation>تاللانما. سىزگە مۇناسىۋەتلىك. ياكى مۇشۈكىڭىزگە.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>تاللانما. سىزگە مۇناسىۋەتلىك. ياكى مۇشۈكىڭىزگە.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe غا تىزىملىتىش مۇلازىمىتى.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئەگەر تاللىمىسىڭىز، ToxMe دىكى ئۇچۇرلىرىڭىز ئاممىۋىي ھالەتتە كۆرىنىدۇ.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation type="unfinished"></translation>
+        <translation>پارولىڭىزنى چىقىرىۋىتىڭ، ئاندىن ئارخىپىڭىزنى شىفىرلاشتۇرۇپ ساقلاڭ.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسىم كىرگۈزۈڭ</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسمنى ئالاقىداشلار قاتارىدا كۆرسىتىش</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر كىرگۈزۈش ھالىتىدە</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر ھالىتىنى ئالاقىداشقا كۆرسىتىش</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox كىملىگىڭىز</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىككىلىك كود رەسىمىنى ساقلاش</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىككىلىك كود رەسىمىنى كۆچۈرۈش</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe دا ToxMe ئىسمىنى كۆرسىتىش</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe دا كۆرىنىدىغان شەخسىي ئۇچۇرلار</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe مۇلازىمېتىر ئادرېسى</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe مۇلازىمەت كۆرۈنىشى</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe خاتىرىسىنى يېڭىلاش</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىقنى ئۆزگەرتىش.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىقنى ئۆچۈرۈش.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىقنى چىقىرىۋىلىش</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>خالىقتىن پارولنى ئۆچۈرۈش</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق پارولىنى ئۆگەرتىش</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسمىڭىز:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>ھالىتىڭىز:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسمىم</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>تەرجىمھالىم</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىقىم</translation>
     </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇرۇنقى خاتىرىلەرنى يۈكلەش</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation type="unfinished"></translation>
+        <translation>خاتىرىلەرنى يۈكلەش:</translation>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 پارچە ئۇچۇر</translation>
     </message>
 </context>
 <context>
     <name>LoginScreen</name>
     <message>
         <source>Username:</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسىم:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>پاورل:</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation type="unfinished"></translation>
+        <translation>جەزىملەش:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول ئۇزۇنلىقى: %p%</translation>
     </message>
     <message>
         <source>Create Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق قۇرۇش</translation>
     </message>
     <message>
         <source>If the profile does not have a password, qTox can skip the login screen</source>
-        <translation type="unfinished"></translation>
+        <translation>ئەگەر ئارخىپىڭىزنىڭ پارولى بولمىسا، بۇ كۆزنىكىدىن ئاتلاپ ئۆتۈپ كىتىدۇ</translation>
     </message>
     <message>
         <source>Load automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۆزلۈكىدىن يۈكلەش</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>يۈكلەش</translation>
     </message>
     <message>
         <source>Load Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق يۈكلەش</translation>
     </message>
     <message>
         <source>New Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى خاسلىق</translation>
     </message>
     <message>
         <source>Couldn&apos;t create a new profile</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى خاسلىق قۇرۇلمىدى</translation>
     </message>
     <message>
         <source>The username must not be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسمىڭىزنى بوش قويماڭ.</translation>
     </message>
     <message>
         <source>The password must be at least 6 characters long.</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول 6 ھەرپتىن ئاز بولمىسۇن.</translation>
     </message>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىككى قېتىم كىرگۈزگەن پارول ئوخشاش ئەمەس.
+ئىككى پارولنىڭ ئوخشاشلىقىنى جەزىملەشتۈرۈڭ.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ خاسلىق بار.</translation>
     </message>
     <message>
         <source>Unknown error: Couldn&apos;t create a new profile.
 If you encountered this error, please report it.</source>
-        <translation type="unfinished"></translation>
+        <translation>ئېنىقسىز خاتالىق: يېڭى ئارخىپ قۇرۇلمىدى.
+ئەگەر سىز بۇ خاتالىققا يولۇقسىڭىز، مەلۇم قىلىڭ.</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>پاروللانغان خاسلىقنى ئۆزلىكىدىن يۈكلىيەلمەيدۇ.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق يۈكلەنمىدى</translation>
     </message>
     <message>
         <source>There is no selected profile.
 
 You may want to create one.</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق تاللانمىدى.
+
+يېڭىدىن قۇرسىڭىزمۇ بولىدۇ.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ خاسلىق يۈكلەنمىدى</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ خاسلىق ئىشلىتىلىۋاتىدۇ.</translation>
     </message>
     <message>
         <source>Profile already in use. Close other clients.</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق ئىشلىتىلىۋاتىدۇ. پروگىراممىنى تاقىۋىتىڭ.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول خاتا.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>كىرگۈزۈش</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسىم كىرگۈزۈش رامكىسى</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول كىرگۈزىش كۆزنىكى، بوش قويسىڭىزمۇ ياكى ئاز بولغاندا 6 ھەرپ كىرگۈزمۇ بولىدۇ</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>جەزىملەش پاورل رامكىسى</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى خاسلىق قۇرۇش كونۇپكىسى</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىقلار قاتارى</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>بارلىق خاسلىقلار</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول كىرگۈزۈڭ</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۆزلۈكىدىن يۈكلەش تاللانمىسى</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق كىرگۈزۈش</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ تاللاش كونۇپكىسى</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى خاسلىق قۇرۇش بېتى</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق يۈكلىنىش بېتى</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Your name</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسمىڭىز</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished"></translation>
+        <translation>ھالىتىڭىز</translation>
     </message>
     <message>
         <source>...</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Add friends</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست قوشۇش</translation>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation type="unfinished"></translation>
+        <translation>توپ قۇرۇش</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>يوللىنىپ بولغان ھۆججەتلەرنى كۆرۈش</translation>
     </message>
     <message>
         <source>Change your settings</source>
-        <translation type="unfinished"></translation>
+        <translation>تەڭشەك ئۆزگەرتىش</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>تاقاش</translation>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق ئېچىش</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>خاسلىق بېتى ئېچىش</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر كۈرگۈزۈش ھالىتى</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation>باشقىلارغا كۆرسىتىدىغان ئۇچۇر ھالىتىڭىز</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>ھالەت</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>ھالەت تەڭشىكى</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداش ئىزدەش</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>دوستلار قاتارىدىن ئالاقىداش ئىزدەش رامكىسى</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>تەرتىپلەش ۋە كۆرسۈتۈش</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>دوستلارنىڭ تەرتىپلەش ۋە كۆرۈنۈش تەڭشىكى</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست قوشۇش بېتىنى ئېچىش</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>توپ</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>توپ باشقۇرۇش بېتىنى ئېچىش</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت يوللاش خاتىرىسى</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت يوللاش خاتىرىسىنى ئېچىش</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>تەڭشەكلەر</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>تەكشەلەرنى ئېچىش</translation>
     </message>
 </context>
 <context>
@@ -1842,43 +1849,44 @@ You may want to create one.</source>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>رەسىم  (%1)</translation>
     </message>
     <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>كۆرۈش</translation>
     </message>
     <message>
         <source>Window</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>چېسلا</translation>
     </message>
     <message>
         <source>Minimize</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئەڭ كىچىك</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئەڭ ئۈستىگە يۆتكەش</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>تولۇق ئېكراندىن چېكىنىش</translation>
     </message>
     <message>
         <source>Enter Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>تولۇق ئېكران ھالىتى</translation>
     </message>
 </context>
 <context>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>ئوقۇلمىغان ئۇچۇر</numerusform>
+            <numerusform>ئوقۇلمىغان ئۇچۇرلار</numerusform>
         </translation>
     </message>
 </context>
@@ -1886,22 +1894,22 @@ You may want to create one.</source>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
+        <translation>CAPS-LOCK قۇلۇپلاندى</translation>
     </message>
 </context>
 <context>
     <name>PrivacyForm</name>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished"></translation>
+        <translation>مەخپىيەتلىك</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسپاتلاش</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>بارلىق سۆھبەت خاتىرىسنى مەڭگۈلۈك ئۆچۈرەمسىز؟</translation>
     </message>
 </context>
 <context>
@@ -1909,278 +1917,286 @@ You may want to create one.</source>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر كىرگۈزۈۋاتقانلىقىڭىزنى دوستىڭىز كۆرەلەيدۇ.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر كىرگۈزۈۋاتقانلىقىنى يوللاش</translation>
     </message>
     <message>
         <source>Keep chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>سۆھبەت خاتىرىسىنى ساقلاش</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation type="unfinished"></translation>
+        <translation>بۇ Tox كىملىكىڭىزنىڭ بىرقىسىمى.
+ئەگەر ئەخلەت تەپلىكلەر ئاۋارە قىلسا بۇنى ئۆزگەرتسىڭىز بولىدۇ.
+كونا Tox كىملىكىڭىزدىن سىزنى قوشالمايدۇ، بىراق قوشۇلۇپ بولغان دوستلار ساقلىنىپ قالىدۇ.</translation>
     </message>
     <message>
         <source>NoSpam</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىم</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ Tox كىملىكىڭىزنىڭ بىرقىسىمى.
+ئەگەر ئەخلەت تەپلىكلەر ئاۋارە قىلسا بۇنى ئۆزگەرتسىڭىز بولىدۇ.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىختىيارى ئىم ھاسىل قىلىش</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>سۆھبەت خاتىرىسىنى ساقلاش ياسىلىش باسقۇچىدا.
+ساقلاش فورماتى كەلگۈسىدە ئۆزگىرىشى مۇمكىن، بۇنداقتا ئۇچۇرلىرىڭىز يوقاپ كىتىشى مۇمكىن.</translation>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished"></translation>
+        <translation>مەخپىيەتلىك</translation>
     </message>
     <message>
         <source>BlackList</source>
-        <translation type="unfinished"></translation>
+        <translation>قارا تىزىملىك</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>ئەزالارنىڭ ئاچقۇچ كودى ئارقىلىق سۆھبەت خاتىرىسىنى سۈزۈش، ھەر بىر كود بىر قۇردىن.</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>پارولدىن ئاچقۇچنى تاپالمىى، خاسلىق بۇر پارولنى ئىشلىتەلمەيدۇ.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>سانداندىكى پارول ئۆزگەرمىدى، بەلكىم ساندان بۇزلغان ياكى پارول خاتا بولۇشى مۇمكىن.</translation>
     </message>
 </context>
 <context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
-        <translation type="unfinished"></translation>
+        <translation>باش رەسىم تاللاش</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خاتا</translation>
     </message>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئۆزگەرتىش &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Unable to open this file.</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ ھۆججەت ئېچىلمىدى.</translation>
     </message>
     <message>
         <source>Current profile: </source>
-        <translation type="unfinished"></translation>
+        <translation>ھازىرقى ئارخىپ: </translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۆچۈرۈش</translation>
     </message>
     <message>
         <source>Unable to read this image.</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ رەسىمنى ئوقۇيالمىدى.</translation>
     </message>
     <message>
         <source>The supplied image is too large.
 Please use another image.</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ رەسىم بەك چوڭكەن.
+باشقا رەسىم تاللاڭ.</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; ئارخىپ ئىسمىنى ئۆزگەرتكىنى بولمىدى</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation>يېزىش چەكلەنگەن ئورۇن</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation>بۇ ئورۇنغا يېزىش ھوقۇقىڭىز يوق، باشقا ئورۇن تاللاڭ ياكى ساقلاشنى بىكار قىلىڭ.</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت كۆچۈرۈلمىدى</translation>
     </message>
     <message>
         <source>The file you chose could not be written to.</source>
-        <translation type="unfinished"></translation>
+        <translation>تاللىغان ھۆججەتكە يىزىش يازالمىدى.</translation>
     </message>
     <message>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپنى راسلا ئۆچۈرەمسىز؟</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۆچۈرىدىغان ھېچنىمە يوق</translation>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپىڭىزغا پارولانمىدى!</translation>
     </message>
     <message>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>پارولنى راسلا ئۆچۈرەمسىز؟</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى پارول كىرگۈزىڭ.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپنى راسلا ئۆچۈرەمسىز؟</translation>
     </message>
     <message>
         <source>Save</source>
         <comment>save qr image</comment>
-        <translation type="unfinished"></translation>
+        <translation>ساقلاش</translation>
     </message>
     <message>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئىككىلىك كودنى ساقلاش (*.png)</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت ئۆچۈرۈلمىدى!</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>تىملاش (ھازىرلىنىۋاتىدۇ)</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭىلاش (ھازىرلىنىۋاتىدۇ)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>پۈتتى!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>%1@%2 ھېسابى يېڭىلىنىپ بولدى</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation type="unfinished"></translation>
+        <translation>%1@%2 ساندانغا قوشۇلدى، پارولنى ياخشى ساقلاڭ</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation type="unfinished"></translation>
+        <translation>Toxme خاتا</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>تىزىملىتىش</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭىلاش</translation>
     </message>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>پارول ئۆزگەرتىش</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>پارول بەلگىلەش</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ھازىرقى ئارخىپ ئورنى: %1</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول ئۆزگەرتىلمىدى</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ ئۇچۇرلار ئارقىلىق باشقا Tox ئىشلەتكۈچىلەر بىلەن ئالاقىلىشالايسىز.
+بۇنى دوستىڭىز بىلەن ئورتاقلاشسىڭىز ئۇلار سىز بىلەن ئالاقىلىشالايدۇ.
+
+بۇ Tox كىملىك NoSpam كودى(كۆك) ۋە تەستىق كودىنى(قوڭۇر) ئۆز ئىچىگە.</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>بوش ئادرېسنى ئىشلەتكىنى بولمايدۇ</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۆزگەرتەلمىدى</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ بار</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ ئىسىمى &quot;%1&quot; بار.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished"></translation>
+        <translation>بوش ئىشىم</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>بوش ئىشىم</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation type="unfinished"></translation>
+        <translation>قۇرۇق ئادرېس</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>سانداندىكى پارول ئۆزگەرمىدى، ساندان بۇزۇلغان ياكى پارول خاتا بولۇشى مۇمكىن.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ چىقىرىش</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tox ئارخىپ ھۆججىتى (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>بۇ ھۆججەتلەنى ئۆچۈرەلمىدى:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>قولدا ئۆچۈرىۋىتىڭ.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>پارولنى راستلا ئۆچۈرەمسىز؟</translation>
     </message>
 </context>
 <context>
@@ -2188,48 +2204,48 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ كىرگۈزىش</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tox ئارخىپ ھۆججىتى (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tox ھۆججىتى بولمىسا كارى بولماسلىق</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئاگاھلاندۇرۇش: سىز تاللىغان ھۆججەت Tox ئارخىپ ھۆججىتى ئەمەس؛ كارىم يوق.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ بار</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ ئىسمى &quot;%1&quot; بار، بۇنى ئۆچۈرۈۋىتەمسىز؟</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت يوق</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ يوق</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ كىرگۈزۈلدى</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished"></translation>
+        <translation>%1.tox كىرگۈزۈلدى</translation>
     </message>
 </context>
 <context>
@@ -2241,190 +2257,191 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>تامام</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>بىكار قىلىش</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>ھەئە</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>ياق</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست قوشۇلمىدى</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ئۈنۈملۈك Toxme ئادرېسى ئەمەس.</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئۆزىڭىزنى قوشالمايسىز!</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>نەشىرى %1، %2</translation>
     </message>
     <message>
         <source>Update</source>
         <comment>The title of a message box</comment>
-        <translation type="unfinished"></translation>
+        <translation>يېڭىلاش</translation>
     </message>
     <message>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭىلىق بار، چۈشۈرەمسىز؟
+بۇ qTox قايتا قوزغالغاندا ئۆۈلۈكىدىن قاچىلىنىدۇ.</translation>
     </message>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ئۇلانما ئارېسى</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭىدىن ئارخىپ قۇرۇپ بەلگىلەنگەن ھۆججەتنى كىرگۈزۈش.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىتىراپلىق</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>كۆك</translation>
     </message>
     <message>
         <source>Olive</source>
-        <translation type="unfinished"></translation>
+        <translation>زەيتۇن</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>قىزىل</translation>
     </message>
     <message>
         <source>Violet</source>
-        <translation type="unfinished"></translation>
+        <translation>بىنەپشە</translation>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation type="unfinished"></translation>
+        <translation>تېلېفون كەلدى...</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
+        <translation>مەن %1! بىز Tox تا پاراڭلىشامدۇق ؟</translation>
     </message>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation type="unfinished"></translation>
+        <translation>يوق</translation>
     </message>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئۈستەل يۈزى</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation type="unfinished"></translation>
+        <translation>مۇلازىمېتىر Toxme نى قوللىمايدۇ</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation type="unfinished"></translation>
+        <translation>بەك جىق ئۇچۇر ئەۋەتىپ كەتتىڭىز. بىر سائەتتىن كىيىن قايتا سىناپ بېقىڭ</translation>
     </message>
     <message>
         <source>This name is already in use</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ ئىسىم ئىشلىتىلىپ بولغان</translation>
     </message>
     <message>
         <source>This Tox ID is already registered under another name</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ Tox كىملىك تىزىملىتىلىپ بولغان</translation>
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسمىڭىز ئارسىدا بوشلۇق ئىشلەتمەڭ</translation>
     </message>
     <message>
         <source>Password incorrect</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول خاتا</translation>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇ ئىسىمنى ئىشلىتەلمەيسىز</translation>
     </message>
     <message>
         <source>Name not found</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىسىم تېپىلمىدى</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox كىملىك يوللانمىدى</translation>
     </message>
     <message>
         <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇنداق ئىشلەتكۈچى يوق</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خاتا</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>سۆھبەت خاتىرىڭىز ئېچىلمىدى، ئۇلارنى چەكلىۋەتسىڭىز بولىدۇ.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTPS ئۇلىنالمىدى</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe ئىچكى خاتالىقى</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation>يېزىق فورماتى تەڭشىلىۋاتىدۇ...</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭىدىن ئۆزنەك قۇرۇپ كىرىش كۆزنىكىنى ئېچىش.</translation>
     </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست ئۆچۈرۈش</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>سۆھبەت خاتىرىسىنىمۇ بىرگە ئۆچۈرۈش</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۆچۈرۈش</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداشلار تىزىملىكىدىن %1 نى ئۆچۈرەمسىز؟</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>بۇنى تەڭشىسىڭىز بۇ دوستىڭىزنىڭ بارلىق سۆھبەت خاتىرىسىمۇ ئۆچۈپ كىتىدۇ</translation>
     </message>
 </context>
 <context>
@@ -2432,77 +2449,77 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished"></translation>
+        <translation>بىر چىكىپ مەلۇم دائىرىنى تاللاڭ، %1 نى بېسىپ qTox كۆزنىكى يوشۇرۇن ھالەتكە ئۆتكۈزسىڭىز ياكى %2 نى بېسىپ ۋاز كەچسىڭىز بولىدۇ.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation type="unfinished"></translation>
+        <translation>بوشلۇق</translation>
     </message>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation type="unfinished"></translation>
+        <translation>Escape</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 كونۇپكىسى ئارقىلىق تاللانغان ئېكران رەسىمىنى يوللىسىڭىز، %2 كونۇپكىسى ئارقىلىق qTox كۆزنىكىنى يوشۇرسىڭىز، ياكى %3 كونۇپكىسى ئارقىلىق ۋاز كەچسىڭىز بولىدۇ.</translation>
     </message>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
-        <translation type="unfinished"></translation>
+        <translation>Enter</translation>
     </message>
 </context>
 <context>
     <name>SetPasswordDialog</name>
     <message>
         <source>Set your password</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول بەلگىلەش</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation type="unfinished"></translation>
+        <translation>جەزىملەش:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول ئۇزۇنلىقى: %p%</translation>
     </message>
     <message>
         <source>The password is too short</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول بەك قىسقا</translation>
     </message>
     <message>
         <source>The password doesn&apos;t match.</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىككى پارول ئوخشىمىدى.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>جەزىملەش پارولى</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>جەزىملەش پارولى كىرگۈزۈش</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول كىرگۈزۈش</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>پارول رامكىسى، 6 ھەرپتىن تۆۋەن بولمىسۇن</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Circle #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>چەمبىرەك #%1</translation>
     </message>
 </context>
 <context>
@@ -2510,194 +2527,194 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation type="unfinished"></translation>
+        <translation>دوست قوشۇش</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 نى دوستقا قوشامسىز؟</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>ئىشلەتكۈچى ID سى:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation type="unfinished"></translation>
+        <translation>دوست ئىستىكى ئۇچۇرى:</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Send a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>يوللاش</translation>
     </message>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>چېكىنىش</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>يوق</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>كۆرۈنمە يۈز</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>سۆھبەت</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>خەت شەكىلى:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>ھەجىم </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox قايتا قوزغالغاندا بۇ يېزىق ئۇسلۇبى يۈكلەنمەسلىكى مۇمكىن.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
+        <translation>يېزىق ئۇسلۇبى:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>يېزىق ئۇسلۇب تەڭشىكى.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished"></translation>
+        <translation>ساپ تېسىت</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>يېزىق فورماتىنى كۆرسىتىش</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>يېزىق فورماتىنى كۆرسەتمەسلىك</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى ئۇچۇر</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر قۇبۇل قىلغاندا ئوچۇق كۆزنەك بولمىسا كۆزنەك ئېچىش.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished"></translation>
+        <translation>كۆزنەك ئېچىش</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>يېڭى ئۇچۇر قۇبۇل قىلغاندا qTox كۆزنىكىنى ئاكتىپلاش.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاكتىپ كۆزنەك</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداشلار تىزىملىكى</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished"></translation>
+        <translation>توپ تەكلىپىنى دائىم ئەسكەرتىش.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished"></translation>
+        <translation>توپ سۆھبەت ئۇچۇرىنى دائىم ئەسكەرتىش</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئەگەر تاللانسا، توپ ئالاقىداشلار تىزىملىكىنىڭ چوقىسىغا چىقىدۇ، ئۇنداق بولمىسا ئۇلار ئاستىدا كۆرىنىدۇ.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished"></translation>
+        <translation>توپنى چوقىلاش</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداشلىرىڭىز قىسقارتىلما ھالەتتە كۆرىنىدۇ.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>قىسقاتىلما ئالاقىداشلار قاتارى</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation type="unfinished"></translation>
+        <translation>كۆپ كۆزنەك ھالىتى</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation type="unfinished"></translation>
+        <translation>ھەر بىر سۆھبەتنى يېڭى كۆزنەكتە ئېچىش</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>يۈز ئىپادىسى</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>ياز ئىپادىسى ئىشلىتىش</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>يۈز ئىپادە بولىقى:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>يۈز ئىپادە ھەجىمى:</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>تېما</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇسلۇب:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished"></translation>
+        <translation>تېما رېڭى:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished"></translation>
+        <translation>ۋاقىت فورماتى:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished"></translation>
+        <translation>چىسلا فورماتى:</translation>
     </message>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئەگەر قوزغىتىلسا، باش سۈرىتى يوق ئالاقىداشلارغا Tox كىملىكىگە ئاساسەن باش سۈرەت ھاسىل قىلىۇ، قايتا قوزغالغاندا كۈچكە ئېگە بولىدۇ.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>بوش باش سۈرەتنى identicons غا ئالماشتۇرۇش</translation>
     </message>
 </context>
 <context>
@@ -2705,198 +2722,200 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation>توردا</translation>
     </message>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئايرىلىش</translation>
     </message>
     <message>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئالدىراش</translation>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation type="unfinished"></translation>
+        <translation>يادرولۇق پروگرامما قوزغىلالمىدى، پىروگىرامما تاقالماقچى.</translation>
     </message>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>ۋاكالەتچى مۇلازىمىتېر تەڭشىگەنلىكىڭىزدىن، يادرولۇق پروگرامما قوزغىلالمىدى، تەڭشەكنى ئۆزگەرتكەندىن كېيىن qTox نى قايتا قوزغۇتۇڭ.</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت</translation>
     </message>
     <message>
         <source>Edit Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>ئارخىپ تەھرىرلەش</translation>
     </message>
     <message>
         <source>Change Status</source>
-        <translation type="unfinished"></translation>
+        <translation>ھالەت ئۆزگەرتىش</translation>
     </message>
     <message>
         <source>Log out</source>
-        <translation type="unfinished"></translation>
+        <translation>قۇلۇپلاش</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>تەھرىرلەش</translation>
     </message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished"></translation>
+        <translation>قۇلۇپلاش</translation>
     </message>
     <message>
         <source>Exit</source>
         <comment>Tray action menu to exit tox</comment>
-        <translation type="unfinished"></translation>
+        <translation>چېكىنىش</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>سۈزۈش...</translation>
     </message>
     <message>
         <source>Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداشلار</translation>
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداش قوشۇش...</translation>
     </message>
     <message>
         <source>Next Conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>كېيىنكى پاراڭ</translation>
     </message>
     <message>
         <source>Previous Conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالدىنقى پاراڭ</translation>
     </message>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>ئىجرا بولىدىغان ھۆججەت</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>سىز  qTox ئارقىلىق ئىجرا بولىدىغان ھۆججەت ئاچماقچى، بۇ ھۆججەت بەلكىم كومپيۇتېرىڭىزغا زىيان يەتكۈزىشى مۇمكىن، راستىنلا بۇ ھۆججەتنى ئاچامسىز؟</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداش قوشۇلمىدى</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>ھالەت</translation>
     </message>
     <message>
         <source>Your name</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاتىڭىز</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished"></translation>
+        <translation>ھالىتىڭىز</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>قۇرۇق</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished"></translation>
+        <translation>ئۇچۇر يوللانمىدى</translation>
     </message>
     <message>
         <source>Create new group...</source>
-        <translation type="unfinished"></translation>
+        <translation>توپ قۇرۇش...</translation>
     </message>
     <message>
         <source>Add new circle...</source>
-        <translation type="unfinished"></translation>
+        <translation>چەمبىرەككە چىقىرىش...</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n دوستلۇق ئىلتىماسى</numerusform>
+            <numerusform>%n دوستلۇق  ئىلتىماسىلىرى</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n پارچە توپ تەكلىپى</numerusform>
+            <numerusform>%n پارچە توپ تەكلىپىلىرى</numerusform>
         </translation>
     </message>
     <message>
         <source>By Name</source>
-        <translation type="unfinished"></translation>
+        <translation>ئات بويىنچە</translation>
     </message>
     <message>
         <source>By Activity</source>
-        <translation type="unfinished"></translation>
+        <translation>ئاكتىپلىق بويىنچە</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>ھەممىسى</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished"></translation>
+        <translation>توردا</translation>
     </message>
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ئايرىلىش</translation>
     </message>
     <message>
         <source>Friends</source>
-        <translation type="unfinished"></translation>
+        <translation>دوستلار</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>توپلار</translation>
     </message>
     <message>
         <source>Search Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>ئالاقىداش ئىزدەش</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>توپ سۆھبەت #%1</translation>
     </message>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>كۆرسىتىش</translation>
     </message>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>دوست قوشۇش</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>توپ تەكلىپى</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>ھۆججەت يوللاش</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>تەڭشەك</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>مېنىڭ</translation>
     </message>
 </context>
 </TS>

@@ -81,7 +81,7 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>Włącza eksperymentalny podkład dźwiękowy z obsługą usuwania echa, wymaga ponownego uruchomienia qToxa.</translation>
+        <translation>Włącza eksperymentalny podkład dźwiękowy z obsługą anulowania echa, potrzebuje ponownego uruchomienia qTox, aby zatwierdzić zmiany.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
@@ -93,7 +93,7 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Jakość wysyłanego dźwięku. Zmniejsz jeśli masz słabe łącze lub gdy chcesz obniżyć zużycie internetu.</translation>
+        <translation>Przesłana jakość dźwięku. Zmniejsz to ustawienie, jeśli przepustowość nie jest wystarczająco wysoka lub jeśli chcesz obniżyć zużycie Internetu.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -188,7 +188,7 @@ co może powodować problemy z rozmowami wideo.</translation>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Informacja</translation>
+        <translation>Okno dialogowe</translation>
     </message>
     <message>
         <source>username</source>
@@ -196,7 +196,7 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">Status</translation>
+        <translation>komunikat o stanie</translation>
     </message>
     <message>
         <source>Public key:</source>
@@ -363,7 +363,7 @@ co może powodować problemy z rozmowami wideo.</translation>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation>Nie możesz dodać samego siebie jako znajomego!</translation>
+        <translation>Nie możesz dodać siebie jako przyjaciela!</translation>
     </message>
     <message>
         <source>Open contact list</source>
@@ -408,7 +408,7 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation>Wyślij zaproszenia do znajomych</translation>
+        <translation>Wyślij zaproszenia</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -417,18 +417,18 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation>Zaimportuj listę kontaktów - jedno Tox ID na każdą linię.</translation>
+        <translation>Zaimportuj listę kontaktów - jedno Tox ID na każdą linię</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation><numerusform>Gotowy do zaimportowania %n kontaktu, kliknij &quot;Wyślij&quot; aby potwierdzić</numerusform>
         <numerusform>Gotowy do zaimportowania %n kontaktów, kliknij &quot;Wyślij&quot; aby potwierdzić</numerusform>
-        <numerusform>Gotowy do zaimportowania %n kontaktów, kliknij &quot;Wyślij&quot; aby potwierdzić</numerusform>
+        <numerusform>Gotowe do zaimportowania %n kontaktów, kliknij &quot;Wyślij&quot; aby potwierdzić</numerusform>
         </translation></message>
     <message>
         <source>Import contacts</source>
-        <translation>Importuj kontakty</translation>
+        <translation>Zaimportuj kontakty</translation>
     </message>
 </context>
 <context>
@@ -671,7 +671,7 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished">Połączenie z %1 zakończyło się niespodziewanie. %2</translation>
+        <translation>Połączenie z %1 zakończyło się niespodziewanie. %2</translation>
     </message>
 </context>
 <context>
@@ -800,7 +800,7 @@ co może powodować problemy z rozmowami wideo.</translation>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Musisz napisać wiadomość z zapytaniem</translation>
+        <translation>Musisz napisać wiadomość z zapytaniem</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
@@ -1289,7 +1289,7 @@ zamiast do paska zadań.</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation>%1 zmienił(a) nazwę na %2</translation>
+        <translation>%1 zmienił(a) nazwę grupy na %2</translation>
     </message>
 </context>
 <context>
@@ -1311,7 +1311,7 @@ zamiast do paska zadań.</translation>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished">Zaproszony przez %1 na %2 na %3.</translation>
+        <translation>Zaproszony przez %1 na %2 przy %3.</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1504,11 +1504,11 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Wprowadzanie statusu wiadomości</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished">Status widoczny dla kontaktów</translation>
+        <translation>Komunikat o stanie widoczny dla kontaktów</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
@@ -1600,7 +1600,7 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>%1 messages</source>
-        <translation type="unfinished">%1 wiadomości</translation>
+        <translation>%1 wiadomości</translation>
     </message>
 </context>
 <context>
@@ -1741,7 +1741,7 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Załaduj automatycznie pole wyboru</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1805,7 +1805,7 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Wprowadzanie statusu wiadomości</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
@@ -1825,7 +1825,7 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Wpisuj dane do wyszukiwania dla znanych znajomych</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
@@ -1906,12 +1906,10 @@ Możesz otworzyć nowy.</translation>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation>
-            <numerusform>Nieprzeczytana wiadomość</numerusform>
-            <numerusform>Nieprzeczytane wiadomości</numerusform>
-            <numerusform>Nieprzeczytane wiadomości</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Nieprzeczytana wiadomość</numerusform>
+        <numerusform>Nieprzeczytane wiadomości</numerusform>
+        <numerusform>Nieprzeczytanych wiadomości</numerusform>
+        </translation></message>
 </context>
 <context>
     <name>PasswordEdit</name>
@@ -1963,7 +1961,7 @@ Znajomi nie będą w stanie dodać cię używając starego ID, ale zachowasz obe
     <message>
         <source>NoSpam</source>
         <translatorcomment>or perhaps should be translated?</translatorcomment>
-        <translation>NoSpam</translation>
+        <translation>Bez Spamu</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
@@ -2000,11 +1998,11 @@ Możliwe są zmianay formatu zapisu, co może skutkować utratą danych.</transl
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można uzyskać klucza z hasła, profil nie użyje nowego hasła.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zmienić hasła w bazie danych, może być uszkodzone lub użyć starego hasła.</translation>
     </message>
 </context>
 <context>
@@ -2189,11 +2187,11 @@ Ten identyfikator zawiera kod NoSpam (na niebiesko) i sumę kontrolną (na szaro
     </message>
     <message>
         <source>Empty name</source>
-        <translation type="unfinished">Pusta nazwa</translation>
+        <translation>Pusta nazwa</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation type="unfinished"></translation>
+        <translation>Pusta nazwa jest niedostępna</translation>
     </message>
     <message>
         <source>Empty path</source>
@@ -2201,7 +2199,7 @@ Ten identyfikator zawiera kod NoSpam (na niebiesko) i sumę kontrolną (na szaro
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zmienić hasła w bazie danych, może być uszkodzone lub użyć starego hasła.</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -2446,7 +2444,7 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation>Ponowne formatowanie tekstu w toku...</translation>
+        <translation>Trwa formatowanie tekstu...</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
@@ -2627,7 +2625,7 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation>Plaintext</translation>
+        <translation>Zwykły tekst</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
@@ -2746,7 +2744,7 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation>Użyj ikon zamiast pustych awatarów</translation>
+        <translation>Użyj ikon zamiast pustych avatarów</translation>
     </message>
 </context>
 <context>

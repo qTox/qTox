@@ -113,7 +113,7 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Prag</translation>
     </message>
 </context>
 <context>
@@ -169,17 +169,17 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">bug-tracker</translation>
+        <translation>bug-tracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Writing Useful Bug Reports</translation>
+        <translation>Kako pripremiti izvješće o bugu</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">contributors</translation>
+        <translation>suradnici</translation>
     </message>
 </context>
 <context>
@@ -275,7 +275,7 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished">Odaberite direktorij za automatsko prihvaćanje</translation>
+        <translation>Odaberite direktorij za automatski prihvat</translation>
     </message>
 </context>
 <context>
@@ -418,12 +418,10 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation>
-            <numerusform>Broj kontakata za uvoz: %n. Kliknite Pošalji za potvrdu.</numerusform>
-            <numerusform>Broj kontakata za uvoz: %n. Kliknite Pošalji za potvrdu.</numerusform>
-            <numerusform>Broj kontakata za uvoz: %n. Kliknite Pošalji za potvrdu.</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Broj kontakata za uvoz: %n. Kliknite Pošalji za potvrdu</numerusform>
+        <numerusform>Broj kontakata za uvoz: %n. Kliknite Pošalji za potvrdu</numerusform>
+        <numerusform>Broj kontakata za uvoz: %n. Kliknite Pošalji za potvrdu</numerusform>
+        </translation></message>
     <message>
         <source>Import contacts</source>
         <translation>Uvezi kontakte</translation>
@@ -673,67 +671,67 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Ne mogu započeti audio poziv</translation>
+        <translation>Ne mogu započeti audio poziv</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Započni audio poziv</translation>
+        <translation>Započni audio poziv</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished">Završi audio poziv</translation>
+        <translation>Završi audio poziv</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation type="unfinished">Otkaži audio poziv</translation>
+        <translation>Otkaži audio poziv</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Prihvati audio poziv</translation>
+        <translation>Prihvati audio poziv</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Ne mogu započeti video poziv</translation>
+        <translation>Ne mogu započeti video poziv</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Započni video poziv</translation>
+        <translation>Započni video poziv</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Završi video poziv</translation>
+        <translation>Završi video poziv</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Otkaži video poziv</translation>
+        <translation>Otkaži video poziv</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Prihvati video poziv</translation>
+        <translation>Prihvati video poziv</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Zvuk može biti isključen samo tijekom poziva</translation>
+        <translation>Zvuk može biti isključen samo tijekom poziva</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Uključi zvuk poziva</translation>
+        <translation>Uključi zvuk poziva</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Isključi zvuk poziva</translation>
+        <translation>Isključi zvuk poziva</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Mikrofon može biti utišan samo tijekom poziva</translation>
+        <translation>Mikrofon može biti utišan samo tijekom poziva</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished">Uključi mikrofon</translation>
+        <translation>Uključi mikrofon</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Isključi mikrofon</translation>
+        <translation>Isključi mikrofon</translation>
     </message>
 </context>
 <context>
@@ -1272,7 +1270,7 @@ umjesto u programsku traku.</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 je promijenio naslov u %2</translation>
+        <translation>%1 je promijenio naslov u %2</translation>
     </message>
 </context>
 <context>
@@ -2706,11 +2704,11 @@ Bit će instalirano prilikom ponovnog pokretanja qToxa.</translation>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ako ovo omogućite, svakom kontaktu koji ga nema će biti dodijeljen avatar na temelju Tox ID-a umjesto standardne slike. Za primjenu je potreban restart.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Upotrijebi identikonse umjesto praznih avatara</translation>
     </message>
 </context>
 <context>

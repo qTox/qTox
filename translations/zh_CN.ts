@@ -380,7 +380,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>无法从该文件中找到任何可导入的联系人信息！</translation>
+        <translation>该文件中找不到可导入的联系人信息！</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -404,7 +404,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation>请求添加为好友</translation>
+        <translation>发送好友请求</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -418,10 +418,8 @@ which may lead to problems with video calls.</source>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation>
-            <numerusform>准备好要导入 %n 个联系人，单击“发送”以确认</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>已经准备好导入 %n 个联系人，单击“发送”以确认</numerusform>
+        </translation></message>
     <message>
         <source>Import contacts</source>
         <translation>导入联系人</translation>

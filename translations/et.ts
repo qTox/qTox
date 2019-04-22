@@ -275,7 +275,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation>Vali kaust, kuhu automaatselt vastuvõetavad failid paigutatakse</translation>
+        <translation>Vali automaatselt vastuvõetavate failide salvestuskaust</translation>
     </message>
 </context>
 <context>

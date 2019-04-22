@@ -5,7 +5,7 @@
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation type="unfinished"></translation>
+        <translation>sance ja jvinu</translation>
     </message>
     <message>
         <source>Default resolution</source>
@@ -13,11 +13,11 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>na tolpo&apos;u</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation>ko cuxna zo&apos;e lo&apos;i tutra</translation>
+        <translation>ko cuxna fi lo&apos;i tutra</translation>
     </message>
     <message>
         <source>Screen %1</source>
@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>lo sance jitro</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished"></translation>
+        <translation>lo selsnapra</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
@@ -45,11 +45,11 @@
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>kamcladu</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>jvinu jitro</translation>
     </message>
     <message>
         <source>Video device</source>
