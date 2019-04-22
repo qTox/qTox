@@ -123,16 +123,6 @@ which may lead to problems with video calls.</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <source>Restart qTox to install version %1</source>
-        <translation>Перезапустить qTox для установки версии %1</translation>
-    </message>
-    <message>
-        <source>qTox is downloading update %1</source>
-        <comment>%1 is the version of the update</comment>
-        <translatorcomment>%1 версия обновления</translatorcomment>
-        <translation>qTox загружает обновление %1</translation>
-    </message>
-    <message>
         <source>Original author: %1</source>
         <translation>Исходный автор: %1</translation>
     </message>
@@ -196,10 +186,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>status message</source>
         <translation>статус</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Публичный ключ:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -270,13 +256,29 @@ which may lead to problems with video calls.</source>
         <translation>История переписки удалена</translation>
     </message>
     <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>История переписки с %1 была удалена!</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
         <translation>Выбрать папку для автоматического приема</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key (not ToxID):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">Подтверждение</translation>
+    </message>
+    <message>
+        <source>Are you sure to remove %1 chat history?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to remove chat history with %1!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -284,10 +286,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Version</source>
         <translation>Версия</translation>
-    </message>
-    <message>
-        <source>Downloading update: %p%</source>
-        <translation>Загрузка обновления:  %p%</translation>
     </message>
     <message>
         <source>License</source>
@@ -300,6 +298,18 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Known Issues</source>
         <translation>Известные проблемы</translation>
+    </message>
+    <message>
+        <source>Open update download link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>qTox is up to date ✓</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -420,10 +430,12 @@ which may lead to problems with video calls.</source>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation><numerusform>Можно импортировать %n контакт, нажмите &quot;Отправить&quot; для подтверждения</numerusform>
-        <numerusform>Можно импортировать %n контактов, нажмите &quot;Отправить&quot; для подтверждения</numerusform>
-        <numerusform>Можно импортировать %n контакта, нажмите &quot;Отправить&quot; для подтверждения</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Можно импортировать %n контакт, нажмите &quot;Отправить&quot; для подтверждения</numerusform>
+            <numerusform>Можно импортировать %n контактов, нажмите &quot;Отправить&quot; для подтверждения</numerusform>
+            <numerusform>Можно импортировать %n контакта, нажмите &quot;Отправить&quot; для подтверждения</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Import contacts</source>
         <translation>Импорт списка контактов</translation>
@@ -567,6 +579,10 @@ which may lead to problems with video calls.</source>
         <source>Copy Debug Log</source>
         <translation>Копировать журнал отладки</translation>
     </message>
+    <message>
+        <source>Enable LAN discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatForm</name>
@@ -633,26 +649,6 @@ which may lead to problems with video calls.</source>
         <translation>Вы пытаетесь отправить последовательный файл, что не сработает!</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>отошел</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>занят</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>оффлайн</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>онлайн</translation>
-    </message>
-    <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 сейчас %2</translation>
@@ -668,6 +664,15 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Разговор с %1  неожиданно прервался. %2</translation>
+    </message>
+    <message>
+        <source>Filename contained illegal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illegal characters have been changed to _ 
+so you can save the file on windows.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -779,11 +784,6 @@ which may lead to problems with video calls.</source>
 <context>
     <name>Core</name>
     <message>
-        <source>Toxing on qTox</source>
-        <translatorcomment>Как-то так. Может, можно ещё что-нибудь придумать?</translatorcomment>
-        <translation>Всем привет из qTox&apos;а</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me предлагает дружбу, &quot;%1&quot;</translation>
     </message>
@@ -806,6 +806,25 @@ which may lead to problems with video calls.</source>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
         <translation>Друг уже добавлен</translation>
+    </message>
+</context>
+<context>
+    <name>DesktopNotify</name>
+    <message>
+        <source>New group message received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New friend request received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New group invite received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New message received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -888,6 +907,11 @@ which may lead to problems with video calls.</source>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Сохранить файл</translation>
+    </message>
+    <message>
+        <source>Remote Paused</source>
+        <comment>file transfer widget</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1050,21 +1074,6 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>GUI</name>
-    <message>
-        <source>Enter your password</source>
-        <translation>Введите свой пароль</translation>
-    </message>
-    <message>
-        <source>Decrypt</source>
-        <translation>Расшифровать</translation>
-    </message>
-    <message>
-        <source>You must enter a non-empty password:</source>
-        <translation>Вы должны ввести непустой пароль:</translation>
-    </message>
-</context>
-<context>
     <name>GeneralForm</name>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1105,10 +1114,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Default directory to save files:</source>
         <translation>Стандартная папка сохранения файлов:</translation>
-    </message>
-    <message>
-        <source>Play sound</source>
-        <translation>Воспроизводить звуки</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
@@ -1156,10 +1161,6 @@ instead of system taskbar.</source>
         <translation>Автозапуск</translation>
     </message>
     <message>
-        <source>Check for updates on startup</source>
-        <translation>Проверять на наличие обновлений при запуске</translation>
-    </message>
-    <message>
         <source>Set where files will be saved.</source>
         <translation>Укажите, где файлы будут сохраняться.</translation>
     </message>
@@ -1170,10 +1171,6 @@ instead of system taskbar.</source>
     <message>
         <source>Auto away after (0 to disable):</source>
         <translation>Статус «Отошел» после (0 - выключено):</translation>
-    </message>
-    <message>
-        <source>On new message:</source>
-        <translation>При получении нового сообщения:</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
@@ -1192,8 +1189,20 @@ instead of system taskbar.</source>
         <translation>Показывать изменения статусов контактов</translation>
     </message>
     <message>
-        <source>Play sound while Busy</source>
-        <translation>Воспроизводить звук, когда Занят</translation>
+        <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spell checking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max autoaccept file size (0 to disable):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> MB</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1246,6 +1255,14 @@ instead of system taskbar.</source>
         <source>You are sure that you want to clear all displayed messages?</source>
         <translation>Вы уверены, что хотите удалить все отображаемые сообщения?</translation>
     </message>
+    <message>
+        <source>[System message]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1261,6 +1278,30 @@ instead of system taskbar.</source>
         <source>Hide Messages</source>
         <translation>Скрыть сообщения</translation>
     </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Выключить микрофон</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Завершить видеозвонок</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1273,18 +1314,45 @@ instead of system taskbar.</source>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <source>%1 users in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>%1 пользователей в чате</translation>
-    </message>
-    <message>
-        <source>1 user in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>1 пользователь в чате</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 сменил заголовок на %2</translation>
+    </message>
+    <message>
+        <source>%1 is online</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new user has connected to the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unmute</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1333,16 +1401,25 @@ instead of system taskbar.</source>
         <translation>Покинуть группу</translation>
     </message>
     <message>
-        <source>1 user in chat</source>
-        <translation>1 пользователь в чате</translation>
-    </message>
-    <message>
-        <source>%1 users in chat</source>
-        <translation>%1 пользователей в чате</translation>
-    </message>
-    <message>
         <source>Set title...</source>
         <translation>Установить заголовок...</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>New Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation type="unfinished">В сети</translation>
     </message>
 </context>
 <context>
@@ -1854,11 +1931,6 @@ You may want to create one.</source>
 <context>
     <name>Nexus</name>
     <message>
-        <source>Images (%1)</source>
-        <comment>filetype filter</comment>
-        <translation>Изображения (%1)</translation>
-    </message>
-    <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
         <translation>Вид</translation>
@@ -1987,6 +2059,10 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
         <translation>Невозможно изменить пароль в базе данных, должно быть база повреждена или вы используете старый пароль.</translation>
+    </message>
+    <message>
+        <source>Toxing on qTox</source>
+        <translation type="unfinished">Всем привет из qTox&apos;а</translation>
     </message>
 </context>
 <context>
@@ -2206,6 +2282,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation>Вы уверены, что хотите удалить свой пароль?</translation>
     </message>
+    <message>
+        <source>Images (%1)</source>
+        <comment>filetype filter</comment>
+        <translation type="unfinished">Изображения (%1)</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2298,21 +2379,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Version %1, %2</source>
-        <translation>Версия %1, %2</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <comment>The title of a message box</comment>
-        <translation>Обновление</translation>
-    </message>
-    <message>
-        <source>An update is available, do you want to download it now?
-It will be installed when qTox restarts.</source>
-        <translation>Обновление доступно, хотите скачать его прямо сейчас?
-Оно будет установлено после того, как qTox будет перезапущен.</translation>
-    </message>
     <message>
         <source>Tox URI to parse</source>
         <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
@@ -2431,6 +2497,26 @@ It will be installed when qTox restarts.</source>
         <source>Starts new instance and opens the login screen.</source>
         <translation>Запускает новый экземпляр и открывает экран входа.</translation>
     </message>
+    <message>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark olive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark violet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2481,6 +2567,68 @@ It will be installed when qTox restarts.</source>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
         <translation>Ввод</translation>
+    </message>
+</context>
+<context>
+    <name>SearchForm</name>
+    <message>
+        <source>The text could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchSettingsForm</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">От</translation>
+    </message>
+    <message>
+        <source>Start search:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the beginning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>after date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>before date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>00.00.0000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use regular expressions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2630,26 +2778,8 @@ It will be installed when qTox restarts.</source>
         <translation>Открыть окно</translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>Сменить фокус на окно при получении сообщения.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Сменить фокус на окно</translation>
-    </message>
-    <message>
         <source>Contact list</source>
         <translation>Список контактов</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Всегда оповещать о новых сообщениях в групповых чатах.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Сообщать о всех сообщениях в групповых чатах</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2726,6 +2856,40 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Use identicons instead of empty avatars</source>
         <translation>Использовать картинки вместо пустых аватаров</translation>
+    </message>
+    <message>
+        <source>Use colored nicknames in chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a notification when you receive a new message and the window is not selected.</source>
+        <comment>tooltip for Notify setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Onlys notify about new messages in groupchats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group chats only notify when mentioned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play sound</source>
+        <translation type="unfinished">Воспроизводить звуки</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished">Воспроизводить звук, когда Занят</translation>
+    </message>
+    <message>
+        <source>Notify via desktop notifications</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2929,6 +3093,31 @@ It will be installed when qTox restarts.</source>
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Мой профиль</translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">онлайн</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">отошел</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">занят</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">оффлайн</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

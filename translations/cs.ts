@@ -123,15 +123,6 @@ může způsobovat problémy během videohovorů.</translation>
         <translation>O aplikaci</translation>
     </message>
     <message>
-        <source>Restart qTox to install version %1</source>
-        <translation>Restartujte qTox pro instalaci verze %1</translation>
-    </message>
-    <message>
-        <source>qTox is downloading update %1</source>
-        <comment>%1 is the version of the update</comment>
-        <translation>qTox stahuje aktualizaci %1</translation>
-    </message>
-    <message>
         <source>Original author: %1</source>
         <translation>Původní autor: %1</translation>
     </message>
@@ -195,10 +186,6 @@ může způsobovat problémy během videohovorů.</translation>
     <message>
         <source>status message</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation type="unfinished">Veřejný klíč:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -269,13 +256,29 @@ může způsobovat problémy během videohovorů.</translation>
         <translation type="unfinished">Historie odstraněna</translation>
     </message>
     <message>
-        <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">Historie konverzace s %1 odstraněna!</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
         <translation type="unfinished">Vyberte sloužku pro automatický příjem</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key (not ToxID):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">Potvrzení</translation>
+    </message>
+    <message>
+        <source>Are you sure to remove %1 chat history?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to remove chat history with %1!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -297,8 +300,16 @@ může způsobovat problémy během videohovorů.</translation>
         <translation>Známé problémy</translation>
     </message>
     <message>
-        <source>Downloading update: %p%</source>
-        <translation>Stahování aktualizace: %p%</translation>
+        <source>Open update download link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>qTox is up to date ✓</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -567,6 +578,10 @@ může způsobovat problémy během videohovorů.</translation>
         <source>Copy Debug Log</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enable LAN discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatForm</name>
@@ -632,26 +647,6 @@ může způsobovat problémy během videohovorů.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">pryč</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">zaneprázdněn</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">nepřítomný</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">přítomný</translation>
-    </message>
-    <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 je nyní %2</translation>
@@ -666,6 +661,15 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filename contained illegal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illegal characters have been changed to _ 
+so you can save the file on windows.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -778,10 +782,6 @@ může způsobovat problémy během videohovorů.</translation>
 <context>
     <name>Core</name>
     <message>
-        <source>Toxing on qTox</source>
-        <translation>Toxuji na qToxe</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>nabídnout přátelství, &quot;%1&quot;</translation>
     </message>
@@ -804,6 +804,25 @@ může způsobovat problémy během videohovorů.</translation>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
         <translation type="unfinished">Přítel už je znám</translation>
+    </message>
+</context>
+<context>
+    <name>DesktopNotify</name>
+    <message>
+        <source>New group message received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New friend request received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New group invite received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New message received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -886,6 +905,11 @@ může způsobovat problémy během videohovorů.</translation>
     <message>
         <source>Open file directory</source>
         <translation>Otevřít adresář souboru</translation>
+    </message>
+    <message>
+        <source>Remote Paused</source>
+        <comment>file transfer widget</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1046,21 +1070,6 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
 </context>
 <context>
-    <name>GUI</name>
-    <message>
-        <source>Enter your password</source>
-        <translation>Zadejte vaše heslo</translation>
-    </message>
-    <message>
-        <source>Decrypt</source>
-        <translation>Dešifrovat</translation>
-    </message>
-    <message>
-        <source>You must enter a non-empty password:</source>
-        <translation>Musíte zadat neprázdné heslo:</translation>
-    </message>
-</context>
-<context>
     <name>GeneralForm</name>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1147,10 +1156,6 @@ místo panelu úloh.</translation>
         <translation>Automaticky spustit</translation>
     </message>
     <message>
-        <source>Check for updates on startup</source>
-        <translation>Zkontrolovat aktualizace při startu</translation>
-    </message>
-    <message>
         <source>Set where files will be saved.</source>
         <translation>Umístění kam ukládat soubory.</translation>
     </message>
@@ -1162,14 +1167,6 @@ místo panelu úloh.</translation>
     <message>
         <source>Autoaccept files</source>
         <translation>Automaticky přijímat soubory</translation>
-    </message>
-    <message>
-        <source>On new message:</source>
-        <translation>Nová zpráva:</translation>
-    </message>
-    <message>
-        <source>Play sound</source>
-        <translation>Přehrát zvuk</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
@@ -1188,8 +1185,20 @@ místo panelu úloh.</translation>
         <translation>Výchozí adresář pro ukládání souborů:</translation>
     </message>
     <message>
-        <source>Play sound while Busy</source>
-        <translation>Přehrát zvuk když Zaneprázdněn</translation>
+        <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spell checking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max autoaccept file size (0 to disable):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> MB</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1234,6 +1243,22 @@ místo panelu úloh.</translation>
         <source>Copy link address</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>[System message]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">Potvrzení</translation>
+    </message>
+    <message>
+        <source>You are sure that you want to clear all displayed messages?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1249,6 +1274,30 @@ místo panelu úloh.</translation>
         <source>Hide Messages</source>
         <translation>Skrýt zprávy</translation>
     </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Ztlumit mikrofon</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Ukončit video hovor</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1261,18 +1310,45 @@ místo panelu úloh.</translation>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <source>%1 users in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>%1 uživatelů v diskuzi</translation>
-    </message>
-    <message>
-        <source>1 user in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>1 uživatel v konverzaci</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation type="unfinished">%1 nastavil jméno konverzace na %2</translation>
+    </message>
+    <message>
+        <source>%1 is online</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new user has connected to the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unmute</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1317,10 +1393,6 @@ místo panelu úloh.</translation>
         <translation>Opustit skupinu</translation>
     </message>
     <message>
-        <source>%1 users in chat</source>
-        <translation>%1 uživatelů v diskuzi</translation>
-    </message>
-    <message>
         <source>Open chat in new window</source>
         <translation>Otevřít konverzaci v novém okně</translation>
     </message>
@@ -1328,9 +1400,22 @@ místo panelu úloh.</translation>
         <source>Remove chat from this window</source>
         <translation>Odstranit konverzaci z tohoto okna</translation>
     </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <source>1 user in chat</source>
-        <translation>1 uživatel v konverzaci</translation>
+        <source>New Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1840,11 +1925,6 @@ You may want to create one.</source>
 <context>
     <name>Nexus</name>
     <message>
-        <source>Images (%1)</source>
-        <comment>filetype filter</comment>
-        <translation>Obrázky (%1)</translation>
-    </message>
-    <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
         <translation type="unfinished">Zobrazit</translation>
@@ -1973,6 +2053,10 @@ Pokud jste obtěžován žádostni o přátelství měli byste si změnit vaše 
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toxing on qTox</source>
+        <translation type="unfinished">Toxuji na qToxe</translation>
     </message>
 </context>
 <context>
@@ -2189,6 +2273,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <extracomment>deletion confirmation text</extracomment>
         <translation type="unfinished">Opravdu odstranit vaše heslo?</translation>
     </message>
+    <message>
+        <source>Images (%1)</source>
+        <comment>filetype filter</comment>
+        <translation type="unfinished">Obrázky (%1)</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2294,17 +2383,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>profil</translation>
     </message>
     <message>
-        <source>Update</source>
-        <comment>The title of a message box</comment>
-        <translation>Aktualizovat</translation>
-    </message>
-    <message>
-        <source>An update is available, do you want to download it now?
-It will be installed when qTox restarts.</source>
-        <translation>Nová aktualizase je dostupná, chcete ji stáhnout nyní ?
-Bude nainstalována po restartu qTox.</translation>
-    </message>
-    <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>Jsem %1 ! Napíšeš mi ?</translation>
@@ -2332,10 +2410,6 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>Incoming call...</source>
         <translation>Příchozí hovor...</translation>
-    </message>
-    <message>
-        <source>Version %1, %2</source>
-        <translation>Verze %1, %2</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
@@ -2411,6 +2485,26 @@ Bude nainstalována po restartu qTox.</translation>
         <source>Starts new instance and opens the login screen.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark olive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark violet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2461,6 +2555,68 @@ Bude nainstalována po restartu qTox.</translation>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
         <translation>Enter</translation>
+    </message>
+</context>
+<context>
+    <name>SearchForm</name>
+    <message>
+        <source>The text could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchSettingsForm</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Rámec</translation>
+    </message>
+    <message>
+        <source>Start search:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the beginning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>after date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>before date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>00.00.0000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use regular expressions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2610,26 +2766,8 @@ Bude nainstalována po restartu qTox.</translation>
         <translation>Otevřít okno</translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Změnit zaměření okna při přijetí zprávy.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation type="unfinished">Aktivovat okno</translation>
-    </message>
-    <message>
         <source>Contact list</source>
         <translation>Seznam kontaktů</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Vždy upozorňovat při přijetí nové zprávy ve skupině.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Vždy upozornit na nové zprávy ve skupinových konverzacích</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2705,6 +2843,40 @@ Bude nainstalována po restartu qTox.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use colored nicknames in chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a notification when you receive a new message and the window is not selected.</source>
+        <comment>tooltip for Notify setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Onlys notify about new messages in groupchats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group chats only notify when mentioned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play sound</source>
+        <translation type="unfinished">Přehrát zvuk</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished">Přehrát zvuk když Zaneprázdněn</translation>
+    </message>
+    <message>
+        <source>Notify via desktop notifications</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2907,6 +3079,31 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">přítomný</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">pryč</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">zaneprázdněn</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">nepřítomný</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

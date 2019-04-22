@@ -124,15 +124,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Hakkında</translation>
     </message>
     <message>
-        <source>Restart qTox to install version %1</source>
-        <translation>%1 sürümünü kurmak için qTox&apos;u yeniden başlat</translation>
-    </message>
-    <message>
-        <source>qTox is downloading update %1</source>
-        <comment>%1 is the version of the update</comment>
-        <translation>qTox %1 güncellemesini indiriyor</translation>
-    </message>
-    <message>
         <source>Original author: %1</source>
         <translation>Özgün yazar: %1</translation>
     </message>
@@ -196,10 +187,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     <message>
         <source>status message</source>
         <translation>durum iletisi</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Açık anahtar:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -270,13 +257,29 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Geçmiş kaldırıldı</translation>
     </message>
     <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>%1 ile sohbet geçmişi kaldırıldı!</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
         <translation>Sormadan kabul etme dizini seç</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key (not ToxID):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">Onay</translation>
+    </message>
+    <message>
+        <source>Are you sure to remove %1 chat history?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to remove chat history with %1!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -299,8 +302,16 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Bilinen Sorunlar</translation>
     </message>
     <message>
-        <source>Downloading update: %p%</source>
-        <translation>Güncelleme indiriliyor: %p%</translation>
+        <source>Open update download link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>qTox is up to date ✓</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -420,9 +431,10 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation><numerusform>%n kişi içe aktarılmaya hazır, onay için göndere tıklayın</numerusform>
-        <numerusform>%n kişi içe aktarılmaya hazır, onay için göndere tıklayın</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n kişi içe aktarılmaya hazır, onay için göndere tıklayın</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Import contacts</source>
         <translation>Kişileri içe aktar</translation>
@@ -567,6 +579,10 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <source>Copy Debug Log</source>
         <translation>Hata ayıklama günlüğünü kopyala</translation>
     </message>
+    <message>
+        <source>Enable LAN discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatForm</name>
@@ -632,26 +648,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Sıralı bir dosya göndermeye çalışıyorsunuz, bu işe yaramayacak!</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>uzakta</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>meşgul</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>çevrimdışı</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>çevrimiçi</translation>
-    </message>
-    <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 artık %2</translation>
@@ -667,6 +663,15 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>%1 ile arama beklenmedik şekilde sonlandı. %2</translation>
+    </message>
+    <message>
+        <source>Filename contained illegal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illegal characters have been changed to _ 
+so you can save the file on windows.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -778,10 +783,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
 <context>
     <name>Core</name>
     <message>
-        <source>Toxing on qTox</source>
-        <translation>qTox&apos;da tox&apos;lanıyor</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me arkadaşlık öneriyor, &quot;%1&quot;</translation>
     </message>
@@ -804,6 +805,25 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
         <translation>Arkadaş zaten eklendi</translation>
+    </message>
+</context>
+<context>
+    <name>DesktopNotify</name>
+    <message>
+        <source>New group message received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New friend request received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New group invite received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New message received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -886,6 +906,11 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Bir dosya kaydet</translation>
+    </message>
+    <message>
+        <source>Remote Paused</source>
+        <comment>file transfer widget</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1047,21 +1072,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     </message>
 </context>
 <context>
-    <name>GUI</name>
-    <message>
-        <source>Enter your password</source>
-        <translation>Parolanızı girin</translation>
-    </message>
-    <message>
-        <source>Decrypt</source>
-        <translation>Şifreyi çöz</translation>
-    </message>
-    <message>
-        <source>You must enter a non-empty password:</source>
-        <translation>Boş olmayan bir parola girmeniz gerekiyor:</translation>
-    </message>
-</context>
-<context>
     <name>GeneralForm</name>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1094,10 +1104,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     <message>
         <source>Autostart</source>
         <translation>Kendiliğinden başlat</translation>
-    </message>
-    <message>
-        <source>Check for updates on startup</source>
-        <translation>Başlangıçta güncellemeleri denetle</translation>
     </message>
     <message>
         <source>Enable light tray icon.</source>
@@ -1173,14 +1179,6 @@ yerine, sistem tepsisine küçültecek.</translation>
         <translation>Dosyaları sormadan kabul et</translation>
     </message>
     <message>
-        <source>On new message:</source>
-        <translation>Yeni iletide:</translation>
-    </message>
-    <message>
-        <source>Play sound</source>
-        <translation>Ses çal</translation>
-    </message>
-    <message>
         <source>Show contacts&apos; status changes</source>
         <translation>Kişilerin durum değişiklerini göster</translation>
     </message>
@@ -1189,8 +1187,20 @@ yerine, sistem tepsisine küçültecek.</translation>
         <translation>Yapay çevrimdışı mesajlaşma</translation>
     </message>
     <message>
-        <source>Play sound while Busy</source>
-        <translation>Meşgulken ses çal</translation>
+        <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spell checking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max autoaccept file size (0 to disable):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> MB</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1235,6 +1245,22 @@ yerine, sistem tepsisine küçültecek.</translation>
         <source>Copy link address</source>
         <translation>Bağlantı adresini kopyala</translation>
     </message>
+    <message>
+        <source>[System message]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">Onay</translation>
+    </message>
+    <message>
+        <source>You are sure that you want to clear all displayed messages?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1250,6 +1276,30 @@ yerine, sistem tepsisine küçültecek.</translation>
         <source>Hide Messages</source>
         <translation>İletileri Gizle</translation>
     </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Mikrofonun sesini kapat</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Görüntülü aramayı bitir</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1262,18 +1312,43 @@ yerine, sistem tepsisine küçültecek.</translation>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <source>1 user in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>1 kullanıcı sohbette</translation>
-    </message>
-    <message>
-        <source>%1 users in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>%1 kullanıcı sohbette</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 başlığı %2 olarak ayarladı</translation>
+    </message>
+    <message>
+        <source>%1 is online</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new user has connected to the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unmute</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1325,13 +1400,20 @@ yerine, sistem tepsisine küçültecek.</translation>
         <comment>Menu to quit a groupchat</comment>
         <translation>Gruptan çık</translation>
     </message>
-    <message>
-        <source>1 user in chat</source>
-        <translation>1 kullanıcı sohbette</translation>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
-        <source>%1 users in chat</source>
-        <translation>%1 kullanıcı sohbette</translation>
+        <source>New Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation type="unfinished">Çevrimiçi</translation>
     </message>
 </context>
 <context>
@@ -1843,11 +1925,6 @@ Yeni birini oluşturmak isteyebilirsiniz.</translation>
 <context>
     <name>Nexus</name>
     <message>
-        <source>Images (%1)</source>
-        <comment>filetype filter</comment>
-        <translation>Resimler (%1)</translation>
-    </message>
-    <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
         <translation>Görünüm</translation>
@@ -1880,9 +1957,10 @@ Yeni birini oluşturmak isteyebilirsiniz.</translation>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation><numerusform>Okunmamış ileti</numerusform>
-        <numerusform>Okunmamış iletiler</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Okunmamış ileti</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>PasswordEdit</name>
@@ -1973,6 +2051,10 @@ Arkadaşlık istemleriyle rahatsız ediliyorsanız, NoSpam&apos;ı değiştirin.
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
         <translation>Veritabanındaki parola değiştirilemedi, bozulmuş olabilir veya eski parolayı kullanın.</translation>
+    </message>
+    <message>
+        <source>Toxing on qTox</source>
+        <translation type="unfinished">qTox&apos;da tox&apos;lanıyor</translation>
     </message>
 </context>
 <context>
@@ -2192,6 +2274,11 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <extracomment>deletion confirmation text</extracomment>
         <translation>Parolanızı silmek istediğinize emin misiniz?</translation>
     </message>
+    <message>
+        <source>Images (%1)</source>
+        <comment>filetype filter</comment>
+        <translation type="unfinished">Resimler (%1)</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2297,17 +2384,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>profil</translation>
     </message>
     <message>
-        <source>Update</source>
-        <comment>The title of a message box</comment>
-        <translation>Güncelle</translation>
-    </message>
-    <message>
-        <source>An update is available, do you want to download it now?
-It will be installed when qTox restarts.</source>
-        <translation>Bir güncelleme var, şimdi indirmek ister misiniz?
-qTox yeniden başlatığında kurulacak.</translation>
-    </message>
-    <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>%1 burada! Beni Toxlarsın belki?</translation>
@@ -2345,10 +2421,6 @@ qTox yeniden başlatığında kurulacak.</translation>
     <message>
         <source>Incoming call...</source>
         <translation>Gelen arama...</translation>
-    </message>
-    <message>
-        <source>Version %1, %2</source>
-        <translation>Sürüm %1, %2</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
@@ -2414,6 +2486,26 @@ qTox yeniden başlatığında kurulacak.</translation>
         <source>Starts new instance and opens the login screen.</source>
         <translation>Yeni örnek başlatır ve giriş ekranını açar.</translation>
     </message>
+    <message>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark olive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark violet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2464,6 +2556,68 @@ qTox yeniden başlatığında kurulacak.</translation>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
         <translation>Enter</translation>
+    </message>
+</context>
+<context>
+    <name>SearchForm</name>
+    <message>
+        <source>The text could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchSettingsForm</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Form</translation>
+    </message>
+    <message>
+        <source>Start search:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the beginning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>after date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>before date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>00.00.0000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use regular expressions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2613,26 +2767,8 @@ qTox yeniden başlatığında kurulacak.</translation>
         <translation>Pencere aç</translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>İleti aldığınızda qTox&apos;u öne çıkar.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Pencereyi öne çıkar</translation>
-    </message>
-    <message>
         <source>Contact list</source>
         <translation>Kişi listesi</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Grup sohbetlerindeki yeni iletileri her zaman bildir.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Grup sohbetlerini her zaman bildir</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2709,6 +2845,40 @@ qTox yeniden başlatığında kurulacak.</translation>
     <message>
         <source>Use identicons instead of empty avatars</source>
         <translation>Boş avatarlar yerine identicon kullan</translation>
+    </message>
+    <message>
+        <source>Use colored nicknames in chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a notification when you receive a new message and the window is not selected.</source>
+        <comment>tooltip for Notify setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Onlys notify about new messages in groupchats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group chats only notify when mentioned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play sound</source>
+        <translation type="unfinished">Ses çal</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished">Meşgulken ses çal</translation>
+    </message>
+    <message>
+        <source>Notify via desktop notifications</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2868,14 +3038,16 @@ qTox yeniden başlatığında kurulacak.</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation><numerusform>%n Yeni Arkadaş İsteği</numerusform>
-        <numerusform>%n Yeni Arkadaş İsteği</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n Yeni Arkadaş İsteği</numerusform>
+        </translation>
+    </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation><numerusform>%n Yeni Grup Daveti</numerusform>
-        <numerusform>%n Yeni Grup Daveti</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n Yeni Grup Daveti</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
@@ -2905,6 +3077,31 @@ qTox yeniden başlatığında kurulacak.</translation>
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Profilim</translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">çevrimiçi</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">uzakta</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">meşgul</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">çevrimdışı</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

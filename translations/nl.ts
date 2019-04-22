@@ -123,15 +123,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Over</translation>
     </message>
     <message>
-        <source>Restart qTox to install version %1</source>
-        <translation>Herstart qTox om versie %1 te installeren</translation>
-    </message>
-    <message>
-        <source>qTox is downloading update %1</source>
-        <comment>%1 is the version of the update</comment>
-        <translation>qTox is update %1 aan het downloaden</translation>
-    </message>
-    <message>
         <source>Original author: %1</source>
         <translation>Oorspronkelijke auteur: %1</translation>
     </message>
@@ -195,10 +186,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>status message</source>
         <translation>statusbericht</translation>
-    </message>
-    <message>
-        <source>Public key:</source>
-        <translation>Publieke sleutel:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -269,13 +256,29 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Geschiedenis verwijderd</translation>
     </message>
     <message>
-        <source>Chat history with %1 removed!</source>
-        <translation>Gespreksgeschiedenis met %1 verwijderd!</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
         <translation>Kies een map om automatisch aanvaarde bestanden op te slaan</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key (not ToxID):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">Bevestiging</translation>
+    </message>
+    <message>
+        <source>Are you sure to remove %1 chat history?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to remove chat history with %1!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -297,8 +300,16 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Bekende problemen</translation>
     </message>
     <message>
-        <source>Downloading update: %p%</source>
-        <translation>Update downloaden: %p%</translation>
+        <source>Open update download link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>qTox is up to date ✓</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -418,9 +429,11 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation><numerusform>Klaar om %n contact te importeren, klik om te bevestigen</numerusform>
-        <numerusform>Klaar om %n contacten te importeren, klik om te bevestigen</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Klaar om %n contact te importeren, klik om te bevestigen</numerusform>
+            <numerusform>Klaar om %n contacten te importeren, klik om te bevestigen</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Import contacts</source>
         <translation>Contacten importeren</translation>
@@ -564,6 +577,10 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>Copy Debug Log</source>
         <translation>Debuglogboek kopiëren</translation>
     </message>
+    <message>
+        <source>Enable LAN discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatForm</name>
@@ -629,26 +646,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Je probeert een sequentieel bestand te sturen, maar dat kan niet!</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>afwezig</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>bezet</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>offline</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>online</translation>
-    </message>
-    <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 is nu %2</translation>
@@ -664,6 +661,15 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Gesprek met %1 is onverwacht beëindigd. %2</translation>
+    </message>
+    <message>
+        <source>Filename contained illegal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illegal characters have been changed to _ 
+so you can save the file on windows.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -775,10 +781,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
 <context>
     <name>Core</name>
     <message>
-        <source>Toxing on qTox</source>
-        <translation>Toxt met qTox</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me biedt vriendschap aan, ‘%1’</translation>
     </message>
@@ -801,6 +803,25 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
         <translation>Vriend is al toegevoegd</translation>
+    </message>
+</context>
+<context>
+    <name>DesktopNotify</name>
+    <message>
+        <source>New group message received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New friend request received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New group invite received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New message received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -883,6 +904,11 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Bestand opslaan</translation>
+    </message>
+    <message>
+        <source>Remote Paused</source>
+        <comment>file transfer widget</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1043,21 +1069,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
 </context>
 <context>
-    <name>GUI</name>
-    <message>
-        <source>Enter your password</source>
-        <translation>Voer je wachtwoord in</translation>
-    </message>
-    <message>
-        <source>Decrypt</source>
-        <translation>Ontsleutelen</translation>
-    </message>
-    <message>
-        <source>You must enter a non-empty password:</source>
-        <translation>Je moet een niet-leeg wachtwoord invoeren:</translation>
-    </message>
-</context>
-<context>
     <name>GeneralForm</name>
     <message>
         <source>General</source>
@@ -1128,10 +1139,6 @@ in plaats van naar de taakbalk.</translation>
         <translation>Minimaliseren naar systeemvak</translation>
     </message>
     <message>
-        <source>Check for updates on startup</source>
-        <translation>Zoeken naar updates bij opstarten</translation>
-    </message>
-    <message>
         <source>Set where files will be saved.</source>
         <translation>Stel in waar bestanden opgeslagen worden.</translation>
     </message>
@@ -1165,10 +1172,6 @@ in plaats van naar de taakbalk.</translation>
         <translation>Toon statusverandering van contacten</translation>
     </message>
     <message>
-        <source>On new message:</source>
-        <translation>Bij een nieuw bericht:</translation>
-    </message>
-    <message>
         <source>Faux offline messaging</source>
         <translation>Faux offline berichten</translation>
     </message>
@@ -1177,16 +1180,24 @@ in plaats van naar de taakbalk.</translation>
         <translation>Automatisch starten</translation>
     </message>
     <message>
-        <source>Play sound</source>
-        <translation>Geluid afspelen</translation>
-    </message>
-    <message>
         <source>Default directory to save files:</source>
         <translation>Standaardmap om bestanden op te slaan:</translation>
     </message>
     <message>
-        <source>Play sound while Busy</source>
-        <translation>Geluid afspelen indien Bezet</translation>
+        <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spell checking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max autoaccept file size (0 to disable):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> MB</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1232,6 +1243,22 @@ in plaats van naar de taakbalk.</translation>
         <source>Copy link address</source>
         <translation>Koppelingsadres kopiëren</translation>
     </message>
+    <message>
+        <source>[System message]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">Bevestiging</translation>
+    </message>
+    <message>
+        <source>You are sure that you want to clear all displayed messages?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1247,6 +1274,30 @@ in plaats van naar de taakbalk.</translation>
         <source>Hide Messages</source>
         <translation>Berichten verbergen</translation>
     </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Microfoon dempen</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Videogesprek beëindigen</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1259,18 +1310,44 @@ in plaats van naar de taakbalk.</translation>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <source>%1 users in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>%1 gebruikers in de chat</translation>
-    </message>
-    <message>
-        <source>1 user in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation>1 gebruiker in chat</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 heeft de titel ingesteld op %2</translation>
+    </message>
+    <message>
+        <source>%1 is online</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new user has connected to the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unmute</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1306,10 +1383,6 @@ in plaats van naar de taakbalk.</translation>
 <context>
     <name>GroupWidget</name>
     <message>
-        <source>%1 users in chat</source>
-        <translation>%1 gebruikers in de chat</translation>
-    </message>
-    <message>
         <source>Set title...</source>
         <translation>Stel titel in…</translation>
     </message>
@@ -1326,9 +1399,21 @@ in plaats van naar de taakbalk.</translation>
         <source>Remove chat from this window</source>
         <translation>Gesprek verwijderen uit dit venster</translation>
     </message>
+    <message numerus="yes">
+        <source>%n user(s) in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <source>1 user in chat</source>
-        <translation>1 gebruiker in chat</translation>
+        <source>New Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation type="unfinished">Online</translation>
     </message>
 </context>
 <context>
@@ -1840,11 +1925,6 @@ Je kan er een aanmaken.</translation>
 <context>
     <name>Nexus</name>
     <message>
-        <source>Images (%1)</source>
-        <comment>filetype filter</comment>
-        <translation>Afbeeldingen (%1)</translation>
-    </message>
-    <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
         <translation>Weergave</translation>
@@ -1877,9 +1957,11 @@ Je kan er een aanmaken.</translation>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation><numerusform>Ongelezen bericht</numerusform>
-        <numerusform>Ongelezen berichten</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Ongelezen bericht</numerusform>
+            <numerusform>Ongelezen berichten</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>PasswordEdit</name>
@@ -1970,6 +2052,10 @@ Het is mogelijk dat er zich veranderingen in het formaat voordoen, wat kan leide
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
         <translation>Kon wachtwoord van database niet wijzigen, het is mogelijk beschadigd of gebruikt het oude wachtwoord.</translation>
+    </message>
+    <message>
+        <source>Toxing on qTox</source>
+        <translation type="unfinished">Toxt met qTox</translation>
     </message>
 </context>
 <context>
@@ -2189,6 +2275,11 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <extracomment>deletion confirmation text</extracomment>
         <translation>Weet je zeker dat je je wachtwoord wilt verwijderen?</translation>
     </message>
+    <message>
+        <source>Images (%1)</source>
+        <comment>filetype filter</comment>
+        <translation type="unfinished">Afbeeldingen (%1)</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2282,17 +2373,6 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
 <context>
     <name>QObject</name>
     <message>
-        <source>Update</source>
-        <comment>The title of a message box</comment>
-        <translation>Update</translation>
-    </message>
-    <message>
-        <source>An update is available, do you want to download it now?
-It will be installed when qTox restarts.</source>
-        <translation>Een update is beschikbaar, wil je deze nu downloaden?
-Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
-    </message>
-    <message>
         <source>Tox URI to parse</source>
         <translation>Te verwerken Tox-URI</translation>
     </message>
@@ -2332,10 +2412,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>%1 hier! Tox met me!</translation>
-    </message>
-    <message>
-        <source>Version %1, %2</source>
-        <translation>Versie %1, %2</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
@@ -2411,6 +2487,26 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <source>Starts new instance and opens the login screen.</source>
         <translation>Start nieuwe instantie en opent aanmeldscherm.</translation>
     </message>
+    <message>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark olive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark violet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2461,6 +2557,68 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
         <translation>Enter</translation>
+    </message>
+</context>
+<context>
+    <name>SearchForm</name>
+    <message>
+        <source>The text could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchSettingsForm</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Formulier</translation>
+    </message>
+    <message>
+        <source>Start search:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from the beginning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>after date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>before date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>00.00.0000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use regular expressions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2610,26 +2768,8 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>Venster openen</translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>Focussen op qTox-venster bij het ontvangen van een nieuw bericht.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Venster focussen</translation>
-    </message>
-    <message>
         <source>Contact list</source>
         <translation>Contactlijst</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Stuur altijd een melding voor nieuwe berichten in groepsgesprekken.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Melding voor alle berichten in groepsgesprekken</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2706,6 +2846,40 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     <message>
         <source>Use identicons instead of empty avatars</source>
         <translation>Identicons gebruiken in plaats van lege avatars</translation>
+    </message>
+    <message>
+        <source>Use colored nicknames in chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a notification when you receive a new message and the window is not selected.</source>
+        <comment>tooltip for Notify setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Onlys notify about new messages in groupchats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group chats only notify when mentioned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play sound</source>
+        <translation type="unfinished">Geluid afspelen</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished">Geluid afspelen indien Bezet</translation>
+    </message>
+    <message>
+        <source>Notify via desktop notifications</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2855,14 +3029,18 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation><numerusform>%n nieuw vriendschapsverzoek</numerusform>
-        <numerusform>%n nieuwe vriendschapsverzoeken</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n nieuw vriendschapsverzoek</numerusform>
+            <numerusform>%n nieuwe vriendschapsverzoeken</numerusform>
+        </translation>
+    </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation><numerusform>%n nieuwe groepsuitnodiging</numerusform>
-        <numerusform>%n nieuwe groepsuitnodigingen</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n nieuwe groepsuitnodiging</numerusform>
+            <numerusform>%n nieuwe groepsuitnodigingen</numerusform>
+        </translation>
+    </message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
@@ -2902,6 +3080,31 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Mijn profiel</translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">online</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">afwezig</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">bezet</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">offline</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
