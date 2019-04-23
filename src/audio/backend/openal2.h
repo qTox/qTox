@@ -37,7 +37,8 @@
 #include <AL/alc.h>
 #include <AL/alext.h>
 
-extern "C" {
+extern "C"
+{
 #include <filter_audio.h>
 }
 

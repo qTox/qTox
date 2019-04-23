@@ -31,8 +31,7 @@
 ToxCall::ToxCall(bool VideoEnabled, CoreAV& av)
     : av{&av}
     , videoEnabled{VideoEnabled}
-{
-}
+{}
 
 ToxCall::~ToxCall()
 {
@@ -110,19 +109,17 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     Audio& audio = Audio::getInstance();
     audio.subscribeInput();
     audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
-    [&av, FriendNum](const int16_t* pcm, size_t samples, uint8_t chans,
-            uint32_t rate) {
-        av.sendCallAudio(FriendNum, pcm, samples, chans, rate);
-    });
+                                   [&av, FriendNum](const int16_t* pcm, size_t samples,
+                                                    uint8_t chans, uint32_t rate) {
+                                       av.sendCallAudio(FriendNum, pcm, samples, chans, rate);
+                                   });
 
     if (!audioInConn) {
-       qDebug() << "Audio input connection not working";
+        qDebug() << "Audio input connection not working";
     }
 
     audioSinkInvalid = QObject::connect(sink.get(), &IAudioSink::invalidated,
-         [this]() {
-            this->onAudioSinkInvalidated();
-         });
+                                        [this]() { this->onAudioSinkInvalidated(); });
 
 
     // register video
@@ -154,9 +151,7 @@ void ToxFriendCall::onAudioSinkInvalidated()
     const auto newSink = Audio::getInstance().makeSink();
 
     audioSinkInvalid = QObject::connect(newSink, &IAudioSink::invalidated,
-       [this]() {
-           this->onAudioSinkInvalidated();
-    });
+                                        [this]() { this->onAudioSinkInvalidated(); });
     sink.reset(newSink);
 }
 
@@ -193,7 +188,7 @@ void ToxFriendCall::setState(const TOXAV_FRIEND_CALL_STATE& value)
     state = value;
 }
 
-const std::unique_ptr<IAudioSink> &ToxFriendCall::getAudioSink() const
+const std::unique_ptr<IAudioSink>& ToxFriendCall::getAudioSink() const
 {
     return sink;
 }
@@ -206,13 +201,13 @@ ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
     Audio& audio = Audio::getInstance();
     audio.subscribeInput();
     audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
-    [&av, GroupNum](const int16_t* pcm, size_t samples, uint8_t chans,
-            uint32_t rate) {
-        av.sendGroupCallAudio(GroupNum, pcm, samples, chans, rate);
-    });
+                                   [&av, GroupNum](const int16_t* pcm, size_t samples,
+                                                   uint8_t chans, uint32_t rate) {
+                                       av.sendGroupCallAudio(GroupNum, pcm, samples, chans, rate);
+                                   });
 
     if (!audioInConn) {
-       qDebug() << "Audio input connection not working";
+        qDebug() << "Audio input connection not working";
     }
 }
 
@@ -231,7 +226,7 @@ void ToxGroupCall::onAudioSinkInvalidated(ToxPk peerId)
 void ToxGroupCall::removePeer(ToxPk peerId)
 {
     const auto& source = peers.find(peerId);
-    if(source == peers.cend()) {
+    if (source == peers.cend()) {
         qDebug() << "Peer:" << peerId.toString() << "does not have a source, can't remove";
         return;
     }
@@ -247,10 +242,9 @@ void ToxGroupCall::addPeer(ToxPk peerId)
     IAudioSink* newSink = audio.makeSink();
     peers.emplace(peerId, std::unique_ptr<IAudioSink>(newSink));
 
-    QMetaObject::Connection con = QObject::connect(newSink, &IAudioSink::invalidated,
-    [this, peerId]() {
-           this->onAudioSinkInvalidated(peerId);
-    });
+    QMetaObject::Connection con =
+        QObject::connect(newSink, &IAudioSink::invalidated,
+                         [this, peerId]() { this->onAudioSinkInvalidated(peerId); });
 
     sinkInvalid.insert({peerId, con});
 }
@@ -264,16 +258,16 @@ bool ToxGroupCall::havePeer(ToxPk peerId)
 void ToxGroupCall::clearPeers()
 {
     peers.clear();
-    for(auto con : sinkInvalid) {
+    for (auto con : sinkInvalid) {
         QObject::disconnect(con.second);
     }
 
     sinkInvalid.clear();
 }
 
-const std::unique_ptr<IAudioSink> &ToxGroupCall::getAudioSink(ToxPk peer)
+const std::unique_ptr<IAudioSink>& ToxGroupCall::getAudioSink(ToxPk peer)
 {
-    if(!havePeer(peer)) {
+    if (!havePeer(peer)) {
         addPeer(peer);
     }
     const auto& source = peers.find(peer);
