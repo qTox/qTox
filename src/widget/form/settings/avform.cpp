@@ -150,7 +150,7 @@ void AVForm::showEvent(QShowEvent* event)
         subscribedToAudioIn = true;
     }
 
-    if(audioSink == nullptr) {
+    if (audioSink == nullptr) {
         audioSink.reset(audio->makeSink());
     }
 
@@ -571,7 +571,7 @@ void AVForm::on_outDevCombobox_currentIndexChanged(int deviceIndex)
 
     const QString oldName = audioSettings->getOutDev();
 
-    if(oldName != deviceName) {
+    if (oldName != deviceName) {
         audioSettings->setOutDev(deviceName);
         audio->reinitOutput(deviceName);
         audioSink.reset(Audio::getInstance().makeSink());

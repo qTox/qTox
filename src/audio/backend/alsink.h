@@ -1,8 +1,8 @@
 #ifndef ALSINK_H
 #define ALSINK_H
 
-#include <QObject>
 #include <QMutex>
+#include <QObject>
 
 #include "src/audio/iaudiosink.h"
 
@@ -12,15 +12,14 @@ class AlSink : public IAudioSink
 {
     Q_OBJECT
 public:
-    AlSink(OpenAL &al, uint sourceId);
-    AlSink(const AlSink &src) = delete;
-    AlSink & operator=(const AlSink&) = delete;
+    AlSink(OpenAL& al, uint sourceId);
+    AlSink(const AlSink& src) = delete;
+    AlSink& operator=(const AlSink&) = delete;
     AlSink(AlSink&& other) = delete;
-    AlSink & operator=(AlSink&& other) = delete;
+    AlSink& operator=(AlSink&& other) = delete;
     ~AlSink();
 
-    void playAudioBuffer(const int16_t* data, int samples, unsigned channels,
-                         int sampleRate) const;
+    void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const;
     void playMono16Sound(const IAudioSink::Sound& sound);
     void startLoop();
     void stopLoop();

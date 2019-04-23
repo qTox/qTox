@@ -33,16 +33,16 @@
 #include <cassert>
 
 namespace {
-    void applyGain(int16_t* buffer, uint32_t bufferSize, qreal gainFactor)
-    {
-        for (quint32 i = 0; i < bufferSize; ++i) {
-            // gain amplification with clipping to 16-bit boundaries
-            buffer[i] = qBound<int16_t>(std::numeric_limits<int16_t>::min(),
-                                   qRound(buffer[i] * gainFactor),
-                                   std::numeric_limits<int16_t>::max());
-        }
+void applyGain(int16_t* buffer, uint32_t bufferSize, qreal gainFactor)
+{
+    for (quint32 i = 0; i < bufferSize; ++i) {
+        // gain amplification with clipping to 16-bit boundaries
+        buffer[i] =
+            qBound<int16_t>(std::numeric_limits<int16_t>::min(), qRound(buffer[i] * gainFactor),
+                            std::numeric_limits<int16_t>::max());
     }
 }
+} // namespace
 
 /**
  * @class OpenAL
@@ -82,13 +82,15 @@ OpenAL::OpenAL()
     captureTimer.setSingleShot(false);
     captureTimer.moveToThread(audioThread);
     // TODO for Qt 5.6+: use qOverload
-    connect(audioThread, &QThread::started, &captureTimer, static_cast<void (QTimer::*)(void)>(&QTimer::start));
+    connect(audioThread, &QThread::started, &captureTimer,
+            static_cast<void (QTimer::*)(void)>(&QTimer::start));
 
     cleanupTimer.setInterval(1000);
     cleanupTimer.setSingleShot(false);
     connect(&cleanupTimer, &QTimer::timeout, this, &OpenAL::cleanupSound);
     // TODO for Qt 5.6+: use qOverload
-    connect(audioThread, &QThread::started, &cleanupTimer, static_cast<void (QTimer::*)(void)>(&QTimer::start));
+    connect(audioThread, &QThread::started, &cleanupTimer,
+            static_cast<void (QTimer::*)(void)>(&QTimer::start));
 
     audioThread->start();
 }
@@ -245,7 +247,7 @@ bool OpenAL::reinitOutput(const QString& outDevDesc)
  * @brief Allocates ressources for a new audio output
  * @return AudioSink on success, nullptr on failure
  */
-IAudioSink *OpenAL::makeSink()
+IAudioSink* OpenAL::makeSink()
 {
     QMutexLocker locker(&audioLock);
 
@@ -332,8 +334,7 @@ void OpenAL::unsubscribeInput()
         return;
 
     inSubscriptions--;
-    qDebug() << "Unsubscribed from audio input device [" << inSubscriptions
-             << "subscriptions left ]";
+    qDebug() << "Unsubscribed from audio input device [" << inSubscriptions << "subscriptions left ]";
 
     if (!inSubscriptions)
         cleanupInput();
@@ -377,8 +378,8 @@ bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
     this->channels = channels;
     int stereoFlag = channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     const int bytesPerSample = 2;
-    const int safetyFactor = 2; // internal OpenAL ring buffer. must be larger than our inputBuffer to avoid the ring
-                                // from overwriting itself between captures.
+    const int safetyFactor = 2; // internal OpenAL ring buffer. must be larger than our inputBuffer
+                                // to avoid the ring from overwriting itself between captures.
     AUDIO_FRAME_SAMPLE_COUNT_TOTAL = AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL * channels;
     const ALCsizei ringBufSize = AUDIO_FRAME_SAMPLE_COUNT_TOTAL * bytesPerSample * safetyFactor;
 
@@ -446,18 +447,18 @@ bool OpenAL::initOutput(const QString& deviceName)
 /**
  * @brief Play a 48kHz mono 16bit PCM sound
  */
-void OpenAL::playMono16Sound(AlSink& sink, const IAudioSink::Sound &sound)
+void OpenAL::playMono16Sound(AlSink& sink, const IAudioSink::Sound& sound)
 {
     const uint sourceId = sink.getSourceId();
     QFile sndFile(IAudioSink::getSound(sound));
-    if(!sndFile.exists()) {
+    if (!sndFile.exists()) {
         qDebug() << "Trying to open non existent sound file";
         return;
     }
 
     sndFile.open(QIODevice::ReadOnly);
     const QByteArray data{sndFile.readAll()};
-    if(data.isEmpty()) {
+    if (data.isEmpty()) {
         qDebug() << "Sound file contained no data";
         return;
     }
@@ -606,9 +607,9 @@ float OpenAL::getVolume()
     float sumOfSquares = 0;
     for (quint32 i = 0; i < samples; i++) {
         float sample = static_cast<float>(inputBuffer[i]) / std::numeric_limits<int16_t>::max();
-        sumOfSquares += std::pow(sample , 2);
+        sumOfSquares += std::pow(sample, 2);
     }
-    const float rms = std::sqrt(sumOfSquares/samples);
+    const float rms = std::sqrt(sumOfSquares / samples);
     // our calculated normalized volume could possibly be above 1 because our RMS assumes a sinusoidal wave
     const float normalizedVolume = std::min(rms * rootTwo, 1.0f);
     return normalizedVolume;
@@ -650,7 +651,8 @@ void OpenAL::doInput()
         return;
     }
 
-    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL, channels, AUDIO_SAMPLE_RATE);
+    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL, channels,
+                               AUDIO_SAMPLE_RATE);
 }
 
 void OpenAL::doOutput()
@@ -725,7 +727,8 @@ QStringList OpenAL::inDeviceNames()
  * @brief Free all buffers that finished playing on a source
  * @param sourceId where to remove the buffers from
  */
-void OpenAL::cleanupBuffers(uint sourceId) {
+void OpenAL::cleanupBuffers(uint sourceId)
+{
     // unqueue all buffers from the source
     ALint processed = 0;
     alGetSourcei(sourceId, AL_BUFFERS_PROCESSED, &processed);

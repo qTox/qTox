@@ -52,8 +52,14 @@ public:
     OpenAL();
     virtual ~OpenAL();
 
-    qreal maxOutputVolume() const { return 1; }
-    qreal minOutputVolume() const { return 0; }
+    qreal maxOutputVolume() const
+    {
+        return 1;
+    }
+    qreal minOutputVolume() const
+    {
+        return 0;
+    }
     qreal outputVolume() const;
     void setOutputVolume(qreal volume);
 

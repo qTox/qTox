@@ -32,7 +32,8 @@
 
 #include <cassert>
 
-extern "C" {
+extern "C"
+{
 #include <filter_audio.h>
 }
 
@@ -80,8 +81,7 @@ OpenAL2::OpenAL2()
     , alProxyContext{nullptr}
     , alProxySource{0}
     , alProxyBuffer{0}
-{
-}
+{}
 
 bool OpenAL2::initInput(const QString& deviceName)
 {
@@ -324,7 +324,8 @@ void OpenAL2::doOutput()
         alcMakeContextCurrent(alOutContext);
     }
 
-    alBufferData(bufids[0], AL_FORMAT_MONO16, outBuf, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL * 2, AUDIO_SAMPLE_RATE);
+    alBufferData(bufids[0], AL_FORMAT_MONO16, outBuf, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL * 2,
+                 AUDIO_SAMPLE_RATE);
 
     alSourceQueueBuffers(alProxySource, 1, bufids);
 
