@@ -54,6 +54,7 @@ private slots:
     void test5to6();
     void test6to7();
     // test7to8 omitted, version only upgrade, versions are not verified in this
+    // test8to9 omitted, data corruption correction upgrade with no schema change
     // test suite
     void cleanupTestCase() const;
 
