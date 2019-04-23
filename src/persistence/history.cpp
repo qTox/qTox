@@ -27,7 +27,7 @@
 #include "src/core/toxpk.h"
 
 namespace {
-static constexpr int SCHEMA_VERSION = 8;
+static constexpr int SCHEMA_VERSION = 9;
 
 bool createCurrentSchema(RawDatabase& db)
 {
@@ -408,6 +408,109 @@ bool dbSchema7to8(RawDatabase& db)
     return db.execNow(upgradeQueries);
 }
 
+struct BadEntry {
+    BadEntry(int64_t row, QString toxId) :
+        row{row},
+        toxId{toxId} {}
+    RowId row;
+    QString toxId;
+};
+
+std::vector<BadEntry> getInvalidPeers(RawDatabase& db)
+{
+    std::vector<BadEntry> badPeerIds;
+    db.execNow(RawDatabase::Query("SELECT id, public_key FROM peers WHERE LENGTH(public_key) != 64", [&](const QVector<QVariant>& row) {
+        badPeerIds.emplace_back(BadEntry{row[0].toInt(), row[1].toString()});
+    }));
+    return badPeerIds;
+}
+
+RowId getValidPeerRow(RawDatabase& db, const ToxPk& friendPk)
+{
+    bool validPeerExists{false};
+    RowId validPeerRow;
+    db.execNow(RawDatabase::Query(QStringLiteral("SELECT id FROM peers WHERE public_key='%1';")
+        .arg(friendPk.toString()), [&](const QVector<QVariant>& row) {
+            validPeerRow = RowId{row[0].toLongLong()};
+            validPeerExists = true;
+    }));
+    if (validPeerExists) {
+        return validPeerRow;
+    }
+
+    db.execNow(RawDatabase::Query(("SELECT id FROM peers ORDER BY id DESC LIMIT 1;"), [&](const QVector<QVariant>& row) {
+        int64_t maxPeerId = row[0].toInt();
+        validPeerRow = RowId{maxPeerId + 1};
+    }));
+    db.execNow(RawDatabase::Query(QStringLiteral("INSERT INTO peers (id, public_key) VALUES (%1, '%2');").arg(validPeerRow.get()).arg(friendPk.toString())));
+    return validPeerRow;
+}
+
+struct DuplicateAlias {
+    DuplicateAlias(RowId goodAliasRow, std::vector<RowId> badAliasRows) :
+        goodAliasRow{goodAliasRow},
+        badAliasRows{badAliasRows} {}
+    DuplicateAlias() {};
+    RowId goodAliasRow{-1};
+    std::vector<RowId> badAliasRows;
+};
+
+DuplicateAlias getDuplicateAliasRows(RawDatabase& db, RowId goodPeerRow, RowId badPeerRow)
+{
+    std::vector<RowId> badAliasRows;
+    RowId goodAliasRow;
+    bool hasGoodEntry{false};
+    db.execNow(RawDatabase::Query(QStringLiteral("SELECT good.id, bad.id FROM aliases good INNER JOIN aliases bad ON good.display_name=bad.display_name WHERE good.owner=%1 AND bad.owner=%2;").arg(goodPeerRow.get()).arg(badPeerRow.get()),
+            [&](const QVector<QVariant>& row) {
+        hasGoodEntry = true;
+        goodAliasRow = RowId{row[0].toInt()};
+        badAliasRows.emplace_back(RowId{row[1].toLongLong()});
+    }));
+
+    if (hasGoodEntry) {
+        return {goodAliasRow, badAliasRows};
+    } else {
+        return {};
+    }
+}
+
+void mergeAndDeleteAlias(QVector<RawDatabase::Query>& upgradeQueries, RowId goodAlias, std::vector<RowId> badAliases)
+{
+    for (const auto badAliasId : badAliases) {
+        upgradeQueries += RawDatabase::Query(QStringLiteral("UPDATE text_messages SET sender_alias = %1 WHERE sender_alias = %2;").arg(goodAlias.get()).arg(badAliasId.get()));
+        upgradeQueries += RawDatabase::Query(QStringLiteral("UPDATE file_transfers SET sender_alias = %1 WHERE sender_alias = %2;").arg(goodAlias.get()).arg(badAliasId.get()));
+        upgradeQueries += RawDatabase::Query(QStringLiteral("DELETE FROM aliases WHERE id = %1;").arg(badAliasId.get()));
+    }
+}
+
+void mergeAndDeletePeer(QVector<RawDatabase::Query>& upgradeQueries, RowId goodPeerId, RowId badPeerId)
+{
+    upgradeQueries += RawDatabase::Query(QStringLiteral("UPDATE aliases SET owner = %1 WHERE owner = %2").arg(goodPeerId.get()).arg(badPeerId.get()));
+    upgradeQueries += RawDatabase::Query(QStringLiteral("UPDATE history SET chat_id = %1 WHERE chat_id = %2;").arg(goodPeerId.get()).arg(badPeerId.get()));
+    upgradeQueries += RawDatabase::Query(QStringLiteral("DELETE FROM peers WHERE id = %1").arg(badPeerId.get()));
+}
+
+void mergeDuplicatePeers(QVector<RawDatabase::Query>& upgradeQueries, RawDatabase& db, std::vector<BadEntry> badPeers)
+{
+    for (const auto& badPeer : badPeers) {
+        const RowId goodPeerId = getValidPeerRow(db, ToxPk{badPeer.toxId.left(64)});
+        const auto aliasDuplicates = getDuplicateAliasRows(db, goodPeerId, badPeer.row);
+        mergeAndDeleteAlias(upgradeQueries, aliasDuplicates.goodAliasRow, aliasDuplicates.badAliasRows);
+        mergeAndDeletePeer(upgradeQueries, goodPeerId, badPeer.row);
+    }
+}
+
+bool dbSchema8to9(RawDatabase& db)
+{
+    // not technically a schema update, but still a database version update based on healing invalid user data
+    // we added ourself in the peers table by ToxId isntead of ToxPk. Heal this over-length entry.
+    QVector<RawDatabase::Query> upgradeQueries;
+    const auto badPeers = getInvalidPeers(db);
+    mergeDuplicatePeers(upgradeQueries, db, badPeers);
+    upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 9;"));
+    return db.execNow(upgradeQueries);
+}
+
 /**
  * @brief Upgrade the db schema
  * @note On future alterations of the database all you have to do is bump the SCHEMA_VERSION
@@ -457,7 +560,7 @@ bool dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
     using DbSchemaUpgradeFn = bool (*)(RawDatabase&);
     std::vector<DbSchemaUpgradeFn> upgradeFns = {dbSchema0to1, dbSchema1to2, dbSchema2to3,
                                                  dbSchema3to4, dbSchema4to5, dbSchema5to6,
-                                                 dbSchema6to7, dbSchema7to8};
+                                                 dbSchema6to7, dbSchema7to8, dbSchema8to9};
 
     assert(databaseSchemaVersion < static_cast<int>(upgradeFns.size()));
     assert(upgradeFns.size() == SCHEMA_VERSION);
