@@ -34,14 +34,14 @@ git config --global alias.logs 'log --show-signature'
 - **always** use [commit message format]
 - **always** GPG-sign your commits.
 - it's preferable to make a PR with changes that you're about to commit.
-  
+
   Yes, there might be a situation where something has to be fixed "right now"
   on master..
-  
+
   Perhaps a security fix, who knows what future holds. If it's not *that*
   important, you're still better off making a PR. Even when you'll just
   fast-forward commits from PR onto the `master` branch.
-  
+
   Reasoning for it is that it's always hard to catch bugs/mistakes that you
   create, while someone else who just briefly looked at the changeset possibly
   can see a problem `:)`
@@ -53,17 +53,17 @@ git config --global alias.logs 'log --show-signature'
   be signed, and websites can fairly well mess things up.
 - **always** test PR that is being merged.
 - **always** GPG-sign PR that you're merging.
-  
+
   Commits that are about to be merged don't have to be signed, but the
   merge-commit **must** be signed. To simplify the process, and ensure that
   things are done "right", it's preferable to use the [`merge-pr.sh`] script,
   which does that for you automatically.
 - **use** [`merge-pr.sh`] script to merge PRs, e.g. `./merge-pr.sh 1234`.
-  
+
   You don't have to use it, but then you're running into risk of breaking
   travis build of master & other PRs, since it verifies all commit messages,
   indlucing merge messages.
-  
+
   Risk, that can be avoided when one doesn't type manually merge message :wink:
 - **might want** to use [`test-pr.sh`].
 - give a PR some "breathing space" right after it's created – i.e. merging
@@ -112,36 +112,21 @@ To get translations into qTox:
 
 1. Go to `https://hosted.weblate.org/projects/tox/qtox/#repository` and lock
    the repository for translations.
-2. Make sure you have git setup to automatically gpg sign commits
-3. In the root of the qTox repository execute the script
-   `tools/update-weblate.sh`
-4. Check what has been changed compared to master: `git diff upstream/master`
-5. Checkout a new branch with e.g. `git checkout -b update_weblate` and open
+2. Make sure you have git setup to automatically gpg sign commits.
+3. To update translated strings from Weblate, in the root of the qTox
+   repository execute the script `tools/update-weblate.sh`
+4. If a new translation language has been added, update the following files:
+    - `CMakeLists.txt`
+    - `src/widget/form/settings/generalform.cpp`
+    - `translations/README.md`
+    - `translations/i18n.pri`
+    - `translations/translations.qrc`
+5. To update translatable strings from qTox for Weblate, run
+    `./tools/update-translation-files.sh ALL`
+6. Checkout a new branch with e.g. `git checkout -b update_weblate` and open
    a Pull Request for it on Github.
-6. After the Pull Request has been merged, unlock Weblate and `reset` it to
-   master
-
-## Adding new translations
-
-Files to edit when adding a new translation:
-
-- `CMakeLists.txt`
-- `src/widget/form/settings/generalform.cpp`
-- `translations/README.md`
-- `translations/i18n.pri`
-- `translations/translations.qrc`
-
-Follow steps for adding translations from Weblate up to step 5. Next:
-
-1. Edit files to add translation to qTox.
-2. Before committing, clean up translation from Weblate and commit the change:
-
-   ```
-   ./tools/update-translation-files.sh translations/$TRANSLATION.ts
-   git commit --amend translations/$TRANSLATION.ts
-   ```
-3. Commit the changes to other files adding language to qTox.
-
+7. After the Pull Request has been merged, `reset` Weblate to master and
+   unlock it.
 
 # Releases
 
@@ -193,7 +178,7 @@ Follow steps for adding translations from Weblate up to step 5. Next:
 - Update download links on https://tox.chat to point to the new release.
 - Write a short blog post for https://github.com/qTox/blog/ and advertise the
   post on Tox IRC channels, popular Tox groups, reddit, or whatever other platforms.
-- Open a PR to update the Flatpak manifest of our [Flathub repository] with the 
+- Open a PR to update the Flatpak manifest of our [Flathub repository] with the
   changes from [`./flatpak/io.github.qtox.qTox.json`].
 - Comment to the PR with `bot, build` to execute a test build
 - After the build passed for qTox on all architectures on
