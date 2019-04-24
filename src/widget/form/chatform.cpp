@@ -31,6 +31,7 @@
 #include "src/persistence/history.h"
 #include "src/persistence/offlinemsgengine.h"
 #include "src/persistence/profile.h"
+#include "src/persistence/paths.h"
 #include "src/persistence/settings.h"
 #include "src/video/netcamview.h"
 #include "src/widget/chatformheader.h"
@@ -949,16 +950,13 @@ void ChatForm::doScreenshot()
 
 void ChatForm::sendImage(const QPixmap& pixmap)
 {
-    QDir(Settings::getInstance().getAppDataDirPath()).mkpath("images");
-
+    QString filepath{Settings::getInstance().getPaths().getScreenshotsDir()};
     // use ~ISO 8601 for screenshot timestamp, considering FS limitations
     // https://en.wikipedia.org/wiki/ISO_8601
     // Windows has to be supported, thus filename can't have `:` in it :/
     // Format should be: `qTox_Screenshot_yyyy-MM-dd HH-mm-ss.zzz.png`
-    QString filepath = QString("%1images%2qTox_Image_%3.png")
-                           .arg(Settings::getInstance().getAppDataDirPath())
-                           .arg(QDir::separator())
-                           .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd HH-mm-ss.zzz"));
+    filepath = QString("qTox_Image_%1.png")
+                       .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd HH-mm-ss.zzz"));
     QFile file(filepath);
 
     if (file.open(QFile::ReadWrite)) {

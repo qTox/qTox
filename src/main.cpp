@@ -21,8 +21,10 @@
 #include "src/ipc.h"
 #include "src/net/toxuri.h"
 #include "src/nexus.h"
+#include "src/persistence/paths.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/toxsave.h"
+#include "src/persistence/upgrader/persistenceupgrader.h"
 #include "src/video/camerasource.h"
 #include "src/widget/loginscreen.h"
 #include "src/widget/translator.h"
@@ -38,6 +40,7 @@
 #include <QMutexLocker>
 
 #include <ctime>
+#include <memory>
 #include <sodium.h>
 #include <stdio.h>
 
@@ -69,7 +72,6 @@ void cleanup()
 
     Nexus::destroyInstance();
     CameraSource::destroyInstance();
-    Settings::destroyInstance();
     qDebug() << "Cleanup success";
 
 #ifdef LOG_TO_FILE
@@ -149,6 +151,57 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 #endif
 }
 
+void createLogFile(const Paths& paths)
+{
+    const QString logFilePath{paths.getLogFilePath()};
+    if (logFilePath.isEmpty()) {
+        qCritical() << "Invalid path for log file";
+        return;
+    }
+
+    QFileInfo logFile{logFilePath};
+    QDir logFileDir{logFile.dir()};
+
+    if (!logFileDir.mkpath(".")) {
+        qCritical() << "Couldn't create path for log file";
+        return;
+    }
+
+    QByteArray logFilePathLocal{logFile.absoluteFilePath().toLocal8Bit()};
+    FILE* mainLogFilePtr = fopen(logFilePathLocal.constData(), "a");
+
+    // Trim log file if over 1MB
+    if (logFile.size() > 1000000) {
+        qDebug() << "Log file over 1MB, rotating...";
+
+        // close old logfile (need for windows)
+        if (mainLogFilePtr) {
+            fclose(mainLogFilePtr);
+        }
+
+        // Check if log.1 already exists, and if so, delete it
+        if (logFileDir.remove(logFileDir.absolutePath() + "qtox.log.1")) {
+            qDebug() << "Removed old log successfully";
+        } else {
+            qWarning() << "Unable to remove old log file";
+        }
+
+        if (!logFileDir.rename(logFileDir.absolutePath() + "qtox.log",
+                               logFileDir.absolutePath() + "qtox.log.1")) {
+            qCritical() << "Unable to move logs";
+        }
+
+        // open a new logfile
+        mainLogFilePtr = fopen(logFilePathLocal.constData(), "a");
+    }
+
+    if (!mainLogFilePtr) {
+        qCritical() << "Couldn't open logfile" << logFilePath;
+    }
+
+    logFileFile.store(mainLogFilePtr); // atomically set the logFile
+}
+
 int main(int argc, char* argv[])
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
@@ -192,8 +245,25 @@ int main(int argc, char* argv[])
 #endif
 
     qsrand(time(nullptr));
-    Settings::getInstance();
-    QString locale = Settings::getInstance().getTranslation();
+
+    std::unique_ptr<Paths> paths{Paths::makePaths()};
+    if (paths == nullptr) {
+        qCritical() << "Couldn't access qTox directories";
+        exit(EXIT_FAILURE);
+    }
+
+    if (!PersistenceUpgrader::runUpgrade(paths->isPortable())) {
+        qCritical() << "Couldn't upgrade settings";
+        exit(EXIT_FAILURE);
+    }
+
+    std::unique_ptr<Settings> settings{Settings::makeSettings(*paths)};
+    if (settings == nullptr) {
+        qCritical() << "Couldn't start Settings module";
+        exit(EXIT_FAILURE);
+    }
+
+    QString locale = settings->getTranslation();
     Translator::translate(locale);
 
     // Process arguments
@@ -213,15 +283,14 @@ int main(int argc, char* argv[])
                            QObject::tr("Starts new instance and opens the login screen.")));
     parser.process(*a);
 
-    uint32_t profileId = Settings::getInstance().getCurrentProfileId();
+    uint32_t profileId = settings->getCurrentProfileId();
     IPC ipc(profileId);
     if (!ipc.isAttached()) {
         qCritical() << "Can't init IPC";
         return EXIT_FAILURE;
     }
 
-    QObject::connect(&Settings::getInstance(), &Settings::currentProfileIdChanged, &ipc,
-                     &IPC::setProfileId);
+    QObject::connect(settings.get(), &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId);
 
     // For the auto-updater
     if (sodium_init() < 0) {
@@ -230,39 +299,7 @@ int main(int argc, char* argv[])
     }
 
 #ifdef LOG_TO_FILE
-    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
-    QDir(logFileDir).mkpath(".");
-
-    QString logfile = logFileDir + "qtox.log";
-    FILE* mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
-
-    // Trim log file if over 1MB
-    if (QFileInfo(logfile).size() > 1000000) {
-        qDebug() << "Log file over 1MB, rotating...";
-
-        // close old logfile (need for windows)
-        if (mainLogFilePtr)
-            fclose(mainLogFilePtr);
-
-        QDir dir(logFileDir);
-
-        // Check if log.1 already exists, and if so, delete it
-        if (dir.remove(logFileDir + "qtox.log.1"))
-            qDebug() << "Removed old log successfully";
-        else
-            qWarning() << "Unable to remove old log file";
-
-        if (!dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1"))
-            qCritical() << "Unable to move logs";
-
-        // open a new logfile
-        mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
-    }
-
-    if (!mainLogFilePtr)
-        qCritical() << "Couldn't open logfile" << logfile;
-
-    logFileFile.store(mainLogFilePtr); // atomically set the logFile
+    createLogFile(*paths);
 #endif
 
     // Windows platform plugins DLL hell fix
@@ -272,7 +309,7 @@ int main(int argc, char* argv[])
     qDebug() << "commit: " << GIT_VERSION;
 
     QString profileName;
-    bool autoLogin = Settings::getInstance().getAutoLogin();
+    bool autoLogin = settings->getAutoLogin();
 
     uint32_t ipcDest = 0;
     bool doIpc = true;
@@ -292,7 +329,7 @@ int main(int argc, char* argv[])
         doIpc = false;
         autoLogin = false;
     } else {
-        profileName = Settings::getInstance().getCurrentProfile();
+        profileName = settings->getCurrentProfile();
     }
 
     if (parser.positionalArguments().size() == 0) {
@@ -347,7 +384,7 @@ int main(int argc, char* argv[])
     }
 
     Nexus::getInstance().setProfile(profile);
-    Settings::getInstance().setCurrentProfile(profileName);
+    settings->setCurrentProfile(profileName);
 
     Nexus& nexus = Nexus::getInstance();
     nexus.start();
@@ -358,10 +395,11 @@ int main(int argc, char* argv[])
     ipc.registerEventHandler("activate", &toxActivateEventHandler);
 
     // Event was not handled by already running instance therefore we handle it ourselves
-    if (eventType == "uri")
+    if (eventType == "uri") {
         handleToxURI(firstParam.toUtf8());
-    else if (eventType == "save")
+    } else if (eventType == "save") {
         handleToxSave(firstParam.toUtf8());
+    }
 
     QObject::connect(a.get(), &QApplication::aboutToQuit, cleanup);
 

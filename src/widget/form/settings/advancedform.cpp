@@ -30,6 +30,7 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/nexus.h"
+#include "src/persistence/paths.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
@@ -54,7 +55,6 @@ AdvancedForm::AdvancedForm()
 
     Settings& s = Settings::getInstance();
     bodyUI->cbEnableIPv6->setChecked(s.getEnableIPv6());
-    bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->proxyAddr->setText(s.getProxyAddr());
     quint16 port = s.getProxyPort();
     if (port > 0) {
@@ -93,10 +93,6 @@ AdvancedForm::~AdvancedForm()
     delete bodyUI;
 }
 
-void AdvancedForm::on_cbMakeToxPortable_stateChanged()
-{
-    Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
-}
 void AdvancedForm::on_btnExportLog_clicked()
 {
     QString savefile =
@@ -107,8 +103,7 @@ void AdvancedForm::on_btnExportLog_clicked()
         return;
     }
 
-    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
-    QString logfile = logFileDir + "qtox.log";
+    QString logfile = Settings::getInstance().getPaths().getLogFilePath();
 
     QFile file(logfile);
     if (file.exists()) {
@@ -126,8 +121,7 @@ void AdvancedForm::on_btnExportLog_clicked()
 
 void AdvancedForm::on_btnCopyDebug_clicked()
 {
-    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
-    QString logfile = logFileDir + "qtox.log";
+    QString logfile = Settings::getInstance().getPaths().getLogFilePath();
 
     QFile file(logfile);
     if (!file.exists()) {

@@ -23,11 +23,13 @@
 #include <QFileInfo>
 #include <QObject>
 #include <QSaveFile>
+#include <QStringBuilder>
 #include <QThread>
 
 #include <cassert>
 #include <sodium.h>
 
+#include "paths.h"
 #include "profile.h"
 #include "profilelocker.h"
 #include "settings.h"
@@ -96,7 +98,18 @@ void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewPr
             Qt::ConnectionType::QueuedConnection);
 }
 
+QString Profile::getProfilePath(const QString &name)
+{
+    return Settings::getInstance().getPaths().getProfilesDir() % name;
+}
+
+QString Profile::getToxSavePath(const QString &name)
+{
+    return Settings::getInstance().getPaths().getToxSaveDir() % name % ".tox";
+}
+
 Profile::Profile(QString name, const QString& password, bool isNewProfile, const QByteArray& toxsave, std::unique_ptr<ToxEncrypt> passkey)
+
     : name{name}
     , passkey{std::move(passkey)}
     , isRemoved{false}
@@ -137,7 +150,7 @@ Profile* Profile::loadProfile(QString name, const QString& password)
     Profile* p = nullptr;
     qint64 fileSize = 0;
 
-    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+    QString path = getToxSavePath(name);
     QFile saveFile(path);
     qDebug() << "Loading tox save " << path;
 
@@ -250,9 +263,9 @@ Profile::~Profile()
  * @param extension Raw extension, e.g. "jpeg" not ".jpeg".
  * @return Vector of filenames.
  */
-QStringList Profile::getFilesByExt(QString extension)
+QStringList Profile::getFilesByExt(QString directory, QString extension)
 {
-    QDir dir(Settings::getInstance().getSettingsDirPath());
+    QDir dir{directory};
     QStringList out;
     dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
     dir.setNameFilters(QStringList("*." + extension));
@@ -272,7 +285,11 @@ QStringList Profile::getFilesByExt(QString extension)
 void Profile::scanProfiles()
 {
     profiles.clear();
-    QStringList toxfiles = getFilesByExt("tox"), inifiles = getFilesByExt("ini");
+    const QString toxDir{Settings::getInstance().getPaths().getToxSaveDir()};
+    const QString profileDir{Settings::getInstance().getPaths().getProfilesDir()};
+    QStringList toxfiles = getFilesByExt(toxDir, "tox");
+    QStringList inifiles = getFilesByExt(profileDir, "ini");
+
     for (QString toxfile : toxfiles) {
         if (!inifiles.contains(toxfile)) {
             Settings::getInstance().createPersonal(toxfile);
@@ -348,7 +365,7 @@ bool Profile::saveToxSave(QByteArray data)
     ProfileLocker::assertLock();
     assert(ProfileLocker::getCurLockName() == name);
 
-    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+    QString path = getToxSavePath(name);
     qDebug() << "Saving tox save to " << path;
     QSaveFile saveFile(path);
     if (!saveFile.open(QIODevice::WriteOnly)) {
@@ -389,8 +406,9 @@ bool Profile::saveToxSave(QByteArray data)
 QString Profile::avatarPath(const ToxPk& owner, bool forceUnencrypted)
 {
     const QString ownerStr = owner.toString();
+    const QString avatarDir{Settings::getInstance().getPaths().getAvatarsDir()};
     if (!encrypted || forceUnencrypted) {
-        return Settings::getInstance().getSettingsDirPath() + "avatars/" + ownerStr + ".png";
+        return avatarDir + ownerStr + ".png";
     }
 
     QByteArray idData = ownerStr.toUtf8();
@@ -404,7 +422,7 @@ QString Profile::avatarPath(const ToxPk& owner, bool forceUnencrypted)
     QByteArray hash(hashSize, 0);
     crypto_generichash((uint8_t*)hash.data(), hashSize, (uint8_t*)idData.data(), idData.size(),
                        (uint8_t*)pubkeyData.data(), pubkeyData.size());
-    return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
+    return avatarDir + hash.toHex().toUpper() + ".png";
 }
 
 /**
@@ -581,7 +599,7 @@ void Profile::saveAvatar(const ToxPk& owner, const QByteArray& avatar)
     const QByteArray& pic = needEncrypt ? passkey->encrypt(avatar) : avatar;
 
     QString path = avatarPath(owner);
-    QDir(Settings::getInstance().getSettingsDirPath()).mkdir("avatars");
+    QDir{}.mkpath(Settings::getInstance().getPaths().getAvatarsDir());
     if (pic.isEmpty()) {
         QFile::remove(path);
     } else {
@@ -659,8 +677,8 @@ void Profile::removeAvatar(const ToxPk& owner)
 
 bool Profile::exists(QString name)
 {
-    QString path = Settings::getInstance().getSettingsDirPath() + name;
-    return QFile::exists(path + ".tox");
+    const QString path{getToxSavePath(name)};
+    return QFile::exists(path);
 }
 
 /**
@@ -681,7 +699,7 @@ bool Profile::isEncrypted() const
 bool Profile::isEncrypted(QString name)
 {
     uint8_t data[TOX_PASS_ENCRYPTION_EXTRA_LENGTH] = {0};
-    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+    QString path = getToxSavePath(name);
     QFile saveFile(path);
     if (!saveFile.open(QIODevice::ReadOnly)) {
         qWarning() << "Couldn't open tox save " << path;
@@ -715,11 +733,11 @@ QStringList Profile::remove()
             i--;
         }
     }
-    QString path = Settings::getInstance().getSettingsDirPath() + name;
+
     ProfileLocker::unlock();
 
-    QFile profileMain{path + ".tox"};
-    QFile profileConfig{path + ".ini"};
+    QFile profileMain{getToxSavePath(name)};
+    QFile profileConfig{getProfilePath(name) + ".ini"};
 
     QStringList ret;
 
@@ -751,15 +769,12 @@ QStringList Profile::remove()
  */
 bool Profile::rename(QString newName)
 {
-    QString path = Settings::getInstance().getSettingsDirPath() + name,
-            newPath = Settings::getInstance().getSettingsDirPath() + newName;
-
     if (!ProfileLocker::lock(newName)) {
         return false;
     }
 
-    QFile::rename(path + ".tox", newPath + ".tox");
-    QFile::rename(path + ".ini", newPath + ".ini");
+    QFile::rename(getToxSavePath(name), getToxSavePath(newName));
+    QFile::rename(getProfilePath(name) + ".ini", getProfilePath(newName) + ".ini");
     if (database) {
         database->rename(newName);
     }
@@ -868,5 +883,5 @@ QString Profile::setPassword(const QString& newPassword)
  */
 QString Profile::getDbPath(const QString& profileName)
 {
-    return Settings::getInstance().getSettingsDirPath() + profileName + ".db";
+    return getProfilePath(profileName) + ".db";
 }

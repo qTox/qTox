@@ -22,6 +22,7 @@
 #include "src/core/core.h"
 #include "src/core/corefile.h"
 #include "src/nexus.h"
+#include "src/persistence/paths.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settingsserializer.h"
@@ -57,15 +58,25 @@
  * @brief Toxme info like name@server
  */
 
-const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
 QMutex Settings::bigLock{QMutex::Recursive};
 QThread* Settings::settingsThread{nullptr};
 
-Settings::Settings()
-    : loaded(false)
+/**
+ * @brief Factory method for the Settings class
+ * @param paths Paths object, providing all important paths
+ * @return Settings object on success, nullptr else
+ */
+Settings* Settings::makeSettings(const Paths& paths) {
+    Settings* s = new Settings{paths};
+    settings = s;
+    return s;
+}
+
+Settings::Settings(const Paths& paths)
+    : paths{paths}
+    , loaded(false)
     , useCustomDhtList{false}
-    , makeToxPortable{false}
     , currentProfileId(0)
 {
     settingsThread = new QThread();
@@ -81,6 +92,7 @@ Settings::~Settings()
     settingsThread->exit(0);
     settingsThread->wait();
     delete settingsThread;
+    settings = nullptr;
 }
 
 /**
@@ -88,16 +100,7 @@ Settings::~Settings()
  */
 Settings& Settings::getInstance()
 {
-    if (!settings)
-        settings = new Settings();
-
     return *settings;
-}
-
-void Settings::destroyInstance()
-{
-    delete settings;
-    settings = nullptr;
 }
 
 void Settings::loadGlobal()
@@ -109,25 +112,12 @@ void Settings::loadGlobal()
 
     createSettingsDir();
 
-    QString localSettingsPath = qApp->applicationDirPath() + QDir::separator() + globalSettingsFile;
-
-    if (QFile(localSettingsPath).exists()) {
-        QSettings ps(localSettingsPath, QSettings::IniFormat);
-        ps.setIniCodec("UTF-8");
-        ps.beginGroup("Advanced");
-        makeToxPortable = ps.value("makeToxPortable", false).toBool();
-        ps.endGroup();
-    } else {
-        makeToxPortable = false;
-    }
-
-    QDir dir(getSettingsDirPath());
-    QString filePath = dir.filePath(globalSettingsFile);
+    QString filePath = paths.getGlobalSettingsPath();
 
     // If no settings file exist -- use the default one
     if (!QFile(filePath).exists()) {
         qDebug() << "No settings file found, using defaults";
-        filePath = ":/conf/" + globalSettingsFile;
+        filePath = ":/conf/qtox.ini";
     }
 
     qDebug() << "Loading settings from " + filePath;
@@ -153,8 +143,12 @@ void Settings::loadGlobal()
         }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", true).toBool();
-        notifySound = s.value("notifySound", true).toBool(); // note: notifySound and busySound UI elements are now under UI settings
-        busySound = s.value("busySound", false).toBool();    // page, but kept under General in settings file to be backwards compatible
+        notifySound =
+            s.value("notifySound", true)
+                .toBool(); // note: notifySound and busySound UI elements are now under UI settings
+        busySound = s.value("busySound", false).toBool(); // page, but kept under General in
+                                                          // settings file to be backwards
+                                                          // compatible
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
@@ -169,7 +163,6 @@ void Settings::loadGlobal()
 
     s.beginGroup("Advanced");
     {
-        makeToxPortable = s.value("makeToxPortable", false).toBool();
         enableIPv6 = s.value("enableIPv6", true).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
         enableLanDiscovery = s.value("enableLanDiscovery", true).toBool();
@@ -277,13 +270,7 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
 {
     QMutexLocker locker{&bigLock};
 
-    QDir dir(getSettingsDirPath());
-    QString filePath = dir.filePath(globalSettingsFile);
-
-    // load from a profile specific friend data list if possible
-    QString tmp = dir.filePath(profileName + ".ini");
-    if (QFile(tmp).exists()) // otherwise, filePath remains the global file
-        filePath = tmp;
+    const QString filePath{paths.getProfilesDir()};
 
     qDebug() << "Loading personal settings from" << filePath;
 
@@ -410,7 +397,7 @@ void Settings::saveGlobal()
     if (!loaded)
         return;
 
-    QString path = getSettingsDirPath() + globalSettingsFile;
+    QString path = paths.getGlobalSettingsPath();
     qDebug() << "Saving global settings at " + path;
 
     QSettings s(path, QSettings::IniFormat);
@@ -445,7 +432,6 @@ void Settings::saveGlobal()
 
     s.beginGroup("Advanced");
     {
-        s.setValue("makeToxPortable", makeToxPortable);
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("forceTCP", forceTCP);
         s.setValue("enableLanDiscovery", enableLanDiscovery);
@@ -662,6 +648,11 @@ uint32_t Settings::makeProfileId(const QString& profile)
     return dwords[0] ^ dwords[1] ^ dwords[2] ^ dwords[3];
 }
 
+const Paths &Settings::getPaths() const
+{
+    return paths;
+}
+
 /**
  * @brief Get path to directory, where the settings files are stored.
  * @return Path to settings directory, ends with a directory separator.
@@ -669,84 +660,8 @@ uint32_t Settings::makeProfileId(const QString& profile)
 QString Settings::getSettingsDirPath() const
 {
     QMutexLocker locker{&bigLock};
-    if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
-
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-#ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
-#else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#endif
-}
-
-/**
- * @brief Get path to directory, where the application data are stored.
- * @return Path to application data, ends with a directory separator.
- */
-QString Settings::getAppDataDirPath() const
-{
-    QMutexLocker locker{&bigLock};
-    if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
-
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-#ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
-#else
-    /*
-     * TODO: Change QStandardPaths::DataLocation to AppDataLocation when upgrate Qt to 5.4+
-     * For now we need support Qt 5.3, so we use deprecated DataLocation
-     * BTW, it's not a big deal since for linux AppDataLocation and DataLocation are equal
-     */
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation))
-           + QDir::separator();
-#endif
-}
-
-/**
- * @brief Get path to directory, where the application cache are stored.
- * @return Path to application cache, ends with a directory separator.
- */
-QString Settings::getAppCacheDirPath() const
-{
-    QMutexLocker locker{&bigLock};
-    if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
-
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-#ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
-#else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation))
-           + QDir::separator();
-#endif
+    QString settingsFile {paths.getGlobalSettingsPath()};
+    return QFileInfo{settingsFile}.dir().absolutePath() + QDir::separator();
 }
 
 bool Settings::getEnableTestSound() const
@@ -778,25 +693,6 @@ void Settings::setEnableIPv6(bool enabled)
     if (enabled != enableIPv6) {
         enableIPv6 = enabled;
         emit enableIPv6Changed(enableIPv6);
-    }
-}
-
-bool Settings::getMakeToxPortable() const
-{
-    QMutexLocker locker{&bigLock};
-    return makeToxPortable;
-}
-
-void Settings::setMakeToxPortable(bool newValue)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (newValue != makeToxPortable) {
-        QFile(getSettingsDirPath() + globalSettingsFile).remove();
-        makeToxPortable = newValue;
-        saveGlobal();
-
-        emit makeToxPortableChanged(makeToxPortable);
     }
 }
 

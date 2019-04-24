@@ -37,6 +37,7 @@
 #include <QObject>
 #include <QPixmap>
 
+class Paths;
 class Profile;
 
 namespace Db {
@@ -134,11 +135,9 @@ public:
     };
 
 public:
+    static Settings* makeSettings(const Paths& paths);
+    ~Settings();
     static Settings& getInstance();
-    static void destroyInstance();
-    QString getSettingsDirPath() const;
-    QString getAppDataDirPath() const;
-    QString getAppCacheDirPath() const;
 
     void createSettingsDir();
     void createPersonal(QString basename);
@@ -172,7 +171,6 @@ signals:
     void notifyChanged(bool enabled);
     void desktopNotifyChanged(bool enabled);
     void showWindowChanged(bool enabled);
-    void makeToxPortableChanged(bool enabled);
     void busySoundChanged(bool enabled);
     void notifySoundChanged(bool enabled);
     void groupAlwaysNotifyChanged(bool enabled);
@@ -226,9 +224,6 @@ signals:
     void blackListChanged(QStringList& blist);
 
 public:
-    bool getMakeToxPortable() const;
-    void setMakeToxPortable(bool newValue);
-
     bool getAutorun() const;
     void setAutorun(bool newValue);
 
@@ -567,22 +562,25 @@ public:
     }
 
     static uint32_t makeProfileId(const QString& profile);
+    const Paths& getPaths() const;
 
 private:
     struct friendProp;
 
-    Settings();
-    ~Settings();
+    Settings(const Paths &paths);
     Settings(Settings& settings) = delete;
     Settings& operator=(const Settings&) = delete;
     void savePersonal(QString profileName, const ToxEncrypt* passkey);
     friendProp& getOrInsertFriendPropRef(const ToxPk& id);
     ICoreSettings::ProxyType fixInvalidProxyType(ICoreSettings::ProxyType proxyType);
 
+    QString getSettingsDirPath() const;
+
 public slots:
     void savePersonal(Profile* profile);
 
 private:
+    const Paths& paths;
     bool loaded;
 
     bool useCustomDhtList;
@@ -598,7 +596,6 @@ private:
     bool showIdenticons;
     bool enableIPv6;
     QString translation;
-    bool makeToxPortable;
     bool autostartInTray;
     bool closeToTray;
     bool minimizeToTray;
@@ -693,7 +690,8 @@ private:
         friendProp() = delete;
         friendProp(QString addr)
             : addr(addr)
-        {}
+        {
+        }
         QString alias = "";
         QString addr = "";
         QString autoAcceptDir = "";

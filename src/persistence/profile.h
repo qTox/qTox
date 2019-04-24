@@ -99,10 +99,12 @@ private slots:
 
 private:
     Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave, std::unique_ptr<ToxEncrypt> passKey);
-    static QStringList getFilesByExt(QString extension);
+    static QStringList getFilesByExt(QString directory, QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
     void initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewProfile);
+    static QString getProfilePath(const QString& name);
+    static QString getToxSavePath(const QString& name);
 
 private:
     std::unique_ptr<Core> core = nullptr;
