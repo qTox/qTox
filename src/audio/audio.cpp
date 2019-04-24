@@ -25,6 +25,8 @@
 #include "src/persistence/settings.h"
 
 #include <QDebug>
+#include <QFile>
+#include <QDir>
 
 #include <cassert>
 
@@ -196,4 +198,31 @@ Audio& Audio::getInstance()
         static OpenAL instance;
         return instance;
     }
+}
+
+QString Audio::getSoundPath(QString fn)
+{
+    QString fullpath = Settings::getInstance().getSettingsDirPath() + fn;
+    if (QFile::exists(fullpath))
+        return fullpath;
+    else
+        return QString(":") + QDir::separator() + fn;
+}
+
+QString Audio::getSound(Sound s)
+{
+    switch (s) {
+    case Sound::Test:
+        return getSoundPath("audio/notification.s16le.pcm");
+    case Sound::NewMessage:
+        return getSoundPath("audio/notification.s16le.pcm");
+    case Sound::IncomingCall:
+        return getSoundPath("audio/ToxIncomingCall.s16le.pcm");
+    case Sound::OutgoingCall:
+        return getSoundPath("audio/ToxOutgoingCall.s16le.pcm");
+    case Sound::CallEnd:
+        return getSoundPath("audio/ToxEndCall.s16le.pcm");
+    }
+    assert(false);
+    return QString();
 }

@@ -39,23 +39,7 @@ public:
         CallEnd
     };
 
-    inline static QString getSound(Sound s)
-    {
-        switch (s) {
-        case Sound::Test:
-            return QStringLiteral(":/audio/notification.s16le.pcm");
-        case Sound::NewMessage:
-            return QStringLiteral(":/audio/notification.s16le.pcm");
-        case Sound::IncomingCall:
-            return QStringLiteral(":/audio/ToxIncomingCall.s16le.pcm");
-        case Sound::OutgoingCall:
-            return QStringLiteral(":/audio/ToxOutgoingCall.s16le.pcm");
-        case Sound::CallEnd:
-            return QStringLiteral(":/audio/ToxEndCall.s16le.pcm");
-        }
-        assert(false);
-        return QString();
-    }
+    static QString getSound(Sound s);
     static Audio& getInstance();
 
     virtual qreal outputVolume() const = 0;
@@ -110,6 +94,9 @@ protected:
     static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL =
         AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
     uint32_t AUDIO_FRAME_SAMPLE_COUNT_TOTAL = 0;
+
+private:
+    static QString getSoundPath(QString fn);
 
 signals:
     void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
