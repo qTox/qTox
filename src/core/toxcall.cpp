@@ -148,11 +148,11 @@ ToxFriendCall::~ToxFriendCall()
 
 void ToxFriendCall::onAudioSinkInvalidated()
 {
-    const auto newSink = Audio::getInstance().makeSink();
+    auto newSink = Audio::getInstance().makeSink();
 
-    audioSinkInvalid = QObject::connect(newSink, &IAudioSink::invalidated,
+    audioSinkInvalid = QObject::connect(newSink.get(), &IAudioSink::invalidated,
                                         [this]() { this->onAudioSinkInvalidated(); });
-    sink.reset(newSink);
+    sink = std::move(newSink);
 }
 
 void ToxFriendCall::startTimeout(uint32_t callId)
@@ -239,11 +239,11 @@ void ToxGroupCall::removePeer(ToxPk peerId)
 void ToxGroupCall::addPeer(ToxPk peerId)
 {
     auto& audio = Audio::getInstance();
-    IAudioSink* newSink = audio.makeSink();
-    peers.emplace(peerId, std::unique_ptr<IAudioSink>(newSink));
+    std::unique_ptr<IAudioSink> newSink = audio.makeSink();
+    peers.emplace(peerId, std::move(newSink));
 
     QMetaObject::Connection con =
-        QObject::connect(newSink, &IAudioSink::invalidated,
+        QObject::connect(newSink.get(), &IAudioSink::invalidated,
                          [this, peerId]() { this->onAudioSinkInvalidated(peerId); });
 
     sinkInvalid.insert({peerId, con});
