@@ -77,7 +77,8 @@ public:
     TOXAV_FRIEND_CALL_STATE getState() const;
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
-    const std::unique_ptr<IAudioSink>& getAudioSink() const;
+    void playAudioBuffer(const int16_t* data, int samples, unsigned channels,
+                                     int sampleRate) const;
 
 protected:
     std::unique_ptr<QTimer> timeoutTimer;
@@ -103,15 +104,15 @@ public:
     ~ToxGroupCall();
 
     ToxGroupCall& operator=(ToxGroupCall&& other) = delete;
-
     void removePeer(ToxPk peerId);
+
+    void playAudioBuffer(const ToxPk& peer, const int16_t* data, int samples, unsigned channels, int sampleRate);
+
+private:
     void addPeer(ToxPk peerId);
     bool havePeer(ToxPk peerId);
     void clearPeers();
 
-    const std::unique_ptr<IAudioSink>& getAudioSink(ToxPk peer);
-
-private:
     std::map<ToxPk, std::unique_ptr<IAudioSink>> peers;
     std::map<ToxPk, QMetaObject::Connection> sinkInvalid;
     int groupId;

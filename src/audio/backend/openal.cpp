@@ -247,7 +247,7 @@ bool OpenAL::reinitOutput(const QString& outDevDesc)
  * @brief Allocates ressources for a new audio output
  * @return AudioSink on success, nullptr on failure
  */
-IAudioSink* OpenAL::makeSink()
+std::unique_ptr<IAudioSink> OpenAL::makeSink()
 {
     QMutexLocker locker(&audioLock);
 
@@ -267,7 +267,7 @@ IAudioSink* OpenAL::makeSink()
     sinks.insert(sink);
     qDebug() << "Audio source" << sid << "created. Sources active:" << sinks.size();
 
-    return sink;
+    return std::unique_ptr<IAudioSink>{sink};
 }
 
 /**

@@ -22,6 +22,7 @@
 #define AUDIO_H
 
 #include <QObject>
+#include <memory>
 
 class IAudioSink;
 class Audio : public QObject
@@ -64,7 +65,7 @@ public:
 
     virtual void stopActive() = 0;
 
-    virtual IAudioSink* makeSink() = 0;
+    virtual std::unique_ptr<IAudioSink> makeSink() = 0;
 
 protected:
     // Public default audio settings
