@@ -151,7 +151,7 @@ void AVForm::showEvent(QShowEvent* event)
     }
 
     if (audioSink == nullptr) {
-        audioSink.reset(audio->makeSink());
+        audioSink = audio->makeSink();
     }
 
     GenericForm::showEvent(event);
@@ -574,7 +574,7 @@ void AVForm::on_outDevCombobox_currentIndexChanged(int deviceIndex)
     if (oldName != deviceName) {
         audioSettings->setOutDev(deviceName);
         audio->reinitOutput(deviceName);
-        audioSink.reset(Audio::getInstance().makeSink());
+        audioSink = Audio::getInstance().makeSink();
     }
 
     playbackSlider->setEnabled(outputEnabled);

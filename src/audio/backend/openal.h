@@ -86,7 +86,7 @@ public:
     QStringList outDeviceNames();
     QStringList inDeviceNames();
 
-    IAudioSink* makeSink();
+    std::unique_ptr<IAudioSink> makeSink();
     void destroySink(AlSink& sink);
 
     void subscribeInput();
