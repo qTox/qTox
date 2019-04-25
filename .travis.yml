@@ -12,11 +12,11 @@ branches:
 stages:
   - Linux
   - name: "Windows Stage 1: Dependencies (OpenSSL, Qt)"
-    if: type = push AND branch = master
+    if: type = push
   - name: "Windows Stage 2: Dependencies (other)"
-    if: type = push AND branch = master
+    if: type = push
   - name: "Windows Stage 3: qTox"
-    if: type = push AND branch = master
+    if: type = push
 
 jobs:
   include:
