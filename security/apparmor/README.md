@@ -31,10 +31,11 @@ release:
 
 - 2.13.2
   - Debian 10 (buster) (or newer)
+  - Ubuntu 19.04 (Disco Dingo) (or newer)
   - openSUSE Tumbleweed
 - 2.12.1
   - Debian 9 (stretch) or older
-  - Ubuntu 19.04 or older
+  - Ubuntu 18.10 or older
 
 To enable AppArmor profile on your system, run prepared install script:
 
