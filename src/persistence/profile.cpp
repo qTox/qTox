@@ -563,11 +563,12 @@ void Profile::onRequestSent(const ToxPk& friendPk, const QString& message)
         return;
     }
 
-    QString pkStr = friendPk.toString();
-    QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(message);
-    QString selfStr = core->getSelfPublicKey().toString();
-    QDateTime datetime = QDateTime::currentDateTime();
-    history->addNewMessage(pkStr, inviteStr, selfStr, datetime, true, QString());
+    const QString pkStr = friendPk.toString();
+    const QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(message);
+    const QString selfStr = core->getSelfPublicKey().toString();
+    const QDateTime datetime = QDateTime::currentDateTime();
+    const QString name = core->getUsername();
+    history->addNewMessage(pkStr, inviteStr, selfStr, datetime, true, name);
 }
 
 /**
