@@ -199,9 +199,6 @@ private:
 
     static RawDatabase::Query generateFileFinished(RowId fileId, bool success,
                                                    const QString& filePath, const QByteArray& fileHash);
-    void dbSchemaUpgrade();
-    void createCurrentSchema();
-
     std::shared_ptr<RawDatabase> db;
 
 
