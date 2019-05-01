@@ -18,8 +18,6 @@
 */
 
 #include "openal2.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 
 #include <QDebug>

@@ -31,12 +31,13 @@
 #include <memory>
 
 class Audio;
+class IAudioSettings;
+class IAudioSink;
+class IAudioSource;
 class CameraSource;
 class CoreAV;
-class IAudioSettings;
 class IVideoSettings;
 class VideoSurface;
-class IAudioSink;
 class AVForm : public GenericForm, private Ui::AVForm
 {
     Q_OBJECT
@@ -103,6 +104,7 @@ private:
 
     bool subscribedToAudioIn;
     std::unique_ptr<IAudioSink> audioSink = nullptr;
+    std::unique_ptr<IAudioSource> audioSrc = nullptr;
     VideoSurface* camVideoSurface;
     CameraSource& camera;
     QVector<QPair<QString, QString>> videoDeviceList;

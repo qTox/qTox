@@ -25,6 +25,7 @@
 #include <memory>
 
 class IAudioSink;
+class IAudioSource;
 class Audio : public QObject
 {
     Q_OBJECT
@@ -60,12 +61,8 @@ public:
     virtual QStringList outDeviceNames() = 0;
     virtual QStringList inDeviceNames() = 0;
 
-    virtual void subscribeInput() = 0;
-    virtual void unsubscribeInput() = 0;
-
-    virtual void stopActive() = 0;
-
     virtual std::unique_ptr<IAudioSink> makeSink() = 0;
+    virtual std::unique_ptr<IAudioSource> makeSource() = 0;
 
 protected:
     // Public default audio settings
@@ -75,12 +72,6 @@ protected:
     static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL =
         AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
     uint32_t AUDIO_FRAME_SAMPLE_COUNT_TOTAL = 0;
-
-signals:
-    void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
-                        uint32_t sampling_rate);
-    void volumeAvailable(float value);
-    void startActive(qreal msec);
 };
 
 #endif // AUDIO_H

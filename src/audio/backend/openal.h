@@ -23,6 +23,7 @@
 
 #include "src/audio/audio.h"
 #include "src/audio/backend/alsink.h"
+#include "src/audio/backend/alsource.h"
 
 #include <memory>
 #include <unordered_set>
@@ -89,8 +90,8 @@ public:
     std::unique_ptr<IAudioSink> makeSink();
     void destroySink(AlSink& sink);
 
-    void subscribeInput();
-    void unsubscribeInput();
+    std::unique_ptr<IAudioSource> makeSource();
+    void destroySource(AlSource& source);
 
     void startLoop(uint sourceId);
     void stopLoop(uint sourceId);
@@ -99,6 +100,8 @@ public:
 
     void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
                          int sampleRate);
+signals:
+    void startActive(qreal msec);
 
 protected:
     static void checkAlError() noexcept;
@@ -135,7 +138,6 @@ protected:
     QString outDev{};
 
     ALCdevice* alInDev = nullptr;
-    quint32 inSubscriptions = 0;
     QTimer captureTimer;
     QTimer cleanupTimer;
 
@@ -147,9 +149,7 @@ protected:
     // Qt containers need copy operators, so use stdlib containers
     std::unordered_set<AlSink*> sinks;
     std::unordered_set<AlSink*> soundSinks;
-
-    // number of output sources
-    int outCount = 0;
+    std::unordered_set<AlSource*> sources;
 
     int channels = 0;
     qreal gain = 0;
