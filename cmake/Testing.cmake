@@ -26,6 +26,7 @@ auto_test(chatlog textformatter)
 auto_test(net toxmedata)
 auto_test(net bsu)
 auto_test(persistence paths)
+auto_test(persistence dbschema)
 
 if (UNIX)
   auto_test(platform posixsignalnotifier)
