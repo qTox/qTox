@@ -2,6 +2,7 @@
 #define TOXCALL_H
 
 #include "src/audio/iaudiosink.h"
+#include "src/audio/iaudiosource.h"
 #include <src/core/toxpk.h>
 #include <tox/toxav.h>
 
@@ -60,6 +61,8 @@ protected:
     QMetaObject::Connection videoInConn;
     bool videoEnabled{false};
     bool nullVideoBitrate{false};
+    std::unique_ptr<IAudioSource> audioSource = nullptr;
+    QMetaObject::Connection audioSrcInvalid;
 };
 
 class ToxFriendCall : public ToxCall
@@ -77,8 +80,7 @@ public:
     TOXAV_FRIEND_CALL_STATE getState() const;
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
-    void playAudioBuffer(const int16_t* data, int samples, unsigned channels,
-                                     int sampleRate) const;
+    void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const;
 
 protected:
     std::unique_ptr<QTimer> timeoutTimer;
@@ -106,7 +108,8 @@ public:
     ToxGroupCall& operator=(ToxGroupCall&& other) = delete;
     void removePeer(ToxPk peerId);
 
-    void playAudioBuffer(const ToxPk& peer, const int16_t* data, int samples, unsigned channels, int sampleRate);
+    void playAudioBuffer(const ToxPk& peer, const int16_t* data, int samples, unsigned channels,
+                         int sampleRate);
 
 private:
     void addPeer(ToxPk peerId);
