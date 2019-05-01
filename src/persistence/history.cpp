@@ -26,7 +26,7 @@
 #include "db/rawdatabase.h"
 
 namespace {
-static constexpr int SCHEMA_VERSION = 1;
+static constexpr int SCHEMA_VERSION = 2;
 
 void generateCurrentSchema(QVector<RawDatabase::Query>& queries)
 {
@@ -36,7 +36,8 @@ void generateCurrentSchema(QVector<RawDatabase::Query>& queries)
         "CREATE TABLE aliases (id INTEGER PRIMARY KEY, "
         "owner INTEGER, "
         "display_name BLOB NOT NULL, "
-        "UNIQUE(owner, display_name));"
+        "UNIQUE(owner, display_name), "
+        "FOREIGN KEY (owner) REFERENCES peers(id));"
         "CREATE TABLE history "
         "(id INTEGER PRIMARY KEY, "
         "timestamp INTEGER NOT NULL, "
@@ -44,12 +45,15 @@ void generateCurrentSchema(QVector<RawDatabase::Query>& queries)
         "sender_alias INTEGER NOT NULL, "
         // even though technically a message can be null for file transfer, we've opted
         // to just insert an empty string when there's no content, this moderately simplifies
-        // implementating to leakon as currently our database doesn't have support for optional
-        // fields. We would either have to insert "?" or "null" based on if message exists and then
+        // implementation as currently our database doesn't have support for optional fields.
+        // We would either have to insert "?" or "null" based on if message exists and then
         // ensure that our blob vector always has the right number of fields. Better to just
         // leave this as NOT NULL for now.
         "message BLOB NOT NULL, "
-        "file_id INTEGER);"
+        "file_id INTEGER, "
+        "FOREIGN KEY (file_id) REFERENCES file_transfers(id), "
+        "FOREIGN KEY (chat_id) REFERENCES peers(id), "
+        "FOREIGN KEY (sender_alias) REFERENCES aliases(id));"
         "CREATE TABLE file_transfers "
         "(id INTEGER PRIMARY KEY, "
         "chat_id INTEGER NOT NULL, "
@@ -60,7 +64,8 @@ void generateCurrentSchema(QVector<RawDatabase::Query>& queries)
         "file_size INTEGER NOT NULL, "
         "direction INTEGER NOT NULL, "
         "file_state INTEGER NOT NULL);"
-        "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY);"));
+        "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY, "
+        "FOREIGN KEY (id) REFERENCES history(id));"));
 }
 
 bool isNewDb(std::shared_ptr<RawDatabase> db)
@@ -92,6 +97,65 @@ void dbSchema0to1(std::shared_ptr<RawDatabase> db, QVector<RawDatabase::Query>& 
             "file_state INTEGER NOT NULL);"));
     queries +=
         RawDatabase::Query(QStringLiteral("ALTER TABLE history ADD file_id INTEGER;"));
+}
+
+void addForeignKeyToAlias(QVector<RawDatabase::Query>& queries)
+{
+    queries += RawDatabase::Query(QStringLiteral(
+        "CREATE TABLE aliases_new (id INTEGER PRIMARY KEY, owner INTEGER, "
+        "display_name BLOB NOT NULL, UNIQUE(owner, display_name), "
+        "FOREIGN KEY (owner) REFERENCES peers(id));"));
+    queries += RawDatabase::Query(QStringLiteral(
+        "INSERT INTO aliases_new (id, owner, display_name) "
+        "SELECT id, owner, display_name "
+        "FROM aliases;"));
+    queries += RawDatabase::Query(QStringLiteral("DROP TABLE aliases;"));
+    queries += RawDatabase::Query(QStringLiteral("ALTER TABLE aliases_new RENAME TO aliases;"));
+}
+
+void addForeignKeyToHistory(QVector<RawDatabase::Query>& queries)
+{
+    queries += RawDatabase::Query(QStringLiteral(
+        "CREATE TABLE history_new "
+        "(id INTEGER PRIMARY KEY, "
+        "timestamp INTEGER NOT NULL, "
+        "chat_id INTEGER NOT NULL, "
+        "sender_alias INTEGER NOT NULL, "
+        "message BLOB NOT NULL, "
+        "file_id INTEGER, "
+        "FOREIGN KEY (file_id) REFERENCES file_transfers(id), "
+        "FOREIGN KEY (chat_id) REFERENCES peers(id), "
+        "FOREIGN KEY (sender_alias) REFERENCES aliases(id));"));
+    queries += RawDatabase::Query(QStringLiteral(
+        "INSERT INTO history_new (id, timestamp, chat_id, sender_alias, message, file_id) "
+        "SELECT id, timestamp, chat_id, sender_alias, message, file_id "
+        "FROM history;"));
+    queries += RawDatabase::Query(QStringLiteral("DROP TABLE history;"));
+    queries += RawDatabase::Query(QStringLiteral("ALTER TABLE history_new RENAME TO history;"));
+}
+
+void addForeignKeyToFauxOfflinePending(QVector<RawDatabase::Query>& queries)
+{
+    queries += RawDatabase::Query(QStringLiteral(
+        "CREATE TABLE new_faux_offline_pending (id INTEGER PRIMARY KEY, "
+        "FOREIGN KEY (id) REFERENCES history(id));"));
+    queries += RawDatabase::Query(QStringLiteral(
+        "INSERT INTO new_faux_offline_pending (id) "
+        "SELECT id "
+        "FROM faux_offline_pending;"));
+    queries += RawDatabase::Query(QStringLiteral("DROP TABLE faux_offline_pending;"));
+    queries += RawDatabase::Query(QStringLiteral("ALTER TABLE new_faux_offline_pending RENAME TO faux_offline_pending;"));
+}
+
+void dbSchema1to2(QVector<RawDatabase::Query>& queries)
+{
+    // add foreign key contrains to database tables. sqlite doesn't support advanced alter table commands, so instead we
+    // need to copy data to new tables with the foreign key contraints: http://www.sqlitetutorial.net/sqlite-alter-table/
+    queries += RawDatabase::Query(QStringLiteral("PRAGMA foreign_keys=off;"));
+    addForeignKeyToAlias(queries);
+    addForeignKeyToHistory(queries);
+    addForeignKeyToFauxOfflinePending(queries);
+    queries += RawDatabase::Query(QStringLiteral("PRAGMA foreign_keys=on;"));
 }
 
 /**
@@ -139,9 +203,9 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase> db)
             dbSchema0to1(db, queries);
         }
         // fallthrough
-    // case 1:
-    //    dbSchema1to2(queries);
-    //    //fallthrough
+    case 1:
+        dbSchema1to2(queries);
+        //fallthrough
     // etc.
     default:
         queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
@@ -181,6 +245,10 @@ History::History(std::shared_ptr<RawDatabase> db)
         qWarning() << "Database not open, init failed";
         return;
     }
+    // foreign key support is not enabled by default, so needs to be enabled on every connection
+    // support was added in sqlite 3.6.19, which is qTox's minimum supported version
+    db->execLater(
+        "PRAGMA foreign_keys = ON;");
 
     dbSchemaUpgrade(db);
 
