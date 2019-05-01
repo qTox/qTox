@@ -18,8 +18,6 @@
 */
 
 #include "openal.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 
 #include <QDebug>
@@ -74,8 +72,8 @@ OpenAL::OpenAL()
 
     voiceTimer.setSingleShot(true);
     voiceTimer.moveToThread(audioThread);
-    connect(this, &Audio::startActive, &voiceTimer, static_cast<void (QTimer::*)(int)>(&QTimer::start));
-    connect(&voiceTimer, &QTimer::timeout, this, &Audio::stopActive);
+    connect(this, &OpenAL::startActive, &voiceTimer, static_cast<void (QTimer::*)(int)>(&QTimer::start));
+    connect(&voiceTimer, &QTimer::timeout, this, &OpenAL::stopActive);
 
     connect(&captureTimer, &QTimer::timeout, this, &OpenAL::doAudio);
     captureTimer.setInterval(AUDIO_FRAME_DURATION / 2);
@@ -218,8 +216,19 @@ qreal OpenAL::maxInputThreshold() const
 void OpenAL::reinitInput(const QString& inDevDesc)
 {
     QMutexLocker locker(&audioLock);
+
+    const auto bakSources = sources;
+    sources.clear();
+
     cleanupInput();
     initInput(inDevDesc);
+
+    locker.unlock();
+    // this must happen outside `audioLock`, to avoid a deadlock when
+    // a slot on AlSource::invalidate tries to create a new source immedeately.
+    for (auto& source : bakSources) {
+        source->kill();
+    }
 }
 
 bool OpenAL::reinitOutput(const QString& outDevDesc)
@@ -308,17 +317,25 @@ void OpenAL::destroySink(AlSink& sink)
  *
  * If the input device is not open, it will be opened before capturing.
  */
-void OpenAL::subscribeInput()
+std::unique_ptr<IAudioSource> OpenAL::makeSource()
 {
     QMutexLocker locker(&audioLock);
 
     if (!autoInitInput()) {
         qWarning("Failed to subscribe to audio input device.");
-        return;
+        return {};
     }
 
-    ++inSubscriptions;
-    qDebug() << "Subscribed to audio input device [" << inSubscriptions << "subscriptions ]";
+    auto const source = new AlSource(*this);
+    if (source == nullptr) {
+        return {};
+    }
+
+    sources.insert(source);
+
+    qDebug() << "Subscribed to audio input device [" << sources.size() << "subscriptions ]";
+
+    return std::unique_ptr<IAudioSource>{source};
 }
 
 /**
@@ -326,18 +343,24 @@ void OpenAL::subscribeInput()
  *
  * If the input device has no more subscriptions, it will be closed.
  */
-void OpenAL::unsubscribeInput()
+void OpenAL::destroySource(AlSource &source)
 {
     QMutexLocker locker(&audioLock);
 
-    if (!inSubscriptions)
+    const auto s = sources.find(&source);
+    if(s == sources.end()) {
+        qWarning() << "Destroyed non-existant source";
         return;
+    }
 
-    inSubscriptions--;
-    qDebug() << "Unsubscribed from audio input device [" << inSubscriptions << "subscriptions left ]";
+    sources.erase(s);
 
-    if (!inSubscriptions)
+    qDebug() << "Unsubscribed from audio input device [" << sources.size()
+                 << "subscriptions left ]";
+
+    if (sources.empty()) {
         cleanupInput();
+    }
 }
 
 /**
@@ -646,13 +669,18 @@ void OpenAL::doInput()
         volume = 0;
     }
 
-    emit Audio::volumeAvailable(volume);
+    // NOTE(sudden6): this loop probably doesn't scale too well with many sources
+    for (auto source : sources) {
+        emit source->volumeAvailable(volume);
+    }
     if (!isActive) {
         return;
     }
 
-    emit Audio::frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL, channels,
-                               AUDIO_SAMPLE_RATE);
+    // NOTE(sudden6): this loop probably doesn't scale too well with many sources
+    for (auto source : sources) {
+        emit source->frameAvailable(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL, channels, AUDIO_SAMPLE_RATE);
+    }
 }
 
 void OpenAL::doOutput()
@@ -670,7 +698,7 @@ void OpenAL::doAudio()
     // Output section does nothing
 
     // Input section
-    if (alInDev && inSubscriptions) {
+    if (alInDev && !sources.empty()) {
         doInput();
     }
 }

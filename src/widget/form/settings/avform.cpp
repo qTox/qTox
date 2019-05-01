@@ -29,6 +29,7 @@
 
 #include "src/audio/audio.h"
 #include "src/audio/iaudiosettings.h"
+#include "src/audio/iaudiosource.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/video/cameradevice.h"
@@ -50,7 +51,6 @@ AVForm::AVForm(Audio* audio, CoreAV* coreAV, CameraSource& camera, IAudioSetting
     , coreAV{coreAV}
     , audioSettings{audioSettings}
     , videoSettings{videoSettings}
-    , subscribedToAudioIn(false)
     , camVideoSurface(nullptr)
     , camera(camera)
 {
@@ -98,7 +98,6 @@ AVForm::AVForm(Audio* audio, CoreAV* coreAV, CameraSource& camera, IAudioSetting
     audioThresholdSlider->setTracking(false);
     audioThresholdSlider->installEventFilter(this);
 
-    connect(audio, &Audio::volumeAvailable, this, &AVForm::setVolume);
     volumeDisplay->setMaximum(totalSliderSteps);
 
     fillAudioQualityComboBox();
@@ -120,13 +119,8 @@ AVForm::~AVForm()
 
 void AVForm::hideEvent(QHideEvent* event)
 {
-    if (subscribedToAudioIn) {
-        // TODO: This should not be done in show/hide events
-        audio->unsubscribeInput();
-        subscribedToAudioIn = false;
-    }
-
     audioSink.reset();
+    audioSrc.reset();
 
     if (camVideoSurface) {
         camVideoSurface->setSource(nullptr);
@@ -144,10 +138,9 @@ void AVForm::showEvent(QShowEvent* event)
     createVideoSurface();
     getVideoDevices();
 
-    if (!subscribedToAudioIn) {
-        // TODO: This should not be done in show/hide events
-        audio->subscribeInput();
-        subscribedToAudioIn = true;
+    if(audioSrc == nullptr) {
+        audioSrc = audio->makeSource();
+        connect(audioSrc.get(), &IAudioSource::volumeAvailable, this, &AVForm::setVolume);
     }
 
     if (audioSink == nullptr) {
@@ -540,17 +533,17 @@ void AVForm::on_inDevCombobox_currentIndexChanged(int deviceIndex)
     const bool inputEnabled = deviceIndex > 0;
     audioSettings->setAudioInDevEnabled(inputEnabled);
 
-    QString deviceName;
+    QString deviceName{};
     if (inputEnabled) {
         deviceName = inDevCombobox->itemText(deviceIndex);
     }
 
-    audioSettings->setInDev(deviceName);
-
-    audio->reinitInput(deviceName);
-    subscribedToAudioIn = inputEnabled;
-    if (inputEnabled) {
-        audio->subscribeInput();
+    const QString oldName = audioSettings->getInDev();
+    if(oldName != deviceName) {
+        audioSettings->setInDev(deviceName);
+        audio->reinitInput(deviceName);
+        audioSrc = audio->makeSource();
+        connect(audioSrc.get(), &IAudioSource::volumeAvailable, this, &AVForm::setVolume);
     }
 
     microphoneSlider->setEnabled(inputEnabled);

@@ -2,6 +2,7 @@
 #define TOXCALL_H
 
 #include "src/audio/iaudiosink.h"
+#include "src/audio/iaudiosource.h"
 #include <src/core/toxpk.h>
 #include <tox/toxav.h>
 
@@ -60,6 +61,8 @@ protected:
     QMetaObject::Connection videoInConn;
     bool videoEnabled{false};
     bool nullVideoBitrate{false};
+    std::unique_ptr<IAudioSource> audioSource = nullptr;
+    QMetaObject::Connection audioSrcInvalid;
 };
 
 class ToxFriendCall : public ToxCall

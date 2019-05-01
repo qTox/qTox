@@ -238,10 +238,13 @@ set(${PROJECT_NAME}_SOURCES
   src/audio/audio.h
   src/audio/backend/alsink.cpp
   src/audio/backend/alsink.h
+  src/audio/backend/alsource.cpp
+  src/audio/backend/alsource.h
   src/audio/backend/openal.cpp
   src/audio/backend/openal.h
   src/audio/iaudiosettings.h
   src/audio/iaudiosink.h
+  src/audio/iaudiosource.h
   src/chatlog/chatlinecontent.cpp
   src/chatlog/chatlinecontent.h
   src/chatlog/chatlinecontentproxy.cpp
