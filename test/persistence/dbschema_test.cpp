@@ -50,6 +50,7 @@ private slots:
     void test1to2();
     void test2to3();
     void test3to4();
+    void test4to5();
     void cleanupTestCase();
 private:
     bool initSucess{false};
@@ -64,7 +65,8 @@ const QString testFileList[] = {
     "test0to1.db",
     "test1to2.db",
     "test2to3.db",
-    "test3to4.db"
+    "test3to4.db",
+    "test4to5.db"
 };
 
 // db schemas can be select with "SELECT name, sql FROM sqlite_master;" on the database.
@@ -106,6 +108,17 @@ const std::vector<SqliteMasterEntry> schema4 {
     {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER)"},
     {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"},
     {"broken_messages", "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY)"},
+    {"chat_id_idx", "CREATE INDEX chat_id_idx on history (chat_id)"}
+};
+
+// added foreign keys
+const std::vector<SqliteMasterEntry> schema5 {
+    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name), FOREIGN KEY (owner) REFERENCES peers(id))"},
+    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY, FOREIGN KEY (id) REFERENCES history(id))"},
+    {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
+    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER, FOREIGN KEY (file_id) REFERENCES file_transfers(id), FOREIGN KEY (chat_id) REFERENCES peers(id), FOREIGN KEY (sender_alias) REFERENCES aliases(id))"},
+    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"},
+    {"broken_messages", "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY, FOREIGN KEY (id) REFERENCES history(id))"},
     {"chat_id_idx", "CREATE INDEX chat_id_idx on history (chat_id)"}
 };
 
@@ -163,7 +176,7 @@ void TestDbSchema::testCreation()
     QVector<RawDatabase::Query> queries;
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"testCreation.db", {}, {}}};
     QVERIFY(createCurrentSchema(*db));
-    verifyDb(db, schema4);
+    verifyDb(db, schema5);
 }
 
 void TestDbSchema::testIsNewDb()
@@ -351,6 +364,14 @@ void TestDbSchema::test3to4()
     createSchemaAtVersion(db, schema3);
     QVERIFY(dbSchema3to4(*db));
     verifyDb(db, schema4);
+}
+
+void TestDbSchema::test4to5()
+{
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test4to5.db", {}, {}}};
+    createSchemaAtVersion(db, schema4);
+    QVERIFY(dbSchema4to5(*db));
+    verifyDb(db, schema5);
 }
 
 QTEST_GUILESS_MAIN(TestDbSchema)
