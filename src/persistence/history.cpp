@@ -66,36 +66,6 @@ History::History(std::shared_ptr<RawDatabase> db)
     connect(this, &History::fileInsertionReady, this, &History::onFileInsertionReady);
     connect(this, &History::fileInserted, this, &History::onFileInserted);
 
-    db->execLater(
-        "CREATE TABLE IF NOT EXISTS peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL "
-        "UNIQUE);"
-        "CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY, owner INTEGER,"
-        "display_name BLOB NOT NULL, UNIQUE(owner, display_name));"
-        "CREATE TABLE IF NOT EXISTS history "
-        "(id INTEGER PRIMARY KEY,"
-        "timestamp INTEGER NOT NULL,"
-        "chat_id INTEGER NOT NULL,"
-        "sender_alias INTEGER NOT NULL,"
-        // even though technically a message can be null for file transfer, we've opted
-        // to just insert an empty string when there's no content, this moderately simplifies
-        // implementation as currently our database doesn't have support for optional fields.
-        // We would either have to insert "?" or "null" based on if message exists and then
-        // ensure that our blob vector always has the right number of fields. Better to just
-        // leave this as NOT NULL for now.
-        "message BLOB NOT NULL,"
-        "file_id INTEGER);"
-        "CREATE TABLE IF NOT EXISTS file_transfers "
-        "(id INTEGER PRIMARY KEY,"
-        "chat_id INTEGER NOT NULL,"
-        "file_restart_id BLOB NOT NULL,"
-        "file_name BLOB NOT NULL, "
-        "file_path BLOB NOT NULL,"
-        "file_hash BLOB NOT NULL,"
-        "file_size INTEGER NOT NULL,"
-        "direction INTEGER NOT NULL,"
-        "file_state INTEGER NOT NULL);"
-        "CREATE TABLE IF NOT EXISTS faux_offline_pending (id INTEGER PRIMARY KEY);");
-
     // Cache our current peers
     db->execLater(RawDatabase::Query{"SELECT public_key, id FROM peers;",
                                      [this](const QVector<QVariant>& row) {
@@ -703,9 +673,14 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
 void History::dbSchemaUpgrade()
 {
     int64_t databaseSchemaVersion;
-    db->execNow(RawDatabase::Query("PRAGMA user_version", [&](const QVector<QVariant>& row) {
-        databaseSchemaVersion = row[0].toLongLong();
-    }));
+
+    if (!db->execNow(RawDatabase::Query("PRAGMA user_version", [&](const QVector<QVariant>& row) {
+            databaseSchemaVersion = row[0].toLongLong();
+        }))) {
+        qCritical() << "History failed to read user_version";
+        db.reset();
+        return;
+    }
 
     if (databaseSchemaVersion > SCHEMA_VERSION) {
         qWarning() << "Database version is newer than we currently support. Please upgrade qTox";
@@ -717,21 +692,77 @@ void History::dbSchemaUpgrade()
         return;
     }
 
+    QVector<RawDatabase::Query> queries;
     // Make sure to handle the un-created case as well in the following upgrade code
     switch (databaseSchemaVersion) {
-    case 0:
-        // This will generate a warning on new profiles, but we have no easy way to chain execs. I
-        // don't want to block the rest of the program on db creation so I guess we can just live with the warning for now
-        db->execLater(RawDatabase::Query("ALTER TABLE history ADD file_id INTEGER;"));
+    case 0: {
+        // Note: 0 is a special version that is actually two versions.
+        //   possibility 1) it is a newly created database and it neesds the current schema to be created.
+        //   possibility 2) it is a old existing database, before version 1 and before we saved schema version,
+        //       and need to be updated.
+        bool newDb;
+        if (!db->execNow(RawDatabase::Query("SELECT COUNT(*) FROM sqlite_master;",
+                                            [&](const QVector<QVariant>& row) {
+                                                newDb = row[0].toLongLong() == 0;
+                                            }))) {
+            db.reset();
+            return;
+        }
+        if (newDb) {
+            createCurrentSchema();
+            break; // new db is the only case where we don't incrementally upgrade through each version
+        } else {
+            // it's a db that exists but at the first versioned schema, version 0.
+            queries +=
+                RawDatabase::Query(QStringLiteral("ALTER TABLE history ADD file_id INTEGER;"));
+        }
+    }
         // fallthrough
     // case 1:
     //    do 1 -> 2 upgrade
     //    //fallthrough
     // etc.
     default:
-        db->execLater(
-            RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION)));
-        qDebug() << "Database upgrade finished (databaseSchemaVersion " << databaseSchemaVersion
-                 << " -> " << SCHEMA_VERSION << ")";
+        queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
+        db->execLater(queries);
+        qDebug() << "Database upgrade finished (databaseSchemaVersion" << databaseSchemaVersion
+                 << "->" << SCHEMA_VERSION << ")";
     }
+}
+
+void History::createCurrentSchema()
+{
+    QVector<RawDatabase::Query> queries;
+    queries += RawDatabase::Query(QStringLiteral(
+        "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL "
+        "UNIQUE);"
+        "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER,"
+        "display_name BLOB NOT NULL, UNIQUE(owner, display_name));"
+        "CREATE TABLE history "
+        "(id INTEGER PRIMARY KEY,"
+        "timestamp INTEGER NOT NULL,"
+        "chat_id INTEGER NOT NULL,"
+        "sender_alias INTEGER NOT NULL,"
+        // even though technically a message can be null for file transfer, we've opted
+        // to just insert an empty string when there's no content, this moderately simplifies
+        // implementating to leakon as currently our database doesn't have support for optional
+        // fields. We would either have to insert "?" or "null" based on if message exists and then
+        // ensure that our blob vector always has the right number of fields. Better to just
+        // leave this as NOT NULL for now.
+        "message BLOB NOT NULL,"
+        "file_id INTEGER);"
+        "CREATE TABLE file_transfers "
+        "(id INTEGER PRIMARY KEY,"
+        "chat_id INTEGER NOT NULL,"
+        "file_restart_id BLOB NOT NULL,"
+        "file_name BLOB NOT NULL, "
+        "file_path BLOB NOT NULL,"
+        "file_hash BLOB NOT NULL,"
+        "file_size INTEGER NOT NULL,"
+        "direction INTEGER NOT NULL,"
+        "file_state INTEGER NOT NULL);"
+        "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY);"));
+    queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
+    db->execLater(queries);
+    qDebug() << "Database created at schema version" << SCHEMA_VERSION;
 }
