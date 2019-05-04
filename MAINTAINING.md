@@ -152,6 +152,7 @@ To get translations into qTox:
 
 ### Before tagging
 
+- Format all code using the [`./tools/format-code.sh`] script
 - Update version number for windows/osx packages using the
   [`./tools/update-versions.sh`] script, e.g. `./tools/update-versions.sh
   1.11.0`
@@ -205,6 +206,7 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`./tools/deweblate-translation-file.sh`]: /tools/deweblate-translation-file.sh
 [`./tools/create-tarball.sh`]: /tools/create-tarball.sh
 [`./tools/update-versions.sh`]: /tools/update-versions.sh
+[`./tools/format-code.sh`]: /tools/format-code.sh
 [Flathub repository]: https://github.com/flathub/io.github.qtox.qTox
 [`./flatpak/io.github.qtox.qTox.json`]: flatpak/io.github.qtox.qTox.json
 [the Flathub build bot]: https://flathub.org/builds/#/
