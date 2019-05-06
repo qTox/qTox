@@ -571,8 +571,6 @@ void AVForm::on_outDevCombobox_currentIndexChanged(int deviceIndex)
     }
 
     playbackSlider->setEnabled(outputEnabled);
-    playbackSlider->setSliderPosition(
-        getStepsFromValue(audio->outputVolume(), audio->minOutputVolume(), audio->maxOutputVolume()));
 }
 
 void AVForm::on_playbackSlider_valueChanged(int sliderSteps)
