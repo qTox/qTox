@@ -663,7 +663,7 @@
                  <property name="accessibleDescription">
                   <string>Set your status message that will be shown to others</string>
                  </property>
-                 <property name="text">
+                 <property name="placeholderText">
                   <string>Your status</string>
                  </property>
                  <property name="textFormat">

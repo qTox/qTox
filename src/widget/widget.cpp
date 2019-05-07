@@ -909,16 +909,11 @@ void Widget::onStatusMessageChanged(const QString& newStatusMessage)
 
 void Widget::setStatusMessage(const QString& statusMessage)
 {
-    if (statusMessage.isEmpty()) {
-        ui->statusLabel->setText(tr("Your status"));
-        ui->statusLabel->setToolTip(tr("Your status"));
-    } else {
-        ui->statusLabel->setText(statusMessage);
-        // escape HTML from tooltips and preserve newlines
-        // TODO: move newspace preservance to a generic function
-        ui->statusLabel->setToolTip("<p style='white-space:pre'>" + statusMessage.toHtmlEscaped()
-                                    + "</p>");
-    }
+    ui->statusLabel->setText(statusMessage);
+    // escape HTML from tooltips and preserve newlines
+    // TODO: move newspace preservance to a generic function
+    ui->statusLabel->setToolTip("<p style='white-space:pre'>" + statusMessage.toHtmlEscaped()
+                                + "</p>");
 }
 
 void Widget::reloadHistory()

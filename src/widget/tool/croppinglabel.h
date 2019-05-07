@@ -39,6 +39,7 @@ public slots:
 
 public slots:
     void setText(const QString& text);
+    void setPlaceholderText(const QString& text);
     void minimizeMaximumWidth();
 
 signals:

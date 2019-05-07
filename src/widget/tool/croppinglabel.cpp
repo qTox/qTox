@@ -85,6 +85,12 @@ void CroppingLabel::setText(const QString& text)
     setElidedText();
 }
 
+void CroppingLabel::setPlaceholderText(const QString& text)
+{
+    textEdit->setPlaceholderText(text);
+    setElidedText();
+}
+
 void CroppingLabel::resizeEvent(QResizeEvent* ev)
 {
     setElidedText();
@@ -129,8 +135,12 @@ void CroppingLabel::setElidedText()
         setToolTip(Qt::convertFromPlainText(origText, Qt::WhiteSpaceNormal));
     else
         setToolTip(QString());
-
-    QLabel::setText(elidedText);
+    if (!elidedText.isEmpty()) {
+        QLabel::setText(elidedText);
+    } else {
+        // NOTE: it would be nice if the label had custom styling when it was default
+        QLabel::setText(textEdit->placeholderText());
+    }
 }
 
 void CroppingLabel::hideTextEdit()
