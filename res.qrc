@@ -31,15 +31,21 @@
         <file>img/status/online.svg</file>
         <file>img/status/online_notification.svg</file>
         <file>img/taskbar/dark/taskbar_online.svg</file>
+        <file>img/taskbar/dark/taskbar_online_event.svg</file>
         <file>img/taskbar/dark/taskbar_away.svg</file>
+        <file>img/taskbar/dark/taskbar_away_event.svg</file>
         <file>img/taskbar/dark/taskbar_busy.svg</file>
+        <file>img/taskbar/dark/taskbar_busy_event.svg</file>
         <file>img/taskbar/dark/taskbar_offline.svg</file>
-        <file>img/taskbar/dark/taskbar_event.svg</file>
+        <file>img/taskbar/dark/taskbar_offline_event.svg</file>
         <file>img/taskbar/light/taskbar_online.svg</file>
+        <file>img/taskbar/light/taskbar_online_event.svg</file>
         <file>img/taskbar/light/taskbar_away.svg</file>
+        <file>img/taskbar/light/taskbar_away_event.svg</file>
         <file>img/taskbar/light/taskbar_busy.svg</file>
+        <file>img/taskbar/light/taskbar_busy_event.svg</file>
         <file>img/taskbar/light/taskbar_offline.svg</file>
-        <file>img/taskbar/light/taskbar_event.svg</file>
+        <file>img/taskbar/light/taskbar_offline_event.svg</file>
         <file>img/transfer.svg</file>
         <file>themes/dark/palette.ini</file>
         <file>themes/dark/fileTransferWidget/fileDone.svg</file>

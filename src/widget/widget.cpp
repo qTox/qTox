@@ -440,8 +440,9 @@ void Widget::updateIcons()
         return;
     }
 
-    const QString assetSuffix = eventIcon ? "event" :
-        Status::getAssetSuffix(static_cast<Status::Status>(ui->statusButton->property("status").toInt()));
+    const QString assetSuffix =
+        Status::getAssetSuffix(static_cast<Status::Status>(ui->statusButton->property("status").toInt()))
+        + (eventIcon ? "_event" : "");
 
 
     // Some builds of Qt appear to have a bug in icon loading:
