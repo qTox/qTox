@@ -91,19 +91,27 @@ void CoreFile::sendAvatarFile(uint32_t friendId, const QByteArray& data)
 {
     QMutexLocker{coreLoopLock};
 
+    uint64_t filesize;
+    uint8_t *file_id;
+    uint8_t *file_name;
+    int nameLength;
     if (data.isEmpty()) {
-        tox_file_send(tox, friendId, TOX_FILE_KIND_AVATAR, 0, nullptr, nullptr, 0, nullptr);
-        return;
+        filesize = 0;
+        file_id = nullptr;
+        file_name = nullptr;
+        nameLength = 0;
+    } else {
+        static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH, "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
+        uint8_t avatarHash[TOX_HASH_LENGTH];
+        tox_hash(avatarHash, (uint8_t*)data.data(), data.size());
+        filesize = data.size();
+        file_id = avatarHash;
+        file_name = avatarHash;
+        nameLength = TOX_HASH_LENGTH;
     }
-
-    static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH, "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
-    uint8_t avatarHash[TOX_HASH_LENGTH];
-    tox_hash(avatarHash, (uint8_t*)data.data(), data.size());
-    uint64_t filesize = data.size();
-
     Tox_Err_File_Send error;
-    uint32_t fileNum = tox_file_send(tox, friendId, TOX_FILE_KIND_AVATAR, filesize,
-                                     avatarHash, avatarHash, TOX_HASH_LENGTH, &error);
+    const uint32_t fileNum = tox_file_send(tox, friendId, TOX_FILE_KIND_AVATAR, filesize,
+                                    file_id, file_name, nameLength, &error);
 
     switch (error) {
     case TOX_ERR_FILE_SEND_OK:
