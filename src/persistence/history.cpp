@@ -714,6 +714,18 @@ void History::dbSchemaUpgrade()
         } else {
             // it's a db that exists but at the first versioned schema, version 0.
             queries +=
+                RawDatabase::Query(QStringLiteral(
+                    "CREATE TABLE file_transfers "
+                    "(id INTEGER PRIMARY KEY,"
+                    "chat_id INTEGER NOT NULL,"
+                    "file_restart_id BLOB NOT NULL,"
+                    "file_name BLOB NOT NULL, "
+                    "file_path BLOB NOT NULL,"
+                    "file_hash BLOB NOT NULL,"
+                    "file_size INTEGER NOT NULL,"
+                    "direction INTEGER NOT NULL,"
+                    "file_state INTEGER NOT NULL);"));
+            queries +=
                 RawDatabase::Query(QStringLiteral("ALTER TABLE history ADD file_id INTEGER;"));
         }
     }
