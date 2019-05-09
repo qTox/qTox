@@ -326,6 +326,7 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
         if (!filesize) {
             qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
             // Avatars of size 0 means explicitely no avatar
+            tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
             emit core->friendAvatarRemoved(core->getFriendPublicKey(friendId));
             return;
         } else {
