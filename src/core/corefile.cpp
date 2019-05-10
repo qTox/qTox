@@ -548,6 +548,6 @@ void CoreFile::onConnectionStatusChanged(uint32_t friendId, Status::Status state
         if (key >> 32 != friendId)
             continue;
         fileMap[key].status = status;
-        emit fileTransferBrokenUnbroken(fileMap[key], !isOffline);
+        emit fileTransferBrokenUnbroken(fileMap[key], isOffline);
     }
 }
