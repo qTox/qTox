@@ -40,7 +40,7 @@ public:
     void setAlias(const QString& name);
     QString getDisplayedName() const override;
     bool hasAlias() const;
-
+    QString getUserName() const;
     void setStatusMessage(const QString& message);
     QString getStatusMessage() const;
 

@@ -97,11 +97,7 @@ void Group::regeneratePeerList()
         }
 
         empty_nick[pk] = peers[i].isEmpty();
-        if (empty_nick[pk]) {
-            toxpks[pk] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
-        } else {
-            toxpks[pk] = peers[i];
-        }
+        toxpks[pk] = FriendList::decideNickname(pk, peers[i]);
     }
     if (avGroupchat) {
         stopAudioOfDepartedPeers(oldPeers, toxpks);

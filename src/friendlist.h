@@ -40,7 +40,7 @@ public:
     static QList<Friend*> getAllFriends();
     static void removeFriend(const ToxPk& friendPk, bool fake = false);
     static void clear();
-    static QString decideNickname(const ToxPk& friendPk, const QString origName);
+    static QString decideNickname(const ToxPk& friendPk, const QString& origName);
 
 private:
     static QHash<ToxPk, Friend*> friendList;
