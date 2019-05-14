@@ -47,14 +47,6 @@ Group::Group(int groupId, const GroupId persistentGroupId, const QString& name, 
     regeneratePeerList();
 }
 
-void Group::updatePeer(int peerId, QString name)
-{
-    ToxPk peerKey = Core::getInstance()->getGroupPeerPk(groupId, peerId);
-    toxpks[peerKey] = name;
-    qDebug() << "name change: " + name;
-    emit userListChanged(persistentGroupId, toxpks);
-}
-
 void Group::setName(const QString& newTitle)
 {
     const QString shortTitle = newTitle.left(MAX_GROUP_TITLE_LENGTH);

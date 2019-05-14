@@ -1772,7 +1772,7 @@ void Widget::onGroupPeerlistChanged(uint32_t groupnumber)
     g->regeneratePeerList();
 }
 
-void Widget::onGroupPeerNameChanged(uint32_t groupnumber, int peernumber, const QString& newName)
+void Widget::onGroupPeerNameChanged(uint32_t groupnumber, const ToxPk& peerPk, const QString& newName)
 {
     const GroupId& groupId = GroupList::id2Key(groupnumber);
     Group* g = GroupList::findGroup(groupId);
@@ -1783,7 +1783,7 @@ void Widget::onGroupPeerNameChanged(uint32_t groupnumber, int peernumber, const 
         setName = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
     }
 
-    g->updatePeer(peernumber, setName);
+    g->updateUsername(peerPk, newName);
 }
 
 void Widget::onGroupTitleChanged(uint32_t groupnumber, const QString& author, const QString& title)

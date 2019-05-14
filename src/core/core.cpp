@@ -576,11 +576,13 @@ void Core::onGroupPeerListChange(Tox*, uint32_t groupId, void* vCore)
 }
 
 void Core::onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* name,
-                                 size_t length, void* core)
+                                 size_t length, void* vCore)
 {
     const auto newName = ToxString(name, length).getQString();
     qDebug() << QString("Group %1, Peer %2, name changed to %3").arg(groupId).arg(peerId).arg(newName);
-    emit static_cast<Core*>(core)->groupPeerNameChanged(groupId, peerId, newName);
+    auto* core = static_cast<Core*>(vCore);
+    auto peerPk = core->getGroupPeerPk(groupId, peerId);
+    emit core->groupPeerNameChanged(groupId, peerPk, newName);
 }
 
 void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* cTitle,

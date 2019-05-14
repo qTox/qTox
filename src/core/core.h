@@ -169,7 +169,7 @@ signals:
     void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void groupPeerlistChanged(int groupnumber);
-    void groupPeerNameChanged(int groupnumber, int peernumber, const QString& newName);
+    void groupPeerNameChanged(int groupnumber, const ToxPk& peerPk, const QString& newName);
     void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void groupPeerAudioPlaying(int groupnumber, ToxPk peerPk);
     void groupSentFailed(int groupId);
