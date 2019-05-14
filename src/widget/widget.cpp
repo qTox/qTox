@@ -1100,8 +1100,14 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
 void Widget::onFriendDisplayedNameChanged(const QString& displayed)
 {
     Friend* f = qobject_cast<Friend*>(sender());
-    FriendWidget* friendWidget = friendWidgets[f->getPublicKey()];
+    const auto& friendPk = f->getPublicKey();
+    for (Group* g : GroupList::getAllGroups()) {
+        if (g->getPeerList().contains(friendPk)) {
+            g->updateUsername(friendPk, displayed);
+        }
+    }
 
+    FriendWidget* friendWidget = friendWidgets[f->getPublicKey()];
     if (friendWidget->isActive()) {
         GUI::setWindowTitle(displayed);
     }
@@ -1533,6 +1539,12 @@ void Widget::removeFriend(Friend* f, bool fake)
     FriendList::removeFriend(friendPk, fake);
     if (!fake) {
         core->removeFriend(f->getId());
+        // aliases aren't supported for non-friend peers in groups, revert to basic username
+        for (Group* g : GroupList::getAllGroups()) {
+            if (g->getPeerList().contains(friendPk)) {
+                g->updateUsername(friendPk, f->getUserName());
+            }
+        }
     }
 
     friendWidgets.remove(friendPk);
@@ -1778,11 +1790,7 @@ void Widget::onGroupPeerNameChanged(uint32_t groupnumber, const ToxPk& peerPk, c
     Group* g = GroupList::findGroup(groupId);
     assert(g);
 
-    QString setName = newName;
-    if (newName.isEmpty()) {
-        setName = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
-    }
-
+    const QString setName = FriendList::decideNickname(peerPk, newName);
     g->updateUsername(peerPk, newName);
 }
 

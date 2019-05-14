@@ -19,9 +19,7 @@
 
 
 #include "friend.h"
-#include "src/model/group.h"
 #include "src/model/status.h"
-#include "src/grouplist.h"
 #include "src/persistence/profile.h"
 #include "src/widget/form/chatform.h"
 
@@ -66,6 +64,7 @@ void Friend::setName(const QString& _name)
         emit displayedNameChanged(newDisplayed);
     }
 }
+
 /**
  * @brief Friend::setAlias sets the alias for the friend
  * @param alias new alias, removes it if set to an empty string
@@ -84,12 +83,6 @@ void Friend::setAlias(const QString& alias)
     const auto newDisplayed = getDisplayedName();
     if (oldDisplayed != newDisplayed) {
         emit displayedNameChanged(newDisplayed);
-    }
-
-    for (Group* g : GroupList::getAllGroups()) {
-        if (g->getPeerList().contains(friendPk)) {
-            g->updateUsername(friendPk, newDisplayed);
-        }
     }
 }
 
@@ -124,6 +117,11 @@ QString Friend::getDisplayedName() const
 bool Friend::hasAlias() const
 {
     return !userAlias.isEmpty();
+}
+
+QString Friend::getUserName() const
+{
+    return userName;
 }
 
 const ToxPk& Friend::getPublicKey() const
