@@ -87,11 +87,9 @@ void Friend::setAlias(const QString& alias)
     }
 
     for (Group* g : GroupList::getAllGroups()) {
-        if (userAlias.isEmpty()) {
-            g->updateUsername(friendPk, userName);
-            continue;
+        if (g->getPeerList().contains(friendPk)) {
+            g->updateUsername(friendPk, newDisplayed);
         }
-        g->updateUsername(friendPk, userAlias);
     }
 }
 
