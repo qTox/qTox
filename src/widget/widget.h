@@ -174,7 +174,7 @@ public slots:
     void onGroupInviteAccepted(const GroupInvite& inviteInfo);
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void onGroupPeerlistChanged(uint32_t groupnumber);
-    void onGroupPeerNameChanged(uint32_t groupnumber, int peernumber, const QString& newName);
+    void onGroupPeerNameChanged(uint32_t groupnumber, ToxPk peerPk, const QString& newName);
     void onGroupTitleChanged(uint32_t groupnumber, const QString& author, const QString& title);
     void titleChangedByUser(const GroupId& groupId, const QString& title);
     void onGroupPeerAudioPlaying(int groupnumber, ToxPk peerPk);

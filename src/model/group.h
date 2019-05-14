@@ -49,7 +49,6 @@ public:
     void setMentionedFlag(bool f);
     bool getMentionedFlag() const;
 
-    void updatePeer(int peerId, QString newName);
     void updateUsername(ToxPk pk, const QString newName);
     void setName(const QString& newTitle) override;
     void setTitle(const QString& author, const QString& newTitle);
