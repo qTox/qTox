@@ -242,12 +242,15 @@ void GroupChatForm::updateUserNames()
      * and then sort them by their text and add them to the layout in that order */
     const auto selfPk = Core::getInstance()->getSelfPublicKey();
     for (const auto& peerPk : peers.keys()) {
-        const QString fullName = FriendList::decideNickname(peerPk, peers.value(peerPk));
-        const QString editedName = editName(fullName).append(QLatin1String(", "));
-        QLabel* const label = new QLabel(editedName);
-        if (editedName != fullName) {
-            label->setToolTip(fullName + " (" + peerPk.toString() + ")");
-        }
+        const QString peerName = peers.value(peerPk);
+        const QString editedName = editName(peerName);
+        QLabel* const label = new QLabel(editedName + QLatin1String(", "));
+        QString toolTipText;
+        if (editedName != peerName) {
+            label->setToolTip(peerName + " (" + peerPk.toString() + ")");
+        } else if (peerName != peerPk.toString()) {
+            label->setToolTip(peerPk.toString());
+        } // else their name is just their Pk, no tooltip needed
         label->setTextFormat(Qt::PlainText);
         label->setContextMenuPolicy(Qt::CustomContextMenu);
 
