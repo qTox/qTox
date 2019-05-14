@@ -84,9 +84,11 @@ QList<Friend*> FriendList::getAllFriends()
 QString FriendList::decideNickname(const ToxPk& friendPk, const QString origName)
 {
     Friend* f = FriendList::findFriend(friendPk);
-    if (f != nullptr && f->hasAlias()) {
+    if (f != nullptr) {
         return f->getDisplayedName();
-    } else {
+    } else if (!origName.isEmpty()) {
         return origName;
+    } else {
+        return friendPk.toString();
     }
 }

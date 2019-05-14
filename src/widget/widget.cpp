@@ -1778,11 +1778,7 @@ void Widget::onGroupPeerNameChanged(uint32_t groupnumber, ToxPk peerPk, const QS
     Group* g = GroupList::findGroup(groupId);
     assert(g);
 
-    QString setName = newName;
-    if (newName.isEmpty()) {
-        setName = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
-    }
-
+    QString setName = FriendList::decideNickname(peerPk, newName);
     g->updateUsername(peerPk, newName);
 }
 

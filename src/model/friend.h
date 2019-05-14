@@ -34,6 +34,7 @@ class Friend : public Contact
 public:
     Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias = {}, const QString &userName = {});
     Friend(const Friend& other) = delete;
+    ~Friend();
     Friend& operator=(const Friend& other) = delete;
 
     void setName(const QString& name) override;

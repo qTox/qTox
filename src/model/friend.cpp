@@ -38,6 +38,16 @@ Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlia
     }
 }
 
+Friend::~Friend()
+{
+    // aliases aren't supported for non-friend peers in groups, revert to basic username
+    for (Group* g : GroupList::getAllGroups()) {
+        if (g->getPeerList().contains(friendPk)) {
+            g->updateUsername(friendPk, userName);
+        }
+    }
+}
+
 /**
  * @brief Friend::setName sets a new username for the friend
  * @param _name new username, sets the public key if _name is empty
@@ -64,6 +74,12 @@ void Friend::setName(const QString& _name)
     const auto newDisplayed = getDisplayedName();
     if (oldDisplayed != newDisplayed) {
         emit displayedNameChanged(newDisplayed);
+    }
+
+    for (Group* g : GroupList::getAllGroups()) {
+        if (g->getPeerList().contains(friendPk)) {
+            g->updateUsername(friendPk, newDisplayed);
+        }
     }
 }
 /**
