@@ -49,8 +49,10 @@ private slots:
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onCallClicked();
-    void onUserListChanged();
-    void onTitleChanged(const GroupId& groupId, const QString& author, const QString& title);
+    void onUserJoined(const ToxPk& user, const QString& name);
+    void onUserLeft(const ToxPk& user, const QString& name);
+    void onPeerNameChanged(const ToxPk& peer, const QString& oldName, const QString& newName);
+    void onTitleChanged(const QString& author, const QString& title);
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter) override;
     void onSearchUp(const QString& phrase, const ParameterSearch& parameter) override;
     void onSearchDown(const QString& phrase, const ParameterSearch& parameter) override;
@@ -66,7 +68,7 @@ protected:
 
 private:
     void retranslateUi();
-    void updateUserCount();
+    void updateUserCount(int numPeers);
     void updateUserNames();
     void sendJoinLeaveMessages();
     void leaveGroupCall();
@@ -75,8 +77,6 @@ private:
     Group* group;
     QMap<ToxPk, QLabel*> peerLabels;
     QMap<ToxPk, QTimer*> peerAudioTimers;
-    QMap<ToxPk, QString> groupLast;
-    QMap<ToxPk, bool> firstTime;
     FlowLayout* namesListLayout;
     QLabel* nusersLabel;
     TabCompleter* tabber;
