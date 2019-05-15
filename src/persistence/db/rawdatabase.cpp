@@ -604,10 +604,9 @@ void RawDatabase::process()
                 }
                 curParam += nParams;
             } while (compileTail != query.query.data() + query.query.size());
-        }
 
-        // Execute each statement of each query of our transaction
-        for (Query& query : trans.queries) {
+
+            // Execute each statement of each query of our transaction
             for (sqlite3_stmt* stmt : query.statements) {
                 int column_count = sqlite3_column_count(stmt);
                 int result;
