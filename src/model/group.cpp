@@ -35,8 +35,8 @@ static const int MAX_GROUP_TITLE_LENGTH = 128;
 Group::Group(int groupId, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat, const QString& selfName)
     : selfName{selfName}
     , title{name}
-    , groupId(groupId)
-    , persistentGroupId{persistentGroupId}
+    , toxGroupNum(groupId)
+    , groupId{persistentGroupId}
     , avGroupchat{isAvGroupchat}
 {
     // in groupchats, we only notify on messages containing your name <-- dumb
@@ -53,8 +53,8 @@ void Group::setName(const QString& newTitle)
     if (!shortTitle.isEmpty() && title != shortTitle) {
         title = shortTitle;
         emit displayedNameChanged(title);
-        emit titleChangedByUser(persistentGroupId, title);
-        emit titleChanged(persistentGroupId, selfName, title);
+        emit titleChangedByUser(groupId, title);
+        emit titleChanged(groupId, selfName, title);
     }
 }
 
@@ -64,7 +64,7 @@ void Group::setTitle(const QString& author, const QString& newTitle)
     if (!shortTitle.isEmpty() && title != shortTitle) {
         title = shortTitle;
         emit displayedNameChanged(title);
-        emit titleChanged(persistentGroupId, author, title);
+        emit titleChanged(groupId, author, title);
     }
 }
 
@@ -82,27 +82,27 @@ void Group::regeneratePeerList()
 {
     const Core* core = Core::getInstance();
 
-    QStringList peers = core->getGroupPeerNames(groupId);
-    const auto oldPeers = toxpks.keys();
-    toxpks.clear();
+    QStringList peers = core->getGroupPeerNames(toxGroupNum);
+    const auto oldPeers = peerDisplayNames.keys();
+    peerDisplayNames.clear();
     const int nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i) {
-        const auto pk = core->getGroupPeerPk(groupId, i);
+        const auto pk = core->getGroupPeerPk(toxGroupNum, i);
 
         Friend* f = FriendList::findFriend(pk);
         if (f != nullptr && f->hasAlias()) {
-            toxpks[pk] = f->getDisplayedName();
+            peerDisplayNames[pk] = f->getDisplayedName();
             empty_nick[pk] = false;
             continue;
         }
 
         empty_nick[pk] = peers[i].isEmpty();
-        toxpks[pk] = FriendList::decideNickname(pk, peers[i]);
+        peerDisplayNames[pk] = FriendList::decideNickname(pk, peers[i]);
     }
     if (avGroupchat) {
-        stopAudioOfDepartedPeers(oldPeers, toxpks);
+        stopAudioOfDepartedPeers(oldPeers, peerDisplayNames);
     }
-    emit userListChanged(persistentGroupId, toxpks);
+    emit userListChanged(groupId, peerDisplayNames);
 }
 
 bool Group::peerHasNickname(ToxPk pk)
@@ -112,8 +112,8 @@ bool Group::peerHasNickname(ToxPk pk)
 
 void Group::updateUsername(ToxPk pk, const QString newName)
 {
-    toxpks[pk] = newName;
-    emit userListChanged(persistentGroupId, toxpks);
+    peerDisplayNames[pk] = newName;
+    emit userListChanged(groupId, peerDisplayNames);
 }
 
 bool Group::isAvGroupchat() const
@@ -123,17 +123,17 @@ bool Group::isAvGroupchat() const
 
 uint32_t Group::getId() const
 {
-    return groupId;
+    return toxGroupNum;
 }
 
 const GroupId& Group::getPersistentId() const
 {
-    return persistentGroupId;
+    return groupId;
 }
 
 int Group::getPeersCount() const
 {
-    return toxpks.size();
+    return peerDisplayNames.size();
 }
 
 /**
@@ -142,7 +142,7 @@ int Group::getPeersCount() const
  */
 const QMap<ToxPk, QString>& Group::getPeerList() const
 {
-    return toxpks;
+    return peerDisplayNames;
 }
 
 void Group::setEventFlag(bool f)
@@ -167,9 +167,9 @@ bool Group::getMentionedFlag() const
 
 QString Group::resolveToxId(const ToxPk& id) const
 {
-    auto it = toxpks.find(id);
+    auto it = peerDisplayNames.find(id);
 
-    if (it != toxpks.end()) {
+    if (it != peerDisplayNames.end()) {
         return *it;
     }
 
@@ -191,7 +191,7 @@ void Group::stopAudioOfDepartedPeers(const QList<ToxPk>& oldPks, const QMap<ToxP
     Core* core = Core::getInstance();
     for(const auto& pk: oldPks) {
         if(!newPks.contains(pk)) {
-            core->getAv()->invalidateGroupCallPeerSource(groupId, pk);
+            core->getAv()->invalidateGroupCallPeerSource(toxGroupNum, pk);
         }
     }
 }
