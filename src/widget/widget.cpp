@@ -1810,9 +1810,10 @@ void Widget::onGroupTitleChanged(uint32_t groupnumber, const QString& author, co
     widget->searchName(ui->searchContactText->text(), filterGroups(filter));
 }
 
-void Widget::titleChangedByUser(const GroupId& groupId, const QString& title)
+void Widget::titleChangedByUser(const QString& title)
 {
-    const auto& group = GroupList::findGroup(groupId);
+    const auto* group = qobject_cast<Group*>(sender());
+    assert(group != nullptr);
     emit changeGroupTitle(group->getId(), title);
 }
 

@@ -59,18 +59,20 @@ public:
     QString getSelfName() const;
 
 signals:
-    void titleChangedByUser(const GroupId& groupId, const QString& title);
-    void titleChanged(const GroupId& groupId, const QString& author, const QString& title);
-    void userListChanged(const GroupId& groupId, const QMap<ToxPk, QString>& toxpks);
+    void titleChangedByUser(const QString& title);
+    void titleChanged(const QString& author, const QString& title);
+    void userJoined(const ToxPk& user, const QString& name);
+    void userLeft(const ToxPk& user, const QString& name);
+    void numPeersChanged(int numPeers);
+    void peerNameChanged(const ToxPk& peer, const QString& oldName, const QString& newName);
 
 private:
-    void stopAudioOfDepartedPeers(const QList<ToxPk>& oldPks, const QMap<ToxPk, QString>& newPks);
+    void stopAudioOfDepartedPeers(const ToxPk& peerPk);
 
 private:
     QString selfName;
     QString title;
     QMap<ToxPk, QString> peerDisplayNames;
-    QMap<ToxPk, bool> empty_nick;
     bool hasNewMessages;
     bool userWasMentioned;
     int groupNum;
