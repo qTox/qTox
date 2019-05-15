@@ -69,12 +69,12 @@ private:
 private:
     QString selfName;
     QString title;
-    QMap<ToxPk, QString> toxpks;
+    QMap<ToxPk, QString> peerDisplayNames;
     QMap<ToxPk, bool> empty_nick;
     bool hasNewMessages;
     bool userWasMentioned;
-    int groupId;
-    const GroupId persistentGroupId;
+    int groupNum;
+    const GroupId groupId;
     bool avGroupchat;
 };
 
