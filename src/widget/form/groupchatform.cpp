@@ -126,11 +126,14 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(headWidget, &ChatFormHeader::micMuteToggle, this, &GroupChatForm::onMicMuteToggle);
     connect(headWidget, &ChatFormHeader::volMuteToggle, this, &GroupChatForm::onVolMuteToggle);
     connect(headWidget, &ChatFormHeader::nameChanged, chatGroup, &Group::setName);
-    connect(group, &Group::userListChanged, this, &GroupChatForm::onUserListChanged);
     connect(group, &Group::titleChanged, this, &GroupChatForm::onTitleChanged);
+    connect(group, &Group::userJoined, this, &GroupChatForm::onUserJoined);
+    connect(group, &Group::userLeft, this, &GroupChatForm::onUserLeft);
+    connect(group, &Group::peerNameChanged, this, &GroupChatForm::onPeerNameChanged);
+    connect(group, &Group::numPeersChanged, this, &GroupChatForm::updateUserCount);
     connect(&Settings::getInstance(), &Settings::blackListChanged, this, &GroupChatForm::updateUserNames);
 
-    onUserListChanged();
+    updateUserNames();
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
 }
@@ -162,29 +165,6 @@ void GroupChatForm::onSendTriggered()
                            true);
         else
             addSelfMessage(msg, QDateTime::currentDateTime(), false);
-    }
-}
-
-/**
- * @brief This slot is intended to connect to Group::userListChanged signal.
- * Brief list of actions made by slot:
- *      1) sets text of how many people are in the group;
- *      2) creates lexicographically sorted comma-separated list of user names, each name in its own
- *      label;
- *      3) sets call button style depending on peer count and etc.
- */
-void GroupChatForm::onUserListChanged()
-{
-    updateUserCount();
-    updateUserNames();
-    sendJoinLeaveMessages();
-
-    // Enable or disable call button
-    const int peersCount = group->getPeersCount();
-    const bool online = peersCount > 1;
-    headWidget->updateCallButtons(online, inCall);
-    if (inCall && (!online || !group->isAvGroupchat())) {
-        leaveGroupCall();
     }
 }
 
@@ -306,61 +286,22 @@ void GroupChatForm::updateUserNames()
     }
 }
 
-void GroupChatForm::sendJoinLeaveMessages()
+void GroupChatForm::onUserJoined(const GroupId& groupId, const ToxPk& user, const QString& name)
 {
-    const auto peers = group->getPeerList();
+    addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
+    updateUserNames();
+}
 
-    // no need to do anything without any peers
-    if (peers.isEmpty()) {
-        return;
-    }
+void GroupChatForm::onUserLeft(const GroupId& groupId, const ToxPk user, const QString& name)
+{
+    addSystemInfoMessage(tr("%1 has left the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
+    updateUserNames();
+}
 
-    // generate user list from the current group if it's empty
-    if (groupLast.isEmpty()) {
-        groupLast = group->getPeerList();
-        return;
-    }
-
-    // user joins
-    for (const auto& peerPk : peers.keys()) {
-        const QString name = FriendList::decideNickname(peerPk, peers.value(peerPk));
-        if (!firstTime.value(peerPk, false)) {
-            if (!groupLast.contains(peerPk)) {
-                if (group->peerHasNickname(peerPk)) {
-                    firstTime[peerPk] = true;
-                    groupLast.insert(peerPk, name);
-                    addSystemInfoMessage(tr("%1 is online").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
-                    continue;
-                }
-                addSystemInfoMessage(tr("A new user has connected to the group"), ChatMessage::INFO, QDateTime::currentDateTime());
-            }
-            firstTime[peerPk] = true;
-            continue;
-        }
-        if (!groupLast.contains(peerPk)) {
-            groupLast.insert(peerPk, name);
-            addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
-        } else {
-            Friend *f = FriendList::findFriend(peerPk);
-            if (groupLast[peerPk] != name
-                    && peers.value(peerPk) == name
-                    && peerPk != Core::getInstance()->getSelfPublicKey() // ignore myself
-                    && !(f != nullptr && f->hasAlias()) // ignore friends with aliases
-                    ) {
-                addSystemInfoMessage(tr("%1 is now known as %2").arg(groupLast[peerPk], name), ChatMessage::INFO, QDateTime::currentDateTime());
-                groupLast[peerPk] = name;
-            }
-        }
-    }
-    // user leaves
-    for (const auto& peerPk : groupLast.keys()) {
-        const QString name = FriendList::decideNickname(peerPk, groupLast.value(peerPk));
-        if (!peers.contains(peerPk)) {
-            groupLast.remove(peerPk);
-            firstTime.remove(peerPk);
-            addSystemInfoMessage(tr("%1 has left the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
-        }
-    }
+void GroupChatForm::onPeerNameChanged(const GroupId& groupId, const ToxPk peer, const QString& oldName, const QString& newName)
+{
+    addSystemInfoMessage(tr("%1 is now known as %2").arg(oldName, newName), ChatMessage::INFO, QDateTime::currentDateTime());
+    updateUserNames();
 }
 
 void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
@@ -510,15 +451,19 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 /**
  * @brief Updates users' count label text
  */
-void GroupChatForm::updateUserCount()
+void GroupChatForm::updateUserCount(const GroupId& groupId, int numPeers)
 {
-    const int peersCount = group->getPeersCount();
-    nusersLabel->setText(tr("%n user(s) in chat", "Number of users in chat", peersCount));
+    nusersLabel->setText(tr("%n user(s) in chat", "Number of users in chat", numPeers));
+    const bool online = numPeers > 1;
+    headWidget->updateCallButtons(online, inCall);
+    if (inCall && (!online || !group->isAvGroupchat())) {
+        leaveGroupCall();
+    }
 }
 
 void GroupChatForm::retranslateUi()
 {
-    updateUserCount();
+    updateUserCount(group->getPersistentId(), group->getPeersCount());
 }
 
 void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)

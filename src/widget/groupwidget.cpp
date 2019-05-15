@@ -55,11 +55,11 @@ GroupWidget::GroupWidget(std::shared_ptr<GroupChatroom> chatroom, bool compact)
     Group* g = chatroom->getGroup();
     nameLabel->setText(g->getName());
 
-    updateUserCount();
+    updateUserCount(g->getPersistentId(), g->getPeersCount());
     setAcceptDrops(true);
 
     connect(g, &Group::titleChanged, this, &GroupWidget::updateTitle);
-    connect(g, &Group::userListChanged, this, &GroupWidget::updateUserCount);
+    connect(g, &Group::numPeersChanged, this, &GroupWidget::updateUserCount);
     connect(nameLabel, &CroppingLabel::editFinished, g, &Group::setName);
     Translator::registerHandler(std::bind(&GroupWidget::retranslateUi, this), this);
 }
@@ -159,10 +159,9 @@ void GroupWidget::mouseMoveEvent(QMouseEvent* ev)
     }
 }
 
-void GroupWidget::updateUserCount()
+void GroupWidget::updateUserCount(const GroupId& groupId, int numPeers)
 {
-    int peersCount = chatroom->getGroup()->getPeersCount();
-    statusMessageLabel->setText(tr("%n user(s) in chat", "Number of users in chat", peersCount));
+    statusMessageLabel->setText(tr("%n user(s) in chat", "Number of users in chat", numPeers));
 }
 
 void GroupWidget::setAsActiveChatroom()
@@ -262,5 +261,6 @@ void GroupWidget::setName(const QString& name)
 
 void GroupWidget::retranslateUi()
 {
-    updateUserCount();
+    const Group* group = chatroom->getGroup();
+    updateUserCount(group->getPersistentId(), group->getPeersCount());
 }

@@ -58,7 +58,7 @@ protected:
 private slots:
     void retranslateUi();
     void updateTitle(const GroupId& groupId, const QString& author, const QString& newName);
-    void updateUserCount();
+    void updateUserCount(const GroupId& groupId, int numPeers);
 
 public:
     GroupId groupId;

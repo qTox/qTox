@@ -45,6 +45,7 @@ Group::Group(int groupId, const GroupId persistentGroupId, const QString& name, 
     hasNewMessages = 0;
     userWasMentioned = 0;
     regeneratePeerList();
+    connect(this, &Group::userLeft, this, &Group::stopAudioOfDepartedPeers);
 }
 
 void Group::setName(const QString& newTitle)
@@ -80,40 +81,51 @@ QString Group::getDisplayedName() const
 
 void Group::regeneratePeerList()
 {
+    // NOTE: there's a bit of a race here. Core emits a signal for both groupPeerlistChanged and groupPeerNameChanged
+    // back-to-back when a peer joins our group. If we get both before we process this slot, core->getGroupPeerNames
+    // will contain the new peer name, and we'll ignore the name changed signal, and emit a single userJoined with
+    // the correct name. But, if we receive the name changed signal a little later, we will emit userJoined before we
+    // have their username, using just their ToxPk, then shortly after emit another peerNameChanged signal. This can
+    // cause double-updated to UI and chatlog, but is unavoidable given the API of toxcore.
     const Core* core = Core::getInstance();
-
     QStringList peers = core->getGroupPeerNames(groupNum);
-    const auto oldPeers = peerDisplayNames.keys();
+    const auto oldPeerNames = peerDisplayNames;
     peerDisplayNames.clear();
     const int nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i) {
         const auto pk = core->getGroupPeerPk(groupNum, i);
-
-        Friend* f = FriendList::findFriend(pk);
-        if (f != nullptr && f->hasAlias()) {
-            peerDisplayNames[pk] = f->getDisplayedName();
-            empty_nick[pk] = false;
-            continue;
-        }
-
-        empty_nick[pk] = peers[i].isEmpty();
         peerDisplayNames[pk] = FriendList::decideNickname(pk, peers[i]);
     }
-    if (avGroupchat) {
-        stopAudioOfDepartedPeers(oldPeers, peerDisplayNames);
+    for(const auto& pk: oldPeerNames.keys()) {
+        if(!peerDisplayNames.contains(pk)) {
+            emit userLeft(groupId, pk, oldPeerNames.value(pk));
+        }
     }
-    emit userListChanged(groupId, peerDisplayNames);
-}
-
-bool Group::peerHasNickname(ToxPk pk)
-{
-    return !empty_nick[pk];
+    for(const auto& pk: peerDisplayNames.keys()) {
+        if(!oldPeerNames.contains(pk)) {
+            emit userJoined(groupId, pk, peerDisplayNames.value(pk));
+        }
+    }
+    for(const auto& pk: peerDisplayNames.keys()) {
+        if(oldPeerNames.contains(pk) && oldPeerNames.value(pk) != peerDisplayNames.value(pk)) {
+            emit peerNameChanged(groupId, pk, oldPeerNames.value(pk), peerDisplayNames.value(pk));
+        }
+    }
+    if (oldPeerNames.size() != nPeers) {
+        emit numPeersChanged(groupId, nPeers);
+    }
 }
 
 void Group::updateUsername(ToxPk pk, const QString newName)
 {
-    peerDisplayNames[pk] = newName;
-    emit userListChanged(groupId, peerDisplayNames);
+    const QString displayName = FriendList::decideNickname(pk, newName);
+    assert(peerDisplayNames.contains(pk));
+    if (peerDisplayNames[pk] != displayName) {
+        // there could be no actual change even if their username changed due to an alias being set
+        const auto oldName = peerDisplayNames[pk];
+        peerDisplayNames[pk] = displayName;
+        emit peerNameChanged(groupId, pk, oldName, displayName);
+    }
 }
 
 bool Group::isAvGroupchat() const
@@ -186,12 +198,11 @@ QString Group::getSelfName() const
     return selfName;
 }
 
-void Group::stopAudioOfDepartedPeers(const QList<ToxPk>& oldPks, const QMap<ToxPk, QString>& newPks)
+void Group::stopAudioOfDepartedPeers(const GroupId& groupId, const ToxPk peerPk)
 {
-    Core* core = Core::getInstance();
-    for(const auto& pk: oldPks) {
-        if(!newPks.contains(pk)) {
-            core->getAv()->invalidateGroupCallPeerSource(groupNum, pk);
-        }
+    assert(groupId == this->groupId);
+    if (avGroupchat) {
+        Core* core = Core::getInstance();
+        core->getAv()->invalidateGroupCallPeerSource(groupNum, peerPk);
     }
 }
