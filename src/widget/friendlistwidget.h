@@ -34,6 +34,8 @@ class GroupWidget;
 class CircleWidget;
 class FriendListLayout;
 class GenericChatroomWidget;
+class CategoryWidget;
+class Friend;
 
 class FriendListWidget : public QWidget
 {
@@ -86,6 +88,7 @@ private:
     CircleWidget* createCircleWidget(int id = -1);
     QLayout* nextLayout(QLayout* layout, bool forward) const;
     void moveFriends(QLayout* layout);
+    CategoryWidget* getTimeCategoryWidget(const Friend* frd) const;
 
     Mode mode;
     bool groupsOnTop;
