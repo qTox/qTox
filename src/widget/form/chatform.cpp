@@ -536,7 +536,7 @@ void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& param
     const bool isFirst = (parameter.period == PeriodSearch::WithTheFirst);
     const bool isAfter = (parameter.period == PeriodSearch::AfterDate);
     if (isFirst || isAfter) {
-        if (isFirst || (isAfter && parameter.date < getFirstDate())) {
+        if (isFirst || (isAfter && parameter.date < getFirstTime().date())) {
             const QString pk = f->getPublicKey().toString();
             if ((isFirst || parameter.date >= history->getStartDateChatHistory(pk).date())
                 && loadHistory(phrase, parameter)) {
@@ -547,7 +547,7 @@ void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& param
 
         onSearchDown(phrase, parameter);
     } else {
-        if (parameter.period == PeriodSearch::BeforeDate && parameter.date < getFirstDate()) {
+        if (parameter.period == PeriodSearch::BeforeDate && parameter.date < getFirstTime().date()) {
             const QString pk = f->getPublicKey().toString();
             if (parameter.date >= history->getStartDateChatHistory(pk).date()
                 && loadHistory(phrase, parameter)) {
@@ -1167,7 +1167,7 @@ bool ChatForm::loadHistory(const QString& phrase, const ParameterSearch& paramet
     const QDateTime newBaseDate =
         history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
-    if (newBaseDate.isValid() && getFirstDate().isValid() && newBaseDate.date() < getFirstDate()) {
+    if (newBaseDate.isValid() && getFirstTime().isValid() && newBaseDate.date() < getFirstTime().date()) {
         searchAfterLoadHistory = true;
         loadHistoryByDateRange(newBaseDate);
 
