@@ -27,6 +27,7 @@
 #include "src/core/toxfile.h"
 #include "src/persistence/ifriendsettings.h"
 #include "src/video/ivideosettings.h"
+#include "src/widget/friendlistwidget.h"
 
 #include <QDate>
 #include <QFlags>
@@ -204,6 +205,7 @@ signals:
     void styleChanged(const QString& style);
     void themeColorChanged(int color);
     void compactLayoutChanged(bool enabled);
+    void sortingModeChanged(FriendListWidget::SortingMode mode);
     void showIdenticonsChanged(bool enabled);
 
     // ChatView
@@ -515,6 +517,9 @@ public:
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
 
+    FriendListWidget::SortingMode getFriendSortingMode() const;
+    void setFriendSortingMode(FriendListWidget::SortingMode mode);
+
     bool getSeparateWindow() const;
     void setSeparateWindow(bool value);
 
@@ -592,6 +597,7 @@ private:
     bool autoLogin;
     bool fauxOfflineMessaging;
     bool compactLayout;
+    FriendListWidget::SortingMode sortingMode;
     bool groupchatPosition;
     bool separateWindow;
     bool dontGroupWindows;

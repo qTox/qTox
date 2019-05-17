@@ -173,6 +173,9 @@ void Widget::init()
     filterDisplayActivity->setCheckable(true);
     filterDisplayGroup->addAction(filterDisplayActivity);
     filterMenu->addAction(filterDisplayActivity);
+    settings.getFriendSortingMode() == FriendListWidget::SortingMode::Name ?
+        filterDisplayName->setChecked(true) :
+        filterDisplayActivity->setChecked(true);
     filterMenu->addSeparator();
 
     filterAllAction = new QAction(this);
@@ -2271,9 +2274,9 @@ void Widget::changeDisplayMode()
     filterDisplayGroup->setEnabled(false);
 
     if (filterDisplayGroup->checkedAction() == filterDisplayActivity) {
-        contactListWidget->setMode(FriendListWidget::Activity);
+        contactListWidget->setMode(FriendListWidget::SortingMode::Activity);
     } else if (filterDisplayGroup->checkedAction() == filterDisplayName) {
-        contactListWidget->setMode(FriendListWidget::Name);
+        contactListWidget->setMode(FriendListWidget::SortingMode::Name);
     }
 
     searchContacts();
