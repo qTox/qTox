@@ -1039,8 +1039,6 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
     FilterCriteria filter = getFilterCriteria();
     widget->search(ui->searchContactText->text(), filterOffline(filter));
-
-    updateFriendActivity(newfriend);
 }
 
 void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
