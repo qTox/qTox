@@ -18,7 +18,6 @@
 #include "friendwidget.h"
 
 #include "circlewidget.h"
-#include "contentdialog.h"
 #include "friendlistwidget.h"
 #include "groupwidget.h"
 #include "maskablepixmapwidget.h"
@@ -32,7 +31,6 @@
 #include "src/model/status.h"
 #include "src/persistence/settings.h"
 #include "src/widget/about/aboutfriendform.h"
-#include "src/widget/contentdialogmanager.h"
 #include "src/widget/form/chatform.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/croppinglabel.h"
@@ -105,18 +103,12 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     QMenu menu;
 
-    const auto frnd = chatroom->getFriend();
-    const auto friendPk = frnd->getPublicKey();
-    const auto contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendPk);
-
-    // TODO: move to model
-    if (!contentDialog || contentDialog->chatroomCount() > 1) {
+    if (chatroom->possibleToOpenInNewWindow()) {
         const auto openChatWindow = menu.addAction(tr("Open chat in new window"));
         connect(openChatWindow, &QAction::triggered, [=]() { emit newWindowOpened(this); });
     }
 
-    // TODO: move to model
-    if (contentDialog && contentDialog->hasContact(friendPk)) {
+    if (chatroom->canBeRemovedFromWindow()) {
         const auto removeChatWindow = menu.addAction(tr("Remove chat from this window"));
         connect(removeChatWindow, &QAction::triggered, this, &FriendWidget::removeChatWindow);
     }
@@ -140,7 +132,6 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     auto circleMenu =
         menu.addMenu(tr("Move to circle...", "Menu to move a friend into a different circle"));
 
-    const auto pk = frnd->getPublicKey();
     const auto newCircleAction = circleMenu->addAction(tr("To new circle"));
     connect(newCircleAction, &QAction::triggered, this, &FriendWidget::moveToNewCircle);
 
@@ -170,8 +161,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     connect(autoAccept, &QAction::triggered, this, &FriendWidget::changeAutoAccept);
     menu.addSeparator();
 
-    // TODO: move to model
-    if (!contentDialog || !contentDialog->hasContact(friendPk)) {
+    if (chatroom->friendCanBeRemoved()) {
+        const auto friendPk = chatroom->getFriend()->getPublicKey();
         const auto removeAction =
             menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
         connect(removeAction, &QAction::triggered, this, [=]() { emit removeFriend(friendPk); },
@@ -194,10 +185,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
 void FriendWidget::removeChatWindow()
 {
-    const auto frnd = chatroom->getFriend();
-    const auto friendPk = frnd->getPublicKey();
-    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendPk);
-    contentDialog->removeFriend(friendPk);
+    chatroom->removeFriendFromDialogs();
 }
 
 namespace {

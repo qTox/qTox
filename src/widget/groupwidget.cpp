@@ -27,7 +27,6 @@
 #include <QMimeData>
 #include <QPalette>
 
-#include "contentdialog.h"
 #include "maskablepixmapwidget.h"
 #include "form/groupchatform.h"
 #include "src/core/core.h"
@@ -36,7 +35,6 @@
 #include "src/model/group.h"
 #include "src/model/status.h"
 #include "src/grouplist.h"
-#include "src/widget/contentdialogmanager.h"
 #include "src/widget/friendwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
@@ -86,17 +84,12 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
     QMenu menu(this);
 
     QAction* openChatWindow = nullptr;
-    QAction* removeChatWindow = nullptr;
-
-    // TODO: Move to model
-    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
-    const bool notAlone = contentDialog != nullptr && contentDialog->chatroomCount() > 1;
-
-    if (contentDialog == nullptr || notAlone) {
+    if (chatroom->possibleToOpenInNewWindow() ) {
         openChatWindow = menu.addAction(tr("Open chat in new window"));
     }
 
-    if (contentDialog && contentDialog->hasContact(groupId)) {
+    QAction* removeChatWindow = nullptr;
+    if (chatroom->canBeRemovedFromWindow()) {
         removeChatWindow = menu.addAction(tr("Remove chat from this window"));
     }
 
@@ -122,9 +115,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
     } else if (selectedItem == openChatWindow) {
         emit newWindowOpened(this);
     } else if (selectedItem == removeChatWindow) {
-        // TODO: move to model
-        ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
-        contentDialog->removeGroup(groupId);
+        chatroom->removeGroupFromDialogs();
     } else if (selectedItem == setTitle) {
         editName();
     }
