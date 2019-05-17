@@ -255,8 +255,8 @@ void FriendListWidget::setMode(Mode mode)
 
 void FriendListWidget::moveFriends(QLayout* layout)
 {
-    for (int i = 0; i < layout->count(); i++) {
-        QWidget* widget = layout->itemAt(i)->widget();
+    while (!layout->isEmpty()) {
+        QWidget* widget = layout->itemAt(0)->widget();
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(widget);
         CircleWidget* circleWidget = qobject_cast<CircleWidget*>(widget);
         if (circleWidget) {
