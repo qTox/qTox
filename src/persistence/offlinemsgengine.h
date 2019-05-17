@@ -57,8 +57,10 @@ private:
 private slots:
     void completeMessage(QMap<ReceiptNum, Message>::iterator msgIt);
 
-private:
+private slots:
     void updateTimestamp(ChatMessage::Ptr msg);
+
+private:
     void checkForCompleteMessages(ReceiptNum receipt);
 
     QMutex mutex;

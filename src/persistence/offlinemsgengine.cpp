@@ -154,7 +154,7 @@ void OfflineMsgEngine::completeMessage(QMap<ReceiptNum, Message>::iterator msgIt
     if (QThread::currentThread() == QCoreApplication::instance()->thread()) {
         updateTimestamp(msgIt->chatMessage);
     } else {
-        QMetaObject::invokeMethod(this, "updateTimestamp", Qt::QueuedConnection, Q_ARG(ChatMessage::Ptr, msgIt->chatMessage));
+        QMetaObject::invokeMethod(this, "updateTimestamp", Qt::BlockingQueuedConnection, Q_ARG(ChatMessage::Ptr, msgIt->chatMessage));
     }
     sentSavedMessages.erase(msgIt);
     receivedReceipts.removeOne(msgIt.key());
