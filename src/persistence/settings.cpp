@@ -319,7 +319,7 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
             fp.circleID = ps.value("circle", -1).toInt();
 
             if (getEnableLogging())
-                fp.activity = ps.value("activity", QDate()).toDate();
+                fp.activity = ps.value("activity",  QDateTime()).toDateTime();
             friendLst.insert(ToxId(fp.addr).getPublicKey().getByteArray(), fp);
         }
         ps.endArray();
@@ -2031,17 +2031,17 @@ void Settings::setFriendCircleID(const ToxPk& id, int circleID)
     frnd.circleID = circleID;
 }
 
-QDate Settings::getFriendActivity(const ToxPk& id) const
+QDateTime Settings::getFriendActivity(const ToxPk& id) const
 {
     QMutexLocker locker{&bigLock};
     auto it = friendLst.find(id.getByteArray());
     if (it != friendLst.end())
         return it->activity;
 
-    return QDate();
+    return QDateTime();
 }
 
-void Settings::setFriendActivity(const ToxPk& id, const QDate& activity)
+void Settings::setFriendActivity(const ToxPk& id, const QDateTime& activity)
 {
     QMutexLocker locker{&bigLock};
     auto& frnd = getOrInsertFriendPropRef(id);

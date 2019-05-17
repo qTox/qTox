@@ -28,7 +28,7 @@
 #include "src/persistence/ifriendsettings.h"
 #include "src/video/ivideosettings.h"
 
-#include <QDate>
+#include <QDateTime>
 #include <QFlags>
 #include <QFont>
 #include <QHash>
@@ -497,8 +497,8 @@ public:
     int getFriendCircleID(const ToxPk& id) const override;
     void setFriendCircleID(const ToxPk& id, int circleID) override;
 
-    QDate getFriendActivity(const ToxPk& id) const override;
-    void setFriendActivity(const ToxPk& id, const QDate& date) override;
+    QDateTime getFriendActivity(const ToxPk& id) const override;
+    void setFriendActivity(const ToxPk& id, const QDateTime& date) override;
 
     void saveFriendSettings(const ToxPk& id) override;
     void removeFriendSettings(const ToxPk& id) override;
@@ -699,7 +699,7 @@ private:
         QString autoAcceptDir = "";
         QString note = "";
         int circleID = -1;
-        QDate activity = QDate();
+        QDateTime activity = QDateTime();
         AutoAcceptCallFlags autoAcceptCall;
         bool autoGroupInvite = false;
     };

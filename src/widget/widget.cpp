@@ -1001,10 +1001,10 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     friendWidgets[friendPk] = widget;
     chatForms[friendPk] = friendForm;
 
-    QDate activityDate = settings.getFriendActivity(friendPk);
-    QDate chatDate = friendForm->getLatestDate();
-    if (chatDate > activityDate && chatDate.isValid()) {
-        settings.setFriendActivity(friendPk, chatDate);
+    const auto activityTime = settings.getFriendActivity(friendPk);
+    const auto chatTime = friendForm->getLatestTime();
+    if (chatTime > activityTime && chatTime.isValid()) {
+        settings.setFriendActivity(friendPk, chatTime);
     }
 
     contactListWidget->addFriendWidget(widget, Status::Status::Offline, settings.getFriendCircleID(friendPk));
@@ -1495,15 +1495,12 @@ void Widget::onFriendRequestReceived(const ToxPk& friendPk, const QString& messa
 void Widget::updateFriendActivity(const Friend* frnd)
 {
     const ToxPk& pk = frnd->getPublicKey();
-    QDate date = settings.getFriendActivity(pk);
-    if (date != QDate::currentDate()) {
-        // Update old activity before after new one. Store old date first.
-        QDate oldDate = settings.getFriendActivity(pk);
-        settings.setFriendActivity(pk, QDate::currentDate());
-        FriendWidget* widget = friendWidgets[frnd->getPublicKey()];
-        contactListWidget->moveWidget(widget, frnd->getStatus());
-        contactListWidget->updateActivityDate(oldDate);
-    }
+    const auto oldTime = settings.getFriendActivity(pk);
+    const auto newTime = QDateTime::currentDateTime();
+    settings.setFriendActivity(pk, newTime);
+    FriendWidget* widget = friendWidgets[frnd->getPublicKey()];
+    contactListWidget->moveWidget(widget, frnd->getStatus());
+    contactListWidget->updateActivityTime(oldTime); // update old category widget
 }
 
 void Widget::removeFriend(Friend* f, bool fake)

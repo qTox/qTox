@@ -62,7 +62,7 @@ public:
 
     void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
 
-    void updateActivityDate(const QDate& date);
+    void updateActivityTime(const QDateTime& date);
     void reDraw();
 
 signals:

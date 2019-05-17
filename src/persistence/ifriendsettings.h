@@ -38,8 +38,8 @@ public:
     virtual int getFriendCircleID(const ToxPk& pk) const = 0;
     virtual void setFriendCircleID(const ToxPk& pk, int circleID) = 0;
 
-    virtual QDate getFriendActivity(const ToxPk& pk) const = 0;
-    virtual void setFriendActivity(const ToxPk& pk, const QDate& date) = 0;
+    virtual QDateTime getFriendActivity(const ToxPk& pk) const = 0;
+    virtual void setFriendActivity(const ToxPk& pk, const QDateTime& date) = 0;
 
     virtual void saveFriendSettings(const ToxPk& pk) = 0;
     virtual void removeFriendSettings(const ToxPk& pk) = 0;
