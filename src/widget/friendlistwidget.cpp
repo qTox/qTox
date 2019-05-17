@@ -97,9 +97,6 @@ qint64 timeUntilTomorrow()
 
 FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     : QWidget(parent)
-    // Prevent Valgrind from complaining. We're changing this to Name here.
-    // Must be Activity for change to take effect.
-    , mode(Activity)
     , groupsOnTop(groupsOnTop)
 {
     listLayout = new FriendListLayout();
@@ -113,7 +110,8 @@ FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     listLayout->removeItem(listLayout->getLayoutOnline());
     listLayout->removeItem(listLayout->getLayoutOffline());
 
-    setMode(Name);
+    mode = Settings::getInstance().getFriendSortingMode();
+    sortByMode(mode);
 
     onGroupchatPositionChanged(groupsOnTop);
     dayTimer = new QTimer(this);
@@ -145,14 +143,20 @@ FriendListWidget::~FriendListWidget()
     }
 }
 
-void FriendListWidget::setMode(Mode mode)
+void FriendListWidget::setMode(SortingMode mode)
 {
     if (this->mode == mode)
         return;
 
     this->mode = mode;
+    Settings::getInstance().setFriendSortingMode(mode);
 
-    if (mode == Name) {
+    sortByMode(mode);
+}
+
+void FriendListWidget::sortByMode(SortingMode mode)
+{
+    if (mode == SortingMode::Name) {
         circleLayout = new GenericChatItemLayout;
         circleLayout->getLayout()->setSpacing(0);
         circleLayout->getLayout()->setMargin(0);
@@ -193,7 +197,7 @@ void FriendListWidget::setMode(Mode mode)
         }
 
         reDraw();
-    } else if (mode == Activity) {
+    } else if (mode == SortingMode::Activity) {
         QLocale ql(Settings::getInstance().getTranslation());
         QDate today = QDate::currentDate();
 #define COMMENT "Category for sorting friends by activity"
@@ -224,7 +228,9 @@ void FriendListWidget::setMode(Mode mode)
 
         moveFriends(listLayout->getLayoutOffline());
         moveFriends(listLayout->getLayoutOnline());
-        moveFriends(circleLayout->getLayout());
+        if (circleLayout != nullptr) {
+            moveFriends(circleLayout->getLayout());
+        }
 
         for (int i = 0; i < activityLayout->count(); ++i) {
             QWidget* widget = activityLayout->itemAt(i)->widget();
@@ -273,7 +279,7 @@ void FriendListWidget::moveFriends(QLayout* layout)
     }
 }
 
-FriendListWidget::Mode FriendListWidget::getMode() const
+FriendListWidget::SortingMode FriendListWidget::getMode() const
 {
     return mode;
 }
@@ -308,7 +314,7 @@ void FriendListWidget::removeGroupWidget(GroupWidget* w)
 void FriendListWidget::removeFriendWidget(FriendWidget* w)
 {
     const Friend* contact = w->getFriend();
-    if (mode == Activity) {
+    if (mode == SortingMode::Activity) {
         QDate activityDate = getDateFriend(contact);
         int time = static_cast<int>(getTime(activityDate));
         QWidget* widget = activityLayout->itemAt(time)->widget();
@@ -400,7 +406,7 @@ void FriendListWidget::onFriendWidgetRenamed(FriendWidget* friendWidget)
 {
     const Friend* contact = friendWidget->getFriend();
     auto status = contact->getStatus();
-    if (mode == Activity) {
+    if (mode == SortingMode::Activity) {
         QDate activityDate = getDateFriend(contact);
         int time = static_cast<int>(getTime(activityDate));
         QWidget* widget = activityLayout->itemAt(time)->widget();
@@ -425,7 +431,7 @@ void FriendListWidget::onGroupchatPositionChanged(bool top)
 {
     groupsOnTop = top;
 
-    if (mode != Name)
+    if (mode != SortingMode::Name)
         return;
 
     listLayout->removeItem(groupLayout.getLayout());
@@ -447,7 +453,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
     int index = -1;
     FriendWidget* friendWidget = qobject_cast<FriendWidget*>(activeChatroomWidget);
 
-    if (mode == Activity) {
+    if (mode == SortingMode::Activity) {
         if (!friendWidget) {
             return;
         }
@@ -601,9 +607,9 @@ void FriendListWidget::dropEvent(QDropEvent* event)
 
 void FriendListWidget::dayTimeout()
 {
-    if (mode == Activity) {
-        setMode(Name);
-        setMode(Activity); // Refresh all.
+    if (mode == SortingMode::Activity) {
+        setMode(SortingMode::Name);
+        setMode(SortingMode::Activity); // Refresh all.
     }
 
     dayTimer->start(timeUntilTomorrow());
@@ -611,7 +617,7 @@ void FriendListWidget::dayTimeout()
 
 void FriendListWidget::moveWidget(FriendWidget* widget, Status::Status s, bool add)
 {
-    if (mode == Name) {
+    if (mode == SortingMode::Name) {
         const Friend* f = widget->getFriend();
         int circleId = Settings::getInstance().getFriendCircleID(f->getPublicKey());
         CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
@@ -638,7 +644,7 @@ void FriendListWidget::moveWidget(FriendWidget* widget, Status::Status s, bool a
 
 void FriendListWidget::updateActivityDate(const QDate& date)
 {
-    if (mode != Activity)
+    if (mode != SortingMode::Activity)
         return;
 
     int time = static_cast<int>(getTime(date));
@@ -663,7 +669,7 @@ CircleWidget* FriendListWidget::createCircleWidget(int id)
         id = Settings::getInstance().addCircle();
 
     // Stop, after it has been created. Code after this is for displaying.
-    if (mode == Activity)
+    if (mode == SortingMode::Activity)
         return nullptr;
 
     assert(circleLayout != nullptr);

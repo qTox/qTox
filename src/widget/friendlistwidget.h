@@ -23,6 +23,7 @@
 #include "genericchatitemlayout.h"
 #include "src/core/core.h"
 #include "src/model/status.h"
+#include "src/persistence/settings.h"
 #include <QWidget>
 
 class QVBoxLayout;
@@ -39,16 +40,11 @@ class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    enum Mode : uint8_t
-    {
-        Name,
-        Activity,
-    };
-
+    using SortingMode = Settings::FriendListSortingMode;
     explicit FriendListWidget(Widget* parent, bool groupsOnTop = true);
     ~FriendListWidget();
-    void setMode(Mode mode);
-    Mode getMode() const;
+    void setMode(SortingMode mode);
+    SortingMode getMode() const;
 
     void addGroupWidget(GroupWidget* widget);
     void addFriendWidget(FriendWidget* w, Status::Status s, int circleIndex);
@@ -86,8 +82,9 @@ private:
     CircleWidget* createCircleWidget(int id = -1);
     QLayout* nextLayout(QLayout* layout, bool forward) const;
     void moveFriends(QLayout* layout);
+    void sortByMode(SortingMode mode);
 
-    Mode mode;
+    SortingMode mode;
     bool groupsOnTop;
     FriendListLayout* listLayout;
     GenericChatItemLayout* circleLayout = nullptr;

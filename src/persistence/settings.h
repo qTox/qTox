@@ -133,6 +133,12 @@ public:
         WITHOUT_CHARS = 2
     };
 
+    enum class FriendListSortingMode
+    {
+        Name,
+        Activity,
+    };
+
 public:
     static Settings& getInstance();
     static void destroyInstance();
@@ -204,6 +210,7 @@ signals:
     void styleChanged(const QString& style);
     void themeColorChanged(int color);
     void compactLayoutChanged(bool enabled);
+    void sortingModeChanged(FriendListSortingMode mode);
     void showIdenticonsChanged(bool enabled);
 
     // ChatView
@@ -515,6 +522,9 @@ public:
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
 
+    FriendListSortingMode getFriendSortingMode() const;
+    void setFriendSortingMode(FriendListSortingMode mode);
+
     bool getSeparateWindow() const;
     void setSeparateWindow(bool value);
 
@@ -592,6 +602,7 @@ private:
     bool autoLogin;
     bool fauxOfflineMessaging;
     bool compactLayout;
+    FriendListSortingMode sortingMode;
     bool groupchatPosition;
     bool separateWindow;
     bool dontGroupWindows;
