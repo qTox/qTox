@@ -28,6 +28,8 @@
 #include "src/model/group.h"
 #include "src/model/status.h"
 #include "src/persistence/settings.h"
+#include "src/widget/categorywidget.h"
+
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <QGridLayout>
@@ -263,14 +265,18 @@ void FriendListWidget::moveFriends(QLayout* layout)
             circleWidget->moveFriendWidgets(this);
         } else if (friendWidget) {
             const Friend* contact = friendWidget->getFriend();
-            const auto activityTime = getActiveTimeFriend(contact);
-            int timeIndex = static_cast<int>(getTimeBucket(activityTime));
-
-            QWidget* w = activityLayout->itemAt(timeIndex)->widget();
-            CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(w);
+            auto* categoryWidget = getTimeCategoryWidget(contact);
             categoryWidget->addFriendWidget(friendWidget, contact->getStatus());
         }
     }
+}
+
+CategoryWidget* FriendListWidget::getTimeCategoryWidget(const Friend* frd) const
+{
+    const auto activityTime = getActiveTimeFriend(frd);
+    int timeIndex = static_cast<int>(getTimeBucket(activityTime));
+    QWidget* widget = activityLayout->itemAt(timeIndex)->widget();
+    return qobject_cast<CategoryWidget*>(widget);
 }
 
 FriendListWidget::Mode FriendListWidget::getMode() const
@@ -309,10 +315,7 @@ void FriendListWidget::removeFriendWidget(FriendWidget* w)
 {
     const Friend* contact = w->getFriend();
     if (mode == Activity) {
-        const auto activityTime = getActiveTimeFriend(contact);
-        int timeIndex = static_cast<int>(getTimeBucket(activityTime));
-        QWidget* widget = activityLayout->itemAt(timeIndex)->widget();
-        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
+        auto* categoryWidget = getTimeCategoryWidget(contact);
         categoryWidget->removeFriendWidget(w, contact->getStatus());
         categoryWidget->setVisible(categoryWidget->hasChatrooms());
     } else {
@@ -401,10 +404,7 @@ void FriendListWidget::onFriendWidgetRenamed(FriendWidget* friendWidget)
     const Friend* contact = friendWidget->getFriend();
     auto status = contact->getStatus();
     if (mode == Activity) {
-        const auto activityTime = getActiveTimeFriend(contact);
-        int timeIndex = static_cast<int>(getTimeBucket(activityTime));
-        QWidget* widget = activityLayout->itemAt(timeIndex)->widget();
-        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
+        auto* categoryWidget = getTimeCategoryWidget(contact);
         categoryWidget->removeFriendWidget(friendWidget, status);
         categoryWidget->addFriendWidget(friendWidget, status);
     } else {
@@ -452,11 +452,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
             return;
         }
 
-        const auto activityTime = getActiveTimeFriend(friendWidget->getFriend());
-        index = static_cast<int>(getTimeBucket(activityTime));
-        QWidget* widget = activityLayout->itemAt(index)->widget();
-        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
-
+        CategoryWidget* categoryWidget = getTimeCategoryWidget(friendWidget->getFriend());
         if (categoryWidget == nullptr || categoryWidget->cycleContacts(friendWidget, forward)) {
             return;
         }
@@ -473,7 +469,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
                 continue;
             }
 
-            widget = activityLayout->itemAt(index)->widget();
+            auto* widget = activityLayout->itemAt(index)->widget();
             categoryWidget = qobject_cast<CategoryWidget*>(widget);
 
             if (categoryWidget != nullptr) {
@@ -627,10 +623,7 @@ void FriendListWidget::moveWidget(FriendWidget* widget, Status::Status s, bool a
         circleWidget->addFriendWidget(widget, s);
     } else {
         const Friend* contact = widget->getFriend();
-        const auto activityTime = getActiveTimeFriend(contact);
-        int timeIndex = static_cast<int>(getTimeBucket(activityTime));
-        QWidget* w = activityLayout->itemAt(timeIndex)->widget();
-        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(w);
+        auto* categoryWidget = getTimeCategoryWidget(contact);
         categoryWidget->addFriendWidget(widget, contact->getStatus());
         categoryWidget->show();
     }
