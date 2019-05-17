@@ -82,8 +82,8 @@ public:
                               const QDateTime& datetime);
     void addAlertMessage(const ToxPk& author, const QString& message, const QDateTime& datetime, bool colorizeName = false);
     static QString resolveToxPk(const ToxPk& pk);
-    QDate getLatestDate() const;
-    QDate getFirstDate() const;
+    QDateTime getLatestTime() const;
+    QDateTime getFirstTime() const;
 
 signals:
     void sendMessage(uint32_t, QString);
@@ -125,7 +125,7 @@ protected slots:
 private:
     void retranslateUi();
     void addSystemDateMessage();
-    QDate getDate(const ChatLine::Ptr& chatLine) const;
+    QDateTime getTime(const ChatLine::Ptr& chatLine) const;
 
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
