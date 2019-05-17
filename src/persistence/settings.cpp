@@ -346,6 +346,7 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
     ps.beginGroup("GUI");
     {
         compactLayout = ps.value("compactLayout", true).toBool();
+        sortingMode = static_cast<FriendListSortingMode>(ps.value("friendSortingMethod", static_cast<int>(FriendListSortingMode::Name)).toInt());
     }
     ps.endGroup();
 
@@ -610,6 +611,7 @@ void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
     ps.beginGroup("GUI");
     {
         ps.setValue("compactLayout", compactLayout);
+        ps.setValue("friendSortingMethod", static_cast<int>(sortingMode));
     }
     ps.endGroup();
 
@@ -2089,6 +2091,22 @@ void Settings::setCompactLayout(bool value)
     if (value != compactLayout) {
         compactLayout = value;
         emit compactLayoutChanged(value);
+    }
+}
+
+Settings::FriendListSortingMode Settings::getFriendSortingMode() const
+{
+    QMutexLocker locker{&bigLock};
+    return sortingMode;
+}
+
+void Settings::setFriendSortingMode(FriendListSortingMode mode)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (mode != sortingMode) {
+        sortingMode = mode;
+        emit sortingModeChanged(sortingMode);
     }
 }
 
