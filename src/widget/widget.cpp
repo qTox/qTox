@@ -991,7 +991,9 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     settings.updateFriendAddress(friendPk.toString());
 
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
-    std::shared_ptr<FriendChatroom> chatroom(new FriendChatroom(newfriend));
+    auto dialogManager = ContentDialogManager::getInstance();
+    auto rawChatroom = new FriendChatroom(newfriend, dialogManager);
+    std::shared_ptr<FriendChatroom> chatroom(rawChatroom);
     const auto compact = settings.getCompactLayout();
     auto widget = new FriendWidget(chatroom, compact);
     auto history = Nexus::getProfile()->getHistory();
@@ -1883,9 +1885,12 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     }
 
     const auto groupName = tr("Groupchat #%1").arg(groupnumber);
-    bool enabled = core->getGroupAvEnabled(groupnumber);
+    const bool enabled = core->getGroupAvEnabled(groupnumber);
     Group* newgroup = GroupList::addGroup(groupnumber, groupId, groupName, enabled, core->getUsername());
-    std::shared_ptr<GroupChatroom> chatroom(new GroupChatroom(newgroup));
+    auto dialogManager = ContentDialogManager::getInstance();
+    auto rawChatroom = new GroupChatroom(newgroup, dialogManager);
+    std::shared_ptr<GroupChatroom> chatroom(rawChatroom);
+
     const auto compact = settings.getCompactLayout();
     auto widget = new GroupWidget(chatroom, compact);
     auto form = new GroupChatForm(newgroup);
