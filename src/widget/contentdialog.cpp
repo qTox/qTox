@@ -202,7 +202,7 @@ void ContentDialog::removeFriend(const ToxPk& friendPk)
 
     chatroomWidget->deleteLater();
 
-    if (chatroomWidgetCount() == 0) {
+    if (chatroomCount() == 0) {
         contentLayout->clear();
         activeChatroomWidget = nullptr;
         deleteLater();
@@ -226,7 +226,7 @@ void ContentDialog::removeGroup(const GroupId& groupId)
     groupLayout.removeSortedWidget(chatroomWidget);
     chatroomWidget->deleteLater();
 
-    if (chatroomWidgetCount() == 0) {
+    if (chatroomCount() == 0) {
         contentLayout->clear();
         activeChatroomWidget = nullptr;
         deleteLater();
@@ -246,7 +246,7 @@ void ContentDialog::closeIfEmpty()
     }
 }
 
-int ContentDialog::chatroomWidgetCount() const
+int ContentDialog::chatroomCount() const
 {
     return friendLayout->friendTotalCount() + groupLayout.getLayout()->count();
 }
@@ -469,7 +469,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent* event)
         ToxPk friendId = contact->getPublicKey();
 
         // If friend is already in a dialog then you can't drop friend where it already is.
-        if (!hasContactWidget(friendId)) {
+        if (!hasContact(friendId)) {
             event->acceptProposedAction();
         }
     } else if (group) {
@@ -480,7 +480,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent* event)
             return;
         }
 
-        if (!hasContactWidget(groupId)) {
+        if (!hasContact(groupId)) {
             event->acceptProposedAction();
         }
     }
@@ -586,11 +586,6 @@ void ContentDialog::activate(GenericChatroomWidget* widget)
     updateTitleAndStatusIcon();
 }
 
-bool ContentDialog::containsContact(const ContactId& contactId) const
-{
-    return contactWidgets.contains(contactId);
-}
-
 void ContentDialog::updateFriendStatus(const ToxPk& friendPk, Status::Status status)
 {
     auto widget = qobject_cast<FriendWidget*>(contactWidgets.value(friendPk));
@@ -605,7 +600,7 @@ void ContentDialog::updateContactStatusLight(const ContactId& contactId)
     }
 }
 
-bool ContentDialog::isContactWidgetActive(const ContactId& contactId)
+bool ContentDialog::isContactActive(const ContactId& contactId) const
 {
     auto widget = contactWidgets.value(contactId);
     if (widget == nullptr) {
@@ -674,7 +669,7 @@ void ContentDialog::saveSplitterState()
     Settings::getInstance().setDialogSplitterState(splitter->saveState());
 }
 
-bool ContentDialog::hasContactWidget(const ContactId& contactId) const
+bool ContentDialog::hasContact(const ContactId& contactId) const
 {
     return contactWidgets.contains(contactId);
 }
