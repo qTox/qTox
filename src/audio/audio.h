@@ -21,57 +21,14 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include <QObject>
 #include <memory>
 
-class IAudioSink;
-class IAudioSource;
-class Audio : public QObject
+class IAudioControl;
+class IAudioSettings;
+class Audio
 {
-    Q_OBJECT
-
 public:
-    static Audio& getInstance();
-
-    virtual qreal outputVolume() const = 0;
-    virtual void setOutputVolume(qreal volume) = 0;
-    virtual qreal maxOutputVolume() const = 0;
-    virtual qreal minOutputVolume() const = 0;
-
-    virtual qreal minInputGain() const = 0;
-    virtual void setMinInputGain(qreal dB) = 0;
-
-    virtual qreal maxInputGain() const = 0;
-    virtual void setMaxInputGain(qreal dB) = 0;
-
-    virtual qreal inputGain() const = 0;
-    virtual void setInputGain(qreal dB) = 0;
-
-    virtual qreal minInputThreshold() const = 0;
-    virtual qreal maxInputThreshold() const = 0;
-
-    virtual qreal getInputThreshold() const = 0;
-    virtual void setInputThreshold(qreal percent) = 0;
-
-    virtual void reinitInput(const QString& inDevDesc) = 0;
-    virtual bool reinitOutput(const QString& outDevDesc) = 0;
-
-    virtual bool isOutputReady() const = 0;
-
-    virtual QStringList outDeviceNames() = 0;
-    virtual QStringList inDeviceNames() = 0;
-
-    virtual std::unique_ptr<IAudioSink> makeSink() = 0;
-    virtual std::unique_ptr<IAudioSource> makeSource() = 0;
-
-protected:
-    // Public default audio settings
-    // Samplerate for Tox calls and sounds
-    static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000;
-    static constexpr uint32_t AUDIO_FRAME_DURATION = 20;
-    static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT_PER_CHANNEL =
-        AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
-    uint32_t AUDIO_FRAME_SAMPLE_COUNT_TOTAL = 0;
+    static std::unique_ptr<IAudioControl> makeAudio(IAudioSettings& settings);
 };
 
 #endif // AUDIO_H

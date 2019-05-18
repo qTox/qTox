@@ -159,7 +159,7 @@ bool OpenAL2::initOutputEchoCancel()
                       ALC_FORMAT_TYPE_SOFT,
                       ALC_SHORT_SOFT,
                       ALC_FREQUENCY,
-                      Audio::AUDIO_SAMPLE_RATE,
+                      IAudioControl::AUDIO_SAMPLE_RATE,
                       0}; // End of List
 
     alProxyDev = alcLoopbackOpenDeviceSOFT(nullptr);

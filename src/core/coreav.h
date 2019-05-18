@@ -29,6 +29,7 @@
 
 class Friend;
 class Group;
+class IAudioControl;
 class QThread;
 class QTimer;
 class CoreVideoSource;
@@ -43,9 +44,11 @@ class CoreAV : public QObject
     Q_OBJECT
 
 public:
-
     using CoreAVPtr = std::unique_ptr<CoreAV>;
     static CoreAVPtr makeCoreAV(Tox* core);
+
+    void setAudio(IAudioControl& newAudio);
+    IAudioControl* getAudio();
 
     ~CoreAV();
 
@@ -124,7 +127,8 @@ private:
     static constexpr uint32_t VIDEO_DEFAULT_BITRATE = 2500;
 
 private:
-
+    // atomic because potentially accessed by different threads
+    std::atomic<IAudioControl*> audio;
     std::unique_ptr<ToxAV, ToxAVDeleter> toxav;
     std::unique_ptr<QThread> coreavThread;
     QTimer* iterateTimer = nullptr;
@@ -133,8 +137,6 @@ private:
     using ToxGroupCallPtr = std::unique_ptr<ToxGroupCall>;
     static std::map<int, ToxGroupCallPtr> groupCalls;
     std::atomic_flag threadSwitchLock;
-
-    friend class Audio;
 };
 
 #endif // COREAV_H

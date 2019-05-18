@@ -281,6 +281,7 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
     assert(core->tox != nullptr);
 
     // toxcore is successfully created, create toxav
+    // TODO(sudden6): don't create CoreAv here, Core should be usable without CoreAV
     core->av = CoreAV::makeCoreAV(core->tox.get());
     if (!core->av) {
         qCritical() << "Toxav failed to start";

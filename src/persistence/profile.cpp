@@ -32,6 +32,7 @@
 #include "profilelocker.h"
 #include "settings.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 #include "src/core/corefile.h"
 #include "src/net/avatarbroadcaster.h"
 #include "src/nexus.h"
@@ -96,7 +97,8 @@ void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewPr
             Qt::ConnectionType::QueuedConnection);
 }
 
-Profile::Profile(QString name, const QString& password, bool isNewProfile, const QByteArray& toxsave, std::unique_ptr<ToxEncrypt> passkey)
+Profile::Profile(QString name, const QString& password, bool isNewProfile,
+                 const QByteArray& toxsave, std::unique_ptr<ToxEncrypt> passkey)
     : name{name}
     , passkey{std::move(passkey)}
     , isRemoved{false}
@@ -797,7 +799,10 @@ void Profile::restartCore()
         if (saveToxSave(savedata)) {
             qDebug() << "Restarting Core";
             const bool isNewProfile{false};
+            IAudioControl* audioBak = core->getAv()->getAudio();
+            assert(audioBak != nullptr);
             initCore(savedata, Settings::getInstance(), isNewProfile);
+            core->getAv()->setAudio(*audioBak);
             core->start();
         } else {
             qCritical() << "Failed to save, not restarting core";

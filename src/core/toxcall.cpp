@@ -28,10 +28,11 @@
  * @brief Keeps sources for users in group calls.
  */
 
-ToxCall::ToxCall(bool VideoEnabled, CoreAV& av)
+ToxCall::ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio)
     : av{&av}
+    , audio(audio)
     , videoEnabled{VideoEnabled}
-    , audioSource{Audio::getInstance().makeSource()}
+    , audioSource(audio.makeSource())
 {}
 
 ToxCall::~ToxCall()
@@ -100,9 +101,9 @@ CoreVideoSource* ToxCall::getVideoSource() const
     return videoSource;
 }
 
-ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
-    : ToxCall(VideoEnabled, av)
-    , sink(Audio::getInstance().makeSink())
+ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av, IAudioControl& audio)
+    : ToxCall(VideoEnabled, av, audio)
+    , sink(audio.makeSink())
     , friendId{FriendNum}
 {
     // TODO(sudden6): move this to audio source
@@ -149,7 +150,7 @@ ToxFriendCall::~ToxFriendCall()
 
 void ToxFriendCall::onAudioSourceInvalidated()
 {
-    auto newSrc = Audio::getInstance().makeSource();
+    auto newSrc = audio.makeSource();
     audioInConn =
         QObject::connect(newSrc.get(), &IAudioSource::frameAvailable,
                          [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
@@ -163,7 +164,7 @@ void ToxFriendCall::onAudioSourceInvalidated()
 
 void ToxFriendCall::onAudioSinkInvalidated()
 {
-    auto newSink = Audio::getInstance().makeSink();
+    auto newSink = audio.makeSink();
 
     audioSinkInvalid = QObject::connect(newSink.get(), &IAudioSink::invalidated,
                                         [this]() { this->onAudioSinkInvalidated(); });
@@ -211,8 +212,8 @@ void ToxFriendCall::playAudioBuffer(const int16_t* data, int samples, unsigned c
     }
 }
 
-ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
-    : ToxCall(false, av)
+ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av, IAudioControl& audio)
+    : ToxCall(false, av, audio)
     , groupId{GroupNum}
 {
     // register audio
@@ -238,7 +239,7 @@ ToxGroupCall::~ToxGroupCall()
 
 void ToxGroupCall::onAudioSourceInvalidated()
 {
-    auto newSrc = Audio::getInstance().makeSource();
+    auto newSrc = audio.makeSource();
     // TODO(sudden6): move this to audio source
     audioInConn =
         QObject::connect(audioSource.get(), &IAudioSource::frameAvailable,
@@ -274,7 +275,6 @@ void ToxGroupCall::removePeer(ToxPk peerId)
 
 void ToxGroupCall::addPeer(ToxPk peerId)
 {
-    auto& audio = Audio::getInstance();
     std::unique_ptr<IAudioSink> newSink = audio.makeSink();
     peers.emplace(peerId, std::move(newSink));
 

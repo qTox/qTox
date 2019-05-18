@@ -40,6 +40,7 @@
 
 class CoreAV;
 class CoreFile;
+class IAudioControl;
 class ICoreSettings;
 class GroupInvite;
 class Profile;

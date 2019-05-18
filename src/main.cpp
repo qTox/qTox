@@ -17,11 +17,13 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "persistence/settings.h"
+#include "src/audio/audio.h"
+#include "src/core/coreav.h"
 #include "src/ipc.h"
 #include "src/net/toxuri.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
 #include "src/persistence/toxsave.h"
 #include "src/video/camerasource.h"
 #include "src/widget/loginscreen.h"
@@ -347,9 +349,17 @@ int main(int argc, char* argv[])
     }
 
     Nexus::getInstance().setProfile(profile);
-    Settings::getInstance().setCurrentProfile(profileName);
+    Settings& s = Settings::getInstance();
+    s.setCurrentProfile(profileName);
+
+    auto audio = Audio::makeAudio(s);
+    assert(audio != nullptr);
+    // TODO(sudden6): init CoreAV audio backend somewhere else so main doesn't depend on coreav.h
+    profile->getCore()->getAv()->setAudio(*audio);
 
     Nexus& nexus = Nexus::getInstance();
+    // TODO(sudden6): remove once we get rid of Nexus
+    nexus.audio = audio.get();
     nexus.start();
 
     // Start to accept Inter-process communication

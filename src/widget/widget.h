@@ -29,12 +29,13 @@
 
 #include "genericchatitemwidget.h"
 
+#include "src/audio/iaudiocontrol.h"
 #include "src/audio/iaudiosink.h"
 #include "src/core/core.h"
-#include "src/core/toxfile.h"
 #include "src/core/groupid.h"
-#include "src/core/toxpk.h"
+#include "src/core/toxfile.h"
 #include "src/core/toxid.h"
+#include "src/core/toxpk.h"
 #if DESKTOP_NOTIFICATIONS
 #include "src/platform/desktop_notifications/desktopnotify.h"
 #endif
@@ -112,13 +113,13 @@ private:
     };
 
 public:
-    explicit Widget(QWidget* parent = nullptr);
+    explicit Widget(IAudioControl& audio, QWidget* parent = nullptr);
     ~Widget() override;
     void init();
     void setCentralWidget(QWidget* widget, const QString& widgetName);
     QString getUsername();
     Camera* getCamera();
-    static Widget* getInstance();
+    static Widget* getInstance(IAudioControl* audio = nullptr);
     void showUpdateDownloadProgress();
     void addFriendDialog(const Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
@@ -185,7 +186,7 @@ public slots:
     void onFriendDialogShown(const Friend* f);
     void onGroupDialogShown(Group* g);
     void toggleFullscreen();
-    void refreshPeerListsLocal(const QString &username);
+    void refreshPeerListsLocal(const QString& username);
     void onUpdateAvailable(QString latestVersion, QUrl link);
 
 signals:
@@ -312,6 +313,8 @@ private:
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
     int icon_size;
+
+    IAudioControl& audio;
     std::unique_ptr<IAudioSink> audioNotification = nullptr;
     Settings& settings;
 

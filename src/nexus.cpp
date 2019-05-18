@@ -175,7 +175,7 @@ void Nexus::showMainGUI()
     assert(profile);
 
     // Create GUI
-    widget = Widget::getInstance();
+    widget = Widget::getInstance(audio);
 
     // Start GUI
     widget->init();

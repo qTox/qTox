@@ -30,7 +30,7 @@
 
 #include <memory>
 
-class Audio;
+class IAudioControl;
 class IAudioSettings;
 class IAudioSink;
 class IAudioSource;
@@ -42,8 +42,8 @@ class AVForm : public GenericForm, private Ui::AVForm
 {
     Q_OBJECT
 public:
-    AVForm(Audio* audio, CoreAV* coreAV, CameraSource& camera, IAudioSettings* audioSettings,
-           IVideoSettings* videoSettings);
+    AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
+           IAudioSettings* audioSettings, IVideoSettings* videoSettings);
     ~AVForm() override;
     QString getFormName() final override
     {
@@ -97,7 +97,7 @@ private:
     qreal getValueFromSteps(int steps, qreal valMin, qreal valMax);
 
 private:
-    Audio* audio;
+    IAudioControl& audio;
     CoreAV* coreAV;
     IAudioSettings* audioSettings;
     IVideoSettings* videoSettings;

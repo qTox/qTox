@@ -23,6 +23,8 @@
 
 #include <QObject>
 
+#include "src/audio/iaudiocontrol.h"
+
 class Widget;
 class Profile;
 class Core;
@@ -79,6 +81,9 @@ private:
     QSignalMapper* windowMapper;
     QActionGroup* windowActions = nullptr;
 #endif
+public:
+    // TODO(sudden6): hack to pass the audio instance
+    IAudioControl* audio = nullptr;
 
 private:
     explicit Nexus(QObject* parent = nullptr);
