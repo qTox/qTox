@@ -1,6 +1,7 @@
 #ifndef TOXCALL_H
 #define TOXCALL_H
 
+#include "src/audio/iaudiocontrol.h"
 #include "src/audio/iaudiosink.h"
 #include "src/audio/iaudiosource.h"
 #include <src/core/toxpk.h>
@@ -22,7 +23,7 @@ class ToxCall
 {
 protected:
     ToxCall() = delete;
-    ToxCall(bool VideoEnabled, CoreAV& av);
+    ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio);
     ~ToxCall();
 
 public:
@@ -53,6 +54,7 @@ protected:
     bool active{false};
     CoreAV* av{nullptr};
     // audio
+    IAudioControl& audio;
     QMetaObject::Connection audioInConn;
     bool muteMic{false};
     bool muteVol{false};
@@ -69,7 +71,7 @@ class ToxFriendCall : public ToxCall
 {
 public:
     ToxFriendCall() = delete;
-    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av);
+    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av, IAudioControl& audio);
     ToxFriendCall(ToxFriendCall&& other) = delete;
     ToxFriendCall& operator=(ToxFriendCall&& other) = delete;
     ~ToxFriendCall();
@@ -101,7 +103,7 @@ class ToxGroupCall : public ToxCall
 {
 public:
     ToxGroupCall() = delete;
-    ToxGroupCall(int GroupNum, CoreAV& av);
+    ToxGroupCall(int GroupNum, CoreAV& av, IAudioControl& audio);
     ToxGroupCall(ToxGroupCall&& other) = delete;
     ~ToxGroupCall();
 

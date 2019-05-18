@@ -81,7 +81,8 @@ std::map<uint32_t, CoreAV::ToxFriendCallPtr> CoreAV::calls;
 std::map<int, CoreAV::ToxGroupCallPtr> CoreAV::groupCalls;
 
 CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav)
-    : toxav{std::move(toxav)}
+    : audio{nullptr}
+    , toxav{std::move(toxav)}
     , coreavThread{new QThread{this}}
     , iterateTimer{new QTimer{this}}
     , threadSwitchLock{false}
@@ -102,7 +103,8 @@ CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav)
     coreavThread->start();
 }
 
-void CoreAV::connectCallbacks(ToxAV& toxav) {
+void CoreAV::connectCallbacks(ToxAV& toxav)
+{
     toxav_callback_call(&toxav, CoreAV::callCallback, this);
     toxav_callback_call_state(&toxav, CoreAV::stateCallback, this);
     toxav_callback_audio_bit_rate(&toxav, CoreAV::audioBitrateCallback, this);
@@ -137,6 +139,27 @@ CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core)
     assert(toxav != nullptr);
 
     return CoreAVPtr{new CoreAV{std::move(toxav)}};
+}
+
+/**
+ * @brief Set the audio backend
+ * @param audio The audio backend to use
+ * @note This must be called before starting CoreAV and audio must outlive CoreAV
+ */
+void CoreAV::setAudio(IAudioControl& newAudio)
+{
+    audio.exchange(&newAudio);
+}
+
+/**
+ * @brief Get the audio backend used
+ * @return Pointer to the audio backend
+ * @note This is needed only for the case CoreAV needs to restart and the restarting class doesn't
+ * have access to the audio backend and wants to keep it the same.
+ */
+IAudioControl* CoreAV::getAudio()
+{
+    return audio;
 }
 
 CoreAV::~CoreAV()
@@ -253,7 +276,8 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
     TOXAV_ERR_ANSWER err;
 
     const uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (toxav_answer(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate, &err)) {
+    if (toxav_answer(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(),
+                     videoBitrate, &err)) {
         it->second->setActive(true);
         return true;
     } else {
@@ -289,10 +313,13 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     }
 
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (!toxav_call(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate, nullptr))
+    if (!toxav_call(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate,
+                    nullptr))
         return false;
 
-    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall(friendNum, video, *this));
+    // Audio backend must be set before making a call
+    assert(audio != nullptr);
+    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall(friendNum, video, *this, *audio));
     assert(call != nullptr);
     auto ret = calls.emplace(friendNum, std::move(call));
     ret.first->second->startTimeout(friendNum);
@@ -420,8 +447,8 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
     TOXAV_ERR_SEND_FRAME err;
     int retries = 0;
     do {
-        if (!toxav_video_send_frame(toxav.get(), callId, frame.width, frame.height, frame.y, frame.u,
-                                    frame.v, &err)) {
+        if (!toxav_video_send_frame(toxav.get(), callId, frame.width, frame.height, frame.y,
+                                    frame.u, frame.v, &err)) {
             if (err == TOXAV_ERR_SEND_FRAME_SYNC) {
                 ++retries;
                 QThread::usleep(500);
@@ -544,7 +571,9 @@ void CoreAV::joinGroupCall(int groupId)
 {
     qDebug() << QString("Joining group call %1").arg(groupId);
 
-    ToxGroupCallPtr groupcall = ToxGroupCallPtr(new ToxGroupCall{groupId, *this});
+    // Audio backend must be set before starting a call
+    assert(audio != nullptr);
+    ToxGroupCallPtr groupcall = ToxGroupCallPtr(new ToxGroupCall{groupId, *this, *audio});
     assert(groupcall != nullptr);
     auto ret = groupCalls.emplace(groupId, std::move(groupcall));
     if (ret.second == false) {
@@ -708,7 +737,9 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         return;
     }
 
-    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall{friendNum, video, *self});
+    // Audio backend must be set before receiving a call
+    assert(self->audio != nullptr);
+    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall{friendNum, video, *self, *self->audio});
     assert(call != nullptr);
 
     auto it = self->calls.emplace(friendNum, std::move(call));

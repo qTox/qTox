@@ -17,109 +17,30 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "audio.h"
+#include <memory>
+
+#include "src/audio/audio.h"
+#include "src/audio/iaudiosettings.h"
 #include "src/audio/backend/openal.h"
 #ifdef USE_FILTERAUDIO
 #include "src/audio/backend/openal2.h"
 #endif
-#include "src/persistence/settings.h"
 
 /**
- * @class Audio
- *
- * @var Audio::AUDIO_SAMPLE_RATE
- * @brief The next best Opus would take is 24k
- *
- * @var Audio::AUDIO_FRAME_DURATION
- * @brief In milliseconds
- *
- * @var Audio::AUDIO_FRAME_SAMPLE_COUNT
- * @brief Frame sample count
- *
- * @fn qreal Audio::outputVolume() const
- * @brief Returns the current output volume (between 0 and 1)
- *
- * @fn void Audio::setOutputVolume(qreal volume)
- * @brief Set the master output volume.
- *
- * @param[in] volume   the master volume (between 0 and 1)
- *
- * @fn qreal Audio::minInputGain() const
- * @brief The minimum gain value for an input device.
- *
- * @return minimum gain value in dB
- *
- * @fn void Audio::setMinInputGain(qreal dB)
- * @brief Set the minimum allowed gain value in dB.
- *
- * @note Default is -30dB; usually you don't need to alter this value;
- *
- * @fn qreal Audio::maxInputGain() const
- * @brief The maximum gain value for an input device.
- *
- * @return maximum gain value in dB
- *
- * @fn void Audio::setMaxInputGain(qreal dB)
- * @brief Set the maximum allowed gain value in dB.
- *
- * @note Default is 30dB; usually you don't need to alter this value.
- *
- * @fn bool Audio::isOutputReady() const
- * @brief check if the output is ready to play audio
- *
- * @return true if the output device is open, false otherwise
- *
- * @fn QStringList Audio::outDeviceNames()
- * @brief Get the names of available output devices
- *
- * @return list of output devices
- *
- * @fn QStringList Audio::inDeviceNames()
- * @brief Get the names of available input devices
- *
- * @return list of input devices
- *
- * @fn qreal Audio::inputGain() const
- * @brief get the current input gain
- *
- * @return current input gain in dB
- *
- * @fn void Audio::setInputGain(qreal dB)
- * @brief set the input gain
- *
- * @fn void Audio::getInputThreshold()
- * @brief get the current input threshold
- *
- * @return current input threshold percentage
- *
- * @fn void Audio::setInputThreshold(qreal percent)
- * @brief set the input threshold
- *
- * @param[in] percent the new input threshold percentage
+ * @brief Select the audio backend
+ * @param settings Audio settings to use
+ * @return Audio backend selection based on settings
  */
-
-/**
- * @brief Returns the singleton instance.
- */
-Audio& Audio::getInstance()
+std::unique_ptr<IAudioControl> Audio::makeAudio(IAudioSettings& settings)
 {
-    // TODO: replace backend selection by inversion of control
 #ifdef USE_FILTERAUDIO
-    static bool initialized = false;
-    static bool Backend2 = false;
-
-    if (!initialized) {
-        Backend2 = Settings::getInstance().getEnableBackend2();
-        initialized = true;
-    }
+    const bool Backend2 = settings.getEnableBackend2();
 
     if (Backend2) {
-        static OpenAL2 instance;
-        return instance;
+        return std::unique_ptr<IAudioControl>(new OpenAL2());
     } else
 #endif
     {
-        static OpenAL instance;
-        return instance;
+        return std::unique_ptr<IAudioControl>(new OpenAL());
     }
 }

@@ -21,7 +21,7 @@
 #ifndef OPENAL_H
 #define OPENAL_H
 
-#include "src/audio/audio.h"
+#include "src/audio/iaudiocontrol.h"
 #include "src/audio/backend/alsink.h"
 #include "src/audio/backend/alsource.h"
 
@@ -45,7 +45,7 @@
 #include <AL/alext.h>
 #endif
 
-class OpenAL : public Audio
+class OpenAL : public IAudioControl
 {
     Q_OBJECT
 

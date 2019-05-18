@@ -20,8 +20,8 @@
 #include "settingswidget.h"
 
 #include "src/audio/audio.h"
-#include "src/core/coreav.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 #include "src/net/updatecheck.h"
 #include "src/persistence/settings.h"
 #include "src/video/camerasource.h"
@@ -41,10 +41,9 @@
 
 #include <memory>
 
-SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, QWidget* parent)
+SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, QWidget* parent)
     : QWidget(parent, Qt::Window)
 {
-    Audio* audio = &Audio::getInstance();
     CoreAV* coreAV = Core::getInstance()->getAv();
     IAudioSettings* audioSettings = &Settings::getInstance();
     IVideoSettings* videoSettings = &Settings::getInstance();
@@ -74,7 +73,8 @@ SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, QWidget* parent)
     }
 #endif
 
-    cfgForms = {{std::move(gfrm), std::move(uifrm), std::move(pfrm), std::move(avfrm), std::move(expfrm), std::move(abtfrm)}};
+    cfgForms = {{std::move(gfrm), std::move(uifrm), std::move(pfrm), std::move(avfrm),
+                 std::move(expfrm), std::move(abtfrm)}};
     for (auto& cfgForm : cfgForms)
         settingsWidgets->addTab(cfgForm.get(), cfgForm->getFormIcon(), cfgForm->getFormName());
 

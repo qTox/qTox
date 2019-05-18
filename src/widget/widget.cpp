@@ -52,16 +52,15 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/core/corefile.h"
+#include "src/friendlist.h"
+#include "src/grouplist.h"
 #include "src/model/chatroom/friendchatroom.h"
 #include "src/model/chatroom/groupchatroom.h"
 #include "src/model/friend.h"
-#include "src/friendlist.h"
-#include "src/grouplist.h"
-#include "src/model/friend.h"
 #include "src/model/group.h"
 #include "src/model/groupinvite.h"
-#include "src/model/status.h"
 #include "src/model/profile/profileinfo.h"
+#include "src/model/status.h"
 #include "src/net/updatecheck.h"
 #include "src/nexus.h"
 #include "src/persistence/offlinemsgengine.h"
@@ -95,7 +94,7 @@ bool toxActivateEventHandler(const QByteArray&)
 
 Widget* Widget::instance{nullptr};
 
-Widget::Widget(QWidget* parent)
+Widget::Widget(IAudioControl& audio, QWidget* parent)
     : QMainWindow(parent)
     , icon{nullptr}
     , trayMenu{nullptr}
@@ -103,6 +102,7 @@ Widget::Widget(QWidget* parent)
     , activeChatroomWidget{nullptr}
     , eventFlag(false)
     , eventIcon(false)
+    , audio{audio}
     , settings(Settings::getInstance())
 {
     installEventFilter(this);
@@ -129,7 +129,8 @@ void Widget::init()
 
     // Preparing icons and set their size
     statusOnline = new QAction(this);
-    statusOnline->setIcon(prepareIcon(Status::getIconPath(Status::Status::Online), icon_size, icon_size));
+    statusOnline->setIcon(
+        prepareIcon(Status::getIconPath(Status::Status::Online), icon_size, icon_size));
     connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
 
     statusAway = new QAction(this);
@@ -148,7 +149,8 @@ void Widget::init()
     actionQuit->setMenuRole(QAction::QuitRole);
 #endif
 
-    actionQuit->setIcon(prepareIcon(Style::getImagePath("rejectCall/rejectCall.svg"), icon_size, icon_size));
+    actionQuit->setIcon(
+        prepareIcon(Style::getImagePath("rejectCall/rejectCall.svg"), icon_size, icon_size));
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
     layout()->setContentsMargins(0, 0, 0, 0);
@@ -230,7 +232,7 @@ void Widget::init()
     updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(settings));
     connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
 #endif
-    settingsWidget = new SettingsWidget(updateCheck.get(), this);
+    settingsWidget = new SettingsWidget(updateCheck.get(), audio, this);
 #if UPDATE_CHECK_ENABLED
     updateCheck->checkForUpdate();
 #endif
@@ -437,8 +439,9 @@ void Widget::updateIcons()
         return;
     }
 
-    const QString assetSuffix = eventIcon ? "event" :
-        Status::getAssetSuffix(static_cast<Status::Status>(ui->statusButton->property("status").toInt()));
+    const QString assetSuffix = eventIcon ? "event"
+                                          : Status::getAssetSuffix(static_cast<Status::Status>(
+                                                ui->statusButton->property("status").toInt()));
 
 
     // Some builds of Qt appear to have a bug in icon loading:
@@ -534,12 +537,17 @@ Widget::~Widget()
 }
 
 /**
+ * @param audio Only used for initialization from Nexus, to pass IAudioControl
  * @brief Returns the singleton instance.
  */
-Widget* Widget::getInstance()
+Widget* Widget::getInstance(IAudioControl* audio)
 {
     if (!instance) {
-        instance = new Widget();
+        // Passing audio via pointer here is a hack
+        // to allow for default paramters.
+        // once Widget::getInstance is removed it won't be neccessary
+        assert(audio != nullptr);
+        instance = new Widget(*audio);
     }
 
     return instance;
@@ -583,8 +591,7 @@ void Widget::closeEvent(QCloseEvent* event)
 void Widget::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::WindowStateChange) {
-        if (isMinimized() && settings.getShowSystemTray()
-            && settings.getMinimizeToTray()) {
+        if (isMinimized() && settings.getShowSystemTray() && settings.getMinimizeToTray()) {
             this->hide();
         }
     }
@@ -912,8 +919,7 @@ void Widget::setStatusMessage(const QString& statusMessage)
     ui->statusLabel->setText(statusMessage);
     // escape HTML from tooltips and preserve newlines
     // TODO: move newspace preservance to a generic function
-    ui->statusLabel->setToolTip("<p style='white-space:pre'>" + statusMessage.toHtmlEscaped()
-                                + "</p>");
+    ui->statusLabel->setToolTip("<p style='white-space:pre'>" + statusMessage.toHtmlEscaped() + "</p>");
 }
 
 void Widget::reloadHistory()
@@ -928,19 +934,20 @@ void Widget::reloadHistory()
  * @param sound Sound to play
  * @param loop if true, loop the sound until onStopNotification() is called
  */
-void Widget::playNotificationSound(IAudioSink::Sound sound, bool loop) {
-    if(audioNotification == nullptr) {
-        audioNotification = std::unique_ptr<IAudioSink>(Audio::getInstance().makeSink());
-        if(audioNotification == nullptr) {
+void Widget::playNotificationSound(IAudioSink::Sound sound, bool loop)
+{
+    if (audioNotification == nullptr) {
+        audioNotification = std::unique_ptr<IAudioSink>(audio.makeSink());
+        if (audioNotification == nullptr) {
             qDebug() << "Failed to allocate AudioSink";
             return;
         }
     }
 
-    connect(audioNotification.get(), &IAudioSink::finishedPlaying,
-            this, &Widget::cleanupNotificationSound);
+    connect(audioNotification.get(), &IAudioSink::finishedPlaying, this,
+            &Widget::cleanupNotificationSound);
 
-    if(loop) {
+    if (loop) {
         audioNotification->startLoop();
     }
 
@@ -1007,7 +1014,8 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
         settings.setFriendActivity(friendPk, chatDate);
     }
 
-    contactListWidget->addFriendWidget(widget, Status::Status::Offline, settings.getFriendCircleID(friendPk));
+    contactListWidget->addFriendWidget(widget, Status::Status::Offline,
+                                       settings.getFriendCircleID(friendPk));
 
     connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayedNameChanged);
@@ -1241,7 +1249,8 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 
     auto form = chatForms[friendPk];
     auto chatroom = friendChatrooms[friendPk];
-    FriendWidget* friendWidget = ContentDialogManager::getInstance()->addFriendToDialog(dialog, chatroom, form);
+    FriendWidget* friendWidget =
+        ContentDialogManager::getInstance()->addFriendToDialog(dialog, chatroom, form);
 
     friendWidget->setStatusMsg(widget->getStatusMsg());
 
@@ -1297,7 +1306,8 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
 
     auto chatForm = groupChatForms[groupId].data();
     auto chatroom = groupChatrooms[groupId];
-    auto groupWidget = ContentDialogManager::getInstance()->addGroupToDialog(dialog, chatroom, chatForm);
+    auto groupWidget =
+        ContentDialogManager::getInstance()->addGroupToDialog(dialog, chatroom, chatForm);
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
     auto removeGroup = QOverload<const GroupId&>::of(&Widget::removeGroup);
@@ -1599,7 +1609,8 @@ ContentDialog* Widget::createContentDialog() const
     connect(contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
     connect(contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
     connect(core, &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
-    connect(&settings, &Settings::groupchatPositionChanged, contentDialog, &ContentDialog::reorderLayouts);
+    connect(&settings, &Settings::groupchatPositionChanged, contentDialog,
+            &ContentDialog::reorderLayouts);
 
 #ifdef Q_OS_MAC
     Nexus& n = Nexus::getInstance();
@@ -1641,8 +1652,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
 
         void retranslateUi()
         {
-            setWindowTitle(core->getUsername() + QStringLiteral(" - ")
-                           + Widget::fromDialogType(type));
+            setWindowTitle(core->getUsername() + QStringLiteral(" - ") + Widget::fromDialogType(type));
         }
 
     protected:
@@ -1750,7 +1760,8 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
     }
 
-    const auto mention = !core->getUsername().isEmpty() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
+    const auto mention = !core->getUsername().isEmpty()
+                         && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     const auto targeted = !isSelf && mention;
     const auto date = QDateTime::currentDateTime();
     auto form = groupChatForms[groupId].data();
@@ -1875,7 +1886,8 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
 
     const auto groupName = tr("Groupchat #%1").arg(groupnumber);
     bool enabled = core->getGroupAvEnabled(groupnumber);
-    Group* newgroup = GroupList::addGroup(groupnumber, groupId, groupName, enabled, core->getUsername());
+    Group* newgroup =
+        GroupList::addGroup(groupnumber, groupId, groupName, enabled, core->getUsername());
     std::shared_ptr<GroupChatroom> chatroom(new GroupChatroom(newgroup));
     const auto compact = settings.getCompactLayout();
     auto widget = new GroupWidget(chatroom, compact);
@@ -1982,7 +1994,8 @@ void Widget::onUserAwayCheck()
 {
 #ifdef QTOX_PLATFORM_EXT
     uint32_t autoAwayTime = settings.getAutoAwayTime() * 60 * 1000;
-    bool online = static_cast<Status::Status>(ui->statusButton->property("status").toInt()) == Status::Status::Online;
+    bool online = static_cast<Status::Status>(ui->statusButton->property("status").toInt())
+                  == Status::Status::Online;
     bool away = autoAwayTime && Platform::getIdleTime() >= autoAwayTime;
 
     if (online && away) {
@@ -2445,7 +2458,7 @@ void Widget::focusChatInput()
     }
 }
 
-void Widget::refreshPeerListsLocal(const QString &username)
+void Widget::refreshPeerListsLocal(const QString& username)
 {
     for (Group* g : GroupList::getAllGroups()) {
         g->updateUsername(core->getSelfPublicKey(), username);

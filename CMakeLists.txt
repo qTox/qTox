@@ -243,6 +243,7 @@ set(${PROJECT_NAME}_SOURCES
   src/audio/backend/openal.cpp
   src/audio/backend/openal.h
   src/audio/iaudiosettings.h
+  src/audio/iaudiocontrol.h
   src/audio/iaudiosink.h
   src/audio/iaudiosource.h
   src/chatlog/chatlinecontent.cpp
