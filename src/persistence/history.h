@@ -172,6 +172,7 @@ public:
     QList<HistMessage> getChatHistoryFromDate(const QString& friendPk, const QDateTime& from,
                                               const QDateTime& to);
     QList<HistMessage> getChatHistoryDefaultNum(const QString& friendPk);
+    QList<HistMessage> getChatHistoryLower(const QString& friendPk, const QDateTime& to);
     QList<DateMessages> getChatHistoryCounts(const ToxPk& friendPk, const QDate& from, const QDate& to);
     QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);

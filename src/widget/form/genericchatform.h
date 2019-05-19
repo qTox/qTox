@@ -117,6 +117,8 @@ protected slots:
     void onSearchTriggered();
     void updateShowDateInfo(const ChatLine::Ptr& line);
 
+    virtual void loadHistoryLower();
+
     virtual void searchInBegin(const QString& phrase, const ParameterSearch& parameter) = 0;
     virtual void onSearchUp(const QString& phrase, const ParameterSearch& parameter) = 0;
     virtual void onSearchDown(const QString& phrase, const ParameterSearch& parameter) = 0;
@@ -125,7 +127,6 @@ protected slots:
 private:
     void retranslateUi();
     void addSystemDateMessage();
-    QDateTime getTime(const ChatLine::Ptr& chatLine) const;
 
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
@@ -146,6 +147,7 @@ protected:
     void disableSearchText();
     bool searchInText(const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
     std::pair<int, int> indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
+    QDateTime getTime(const ChatLine::Ptr& chatLine) const;
 
 protected:
     bool audioInputFlag;

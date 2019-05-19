@@ -550,6 +550,21 @@ QList<History::HistMessage> History::getChatHistoryDefaultNum(const QString& fri
                           NUM_MESSAGES_DEFAULT);
 }
 
+/**
+ * @brief Fetches set amount of messages from the database before date.
+ * @param friendPk Friend public key to fetch.
+ * @param to End of period to fetch.
+ * @return List of messages.
+ */
+QList<History::HistMessage> History::getChatHistoryLower(const QString& friendPk, const QDateTime& to)
+{
+    if (!isValid()) {
+        return {};
+    }
+    return getChatHistory(friendPk, QDateTime::fromMSecsSinceEpoch(0), to,
+                          NUM_MESSAGES_DEFAULT);
+}
+
 
 /**
  * @brief Fetches chat messages counts for each day from the database.

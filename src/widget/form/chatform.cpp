@@ -759,6 +759,15 @@ void ChatForm::clearChatArea()
     offlineEngine->removeAllMessages();
 }
 
+void ChatForm::loadHistoryLower()
+{
+    QString pk = f->getPublicKey().toString();
+    QList<History::HistMessage> msgs = history->getChatHistoryLower(pk, earliestMessage.addDays(-1));
+    if (!msgs.isEmpty()) {
+        handleLoadedMessages(msgs, false);
+    }
+}
+
 QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName)
 {
     QString authorStr;
