@@ -382,6 +382,22 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     updateTypingNotification();
 }
 
+void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
+{
+    if (newLines.isEmpty())
+        return;
+
+    for (ChatLine::Ptr l : newLines) {
+        l->setRow(lines.size());
+        l->addToScene(scene);
+        l->visibilityChanged(false);
+        lines.append(l);
+    }
+
+    layout(lines.last()->getRow(), lines.size(), useableWidth());
+    startResizeWorker();
+}
+
 void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
 {
     if (!l.get())
@@ -718,8 +734,12 @@ void ChatLog::checkVisibility(bool causedByScroll)
         emit firstVisibleLineChanged(visibleLines.at(0));
     }
 
-    if (causedByScroll && lowerBound != lines.cend() && lowerBound->get()->row == 0) {
-        emit loadHistoryLower();
+    if (causedByScroll) {
+        if (lowerBound != lines.cend() && lowerBound->get()->row == 0) {
+            emit loadHistoryLower();
+        } else if (upperBound != lines.cend() && upperBound->get()->row >= lines.size() - 10) {
+            emit loadHistoryUpper();
+        }
     }
 }
 
