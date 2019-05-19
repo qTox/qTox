@@ -33,11 +33,17 @@ class LoadHistoryDialog : public QDialog
     Q_OBJECT
 
 public:
+    enum LoadType {
+        from,
+        to
+    };
+
     explicit LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent = nullptr);
     explicit LoadHistoryDialog(QWidget* parent = nullptr);
     ~LoadHistoryDialog();
 
     QDateTime getFromDate();
+    LoadType getLoadType();
     void setTitle(const QString& title);
     void setInfoLabel(const QString& info);
 

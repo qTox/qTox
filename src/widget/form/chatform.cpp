@@ -35,7 +35,6 @@
 #include "src/persistence/settings.h"
 #include "src/video/netcamview.h"
 #include "src/widget/chatformheader.h"
-#include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/searchform.h"
 #include "src/widget/style.h"
@@ -803,7 +802,7 @@ void ChatForm::loadHistoryDefaultNum(bool processUndelivered)
     handleLoadedMessages(msgs, processUndelivered);
 }
 
-void ChatForm::loadHistoryByDateRange(const QDateTime& since, bool processUndelivered)
+void ChatForm::loadHistoryByDateRange(const QDateTime& since, LoadHistoryDialog::LoadType loadType, bool processUndelivered)
 {
     QDateTime now = QDateTime::currentDateTime();
     if (since > now) {
@@ -823,8 +822,21 @@ void ChatForm::loadHistoryByDateRange(const QDateTime& since, bool processUndeli
 
     QString pk = f->getPublicKey().toString();
     earliestMessage = since;
-    QList<History::HistMessage> msgs = history->getChatHistoryFromDate(pk, since, now);
-    handleLoadedMessages(msgs, processUndelivered);
+
+    QList<History::HistMessage> msgs;
+    bool onTop;
+    if (loadType == LoadHistoryDialog::from) {
+        onTop = true;
+        msgs = history->getChatHistoryUpper(pk, since);
+    } else {
+        onTop = false;
+        msgs = history->getChatHistoryLower(pk, since);
+    }
+
+    if (!msgs.isEmpty()) {
+        chatWidget->clear();
+        handleLoadedMessages(msgs, processUndelivered, onTop);
+    }
 }
 
 void ChatForm::handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered, bool onTop)
@@ -1012,7 +1024,8 @@ void ChatForm::onLoadHistory()
     LoadHistoryDialog dlg(f->getPublicKey());
     if (dlg.exec()) {
         QDateTime fromTime = dlg.getFromDate();
-        loadHistoryByDateRange(fromTime);
+        auto type = dlg.getLoadType();
+        loadHistoryByDateRange(fromTime, type);
     }
 }
 

@@ -29,6 +29,7 @@
 #include "src/core/core.h"
 #include "src/persistence/history.h"
 #include "src/model/status.h"
+#include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/tool/screenshotgrabber.h"
 
 class CallConfirmWidget;
@@ -47,7 +48,8 @@ public:
     ChatForm(Friend* chatFriend, History* history);
     ~ChatForm();
     void setStatusMessage(const QString& newMessage);
-    void loadHistoryByDateRange(const QDateTime& since, bool processUndelivered = false);
+    void loadHistoryByDateRange(const QDateTime& since, LoadHistoryDialog::LoadType loadType = LoadHistoryDialog::from,
+                                bool processUndelivered = false);
     void loadHistoryDefaultNum(bool processUndelivered = false);
 
     void dischargeReceipt(int receipt);
