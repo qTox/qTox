@@ -762,9 +762,18 @@ void ChatForm::clearChatArea()
 void ChatForm::loadHistoryLower()
 {
     QString pk = f->getPublicKey().toString();
-    QList<History::HistMessage> msgs = history->getChatHistoryLower(pk, earliestMessage.addDays(-1));
+    QList<History::HistMessage> msgs = history->getChatHistoryLower(pk, earliestMessage);
     if (!msgs.isEmpty()) {
         handleLoadedMessages(msgs, false);
+    }
+}
+
+void ChatForm::loadHistoryUpper()
+{
+    QString pk = f->getPublicKey().toString();
+    QList<History::HistMessage> msgs = history->getChatHistoryUpper(pk, prevMsgDateTime);
+    if (!msgs.isEmpty()) {
+        handleLoadedMessages(msgs, false, false);
     }
 }
 
@@ -818,7 +827,7 @@ void ChatForm::loadHistoryByDateRange(const QDateTime& since, bool processUndeli
     handleLoadedMessages(msgs, processUndelivered);
 }
 
-void ChatForm::handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered)
+void ChatForm::handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered, bool onTop)
 {
     ToxPk prevIdBackup = previousId;
     previousId = ToxPk{};
@@ -841,17 +850,23 @@ void ChatForm::handleLoadedMessages(QList<History::HistMessage> newHistMsgs, boo
         prevMsgDateTime = metadata.msgDateTime;
     }
     previousId = prevIdBackup;
-    insertChatlines(chatLines);
+    insertChatlines(chatLines, onTop);
     if (searchAfterLoadHistory && chatLines.isEmpty()) {
         onContinueSearch();
     }
 }
 
-void ChatForm::insertChatlines(QList<ChatLine::Ptr> chatLines)
+void ChatForm::insertChatlines(QList<ChatLine::Ptr> chatLines, bool onTop)
 {
     QScrollBar* verticalBar = chatWidget->verticalScrollBar();
     int savedSliderPos = verticalBar->maximum() - verticalBar->value();
-    chatWidget->insertChatlinesOnTop(chatLines);
+
+    if (onTop) {
+        chatWidget->insertChatlinesOnTop(chatLines);
+    } else {
+        chatWidget->insertChatlineAtBottom(chatLines);
+    }
+
     savedSliderPos = verticalBar->maximum() - savedSliderPos;
     verticalBar->setValue(savedSliderPos);
 }

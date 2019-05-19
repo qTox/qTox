@@ -565,6 +565,21 @@ QList<History::HistMessage> History::getChatHistoryLower(const QString& friendPk
                           NUM_MESSAGES_DEFAULT);
 }
 
+/**
+ * @brief Fetches set amount of messages from the database after date.
+ * @param friendPk Friend public key to fetch.
+ * @param to End of period to fetch.
+ * @return List of messages.
+ */
+QList<History::HistMessage> History::getChatHistoryUpper(const QString& friendPk, const QDateTime& from)
+{
+    if (!isValid()) {
+        return {};
+    }
+    return getChatHistory(friendPk, from, QDateTime::currentDateTime(),
+                          NUM_MESSAGES_DEFAULT, false);
+}
+
 
 /**
  * @brief Fetches chat messages counts for each day from the database.
@@ -743,10 +758,11 @@ void History::markAsSent(RowId messageId)
  * @param from Start of period to fetch.
  * @param to End of period to fetch.
  * @param numMessages max number of messages to fetch.
+ * @param useDesk if true use last messages else begin
  * @return List of messages.
  */
 QList<History::HistMessage> History::getChatHistory(const QString& friendPk, const QDateTime& from,
-                                                    const QDateTime& to, int numMessages)
+                                                    const QDateTime& to, int numMessages, bool useDesk)
 {
     QList<HistMessage> messages;
 
@@ -794,9 +810,13 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
             .arg(to.toMSecsSinceEpoch())
             .arg(friendPk);
     if (numMessages) {
+        QString typeOrder = QStringLiteral("ASC");
+        if (useDesk) {
+            typeOrder = QStringLiteral("DESC");
+        }
         queryText =
             "SELECT * FROM (" + queryText
-            + QString(" ORDER BY history.id DESC limit %1) AS T1 ORDER BY T1.id ASC;").arg(numMessages);
+            + QString(" ORDER BY history.id %1 limit %2) AS T1 ORDER BY T1.id ASC;").arg(typeOrder).arg(numMessages);
     } else {
         queryText = queryText + ";";
     }

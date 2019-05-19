@@ -118,6 +118,7 @@ protected slots:
     void updateShowDateInfo(const ChatLine::Ptr& line);
 
     virtual void loadHistoryLower();
+    virtual void loadHistoryUpper();
 
     virtual void searchInBegin(const QString& phrase, const ParameterSearch& parameter) = 0;
     virtual void onSearchUp(const QString& phrase, const ParameterSearch& parameter) = 0;

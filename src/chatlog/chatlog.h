@@ -43,6 +43,7 @@ public:
     virtual ~ChatLog();
 
     void insertChatlineAtBottom(ChatLine::Ptr l);
+    void insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines);
     void insertChatlineOnTop(ChatLine::Ptr l);
     void insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines);
     void clearSelection();
@@ -73,6 +74,7 @@ signals:
     void workerTimeoutFinished();
     void firstVisibleLineChanged(const ChatLine::Ptr&);
     void loadHistoryLower();
+    void loadHistoryUpper();
 
 public slots:
     void forceRelayout();

@@ -173,6 +173,7 @@ public:
                                               const QDateTime& to);
     QList<HistMessage> getChatHistoryDefaultNum(const QString& friendPk);
     QList<HistMessage> getChatHistoryLower(const QString& friendPk, const QDateTime& to);
+    QList<HistMessage> getChatHistoryUpper(const QString& friendPk, const QDateTime& from);
     QList<DateMessages> getChatHistoryCounts(const ToxPk& friendPk, const QDate& from, const QDate& to);
     QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);
@@ -196,7 +197,7 @@ private slots:
 
 private:
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
-                                      const QDateTime& to, int numMessages);
+                                      const QDateTime& to, int numMessages, bool useDesk = true);
 
     static RawDatabase::Query generateFileFinished(RowId fileId, bool success,
                                                    const QString& filePath, const QByteArray& fileHash);

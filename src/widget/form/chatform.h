@@ -83,6 +83,7 @@ public slots:
 
 protected slots:
     void loadHistoryLower() override final;
+    void loadHistoryUpper() override final;
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter) override;
     void onSearchUp(const QString& phrase, const ParameterSearch& parameter) override;
     void onSearchDown(const QString& phrase, const ParameterSearch& parameter) override;
@@ -133,14 +134,14 @@ private:
             , msgDateTime{msgDateTime}
         {}
     };
-    void handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered);
+    void handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered, bool onTop = true);
     QDate addDateLineIfNeeded(QList<ChatLine::Ptr>& msgs, QDate const& lastDate,
                               History::HistMessage const& newMessage, MessageMetadata const& metadata);
     MessageMetadata getMessageMetadata(History::HistMessage const& histMessage);
     ChatMessage::Ptr chatMessageFromHistMessage(History::HistMessage const& histMessage,
                                                 MessageMetadata const& metadata);
     void sendLoadedMessage(ChatMessage::Ptr chatMsg, MessageMetadata const& metadata);
-    void insertChatlines(QList<ChatLine::Ptr> chatLines);
+    void insertChatlines(QList<ChatLine::Ptr> chatLines, bool onTop);
     void updateMuteMicButton();
     void updateMuteVolButton();
     void retranslateUi();

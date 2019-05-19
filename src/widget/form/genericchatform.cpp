@@ -233,6 +233,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
             &GenericChatForm::onChatContextMenuRequested);
     connect(chatWidget, &ChatLog::firstVisibleLineChanged, this, &GenericChatForm::updateShowDateInfo);
     connect(chatWidget, &ChatLog::loadHistoryLower, this, &GenericChatForm::loadHistoryLower);
+    connect(chatWidget, &ChatLog::loadHistoryUpper, this, &GenericChatForm::loadHistoryUpper);
 
     connect(searchForm, &SearchForm::searchInBegin, this, &GenericChatForm::searchInBegin);
     connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
@@ -1015,7 +1016,10 @@ void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& line)
 
 void GenericChatForm::loadHistoryLower()
 {
+}
 
+void GenericChatForm::loadHistoryUpper()
+{
 }
 
 void GenericChatForm::onContinueSearch()
