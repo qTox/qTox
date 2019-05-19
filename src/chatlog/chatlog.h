@@ -72,6 +72,7 @@ signals:
     void selectionChanged();
     void workerTimeoutFinished();
     void firstVisibleLineChanged(const ChatLine::Ptr&);
+    void loadHistoryLower();
 
 public slots:
     void forceRelayout();
@@ -94,7 +95,7 @@ protected:
 
     void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
-    void checkVisibility();
+    void checkVisibility(bool causedByScroll = false);
     void scrollToBottom();
     void startResizeWorker();
 
