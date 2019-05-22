@@ -50,7 +50,7 @@ void DesktopNotify::notifyMessageSimple(const MessageType type)
     case MSG_FRIEND_FILE: message = tr("Incoming file transfer"); break;
     case MSG_FRIEND_REQUEST: message = tr("Friend request received"); break;
     case MSG_GROUP: message = tr("New group message"); break;
-    case MSG_GROUP_INVITE: message = tr("Group invite"); break;
+    case MSG_GROUP_INVITE: message = tr("Group invite received"); break;
     default: break;
     }
 
