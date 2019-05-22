@@ -78,6 +78,7 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
     bodyUI->groupOnlyNotfiyWhenMentioned->setChecked(!s.getGroupAlwaysNotify());
     bodyUI->groupOnlyNotfiyWhenMentioned->setEnabled(s.getNotify());
     bodyUI->notifySound->setChecked(s.getNotifySound());
+    bodyUI->notifyHide->setChecked(s.getNotifyHide());
     bodyUI->notifySound->setEnabled(s.getNotify());
     bodyUI->busySound->setChecked(s.getBusySound());
     bodyUI->busySound->setEnabled(s.getNotifySound() && s.getNotify());
