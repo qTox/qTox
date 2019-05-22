@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>650</width>
-        <height>892</height>
+        <height>950</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0,0">
@@ -218,6 +218,13 @@
              <widget class="QCheckBox" name="desktopNotify">
               <property name="text">
                <string>Notify via desktop notifications</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="notifyHide">
+              <property name="text">
+               <string>Hide message sender and contents</string>
               </property>
              </widget>
             </item>

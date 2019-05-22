@@ -154,6 +154,7 @@ void Settings::loadGlobal()
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", true).toBool();
         notifySound = s.value("notifySound", true).toBool(); // note: notifySound and busySound UI elements are now under UI settings
+        notifyHide = s.value("notifyHide", false).toBool();
         busySound = s.value("busySound", false).toBool();    // page, but kept under General in settings file to be backwards compatible
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
@@ -435,6 +436,7 @@ void Settings::saveGlobal()
         s.setValue("autoAwayTime", autoAwayTime);
         s.setValue("checkUpdates", checkUpdates);
         s.setValue("notifySound", notifySound);
+        s.setValue("notifyHide", notifyHide);
         s.setValue("busySound", busySound);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
@@ -1002,6 +1004,22 @@ void Settings::setNotifySound(bool newValue)
     if (newValue != notifySound) {
         notifySound = newValue;
         emit notifySoundChanged(notifySound);
+    }
+}
+
+bool Settings::getNotifyHide() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyHide;
+}
+
+void Settings::setNotifyHide(bool newValue)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (newValue != notifyHide) {
+        notifyHide = newValue;
+        emit notifyHideChanged(notifyHide);
     }
 }
 

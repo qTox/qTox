@@ -1381,11 +1381,16 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString text, bo
         widget->updateStatusLight();
         ui->friendList->trackWidget(widget);
 #if DESKTOP_NOTIFICATIONS
-        QString title = f->getDisplayedName();
-        if (file) {
-            title += " - " + tr("File sent");
+        const Settings& s = Settings::getInstance();
+        if (s.getNotifyHide()) {
+            notifier.notifyMessageSimple(file ? DesktopNotify::MSG_FRIEND_FILE : DesktopNotify::MSG_FRIEND);
+        } else {
+            QString title = f->getDisplayedName();
+            if (file) {
+                title += " - " + tr("File sent");
+            }
+            notifier.notifyMessagePixmap(title, text, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
         }
-        notifier.notifyMessagePixmap(title, text, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
 #endif
 
         if (contentDialog == nullptr) {
@@ -1425,12 +1430,17 @@ bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk authorPk, 
     g->setEventFlag(true);
     widget->updateStatusLight();
 #if DESKTOP_NOTIFICATIONS
-    Friend *f = FriendList::findFriend(authorPk);
-    QString title = g->getPeerList().value(authorPk) + " (" + g->getDisplayedName() + ")";
-    if (!f) {
-        notifier.notifyMessage(title, message);
+    const Settings& s = Settings::getInstance();
+    if (s.getNotifyHide()) {
+        notifier.notifyMessageSimple(DesktopNotify::MSG_GROUP);
     } else {
-        notifier.notifyMessagePixmap(title, message, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
+        Friend *f = FriendList::findFriend(authorPk);
+        QString title = g->getPeerList().value(authorPk) + " (" + g->getDisplayedName() + ")";
+        if (!f) {
+            notifier.notifyMessage(title, message);
+        } else {
+            notifier.notifyMessagePixmap(title, message, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
+        }
     }
 #endif
 
@@ -1507,7 +1517,12 @@ void Widget::onFriendRequestReceived(const ToxPk& friendPk, const QString& messa
         friendRequestsUpdate();
         newMessageAlert(window(), isActiveWindow(), true, true);
 #if DESKTOP_NOTIFICATIONS
-        notifier.notifyMessage(friendPk.toString() + tr(" sent you a friend request."), message);
+        const Settings& s = Settings::getInstance();
+        if (s.getNotifyHide()) {
+            notifier.notifyMessageSimple(DesktopNotify::MSG_FRIEND_REQUEST);
+        } else {
+            notifier.notifyMessage(friendPk.toString() + tr(" sent you a friend request."), message);
+        }
 #endif
     }
 }
@@ -1746,7 +1761,12 @@ void Widget::onGroupInviteReceived(const GroupInvite& inviteInfo)
             groupInvitesUpdate();
             newMessageAlert(window(), isActiveWindow(), true, true);
 #if DESKTOP_NOTIFICATIONS
-            notifier.notifyMessagePixmap(f->getDisplayedName() + tr(" invites you to join a group."), {}, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
+            const Settings& s = Settings::getInstance();
+            if (s.getNotifyHide()) {
+                notifier.notifyMessageSimple(DesktopNotify::MSG_GROUP_INVITE);
+            } else {
+                notifier.notifyMessagePixmap(f->getDisplayedName() + tr(" invites you to join a group."), {}, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
+            }
 #endif
         }
     } else {

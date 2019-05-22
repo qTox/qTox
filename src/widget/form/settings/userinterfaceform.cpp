@@ -391,3 +391,9 @@ void UserInterfaceForm::on_useNameColors_stateChanged(int value)
 {
     Settings::getInstance().setEnableGroupChatsColor(value);
 }
+
+void UserInterfaceForm::on_notifyHide_stateChanged(int value)
+{
+    Settings::getInstance().setNotifyHide(value);
+}
+

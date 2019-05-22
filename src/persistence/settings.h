@@ -181,6 +181,7 @@ signals:
     void makeToxPortableChanged(bool enabled);
     void busySoundChanged(bool enabled);
     void notifySoundChanged(bool enabled);
+    void notifyHideChanged(bool enabled);
     void groupAlwaysNotifyChanged(bool enabled);
     void translationChanged(const QString& translation);
     void toxmeInfoChanged(const QString& info);
@@ -336,6 +337,9 @@ public:
 
     bool getNotifySound() const;
     void setNotifySound(bool newValue);
+
+    bool getNotifyHide() const;
+    void setNotifyHide(bool newValue);
 
     bool getBusySound() const;
     void setBusySound(bool newValue);
@@ -620,6 +624,7 @@ private:
     bool desktopNotify;
     bool showWindow;
     bool notifySound;
+    bool notifyHide;
     bool busySound;
     bool groupAlwaysNotify;
     bool nameColors;
