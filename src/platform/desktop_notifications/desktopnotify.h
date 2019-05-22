@@ -13,13 +13,11 @@ public:
     DesktopNotify();
 
 public slots:
-    void notifyFriendMessage();
-    void notifyGroupMessage();
-    void notifyFriendRequest();
-    void notifyGroupInvite();
+    void notifyMessage(const QString title, const QString message);
+    void notifyMessagePixmap(const QString title, const QString message, QPixmap avatar);
 
 private:
-    void createNotification(const QString& title);
+    void createNotification(const QString& title, const QString &text, Snore::Icon &icon);
 
 private:
     Snore::SnoreCore& notifyCore;

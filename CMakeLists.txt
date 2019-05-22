@@ -14,7 +14,7 @@ option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
 option(SVGZ_ICON "Compress the SVG icon of qTox" ON)
 option(ASAN "Compile with AddressSanitizer" OFF)
-option(DESKTOP_NOTIFICATIONS "Use snorenotify for desktop notifications" OFF)
+option(DESKTOP_NOTIFICATIONS "Use snorenotify for desktop notifications" ON)
 
 # process generated files if cmake >= 3.10
 if(POLICY CMP0071)
