@@ -46,11 +46,11 @@ void DesktopNotify::notifyMessageSimple(const MessageType type)
 {
     QString message;
     switch (type) {
-    case MSG_FRIEND: message = tr("New message"); break;
-    case MSG_FRIEND_FILE: message = tr("Incoming file transfer"); break;
-    case MSG_FRIEND_REQUEST: message = tr("Friend request received"); break;
-    case MSG_GROUP: message = tr("New group message"); break;
-    case MSG_GROUP_INVITE: message = tr("Group invite received"); break;
+    case MessageType::FRIEND: message = tr("New message"); break;
+    case MessageType::FRIEND_FILE: message = tr("Incoming file transfer"); break;
+    case MessageType::FRIEND_REQUEST: message = tr("Friend request received"); break;
+    case MessageType::GROUP: message = tr("New group message"); break;
+    case MessageType::GROUP_INVITE: message = tr("Group invite received"); break;
     default: break;
     }
 

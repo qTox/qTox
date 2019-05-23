@@ -1381,9 +1381,8 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString text, bo
         widget->updateStatusLight();
         ui->friendList->trackWidget(widget);
 #if DESKTOP_NOTIFICATIONS
-        const Settings& s = Settings::getInstance();
-        if (s.getNotifyHide()) {
-            notifier.notifyMessageSimple(file ? DesktopNotify::MSG_FRIEND_FILE : DesktopNotify::MSG_FRIEND);
+        if (settings.getNotifyHide()) {
+            notifier.notifyMessageSimple(file ? DesktopNotify::MessageType::FRIEND_FILE : DesktopNotify::MessageType::FRIEND);
         } else {
             QString title = f->getDisplayedName();
             if (file) {
@@ -1430,9 +1429,8 @@ bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk authorPk, 
     g->setEventFlag(true);
     widget->updateStatusLight();
 #if DESKTOP_NOTIFICATIONS
-    const Settings& s = Settings::getInstance();
-    if (s.getNotifyHide()) {
-        notifier.notifyMessageSimple(DesktopNotify::MSG_GROUP);
+    if (settings.getNotifyHide()) {
+        notifier.notifyMessageSimple(DesktopNotify::MessageType::GROUP);
     } else {
         Friend *f = FriendList::findFriend(authorPk);
         QString title = g->getPeerList().value(authorPk) + " (" + g->getDisplayedName() + ")";
@@ -1517,9 +1515,8 @@ void Widget::onFriendRequestReceived(const ToxPk& friendPk, const QString& messa
         friendRequestsUpdate();
         newMessageAlert(window(), isActiveWindow(), true, true);
 #if DESKTOP_NOTIFICATIONS
-        const Settings& s = Settings::getInstance();
-        if (s.getNotifyHide()) {
-            notifier.notifyMessageSimple(DesktopNotify::MSG_FRIEND_REQUEST);
+        if (settings.getNotifyHide()) {
+            notifier.notifyMessageSimple(DesktopNotify::MessageType::FRIEND_REQUEST);
         } else {
             notifier.notifyMessage(friendPk.toString() + tr(" sent you a friend request."), message);
         }
@@ -1761,9 +1758,8 @@ void Widget::onGroupInviteReceived(const GroupInvite& inviteInfo)
             groupInvitesUpdate();
             newMessageAlert(window(), isActiveWindow(), true, true);
 #if DESKTOP_NOTIFICATIONS
-            const Settings& s = Settings::getInstance();
-            if (s.getNotifyHide()) {
-                notifier.notifyMessageSimple(DesktopNotify::MSG_GROUP_INVITE);
+            if (settings.getNotifyHide()) {
+                notifier.notifyMessageSimple(DesktopNotify::MessageType::GROUP_INVITE);
             } else {
                 notifier.notifyMessagePixmap(f->getDisplayedName() + tr(" invites you to join a group."), {}, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
             }
