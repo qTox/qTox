@@ -19,7 +19,7 @@ DesktopNotify::DesktopNotify()
     notifyCore.registerApplication(snoreApp);
 }
 
-void DesktopNotify::createNotification(const QString& title, const QString &text, Snore::Icon &icon)
+void DesktopNotify::createNotification(const QString& title, const QString& text, Snore::Icon& icon)
 {
     const Settings& s = Settings::getInstance();
     if(!(s.getNotify() && s.getDesktopNotify())) {
@@ -31,12 +31,12 @@ void DesktopNotify::createNotification(const QString& title, const QString &text
     notifyCore.broadcastNotification(notify);
 }
 
-void DesktopNotify::notifyMessage(const QString title, const QString message)
+void DesktopNotify::notifyMessage(const QString& title, const QString& message)
 {
     createNotification(title, message, snoreIcon);
 }
 
-void DesktopNotify::notifyMessagePixmap(const QString title, const QString message, QPixmap avatar)
+void DesktopNotify::notifyMessagePixmap(const QString& title, const QString& message, QPixmap avatar)
 {
     Snore::Icon new_icon(avatar);
     createNotification(title, message, new_icon);

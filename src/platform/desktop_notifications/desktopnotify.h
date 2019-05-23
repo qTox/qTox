@@ -21,12 +21,12 @@ public:
     };
 
 public slots:
-    void notifyMessage(const QString title, const QString message);
-    void notifyMessagePixmap(const QString title, const QString message, QPixmap avatar);
+    void notifyMessage(const QString& title, const QString& message);
+    void notifyMessagePixmap(const QString& title, const QString& message, QPixmap avatar);
     void notifyMessageSimple(const MessageType type);
 
 private:
-    void createNotification(const QString& title, const QString &text, Snore::Icon &icon);
+    void createNotification(const QString& title, const QString& text, Snore::Icon& icon);
 
 private:
     Snore::SnoreCore& notifyCore;
