@@ -45,6 +45,11 @@ void ChatLine::setRow(int idx)
         content[c]->setIndex(row, c);
 }
 
+void ChatLine::setId(int64_t id)
+{
+    this->id = id;
+}
+
 void ChatLine::visibilityChanged(bool visible)
 {
     if (isVisible != visible) {
@@ -58,6 +63,11 @@ void ChatLine::visibilityChanged(bool visible)
 int ChatLine::getRow() const
 {
     return row;
+}
+
+int64_t ChatLine::getId() const
+{
+    return id;
 }
 
 ChatLineContent* ChatLine::getContent(int col) const

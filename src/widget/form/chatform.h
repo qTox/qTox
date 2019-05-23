@@ -136,7 +136,7 @@ private:
             , msgDateTime{msgDateTime}
         {}
     };
-    void handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered, bool onTop = true);
+    void handleLoadedMessages(QList<History::HistMessage> newHistMsgs, bool processUndelivered, bool onTop);
     QDate addDateLineIfNeeded(QList<ChatLine::Ptr>& msgs, QDate const& lastDate,
                               History::HistMessage const& newMessage, MessageMetadata const& metadata);
     MessageMetadata getMessageMetadata(History::HistMessage const& histMessage);
@@ -153,6 +153,7 @@ private:
     void updateCallButtons();
     void SendMessageStr(QString msg);
     bool loadHistory(const QString& phrase, const ParameterSearch& parameter);
+    QList<History::HistMessage> deleteDuplicate(QList<History::HistMessage> histMessage, const bool onTop);
 
 protected:
     GenericNetCamView* createNetcam() final override;

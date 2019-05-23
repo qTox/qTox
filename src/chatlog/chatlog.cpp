@@ -22,6 +22,8 @@
 #include "chatlinecontentproxy.h"
 #include "chatmessage.h"
 #include "content/filetransferwidget.h"
+#include "src/chatlog/content/timestamp.h"
+#include "src/persistence/settings.h"
 #include "src/widget/translator.h"
 #include "src/widget/style.h"
 
@@ -686,6 +688,64 @@ void ChatLog::reloadTheme()
     for (ChatLine::Ptr l : lines) {
         l->reloadTheme();
     }
+}
+
+void ChatLog::removeLowerDateLineIfNeed(const QDate &date)
+{
+    if (!lines.isEmpty()) {
+        auto line = lines.first();
+        Timestamp* const lineTime = qobject_cast<Timestamp*>(line.get()->getContent(2));
+        if (!lineTime->getTime().isValid()) {
+            Text* const text = qobject_cast<Text*>(line.get()->getContent(1));
+            QDateTime dt = QDateTime::fromString(text->getText(), Settings::getInstance().getDateFormat());
+
+            if (dt.date() == date) {
+                lines.removeFirst();
+            }
+        }
+    }
+}
+
+int64_t ChatLog::lowerId() const
+{
+    if (lines.empty())
+        return -1;
+
+    for (int i = 0; i < lines.size(); ++i) {
+        auto id = lines.at(i).get()->getId();
+        if (id > -1) {
+            return id;
+        }
+    }
+
+    return -1;
+}
+
+int64_t ChatLog::upperId() const
+{
+    if (lines.empty())
+        return -1;
+
+    for (int i = lines.size()-1; i >= 0; --i) {
+        auto id = lines.at(i).get()->getId();
+        if (id > -1) {
+            return id;
+        }
+    }
+
+    return -1;
+}
+
+QDate ChatLog::upperDate() const
+{
+    if (!lines.isEmpty()) {
+        auto line = lines.last();
+        Timestamp* const lineTime = qobject_cast<Timestamp*>(line.get()->getContent(2));
+
+        return lineTime->getTime().date();
+    }
+
+    return QDate();
 }
 
 void ChatLog::forceRelayout()

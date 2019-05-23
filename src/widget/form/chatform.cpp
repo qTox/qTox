@@ -301,7 +301,7 @@ void ChatForm::startFileSend(ToxFile file)
     }
 
     insertChatMessage(
-        ChatMessage::createFileTransferMessage(name, file, true, QDateTime::currentDateTime()));
+        ChatMessage::createFileTransferMessage(name, file, true, -1, QDateTime::currentDateTime()));
 
     if (history && Settings::getInstance().getEnableLogging()) {
         auto selfPk = Core::getInstance()->getSelfId().toString();
@@ -346,7 +346,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     }
 
     ChatMessage::Ptr msg =
-        ChatMessage::createFileTransferMessage(name, file, false, QDateTime::currentDateTime());
+        ChatMessage::createFileTransferMessage(name, file, false, -1, QDateTime::currentDateTime());
 
     insertChatMessage(msg);
 
@@ -762,8 +762,10 @@ void ChatForm::loadHistoryLower()
 {
     QString pk = f->getPublicKey().toString();
     QList<History::HistMessage> msgs = history->getChatHistoryLower(pk, earliestMessage);
+    msgs = deleteDuplicate(msgs, true);
     if (!msgs.isEmpty()) {
-        handleLoadedMessages(msgs, false);
+        earliestMessage = msgs.first().timestamp;
+        handleLoadedMessages(msgs, false, true);
     }
 }
 
@@ -771,7 +773,9 @@ void ChatForm::loadHistoryUpper()
 {
     QString pk = f->getPublicKey().toString();
     QList<History::HistMessage> msgs = history->getChatHistoryUpper(pk, prevMsgDateTime);
+    msgs = deleteDuplicate(msgs, false);
     if (!msgs.isEmpty()) {
+        prevMsgDateTime = msgs.last().timestamp;
         handleLoadedMessages(msgs, false, false);
     }
 }
@@ -798,8 +802,8 @@ void ChatForm::loadHistoryDefaultNum(bool processUndelivered)
     QList<History::HistMessage> msgs = history->getChatHistoryDefaultNum(pk);
     if (!msgs.isEmpty()) {
         earliestMessage = msgs.first().timestamp;
+        handleLoadedMessages(msgs, processUndelivered, true);
     }
-    handleLoadedMessages(msgs, processUndelivered);
 }
 
 void ChatForm::loadHistoryByDateRange(const QDateTime& since, LoadHistoryDialog::LoadType loadType, bool processUndelivered)
@@ -845,6 +849,18 @@ void ChatForm::handleLoadedMessages(QList<History::HistMessage> newHistMsgs, boo
     previousId = ToxPk{};
     QList<ChatLine::Ptr> chatLines;
     QDate lastDate(1, 0, 0);
+
+    if (onTop) {
+        MessageMetadata const metadata = getMessageMetadata(newHistMsgs.last());
+        QDate date = metadata.msgDateTime.date();
+        chatWidget->removeLowerDateLineIfNeed(date);
+    } else {
+        auto date = chatWidget->upperDate();
+        if (date.isValid()) {
+            lastDate = date;
+        }
+    }
+
     for (const auto& histMessage : newHistMsgs) {
         MessageMetadata const metadata = getMessageMetadata(histMessage);
         lastDate = addDateLineIfNeeded(chatLines, lastDate, histMessage, metadata);
@@ -927,13 +943,13 @@ ChatMessage::Ptr ChatForm::chatMessageFromHistMessage(History::HistMessage const
         auto& message = histMessage.content.asMessage();
         QString messageText = metadata.isAction ? message.mid(ACTION_PREFIX.length()) : message;
 
-        msg = ChatMessage::createChatMessage(authorStr, messageText, type, metadata.isSelf, dateTime);
+        msg = ChatMessage::createChatMessage(authorStr, messageText, type, metadata.isSelf, histMessage.id.get(), dateTime);
         break;
     }
     case HistMessageContentType::file: {
         auto& file = histMessage.content.asFile();
         bool isMe = file.direction == ToxFile::SENDING;
-        msg = ChatMessage::createFileTransferMessage(authorStr, file, isMe, dateTime);
+        msg = ChatMessage::createFileTransferMessage(authorStr, file, isMe, histMessage.id.get(), dateTime);
         break;
     }
     default:
@@ -1212,6 +1228,31 @@ bool ChatForm::loadHistory(const QString& phrase, const ParameterSearch& paramet
     }
 
     return false;
+}
+
+QList<History::HistMessage> ChatForm::deleteDuplicate(QList<History::HistMessage> histMessage, const bool onTop)
+{
+    auto id = onTop ? chatWidget->lowerId() : chatWidget->upperId();
+
+    bool isDel = true;
+    while (isDel) {
+        bool b = onTop ? histMessage.last().id.get() >= id : histMessage.first().id.get() <= id;
+        if (b) {
+            if (onTop) {
+                histMessage.removeLast();
+            } else {
+                histMessage.removeFirst();
+            }
+
+            if (histMessage.isEmpty()) {
+                isDel = false;
+            }
+        } else {
+            isDel = false;
+        }
+    }
+
+    return histMessage;
 }
 
 void ChatForm::retranslateUi()

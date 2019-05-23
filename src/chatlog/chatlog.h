@@ -56,6 +56,12 @@ public:
     void selectAll();
     void fontChanged(const QFont& font);
     void reloadTheme();
+    void removeLowerDateLineIfNeed(const QDate& date);
+
+    int64_t lowerId() const;
+    int64_t upperId() const;
+
+    QDate upperDate() const;
 
     QString getSelectedText() const;
 

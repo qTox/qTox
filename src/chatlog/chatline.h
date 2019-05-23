@@ -86,6 +86,7 @@ public:
 
     int getColumnCount();
     int getRow() const;
+    int64_t getId() const;
 
     ChatLineContent* getContent(int col) const;
     ChatLineContent* getContent(QPointF scenePos) const;
@@ -105,10 +106,12 @@ protected:
     void addColumn(ChatLineContent* item, ColumnFormat fmt);
     void updateBBox();
     void setRow(int idx);
+    void setId(int64_t id);
     void visibilityChanged(bool visible);
 
 private:
     int row = -1;
+    int64_t id{-1};
     QVector<ChatLineContent*> content;
     QVector<ColumnFormat> format;
     qreal width = 100.0;

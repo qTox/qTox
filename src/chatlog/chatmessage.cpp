@@ -43,9 +43,11 @@ ChatMessage::ChatMessage()
 }
 
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
-                                                MessageType type, bool isMe, const QDateTime& date, bool colorizeName)
+                                                MessageType type, bool isMe, int64_t id, const QDateTime& date, bool colorizeName)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
+
+    msg->setId(id);
 
     QString text = rawMessage.toHtmlEscaped();
     QString senderText = sender;
@@ -146,9 +148,11 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString& rawMessage,
 }
 
 ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, ToxFile file,
-                                                        bool isMe, const QDateTime& date)
+                                                        bool isMe, int64_t id, const QDateTime& date)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
+
+    msg->setId(id);
 
     QFont baseFont = Settings::getInstance().getChatMessageFont();
     QFont authorFont = baseFont;

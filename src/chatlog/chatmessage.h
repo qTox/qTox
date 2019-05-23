@@ -48,12 +48,12 @@ public:
     ChatMessage();
 
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage,
-                                              MessageType type, bool isMe,
+                                              MessageType type, bool isMe, int64_t id,
                                               const QDateTime& date = QDateTime(), bool colorizeName = false);
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type,
                                                   const QDateTime& date);
     static ChatMessage::Ptr createFileTransferMessage(const QString& sender, ToxFile file,
-                                                      bool isMe, const QDateTime& date);
+                                                      bool isMe, int64_t id, const QDateTime& date);
     static ChatMessage::Ptr createTypingNotification();
     static ChatMessage::Ptr createBusyNotification();
 
