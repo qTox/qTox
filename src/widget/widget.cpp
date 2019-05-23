@@ -1344,7 +1344,7 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
     emit widget->chatroomWidgetClicked(widget);
 }
 
-bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString text, bool sound, bool file)
+bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, bool sound, bool file)
 {
     bool hasActive;
     QWidget* currentWindow;
@@ -1406,7 +1406,7 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString text, bo
     return false;
 }
 
-bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk authorPk, const QString message, bool notify)
+bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk, const QString& message, bool notify)
 {
     bool hasActive;
     QWidget* currentWindow;
