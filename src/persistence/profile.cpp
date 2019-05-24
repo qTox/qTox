@@ -107,7 +107,7 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile,
     Settings& s = Settings::getInstance();
     s.setCurrentProfile(name);
     s.saveGlobal();
-    s.loadPersonal(name, passkey.get());
+    s.loadPersonal(name, this->passkey.get());
     initCore(toxsave, s, isNewProfile);
 
     const ToxId& selfId = core->getSelfId();
