@@ -535,9 +535,9 @@ void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& param
     const bool isFirst = (parameter.period == PeriodSearch::WithTheFirst);
     const bool isAfter = (parameter.period == PeriodSearch::AfterDate);
     if (isFirst || isAfter) {
-        if (isFirst || (isAfter && parameter.date < getFirstTime().date())) {
+        if (isFirst || (isAfter && parameter.time < getFirstTime())) {
             const QString pk = f->getPublicKey().toString();
-            if ((isFirst || parameter.date >= history->getStartDateChatHistory(pk).date())
+            if ((isFirst || parameter.time >= history->getStartDateChatHistory(pk))
                 && loadHistory(phrase, parameter)) {
 
                 return;
@@ -546,9 +546,9 @@ void ChatForm::searchInBegin(const QString& phrase, const ParameterSearch& param
 
         onSearchDown(phrase, parameter);
     } else {
-        if (parameter.period == PeriodSearch::BeforeDate && parameter.date < getFirstTime().date()) {
+        if (parameter.period == PeriodSearch::BeforeDate && parameter.time < getFirstTime()) {
             const QString pk = f->getPublicKey().toString();
-            if (parameter.date >= history->getStartDateChatHistory(pk).date()
+            if (parameter.time >= history->getStartDateChatHistory(pk)
                 && loadHistory(phrase, parameter)) {
                 return;
             }
@@ -592,16 +592,31 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
             return;
         }
 
-        searchPoint.setX(numLines);
+        searchPoint.setX(1);
         searchAfterLoadHistory = true;
-        loadHistoryByDateRange(newBaseDate);
+        loadHistoryByDateRange(newBaseDate, LoadHistoryDialog::to);
     }
 }
 
 void ChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
 {
-    if (!searchInText(phrase, parameter, SearchDirection::Down)) {
-        emit messageNotFoundShow(SearchDirection::Down);
+    const bool isSearch = searchInText(phrase, parameter, SearchDirection::Down);
+
+    if (!isSearch) {
+        const QString pk = f->getPublicKey().toString();
+        auto param = parameter;
+        param.period = PeriodSearch::AfterDate;
+        param.time = prevMsgDateTime;
+        const QDateTime newBaseDate =
+            history->getDateWhereFindPhrase(pk, prevMsgDateTime, phrase, param);
+
+        if (!newBaseDate.isValid()) {
+            emit messageNotFoundShow(SearchDirection::Down);
+            return;
+        }
+
+        searchAfterLoadHistory = true;
+        loadHistoryByDateRange(newBaseDate, LoadHistoryDialog::from);
     }
 }
 
@@ -802,43 +817,40 @@ void ChatForm::loadHistoryDefaultNum(bool processUndelivered)
     QList<History::HistMessage> msgs = history->getChatHistoryDefaultNum(pk);
     if (!msgs.isEmpty()) {
         earliestMessage = msgs.first().timestamp;
+        prevMsgDateTime = msgs.last().timestamp;
         handleLoadedMessages(msgs, processUndelivered, true);
     }
 }
 
-void ChatForm::loadHistoryByDateRange(const QDateTime& since, LoadHistoryDialog::LoadType loadType, bool processUndelivered)
+void ChatForm::loadHistoryByDateRange(const QDateTime& date, LoadHistoryDialog::LoadType loadType, bool processUndelivered)
 {
-    QDateTime now = QDateTime::currentDateTime();
-    if (since > now) {
+    if (date > QDateTime::currentDateTime()) {
         return;
     }
 
-    if (!earliestMessage.isNull()) {
-        if (earliestMessage < since) {
-            return;
-        }
-
-        if (earliestMessage < now) {
-            now = earliestMessage;
-            now = now.addMSecs(-1);
-        }
-    }
-
     QString pk = f->getPublicKey().toString();
-    earliestMessage = since;
 
     QList<History::HistMessage> msgs;
     bool onTop;
     if (loadType == LoadHistoryDialog::from) {
         onTop = true;
-        msgs = history->getChatHistoryUpper(pk, since);
+        msgs = history->getChatHistoryUpper(pk, date);
     } else {
         onTop = false;
-        msgs = history->getChatHistoryLower(pk, since);
+        msgs = history->getChatHistoryLower(pk, date);
     }
 
     if (!msgs.isEmpty()) {
         chatWidget->clear();
+
+        if (onTop) {
+            earliestMessage = date;
+            prevMsgDateTime = msgs.last().timestamp;
+        } else {
+            earliestMessage = msgs.first().timestamp;
+            prevMsgDateTime = date;
+        }
+
         handleLoadedMessages(msgs, processUndelivered, onTop);
     }
 }
@@ -875,12 +887,15 @@ void ChatForm::handleLoadedMessages(QList<History::HistMessage> newHistMsgs, boo
         }
         chatLines.append(msg);
         previousId = metadata.authorPk;
-        prevMsgDateTime = metadata.msgDateTime;
     }
     previousId = prevIdBackup;
     insertChatlines(chatLines, onTop);
-    if (searchAfterLoadHistory && chatLines.isEmpty()) {
-        onContinueSearch();
+
+    if (searchAfterLoadHistory && onTop) {
+        const auto size = chatWidget->getLines().size();
+        if (size > 0) {
+            searchPoint.setX(size - 1);
+        }
     }
 }
 
@@ -1220,9 +1235,10 @@ bool ChatForm::loadHistory(const QString& phrase, const ParameterSearch& paramet
     const QDateTime newBaseDate =
         history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
 
+    auto t = getFirstTime();
     if (newBaseDate.isValid() && getFirstTime().isValid() && newBaseDate.date() < getFirstTime().date()) {
         searchAfterLoadHistory = true;
-        loadHistoryByDateRange(newBaseDate);
+        loadHistoryByDateRange(newBaseDate, LoadHistoryDialog::from);
 
         return true;
     }

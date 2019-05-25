@@ -21,7 +21,7 @@ public:
 
 private:
     Ui::SearchSettingsForm *ui;
-    QDate startDate;
+    QDateTime startTime;
     bool isUpdate{false};
 
     void updateStartDateLabel();

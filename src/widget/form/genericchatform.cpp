@@ -294,7 +294,18 @@ QDateTime GenericChatForm::getLatestTime() const
 
 QDateTime GenericChatForm::getFirstTime() const
 {
-    return getTime(chatWidget->getFirstLine());
+    const auto lines = chatWidget->getLines();
+    if (lines.empty())
+        return QDateTime();
+
+    for (int i = 0; i < lines.size(); ++i) {
+        Timestamp* const timestamp = qobject_cast<Timestamp*>(lines.at(i).get()->getContent(2));
+        if (timestamp->getTime().isValid()) {
+            return timestamp->getTime();
+        }
+    }
+
+    return QDateTime();
 }
 
 void GenericChatForm::reloadTheme()
@@ -627,8 +638,8 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
         startLine = 0;
     } else if (parameter.period == PeriodSearch::AfterDate) {
         const auto lambda = [=](const ChatLine::Ptr& item) {
-            const auto d = getTime(item).date();
-            return d.isValid() && parameter.date <= d;
+            const auto d = getTime(item);
+            return d.isValid() && parameter.time <= d;
           };
 
         const auto find = std::find_if(lines.begin(), lines.end(), lambda);
@@ -639,8 +650,8 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
     } else if (parameter.period == PeriodSearch::BeforeDate) {
 #if QT_VERSION > QT_VERSION_CHECK(5, 6, 0)
         const auto lambda = [=](const ChatLine::Ptr& item) {
-            const auto d = getTime(item).date();
-            return d.isValid() && parameter.date >= d;
+            const auto d = getTime(item);
+            return d.isValid() && parameter.time >= d;
           };
 
         const auto find = std::find_if(lines.rbegin(), lines.rend(), lambda);

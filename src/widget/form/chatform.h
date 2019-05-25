@@ -48,7 +48,7 @@ public:
     ChatForm(Friend* chatFriend, History* history);
     ~ChatForm();
     void setStatusMessage(const QString& newMessage);
-    void loadHistoryByDateRange(const QDateTime& since, LoadHistoryDialog::LoadType loadType = LoadHistoryDialog::from,
+    void loadHistoryByDateRange(const QDateTime& date, LoadHistoryDialog::LoadType loadType,
                                 bool processUndelivered = false);
     void loadHistoryDefaultNum(bool processUndelivered = false);
 
