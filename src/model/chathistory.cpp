@@ -220,6 +220,15 @@ std::vector<IChatLog::DateChatLogIdxPair> ChatHistory::getDateIdxs(const QDate& 
     }
 }
 
+std::size_t ChatHistory::size() const
+{
+    if (canUseHistory()) {
+        return history->getNumMessagesForFriend(f.getPublicKey());
+    }
+
+    return sessionChatLog.size();
+}
+
 void ChatHistory::onFileUpdated(const ToxPk& sender, const ToxFile& file)
 {
     if (canUseHistory()) {

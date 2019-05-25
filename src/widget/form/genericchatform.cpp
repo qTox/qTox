@@ -327,6 +327,13 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     quoteAction = menu.addAction(QIcon(), QString(), this, SLOT(quoteSelectedText()),
                                  QKeySequence(Qt::ALT + Qt::Key_Q));
     addAction(quoteAction);
+
+    menu.addSeparator();
+
+    goCurrentDateAction = menu.addAction(QIcon(), QString(), this, SLOT(goToCurrentDate()),
+                                  QKeySequence(Qt::CTRL + Qt::Key_G));
+    addAction(goCurrentDateAction);
+
     menu.addSeparator();
 
     searchAction = menu.addAction(QIcon(), QString(), this, SLOT(searchFormShow()),
@@ -994,6 +1001,16 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
     }
 }
 
+void GenericChatForm::goToCurrentDate()
+{
+    chatWidget->clear();
+    messages.clear();
+    auto end = ChatLogIdx(chatLog.size() - 1);
+    auto begin = end.get() > 100 ? ChatLogIdx(end.get() - 100) : ChatLogIdx(0);
+
+    renderMessages(begin, end);
+}
+
 void GenericChatForm::loadHistoryLower()
 {
     auto end = messages.begin()->first;
@@ -1040,6 +1057,7 @@ void GenericChatForm::retranslateUi()
     quoteAction->setText(tr("Quote selected text"));
     copyLinkAction->setText(tr("Copy link address"));
     searchAction->setText(tr("Search in text"));
+    goCurrentDateAction->setText(tr("Go to current date"));
     loadHistoryAction->setText(tr("Load chat history..."));
     exportChatAction->setText(tr("Export to file"));
 }
