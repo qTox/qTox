@@ -71,14 +71,12 @@ LoadHistoryDialog::LoadType LoadHistoryDialog::getLoadType()
     return LoadType::to;
 }
 
-void LoadHistoryDialog::setTitle(const QString& title)
+void LoadHistoryDialog::turnSearchMode()
 {
-    setWindowTitle(title);
-}
-
-void LoadHistoryDialog::setInfoLabel(const QString& info)
-{
-    ui->fromLabel->setText(info);
+    setWindowTitle(tr("Select Date Dialog"));
+    ui->fromLabel->setText(tr("Select a date"));
+    ui->loadTypeComboBox->setVisible(false);
+    ui->infoLabel->setVisible(false);
 }
 
 void LoadHistoryDialog::highlightDates(int year, int month)

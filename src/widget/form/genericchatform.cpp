@@ -37,7 +37,6 @@
 #include "src/widget/contentlayout.h"
 #include "src/widget/emoticonswidget.h"
 #include "src/widget/form/chatform.h"
-#include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/searchform.h"
 #include "src/widget/style.h"
@@ -636,6 +635,23 @@ QDateTime GenericChatForm::getTime(const ChatLine::Ptr &chatLine) const
     return QDateTime();
 }
 
+void GenericChatForm::loadHistory(const QDateTime &time, const LoadHistoryDialog::LoadType type)
+{
+    chatWidget->clear();
+    messages.clear();
+
+    auto begin = firstItemAfterDate(time.date(), chatLog);
+    auto end = ChatLogIdx(begin.get() + 1);
+
+    renderMessages(begin, end);
+
+    if (type == LoadHistoryDialog::from) {
+        loadHistoryUpper();
+    } else {
+        loadHistoryLower();
+    }
+}
+
 
 void GenericChatForm::disableSearchText()
 {
@@ -801,22 +817,10 @@ void GenericChatForm::onLoadHistory()
 {
     LoadHistoryDialog dlg(&chatLog);
     if (dlg.exec()) {
-        chatWidget->clear();
-        messages.clear();
-
         QDateTime time = dlg.getFromDate();
         auto type = dlg.getLoadType();
 
-        auto begin = firstItemAfterDate(dlg.getFromDate().date(), chatLog);
-        auto end = ChatLogIdx(begin.get() + 1);
-
-        renderMessages(begin, end);
-
-        if (type == LoadHistoryDialog::from) {
-            loadHistoryUpper();
-        } else {
-            loadHistoryLower();
-        }
+        loadHistory(time, type);
     }
 }
 
@@ -863,6 +867,12 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
 {
     disableSearchText();
 
+    if (!parameter.time.isNull()) {
+        LoadHistoryDialog::LoadType type = (parameter.period == PeriodSearch::BeforeDate)
+                ? LoadHistoryDialog::to : LoadHistoryDialog::from;
+        loadHistory(parameter.time, type);
+    }
+
     bool bForwardSearch = false;
     switch (parameter.period) {
     case PeriodSearch::WithTheFirst: {
@@ -880,13 +890,13 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
     }
     case PeriodSearch::AfterDate: {
         bForwardSearch = true;
-        searchPos.logIdx = firstItemAfterDate(parameter.date, chatLog);
+        searchPos.logIdx = firstItemAfterDate(parameter.time.date(), chatLog);
         searchPos.numMatches = 0;
         break;
     }
     case PeriodSearch::BeforeDate: {
         bForwardSearch = false;
-        searchPos.logIdx = firstItemAfterDate(parameter.date, chatLog);
+        searchPos.logIdx = firstItemAfterDate(parameter.time.date(), chatLog);
         searchPos.numMatches = 0;
         break;
     }
@@ -997,7 +1007,7 @@ void GenericChatForm::loadHistoryLower()
 
 void GenericChatForm::loadHistoryUpper()
 {
-    auto begin = messages.end()->first;
+    auto begin = messages.rbegin()->first;
 
     int add = 100;
     if (begin.get() + 100 > chatLog.getNextIdx().get()) {
