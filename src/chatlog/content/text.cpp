@@ -66,9 +66,11 @@ void Text::selectText(const QString& txt, const std::pair<int, int>& point)
         return;
     }
 
-    auto cursor = doc->find(txt, point.first);
+    selectCursor = doc->find(txt, point.first);
+    selectPoint = point;
 
-    selectText(cursor, point);
+    regenerate();
+    update();
 }
 
 void Text::selectText(const QRegularExpression &exp, const std::pair<int, int>& point)
@@ -79,14 +81,20 @@ void Text::selectText(const QRegularExpression &exp, const std::pair<int, int>& 
         return;
     }
 
-    auto cursor = doc->find(exp, point.first);
+    selectCursor = doc->find(exp, point.first);
+    selectPoint = point;
 
-    selectText(cursor, point);
+    regenerate();
+    update();
 }
 
 void Text::deselectText()
 {
     dirty = true;
+
+    selectCursor = QTextCursor();
+    selectPoint = {0, 0};
+
     regenerate();
     update();
 }
@@ -355,6 +363,10 @@ void Text::regenerate()
         dirty = false;
     }
 
+    if (!selectCursor.isNull()) {
+        selectText(selectCursor, selectPoint);
+    }
+
     // if we are not visible -> free mem
     if (!keepInMemory)
         freeResources();
@@ -462,9 +474,6 @@ void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
         QTextCharFormat format;
         format.setBackground(QBrush(Style::getColor(Style::SearchHighlighted)));
         cursor.mergeCharFormat(format);
-
-        regenerate();
-        update();
     }
 }
 
