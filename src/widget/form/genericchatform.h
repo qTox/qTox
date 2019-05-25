@@ -117,6 +117,8 @@ protected slots:
     void onSearchTriggered();
     void updateShowDateInfo(const ChatLine::Ptr& line);
 
+    virtual void goToCurrentDate();
+
     virtual void loadHistoryLower();
     virtual void loadHistoryUpper();
 
@@ -160,6 +162,7 @@ protected:
     QAction* quoteAction;
     QAction* copyLinkAction;
     QAction* searchAction;
+    QAction* goCurrentDateAction;
 
     ToxPk previousId;
 

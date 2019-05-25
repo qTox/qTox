@@ -84,6 +84,7 @@ public slots:
     void clearChatArea();
 
 protected slots:
+    void goToCurrentDate() override final;
     void loadHistoryLower() override final;
     void loadHistoryUpper() override final;
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter) override;

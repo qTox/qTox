@@ -208,6 +208,13 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     quoteAction = menu.addAction(QIcon(), QString(), this, SLOT(quoteSelectedText()),
                                  QKeySequence(Qt::ALT + Qt::Key_Q));
     addAction(quoteAction);
+
+    menu.addSeparator();
+
+    goCurrentDateAction = menu.addAction(QIcon(), QString(), this, SLOT(goToCurrentDate()),
+                                  QKeySequence(Qt::CTRL + Qt::Key_G));
+    addAction(goCurrentDateAction);
+
     menu.addSeparator();
 
     searchAction = menu.addAction(QIcon(), QString(), this, SLOT(searchFormShow()),
@@ -661,8 +668,8 @@ bool GenericChatForm::searchInText(const QString& phrase, const ParameterSearch&
         }
 #else
         for (int i = lines.size() - 1; i >= 0; --i) {
-            auto d = getTime(lines[i]).date();
-            if (d.isValid() && parameter.date >= d) {
+            auto d = getTime(lines[i]);
+            if (d.isValid() && parameter.time >= d) {
                 startLine = i;
                 break;
             }
@@ -1025,6 +1032,10 @@ void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& line)
     }
 }
 
+void GenericChatForm::goToCurrentDate()
+{
+}
+
 void GenericChatForm::loadHistoryLower()
 {
 }
@@ -1058,6 +1069,7 @@ void GenericChatForm::retranslateUi()
     quoteAction->setText(tr("Quote selected text"));
     copyLinkAction->setText(tr("Copy link address"));
     searchAction->setText(tr("Search in text"));
+    goCurrentDateAction->setText(tr("Go to current date"));
 }
 
 void GenericChatForm::showNetcam()

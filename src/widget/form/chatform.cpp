@@ -773,6 +773,12 @@ void ChatForm::clearChatArea()
     offlineEngine->removeAllMessages();
 }
 
+void ChatForm::goToCurrentDate()
+{
+    chatWidget->clear();
+    loadHistoryDefaultNum(true);
+}
+
 void ChatForm::loadHistoryLower()
 {
     QString pk = f->getPublicKey().toString();
