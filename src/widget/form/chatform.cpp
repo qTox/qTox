@@ -1192,7 +1192,14 @@ void ChatForm::SendMessageStr(QString msg)
                                        }
                                    });
         } else {
-            ma->markAsSent(QDateTime::currentDateTime());
+            if (messageSent) {
+                offlineEngine->addSentMessage(receipt, modelMsg,
+                                              [ma] { ma->markAsSent(QDateTime::currentDateTime()); });
+            } else {
+                offlineEngine->addUnsentMessage(modelMsg, [ma] {
+                    ma->markAsSent(QDateTime::currentDateTime());
+                });
+            }
         }
 
         // set last message only when sending it
