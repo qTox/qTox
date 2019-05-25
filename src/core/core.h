@@ -21,10 +21,12 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
+#include "groupid.h"
+#include "icorefriendmessagesender.h"
+#include "receiptnum.h"
 #include "toxfile.h"
 #include "toxid.h"
 #include "toxpk.h"
-#include "groupid.h"
 
 #include "src/util/strongtype.h"
 #include "src/model/status.h"
@@ -47,10 +49,8 @@ class Profile;
 class Core;
 
 using ToxCorePtr = std::unique_ptr<Core>;
-using ReceiptNum = NamedType<uint32_t, struct ReceiptNumTag>;
-Q_DECLARE_METATYPE(ReceiptNum);
 
-class Core : public QObject
+class Core : public QObject, public ICoreFriendMessageSender
 {
     Q_OBJECT
 public:
@@ -114,11 +114,11 @@ public slots:
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
 
-    bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt);
+    bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) override;
     void sendGroupMessage(int groupId, const QString& message);
     void sendGroupAction(int groupId, const QString& message);
     void changeGroupTitle(int groupId, const QString& title);
-    bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt);
+    bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) override;
     void sendTyping(uint32_t friendId, bool typing);
 
     void setNospam(uint32_t nospam);
