@@ -22,6 +22,7 @@
 
 #include "src/chatlog/chatmessage.h"
 #include "src/core/core.h"
+#include "src/model/message.h"
 #include "src/persistence/db/rawdatabase.h"
 #include <QDateTime>
 #include <QMap>
@@ -31,14 +32,19 @@
 #include <chrono>
 
 class Friend;
+class IOfflineMsgsSettings;
+class ICoreFriendMessageSender;
 
 class OfflineMsgEngine : public QObject
 {
     Q_OBJECT
 public:
-    explicit OfflineMsgEngine(Friend*);
-    void addSavedMessage(RowId messageID, ChatMessage::Ptr msg);
-    void addSentSavedMessage(ReceiptNum receipt, RowId messageID, ChatMessage::Ptr msg);
+    explicit OfflineMsgEngine(Friend* f, ICoreFriendMessageSender* messageSender,
+                              IOfflineMsgsSettings* settings);
+
+    using CompletionFn = std::function<void()>;
+    void addUnsentMessage(Message const& message, CompletionFn completionCallback);
+    void addSentMessage(ReceiptNum receipt, Message const& message, CompletionFn completionCallback);
     void deliverOfflineMsgs();
 
 public slots:
@@ -46,28 +52,26 @@ public slots:
     void onReceiptReceived(ReceiptNum receipt);
 
 private:
-    struct Message
+    struct OfflineMessage
     {
-        bool operator==(const Message& rhs) const { return rhs.rowId == rowId; }
-        ChatMessage::Ptr chatMessage;
-        RowId rowId;
+        Message message;
         std::chrono::time_point<std::chrono::steady_clock> authorshipTime;
+        CompletionFn completionFn;
     };
 
 private slots:
-    void completeMessage(QMap<ReceiptNum, Message>::iterator msgIt);
-
-private slots:
-    void updateTimestamp(ChatMessage::Ptr msg);
+    void completeMessage(QMap<ReceiptNum, OfflineMessage>::iterator msgIt);
 
 private:
     void checkForCompleteMessages(ReceiptNum receipt);
 
     QMutex mutex;
     const Friend* f;
+    ICoreFriendMessageSender* messageSender;
+    IOfflineMsgsSettings* settings;
     QVector<ReceiptNum> receivedReceipts;
-    QMap<ReceiptNum, Message> sentSavedMessages;
-    QVector<Message> unsentSavedMessages;
+    QMap<ReceiptNum, OfflineMessage> sentMessages;
+    QVector<OfflineMessage> unsentMessages;
 };
 
 #endif // OFFLINEMSGENGINE_H

@@ -102,6 +102,27 @@ namespace
 
         return cD + res.sprintf("%02ds", seconds);
     }
+
+    void completeMessage(ChatMessage::Ptr ma, RowId rowId)
+    {
+        auto profile = Nexus::getProfile();
+        if (profile->isHistoryEnabled()) {
+            profile->getHistory()->markAsSent(rowId);
+        }
+
+        ma->markAsSent(QDateTime::currentDateTime());
+    }
+
+    struct CompleteMessageFunctor
+    {
+        void operator()() const
+        {
+            completeMessage(ma, rowId);
+        }
+
+        ChatMessage::Ptr ma;
+        RowId rowId;
+    };
 } // namespace
 
 ChatForm::ChatForm(Friend* chatFriend, History* history)
@@ -122,7 +143,7 @@ ChatForm::ChatForm(Friend* chatFriend, History* history)
     statusMessageLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    offlineEngine = new OfflineMsgEngine(f);
+    offlineEngine = new OfflineMsgEngine(f, Core::getInstance(), &Settings::getInstance());
 
     typingTimer.setSingleShot(true);
 
@@ -919,20 +940,26 @@ void ChatForm::sendLoadedMessage(ChatMessage::Ptr chatMsg, MessageMetadata const
 
     ReceiptNum receipt;
     bool  messageSent{false};
+    QString stringMsg = chatMsg->toString();
     if (f->isOnline()) {
         Core* core = Core::getInstance();
         uint32_t friendId = f->getId();
-        QString stringMsg = chatMsg->toString();
         messageSent = metadata.isAction ? core->sendAction(friendId, stringMsg, receipt)
                                         : core->sendMessage(friendId, stringMsg, receipt);
         if (!messageSent) {
             qWarning() << "Failed to send loaded message, adding to offline messaging";
         }
     }
+
+    auto onCompletion = CompleteMessageFunctor{};
+    onCompletion.ma = chatMsg;
+    onCompletion.rowId = metadata.id;
+
+    auto modelMsg = Message{metadata.isAction, stringMsg, QDateTime::currentDateTime()};
     if (messageSent) {
-        getOfflineMsgEngine()->addSentSavedMessage(receipt, metadata.id, chatMsg);
+        getOfflineMsgEngine()->addSentMessage(receipt, modelMsg, onCompletion);
     } else {
-        getOfflineMsgEngine()->addSavedMessage(metadata.id, chatMsg);
+        getOfflineMsgEngine()->addUnsentMessage(modelMsg, onCompletion);
     }
 }
 
@@ -1136,22 +1163,32 @@ void ChatForm::SendMessageStr(QString msg)
 
         ChatMessage::Ptr ma = createSelfMessage(part, timestamp, isAction, false);
 
+        Message modelMsg{isAction, part, timestamp};
+
+
         if (history && Settings::getInstance().getEnableLogging()) {
             auto* offMsgEngine = getOfflineMsgEngine();
             QString selfPk = Core::getInstance()->getSelfId().toString();
             QString pk = f->getPublicKey().toString();
             QString name = Core::getInstance()->getUsername();
             bool isSent = !Settings::getInstance().getFauxOfflineMessaging();
+
+            // Use functor to avoid having to declare a lambda in a lambda
+            CompleteMessageFunctor onCompletion;
+            onCompletion.ma = ma;
+
             history->addNewMessage(pk, historyPart, selfPk, timestamp, isSent, name,
-                                   [messageSent, offMsgEngine, receipt, ma](RowId id) {
-                                        if (messageSent) {
-                                            offMsgEngine->addSentSavedMessage(receipt, id, ma);
-                                        } else {
-                                            offMsgEngine->addSavedMessage(id, ma);
-                                        }
+                                   [messageSent, offMsgEngine, receipt, modelMsg,
+                                    onCompletion](RowId id) mutable {
+                                       onCompletion.rowId = id;
+                                       if (messageSent) {
+                                           offMsgEngine->addSentMessage(receipt, modelMsg,
+                                                                        onCompletion);
+                                       } else {
+                                           offMsgEngine->addUnsentMessage(modelMsg, onCompletion);
+                                       }
                                    });
         } else {
-            // TODO: Make faux-offline messaging work partially with the history disabled
             ma->markAsSent(QDateTime::currentDateTime());
         }
 

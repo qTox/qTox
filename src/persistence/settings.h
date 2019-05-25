@@ -26,6 +26,7 @@
 #include "src/core/toxencrypt.h"
 #include "src/core/toxfile.h"
 #include "src/persistence/ifriendsettings.h"
+#include "src/persistence/iofflinemsgssettings.h"
 #include "src/video/ivideosettings.h"
 
 #include <QDateTime>
@@ -47,7 +48,8 @@ class Settings : public QObject,
                  public ICoreSettings,
                  public IFriendSettings,
                  public IAudioSettings,
-                 public IVideoSettings
+                 public IVideoSettings,
+                 public IOfflineMsgsSettings
 {
     Q_OBJECT
 
@@ -516,8 +518,8 @@ public:
     SIGNAL_IMPL(Settings, autoAcceptDirChanged, const ToxPk& id, const QString& dir)
     SIGNAL_IMPL(Settings, contactNoteChanged, const ToxPk& id, const QString& note)
 
-    bool getFauxOfflineMessaging() const;
-    void setFauxOfflineMessaging(bool value);
+    bool getFauxOfflineMessaging() const override;
+    void setFauxOfflineMessaging(bool value) override;
 
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
