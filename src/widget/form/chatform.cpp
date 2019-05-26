@@ -852,6 +852,7 @@ void ChatForm::loadHistoryByDateRange(const QDateTime& date, LoadHistoryDialog::
         if (onTop) {
             earliestMessage = date;
             prevMsgDateTime = msgs.last().timestamp;
+            chatWidget->setScrollToTop();
         } else {
             earliestMessage = msgs.first().timestamp;
             prevMsgDateTime = date;

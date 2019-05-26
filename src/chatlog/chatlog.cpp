@@ -397,7 +397,12 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
     }
 
     layout(lines.last()->getRow(), lines.size(), useableWidth());
-    startResizeWorker();
+
+    if (!visibleLines.isEmpty()) {
+        startResizeWorker(visibleLines.last());
+    } else {
+        startResizeWorker();
+    }
 }
 
 void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
@@ -440,7 +445,11 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
     scene->setItemIndexMethod(oldIndexMeth);
 
     // redo layout
-    startResizeWorker();
+    if (visibleLines.size() > 1) {
+        startResizeWorker(visibleLines[1]);
+    } else {
+        startResizeWorker();
+    }
 }
 
 bool ChatLog::stickToBottom() const
@@ -454,7 +463,7 @@ void ChatLog::scrollToBottom()
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
 }
 
-void ChatLog::startResizeWorker()
+void ChatLog::startResizeWorker(ChatLine::Ptr anchorLine)
 {
     if (lines.empty())
         return;
@@ -462,10 +471,13 @@ void ChatLog::startResizeWorker()
     // (re)start the worker
     if (!workerTimer->isActive()) {
         // these values must not be reevaluated while the worker is running
-        workerStb = stickToBottom();
 
-        if (!visibleLines.empty())
-            workerAnchorLine = visibleLines.first();
+        if (anchorLine) {
+            workerAnchorLine = anchorLine;
+            workerStb = false;
+        } else {
+            workerStb = stickToBottom();
+        }
     }
 
     // switch to busy scene displaying the busy notification if there is a lot
@@ -753,7 +765,7 @@ void ChatLog::forceRelayout()
     startResizeWorker();
 }
 
-void ChatLog::checkVisibility(bool causedByScroll)
+void ChatLog::checkVisibility(bool causedWheelEvent)
 {
     if (lines.empty())
         return;
@@ -794,19 +806,30 @@ void ChatLog::checkVisibility(bool causedByScroll)
         emit firstVisibleLineChanged(visibleLines.at(0));
     }
 
-    if (causedByScroll) {
+    if (causedWheelEvent) {
         if (lowerBound != lines.cend() && lowerBound->get()->row == 0) {
             emit loadHistoryLower();
-        } else if (upperBound != lines.cend() && upperBound->get()->row >= lines.size() - 10) {
+        } else if (upperBound == lines.cend()/* && upperBound->get()->row >= lines.size() - 10*/) {
             emit loadHistoryUpper();
         }
     }
 }
 
+void ChatLog::setScrollToTop()
+{
+    isScrollToTop = true;
+}
+
+void ChatLog::scrollToTop()
+{
+    updateSceneRect();
+    verticalScrollBar()->setValue(verticalScrollBar()->minimum());
+}
+
 void ChatLog::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
-    checkVisibility(true);
+    checkVisibility();
 }
 
 void ChatLog::resizeEvent(QResizeEvent* ev)
@@ -926,10 +949,14 @@ void ChatLog::onWorkerTimeout()
         updateMultiSelectionRect();
 
         // scroll
-        if (workerStb)
+        if (isScrollToTop) {
+            isScrollToTop = false;
+            scrollToTop();
+        } else if (workerStb) {
             scrollToBottom();
-        else
+        } else {
             scrollToLine(workerAnchorLine);
+        }
 
         // don't keep a Ptr to the anchor line
         workerAnchorLine = ChatLine::Ptr();
@@ -1000,6 +1027,12 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
         for (int i = selFirstRow; i <= selLastRow; ++i)
             lines[i]->selectionFocusChanged(false);
     }
+}
+
+void ChatLog::wheelEvent(QWheelEvent *event)
+{
+    QGraphicsView::wheelEvent(event);
+    checkVisibility(true);
 }
 
 void ChatLog::retranslateUi()

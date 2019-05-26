@@ -57,6 +57,7 @@ public:
     void fontChanged(const QFont& font);
     void reloadTheme();
     void removeLowerDateLineIfNeed(const QDate& date);
+    void setScrollToTop();
 
     int64_t lowerId() const;
     int64_t upperId() const;
@@ -103,9 +104,10 @@ protected:
 
     void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
-    void checkVisibility(bool causedByScroll = false);
+    void checkVisibility(bool causedWheelEvent = false);
+    void scrollToTop();
     void scrollToBottom();
-    void startResizeWorker();
+    void startResizeWorker(ChatLine::Ptr anchorLine = nullptr);
 
     virtual void mouseDoubleClickEvent(QMouseEvent* ev) final override;
     virtual void mousePressEvent(QMouseEvent* ev) final override;
@@ -116,6 +118,7 @@ protected:
     virtual void showEvent(QShowEvent*) final override;
     virtual void focusInEvent(QFocusEvent* ev) final override;
     virtual void focusOutEvent(QFocusEvent* ev) final override;
+    virtual void wheelEvent(QWheelEvent *event) final override;
 
     void updateMultiSelectionRect();
     void updateTypingNotification();
@@ -151,6 +154,7 @@ private:
     QList<ChatLine::Ptr> visibleLines;
     ChatLine::Ptr typingNotification;
     ChatLine::Ptr busyNotification;
+    bool isScrollToTop{false};
 
     // selection
     int selClickedRow = -1; // These 4 are only valid while selectionMode != None
