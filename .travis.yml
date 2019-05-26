@@ -18,6 +18,10 @@ stages:
   - name: "Windows Stage 3: qTox"
     if: type = push AND branch = master
 
+env:
+  global:
+    - CIRP_GITHUB_REPO_SLUG="qTox/qTox-nightly-releases"
+
 jobs:
   include:
     - stage: Linux
@@ -82,7 +86,13 @@ jobs:
     - stage: "Windows Stage 3: qTox"
       os: linux
       env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=i686
-      script: ./.travis/build-windows.sh i686 release /opt/build-windows/i686 stage3
+      script:
+        - ./.travis/build-windows.sh i686 release /opt/build-windows/i686 stage3
+        - export ARTIFACTS_DIR="$(mktemp -d)"
+        - cp -a ./workspace/i686/qtox/release/{setup-qtox-i686-release.exe,setup-qtox-i686-release.exe.sha256,qtox-i686-release.zip,qtox-i686-release.zip.sha256} "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup1.sh
+        - .travis/cirp/store.sh "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup2.sh
       services:
         - docker
       cache:
@@ -91,7 +101,13 @@ jobs:
     - stage: "Windows Stage 3: qTox"
       os: linux
       env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=x86_64
-      script: ./.travis/build-windows.sh x86_64 release /opt/build-windows/x86_64 stage3
+      script:
+        - ./.travis/build-windows.sh x86_64 release /opt/build-windows/x86_64 stage3
+        - export ARTIFACTS_DIR="$(mktemp -d)"
+        - cp -a ./workspace/x86_64/qtox/release/{setup-qtox-x86_64-release.exe,setup-qtox-x86_64-release.exe.sha256,qtox-x86_64-release.zip,qtox-x86_64-release.zip.sha256} "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup1.sh
+        - .travis/cirp/store.sh "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup2.sh
       services:
         - docker
       cache:
@@ -100,7 +116,13 @@ jobs:
     - stage: "Windows Stage 3: qTox"
       os: linux
       env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=i686
-      script: ./.travis/build-windows.sh i686 debug /opt/build-windows/i686 stage3
+      script:
+        - ./.travis/build-windows.sh i686 debug /opt/build-windows/i686 stage3
+        - export ARTIFACTS_DIR="$(mktemp -d)"
+        - cp -a ./workspace/i686/qtox/debug/{qtox-i686-debug.zip,qtox-i686-debug.zip.sha256} "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup1.sh
+        - .travis/cirp/store.sh "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup2.sh
       services:
         - docker
       cache:
@@ -109,7 +131,13 @@ jobs:
     - stage: "Windows Stage 3: qTox"
       os: linux
       env: WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=x86_64
-      script: ./.travis/build-windows.sh x86_64 debug /opt/build-windows/x86_64 stage3
+      script:
+        - ./.travis/build-windows.sh x86_64 debug /opt/build-windows/x86_64 stage3
+        - export ARTIFACTS_DIR="$(mktemp -d)"
+        - cp -a ./workspace/x86_64/qtox/debug/{qtox-x86_64-debug.zip,qtox-x86_64-debug.zip.sha256} "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup1.sh
+        - .travis/cirp/store.sh "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup2.sh
       services:
         - docker
       cache:
@@ -126,19 +154,48 @@ jobs:
           - $HOME/Library/Caches/Homebrew
       before_cache:
         - brew cleanup
-      script: "./.travis/$JOB.sh"
+      script:
+        - "./.travis/$JOB.sh"
+        - export ARTIFACTS_DIR="$(mktemp -d)"
+        - cp -a ./{qTox.dmg,qTox.dmg.sha256} "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup1.sh
+        - .travis/cirp/store.sh "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup2.sh
     - stage: "macOS, AppImage and Flatpak"
       os: linux
       env: JOB=APPIMAGE
-      script: ./appimage/build-appimage.sh
+      script:
+        - ./appimage/build-appimage.sh
+        - export ARTIFACTS_DIR="$(mktemp -d)"
+        - cp -a ./output/* "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup1.sh
+        - .travis/cirp/store.sh "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup2.sh
       services:
         - docker
     - stage: "macOS, AppImage and Flatpak"
       os: linux
       env: JOB=FLATPAK
-      script: ./flatpak/build-flatpak.sh
+      script:
+        - ./flatpak/build-flatpak.sh
+        - export ARTIFACTS_DIR="$(mktemp -d)"
+        - cp -a ./output/* "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup1.sh
+        - .travis/cirp/store.sh "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup2.sh
       services:
         - docker
+    - stage: "Nightly publishing"
+      if: type == cron
+      script:
+        - export ARTIFACTS_DIR="$(mktemp -d)"
+        - .travis/cirp/collect.sh "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup4.sh
+        - .travis/cirp/publish.sh "$ARTIFACTS_DIR"
+        - .travis/cirp/cleanup5.sh
+      cache:
+        directories:
+          - /opt/cirp
 
 
 
