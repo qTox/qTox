@@ -693,7 +693,7 @@ void ChatLog::forceRelayout()
     startResizeWorker();
 }
 
-void ChatLog::checkVisibility(bool causedByScroll)
+void ChatLog::checkVisibility(bool causedWheelEvent)
 {
     if (lines.empty())
         return;
@@ -734,10 +734,10 @@ void ChatLog::checkVisibility(bool causedByScroll)
         emit firstVisibleLineChanged(visibleLines.at(0));
     }
 
-    if (causedByScroll) {
+    if (causedWheelEvent) {
         if (lowerBound != lines.cend() && lowerBound->get()->row == 0) {
             emit loadHistoryLower();
-        } else if (upperBound != lines.cend() && upperBound->get()->row >= lines.size() - 10) {
+        } else if (upperBound == lines.cend()) {
             emit loadHistoryUpper();
         }
     }
@@ -746,7 +746,7 @@ void ChatLog::checkVisibility(bool causedByScroll)
 void ChatLog::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
-    checkVisibility(true);
+    checkVisibility();
 }
 
 void ChatLog::resizeEvent(QResizeEvent* ev)
@@ -940,6 +940,12 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
         for (int i = selFirstRow; i <= selLastRow; ++i)
             lines[i]->selectionFocusChanged(false);
     }
+}
+
+void ChatLog::wheelEvent(QWheelEvent *event)
+{
+    QGraphicsView::wheelEvent(event);
+    checkVisibility(true);
 }
 
 void ChatLog::retranslateUi()
