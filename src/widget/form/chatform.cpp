@@ -1141,7 +1141,7 @@ void ChatForm::SendMessageStr(QString msg)
             QString selfPk = Core::getInstance()->getSelfId().toString();
             QString pk = f->getPublicKey().toString();
             QString name = Core::getInstance()->getUsername();
-            bool isSent = !Settings::getInstance().getFauxOfflineMessaging();
+            bool const isSent = false; // This forces history to add it to the offline messages table
             history->addNewMessage(pk, historyPart, selfPk, timestamp, isSent, name,
                                    [messageSent, offMsgEngine, receipt, ma](RowId id) {
                                         if (messageSent) {

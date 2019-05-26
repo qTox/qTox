@@ -144,7 +144,6 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
     bodyUI->closeToTray->setEnabled(showSystemTray);
 
     bodyUI->statusChanges->setChecked(s.getStatusChangeNotificationEnabled());
-    bodyUI->cbFauxOfflineMessaging->setChecked(s.getFauxOfflineMessaging());
 
     bodyUI->autoAwaySpinBox->setValue(s.getAutoAwayTime());
     bodyUI->autoSaveFilesDir->setText(s.getGlobalAutoAcceptDir());
@@ -215,11 +214,6 @@ void GeneralForm::on_minimizeToTray_stateChanged()
 void GeneralForm::on_statusChanges_stateChanged()
 {
     Settings::getInstance().setStatusChangeNotificationEnabled(bodyUI->statusChanges->isChecked());
-}
-
-void GeneralForm::on_cbFauxOfflineMessaging_stateChanged()
-{
-    Settings::getInstance().setFauxOfflineMessaging(bodyUI->cbFauxOfflineMessaging->isChecked());
 }
 
 void GeneralForm::on_autoAwaySpinBox_editingFinished()

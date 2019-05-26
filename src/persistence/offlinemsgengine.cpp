@@ -98,10 +98,6 @@ void OfflineMsgEngine::deliverOfflineMsgs()
 {
     QMutexLocker ml(&mutex);
 
-    if (!Settings::getInstance().getFauxOfflineMessaging()) {
-        return;
-    }
-
     if (!f->isOnline()) {
         return;
     }

@@ -155,7 +155,6 @@ void Settings::loadGlobal()
         checkUpdates = s.value("checkUpdates", true).toBool();
         notifySound = s.value("notifySound", true).toBool(); // note: notifySound and busySound UI elements are now under UI settings
         busySound = s.value("busySound", false).toBool();    // page, but kept under General in settings file to be backwards compatible
-        fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(),
@@ -436,7 +435,6 @@ void Settings::saveGlobal()
         s.setValue("checkUpdates", checkUpdates);
         s.setValue("notifySound", notifySound);
         s.setValue("busySound", busySound);
-        s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("autoAcceptMaxSize", static_cast<qlonglong>(autoAcceptMaxSize));
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
@@ -2060,22 +2058,6 @@ void Settings::removeFriendSettings(const ToxPk& id)
 {
     QMutexLocker locker{&bigLock};
     friendLst.remove(id.getByteArray());
-}
-
-bool Settings::getFauxOfflineMessaging() const
-{
-    QMutexLocker locker{&bigLock};
-    return fauxOfflineMessaging;
-}
-
-void Settings::setFauxOfflineMessaging(bool value)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (value != fauxOfflineMessaging) {
-        fauxOfflineMessaging = value;
-        emit fauxOfflineMessagingChanged(fauxOfflineMessaging);
-    }
 }
 
 bool Settings::getCompactLayout() const
