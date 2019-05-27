@@ -40,11 +40,19 @@ readonly AITOOL_BUILD_DIR="$BUILD_DIR"/aitool
 readonly SQLCIPHER_BUILD_DIR="$BUILD_DIR"/sqlcipher
 # ldqt binary
 readonly LDQT_BIN="/usr/lib/x86_64-linux-gnu/qt5/bin/linuxdeployqt"
+# aitool binary
+readonly AITOOL_BIN="/usr/lib/x86_64-linux-gnu/"
 readonly APT_FLAGS="-y --no-install-recommends"
 # snorenotify source
 readonly SNORE_GIT="https://github.com/KDE/snorenotify"
 # snorenotify build directory
 readonly SNORE_BUILD_DIR="$BUILD_DIR"/snorenotify
+# "appimage updater bridge" becomes aub
+readonly AUB_SRC_DIR="$BUILD_DIR"/aub
+# aub source
+readonly AUB_GIT="https://github.com/antony-jr/AppImageUpdaterBridge"
+# aub build dir
+readonly AUB_BUILD_DIR="$BUILD_DIR"/aub/build
 
 # use multiple cores when building
 export MAKEFLAGS="-j$(nproc)"
@@ -90,6 +98,15 @@ LDFLAGS="-lcrypto"
 make
 make install
 
+# build aub into a static library and later use it in 
+# qTox
+git clone "$AUB_GIT" "$AUB_SRC_DIR"
+mkdir $AUB_BUILD_DIR
+cd $AUB_BUILD_DIR
+cmake .. -DLOGGING_DISABLED=ON
+make
+
+
 # copy qtox source
 cp -r "$QTOX_SRC_DIR" "$QTOX_BUILD_DIR"
 cd "$QTOX_BUILD_DIR"
@@ -104,7 +121,10 @@ mkdir -p ./_build
 cd _build
 
 # need to build with -DDESKTOP_NOTIFICATIONS=True for snorenotify
-cmake -DDESKTOP_NOTIFICATIONS=True ../
+cmake -DDESKTOP_NOTIFICATIONS=True \
+      -DUPDATE_CHECK=True \
+      -DAPPIMAGE_UPDATER_BRIDGE_SRC_DIR="$AUB_SRC_DIR" \
+      -DAPPIMAGE_UPDATER_BRIDGE_BUILD_DIR="$AUB_BUILD_DIR" ../
 
 make
 
@@ -139,8 +159,9 @@ cd build
 # make sure that deps in separate install tree are found
 export PKG_CONFIG_PATH=/deps/lib/pkgconfig/
 
+# This is aitool not qTox , do not add qTox build options here
 cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING=ON \
--DAPPIMAGEKIT_PACKAGE_DEBS=ON -DUPDATE_CHECK=ON
+-DAPPIMAGEKIT_PACKAGE_DEBS=ON
 
 make
 make install

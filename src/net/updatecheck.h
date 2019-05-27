@@ -20,6 +20,14 @@
 #include <QNetworkAccessManager>
 #include <QTimer>
 
+#ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
+#include <QNetworkAccessManager>
+#else
+#include <AppImageUpdaterBridge>
+#include <AppImageUpdaterDialog>
+#include <QScopedPointer>
+#endif // APPIMAGE_UPDATER_BRIDGE_ENABLED
+
 #include <memory>
 
 class Settings;
@@ -32,18 +40,39 @@ class UpdateCheck : public QObject
 
 public:
     UpdateCheck(const Settings& settings);
-    void checkForUpdate();
 
 signals:
+#ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
     void updateAvailable(QString latestVersion, QUrl link);
+#else
+    void updateAvailable();
+#endif
     void upToDate();
     void updateCheckFailed();
 
+public slots:
+    void checkForUpdate();
+
+#ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
 private slots:
     void handleResponse(QNetworkReply *reply);
+#else
+
+public slots:
+    void initUpdate();
+
+private slots:
+    void handleUpdate(bool);
+    void handleUpdateEnd();
+#endif // APPIMAGE_UPDATER_BRIDGE_ENABLED
 
 private:
+#ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
     QNetworkAccessManager manager;
+#else
+    AppImageUpdaterBridge::AppImageDeltaRevisioner revisioner;
+    QScopedPointer<AppImageUpdaterBridge::AppImageUpdaterDialog> updateDialog;
+#endif // APPIMAGE_UPDATER_BRIDGE_ENABLED
     QTimer updateTimer;
     const Settings& settings;
 };

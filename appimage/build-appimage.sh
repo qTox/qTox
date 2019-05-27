@@ -57,6 +57,7 @@ then
         /bin/bash
 else
     docker run --rm \
+	-e TRAVIS_REPO_SLUG \
         -v $PWD:/qtox \
         -v $PWD/output:/output \
         debian:stretch-slim \
@@ -68,5 +69,6 @@ if [ -n "$TRAVIS_TAG" ]
 then
     readonly OUTFILE=./output/qTox-"$TRAVIS_TAG".x86_64.AppImage
     mv ./output/*.AppImage "$OUTFILE"
+    mv ./output/*.AppImage.zsync "$OUTFILE".zsync
     sha256sum "$OUTFILE" > "$OUTFILE".sha256
 fi

@@ -187,7 +187,7 @@ public slots:
     void onGroupDialogShown(Group* g);
     void toggleFullscreen();
     void refreshPeerListsLocal(const QString& username);
-    void onUpdateAvailable(QString latestVersion, QUrl link);
+    void onUpdateAvailable();
 
 signals:
     void friendRequestAccepted(const ToxPk& friendPk);
