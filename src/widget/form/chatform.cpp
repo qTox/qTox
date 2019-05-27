@@ -338,7 +338,10 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         return;
     }
 
-    Widget::getInstance()->newFriendMessageAlert(f->getPublicKey());
+    Widget::getInstance()->newFriendMessageAlert(f->getPublicKey(), 
+                                                 file.fileName + 
+                                                 " (" + FileTransferWidget::getHumanReadableSize(file.filesize) + ")",
+                                                 true, true);
     QString name;
     ToxPk friendId = f->getPublicKey();
     if (friendId != previousId) {

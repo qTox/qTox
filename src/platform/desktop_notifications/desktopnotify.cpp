@@ -19,37 +19,40 @@ DesktopNotify::DesktopNotify()
     notifyCore.registerApplication(snoreApp);
 }
 
-void DesktopNotify::createNotification(const QString& title)
+void DesktopNotify::createNotification(const QString& title, const QString& text, Snore::Icon& icon)
 {
     const Settings& s = Settings::getInstance();
     if(!(s.getNotify() && s.getDesktopNotify())) {
         return;
     }
 
-    Snore::Notification notify{snoreApp, Snore::Alert(), title, {}, snoreIcon};
+    Snore::Notification notify{snoreApp, Snore::Alert(), title, text, icon};
+
     notifyCore.broadcastNotification(notify);
 }
 
-void DesktopNotify::notifyGroupMessage()
+void DesktopNotify::notifyMessage(const QString& title, const QString& message)
 {
-    const QString title = tr("New group message received");
-    createNotification(title);
+    createNotification(title, message, snoreIcon);
 }
 
-void DesktopNotify::notifyFriendRequest()
+void DesktopNotify::notifyMessagePixmap(const QString& title, const QString& message, QPixmap avatar)
 {
-    const QString title = tr("New friend request received");
-    createNotification(title);
+    Snore::Icon new_icon(avatar);
+    createNotification(title, message, new_icon);
 }
 
-void DesktopNotify::notifyGroupInvite()
+void DesktopNotify::notifyMessageSimple(const MessageType type)
 {
-    const QString title = tr("New group invite received");
-    createNotification(title);
-}
+    QString message;
+    switch (type) {
+    case MessageType::FRIEND: message = tr("New message"); break;
+    case MessageType::FRIEND_FILE: message = tr("Incoming file transfer"); break;
+    case MessageType::FRIEND_REQUEST: message = tr("Friend request received"); break;
+    case MessageType::GROUP: message = tr("New group message"); break;
+    case MessageType::GROUP_INVITE: message = tr("Group invite received"); break;
+    default: break;
+    }
 
-void DesktopNotify::notifyFriendMessage()
-{
-    const QString title = tr("New message received");
-    createNotification(title);
+    createNotification(message, {}, snoreIcon);
 }

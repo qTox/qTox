@@ -12,14 +12,21 @@ class DesktopNotify : public QObject
 public:
     DesktopNotify();
 
+    enum class MessageType {
+        FRIEND,
+        FRIEND_FILE,
+        FRIEND_REQUEST,
+        GROUP,
+        GROUP_INVITE
+    };
+
 public slots:
-    void notifyFriendMessage();
-    void notifyGroupMessage();
-    void notifyFriendRequest();
-    void notifyGroupInvite();
+    void notifyMessage(const QString& title, const QString& message);
+    void notifyMessagePixmap(const QString& title, const QString& message, QPixmap avatar);
+    void notifyMessageSimple(const MessageType type);
 
 private:
-    void createNotification(const QString& title);
+    void createNotification(const QString& title, const QString& text, Snore::Icon& icon);
 
 private:
     Snore::SnoreCore& notifyCore;

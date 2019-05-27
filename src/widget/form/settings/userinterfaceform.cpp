@@ -78,6 +78,7 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
     bodyUI->groupOnlyNotfiyWhenMentioned->setChecked(!s.getGroupAlwaysNotify());
     bodyUI->groupOnlyNotfiyWhenMentioned->setEnabled(s.getNotify());
     bodyUI->notifySound->setChecked(s.getNotifySound());
+    bodyUI->notifyHide->setChecked(s.getNotifyHide());
     bodyUI->notifySound->setEnabled(s.getNotify());
     bodyUI->busySound->setChecked(s.getBusySound());
     bodyUI->busySound->setEnabled(s.getNotifySound() && s.getNotify());
@@ -391,3 +392,9 @@ void UserInterfaceForm::on_useNameColors_stateChanged(int value)
 {
     Settings::getInstance().setEnableGroupChatsColor(value);
 }
+
+void UserInterfaceForm::on_notifyHide_stateChanged(int value)
+{
+    Settings::getInstance().setNotifyHide(value);
+}
+

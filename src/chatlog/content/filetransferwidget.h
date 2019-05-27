@@ -44,6 +44,7 @@ public:
     virtual ~FileTransferWidget();
     void autoAcceptTransfer(const QString& path);
     bool isActive() const;
+    static QString getHumanReadableSize(qint64 size);
 
 protected slots:
     void onFileTransferInfo(ToxFile file);
@@ -56,7 +57,6 @@ protected slots:
     void fileTransferBrokenUnbroken(ToxFile file, bool broken);
 
 protected:
-    QString getHumanReadableSize(qint64 size);
     void updateWidgetColor(ToxFile const& file);
     void updateWidgetText(ToxFile const& file);
     void updateFileProgress(ToxFile const& file);

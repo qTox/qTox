@@ -51,6 +51,7 @@ private slots:
     void on_notify_stateChanged();
     void on_desktopNotify_stateChanged();
     void on_notifySound_stateChanged();
+    void on_notifyHide_stateChanged(int);
     void on_busySound_stateChanged();
     void on_showWindow_stateChanged();
     void on_groupOnlyNotfiyWhenMentioned_stateChanged();
@@ -60,7 +61,6 @@ private slots:
     void on_cbGroupchatPosition_stateChanged();
     void on_themeColorCBox_currentIndexChanged(int);
     void on_cbShowIdenticons_stateChanged();
-
     void on_txtChatFont_currentFontChanged(const QFont& f);
     void on_txtChatFontSize_valueChanged(int arg1);
     void on_useNameColors_stateChanged(int value);
