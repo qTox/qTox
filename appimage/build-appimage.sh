@@ -56,14 +56,12 @@ then
         debian:stretch-slim \
         /bin/bash
 else
-    # We require the $TRAVIS_TAG to know the filename of the AppImage which is 
-    # to be uploaded to github.
     docker run --rm \
-        -e TRAVIS_TAG
-        -v $PWD:/qtox \
-        -v $PWD/output:/output \
-        debian:stretch-slim \
-        /bin/bash -c "/qtox/appimage/build.sh"
+           -e TRAVIS_TAG \
+           -v $PWD:/qtox \
+           -v $PWD/output:/output \
+           debian:stretch-slim \
+           /bin/bash -c "/qtox/appimage/build.sh"
 fi
 
 # use the version number in the name when building a tag on Travis CI
