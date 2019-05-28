@@ -41,7 +41,7 @@ readonly SQLCIPHER_BUILD_DIR="$BUILD_DIR"/sqlcipher
 # ldqt binary
 readonly LDQT_BIN="/usr/lib/x86_64-linux-gnu/qt5/bin/linuxdeployqt"
 # aitool binary
-readonly AITOOL_BIN="/usr/lib/x86_64-linux-gnu/"
+readonly AITOOL_BIN="/usr/local/bin/appimagetool"
 readonly APT_FLAGS="-y --no-install-recommends"
 # snorenotify source
 readonly SNORE_GIT="https://github.com/KDE/snorenotify"
@@ -53,6 +53,8 @@ readonly AUB_SRC_DIR="$BUILD_DIR"/aub
 readonly AUB_GIT="https://github.com/antony-jr/AppImageUpdaterBridge"
 # aub build dir
 readonly AUB_BUILD_DIR="$BUILD_DIR"/aub/build
+# update information to be embeded in AppImage
+readonly UPDATE_INFO="gh-releases-zsync|qTox|qTox|latest|qTox-*.x86_64.AppImage.zsync"
 
 # use multiple cores when building
 export MAKEFLAGS="-j$(nproc)"
@@ -101,6 +103,8 @@ make install
 # build aub into a static library and later use it in 
 # qTox
 git clone "$AUB_GIT" "$AUB_SRC_DIR"
+cd "$AUB_SRC_DIR" # we need to checkout first
+git checkout tags/v1.0.3 
 mkdir $AUB_BUILD_DIR
 cd $AUB_BUILD_DIR
 cmake .. -DLOGGING_DISABLED=ON
@@ -159,7 +163,6 @@ cd build
 # make sure that deps in separate install tree are found
 export PKG_CONFIG_PATH=/deps/lib/pkgconfig/
 
-# This is aitool not qTox , do not add qTox build options here
 cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING=ON \
 -DAPPIMAGEKIT_PACKAGE_DEBS=ON
 
@@ -174,7 +177,9 @@ readonly QTOX_DESKTOP_FILE="$QTOX_APP_DIR"/usr/local/share/applications/*.deskto
 
 eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs -extra-plugins=libsnore-qt5"
 
-eval "$LDQT_BIN $QTOX_DESKTOP_FILE -appimage"
+# this is important , aitool automatically uses the same filename in .zsync meta file.
+# if this name does not match with the one we upload , the update always fails.
+eval "$AITOOL_BIN -u $UPDATE_INFO $QTOX_APP_DIR qTox-$TRAVIS_TAG.x86_64.AppImage"
 
 # Chmod since everything is root:root
 chmod 755 -R "$OUTPUT_DIR"

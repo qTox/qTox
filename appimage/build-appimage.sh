@@ -56,8 +56,10 @@ then
         debian:stretch-slim \
         /bin/bash
 else
+    # We require the $TRAVIS_TAG to know the filename of the AppImage which is 
+    # to be uploaded to github.
     docker run --rm \
-	-e TRAVIS_REPO_SLUG \
+        -e TRAVIS_TAG
         -v $PWD:/qtox \
         -v $PWD/output:/output \
         debian:stretch-slim \
@@ -67,8 +69,11 @@ fi
 # use the version number in the name when building a tag on Travis CI
 if [ -n "$TRAVIS_TAG" ]
 then
+    # the aitool should have written the appimage in the same name
+    # as below so no need to move things.
     readonly OUTFILE=./output/qTox-"$TRAVIS_TAG".x86_64.AppImage
-    mv ./output/*.AppImage "$OUTFILE"
+
+    # This meta file will be used by appimage updater
     mv ./output/*.AppImage.zsync "$OUTFILE".zsync
     sha256sum "$OUTFILE" > "$OUTFILE".sha256
 fi

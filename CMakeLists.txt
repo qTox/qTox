@@ -664,7 +664,7 @@ if(${UPDATE_CHECK})
 	    add_definitions(-DAPPIMAGE_UPDATER_BRIDGE_ENABLED=1)
 	    include_directories(${APPIMAGE_UPDATER_BRIDGE_SRC_DIR})
     else()
-	    message(STATUS "not using AppImageUpdaterBridge")
+            message(STATUS "not using AppImageUpdaterBridge")
     endif()
 
     set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
@@ -709,14 +709,14 @@ add_library(${PROJECT_NAME}_static
   ${${PROJECT_NAME}_RESOURCES})
 
 if(APPIMAGE_UPDATER_BRIDGE_BUILD_DIR AND APPIMAGE_UPDATER_BRIDGE_SRC_DIR AND UPDATE_CHECK)
-target_link_libraries(${PROJECT_NAME}_static
-  ${CMAKE_REQUIRED_LIBRARIES}
-  ${ALL_LIBRARIES}
-  ${APPIMAGE_UPDATER_BRIDGE_BUILD_DIR}/libAppImageUpdaterBridge.a)
+    target_link_libraries(${PROJECT_NAME}_static
+    ${CMAKE_REQUIRED_LIBRARIES}
+    ${ALL_LIBRARIES}
+    ${APPIMAGE_UPDATER_BRIDGE_BUILD_DIR}/libAppImageUpdaterBridge.a)
 else()
-target_link_libraries(${PROJECT_NAME}_static
-  ${CMAKE_REQUIRED_LIBRARIES}
-  ${ALL_LIBRARIES})
+    target_link_libraries(${PROJECT_NAME}_static
+    ${CMAKE_REQUIRED_LIBRARIES}
+    ${ALL_LIBRARIES})
 endif()
 
 add_executable(${PROJECT_NAME}
