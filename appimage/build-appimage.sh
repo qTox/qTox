@@ -91,7 +91,7 @@ else
     if [ -n "$TRAVIS_PULL_REQUEST" ]
     then
         echo "uploading to transfer.sh"
-        curl --upload-file "qTox-.x86_64.AppImage" "https://transfer.sh/qTox-$TRAVIS_PULL_REQUEST.x86_64.AppImage"
-        curl --upload-file "qTox-.x86_64.AppImage.zsync" "https://transfer.sh/qTox-$TRAVIS_PULL_REQUEST.x86_64.AppImage.zsync"
+        curl --upload-file "./qTox-.x86_64.AppImage" "https://transfer.sh/qTox-$TRAVIS_PULL_REQUEST.x86_64.AppImage"
+        curl --upload-file "./qTox-.x86_64.AppImage.zsync" "https://transfer.sh/qTox-$TRAVIS_PULL_REQUEST.x86_64.AppImage.zsync"
     fi
 fi
