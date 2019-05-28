@@ -179,7 +179,7 @@ readonly QTOX_DESKTOP_FILE="$QTOX_APP_DIR"/usr/local/share/applications/*.deskto
 eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs -extra-plugins=libsnore-qt5"
 
 # Move the required files to the correct directory
-mv "$QTOX_APP_DIR/usr/*" "$QTOX_APP_DIR/"
+mv "$QTOX_APP_DIR"/usr/* "$QTOX_APP_DIR/"
 rm -rf "$QTOX_APP_DIR/usr"
 
 # this is important , aitool automatically uses the same filename in .zsync meta file.
