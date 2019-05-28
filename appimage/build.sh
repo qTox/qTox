@@ -177,6 +177,10 @@ readonly QTOX_DESKTOP_FILE="$QTOX_APP_DIR"/usr/local/share/applications/*.deskto
 
 eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs -extra-plugins=libsnore-qt5"
 
+eval "cp \"$QTOX_DESKTOP_FILE\" $QTOX_APP_DIR/"
+
+eval "ls $QTOX_APP_DIR" # this is for debug for now
+
 # this is important , aitool automatically uses the same filename in .zsync meta file.
 # if this name does not match with the one we upload , the update always fails.
 if [ -n "$TRAVIS_TAG" ]
