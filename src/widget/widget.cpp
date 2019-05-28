@@ -175,9 +175,9 @@ void Widget::init()
     filterDisplayActivity->setCheckable(true);
     filterDisplayGroup->addAction(filterDisplayActivity);
     filterMenu->addAction(filterDisplayActivity);
-    settings.getFriendSortingMode() == FriendListWidget::SortingMode::Name ?
-        filterDisplayName->setChecked(true) :
-        filterDisplayActivity->setChecked(true);
+    settings.getFriendSortingMode() == FriendListWidget::SortingMode::Name
+        ? filterDisplayName->setChecked(true)
+        : filterDisplayActivity->setChecked(true);
     filterMenu->addSeparator();
 
     filterAllAction = new QAction(this);
@@ -442,9 +442,9 @@ void Widget::updateIcons()
         return;
     }
 
-    const QString assetSuffix =
-        Status::getAssetSuffix(static_cast<Status::Status>(ui->statusButton->property("status").toInt()))
-        + (eventIcon ? "_event" : "");
+    const QString assetSuffix = Status::getAssetSuffix(static_cast<Status::Status>(
+                                    ui->statusButton->property("status").toInt()))
+                                + (eventIcon ? "_event" : "");
 
     // Some builds of Qt appear to have a bug in icon loading:
     // QIcon::hasThemeIcon is sometimes unaware that the icon returned

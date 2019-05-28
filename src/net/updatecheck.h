@@ -16,16 +16,16 @@
     You should have received a copy of the GNU General Public License
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <QObject>
 #include <QNetworkAccessManager>
+#include <QObject>
 #include <QTimer>
 
 #ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
 #include <QNetworkAccessManager>
 #else
+#include <QScopedPointer>
 #include <AppImageUpdaterBridge>
 #include <AppImageUpdaterDialog>
-#include <QScopedPointer>
 #endif // APPIMAGE_UPDATER_BRIDGE_ENABLED
 
 #include <memory>
@@ -55,7 +55,7 @@ public slots:
 
 #ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
 private slots:
-    void handleResponse(QNetworkReply *reply);
+    void handleResponse(QNetworkReply* reply);
 #else
 
 public slots:

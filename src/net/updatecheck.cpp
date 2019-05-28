@@ -22,24 +22,24 @@
 #ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
 #include <QNetworkAccessManager>
 #else
-#include <AppImageUpdaterBridge>
-#include <AppImageUpdaterDialog>
 #include <QApplication>
 #include <QScreen>
+#include <AppImageUpdaterBridge>
+#include <AppImageUpdaterDialog>
 #endif
 
+#include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QRegularExpression>
 #include <QNetworkReply>
 #include <QObject>
+#include <QRegularExpression>
 #include <QTimer>
-#include <QDebug>
 #include <cassert>
 
 #ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
 namespace {
-    const QString versionUrl{QStringLiteral("https://api.github.com/repos/qTox/qTox/releases/latest")};
+const QString versionUrl{QStringLiteral("https://api.github.com/repos/qTox/qTox/releases/latest")};
 } // namespace
 #else
 using AppImageUpdaterBridge::AppImageDeltaRevisioner;
@@ -55,7 +55,8 @@ UpdateCheck::UpdateCheck(const Settings& settings)
     connect(&manager, &QNetworkAccessManager::finished, this, &UpdateCheck::handleResponse);
 #else
     connect(&revisioner, &AppImageDeltaRevisioner::updateAvailable, this, &UpdateCheck::handleUpdate);
-    connect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed, Qt::DirectConnection);
+    connect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed,
+            Qt::DirectConnection);
 #endif
 }
 
@@ -82,24 +83,26 @@ void UpdateCheck::initUpdate()
         updateDialog->init();
         return;
     }
-    int flags = AppImageUpdaterDialog::ShowProgressDialog |
-                AppImageUpdaterDialog::ShowFinishedDialog |
-                AppImageUpdaterDialog::ShowUpdateConfirmationDialog |
-                AppImageUpdaterDialog::ShowErrorDialog;
-    updateDialog.reset(new AppImageUpdaterDialog(QPixmap(":/img/icons/qtox.svg"), nullptr, flags, &revisioner));
-    updateDialog->move(QGuiApplication::primaryScreen()->geometry().center() - updateDialog->rect().center());
+    int flags = AppImageUpdaterDialog::ShowProgressDialog | AppImageUpdaterDialog::ShowFinishedDialog
+                | AppImageUpdaterDialog::ShowUpdateConfirmationDialog
+                | AppImageUpdaterDialog::ShowErrorDialog;
+    updateDialog.reset(
+        new AppImageUpdaterDialog(QPixmap(":/img/icons/qtox.svg"), nullptr, flags, &revisioner));
+    updateDialog->move(QGuiApplication::primaryScreen()->geometry().center()
+                       - updateDialog->rect().center());
 
     disconnect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed);
-    connect(updateDialog.data(), &AppImageUpdaterDialog::quit, QApplication::instance(), &QApplication::quit, Qt::QueuedConnection);
+    connect(updateDialog.data(), &AppImageUpdaterDialog::quit, QApplication::instance(),
+            &QApplication::quit, Qt::QueuedConnection);
     connect(updateDialog.data(), &AppImageUpdaterDialog::canceled, this, &UpdateCheck::handleUpdateEnd);
-    connect(updateDialog.data(), &AppImageUpdaterDialog::finished , this , &UpdateCheck::handleUpdateEnd);
-    connect(updateDialog.data(), &AppImageUpdaterDialog::error, this, &UpdateCheck::handleUpdateEnd); 
+    connect(updateDialog.data(), &AppImageUpdaterDialog::finished, this, &UpdateCheck::handleUpdateEnd);
+    connect(updateDialog.data(), &AppImageUpdaterDialog::error, this, &UpdateCheck::handleUpdateEnd);
     updateDialog->init();
 }
 #endif
 
 #ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
-void UpdateCheck::handleResponse(QNetworkReply *reply)
+void UpdateCheck::handleResponse(QNetworkReply* reply)
 {
     assert(reply != nullptr);
     if (reply == nullptr) {
@@ -132,8 +135,7 @@ void UpdateCheck::handleResponse(QNetworkReply *reply)
         qInfo() << "Update available to version" << latestVersion;
         QUrl link{mainMap["html_url"].toString()};
         emit updateAvailable(latestVersion, link);
-    }
-    else {
+    } else {
         qInfo() << "qTox is up to date";
         emit upToDate();
     }
@@ -142,19 +144,20 @@ void UpdateCheck::handleResponse(QNetworkReply *reply)
 #else
 void UpdateCheck::handleUpdate(bool aval)
 {
-	if (aval) {
-            qInfo() << "Update available";
-            emit updateAvailable();
-            return;
-	}
-        qInfo() << "qTox is up to date";
-        emit upToDate();
+    if (aval) {
+        qInfo() << "Update available";
+        emit updateAvailable();
+        return;
+    }
+    qInfo() << "qTox is up to date";
+    emit upToDate();
 }
 
 void UpdateCheck::handleUpdateEnd()
 {
-        updateDialog->hide();
-        updateDialog.reset(nullptr);
-        connect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed, Qt::DirectConnection);
+    updateDialog->hide();
+    updateDialog.reset(nullptr);
+    connect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed,
+            Qt::DirectConnection);
 }
 #endif // APPIMAGE_UPDATER_BRIDGE_ENABLED
