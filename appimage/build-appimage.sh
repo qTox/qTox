@@ -64,6 +64,16 @@ else
            /bin/bash -c "/qtox/appimage/build.sh"
 fi
 
+
+# upload to transfer.sh if this is a pull request to test
+# appimage builds
+if [ "$TRAVIS_PULL_REQUEST" == "true" ]
+then
+    echo "uploading to transfer.sh"
+    curl --upload-file "qTox-.x86_64.AppImage" "https://transfer.sh/qTox-PR.x86_64.AppImage"
+    curl --upload-file "qTox-.x86_64.AppImage.zsync" "https://transfer.sh/qTox-PR.x86_64.AppImage.zsync"
+fi
+
 # use the version number in the name when building a tag on Travis CI
 if [ -n "$TRAVIS_TAG" ]
 then
