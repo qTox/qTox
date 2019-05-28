@@ -179,7 +179,14 @@ eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs -extra-plugins=libsnore-q
 
 # this is important , aitool automatically uses the same filename in .zsync meta file.
 # if this name does not match with the one we upload , the update always fails.
-eval "$AITOOL_BIN -u \"$UPDATE_INFO $QTOX_APP_DIR\" qTox-$TRAVIS_TAG.x86_64.AppImage"
+if [ -n "$TRAVIS_TAG" ]
+then
+    eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-$TRAVIS_TAG.x86_64.AppImage"
+else
+    eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-x86_64.AppImage"
+    curl --upload-file "./qTox-x86_64.AppImage" "https://transfer.sh/qTox-x86_64.AppImage"
+    curl --upload-file "./qTox-x86_64.AppImage.zsync" "https://transfer.sh/qTox-x86_64.AppImage.zsync"
+fi
 
 # Chmod since everything is root:root
 chmod 755 -R "$OUTPUT_DIR"
