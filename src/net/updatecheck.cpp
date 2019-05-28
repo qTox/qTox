@@ -82,8 +82,7 @@ void UpdateCheck::initUpdate()
         updateDialog->init();
         return;
     }
-    int flags = AppImageUpdaterDialog::ShowBeforeProgress |
-                AppImageUpdaterDialog::ShowProgressDialog |
+    int flags = AppImageUpdaterDialog::ShowProgressDialog |
                 AppImageUpdaterDialog::ShowFinishedDialog |
                 AppImageUpdaterDialog::ShowUpdateConfirmationDialog |
                 AppImageUpdaterDialog::ShowErrorDialog;
