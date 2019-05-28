@@ -79,5 +79,4 @@ then
 else
     # upload PR builds to test them.
     curl --upload-file "./output/qTox-x86_64.AppImage" "https://transfer.sh/qTox-x86_64.AppImage"
-    curl --upload-file "./output/qTox-x86_64.AppImage.zsync" "https://transfer.sh/qTox-x86_64.AppImage.zsync"
 fi
