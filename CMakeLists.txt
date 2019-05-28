@@ -666,7 +666,6 @@ if(${UPDATE_CHECK})
     else()
             message(STATUS "not using AppImageUpdaterBridge")
     endif()
-
     set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
         src/net/updatecheck.cpp
         src/net/updatecheck.h)
