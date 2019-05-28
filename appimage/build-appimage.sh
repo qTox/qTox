@@ -73,5 +73,15 @@ then
 
     # This meta file will be used by appimage updater
     mv ./output/*.AppImage.zsync "$OUTFILE".zsync
+
+    # upload to transfer.sh if this is a pull request to test
+    # appimage builds
+    if [ "$TRAVIS_PULL_REQUEST" == "true" ]
+    then
+        echo "uploading to transfer.sh"
+        curl --upload-file "$OUTFILE" "https://transfer.sh/qTox-$TRAVIS_TAG.x86_64.AppImage"
+        curl --upload-file "$OUTFILE.zsync" "https://transfer.sh/qTox-$TRAVIS_TAG.x86_64.AppImage.zsync"
+    fi
+
     sha256sum "$OUTFILE" > "$OUTFILE".sha256
 fi
