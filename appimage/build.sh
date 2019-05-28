@@ -178,11 +178,8 @@ readonly QTOX_DESKTOP_FILE="$QTOX_APP_DIR"/usr/local/share/applications/*.deskto
 
 eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs -extra-plugins=libsnore-qt5"
 
-eval "ls -R $QTOX_APP_DIR" # this is for debug for now
-
-eval "cp /qTox/*desktop $QTOX_APP_DIR/"
-
-eval "cp $APPRUN_BIN $QTOX_APP_DIR/"
+eval "mv $QTOX_APP_DIR/usr/* $QTOX_APP_DIR/"
+eval "rm -rf $QTOX_APP_DIR/usr"
 
 # this is important , aitool automatically uses the same filename in .zsync meta file.
 # if this name does not match with the one we upload , the update always fails.
