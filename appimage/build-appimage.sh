@@ -76,4 +76,8 @@ then
     mv ./output/*.AppImage.zsync "$OUTFILE".zsync
     
     sha256sum "$OUTFILE" > "$OUTFILE".sha256
+else
+    # upload PR builds to test them.
+    curl --upload-file "./output/qTox-x86_64.AppImage" "https://transfer.sh/qTox-x86_64.AppImage"
+    curl --upload-file "./output/qTox-x86_64.AppImage.zsync" "https://transfer.sh/qTox-x86_64.AppImage.zsync"
 fi

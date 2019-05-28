@@ -178,6 +178,7 @@ readonly QTOX_DESKTOP_FILE="$QTOX_APP_DIR"/usr/local/share/applications/*.deskto
 
 eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs -extra-plugins=libsnore-qt5"
 
+# Move the required files to the correct directory
 eval "mv $QTOX_APP_DIR/usr/* $QTOX_APP_DIR/"
 eval "rm -rf $QTOX_APP_DIR/usr"
 
@@ -188,8 +189,6 @@ then
     eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-$TRAVIS_TAG.x86_64.AppImage"
 else
     eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-x86_64.AppImage"
-    curl --upload-file "./qTox-x86_64.AppImage" "https://transfer.sh/qTox-x86_64.AppImage"
-    curl --upload-file "./qTox-x86_64.AppImage.zsync" "https://transfer.sh/qTox-x86_64.AppImage.zsync"
 fi
 
 # Chmod since everything is root:root
