@@ -1,5 +1,6 @@
 #include "src/grouplist.h"
 #include "src/model/chatroom/friendchatroom.h"
+#include "src/model/dialogs/idialogsmanager.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
 #include "src/persistence/settings.h"
@@ -21,8 +22,9 @@ QString getShortName(const QString& name)
 
 }
 
-FriendChatroom::FriendChatroom(Friend* frnd)
+FriendChatroom::FriendChatroom(Friend* frnd, IDialogsManager* dialogsManager)
     : frnd{frnd}
+    , dialogsManager{dialogsManager}
 {
 }
 
@@ -140,4 +142,32 @@ QVector<CircleToDisplay> FriendChatroom::getOtherCircles() const
 void FriendChatroom::resetEventFlags()
 {
     frnd->setEventFlag(false);
+}
+
+bool FriendChatroom::possibleToOpenInNewWindow() const
+{
+    const auto friendPk = frnd->getPublicKey();
+    const auto dialogs = dialogsManager->getFriendDialogs(friendPk);
+    return !dialogs || dialogs->chatroomCount() > 1;
+}
+
+bool FriendChatroom::canBeRemovedFromWindow() const
+{
+    const auto friendPk = frnd->getPublicKey();
+    const auto dialogs = dialogsManager->getFriendDialogs(friendPk);
+    return dialogs && dialogs->hasContact(friendPk);
+}
+
+bool FriendChatroom::friendCanBeRemoved() const
+{
+    const auto friendPk = frnd->getPublicKey();
+    const auto dialogs = dialogsManager->getFriendDialogs(friendPk);
+    return !dialogs || !dialogs->hasContact(friendPk);
+}
+
+void FriendChatroom::removeFriendFromDialogs()
+{
+    const auto friendPk = frnd->getPublicKey();
+    auto dialogs = dialogsManager->getFriendDialogs(friendPk);
+    dialogs->removeFriend(friendPk);
 }

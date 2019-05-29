@@ -26,6 +26,7 @@
 #include <QString>
 #include <QVector>
 
+class IDialogsManager;
 class Friend;
 class Group;
 
@@ -45,7 +46,7 @@ class FriendChatroom : public QObject, public Chatroom
 {
     Q_OBJECT
 public:
-    FriendChatroom(Friend* frnd);
+    FriendChatroom(Friend* frnd, IDialogsManager* dialogsManager);
 
     Contact* getContact() override;
 
@@ -73,12 +74,18 @@ public slots:
 
     void resetEventFlags();
 
+    bool possibleToOpenInNewWindow() const;
+    bool canBeRemovedFromWindow() const;
+    bool friendCanBeRemoved() const;
+    void removeFriendFromDialogs();
+
 signals:
     void activeChanged(bool activated);
 
 private:
     bool active{false};
     Friend* frnd{nullptr};
+    IDialogsManager* dialogsManager{nullptr};
 };
 
 #endif // FRIEND_H

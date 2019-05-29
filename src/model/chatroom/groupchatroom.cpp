@@ -3,12 +3,14 @@
 #include "src/core/core.h"
 #include "src/core/toxpk.h"
 #include "src/friendlist.h"
+#include "src/model/dialogs/idialogsmanager.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
 #include "src/persistence/settings.h"
 
-GroupChatroom::GroupChatroom(Group* group)
+GroupChatroom::GroupChatroom(Group* group, IDialogsManager* dialogsManager)
     : group{group}
+    , dialogsManager{dialogsManager}
 {
 }
 
@@ -48,4 +50,25 @@ void GroupChatroom::inviteFriend(const ToxPk& pk)
     if (canInvite) {
         Core::getInstance()->groupInviteFriend(friendId, groupId);
     }
+}
+
+bool GroupChatroom::possibleToOpenInNewWindow() const
+{
+    const auto groupId = group->getPersistentId();
+    const auto dialogs = dialogsManager->getGroupDialogs(groupId);
+    return !dialogs || dialogs->chatroomCount() > 1;
+}
+
+bool GroupChatroom::canBeRemovedFromWindow() const
+{
+    const auto groupId = group->getPersistentId();
+    const auto dialogs = dialogsManager->getGroupDialogs(groupId);
+    return dialogs && dialogs->hasContact(groupId);
+}
+
+void GroupChatroom::removeGroupFromDialogs()
+{
+    const auto groupId = group->getPersistentId();
+    auto dialogs = dialogsManager->getGroupDialogs(groupId);
+    dialogs->removeGroup(groupId);
 }
