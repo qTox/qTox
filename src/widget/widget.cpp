@@ -1353,7 +1353,7 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
 
     if (contentDialog != nullptr) {
         currentWindow = contentDialog->window();
-        hasActive = ContentDialogManager::getInstance()->isContactWidgetActive(friendId);
+        hasActive = ContentDialogManager::getInstance()->isContactActive(friendId);
     } else {
         if (settings.getSeparateWindow() && settings.getShowWindow()) {
             if (settings.getDontGroupWindows()) {
@@ -1367,7 +1367,7 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
 
             addFriendDialog(f, contentDialog);
             currentWindow = contentDialog->window();
-            hasActive = ContentDialogManager::getInstance()->isContactWidgetActive(friendId);
+            hasActive = ContentDialogManager::getInstance()->isContactActive(friendId);
         } else {
             currentWindow = window();
             FriendWidget* widget = friendWidgets[friendId];
@@ -1416,7 +1416,7 @@ bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk,
 
     if (contentDialog != nullptr) {
         currentWindow = contentDialog->window();
-        hasActive = ContentDialogManager::getInstance()->isContactWidgetActive(groupId);
+        hasActive = ContentDialogManager::getInstance()->isContactActive(groupId);
     } else {
         currentWindow = window();
         hasActive = widget == activeChatroomWidget;
