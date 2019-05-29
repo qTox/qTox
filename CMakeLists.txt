@@ -658,13 +658,12 @@ endif()
 
 if(${UPDATE_CHECK})
     add_definitions(-DUPDATE_CHECK_ENABLED=1)
-
     if(APPIMAGE_UPDATER_BRIDGE_SRC_DIR AND APPIMAGE_UPDATER_BRIDGE_BUILD_DIR)
-	    message(STATUS "using AppImageUpdaterBridge")
-	    add_definitions(-DAPPIMAGE_UPDATER_BRIDGE_ENABLED=1)
-	    include_directories(${APPIMAGE_UPDATER_BRIDGE_SRC_DIR})
+        message(STATUS "using AppImageUpdaterBridge")
+        add_definitions(-DAPPIMAGE_UPDATER_BRIDGE_ENABLED=1)
+        include_directories(${APPIMAGE_UPDATER_BRIDGE_SRC_DIR})
     else()
-            message(STATUS "not using AppImageUpdaterBridge")
+        message(STATUS "not using AppImageUpdaterBridge")
     endif()
     set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
         src/net/updatecheck.cpp
