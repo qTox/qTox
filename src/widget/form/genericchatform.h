@@ -166,9 +166,6 @@ protected:
 
     ToxPk previousId;
 
-    QDateTime prevMsgDateTime;
-    QDateTime earliestMessage;
-
     QMenu menu;
 
     QPushButton* emoteButton;

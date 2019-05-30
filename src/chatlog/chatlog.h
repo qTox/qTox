@@ -39,7 +39,7 @@ class ChatLog : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit ChatLog(QWidget* parent = nullptr);
+    explicit ChatLog(const bool canRemove, QWidget* parent = nullptr);
     virtual ~ChatLog();
 
     void insertChatlineAtBottom(ChatLine::Ptr l);
@@ -62,7 +62,8 @@ public:
     int64_t lowerId() const;
     int64_t upperId() const;
 
-    QDate upperDate() const;
+    QDateTime getFirstTime() const;
+    QDateTime getLatestTime() const;
 
     QString getSelectedText() const;
 
@@ -71,8 +72,6 @@ public:
 
     ChatLine::Ptr getTypingNotification() const;
     QVector<ChatLine::Ptr> getLines();
-    ChatLine::Ptr getLatestLine() const;
-    ChatLine::Ptr getFirstLine() const; // TODO(TriKriSta): remove, doesn't use
     ChatLineContent* getContentFromGlobalPos(QPoint pos) const;
     const uint repNameAfter = 5 * 60;
 
@@ -130,6 +129,7 @@ private:
     void retranslateUi();
     bool isActiveFileTransfer(ChatLine::Ptr l);
     void handleMultiClickEvent();
+    void removeFirsts(const int num);
 
 private:
     enum SelectionMode
@@ -181,6 +181,9 @@ private:
     // layout
     QMargins margins = QMargins(10, 10, 10, 10);
     qreal lineSpacing = 5.0f;
+    const int maxMessages{300};
+    const int optimalRemove{50};
+    bool canRemove; // TODO: remove after added history in group chat
 };
 
 #endif // CHATLOG_H

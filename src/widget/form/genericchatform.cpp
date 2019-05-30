@@ -139,7 +139,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, QWidget* parent)
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
     dateInfo = new QLabel(this);
-    chatWidget = new ChatLog(this);
+    chatWidget = new ChatLog(contact->useHistory(), this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);
@@ -296,23 +296,12 @@ void GenericChatForm::hideFileMenu()
 
 QDateTime GenericChatForm::getLatestTime() const
 {
-    return getTime(chatWidget->getLatestLine());
+    return chatWidget->getLatestTime();
 }
 
 QDateTime GenericChatForm::getFirstTime() const
 {
-    const auto lines = chatWidget->getLines();
-    if (lines.empty())
-        return QDateTime();
-
-    for (int i = 0; i < lines.size(); ++i) {
-        Timestamp* const timestamp = qobject_cast<Timestamp*>(lines.at(i).get()->getContent(2));
-        if (timestamp->getTime().isValid()) {
-            return timestamp->getTime();
-        }
-    }
-
-    return QDateTime();
+    return chatWidget->getFirstTime();
 }
 
 void GenericChatForm::reloadTheme()
@@ -401,7 +390,7 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
  */
 bool GenericChatForm::needsToHideName(const ToxPk& messageAuthor, const QDateTime& messageTime) const
 {
-    qint64 messagesTimeDiff = prevMsgDateTime.secsTo(messageTime);
+    qint64 messagesTimeDiff = getLatestTime().secsTo(messageTime);
     return messageAuthor == previousId && messagesTimeDiff < chatWidget->repNameAfter;
 }
 
@@ -437,7 +426,6 @@ ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QStri
         }
 
         previousId = author;
-        prevMsgDateTime = now;
     }
 
     if (isSent) {
@@ -487,7 +475,6 @@ void GenericChatForm::addAlertMessage(const ToxPk& author, const QString& msg, c
 
     insertChatMessage(chatMsg);
     previousId = author;
-    prevMsgDateTime = newMsgDateTime;
 }
 
 void GenericChatForm::onEmoteButtonClicked()
@@ -878,8 +865,6 @@ void GenericChatForm::clearChatArea(bool confirm, bool inform)
 
     if (inform)
         addSystemInfoMessage(tr("Cleared"), ChatMessage::INFO, QDateTime::currentDateTime());
-
-    earliestMessage = QDateTime(); // null
 }
 
 void GenericChatForm::onSelectAllClicked()

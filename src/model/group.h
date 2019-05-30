@@ -57,6 +57,7 @@ public:
     QString resolveToxId(const ToxPk& id) const;
     void setSelfName(const QString& name);
     QString getSelfName() const;
+    bool useHistory() const override final;
 
 signals:
     void titleChangedByUser(const QString& title);

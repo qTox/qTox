@@ -51,8 +51,8 @@ T clamp(T x, T min, T max)
     return x;
 }
 
-ChatLog::ChatLog(QWidget* parent)
-    : QGraphicsView(parent)
+ChatLog::ChatLog(const bool canRemove, QWidget* parent)
+    : QGraphicsView(parent), canRemove(canRemove)
 {
     // Create the scene
     busyScene = new QGraphicsScene(this);
@@ -368,6 +368,12 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 
     bool stickToBtm = stickToBottom();
 
+    if (canRemove) {
+        if (lines.size() >= 300) {
+            removeFirsts(optimalRemove);
+        }
+    }
+
     // insert
     l->setRow(lines.size());
     l->addToScene(scene);
@@ -388,6 +394,17 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
 {
     if (newLines.isEmpty())
         return;
+
+    const int size = lines.size() + newLines.size();
+
+    const int free = maxMessages - size;
+    const int excessSize = (free >= 0) ? 0 : (-1)*free;
+
+    if (canRemove) {
+        if (excessSize > 0) {
+            removeFirsts(excessSize);
+        }
+    }
 
     for (ChatLine::Ptr l : newLines) {
         l->setRow(lines.size());
@@ -438,6 +455,11 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
     for (ChatLine::Ptr l : lines) {
         l->setRow(i++);
         combLines.push_back(l);
+        if (canRemove) {
+            if (i >= maxMessages) {
+                break;
+            }
+        }
     }
 
     lines = combLines;
@@ -574,22 +596,6 @@ ChatLine::Ptr ChatLog::getTypingNotification() const
 QVector<ChatLine::Ptr> ChatLog::getLines()
 {
     return lines;
-}
-
-ChatLine::Ptr ChatLog::getLatestLine() const
-{
-    if (!lines.empty()) {
-        return lines.last();
-    }
-    return nullptr;
-}
-
-ChatLine::Ptr ChatLog::getFirstLine() const
-{
-    if (!lines.empty()) {
-        return lines.first();
-    }
-    return nullptr;
 }
 
 /**
@@ -748,16 +754,33 @@ int64_t ChatLog::upperId() const
     return -1;
 }
 
-QDate ChatLog::upperDate() const
+QDateTime ChatLog::getFirstTime() const
+{
+    if (lines.empty())
+        return QDateTime();
+
+    for (int i = 0; i < lines.size(); ++i) {
+        Timestamp* const timestamp = qobject_cast<Timestamp*>(lines.at(i).get()->getContent(2));
+        if (timestamp->getTime().isValid()) {
+            return timestamp->getTime();
+        }
+    }
+
+    return QDateTime();
+}
+
+QDateTime ChatLog::getLatestTime() const
 {
     if (!lines.isEmpty()) {
         auto line = lines.last();
-        Timestamp* const lineTime = qobject_cast<Timestamp*>(line.get()->getContent(2));
+        Timestamp* const timestamp = qobject_cast<Timestamp*>(line.get()->getContent(2));
 
-        return lineTime->getTime().date();
+        if (timestamp && timestamp->getTime().isValid()) {
+            return timestamp->getTime();
+        }
     }
 
-    return QDate();
+    return QDateTime();
 }
 
 void ChatLog::forceRelayout()
@@ -995,6 +1018,21 @@ void ChatLog::handleMultiClickEvent()
             emit selectionChanged();
         }
         break;
+    }
+}
+
+void ChatLog::removeFirsts(const int num)
+{
+    for (int i = 0; i < num; ++i) {
+        if (!lines.isEmpty()) {
+            lines.removeFirst();
+        } else {
+            break;
+        }
+    }
+
+    for (int i = 0; i < lines.size(); ++i) {
+        lines[i]->setRow(i);
     }
 }
 

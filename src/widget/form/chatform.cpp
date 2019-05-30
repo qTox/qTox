@@ -585,7 +585,7 @@ void ChatForm::onSearchUp(const QString& phrase, const ParameterSearch& paramete
     if (!isSearch) {
         const QString pk = f->getPublicKey().toString();
         const QDateTime newBaseDate =
-            history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+            history->getDateWhereFindPhrase(pk, getFirstTime(), phrase, parameter);
 
         if (!newBaseDate.isValid()) {
             emit messageNotFoundShow(SearchDirection::Up);
@@ -606,9 +606,9 @@ void ChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parame
         const QString pk = f->getPublicKey().toString();
         auto param = parameter;
         param.period = PeriodSearch::AfterDate;
-        param.time = prevMsgDateTime;
+        param.time = getLatestTime();
         const QDateTime newBaseDate =
-            history->getDateWhereFindPhrase(pk, prevMsgDateTime, phrase, param);
+            history->getDateWhereFindPhrase(pk, getLatestTime(), phrase, param);
 
         if (!newBaseDate.isValid()) {
             emit messageNotFoundShow(SearchDirection::Down);
@@ -782,22 +782,24 @@ void ChatForm::goToCurrentDate()
 void ChatForm::loadHistoryLower()
 {
     QString pk = f->getPublicKey().toString();
-    QList<History::HistMessage> msgs = history->getChatHistoryLower(pk, earliestMessage);
-    msgs = deleteDuplicate(msgs, true);
+    QList<History::HistMessage> msgs = history->getChatHistoryLower(pk, getFirstTime());
     if (!msgs.isEmpty()) {
-        earliestMessage = msgs.first().timestamp;
-        handleLoadedMessages(msgs, false, true);
+        msgs = deleteDuplicate(msgs, true);
+        if (!msgs.isEmpty()) {
+            handleLoadedMessages(msgs, false, true);
+        }
     }
 }
 
 void ChatForm::loadHistoryUpper()
 {
     QString pk = f->getPublicKey().toString();
-    QList<History::HistMessage> msgs = history->getChatHistoryUpper(pk, prevMsgDateTime);
-    msgs = deleteDuplicate(msgs, false);
+    QList<History::HistMessage> msgs = history->getChatHistoryUpper(pk, getLatestTime());
     if (!msgs.isEmpty()) {
-        prevMsgDateTime = msgs.last().timestamp;
-        handleLoadedMessages(msgs, false, false);
+        msgs = deleteDuplicate(msgs, false);
+        if (!msgs.isEmpty()) {
+            handleLoadedMessages(msgs, false, false);
+        }
     }
 }
 
@@ -822,8 +824,6 @@ void ChatForm::loadHistoryDefaultNum(bool processUndelivered)
     const QString pk = f->getPublicKey().toString();
     QList<History::HistMessage> msgs = history->getChatHistoryDefaultNum(pk);
     if (!msgs.isEmpty()) {
-        earliestMessage = msgs.first().timestamp;
-        prevMsgDateTime = msgs.last().timestamp;
         handleLoadedMessages(msgs, processUndelivered, true);
     }
 }
@@ -850,12 +850,7 @@ void ChatForm::loadHistoryByDateRange(const QDateTime& date, LoadHistoryDialog::
         chatWidget->clear();
 
         if (onTop) {
-            earliestMessage = date;
-            prevMsgDateTime = msgs.last().timestamp;
             chatWidget->setScrollToTop();
-        } else {
-            earliestMessage = msgs.first().timestamp;
-            prevMsgDateTime = date;
         }
 
         handleLoadedMessages(msgs, processUndelivered, onTop);
@@ -874,7 +869,7 @@ void ChatForm::handleLoadedMessages(QList<History::HistMessage> newHistMsgs, boo
         QDate date = metadata.msgDateTime.date();
         chatWidget->removeLowerDateLineIfNeed(date);
     } else {
-        auto date = chatWidget->upperDate();
+        auto date = getLatestTime().date();
         if (date.isValid()) {
             lastDate = date;
         }
@@ -1240,7 +1235,7 @@ bool ChatForm::loadHistory(const QString& phrase, const ParameterSearch& paramet
 {
     const QString pk = f->getPublicKey().toString();
     const QDateTime newBaseDate =
-        history->getDateWhereFindPhrase(pk, earliestMessage, phrase, parameter);
+        history->getDateWhereFindPhrase(pk, chatWidget->getFirstTime(), phrase, parameter);
 
     auto t = getFirstTime();
     if (newBaseDate.isValid() && getFirstTime().isValid() && newBaseDate.date() < getFirstTime().date()) {
