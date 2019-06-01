@@ -57,11 +57,11 @@ then
         /bin/bash
 else
     docker run --rm \
-           -e TRAVIS_TAG \
-           -v $PWD:/qtox \
-           -v $PWD/output:/output \
-           debian:stretch-slim \
-           /bin/bash -c "/qtox/appimage/build.sh"
+        -e TRAVIS_TAG \
+        -v $PWD:/qtox \
+        -v $PWD/output:/output \
+        debian:stretch-slim \
+        /bin/bash -c "/qtox/appimage/build.sh"
 fi
 
 
@@ -69,12 +69,15 @@ fi
 if [ -n "$TRAVIS_TAG" ]
 then
     # the aitool should have written the appimage in the same name
-    # as below so no need to move things.
+    # as below so no need to move things , it should have also written
+    # the .zsync meta file as the given name below with .zsync
+    # extension.
     readonly OUTFILE=./output/qTox-"$TRAVIS_TAG".x86_64.AppImage
+ 
+    # just check if the files are in the right place
+    eval "ls $OUTFILE"
+    eval "ls $OUTFILE.zsync"
 
-    # This meta file will be used by appimage updater
-    mv ./output/*.AppImage.zsync "$OUTFILE".zsync
-    
     sha256sum "$OUTFILE" > "$OUTFILE".sha256
 else
     # upload PR builds to test them.
