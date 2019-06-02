@@ -29,6 +29,24 @@ struct Addable
 };
 
 template <typename T>
+struct Incrementable
+{
+    T& operator++()
+    {
+        auto& underlying = static_cast<T&>(*this).get();
+        ++underlying;
+        return static_cast<T&>(*this);
+    }
+
+    T operator++(int)
+    {
+        auto ret = T(static_cast<T const&>(*this));
+        ++(*this);
+        return ret;
+    }
+};
+
+template <typename T>
 struct EqualityComparible
 {
     bool operator==(const T& other) const { return static_cast<T const&>(*this).get() == other.get(); };
