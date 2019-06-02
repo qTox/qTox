@@ -23,11 +23,17 @@
 #include <QDateTime>
 #include <QString>
 
+#include <vector>
+
 struct Message
 {
     bool isAction;
     QString content;
     QDateTime timestamp;
 };
+
+
+std::vector<Message> processOutgoingMessage(bool isAction, const QString& content);
+Message processIncomingMessage(bool isAction, const QString& message);
 
 #endif /*MESSAGE_H*/
