@@ -28,6 +28,7 @@
 class ICoreFriendMessageSender
 {
 public:
+    virtual ~ICoreFriendMessageSender() = default;
     virtual bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) = 0;
     virtual bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) = 0;
 };
