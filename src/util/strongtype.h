@@ -22,6 +22,38 @@
 
 #include <QHash>
 
+template <typename T>
+struct Addable
+{
+    T operator+(T const& other) const { return static_cast<T const&>(*this).get() + other.get(); };
+};
+
+template <typename T>
+struct EqualityComparible
+{
+    bool operator==(const T& other) const { return static_cast<T const&>(*this).get() == other.get(); };
+};
+
+template <typename T>
+struct Hashable
+{
+    friend uint qHash(const Hashable<T>& key, uint seed = 0)
+    {
+        return qHash(static_cast<T const&>(*key).get(), seed);
+    }
+};
+
+template <typename T>
+struct Orderable : EqualityComparible<T>
+{
+    bool operator<(const T& rhs) const { return static_cast<T const&>(*this).get() < rhs.get(); }
+    bool operator>(const T& rhs) const { return static_cast<T const&>(*this).get() > rhs.get(); }
+    bool operator>=(const T& rhs) const { return static_cast<T const&>(*this).get() >= rhs.get(); }
+    bool operator<=(const T& rhs) const { return static_cast<T const&>(*this).get() <= rhs.get(); }
+};
+
+
+
 /* This class facilitates creating a named class which wraps underlying POD,
  * avoiding implict casts and arithmetic of the underlying data.
  * Usage: Declare named type with arbitrary tag, then hook up Qt metatype for use
@@ -32,24 +64,21 @@
  *   qRegisterMetaType<ReceiptNum>();
  */
 
-template <typename T, typename Parameter>
-class NamedType
+template <typename T, typename Tag, template <typename> class... Properties>
+class NamedType : public Properties<NamedType<T, Tag, Properties...>>...
 {
 public:
     NamedType() {}
     explicit NamedType(T const& value) : value_(value) {}
     T& get() { return value_; }
     T const& get() const {return value_; }
-    bool operator==(const NamedType& rhs) const { return value_ == rhs.value_; }
-    bool operator<(const NamedType& rhs) const { return value_ < rhs.value_; }
-    bool operator>(const NamedType& rhs) const { return value_ > rhs.value_; }
-
 private:
     T value_;
 };
 
-template <typename T, typename Parameter>
-inline uint qHash(const NamedType<T,Parameter> &key, uint seed = 0) {
+template <typename T, typename Tag, template <typename> class... Properties>
+uint qHash(const NamedType<T, Tag, Properties...>& key, uint seed = 0)
+{
     return qHash(key.get(), seed);
 }
 #endif // STORNGTYPE_H

@@ -47,7 +47,7 @@ class Profile;
 class Core;
 
 using ToxCorePtr = std::unique_ptr<Core>;
-using ReceiptNum = NamedType<uint32_t, struct ReceiptNumTag>;
+using ReceiptNum = NamedType<uint32_t, struct ReceiptNumTag, Orderable>;
 Q_DECLARE_METATYPE(ReceiptNum);
 
 class Core : public QObject
