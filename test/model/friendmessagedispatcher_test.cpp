@@ -74,6 +74,8 @@ private:
     // All unique_ptrs to make construction/init() easier to manage
     std::unique_ptr<Friend> f;
     std::unique_ptr<MockFriendMessageSender> messageSender;
+    std::unique_ptr<MessageProcessor::SharedParams> sharedProcessorParams;
+    std::unique_ptr<MessageProcessor> messageProcessor;
     std::unique_ptr<FriendMessageDispatcher> friendMessageDispatcher;
     std::map<DispatchedMessageId, Message> outgoingMessages;
     std::deque<Message> receivedMessages;
@@ -89,8 +91,11 @@ void TestFriendMessageDispatcher::init()
     f = std::unique_ptr<Friend>(new Friend(0, ToxPk()));
     f->setStatus(Status::Status::Online);
     messageSender = std::unique_ptr<MockFriendMessageSender>(new MockFriendMessageSender());
-    friendMessageDispatcher =
-        std::unique_ptr<FriendMessageDispatcher>(new FriendMessageDispatcher(*f, *messageSender));
+    sharedProcessorParams =
+        std::unique_ptr<MessageProcessor::SharedParams>(new MessageProcessor::SharedParams());
+    messageProcessor = std::unique_ptr<MessageProcessor>(new MessageProcessor(*sharedProcessorParams));
+    friendMessageDispatcher = std::unique_ptr<FriendMessageDispatcher>(
+        new FriendMessageDispatcher(*f, *messageProcessor, *messageSender));
 
     connect(friendMessageDispatcher.get(), &FriendMessageDispatcher::messageSent, this,
             &TestFriendMessageDispatcher::onMessageSent);
