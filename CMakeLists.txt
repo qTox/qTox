@@ -331,6 +331,10 @@ set(${PROJECT_NAME}_SOURCES
   src/model/imessagedispatcher.h
   src/model/friendmessagedispatcher.h
   src/model/friendmessagedispatcher.cpp
+  src/model/groupmessagedispatcher.h
+  src/model/groupmessagedispatcher.cpp
+  src/model/message.h
+  src/model/message.cpp
   src/model/groupinvite.cpp
   src/model/groupinvite.h
   src/model/group.cpp
