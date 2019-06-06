@@ -42,10 +42,11 @@ bool sendMessageToCore(ICoreFriendMessageSender& messageSender, const Friend& f,
 }
 } // namespace
 
-FriendMessageDispatcher::FriendMessageDispatcher(Friend& f_, ICoreFriendMessageSender& messageSender_)
+FriendMessageDispatcher::FriendMessageDispatcher(Friend& f_, MessageProcessor processor_, ICoreFriendMessageSender& messageSender_)
     : f(f_)
     , messageSender(messageSender_)
     , offlineMsgEngine(&f_, &messageSender_)
+    , processor(std::move(processor_))
 {
     connect(&f, &Friend::statusChanged, this, &FriendMessageDispatcher::onFriendStatusChange);
 }
@@ -58,7 +59,7 @@ FriendMessageDispatcher::sendMessage(bool isAction, const QString& content)
 {
     const auto firstId = nextMessageId;
     auto lastId = nextMessageId;
-    for (const auto& message : processOutgoingMessage(isAction, content)) {
+    for (const auto& message : processor.processOutgoingMessage(isAction, content)) {
         auto messageId = nextMessageId++;
         lastId = messageId;
         auto onOfflineMsgComplete = [this, messageId] { emit this->messageComplete(messageId); };
@@ -89,7 +90,7 @@ FriendMessageDispatcher::sendMessage(bool isAction, const QString& content)
  */
 void FriendMessageDispatcher::onMessageReceived(bool isAction, const QString& content)
 {
-    emit this->messageReceived(f.getPublicKey(), processIncomingMessage(isAction, content));
+    emit this->messageReceived(f.getPublicKey(), processor.processIncomingMessage(isAction, content));
 }
 
 /**
