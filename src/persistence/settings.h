@@ -26,6 +26,7 @@
 #include "src/core/toxencrypt.h"
 #include "src/core/toxfile.h"
 #include "src/persistence/ifriendsettings.h"
+#include "src/persistence/igroupsettings.h"
 #include "src/video/ivideosettings.h"
 
 #include <QDateTime>
@@ -46,6 +47,7 @@ enum class syncType;
 class Settings : public QObject,
                  public ICoreSettings,
                  public IFriendSettings,
+                 public IGroupSettings,
                  public IAudioSettings,
                  public IVideoSettings
 {
@@ -343,8 +345,8 @@ public:
     bool getBusySound() const;
     void setBusySound(bool newValue);
 
-    bool getGroupAlwaysNotify() const;
-    void setGroupAlwaysNotify(bool newValue);
+    bool getGroupAlwaysNotify() const override;
+    void setGroupAlwaysNotify(bool newValue) override;
 
     QString getInDev() const override;
     void setInDev(const QString& deviceSpecifier) override;
@@ -476,8 +478,8 @@ public:
     // Privacy
     bool getTypingNotification() const;
     void setTypingNotification(bool enabled);
-    QStringList getBlackList() const;
-    void setBlackList(const QStringList& blist);
+    QStringList getBlackList() const override;
+    void setBlackList(const QStringList& blist) override;
 
     // State
     QByteArray getWindowGeometry() const;

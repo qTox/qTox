@@ -17,42 +17,41 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FRIEND_MESSAGE_DISPATCHER_H
-#define FRIEND_MESSAGE_DISPATCHER_H
+#ifndef GROUP_MESSAGE_DISPATCHER_H
+#define GROUP_MESSAGE_DISPATCHER_H
 
-#include "src/core/icorefriendmessagesender.h"
-#include "src/model/friend.h"
+#include "src/core/icoregroupmessagesender.h"
+#include "src/core/icoreidhandler.h"
+#include "src/model/group.h"
 #include "src/model/imessagedispatcher.h"
 #include "src/model/message.h"
-#include "src/persistence/offlinemsgengine.h"
 
 #include <QObject>
 #include <QString>
 
 #include <cstdint>
 
-class FriendMessageDispatcher : public IMessageDispatcher
+class IGroupSettings;
+
+class GroupMessageDispatcher : public IMessageDispatcher
 {
     Q_OBJECT
 public:
-    FriendMessageDispatcher(Friend& f, MessageProcessor processor,
-                            ICoreFriendMessageSender& messageSender);
+    GroupMessageDispatcher(Group& group, MessageProcessor processor, ICoreIdHandler& idHandler,
+                           ICoreGroupMessageSender& messageSender,
+                           const IGroupSettings& groupSettings);
 
     std::pair<DispatchedMessageId, DispatchedMessageId> sendMessage(bool isAction,
-                                                                    const QString& content) override;
-    void onMessageReceived(bool isAction, const QString& content);
-    void onReceiptReceived(ReceiptNum receipt);
-    void clearOutgoingMessages();
-private slots:
-    void onFriendStatusChange(const ToxPk& key, Status::Status status);
+                                                                    QString const& content) override;
+    void onMessageReceived(ToxPk const& sender, bool isAction, QString const& content);
 
 private:
-    Friend& f;
-    DispatchedMessageId nextMessageId = DispatchedMessageId(0);
-
-    ICoreFriendMessageSender& messageSender;
-    OfflineMsgEngine offlineMsgEngine;
+    Group& group;
     MessageProcessor processor;
+    ICoreIdHandler& idHandler;
+    ICoreGroupMessageSender& messageSender;
+    const IGroupSettings& groupSettings;
+    DispatchedMessageId nextMessageId{0};
 };
 
 
