@@ -1080,11 +1080,6 @@ void ChatForm::setFriendTyping(bool isTyping)
     text->setText(typingDiv.arg(tr("%1 is typing").arg(name)));
 }
 
-void ChatForm::show(ContentLayout* contentLayout)
-{
-    GenericChatForm::show(contentLayout);
-}
-
 void ChatForm::reloadTheme()
 {
     chatWidget->setTypingNotification(ChatMessage::createTypingNotification());

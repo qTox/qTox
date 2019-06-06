@@ -55,6 +55,7 @@ public:
     void selectAll();
     void fontChanged(const QFont& font);
     void reloadTheme();
+    void showed();
 
     QString getSelectedText() const;
 
@@ -168,6 +169,8 @@ private:
     // layout
     QMargins margins = QMargins(10, 10, 10, 10);
     qreal lineSpacing = 5.0f;
+
+    bool isShown{false};
 };
 
 #endif // CHATLOG_H

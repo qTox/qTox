@@ -372,14 +372,17 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     lines.append(l);
 
     // partial refresh
-    layout(lines.last()->getRow(), lines.size(), useableWidth());
-    updateSceneRect();
+    if (isShown) {
+        layout(lines.last()->getRow(), lines.size(), useableWidth());
+        updateSceneRect();
 
-    if (stickToBtm)
-        scrollToBottom();
+        if (stickToBtm) {
+            scrollToBottom();
+        }
 
-    checkVisibility();
-    updateTypingNotification();
+        checkVisibility();
+        updateTypingNotification();
+    }
 }
 
 void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
@@ -670,6 +673,11 @@ void ChatLog::reloadTheme()
     for (ChatLine::Ptr l : lines) {
         l->reloadTheme();
     }
+}
+
+void ChatLog::showed()
+{
+    isShown = true;
 }
 
 void ChatLog::forceRelayout()

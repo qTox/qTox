@@ -321,6 +321,7 @@ void GenericChatForm::setName(const QString& newName)
 
 void GenericChatForm::show(ContentLayout* contentLayout)
 {
+    chatWidget->showed();
     contentLayout->mainContent->layout()->addWidget(this);
     contentLayout->mainHead->layout()->addWidget(headWidget);
     headWidget->show();
