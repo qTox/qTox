@@ -18,9 +18,25 @@
 */
 
 #include "message.h"
+#include "friend.h"
 #include "src/core/core.h"
 
-std::vector<Message> processOutgoingMessage(bool isAction, const QString& content)
+void MessageProcessor::SharedParams::onUserNameSet(const QString& username)
+{
+    QString sanename = username;
+    sanename.remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
+    nameMention = QRegExp("\\b" + QRegExp::escape(username) + "\\b", Qt::CaseInsensitive);
+    sanitizedNameMention = nameMention;
+}
+
+MessageProcessor::MessageProcessor(const MessageProcessor::SharedParams& sharedParams)
+    : sharedParams(sharedParams)
+{}
+
+/**
+ * @brief Converts an outgoing message into one (or many) sanitized Message(s)
+ */
+std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QString const& content)
 {
     std::vector<Message> ret;
 
@@ -40,12 +56,34 @@ std::vector<Message> processOutgoingMessage(bool isAction, const QString& conten
     return ret;
 }
 
-Message processIncomingMessage(bool isAction, const QString& message)
+
+/**
+ * @brief Converts an incoming message into a sanitized Message
+ */
+Message MessageProcessor::processIncomingMessage(bool isAction, QString const& message)
 {
     QDateTime timestamp = QDateTime::currentDateTime();
     auto ret = Message{};
     ret.isAction = isAction;
     ret.content = message;
     ret.timestamp = timestamp;
+
+    if (detectingMentions) {
+        auto nameMention = sharedParams.GetNameMention();
+        auto sanitizedNameMention = sharedParams.GetSanitizedNameMention();
+
+        for (auto const& mention : {nameMention, sanitizedNameMention}) {
+            if (mention.indexIn(ret.content) == -1) {
+                continue;
+            }
+
+            auto pos = static_cast<size_t>(mention.pos(0));
+            auto length = static_cast<size_t>(mention.matchedLength());
+
+            ret.metadata.push_back({MessageMetadataType::selfMention, pos, pos + length});
+            break;
+        }
+    }
+
     return ret;
 }

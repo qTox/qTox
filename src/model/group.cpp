@@ -33,12 +33,14 @@
 static const int MAX_GROUP_TITLE_LENGTH = 128;
 
 Group::Group(int groupId, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat,
-             const QString& selfName)
+             const QString& selfName, ICoreGroupQuery& groupQuery, ICoreIdHandler& idHandler)
     : selfName{selfName}
     , title{name}
     , toxGroupNum(groupId)
     , groupId{persistentGroupId}
     , avGroupchat{isAvGroupchat}
+    , groupQuery(groupQuery)
+    , idHandler(idHandler)
 {
     // in groupchats, we only notify on messages containing your name <-- dumb
     // sound notifications should be on all messages, but system popup notification
@@ -88,15 +90,14 @@ void Group::regeneratePeerList()
     // receive the name changed signal a little later, we will emit userJoined before we have their
     // username, using just their ToxPk, then shortly after emit another peerNameChanged signal.
     // This can cause double-updated to UI and chatlog, but is unavoidable given the API of toxcore.
-    const Core* core = Core::getInstance();
-    QStringList peers = core->getGroupPeerNames(toxGroupNum);
+    QStringList peers = groupQuery.getGroupPeerNames(toxGroupNum);
     const auto oldPeerNames = peerDisplayNames;
     peerDisplayNames.clear();
     const int nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i) {
-        const auto pk = core->getGroupPeerPk(toxGroupNum, i);
-        if (pk == core->getSelfPublicKey()) {
-            peerDisplayNames[pk] = core->getUsername();
+        const auto pk = groupQuery.getGroupPeerPk(toxGroupNum, i);
+        if (pk == idHandler.getSelfPublicKey()) {
+            peerDisplayNames[pk] = idHandler.getUsername();
         } else {
             peerDisplayNames[pk] = FriendList::decideNickname(pk, peers[i]);
         }
