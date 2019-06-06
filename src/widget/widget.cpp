@@ -531,6 +531,10 @@ Widget::~Widget()
     delete contentLayout;
     delete settingsWidget;
 
+    if (currentId != nullptr) {
+        delete currentId;
+    }
+
     FriendList::clear();
     GroupList::clear();
     delete trayMenu;
@@ -1208,9 +1212,32 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
         dialog->activateWindow();
     } else {
         hideMainForms(widget);
+
+        if (currentId != nullptr) {
+            if (currentId->type() == ContactId::Friend) {
+                auto key = *static_cast<ToxPk*>(currentId);
+                if (chatForms.contains(key)) {
+                    chatForms[key]->setShowed(false);
+                } else {
+                    delete currentId;
+                    currentId = nullptr;
+                }
+            } else {
+                auto key = *static_cast<GroupId*>(currentId);
+                if (groupChatForms.contains(key)) {
+                    groupChatForms[key]->setShowed(false);
+                } else {
+                    delete currentId;
+                    currentId = nullptr;
+                }
+            }
+        }
+
         if (frnd) {
+            currentId = new ToxPk(frnd->getPublicKey());
             chatForms[frnd->getPublicKey()]->show(contentLayout);
         } else {
+            currentId = new GroupId(group->getPersistentId());
             groupChatForms[group->getPersistentId()]->show(contentLayout);
         }
         widget->setAsActiveChatroom();

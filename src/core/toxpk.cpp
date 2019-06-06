@@ -59,3 +59,8 @@ int ToxPk::getSize() const
 {
     return TOX_PUBLIC_KEY_SIZE;
 }
+
+ContactId::Type ToxPk::type() const
+{
+    return Friend;
+}

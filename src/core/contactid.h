@@ -10,6 +10,11 @@
 class ContactId
 {
 public:
+    enum Type {
+        Friend,
+        Group
+    };
+
     virtual ~ContactId() = default;
     ContactId& operator=(const ContactId& other) = default;
     ContactId& operator=(ContactId&& other) = default;
@@ -21,6 +26,7 @@ public:
     const uint8_t* getData() const;
     bool isEmpty() const;
     virtual int getSize() const = 0;
+    virtual Type type() const = 0;
 
 protected:
     ContactId();

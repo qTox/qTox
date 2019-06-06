@@ -371,17 +371,8 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     l->addToScene(scene);
     lines.append(l);
 
-    // partial refresh
     if (isShown) {
-        layout(lines.last()->getRow(), lines.size(), useableWidth());
-        updateSceneRect();
-
-        if (stickToBtm) {
-            scrollToBottom();
-        }
-
-        checkVisibility();
-        updateTypingNotification();
+        partialRefresh(stickToBtm);
     }
 }
 
@@ -469,6 +460,22 @@ void ChatLog::startResizeWorker()
     workerTimer->start();
 
     verticalScrollBar()->hide();
+}
+
+void ChatLog::partialRefresh(const bool stickToBtm, int start)
+{
+    if (start == -1) {
+        start = lines.last()->getRow();
+    }
+    layout(start, lines.size(), useableWidth());
+    updateSceneRect();
+
+    if (stickToBtm) {
+        scrollToBottom();
+    }
+
+    checkVisibility();
+    updateTypingNotification();
 }
 
 void ChatLog::mouseDoubleClickEvent(QMouseEvent* ev)
@@ -675,9 +682,13 @@ void ChatLog::reloadTheme()
     }
 }
 
-void ChatLog::showed()
+void ChatLog::setShowed(const bool isShow)
 {
-    isShown = true;
+    isShown = isShow;
+
+    if (isShown) {
+        partialRefresh(false, 0);
+    }
 }
 
 void ChatLog::forceRelayout()

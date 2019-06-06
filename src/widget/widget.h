@@ -327,6 +327,8 @@ private:
     QMap<GroupId, QSharedPointer<GroupChatForm>> groupChatForms;
     Core* core = nullptr;
 
+    ContactId *currentId{nullptr};
+
 #if DESKTOP_NOTIFICATIONS
     DesktopNotify notifier;
 #endif

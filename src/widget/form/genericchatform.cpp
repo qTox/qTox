@@ -295,6 +295,11 @@ QDateTime GenericChatForm::getFirstTime() const
     return getTime(chatWidget->getFirstLine());
 }
 
+void GenericChatForm::setShowed(const bool isShow)
+{
+    chatWidget->setShowed(isShow);
+}
+
 void GenericChatForm::reloadTheme()
 {
     const Settings& s = Settings::getInstance();
@@ -321,7 +326,7 @@ void GenericChatForm::setName(const QString& newName)
 
 void GenericChatForm::show(ContentLayout* contentLayout)
 {
-    chatWidget->showed();
+    setShowed(true);
     contentLayout->mainContent->layout()->addWidget(this);
     contentLayout->mainHead->layout()->addWidget(headWidget);
     headWidget->show();

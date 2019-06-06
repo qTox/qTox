@@ -55,7 +55,7 @@ public:
     void selectAll();
     void fontChanged(const QFont& font);
     void reloadTheme();
-    void showed();
+    void setShowed(const bool isShow);
 
     QString getSelectedText() const;
 
@@ -98,6 +98,7 @@ protected:
     void checkVisibility();
     void scrollToBottom();
     void startResizeWorker();
+    void partialRefresh(const bool stickToBtm, int start = -1);
 
     virtual void mouseDoubleClickEvent(QMouseEvent* ev) final override;
     virtual void mousePressEvent(QMouseEvent* ev) final override;
