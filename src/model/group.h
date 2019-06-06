@@ -24,6 +24,8 @@
 
 #include "src/core/contactid.h"
 #include "src/core/groupid.h"
+#include "src/core/icoregroupquery.h"
+#include "src/core/icoreidhandler.h"
 #include "src/core/toxpk.h"
 
 #include <QMap>
@@ -34,7 +36,8 @@ class Group : public Contact
 {
     Q_OBJECT
 public:
-    Group(int groupId, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat, const QString& selfName);
+    Group(int groupId, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat,
+          const QString& selfName, ICoreGroupQuery& groupQuery, ICoreIdHandler& idHandler);
     bool isAvGroupchat() const;
     uint32_t getId() const override;
     const GroupId& getPersistentId() const override;
@@ -70,6 +73,8 @@ private:
     void stopAudioOfDepartedPeers(const ToxPk& peerPk);
 
 private:
+    ICoreGroupQuery& groupQuery;
+    ICoreIdHandler& idHandler;
     QString selfName;
     QString title;
     QMap<ToxPk, QString> peerDisplayNames;
