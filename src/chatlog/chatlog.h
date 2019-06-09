@@ -55,7 +55,7 @@ public:
     void selectAll();
     void fontChanged(const QFont& font);
     void reloadTheme();
-    void setShowed(const bool isShow);
+    void setShown(const bool isShown);
 
     QString getSelectedText() const;
 
@@ -98,7 +98,6 @@ protected:
     void checkVisibility();
     void scrollToBottom();
     void startResizeWorker();
-    void partialRefresh(const bool stickToBtm, int start = -1);
 
     virtual void mouseDoubleClickEvent(QMouseEvent* ev) final override;
     virtual void mousePressEvent(QMouseEvent* ev) final override;
@@ -120,6 +119,7 @@ private:
     void retranslateUi();
     bool isActiveFileTransfer(ChatLine::Ptr l);
     void handleMultiClickEvent();
+    void partialRefresh(const bool stickToBtm, const int fromLine);
 
 private:
     enum SelectionMode

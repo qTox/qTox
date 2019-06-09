@@ -59,8 +59,3 @@ int GroupId::getSize() const
 {
     return TOX_CONFERENCE_UID_SIZE;
 }
-
-ContactId::Type GroupId::type() const
-{
-    return Group;
-}

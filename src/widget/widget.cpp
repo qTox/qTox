@@ -517,10 +517,6 @@ Widget::~Widget()
         removeFriend(f, true);
     }
 
-    for (auto form : chatForms) {
-        delete form;
-    }
-
     delete icon;
     delete profileForm;
     delete profileInfo;
@@ -530,10 +526,6 @@ Widget::~Widget()
     delete timer;
     delete contentLayout;
     delete settingsWidget;
-
-    if (currentId != nullptr) {
-        delete currentId;
-    }
 
     FriendList::clear();
     GroupList::clear();
@@ -1012,7 +1004,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
     friendChatrooms[friendPk] = chatroom;
     friendWidgets[friendPk] = widget;
-    chatForms[friendPk] = friendForm;
+    chatForms[friendPk] = std::shared_ptr<ChatForm>(friendForm);
 
     const auto activityTime = settings.getFriendActivity(friendPk);
     const auto chatTime = friendForm->getLatestTime();
@@ -1174,10 +1166,10 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
     const Friend* frnd = widget->getFriend();
     const Group* group = widget->getGroup();
     if (frnd) {
-        form = chatForms[frnd->getPublicKey()];
+        form = chatForms[frnd->getPublicKey()].get();
     } else {
         id = group->getPersistentId();
-        form = groupChatForms[id].data();
+        form = groupChatForms[id].get();
     }
     bool chatFormIsSet;
     ContentDialogManager::getInstance()->focusContact(id);
@@ -1213,31 +1205,15 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
     } else {
         hideMainForms(widget);
 
-        if (currentId != nullptr) {
-            if (currentId->type() == ContactId::Friend) {
-                auto key = *static_cast<ToxPk*>(currentId);
-                if (chatForms.contains(key)) {
-                    chatForms[key]->setShowed(false);
-                } else {
-                    delete currentId;
-                    currentId = nullptr;
-                }
-            } else {
-                auto key = *static_cast<GroupId*>(currentId);
-                if (groupChatForms.contains(key)) {
-                    groupChatForms[key]->setShowed(false);
-                } else {
-                    delete currentId;
-                    currentId = nullptr;
-                }
-            }
+        if (currentForm != nullptr && !currentForm.unique()) {
+            currentForm->setShown(false);
         }
 
         if (frnd) {
-            currentId = new ToxPk(frnd->getPublicKey());
+            currentForm = chatForms[frnd->getPublicKey()];
             chatForms[frnd->getPublicKey()]->show(contentLayout);
         } else {
-            currentId = new GroupId(group->getPersistentId());
+            currentForm = groupChatForms[group->getPersistentId()];
             groupChatForms[group->getPersistentId()]->show(contentLayout);
         }
         widget->setAsActiveChatroom();
@@ -1280,7 +1256,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
         onAddClicked();
     }
 
-    auto form = chatForms[friendPk];
+    auto form = chatForms[friendPk].get();
     auto chatroom = friendChatrooms[friendPk];
     FriendWidget* friendWidget =
         ContentDialogManager::getInstance()->addFriendToDialog(dialog, chatroom, form);
@@ -1337,7 +1313,7 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
         onAddClicked();
     }
 
-    auto chatForm = groupChatForms[groupId].data();
+    auto chatForm = groupChatForms[groupId].get();
     auto chatroom = groupChatrooms[groupId];
     auto groupWidget =
         ContentDialogManager::getInstance()->addGroupToDialog(dialog, chatroom, chatForm);
@@ -1606,9 +1582,8 @@ void Widget::removeFriend(Friend* f, bool fake)
     friendWidgets.remove(friendPk);
     delete widget;
 
-    auto chatForm = chatForms[friendPk];
-    chatForms.remove(friendPk);
-    delete chatForm;
+    auto chatForm = chatForms.find(friendPk);
+    chatForms.erase(chatForm);
 
     delete f;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
@@ -1826,7 +1801,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
                          && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     const auto targeted = !isSelf && mention;
     const auto date = QDateTime::currentDateTime();
-    auto form = groupChatForms[groupId].data();
+    auto form = groupChatForms[groupId].get();
 
     if (targeted && !isAction) {
         form->addAlertMessage(author, message, date, true);
@@ -1884,7 +1859,7 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, ToxPk peerPk)
     Group* g = GroupList::findGroup(groupId);
     assert(g);
 
-    auto form = groupChatForms[groupId].data();
+    auto form = groupChatForms[groupId].get();
     form->peerAudioPlaying(peerPk);
 }
 
@@ -1953,7 +1928,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     auto form = new GroupChatForm(newgroup);
     groupWidgets[groupId] = widget;
     groupChatrooms[groupId] = chatroom;
-    groupChatForms[groupId] = QSharedPointer<GroupChatForm>(form);
+    groupChatForms[groupId] = std::shared_ptr<GroupChatForm>(form);
 
     contactListWidget->addGroupWidget(widget);
     widget->updateStatusLight();
@@ -2158,7 +2133,7 @@ void Widget::onGroupSendFailed(uint32_t groupnumber)
 
     const auto message = tr("Message failed to send");
     const auto curTime = QDateTime::currentDateTime();
-    auto form = groupChatForms[groupId].data();
+    auto form = groupChatForms[groupId].get();
     form->addSystemInfoMessage(message, ChatMessage::INFO, curTime);
 }
 

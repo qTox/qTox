@@ -372,7 +372,7 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     lines.append(l);
 
     if (isShown) {
-        partialRefresh(stickToBtm);
+        partialRefresh(stickToBtm, lines.last()->getRow());
     }
 }
 
@@ -462,12 +462,9 @@ void ChatLog::startResizeWorker()
     verticalScrollBar()->hide();
 }
 
-void ChatLog::partialRefresh(const bool stickToBtm, int start)
+void ChatLog::partialRefresh(const bool stickToBtm, const int fromLine)
 {
-    if (start == -1) {
-        start = lines.last()->getRow();
-    }
-    layout(start, lines.size(), useableWidth());
+    layout(fromLine, lines.size(), useableWidth());
     updateSceneRect();
 
     if (stickToBtm) {
@@ -682,9 +679,9 @@ void ChatLog::reloadTheme()
     }
 }
 
-void ChatLog::setShowed(const bool isShow)
+void ChatLog::setShown(const bool isShown)
 {
-    isShown = isShow;
+    this->isShown = isShown;
 
     if (isShown) {
         partialRefresh(false, 0);
