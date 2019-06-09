@@ -222,13 +222,6 @@ instead of closing itself.</string>
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QCheckBox" name="cbFauxOfflineMessaging">
-              <property name="text">
-               <string>Faux offline messaging</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
           <item>
@@ -371,7 +364,6 @@ instead of closing itself.</string>
   <tabstop>minimizeToTray</tabstop>
   <tabstop>closeToTray</tabstop>
   <tabstop>statusChanges</tabstop>
-  <tabstop>cbFauxOfflineMessaging</tabstop>
   <tabstop>autoAwaySpinBox</tabstop>
   <tabstop>autoSaveFilesDir</tabstop>
   <tabstop>autoacceptFiles</tabstop>

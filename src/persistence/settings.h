@@ -226,7 +226,6 @@ signals:
     void dateFormatChanged(const QString& format);
     void statusChangeNotificationEnabledChanged(bool enabled);
     void spellCheckingEnabledChanged(bool enabled);
-    void fauxOfflineMessagingChanged(bool enabled);
 
     // Privacy
     void typingNotificationChanged(bool enabled);
@@ -520,9 +519,6 @@ public:
     SIGNAL_IMPL(Settings, autoAcceptDirChanged, const ToxPk& id, const QString& dir)
     SIGNAL_IMPL(Settings, contactNoteChanged, const ToxPk& id, const QString& note)
 
-    bool getFauxOfflineMessaging() const;
-    void setFauxOfflineMessaging(bool value);
-
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
 
@@ -604,7 +600,6 @@ private:
     bool dontShowDhtDialog;
 
     bool autoLogin;
-    bool fauxOfflineMessaging;
     bool compactLayout;
     FriendListSortingMode sortingMode;
     bool groupchatPosition;
