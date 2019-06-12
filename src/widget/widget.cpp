@@ -949,11 +949,11 @@ void Widget::playNotificationSound(IAudioSink::Sound sound, bool loop)
     connect(audioNotification.get(), &IAudioSink::finishedPlaying, this,
             &Widget::cleanupNotificationSound);
 
+    audioNotification->playMono16Sound(sound);
+
     if (loop) {
         audioNotification->startLoop();
     }
-
-    audioNotification->playMono16Sound(sound);
 }
 
 void Widget::cleanupNotificationSound()
