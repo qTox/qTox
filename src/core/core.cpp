@@ -1026,26 +1026,37 @@ void Core::loadGroups()
         return;
     }
 
-    uint32_t* groupIds = new uint32_t[groupCount];
-    tox_conference_get_chatlist(tox.get(), groupIds);
+    auto groupNumbers = new uint32_t[groupCount];
+    tox_conference_get_chatlist(tox.get(), groupNumbers);
 
     for(size_t i = 0; i < groupCount; ++i) {
         TOX_ERR_CONFERENCE_TITLE error;
-        const auto groupId = static_cast<int>(groupIds[i]);
-        size_t titleSize = tox_conference_get_title_size(tox.get(), groupId, &error);
-        if (LogConferenceTitleError(error)) {
+        QByteArray nameByteArray;
+        QString name;
+        bool invalidTitle;
+        const auto groupNumber = groupNumbers[i];
+        size_t titleSize = tox_conference_get_title_size(tox.get(), groupNumber, &error);
+        invalidTitle = LogConferenceTitleError(error);
+        if (!invalidTitle)
+        {
+            nameByteArray = QByteArray(static_cast<int>(titleSize), Qt::Uninitialized);
+            tox_conference_get_title(tox.get(), groupNumber, reinterpret_cast<uint8_t*>(nameByteArray.data()), &error);
+            invalidTitle = LogConferenceTitleError(error);
+        }
+        if (error == TOX_ERR_CONFERENCE_TITLE_CONFERENCE_NOT_FOUND)
             continue;
+
+        if (invalidTitle)
+        {
+            name = tr("Groupchat %1").arg(getGroupPersistentId(groupNumber).toString().left(8));
+        } else {
+            name = ToxString(nameByteArray).getQString();
         }
 
-        QByteArray name(titleSize, Qt::Uninitialized);
-        if (!tox_conference_get_title(tox.get(), groupId, reinterpret_cast<uint8_t*>(name.data()), &error))
-        if (LogConferenceTitleError(error)) {
-            continue;
-        }
-        emit emptyGroupCreated(groupId, getGroupPersistentId(groupId), ToxString(name).getQString());
+        emit emptyGroupCreated(groupNumber, getGroupPersistentId(groupNumber), name);
     }
 
-    delete[] groupIds;
+    delete[] groupNumbers;
 }
 
 void Core::checkLastOnline(uint32_t friendId)
