@@ -135,10 +135,15 @@ then
 fi
 
 # Generate checksum files for releases
-if [ "$STAGE" == "stage3" ] && [ "$BUILD_TYPE" == "release" ]
+if [ "$STAGE" == "stage3" ]
 then
   readonly OUT_DIR=./workspace/"$ARCH"/qtox/"$BUILD_TYPE"/
-  readonly NAME=setup-qtox-"$ARCH"-"$BUILD_TYPE".exe
+  if [ "$BUILD_TYPE" == "release" ]
+  then
+    NAME=setup-qtox-"$ARCH"-"$BUILD_TYPE".exe
+    sha256sum "$OUT_DIR""$NAME" > "$OUT_DIR""$NAME".sha256
+  fi
+  NAME=qtox-"$ARCH"-"$BUILD_TYPE".zip
   sha256sum "$OUT_DIR""$NAME" > "$OUT_DIR""$NAME".sha256
 fi
 
