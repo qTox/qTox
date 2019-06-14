@@ -19,12 +19,12 @@
 
 #include "group.h"
 #include "friend.h"
-#include "src/friendlist.h"
+#include "src/core/contactid.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
-#include "src/core/contactid.h"
 #include "src/core/groupid.h"
 #include "src/core/toxpk.h"
+#include "src/friendlist.h"
 #include "src/persistence/settings.h"
 #include "src/widget/form/groupchatform.h"
 #include "src/widget/groupwidget.h"
@@ -32,7 +32,8 @@
 
 static const int MAX_GROUP_TITLE_LENGTH = 128;
 
-Group::Group(int groupId, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat, const QString& selfName)
+Group::Group(int groupId, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat,
+             const QString& selfName)
     : selfName{selfName}
     , title{name}
     , toxGroupNum(groupId)
@@ -80,12 +81,13 @@ QString Group::getDisplayedName() const
 
 void Group::regeneratePeerList()
 {
-    // NOTE: there's a bit of a race here. Core emits a signal for both groupPeerlistChanged and groupPeerNameChanged
-    // back-to-back when a peer joins our group. If we get both before we process this slot, core->getGroupPeerNames
-    // will contain the new peer name, and we'll ignore the name changed signal, and emit a single userJoined with
-    // the correct name. But, if we receive the name changed signal a little later, we will emit userJoined before we
-    // have their username, using just their ToxPk, then shortly after emit another peerNameChanged signal. This can
-    // cause double-updated to UI and chatlog, but is unavoidable given the API of toxcore.
+    // NOTE: there's a bit of a race here. Core emits a signal for both groupPeerlistChanged and
+    // groupPeerNameChanged back-to-back when a peer joins our group. If we get both before we
+    // process this slot, core->getGroupPeerNames will contain the new peer name, and we'll ignore
+    // the name changed signal, and emit a single userJoined with the correct name. But, if we
+    // receive the name changed signal a little later, we will emit userJoined before we have their
+    // username, using just their ToxPk, then shortly after emit another peerNameChanged signal.
+    // This can cause double-updated to UI and chatlog, but is unavoidable given the API of toxcore.
     const Core* core = Core::getInstance();
     QStringList peers = core->getGroupPeerNames(toxGroupNum);
     const auto oldPeerNames = peerDisplayNames;
@@ -93,20 +95,22 @@ void Group::regeneratePeerList()
     const int nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i) {
         const auto pk = core->getGroupPeerPk(toxGroupNum, i);
+        if (pk == core->getSelfPublicKey())
+            peerDisplayNames[pk] = core->getUsername();
         peerDisplayNames[pk] = FriendList::decideNickname(pk, peers[i]);
     }
-    for (const auto& pk: oldPeerNames.keys()) {
+    for (const auto& pk : oldPeerNames.keys()) {
         if (!peerDisplayNames.contains(pk)) {
             emit userLeft(pk, oldPeerNames.value(pk));
             stopAudioOfDepartedPeers(pk);
         }
     }
-    for (const auto& pk: peerDisplayNames.keys()) {
+    for (const auto& pk : peerDisplayNames.keys()) {
         if (!oldPeerNames.contains(pk)) {
             emit userJoined(pk, peerDisplayNames.value(pk));
         }
     }
-    for (const auto& pk: peerDisplayNames.keys()) {
+    for (const auto& pk : peerDisplayNames.keys()) {
         if (oldPeerNames.contains(pk) && oldPeerNames.value(pk) != peerDisplayNames.value(pk)) {
             emit peerNameChanged(pk, oldPeerNames.value(pk), peerDisplayNames.value(pk));
         }
