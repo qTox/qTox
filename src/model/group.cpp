@@ -95,9 +95,11 @@ void Group::regeneratePeerList()
     const int nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i) {
         const auto pk = core->getGroupPeerPk(toxGroupNum, i);
-        if (pk == core->getSelfPublicKey())
+        if (pk == core->getSelfPublicKey()) {
             peerDisplayNames[pk] = core->getUsername();
-        peerDisplayNames[pk] = FriendList::decideNickname(pk, peers[i]);
+        } else {
+            peerDisplayNames[pk] = FriendList::decideNickname(pk, peers[i]);
+        }
     }
     for (const auto& pk : oldPeerNames.keys()) {
         if (!peerDisplayNames.contains(pk)) {
