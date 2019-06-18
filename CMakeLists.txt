@@ -324,6 +324,8 @@ set(${PROJECT_NAME}_SOURCES
   src/model/chatroom/groupchatroom.h
   src/model/contact.cpp
   src/model/contact.h
+  src/model/chatlogitem.cpp
+  src/model/chatlogitem.h
   src/model/friend.cpp
   src/model/friend.h
   src/model/message.h
@@ -345,6 +347,9 @@ set(${PROJECT_NAME}_SOURCES
   src/model/profile/iprofileinfo.h
   src/model/profile/profileinfo.cpp
   src/model/profile/profileinfo.h
+  src/model/ichatlog.h
+  src/model/sessionchatlog.h
+  src/model/sessionchatlog.cpp
   src/net/bootstrapnodeupdater.cpp
   src/net/bootstrapnodeupdater.h
   src/net/avatarbroadcaster.cpp
