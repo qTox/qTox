@@ -23,6 +23,7 @@
 
 #include "groupid.h"
 #include "icorefriendmessagesender.h"
+#include "icoreidhandler.h"
 #include "receiptnum.h"
 #include "toxfile.h"
 #include "toxid.h"
@@ -50,7 +51,7 @@ class Core;
 
 using ToxCorePtr = std::unique_ptr<Core>;
 
-class Core : public QObject, public ICoreFriendMessageSender
+class Core : public QObject, public ICoreFriendMessageSender, public ICoreIdHandler
 {
     Q_OBJECT
 public:
@@ -88,11 +89,11 @@ public:
     uint32_t joinGroupchat(const GroupInvite& inviteInfo);
     void quitGroupChat(int groupId) const;
 
-    QString getUsername() const;
+    QString getUsername() const override;
     Status::Status getStatus() const;
     QString getStatusMessage() const;
-    ToxId getSelfId() const;
-    ToxPk getSelfPublicKey() const;
+    ToxId getSelfId() const override;
+    ToxPk getSelfPublicKey() const override;
     QPair<QByteArray, QByteArray> getKeypair() const;
 
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
