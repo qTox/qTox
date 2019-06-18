@@ -28,8 +28,8 @@
 #include "src/core/toxstring.h"
 #include "src/model/groupinvite.h"
 #include "src/model/status.h"
-#include "src/nexus.h"
 #include "src/net/bootstrapnodeupdater.h"
+#include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/util/strongtype.h"
 
@@ -49,79 +49,78 @@ const QString Core::TOX_EXT = ".tox";
 #define ASSERT_CORE_THREAD assert(QThread::currentThread() == coreThread.get())
 
 namespace {
-    bool LogConferenceTitleError(TOX_ERR_CONFERENCE_TITLE error)
-    {
-        switch(error)
-        {
-        case TOX_ERR_CONFERENCE_TITLE_OK:
-            break;
-        case TOX_ERR_CONFERENCE_TITLE_CONFERENCE_NOT_FOUND:
-            qWarning() << "Conference title not found";
-            break;
-        case TOX_ERR_CONFERENCE_TITLE_INVALID_LENGTH:
-            qWarning() << "Invalid conference title length";
-            break;
-        case TOX_ERR_CONFERENCE_TITLE_FAIL_SEND:
-            qWarning() << "Failed to send title packet";
-        }
-        return error;
+bool LogConferenceTitleError(TOX_ERR_CONFERENCE_TITLE error)
+{
+    switch (error) {
+    case TOX_ERR_CONFERENCE_TITLE_OK:
+        break;
+    case TOX_ERR_CONFERENCE_TITLE_CONFERENCE_NOT_FOUND:
+        qWarning() << "Conference title not found";
+        break;
+    case TOX_ERR_CONFERENCE_TITLE_INVALID_LENGTH:
+        qWarning() << "Invalid conference title length";
+        break;
+    case TOX_ERR_CONFERENCE_TITLE_FAIL_SEND:
+        qWarning() << "Failed to send title packet";
     }
+    return error;
+}
 
-    bool parseFriendSendMessageError(Tox_Err_Friend_Send_Message  error)
-    {
-        switch (error) {
-        case TOX_ERR_FRIEND_SEND_MESSAGE_OK:
-            return true;
-        case TOX_ERR_FRIEND_SEND_MESSAGE_NULL:
-            qCritical() << "Send friend message passed an unexpected null argument";
-            return false;
-        case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_FOUND:
-            qCritical() << "Send friend message could not find friend";
-            return false;
-        case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_CONNECTED:
-            qCritical() << "Send friend message: friend is offline";
-            return false;
-        case TOX_ERR_FRIEND_SEND_MESSAGE_SENDQ:
-            qCritical() << "Failed to allocate more message queue";
-            return false;
-        case TOX_ERR_FRIEND_SEND_MESSAGE_TOO_LONG:
-            qCritical() << "Attemped to send message that's too long";
-            return false;
-        case TOX_ERR_FRIEND_SEND_MESSAGE_EMPTY:
-            qCritical() << "Attempted to send an empty message";
-            return false;
-        default:
-            qCritical() << "Unknown friend send message error:" << static_cast<int>(error);
-            return false;
-        }
+bool parseFriendSendMessageError(Tox_Err_Friend_Send_Message error)
+{
+    switch (error) {
+    case TOX_ERR_FRIEND_SEND_MESSAGE_OK:
+        return true;
+    case TOX_ERR_FRIEND_SEND_MESSAGE_NULL:
+        qCritical() << "Send friend message passed an unexpected null argument";
+        return false;
+    case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_FOUND:
+        qCritical() << "Send friend message could not find friend";
+        return false;
+    case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_CONNECTED:
+        qCritical() << "Send friend message: friend is offline";
+        return false;
+    case TOX_ERR_FRIEND_SEND_MESSAGE_SENDQ:
+        qCritical() << "Failed to allocate more message queue";
+        return false;
+    case TOX_ERR_FRIEND_SEND_MESSAGE_TOO_LONG:
+        qCritical() << "Attemped to send message that's too long";
+        return false;
+    case TOX_ERR_FRIEND_SEND_MESSAGE_EMPTY:
+        qCritical() << "Attempted to send an empty message";
+        return false;
+    default:
+        qCritical() << "Unknown friend send message error:" << static_cast<int>(error);
+        return false;
     }
+}
 
-    bool parseConferenceSendMessageError(Tox_Err_Conference_Send_Message  error)
-    {
-        switch (error) {
-        case TOX_ERR_CONFERENCE_SEND_MESSAGE_OK:
-            return true;
+bool parseConferenceSendMessageError(Tox_Err_Conference_Send_Message error)
+{
+    switch (error) {
+    case TOX_ERR_CONFERENCE_SEND_MESSAGE_OK:
+        return true;
 
-        case TOX_ERR_CONFERENCE_SEND_MESSAGE_CONFERENCE_NOT_FOUND:
-            qCritical() << "Conference not found";
-            return false;
+    case TOX_ERR_CONFERENCE_SEND_MESSAGE_CONFERENCE_NOT_FOUND:
+        qCritical() << "Conference not found";
+        return false;
 
-        case TOX_ERR_CONFERENCE_SEND_MESSAGE_FAIL_SEND:
-            qCritical() << "Conference message failed to send";
-            return false;
+    case TOX_ERR_CONFERENCE_SEND_MESSAGE_FAIL_SEND:
+        qCritical() << "Conference message failed to send";
+        return false;
 
-        case TOX_ERR_CONFERENCE_SEND_MESSAGE_NO_CONNECTION:
-            qCritical() << "No connection";
-            return false;
+    case TOX_ERR_CONFERENCE_SEND_MESSAGE_NO_CONNECTION:
+        qCritical() << "No connection";
+        return false;
 
-        case TOX_ERR_CONFERENCE_SEND_MESSAGE_TOO_LONG:
-            qCritical() << "Message too long";
-            return false;
-        default:
-            qCritical() << "Unknown Tox_Err_Conference_Send_Message  error:" << static_cast<int>(error);
-            return false;
-        }
+    case TOX_ERR_CONFERENCE_SEND_MESSAGE_TOO_LONG:
+        qCritical() << "Message too long";
+        return false;
+    default:
+        qCritical() << "Unknown Tox_Err_Conference_Send_Message  error:" << static_cast<int>(error);
+        return false;
     }
+}
 } // namespace
 
 Core::Core(QThread* coreThread)
@@ -529,7 +528,8 @@ void Core::onUserStatusChanged(Tox*, uint32_t friendId, Tox_User_Status userstat
 void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection status, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
-    Status::Status friendStatus = status != TOX_CONNECTION_NONE ? Status::Status::Online : Status::Status::Offline;
+    Status::Status friendStatus =
+        status != TOX_CONNECTION_NONE ? Status::Status::Online : Status::Status::Offline;
     // Ignore Online because it will be emited from onUserStatusChanged
     bool isOffline = friendStatus == Status::Status::Offline;
     if (isOffline) {
@@ -669,19 +669,21 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
     emit saveRequest();
 }
 
-bool Core::sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type, ReceiptNum& receipt)
+bool Core::sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type,
+                               ReceiptNum& receipt)
 {
     int size = message.toUtf8().size();
     auto maxSize = tox_max_message_length();
     if (size > maxSize) {
-        qCritical() << "Core::sendMessageWithType called with message of size:" << size << "when max is:" << maxSize <<". Ignoring.";
+        qCritical() << "Core::sendMessageWithType called with message of size:" << size
+                    << "when max is:" << maxSize << ". Ignoring.";
         return false;
     }
 
     ToxString cMessage(message);
     Tox_Err_Friend_Send_Message error;
-    receipt = ReceiptNum{tox_friend_send_message(tox.get(), friendId, type,
-                                          cMessage.data(), cMessage.size(), &error)};
+    receipt = ReceiptNum{tox_friend_send_message(tox.get(), friendId, type, cMessage.data(),
+                                                 cMessage.size(), &error)};
     if (parseFriendSendMessageError(error)) {
         return true;
     }
@@ -717,7 +719,7 @@ void Core::sendGroupMessageWithType(int groupId, const QString& message, Tox_Mes
 
     for (auto& part : cMessages) {
         ToxString cMsg(part);
-        Tox_Err_Conference_Send_Message  error;
+        Tox_Err_Conference_Send_Message error;
         bool ok =
             tox_conference_send_message(tox.get(), groupId, type, cMsg.data(), cMsg.size(), &error);
         if (!ok || !parseConferenceSendMessageError(error)) {
@@ -1026,26 +1028,27 @@ void Core::loadGroups()
         return;
     }
 
-    uint32_t* groupIds = new uint32_t[groupCount];
-    tox_conference_get_chatlist(tox.get(), groupIds);
+    auto groupNumbers = new uint32_t[groupCount];
+    tox_conference_get_chatlist(tox.get(), groupNumbers);
 
-    for(size_t i = 0; i < groupCount; ++i) {
+    for (size_t i = 0; i < groupCount; ++i) {
         TOX_ERR_CONFERENCE_TITLE error;
-        const auto groupId = static_cast<int>(groupIds[i]);
-        size_t titleSize = tox_conference_get_title_size(tox.get(), groupId, &error);
+        QString name;
+        const auto groupNumber = groupNumbers[i];
+        size_t titleSize = tox_conference_get_title_size(tox.get(), groupNumber, &error);
         if (LogConferenceTitleError(error)) {
-            continue;
+            name = tr("Groupchat %1").arg(getGroupPersistentId(groupNumber).toString().left(8));
+        } else {
+            QByteArray nameByteArray = QByteArray(static_cast<int>(titleSize), Qt::Uninitialized);
+            tox_conference_get_title(tox.get(), groupNumber,
+                                     reinterpret_cast<uint8_t*>(nameByteArray.data()), &error);
+            name = ToxString(nameByteArray).getQString();
         }
 
-        QByteArray name(titleSize, Qt::Uninitialized);
-        if (!tox_conference_get_title(tox.get(), groupId, reinterpret_cast<uint8_t*>(name.data()), &error))
-        if (LogConferenceTitleError(error)) {
-            continue;
-        }
-        emit emptyGroupCreated(groupId, getGroupPersistentId(groupId), ToxString(name).getQString());
+        emit emptyGroupCreated(groupNumber, getGroupPersistentId(groupNumber), name);
     }
 
-    delete[] groupIds;
+    delete[] groupNumbers;
 }
 
 void Core::checkLastOnline(uint32_t friendId)
@@ -1106,7 +1109,8 @@ GroupId Core::getGroupPersistentId(uint32_t groupNumber) const
 
     size_t conferenceIdSize = TOX_CONFERENCE_UID_SIZE;
     QByteArray groupPersistentId(conferenceIdSize, Qt::Uninitialized);
-    if (tox_conference_get_id(tox.get(), groupNumber, reinterpret_cast<uint8_t*>(groupPersistentId.data()))) {
+    if (tox_conference_get_id(tox.get(), groupNumber,
+                              reinterpret_cast<uint8_t*>(groupPersistentId.data()))) {
         return GroupId{groupPersistentId};
     } else {
         qCritical() << "Failed to get conference ID of group" << groupNumber;
@@ -1301,7 +1305,7 @@ uint32_t Core::joinGroupchat(const GroupInvite& inviteInfo)
     case TOX_CONFERENCE_TYPE_AV: {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendId);
         groupNum = toxav_join_av_groupchat(tox.get(), friendId, cookie, cookieLength,
-                                       CoreAV::groupCallCallback, const_cast<Core*>(this));
+                                           CoreAV::groupCallCallback, const_cast<Core*>(this));
         break;
     }
     default:
