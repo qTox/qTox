@@ -149,6 +149,12 @@ public:
         uint count;
     };
 
+    struct DateIdx
+    {
+        QDate date;
+        size_t numMessagesIn;
+    };
+
 public:
     explicit History(std::shared_ptr<RawDatabase> db);
     ~History();
@@ -173,8 +179,14 @@ public:
                                               const QDateTime& to);
     QList<HistMessage> getChatHistoryDefaultNum(const QString& friendPk);
     QList<DateMessages> getChatHistoryCounts(const ToxPk& friendPk, const QDate& from, const QDate& to);
+    size_t getNumMessagesForFriend(const ToxPk& friendPk);
+    size_t getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date);
+    QList<HistMessage> getMessagesForFriend(const ToxPk& friendPk, size_t firstIdx, size_t lastIdx);
+    QList<HistMessage> getUnsentMessagesForFriend(const ToxPk& friendPk);
     QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);
+    QList<DateIdx> getNumMessagesForFriendBeforeDateBoundaries(const ToxPk& friendPk,
+                                                               const QDate& from, size_t maxNum);
     QDateTime getStartDateChatHistory(const QString& friendPk);
 
     void markAsSent(RowId messageId);
