@@ -350,6 +350,8 @@ set(${PROJECT_NAME}_SOURCES
   src/model/ichatlog.h
   src/model/sessionchatlog.h
   src/model/sessionchatlog.cpp
+  src/model/chathistory.h
+  src/model/chathistory.cpp
   src/net/bootstrapnodeupdater.cpp
   src/net/bootstrapnodeupdater.h
   src/net/avatarbroadcaster.cpp
