@@ -31,6 +31,7 @@ auto_test(persistence offlinemsgengine)
 auto_test(model friendmessagedispatcher)
 auto_test(model groupmessagedispatcher)
 auto_test(model messageprocessor)
+auto_test(model sessionchatlog)
 
 if (UNIX)
   auto_test(platform posixsignalnotifier)
