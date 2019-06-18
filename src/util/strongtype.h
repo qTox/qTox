@@ -28,7 +28,30 @@ struct Addable
     T operator+(T const& other) const { return static_cast<T const&>(*this).get() + other.get(); };
 };
 
-template <typename T>
+template <typename T, typename Underlying>
+struct UnderlyingAddable
+{
+    T operator+(Underlying const& other) const
+    {
+        return T(static_cast<T const&>(*this).get() + other);
+    };
+};
+
+template <typename T, typename Underlying>
+struct UnitlessDifferencable
+{
+    T operator-(Underlying const& other) const
+    {
+        return T(static_cast<T const&>(*this).get() - other);
+    };
+
+    Underlying operator-(T const& other) const
+    {
+        return static_cast<T const&>(*this).get() - other.get();
+    }
+};
+
+template <typename T, typename>
 struct Incrementable
 {
     T& operator++()
@@ -46,23 +69,28 @@ struct Incrementable
     }
 };
 
-template <typename T>
+
+template <typename T, typename>
 struct EqualityComparible
 {
     bool operator==(const T& other) const { return static_cast<T const&>(*this).get() == other.get(); };
+    bool operator!=(const T& other) const
+    {
+        return static_cast<T const&>(*this).get() != other.get();
+    };
 };
 
-template <typename T>
+template <typename T, typename Underlying>
 struct Hashable
 {
-    friend uint qHash(const Hashable<T>& key, uint seed = 0)
+    friend uint qHash(const Hashable<T, Underlying>& key, uint seed = 0)
     {
         return qHash(static_cast<T const&>(*key).get(), seed);
     }
 };
 
-template <typename T>
-struct Orderable : EqualityComparible<T>
+template <typename T, typename Underlying>
+struct Orderable : EqualityComparible<T, Underlying>
 {
     bool operator<(const T& rhs) const { return static_cast<T const&>(*this).get() < rhs.get(); }
     bool operator>(const T& rhs) const { return static_cast<T const&>(*this).get() > rhs.get(); }
@@ -82,10 +110,12 @@ struct Orderable : EqualityComparible<T>
  *   qRegisterMetaType<ReceiptNum>();
  */
 
-template <typename T, typename Tag, template <typename> class... Properties>
-class NamedType : public Properties<NamedType<T, Tag, Properties...>>...
+template <typename T, typename Tag, template <typename, typename> class... Properties>
+class NamedType : public Properties<NamedType<T, Tag, Properties...>, T>...
 {
 public:
+    using UnderlyingType = T;
+
     NamedType() {}
     explicit NamedType(T const& value) : value_(value) {}
     T& get() { return value_; }
@@ -94,7 +124,7 @@ private:
     T value_;
 };
 
-template <typename T, typename Tag, template <typename> class... Properties>
+template <typename T, typename Tag, template <typename, typename> class... Properties>
 uint qHash(const NamedType<T, Tag, Properties...>& key, uint seed = 0)
 {
     return qHash(key.get(), seed);
