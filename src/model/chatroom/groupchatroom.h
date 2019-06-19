@@ -24,6 +24,7 @@
 
 #include <QObject>
 
+class IDialogsManager;
 class Group;
 class ToxPk;
 
@@ -31,7 +32,7 @@ class GroupChatroom : public QObject, public Chatroom
 {
     Q_OBJECT
 public:
-    GroupChatroom(Group* group);
+    GroupChatroom(Group* group, IDialogsManager* dialogsManager);
 
     Contact* getContact() override;
 
@@ -42,8 +43,14 @@ public:
 
     bool friendExists(const ToxPk& pk);
     void inviteFriend(const ToxPk& pk);
+
+    bool possibleToOpenInNewWindow() const;
+    bool canBeRemovedFromWindow() const;
+    void removeGroupFromDialogs();
+
 private:
     Group* group{nullptr};
+    IDialogsManager* dialogsManager{nullptr};
 };
 
 #endif /* GROUP_CHATROOM_H */
