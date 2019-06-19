@@ -90,13 +90,13 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
 
     // TODO: Move to model
     ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
-    const bool notAlone = contentDialog != nullptr && contentDialog->chatroomWidgetCount() > 1;
+    const bool notAlone = contentDialog != nullptr && contentDialog->chatroomCount() > 1;
 
     if (contentDialog == nullptr || notAlone) {
         openChatWindow = menu.addAction(tr("Open chat in new window"));
     }
 
-    if (contentDialog && contentDialog->hasContactWidget(groupId)) {
+    if (contentDialog && contentDialog->hasContact(groupId)) {
         removeChatWindow = menu.addAction(tr("Remove chat from this window"));
     }
 

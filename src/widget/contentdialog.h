@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015-2018 by The qTox Project Contributors
+    Copyright © 2015-2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -20,6 +20,7 @@
 #ifndef CONTENTDIALOG_H
 #define CONTENTDIALOG_H
 
+#include "src/model/dialogs/idialogs.h"
 #include "src/widget/genericchatitemlayout.h"
 #include "src/widget/tool/activatedialog.h"
 #include "src/model/status.h"
@@ -27,14 +28,10 @@
 #include "src/core/toxpk.h"
 
 #include <memory>
-#include <tuple>
 
 template <typename K, typename V>
 class QHash;
-template <typename T>
-class QSet;
 
-class ContentDialog;
 class ContentLayout;
 class Friend;
 class FriendChatroom;
@@ -47,11 +44,8 @@ class GroupChatroom;
 class GroupWidget;
 class QCloseEvent;
 class QSplitter;
-class QVBoxLayout;
 
-using ContactInfo = std::tuple<ContentDialog*, GenericChatroomWidget*>;
-
-class ContentDialog : public ActivateDialog
+class ContentDialog : public ActivateDialog, public IDialogs
 {
     Q_OBJECT
 public:
@@ -60,9 +54,9 @@ public:
 
     FriendWidget* addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form);
     GroupWidget* addGroup(std::shared_ptr<GroupChatroom> chatroom, GenericChatForm* form);
-    void removeFriend(const ToxPk& friendPk);
-    void removeGroup(const GroupId& groupId);
-    int chatroomWidgetCount() const;
+    void removeFriend(const ToxPk& friendPk) override;
+    void removeGroup(const GroupId& groupId) override;
+    int chatroomCount() const override;
     void ensureSplitterVisible();
     void updateTitleAndStatusIcon();
 
@@ -73,12 +67,12 @@ public:
     void addFriendWidget(FriendWidget* widget, Status::Status status);
     bool isActiveWidget(GenericChatroomWidget* widget);
 
-    bool hasContactWidget(const ContactId& contactId) const;
+    bool hasContact(const ContactId& contactId) const override;
+    bool isContactActive(const ContactId& contactId) const override;
+
     void focusContact(const ContactId& friendPk);
-    bool containsContact(const ContactId& friendPk) const;
     void updateFriendStatus(const ToxPk& friendPk, Status::Status status);
     void updateContactStatusLight(const ContactId& contactId);
-    bool isContactWidgetActive(const ContactId& contactId);
 
     void setStatusMessage(const ToxPk& friendPk, const QString& message);
 

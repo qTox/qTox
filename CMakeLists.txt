@@ -336,6 +336,7 @@ set(${PROJECT_NAME}_SOURCES
   src/model/profile/iprofileinfo.h
   src/model/profile/profileinfo.cpp
   src/model/profile/profileinfo.h
+  src/model/dialogs/idialogs.h
   src/net/bootstrapnodeupdater.cpp
   src/net/bootstrapnodeupdater.h
   src/net/avatarbroadcaster.cpp
