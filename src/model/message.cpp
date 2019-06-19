@@ -26,7 +26,7 @@ void MessageProcessor::SharedParams::onUserNameSet(const QString& username)
     QString sanename = username;
     sanename.remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
     nameMention = QRegExp("\\b" + QRegExp::escape(username) + "\\b", Qt::CaseInsensitive);
-    sanitizedNameMention = nameMention;
+    sanitizedNameMention = QRegExp("\\b" + QRegExp::escape(sanename) + "\\b", Qt::CaseInsensitive);
 }
 
 MessageProcessor::MessageProcessor(const MessageProcessor::SharedParams& sharedParams)
