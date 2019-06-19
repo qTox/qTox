@@ -301,7 +301,7 @@ void ChatForm::startFileSend(ToxFile file)
     }
 
     insertChatMessage(
-        ChatMessage::createFileTransferMessage(name, file, true, -1, QDateTime::currentDateTime()));
+        ChatMessage::createFileTransferMessage(name, file, true, DEF_LINE_ID, QDateTime::currentDateTime()));
 
     if (history && Settings::getInstance().getEnableLogging()) {
         auto selfPk = Core::getInstance()->getSelfId().toString();
@@ -346,7 +346,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     }
 
     ChatMessage::Ptr msg =
-        ChatMessage::createFileTransferMessage(name, file, false, -1, QDateTime::currentDateTime());
+        ChatMessage::createFileTransferMessage(name, file, false, DEF_LINE_ID, QDateTime::currentDateTime());
 
     insertChatMessage(msg);
 
@@ -602,22 +602,24 @@ void ChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parame
 {
     const bool isSearch = searchInText(phrase, parameter, SearchDirection::Down);
 
-    if (!isSearch) {
-        const QString pk = f->getPublicKey().toString();
-        auto param = parameter;
-        param.period = PeriodSearch::AfterDate;
-        param.time = getLatestTime();
-        const QDateTime newBaseDate =
+    if (isSearch) {
+        return;
+    }
+
+    const QString pk = f->getPublicKey().toString();
+    auto param = parameter;
+    param.period = PeriodSearch::AfterDate;
+    param.time = getLatestTime();
+    const QDateTime newBaseDate =
             history->getDateWhereFindPhrase(pk, getLatestTime(), phrase, param);
 
-        if (!newBaseDate.isValid()) {
-            emit messageNotFoundShow(SearchDirection::Down);
-            return;
-        }
-
-        searchAfterLoadHistory = true;
-        loadHistoryByDateRange(newBaseDate, LoadHistoryDialog::from);
+    if (!newBaseDate.isValid()) {
+        emit messageNotFoundShow(SearchDirection::Down);
+        return;
     }
+
+    searchAfterLoadHistory = true;
+    loadHistoryByDateRange(newBaseDate, LoadHistoryDialog::from);
 }
 
 void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)
@@ -783,24 +785,36 @@ void ChatForm::loadHistoryLower()
 {
     QString pk = f->getPublicKey().toString();
     QList<History::HistMessage> msgs = history->getChatHistoryLower(pk, getFirstTime());
-    if (!msgs.isEmpty()) {
-        msgs = deleteDuplicate(msgs, true);
-        if (!msgs.isEmpty()) {
-            handleLoadedMessages(msgs, false, true);
-        }
+
+    if (msgs.isEmpty()) {
+        return;
     }
+
+    msgs = deleteDuplicate(msgs, true);
+
+    if (msgs.isEmpty()) {
+        return;
+    }
+
+    handleLoadedMessages(msgs, false, true);
 }
 
 void ChatForm::loadHistoryUpper()
 {
     QString pk = f->getPublicKey().toString();
     QList<History::HistMessage> msgs = history->getChatHistoryUpper(pk, getLatestTime());
-    if (!msgs.isEmpty()) {
-        msgs = deleteDuplicate(msgs, false);
-        if (!msgs.isEmpty()) {
-            handleLoadedMessages(msgs, false, false);
-        }
+
+    if (msgs.isEmpty()) {
+        return;
     }
+
+    msgs = deleteDuplicate(msgs, false);
+
+    if (msgs.isEmpty()) {
+        return;
+    }
+
+    handleLoadedMessages(msgs, false, false);
 }
 
 QString getMsgAuthorDispName(const ToxPk& authorPk, const QString& dispName)

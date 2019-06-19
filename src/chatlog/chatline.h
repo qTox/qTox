@@ -31,6 +31,8 @@ class QGraphicsScene;
 class QStyleOptionGraphicsItem;
 class QFont;
 
+static const int DEF_LINE_ID = -1;
+
 struct ColumnFormat
 {
     enum Policy
@@ -111,7 +113,7 @@ protected:
 
 private:
     int row = -1;
-    int64_t id{-1};
+    int64_t id{DEF_LINE_ID};
     QVector<ChatLineContent*> content;
     QVector<ColumnFormat> format;
     qreal width = 100.0;

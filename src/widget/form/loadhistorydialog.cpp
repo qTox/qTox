@@ -37,11 +37,15 @@ LoadHistoryDialog::LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent)
             &LoadHistoryDialog::highlightDates);
 }
 
-LoadHistoryDialog::LoadHistoryDialog(QWidget* parent)
+LoadHistoryDialog::LoadHistoryDialog(Mode mode, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::LoadHistoryDialog)
 {
     ui->setupUi(this);
+
+    if (mode == Mode::search) {
+        turnSearchMode();
+    }
 }
 
 LoadHistoryDialog::~LoadHistoryDialog()

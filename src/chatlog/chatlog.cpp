@@ -170,8 +170,9 @@ void ChatLog::updateSceneRect()
 
 void ChatLog::layout(int start, int end, qreal width)
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return;
+    }
 
     qreal h = 0.0;
 
@@ -314,8 +315,9 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 // Much faster than QGraphicsScene::itemAt()!
 ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return nullptr;
+    }
 
     auto itr =
         std::lower_bound(lines.cbegin(), lines.cend(), scenePos.y(), ChatLine::lessThanBSRectBottom);
@@ -368,10 +370,8 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 
     bool stickToBtm = stickToBottom();
 
-    if (canRemove) {
-        if (lines.size() >= 300) {
-            removeFirsts(optimalRemove);
-        }
+    if (canRemove && lines.size() >= 300) {
+        removeFirsts(optimalRemove);
     }
 
     // insert
@@ -392,18 +392,17 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 
 void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
 {
-    if (newLines.isEmpty())
+    if (newLines.isEmpty()) {
         return;
+    }
 
     const int size = lines.size() + newLines.size();
 
     const int free = maxMessages - size;
     const int excessSize = (free >= 0) ? 0 : (-1)*free;
 
-    if (canRemove) {
-        if (excessSize > 0) {
-            removeFirsts(excessSize);
-        }
+    if (canRemove && excessSize > 0) {
+        removeFirsts(excessSize);
     }
 
     for (ChatLine::Ptr l : newLines) {
@@ -415,10 +414,10 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
 
     layout(lines.last()->getRow(), lines.size(), useableWidth());
 
-    if (!visibleLines.isEmpty()) {
-        startResizeWorker(visibleLines.last());
-    } else {
+    if (visibleLines.isEmpty()) {
         startResizeWorker();
+    } else {
+        startResizeWorker(visibleLines.last());
     }
 }
 
@@ -432,8 +431,9 @@ void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
 
 void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
 {
-    if (newLines.isEmpty())
+    if (newLines.isEmpty()) {
         return;
+    }
 
     QGraphicsScene::ItemIndexMethod oldIndexMeth = scene->itemIndexMethod();
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -455,10 +455,8 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
     for (ChatLine::Ptr l : lines) {
         l->setRow(i++);
         combLines.push_back(l);
-        if (canRemove) {
-            if (i >= maxMessages) {
-                break;
-            }
+        if (canRemove && i >= maxMessages) {
+            break;
         }
     }
 
@@ -487,8 +485,9 @@ void ChatLog::scrollToBottom()
 
 void ChatLog::startResizeWorker(ChatLine::Ptr anchorLine)
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return;
+    }
 
     // (re)start the worker
     if (!workerTimer->isActive()) {
@@ -676,8 +675,9 @@ void ChatLog::scrollToLine(ChatLine::Ptr line)
 
 void ChatLog::selectAll()
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return;
+    }
 
     clearSelection();
 
@@ -710,24 +710,27 @@ void ChatLog::reloadTheme()
 
 void ChatLog::removeLowerDateLineIfNeed(const QDate &date)
 {
-    if (!lines.isEmpty()) {
-        auto line = lines.first();
-        Timestamp* const lineTime = qobject_cast<Timestamp*>(line.get()->getContent(2));
-        if (!lineTime->getTime().isValid()) {
-            Text* const text = qobject_cast<Text*>(line.get()->getContent(1));
-            QDateTime dt = QDateTime::fromString(text->getText(), Settings::getInstance().getDateFormat());
+    if (lines.isEmpty()) {
+        return;
+    }
 
-            if (dt.date() == date) {
-                lines.removeFirst();
-            }
+    auto line = lines.first();
+    Timestamp* const lineTime = qobject_cast<Timestamp*>(line.get()->getContent(2));
+    if (!lineTime->getTime().isValid()) {
+        Text* const text = qobject_cast<Text*>(line.get()->getContent(1));
+        QDateTime dt = QDateTime::fromString(text->getText(), Settings::getInstance().getDateFormat());
+
+        if (dt.date() == date) {
+            lines.removeFirst();
         }
     }
 }
 
 int64_t ChatLog::lowerId() const
 {
-    if (lines.empty())
-        return -1;
+    if (lines.empty()) {
+        return DEF_LINE_ID;
+    }
 
     for (int i = 0; i < lines.size(); ++i) {
         auto id = lines.at(i).get()->getId();
@@ -736,13 +739,14 @@ int64_t ChatLog::lowerId() const
         }
     }
 
-    return -1;
+    return DEF_LINE_ID;
 }
 
 int64_t ChatLog::upperId() const
 {
-    if (lines.empty())
-        return -1;
+    if (lines.empty()) {
+        return DEF_LINE_ID;
+    }
 
     for (int i = lines.size()-1; i >= 0; --i) {
         auto id = lines.at(i).get()->getId();
@@ -751,13 +755,14 @@ int64_t ChatLog::upperId() const
         }
     }
 
-    return -1;
+    return DEF_LINE_ID;
 }
 
 QDateTime ChatLog::getFirstTime() const
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return QDateTime();
+    }
 
     for (int i = 0; i < lines.size(); ++i) {
         Timestamp* const timestamp = qobject_cast<Timestamp*>(lines.at(i).get()->getContent(2));
@@ -771,13 +776,15 @@ QDateTime ChatLog::getFirstTime() const
 
 QDateTime ChatLog::getLatestTime() const
 {
-    if (!lines.isEmpty()) {
-        auto line = lines.last();
-        Timestamp* const timestamp = qobject_cast<Timestamp*>(line.get()->getContent(2));
+    if (lines.isEmpty()) {
+        return QDateTime();
+    }
 
-        if (timestamp && timestamp->getTime().isValid()) {
-            return timestamp->getTime();
-        }
+    auto line = lines.last();
+    Timestamp* const timestamp = qobject_cast<Timestamp*>(line.get()->getContent(2));
+
+    if (timestamp && timestamp->getTime().isValid()) {
+        return timestamp->getTime();
     }
 
     return QDateTime();
@@ -790,8 +797,9 @@ void ChatLog::forceRelayout()
 
 void ChatLog::checkVisibility(bool causedWheelEvent)
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return;
+    }
 
     // find first visible line
     auto lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(),
@@ -897,8 +905,9 @@ void ChatLog::updateTypingNotification()
 
     qreal posY = 0.0;
 
-    if (!lines.empty())
+    if (!lines.empty()) {
         posY = lines.last()->sceneBoundingRect().bottom() + lineSpacing;
+    }
 
     notification->layout(useableWidth(), QPointF(0.0, posY));
 }
