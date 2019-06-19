@@ -387,7 +387,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     connect(contact, &Contact::displayedNameChanged, this, &GenericChatForm::setName);
 
     auto chatLogIdxRange = chatLog.getNextIdx() - chatLog.getFirstIdx();
-    auto firstChatLogIdx = (chatLogIdxRange < 100) ? chatLog.getFirstIdx() : chatLog.getNextIdx() - 100;
+    auto firstChatLogIdx = (chatLogIdxRange < DEF_NUM_MSG_TO_LOAD) ? chatLog.getFirstIdx() : chatLog.getNextIdx() - DEF_NUM_MSG_TO_LOAD;
 
     renderMessages(firstChatLogIdx, chatLog.getNextIdx());
 
@@ -660,10 +660,10 @@ void GenericChatForm::loadHistoryTo(const QDateTime &time)
 {
     auto end = ChatLogIdx(0);
     if (time.isNull()) {
-        if (messages.size() + 100 >= maxMessages) {
-            end = ChatLogIdx(messages.rbegin()->first.get() - 100);
-            chatWidget->removeLasts(100);
-            removeLastsMessages(100);
+        if (messages.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
+            end = ChatLogIdx(messages.rbegin()->first.get() - DEF_NUM_MSG_TO_LOAD);
+            chatWidget->removeLasts(DEF_NUM_MSG_TO_LOAD);
+            removeLastsMessages(DEF_NUM_MSG_TO_LOAD);
         } else {
             end = messages.begin()->first;
         }
@@ -672,8 +672,8 @@ void GenericChatForm::loadHistoryTo(const QDateTime &time)
     }
 
     auto begin = ChatLogIdx(0);
-    if (end.get() > 100) {
-        begin = ChatLogIdx(end.get() - 100);
+    if (end.get() > DEF_NUM_MSG_TO_LOAD) {
+        begin = ChatLogIdx(end.get() - DEF_NUM_MSG_TO_LOAD);
     }
 
     renderMessages(begin, end);
@@ -683,10 +683,10 @@ void GenericChatForm::loadHistoryFrom(const QDateTime &time)
 {
     auto begin = ChatLogIdx(0);
     if (time.isNull()) {
-        if (messages.size() + 100 >= maxMessages) {
-            begin = ChatLogIdx(messages.rbegin()->first.get() + 100);
-            chatWidget->removeFirsts(100);
-            removeFirstsMessages(100);
+        if (messages.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
+            begin = ChatLogIdx(messages.rbegin()->first.get() + DEF_NUM_MSG_TO_LOAD);
+            chatWidget->removeFirsts(DEF_NUM_MSG_TO_LOAD);
+            removeFirstsMessages(DEF_NUM_MSG_TO_LOAD);
         } else {
             begin = messages.rbegin()->first;
         }
@@ -695,9 +695,9 @@ void GenericChatForm::loadHistoryFrom(const QDateTime &time)
         begin = firstItemAfterDate(time.date(), chatLog);
     }
 
-    int add = 100;
-    if (begin.get() + 100 > chatLog.getNextIdx().get()) {
-        add = chatLog.getNextIdx().get() - (begin.get() + 100);
+    int add = DEF_NUM_MSG_TO_LOAD;
+    if (begin.get() + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx().get()) {
+        add = chatLog.getNextIdx().get() - (begin.get() + DEF_NUM_MSG_TO_LOAD);
     }
     auto end = ChatLogIdx(begin.get() + add);
     renderMessages(begin, end);
@@ -714,8 +714,8 @@ void GenericChatForm::removeFirstsMessages(const int num)
 
 void GenericChatForm::removeLastsMessages(const int num)
 {
-    if (messages.size() > 100) {
-        messages.erase(std::next(messages.end(), -100), messages.end());
+    if (messages.size() > num) {
+        messages.erase(std::next(messages.end(), -num), messages.end());
     } else {
         messages.clear();
     }
@@ -1072,7 +1072,7 @@ void GenericChatForm::goToCurrentDate()
     chatWidget->clear();
     messages.clear();
     auto end = ChatLogIdx(chatLog.size() - 1);
-    auto begin = end.get() > 100 ? ChatLogIdx(end.get() - 100) : ChatLogIdx(0);
+    auto begin = end.get() > DEF_NUM_MSG_TO_LOAD ? ChatLogIdx(end.get() - DEF_NUM_MSG_TO_LOAD) : ChatLogIdx(0);
 
     renderMessages(begin, end);
 }
