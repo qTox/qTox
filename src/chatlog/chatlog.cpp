@@ -168,8 +168,9 @@ void ChatLog::updateSceneRect()
 
 void ChatLog::layout(int start, int end, qreal width)
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return;
+    }
 
     qreal h = 0.0;
 
@@ -312,8 +313,9 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 // Much faster than QGraphicsScene::itemAt()!
 ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return nullptr;
+    }
 
     auto itr =
         std::lower_bound(lines.cbegin(), lines.cend(), scenePos.y(), ChatLine::lessThanBSRectBottom);
@@ -454,8 +456,9 @@ void ChatLog::scrollToBottom()
 
 void ChatLog::startResizeWorker()
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return;
+    }
 
     // (re)start the worker
     if (!workerTimer->isActive()) {
@@ -656,8 +659,9 @@ void ChatLog::scrollToLine(ChatLine::Ptr line)
 
 void ChatLog::selectAll()
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return;
+    }
 
     clearSelection();
 
@@ -717,8 +721,9 @@ void ChatLog::forceRelayout()
 
 void ChatLog::checkVisibility(bool causedWheelEvent)
 {
-    if (lines.empty())
+    if (lines.empty()) {
         return;
+    }
 
     // find first visible line
     auto lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(),
@@ -813,8 +818,9 @@ void ChatLog::updateTypingNotification()
 
     qreal posY = 0.0;
 
-    if (!lines.empty())
+    if (!lines.empty()) {
         posY = lines.last()->sceneBoundingRect().bottom() + lineSpacing;
+    }
 
     notification->layout(useableWidth(), QPointF(0.0, posY));
 }

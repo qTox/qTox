@@ -161,8 +161,7 @@ void SearchSettingsForm::onRegularClicked(const bool checked)
 
 void SearchSettingsForm::onChoiceDate()
 {
-    LoadHistoryDialog dlg;
-    dlg.turnSearchMode();
+    LoadHistoryDialog dlg(LoadHistoryDialog::search);
     if (dlg.exec()) {
         startTime = dlg.getFromDate();
         updateStartDateLabel();
