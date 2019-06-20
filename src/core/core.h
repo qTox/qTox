@@ -71,7 +71,7 @@ public:
     ~Core();
 
     static const QString TOX_EXT;
-    static QStringList splitMessage(const QString& message, int maxLen);
+    static QStringList splitMessage(const QString& message);
     QString getPeerName(const ToxPk& id) const;
     QVector<uint32_t> getFriendList() const;
     GroupId getGroupPersistentId(uint32_t groupNumber) const;

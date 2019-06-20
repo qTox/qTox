@@ -44,8 +44,6 @@
 
 const QString Core::TOX_EXT = ".tox";
 
-#define MAX_GROUP_MESSAGE_LEN 1024
-
 #define ASSERT_CORE_THREAD assert(QThread::currentThread() == coreThread.get())
 
 namespace {
@@ -715,17 +713,21 @@ void Core::sendGroupMessageWithType(int groupId, const QString& message, Tox_Mes
 {
     QMutexLocker ml{&coreLoopLock};
 
-    QStringList cMessages = splitMessage(message, MAX_GROUP_MESSAGE_LEN);
+    int size = message.toUtf8().size();
+    auto maxSize = tox_max_message_length();
+    if (size > maxSize) {
+        qCritical() << "Core::sendMessageWithType called with message of size:" << size
+                    << "when max is:" << maxSize << ". Ignoring.";
+        return;
+    }
 
-    for (auto& part : cMessages) {
-        ToxString cMsg(part);
-        Tox_Err_Conference_Send_Message error;
-        bool ok =
-            tox_conference_send_message(tox.get(), groupId, type, cMsg.data(), cMsg.size(), &error);
-        if (!ok || !parseConferenceSendMessageError(error)) {
-            emit groupSentFailed(groupId);
-            return;
-        }
+    ToxString cMsg(message);
+    Tox_Err_Conference_Send_Message error;
+    bool ok =
+        tox_conference_send_message(tox.get(), groupId, type, cMsg.data(), cMsg.size(), &error);
+    if (!ok || !parseConferenceSendMessageError(error)) {
+        emit groupSentFailed(groupId);
+        return;
     }
 }
 
@@ -1434,10 +1436,12 @@ QString Core::getFriendUsername(uint32_t friendnumber) const
     return sname.getQString();
 }
 
-QStringList Core::splitMessage(const QString& message, int maxLen)
+QStringList Core::splitMessage(const QString& message)
 {
     QStringList splittedMsgs;
     QByteArray ba_message{message.toUtf8()};
+
+    const auto maxLen = tox_max_message_length();
 
     while (ba_message.size() > maxLen) {
         int splitPos = ba_message.lastIndexOf('\n', maxLen - 1);
