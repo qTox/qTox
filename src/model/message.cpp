@@ -24,9 +24,9 @@
 void MessageProcessor::SharedParams::onUserNameSet(const QString& username)
 {
     QString sanename = username;
-    sanename.remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
-    nameMention = QRegExp("\\b" + QRegExp::escape(username) + "\\b", Qt::CaseInsensitive);
-    sanitizedNameMention = QRegExp("\\b" + QRegExp::escape(sanename) + "\\b", Qt::CaseInsensitive);
+    sanename.remove(QRegularExpression("[\\t\\n\\v\\f\\r\\x0000]"));
+    nameMention = QRegularExpression("\\b" + QRegularExpression::escape(username) + "\\b", QRegularExpression::CaseInsensitiveOption);
+    sanitizedNameMention = QRegularExpression("\\b" + QRegularExpression::escape(sanename) + "\\b", QRegularExpression::CaseInsensitiveOption);
 }
 
 MessageProcessor::MessageProcessor(const MessageProcessor::SharedParams& sharedParams)
@@ -74,12 +74,15 @@ Message MessageProcessor::processIncomingMessage(bool isAction, QString const& m
         auto sanitizedNameMention = sharedParams.GetSanitizedNameMention();
 
         for (auto const& mention : {nameMention, sanitizedNameMention}) {
-            if (mention.indexIn(ret.content) == -1) {
+            auto matchIt = mention.globalMatch(ret.content);
+            if (!matchIt.hasNext()) {
                 continue;
             }
 
-            auto pos = static_cast<size_t>(mention.pos(0));
-            auto length = static_cast<size_t>(mention.matchedLength());
+            auto match = matchIt.next();
+
+            auto pos = static_cast<size_t>(match.capturedStart());
+            auto length = static_cast<size_t>(match.capturedLength());
 
             ret.metadata.push_back({MessageMetadataType::selfMention, pos, pos + length});
             break;

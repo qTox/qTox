@@ -22,6 +22,7 @@
 
 #include <QDateTime>
 #include <QString>
+#include <QRegularExpression>
 
 #include <vector>
 
@@ -66,19 +67,19 @@ public:
     {
 
     public:
-        QRegExp GetNameMention() const
+        QRegularExpression GetNameMention() const
         {
             return nameMention;
         }
-        QRegExp GetSanitizedNameMention() const
+        QRegularExpression GetSanitizedNameMention() const
         {
             return sanitizedNameMention;
         }
         void onUserNameSet(const QString& username);
 
     private:
-        QRegExp nameMention;
-        QRegExp sanitizedNameMention;
+        QRegularExpression nameMention;
+        QRegularExpression sanitizedNameMention;
     };
 
     MessageProcessor(const SharedParams& sharedParams);
