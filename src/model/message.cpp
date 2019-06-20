@@ -24,7 +24,7 @@ std::vector<Message> processOutgoingMessage(bool isAction, const QString& conten
 {
     std::vector<Message> ret;
 
-    QStringList splitMsgs = Core::splitMessage(content, tox_max_message_length());
+    QStringList splitMsgs = Core::splitMessage(content);
     ret.reserve(splitMsgs.size());
 
     QDateTime timestamp = QDateTime::currentDateTime();
