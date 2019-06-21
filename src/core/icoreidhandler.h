@@ -17,21 +17,21 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ICORE_FRIEND_MESSAGE_SENDER_H
-#define ICORE_FRIEND_MESSAGE_SENDER_H
+#ifndef ICORE_ID_HANDLER_H
+#define ICORE_ID_HANDLER_H
 
-#include "receiptnum.h"
+#include "toxid.h"
+#include "toxpk.h"
 
-#include <QString>
-#include <cstdint>
-
-class ICoreFriendMessageSender
+class ICoreIdHandler
 {
+
 public:
-    virtual ~ICoreFriendMessageSender() = default;
-    virtual bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) = 0;
-    virtual bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) = 0;
+    virtual ~ICoreIdHandler() = default;
+    virtual ToxId getSelfId() const = 0;
+    virtual ToxPk getSelfPublicKey() const = 0;
+    virtual QString getUsername() const = 0;
 };
 
 
-#endif /* ICORE_FRIEND_MESSAGE_SENDER_H */
+#endif /*ICORE_ID_HANDLER_H*/

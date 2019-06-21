@@ -143,10 +143,10 @@ public:
         HistMessageContent content;
     };
 
-    struct DateMessages
+    struct DateIdx
     {
-        uint offsetDays;
-        uint count;
+        QDate date;
+        size_t numMessagesIn;
     };
 
 public:
@@ -155,7 +155,7 @@ public:
 
     bool isValid();
 
-    bool isHistoryExistence(const QString& friendPk);
+    bool historyExists(const ToxPk& friendPk);
 
     void eraseHistory();
     void removeFriendHistory(const QString& friendPk);
@@ -168,14 +168,14 @@ public:
                            const QString& sender, const QDateTime& time, QString const& dispName);
 
     void setFileFinished(const QString& fileId, bool success, const QString& filePath, const QByteArray& fileHash);
-
-    QList<HistMessage> getChatHistoryFromDate(const QString& friendPk, const QDateTime& from,
-                                              const QDateTime& to);
-    QList<HistMessage> getChatHistoryDefaultNum(const QString& friendPk);
-    QList<DateMessages> getChatHistoryCounts(const ToxPk& friendPk, const QDate& from, const QDate& to);
+    size_t getNumMessagesForFriend(const ToxPk& friendPk);
+    size_t getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date);
+    QList<HistMessage> getMessagesForFriend(const ToxPk& friendPk, size_t firstIdx, size_t lastIdx);
+    QList<HistMessage> getUnsentMessagesForFriend(const ToxPk& friendPk);
     QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);
-    QDateTime getStartDateChatHistory(const QString& friendPk);
+    QList<DateIdx> getNumMessagesForFriendBeforeDateBoundaries(const ToxPk& friendPk,
+                                                               const QDate& from, size_t maxNum);
 
     void markAsSent(RowId messageId);
 
@@ -194,9 +194,6 @@ private slots:
     void onFileInserted(RowId dbId, QString fileId);
 
 private:
-    QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
-                                      const QDateTime& to, int numMessages);
-
     static RawDatabase::Query generateFileFinished(RowId fileId, bool success,
                                                    const QString& filePath, const QByteArray& fileHash);
     std::shared_ptr<RawDatabase> db;

@@ -23,6 +23,9 @@
 
 #include "groupid.h"
 #include "icorefriendmessagesender.h"
+#include "icoregroupmessagesender.h"
+#include "icoregroupquery.h"
+#include "icoreidhandler.h"
 #include "receiptnum.h"
 #include "toxfile.h"
 #include "toxid.h"
@@ -50,7 +53,11 @@ class Core;
 
 using ToxCorePtr = std::unique_ptr<Core>;
 
-class Core : public QObject, public ICoreFriendMessageSender
+class Core : public QObject,
+             public ICoreFriendMessageSender,
+             public ICoreIdHandler,
+             public ICoreGroupMessageSender,
+             public ICoreGroupQuery
 {
     Q_OBJECT
 public:
@@ -71,15 +78,15 @@ public:
     ~Core();
 
     static const QString TOX_EXT;
-    static QStringList splitMessage(const QString& message, int maxLen);
+    static QStringList splitMessage(const QString& message);
     QString getPeerName(const ToxPk& id) const;
     QVector<uint32_t> getFriendList() const;
-    GroupId getGroupPersistentId(uint32_t groupNumber) const;
-    uint32_t getGroupNumberPeers(int groupId) const;
-    QString getGroupPeerName(int groupId, int peerId) const;
-    ToxPk getGroupPeerPk(int groupId, int peerId) const;
-    QStringList getGroupPeerNames(int groupId) const;
-    bool getGroupAvEnabled(int groupId) const;
+    GroupId getGroupPersistentId(uint32_t groupNumber) const override;
+    uint32_t getGroupNumberPeers(int groupId) const override;
+    QString getGroupPeerName(int groupId, int peerId) const override;
+    ToxPk getGroupPeerPk(int groupId, int peerId) const override;
+    QStringList getGroupPeerNames(int groupId) const override;
+    bool getGroupAvEnabled(int groupId) const override;
     ToxPk getFriendPublicKey(uint32_t friendNumber) const;
     QString getFriendUsername(uint32_t friendNumber) const;
 
@@ -88,11 +95,11 @@ public:
     uint32_t joinGroupchat(const GroupInvite& inviteInfo);
     void quitGroupChat(int groupId) const;
 
-    QString getUsername() const;
+    QString getUsername() const override;
     Status::Status getStatus() const;
     QString getStatusMessage() const;
-    ToxId getSelfId() const;
-    ToxPk getSelfPublicKey() const;
+    ToxId getSelfId() const override;
+    ToxPk getSelfPublicKey() const override;
     QPair<QByteArray, QByteArray> getKeypair() const;
 
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
@@ -115,8 +122,8 @@ public slots:
     void setStatusMessage(const QString& message);
 
     bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) override;
-    void sendGroupMessage(int groupId, const QString& message);
-    void sendGroupAction(int groupId, const QString& message);
+    void sendGroupMessage(int groupId, const QString& message) override;
+    void sendGroupAction(int groupId, const QString& message) override;
     void changeGroupTitle(int groupId, const QString& title);
     bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) override;
     void sendTyping(uint32_t friendId, bool typing);

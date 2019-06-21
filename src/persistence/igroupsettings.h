@@ -1,5 +1,5 @@
 /*
-    Copyright © 2019 by The qTox Project Contributors
+    Copyright © 2014-2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,21 +17,19 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ICORE_FRIEND_MESSAGE_SENDER_H
-#define ICORE_FRIEND_MESSAGE_SENDER_H
+#ifndef IGROUP_SETTINGS_H
+#define IGROUP_SETTINGS_H
 
-#include "receiptnum.h"
+#include <QStringList>
 
-#include <QString>
-#include <cstdint>
-
-class ICoreFriendMessageSender
+class IGroupSettings
 {
 public:
-    virtual ~ICoreFriendMessageSender() = default;
-    virtual bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) = 0;
-    virtual bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) = 0;
+    virtual ~IGroupSettings() = default;
+    virtual QStringList getBlackList() const = 0;
+    virtual void setBlackList(const QStringList& blist) = 0;
+    virtual bool getGroupAlwaysNotify() const = 0;
+    virtual void setGroupAlwaysNotify(bool newValue) = 0;
 };
 
-
-#endif /* ICORE_FRIEND_MESSAGE_SENDER_H */
+#endif /*IGROUP_SETTINGS_H*/

@@ -324,8 +324,19 @@ set(${PROJECT_NAME}_SOURCES
   src/model/chatroom/groupchatroom.h
   src/model/contact.cpp
   src/model/contact.h
+  src/model/chatlogitem.cpp
+  src/model/chatlogitem.h
   src/model/friend.cpp
   src/model/friend.h
+  src/model/message.h
+  src/model/message.cpp
+  src/model/imessagedispatcher.h
+  src/model/friendmessagedispatcher.h
+  src/model/friendmessagedispatcher.cpp
+  src/model/groupmessagedispatcher.h
+  src/model/groupmessagedispatcher.cpp
+  src/model/message.h
+  src/model/message.cpp
   src/model/groupinvite.cpp
   src/model/groupinvite.h
   src/model/group.cpp
@@ -337,6 +348,11 @@ set(${PROJECT_NAME}_SOURCES
   src/model/profile/profileinfo.cpp
   src/model/profile/profileinfo.h
   src/model/dialogs/idialogs.h
+  src/model/ichatlog.h
+  src/model/sessionchatlog.h
+  src/model/sessionchatlog.cpp
+  src/model/chathistory.h
+  src/model/chathistory.cpp
   src/net/bootstrapnodeupdater.cpp
   src/net/bootstrapnodeupdater.h
   src/net/avatarbroadcaster.cpp

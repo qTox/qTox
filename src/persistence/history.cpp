@@ -224,9 +224,9 @@ bool History::isValid()
  * @param friendPk
  * @return True if has, false otherwise.
  */
-bool History::isHistoryExistence(const QString& friendPk)
+bool History::historyExists(const ToxPk& friendPk)
 {
-    return !getChatHistoryDefaultNum(friendPk).isEmpty();
+    return !getMessagesForFriend(friendPk, 0, 1).empty();
 }
 
 /**
@@ -520,76 +520,121 @@ void History::setFileFinished(const QString& fileId, bool success, const QString
 
     fileInfos.remove(fileId);
 }
-/**
- * @brief Fetches chat messages from the database.
- * @param friendPk Friend publick key to fetch.
- * @param from Start of period to fetch.
- * @param to End of period to fetch.
- * @return List of messages.
- */
-QList<History::HistMessage> History::getChatHistoryFromDate(const QString& friendPk,
-                                                            const QDateTime& from, const QDateTime& to)
+
+size_t History::getNumMessagesForFriend(const ToxPk& friendPk)
 {
-    if (!isValid()) {
-        return {};
-    }
-    return getChatHistory(friendPk, from, to, 0);
+    return getNumMessagesForFriendBeforeDate(friendPk,
+                                             // Maximum possible time
+                                             QDateTime::fromMSecsSinceEpoch(
+                                                 std::numeric_limits<int64_t>::max()));
 }
 
-/**
- * @brief Fetches the latest set amount of messages from the database.
- * @param friendPk Friend public key to fetch.
- * @return List of messages.
- */
-QList<History::HistMessage> History::getChatHistoryDefaultNum(const QString& friendPk)
+size_t History::getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date)
 {
-    if (!isValid()) {
-        return {};
-    }
-    return getChatHistory(friendPk, QDateTime::fromMSecsSinceEpoch(0), QDateTime::currentDateTime(),
-                          NUM_MESSAGES_DEFAULT);
-}
+    QString queryText = QString("SELECT COUNT(history.id) "
+                                "FROM history "
+                                "JOIN peers chat ON chat_id = chat.id "
+                                "WHERE chat.public_key='%1'"
+                                "AND timestamp < %2;")
+                            .arg(friendPk.toString())
+                            .arg(date.toMSecsSinceEpoch());
 
-
-/**
- * @brief Fetches chat messages counts for each day from the database.
- * @param friendPk Friend public key to fetch.
- * @param from Start of period to fetch.
- * @param to End of period to fetch.
- * @return List of structs containing days offset and message count for that day.
- */
-QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk, const QDate& from,
-                                                           const QDate& to)
-{
-    if (!isValid()) {
-        return {};
-    }
-    QDateTime fromTime(from);
-    QDateTime toTime(to);
-
-    QList<DateMessages> counts;
-
-    auto rowCallback = [&counts](const QVector<QVariant>& row) {
-        DateMessages app;
-        app.count = row[0].toUInt();
-        app.offsetDays = row[1].toUInt();
-        counts.append(app);
+    size_t numMessages = 0;
+    auto rowCallback = [&numMessages](const QVector<QVariant>& row) {
+        numMessages = row[0].toLongLong();
     };
-
-    QString queryText =
-        QString("SELECT COUNT(history.id), ((timestamp / 1000 / 60 / 60 / 24) - %4 ) AS day "
-                "FROM history "
-                "JOIN peers chat ON chat_id = chat.id "
-                "WHERE timestamp BETWEEN %1 AND %2 AND chat.public_key='%3'"
-                "GROUP BY day;")
-            .arg(fromTime.toMSecsSinceEpoch())
-            .arg(toTime.toMSecsSinceEpoch())
-            .arg(friendPk.toString())
-            .arg(QDateTime::fromMSecsSinceEpoch(0).daysTo(fromTime));
 
     db->execNow({queryText, rowCallback});
 
-    return counts;
+    return numMessages;
+}
+
+QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk, size_t firstIdx,
+                                                          size_t lastIdx)
+{
+    QList<HistMessage> messages;
+
+    // Don't forget to update the rowCallback if you change the selected columns!
+    QString queryText =
+        QString("SELECT history.id, faux_offline_pending.id, timestamp, "
+                "chat.public_key, aliases.display_name, sender.public_key, "
+                "message, file_transfers.file_restart_id, "
+                "file_transfers.file_path, file_transfers.file_name, "
+                "file_transfers.file_size, file_transfers.direction, "
+                "file_transfers.file_state FROM history "
+                "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+                "JOIN peers chat ON history.chat_id = chat.id "
+                "JOIN aliases ON sender_alias = aliases.id "
+                "JOIN peers sender ON aliases.owner = sender.id "
+                "LEFT JOIN file_transfers ON history.file_id = file_transfers.id "
+                "WHERE chat.public_key='%1' "
+                "LIMIT %2 OFFSET %3;")
+            .arg(friendPk.toString())
+            .arg(lastIdx - firstIdx)
+            .arg(firstIdx);
+
+    auto rowCallback = [&messages](const QVector<QVariant>& row) {
+        // dispName and message could have null bytes, QString::fromUtf8
+        // truncates on null bytes so we strip them
+        auto id = RowId{row[0].toLongLong()};
+        auto isOfflineMessage = row[1].isNull();
+        auto timestamp = QDateTime::fromMSecsSinceEpoch(row[2].toLongLong());
+        auto friend_key = row[3].toString();
+        auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
+        auto sender_key = row[5].toString();
+        if (row[7].isNull()) {
+            messages += {id,           isOfflineMessage, timestamp,        friend_key,
+                         display_name, sender_key,       row[6].toString()};
+        } else {
+            ToxFile file;
+            file.fileKind = TOX_FILE_KIND_DATA;
+            file.resumeFileId = row[7].toString().toUtf8();
+            file.filePath = row[8].toString();
+            file.fileName = row[9].toString();
+            file.filesize = row[10].toLongLong();
+            file.direction = static_cast<ToxFile::FileDirection>(row[11].toLongLong());
+            file.status = static_cast<ToxFile::FileStatus>(row[12].toInt());
+            messages +=
+                {id, isOfflineMessage, timestamp, friend_key, display_name, sender_key, file};
+        }
+    };
+
+    db->execNow({queryText, rowCallback});
+
+    return messages;
+}
+
+QList<History::HistMessage> History::getUnsentMessagesForFriend(const ToxPk& friendPk)
+{
+    auto queryText =
+        QString("SELECT history.id, faux_offline_pending.id, timestamp, chat.public_key, "
+                "aliases.display_name, sender.public_key, message "
+                "FROM history "
+                "JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+                "JOIN peers chat on chat.public_key = '%1' "
+                "JOIN aliases on sender_alias = aliases.id "
+                "JOIN peers sender on aliases.owner = sender.id;")
+            .arg(friendPk.toString());
+
+    QList<History::HistMessage> ret;
+    auto rowCallback = [&ret](const QVector<QVariant>& row) {
+        // dispName and message could have null bytes, QString::fromUtf8
+        // truncates on null bytes so we strip them
+        auto id = RowId{row[0].toLongLong()};
+        auto isOfflineMessage = row[1].isNull();
+        auto timestamp = QDateTime::fromMSecsSinceEpoch(row[2].toLongLong());
+        auto friend_key = row[3].toString();
+        auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
+        auto sender_key = row[5].toString();
+        if (row[6].isNull()) {
+            ret += {id,           isOfflineMessage, timestamp,        friend_key,
+                    display_name, sender_key,       row[6].toString()};
+        }
+    };
+
+    db->execNow({queryText, rowCallback});
+
+    return ret;
 }
 
 /**
@@ -682,28 +727,62 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
 }
 
 /**
- * @brief get start date of correspondence
- * @param friendPk Friend public key
- * @return start date of correspondence
+ * @brief Gets date boundaries in conversation with friendPk. History doesn't model conversation indexes,
+ * but we can count messages between us and friendPk to effectively give us an index. This function
+ * returns how many messages have happened between us <-> friendPk each time the date changes
+ * @param[in] friendPk ToxPk of conversation to retrieve
+ * @param[in] from Start date to look from
+ * @param[in] maxNum Maximum number of date boundaries to retrieve
+ * @note This API may seem a little strange, why not use QDate from and QDate to? The intent is to
+ * have an API that can be used to get the first item after a date (for search) and to get a list
+ * of date changes (for loadHistory). We could write two separate queries but the query is fairly
+ * intricate compared to our other ones so reducing duplication of it is preferable.
  */
-QDateTime History::getStartDateChatHistory(const QString& friendPk)
+QList<History::DateIdx> History::getNumMessagesForFriendBeforeDateBoundaries(const ToxPk& friendPk,
+                                                                             const QDate& from,
+                                                                             size_t maxNum)
 {
-    QDateTime result;
-    auto rowCallback = [&result](const QVector<QVariant>& row) {
-        result = QDateTime::fromMSecsSinceEpoch(row[0].toLongLong());
+    auto friendPkString = friendPk.toString();
+
+    // No guarantee that this is the most efficient way to do this...
+    // We want to count messages that happened for a friend before a
+    // certain date. We do this by re-joining our table a second time
+    // but this time with the only filter being that our id is less than
+    // the ID of the corresponding row in the table that is grouped by day
+    auto countMessagesForFriend =
+        QString("SELECT COUNT(*) - 1 " // Count - 1 corresponds to 0 indexed message id for friend
+                "FROM history countHistory "            // Import unfiltered table as countHistory
+                "JOIN peers chat ON chat_id = chat.id " // link chat_id to chat.id
+                "WHERE chat.public_key = '%1'"          // filter this conversation
+                "AND countHistory.id <= history.id") // and filter that our unfiltered table history id only has elements up to history.id
+            .arg(friendPkString);
+
+    auto limitString = (maxNum) ? QString("LIMIT %1").arg(maxNum) : QString("");
+
+    auto queryString = QString("SELECT (%1), (timestamp / 1000 / 60 / 60 / 24) AS day "
+                               "FROM history "
+                               "JOIN peers chat ON chat_id = chat.id "
+                               "WHERE chat.public_key = '%2' "
+                               "AND timestamp >= %3 "
+                               "GROUP by day "
+                               "%4;")
+                           .arg(countMessagesForFriend)
+                           .arg(friendPkString)
+                           .arg(QDateTime(from).toMSecsSinceEpoch())
+                           .arg(limitString);
+
+    QList<DateIdx> dateIdxs;
+    auto rowCallback = [&dateIdxs](const QVector<QVariant>& row) {
+        DateIdx dateIdx;
+        dateIdx.numMessagesIn = row[0].toLongLong();
+        dateIdx.date =
+            QDateTime::fromMSecsSinceEpoch(row[1].toLongLong() * 24 * 60 * 60 * 1000).date();
+        dateIdxs.append(dateIdx);
     };
 
-    QString queryText =
-        QStringLiteral("SELECT timestamp "
-                       "FROM history "
-                       "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
-                       "JOIN peers chat ON chat_id = chat.id "
-                       "WHERE chat.public_key='%1' ORDER BY timestamp ASC LIMIT 1;")
-            .arg(friendPk);
+    db->execNow({queryString, rowCallback});
 
-    db->execNow({queryText, rowCallback});
-
-    return result;
+    return dateIdxs;
 }
 
 /**
@@ -719,74 +798,4 @@ void History::markAsSent(RowId messageId)
     }
 
     db->execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;").arg(messageId.get()));
-}
-
-
-/**
- * @brief Fetches chat messages from the database.
- * @param friendPk Friend publick key to fetch.
- * @param from Start of period to fetch.
- * @param to End of period to fetch.
- * @param numMessages max number of messages to fetch.
- * @return List of messages.
- */
-QList<History::HistMessage> History::getChatHistory(const QString& friendPk, const QDateTime& from,
-                                                    const QDateTime& to, int numMessages)
-{
-    QList<HistMessage> messages;
-
-    auto rowCallback = [&messages](const QVector<QVariant>& row) {
-        // dispName and message could have null bytes, QString::fromUtf8
-        // truncates on null bytes so we strip them
-        auto id = RowId{row[0].toLongLong()};
-        auto isOfflineMessage = row[1].isNull();
-        auto timestamp = QDateTime::fromMSecsSinceEpoch(row[2].toLongLong());
-        auto friend_key = row[3].toString();
-        auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
-        auto sender_key = row[5].toString();
-        if (row[7].isNull()) {
-            messages +=
-                {id, isOfflineMessage, timestamp, friend_key, display_name, sender_key, row[6].toString()};
-        } else {
-            ToxFile file;
-            file.fileKind = TOX_FILE_KIND_DATA;
-            file.resumeFileId = row[7].toString().toUtf8();
-            file.filePath = row[8].toString();
-            file.fileName = row[9].toString();
-            file.filesize = row[10].toLongLong();
-            file.direction = static_cast<ToxFile::FileDirection>(row[11].toLongLong());
-            file.status = static_cast<ToxFile::FileStatus>(row[12].toInt());
-            messages +=
-                {id, isOfflineMessage, timestamp, friend_key, display_name, sender_key, file};
-        }
-    };
-
-    // Don't forget to update the rowCallback if you change the selected columns!
-    QString queryText =
-        QString("SELECT history.id, faux_offline_pending.id, timestamp, "
-                "chat.public_key, aliases.display_name, sender.public_key, "
-                "message, file_transfers.file_restart_id, "
-                "file_transfers.file_path, file_transfers.file_name, "
-                "file_transfers.file_size, file_transfers.direction, "
-                "file_transfers.file_state FROM history "
-                "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
-                "JOIN peers chat ON history.chat_id = chat.id "
-                "JOIN aliases ON sender_alias = aliases.id "
-                "JOIN peers sender ON aliases.owner = sender.id "
-                "LEFT JOIN file_transfers ON history.file_id = file_transfers.id "
-                "WHERE timestamp BETWEEN %1 AND %2 AND chat.public_key='%3'")
-            .arg(from.toMSecsSinceEpoch())
-            .arg(to.toMSecsSinceEpoch())
-            .arg(friendPk);
-    if (numMessages) {
-        queryText =
-            "SELECT * FROM (" + queryText
-            + QString(" ORDER BY history.id DESC limit %1) AS T1 ORDER BY T1.id ASC;").arg(numMessages);
-    } else {
-        queryText = queryText + ";";
-    }
-
-    db->execNow({queryText, rowCallback});
-
-    return messages;
 }
