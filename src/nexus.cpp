@@ -59,9 +59,6 @@ Nexus::~Nexus()
     delete profile;
     profile = nullptr;
     emit saveGlobal();
-#ifdef Q_OS_MAC
-    delete globalMenuBar;
-#endif
 }
 
 /**

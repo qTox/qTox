@@ -60,6 +60,10 @@ private:
 public:
     Presenter();
 
+#ifdef Q_OS_MAC
+    ~Presenter();
+#endif
+
     void setupEnvironment();
 
 public slots:

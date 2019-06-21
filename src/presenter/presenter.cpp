@@ -21,6 +21,11 @@
 Q_DECLARE_OPAQUE_POINTER(ToxAV*)
 
 Presenter::Presenter() = default;
+#ifdef Q_OS_MAC
+Presenter::~Presenter() {
+    delete globalMenuBar;
+}
+#endif
 
 /**
  * @brief Sets up invariants
