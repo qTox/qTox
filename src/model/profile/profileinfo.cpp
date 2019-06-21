@@ -226,8 +226,10 @@ QStringList ProfileInfo::removeProfile()
  */
 void ProfileInfo::logout()
 {
+    // TODO(kriby): Refactor all of these invokeMethod calls with connect() properly when possible
     Settings::getInstance().saveGlobal();
-    QMetaObject::invokeMethod(&Nexus::getInstance(), "showLogin");
+    QMetaObject::invokeMethod(&Nexus::getInstance(), "showLogin",
+                              Q_ARG(QString, Settings::getInstance().getCurrentProfile()));
 }
 
 /**
