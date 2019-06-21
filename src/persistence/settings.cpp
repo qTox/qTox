@@ -143,9 +143,13 @@ void Settings::loadGlobal()
         }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", true).toBool();
-        notifySound = s.value("notifySound", true).toBool(); // note: notifySound and busySound UI elements are now under UI settings
+        notifySound =
+            s.value("notifySound", true)
+                .toBool(); // note: notifySound and busySound UI elements are now under UI settings
         notifyHide = s.value("notifyHide", false).toBool();
-        busySound = s.value("busySound", false).toBool();    // page, but kept under General in settings file to be backwards compatible
+        busySound =
+            s.value("busySound", false)
+                .toBool(); // page, but kept under General in settings file to be backwards compatible
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(),
@@ -338,7 +342,7 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
             fp.circleID = ps.value("circle", -1).toInt();
 
             if (getEnableLogging())
-                fp.activity = ps.value("activity",  QDateTime()).toDateTime();
+                fp.activity = ps.value("activity", QDateTime()).toDateTime();
             friendLst.insert(ToxId(fp.addr).getPublicKey().getByteArray(), fp);
         }
         ps.endArray();
@@ -365,7 +369,8 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
     ps.beginGroup("GUI");
     {
         compactLayout = ps.value("compactLayout", true).toBool();
-        sortingMode = static_cast<FriendListSortingMode>(ps.value("friendSortingMethod", static_cast<int>(FriendListSortingMode::Name)).toInt());
+        sortingMode = static_cast<FriendListSortingMode>(
+            ps.value("friendSortingMethod", static_cast<int>(FriendListSortingMode::Name)).toInt());
     }
     ps.endGroup();
 
