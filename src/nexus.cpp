@@ -36,13 +36,6 @@
 #include <cassert>
 #include <vpx/vpx_image.h>
 
-#ifdef Q_OS_MAC
-#include <QActionGroup>
-#include <QMenuBar>
-#include <QSignalMapper>
-#include <QWindow>
-#endif
-
 /**
  * @class Nexus
  *
@@ -50,8 +43,6 @@
  * and forwarding signals appropriately to the right objects,
  * it is in charge of starting the GUI and the Core.
  */
-
-Q_DECLARE_OPAQUE_POINTER(ToxAV*)
 
 static Nexus* nexus{nullptr};
 
@@ -67,115 +58,90 @@ Nexus::~Nexus()
     widget = nullptr;
     delete profile;
     profile = nullptr;
-    Settings::getInstance().saveGlobal();
+    emit saveGlobal();
 #ifdef Q_OS_MAC
     delete globalMenuBar;
 #endif
 }
 
 /**
- * @brief Sets up invariants and calls showLogin
- *
- * Hides the login screen and shows the GUI for the given profile.
- * Will delete the current GUI, if it exists.
- */
-void Nexus::start()
-{
-    qDebug() << "Starting up";
-
-    // Setup the environment
-    qRegisterMetaType<Status::Status>("Status::Status");
-    qRegisterMetaType<vpx_image>("vpx_image");
-    qRegisterMetaType<uint8_t>("uint8_t");
-    qRegisterMetaType<uint16_t>("uint16_t");
-    qRegisterMetaType<uint32_t>("uint32_t");
-    qRegisterMetaType<const int16_t*>("const int16_t*");
-    qRegisterMetaType<int32_t>("int32_t");
-    qRegisterMetaType<int64_t>("int64_t");
-    qRegisterMetaType<QPixmap>("QPixmap");
-    qRegisterMetaType<Profile*>("Profile*");
-    qRegisterMetaType<ToxAV*>("ToxAV*");
-    qRegisterMetaType<ToxFile>("ToxFile");
-    qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
-    qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
-    qRegisterMetaType<ToxPk>("ToxPk");
-    qRegisterMetaType<ToxId>("ToxId");
-    qRegisterMetaType<ToxPk>("GroupId");
-    qRegisterMetaType<ToxPk>("ContactId");
-    qRegisterMetaType<GroupInvite>("GroupInvite");
-    qRegisterMetaType<ReceiptNum>("ReceiptNum");
-    qRegisterMetaType<RowId>("RowId");
-
-    qApp->setQuitOnLastWindowClosed(false);
-
-#ifdef Q_OS_MAC
-    // TODO: still needed?
-    globalMenuBar = new QMenuBar(0);
-    dockMenu = new QMenu(globalMenuBar);
-
-    viewMenu = globalMenuBar->addMenu(QString());
-
-    windowMenu = globalMenuBar->addMenu(QString());
-    globalMenuBar->addAction(windowMenu->menuAction());
-
-    fullscreenAction = viewMenu->addAction(QString());
-    fullscreenAction->setShortcut(QKeySequence::FullScreen);
-    connect(fullscreenAction, &QAction::triggered, this, &Nexus::toggleFullscreen);
-
-    minimizeAction = windowMenu->addAction(QString());
-    minimizeAction->setShortcut(Qt::CTRL + Qt::Key_M);
-    connect(minimizeAction, &QAction::triggered, [this]() {
-        minimizeAction->setEnabled(false);
-        QApplication::focusWindow()->showMinimized();
-    });
-
-    windowMenu->addSeparator();
-    frontAction = windowMenu->addAction(QString());
-    connect(frontAction, &QAction::triggered, this, &Nexus::bringAllToFront);
-
-    QAction* quitAction = new QAction(globalMenuBar);
-    quitAction->setMenuRole(QAction::QuitRole);
-    connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
-
-    windowMapper = new QSignalMapper(this);
-    connect(windowMapper, SIGNAL(mapped(QObject*)), this, SLOT(onOpenWindow(QObject*)));
-
-    retranslateUi();
-#endif
-    showMainGUI();
-}
-
-/**
  * @brief Hides the main GUI, delete the profile, and shows the login screen
  */
-void Nexus::showLogin()
+int Nexus::showLogin(const QString& profileName)
 {
+
+    // TODO(kriby): Should be replaced by external controller object
+
     delete widget;
     widget = nullptr;
 
     delete profile;
     profile = nullptr;
 
-    LoginScreen loginScreen;
-    loginScreen.exec();
+    std::unique_ptr<LoginScreen> loginScreen(new LoginScreen{profileName});
+    connectLoginScreen(*loginScreen.get());
 
-    profile = loginScreen.getProfile();
+    // TODO(kriby): Move core out of profile
+    // This is awkward because the core is in the profile
+    // The connection order ensures profile will be ready for bootstrap for now
+    connect(this, &Nexus::currentProfileChanged, this, &Nexus::bootStrapWithProfile);
+    int returnval = loginScreen->exec();
+    disconnect(this, &Nexus::currentProfileChanged, this, &Nexus::bootStrapWithProfile);
+    return returnval;
+}
+
+void Nexus::bootStrapWithProfile(Profile* p)
+{
+    // kriby: This is a hack until a proper controller is written
+
+    profile = p;
 
     if (profile) {
-        Nexus::getInstance().setProfile(profile);
-        Settings::getInstance().setCurrentProfile(profile->getName());
+        audioControl = std::unique_ptr<IAudioControl>(Audio::makeAudio(*settings));
+        assert(audioControl != nullptr);
+        profile->getCore()->getAv()->setAudio(*audioControl);
         showMainGUI();
-    } else {
-        qApp->quit();
     }
+}
+
+void Nexus::setSettings(Settings* settings)
+{
+    if (this->settings) {
+        QObject::disconnect(this, &Nexus::currentProfileChanged, this->settings,
+                            &Settings::onCurrentProfileChanged);
+        QObject::disconnect(this, &Nexus::saveGlobal, this->settings, &Settings::saveGlobal);
+    }
+    this->settings = settings;
+    if (this->settings) {
+        QObject::connect(this, &Nexus::currentProfileChanged, this->settings,
+                         &Settings::onCurrentProfileChanged);
+        QObject::connect(this, &Nexus::saveGlobal, this->settings, &Settings::saveGlobal);
+    }
+}
+
+void Nexus::connectLoginScreen(const LoginScreen& loginScreen)
+{
+    // TODO(kriby): Move connect sequences to a controller class object instead
+
+    // Nexus -> LoginScreen
+    QObject::connect(this, &Nexus::profileLoaded, &loginScreen, &LoginScreen::onProfileLoaded);
+    // LoginScreen -> Nexus
+    QObject::connect(&loginScreen, &LoginScreen::createNewProfile, this, &Nexus::onCreateNewProfile);
+    QObject::connect(&loginScreen, &LoginScreen::loadProfile, this, &Nexus::onLoadProfile);
+    // LoginScreen -> Settings
+    QObject::connect(&loginScreen, &LoginScreen::setAutoLogin, settings, &Settings::onSetAutoLogin);
+    // Settings -> LoginScreen
+    QObject::connect(settings, &Settings::autoLoginChanged, &loginScreen,
+                     &LoginScreen::onAutoLoginChanged);
 }
 
 void Nexus::showMainGUI()
 {
+    // TODO(kriby): Rewrite as view-model connect sequence only, add to a controller class object
     assert(profile);
 
     // Create GUI
-    widget = Widget::getInstance(audio);
+    widget = Widget::getInstance(audioControl.get());
 
     // Start GUI
     widget->init();
@@ -279,6 +245,11 @@ void Nexus::setProfile(Profile* profile)
         Settings::getInstance().loadPersonal(profile->getName(), profile->getPasskey());
 }
 
+
+
+
+
+
 /**
  * @brief Get desktop GUI widget.
  * @return nullptr if not started, desktop widget otherwise.
@@ -287,127 +258,3 @@ Widget* Nexus::getDesktopGUI()
 {
     return getInstance().widget;
 }
-
-#ifdef Q_OS_MAC
-void Nexus::retranslateUi()
-{
-    viewMenu->menuAction()->setText(tr("View", "OS X Menu bar"));
-    windowMenu->menuAction()->setText(tr("Window", "OS X Menu bar"));
-    minimizeAction->setText(tr("Minimize", "OS X Menu bar"));
-    frontAction->setText((tr("Bring All to Front", "OS X Menu bar")));
-}
-
-void Nexus::onWindowStateChanged(Qt::WindowStates state)
-{
-    minimizeAction->setEnabled(QApplication::activeWindow() != nullptr);
-
-    if (QApplication::activeWindow() != nullptr && sender() == QApplication::activeWindow()) {
-        if (state & Qt::WindowFullScreen)
-            minimizeAction->setEnabled(false);
-
-        if (state & Qt::WindowFullScreen)
-            fullscreenAction->setText(tr("Exit Fullscreen"));
-        else
-            fullscreenAction->setText(tr("Enter Fullscreen"));
-
-        updateWindows();
-    }
-
-    updateWindowsStates();
-}
-
-void Nexus::updateWindows()
-{
-    updateWindowsArg(nullptr);
-}
-
-void Nexus::updateWindowsArg(QWindow* closedWindow)
-{
-    QWindowList windowList = QApplication::topLevelWindows();
-    delete windowActions;
-    windowActions = new QActionGroup(this);
-
-    windowMenu->addSeparator();
-
-    QAction* dockLast;
-    if (!dockMenu->actions().isEmpty())
-        dockLast = dockMenu->actions().first();
-    else
-        dockLast = nullptr;
-
-    QWindow* activeWindow;
-
-    if (QApplication::activeWindow())
-        activeWindow = QApplication::activeWindow()->windowHandle();
-    else
-        activeWindow = nullptr;
-
-    for (int i = 0; i < windowList.size(); ++i) {
-        if (closedWindow == windowList[i])
-            continue;
-
-        QAction* action = windowActions->addAction(windowList[i]->title());
-        action->setCheckable(true);
-        action->setChecked(windowList[i] == activeWindow);
-        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-        windowMapper->setMapping(action, windowList[i]);
-        windowMenu->addAction(action);
-        dockMenu->insertAction(dockLast, action);
-    }
-
-    if (dockLast && !dockLast->isSeparator())
-        dockMenu->insertSeparator(dockLast);
-}
-
-void Nexus::updateWindowsClosed()
-{
-    updateWindowsArg(static_cast<QWidget*>(sender())->windowHandle());
-}
-
-void Nexus::updateWindowsStates()
-{
-    bool exists = false;
-    QWindowList windowList = QApplication::topLevelWindows();
-
-    for (QWindow* window : windowList) {
-        if (!(window->windowState() & Qt::WindowMinimized)) {
-            exists = true;
-            break;
-        }
-    }
-
-    frontAction->setEnabled(exists);
-}
-
-void Nexus::onOpenWindow(QObject* object)
-{
-    QWindow* window = static_cast<QWindow*>(object);
-
-    if (window->windowState() & QWindow::Minimized)
-        window->showNormal();
-
-    window->raise();
-    window->requestActivate();
-}
-
-void Nexus::toggleFullscreen()
-{
-    QWidget* window = QApplication::activeWindow();
-
-    if (window->isFullScreen())
-        window->showNormal();
-    else
-        window->showFullScreen();
-}
-
-void Nexus::bringAllToFront()
-{
-    QWindowList windowList = QApplication::topLevelWindows();
-    QWindow* focused = QApplication::focusWindow();
-
-    for (QWindow* window : windowList)
-        window->raise();
-
-    focused->raise();
-}
-#endif

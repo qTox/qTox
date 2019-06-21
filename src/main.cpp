@@ -25,6 +25,7 @@
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/toxsave.h"
+#include "src/presenter/presenter.h"
 #include "src/video/camerasource.h"
 #include "src/widget/loginscreen.h"
 #include "src/widget/translator.h"
@@ -164,6 +165,7 @@ int main(int argc, char* argv[])
     qsrand(time(nullptr));
 
     std::unique_ptr<QApplication> a(new QApplication(argc, argv));
+    std::unique_ptr<Presenter> presenter(new Presenter{});
 
 #if defined(Q_OS_UNIX)
     // PosixSignalNotifier is used only for terminating signals,
@@ -331,6 +333,11 @@ int main(int argc, char* argv[])
     }
 
     Profile* profile = nullptr;
+    presenter->setupEnvironment();
+#ifdef Q_OS_MAC
+    // TODO: still needed?
+    presenter->setupMacEnvironment(nexus);
+#endif
 
     // Autologin
     if (autoLogin && Profile::exists(profileName) && !Profile::isEncrypted(profileName)) {
