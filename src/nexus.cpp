@@ -34,7 +34,7 @@
 #include <QDesktopWidget>
 #include <QThread>
 #include <cassert>
-#include <vpx/vpx_image.h>
+#include <src/audio/audio.h>
 
 /**
  * @class Nexus
@@ -235,20 +235,34 @@ Profile* Nexus::getProfile()
 }
 
 /**
- * @brief Unload the current profile, if any, and replaces it.
- * @param profile Profile to set.
+ * @brief Create a new profile and replace the current one.
+ * @param name New username
+ * @param pass New password
  */
-void Nexus::setProfile(Profile* profile)
+void Nexus::onCreateNewProfile(QString name, const QString& pass)
 {
-    getInstance().profile = profile;
-    if (profile)
-        Settings::getInstance().loadPersonal(profile->getName(), profile->getPasskey());
+    Profile* p = Profile::createProfile(name, pass);
+    emit profileLoaded(bool(p));
+
+    if (!p) {
+        // Warnings are issued during Profile::createProfile
+        return;
+    }
+
+    emit currentProfileChanged(p);
 }
 
+void Nexus::onLoadProfile(QString name, const QString& pass)
+{
+    Profile* p = Profile::loadProfile(name, pass);
+    emit profileLoaded(bool(p));
 
-
-
-
+    if (!p) {
+        // Warnings are issued during Profile::loadProfile
+        return;
+    }
+    emit currentProfileChanged(p);
+}
 
 /**
  * @brief Get desktop GUI widget.

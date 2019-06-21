@@ -105,9 +105,8 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile,
     , encrypted{this->passkey != nullptr}
 {
     Settings& s = Settings::getInstance();
-    s.setCurrentProfile(name);
-    s.saveGlobal();
-    s.loadPersonal(name, this->passkey.get());
+    // TODO(kriby): Move/refactor core initialization to remove settings dependency
+    //  note to self: use slots/signals for this?
     initCore(toxsave, s, isNewProfile);
 
     const ToxId& selfId = core->getSelfId();
@@ -271,21 +270,17 @@ QStringList Profile::getFilesByExt(QString extension)
  * @brief Scan for profile, automatically importing them if needed.
  * @warning NOT thread-safe.
  */
-void Profile::scanProfiles()
+QStringList Profile::getAllProfileNames()
 {
     profiles.clear();
     QStringList toxfiles = getFilesByExt("tox"), inifiles = getFilesByExt("ini");
-    for (QString toxfile : toxfiles) {
+    for (const QString& toxfile : toxfiles) {
         if (!inifiles.contains(toxfile)) {
             Settings::getInstance().createPersonal(toxfile);
         }
 
         profiles.append(toxfile);
     }
-}
-
-QStringList Profile::getProfiles()
-{
     return profiles;
 }
 

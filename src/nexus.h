@@ -27,6 +27,8 @@
 
 class Widget;
 class Profile;
+class Settings;
+class LoginScreen;
 class Core;
 
 #ifdef Q_OS_MAC
@@ -44,29 +46,34 @@ class Nexus : public QObject
 public:
     void start();
     void showMainGUI();
-
+    void setSettings(Settings* settings);
     static Nexus& getInstance();
     static void destroyInstance();
     static Core* getCore();
     static Profile* getProfile();
-    static void setProfile(Profile* profile);
     static Widget* getDesktopGUI();
 
-public slots:
-    void showLogin();
+signals:
+    void currentProfileChanged(Profile* Profile);
+    void profileLoaded(bool success);
+    void saveGlobal();
 
-
 public slots:
-    // TODO(sudden6): hack to pass the audio instance
-    IAudioControl* audio = nullptr;
+    void onCreateNewProfile(QString name, const QString& pass);
+    void onLoadProfile(QString name, const QString& pass);
+    int showLogin(const QString& profileName = QString());
+    void bootStrapWithProfile(Profile* p);
 
 private:
     explicit Nexus(QObject* parent = nullptr);
+    void connectLoginScreen(const LoginScreen& loginScreen);
     ~Nexus();
 
 private:
     Profile* profile;
+    Settings* settings;
     Widget* widget;
+    std::unique_ptr<IAudioControl> audioControl;
 };
 
 #endif // NEXUS_H

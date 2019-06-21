@@ -273,6 +273,19 @@ void Settings::loadGlobal()
     loaded = true;
 }
 
+void Settings::onCurrentProfileChanged(Profile* profile)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (profile == nullptr) {
+        qWarning() << QString("Could not load new settings (profile change to nullptr)");
+        return;
+    }
+    setCurrentProfile(profile->getName());
+    saveGlobal();
+    loadPersonal(profile->getName(), profile->getPasskey());
+}
+
 void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
 {
     QMutexLocker locker{&bigLock};
@@ -1281,7 +1294,7 @@ void Settings::setCurrentProfile(const QString& profile)
     if (profile != currentProfile) {
         currentProfile = profile;
         currentProfileId = makeProfileId(currentProfile);
-        emit currentProfileChanged(currentProfile);
+
         emit currentProfileIdChanged(currentProfileId);
     }
 }
@@ -2318,12 +2331,13 @@ bool Settings::getAutoLogin() const
     return autoLogin;
 }
 
-void Settings::setAutoLogin(bool state)
+void Settings::onSetAutoLogin(bool state)
 {
     QMutexLocker locker{&bigLock};
 
     if (state != autoLogin) {
         autoLogin = state;
+        saveGlobal();
         emit autoLoginChanged(autoLogin);
     }
 }

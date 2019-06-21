@@ -67,8 +67,7 @@ public:
 
     bool rename(QString newName);
 
-    static void scanProfiles();
-    static QStringList getProfiles();
+    static QStringList getAllProfileNames();
 
     static bool exists(QString name);
     static bool isEncrypted(QString name);
