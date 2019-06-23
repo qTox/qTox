@@ -209,7 +209,8 @@ void Nexus::connectLoginScreen(const LoginScreen& loginScreen)
     QObject::connect(&loginScreen, &LoginScreen::createNewProfile, this, &Nexus::onCreateNewProfile);
     QObject::connect(&loginScreen, &LoginScreen::loadProfile, this, &Nexus::onLoadProfile);
     // LoginScreen -> Settings
-    QObject::connect(&loginScreen, &LoginScreen::autoLoginChanged, settings, &Settings::onSetAutoLogin);
+    QObject::connect(&loginScreen, &LoginScreen::autoLoginChanged, settings, &Settings::setAutoLogin);
+    QObject::connect(&loginScreen, &LoginScreen::autoLoginChanged, settings, &Settings::saveGlobal);
     // Settings -> LoginScreen
     QObject::connect(settings, &Settings::autoLoginChanged, &loginScreen,
                      &LoginScreen::onAutoLoginChanged);
