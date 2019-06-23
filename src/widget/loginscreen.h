@@ -36,19 +36,22 @@ class LoginScreen : public QDialog
     Q_OBJECT
 
 public:
-    LoginScreen(QString selectedProfile = QString(), QWidget* parent = nullptr);
+    LoginScreen(const QString& initialProfileName = QString(), QWidget* parent = nullptr);
     ~LoginScreen();
-    void reset(QString selectedProfile = QString());
-    Profile* getProfile() const;
-
     bool event(QEvent* event) final override;
 
 signals:
+
     void windowStateChanged(Qt::WindowStates states);
-    void closed();
+    void createNewProfile(QString name, const QString& pass);
+    void loadProfile(QString name, const QString& pass);
 
 protected:
     virtual void closeEvent(QCloseEvent* event) final override;
+
+public slots:
+    void onProfileLoaded();
+    void onProfileLoadFailed();
 
 private slots:
     void onAutoLoginToggled(int state);
@@ -63,6 +66,7 @@ private slots:
     void onImportProfile();
 
 private:
+    void reset(const QString& initialProfileName = QString());
     void retranslateUi();
     void showCapsIndicator();
     void hideCapsIndicator();
@@ -71,7 +75,6 @@ private:
 private:
     Ui::LoginScreen* ui;
     QShortcut quitShortcut;
-    Profile* profile{nullptr};
 };
 
 #endif // LOGINSCREEN_H
