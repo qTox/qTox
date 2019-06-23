@@ -245,10 +245,7 @@ void LoginScreen::retranslateUi()
 
 void LoginScreen::onImportProfile()
 {
-    ProfileImporter* pi = new ProfileImporter(this);
-
-    if (pi->importProfile())
+    ProfileImporter pi(this);
+    if (pi.importProfile())
         reset();
-
-    delete pi;
 }
