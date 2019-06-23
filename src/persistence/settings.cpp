@@ -109,17 +109,7 @@ void Settings::loadGlobal()
 
     createSettingsDir();
 
-    QString localSettingsPath = qApp->applicationDirPath() + QDir::separator() + globalSettingsFile;
-
-    if (QFile(localSettingsPath).exists()) {
-        QSettings ps(localSettingsPath, QSettings::IniFormat);
-        ps.setIniCodec("UTF-8");
-        ps.beginGroup("Advanced");
-        makeToxPortable = ps.value("makeToxPortable", false).toBool();
-        ps.endGroup();
-    } else {
-        makeToxPortable = false;
-    }
+    makeToxPortable = Settings::isToxPortable();
 
     QDir dir(getSettingsDirPath());
     QString filePath = dir.filePath(globalSettingsFile);
@@ -271,6 +261,22 @@ void Settings::loadGlobal()
     s.endGroup();
 
     loaded = true;
+}
+
+bool Settings::isToxPortable()
+{
+    QString localSettingsPath = qApp->applicationDirPath() + QDir::separator() + globalSettingsFile;
+    bool result;
+
+    if (QFile(localSettingsPath).exists()) {
+        QSettings ps(localSettingsPath, QSettings::IniFormat);
+        ps.setIniCodec("UTF-8");
+        ps.beginGroup("Advanced");
+        result = ps.value("makeToxPortable", false).toBool();
+        ps.endGroup();
+        return result;
+    }
+    return false;
 }
 
 void Settings::onCurrentProfileChanged(Profile* profile)

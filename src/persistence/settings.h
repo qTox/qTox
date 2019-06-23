@@ -152,6 +152,7 @@ public:
     void savePersonal();
 
     void loadGlobal();
+    bool isToxPortable();
     void loadPersonal(QString profileName, const ToxEncrypt* passKey);
 
     void resetToDefault();
