@@ -2337,12 +2337,13 @@ bool Settings::getAutoLogin() const
     return autoLogin;
 }
 
-void Settings::setAutoLogin(bool state)
+void Settings::onSetAutoLogin(bool state)
 {
     QMutexLocker locker{&bigLock};
 
     if (state != autoLogin) {
         autoLogin = state;
+        saveGlobal();
         emit autoLoginChanged(autoLogin);
     }
 }
