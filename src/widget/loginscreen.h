@@ -43,6 +43,7 @@ public:
 signals:
 
     void windowStateChanged(Qt::WindowStates states);
+    void autoLoginChanged(bool state);
     void createNewProfile(QString name, const QString& pass);
     void loadProfile(QString name, const QString& pass);
 
@@ -52,9 +53,10 @@ protected:
 public slots:
     void onProfileLoaded();
     void onProfileLoadFailed();
+    void onAutoLoginChanged(bool state);
 
 private slots:
-    void onAutoLoginToggled(int state);
+    void onAutoLoginCheckboxChanged(int state);
     void onLoginUsernameSelected(const QString& name);
     void onPasswordEdited();
     // Buttons to change page

@@ -169,7 +169,7 @@ public:
 public slots:
     void saveGlobal();
     void sync();
-    void onSetAutoLogin(bool state);
+    void setAutoLogin(bool state);
     void updateProfileData(Profile *profile);
 
 signals:
@@ -543,7 +543,6 @@ public:
     void setShowIdenticons(bool value);
 
     bool getAutoLogin() const;
-    void setAutoLogin(bool state);
     void setEnableGroupChatsColor(bool state);
     bool getEnableGroupChatsColor() const;
 
