@@ -295,7 +295,7 @@ int main(int argc, char* argv[])
         profileName = settings.getCurrentProfile();
     }
 
-    if (parser.positionalArguments().size() == 0) {
+    if (parser.positionalArguments().empty()) {
         eventType = "activate";
     } else {
         firstParam = parser.positionalArguments()[0];
