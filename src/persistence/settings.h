@@ -540,7 +540,6 @@ public:
     void setShowIdenticons(bool value);
 
     bool getAutoLogin() const;
-    void setAutoLogin(bool state);
     void setEnableGroupChatsColor(bool state);
     bool getEnableGroupChatsColor() const;
 
