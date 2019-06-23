@@ -523,10 +523,7 @@ void History::setFileFinished(const QString& fileId, bool success, const QString
 
 size_t History::getNumMessagesForFriend(const ToxPk& friendPk)
 {
-    return getNumMessagesForFriendBeforeDate(friendPk,
-                                             // Maximum possible time
-                                             QDateTime::fromMSecsSinceEpoch(
-                                                 std::numeric_limits<int64_t>::max()));
+    return getNumMessagesForFriendBeforeDate(friendPk, QDateTime::currentDateTime());
 }
 
 size_t History::getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date)
