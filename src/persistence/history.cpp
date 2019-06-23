@@ -523,10 +523,7 @@ void History::setFileFinished(const QString& fileId, bool success, const QString
 
 size_t History::getNumMessagesForFriend(const ToxPk& friendPk)
 {
-    return getNumMessagesForFriendBeforeDate(friendPk,
-                                             // Maximum possible time
-                                             QDateTime::fromMSecsSinceEpoch(
-                                                 std::numeric_limits<int64_t>::max()));
+    return getNumMessagesForFriendBeforeDate(friendPk, QDateTime());
 }
 
 size_t History::getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date)
@@ -534,10 +531,14 @@ size_t History::getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const Q
     QString queryText = QString("SELECT COUNT(history.id) "
                                 "FROM history "
                                 "JOIN peers chat ON chat_id = chat.id "
-                                "WHERE chat.public_key='%1'"
-                                "AND timestamp < %2;")
-                            .arg(friendPk.toString())
-                            .arg(date.toMSecsSinceEpoch());
+                                "WHERE chat.public_key='%1'")
+                            .arg(friendPk.toString());
+
+    if (date.isNull()) {
+        queryText += ";";
+    } else {
+        queryText += QString(" AND timestamp < %1;").arg(date.toMSecsSinceEpoch());
+    }
 
     size_t numMessages = 0;
     auto rowCallback = [&numMessages](const QVector<QVariant>& row) {
