@@ -166,6 +166,8 @@ public:
 public slots:
     void saveGlobal();
     void sync();
+    void onSetAutoLogin(bool state);
+    void onCurrentProfileChanged(Profile* profile);
 
 signals:
     // General
@@ -188,7 +190,6 @@ signals:
     void toxmeBioChanged(const QString& bio);
     void toxmePrivChanged(bool priv);
     void toxmePassChanged();
-    void currentProfileChanged(const QString& profile);
     void currentProfileIdChanged(quint32 id);
     void enableLoggingChanged(bool enabled);
     void autoAwayTimeChanged(int minutes);
