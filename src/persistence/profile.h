@@ -90,7 +90,7 @@ public slots:
     void onRequestSent(const ToxPk& friendPk, const QString& message);
 
 private slots:
-    void loadDatabase(const ToxId& id, QString password);
+    void loadDatabase(QString password);
     void saveAvatar(const ToxPk& owner, const QByteArray& avatar);
     void removeAvatar(const ToxPk& owner);
     void onSaveToxSave();
