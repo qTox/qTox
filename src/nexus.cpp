@@ -35,6 +35,7 @@
 #include <QThread>
 #include <cassert>
 #include <vpx/vpx_image.h>
+#include <src/audio/audio.h>
 
 #ifdef Q_OS_MAC
 #include <QActionGroup>
@@ -67,7 +68,7 @@ Nexus::~Nexus()
     widget = nullptr;
     delete profile;
     profile = nullptr;
-    Settings::getInstance().saveGlobal();
+    emit saveGlobal();
 #ifdef Q_OS_MAC
     delete globalMenuBar;
 #endif
@@ -148,7 +149,7 @@ void Nexus::start()
 /**
  * @brief Hides the main GUI, delete the profile, and shows the login screen
  */
-void Nexus::showLogin()
+int Nexus::showLogin(const QString& profileName)
 {
     delete widget;
     widget = nullptr;
@@ -157,25 +158,70 @@ void Nexus::showLogin()
     profile = nullptr;
 
     LoginScreen loginScreen;
-    loginScreen.exec();
+    connectLoginScreen(loginScreen);
 
-    profile = loginScreen.getProfile();
+    // TODO(kriby): Move core out of profile
+    // This is awkward because the core is in the profile
+    // The connection order ensures profile will be ready for bootstrap for now
+    connect(this, &Nexus::currentProfileChanged, this, &Nexus::bootstrapWithProfile);
+    int returnval = loginScreen.exec();
+    disconnect(this, &Nexus::currentProfileChanged, this, &Nexus::bootstrapWithProfile);
+    return returnval;
+}
+
+void Nexus::bootstrapWithProfile(Profile *p)
+{
+    // kriby: This is a hack until a proper controller is written
+
+    profile = p;
 
     if (profile) {
-        Nexus::getInstance().setProfile(profile);
-        Settings::getInstance().setCurrentProfile(profile->getName());
-        showMainGUI();
-    } else {
-        qApp->quit();
+        audioControl = std::unique_ptr<IAudioControl>(Audio::makeAudio(*settings));
+        assert(audioControl != nullptr);
+        profile->getCore()->getAv()->setAudio(*audioControl);
+        start();
     }
+}
+
+void Nexus::setSettings(Settings* settings)
+{
+    if (this->settings) {
+        QObject::disconnect(this, &Nexus::currentProfileChanged, this->settings,
+                            &Settings::onCurrentProfileChanged);
+        QObject::disconnect(this, &Nexus::saveGlobal, this->settings, &Settings::saveGlobal);
+    }
+    this->settings = settings;
+    if (this->settings) {
+        QObject::connect(this, &Nexus::currentProfileChanged, this->settings,
+                         &Settings::onCurrentProfileChanged);
+        QObject::connect(this, &Nexus::saveGlobal, this->settings, &Settings::saveGlobal);
+    }
+}
+
+void Nexus::connectLoginScreen(const LoginScreen& loginScreen)
+{
+    // TODO(kriby): Move connect sequences to a controller class object instead
+
+    // Nexus -> LoginScreen
+    QObject::connect(this, &Nexus::profileLoaded, &loginScreen, &LoginScreen::onProfileLoaded);
+    QObject::connect(this, &Nexus::profileLoadFailed, &loginScreen, &LoginScreen::onProfileLoadFailed);
+    // LoginScreen -> Nexus
+    QObject::connect(&loginScreen, &LoginScreen::createNewProfile, this, &Nexus::onCreateNewProfile);
+    QObject::connect(&loginScreen, &LoginScreen::loadProfile, this, &Nexus::onLoadProfile);
+    // LoginScreen -> Settings
+    QObject::connect(&loginScreen, &LoginScreen::autoLoginChanged, settings, &Settings::onSetAutoLogin);
+    // Settings -> LoginScreen
+    QObject::connect(settings, &Settings::autoLoginChanged, &loginScreen,
+                     &LoginScreen::onAutoLoginChanged);
 }
 
 void Nexus::showMainGUI()
 {
+    // TODO(kriby): Rewrite as view-model connect sequence only, add to a controller class object
     assert(profile);
 
     // Create GUI
-    widget = Widget::getInstance(audio);
+    widget = Widget::getInstance(audioControl.get());
 
     // Start GUI
     widget->init();
@@ -270,14 +316,36 @@ Profile* Nexus::getProfile()
 }
 
 /**
- * @brief Unload the current profile, if any, and replaces it.
- * @param profile Profile to set.
+ * @brief Creates a new profile and replaces the current one.
+ * @param name New username
+ * @param pass New password
  */
-void Nexus::setProfile(Profile* profile)
+void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
 {
-    getInstance().profile = profile;
-    if (profile)
-        Settings::getInstance().loadPersonal(profile->getName(), profile->getPasskey());
+    setProfile(Profile::createProfile(name, pass));
+}
+
+/**
+ * Loads an existing profile and replaces the current one.
+ */
+void Nexus::onLoadProfile(const QString& name, const QString& pass)
+{
+    setProfile(Profile::loadProfile(name, pass));
+}
+/**
+ * Changes the loaded profile and notifies listeners.
+ * @param p
+ */
+void Nexus::setProfile(Profile* p) {
+    if (!p) {
+        emit profileLoadFailed();
+        // Warnings are issued during respective createNew/load calls
+        return;
+    } else {
+        emit profileLoaded();
+    }
+
+    emit currentProfileChanged(p);
 }
 
 /**

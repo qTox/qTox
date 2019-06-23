@@ -18,7 +18,6 @@
 */
 
 #include "src/audio/audio.h"
-#include "src/core/coreav.h"
 #include "src/ipc.h"
 #include "src/net/toxuri.h"
 #include "src/nexus.h"
@@ -194,8 +193,8 @@ int main(int argc, char* argv[])
 #endif
 
     qsrand(time(nullptr));
-    Settings::getInstance();
-    QString locale = Settings::getInstance().getTranslation();
+    Settings& settings = Settings::getInstance();
+    QString locale = settings.getTranslation();
     Translator::translate(locale);
 
     // Process arguments
@@ -215,15 +214,14 @@ int main(int argc, char* argv[])
                            QObject::tr("Starts new instance and opens the login screen.")));
     parser.process(*a);
 
-    uint32_t profileId = Settings::getInstance().getCurrentProfileId();
+    uint32_t profileId = settings.getCurrentProfileId();
     IPC ipc(profileId);
     if (!ipc.isAttached()) {
         qCritical() << "Can't init IPC";
         return EXIT_FAILURE;
     }
 
-    QObject::connect(&Settings::getInstance(), &Settings::currentProfileIdChanged, &ipc,
-                     &IPC::setProfileId);
+    QObject::connect(&settings, &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId);
 
     // For the auto-updater
     if (sodium_init() < 0) {
@@ -232,7 +230,7 @@ int main(int argc, char* argv[])
     }
 
 #ifdef LOG_TO_FILE
-    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
+    QString logFileDir = settings.getAppCacheDirPath();
     QDir(logFileDir).mkpath(".");
 
     QString logfile = logFileDir + "qtox.log";
@@ -274,7 +272,7 @@ int main(int argc, char* argv[])
     qDebug() << "commit: " << GIT_VERSION;
 
     QString profileName;
-    bool autoLogin = Settings::getInstance().getAutoLogin();
+    bool autoLogin = settings.getAutoLogin();
 
     uint32_t ipcDest = 0;
     bool doIpc = true;
@@ -294,7 +292,7 @@ int main(int argc, char* argv[])
         doIpc = false;
         autoLogin = false;
     } else {
-        profileName = Settings::getInstance().getCurrentProfile();
+        profileName = settings.getCurrentProfile();
     }
 
     if (parser.positionalArguments().size() == 0) {
@@ -330,37 +328,26 @@ int main(int argc, char* argv[])
         }
     }
 
-    Profile* profile = nullptr;
+    // TODO(sudden6): remove once we get rid of Nexus
+    Nexus& nexus = Nexus::getInstance();
+    // TODO(kriby): Consider moving application initializing variables into a globalSettings object
+    //  note: Because Settings is shouldering global settings as well as model specific ones it
+    //  cannot be integrated into a central model object yet
+    nexus.setSettings(&settings);
 
     // Autologin
+    // TODO (kriby): Shift responsibility of linking views to model objects from nexus
+    // Further: generate view instances separately (loginScreen, mainGUI, audio)
     if (autoLogin && Profile::exists(profileName) && !Profile::isEncrypted(profileName)) {
-        profile = Profile::loadProfile(profileName);
+        Profile* profile = Profile::loadProfile(profileName);
+        settings.onCurrentProfileChanged(profile);
+        nexus.bootstrapWithProfile(profile);
     } else {
-        LoginScreen loginScreen{profileName};
-        loginScreen.exec();
-        profile = loginScreen.getProfile();
-        if (profile) {
-            profileName = profile->getName();
+        int returnval = nexus.showLogin(profileName);
+        if (returnval != 0) {
+            return returnval;
         }
     }
-
-    if (!profile) {
-        return EXIT_FAILURE;
-    }
-
-    Nexus::getInstance().setProfile(profile);
-    Settings& s = Settings::getInstance();
-    s.setCurrentProfile(profileName);
-
-    auto audio = Audio::makeAudio(s);
-    assert(audio != nullptr);
-    // TODO(sudden6): init CoreAV audio backend somewhere else so main doesn't depend on coreav.h
-    profile->getCore()->getAv()->setAudio(*audio);
-
-    Nexus& nexus = Nexus::getInstance();
-    // TODO(sudden6): remove once we get rid of Nexus
-    nexus.audio = audio.get();
-    nexus.start();
 
     // Start to accept Inter-process communication
     ipc.registerEventHandler("uri", &toxURIEventHandler);
