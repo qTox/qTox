@@ -59,7 +59,7 @@ LoginScreen::LoginScreen(const QString& initialProfileName, QWidget* parent)
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
     connect(ui->importButton, &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
-    reset(initialProfile);
+    reset(initialProfileName);
     this->setStyleSheet(Style::getStylesheet("loginScreen/loginScreen.css"));
 
     retranslateUi();
@@ -84,7 +84,7 @@ void LoginScreen::closeEvent(QCloseEvent* event)
 /**
  * @brief Resets the UI, clears all fields.
  */
-void LoginScreen::reset(QString initialProfile)
+void LoginScreen::reset(const QString& initialProfileName)
 {
     ui->newUsername->clear();
     ui->newPass->clear();
@@ -92,25 +92,26 @@ void LoginScreen::reset(QString initialProfile)
     ui->loginPassword->clear();
     ui->loginUsernames->clear();
 
-    Profile::scanProfiles();
-    if (initialProfile.isEmpty()) {
-        initialProfile = Settings::getInstance().getCurrentProfile();
-    }
-    QStringList profiles = Profile::getProfiles();
-    for (QString profile : profiles) {
-        ui->loginUsernames->addItem(profile);
-        if (profile == initialProfile) {
-            ui->loginUsernames->setCurrentIndex(ui->loginUsernames->count() - 1);
-        }
-    }
+    QStringList allProfileNames = Profile::getAllProfileNames();
 
-    if (profiles.isEmpty()) {
+    if (allProfileNames.isEmpty()) {
         ui->stackedWidget->setCurrentIndex(0);
         ui->newUsername->setFocus();
     } else {
+        for (const QString& profileName : allProfileNames) {
+            ui->loginUsernames->addItem(profileName);
+        }
+
+        ui->loginUsernames->setCurrentText(initialProfileName);
         ui->stackedWidget->setCurrentIndex(1);
         ui->loginPassword->setFocus();
     }
+}
+
+void LoginScreen::onProfileLoaded()
+{
+    done(0);
+}
 
 void LoginScreen::onProfileLoadFailed() {
     QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
