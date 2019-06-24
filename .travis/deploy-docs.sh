@@ -1,6 +1,6 @@
 #!/bin/bash
-#
-#    Copyright © 2016-2018 by The qTox Project Contributors
+
+#    Copyright © 2016-2019 by The qTox Project Contributors
 #
 #    This program is libre software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -14,7 +14,6 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
 
 # Fail out on error
 set -eu -o pipefail
