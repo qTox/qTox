@@ -1,3 +1,5 @@
+
+
 #include "src/core/icorefriendmessagesender.h"
 #include "src/model/friend.h"
 #include "src/model/friendmessagedispatcher.h"
