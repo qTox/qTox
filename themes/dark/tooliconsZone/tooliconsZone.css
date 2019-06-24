@@ -6,7 +6,7 @@ QPushButton[update-available=true]
 
 QPushButton:hover[update-available=true]
 {
-    background-color: #2b9e1c;
+    background-color: #19780b;
     border: none;
 }
 
