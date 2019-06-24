@@ -122,6 +122,7 @@ cp -r "$APT_CACHE_DIR"/* /var/cache/
 # remove docker specific config file, this file prevents usage of the package cache
 rm /etc/apt/apt.conf.d/docker-clean
 
+readonly WGET_OPTIONS="--timeout=10"
 
 # Get packages
 
@@ -236,7 +237,7 @@ then
   rm -rf "$OPENSSL_PREFIX_DIR"
   mkdir -p "$OPENSSL_PREFIX_DIR"
 
-  wget "https://www.openssl.org/source/$OPENSSL_FILENAME"
+  wget $WGET_OPTIONS "https://www.openssl.org/source/$OPENSSL_FILENAME"
   check_sha256 "$OPENSSL_HASH" "$OPENSSL_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$OPENSSL_FILENAME"
   rm $OPENSSL_FILENAME
@@ -280,7 +281,7 @@ then
   rm -rf "$QT_PREFIX_DIR"
   mkdir -p "$QT_PREFIX_DIR"
 
-  wget "https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/$QT_FILENAME"
+  wget $WGET_OPTIONS "https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/$QT_FILENAME"
   check_sha256 "$QT_HASH" "$QT_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $QT_FILENAME
   rm $QT_FILENAME
@@ -396,7 +397,7 @@ then
   rm -rf "$SQLCIPHER_PREFIX_DIR"
   mkdir -p "$SQLCIPHER_PREFIX_DIR"
 
-  wget "https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_FILENAME"
+  wget $WGET_OPTIONS "https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_FILENAME"
   check_sha256 "$SQLCIPHER_HASH" "$SQLCIPHER_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$SQLCIPHER_FILENAME"
   rm $SQLCIPHER_FILENAME
@@ -456,7 +457,7 @@ then
   rm -rf "$FFMPEG_PREFIX_DIR"
   mkdir -p "$FFMPEG_PREFIX_DIR"
 
-  wget "https://www.ffmpeg.org/releases/$FFMPEG_FILENAME"
+  wget $WGET_OPTIONS "https://www.ffmpeg.org/releases/$FFMPEG_FILENAME"
   check_sha256 "$FFMPEG_HASH" "$FFMPEG_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $FFMPEG_FILENAME
   rm $FFMPEG_FILENAME
@@ -730,7 +731,7 @@ then
   rm -rf "$QRENCODE_PREFIX_DIR"
   mkdir -p "$QRENCODE_PREFIX_DIR"
 
-  wget https://fukuchi.org/works/qrencode/$QRENCODE_FILENAME
+  wget $WGET_OPTIONS https://fukuchi.org/works/qrencode/$QRENCODE_FILENAME
   check_sha256 "$QRENCODE_HASH" "$QRENCODE_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$QRENCODE_FILENAME"
   rm $QRENCODE_FILENAME
@@ -765,7 +766,7 @@ then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  wget https://sourceforge.net/projects/libexif/files/libexif/$EXIF_VERSION/$EXIF_FILENAME
+  wget $WGET_OPTIONS https://sourceforge.net/projects/libexif/files/libexif/$EXIF_VERSION/$EXIF_FILENAME
   check_sha256 "$EXIF_HASH" "$EXIF_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $EXIF_FILENAME
   rm $EXIF_FILENAME
@@ -800,7 +801,7 @@ then
   rm -rf "$OPUS_PREFIX_DIR"
   mkdir -p "$OPUS_PREFIX_DIR"
 
-  wget "https://archive.mozilla.org/pub/opus/$OPUS_FILENAME"
+  wget $WGET_OPTIONS "https://archive.mozilla.org/pub/opus/$OPUS_FILENAME"
   check_sha256 "$OPUS_HASH" "$OPUS_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$OPUS_FILENAME"
   rm $OPUS_FILENAME
@@ -834,7 +835,7 @@ then
   rm -rf "$SODIUM_PREFIX_DIR"
   mkdir -p "$SODIUM_PREFIX_DIR"
 
-  wget "https://download.libsodium.org/libsodium/releases/$SODIUM_FILENAME"
+  wget $WGET_OPTIONS "https://download.libsodium.org/libsodium/releases/$SODIUM_FILENAME"
   check_sha256 "$SODIUM_HASH" "$SODIUM_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$SODIUM_FILENAME"
   rm "$SODIUM_FILENAME"
@@ -867,7 +868,7 @@ then
   rm -rf "$VPX_PREFIX_DIR"
   mkdir -p "$VPX_PREFIX_DIR"
 
-  wget https://github.com/webmproject/libvpx/archive/$VPX_VERSION.tar.gz -O $VPX_FILENAME
+  wget $WGET_OPTIONS https://github.com/webmproject/libvpx/archive/$VPX_VERSION.tar.gz -O $VPX_FILENAME
   check_sha256 "$VPX_HASH" "$VPX_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$VPX_FILENAME"
   rm $VPX_FILENAME
@@ -911,7 +912,7 @@ then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  wget https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz -O $TOXCORE_FILENAME
+  wget $WGET_OPTIONS https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz -O $TOXCORE_FILENAME
   check_sha256 "$TOXCORE_HASH" "$TOXCORE_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$TOXCORE_FILENAME"
   rm "$TOXCORE_FILENAME"
@@ -1068,7 +1069,7 @@ then
   mkdir -p "$NSISSHELLEXECASUSER_PREFIX_DIR"
 
   # Backup: https://web.archive.org/web/20171008011417/http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
-  wget http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
+  wget $WGET_OPTIONS http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
   check_sha256 "$NSISSHELLEXECASUSER_HASH" "ShellExecAsUser.zip"
   unzip ShellExecAsUser.zip 'ShellExecAsUser.dll'
 
