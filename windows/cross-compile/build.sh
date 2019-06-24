@@ -791,8 +791,9 @@ fi
 # Opus
 
 OPUS_PREFIX_DIR="$DEP_DIR/libopus"
-OPUS_VERSION=1.3
-OPUS_HASH="4f3d69aefdf2dbaf9825408e452a8a414ffc60494c70633560700398820dc550"
+OPUS_VERSION=1.3.1
+# https://archive.mozilla.org/pub/opus/SHA256SUMS.txt
+OPUS_HASH="65b58e1e25b2a114157014736a3d9dfeaad8d41be1c8179866f144a2fb44ff9d"
 OPUS_FILENAME="opus-$OPUS_VERSION.tar.gz"
 if [ ! -f "$OPUS_PREFIX_DIR/done" ]
 then
