@@ -219,9 +219,9 @@ void Widget::init()
     filterDisplayActivity->setCheckable(true);
     filterDisplayGroup->addAction(filterDisplayActivity);
     filterMenu->addAction(filterDisplayActivity);
-    settings.getFriendSortingMode() == FriendListWidget::SortingMode::Name ?
-        filterDisplayName->setChecked(true) :
-        filterDisplayActivity->setChecked(true);
+    settings.getFriendSortingMode() == FriendListWidget::SortingMode::Name
+        ? filterDisplayName->setChecked(true)
+        : filterDisplayActivity->setChecked(true);
     filterMenu->addSeparator();
 
     filterAllAction = new QAction(this);
@@ -502,9 +502,9 @@ void Widget::updateIcons()
         return;
     }
 
-    const QString assetSuffix =
-        Status::getAssetSuffix(static_cast<Status::Status>(ui->statusButton->property("status").toInt()))
-        + (eventIcon ? "_event" : "");
+    const QString assetSuffix = Status::getAssetSuffix(static_cast<Status::Status>(
+                                    ui->statusButton->property("status").toInt()))
+                                + (eventIcon ? "_event" : "");
 
     // Some builds of Qt appear to have a bug in icon loading:
     // QIcon::hasThemeIcon is sometimes unaware that the icon returned
@@ -673,6 +673,38 @@ QString Widget::getUsername()
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 {
     profilePicture->setPixmap(pic);
+}
+
+void Widget::onCoreChanged(Core& core)
+{
+
+    connect(&core, &Core::connected, this, &Widget::onConnected);
+    connect(&core, &Core::disconnected, this, &Widget::onDisconnected);
+    connect(&core, &Core::statusSet, this, &Widget::onStatusSet);
+    connect(&core, &Core::usernameSet, this, &Widget::setUsername);
+    connect(&core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
+    connect(&core, &Core::friendAdded, this, &Widget::addFriend);
+    connect(&core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
+    connect(&core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
+    connect(&core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
+    connect(&core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
+    connect(&core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
+    connect(&core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
+    connect(&core, &Core::receiptRecieved, this, &Widget::onReceiptReceived);
+    connect(&core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
+    connect(&core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
+    connect(&core, &Core::groupPeerlistChanged, this, &Widget::onGroupPeerlistChanged);
+    connect(&core, &Core::groupPeerNameChanged, this, &Widget::onGroupPeerNameChanged);
+    connect(&core, &Core::groupTitleChanged, this, &Widget::onGroupTitleChanged);
+    connect(&core, &Core::groupPeerAudioPlaying, this, &Widget::onGroupPeerAudioPlaying);
+    connect(&core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
+    connect(&core, &Core::groupJoined, this, &Widget::onGroupJoined);
+    connect(&core, &Core::friendTypingChanged, this, &Widget::onFriendTypingChanged);
+    connect(&core, &Core::groupSentFailed, this, &Widget::onGroupSendFailed);
+    connect(&core, &Core::usernameSet, this, &Widget::refreshPeerListsLocal);
+    connect(this, &Widget::statusSet, &core, &Core::setStatus);
+    connect(this, &Widget::friendRequested, &core, &Core::requestFriendship);
+    connect(this, &Widget::friendRequestAccepted, &core, &Core::acceptFriendRequest);
 }
 
 void Widget::onConnected()
@@ -1513,13 +1545,15 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
         ui->friendList->trackWidget(widget);
 #if DESKTOP_NOTIFICATIONS
         if (settings.getNotifyHide()) {
-            notifier.notifyMessageSimple(file ? DesktopNotify::MessageType::FRIEND_FILE : DesktopNotify::MessageType::FRIEND);
+            notifier.notifyMessageSimple(file ? DesktopNotify::MessageType::FRIEND_FILE
+                                              : DesktopNotify::MessageType::FRIEND);
         } else {
             QString title = f->getDisplayedName();
             if (file) {
                 title += " - " + tr("File sent");
             }
-            notifier.notifyMessagePixmap(title, text, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
+            notifier.notifyMessagePixmap(title, text,
+                                         Nexus::getProfile()->loadAvatar(f->getPublicKey()));
         }
 #endif
 
@@ -1537,7 +1571,8 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
     return false;
 }
 
-bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk, const QString& message, bool notify)
+bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk,
+                                  const QString& message, bool notify)
 {
     bool hasActive;
     QWidget* currentWindow;
@@ -1563,12 +1598,13 @@ bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk,
     if (settings.getNotifyHide()) {
         notifier.notifyMessageSimple(DesktopNotify::MessageType::GROUP);
     } else {
-        Friend *f = FriendList::findFriend(authorPk);
+        Friend* f = FriendList::findFriend(authorPk);
         QString title = g->getPeerList().value(authorPk) + " (" + g->getDisplayedName() + ")";
         if (!f) {
             notifier.notifyMessage(title, message);
         } else {
-            notifier.notifyMessagePixmap(title, message, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
+            notifier.notifyMessagePixmap(title, message,
+                                         Nexus::getProfile()->loadAvatar(f->getPublicKey()));
         }
     }
 #endif
@@ -1903,7 +1939,8 @@ void Widget::onGroupInviteReceived(const GroupInvite& inviteInfo)
             if (settings.getNotifyHide()) {
                 notifier.notifyMessageSimple(DesktopNotify::MessageType::GROUP_INVITE);
             } else {
-                notifier.notifyMessagePixmap(f->getDisplayedName() + tr(" invites you to join a group."), {}, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
+                notifier.notifyMessagePixmap(f->getDisplayedName() + tr(" invites you to join a group."),
+                                             {}, Nexus::getProfile()->loadAvatar(f->getPublicKey()));
             }
 #endif
         }
