@@ -1,6 +1,6 @@
 /*
-    Copyright (c) 2014 Thilo Borgmann <thilo.borgmann@mail.de>
-    Copyright © 2015-2018 by The qTox Project Contributors
+    Copyright © 2014 Thilo Borgmann <thilo.borgmann@mail.de>
+    Copyright © 2015-2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -16,7 +16,7 @@
 
     You should have received a copy of the GNU General Public License
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
- */
+*/
 
 #include "avfoundation.h"
 #include <QObject>

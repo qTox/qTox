@@ -2,7 +2,7 @@
 
 # SPDX-License-Identifier: GPL-3.0+
 #
-# Copyright © 2018 by The qTox Project Contributors
+# Copyright © 2018-2019 by The qTox Project Contributors
 #
 # This script should be run from the root of the repository
 

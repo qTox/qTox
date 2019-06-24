@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [ ! -z "$TRAVIS_EVENT_TYPE" ] && [ "$TRAVIS_EVENT_TYPE" != "cron" ]
 then
   echo "Skipping publishing in a non-cron build"

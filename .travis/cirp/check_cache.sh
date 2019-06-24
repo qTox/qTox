@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [ -f "/opt/cirp/previous_runs_commit" ] && [ "$(cat /opt/cirp/previous_runs_commit)" == "$(git rev-parse HEAD)" ]
 then
   # No new commits in the repo

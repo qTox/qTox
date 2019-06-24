@@ -1,4 +1,6 @@
 /*
+    Copyright © 2019 by The qTox Project Contributors
+
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     qTox is libre software: you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 /*
-    Copyright © 2017-2018 by The qTox Project Contributors
+    Copyright © 2017-2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
