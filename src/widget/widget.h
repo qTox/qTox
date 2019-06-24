@@ -193,6 +193,7 @@ public slots:
     void toggleFullscreen();
     void refreshPeerListsLocal(const QString& username);
     void onUpdateAvailable(QString latestVersion, QUrl link);
+    void onCoreChanged(Core& core);
 
 signals:
     void friendRequestAccepted(const ToxPk& friendPk);

@@ -675,6 +675,37 @@ void Widget::onSelfAvatarLoaded(const QPixmap& pic)
     profilePicture->setPixmap(pic);
 }
 
+void Widget::onCoreChanged(Core& core) {
+
+    connect(&core, &Core::connected, this, &Widget::onConnected);
+    connect(&core, &Core::disconnected, this, &Widget::onDisconnected);
+    connect(&core, &Core::statusSet, this, &Widget::onStatusSet);
+    connect(&core, &Core::usernameSet, this, &Widget::setUsername);
+    connect(&core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
+    connect(&core, &Core::friendAdded, this, &Widget::addFriend);
+    connect(&core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
+    connect(&core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
+    connect(&core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
+    connect(&core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
+    connect(&core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
+    connect(&core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
+    connect(&core, &Core::receiptRecieved, this, &Widget::onReceiptReceived);
+    connect(&core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
+    connect(&core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
+    connect(&core, &Core::groupPeerlistChanged, this, &Widget::onGroupPeerlistChanged);
+    connect(&core, &Core::groupPeerNameChanged, this, &Widget::onGroupPeerNameChanged);
+    connect(&core, &Core::groupTitleChanged, this, &Widget::onGroupTitleChanged);
+    connect(&core, &Core::groupPeerAudioPlaying, this, &Widget::onGroupPeerAudioPlaying);
+    connect(&core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
+    connect(&core, &Core::groupJoined, this, &Widget::onGroupJoined);
+    connect(&core, &Core::friendTypingChanged, this, &Widget::onFriendTypingChanged);
+    connect(&core, &Core::groupSentFailed, this, &Widget::onGroupSendFailed);
+    connect(&core, &Core::usernameSet, this, &Widget::refreshPeerListsLocal);
+    connect(this, &Widget::statusSet, &core, &Core::setStatus);
+    connect(this, &Widget::friendRequested, &core, &Core::requestFriendship);
+    connect(this, &Widget::friendRequestAccepted, &core, &Core::acceptFriendRequest);
+}
+
 void Widget::onConnected()
 {
     ui->statusButton->setEnabled(true);

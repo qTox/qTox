@@ -305,6 +305,10 @@ QString Profile::getName() const
  */
 void Profile::startCore()
 {
+    //kriby: code duplication belongs in initCore, but cannot yet due to Core/Profile coupling
+    connect(core.get(), &Core::requestSent, this, &Profile::onRequestSent);
+    emit coreChanged(*core);
+
     core->start();
 
     const ToxId& selfId = core->getSelfId();
@@ -803,6 +807,11 @@ void Profile::restartCore()
             assert(audioBak != nullptr);
             initCore(savedata, Settings::getInstance(), isNewProfile);
             core->getAv()->setAudio(*audioBak);
+
+            //kriby: code duplication belongs in initCore, but cannot yet due to Core/Profile coupling
+            connect(core.get(), &Core::requestSent, this, &Profile::onRequestSent);
+            emit coreChanged(*core);
+
             core->start();
         } else {
             qCritical() << "Failed to save, not restarting core";
