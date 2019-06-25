@@ -120,7 +120,7 @@ touch "$APT_CACHE_DIR"/dummy
 cp -r "$APT_CACHE_DIR"/* /var/cache/
 
 # remove docker specific config file, this file prevents usage of the package cache
-rm /etc/apt/apt.conf.d/docker-clean
+rm -f /etc/apt/apt.conf.d/docker-clean
 
 readonly WGET_OPTIONS="--timeout=10"
 
