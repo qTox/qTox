@@ -154,6 +154,7 @@ public:
     void savePersonal();
 
     void loadGlobal();
+    bool isToxPortable();
     void loadPersonal(QString profileName, const ToxEncrypt* passKey);
 
     void resetToDefault();
@@ -168,6 +169,8 @@ public:
 public slots:
     void saveGlobal();
     void sync();
+    void setAutoLogin(bool state);
+    void updateProfileData(Profile *profile);
 
 signals:
     // General
@@ -190,7 +193,6 @@ signals:
     void toxmeBioChanged(const QString& bio);
     void toxmePrivChanged(bool priv);
     void toxmePassChanged();
-    void currentProfileChanged(const QString& profile);
     void currentProfileIdChanged(quint32 id);
     void enableLoggingChanged(bool enabled);
     void autoAwayTimeChanged(int minutes);
@@ -541,7 +543,6 @@ public:
     void setShowIdenticons(bool value);
 
     bool getAutoLogin() const;
-    void setAutoLogin(bool state);
     void setEnableGroupChatsColor(bool state);
     bool getEnableGroupChatsColor() const;
 

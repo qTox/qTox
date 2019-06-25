@@ -226,8 +226,10 @@ QStringList ProfileInfo::removeProfile()
  */
 void ProfileInfo::logout()
 {
+    // TODO(kriby): Refactor all of these invokeMethod calls with connect() properly when possible
     Settings::getInstance().saveGlobal();
-    QMetaObject::invokeMethod(&Nexus::getInstance(), "showLogin");
+    QMetaObject::invokeMethod(&Nexus::getInstance(), "showLogin",
+                              Q_ARG(QString, Settings::getInstance().getCurrentProfile()));
 }
 
 /**
@@ -340,8 +342,8 @@ IProfileInfo::SetAvatarResult ProfileInfo::byteArrayToPng(QByteArray inData, QBy
     }
 
     if (format == "png") {
-        // FIXME: re-encode the png even though inData is already valid. This strips the metadata since
-        // we don't have a good png metadata stripping method currently.
+        // FIXME: re-encode the png even though inData is already valid. This strips the metadata
+        // since we don't have a good png metadata stripping method currently.
         outPng = picToPng(image);
     } else {
         outPng = picToPng(image);

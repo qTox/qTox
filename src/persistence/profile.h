@@ -67,8 +67,7 @@ public:
 
     bool rename(QString newName);
 
-    static void scanProfiles();
-    static QStringList getProfiles();
+    static const QStringList getAllProfileNames();
 
     static bool exists(QString name);
     static bool isEncrypted(QString name);
@@ -90,7 +89,7 @@ public slots:
     void onRequestSent(const ToxPk& friendPk, const QString& message);
 
 private slots:
-    void loadDatabase(const ToxId& id, QString password);
+    void loadDatabase(QString password);
     void saveAvatar(const ToxPk& owner, const QByteArray& avatar);
     void removeAvatar(const ToxPk& owner);
     void onSaveToxSave();
@@ -98,7 +97,8 @@ private slots:
     void onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash);
 
 private:
-    Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave, std::unique_ptr<ToxEncrypt> passKey);
+    Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave,
+            std::unique_ptr<ToxEncrypt> passKey);
     static QStringList getFilesByExt(QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);

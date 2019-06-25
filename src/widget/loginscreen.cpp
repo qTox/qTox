@@ -32,7 +32,7 @@
 #include <QMessageBox>
 #include <QToolButton>
 
-LoginScreen::LoginScreen(QString initialProfile, QWidget* parent)
+LoginScreen::LoginScreen(const QString& initialProfileName, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::LoginScreen)
     , quitShortcut{QKeySequence(Qt::CTRL + Qt::Key_Q), this}
@@ -56,10 +56,10 @@ LoginScreen::LoginScreen(QString initialProfile, QWidget* parent)
     connect(ui->loginPassword, &QLineEdit::returnPressed, this, &LoginScreen::onLogin);
     connect(ui->newPass, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->newPassConfirm, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
-    connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
+    connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginCheckboxChanged);
     connect(ui->importButton, &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
-    reset(initialProfile);
+    reset(initialProfileName);
     this->setStyleSheet(Style::getStylesheet("loginScreen/loginScreen.css"));
 
     retranslateUi();
@@ -72,10 +72,19 @@ LoginScreen::~LoginScreen()
     delete ui;
 }
 
+void LoginScreen::closeEvent(QCloseEvent* event)
+{
+
+    // If we are in the bootstrap, returning -1 will give us something to exit with in main.cpp
+    this->setResult(-1);
+    // If we are in application exec, we can quit by closing it, instead.
+    qApp->quit();
+}
+
 /**
  * @brief Resets the UI, clears all fields.
  */
-void LoginScreen::reset(QString initialProfile)
+void LoginScreen::reset(const QString& initialProfileName)
 {
     ui->newUsername->clear();
     ui->newPass->clear();
@@ -83,34 +92,36 @@ void LoginScreen::reset(QString initialProfile)
     ui->loginPassword->clear();
     ui->loginUsernames->clear();
 
-    Profile::scanProfiles();
-    if (initialProfile.isEmpty()) {
-        initialProfile = Settings::getInstance().getCurrentProfile();
-    }
-    QStringList profiles = Profile::getProfiles();
-    for (QString profile : profiles) {
-        ui->loginUsernames->addItem(profile);
-        if (profile == initialProfile) {
-            ui->loginUsernames->setCurrentIndex(ui->loginUsernames->count() - 1);
-        }
-    }
+    QStringList allProfileNames = Profile::getAllProfileNames();
 
-    if (profiles.isEmpty()) {
+    if (allProfileNames.isEmpty()) {
         ui->stackedWidget->setCurrentIndex(0);
         ui->newUsername->setFocus();
     } else {
+        for (const QString& profileName : allProfileNames) {
+            ui->loginUsernames->addItem(profileName);
+        }
+
+        ui->loginUsernames->setCurrentText(initialProfileName);
         ui->stackedWidget->setCurrentIndex(1);
         ui->loginPassword->setFocus();
     }
-
-    ui->autoLoginCB->blockSignals(true);
-    ui->autoLoginCB->setChecked(Settings::getInstance().getAutoLogin());
-    ui->autoLoginCB->blockSignals(false);
 }
 
-Profile *LoginScreen::getProfile() const
+void LoginScreen::onProfileLoaded()
 {
-    return profile;
+    done(0);
+}
+
+void LoginScreen::onProfileLoadFailed() {
+    QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
+    ui->loginPassword->setFocus();
+    ui->loginPassword->selectAll();
+}
+
+void LoginScreen::onAutoLoginChanged(bool state)
+{
+    ui->autoLoginCB->setChecked(state);
 }
 
 bool LoginScreen::event(QEvent* event)
@@ -127,11 +138,6 @@ bool LoginScreen::event(QEvent* event)
     }
 
     return QWidget::event(event);
-}
-
-void LoginScreen::closeEvent(QCloseEvent*)
-{
-    emit closed();
 }
 
 void LoginScreen::onNewProfilePageClicked()
@@ -174,16 +180,7 @@ void LoginScreen::onCreateNewProfile()
         return;
     }
 
-    profile = Profile::createProfile(name, pass);
-    if (!profile) {
-        // Unknown error
-        QMessageBox::critical(this, tr("Couldn't create a new profile"),
-                              tr("Unknown error: Couldn't create a new profile.\nIf you "
-                                 "encountered this error, please report it."));
-        done(-1);
-        return;
-    }
-    done(0);
+    emit createNewProfile(name, pass);
 }
 
 void LoginScreen::onLoginUsernameSelected(const QString& name)
@@ -227,20 +224,7 @@ void LoginScreen::onLogin()
         return;
     }
 
-    profile = Profile::loadProfile(name, pass);
-    if (!profile) {
-        if (!ProfileLocker::isLockable(name)) {
-            QMessageBox::critical(this, tr("Couldn't load this profile"),
-                                  tr("Profile already in use. Close other clients."));
-            return;
-        } else {
-            QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
-            ui->loginPassword->setFocus();
-            ui->loginPassword->selectAll();
-            return;
-        }
-    }
-    done(0);
+    emit loadProfile(name, pass);
 }
 
 void LoginScreen::onPasswordEdited()
@@ -248,15 +232,10 @@ void LoginScreen::onPasswordEdited()
     ui->passStrengthMeter->setValue(SetPasswordDialog::getPasswordStrength(ui->newPass->text()));
 }
 
-void LoginScreen::onAutoLoginToggled(int state)
+void LoginScreen::onAutoLoginCheckboxChanged(int state)
 {
-    Qt::CheckState cstate = static_cast<Qt::CheckState>(state);
-    if (cstate == Qt::CheckState::Unchecked)
-        Settings::getInstance().setAutoLogin(false);
-    else
-        Settings::getInstance().setAutoLogin(true);
-
-    Settings::getInstance().saveGlobal();
+    auto cstate = static_cast<Qt::CheckState>(state);
+    emit autoLoginChanged(cstate == Qt::CheckState::Checked);
 }
 
 void LoginScreen::retranslateUi()
@@ -266,10 +245,8 @@ void LoginScreen::retranslateUi()
 
 void LoginScreen::onImportProfile()
 {
-    ProfileImporter* pi = new ProfileImporter(this);
-
-    if (pi->importProfile())
+    ProfileImporter pi(this);
+    if (pi.importProfile()) {
         reset();
-
-    delete pi;
+    }
 }

@@ -109,17 +109,7 @@ void Settings::loadGlobal()
 
     createSettingsDir();
 
-    QString localSettingsPath = qApp->applicationDirPath() + QDir::separator() + globalSettingsFile;
-
-    if (QFile(localSettingsPath).exists()) {
-        QSettings ps(localSettingsPath, QSettings::IniFormat);
-        ps.setIniCodec("UTF-8");
-        ps.beginGroup("Advanced");
-        makeToxPortable = ps.value("makeToxPortable", false).toBool();
-        ps.endGroup();
-    } else {
-        makeToxPortable = false;
-    }
+    makeToxPortable = Settings::isToxPortable();
 
     QDir dir(getSettingsDirPath());
     QString filePath = dir.filePath(globalSettingsFile);
@@ -153,9 +143,11 @@ void Settings::loadGlobal()
         }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", true).toBool();
-        notifySound = s.value("notifySound", true).toBool(); // note: notifySound and busySound UI elements are now under UI settings
+        // note: notifySound and busySound UI elements are now under UI settings
+        // page, but kept under General in settings file to be backwards compatible
+        notifySound = s.value("notifySound", true).toBool();
         notifyHide = s.value("notifyHide", false).toBool();
-        busySound = s.value("busySound", false).toBool();    // page, but kept under General in settings file to be backwards compatible
+        busySound = s.value("busySound", false).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(),
@@ -273,6 +265,33 @@ void Settings::loadGlobal()
     loaded = true;
 }
 
+bool Settings::isToxPortable()
+{
+    QString localSettingsPath = qApp->applicationDirPath() + QDir::separator() + globalSettingsFile;
+    if (!QFile(localSettingsPath).exists()) {
+        return false;
+    }
+    QSettings ps(localSettingsPath, QSettings::IniFormat);
+    ps.setIniCodec("UTF-8");
+    ps.beginGroup("Advanced");
+    bool result = ps.value("makeToxPortable", false).toBool();
+    ps.endGroup();
+    return result;
+}
+
+void Settings::updateProfileData(Profile *profile)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (profile == nullptr) {
+        qWarning() << QString("Could not load new settings (profile change to nullptr)");
+        return;
+    }
+    setCurrentProfile(profile->getName());
+    saveGlobal();
+    loadPersonal(profile->getName(), profile->getPasskey());
+}
+
 void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
 {
     QMutexLocker locker{&bigLock};
@@ -319,7 +338,7 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
             fp.circleID = ps.value("circle", -1).toInt();
 
             if (getEnableLogging())
-                fp.activity = ps.value("activity",  QDateTime()).toDateTime();
+                fp.activity = ps.value("activity", QDateTime()).toDateTime();
             friendLst.insert(ToxId(fp.addr).getPublicKey().getByteArray(), fp);
         }
         ps.endArray();
@@ -346,7 +365,8 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
     ps.beginGroup("GUI");
     {
         compactLayout = ps.value("compactLayout", true).toBool();
-        sortingMode = static_cast<FriendListSortingMode>(ps.value("friendSortingMethod", static_cast<int>(FriendListSortingMode::Name)).toInt());
+        sortingMode = static_cast<FriendListSortingMode>(
+            ps.value("friendSortingMethod", static_cast<int>(FriendListSortingMode::Name)).toInt());
     }
     ps.endGroup();
 
@@ -1281,7 +1301,7 @@ void Settings::setCurrentProfile(const QString& profile)
     if (profile != currentProfile) {
         currentProfile = profile;
         currentProfileId = makeProfileId(currentProfile);
-        emit currentProfileChanged(currentProfile);
+
         emit currentProfileIdChanged(currentProfileId);
     }
 }
