@@ -39,8 +39,8 @@ class Profile : public QObject
     Q_OBJECT
 
 public:
-    static Profile* loadProfile(QString name, const QString& password = QString());
-    static Profile* createProfile(QString name, QString password);
+    static Profile* loadProfile(const QString& name, const QString& password = QString());
+    static Profile* createProfile(const QString& name, const QString& password);
     ~Profile();
 
     Core* getCore();

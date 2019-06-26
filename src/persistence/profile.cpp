@@ -120,7 +120,7 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile,
  *
  * @example If the profile is already in use return nullptr.
  */
-Profile* Profile::loadProfile(QString name, const QString& password)
+Profile* Profile::loadProfile(const QString& name, const QString& password)
 {
     if (ProfileLocker::hasLock()) {
         qCritical() << "Tried to load profile " << name << ", but another profile is already locked!";
@@ -200,7 +200,7 @@ fail:
  *
  * @note If the profile is already in use return nullptr.
  */
-Profile* Profile::createProfile(QString name, QString password)
+Profile* Profile::createProfile(const QString& name, const QString& password)
 {
     std::unique_ptr<ToxEncrypt> tmpKey;
     if (!password.isEmpty()) {
