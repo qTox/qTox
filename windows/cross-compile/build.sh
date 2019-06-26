@@ -120,8 +120,9 @@ touch "$APT_CACHE_DIR"/dummy
 cp -r "$APT_CACHE_DIR"/* /var/cache/
 
 # remove docker specific config file, this file prevents usage of the package cache
-rm /etc/apt/apt.conf.d/docker-clean
+rm -f /etc/apt/apt.conf.d/docker-clean
 
+readonly WGET_OPTIONS="--timeout=10"
 
 # Get packages
 
@@ -227,16 +228,16 @@ store_apt_cache()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.0.2p
+OPENSSL_VERSION=1.0.2s
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="50a98e07b1a89eb8f6a99477f262df71c6fa7bef77df4dc83025a2845c827d00"
+OPENSSL_HASH="cabd5c9492825ce5bd23f3c3aeed6a97f8142f606d893df216411f07d1abab96"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
   rm -rf "$OPENSSL_PREFIX_DIR"
   mkdir -p "$OPENSSL_PREFIX_DIR"
 
-  wget "https://www.openssl.org/source/$OPENSSL_FILENAME"
+  wget $WGET_OPTIONS "https://www.openssl.org/source/$OPENSSL_FILENAME"
   check_sha256 "$OPENSSL_HASH" "$OPENSSL_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$OPENSSL_FILENAME"
   rm $OPENSSL_FILENAME
@@ -270,17 +271,17 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=9
-QT_PATCH=7
+QT_PATCH=8
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.9/5.9.7/single/qt-everywhere-opensource-src-5.9.7.tar.xz.mirrorlist
-QT_HASH="1c3852aa48b5a1310108382fb8f6185560cefc3802e81ecc099f4e62ee38516c"
+# hash from https://download.qt.io/archive/qt/5.9/5.9.8/single/qt-everywhere-opensource-src-5.9.8.tar.xz.mirrorlist
+QT_HASH="86aca7dc37f161fc730a9d4f6bddf684962ca560327682e282ff61bf8b859c36"
 QT_FILENAME="qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
   rm -rf "$QT_PREFIX_DIR"
   mkdir -p "$QT_PREFIX_DIR"
 
-  wget "https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/$QT_FILENAME"
+  wget $WGET_OPTIONS "https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/$QT_FILENAME"
   check_sha256 "$QT_HASH" "$QT_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $QT_FILENAME
   rm $QT_FILENAME
@@ -388,15 +389,15 @@ set -u
 # SQLCipher
 
 SQLCIPHER_PREFIX_DIR="$DEP_DIR/libsqlcipher"
-SQLCIPHER_VERSION=v3.4.2
-SQLCIPHER_HASH="69897a5167f34e8a84c7069f1b283aba88cdfa8ec183165c4a5da2c816cfaadb"
+SQLCIPHER_VERSION=v4.2.0
+SQLCIPHER_HASH="105c1b813f848da038c03647a8bfc9d42fb46865e6aaf4edfd46ff3b18cdccfc"
 SQLCIPHER_FILENAME="$SQLCIPHER_VERSION.tar.gz"
 if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]
 then
   rm -rf "$SQLCIPHER_PREFIX_DIR"
   mkdir -p "$SQLCIPHER_PREFIX_DIR"
 
-  wget "https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_FILENAME"
+  wget $WGET_OPTIONS "https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_FILENAME"
   check_sha256 "$SQLCIPHER_HASH" "$SQLCIPHER_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$SQLCIPHER_FILENAME"
   rm $SQLCIPHER_FILENAME
@@ -405,6 +406,7 @@ then
   sed -i s/'LIBS="-lcrypto  $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
   sed -i s/'LIBS="-lcrypto $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
   sed -i s/'if test "$TARGET_EXEEXT" = ".exe"'/'if test ".exe" = ".exe"'/g configure
+  sed -i 's|exec $PWD/mksourceid manifest|exec $PWD/mksourceid.exe manifest|g' tool/mksqlite3h.tcl
 
 # Do not remove trailing whitespace and dont replace tabs with spaces in the patch below,
 #  otherwise the patch will fail to apply
@@ -448,15 +450,15 @@ fi
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
-FFMPEG_VERSION=4.0.2
-FFMPEG_HASH="a95c0cc9eb990e94031d2183f2e6e444cc61c99f6f182d1575c433d62afb2f97"
+FFMPEG_VERSION=4.1.3
+FFMPEG_HASH="0c3020452880581a8face91595b239198078645e7d7184273b8bcc7758beb63d"
 FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
   rm -rf "$FFMPEG_PREFIX_DIR"
   mkdir -p "$FFMPEG_PREFIX_DIR"
 
-  wget "https://www.ffmpeg.org/releases/$FFMPEG_FILENAME"
+  wget $WGET_OPTIONS "https://www.ffmpeg.org/releases/$FFMPEG_FILENAME"
   check_sha256 "$FFMPEG_HASH" "$FFMPEG_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $FFMPEG_FILENAME
   rm $FFMPEG_FILENAME
@@ -730,7 +732,7 @@ then
   rm -rf "$QRENCODE_PREFIX_DIR"
   mkdir -p "$QRENCODE_PREFIX_DIR"
 
-  wget https://fukuchi.org/works/qrencode/$QRENCODE_FILENAME
+  wget $WGET_OPTIONS https://fukuchi.org/works/qrencode/$QRENCODE_FILENAME
   check_sha256 "$QRENCODE_HASH" "$QRENCODE_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$QRENCODE_FILENAME"
   rm $QRENCODE_FILENAME
@@ -765,7 +767,7 @@ then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  wget https://sourceforge.net/projects/libexif/files/libexif/$EXIF_VERSION/$EXIF_FILENAME
+  wget $WGET_OPTIONS https://sourceforge.net/projects/libexif/files/libexif/$EXIF_VERSION/$EXIF_FILENAME
   check_sha256 "$EXIF_HASH" "$EXIF_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $EXIF_FILENAME
   rm $EXIF_FILENAME
@@ -791,15 +793,16 @@ fi
 # Opus
 
 OPUS_PREFIX_DIR="$DEP_DIR/libopus"
-OPUS_VERSION=1.3
-OPUS_HASH="4f3d69aefdf2dbaf9825408e452a8a414ffc60494c70633560700398820dc550"
+OPUS_VERSION=1.3.1
+# https://archive.mozilla.org/pub/opus/SHA256SUMS.txt
+OPUS_HASH="65b58e1e25b2a114157014736a3d9dfeaad8d41be1c8179866f144a2fb44ff9d"
 OPUS_FILENAME="opus-$OPUS_VERSION.tar.gz"
 if [ ! -f "$OPUS_PREFIX_DIR/done" ]
 then
   rm -rf "$OPUS_PREFIX_DIR"
   mkdir -p "$OPUS_PREFIX_DIR"
 
-  wget "https://archive.mozilla.org/pub/opus/$OPUS_FILENAME"
+  wget $WGET_OPTIONS "https://archive.mozilla.org/pub/opus/$OPUS_FILENAME"
   check_sha256 "$OPUS_HASH" "$OPUS_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$OPUS_FILENAME"
   rm $OPUS_FILENAME
@@ -825,15 +828,15 @@ fi
 # Sodium
 
 SODIUM_PREFIX_DIR="$DEP_DIR/libsodium"
-SODIUM_VERSION=1.0.16
-SODIUM_HASH="eeadc7e1e1bcef09680fb4837d448fbdf57224978f865ac1c16745868fbd0533"
+SODIUM_VERSION=1.0.18
+SODIUM_HASH="6f504490b342a4f8a4c4a02fc9b866cbef8622d5df4e5452b46be121e46636c1"
 SODIUM_FILENAME="libsodium-$SODIUM_VERSION.tar.gz"
 if [ ! -f "$SODIUM_PREFIX_DIR/done" ]
 then
   rm -rf "$SODIUM_PREFIX_DIR"
   mkdir -p "$SODIUM_PREFIX_DIR"
 
-  wget "https://download.libsodium.org/libsodium/releases/$SODIUM_FILENAME"
+  wget $WGET_OPTIONS "https://download.libsodium.org/libsodium/releases/$SODIUM_FILENAME"
   check_sha256 "$SODIUM_HASH" "$SODIUM_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$SODIUM_FILENAME"
   rm "$SODIUM_FILENAME"
@@ -858,15 +861,15 @@ fi
 # VPX
 
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
-VPX_VERSION=v1.7.0
-VPX_HASH="1fec931eb5c94279ad219a5b6e0202358e94a93a90cfb1603578c326abfc1238"
-VPX_FILENAME="libvpx-$VPX_VERSION.tar.bz2"
+VPX_VERSION=v1.8.0
+VPX_HASH="86df18c694e1c06cc8f83d2d816e9270747a0ce6abe316e93a4f4095689373f6"
+VPX_FILENAME="libvpx-$VPX_VERSION.tar.gz"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
   rm -rf "$VPX_PREFIX_DIR"
   mkdir -p "$VPX_PREFIX_DIR"
 
-  wget https://github.com/webmproject/libvpx/archive/$VPX_VERSION.tar.gz -O $VPX_FILENAME
+  wget $WGET_OPTIONS https://github.com/webmproject/libvpx/archive/$VPX_VERSION.tar.gz -O $VPX_FILENAME
   check_sha256 "$VPX_HASH" "$VPX_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$VPX_FILENAME"
   rm $VPX_FILENAME
@@ -902,15 +905,15 @@ fi
 # Toxcore
 
 TOXCORE_PREFIX_DIR="$DEP_DIR/libtoxcore"
-TOXCORE_VERSION=0.2.9
-TOXCORE_HASH="a8c962709447fb9b0cbb1a90ec1945a1b2d272b4d322356c48a4e3882b1267e7"
+TOXCORE_VERSION=0.2.10
+TOXCORE_HASH="5ccc4ecd79b95c367efe8341b06bf2a81f853032e6fcd7cb2bc0ad0ef7419d40"
 TOXCORE_FILENAME="c-toxcore-$TOXCORE_VERSION.tar.gz"
 if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]
 then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  wget https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz -O $TOXCORE_FILENAME
+  wget $WGET_OPTIONS https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz -O $TOXCORE_FILENAME
   check_sha256 "$TOXCORE_HASH" "$TOXCORE_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$TOXCORE_FILENAME"
   rm "$TOXCORE_FILENAME"
@@ -1067,7 +1070,7 @@ then
   mkdir -p "$NSISSHELLEXECASUSER_PREFIX_DIR"
 
   # Backup: https://web.archive.org/web/20171008011417/http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
-  wget http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
+  wget $WGET_OPTIONS http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
   check_sha256 "$NSISSHELLEXECASUSER_HASH" "ShellExecAsUser.zip"
   unzip ShellExecAsUser.zip 'ShellExecAsUser.dll'
 
