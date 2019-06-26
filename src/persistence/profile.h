@@ -103,7 +103,7 @@ private:
     static QStringList getFilesByExt(QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
-    void initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewProfile);
+    void initCore(const QByteArray& toxsave, const ICoreSettings& s, bool isNewProfile);
 
 private:
     std::unique_ptr<Core> core = nullptr;
