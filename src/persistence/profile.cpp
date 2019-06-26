@@ -53,7 +53,7 @@
 
 QStringList Profile::profiles;
 
-void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewProfile)
+void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool isNewProfile)
 {
     if (toxsave.isEmpty() && !isNewProfile) {
         qCritical() << "Existing toxsave is empty";
