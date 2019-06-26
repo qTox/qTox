@@ -149,7 +149,7 @@ public:
     QString getAppCacheDirPath() const;
 
     void createSettingsDir();
-    void createPersonal(QString basename);
+    void createPersonal(const QString& basename) const;
 
     void savePersonal();
 

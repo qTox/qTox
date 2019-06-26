@@ -2368,7 +2368,7 @@ bool Settings::getEnableGroupChatsColor() const
  *
  * @note If basename is "profile", settings will be saved in profile.ini
  */
-void Settings::createPersonal(QString basename)
+void Settings::createPersonal(const QString& basename) const
 {
     QMutexLocker locker{&bigLock};
 
