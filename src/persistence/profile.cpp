@@ -97,7 +97,7 @@ void Profile::initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewPr
             Qt::ConnectionType::QueuedConnection);
 }
 
-Profile::Profile(QString name, const QString& password, bool isNewProfile,
+Profile::Profile(const QString& name, const QString& password, bool isNewProfile,
                  const QByteArray& toxsave, std::unique_ptr<ToxEncrypt> passkey)
     : name{name}
     , passkey{std::move(passkey)}
