@@ -227,11 +227,8 @@ bool RawDatabase::updateSavedCipherParameters(const QString& hexKey)
         return false;
     }
 
-    int64_t user_version;
-    if (!execNow(RawDatabase::Query("PRAGMA user_version", [&](const QVector<QVariant>& row) {
-            user_version = row[0].toLongLong();
-        }))) {
-        qCritical() << "Failed to read user_version during cipher upgrade";
+    const auto user_version = getUserVersion();
+    if (user_version < 0) {
         return false;
     }
     if (!execNow("ATTACH DATABASE '" + path + ".tmp' AS sqlcipher4 KEY \"x'" + hexKey + "'\";")) {
@@ -297,6 +294,18 @@ bool RawDatabase::setKey(const QString& hexKey)
         return false;
     }
     return true;
+}
+
+int RawDatabase::getUserVersion()
+{
+    int64_t user_version;
+    if (!execNow(RawDatabase::Query("PRAGMA user_version", [&](const QVector<QVariant>& row) {
+            user_version = row[0].toLongLong();
+        }))) {
+        qCritical() << "Failed to read user_version during cipher upgrade";
+        return -1;
+    }
+    return user_version;
 }
 
 /**
@@ -476,6 +485,10 @@ bool RawDatabase::setPassword(const QString& password)
 
 bool RawDatabase::encryptDatabase(const QString& newHexKey)
 {
+    const auto user_version = getUserVersion();
+    if (user_version < 0) {
+        return false;
+    }
     if (!execNow("ATTACH DATABASE '" + path + ".tmp' AS encrypted KEY \"x'" + newHexKey
                     + "'\";")) {
         qWarning() << "Failed to export encrypted database";
@@ -487,6 +500,9 @@ bool RawDatabase::encryptDatabase(const QString& newHexKey)
     if (!execNow("SELECT sqlcipher_export('encrypted');")) {
         return false;
     }
+    if (!execNow(QString("PRAGMA encrypted.user_version = %1;").arg(user_version))) {
+        return false;
+    }
     if (!execNow("DETACH DATABASE encrypted;")) {
         return false;
     }
@@ -495,9 +511,16 @@ bool RawDatabase::encryptDatabase(const QString& newHexKey)
 
 bool RawDatabase::decryptDatabase()
 {
+    const auto user_version = getUserVersion();
+    if (user_version < 0) {
+        return false;
+    }
     if (!execNow("ATTACH DATABASE '" + path + ".tmp' AS plaintext KEY '';"
                                                 "SELECT sqlcipher_export('plaintext');")) {
         qWarning() << "Failed to export decrypted database";
+        return false;
+    }
+    if (!execNow(QString("PRAGMA plaintext.user_version = %1;").arg(user_version))) {
         return false;
     }
     if (!execNow("DETACH DATABASE plaintext;")) {
