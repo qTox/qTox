@@ -1820,6 +1820,8 @@ ContentDialog* Widget::createContentDialog() const
     connect(core, &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
     connect(&settings, &Settings::groupchatPositionChanged, contentDialog,
             &ContentDialog::reorderLayouts);
+    connect(contentDialog, &ContentDialog::addFriendDialog, this, &Widget::addFriendDialog);
+    connect(contentDialog, &ContentDialog::addGroupDialog, this, &Widget::addGroupDialog);
 
 #ifdef Q_OS_MAC
     Nexus& n = Nexus::getInstance();

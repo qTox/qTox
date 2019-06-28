@@ -20,12 +20,12 @@
 #ifndef CONTENTDIALOG_H
 #define CONTENTDIALOG_H
 
-#include "src/model/dialogs/idialogs.h"
-#include "src/widget/genericchatitemlayout.h"
-#include "src/widget/tool/activatedialog.h"
-#include "src/model/status.h"
 #include "src/core/groupid.h"
 #include "src/core/toxpk.h"
+#include "src/model/dialogs/idialogs.h"
+#include "src/model/status.h"
+#include "src/widget/genericchatitemlayout.h"
+#include "src/widget/tool/activatedialog.h"
 
 #include <memory>
 
@@ -79,6 +79,8 @@ public:
 signals:
     void friendDialogShown(const Friend* f);
     void groupDialogShown(Group* g);
+    void addFriendDialog(Friend* frnd, ContentDialog* contentDialog);
+    void addGroupDialog(Group* group, ContentDialog* contentDialog);
     void activated();
     void willClose();
 
@@ -116,7 +118,6 @@ private:
     void focusCommon(const ContactId& id, QHash<const ContactId&, GenericChatroomWidget*> list);
 
 private:
-
     QList<QLayout*> layouts;
     QSplitter* splitter;
     FriendListLayout* friendLayout;
