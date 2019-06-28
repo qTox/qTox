@@ -263,6 +263,7 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
     if (isNewProfile) {
         core->setStatusMessage(tr("Toxing on qTox"));
         core->setUsername(name);
+        onSaveToxSave();
     }
 
     // save tox file when Core requests it
