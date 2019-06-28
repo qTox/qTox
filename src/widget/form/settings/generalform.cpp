@@ -152,8 +152,7 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
 
 
 #ifndef QTOX_PLATFORM_EXT
-    bodyUI->autoAwayLabel->setEnabled(
-        false); // these don't seem to change the appearance of the widgets,
+    bodyUI->autoAwayLabel->setEnabled(false); // these don't seem to change the appearance of the widgets,
     bodyUI->autoAwaySpinBox->setEnabled(false); // though they are unusable
 #endif
 
@@ -203,7 +202,7 @@ void GeneralForm::on_closeToTray_stateChanged()
 void GeneralForm::on_lightTrayIcon_stateChanged()
 {
     Settings::getInstance().setLightTrayIcon(bodyUI->lightTrayIcon->isChecked());
-    Widget::getInstance()->updateIcons();
+    emit updateIcons();
 }
 
 void GeneralForm::on_minimizeToTray_stateChanged()
