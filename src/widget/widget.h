@@ -127,8 +127,10 @@ public:
     void showUpdateDownloadProgress();
     void addFriendDialog(const Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
-    bool newFriendMessageAlert(const ToxPk& friendId, const QString& text, bool sound = true, bool file = false);
-    bool newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk, const QString& message, bool notify);
+    bool newFriendMessageAlert(const ToxPk& friendId, const QString& text, bool sound = true,
+                               bool file = false);
+    bool newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk, const QString& message,
+                              bool notify);
     bool getIsWindowMinimized();
     void updateIcons();
 
@@ -193,6 +195,7 @@ public slots:
     void toggleFullscreen();
     void refreshPeerListsLocal(const QString& username);
     void onUpdateAvailable(QString latestVersion, QUrl link);
+    void onCoreChanged(Core& core);
 
 signals:
     void friendRequestAccepted(const ToxPk& friendPk);
