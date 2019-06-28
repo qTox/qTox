@@ -85,6 +85,30 @@ bool Profile::logLoadToxDataError(const LoadToxDataError& error, const QString& 
     return error;
 }
 
+bool Profile::logCreateToxDataError(const CreateToxDataError& error, const QString& userName)
+{
+    switch (error) {
+    case CREATE_TOX_DATA_OK:
+        break;
+    case CREATE_TOX_DATA_COULD_NOT_DERIVE_KEY:
+        qCritical() << "Failed to derive key for the tox save";
+        break;
+    case CREATE_TOX_DATA_PROFILE_LOCKED:
+        qCritical() << "Tried to create profile " << userName
+                    << ", but another profile is already locked!";
+        break;
+    case CREATE_TOX_DATA_ALREADY_EXISTS:
+        qCritical() << "Tried to create profile " << userName << ", but it already exists!";
+        break;
+    case CREATE_TOX_DATA_LOCK_FAILED:
+        qWarning() << "Failed to lock profile " << userName;
+        break;
+    default:
+        break;
+    }
+    return error;
+}
+
 void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool isNewProfile)
 {
     if (toxsave.isEmpty() && !isNewProfile) {
@@ -251,35 +275,45 @@ done:
  *
  * @note If the profile is already in use return nullptr.
  */
-Profile* Profile::createProfile(const QString& name, const QString& password)
+Profile* Profile::createProfile(const QString& userName, const QString& password)
 {
-    std::unique_ptr<ToxEncrypt> tmpKey;
+    CreateToxDataError error;
+    std::unique_ptr<ToxEncrypt> tmpKey = createToxData(userName, password, error);
+
+    if (logCreateToxDataError(error, userName)) {
+        return nullptr;
+    }
+
+    Settings::getInstance().createPersonal(userName);
+    Profile* p = new Profile(userName, password, true, QByteArray(), std::move(tmpKey));
+    return p;
+}
+
+std::unique_ptr<ToxEncrypt> Profile::createToxData(const QString& name, const QString& password,
+                                                   CreateToxDataError& error)
+{
+    std::unique_ptr<ToxEncrypt> newKey{nullptr};
     if (!password.isEmpty()) {
-        tmpKey = ToxEncrypt::makeToxEncrypt(password);
-        if (!tmpKey) {
-            qCritical() << "Failed to derive key for the tox save";
-            return nullptr;
+        newKey = ToxEncrypt::makeToxEncrypt(password);
+        if (!newKey) {
+            error = CREATE_TOX_DATA_COULD_NOT_DERIVE_KEY;
         }
     }
 
     if (ProfileLocker::hasLock()) {
-        qCritical() << "Tried to create profile " << name << ", but another profile is already locked!";
-        return nullptr;
+        error = CREATE_TOX_DATA_PROFILE_LOCKED;
     }
 
     if (exists(name)) {
-        qCritical() << "Tried to create profile " << name << ", but it already exists!";
-        return nullptr;
+        error = CREATE_TOX_DATA_ALREADY_EXISTS;
     }
 
     if (!ProfileLocker::lock(name)) {
-        qWarning() << "Failed to lock profile " << name;
-        return nullptr;
+        error = CREATE_TOX_DATA_LOCK_FAILED;
     }
 
-    Settings::getInstance().createPersonal(name);
-    Profile* p = new Profile(name, password, true, QByteArray(), std::move(tmpKey));
-    return p;
+    error = CREATE_TOX_DATA_OK;
+    return newKey;
 }
 
 Profile::~Profile()

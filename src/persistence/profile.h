@@ -50,6 +50,15 @@ class Profile : public QObject
         LOAD_TOX_DATA_DECRYPT_UNENCRYPTED_FILE
     };
 
+    enum CreateToxDataError
+    {
+        CREATE_TOX_DATA_OK = 0,
+        CREATE_TOX_DATA_COULD_NOT_DERIVE_KEY,
+        CREATE_TOX_DATA_PROFILE_LOCKED,
+        CREATE_TOX_DATA_ALREADY_EXISTS,
+        CREATE_TOX_DATA_LOCK_FAILED
+    };
+
 public:
     static Profile* loadProfile(const QString& name, const QString& password = QString());
     static Profile* createProfile(const QString& name, const QString& password);
@@ -116,9 +125,13 @@ private:
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
     void initCore(const QByteArray& toxsave, const ICoreSettings& s, bool isNewProfile);
+    // Todo(Kriby): Consider extracting these functions from Profile entirely
     static std::unique_ptr<ToxEncrypt> loadToxData(const QString& password, const QString& filePath,
                                                    QByteArray& data, LoadToxDataError& error);
     static bool logLoadToxDataError(const LoadToxDataError& error, const QString& path);
+    static std::unique_ptr<ToxEncrypt> createToxData(const QString& name, const QString& password,
+                                                     CreateToxDataError& error);
+    static bool logCreateToxDataError(const CreateToxDataError& error, const QString& userName);
 
 private:
     std::unique_ptr<Core> core = nullptr;
