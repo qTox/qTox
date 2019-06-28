@@ -170,7 +170,7 @@ public slots:
     void saveGlobal();
     void sync();
     void setAutoLogin(bool state);
-    void updateProfileData(Profile *profile);
+    void updateProfileData(Profile* profile);
 
 signals:
     // General
