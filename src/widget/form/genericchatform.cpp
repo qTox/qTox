@@ -52,6 +52,7 @@
 #include <QMessageBox>
 #include <QRegularExpression>
 #include <QStringBuilder>
+#include <QtGlobal>
 
 #ifdef SPELL_CHECKING
 #include <KF5/SonnetUi/sonnet/spellcheckdecorator.h>
@@ -450,10 +451,19 @@ void GenericChatForm::setName(const QString& newName)
 
 void GenericChatForm::show(ContentLayout* contentLayout)
 {
-    contentLayout->mainContent->layout()->addWidget(this);
     contentLayout->mainHead->layout()->addWidget(headWidget);
     headWidget->show();
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 4) && QT_VERSION > QT_VERSION_CHECK(5, 11, 0)
+    // HACK: switching order happens to avoid a Qt bug causing segfault, present between these versions.
+    // this could cause flickering if our form is shown before added to the layout
+    // https://github.com/qTox/qTox/issues/5570
     QWidget::show();
+    contentLayout->mainContent->layout()->addWidget(this);
+#else
+    contentLayout->mainContent->layout()->addWidget(this);
+    QWidget::show();
+#endif
 }
 
 void GenericChatForm::showEvent(QShowEvent*)
