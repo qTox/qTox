@@ -341,7 +341,7 @@ int main(int argc, char* argv[])
     // TODO (kriby): Shift responsibility of linking views to model objects from nexus
     // Further: generate view instances separately (loginScreen, mainGUI, audio)
     if (autoLogin && Profile::exists(profileName) && !Profile::isEncrypted(profileName)) {
-        Profile* profile = Profile::loadProfile(profileName);
+        Profile* profile = Profile::loadProfile(profileName, QString(), settings);
         settings.updateProfileData(profile);
         nexus.bootstrapWithProfile(profile);
     } else {

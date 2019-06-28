@@ -292,7 +292,7 @@ Profile* Nexus::getProfile()
  */
 void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::createProfile(name, pass));
+    setProfile(Profile::createProfile(name, pass, *settings));
 }
 
 /**
@@ -300,7 +300,7 @@ void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
  */
 void Nexus::onLoadProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::loadProfile(name, pass));
+    setProfile(Profile::loadProfile(name, pass, *settings));
 }
 /**
  * Changes the loaded profile and notifies listeners.
