@@ -2158,7 +2158,7 @@ void Widget::onEmptyGroupCreated(uint32_t groupnumber, const GroupId& groupId, c
     }
     if (title.isEmpty()) {
         // Only rename group if groups are visible.
-        if (Widget::getInstance()->groupsVisible()) {
+        if (groupsVisible()) {
             groupWidgets[groupId]->editName();
         }
     } else {
