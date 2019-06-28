@@ -153,20 +153,12 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
             Qt::ConnectionType::QueuedConnection);
 }
 
-Profile::Profile(const QString& name, const QString& password, bool isNewProfile,
-                 const QByteArray& toxsave, std::unique_ptr<ToxEncrypt> passkey)
+Profile::Profile(const QString& name, const QString& password, std::unique_ptr<ToxEncrypt> passkey)
     : name{name}
     , passkey{std::move(passkey)}
     , isRemoved{false}
     , encrypted{this->passkey != nullptr}
-{
-    Settings& s = Settings::getInstance();
-    // TODO(kriby): Move/refactor core initialization to remove settings dependency
-    //  note to self: use slots/signals for this?
-    initCore(toxsave, s, isNewProfile);
-
-    loadDatabase(password);
-}
+{}
 
 /**
  * @brief Locks and loads an existing profile and creates the associate Core* instance.
@@ -176,7 +168,7 @@ Profile::Profile(const QString& name, const QString& password, bool isNewProfile
  *
  * @example If the profile is already in use return nullptr.
  */
-Profile* Profile::loadProfile(const QString& name, const QString& password)
+Profile* Profile::loadProfile(const QString& name, const QString& password, const Settings& settings)
 {
     if (ProfileLocker::hasLock()) {
         qCritical() << "Tried to load profile " << name << ", but another profile is already locked!";
@@ -190,7 +182,7 @@ Profile* Profile::loadProfile(const QString& name, const QString& password)
 
     LoadToxDataError error;
     QByteArray toxsave = QByteArray();
-    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+    QString path = settings.getSettingsDirPath() + name + ".tox";
     std::unique_ptr<ToxEncrypt> tmpKey = Profile::loadToxData(password, path, toxsave, error);
 
     if (logLoadToxDataError(error, path)) {
@@ -198,7 +190,10 @@ Profile* Profile::loadProfile(const QString& name, const QString& password)
         return nullptr;
     }
 
-    Profile* p = new Profile(name, password, false, toxsave, std::move(tmpKey));
+    Profile* p = new Profile(name, password, std::move(tmpKey));
+
+    p->initCore(toxsave, settings, /*isNewProfile*/ false);
+    p->loadDatabase(password);
 
     return p;
 }
@@ -275,7 +270,8 @@ done:
  *
  * @note If the profile is already in use return nullptr.
  */
-Profile* Profile::createProfile(const QString& userName, const QString& password)
+Profile* Profile::createProfile(const QString& userName, const QString& password,
+                                const Settings& settings)
 {
     CreateToxDataError error;
     std::unique_ptr<ToxEncrypt> tmpKey = createToxData(userName, password, error);
@@ -284,8 +280,10 @@ Profile* Profile::createProfile(const QString& userName, const QString& password
         return nullptr;
     }
 
-    Settings::getInstance().createPersonal(userName);
-    Profile* p = new Profile(userName, password, true, QByteArray(), std::move(tmpKey));
+    settings.createPersonal(userName);
+    Profile* p = new Profile(userName, password, std::move(tmpKey));
+    p->initCore(QByteArray(), settings, /*isNewProfile*/ true);
+    p->loadDatabase(password);
     return p;
 }
 

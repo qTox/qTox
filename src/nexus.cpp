@@ -295,7 +295,7 @@ Profile* Nexus::getProfile()
  */
 void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::createProfile(name, pass));
+    setProfile(Profile::createProfile(name, pass, *settings));
 }
 
 /**
