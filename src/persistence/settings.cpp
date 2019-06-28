@@ -279,7 +279,7 @@ bool Settings::isToxPortable()
     return result;
 }
 
-void Settings::updateProfileData(Profile *profile)
+void Settings::updateProfileData(Profile* profile)
 {
     QMutexLocker locker{&bigLock};
 

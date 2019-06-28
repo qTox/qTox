@@ -34,8 +34,8 @@
 #include <QDesktopWidget>
 #include <QThread>
 #include <cassert>
-#include <vpx/vpx_image.h>
 #include <src/audio/audio.h>
+#include <vpx/vpx_image.h>
 
 #ifdef Q_OS_MAC
 #include <QActionGroup>
@@ -169,7 +169,7 @@ int Nexus::showLogin(const QString& profileName)
     return returnval;
 }
 
-void Nexus::bootstrapWithProfile(Profile *p)
+void Nexus::bootstrapWithProfile(Profile* p)
 {
     // kriby: This is a hack until a proper controller is written
 
@@ -303,13 +303,14 @@ void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
  */
 void Nexus::onLoadProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::loadProfile(name, pass));
+    setProfile(Profile::loadProfile(name, pass, *settings));
 }
 /**
  * Changes the loaded profile and notifies listeners.
  * @param p
  */
-void Nexus::setProfile(Profile* p) {
+void Nexus::setProfile(Profile* p)
+{
     if (!p) {
         emit profileLoadFailed();
         // Warnings are issued during respective createNew/load calls
