@@ -75,8 +75,10 @@ void cleanup()
 
 #ifdef LOG_TO_FILE
     FILE* f = logFileFile.load();
-    fclose(f);
-    logFileFile.store(nullptr); // atomically disable logging to file
+    if (f != nullptr) {
+        fclose(f);
+        logFileFile.store(nullptr); // atomically disable logging to file
+    }
 #endif
 }
 
