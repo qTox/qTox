@@ -38,6 +38,18 @@ class Profile : public QObject
 {
     Q_OBJECT
 
+    enum LoadToxDataError
+    {
+        LOAD_TOX_DATA_OK = 0,
+        LOAD_TOX_DATA_FILE_NOT_FOUND,
+        LOAD_TOX_DATA_COULD_NOT_READ_FILE,
+        LOAD_TOX_DATA_FILE_IS_EMPTY,
+        LOAD_TOX_DATA_ENCRYPTED_NO_PASSWORD,
+        LOAD_TOX_DATA_COULD_NOT_DERIVE_KEY,
+        LOAD_TOX_DATA_DECRYPTION_FAILED,
+        LOAD_TOX_DATA_DECRYPT_UNENCRYPTED_FILE
+    };
+
 public:
     static Profile* loadProfile(const QString& name, const QString& password = QString());
     static Profile* createProfile(const QString& name, const QString& password);
@@ -104,6 +116,9 @@ private:
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
     void initCore(const QByteArray& toxsave, const ICoreSettings& s, bool isNewProfile);
+    static std::unique_ptr<ToxEncrypt> loadToxData(const QString& password, const QString& filePath,
+                                                   QByteArray& data, LoadToxDataError& error);
+    static bool logLoadToxDataError(const LoadToxDataError& error, const QString& path);
 
 private:
     std::unique_ptr<Core> core = nullptr;
