@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Install verifying the hash
 
 # Get Python >=3.5

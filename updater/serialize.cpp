@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2018 by The qTox Project Contributors
+    Copyright © 2014-2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -14,7 +14,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with qTox.  If not, see <http://www.gnu.org/licenses/>
+    along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
