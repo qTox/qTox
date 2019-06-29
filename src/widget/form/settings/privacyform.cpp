@@ -59,7 +59,7 @@ void PrivacyForm::on_cbKeepHistory_stateChanged()
 {
     Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
     if (!bodyUI->cbKeepHistory->isChecked()) {
-        Widget::getInstance()->clearAllReceipts();
+        emit clearAllReceipts();
         QMessageBox::StandardButton dialogDelHistory;
         dialogDelHistory =
             QMessageBox::question(nullptr, tr("Confirmation"),
