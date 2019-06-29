@@ -83,6 +83,7 @@ signals:
     void addGroupDialog(Group* group, ContentDialog* contentDialog);
     void activated();
     void willClose();
+    void connectFriendWidget(FriendWidget& friendWidget);
 
 public slots:
     void reorderLayouts(bool newGroupOnTop);

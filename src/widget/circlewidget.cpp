@@ -33,8 +33,8 @@
 #include "widget.h"
 #include "tool/croppinglabel.h"
 
-#include "src/model/friend.h"
 #include "src/friendlist.h"
+#include "src/model/friend.h"
 #include "src/persistence/settings.h"
 #include "src/widget/form/chatform.h"
 
@@ -142,7 +142,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
 void CircleWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-    if(!event->mimeData()->hasFormat("toxPk")) {
+    if (!event->mimeData()->hasFormat("toxPk")) {
         return;
     }
     ToxPk toxPk(event->mimeData()->data("toxPk"));
@@ -186,7 +186,7 @@ void CircleWidget::dropEvent(QDropEvent* event)
 
     if (circleWidget != nullptr) {
         circleWidget->updateStatus();
-        Widget::getInstance()->searchCircle(circleWidget);
+        emit searchCircle(*circleWidget);
     }
 
     setContainerAttribute(Qt::WA_UnderMouse, false);

@@ -249,6 +249,9 @@ void Widget::init()
     ui->searchContactFilterBox->setMenu(filterMenu);
 
     contactListWidget = new FriendListWidget(this, settings.getGroupchatPosition());
+    connect(contactListWidget, &FriendListWidget::searchCircle, this, &Widget::searchCircle);
+    connect(contactListWidget, &FriendListWidget::connectCircleWidget, this,
+            &Widget::connectCircleWidget);
     ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
     ui->friendList->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -1141,6 +1144,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     std::shared_ptr<FriendChatroom> chatroom(rawChatroom);
     const auto compact = settings.getCompactLayout();
     auto widget = new FriendWidget(chatroom, compact);
+    connectFriendWidget(*widget);
     auto history = Nexus::getProfile()->getHistory();
 
     auto messageProcessor = MessageProcessor(sharedMessageProcessorParams);
@@ -1822,6 +1826,7 @@ ContentDialog* Widget::createContentDialog() const
             &ContentDialog::reorderLayouts);
     connect(contentDialog, &ContentDialog::addFriendDialog, this, &Widget::addFriendDialog);
     connect(contentDialog, &ContentDialog::addGroupDialog, this, &Widget::addGroupDialog);
+    connect(contentDialog, &ContentDialog::connectFriendWidget, this, &Widget::connectFriendWidget);
 
 #ifdef Q_OS_MAC
     Nexus& n = Nexus::getInstance();
@@ -2540,11 +2545,11 @@ Widget::FilterCriteria Widget::getFilterCriteria() const
     return FilterCriteria::All;
 }
 
-void Widget::searchCircle(CircleWidget* circleWidget)
+void Widget::searchCircle(CircleWidget& circleWidget)
 {
     FilterCriteria filter = getFilterCriteria();
     QString text = ui->searchContactText->text();
-    circleWidget->search(text, true, filterOnline(filter), filterOffline(filter));
+    circleWidget.search(text, true, filterOnline(filter), filterOffline(filter));
 }
 
 bool Widget::groupsVisible() const
@@ -2691,4 +2696,14 @@ void Widget::refreshPeerListsLocal(const QString& username)
     for (Group* g : GroupList::getAllGroups()) {
         g->updateUsername(core->getSelfPublicKey(), username);
     }
+}
+
+void Widget::connectCircleWidget(CircleWidget& circleWidget)
+{
+    connect(&circleWidget, &CircleWidget::searchCircle, this, &Widget::searchCircle);
+}
+
+void Widget::connectFriendWidget(FriendWidget& friendWidget)
+{
+    connect(&friendWidget, &FriendWidget::searchCircle, this, &Widget::searchCircle);
 }

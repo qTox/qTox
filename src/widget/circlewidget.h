@@ -34,6 +34,7 @@ public:
 
 signals:
     void renameRequested(CircleWidget* circleWidget, const QString& newName);
+    void searchCircle(CircleWidget& circletWidget);
 
 protected:
     void contextMenuEvent(QContextMenuEvent* event) final override;

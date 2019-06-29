@@ -294,8 +294,7 @@ void FriendListWidget::addGroupWidget(GroupWidget* widget)
 {
     groupLayout.addSortedWidget(widget);
     Group* g = widget->getGroup();
-    connect(g, &Group::titleChanged,
-            [=](const QString& author, const QString& name) {
+    connect(g, &Group::titleChanged, [=](const QString& author, const QString& name) {
         Q_UNUSED(author);
         renameGroupWidget(widget, name);
     });
@@ -330,7 +329,7 @@ void FriendListWidget::removeFriendWidget(FriendWidget* w)
         CircleWidget* circleWidget = CircleWidget::getFromID(id);
         if (circleWidget != nullptr) {
             circleWidget->removeFriendWidget(w, contact->getStatus());
-            Widget::getInstance()->searchCircle(circleWidget);
+            emit searchCircle(*circleWidget);
         }
     }
 }
@@ -354,10 +353,10 @@ void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
             circleWidget->setExpanded(true);
 
             if (circleOriginal != nullptr)
-                Widget::getInstance()->searchCircle(circleOriginal);
+                emit searchCircle(*circleOriginal);
         }
 
-        Widget::getInstance()->searchCircle(circleWidget);
+        emit searchCircle(*circleWidget);
 
         if (window()->isActiveWindow())
             circleWidget->editName();
@@ -420,7 +419,7 @@ void FriendListWidget::onFriendWidgetRenamed(FriendWidget* friendWidget)
         if (circleWidget != nullptr) {
             circleWidget->removeFriendWidget(friendWidget, status);
             circleWidget->addFriendWidget(friendWidget, status);
-            Widget::getInstance()->searchCircle(circleWidget);
+            emit searchCircle(*circleWidget);
         } else {
             listLayout->removeFriendWidget(friendWidget, status);
             listLayout->addFriendWidget(friendWidget, status);
@@ -575,7 +574,7 @@ void FriendListWidget::dragEnterEvent(QDragEnterEvent* event)
     if (!event->mimeData()->hasFormat("toxPk")) {
         return;
     }
-    ToxPk toxPk(event->mimeData()->data("toxPk"));;
+    ToxPk toxPk(event->mimeData()->data("toxPk"));
     Friend* frnd = FriendList::findFriend(toxPk);
     if (frnd)
         event->acceptProposedAction();
@@ -673,6 +672,7 @@ CircleWidget* FriendListWidget::createCircleWidget(int id)
     assert(circleLayout != nullptr);
 
     CircleWidget* circleWidget = new CircleWidget(this, id);
+    emit connectCircleWidget(*circleWidget);
     circleLayout->addSortedWidget(circleWidget);
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);

@@ -153,6 +153,7 @@ FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom,
     auto frnd = chatroom->getFriend();
     auto friendPk = frnd->getPublicKey();
     auto friendWidget = new FriendWidget(chatroom, compact);
+    emit connectFriendWidget(*friendWidget);
     contactWidgets[friendPk] = friendWidget;
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
     contactChatForms[friendPk] = form;

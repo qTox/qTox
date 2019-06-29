@@ -145,7 +145,6 @@ public:
     void reloadTheme();
     static inline QIcon prepareIcon(QString path, int w = 0, int h = 0);
 
-    void searchCircle(CircleWidget* circleWidget);
     bool groupsVisible() const;
 
     void resetIcon();
@@ -241,6 +240,9 @@ private slots:
     void dispatchFile(ToxFile file);
     void dispatchFileWithBool(ToxFile file, bool);
     void dispatchFileSendFailed(uint32_t friendId, const QString& fileName);
+    void connectCircleWidget(CircleWidget& circleWidget);
+    void connectFriendWidget(FriendWidget& friendWidget);
+    void searchCircle(CircleWidget& circleWidget);
 
 private:
     // QMainWindow overrides
