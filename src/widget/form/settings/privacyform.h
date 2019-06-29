@@ -37,6 +37,9 @@ public:
         return tr("Privacy");
     }
 
+signals:
+    void clearAllReceipts();
+
 private slots:
     void on_cbKeepHistory_stateChanged();
     void on_cbTypingNotification_stateChanged();
