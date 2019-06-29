@@ -326,7 +326,7 @@ void FriendWidget::updateStatusLight()
             circleWidget->setExpanded(true);
         }
 
-        Widget::getInstance()->updateFriendActivity(frnd);
+        emit updateFriendActivity(*frnd);
     }
 
     statusPic.setMargin(event ? 1 : 3);

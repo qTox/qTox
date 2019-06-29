@@ -174,7 +174,6 @@ public slots:
     void onReceiptReceived(int friendId, ReceiptNum receipt);
     void onFriendRequestReceived(const ToxPk& friendPk, const QString& message);
     void onFileReceiveRequested(const ToxFile& file);
-    void updateFriendActivity(const Friend* frnd);
     void onEmptyGroupCreated(uint32_t groupnumber, const GroupId& groupId, const QString& title);
     void onGroupJoined(int groupNum, const GroupId& groupId);
     void onGroupInviteReceived(const GroupInvite& inviteInfo);
@@ -243,6 +242,7 @@ private slots:
     void connectCircleWidget(CircleWidget& circleWidget);
     void connectFriendWidget(FriendWidget& friendWidget);
     void searchCircle(CircleWidget& circleWidget);
+    void updateFriendActivity(const Friend& frnd);
 
 private:
     // QMainWindow overrides

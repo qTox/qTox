@@ -1157,6 +1157,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
         std::make_shared<ChatHistory>(*newfriend, history, *core, Settings::getInstance(),
                                       *friendMessageDispatcher);
     auto friendForm = new ChatForm(newfriend, *chatHistory, *friendMessageDispatcher);
+    connect(friendForm, &ChatForm::updateFriendActivity, this, &Widget::updateFriendActivity);
 
     friendMessageDispatchers[friendPk] = friendMessageDispatcher;
     friendChatLogs[friendPk] = chatHistory;
@@ -1704,14 +1705,14 @@ void Widget::onFileReceiveRequested(const ToxFile& file)
                           true, true);
 }
 
-void Widget::updateFriendActivity(const Friend* frnd)
+void Widget::updateFriendActivity(const Friend& frnd)
 {
-    const ToxPk& pk = frnd->getPublicKey();
+    const ToxPk& pk = frnd.getPublicKey();
     const auto oldTime = settings.getFriendActivity(pk);
     const auto newTime = QDateTime::currentDateTime();
     settings.setFriendActivity(pk, newTime);
-    FriendWidget* widget = friendWidgets[frnd->getPublicKey()];
-    contactListWidget->moveWidget(widget, frnd->getStatus());
+    FriendWidget* widget = friendWidgets[frnd.getPublicKey()];
+    contactListWidget->moveWidget(widget, frnd.getStatus());
     contactListWidget->updateActivityTime(oldTime); // update old category widget
 }
 
@@ -1928,7 +1929,7 @@ void Widget::onGroupInviteReceived(const GroupInvite& inviteInfo)
     const uint32_t friendId = inviteInfo.getFriendId();
     const ToxPk& friendPk = FriendList::id2Key(friendId);
     const Friend* f = FriendList::findFriend(friendPk);
-    updateFriendActivity(f);
+    updateFriendActivity(*f);
 
     const uint8_t confType = inviteInfo.getType();
     if (confType == TOX_CONFERENCE_TYPE_TEXT || confType == TOX_CONFERENCE_TYPE_AV) {
@@ -2706,4 +2707,5 @@ void Widget::connectCircleWidget(CircleWidget& circleWidget)
 void Widget::connectFriendWidget(FriendWidget& friendWidget)
 {
     connect(&friendWidget, &FriendWidget::searchCircle, this, &Widget::searchCircle);
+    connect(&friendWidget, &FriendWidget::updateFriendActivity, this, &Widget::updateFriendActivity);
 }
