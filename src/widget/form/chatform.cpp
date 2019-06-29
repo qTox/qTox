@@ -74,34 +74,33 @@ static constexpr int TYPING_NOTIFICATION_DURATION = 3000;
 
 const QString ChatForm::ACTION_PREFIX = QStringLiteral("/me ");
 
-namespace
+namespace {
+QString secondsToDHMS(quint32 duration)
 {
-    QString secondsToDHMS(quint32 duration)
-    {
-        QString res;
-        QString cD = ChatForm::tr("Call duration: ");
-        quint32 seconds = duration % 60;
-        duration /= 60;
-        quint32 minutes = duration % 60;
-        duration /= 60;
-        quint32 hours = duration % 24;
-        quint32 days = duration / 24;
+    QString res;
+    QString cD = ChatForm::tr("Call duration: ");
+    quint32 seconds = duration % 60;
+    duration /= 60;
+    quint32 minutes = duration % 60;
+    duration /= 60;
+    quint32 hours = duration % 24;
+    quint32 days = duration / 24;
 
-        // I assume no one will ever have call longer than a month
-        if (days) {
-            return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
-        }
-
-        if (hours) {
-            return cD + res.sprintf("%02dh %02dm %02ds", hours, minutes, seconds);
-        }
-
-        if (minutes) {
-            return cD + res.sprintf("%02dm %02ds", minutes, seconds);
-        }
-
-        return cD + res.sprintf("%02ds", seconds);
+    // I assume no one will ever have call longer than a month
+    if (days) {
+        return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
     }
+
+    if (hours) {
+        return cD + res.sprintf("%02dh %02dm %02ds", hours, minutes, seconds);
+    }
+
+    if (minutes) {
+        return cD + res.sprintf("%02dm %02ds", minutes, seconds);
+    }
+
+    return cD + res.sprintf("%02ds", seconds);
+}
 } // namespace
 
 ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& messageDispatcher)
@@ -155,9 +154,8 @@ ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& me
     connect(headWidget, &ChatFormHeader::videoCallTriggered, this, &ChatForm::onVideoCallTriggered);
     connect(headWidget, &ChatFormHeader::micMuteToggle, this, &ChatForm::onMicMuteToggle);
     connect(headWidget, &ChatFormHeader::volMuteToggle, this, &ChatForm::onVolMuteToggle);
-
-    connect(sendButton, &QPushButton::pressed, this, &ChatForm::updateFriendActivity);
-    connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::updateFriendActivity);
+    connect(sendButton, &QPushButton::pressed, this, &ChatForm::callUpdateFriendActivity);
+    connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::callUpdateFriendActivity);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(msgEdit, &ChatTextEdit::pasteImage, this, &ChatForm::sendImage);
     connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this,
@@ -201,10 +199,9 @@ void ChatForm::setStatusMessage(const QString& newMessage)
     statusMessageLabel->setToolTip(Qt::convertFromPlainText(newMessage, Qt::WhiteSpaceNormal));
 }
 
-void ChatForm::updateFriendActivity()
+void ChatForm::callUpdateFriendActivity()
 {
-    // TODO: Remove Widget::getInstance()
-    Widget::getInstance()->updateFriendActivity(f);
+    emit updateFriendActivity(*f);
 }
 
 void ChatForm::updateFriendActivityForFile(const ToxFile& file)
@@ -212,9 +209,7 @@ void ChatForm::updateFriendActivityForFile(const ToxFile& file)
     if (file.friendId != f->getId()) {
         return;
     }
-
-    // TODO: Remove Widget::getInstance()
-    Widget::getInstance()->updateFriendActivity(f);
+    emit updateFriendActivity(*f);
 }
 
 void ChatForm::onFileNameChanged(const ToxPk& friendPk)
@@ -351,7 +346,7 @@ void ChatForm::showOutgoingCall(bool video)
     addSystemInfoMessage(tr("Calling %1").arg(f->getDisplayedName()), ChatMessage::INFO,
                          QDateTime::currentDateTime());
     emit outgoingNotification();
-    Widget::getInstance()->updateFriendActivity(f);
+    emit updateFriendActivity(*f);
 }
 
 void ChatForm::onAnswerCallTriggered(bool video)

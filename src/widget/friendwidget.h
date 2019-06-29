@@ -55,6 +55,7 @@ signals:
     void friendHistoryRemoved();
     void friendWidgetRenamed(FriendWidget* friendWidget);
     void searchCircle(CircleWidget& circleWidget);
+    void updateFriendActivity(Friend& frnd);
 
 public slots:
     void onAvatarSet(const ToxPk& friendPk, const QPixmap& pic);

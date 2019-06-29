@@ -65,6 +65,7 @@ signals:
     void endCallNotification();
     void rejectCall(uint32_t friendId);
     void acceptCall(uint32_t friendId);
+    void updateFriendActivity(Friend& frnd);
 
 public slots:
     void onAvInvite(uint32_t friendId, bool video);
@@ -75,7 +76,6 @@ public slots:
     void clearChatArea();
 
 private slots:
-    void updateFriendActivity();
     void updateFriendActivityForFile(const ToxFile& file);
     void onAttachClicked() override;
     void onScreenshotClicked() override;
@@ -96,6 +96,8 @@ private slots:
     void sendImage(const QPixmap& pixmap);
     void doScreenshot();
     void onCopyStatusMessage();
+
+    void callUpdateFriendActivity();
 
 private:
     void updateMuteMicButton();
