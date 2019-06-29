@@ -65,6 +65,8 @@ public:
 
 signals:
     void onCompactChanged(bool compact);
+    void connectCircleWidget(CircleWidget& circleWidget);
+    void searchCircle(CircleWidget& circleWidget);
 
 public slots:
     void renameGroupWidget(GroupWidget* groupWidget, const QString& newName);

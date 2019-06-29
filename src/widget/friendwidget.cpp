@@ -72,7 +72,8 @@ FriendWidget::FriendWidget(std::shared_ptr<FriendChatroom> chatroom, bool compac
     connect(nameLabel, &CroppingLabel::editFinished, frnd, &Friend::setAlias);
     // update on changes of the displayed name
     connect(frnd, &Friend::displayedNameChanged, nameLabel, &CroppingLabel::setText);
-    connect(frnd, &Friend::displayedNameChanged, this, [this](const QString /* &newName */){emit friendWidgetRenamed(this);});
+    connect(frnd, &Friend::displayedNameChanged, this,
+            [this](const QString /* &newName */) { emit friendWidgetRenamed(this); });
     connect(chatroom.get(), &FriendChatroom::activeChanged, this, &FriendWidget::setActive);
     statusMessageLabel->setTextFormat(Qt::PlainText);
 }
@@ -125,9 +126,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     for (const auto group : chatroom->getGroups()) {
         const auto groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(group.name));
-        connect(groupAction, &QAction::triggered, [=]() {
-            chatroom->inviteFriend(group.group);
-        });
+        connect(groupAction, &QAction::triggered, [=]() { chatroom->inviteFriend(group.group); });
     }
 
     const auto circleId = chatroom->getCircleId();
@@ -242,7 +241,7 @@ void FriendWidget::removeFromCircle()
 
     if (circleWidget != nullptr) {
         circleWidget->updateStatus();
-        Widget::getInstance()->searchCircle(circleWidget);
+        emit searchCircle(*circleWidget);
     }
 }
 
@@ -258,7 +257,7 @@ void FriendWidget::moveToCircle(int newCircleId)
     if (newCircleWidget) {
         newCircleWidget->addFriendWidget(this, frnd->getStatus());
         newCircleWidget->setExpanded(true);
-        Widget::getInstance()->searchCircle(newCircleWidget);
+        emit searchCircle(*newCircleWidget);
         s.savePersonal();
     } else {
         s.setFriendCircleID(pk, newCircleId);
@@ -266,7 +265,7 @@ void FriendWidget::moveToCircle(int newCircleId)
 
     if (oldCircleWidget) {
         oldCircleWidget->updateStatus();
-        Widget::getInstance()->searchCircle(oldCircleWidget);
+        emit searchCircle(*oldCircleWidget);
     }
 }
 
@@ -274,8 +273,10 @@ void FriendWidget::changeAutoAccept(bool enable)
 {
     if (enable) {
         const auto oldDir = chatroom->getAutoAcceptDir();
-        const auto newDir = QFileDialog::getExistingDirectory(
-            Q_NULLPTR, tr("Choose an auto accept directory", "popup title"), oldDir);
+        const auto newDir =
+            QFileDialog::getExistingDirectory(Q_NULLPTR,
+                                              tr("Choose an auto accept directory", "popup title"),
+                                              oldDir);
         chatroom->setAutoAcceptDir(newDir);
     } else {
         chatroom->disableAutoAccept();
@@ -305,8 +306,8 @@ void FriendWidget::setActive(bool active)
 {
     GenericChatroomWidget::setActive(active);
     if (isDefaultAvatar) {
-        const auto uri = active ? QStringLiteral(":img/contact_dark.svg")
-                                : QStringLiteral(":img/contact.svg");
+        const auto uri =
+            active ? QStringLiteral(":img/contact_dark.svg") : QStringLiteral(":img/contact.svg");
         avatar->setPixmap(QPixmap{uri});
     }
 }
