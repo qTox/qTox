@@ -80,7 +80,6 @@ During this time we want to prepare qTox for upcoming new features of toxcore.
 The next steps are:
 
 
-* remove support for toxcore < 0.2.0
 * move all toxcore abstractions into their own subproject
 * write basic tests for this Core
 * format the code base
