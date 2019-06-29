@@ -1818,16 +1818,22 @@ void Widget::onUpdateAvailable(QString /*latestVersion*/, QUrl /*link*/)
 ContentDialog* Widget::createContentDialog() const
 {
     ContentDialog* contentDialog = new ContentDialog();
-    ContentDialogManager::getInstance()->addContentDialog(contentDialog);
 
-    connect(contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
-    connect(contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
-    connect(core, &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
-    connect(&settings, &Settings::groupchatPositionChanged, contentDialog,
+    registerContentDialog(*contentDialog);
+    return contentDialog;
+}
+
+void Widget::registerContentDialog(ContentDialog& contentDialog) const
+{
+    ContentDialogManager::getInstance()->addContentDialog(contentDialog);
+    connect(&contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
+    connect(&contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
+    connect(core, &Core::usernameSet, &contentDialog, &ContentDialog::setUsername);
+    connect(&settings, &Settings::groupchatPositionChanged, &contentDialog,
             &ContentDialog::reorderLayouts);
-    connect(contentDialog, &ContentDialog::addFriendDialog, this, &Widget::addFriendDialog);
-    connect(contentDialog, &ContentDialog::addGroupDialog, this, &Widget::addGroupDialog);
-    connect(contentDialog, &ContentDialog::connectFriendWidget, this, &Widget::connectFriendWidget);
+    connect(&contentDialog, &ContentDialog::addFriendDialog, this, &Widget::addFriendDialog);
+    connect(&contentDialog, &ContentDialog::addGroupDialog, this, &Widget::addGroupDialog);
+    connect(&contentDialog, &ContentDialog::connectFriendWidget, this, &Widget::connectFriendWidget);
 
 #ifdef Q_OS_MAC
     Nexus& n = Nexus::getInstance();
@@ -1836,8 +1842,6 @@ ContentDialog* Widget::createContentDialog() const
     connect(contentDialog->windowHandle(), &QWindow::windowTitleChanged, &n, &Nexus::updateWindows);
     n.updateWindows();
 #endif
-
-    return contentDialog;
 }
 
 ContentLayout* Widget::createContentDialog(DialogType type) const
@@ -2702,6 +2706,7 @@ void Widget::refreshPeerListsLocal(const QString& username)
 void Widget::connectCircleWidget(CircleWidget& circleWidget)
 {
     connect(&circleWidget, &CircleWidget::searchCircle, this, &Widget::searchCircle);
+    connect(&circleWidget, &CircleWidget::newContentDialog, this, &Widget::registerContentDialog);
 }
 
 void Widget::connectFriendWidget(FriendWidget& friendWidget)

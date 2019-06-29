@@ -19,17 +19,16 @@
 
 #include "contentdialogmanager.h"
 
-#include "src/widget/friendwidget.h"
-#include "src/widget/groupwidget.h"
 #include "src/friendlist.h"
 #include "src/grouplist.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
+#include "src/widget/friendwidget.h"
+#include "src/widget/groupwidget.h"
 
 #include <tuple>
 
-namespace
-{
+namespace {
 void removeDialog(ContentDialog* dialog, QHash<const ContactId&, ContentDialog*>& dialogs)
 {
     for (auto it = dialogs.begin(); it != dialogs.end();) {
@@ -40,7 +39,7 @@ void removeDialog(ContentDialog* dialog, QHash<const ContactId&, ContentDialog*>
         }
     }
 }
-}
+} // namespace
 
 ContentDialogManager* ContentDialogManager::instance;
 
@@ -60,7 +59,8 @@ bool ContentDialogManager::contactWidgetExists(const ContactId& contactId)
 }
 
 FriendWidget* ContentDialogManager::addFriendToDialog(ContentDialog* dialog,
-    std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form)
+                                                      std::shared_ptr<FriendChatroom> chatroom,
+                                                      GenericChatForm* form)
 {
     auto friendWidget = dialog->addFriend(chatroom, form);
     const auto friendPk = friendWidget->getFriend()->getPublicKey();
@@ -75,7 +75,8 @@ FriendWidget* ContentDialogManager::addFriendToDialog(ContentDialog* dialog,
 }
 
 GroupWidget* ContentDialogManager::addGroupToDialog(ContentDialog* dialog,
-    std::shared_ptr<GroupChatroom> chatroom, GenericChatForm* form)
+                                                    std::shared_ptr<GroupChatroom> chatroom,
+                                                    GenericChatForm* form)
 {
     auto groupWidget = dialog->addGroup(chatroom, form);
     const auto& groupId = groupWidget->getGroup()->getPersistentId();
@@ -103,7 +104,8 @@ void ContentDialogManager::focusContact(const ContactId& contactId)
  * @param list List with dialogs
  * @return ContentDialog if found, nullptr otherwise
  */
-ContentDialog* ContentDialogManager::focusDialog(const ContactId& id, const QHash<const ContactId&, ContentDialog*>& list)
+ContentDialog* ContentDialogManager::focusDialog(const ContactId& id,
+                                                 const QHash<const ContactId&, ContentDialog*>& list)
 {
     auto iter = list.find(id);
     if (iter == list.end()) {
@@ -178,11 +180,11 @@ ContentDialogManager* ContentDialogManager::getInstance()
     return instance;
 }
 
-void ContentDialogManager::addContentDialog(ContentDialog* dialog)
+void ContentDialogManager::addContentDialog(ContentDialog& dialog)
 {
-    currentDialog = dialog;
-    connect(dialog, &ContentDialog::willClose, this, &ContentDialogManager::onDialogClose);
-    connect(dialog, &ContentDialog::activated, this, &ContentDialogManager::onDialogActivate);
+    currentDialog = &dialog;
+    connect(&dialog, &ContentDialog::willClose, this, &ContentDialogManager::onDialogClose);
+    connect(&dialog, &ContentDialog::activated, this, &ContentDialogManager::onDialogActivate);
 }
 
 void ContentDialogManager::onDialogActivate()
@@ -203,10 +205,10 @@ void ContentDialogManager::onDialogClose()
 
 IDialogs* ContentDialogManager::getFriendDialogs(const ToxPk& friendPk) const
 {
-  return getFriendDialog(friendPk);
+    return getFriendDialog(friendPk);
 }
 
 IDialogs* ContentDialogManager::getGroupDialogs(const GroupId& groupId) const
 {
-  return getGroupDialog(groupId);
+    return getGroupDialog(groupId);
 }

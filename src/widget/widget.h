@@ -244,6 +244,7 @@ private slots:
     void connectFriendWidget(FriendWidget& friendWidget);
     void searchCircle(CircleWidget& circleWidget);
     void updateFriendActivity(const Friend& frnd);
+    void registerContentDialog(ContentDialog& contentDialog) const;
 
 private:
     // QMainWindow overrides

@@ -113,8 +113,8 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
             circleList.remove(replacedCircle);
         } else if (selectedItem == openAction) {
-            ContentDialog* dialog = Widget::getInstance()->createContentDialog();
-
+            ContentDialog* dialog = new ContentDialog();
+            emit newContentDialog(*dialog);
             for (int i = 0; i < friendOnlineLayout()->count(); ++i) {
                 QWidget* const widget = friendOnlineLayout()->itemAt(i)->widget();
                 FriendWidget* const friendWidget = qobject_cast<FriendWidget*>(widget);
