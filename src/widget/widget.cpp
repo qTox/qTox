@@ -602,23 +602,6 @@ Widget::~Widget()
 }
 
 /**
- * @param audio Only used for initialization from Nexus, to pass IAudioControl
- * @brief Returns the singleton instance.
- */
-Widget* Widget::getInstance(IAudioControl* audio)
-{
-    if (!instance) {
-        // Passing audio via pointer here is a hack
-        // to allow for default paramters.
-        // once Widget::getInstance is removed it won't be neccessary
-        assert(audio != nullptr);
-        instance = new Widget(*audio);
-    }
-
-    return instance;
-}
-
-/**
  * @brief Switches to the About settings page.
  */
 void Widget::showUpdateDownloadProgress()
