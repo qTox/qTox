@@ -55,6 +55,8 @@ public:
     Status::Status getStatus() const;
     bool isOnline() const;
 
+    bool useHistory() const override final;
+
 signals:
     void nameChanged(const ToxPk& friendId, const QString& name);
     void aliasChanged(const ToxPk& friendId, QString alias);

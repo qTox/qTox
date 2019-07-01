@@ -41,7 +41,7 @@ class ChatLog : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit ChatLog(QWidget* parent = nullptr);
+    explicit ChatLog(const bool canRemove, QWidget* parent = nullptr);
     virtual ~ChatLog();
 
     void insertChatlineAtBottom(ChatLine::Ptr l);
@@ -182,6 +182,7 @@ private:
 
     int numRemove{0};
     const int maxMessages{300};
+    bool canRemove;
 };
 
 #endif // CHATLOG_H

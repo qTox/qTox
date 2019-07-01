@@ -205,6 +205,11 @@ QString Group::getSelfName() const
     return selfName;
 }
 
+bool Group::useHistory() const
+{
+    return false;
+}
+
 void Group::stopAudioOfDepartedPeers(const ToxPk& peerPk)
 {
     if (avGroupchat) {
