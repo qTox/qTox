@@ -53,6 +53,8 @@
 #include <QStringBuilder>
 #include <QtGlobal>
 
+#include <QDebug>
+
 #ifdef SPELL_CHECKING
 #include <KF5/SonnetUi/sonnet/spellcheckdecorator.h>
 #endif
@@ -660,6 +662,7 @@ void GenericChatForm::loadHistory(const QDateTime &time, const LoadHistoryDialog
     if (type == LoadHistoryDialog::from) {
         loadHistoryFrom(time);
         auto msg = messages.cbegin()->second;
+        chatWidget->setScroll(true);
         chatWidget->scrollToLine(msg);
     } else {
         loadHistoryTo(time);
@@ -668,15 +671,10 @@ void GenericChatForm::loadHistory(const QDateTime &time, const LoadHistoryDialog
 
 void GenericChatForm::loadHistoryTo(const QDateTime &time)
 {
+    chatWidget->setScroll(false);
     auto end = ChatLogIdx(0);
     if (time.isNull()) {
-        if (messages.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
-            end = ChatLogIdx(messages.rbegin()->first.get() - DEF_NUM_MSG_TO_LOAD);
-            chatWidget->removeLasts(DEF_NUM_MSG_TO_LOAD);
-            removeLastsMessages(DEF_NUM_MSG_TO_LOAD);
-        } else {
-            end = messages.begin()->first;
-        }
+        end = messages.begin()->first;
     } else {
         end = firstItemAfterDate(time.date(), chatLog);
     }
@@ -686,28 +684,27 @@ void GenericChatForm::loadHistoryTo(const QDateTime &time)
         begin = ChatLogIdx(end.get() - DEF_NUM_MSG_TO_LOAD);
     }
 
-    renderMessages(begin, end);
+    if (begin != end) {
+        renderMessages(begin, end);
+    } else {
+        chatWidget->setScroll(true);
+    }
 }
 
 void GenericChatForm::loadHistoryFrom(const QDateTime &time)
 {
+    chatWidget->setScroll(false);
     auto begin = ChatLogIdx(0);
     if (time.isNull()) {
-        if (messages.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
-            begin = ChatLogIdx(messages.rbegin()->first.get() + DEF_NUM_MSG_TO_LOAD);
-            chatWidget->removeFirsts(DEF_NUM_MSG_TO_LOAD);
-            removeFirstsMessages(DEF_NUM_MSG_TO_LOAD);
-        } else {
-            begin = messages.rbegin()->first;
-        }
-
+        begin = messages.rbegin()->first;
     } else {
         begin = firstItemAfterDate(time.date(), chatLog);
     }
 
     int add = DEF_NUM_MSG_TO_LOAD;
     if (begin.get() + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx().get()) {
-        add = chatLog.getNextIdx().get() - (begin.get() + DEF_NUM_MSG_TO_LOAD);
+        auto aTest = chatLog.getNextIdx().get();
+        add = chatLog.getNextIdx().get() - begin.get();
     }
     auto end = ChatLogIdx(begin.get() + add);
     renderMessages(begin, end);
@@ -1024,10 +1021,6 @@ void GenericChatForm::handleSearchResult(SearchResult result, SearchDirection di
 
 void GenericChatForm::renderMessage(ChatLogIdx idx)
 {
-    if (chatWidget->getLines().size() >= maxMessages) {
-        chatWidget->removeFirsts(optimalRemove);
-        removeFirstsMessages(optimalRemove);
-    }
     renderMessages(idx, idx + 1);
 }
 
@@ -1036,6 +1029,11 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
 {
     QList<ChatLine::Ptr> beforeLines;
     QList<ChatLine::Ptr> afterLines;
+
+    if (!messages.empty() && !(messages.rbegin()->first == begin || messages.begin()->first == end
+                              || messages.rbegin()->first.get() + 1 == begin.get())) {
+        return;
+    }
 
     for (auto i = begin; i < end; ++i) {
         auto chatMessage = getChatMessageForIdx(i, messages);
@@ -1054,8 +1052,13 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
         }
     }
 
-    for (auto const& line : afterLines) {
-        chatWidget->insertChatlineAtBottom(line);
+    if (beforeLines.isEmpty() && afterLines.isEmpty()) {
+        chatWidget->setScroll(true);
+    }
+
+    chatWidget->insertChatlineAtBottom(afterLines);
+    if (chatWidget->getNumRemove()) {
+        removeFirstsMessages(chatWidget->getNumRemove());
     }
 
     if (!beforeLines.empty()) {
@@ -1072,6 +1075,9 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
         }
 
         chatWidget->insertChatlinesOnTop(beforeLines);
+        if (chatWidget->getNumRemove()) {
+            removeLastsMessages(chatWidget->getNumRemove());
+        }
     } else if (onCompletion) {
         onCompletion();
     }
@@ -1081,7 +1087,7 @@ void GenericChatForm::goToCurrentDate()
 {
     chatWidget->clear();
     messages.clear();
-    auto end = ChatLogIdx(chatLog.size() - 1);
+    auto end = ChatLogIdx(chatLog.size());
     auto begin = end.get() > DEF_NUM_MSG_TO_LOAD ? ChatLogIdx(end.get() - DEF_NUM_MSG_TO_LOAD) : ChatLogIdx(0);
 
     renderMessages(begin, end);
