@@ -627,10 +627,8 @@ QList<History::HistMessage> History::getUnsentMessagesForFriend(const ToxPk& fri
         auto friend_key = row[3].toString();
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
-        if (row[6].isNull()) {
-            ret += {id,           isOfflineMessage, timestamp,        friend_key,
-                    display_name, sender_key,       row[6].toString()};
-        }
+        ret += {id,           isOfflineMessage, timestamp,        friend_key,
+                display_name, sender_key,       row[6].toString()};
     };
 
     db->execNow({queryText, rowCallback});

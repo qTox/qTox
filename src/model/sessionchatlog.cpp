@@ -284,8 +284,8 @@ std::vector<IChatLog::DateChatLogIdxPair> SessionChatLog::getDateIdxs(const QDat
     return ret;
 }
 
-void SessionChatLog::insertMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName,
-                                        ChatLogMessage message)
+void SessionChatLog::insertCompleteMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName,
+                                                ChatLogMessage message)
 {
     auto item = ChatLogItem(sender, message);
 
@@ -293,7 +293,25 @@ void SessionChatLog::insertMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString se
         item.setDisplayName(senderName);
     }
 
+    assert(message.isComplete == true);
+
     items.emplace(idx, std::move(item));
+}
+
+void SessionChatLog::insertIncompleteMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName,
+                                                  ChatLogMessage message,
+                                                  DispatchedMessageId dispatchId)
+{
+    auto item = ChatLogItem(sender, message);
+
+    if (!senderName.isEmpty()) {
+        item.setDisplayName(senderName);
+    }
+
+    assert(message.isComplete == false);
+
+    items.emplace(idx, std::move(item));
+    outgoingMessages.insert(dispatchId, idx);
 }
 
 void SessionChatLog::insertFileAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName, ChatLogFile file)

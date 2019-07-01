@@ -46,7 +46,10 @@ public:
     ChatLogIdx getNextIdx() const override;
     std::vector<DateChatLogIdxPair> getDateIdxs(const QDate& startDate, size_t maxDates) const override;
 
-    void insertMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName, ChatLogMessage message);
+    void insertCompleteMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName,
+                                    ChatLogMessage message);
+    void insertIncompleteMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName,
+                                      ChatLogMessage message, DispatchedMessageId dispatchId);
     void insertFileAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName, ChatLogFile file);
 
 public slots:

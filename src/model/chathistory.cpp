@@ -94,9 +94,10 @@ ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& co
     , settings(settings_)
     , coreIdHandler(coreIdHandler)
 {
-    connect(&messageDispatcher, &IMessageDispatcher::messageSent, this, &ChatHistory::onMessageSent);
     connect(&messageDispatcher, &IMessageDispatcher::messageComplete, this,
             &ChatHistory::onMessageComplete);
+    connect(&messageDispatcher, &IMessageDispatcher::messageReceived, this,
+            &ChatHistory::onMessageReceived);
 
     if (canUseHistory()) {
         // Defer messageSent callback until we finish firing off all our unsent messages.
@@ -105,8 +106,7 @@ ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& co
     }
 
     // Now that we've fired off our unsent messages we can connect the message
-    connect(&messageDispatcher, &IMessageDispatcher::messageReceived, this,
-            &ChatHistory::onMessageReceived);
+    connect(&messageDispatcher, &IMessageDispatcher::messageSent, this, &ChatHistory::onMessageSent);
 
     // NOTE: this has to be done _after_ sending all sent messages since initial
     // state of the message has to be marked according to our dispatch state
@@ -383,11 +383,12 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
 
             if (isComplete) {
                 auto chatLogMessage = ChatLogMessage{true, processedMessage};
-                sessionChatLog.insertMessageAtIdx(currentIdx, sender, message.dispName, chatLogMessage);
+                sessionChatLog.insertCompleteMessageAtIdx(currentIdx, sender, message.dispName,
+                                                          chatLogMessage);
             } else {
-                // If the message is incomplete we have to pretend we sent it to ensure
-                // sessionChatLog state is correct
-                sessionChatLog.onMessageSent(dispatchedMessageIt.key(), processedMessage);
+                auto chatLogMessage = ChatLogMessage{false, processedMessage};
+                sessionChatLog.insertIncompleteMessageAtIdx(currentIdx, sender, message.dispName,
+                                                            chatLogMessage, dispatchedMessageIt.key());
             }
             break;
         }
