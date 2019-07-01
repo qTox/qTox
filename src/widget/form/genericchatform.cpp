@@ -261,7 +261,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
     dateInfo = new QLabel(this);
-    chatWidget = new ChatLog(this);
+    chatWidget = new ChatLog(contact->useHistory(), this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);
@@ -703,7 +703,6 @@ void GenericChatForm::loadHistoryFrom(const QDateTime &time)
 
     int add = DEF_NUM_MSG_TO_LOAD;
     if (begin.get() + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx().get()) {
-        auto aTest = chatLog.getNextIdx().get();
         add = chatLog.getNextIdx().get() - begin.get();
     }
     auto end = ChatLogIdx(begin.get() + add);
