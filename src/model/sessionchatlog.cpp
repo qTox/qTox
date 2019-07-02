@@ -189,6 +189,11 @@ SearchResult SessionChatLog::searchBackward(SearchPos startPos, const QString& p
 
     // If we don't have it we'll start at the end
     if (startIt == items.end()) {
+        if (items.empty()) {
+            SearchResult ret;
+            ret.found = false;
+            return ret;
+        }
         startIt = std::prev(items.end());
         startPos.numMatches = 0;
     }
