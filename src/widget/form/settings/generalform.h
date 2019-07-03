@@ -38,6 +38,8 @@ public:
     {
         return tr("General");
     }
+signals:
+    void updateIcons();
 
 private slots:
     void on_transComboBox_currentIndexChanged(int index);

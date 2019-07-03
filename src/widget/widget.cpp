@@ -249,6 +249,9 @@ void Widget::init()
     ui->searchContactFilterBox->setMenu(filterMenu);
 
     contactListWidget = new FriendListWidget(this, settings.getGroupchatPosition());
+    connect(contactListWidget, &FriendListWidget::searchCircle, this, &Widget::searchCircle);
+    connect(contactListWidget, &FriendListWidget::connectCircleWidget, this,
+            &Widget::connectCircleWidget);
     ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
     ui->friendList->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -596,23 +599,6 @@ Widget::~Widget()
     delete trayMenu;
     delete ui;
     instance = nullptr;
-}
-
-/**
- * @param audio Only used for initialization from Nexus, to pass IAudioControl
- * @brief Returns the singleton instance.
- */
-Widget* Widget::getInstance(IAudioControl* audio)
-{
-    if (!instance) {
-        // Passing audio via pointer here is a hack
-        // to allow for default paramters.
-        // once Widget::getInstance is removed it won't be neccessary
-        assert(audio != nullptr);
-        instance = new Widget(*audio);
-    }
-
-    return instance;
 }
 
 /**
@@ -1141,6 +1127,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     std::shared_ptr<FriendChatroom> chatroom(rawChatroom);
     const auto compact = settings.getCompactLayout();
     auto widget = new FriendWidget(chatroom, compact);
+    connectFriendWidget(*widget);
     auto history = Nexus::getProfile()->getHistory();
 
     auto messageProcessor = MessageProcessor(sharedMessageProcessorParams);
@@ -1153,6 +1140,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
         std::make_shared<ChatHistory>(*newfriend, history, *core, Settings::getInstance(),
                                       *friendMessageDispatcher);
     auto friendForm = new ChatForm(newfriend, *chatHistory, *friendMessageDispatcher);
+    connect(friendForm, &ChatForm::updateFriendActivity, this, &Widget::updateFriendActivity);
 
     friendMessageDispatchers[friendPk] = friendMessageDispatcher;
     friendChatLogs[friendPk] = chatHistory;
@@ -1700,14 +1688,14 @@ void Widget::onFileReceiveRequested(const ToxFile& file)
                           true, true);
 }
 
-void Widget::updateFriendActivity(const Friend* frnd)
+void Widget::updateFriendActivity(const Friend& frnd)
 {
-    const ToxPk& pk = frnd->getPublicKey();
+    const ToxPk& pk = frnd.getPublicKey();
     const auto oldTime = settings.getFriendActivity(pk);
     const auto newTime = QDateTime::currentDateTime();
     settings.setFriendActivity(pk, newTime);
-    FriendWidget* widget = friendWidgets[frnd->getPublicKey()];
-    contactListWidget->moveWidget(widget, frnd->getStatus());
+    FriendWidget* widget = friendWidgets[frnd.getPublicKey()];
+    contactListWidget->moveWidget(widget, frnd.getStatus());
     contactListWidget->updateActivityTime(oldTime); // update old category widget
 }
 
@@ -1813,23 +1801,30 @@ void Widget::onUpdateAvailable(QString /*latestVersion*/, QUrl /*link*/)
 ContentDialog* Widget::createContentDialog() const
 {
     ContentDialog* contentDialog = new ContentDialog();
-    ContentDialogManager::getInstance()->addContentDialog(contentDialog);
 
-    connect(contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
-    connect(contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
-    connect(core, &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
-    connect(&settings, &Settings::groupchatPositionChanged, contentDialog,
+    registerContentDialog(*contentDialog);
+    return contentDialog;
+}
+
+void Widget::registerContentDialog(ContentDialog& contentDialog) const
+{
+    ContentDialogManager::getInstance()->addContentDialog(contentDialog);
+    connect(&contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
+    connect(&contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
+    connect(core, &Core::usernameSet, &contentDialog, &ContentDialog::setUsername);
+    connect(&settings, &Settings::groupchatPositionChanged, &contentDialog,
             &ContentDialog::reorderLayouts);
+    connect(&contentDialog, &ContentDialog::addFriendDialog, this, &Widget::addFriendDialog);
+    connect(&contentDialog, &ContentDialog::addGroupDialog, this, &Widget::addGroupDialog);
+    connect(&contentDialog, &ContentDialog::connectFriendWidget, this, &Widget::connectFriendWidget);
 
 #ifdef Q_OS_MAC
     Nexus& n = Nexus::getInstance();
-    connect(contentDialog, &ContentDialog::destroyed, &n, &Nexus::updateWindowsClosed);
-    connect(contentDialog, &ContentDialog::windowStateChanged, &n, &Nexus::onWindowStateChanged);
-    connect(contentDialog->windowHandle(), &QWindow::windowTitleChanged, &n, &Nexus::updateWindows);
+    connect(&contentDialog, &ContentDialog::destroyed, &n, &Nexus::updateWindowsClosed);
+    connect(&contentDialog, &ContentDialog::windowStateChanged, &n, &Nexus::onWindowStateChanged);
+    connect(contentDialog.windowHandle(), &QWindow::windowTitleChanged, &n, &Nexus::updateWindows);
     n.updateWindows();
 #endif
-
-    return contentDialog;
 }
 
 ContentLayout* Widget::createContentDialog(DialogType type) const
@@ -1921,7 +1916,7 @@ void Widget::onGroupInviteReceived(const GroupInvite& inviteInfo)
     const uint32_t friendId = inviteInfo.getFriendId();
     const ToxPk& friendPk = FriendList::id2Key(friendId);
     const Friend* f = FriendList::findFriend(friendPk);
-    updateFriendActivity(f);
+    updateFriendActivity(*f);
 
     const uint8_t confType = inviteInfo.getType();
     if (confType == TOX_CONFERENCE_TYPE_TEXT || confType == TOX_CONFERENCE_TYPE_AV) {
@@ -2156,7 +2151,7 @@ void Widget::onEmptyGroupCreated(uint32_t groupnumber, const GroupId& groupId, c
     }
     if (title.isEmpty()) {
         // Only rename group if groups are visible.
-        if (Widget::getInstance()->groupsVisible()) {
+        if (groupsVisible()) {
             groupWidgets[groupId]->editName();
         }
     } else {
@@ -2538,11 +2533,11 @@ Widget::FilterCriteria Widget::getFilterCriteria() const
     return FilterCriteria::All;
 }
 
-void Widget::searchCircle(CircleWidget* circleWidget)
+void Widget::searchCircle(CircleWidget& circleWidget)
 {
     FilterCriteria filter = getFilterCriteria();
     QString text = ui->searchContactText->text();
-    circleWidget->search(text, true, filterOnline(filter), filterOffline(filter));
+    circleWidget.search(text, true, filterOnline(filter), filterOffline(filter));
 }
 
 bool Widget::groupsVisible() const
@@ -2689,4 +2684,16 @@ void Widget::refreshPeerListsLocal(const QString& username)
     for (Group* g : GroupList::getAllGroups()) {
         g->updateUsername(core->getSelfPublicKey(), username);
     }
+}
+
+void Widget::connectCircleWidget(CircleWidget& circleWidget)
+{
+    connect(&circleWidget, &CircleWidget::searchCircle, this, &Widget::searchCircle);
+    connect(&circleWidget, &CircleWidget::newContentDialog, this, &Widget::registerContentDialog);
+}
+
+void Widget::connectFriendWidget(FriendWidget& friendWidget)
+{
+    connect(&friendWidget, &FriendWidget::searchCircle, this, &Widget::searchCircle);
+    connect(&friendWidget, &FriendWidget::updateFriendActivity, this, &Widget::updateFriendActivity);
 }

@@ -22,6 +22,8 @@
 
 #include "categorywidget.h"
 
+class ContentDialog;
+
 class CircleWidget final : public CategoryWidget
 {
     Q_OBJECT
@@ -34,6 +36,8 @@ public:
 
 signals:
     void renameRequested(CircleWidget* circleWidget, const QString& newName);
+    void searchCircle(CircleWidget& circletWidget);
+    void newContentDialog(ContentDialog& contentDialog);
 
 protected:
     void contextMenuEvent(QContextMenuEvent* event) final override;

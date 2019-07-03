@@ -37,10 +37,10 @@
 #include "src/model/status.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
-#include "src/widget/friendwidget.h"
-#include "src/widget/groupwidget.h"
 #include "src/widget/form/chatform.h"
 #include "src/widget/friendlistlayout.h"
+#include "src/widget/friendwidget.h"
+#include "src/widget/groupwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/adjustingscrollarea.h"
 #include "src/widget/translator.h"
@@ -141,7 +141,7 @@ ContentDialog::~ContentDialog()
     Translator::unregister(this);
 }
 
-void ContentDialog::closeEvent(QCloseEvent *event)
+void ContentDialog::closeEvent(QCloseEvent* event)
 {
     emit willClose();
     event->accept();
@@ -153,6 +153,7 @@ FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom,
     auto frnd = chatroom->getFriend();
     auto friendPk = frnd->getPublicKey();
     auto friendWidget = new FriendWidget(chatroom, compact);
+    emit connectFriendWidget(*friendWidget);
     contactWidgets[friendPk] = friendWidget;
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
     contactChatForms[friendPk] = form;
@@ -499,7 +500,7 @@ void ContentDialog::dropEvent(QDropEvent* event)
             return;
         }
 
-        Widget::getInstance()->addFriendDialog(contact, this);
+        emit addFriendDialog(contact, this);
         ensureSplitterVisible();
     } else if (group) {
         assert(event->mimeData()->hasFormat("groupId"));
@@ -509,7 +510,7 @@ void ContentDialog::dropEvent(QDropEvent* event)
             return;
         }
 
-        Widget::getInstance()->addGroupDialog(contact, this);
+        emit addGroupDialog(contact, this);
         ensureSplitterVisible();
     }
 }

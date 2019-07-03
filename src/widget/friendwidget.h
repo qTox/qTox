@@ -28,6 +28,7 @@
 class FriendChatroom;
 class QPixmap;
 class MaskablePixmapWidget;
+class CircleWidget;
 
 class FriendWidget : public GenericChatroomWidget
 {
@@ -53,6 +54,8 @@ signals:
     void contextMenuCalled(QContextMenuEvent* event);
     void friendHistoryRemoved();
     void friendWidgetRenamed(FriendWidget* friendWidget);
+    void searchCircle(CircleWidget& circleWidget);
+    void updateFriendActivity(Friend& frnd);
 
 public slots:
     void onAvatarSet(const ToxPk& friendPk, const QPixmap& pic);
