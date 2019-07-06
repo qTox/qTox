@@ -39,8 +39,13 @@
 #include <QMutexLocker>
 
 #include <ctime>
+#include <memory>
 #include <sodium.h>
 #include <stdio.h>
+#if defined(__FreeBSD__) || defined(__DragonFly__)
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#endif
 
 #if defined(Q_OS_OSX)
 #include "platform/install_osx.h"
@@ -216,14 +221,36 @@ int main(int argc, char* argv[])
                            QObject::tr("Starts new instance and opens the login screen.")));
     parser.process(*a);
 
-    uint32_t profileId = settings.getCurrentProfileId();
-    IPC ipc(profileId);
-    if (!ipc.isAttached()) {
-        qCritical() << "Can't init IPC";
-        return EXIT_FAILURE;
-    }
+    bool doIpc = true;
+    std::unique_ptr<IPC> ipc;
 
-    QObject::connect(&settings, &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId);
+#if defined(__FreeBSD__) || defined(__DragonFly__)
+    // IPC can't be used in FreeBSD jails because semget(2) is intentionally disabled in jails.
+    // Determine if we run in a FreeBSD jail, and disable IPC in this case.
+    {
+        int injail;
+        size_t size = sizeof(injail);
+        if (::sysctlbyname("security.jail.jailed", &injail, &size, NULL, 0) == 0) {
+          if (injail != 0) {
+            doIpc = false;
+            qInfo() << "Running in a FreeBSD jail: IPC is disabled because the semget system call is not available";
+          }
+        } else {
+          qWarning() << "Unable to determine the sysctl security.jail.jailed value";
+        }
+    }
+#endif
+
+    if (doIpc) {
+        uint32_t profileId = settings.getCurrentProfileId();
+        ipc.reset(new IPC(profileId));
+        if (!ipc->isAttached()) {
+            qCritical() << "Can't init IPC";
+            return EXIT_FAILURE;
+        }
+
+        QObject::connect(&settings, &Settings::currentProfileIdChanged, ipc.get(), &IPC::setProfileId);
+    }
 
     // For the auto-updater
     if (sodium_init() < 0) {
@@ -277,7 +304,6 @@ int main(int argc, char* argv[])
     bool autoLogin = settings.getAutoLogin();
 
     uint32_t ipcDest = 0;
-    bool doIpc = true;
     QString eventType, firstParam;
     if (parser.isSet("p")) {
         profileName = parser.value("p");
@@ -314,10 +340,10 @@ int main(int argc, char* argv[])
         }
     }
 
-    if (doIpc && !ipc.isCurrentOwner()) {
-        time_t event = ipc.postEvent(eventType, firstParam.toUtf8(), ipcDest);
+    if (doIpc && !ipc->isCurrentOwner()) {
+        time_t event = ipc->postEvent(eventType, firstParam.toUtf8(), ipcDest);
         // If someone else processed it, we're done here, no need to actually start qTox
-        if (ipc.waitUntilAccepted(event, 2)) {
+        if (ipc->waitUntilAccepted(event, 2)) {
             if (eventType == "activate") {
                 qDebug()
                     << "Another qTox instance is already running. If you want to start a second "
@@ -352,9 +378,11 @@ int main(int argc, char* argv[])
     }
 
     // Start to accept Inter-process communication
-    ipc.registerEventHandler("uri", &toxURIEventHandler);
-    ipc.registerEventHandler("save", &toxSaveEventHandler);
-    ipc.registerEventHandler("activate", &toxActivateEventHandler);
+    if (doIpc) {
+        ipc->registerEventHandler("uri", &toxURIEventHandler);
+        ipc->registerEventHandler("save", &toxSaveEventHandler);
+        ipc->registerEventHandler("activate", &toxActivateEventHandler);
+    }
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri")
