@@ -81,5 +81,8 @@ then
     sha256sum "$OUTFILE" > "$OUTFILE".sha256
 else
     # upload PR builds to test them.
-    curl --upload-file "./output/qTox-x86_64.AppImage" "https://transfer.sh/qTox-x86_64.AppImage"
+    echo "Uploading AppImage to transfer.sh"
+    curl --upload-file "./output/qTox-x86_64.AppImage" "https://transfer.sh/qTox-x86_64.AppImage" > ./upload
+    echo "$(cat ./upload)"
+    echo -n "$(cat ./upload)\\n" >> ./uploaded-to
 fi
