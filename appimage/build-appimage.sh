@@ -85,4 +85,5 @@ else
     curl --upload-file "./output/qTox-x86_64.AppImage" "https://transfer.sh/qTox-x86_64.AppImage" > ./upload
     echo "$(cat ./upload)"
     echo -n "$(cat ./upload)\\n" >> ./uploaded-to
+    rm -rf ./upload ./uploaded-to # remove temp files.
 fi
