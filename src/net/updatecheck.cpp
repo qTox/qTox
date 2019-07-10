@@ -155,8 +155,6 @@ void UpdateCheck::handleUpdateEnd()
     updateDialog->hide();
     connect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed,
             Qt::DirectConnection);
-    disconnect(updateDialog.data(), &AppImageUpdaterDialog::quit, QApplication::instance(),
-               &QApplication::quit);
     disconnect(updateDialog.data(), &AppImageUpdaterDialog::canceled, this,
                &UpdateCheck::handleUpdateEnd);
     disconnect(updateDialog.data(), &AppImageUpdaterDialog::finished, this,
