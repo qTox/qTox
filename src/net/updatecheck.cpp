@@ -71,6 +71,7 @@ void UpdateCheck::checkForUpdate()
     QNetworkRequest request{versionUrl};
     manager.get(request);
 #else
+    revisioner.clear();
     revisioner.setProxy(settings.getProxy());
     revisioner.checkForUpdate();
 #endif
@@ -79,10 +80,6 @@ void UpdateCheck::checkForUpdate()
 #ifdef APPIMAGE_UPDATER_BRIDGE_ENABLED
 void UpdateCheck::initUpdate()
 {
-    if (!updateDialog.isNull()) {
-        updateDialog->init();
-        return;
-    }
     int flags = AppImageUpdaterDialog::ShowProgressDialog | AppImageUpdaterDialog::ShowFinishedDialog
                 | AppImageUpdaterDialog::ShowUpdateConfirmationDialog
                 | AppImageUpdaterDialog::ShowErrorDialog;
@@ -156,8 +153,14 @@ void UpdateCheck::handleUpdate(bool aval)
 void UpdateCheck::handleUpdateEnd()
 {
     updateDialog->hide();
-    updateDialog.reset(nullptr);
     connect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed,
             Qt::DirectConnection);
+    disconnect(updateDialog.data(), &AppImageUpdaterDialog::quit, QApplication::instance(),
+               &QApplication::quit, Qt::QueuedConnection);
+    disconnect(updateDialog.data(), &AppImageUpdaterDialog::canceled, this,
+               &UpdateCheck::handleUpdateEnd);
+    disconnect(updateDialog.data(), &AppImageUpdaterDialog::finished, this,
+               &UpdateCheck::handleUpdateEnd);
+    disconnect(updateDialog.data(), &AppImageUpdaterDialog::error, this, &UpdateCheck::handleUpdateEnd);
 }
 #endif // APPIMAGE_UPDATER_BRIDGE_ENABLED
