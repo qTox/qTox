@@ -31,7 +31,7 @@ readonly DEBUG="$1"
 
 # Set this to True to upload the PR version of the 
 # AppImage to transfer.sh for testing.
-readonly UPLOAD_PR_APPIMAGE="True"
+readonly UPLOAD_PR_APPIMAGE="False"
 
 # Fail out on error
 set -exo pipefail
