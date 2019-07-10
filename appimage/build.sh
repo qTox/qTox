@@ -28,6 +28,7 @@ set -exuo pipefail
 
 # directory paths
 readonly QTOX_SRC_DIR="/qtox"
+readonly QTOX_NIGHTLY_APPIMAGE_OUTPUT="/nightly-appimage"
 readonly OUTPUT_DIR="/output"
 readonly BUILD_DIR="/build"
 readonly QTOX_BUILD_DIR="$BUILD_DIR"/qtox
@@ -54,8 +55,12 @@ readonly AUB_SRC_DIR="$BUILD_DIR"/aub
 readonly AUB_GIT="https://github.com/antony-jr/AppImageUpdaterBridge"
 # aub build dir
 readonly AUB_BUILD_DIR="$BUILD_DIR"/aub/build
+
 # update information to be embeded in AppImage
 readonly UPDATE_INFO="gh-releases-zsync|qTox|qTox|latest|qTox-*.x86_64.AppImage.zsync"
+# update information for nightly version
+# readonly NIGHTLY_REPO_SLUG=$(echo "$CIRP_GITHUB_REPO_SLUG" | tr "/" "|")
+# readonly UPDATE_INFO_NIGHTLY="gh-releases-zsync|$NIGHTLY_REPO_SLUG|ci-master-latest|qTox-*-x86_64.AppImage.zsync"
 
 # use multiple cores when building
 export MAKEFLAGS="-j$(nproc)"
@@ -188,8 +193,15 @@ if [ -n "$TRAVIS_TAG" ]
 then
     eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-$TRAVIS_TAG.x86_64.AppImage"
 else
-    eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-x86_64.AppImage"
+    eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-$GIT_HASH-x86_64.AppImage"
 fi
+
+# for nightly builds a new appimage is created with the correct update information 
+# and it is copied to the nightly-appimage in the qTox source directory , copy this after the 
+# build script are finished to the artifacts dir for the nightly release.
+# Simply ignore this file which will be deleted after the job ends.
+# cd "$QTOX_NIGHTLY_APPIMAGE_OUTPUT"
+# eval "$AITOOL_BIN -u \"$UPDATE_INFO_NIGHTLY\" $QTOX_APP_DIR qTox-$GIT_HASH-x86_64.AppImage"
 
 # Chmod since everything is root:root
 chmod 755 -R "$OUTPUT_DIR"
