@@ -87,7 +87,7 @@ then
 
     sha256sum "$OUTFILE" > "$OUTFILE".sha256
 else
-    if [ "$UPLOAD_PR_APPIMAGE" == "True" ] 
+    if [ "$UPLOAD_PR_APPIMAGE" == "True" ]
     then
         # upload PR builds to test them.
         echo "Uploading AppImage to transfer.sh"
