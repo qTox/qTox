@@ -63,7 +63,7 @@ else
     docker run --rm \
         -e CIRP_GITHUB_REPO_SLUG \
         -e TRAVIS_EVENT_TYPE \
-        -e TRAVIS_COMMIT \ 
+        -e TRAVIS_COMMIT \
         -e TRAVIS_TAG \
         -v $PWD:/qtox \
         -v $PWD/output:/output \

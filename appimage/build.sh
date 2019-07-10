@@ -56,7 +56,7 @@ readonly AUB_GIT="https://github.com/antony-jr/AppImageUpdaterBridge"
 readonly AUB_BUILD_DIR="$BUILD_DIR"/aub/build
 
 # update information to be embeded in AppImage
-if [ "$TRAVIS_EVENT_TYPE" == "corn" ]
+if [ "cron" == "$TRAVIS_EVENT_TYPE" ]
 then
     # update information for nightly version
     readonly NIGHTLY_REPO_SLUG=$(echo "$CIRP_GITHUB_REPO_SLUG" | tr "/" "|")
