@@ -96,6 +96,6 @@ else
         echo "$(cat ./upload)"
         echo -n "$(cat ./upload)\\n" >> ./uploaded-to
         rm -rf ./upload ./uploaded-to
-	sha256sum "./output/qTox-$TRAVIS_COMMIT-x86_64.AppImage"
+        sha256sum "./output/qTox-$TRAVIS_COMMIT-x86_64.AppImage"
     fi
 fi
