@@ -33,9 +33,6 @@ readonly DEBUG="$1"
 # AppImage to transfer.sh for testing.
 readonly UPLOAD_PR_APPIMAGE="True"
 
-# Git commit to use for nightlies and PR upload.
-readonly GIT_HASH=$(git rev-parse --short HEAD)
-
 # Fail out on error
 set -exo pipefail
 
@@ -51,7 +48,6 @@ if [ ! -f ./appimage/build-appimage.sh ]; then
 fi
 
 mkdir -p ./output
-mkdir -p ./nightly-appimage # AppImages specially made for nightly release.
 
 if [ "$DEBUG" == "Debug" ]
 then
@@ -65,12 +61,12 @@ then
         /bin/bash
 else
     docker run --rm \
-        -e GIT_HASH \
-	-e CIRP_GITHUB_REPO_SLUG \
+        -e CIRP_GITHUB_REPO_SLUG \
+        -e TRAVIS_EVENT_TYPE \
+        -e TRAVIS_COMMIT \ 
         -e TRAVIS_TAG \
         -v $PWD:/qtox \
         -v $PWD/output:/output \
-        -v $PWD/nightly-appimage:/nightly-appimage \
         debian:stretch-slim \
         /bin/bash -c "/qtox/appimage/build.sh"
 fi
@@ -95,10 +91,11 @@ else
     then
         # upload PR builds to test them.
         echo "Uploading AppImage to transfer.sh"
-        curl --upload-file "./output/qTox-$GIT_HASH-x86_64.AppImage" "https://transfer.sh/qTox-$GIT_HASH-x86_64.AppImage" > ./upload
+        curl --upload-file "./output/qTox-$TRAVIS_COMMIT-x86_64.AppImage" \
+            "https://transfer.sh/qTox-$TRAVIS_COMMIT-x86_64.AppImage" > ./upload
         echo "$(cat ./upload)"
         echo -n "$(cat ./upload)\\n" >> ./uploaded-to
         rm -rf ./upload ./uploaded-to
-	sha256sum "./output/qTox-$GIT_HASH-x86_64.AppImage"
+	sha256sum "./output/qTox-$TRAVIS_COMMIT-x86_64.AppImage"
     fi
 fi
