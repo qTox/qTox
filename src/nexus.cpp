@@ -138,9 +138,6 @@ void Nexus::start()
     quitAction->setMenuRole(QAction::QuitRole);
     connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
 
-    windowMapper = new QSignalMapper(this);
-    connect(windowMapper, SIGNAL(mapped(QObject*)), this, SLOT(onOpenWindow(QObject*)));
-
     retranslateUi();
 #endif
     showMainGUI();
@@ -392,8 +389,7 @@ void Nexus::updateWindowsArg(QWindow* closedWindow)
         QAction* action = windowActions->addAction(windowList[i]->title());
         action->setCheckable(true);
         action->setChecked(windowList[i] == activeWindow);
-        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-        windowMapper->setMapping(action, windowList[i]);
+        connect(action, &QAction::triggered, [=] { onOpenWindow(windowList[i]);});
         windowMenu->addAction(action);
         dockMenu->insertAction(dockLast, action);
     }
