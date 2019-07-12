@@ -101,7 +101,7 @@ void OfflineMsgEngine::deliverOfflineMsgs()
 
     QVector<OfflineMessage> messages = sentMessages.values().toVector() + unsentMessages;
     // order messages by authorship time to resend in same order as they were written
-    qSort(messages.begin(), messages.end(), [](const OfflineMessage& lhs, const OfflineMessage& rhs) {
+    std::sort(messages.begin(), messages.end(), [](const OfflineMessage& lhs, const OfflineMessage& rhs) {
         return lhs.authorshipTime < rhs.authorshipTime;
     });
     removeAllMessages();
