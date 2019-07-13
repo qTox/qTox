@@ -57,6 +57,15 @@ UpdateCheck::UpdateCheck(const Settings& settings)
     connect(&revisioner, &AppImageDeltaRevisioner::updateAvailable, this, &UpdateCheck::handleUpdate);
     connect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed,
             Qt::DirectConnection);
+
+
+    updateDialog.reset(new AppImageUpdaterDialog(QPixmap(":/img/icons/qtox.svg")));
+
+    connect(updateDialog.data(), &AppImageUpdaterDialog::quit, QApplication::instance(),
+            &QApplication::quit, Qt::QueuedConnection);
+    connect(updateDialog.data(), &AppImageUpdaterDialog::canceled, this, &UpdateCheck::handleUpdateEnd);
+    connect(updateDialog.data(), &AppImageUpdaterDialog::finished, this, &UpdateCheck::handleUpdateEnd);
+    connect(updateDialog.data(), &AppImageUpdaterDialog::error, this, &UpdateCheck::handleUpdateEnd);
 #endif
 }
 
@@ -80,21 +89,12 @@ void UpdateCheck::checkForUpdate()
 #ifdef APPIMAGE_UPDATER_BRIDGE_ENABLED
 void UpdateCheck::initUpdate()
 {
-    int flags = AppImageUpdaterDialog::ShowProgressDialog | AppImageUpdaterDialog::ShowFinishedDialog
-                | AppImageUpdaterDialog::ShowUpdateConfirmationDialog
-                | AppImageUpdaterDialog::ShowErrorDialog;
-    updateDialog.reset(
-        new AppImageUpdaterDialog(QPixmap(":/img/icons/qtox.svg"), nullptr, flags, &revisioner));
+    disconnect(&revisioner, &AppImageDeltaRevisioner::updateAvailable, this,
+               &UpdateCheck::handleUpdate);
+    disconnect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed);
     updateDialog->move(QGuiApplication::primaryScreen()->geometry().center()
                        - updateDialog->rect().center());
-
-    disconnect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed);
-    connect(updateDialog.data(), &AppImageUpdaterDialog::quit, QApplication::instance(),
-            &QApplication::quit, Qt::QueuedConnection);
-    connect(updateDialog.data(), &AppImageUpdaterDialog::canceled, this, &UpdateCheck::handleUpdateEnd);
-    connect(updateDialog.data(), &AppImageUpdaterDialog::finished, this, &UpdateCheck::handleUpdateEnd);
-    connect(updateDialog.data(), &AppImageUpdaterDialog::error, this, &UpdateCheck::handleUpdateEnd);
-    updateDialog->init();
+    updateDialog->init(&revisioner);
 }
 #endif
 
@@ -152,13 +152,9 @@ void UpdateCheck::handleUpdate(bool aval)
 
 void UpdateCheck::handleUpdateEnd()
 {
-    updateDialog->hide();
     connect(&revisioner, &AppImageDeltaRevisioner::error, this, &UpdateCheck::updateCheckFailed,
-            Qt::DirectConnection);
-    disconnect(updateDialog.data(), &AppImageUpdaterDialog::canceled, this,
-               &UpdateCheck::handleUpdateEnd);
-    disconnect(updateDialog.data(), &AppImageUpdaterDialog::finished, this,
-               &UpdateCheck::handleUpdateEnd);
-    disconnect(updateDialog.data(), &AppImageUpdaterDialog::error, this, &UpdateCheck::handleUpdateEnd);
+            (Qt::ConnectionType)(Qt::DirectConnection | Qt::UniqueConnection));
+    connect(&revisioner, &AppImageDeltaRevisioner::updateAvailable, this,
+            &UpdateCheck::handleUpdate, Qt::UniqueConnection);
 }
 #endif // APPIMAGE_UPDATER_BRIDGE_ENABLED

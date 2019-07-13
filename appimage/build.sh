@@ -114,7 +114,7 @@ make install
 # qTox
 git clone "$AUB_GIT" "$AUB_SRC_DIR"
 cd "$AUB_SRC_DIR" # we need to checkout first
-git checkout tags/v1.0.4 
+git checkout tags/v1.1.0
 mkdir $AUB_BUILD_DIR
 cd $AUB_BUILD_DIR
 cmake .. -DLOGGING_DISABLED=ON
