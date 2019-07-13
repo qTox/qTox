@@ -191,6 +191,12 @@ eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs -extra-plugins=libsnore-q
 mv "$QTOX_APP_DIR"/usr/* "$QTOX_APP_DIR/"
 rm -rf "$QTOX_APP_DIR/usr"
 
+# copy OpenSSL libs to AppImage
+# Warning: This is hard coded to debain:stretch.
+cp /usr/lib/x86_64-linux-gnu/libssl.so* "$QTOX_APP_DIR/local/lib/"
+cp /usr/lib/x86_64-linux-gnu/libcrypt.so* "$QTOX_APP_DIR/local/lib/"
+cp /usr/lib/x86_64-linux-gnu/libcrypto.so* "$QTOX_APP_DIR/local/lib"
+
 # this is important , aitool automatically uses the same filename in .zsync meta file.
 # if this name does not match with the one we upload , the update always fails.
 if [ -n "$TRAVIS_TAG" ]
