@@ -27,13 +27,13 @@
 #include <AppImageUpdaterBridge>
 #include <AppImageUpdaterDialog>
 #endif
+#include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QRegularExpression>
 #include <QNetworkReply>
 #include <QObject>
+#include <QRegularExpression>
 #include <QTimer>
-#include <QDebug>
 #include <cassert>
 
 #ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
@@ -96,7 +96,7 @@ void UpdateCheck::initUpdate()
 #endif
 
 #ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
-void UpdateCheck::handleResponse(QNetworkReply *reply)
+void UpdateCheck::handleResponse(QNetworkReply* reply)
 {
     assert(reply != nullptr);
     if (reply == nullptr) {
@@ -129,8 +129,7 @@ void UpdateCheck::handleResponse(QNetworkReply *reply)
         qInfo() << "Update available to version" << latestVersion;
         QUrl link{mainMap["html_url"].toString()};
         emit updateAvailable(latestVersion, link);
-    }
-    else {
+    } else {
         qInfo() << "qTox is up to date";
         emit upToDate();
     }

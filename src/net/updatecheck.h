@@ -16,8 +16,8 @@
     You should have received a copy of the GNU General Public License
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <QObject>
 #include <QNetworkAccessManager>
+#include <QObject>
 #include <QTimer>
 
 #ifdef APPIMAGE_UPDATER_BRIDGE_ENABLED
