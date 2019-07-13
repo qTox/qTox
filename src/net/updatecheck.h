@@ -57,6 +57,10 @@ private slots:
 #ifdef APPIMAGE_UPDATER_BRIDGE_ENABLED
 public slots:
     void initUpdate();
+
+private slots:
+    void handleUpdate(bool);
+    void handleUpdateEnd();
 #endif
 
 private:
