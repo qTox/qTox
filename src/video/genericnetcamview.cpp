@@ -136,10 +136,15 @@ void GenericNetCamView::enterFullScreen()
     showFullScreen();
     enterFullScreenButton->hide();
     toggleMessagesButton->hide();
-
-    const auto screenSize = QApplication::desktop()->screenGeometry(this);
-    buttonPanel->setGeometry((screenSize.width() / 2) - buttonPanel->width() / 2,
-            screenSize.height() - BTN_PANEL_HEIGHT - 25, BTN_PANEL_WIDTH, BTN_PANEL_HEIGHT);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 13, 0))
+    const auto screenSize = QGuiApplication::screenAt(this->pos());
+#else
+    const QRect screenSizeInstance = QApplication::desktop()->screenGeometry(this);
+    // Kriby: equalize behavior between Qt 5.13 and earlier versions
+    const QRect* screenSize = &screenSizeInstance;
+#endif
+    buttonPanel->setGeometry((screenSize->width() / 2) - buttonPanel->width() / 2,
+            screenSize->height() - BTN_PANEL_HEIGHT - 25, BTN_PANEL_WIDTH, BTN_PANEL_HEIGHT);
     buttonPanel->show();
     buttonPanel->activateWindow();
     buttonPanel->raise();

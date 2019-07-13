@@ -203,10 +203,16 @@ void ScreenshotGrabber::chooseHelperTooltipText(QRect rect)
 void ScreenshotGrabber::adjustTooltipPosition()
 {
     QRect recGL = QGuiApplication::primaryScreen()->virtualGeometry();
-    QRect rec = qApp->desktop()->screenGeometry(QCursor::pos());
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 13, 0))
+    QScreen* rec = qApp->desktop()->screenAt(QCursor::pos())->geometry();
+#else
+    QRect recInstance = qApp->desktop()->screenGeometry(QCursor::pos());
+    // Kriby: equalize behavior between Qt 5.13 and earlier versions
+    QRect* rec = &recInstance;
+#endif
     const QRectF ttRect = this->helperToolbox->childrenBoundingRect();
-    int x = qAbs(recGL.x()) + rec.x() + ((rec.width() - ttRect.width()) / 2);
-    int y = qAbs(recGL.y()) + rec.y();
+    int x = qAbs(recGL.x()) + rec->x() + ((rec->width() - ttRect.width()) / 2);
+    int y = qAbs(recGL.y()) + rec->y();
 
     helperToolbox->setX(x);
     helperToolbox->setY(y);
