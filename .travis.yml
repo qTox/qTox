@@ -144,24 +144,6 @@ jobs:
         directories:
           - /opt/build-windows/x86_64
     - stage: "macOS, AppImage and Flatpak"
-      os: osx
-      osx_image: xcode9.2
-      env: JOB=build-osx
-      cache:
-        timeout: 300 # seconds
-        ccache: true
-        directories:
-          - $HOME/Library/Caches/Homebrew
-      before_cache:
-        - brew cleanup
-      script:
-        - "./.travis/$JOB.sh"
-        - export ARTIFACTS_DIR="$(mktemp -d)"
-        - cp -a ./{qTox.dmg,qTox.dmg.sha256} "$ARTIFACTS_DIR"
-        - .travis/cirp/cleanup1.sh
-        - .travis/cirp/store.sh "$ARTIFACTS_DIR"
-        - .travis/cirp/cleanup2.sh
-    - stage: "macOS, AppImage and Flatpak"
       os: linux
       env: JOB=APPIMAGE
       script:
