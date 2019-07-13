@@ -1791,7 +1791,7 @@ void Widget::toggleFullscreen()
     }
 }
 
-void Widget::onUpdateAvailable(QString /*latestVersion*/, QUrl /*link*/)
+void Widget::onUpdateAvailable()
 {
     ui->settingsButton->setProperty("update-available", true);
     ui->settingsButton->style()->unpolish(ui->settingsButton);

@@ -2,7 +2,7 @@
 
 # MIT License
 #
-# Copyright © 2019 by The qTox Project Contributors
+# Copyright © 2018 by The qTox Project Contributors
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+
 # Fail out on error
 set -exuo pipefail
 
@@ -39,11 +40,31 @@ readonly AITOOL_BUILD_DIR="$BUILD_DIR"/aitool
 readonly SQLCIPHER_BUILD_DIR="$BUILD_DIR"/sqlcipher
 # ldqt binary
 readonly LDQT_BIN="/usr/lib/x86_64-linux-gnu/qt5/bin/linuxdeployqt"
+# aitool binary
+readonly AITOOL_BIN="/usr/local/bin/appimagetool"
+readonly APPRUN_BIN="/usr/local/bin/AppRun"
 readonly APT_FLAGS="-y --no-install-recommends"
 # snorenotify source
 readonly SNORE_GIT="https://github.com/KDE/snorenotify"
 # snorenotify build directory
 readonly SNORE_BUILD_DIR="$BUILD_DIR"/snorenotify
+# "appimage updater bridge" becomes aub
+readonly AUB_SRC_DIR="$BUILD_DIR"/aub
+# aub source
+readonly AUB_GIT="https://github.com/antony-jr/AppImageUpdaterBridge"
+# aub build dir
+readonly AUB_BUILD_DIR="$BUILD_DIR"/aub/build
+
+# update information to be embeded in AppImage
+if [ "cron" == "${TRAVIS_EVENT_TYPE:-}" ]
+then
+    # update information for nightly version
+    readonly NIGHTLY_REPO_SLUG=$(echo "$CIRP_GITHUB_REPO_SLUG" | tr "/" "|")
+    readonly UPDATE_INFO="gh-releases-zsync|$NIGHTLY_REPO_SLUG|ci-master-latest|qTox-*-x86_64.AppImage.zsync"
+else
+    # update information for stable version
+    readonly UPDATE_INFO="gh-releases-zsync|qTox|qTox|latest|qTox-*.x86_64.AppImage.zsync"
+fi
 
 # use multiple cores when building
 export MAKEFLAGS="-j$(nproc)"
@@ -89,6 +110,17 @@ LDFLAGS="-lcrypto"
 make
 make install
 
+# build aub into a static library and later use it in 
+# qTox
+git clone "$AUB_GIT" "$AUB_SRC_DIR"
+cd "$AUB_SRC_DIR" # we need to checkout first
+git checkout tags/v1.1.1
+mkdir $AUB_BUILD_DIR
+cd $AUB_BUILD_DIR
+cmake .. -DLOGGING_DISABLED=ON
+make
+
+
 # copy qtox source
 cp -r "$QTOX_SRC_DIR" "$QTOX_BUILD_DIR"
 cd "$QTOX_BUILD_DIR"
@@ -103,7 +135,10 @@ mkdir -p ./_build
 cd _build
 
 # need to build with -DDESKTOP_NOTIFICATIONS=True for snorenotify
-cmake -DDESKTOP_NOTIFICATIONS=True ../
+cmake -DDESKTOP_NOTIFICATIONS=True \
+      -DUPDATE_CHECK=True \
+      -DAPPIMAGE_UPDATER_BRIDGE_SRC_DIR="$AUB_SRC_DIR" \
+      -DAPPIMAGE_UPDATER_BRIDGE_BUILD_DIR="$AUB_BUILD_DIR" ../
 
 make
 
@@ -139,7 +174,7 @@ cd build
 export PKG_CONFIG_PATH=/deps/lib/pkgconfig/
 
 cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING=ON \
--DAPPIMAGEKIT_PACKAGE_DEBS=ON -DUPDATE_CHECK=ON
+-DAPPIMAGEKIT_PACKAGE_DEBS=ON
 
 make
 make install
@@ -152,7 +187,18 @@ readonly QTOX_DESKTOP_FILE="$QTOX_APP_DIR"/usr/local/share/applications/*.deskto
 
 eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs -extra-plugins=libsnore-qt5"
 
-eval "$LDQT_BIN $QTOX_DESKTOP_FILE -appimage"
+# Move the required files to the correct directory
+mv "$QTOX_APP_DIR"/usr/* "$QTOX_APP_DIR/"
+rm -rf "$QTOX_APP_DIR/usr"
+
+# this is important , aitool automatically uses the same filename in .zsync meta file.
+# if this name does not match with the one we upload , the update always fails.
+if [ -n "$TRAVIS_TAG" ]
+then
+    eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-$TRAVIS_TAG.x86_64.AppImage"
+else
+    eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-$TRAVIS_COMMIT-x86_64.AppImage"
+fi
 
 # Chmod since everything is root:root
 chmod 755 -R "$OUTPUT_DIR"
