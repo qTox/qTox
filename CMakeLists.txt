@@ -26,6 +26,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra dependencies" ON)
 option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 option(UPDATE_CHECK "Enable automatic update check" ON)
+option(APPIMAGE_UPDATER_BRIDGE "Use AppImageUpdaterBridge to do the update" OFF)
 option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
 option(SVGZ_ICON "Compress the SVG icon of qTox" ON)
@@ -690,6 +691,13 @@ endif()
 
 if(${UPDATE_CHECK})
     add_definitions(-DUPDATE_CHECK_ENABLED=1)
+    if(APPIMAGE_UPDATER_BRIDGE_SRC_DIR AND APPIMAGE_UPDATER_BRIDGE_BUILD_DIR)
+        message(STATUS "using AppImageUpdaterBridge")
+        add_definitions(-DAPPIMAGE_UPDATER_BRIDGE_ENABLED=1)
+        include_directories(${APPIMAGE_UPDATER_BRIDGE_SRC_DIR})
+    else()
+        message(STATUS "NOT using AppImageUpdaterBridge")
+    endif()
     set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
         src/net/updatecheck.cpp
         src/net/updatecheck.h)
@@ -729,10 +737,18 @@ add_library(${PROJECT_NAME}_static
   ${${PROJECT_NAME}_SOURCES}
   ${${PROJECT_NAME}_QM_FILES}
   ${${PROJECT_NAME}_RESOURCES})
-target_link_libraries(${PROJECT_NAME}_static
-  ${CMAKE_REQUIRED_LIBRARIES}
-  ${ALL_LIBRARIES})
 
+if(APPIMAGE_UPDATER_BRIDGE_BUILD_DIR AND APPIMAGE_UPDATER_BRIDGE_SRC_DIR AND UPDATE_CHECK)
+    target_link_libraries(${PROJECT_NAME}_static
+    ${CMAKE_REQUIRED_LIBRARIES}
+    ${ALL_LIBRARIES}
+    ${APPIMAGE_UPDATER_BRIDGE_BUILD_DIR}/libAppImageUpdaterBridge.a)
+else()
+    target_link_libraries(${PROJECT_NAME}_static
+    ${CMAKE_REQUIRED_LIBRARIES}
+    ${ALL_LIBRARIES})
+endif()
+  
 add_executable(${PROJECT_NAME}
   WIN32
   MACOSX_BUNDLE
