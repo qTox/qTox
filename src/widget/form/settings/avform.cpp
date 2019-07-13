@@ -105,11 +105,14 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
     eventsInit();
 
     QDesktopWidget* desktop = QApplication::desktop();
-    connect(desktop, &QDesktopWidget::screenCountChanged, this, &AVForm::rescanDevices);
-
     for (QScreen* qScreen : QGuiApplication::screens()) {
         connect(qScreen, &QScreen::geometryChanged, this, &AVForm::rescanDevices);
     }
+    auto* qGUIApp = qobject_cast<QGuiApplication *>(qApp);
+    assert (qGUIApp);
+    connect(qGUIApp, &QGuiApplication::screenAdded, this, &AVForm::trackNewScreenGeometry);
+    connect(qGUIApp, &QGuiApplication::screenAdded, this, &AVForm::rescanDevices);
+    connect(qGUIApp, &QGuiApplication::screenRemoved, this, &AVForm::rescanDevices);
     Translator::registerHandler(std::bind(&AVForm::retranslateUi, this), this);
 }
 
@@ -158,6 +161,10 @@ void AVForm::open(const QString& devName, const VideoMode& mode)
     videoSettings->setCamVideoRes(rect);
     videoSettings->setCamVideoFPS(static_cast<float>(mode.FPS));
     camera.setupDevice(devName, mode);
+}
+
+void AVForm::trackNewScreenGeometry(QScreen* qScreen) {
+    connect(qScreen, &QScreen::geometryChanged, this, &AVForm::rescanDevices);
 }
 
 void AVForm::rescanDevices()
