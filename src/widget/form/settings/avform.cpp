@@ -105,9 +105,11 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
     eventsInit();
 
     QDesktopWidget* desktop = QApplication::desktop();
-    connect(desktop, &QDesktopWidget::resized, this, &AVForm::rescanDevices);
     connect(desktop, &QDesktopWidget::screenCountChanged, this, &AVForm::rescanDevices);
 
+    for (QScreen* qScreen : QGuiApplication::screens()) {
+        connect(qScreen, &QScreen::geometryChanged, this, &AVForm::rescanDevices);
+    }
     Translator::registerHandler(std::bind(&AVForm::retranslateUi, this), this);
 }
 
