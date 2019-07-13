@@ -52,10 +52,12 @@ signals:
 #ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
 private slots:
     void handleResponse(QNetworkReply* reply);
+#endif
 
+#ifdef APPIMAGE_UPDATER_BRIDGE_ENABLED
 public slots:
     void initUpdate();
-#else
+#endif
 
 private:
 #ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
