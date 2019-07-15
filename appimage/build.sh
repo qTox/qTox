@@ -196,6 +196,8 @@ rm -rf "$QTOX_APP_DIR/usr"
 cp /usr/lib/x86_64-linux-gnu/libssl.so* "$QTOX_APP_DIR/local/lib/"
 cp /usr/lib/x86_64-linux-gnu/libcrypt.so* "$QTOX_APP_DIR/local/lib/"
 cp /usr/lib/x86_64-linux-gnu/libcrypto.so* "$QTOX_APP_DIR/local/lib"
+# Also bundle libjack.so* without which the AppImage does not work in Fedora Workstation
+cp /usr/lib/x86_64-linux-gnu/libjack.so* "$QTOX_APP_DIR/local/lib"
 
 # this is important , aitool automatically uses the same filename in .zsync meta file.
 # if this name does not match with the one we upload , the update always fails.
