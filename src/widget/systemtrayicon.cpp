@@ -115,9 +115,13 @@ GdkPixbuf* SystemTrayIcon::convertQIconToPixbuf(const QIcon& icon)
     QImage image = icon.pixmap(64, 64).toImage();
     if (image.format() != QImage::Format_RGBA8888_Premultiplied)
         image = image.convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+    guchar* image_bytes = new guchar[image.sizeInBytes()];
+    memcpy(image_bytes, image.bits(), image.sizeInBytes());
+#else
     guchar* image_bytes = new guchar[image.byteCount()];
     memcpy(image_bytes, image.bits(), image.byteCount());
-
+#endif
     return gdk_pixbuf_new_from_data(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(), 8,
                                     image.width(), image.height(), image.bytesPerLine(),
                                     callbackFreeImage, nullptr);
@@ -214,8 +218,8 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
             else if (a->icon().isNull())
                 item = gtk_menu_item_new_with_label(aText.c_str());
             else {
-                const std::string iconPath = extractIconToFile(a->icon(),
-                                             "iconmenu" + a->icon().name()).toStdString();
+                const std::string iconPath =
+                    extractIconToFile(a->icon(), "iconmenu" + a->icon().name()).toStdString();
                 GtkWidget* image = gtk_image_new_from_file(iconPath.c_str());
                 item = gtk_image_menu_item_new_with_label(aText.c_str());
                 gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), image);
