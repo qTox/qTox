@@ -23,6 +23,7 @@
 #include "src/chatlog/chatmessage.h"
 #include "src/core/toxpk.h"
 #include "src/model/ichatlog.h"
+#include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/searchtypes.h"
 
 #include <QMenu>
@@ -125,11 +126,20 @@ protected slots:
     void renderMessage(ChatLogIdx idx);
     void renderMessages(ChatLogIdx begin, ChatLogIdx end,
                         std::function<void(void)> onCompletion = std::function<void(void)>());
+    void goToCurrentDate();
+
+    void loadHistoryLower();
+    void loadHistoryUpper();
 
 private:
     void retranslateUi();
     void addSystemDateMessage(const QDate& date);
     QDateTime getTime(const ChatLine::Ptr& chatLine) const;
+    void loadHistory(const QDateTime& time, const LoadHistoryDialog::LoadType type);
+    void loadHistoryTo(const QDateTime& time);
+    void loadHistoryFrom(const QDateTime& time);
+    void removeFirstsMessages(const int num);
+    void removeLastsMessages(const int num);
 
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
@@ -160,10 +170,9 @@ protected:
     QAction* searchAction;
     QAction* loadHistoryAction;
     QAction* exportChatAction;
+    QAction* goCurrentDateAction;
 
     ToxPk previousId;
-
-    QDateTime earliestMessage;
 
     QMenu menu;
 

@@ -681,14 +681,14 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
         break;
     }
 
-    QDateTime date = from;
+    QDateTime time = from;
 
-    if (!date.isValid()) {
-        date = QDateTime::currentDateTime();
+    if (!time.isValid()) {
+        time = QDateTime::currentDateTime();
     }
 
     if (parameter.period == PeriodSearch::AfterDate || parameter.period == PeriodSearch::BeforeDate) {
-        date = QDateTime(parameter.date);
+        time = parameter.time;
     }
 
     QString period;
@@ -698,15 +698,15 @@ QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTi
         break;
     case PeriodSearch::AfterDate:
         period = QStringLiteral("AND timestamp > '%1' ORDER BY timestamp ASC LIMIT 1;")
-                     .arg(date.toMSecsSinceEpoch());
+                     .arg(time.toMSecsSinceEpoch());
         break;
     case PeriodSearch::BeforeDate:
         period = QStringLiteral("AND timestamp < '%1' ORDER BY timestamp DESC LIMIT 1;")
-                     .arg(date.toMSecsSinceEpoch());
+                     .arg(time.toMSecsSinceEpoch());
         break;
     default:
         period = QStringLiteral("AND timestamp < '%1' ORDER BY timestamp DESC LIMIT 1;")
-                     .arg(date.toMSecsSinceEpoch());
+                     .arg(time.toMSecsSinceEpoch());
         break;
     }
 

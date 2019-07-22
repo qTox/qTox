@@ -35,14 +35,17 @@ class QTimer;
 class ChatLineContent;
 struct ToxFile;
 
+static const auto DEF_NUM_MSG_TO_LOAD = 100;
+
 class ChatLog : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit ChatLog(QWidget* parent = nullptr);
+    explicit ChatLog(const bool canRemove, QWidget* parent = nullptr);
     virtual ~ChatLog();
 
     void insertChatlineAtBottom(ChatLine::Ptr l);
+    void insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines);
     void insertChatlineOnTop(ChatLine::Ptr l);
     void insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines);
     void clearSelection();
@@ -55,6 +58,10 @@ public:
     void selectAll();
     void fontChanged(const QFont& font);
     void reloadTheme();
+    void removeFirsts(const int num);
+    void removeLasts(const int num);
+    void setScroll(const bool scroll);
+    int getNumRemove() const;
 
     QString getSelectedText() const;
 
@@ -72,6 +79,8 @@ signals:
     void selectionChanged();
     void workerTimeoutFinished();
     void firstVisibleLineChanged(const ChatLine::Ptr&);
+    void loadHistoryLower();
+    void loadHistoryUpper();
 
 public slots:
     void forceRelayout();
@@ -94,9 +103,9 @@ protected:
 
     void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
-    void checkVisibility();
+    void checkVisibility(bool causedWheelEvent = false);
     void scrollToBottom();
-    void startResizeWorker();
+    void startResizeWorker(ChatLine::Ptr anchorLine = nullptr);
 
     virtual void mouseDoubleClickEvent(QMouseEvent* ev) final override;
     virtual void mousePressEvent(QMouseEvent* ev) final override;
@@ -107,6 +116,7 @@ protected:
     virtual void showEvent(QShowEvent*) final override;
     virtual void focusInEvent(QFocusEvent* ev) final override;
     virtual void focusOutEvent(QFocusEvent* ev) final override;
+    virtual void wheelEvent(QWheelEvent *event) final override;
 
     void updateMultiSelectionRect();
     void updateTypingNotification();
@@ -159,6 +169,7 @@ private:
     int clickCount = 0;
     QPoint lastClickPos;
     Qt::MouseButton lastClickButton;
+    bool isScroll{true};
 
     // worker vars
     int workerLastIndex = 0;
@@ -168,6 +179,10 @@ private:
     // layout
     QMargins margins = QMargins(10, 10, 10, 10);
     qreal lineSpacing = 5.0f;
+
+    int numRemove{0};
+    const int maxMessages{300};
+    bool canRemove;
 };
 
 #endif // CHATLOG_H

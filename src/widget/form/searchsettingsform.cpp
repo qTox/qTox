@@ -86,7 +86,7 @@ ParameterSearch SearchSettingsForm::getParameterSearch()
         break;
     }
 
-    ps.date = startDate;
+    ps.time = startTime;
     ps.isUpdate = isUpdate;
     isUpdate = false;
 
@@ -101,7 +101,7 @@ void SearchSettingsForm::reloadTheme()
 
 void SearchSettingsForm::updateStartDateLabel()
 {
-    ui->startDateLabel->setText(startDate.toString(Settings::getInstance().getDateFormat()));
+    ui->startDateLabel->setText(startTime.toString(Settings::getInstance().getDateFormat()));
 }
 
 void SearchSettingsForm::setUpdate(const bool isUpdate)
@@ -119,8 +119,8 @@ void SearchSettingsForm::onStartSearchSelected(const int index)
         ui->choiceDateButton->setProperty("state", QStringLiteral("green"));
         ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
 
-        if (startDate.isNull()) {
-            startDate = QDate::currentDate();
+        if (startTime.isNull()) {
+            startTime = QDateTime::currentDateTime();
             updateStartDateLabel();
         }
 
@@ -161,11 +161,9 @@ void SearchSettingsForm::onRegularClicked(const bool checked)
 
 void SearchSettingsForm::onChoiceDate()
 {
-    LoadHistoryDialog dlg;
-    dlg.setTitle(tr("Select Date Dialog"));
-    dlg.setInfoLabel(tr("Select a date"));
+    LoadHistoryDialog dlg(LoadHistoryDialog::search);
     if (dlg.exec()) {
-        startDate = dlg.getFromDate().date();
+        startTime = dlg.getFromDate();
         updateStartDateLabel();
     }
 

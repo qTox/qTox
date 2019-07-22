@@ -37,7 +37,6 @@
 #include "src/widget/contentlayout.h"
 #include "src/widget/emoticonswidget.h"
 #include "src/widget/form/chatform.h"
-#include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/searchform.h"
 #include "src/widget/style.h"
@@ -53,6 +52,8 @@
 #include <QRegularExpression>
 #include <QStringBuilder>
 #include <QtGlobal>
+
+#include <QDebug>
 
 #ifdef SPELL_CHECKING
 #include <KF5/SonnetUi/sonnet/spellcheckdecorator.h>
@@ -260,7 +261,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
     dateInfo = new QLabel(this);
-    chatWidget = new ChatLog(this);
+    chatWidget = new ChatLog(contact->useHistory(), this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);
@@ -329,6 +330,13 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     quoteAction = menu.addAction(QIcon(), QString(), this, SLOT(quoteSelectedText()),
                                  QKeySequence(Qt::ALT + Qt::Key_Q));
     addAction(quoteAction);
+
+    menu.addSeparator();
+
+    goCurrentDateAction = menu.addAction(QIcon(), QString(), this, SLOT(goToCurrentDate()),
+                                  QKeySequence(Qt::CTRL + Qt::Key_G));
+    addAction(goCurrentDateAction);
+
     menu.addSeparator();
 
     searchAction = menu.addAction(QIcon(), QString(), this, SLOT(searchFormShow()),
@@ -355,6 +363,8 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     connect(chatWidget, &ChatLog::customContextMenuRequested, this,
             &GenericChatForm::onChatContextMenuRequested);
     connect(chatWidget, &ChatLog::firstVisibleLineChanged, this, &GenericChatForm::updateShowDateInfo);
+    connect(chatWidget, &ChatLog::loadHistoryLower, this, &GenericChatForm::loadHistoryLower);
+    connect(chatWidget, &ChatLog::loadHistoryUpper, this, &GenericChatForm::loadHistoryUpper);
 
     connect(searchForm, &SearchForm::searchInBegin, this, &GenericChatForm::searchInBegin);
     connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
@@ -380,7 +390,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     connect(contact, &Contact::displayedNameChanged, this, &GenericChatForm::setName);
 
     auto chatLogIdxRange = chatLog.getNextIdx() - chatLog.getFirstIdx();
-    auto firstChatLogIdx = (chatLogIdxRange < 100) ? chatLog.getFirstIdx() : chatLog.getNextIdx() - 100;
+    auto firstChatLogIdx = (chatLogIdxRange < DEF_NUM_MSG_TO_LOAD) ? chatLog.getFirstIdx() : chatLog.getNextIdx() - DEF_NUM_MSG_TO_LOAD;
 
     renderMessages(firstChatLogIdx, chatLog.getNextIdx());
 
@@ -644,6 +654,79 @@ QDateTime GenericChatForm::getTime(const ChatLine::Ptr &chatLine) const
     return QDateTime();
 }
 
+void GenericChatForm::loadHistory(const QDateTime &time, const LoadHistoryDialog::LoadType type)
+{
+    chatWidget->clear();
+    messages.clear();
+
+    if (type == LoadHistoryDialog::from) {
+        loadHistoryFrom(time);
+        auto msg = messages.cbegin()->second;
+        chatWidget->setScroll(true);
+        chatWidget->scrollToLine(msg);
+    } else {
+        loadHistoryTo(time);
+    }
+}
+
+void GenericChatForm::loadHistoryTo(const QDateTime &time)
+{
+    chatWidget->setScroll(false);
+    auto end = ChatLogIdx(0);
+    if (time.isNull()) {
+        end = messages.begin()->first;
+    } else {
+        end = firstItemAfterDate(time.date(), chatLog);
+    }
+
+    auto begin = ChatLogIdx(0);
+    if (end.get() > DEF_NUM_MSG_TO_LOAD) {
+        begin = ChatLogIdx(end.get() - DEF_NUM_MSG_TO_LOAD);
+    }
+
+    if (begin != end) {
+        renderMessages(begin, end);
+    } else {
+        chatWidget->setScroll(true);
+    }
+}
+
+void GenericChatForm::loadHistoryFrom(const QDateTime &time)
+{
+    chatWidget->setScroll(false);
+    auto begin = ChatLogIdx(0);
+    if (time.isNull()) {
+        begin = messages.rbegin()->first;
+    } else {
+        begin = firstItemAfterDate(time.date(), chatLog);
+    }
+
+    int add = DEF_NUM_MSG_TO_LOAD;
+    if (begin.get() + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx().get()) {
+        add = chatLog.getNextIdx().get() - begin.get();
+    }
+    auto end = ChatLogIdx(begin.get() + add);
+    renderMessages(begin, end);
+}
+
+void GenericChatForm::removeFirstsMessages(const int num)
+{
+    if (messages.size() > num) {
+        messages.erase(messages.begin(), std::next(messages.begin(), num));
+    } else {
+        messages.clear();
+    }
+}
+
+void GenericChatForm::removeLastsMessages(const int num)
+{
+    if (messages.size() > num) {
+        messages.erase(std::next(messages.end(), -num), messages.end());
+    } else {
+        messages.clear();
+    }
+}
+
 
 void GenericChatForm::disableSearchText()
 {
@@ -810,8 +893,9 @@ void GenericChatForm::onLoadHistory()
     LoadHistoryDialog dlg(&chatLog);
     if (dlg.exec()) {
         QDateTime time = dlg.getFromDate();
-        auto idx = firstItemAfterDate(dlg.getFromDate().date(), chatLog);
-        renderMessages(idx, chatLog.getNextIdx());
+        auto type = dlg.getLoadType();
+
+        loadHistory(time, type);
     }
 }
 
@@ -858,6 +942,12 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
 {
     disableSearchText();
 
+    if (!parameter.time.isNull()) {
+        LoadHistoryDialog::LoadType type = (parameter.period == PeriodSearch::BeforeDate)
+                ? LoadHistoryDialog::to : LoadHistoryDialog::from;
+        loadHistory(parameter.time, type);
+    }
+
     bool bForwardSearch = false;
     switch (parameter.period) {
     case PeriodSearch::WithTheFirst: {
@@ -875,13 +965,13 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
     }
     case PeriodSearch::AfterDate: {
         bForwardSearch = true;
-        searchPos.logIdx = firstItemAfterDate(parameter.date, chatLog);
+        searchPos.logIdx = firstItemAfterDate(parameter.time.date(), chatLog);
         searchPos.numMatches = 0;
         break;
     }
     case PeriodSearch::BeforeDate: {
         bForwardSearch = false;
-        searchPos.logIdx = firstItemAfterDate(parameter.date, chatLog);
+        searchPos.logIdx = firstItemAfterDate(parameter.time.date(), chatLog);
         searchPos.numMatches = 0;
         break;
     }
@@ -939,6 +1029,11 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
     QList<ChatLine::Ptr> beforeLines;
     QList<ChatLine::Ptr> afterLines;
 
+    if (!messages.empty() && !(messages.rbegin()->first == begin || messages.begin()->first == end
+                              || messages.rbegin()->first.get() + 1 == begin.get())) {
+        return;
+    }
+
     for (auto i = begin; i < end; ++i) {
         auto chatMessage = getChatMessageForIdx(i, messages);
         renderItem(chatLog.at(i), needsToHideName(i), colorizeNames, chatMessage);
@@ -956,8 +1051,13 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
         }
     }
 
-    for (auto const& line : afterLines) {
-        chatWidget->insertChatlineAtBottom(line);
+    if (beforeLines.isEmpty() && afterLines.isEmpty()) {
+        chatWidget->setScroll(true);
+    }
+
+    chatWidget->insertChatlineAtBottom(afterLines);
+    if (chatWidget->getNumRemove()) {
+        removeFirstsMessages(chatWidget->getNumRemove());
     }
 
     if (!beforeLines.empty()) {
@@ -974,9 +1074,34 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
         }
 
         chatWidget->insertChatlinesOnTop(beforeLines);
+        if (chatWidget->getNumRemove()) {
+            removeLastsMessages(chatWidget->getNumRemove());
+        }
     } else if (onCompletion) {
         onCompletion();
     }
+}
+
+void GenericChatForm::goToCurrentDate()
+{
+    chatWidget->clear();
+    messages.clear();
+    auto end = ChatLogIdx(chatLog.size());
+    auto begin = end.get() > DEF_NUM_MSG_TO_LOAD ? ChatLogIdx(end.get() - DEF_NUM_MSG_TO_LOAD) : ChatLogIdx(0);
+
+    renderMessages(begin, end);
+}
+
+void GenericChatForm::loadHistoryLower()
+{
+    loadHistoryTo(QDateTime());
+}
+
+void GenericChatForm::loadHistoryUpper()
+{
+    auto msg = messages.crbegin()->second;
+    loadHistoryFrom(QDateTime());
+    chatWidget->scrollToLine(msg);
 }
 
 void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& line)
@@ -1002,6 +1127,7 @@ void GenericChatForm::retranslateUi()
     quoteAction->setText(tr("Quote selected text"));
     copyLinkAction->setText(tr("Copy link address"));
     searchAction->setText(tr("Search in text"));
+    goCurrentDateAction->setText(tr("Go to current date"));
     loadHistoryAction->setText(tr("Load chat history..."));
     exportChatAction->setText(tr("Export to file"));
 }

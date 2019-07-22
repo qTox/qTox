@@ -289,6 +289,11 @@ std::vector<IChatLog::DateChatLogIdxPair> SessionChatLog::getDateIdxs(const QDat
     return ret;
 }
 
+std::size_t SessionChatLog::size() const
+{
+    return items.size();
+}
+
 void SessionChatLog::insertMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName,
                                         ChatLogMessage message)
 {
