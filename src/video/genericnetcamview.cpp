@@ -20,6 +20,7 @@
 #include "genericnetcamview.h"
 
 #include <QApplication>
+#include <QScreen>
 #include <QBoxLayout>
 #include <QDesktopWidget>
 #include <QKeyEvent>
@@ -136,8 +137,11 @@ void GenericNetCamView::enterFullScreen()
     showFullScreen();
     enterFullScreenButton->hide();
     toggleMessagesButton->hide();
-
-    const auto screenSize = QApplication::desktop()->screenGeometry(this);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+    const auto screenSize = QGuiApplication::screenAt(this->pos())->geometry();
+#else
+    const QRect screenSize = QApplication::desktop()->screenGeometry(this);
+#endif
     buttonPanel->setGeometry((screenSize.width() / 2) - buttonPanel->width() / 2,
             screenSize.height() - BTN_PANEL_HEIGHT - 25, BTN_PANEL_WIDTH, BTN_PANEL_HEIGHT);
     buttonPanel->show();

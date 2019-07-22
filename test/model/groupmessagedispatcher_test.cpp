@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
+#include <set>
 #include <deque>
 
 

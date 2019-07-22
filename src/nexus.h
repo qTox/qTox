@@ -77,7 +77,6 @@ public slots:
 private:
     void updateWindowsArg(QWindow* closedWindow);
 
-    QSignalMapper* windowMapper;
     QActionGroup* windowActions = nullptr;
 #endif
 signals:

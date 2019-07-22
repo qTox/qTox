@@ -195,13 +195,14 @@ void FileTransferWidget::paintEvent(QPaintEvent*)
     // Draw the widget background:
     painter.setClipRect(QRect(0, 0, width(), height()));
     painter.setBrush(QBrush(backgroundColor));
-    painter.drawRoundRect(geometry(), r * ratio, r);
+    painter.drawRoundedRect(geometry(), r * ratio, r, Qt::RelativeSize);
 
     if (drawButtonAreaNeeded()) {
         // Draw the button background:
         QPainterPath buttonBackground;
-        buttonBackground.addRoundRect(width() - 2 * buttonFieldWidth - lineWidth * 2, 0,
-                                      buttonFieldWidth, buttonFieldWidth + lineWidth, 50, 50);
+        buttonBackground.addRoundedRect(width() - 2 * buttonFieldWidth - lineWidth * 2, 0,
+                                      buttonFieldWidth, buttonFieldWidth + lineWidth, 50, 50,
+                                      Qt::RelativeSize);
         buttonBackground.addRect(width() - 2 * buttonFieldWidth - lineWidth * 2, 0,
                                  buttonFieldWidth * 2, buttonFieldWidth / 2);
         buttonBackground.addRect(width() - 1.5 * buttonFieldWidth - lineWidth * 2, 0,
@@ -212,9 +213,9 @@ void FileTransferWidget::paintEvent(QPaintEvent*)
 
         // Draw the left button:
         QPainterPath leftButton;
-        leftButton.addRoundRect(QRect(width() - 2 * buttonFieldWidth - lineWidth, 0,
+        leftButton.addRoundedRect(QRect(width() - 2 * buttonFieldWidth - lineWidth, 0,
                                       buttonFieldWidth, buttonFieldWidth),
-                                50, 50);
+                                50, 50, Qt::RelativeSize);
         leftButton.addRect(QRect(width() - 2 * buttonFieldWidth - lineWidth, 0,
                                  buttonFieldWidth / 2, buttonFieldWidth / 2));
         leftButton.addRect(QRect(width() - 1.5 * buttonFieldWidth - lineWidth, 0,
@@ -226,7 +227,7 @@ void FileTransferWidget::paintEvent(QPaintEvent*)
         // Draw the right button:
         painter.setBrush(QBrush(buttonColor));
         painter.setClipRect(QRect(width() - buttonFieldWidth, 0, buttonFieldWidth, buttonFieldWidth));
-        painter.drawRoundRect(geometry(), r * ratio, r);
+        painter.drawRoundedRect(geometry(), r * ratio, r, Qt::RelativeSize);
     }
 }
 
@@ -539,7 +540,7 @@ void FileTransferWidget::showPreview(const QString& filename)
         ui->previewButton->show();
         // Show mouseover preview, but make sure it's not larger than 50% of the screen
         // width/height
-        const QRect desktopSize = QApplication::desktop()->screenGeometry();
+        const QRect desktopSize = QApplication::desktop()->geometry();
         const int maxPreviewWidth{desktopSize.width() / 2};
         const int maxPreviewHeight{desktopSize.height() / 2};
         const QImage previewImage = [&image, maxPreviewWidth, maxPreviewHeight]() {

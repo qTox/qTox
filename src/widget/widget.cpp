@@ -2271,7 +2271,7 @@ void Widget::onTryCreateTrayIcon()
             }
 
 #ifdef Q_OS_MAC
-            qt_mac_set_dock_menu(Nexus::getInstance().dockMenu);
+            Nexus::getInstance().dockMenu->setAsDockMenu();
 #endif
         } else if (!isVisible()) {
             show();

@@ -95,6 +95,7 @@ private:
     void open(const QString& devName, const VideoMode& mode);
     int getStepsFromValue(qreal val, qreal valMin, qreal valMax);
     qreal getValueFromSteps(int steps, qreal valMin, qreal valMax);
+    void trackNewScreenGeometry(QScreen* qScreen);
 
 private:
     IAudioControl& audio;
