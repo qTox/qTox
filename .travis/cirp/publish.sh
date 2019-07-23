@@ -24,6 +24,7 @@ ARTIFACTS_DIR="$1"
 
 ci-release-publisher publish --latest-release \
                              --latest-release-prerelease \
+                             --latest-release-check-event-type cron \
                              --numbered-release \
                              --numbered-release-keep-count 3 \
                              --numbered-release-prerelease \
