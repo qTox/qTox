@@ -117,8 +117,9 @@ git checkout tags/v1.1.2
 mkdir $AUB_BUILD_DIR
 cd $AUB_BUILD_DIR
 cmake .. -DLOGGING_DISABLED=ON
-make
 
+make
+make install
 
 # copy qtox source
 cp -r "$QTOX_SRC_DIR" "$QTOX_BUILD_DIR"
@@ -136,8 +137,7 @@ cd _build
 # need to build with -DDESKTOP_NOTIFICATIONS=True for snorenotify
 cmake -DDESKTOP_NOTIFICATIONS=True \
       -DUPDATE_CHECK=True \
-      -DAPPIMAGE_UPDATER_BRIDGE_SRC_DIR="$AUB_SRC_DIR" \
-      -DAPPIMAGE_UPDATER_BRIDGE_BUILD_DIR="$AUB_BUILD_DIR" ../
+      -DAPPIMAGE_UPDATER_BRIDGE=True
 
 make
 
