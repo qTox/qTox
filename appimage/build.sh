@@ -22,7 +22,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-
 # Fail out on error
 set -exuo pipefail
 
@@ -110,11 +109,11 @@ LDFLAGS="-lcrypto"
 make
 make install
 
-# build aub into a static library and later use it in 
+# build aub into a static library and later use it in
 # qTox
 git clone "$AUB_GIT" "$AUB_SRC_DIR"
 cd "$AUB_SRC_DIR" # we need to checkout first
-git checkout tags/v1.1.1
+git checkout tags/v1.1.2
 mkdir $AUB_BUILD_DIR
 cd $AUB_BUILD_DIR
 cmake .. -DLOGGING_DISABLED=ON
