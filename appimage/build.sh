@@ -137,7 +137,8 @@ cd _build
 # need to build with -DDESKTOP_NOTIFICATIONS=True for snorenotify
 cmake -DDESKTOP_NOTIFICATIONS=True \
       -DUPDATE_CHECK=True \
-      -DAPPIMAGE_UPDATER_BRIDGE=True
+      -DAPPIMAGE_UPDATER_BRIDGE=True \
+      ../
 
 make
 
