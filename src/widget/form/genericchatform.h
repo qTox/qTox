@@ -86,6 +86,7 @@ public:
     static QString resolveToxPk(const ToxPk& pk);
     QDateTime getLatestTime() const;
     QDateTime getFirstTime() const;
+    void setShown(const bool isShown);
 
 signals:
     void messageInserted();

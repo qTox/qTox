@@ -377,15 +377,11 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     l->addToScene(scene);
     lines.append(l);
 
-    // partial refresh
-    layout(lines.last()->getRow(), lines.size(), useableWidth());
-    updateSceneRect();
-
-    if (stickToBtm)
-        scrollToBottom();
-
-    checkVisibility();
-    updateTypingNotification();
+    if (isShown) {
+        partialRefresh(stickToBtm, lines.last()->getRow());
+    } else if (firstUnreadMessage == ChatLine::Ptr()) {
+        firstUnreadMessage = lines.last();
+    }
 }
 
 void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
@@ -405,12 +401,16 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
         lines.append(l);
     }
 
-    layout(lines.last()->getRow(), lines.size(), useableWidth());
+    if (isShown) {
+        layout(lines.last()->getRow(), lines.size(), useableWidth());
 
-    if (visibleLines.size() > 1) {
-        startResizeWorker(visibleLines[1]);
-    } else {
-        startResizeWorker();
+        if (newLines.size() > 2 && visibleLines.size() > 1) {
+            startResizeWorker(visibleLines[1]);
+        } else {
+            startResizeWorker();
+        }
+    } else if (newLines.size() == 1 && firstUnreadMessage == ChatLine::Ptr()) {
+        firstUnreadMessage = lines.last();
     }
 }
 
@@ -490,6 +490,10 @@ void ChatLog::startResizeWorker(ChatLine::Ptr anchorLine)
 
     // (re)start the worker
     if (!workerTimer->isActive()) {
+        if (!isShown) {
+            return;
+        }
+
         // these values must not be reevaluated while the worker is running
         if (anchorLine) {
             workerAnchorLine = anchorLine;
@@ -515,6 +519,19 @@ void ChatLog::startResizeWorker(ChatLine::Ptr anchorLine)
     workerTimer->start();
 
     verticalScrollBar()->hide();
+}
+
+void ChatLog::partialRefresh(const bool stickToBtm, const int fromLine)
+{
+    layout(fromLine, lines.size(), useableWidth());
+    updateSceneRect();
+
+    if (stickToBtm) {
+        scrollToBottom();
+    }
+
+    checkVisibility();
+    updateTypingNotification();
 }
 
 void ChatLog::mouseDoubleClickEvent(QMouseEvent* ev)
@@ -680,15 +697,21 @@ void ChatLog::setTypingNotificationVisible(bool visible)
 
 void ChatLog::scrollToLine(ChatLine::Ptr line)
 {
-    if (!line.get())
+    if (!line.get()) {
         return;
+    }
 
     if (workerTimer->isActive()) {
         workerAnchorLine = line;
         workerStb = false;
     } else {
         updateSceneRect();
-        verticalScrollBar()->setValue(line->sceneBoundingRect().top());
+        auto minSize = line->sceneBoundingRect().height() + scrollSpeed;
+        if (verticalScrollBar()->maximum() - verticalScrollBar()->value() < minSize) {
+            scrollToBottom();
+        } else {
+            verticalScrollBar()->setValue(line->sceneBoundingRect().bottom() - height() + scrollSpeed);
+        }
     }
 }
 
@@ -763,6 +786,23 @@ int ChatLog::getNumRemove() const
     return numRemove;
 }
 
+void ChatLog::setShown(const bool isShown)
+{
+    this->isShown = isShown;
+
+    if (isShown) {
+        const bool stickToBtm = (firstUnreadMessage == ChatLine::Ptr());
+        partialRefresh(stickToBtm, 0);
+
+        if (!stickToBtm && !isFirstShown) {
+            scrollToLine(firstUnreadMessage);
+            firstUnreadMessage = ChatLine::Ptr();
+        }
+
+        isFirstShown = false;
+    }
+}
+
 void ChatLog::forceRelayout()
 {
     startResizeWorker();
@@ -830,7 +870,7 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
     bool stb = stickToBottom();
 
     if (ev->size().width() != ev->oldSize().width()) {
-        startResizeWorker();
+        startResizeWorker(firstUnreadMessage);
         stb = false; // let the resize worker handle it
     }
 
@@ -906,8 +946,6 @@ QRectF ChatLog::calculateSceneRect() const
 
 void ChatLog::onSelectionTimerTimeout()
 {
-    const int scrollSpeed = 10;
-
     switch (selectionScrollDir) {
     case AutoScrollDirection::Up:
         verticalScrollBar()->setValue(verticalScrollBar()->value() - scrollSpeed);

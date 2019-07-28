@@ -61,6 +61,7 @@ class Friend;
 class FriendChatroom;
 class FriendListWidget;
 class FriendWidget;
+class GenericChatForm;
 class GenericChatroomWidget;
 class Group;
 class GroupChatForm;
@@ -341,7 +342,7 @@ private:
     QMap<ToxPk, QMetaObject::Connection> friendAlertConnections;
     QMap<ToxPk, std::shared_ptr<ChatHistory>> friendChatLogs;
     QMap<ToxPk, std::shared_ptr<FriendChatroom>> friendChatrooms;
-    QMap<ToxPk, ChatForm*> chatForms;
+    QMap<ToxPk, std::shared_ptr<ChatForm>> chatForms;
 
     QMap<GroupId, GroupWidget*> groupWidgets;
     QMap<GroupId, std::shared_ptr<GroupMessageDispatcher>> groupMessageDispatchers;
@@ -353,9 +354,10 @@ private:
     QMap<GroupId, QMetaObject::Connection> groupAlertConnections;
     QMap<GroupId, std::shared_ptr<IChatLog>> groupChatLogs;
     QMap<GroupId, std::shared_ptr<GroupChatroom>> groupChatrooms;
-    QMap<GroupId, QSharedPointer<GroupChatForm>> groupChatForms;
+    QMap<GroupId, std::shared_ptr<GroupChatForm>> groupChatForms;
     Core* core = nullptr;
 
+    std::shared_ptr<GenericChatForm> currentForm{nullptr};
 
     MessageProcessor::SharedParams sharedMessageProcessorParams;
 #if DESKTOP_NOTIFICATIONS

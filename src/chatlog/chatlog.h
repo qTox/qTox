@@ -61,6 +61,7 @@ public:
     void removeFirsts(const int num);
     void removeLasts(const int num);
     void setScroll(const bool scroll);
+    void setShown(const bool isShown);
     int getNumRemove() const;
 
     QString getSelectedText() const;
@@ -134,6 +135,7 @@ private:
     void movePreciseSelectionUp(int offset);
     void moveMultiSelectionUp(int offset);
     void moveMultiSelectionDown(int offset);
+    void partialRefresh(const bool stickToBtm, const int fromLine);
 
 private:
     enum class SelectionMode
@@ -176,6 +178,7 @@ private:
     QPoint lastClickPos;
     Qt::MouseButton lastClickButton;
     bool isScroll{true};
+    const int scrollSpeed{10};
 
     // worker vars
     int workerLastIndex = 0;
@@ -189,6 +192,9 @@ private:
     int numRemove{0};
     const int maxMessages{300};
     bool canRemove;
+    bool isShown{false};
+    bool isFirstShown{true};
+    ChatLine::Ptr firstUnreadMessage;
 };
 
 #endif // CHATLOG_H
