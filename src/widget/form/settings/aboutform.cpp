@@ -20,17 +20,17 @@
 #include "aboutform.h"
 #include "ui_aboutsettings.h"
 
-#include "src/widget/tool/recursivesignalblocker.h"
 #include "src/net/updatecheck.h"
-#include "src/widget/style.h"
-#include "src/widget/translator.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
+#include "src/widget/style.h"
+#include "src/widget/tool/recursivesignalblocker.h"
+#include "src/widget/translator.h"
 
 #include <tox/tox.h>
 
 #include <QDebug>
-#include <QDesktopServices> 
+#include <QDesktopServices>
 #include <QPushButton>
 #include <QTimer>
 
@@ -96,6 +96,10 @@ void AboutForm::replaceVersions()
         connect(updateCheck, &UpdateCheck::updateAvailable, this, &AboutForm::onUpdateAvailable);
         connect(updateCheck, &UpdateCheck::upToDate, this, &AboutForm::onUpToDate);
         connect(updateCheck, &UpdateCheck::updateCheckFailed, this, &AboutForm::onUpdateCheckFailed);
+#ifdef APPIMAGE_UPDATER_BRIDGE_ENABLED
+        connect(bodyUI->updateAvailableButton, &QPushButton::clicked, updateCheck,
+                &UpdateCheck::initUpdate);
+#endif
     } else {
         qWarning() << "AboutForm passed null UpdateCheck!";
     }
@@ -165,14 +169,20 @@ void AboutForm::replaceVersions()
     bodyUI->authorInfo->setText(authorInfo);
 }
 
+#ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
 void AboutForm::onUpdateAvailable(QString latestVersion, QUrl link)
 {
     QObject::disconnect(linkConnection);
-    linkConnection = connect(bodyUI->updateAvailableButton, &QPushButton::clicked, [link](){
-        QDesktopServices::openUrl(link);
-    });
+    linkConnection = connect(bodyUI->updateAvailableButton, &QPushButton::clicked,
+                             [link]() { QDesktopServices::openUrl(link); });
     bodyUI->updateStack->setCurrentIndex(static_cast<int>(updateIndex::available));
 }
+#else
+void AboutForm::onUpdateAvailable()
+{
+    bodyUI->updateStack->setCurrentIndex(static_cast<int>(updateIndex::available));
+}
+#endif
 
 void AboutForm::onUpToDate()
 {

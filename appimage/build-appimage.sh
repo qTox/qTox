@@ -29,6 +29,10 @@
 
 readonly DEBUG="$1"
 
+# Set this to True to upload the PR version of the 
+# AppImage to transfer.sh for testing.
+readonly UPLOAD_PR_APPIMAGE="False"
+
 # Fail out on error
 set -exo pipefail
 
@@ -57,16 +61,41 @@ then
         /bin/bash
 else
     docker run --rm \
+        -e CIRP_GITHUB_REPO_SLUG \
+        -e TRAVIS_EVENT_TYPE \
+        -e TRAVIS_COMMIT \
+        -e TRAVIS_TAG \
         -v $PWD:/qtox \
         -v $PWD/output:/output \
         debian:stretch-slim \
         /bin/bash -c "/qtox/appimage/build.sh"
 fi
 
+
 # use the version number in the name when building a tag on Travis CI
 if [ -n "$TRAVIS_TAG" ]
 then
+    # the aitool should have written the appimage in the same name
+    # as below so no need to move things , it should have also written
+    # the .zsync meta file as the given name below with .zsync
+    # extension.
     readonly OUTFILE=./output/qTox-"$TRAVIS_TAG".x86_64.AppImage
-    mv ./output/*.AppImage "$OUTFILE"
+ 
+    # just check if the files are in the right place
+    eval "ls $OUTFILE"
+    eval "ls $OUTFILE.zsync"
+
     sha256sum "$OUTFILE" > "$OUTFILE".sha256
+else
+    if [ "$UPLOAD_PR_APPIMAGE" == "True" ]
+    then
+        # upload PR builds to test them.
+        echo "Uploading AppImage to transfer.sh"
+        curl --upload-file "./output/qTox-$TRAVIS_COMMIT-x86_64.AppImage" \
+            "https://transfer.sh/qTox-$TRAVIS_COMMIT-x86_64.AppImage" > ./upload
+        echo "$(cat ./upload)"
+        echo -n "$(cat ./upload)\\n" >> ./uploaded-to
+        rm -rf ./upload ./uploaded-to
+        sha256sum "./output/qTox-$TRAVIS_COMMIT-x86_64.AppImage"
+    fi
 fi
