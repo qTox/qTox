@@ -63,7 +63,7 @@ FriendWidget* ContentDialogManager::addFriendToDialog(ContentDialog* dialog,
                                                       GenericChatForm* form)
 {
     auto friendWidget = dialog->addFriend(chatroom, form);
-    const auto friendPk = friendWidget->getFriend()->getPublicKey();
+    const auto& friendPk = friendWidget->getFriend()->getPublicKey();
 
     ContentDialog* lastDialog = getFriendDialog(friendPk);
     if (lastDialog) {

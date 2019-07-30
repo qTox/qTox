@@ -155,7 +155,7 @@ FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom,
 {
     const auto compact = Settings::getInstance().getCompactLayout();
     auto frnd = chatroom->getFriend();
-    auto friendPk = frnd->getPublicKey();
+    const auto& friendPk = frnd->getPublicKey();
     auto friendWidget = new FriendWidget(chatroom, compact);
     emit connectFriendWidget(*friendWidget);
     contactWidgets[friendPk] = friendWidget;
@@ -176,7 +176,7 @@ FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom,
 GroupWidget* ContentDialog::addGroup(std::shared_ptr<GroupChatroom> chatroom, GenericChatForm* form)
 {
     const auto g = chatroom->getGroup();
-    const auto groupId = g->getPersistentId();
+    const auto& groupId = g->getPersistentId();
     const auto compact = Settings::getInstance().getCompactLayout();
     auto groupWidget = new GroupWidget(chatroom, compact);
     contactWidgets[groupId] = groupWidget;
