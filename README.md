@@ -45,7 +45,7 @@ the encrypted peer-to-peer Tox protocol.
 
 Windows | Linux | OS X | FreeBSD
 --------|-------|------|--------
-**[64 bit release]**| **[Arch]**, , **[Debian]**, **[Fedora]**, **[Gentoo]**, **[openSUSE]**, **[Ubuntu]** | **[Latest release]**  | **[Package & Port]**
+**[64 bit release]**| **[Arch]**, **[Debian]**, **[Fedora]**, **[Gentoo]**, **[openSUSE]**, **[Ubuntu]** | **[Latest release]**  | **[Package & Port]**
 [32 bit release]|**[AppImage]**, [Flatpak] | [Building instructions] |
 [64 bit][64nightly], [32 bit][32nightly] nightly | [From Source] | |
 
