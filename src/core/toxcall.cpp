@@ -295,12 +295,11 @@ void ToxGroupCall::removePeer(ToxPk peerId)
 void ToxGroupCall::addPeer(ToxPk peerId)
 {
     std::unique_ptr<IAudioSink> newSink = audio.makeSink();
-    peers.emplace(peerId, std::move(newSink));
-
     QMetaObject::Connection con =
         QObject::connect(newSink.get(), &IAudioSink::invalidated,
                          [this, peerId]() { this->onAudioSinkInvalidated(peerId); });
 
+    peers.emplace(peerId, std::move(newSink));
     sinkInvalid.insert({peerId, con});
 }
 
