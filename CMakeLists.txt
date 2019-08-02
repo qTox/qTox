@@ -262,6 +262,8 @@ set(${PROJECT_NAME}_SOURCES
   src/audio/backend/alsink.h
   src/audio/backend/alsource.cpp
   src/audio/backend/alsource.h
+  src/audio/backend/dummysource.cpp
+  src/audio/backend/dummysource.h
   src/audio/backend/openal.cpp
   src/audio/backend/openal.h
   src/audio/iaudiosettings.h
