@@ -723,9 +723,8 @@ void Core::sendGroupMessageWithType(int groupId, const QString& message, Tox_Mes
 
     ToxString cMsg(message);
     Tox_Err_Conference_Send_Message error;
-    bool ok =
-        tox_conference_send_message(tox.get(), groupId, type, cMsg.data(), cMsg.size(), &error);
-    if (!ok || !parseConferenceSendMessageError(error)) {
+    tox_conference_send_message(tox.get(), groupId, type, cMsg.data(), cMsg.size(), &error);
+    if (!parseConferenceSendMessageError(error)) {
         emit groupSentFailed(groupId);
         return;
     }
