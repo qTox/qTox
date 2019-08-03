@@ -723,9 +723,8 @@ void Core::sendGroupMessageWithType(int groupId, const QString& message, Tox_Mes
 
     ToxString cMsg(message);
     Tox_Err_Conference_Send_Message error;
-    bool ok =
-        tox_conference_send_message(tox.get(), groupId, type, cMsg.data(), cMsg.size(), &error);
-    if (!ok || !parseConferenceSendMessageError(error)) {
+    tox_conference_send_message(tox.get(), groupId, type, cMsg.data(), cMsg.size(), &error);
+    if (!parseConferenceSendMessageError(error)) {
         emit groupSentFailed(groupId);
         return;
     }
@@ -1451,7 +1450,17 @@ QStringList Core::splitMessage(const QString& message)
     QStringList splittedMsgs;
     QByteArray ba_message{message.toUtf8()};
 
-    const auto maxLen = tox_max_message_length();
+    /*
+     * TODO: Remove this hack; the reported max message length we receive from c-toxcore
+     * as of 08-02-2019 is inaccurate, causing us to generate too large messages when splitting
+     * them up.
+     *
+     * The inconsistency lies in c-toxcore group.c:2480 using MAX_GROUP_MESSAGE_DATA_LEN to verify
+     * message size is within limit, but tox_max_message_length giving a different size limit to us.
+     *
+     * (uint32_t tox_max_message_length(void); declared in tox.h, unable to see explicit definition)
+     */
+    const auto maxLen = tox_max_message_length() - 50;
 
     while (ba_message.size() > maxLen) {
         int splitPos = ba_message.lastIndexOf('\n', maxLen - 1);
