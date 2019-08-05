@@ -1119,6 +1119,9 @@ void Widget::onRejectCall(uint32_t friendId)
 
 void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 {
+    if (FriendList::findFriend(friendPk)) {
+        return;
+    }
     settings.updateFriendAddress(friendPk.toString());
 
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
