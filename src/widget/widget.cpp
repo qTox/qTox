@@ -663,7 +663,7 @@ void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 
 void Widget::onCoreChanged(Core& core)
 {
-
+    this->core = &core;
     connect(&core, &Core::connected, this, &Widget::onConnected);
     connect(&core, &Core::disconnected, this, &Widget::onDisconnected);
     connect(&core, &Core::statusSet, this, &Widget::onStatusSet);
