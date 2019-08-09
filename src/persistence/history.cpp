@@ -612,9 +612,10 @@ QList<History::HistMessage> History::getUnsentMessagesForFriend(const ToxPk& fri
                 "aliases.display_name, sender.public_key, message "
                 "FROM history "
                 "JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
-                "JOIN peers chat on chat.public_key = '%1' "
+                "JOIN peers chat on history.chat_id = chat.id "
                 "JOIN aliases on sender_alias = aliases.id "
-                "JOIN peers sender on aliases.owner = sender.id;")
+                "JOIN peers sender on aliases.owner = sender.id "
+                "WHERE chat.public_key='%1';")
             .arg(friendPk.toString());
 
     QList<History::HistMessage> ret;
