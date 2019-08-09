@@ -294,8 +294,8 @@ std::size_t SessionChatLog::size() const
     return items.size();
 }
 
-void SessionChatLog::insertMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName,
-                                        ChatLogMessage message)
+void SessionChatLog::insertCompleteMessageAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName,
+                                                const ChatLogMessage& message)
 {
     auto item = ChatLogItem(sender, message);
 
@@ -303,10 +303,28 @@ void SessionChatLog::insertMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString se
         item.setDisplayName(senderName);
     }
 
+    assert(message.isComplete == true);
+
     items.emplace(idx, std::move(item));
 }
 
-void SessionChatLog::insertFileAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName, ChatLogFile file)
+void SessionChatLog::insertIncompleteMessageAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName,
+                                                  const ChatLogMessage& message,
+                                                  DispatchedMessageId dispatchId)
+{
+    auto item = ChatLogItem(sender, message);
+
+    if (!senderName.isEmpty()) {
+        item.setDisplayName(senderName);
+    }
+
+    assert(message.isComplete == false);
+
+    items.emplace(idx, std::move(item));
+    outgoingMessages.insert(dispatchId, idx);
+}
+
+void SessionChatLog::insertFileAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName, const ChatLogFile& file)
 {
     auto item = ChatLogItem(sender, file);
 
