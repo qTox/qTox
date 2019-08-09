@@ -34,13 +34,16 @@
 #include <QVector>
 #include <memory>
 
+class Settings;
+
 class Profile : public QObject
 {
     Q_OBJECT
 
 public:
-    static Profile* loadProfile(QString name, const QString& password = QString());
-    static Profile* createProfile(QString name, QString password);
+    static Profile* loadProfile(const QString& name, const QString& password, const Settings& settings);
+    static Profile* createProfile(const QString& name, const QString& password,
+                                  const Settings& settings);
     ~Profile();
 
     Core* getCore();
@@ -98,12 +101,11 @@ private slots:
     void onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash);
 
 private:
-    Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave,
-            std::unique_ptr<ToxEncrypt> passKey);
+    Profile(const QString& name, const QString& password, std::unique_ptr<ToxEncrypt> passkey);
     static QStringList getFilesByExt(QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
-    void initCore(const QByteArray& toxsave, ICoreSettings& s, bool isNewProfile);
+    void initCore(const QByteArray& toxsave, const ICoreSettings& s, bool isNewProfile);
 
 private:
     std::unique_ptr<Core> core = nullptr;

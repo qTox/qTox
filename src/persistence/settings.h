@@ -149,7 +149,7 @@ public:
     QString getAppCacheDirPath() const;
 
     void createSettingsDir();
-    void createPersonal(QString basename);
+    void createPersonal(const QString& basename) const;
 
     void savePersonal();
 
@@ -170,7 +170,7 @@ public slots:
     void saveGlobal();
     void sync();
     void setAutoLogin(bool state);
-    void updateProfileData(Profile *profile);
+    void updateProfileData(Profile* profile);
 
 signals:
     // General
