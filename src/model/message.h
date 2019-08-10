@@ -75,11 +75,17 @@ public:
         {
             return sanitizedNameMention;
         }
+        QRegularExpression GetPublicKeyMention() const
+        {
+            return pubKeyMention;
+        }
         void onUserNameSet(const QString& username);
+        void setPublicKey(const QString& pk);
 
     private:
         QRegularExpression nameMention;
         QRegularExpression sanitizedNameMention;
+        QRegularExpression pubKeyMention;
     };
 
     MessageProcessor(const SharedParams& sharedParams);

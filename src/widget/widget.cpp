@@ -691,6 +691,8 @@ void Widget::onCoreChanged(Core& core)
     connect(this, &Widget::statusSet, &core, &Core::setStatus);
     connect(this, &Widget::friendRequested, &core, &Core::requestFriendship);
     connect(this, &Widget::friendRequestAccepted, &core, &Core::acceptFriendRequest);
+
+    sharedMessageProcessorParams.setPublicKey(core.getSelfPublicKey().toString());
 }
 
 void Widget::onConnected()

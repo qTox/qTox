@@ -31,6 +31,17 @@ void MessageProcessor::SharedParams::onUserNameSet(const QString& username)
                                               QRegularExpression::CaseInsensitiveOption);
 }
 
+/**
+ * @brief Set the public key on which a message should be highlighted
+ * @param pk ToxPk in its hex string form
+ */
+void MessageProcessor::SharedParams::setPublicKey(const QString& pk)
+{
+    // no sanitization needed, we expect a ToxPk in its string form
+    pubKeyMention = QRegularExpression("\\b" + pk + "\\b",
+                                       QRegularExpression::CaseInsensitiveOption);
+}
+
 MessageProcessor::MessageProcessor(const MessageProcessor::SharedParams& sharedParams)
     : sharedParams(sharedParams)
 {}
@@ -73,8 +84,9 @@ Message MessageProcessor::processIncomingMessage(bool isAction, QString const& m
     if (detectingMentions) {
         auto nameMention = sharedParams.GetNameMention();
         auto sanitizedNameMention = sharedParams.GetSanitizedNameMention();
+        auto pubKeyMention = sharedParams.GetPublicKeyMention();
 
-        for (auto const& mention : {nameMention, sanitizedNameMention}) {
+        for (auto const& mention : {nameMention, sanitizedNameMention, pubKeyMention}) {
             auto matchIt = mention.globalMatch(ret.content);
             if (!matchIt.hasNext()) {
                 continue;
@@ -84,6 +96,11 @@ Message MessageProcessor::processIncomingMessage(bool isAction, QString const& m
 
             auto pos = static_cast<size_t>(match.capturedStart());
             auto length = static_cast<size_t>(match.capturedLength());
+
+            // skip matches on empty usernames
+            if (length == 0) {
+                continue;
+            }
 
             ret.metadata.push_back({MessageMetadataType::selfMention, pos, pos + length});
             break;
