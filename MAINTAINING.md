@@ -72,34 +72,81 @@ git config --global alias.logs 'log --show-signature'
   the PR before merging.
   - with trivial changes, like fixing typos or something along those lines,
     feel free to merge right away.
-- if PR requires some changes, comment what parts need to be adjusted, and
-  assign the `PR-needs-changes` label – after requested changes are done,
-  remove the label.
+- if a PR requires some changes, comment what parts need to be adjusted,
+  preferably by using the `Reviewable` button on the first comment.
 - if PR doesn't apply properly on top of current master (when using
-  [`merge-pr.sh`] script), request a rebase and tag PR with `PR-needs-rebase`.
+  [`merge-pr.sh`] script), request a rebase
 - if a PR requires changes but there has been no activity from the PR submitter
   for more than 2 months, close the PR.
 
 
 # Issues
 
-- tag issues
-  - `up for grabs` tag should be used whenever no one is currently working on
-    the issue, and you're not going to work on it in foreseeable future (hours,
-    day or two).
-  - when you request more info to be provided in the issue, tag it with
-    `I-need-info`. Remove tag once needed info has been provided.
-    - sometimes there are issue with only one comment, and no reply to query
-      for more info. Those issues usually can be closed after some period,
-      preferably after a month or more with no reply. To search for them, you
-      can specify time period when issue with a given tag was last updated,
-      e.g.: `label:I-need-info updated:<2016-03-01`.
-- if you're going to fix the issue, assign yourself to it.
+## Tagging Issues
+
+- When you request more info to be provided in the issue, tag it with
+    `O-need-info`. Remove tag once the needed info has been provided.
+    - If the needed information is not provided after 30 days, add the `O-stale`
+      tag and a comment requesting the information again.
+      - If the `O-stale` tag is present for more than 30 day, the issue should
+        be closed.
+- If you're going to fix the issue, assign yourself to it.
 - when closing an issue, preferably state the reason why it was closed, unless
   it was closed automatically by commit message.
-- when issue is a duplicate, tag it with `duplicate`, and issue that it was a
-  duplicate of, tag with higher `duplicates:#`
+- When issue is a duplicate, close the issue with less useful information and
+  comment the link to the other issue.
 
+## Determining Priority
+
+The priority of an issue should be determined by taking into account the user
+impact and how hard it is to fix the issue.
+
+### User impact
+
+We have two labels to rate user impact `U-high` and `U-low`.
+
+Use `U-high` if
+- Many users have reported this issue
+- The problem is triggered often during typical use of qTox
+- The problem causes data loss
+- There is no workaround
+
+Use `U-low` if
+- Few users reported this problem
+- The problem occurs very sporadically
+- The problem needs a very specific set of conditions to appear
+- There is a workaround
+- The problem appears only after multiple days of usage
+
+### Difficulty to fix
+
+We have two labels to estimate the difficulty of a fix, `D-easy` and `D-hard`.
+
+Use `D-easy` if you think that:
+- The issue is well described
+- The issue can be consistently reproduced
+- The issue needs no specific equipment to fix, e.g. specific OS, webcam,...
+- The code that causes the problem is known
+
+Use `D-hard` if you think that:
+- The issue is described only vaguely
+- The exact way to reproduce the issue is not known
+- The issue happens only on a specifc OS
+- The issue is not only caused by code from qTox
+
+### Determining initial priority
+
+After assesing the user impact and the difficulty to fix the issue you look up
+the initial priority for the issue in the following table:
+
+|          |  `U-high`  | `U-low`    |
+|----------|------------|------------|
+| `E-easy` | `P-high`   | `P-medium` |
+| `E-hard` | `P-medium` | `P-low`    |
+
+Possible security issues should be tagged with `P-high` initally. If they are
+confirmed security issues, the tag should be changed to `P-very-high`, else
+apply the normal rating process.
 
 # Translations from Weblate
 
