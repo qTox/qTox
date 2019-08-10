@@ -695,7 +695,7 @@ void GenericChatForm::loadHistoryTo(const QDateTime &time)
     }
 }
 
-void GenericChatForm::loadHistoryFrom(const QDateTime &time)
+bool GenericChatForm::loadHistoryFrom(const QDateTime &time)
 {
     chatWidget->setScroll(false);
     auto begin = ChatLogIdx(0);
@@ -707,10 +707,20 @@ void GenericChatForm::loadHistoryFrom(const QDateTime &time)
 
     int add = DEF_NUM_MSG_TO_LOAD;
     if (begin.get() + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx().get()) {
+        auto t = chatLog.getNextIdx();
         add = chatLog.getNextIdx().get() - begin.get();
     }
+
+    if (add  <= 1) {
+        chatWidget->setScroll(true);
+        return false;
+    }
+
     auto end = ChatLogIdx(begin.get() + add);
+
     renderMessages(begin, end);
+
+    return true;
 }
 
 void GenericChatForm::removeFirstsMessages(const int num)
@@ -1159,8 +1169,9 @@ void GenericChatForm::loadHistoryUpper()
     }
 
     auto msg = messages.crbegin()->second;
-    loadHistoryFrom(QDateTime());
-    chatWidget->scrollToLine(msg);
+    if (loadHistoryFrom(QDateTime())) {
+        chatWidget->scrollToLine(msg);
+    }
 }
 
 void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& line)
