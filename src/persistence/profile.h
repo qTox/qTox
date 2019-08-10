@@ -47,7 +47,6 @@ public:
     QString getName() const;
 
     void startCore();
-    void restartCore();
     bool isEncrypted() const;
     QString setPassword(const QString& newPassword);
     const ToxEncrypt* getPasskey() const;
