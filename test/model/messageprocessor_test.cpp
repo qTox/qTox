@@ -22,6 +22,7 @@
 #include <tox/tox.h>
 
 #include <QObject>
+#include <QStringBuilder>
 #include <QtTest/QtTest>
 
 namespace {
@@ -53,44 +54,69 @@ private slots:
 void TestMessageProcessor::testSelfMention()
 {
     MessageProcessor::SharedParams sharedParams;
-    sharedParams.onUserNameSet("MyUserName");
+    const QLatin1Literal testUserName{"MyUserName"};
+    const QLatin1Literal testToxPk{
+        "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"};
+    sharedParams.onUserNameSet(testUserName);
+    sharedParams.setPublicKey(testToxPk);
 
     auto messageProcessor = MessageProcessor(sharedParams);
     messageProcessor.enableMentions();
 
-    // Using my name should match
-    auto processedMessage = messageProcessor.processIncomingMessage(false, "MyUserName hi");
-    QVERIFY(messageHasSelfMention(processedMessage));
+    for (const auto& str : {testUserName, testToxPk}) {
 
-    // Action messages should match too
-    processedMessage = messageProcessor.processIncomingMessage(true, "MyUserName hi");
-    QVERIFY(messageHasSelfMention(processedMessage));
+        // Using my name or public key should match
+        auto processedMessage = messageProcessor.processIncomingMessage(false, str % " hi");
+        QVERIFY(messageHasSelfMention(processedMessage));
 
-    // Too much text shouldn't match
-    processedMessage = messageProcessor.processIncomingMessage(false, "MyUserName2");
-    QVERIFY(!messageHasSelfMention(processedMessage));
+        // Action messages should match too
+        processedMessage = messageProcessor.processIncomingMessage(true, str % " hi");
+        QVERIFY(messageHasSelfMention(processedMessage));
 
-    // Unless it's a colon
-    processedMessage = messageProcessor.processIncomingMessage(false, "MyUserName: test");
-    QVERIFY(messageHasSelfMention(processedMessage));
+        // Too much text shouldn't match
+        processedMessage = messageProcessor.processIncomingMessage(false, str % "2");
+        QVERIFY(!messageHasSelfMention(processedMessage));
 
-    // Too little text shouldn't match
-    processedMessage = messageProcessor.processIncomingMessage(false, "MyUser");
-    QVERIFY(!messageHasSelfMention(processedMessage));
+        // Unless it's a colon
+        processedMessage = messageProcessor.processIncomingMessage(false, str % ": test");
+        QVERIFY(messageHasSelfMention(processedMessage));
 
-    // The regex should be case insensitive
-    processedMessage = messageProcessor.processIncomingMessage(false, "myusername hi");
-    QVERIFY(messageHasSelfMention(processedMessage));
+        // remove last character
+        QString chopped = str;
+        chopped.chop(1);
+        // Too little text shouldn't match
+        processedMessage = messageProcessor.processIncomingMessage(false, chopped);
+        QVERIFY(!messageHasSelfMention(processedMessage));
+
+        // make lower case
+        QString lower = QString(str).toLower();
+
+        // The regex should be case insensitive
+        processedMessage = messageProcessor.processIncomingMessage(false, lower % " hi");
+        QVERIFY(messageHasSelfMention(processedMessage));
+    }
 
     // New user name changes should be detected
     sharedParams.onUserNameSet("NewUserName");
-    processedMessage = messageProcessor.processIncomingMessage(false, "NewUserName: hi");
+    auto processedMessage = messageProcessor.processIncomingMessage(false, "NewUserName: hi");
     QVERIFY(messageHasSelfMention(processedMessage));
 
     // Special characters should be removed
     sharedParams.onUserNameSet("New\nUserName");
     processedMessage = messageProcessor.processIncomingMessage(false, "NewUserName: hi");
     QVERIFY(messageHasSelfMention(processedMessage));
+
+    // Regression tests for: https://github.com/qTox/qTox/issues/2119
+    {
+        // Empty usernames should not match
+        sharedParams.onUserNameSet("");
+        processedMessage = messageProcessor.processIncomingMessage(false, "");
+        QVERIFY(!messageHasSelfMention(processedMessage));
+
+        // Empty usernames matched on everything, ensure this is not the case
+        processedMessage = messageProcessor.processIncomingMessage(false, "a");
+        QVERIFY(!messageHasSelfMention(processedMessage));
+    }
 }
 
 /**
