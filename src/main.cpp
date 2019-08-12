@@ -38,6 +38,7 @@
 #include <QMutex>
 #include <QMutexLocker>
 
+#include <QtWidgets/QMessageBox>
 #include <ctime>
 #include <sodium.h>
 #include <stdio.h>
@@ -343,6 +344,10 @@ int main(int argc, char* argv[])
     Profile* profile = nullptr;
     if (autoLogin && Profile::exists(profileName) && !Profile::isEncrypted(profileName)) {
         profile = Profile::loadProfile(profileName, QString(), settings);
+        if (!profile) {
+            QMessageBox::information(nullptr, QObject::tr("Error"),
+                                     QObject::tr("Failed to load profile automatically."));
+        }
     }
     if (profile) {
         settings.updateProfileData(profile);
