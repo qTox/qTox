@@ -33,6 +33,7 @@
 #include <QScrollBar>
 #include <QShortcut>
 #include <QTimer>
+#include <algorithm>
 
 /**
  * @var ChatLog::repNameAfter
@@ -454,6 +455,8 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
 
     lines = combLines;
 
+    moveSelectionRectDownIfMulti(newLines.size());
+
     scene->setItemIndexMethod(oldIndexMeth);
 
     // redo layout
@@ -722,6 +725,41 @@ void ChatLog::reloadTheme()
     }
 }
 
+void ChatLog::moveSelectionRectUpIfMulti(int offset)
+{
+    if (selectionMode != Multi) {
+        return;
+    }
+    if (selLastRow < offset) { // entire selection now out of bounds
+        clearSelection();
+        return;
+    } else {
+        selLastRow -= offset;
+    }
+    selClickedRow = std::max(0, selClickedRow - offset);
+    selFirstRow = std::max(0, selFirstRow - offset);
+    updateMultiSelectionRect();
+    emit selectionChanged();
+}
+
+void ChatLog::moveSelectionRectDownIfMulti(int offset)
+{
+    if (selectionMode != Multi) {
+        return;
+    }
+    const int lastLine = lines.size() - 1;
+    if (selFirstRow + offset > lastLine) { // entire selection now out of bounds
+        clearSelection();
+        return;
+    } else {
+        selFirstRow += offset;
+    }
+    selClickedRow = std::min(lastLine, selClickedRow + offset);
+    selLastRow = std::min(lastLine, selLastRow + offset);
+    updateMultiSelectionRect();
+    emit selectionChanged();
+}
+
 void ChatLog::removeFirsts(const int num)
 {
     if (lines.size() > num) {
@@ -734,6 +772,8 @@ void ChatLog::removeFirsts(const int num)
     for (int i = 0; i < lines.size(); ++i) {
         lines[i]->setRow(i);
     }
+
+    moveSelectionRectUpIfMulti(num);
 }
 
 void ChatLog::removeLasts(const int num)
@@ -950,7 +990,7 @@ void ChatLog::onWorkerTimeout()
         verticalScrollBar()->show();
 
         isScroll = true;
-        emit workerTimeoutFinished();   
+        emit workerTimeoutFinished();
     }
 }
 
