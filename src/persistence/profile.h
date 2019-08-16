@@ -35,15 +35,17 @@
 #include <memory>
 
 class Settings;
+class QCommandLineParser;
 
 class Profile : public QObject
 {
     Q_OBJECT
 
 public:
-    static Profile* loadProfile(const QString& name, const QString& password, Settings& settings);
-    static Profile* createProfile(const QString& name, const QString& password,
-                                  const Settings& settings);
+    static Profile* loadProfile(const QString& name, const QString& password, Settings& settings,
+                                const QCommandLineParser* parser);
+    static Profile* createProfile(const QString& name, const QString& password, Settings& settings,
+                                  const QCommandLineParser* parser);
     ~Profile();
 
     Core* getCore();

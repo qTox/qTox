@@ -30,6 +30,7 @@
 #include "widget/gui.h"
 #include "widget/loginscreen.h"
 #include <QApplication>
+#include <QCommandLineParser>
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QThread>
@@ -183,14 +184,10 @@ void Nexus::bootstrapWithProfile(Profile* p)
 void Nexus::setSettings(Settings* settings)
 {
     if (this->settings) {
-        QObject::disconnect(this, &Nexus::currentProfileChanged, this->settings,
-                            &Settings::updateProfileData);
         QObject::disconnect(this, &Nexus::saveGlobal, this->settings, &Settings::saveGlobal);
     }
     this->settings = settings;
     if (this->settings) {
-        QObject::connect(this, &Nexus::currentProfileChanged, this->settings,
-                         &Settings::updateProfileData);
         QObject::connect(this, &Nexus::saveGlobal, this->settings, &Settings::saveGlobal);
     }
 }
@@ -292,7 +289,8 @@ Profile* Nexus::getProfile()
  */
 void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::createProfile(name, pass, *settings));
+    setProfile(Profile::createProfile(name, pass, *settings, parser));
+    parser = nullptr; // only apply cmdline proxy settings once
 }
 
 /**
@@ -300,7 +298,8 @@ void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
  */
 void Nexus::onLoadProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::loadProfile(name, pass, *settings));
+    setProfile(Profile::loadProfile(name, pass, *settings, parser));
+    parser = nullptr; // only apply cmdline proxy settings once
 }
 /**
  * Changes the loaded profile and notifies listeners.
@@ -317,6 +316,11 @@ void Nexus::setProfile(Profile* p)
     }
 
     emit currentProfileChanged(p);
+}
+
+void Nexus::setParser(QCommandLineParser* parser)
+{
+    this->parser = parser;
 }
 
 /**
@@ -389,7 +393,7 @@ void Nexus::updateWindowsArg(QWindow* closedWindow)
         QAction* action = windowActions->addAction(windowList[i]->title());
         action->setCheckable(true);
         action->setChecked(windowList[i] == activeWindow);
-        connect(action, &QAction::triggered, [=] { onOpenWindow(windowList[i]);});
+        connect(action, &QAction::triggered, [=] { onOpenWindow(windowList[i]); });
         windowMenu->addAction(action);
         dockMenu->insertAction(dockLast, action);
     }
