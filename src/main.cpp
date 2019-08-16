@@ -58,6 +58,96 @@ static QList<QByteArray>* logBuffer =
 QMutex* logBufferMutex = new QMutex();
 #endif
 
+/**
+ * Verifies that commandline proxy settings are at least reasonable. Does not verify provided IP
+ * or hostname addresses are valid. Code duplication with Settings::applyCommandLineOptions, which
+ * also verifies arguments, should be removed in a future refactor.
+ * @param parser QCommandLineParser instance
+ */
+bool verifyProxySettings(QCommandLineParser& parser)
+{
+    QString IPv6Setting = parser.value("I");
+    QString LANSetting = parser.value("L");
+    QString UDPSetting = parser.value("U");
+    QString proxySettingString = parser.value("proxy");
+    QStringList proxySettings = proxySettingString.split(":");
+    // Check for incompatible settings
+    bool activeProxyType = false;
+
+    if (parser.isSet("P")) {
+        activeProxyType = proxySettings[0].compare(QString("SOCKS5"), Qt::CaseInsensitive) == 0
+                          || proxySettings[0].compare(QString("HTTP"), Qt::CaseInsensitive) == 0;
+    }
+
+
+    if (activeProxyType && (UDPSetting.compare(QString("on"), Qt::CaseInsensitive) == 0)) {
+        qCritical() << "Cannot set UDP on with proxy.";
+        return false;
+    }
+
+    if (activeProxyType && (LANSetting.compare(QString("on"), Qt::CaseInsensitive) == 0)) {
+        qCritical() << "Cannot set LAN discovery on with proxy.";
+        return false;
+    }
+
+    if ((LANSetting.compare(QString("on"), Qt::CaseInsensitive) == 0)
+        && (UDPSetting.compare(QString("off"), Qt::CaseInsensitive) == 0)) {
+        qCritical() << "Incompatible UDP/LAN settings.";
+        return false;
+    }
+
+    if (parser.isSet("I")) {
+        if (!(IPv6Setting.compare(QString("on"), Qt::CaseInsensitive) == 0
+              || IPv6Setting.compare(QString("off"), Qt::CaseInsensitive) == 0)) {
+            qCritical() << "Unable to parse IPv6 setting.";
+            return false;
+        }
+    }
+
+    if (parser.isSet("U")) {
+        if (!(UDPSetting.compare(QString("on"), Qt::CaseInsensitive) == 0
+              || UDPSetting.compare(QString("off"), Qt::CaseInsensitive) == 0)) {
+            qCritical() << "Unable to parse UDP setting.";
+            return false;
+        }
+    }
+
+    if (parser.isSet("L")) {
+        if (!(LANSetting.compare(QString("on"), Qt::CaseInsensitive) == 0
+              || LANSetting.compare(QString("off"), Qt::CaseInsensitive) == 0)) {
+            qCritical() << "Unable to parse LAN setting.";
+            return false;
+        }
+    }
+
+    if (parser.isSet("P")) {
+        if (proxySettings[0].compare(QString("NONE"), Qt::CaseInsensitive) == 0) {
+            return true;
+            // slightly lazy check here, accepting 'NONE[:.*]' is fine since no other
+            // arguments will be investigated when proxy settings are applied.
+        }
+        // Since the first argument isn't 'none', verify format of remaining arguments
+        if (proxySettings.size() != 3) {
+            qCritical() << "Invalid number of proxy arguments.";
+            return false;
+        }
+
+        if (!(proxySettings[0].compare(QString("SOCKS5"), Qt::CaseInsensitive) == 0
+              || proxySettings[0].compare(QString("HTTP"), Qt::CaseInsensitive) == 0)) {
+            qCritical() << "Unable to parse proxy type.";
+            return false;
+        }
+
+        // Kriby: Sanity checking IPv4+IPv6/hostnames sure is a lot of work!
+
+        int portNumber = proxySettings[2].toInt();
+        if (!(portNumber > 0 && portNumber < 65536)) {
+            qCritical() << "Invalid port number range.";
+        }
+    }
+    return true;
+}
+
 void cleanup()
 {
     // force save early even though destruction saves, because Windows OS will
@@ -215,6 +305,21 @@ int main(int argc, char* argv[])
         QCommandLineOption(QStringList() << "l"
                                          << "login",
                            QObject::tr("Starts new instance and opens the login screen.")));
+    parser.addOption(QCommandLineOption(QStringList() << "I"
+                                                      << "IPv6",
+                                        QObject::tr("Sets IPv6 <on>/<off>"), QObject::tr("on/off")));
+    parser.addOption(QCommandLineOption(QStringList() << "U"
+                                                      << "UDP",
+                                        QObject::tr("Sets UDP <on>/<off>"), QObject::tr("on/off")));
+    parser.addOption(
+        QCommandLineOption(QStringList() << "L"
+                                         << "LAN",
+                           QObject::tr("Sets LAN discovery <on>/<off>. UDP off overrides."),
+                           QObject::tr("on/off")));
+    parser.addOption(QCommandLineOption(QStringList() << "P"
+                                                      << "proxy",
+                                        QObject::tr("Sets proxy settings."),
+                                        QObject::tr("(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)")));
     parser.process(*a);
 
     uint32_t profileId = settings.getCurrentProfileId();
@@ -330,6 +435,10 @@ int main(int argc, char* argv[])
         }
     }
 
+    if (!verifyProxySettings(parser)) {
+        return -1;
+    }
+
     // TODO(sudden6): remove once we get rid of Nexus
     Nexus& nexus = Nexus::getInstance();
     // TODO(kriby): Consider moving application initializing variables into a globalSettings object
@@ -342,16 +451,16 @@ int main(int argc, char* argv[])
     // Further: generate view instances separately (loginScreen, mainGUI, audio)
     Profile* profile = nullptr;
     if (autoLogin && Profile::exists(profileName) && !Profile::isEncrypted(profileName)) {
-        profile = Profile::loadProfile(profileName);
+        profile = Profile::loadProfile(profileName, &parser);
         if (!profile) {
             QMessageBox::information(nullptr, QObject::tr("Error"),
                                      QObject::tr("Failed to load profile automatically."));
         }
     }
     if (profile) {
-        settings.updateProfileData(profile);
         nexus.bootstrapWithProfile(profile);
     } else {
+        nexus.setParser(&parser);
         int returnval = nexus.showLogin(profileName);
         if (returnval != 0) {
             return returnval;

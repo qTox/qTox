@@ -34,13 +34,16 @@
 #include <QVector>
 #include <memory>
 
+class Settings;
+class QCommandLineParser;
+
 class Profile : public QObject
 {
     Q_OBJECT
 
 public:
-    static Profile* loadProfile(QString name, const QString& password = QString());
-    static Profile* createProfile(QString name, QString password);
+    static Profile* loadProfile(QString name, const QCommandLineParser* parser, const QString& password = QString());
+    static Profile* createProfile(QString name, const QCommandLineParser* parser, QString password);
     ~Profile();
 
     Core* getCore();

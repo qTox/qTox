@@ -45,6 +45,7 @@
 #include <QStandardPaths>
 #include <QStyleFactory>
 #include <QThread>
+#include <QtCore/QCommandLineParser>
 
 /**
  * @var QHash<QString, QByteArray> Settings::widgetSettings
@@ -279,7 +280,7 @@ bool Settings::isToxPortable()
     return result;
 }
 
-void Settings::updateProfileData(Profile *profile)
+void Settings::updateProfileData(Profile* profile, const QCommandLineParser* parser)
 {
     QMutexLocker locker{&bigLock};
 
@@ -290,6 +291,141 @@ void Settings::updateProfileData(Profile *profile)
     setCurrentProfile(profile->getName());
     saveGlobal();
     loadPersonal(profile->getName(), profile->getPasskey());
+    if (parser) {
+        applyCommandLineOptions(parser);
+    }
+}
+/**
+ * Applies command line options on top of loaded settings. Fails without changes if attempting to
+ * apply contradicting settings.
+ * @param parser
+ * @return Success indicator (success = true)
+ */
+bool Settings::applyCommandLineOptions(const QCommandLineParser* parser)
+{
+    QString IPv6Setting = parser->value("I");
+    QString LANSetting = parser->value("L");
+    QString UDPSetting = parser->value("U");
+    QString proxySettingString = parser->value("proxy");
+    QStringList proxySettings = proxySettingString.split(":");
+    // Check for incompatible settings
+    bool activeProxyType = false;
+
+    if (parser->isSet("P")) {
+        activeProxyType = proxySettings[0].compare(QString("SOCKS5"), Qt::CaseInsensitive) == 0
+                          || proxySettings[0].compare(QString("HTTP"), Qt::CaseInsensitive) == 0;
+    }
+
+
+    if (activeProxyType && (UDPSetting.compare(QString("on"), Qt::CaseInsensitive) == 0)) {
+        qCritical() << "Cannot set UDP on with proxy.";
+        return false;
+    }
+
+    if (activeProxyType && (LANSetting.compare(QString("on"), Qt::CaseInsensitive) == 0)) {
+        qCritical() << "Cannot set LAN discovery on with proxy.";
+        return false;
+    }
+
+    if ((LANSetting.compare(QString("on"), Qt::CaseInsensitive) == 0)
+        && (UDPSetting.compare(QString("off"), Qt::CaseInsensitive) == 0)) {
+        qCritical() << "Incompatible UDP/LAN settings.";
+        return false;
+    }
+
+    if (parser->isSet("I")) {
+        if (IPv6Setting.compare(QString("on"), Qt::CaseInsensitive) == 0) {
+            enableIPv6 = true;
+            qDebug() << "Setting IPv6 ON.";
+        } else if (IPv6Setting.compare(QString("off"), Qt::CaseInsensitive) == 0) {
+            enableIPv6 = false;
+            qDebug() << "Setting IPv6 OFF.";
+        } else {
+            qCritical() << "Unable to parse IPv6 setting.";
+            return false;
+        }
+    }
+
+    if (parser->isSet("U")) {
+        if (UDPSetting.compare(QString("on"), Qt::CaseInsensitive) == 0) {
+            forceTCP = false;
+            qDebug() << "Setting UDP ON.";
+            if (proxyType != ICoreSettings::ProxyType::ptNone) {
+                qDebug() << "Cannot use UDP with proxy; disabling proxy settings.";
+                proxyType = ICoreSettings::ProxyType::ptNone;
+            }
+        } else if (UDPSetting.compare(QString("off"), Qt::CaseInsensitive) == 0) {
+            forceTCP = true;
+            qDebug() << "Setting UDP OFF.";
+        } else {
+            qCritical() << "Unable to parse UDP setting.";
+            return false;
+        }
+    }
+
+    if (parser->isSet("L")) {
+        if (LANSetting.compare(QString("on"), Qt::CaseInsensitive) == 0) {
+            qDebug() << "Setting LAN Discovery ON.";
+            enableLanDiscovery = true;
+            if (forceTCP) {
+                qDebug() << "Cannot use LAN discovery without UDP; enabling UDP.";
+                proxyType = ICoreSettings::ProxyType::ptNone;
+            }
+            if (proxyType != ICoreSettings::ProxyType::ptNone) {
+                qDebug() << "Cannot use LAN discovery with proxy; disabling proxy settings.";
+                proxyType = ICoreSettings::ProxyType::ptNone;
+            }
+        } else if (LANSetting.compare(QString("off"), Qt::CaseInsensitive) == 0) {
+            enableLanDiscovery = false;
+            qDebug() << "Setting LAN Discovery OFF.";
+        } else {
+            qCritical() << "Unable to parse LAN setting.";
+            return false;
+        }
+    }
+
+    if (parser->isSet("P")) {
+        if (proxySettings[0].compare(QString("NONE"), Qt::CaseInsensitive) == 0) {
+            proxyType = ICoreSettings::ProxyType::ptNone;
+            proxyAddr = "";
+            proxyPort = 0;
+            qDebug() << "Setting proxy type to NONE.";
+            return true;
+        }
+        // Since the first argument isn't 'none', verify format of remaining arguments
+        if (proxySettings.size() != 3) {
+            qCritical() << "Invalid number of proxy arguments.";
+            return false;
+        }
+
+        if (proxySettings[0].compare(QString("SOCKS5"), Qt::CaseInsensitive) == 0) {
+            proxyType = ICoreSettings::ProxyType::ptSOCKS5;
+            forceTCP = true;
+            enableLanDiscovery = false;
+            qDebug() << "Setting proxy type to SOCKS5.";
+        } else if (proxySettings[0].compare(QString("HTTP"), Qt::CaseInsensitive) == 0) {
+            proxyType = ICoreSettings::ProxyType::ptHTTP;
+            forceTCP = true;
+            enableLanDiscovery = false;
+            qDebug() << "Setting proxy type to HTTP.";
+        } else {
+            qCritical() << "Unable to parse proxy type.";
+            return false;
+        }
+
+        // Kriby: Sanity checking IPv4+IPv6/hostnames sure is a lot of work!
+        proxyAddr = proxySettings[1];
+        qDebug() << QString("Setting proxy address to %1.").arg(proxySettings[1]);
+
+        int portNumber = proxySettings[2].toInt();
+        if (portNumber > 0 && portNumber < 65536) {
+            proxyPort = portNumber;
+            qDebug() << QString("Setting port number to %1.").arg(portNumber);
+        } else {
+            qCritical() << "Invalid port number range.";
+        }
+    }
+    return true;
 }
 
 void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)

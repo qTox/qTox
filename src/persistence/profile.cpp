@@ -123,7 +123,7 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile,
  *
  * @example If the profile is already in use return nullptr.
  */
-Profile* Profile::loadProfile(QString name, const QString& password)
+Profile* Profile::loadProfile(QString name, const QCommandLineParser* parser, const QString& password)
 {
     if (ProfileLocker::hasLock()) {
         qCritical() << "Tried to load profile " << name << ", but another profile is already locked!";
@@ -140,7 +140,8 @@ Profile* Profile::loadProfile(QString name, const QString& password)
     Profile* p = nullptr;
     qint64 fileSize = 0;
 
-    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+    Settings& s = Settings::getInstance();
+    QString path = s.getSettingsDirPath() + name + ".tox";
     QFile saveFile(path);
     qDebug() << "Loading tox save " << path;
 
@@ -186,6 +187,8 @@ Profile* Profile::loadProfile(QString name, const QString& password)
 
     saveFile.close();
     p = new Profile(name, password, false, data, std::move(tmpKey));
+
+    s.updateProfileData(p, parser);
     return p;
 
 // cleanup in case of error
@@ -203,7 +206,7 @@ fail:
  *
  * @note If the profile is already in use return nullptr.
  */
-Profile* Profile::createProfile(QString name, QString password)
+Profile* Profile::createProfile(QString name, const QCommandLineParser* parser, QString password)
 {
     std::unique_ptr<ToxEncrypt> tmpKey;
     if (!password.isEmpty()) {

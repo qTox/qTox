@@ -30,6 +30,7 @@ class Profile;
 class Settings;
 class LoginScreen;
 class Core;
+class QCommandLineParser;
 
 #ifdef Q_OS_MAC
 class QMenuBar;
@@ -47,6 +48,7 @@ public:
     void start();
     void showMainGUI();
     void setSettings(Settings* settings);
+    void setParser(QCommandLineParser* parser);
     static Nexus& getInstance();
     static void destroyInstance();
     static Core* getCore();
@@ -89,7 +91,7 @@ public slots:
     void onCreateNewProfile(const QString& name, const QString& pass);
     void onLoadProfile(const QString& name, const QString& pass);
     int showLogin(const QString& profileName = QString());
-    void bootstrapWithProfile(Profile *p);
+    void bootstrapWithProfile(Profile* p);
 
 private:
     explicit Nexus(QObject* parent = nullptr);
@@ -102,6 +104,7 @@ private:
     Settings* settings;
     Widget* widget;
     std::unique_ptr<IAudioControl> audioControl;
+    QCommandLineParser* parser = nullptr;
 };
 
 #endif // NEXUS_H
