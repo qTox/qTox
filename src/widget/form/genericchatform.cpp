@@ -992,7 +992,13 @@ void GenericChatForm::onSearchUp(const QString& phrase, const ParameterSearch& p
 
 void GenericChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
 {
-    auto result = chatLog.searchForward(searchPos, phrase, parameter);
+    auto result = chatLog.searchForward(searchPos, phrase, parameter);    
+
+    if (result.found && result.pos.logIdx.get() > messages.end()->first.get()) {
+        const auto dt = chatLog.at(result.pos.logIdx).getTimestamp();
+        loadHistory(dt, LoadHistoryDialog::from);
+    }
+
     handleSearchResult(result, SearchDirection::Down);
 }
 
@@ -1014,6 +1020,7 @@ void GenericChatForm::handleSearchResult(SearchResult result, SearchDirection di
         chatWidget->scrollToLine(msg);
 
         auto text = qobject_cast<Text*>(msg->getContent(1));
+        text->visibilityChanged(true);
         text->selectText(result.exp, std::make_pair(result.start, result.len));
     });
 }
