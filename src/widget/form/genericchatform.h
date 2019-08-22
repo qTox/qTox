@@ -156,6 +156,7 @@ protected:
     virtual void resizeEvent(QResizeEvent* event) final override;
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
     void disableSearchText();
+    void enableSearchText();
     bool searchInText(const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
     std::pair<int, int> indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
 
@@ -198,7 +199,7 @@ protected:
 
     IChatLog& chatLog;
     IMessageDispatcher& messageDispatcher;
-    SearchPos searchPos;
+    SearchResult searchResult;
     std::map<ChatLogIdx, ChatMessage::Ptr> messages;
     bool colorizeNames = false;
 };

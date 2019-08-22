@@ -70,7 +70,7 @@ struct SearchPos
 
 struct SearchResult
 {
-    bool found;
+    bool found{false};
     SearchPos pos;
     size_t start;
     size_t len;
