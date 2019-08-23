@@ -64,9 +64,9 @@
  */
 
 namespace {
-    const QLatin1Literal ThemeSubFolder{"themes/"};
-    const QLatin1Literal BuiltinThemeDefaultPath{":themes/default/"};
-    const QLatin1Literal BuiltinThemeDarkPath{":themes/dark/"};
+    const QLatin1String ThemeSubFolder{"themes/"};
+    const QLatin1String BuiltinThemeDefaultPath{":themes/default/"};
+    const QLatin1String BuiltinThemeDarkPath{":themes/dark/"};
 }
 
 // helper functions
@@ -273,15 +273,15 @@ const QString Style::resolve(const QString& filename, const QFont& baseFont)
     }
 
     for (const QString& key : dictColor.keys()) {
-        qss.replace(QRegularExpression(key % QLatin1Literal{"\\b"}), dictColor[key]);
+        qss.replace(QRegularExpression(key % QLatin1String{"\\b"}), dictColor[key]);
     }
 
     for (const QString& key : dictFont.keys()) {
-        qss.replace(QRegularExpression(key % QLatin1Literal{"\\b"}), dictFont[key]);
+        qss.replace(QRegularExpression(key % QLatin1String{"\\b"}), dictFont[key]);
     }
 
     for (const QString& key : dictTheme.keys()) {
-        qss.replace(QRegularExpression(key % QLatin1Literal{"\\b"}), dictTheme[key]);
+        qss.replace(QRegularExpression(key % QLatin1String{"\\b"}), dictTheme[key]);
     }
 
     // @getImagePath() function

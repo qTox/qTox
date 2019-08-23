@@ -40,12 +40,12 @@ private:
 };
 
 namespace {
-const QLatin1Literal globalSettingsFile{"qtox.ini"};
-const QLatin1Literal profileFolder{"profiles"};
-const QLatin1Literal themeFolder{"themes"};
-const QLatin1Literal avatarsFolder{"avatars"};
-const QLatin1Literal transfersFolder{"transfers"};
-const QLatin1Literal screenshotsFolder{"screenshots"};
+const QLatin1String globalSettingsFile{"qtox.ini"};
+const QLatin1String profileFolder{"profiles"};
+const QLatin1String themeFolder{"themes"};
+const QLatin1String avatarsFolder{"avatars"};
+const QLatin1String transfersFolder{"transfers"};
+const QLatin1String screenshotsFolder{"screenshots"};
 const QString sep{QDir::separator()};
 }
 
