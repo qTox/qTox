@@ -29,20 +29,20 @@
 #include <QStringList>
 
 namespace {
-const QLatin1Literal globalSettingsFile{"qtox.ini"};
-const QLatin1Literal profileFolder{"profiles"};
-const QLatin1Literal themeFolder{"themes"};
-const QLatin1Literal avatarsFolder{"avatars"};
-const QLatin1Literal transfersFolder{"transfers"};
-const QLatin1Literal screenshotsFolder{"screenshots"};
+const QLatin1String globalSettingsFile{"qtox.ini"};
+const QLatin1String profileFolder{"profiles"};
+const QLatin1String themeFolder{"themes"};
+const QLatin1String avatarsFolder{"avatars"};
+const QLatin1String transfersFolder{"transfers"};
+const QLatin1String screenshotsFolder{"screenshots"};
 
 // NOTE(sudden6): currently unused, but reflects the TCS at 2018-11
 #ifdef Q_OS_WIN
-const QLatin1Literal TCSToxFileFolder{"%APPDATA%/tox/"};
+const QLatin1String TCSToxFileFolder{"%APPDATA%/tox/"};
 #elif defined(Q_OS_OSX)
-const QLatin1Literal TCSToxFileFolder{"~/Library/Application Support/Tox"};
+const QLatin1String TCSToxFileFolder{"~/Library/Application Support/Tox"};
 #else
-const QLatin1Literal TCSToxFileFolder{"~/.config/tox/"};
+const QLatin1String TCSToxFileFolder{"~/.config/tox/"};
 #endif
 } // namespace
 
