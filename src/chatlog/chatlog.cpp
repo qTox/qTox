@@ -936,10 +936,12 @@ void ChatLog::onWorkerTimeout()
         updateMultiSelectionRect();
 
         // scroll
-        if (workerStb)
+        if (workerStb) {
             scrollToBottom();
-        else
+            workerStb = false;
+        } else {
             scrollToLine(workerAnchorLine);
+        }
 
         // don't keep a Ptr to the anchor line
         workerAnchorLine = ChatLine::Ptr();
