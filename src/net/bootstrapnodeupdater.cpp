@@ -30,22 +30,22 @@
 
 namespace {
 const QUrl NodeListAddress{"https://nodes.tox.chat/json"};
-const QLatin1Literal jsonNodeArrayName{"nodes"};
-const QLatin1Literal emptyAddress{"-"};
+const QLatin1String jsonNodeArrayName{"nodes"};
+const QLatin1String emptyAddress{"-"};
 const QRegularExpression ToxPkRegEx(QString("(^|\\s)[A-Fa-f0-9]{%1}($|\\s)").arg(64));
-const QLatin1Literal builtinNodesFile{":/conf/nodes.json"};
+const QLatin1String builtinNodesFile{":/conf/nodes.json"};
 } // namespace
 
 namespace NodeFields {
-const QLatin1Literal status_udp{"status_udp"};
-const QLatin1Literal status_tcp{"status_tcp"};
-const QLatin1Literal ipv4{"ipv4"};
-const QLatin1Literal ipv6{"ipv6"};
-const QLatin1Literal public_key{"public_key"};
-const QLatin1Literal port{"port"};
-const QLatin1Literal maintainer{"maintainer"};
+const QLatin1String status_udp{"status_udp"};
+const QLatin1String status_tcp{"status_tcp"};
+const QLatin1String ipv4{"ipv4"};
+const QLatin1String ipv6{"ipv6"};
+const QLatin1String public_key{"public_key"};
+const QLatin1String port{"port"};
+const QLatin1String maintainer{"maintainer"};
 // TODO(sudden6): make use of this field once we differentiate between TCP nodes, and bootstrap nodes
-const QLatin1Literal tcp_ports{"tcp_ports"};
+const QLatin1String tcp_ports{"tcp_ports"};
 const QStringList neededFields{status_udp, status_tcp, ipv4, ipv6, public_key, port, maintainer};
 } // namespace NodeFields
 
