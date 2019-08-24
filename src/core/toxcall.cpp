@@ -105,14 +105,14 @@ void ToxCall::setVideoEnabled(bool value)
     videoEnabled = value;
 }
 
-bool ToxCall::getNullVideoBitrate() const
+int ToxCall::getVideoBitrate() const
 {
-    return nullVideoBitrate;
+    return videoBitrate;
 }
 
-void ToxCall::setNullVideoBitrate(bool value)
+void ToxCall::setVideoBitrate(int value)
 {
-    nullVideoBitrate = value;
+    videoBitrate = value;
 }
 
 CoreVideoSource* ToxCall::getVideoSource() const

@@ -116,6 +116,7 @@ private:
     void connectCallbacks(ToxAV& toxav);
 
     void process();
+    void bump();
     static void audioFrameCallback(ToxAV* toxAV, uint32_t friendNum, const int16_t* pcm,
                                    size_t sampleCount, uint8_t channels, uint32_t samplingRate,
                                    void* self);
@@ -124,7 +125,7 @@ private:
                                    int32_t ystride, int32_t ustride, int32_t vstride, void* self);
 
 private:
-    static constexpr uint32_t VIDEO_DEFAULT_BITRATE = 2500;
+    static constexpr uint32_t VIDEO_DEFAULT_BITRATE = 5000;
 
 private:
     // atomic because potentially accessed by different threads
@@ -132,6 +133,7 @@ private:
     std::unique_ptr<ToxAV, ToxAVDeleter> toxav;
     std::unique_ptr<QThread> coreavThread;
     QTimer* iterateTimer = nullptr;
+    QTimer* qualityBumpTimer = nullptr;
     using ToxFriendCallPtr = std::unique_ptr<ToxFriendCall>;
     static std::map<uint32_t, ToxFriendCallPtr> calls;
     using ToxGroupCallPtr = std::unique_ptr<ToxGroupCall>;

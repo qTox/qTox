@@ -85,6 +85,7 @@ CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav)
     , toxav{std::move(toxav)}
     , coreavThread{new QThread{this}}
     , iterateTimer{new QTimer{this}}
+    , qualityBumpTimer{new QTimer{this}}
     , threadSwitchLock{false}
 {
     assert(coreavThread);
@@ -96,8 +97,10 @@ CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav)
     connectCallbacks(*this->toxav);
 
     iterateTimer->setSingleShot(true);
+    qualityBumpTimer->setSingleShot(true);
 
     connect(iterateTimer, &QTimer::timeout, this, &CoreAV::process);
+    connect(qualityBumpTimer, &QTimer::timeout, this, &CoreAV::bump);
     connect(coreavThread.get(), &QThread::finished, iterateTimer, &QTimer::stop);
 
     coreavThread->start();
@@ -181,6 +184,24 @@ void CoreAV::start()
     if (QThread::currentThread() != coreavThread.get())
         return (void)QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection);
     iterateTimer->start();
+    qualityBumpTimer->start();
+}
+
+void CoreAV::bump()
+{
+    for (auto& call : calls) {
+        if (call.second->getState() & TOXAV_FRIEND_CALL_STATE_SENDING_V) {
+            int curbitrate = call.second->getVideoBitrate();
+            if (curbitrate < VIDEO_DEFAULT_BITRATE) {
+                TOXAV_ERR_BIT_RATE_SET err;
+                int newbitrate = curbitrate + 10;
+                toxav_video_set_bit_rate(toxav.get(), call.first, newbitrate, &err);
+                call.second->setVideoBitrate(newbitrate);
+                qDebug() << "updated bitrate from" << curbitrate << "to" << newbitrate << "and got" << err;
+            }
+        }
+    }
+    qualityBumpTimer->start(100);
 }
 
 void CoreAV::process()
@@ -278,6 +299,7 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
     const uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
     if (toxav_answer(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(),
                      videoBitrate, &err)) {
+        it->second->setVideoBitrate(videoBitrate);
         it->second->setActive(true);
         return true;
     } else {
@@ -320,6 +342,7 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     // Audio backend must be set before making a call
     assert(audio != nullptr);
     ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall(friendNum, video, *this, *audio));
+    call->setVideoBitrate(videoBitrate);
     assert(call != nullptr);
     auto ret = calls.emplace(friendNum, std::move(call));
     ret.first->second->startTimeout(friendNum);
@@ -430,10 +453,10 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
         return;
     }
 
-    if (call.getNullVideoBitrate()) {
+    if (call.getVideoBitrate() == 0) {
         qDebug() << "Restarting video stream to friend" << callId;
         toxav_video_set_bit_rate(toxav.get(), callId, VIDEO_DEFAULT_BITRATE, nullptr);
-        call.setNullVideoBitrate(false);
+        call.setVideoBitrate(VIDEO_DEFAULT_BITRATE);
     }
 
     ToxYUVFrame frame = vframe->toToxYUVFrame();
@@ -712,7 +735,7 @@ void CoreAV::sendNoVideo()
     for (auto& kv : calls) {
         ToxFriendCall& call = *kv.second;
         toxav_video_set_bit_rate(toxav.get(), kv.first, 0, nullptr);
-        call.setNullVideoBitrate(true);
+        call.setVideoBitrate(0);
     }
 }
 
@@ -878,7 +901,16 @@ void CoreAV::videoBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rat
                                                Q_ARG(uint32_t, rate), Q_ARG(void*, vSelf));
     }
 
-    qDebug() << "Recommended video bitrate with" << friendNum << " is now " << rate << ", ignoring it";
+    TOXAV_ERR_BIT_RATE_SET error;
+    toxav_video_set_bit_rate(toxav, friendNum, rate, &error);
+    qDebug() << "Recommended video bitrate with" << friendNum << " is now " << rate
+             << ", updated it." << error;
+    auto it = calls.find(friendNum);
+    if (it == calls.end()) {
+        qCritical() << "wat no call for" << friendNum << "???";
+        return;
+    }
+    it->second->setVideoBitrate(rate);
 }
 
 void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, size_t sampleCount,

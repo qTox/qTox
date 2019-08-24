@@ -64,8 +64,8 @@ public:
     bool getVideoEnabled() const;
     void setVideoEnabled(bool value);
 
-    bool getNullVideoBitrate() const;
-    void setNullVideoBitrate(bool value);
+    int getVideoBitrate() const;
+    void setVideoBitrate(int value);
 
     CoreVideoSource* getVideoSource() const;
 
@@ -81,7 +81,7 @@ protected:
     CoreVideoSource* videoSource{nullptr};
     QMetaObject::Connection videoInConn;
     bool videoEnabled{false};
-    bool nullVideoBitrate{false};
+    int videoBitrate{5000};
     std::unique_ptr<IAudioSource> audioSource = nullptr;
     QMetaObject::Connection audioSrcInvalid;
 };
