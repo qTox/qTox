@@ -105,6 +105,9 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile,
     , encrypted{this->passkey != nullptr}
 {
     Settings& s = Settings::getInstance();
+    // Core settings are saved per profile, need to load them before starting Core
+    s.loadPersonal(name, this->passkey.get());
+
     // TODO(kriby): Move/refactor core initialization to remove settings dependency
     //  note to self: use slots/signals for this?
     initCore(toxsave, s, isNewProfile);
