@@ -291,7 +291,7 @@ Profile::Profile(const QString& name, const QString& password, std::unique_ptr<T
  *
  * @note If the profile is already in use return nullptr.
  */
-Profile* Profile::loadProfile(const QString& name, const QString& password, const Settings& settings)
+Profile* Profile::loadProfile(const QString& name, const QString& password, Settings& settings)
 {
     if (ProfileLocker::hasLock()) {
         qCritical() << "Tried to load profile " << name << ", but another profile is already locked!";
@@ -307,13 +307,15 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, cons
     QByteArray toxsave = QByteArray();
     QString path = settings.getSettingsDirPath() + name + ".tox";
     std::unique_ptr<ToxEncrypt> tmpKey = loadToxData(password, path, toxsave, error);
-
     if (logLoadToxDataError(error, path)) {
         ProfileLocker::unlock();
         return nullptr;
     }
 
     Profile* p = new Profile(name, password, std::move(tmpKey));
+
+    // Core settings are saved per profile, need to load them before starting Core
+    settings.loadPersonal(name, tmpKey.get());
 
     p->initCore(toxsave, settings, /*isNewProfile*/ false);
     p->loadDatabase(password);
