@@ -1008,6 +1008,11 @@ void Widget::setStatusMessage(const QString& statusMessage)
  */
 void Widget::playNotificationSound(IAudioSink::Sound sound, bool loop)
 {
+    if (!settings.getAudioOutDevEnabled()) {
+        // don't try to play sounds if audio is disabled
+        return;
+    }
+
     if (audioNotification == nullptr) {
         audioNotification = std::unique_ptr<IAudioSink>(audio.makeSink());
         if (audioNotification == nullptr) {
