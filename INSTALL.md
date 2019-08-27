@@ -155,7 +155,7 @@ pacman -S qtox
 
 #### Fedora
 
-qTox is available in the [RPMFusion](https://rpmfusion.org/) repo, to install:
+qTox is available in the [RPM Fusion](https://rpmfusion.org/) repo, to install:
 
 ```bash
 dnf install qtox
@@ -346,15 +346,12 @@ sudo apt-get install \
 
 #### Fedora
 
-**Note that sqlcipher is not included in all versions of Fedora yet.**
-As of writing this section (November 2016), Fedora 25 ships sqlcipher, but
-Fedora 24 and older don't ship it yet.
-**This means that if you can't install sqlcipher from repositories, you'll
-have to compile it yourself, otherwise compiling qTox will fail.**
+To install FFmpeg, the [RPM Fusion](https://rpmfusion.org/) repo is required.
 
 ```bash
-sudo dnf groupinstall "Development Tools" "C Development Tools and Libraries"
-# (can also use sudo dnf install @"Development Tools")
+sudo dnf group install "Development Tools" "C Development Tools and Libraries"
+# (can also use):
+# sudo dnf install @"Development Tools" @"C Development Tools and Libraries"
 sudo dnf install \
     autoconf \
     automake \
@@ -372,13 +369,13 @@ sudo dnf install \
     openssl-devel \
     opus-devel \
     qrencode-devel \
+    qt5-devel \
     qt5-linguist \
     qt5-qtsvg \
     qt5-qtsvg-devel \
     qt-creator \
-    qt-devel \
     qt-doc \
-    qtsingleapplication \
+    qtsingleapplication-qt5 \
     sqlcipher \
     sqlcipher-devel
 ```
