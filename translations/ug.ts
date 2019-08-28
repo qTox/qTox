@@ -584,10 +584,6 @@ which may lead to problems with video calls.</source>
 <context>
     <name>ChatForm</name>
     <message>
-        <source>Load chat history...</source>
-        <translation>پاراڭ خاتىرىسىنى كىرگۈزۈش...</translation>
-    </message>
-    <message>
         <source>Send a file</source>
         <translation>ھۆججەت يوللاش</translation>
     </message>
@@ -610,10 +606,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Calling %1</source>
         <translation>ھازىر %1 نى چاقىرىۋاتىدۇ</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>ھۆججەت %1 يوللاش مەغلۇب بولدى</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -649,14 +641,6 @@ which may lead to problems with video calls.</source>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 ھازىر %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>ھۆججەت چىقىرىش</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>پارڭ خاتىرىسىنى ساقلاش</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -804,23 +788,31 @@ so you can save the file on windows.</source>
         <comment>Error while sending friendship request</comment>
         <translation>ئالاقىداش قوشۇلدى</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
+        <source>New message</source>
+        <translation type="unfinished">يېڭى ئۇچۇر</translation>
+    </message>
+    <message>
+        <source>Incoming file transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New friend request received</source>
+        <source>Friend request received</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
+        <source>New group message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
+        <source>Group invite received</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1176,10 +1168,6 @@ instead of system taskbar.</source>
         <translation>ئالاقىداشلار ھالىتىنى كۆرسىتىش</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>تورسىز ھالەتكى كىرىۋىلىش</translation>
-    </message>
-    <message>
         <source>Start qTox on operating system startup (current profile).</source>
         <translation>qTox نى ئپتۇماتىك قوزغىتىش (مۇشۇ ئىشكەتكۈچى).</translation>
     </message>
@@ -1231,10 +1219,6 @@ instead of system taskbar.</source>
         <translation>ئۇچۇرلارنى تازىلاش</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>يوللانمىدى</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>تازىلاندى</translation>
     </message>
@@ -1247,10 +1231,6 @@ instead of system taskbar.</source>
         <translation>ئۇلانما ئادرېسىنى كۆچۈرۈش</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation type="unfinished">ئىسپاتلاش</translation>
     </message>
@@ -1261,6 +1241,18 @@ instead of system taskbar.</source>
     <message>
         <source>Search in text</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">پاراڭ خاتىرىسىنى كىرگۈزۈش...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">ھۆججەت چىقىرىش</translation>
     </message>
 </context>
 <context>
@@ -1303,26 +1295,10 @@ instead of system taskbar.</source>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;قۇرۇق&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 ماۋزۇنى %2 گە ئۆزگەرتتى</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1657,12 +1633,28 @@ Profile does not contain your history.</source>
         <translation>بۇرۇنقى خاتىرىلەرنى يۈكلەش</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>خاتىرىلەرنى يۈكلەش:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 پارچە ئۇچۇر</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1730,12 +1722,6 @@ Please make sure to enter same password twice.</source>
         <translation>بۇ خاسلىق بار.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>ئېنىقسىز خاتالىق: يېڭى ئارخىپ قۇرۇلمىدى.
-ئەگەر سىز بۇ خاتالىققا يولۇقسىڭىز، مەلۇم قىلىڭ.</translation>
-    </message>
-    <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation>پاروللانغان خاسلىقنى ئۆزلىكىدىن يۈكلىيەلمەيدۇ.</translation>
     </message>
@@ -1758,10 +1744,6 @@ You may want to create one.</source>
     <message>
         <source>This profile is already in use.</source>
         <translation>بۇ خاسلىق ئىشلىتىلىۋاتىدۇ.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>خاسلىق ئىشلىتىلىۋاتىدۇ. پروگىراممىنى تاقىۋىتىڭ.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2508,6 +2490,35 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Dark violet</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">توردا</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">چىقىپ كىتىش</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">ئالدىراش</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">توردا يوق</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2611,14 +2622,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2882,6 +2885,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Notify via desktop notifications</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2982,15 +2989,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>ئاتىڭىز</translation>
     </message>
     <message>
-        <source>Your status</source>
-        <translation>ھالىتىڭىز</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>قۇرۇق</translation>
-    </message>
-    <message>
         <source>Message failed to send</source>
         <translation>ئۇچۇر يوللانمىدى</translation>
     </message>
@@ -3082,28 +3080,19 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>مېنىڭ</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">توردا</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">ھۆججەت %1 يوللاش مەغلۇب بولدى</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">چىقىپ كىتىش</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">ئالدىراش</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">توردا يوق</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
+        <source> invites you to join a group.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

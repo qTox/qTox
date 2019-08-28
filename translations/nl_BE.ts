@@ -585,10 +585,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
 <context>
     <name>ChatForm</name>
     <message>
-        <source>Load chat history...</source>
-        <translation>Gespreksgeschiedenis laden…</translation>
-    </message>
-    <message>
         <source>Send a file</source>
         <translation>Verstuur een bestand</translation>
     </message>
@@ -611,10 +607,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>Calling %1</source>
         <translation>%1 bellen</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Kon bestand ‘%1’ niet verzenden</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -650,14 +642,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 is nu %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>Exporteren naar bestand</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Chatgeschiedenis opslaan</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -805,23 +789,31 @@ so you can save the file on windows.</source>
         <comment>Error while sending friendship request</comment>
         <translation>Vriend is al toegevoegd</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
+        <source>New message</source>
+        <translation type="unfinished">Nieuw bericht</translation>
+    </message>
+    <message>
+        <source>Incoming file transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New friend request received</source>
+        <source>Friend request received</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
+        <source>New group message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
+        <source>Group invite received</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1179,10 +1171,6 @@ in plaats van naar den taakbalk.</translation>
         <translation>Toon statusverandering van contacten</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>Faux offline berichten</translation>
-    </message>
-    <message>
         <source>Start qTox on operating system startup (current profile).</source>
         <translation>qTox starten bij opstarten van besturingssysteem (huidig profiel).</translation>
     </message>
@@ -1234,10 +1222,6 @@ in plaats van naar den taakbalk.</translation>
         <translation>Getoonde berichten verwijderen</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>Niet verstuurd</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>Geleegd</translation>
     </message>
@@ -1250,10 +1234,6 @@ in plaats van naar den taakbalk.</translation>
         <translation>Koppelingsadres kopiëren</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation type="unfinished">Bevestiging</translation>
     </message>
@@ -1264,6 +1244,18 @@ in plaats van naar den taakbalk.</translation>
     <message>
         <source>Search in text</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Gespreksgeschiedenis laden…</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Exporteren naar bestand</translation>
     </message>
 </context>
 <context>
@@ -1306,26 +1298,10 @@ in plaats van naar den taakbalk.</translation>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;leeg&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 heeft den titel ingesteld op %2</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1662,12 +1638,28 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
         <translation>Geschiedenis laden</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Geschiedenis laden van:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 berichten</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1735,12 +1727,6 @@ Voer twee keer hetzelfde paswoord in.</translation>
         <translation>Een profiel met deze naam bestaat al.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Onbekende fout: kon geen nieuw profiel aanmaken.
-Als ge deze fout tegenkomt, gelieve deze dan te melden.</translation>
-    </message>
-    <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation>Profielen beschermd met paswoord kunnen niet automatisch worden geladen.</translation>
     </message>
@@ -1763,10 +1749,6 @@ Ge kunt der een aanmaken.</translation>
     <message>
         <source>This profile is already in use.</source>
         <translation>Dit profiel is al in gebruik.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>Dit profiel is al in gebruik, sluit alle andere Tox-cliënten.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2514,6 +2496,35 @@ Dezen ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</
         <source>Dark violet</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">afwezig</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">bezet</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2617,14 +2628,6 @@ Dezen ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2888,6 +2891,10 @@ Dezen ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</
         <source>Notify via desktop notifications</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2988,15 +2995,6 @@ Dezen ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</
         <translation>Uwe naam</translation>
     </message>
     <message>
-        <source>Your status</source>
-        <translation>Uwe status</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;leeg&gt;</translation>
-    </message>
-    <message>
         <source>Message failed to send</source>
         <translation>Bericht kon niet verstuurd worden</translation>
     </message>
@@ -3090,28 +3088,19 @@ Dezen ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</
         <translation>Mijn profiel</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Kon bestand ‘%1’ niet verzenden</translation>
+    </message>
+    <message>
+        <source>File sent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">afwezig</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">bezet</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
+        <source> sent you a friend request.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
+        <source> invites you to join a group.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -612,10 +612,6 @@ which may lead to problems with video calls.</source>
         <translation>Вызов %1</translation>
     </message>
     <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Не удалось отправить файл «%1»</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Не удалось открыть временный файл</translation>
@@ -633,10 +629,6 @@ which may lead to problems with video calls.</source>
         <translation>Длительность разговора: </translation>
     </message>
     <message>
-        <source>Load chat history...</source>
-        <translation>Загрузить историю чата...</translation>
-    </message>
-    <message>
         <source>%1 is typing</source>
         <translation>%1 набирает сообщение</translation>
     </message>
@@ -652,14 +644,6 @@ which may lead to problems with video calls.</source>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 сейчас %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>Экспорт в файл</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Сохранить журнал чата</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -807,24 +791,32 @@ so you can save the file on windows.</source>
         <comment>Error while sending friendship request</comment>
         <translation>Друг уже добавлен</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
-        <translation>Новое групповое сообщение получено</translation>
+        <source>New message</source>
+        <translation type="unfinished">Новое сообщение</translation>
     </message>
     <message>
-        <source>New friend request received</source>
-        <translation>Получен новый запрос на добавление в друзья</translation>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
-        <translation>Получено новое приглашение от группы</translation>
+        <source>Friend request received</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
-        <translation>Получено новое сообщение</translation>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1116,10 +1108,6 @@ so you can save the file on windows.</source>
         <translation>Стандартная папка сохранения файлов:</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>Имитация офлайнового обмена сообщениями</translation>
-    </message>
-    <message>
         <source>Set to 0 to disable</source>
         <translation>Укажите 0, чтобы отключить</translation>
     </message>
@@ -1236,10 +1224,6 @@ instead of system taskbar.</source>
         <translation>Цитировать выделенное</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>Не отправлено</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>Очищено</translation>
     </message>
@@ -1256,12 +1240,20 @@ instead of system taskbar.</source>
         <translation>Вы уверены, что хотите удалить все отображаемые сообщения?</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation>[Системное сообщение]</translation>
-    </message>
-    <message>
         <source>Search in text</source>
         <translation>Поиск в тексте</translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Загрузить историю чата...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Экспорт в файл</translation>
     </message>
 </context>
 <context>
@@ -1304,26 +1296,10 @@ instead of system taskbar.</source>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Пусто&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 сменил заголовок на %2</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation>%1 онлайн</translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation>Новый пользователь подключился к группе</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1662,12 +1638,28 @@ Profile does not contain your history.</source>
         <translation>Диалог загрузки истории</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Загрузить историю с:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 сообщений</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Выберите дату</translation>
     </message>
 </context>
 <context>
@@ -1735,22 +1727,12 @@ Please make sure to enter same password twice.</source>
         <translation>Профиль с таким именем уже существует.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Неизвестная ошибка: невозможно создать новый профиль.
-Пожалуйста, сообщите об этой проблеме.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load this profile</source>
         <translation>Невозможно загрузить данный профиль</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
         <translation>Профиль уже используется.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>Профиль уже используется. Закройте другие процессы клиента.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2517,6 +2499,35 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Dark violet</source>
         <translation>Темно-фиолетовый</translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">онлайн</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">отошел</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">занят</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">Не в сети</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">блокированный</translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2621,14 +2632,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Use regular expressions</source>
         <translation>Использовать регулярные выражения</translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Выберите дату</translation>
     </message>
 </context>
 <context>
@@ -2891,6 +2894,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Notify via desktop notifications</source>
         <translation>Уведомлять с помощью уведомлений на рабочем столе</translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2922,15 +2929,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Your name</source>
         <translation>Ваше имя</translation>
-    </message>
-    <message>
-        <source>Your status</source>
-        <translation>Ваш статус</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Пусто&gt;</translation>
     </message>
     <message>
         <source>Create new group...</source>
@@ -3095,29 +3093,20 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Мой профиль</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">онлайн</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Не удалось отправить файл «%1»</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">отошел</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">занят</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>Не в сети</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
-        <translation>блокированный</translation>
+        <source> invites you to join a group.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

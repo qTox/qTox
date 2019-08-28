@@ -598,10 +598,6 @@ může způsobovat problémy během videohovorů.</translation>
         <translation>%1 volá</translation>
     </message>
     <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Nepodařilo se poslat soubor &quot;%1&quot;</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Nepodařilo se otevřít dočasný soubor</translation>
@@ -617,10 +613,6 @@ může způsobovat problémy během videohovorů.</translation>
     <message>
         <source>Call duration: </source>
         <translation>Délka hovoru: </translation>
-    </message>
-    <message>
-        <source>Load chat history...</source>
-        <translation>Nahrát historii zpráv...</translation>
     </message>
     <message>
         <source>Unable to open</source>
@@ -650,14 +642,6 @@ může způsobovat problémy během videohovorů.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 je nově %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>Export do souboru</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Uložit záznam chatu</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -806,24 +790,32 @@ takže můžete soubor uložit do systému Windows.</translation>
         <comment>Error while sending friendship request</comment>
         <translation>Přítel je již v seznamu</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
-        <translation>Byla přijata nová skupinová zpráva</translation>
+        <source>New message</source>
+        <translation type="unfinished">Nová zpráva</translation>
     </message>
     <message>
-        <source>New friend request received</source>
-        <translation>Byla přijata nová žádost o přátelství</translation>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
-        <translation>Byla přijata nová pozvánka do skupiny</translation>
+        <source>Friend request received</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
-        <translation>Byla přijata nová zpráva</translation>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1174,10 +1166,6 @@ místo panelu úloh.</translation>
         <translation>Upozornění při změně stavu kontaktů</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>Odesílání zpráv offline</translation>
-    </message>
-    <message>
         <source>Start qTox on operating system startup (current profile).</source>
         <translation>Spustit qTox při startu operačního systému (aktuální profil).</translation>
     </message>
@@ -1207,10 +1195,6 @@ místo panelu úloh.</translation>
     <message>
         <source>Save chat log</source>
         <translation>Uložit záznam z chatu</translation>
-    </message>
-    <message>
-        <source>Not sent</source>
-        <translation>Neodesláno</translation>
     </message>
     <message>
         <source>Cleared</source>
@@ -1245,10 +1229,6 @@ místo panelu úloh.</translation>
         <translation>Kopírovat adresu odkazu</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation>[Systémová zpráva]</translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation>Potvrzení</translation>
     </message>
@@ -1259,6 +1239,18 @@ místo panelu úloh.</translation>
     <message>
         <source>Search in text</source>
         <translation>Prohledat text</translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Nahrát historii zpráv...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Export do souboru</translation>
     </message>
 </context>
 <context>
@@ -1301,26 +1293,10 @@ místo panelu úloh.</translation>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Prázdné&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 nastavil název konverzace na %2</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation>%1 je online</translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation>Ke skupině se připojil nový uživatel</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1659,12 +1635,28 @@ Při exportu nebude nahrána vaše historie.</translation>
         <translation>Zobrazit historii</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Zobrazit historii od:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 zprávy</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished">Vyberte dialogové okno Datum</translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Vyberte datum</translation>
     </message>
 </context>
 <context>
@@ -1716,22 +1708,12 @@ Zadejte prosím dvakrát stejné heslo.</translation>
         <translation>Profil s tímto jménem už existuje.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Neznámá chyba: Nelze vytvořit profil.
-Pokud narazíte na tento problém, prosím zašlete jej.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load this profile</source>
         <translation>Nelze nahrát tento profil</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
         <translation>Profil už je používán.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>Profil už se používá. Zavřete ostatní klienty.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2511,6 +2493,35 @@ Toto ID zahrnuje kód NoSpam (modrý) a kontrolní součet (šedý).</translatio
         <source>Dark violet</source>
         <translation>Tmavě fialová</translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">online</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">pryč</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">zaneprázdněn</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">offline</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">blokovaný</translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2615,14 +2626,6 @@ Toto ID zahrnuje kód NoSpam (modrý) a kontrolní součet (šedý).</translatio
     <message>
         <source>Use regular expressions</source>
         <translation>Používejte regulární výrazy</translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation>Vyberte dialogové okno Datum</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Vyberte datum</translation>
     </message>
 </context>
 <context>
@@ -2885,6 +2888,10 @@ Toto ID zahrnuje kód NoSpam (modrý) a kontrolní součet (šedý).</translatio
         <source>Notify via desktop notifications</source>
         <translation>Upozorňovat prostřednictvím oznámení na ploše</translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -3015,15 +3022,6 @@ Toto ID zahrnuje kód NoSpam (modrý) a kontrolní součet (šedý).</translatio
         <translation>Vaše jméno</translation>
     </message>
     <message>
-        <source>Your status</source>
-        <translation>Váš status</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Prázdné&gt;</translation>
-    </message>
-    <message>
         <source>Groupchat #%1</source>
         <translation>Skupinová konverzace #%1</translation>
     </message>
@@ -3088,29 +3086,20 @@ Toto ID zahrnuje kód NoSpam (modrý) a kontrolní součet (šedý).</translatio
         <translation>Můj profil</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>online</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Nepodařilo se poslat soubor &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>pryč</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>zaneprázdněn</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>offline</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
-        <translation>blokovaný</translation>
+        <source> invites you to join a group.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

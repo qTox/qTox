@@ -601,10 +601,6 @@ questo può causare problemi con le chiamate video.</translation>
         <translation>Stai chiamando %1</translation>
     </message>
     <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Invio del file &quot;%1&quot; fallito</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Impossibile aprire il file temporaneo</translation>
@@ -620,10 +616,6 @@ questo può causare problemi con le chiamate video.</translation>
     <message>
         <source>Call duration: </source>
         <translation>Durata chiamata: </translation>
-    </message>
-    <message>
-        <source>Load chat history...</source>
-        <translation>Carica cronologia chat...</translation>
     </message>
     <message>
         <source>Unable to open</source>
@@ -649,14 +641,6 @@ questo può causare problemi con le chiamate video.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 è %2 adesso</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>Esporta su file</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Salva il log della chat</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -805,24 +789,32 @@ in modo da poter salvare il file su windows.</translation>
         <comment>Error while sending friendship request</comment>
         <translation>Questo contatto è già presente</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
-        <translation>Nuovo messaggio di gruppo ricevuto</translation>
+        <source>New message</source>
+        <translation type="unfinished">Nuovo messaggio</translation>
     </message>
     <message>
-        <source>New friend request received</source>
-        <translation>Nuova richiesta di amicizia ricevuta</translation>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
-        <translation>Nuovo invito di gruppo ricevuto</translation>
+        <source>Friend request received</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
-        <translation>Nuovo messaggio ricevuto</translation>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1168,10 +1160,6 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
         <translation>Mostra quando i contatti cambiano stato</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>Usa falsi messaggi offline</translation>
-    </message>
-    <message>
         <source>Autostart</source>
         <translation>Avvia automaticamente</translation>
     </message>
@@ -1228,10 +1216,6 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
         <translation>Rimuovi messaggi visualizzati</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>Non inviato</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>Pulito</translation>
     </message>
@@ -1244,10 +1228,6 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
         <translation>Copia il link dell&apos;indirizzo</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation>[Messaggio di sistema]</translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation>Conferma</translation>
     </message>
@@ -1258,6 +1238,18 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
     <message>
         <source>Search in text</source>
         <translation>Cerca nel testo</translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Carica cronologia chat...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Esporta su file</translation>
     </message>
 </context>
 <context>
@@ -1300,26 +1292,10 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Vuoto&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 ha impostato il titolo a %2</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation>%1 è online</translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation>Un nuovo utente si è connesso al gruppo</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1657,12 +1633,28 @@ I profili non contengono la cronologia messaggi.</translation>
         <translation>Carica cronologia chat</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Carica cronologia chat dal giorno:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 messaggi</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished">Finestra di dialogo Seleziona data</translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Seleziona una data</translation>
     </message>
 </context>
 <context>
@@ -1730,12 +1722,6 @@ Assicurati di inserire la stessa password due volte.</translation>
         <translation>Un profilo con questo nome esiste già.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Errore sconosciuto: impossibile creare un nuovo profilo.
-Se incontri questo errore, riportalo agli sviluppatori.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load this profile</source>
         <translation>Impossibile caricare il profilo</translation>
     </message>
@@ -1766,10 +1752,6 @@ You may want to create one.</source>
         <translation>Non è stato selezionato nessuno profilo.
 
 È possibile crearne uno nuovo.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>Questo profilo è già in uso. Chiudi gli altri clients.</translation>
     </message>
     <message>
         <source>Username input field</source>
@@ -2508,6 +2490,35 @@ Questo ID include il codice NoSpam (in blu), e il checksum (in grigio).</transla
         <source>Dark violet</source>
         <translation>Viola scuro</translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">in linea</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">assente</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">occupato</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">disconnesso</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">bloccato</translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2612,14 +2623,6 @@ Questo ID include il codice NoSpam (in blu), e il checksum (in grigio).</transla
     <message>
         <source>Use regular expressions</source>
         <translation>Utilizzare espressioni comuni</translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation>Finestra di dialogo Seleziona data</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Seleziona una data</translation>
     </message>
 </context>
 <context>
@@ -2882,6 +2885,10 @@ Questo ID include il codice NoSpam (in blu), e il checksum (in grigio).</transla
         <source>Notify via desktop notifications</source>
         <translation>Notifica tramite notifiche sul desktop</translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2970,15 +2977,6 @@ Questo ID include il codice NoSpam (in blu), e il checksum (in grigio).</transla
     <message>
         <source>Your name</source>
         <translation>qTox User</translation>
-    </message>
-    <message>
-        <source>Your status</source>
-        <translation>Toxing on qTox</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Vuoto&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
@@ -3083,29 +3081,20 @@ Questo ID include il codice NoSpam (in blu), e il checksum (in grigio).</transla
         <translation>Il mio profilo</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>in linea</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Invio del file &quot;%1&quot; fallito</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>assente</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>occupato</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>disconnesso</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
-        <translation>bloccato</translation>
+        <source> invites you to join a group.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

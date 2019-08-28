@@ -609,10 +609,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Helistan kasutajale %1</translation>
     </message>
     <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Faili &quot;%1&quot; saatmine luhtus</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Ei suutnud avada ajutist faili</translation>
@@ -630,11 +626,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Kõne kestvus: </translation>
     </message>
     <message>
-        <source>Load chat history...</source>
-        <translatorcomment>mitmuse kasutamine on siin ilmselt loogilisem</translatorcomment>
-        <translation>Lae vestluste ajalugu...</translation>
-    </message>
-    <message>
         <source>%1 is typing</source>
         <translation>%1 on kirjutamas</translation>
     </message>
@@ -650,14 +641,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 on nüüd %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>Ekspordi faili</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Salvesta vestluse logi</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -806,23 +789,31 @@ so you can save the file on windows.</source>
         <comment>Error while sending friendship request</comment>
         <translation>Sõber on juba lisatud</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
+        <source>New message</source>
+        <translation type="unfinished">Uus sõnum</translation>
+    </message>
+    <message>
+        <source>Incoming file transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New friend request received</source>
+        <source>Friend request received</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
+        <source>New group message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
+        <source>Group invite received</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1181,10 +1172,6 @@ instead of closing itself.</source>
         <translation>Näita muutusi kontaktide olekus</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>Sõnumite edastamine ühendamata olekus sõpradele</translation>
-    </message>
-    <message>
         <source>Check for updates</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1206,10 +1193,6 @@ instead of closing itself.</source>
     <message>
         <source>Save chat log</source>
         <translation>Salvesta vestluse logi</translation>
-    </message>
-    <message>
-        <source>Not sent</source>
-        <translation>Saatmata</translation>
     </message>
     <message>
         <source>Cleared</source>
@@ -1244,10 +1227,6 @@ instead of closing itself.</source>
         <translation>Kopeeri viida aadress</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation type="unfinished">Kinnitus</translation>
     </message>
@@ -1258,6 +1237,18 @@ instead of closing itself.</source>
     <message>
         <source>Search in text</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Lae vestluste ajalugu...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Ekspordi faili</translation>
     </message>
 </context>
 <context>
@@ -1300,26 +1291,10 @@ instead of closing itself.</source>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Tühi&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 seadis pealkirjaks %2</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1656,12 +1631,28 @@ Profiil ei sisalda vestluste ajalugu.</translation>
         <translation>Vestluste ajaloo laadimise aken</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Lae vestluste ajalugu kp-st:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 sõnumit</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1729,12 +1720,6 @@ Palun veendu, et sisestad mõlemal korral sama salasõna.</translation>
         <translation>Selle nimega profiil on juba olemas.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Tundmatu viga: Uue profiili loomine luhtus.
-Palun teavitage meid sellest veast.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load profile</source>
         <translation>Profiili laadimine luhtus</translation>
     </message>
@@ -1753,10 +1738,6 @@ Võimalik, et peaksid selle looma.</translation>
     <message>
         <source>This profile is already in use.</source>
         <translation>Seda profiili juba kasutatakse.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>Profiili juba kasutatakse. Sulgege muud seda kasutavad rakendused.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2509,6 +2490,35 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <source>Dark violet</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">ühendatud</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">eemal</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">hõivatud</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">ühendamata</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2612,14 +2622,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2883,6 +2885,10 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <source>Notify via desktop notifications</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2912,10 +2918,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <message>
         <source>Your name</source>
         <translation>Sinu nimi</translation>
-    </message>
-    <message>
-        <source>Your status</source>
-        <translation>Olekuteade</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -3027,11 +3029,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <translation>Eelmine vestlus</translation>
     </message>
     <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Tühi&gt;</translation>
-    </message>
-    <message>
         <source>Groupchat #%1</source>
         <translation>Grupivestlus #%1</translation>
     </message>
@@ -3084,28 +3081,19 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <translation>Minu profiil</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">ühendatud</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Faili &quot;%1&quot; saatmine luhtus</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">eemal</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">hõivatud</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">ühendamata</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
+        <source> invites you to join a group.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

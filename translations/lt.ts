@@ -594,10 +594,6 @@ vaizdo skambučiais.</translation>
         <translation>qTox nepavyko atverti %1</translation>
     </message>
     <message>
-        <source>Load chat history...</source>
-        <translation>Įkelti pokalbių žurnalą...</translation>
-    </message>
-    <message>
         <source>Unable to open</source>
         <translation>Nepavyko atverti</translation>
     </message>
@@ -612,10 +608,6 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Calling %1</source>
         <translation>Skambiname %1</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Nepavyko išsiųsti failo „%1“</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -650,14 +642,6 @@ vaizdo skambučiais.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 dabar %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>Eksportuoti į failą</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Įrašyti pokalbio žurnalą</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -806,24 +790,32 @@ tad dabar galite įrašyti failą Windows sistemoje.</translation>
         <comment>Error while sending friendship request</comment>
         <translation>Toks kontaktas jau yra pridėtas</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
-        <translation>Gauta nauja grupės žinutė</translation>
+        <source>New message</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New friend request received</source>
-        <translation>Gauta nauja draugo užklausa</translation>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
-        <translation>Gautas naujas grupės pakvietimas</translation>
+        <source>Friend request received</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
-        <translation>Gauta nauja žinutė</translation>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1165,10 +1157,6 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <translation>Rodyti kontaktų būsenos pokyčius</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>Kaupti žinutes atsijungus adresatui</translation>
-    </message>
-    <message>
         <source>Set to 0 to disable</source>
         <translation>Išjungsite nustatydami „0“</translation>
     </message>
@@ -1229,10 +1217,6 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <translation>Išvalyti rodomas žinutes</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>Nenusiųsta</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>Išvalyta</translation>
     </message>
@@ -1245,10 +1229,6 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <translation>Kopijuoti nuorodos adresą</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation>[Sistemos pranešimas]</translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation>Patvirtinimas</translation>
     </message>
@@ -1259,6 +1239,18 @@ sistemos juostelėje, o ne programų juostoje.</translation>
     <message>
         <source>Search in text</source>
         <translation>Ieškoti tekste</translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Įkelti pokalbių žurnalą...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Eksportuoti į failą</translation>
     </message>
 </context>
 <context>
@@ -1301,26 +1293,10 @@ sistemos juostelėje, o ne programų juostoje.</translation>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;nėra&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 nustatė pavadinimą „%2“</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation>%1 yra prisijungęs(-usi)</translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation>Naujas naudotojas prisijungė prie grupės</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1659,12 +1635,28 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
         <translation>Įkelti žurnalą</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Įkelti pokalbių žurnalą nuo:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 žinučių</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished">Datos pasirinkimo dialogas</translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Pasirinkti datą</translation>
     </message>
 </context>
 <context>
@@ -1732,12 +1724,6 @@ Please make sure to enter same password twice.</source>
         <translation>Toks profilis jau yra.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Neatpažinta klaida: nepavyko sukurti profilio.
-Prašome pranešti apie šią klaidą.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load profile</source>
         <translation>Nepavyko prisijungti</translation>
     </message>
@@ -1756,10 +1742,6 @@ Galite sukurti naują.</translation>
     <message>
         <source>This profile is already in use.</source>
         <translation>Profilis jau naudojamas.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>Profilis jau naudojamas. Išjunkite kitas Tox programas.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2514,6 +2496,35 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
         <source>Dark violet</source>
         <translation>Tamsiai violetinė</translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">prisijungęs (-usi)</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">pasišalinęs (-usi)</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">užsiėmęs (-usi)</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">neprisijungęs (-usi)</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">užblokuota(-s)</translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2618,14 +2629,6 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
     <message>
         <source>Use regular expressions</source>
         <translation>Naudoti reguliariuosius reiškinius</translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation>Datos pasirinkimo dialogas</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Pasirinkti datą</translation>
     </message>
 </context>
 <context>
@@ -2888,6 +2891,10 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
         <source>Notify via desktop notifications</source>
         <translation>Pranešti per darbalaukio pranešimus</translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -3024,17 +3031,8 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
         <translation>Jūsų vardas</translation>
     </message>
     <message>
-        <source>Your status</source>
-        <translation>Jūsų būsena</translation>
-    </message>
-    <message>
         <source>Message failed to send</source>
         <translation>Nepavyko nusiųsti žinutės</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;nėra&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
@@ -3091,29 +3089,20 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
         <translation>Mano profilis</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>prisijungęs (-usi)</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Nepavyko išsiųsti failo „%1“</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>pasišalinęs (-usi)</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>užsiėmęs (-usi)</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>neprisijungęs (-usi)</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
-        <translation>užblokuota(-s)</translation>
+        <source> invites you to join a group.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

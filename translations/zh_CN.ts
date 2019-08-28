@@ -592,10 +592,6 @@ which may lead to problems with video calls.</source>
         <translation>qTox 无法打开 %1</translation>
     </message>
     <message>
-        <source>Load chat history...</source>
-        <translation>加载聊天历史记录…</translation>
-    </message>
-    <message>
         <source>%1 calling</source>
         <translation>%1 呼叫</translation>
     </message>
@@ -610,10 +606,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Copy</source>
         <translation>复制</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>文件“%1”传输失败</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -648,14 +640,6 @@ which may lead to problems with video calls.</source>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 现在 %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>导出到文件</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>保存聊天记录</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -804,24 +788,32 @@ so you can save the file on windows.</source>
         <comment>Error while sending friendship request</comment>
         <translation>已添加为好友</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
-        <translation>接收到新的群组消息</translation>
+        <source>New message</source>
+        <translation type="unfinished">新消息</translation>
     </message>
     <message>
-        <source>New friend request received</source>
-        <translation>接收到新的好友请求</translation>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
-        <translation>接收到新的群组邀请</translation>
+        <source>Friend request received</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
-        <translation>接收到新消息</translation>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1171,10 +1163,6 @@ instead of system taskbar.</source>
         <translation>使用亮色图标</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>伪造离线消息</translation>
-    </message>
-    <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
         <translation>你可以通过右键点击他们来设置。</translation>
@@ -1227,10 +1215,6 @@ instead of system taskbar.</source>
         <translation>清屏</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>未发送</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>已清除</translation>
     </message>
@@ -1243,10 +1227,6 @@ instead of system taskbar.</source>
         <translation>复制链接地址</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation>[系统消息]</translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation>确认</translation>
     </message>
@@ -1257,6 +1237,18 @@ instead of system taskbar.</source>
     <message>
         <source>Search in text</source>
         <translation>在文本中搜索</translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">加载聊天历史记录…</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">导出到文件</translation>
     </message>
 </context>
 <context>
@@ -1299,26 +1291,10 @@ instead of system taskbar.</source>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;空&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 已将标题设置为 %2</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation>%1 在线</translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation>一位新用户已经连接到群组</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1653,12 +1629,28 @@ Profile does not contain your history.</source>
         <translation>加载历史记录</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>从此处加载历史记录：</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 条消息</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished">选择日期对话框</translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">选择日期</translation>
     </message>
 </context>
 <context>
@@ -1726,12 +1718,6 @@ Please make sure to enter same password twice.</source>
         <translation>该配置已经存在。</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>未知错误：无法创建新配置。
-如果你遇到这个错误，请提交报告。</translation>
-    </message>
-    <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation>不能自动加载密码保护的配置。</translation>
     </message>
@@ -1754,10 +1740,6 @@ You may want to create one.</source>
     <message>
         <source>This profile is already in use.</source>
         <translation>该配置正在使用。</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>配置正在使用。关闭其他客户端。</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2503,6 +2485,35 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Dark violet</source>
         <translation>紫罗兰</translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">在线</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">离开</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">忙碌</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">离线</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">被屏蔽</translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2607,14 +2618,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Use regular expressions</source>
         <translation>使用正则表达</translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation>选择日期对话框</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>选择日期</translation>
     </message>
 </context>
 <context>
@@ -2877,6 +2880,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Notify via desktop notifications</source>
         <translation>通过桌面提醒来通知</translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2918,10 +2925,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>你的名字</translation>
     </message>
     <message>
-        <source>Your status</source>
-        <translation>你的状态</translation>
-    </message>
-    <message>
         <source>Offline</source>
         <translation>离线</translation>
     </message>
@@ -2959,11 +2962,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>可执行文件</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;空&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
@@ -3076,29 +3074,20 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>个人资料</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>在线</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">文件“%1”传输失败</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>离开</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>忙碌</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>离线</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
-        <translation>被屏蔽</translation>
+        <source> invites you to join a group.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

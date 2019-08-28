@@ -597,10 +597,6 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation>%1 ringer</translation>
     </message>
     <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Mislyktes å sende fil &quot;%1&quot;</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translatorcomment>Midlertidig fil for skjermbilde</translatorcomment>
@@ -617,10 +613,6 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     <message>
         <source>Call duration: </source>
         <translation>Samtalens varighet: </translation>
-    </message>
-    <message>
-        <source>Load chat history...</source>
-        <translation>Last inn samtalehistorikk…</translation>
     </message>
     <message>
         <source>Unable to open</source>
@@ -650,14 +642,6 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 er nå %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>Eksporter til fil</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Lagre sludre-logg</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -806,24 +790,32 @@ slik at du kan lagre filen på Windows.</translation>
         <comment>Error while sending friendship request</comment>
         <translation>Kontakt allerede lagt til</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
-        <translation type="unfinished">Ny gruppemelding mottatt</translation>
+        <source>New message</source>
+        <translation type="unfinished">Ny melding</translation>
     </message>
     <message>
-        <source>New friend request received</source>
-        <translation type="unfinished">Ny venneforespørsel mottatt</translation>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
-        <translation type="unfinished">Ny gruppeinvitasjon mottatt</translation>
+        <source>Friend request received</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
-        <translation type="unfinished">Ny melding mottatt</translation>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1173,10 +1165,6 @@ instead of system taskbar.</source>
         <translation>Vis kontakt statusendringer</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>Falsk sending av meldinger offline</translation>
-    </message>
-    <message>
         <source>Start qTox on operating system startup (current profile).</source>
         <translation>Start qTox ved oppstart (gjeldende profil).</translation>
     </message>
@@ -1228,10 +1216,6 @@ instead of system taskbar.</source>
         <translation>Fjern viste meldinger</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>Ikke sendt</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>Fjernet</translation>
     </message>
@@ -1244,10 +1228,6 @@ instead of system taskbar.</source>
         <translation>Kopier lenkeadresse</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation>[Systemmelding]</translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation type="unfinished">Bekreftelse</translation>
     </message>
@@ -1258,6 +1238,18 @@ instead of system taskbar.</source>
     <message>
         <source>Search in text</source>
         <translation>Søk i tekst</translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Last inn samtalehistorikk…</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Eksporter til fil</translation>
     </message>
 </context>
 <context>
@@ -1300,26 +1292,10 @@ instead of system taskbar.</source>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Tom&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 har endret tittelen til %2</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation type="unfinished">%1 er pålogget</translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation>En ny bruker har koblet til gruppen</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1655,12 +1631,28 @@ Profile does not contain your history.</source>
         <translation>Last Historikk-dialog</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Last inn historikk fra:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 meldinger</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished">Velg datodialog</translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Velg en dato</translation>
     </message>
 </context>
 <context>
@@ -1712,22 +1704,12 @@ Skriv inn samme passord to ganger.</translation>
         <translation>En profil med dette navnet finnes allerede.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Ukjent feil: Kunne ikke opprette ny profil.
-Hvis du støtte på denne feilen, vær så snill å rapporter den.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load this profile</source>
         <translation>Kunne ikke laste inn profil</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
         <translation>Denne profilen er allerede i bruk.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>Profil allerede i bruk. Lukk andre klienter.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2506,6 +2488,35 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
         <source>Dark violet</source>
         <translation>Mørkelilla</translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">pålogget</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">borte</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">opptatt</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">avlogget</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">blokkert</translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2610,14 +2621,6 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     <message>
         <source>Use regular expressions</source>
         <translation>Bruk regulære uttrykk</translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation>Velg datodialog</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Velg en dato</translation>
     </message>
 </context>
 <context>
@@ -2880,6 +2883,10 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
         <source>Notify via desktop notifications</source>
         <translation>Varsle via skrivebordsmerknader</translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -3010,15 +3017,6 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
         <translation>Ditt navn</translation>
     </message>
     <message>
-        <source>Your status</source>
-        <translation>Din status</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Tom&gt;</translation>
-    </message>
-    <message>
         <source>Groupchat #%1</source>
         <translation>Gruppesludring #%1</translation>
     </message>
@@ -3081,29 +3079,20 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
         <translation>Min profil</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">pålogget</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Mislyktes å sende fil &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">borte</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">opptatt</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">avlogget</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
-        <translation>blokkert</translation>
+        <source> invites you to join a group.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

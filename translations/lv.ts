@@ -586,10 +586,6 @@ kas var radīt video zvanu problēmas.</translation>
 <context>
     <name>ChatForm</name>
     <message>
-        <source>Load chat history...</source>
-        <translation>Ielādēt tērzēšanas vēsturi ...</translation>
-    </message>
-    <message>
         <source>Send a file</source>
         <translation>Sūtīt failu</translation>
     </message>
@@ -612,10 +608,6 @@ kas var radīt video zvanu problēmas.</translation>
     <message>
         <source>Calling %1</source>
         <translation>Zvans %1</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Neizdevās nosūtīt failu &apos;&apos;%1&apos;&apos;</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -651,14 +643,6 @@ kas var radīt video zvanu problēmas.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 tagad ir %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>Eksportēt failā</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Saglabāt tērzēšanas žurnālu</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -807,24 +791,32 @@ lai Jūs varētu saglabāt failu.</translation>
         <comment>Error while sending friendship request</comment>
         <translation>Draugs ir jau pievienots</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
-        <translation>Saņemts jauns grupas ziņojums</translation>
+        <source>New message</source>
+        <translation type="unfinished">Jauna ziņa</translation>
     </message>
     <message>
-        <source>New friend request received</source>
-        <translation>Saņemts jauns draudzības pieprasījums</translation>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
-        <translation>Saņemts jauns grupas ielūgums</translation>
+        <source>Friend request received</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
-        <translation>Saņemts jauns ziņojums</translation>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1181,10 +1173,6 @@ neviss sistēmas uzdevumjoslā.</translation>
         <translation>Rādīt kontaktpersonu statusa izmaiņas</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>Imitēt bezsaistes ziņojumapmaiņu</translation>
-    </message>
-    <message>
         <source>Start qTox on operating system startup (current profile).</source>
         <translation>Startēt qTox, kad ielādējas operētājsistēma (pašreizējo profilu).</translation>
     </message>
@@ -1236,10 +1224,6 @@ neviss sistēmas uzdevumjoslā.</translation>
         <translation>Notīrīt redzamos ziņojumus</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>Nav nosūtīts</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>Notīrīts</translation>
     </message>
@@ -1252,10 +1236,6 @@ neviss sistēmas uzdevumjoslā.</translation>
         <translation>Kopēt saites adresi</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation>[Sistēmas ziņojums]</translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation>Apstiprinājums</translation>
     </message>
@@ -1266,6 +1246,18 @@ neviss sistēmas uzdevumjoslā.</translation>
     <message>
         <source>Search in text</source>
         <translation>Meklēt tekstā</translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Ielādēt tērzēšanas vēsturi ...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Eksportēt failā</translation>
     </message>
 </context>
 <context>
@@ -1308,26 +1300,10 @@ neviss sistēmas uzdevumjoslā.</translation>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Tukšs&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 mainīja nosaukumu uz %2</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation>%1 ir tiešsaistē</translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation>Jauns lietotājs ir izveidojis savienojumu ar grupu</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1345,6 +1321,7 @@ neviss sistēmas uzdevumjoslā.</translation>
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
@@ -1411,6 +1388,7 @@ neviss sistēmas uzdevumjoslā.</translation>
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
@@ -1664,12 +1642,28 @@ Profile does not contain your history.</source>
         <translation>Ielādēt vēstures dialogu</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Ielādēt vēsturi no:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 ziņas</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished">Izvēlieties datuma dialogu</translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Izvēlieties datumu</translation>
     </message>
 </context>
 <context>
@@ -1737,12 +1731,6 @@ Lūdzu, divreiz ievadiet vienu un to pašu paroli.</translation>
         <translation>Profils ar šādu vārdu jau pastāv.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Nezināma kļūda: nevar izveidot jaunu profilu.
-Ja radās šī kļūda, lūdzu, ziņojiet par to.</translation>
-    </message>
-    <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation>Ar paroli aizsargātus profilus nevar automātiski ielādēt.</translation>
     </message>
@@ -1765,10 +1753,6 @@ Jūs varat izveidot jaunu.</translation>
     <message>
         <source>This profile is already in use.</source>
         <translation>Šis profils jau tiek lietots.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>Profils jau tiek lietots. Aizveriet citus klientus.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2517,6 +2501,35 @@ ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēk
         <source>Dark violet</source>
         <translation>Tumši violets</translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">tiešsaistē</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">aizņemts</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">bloķēts</translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2621,14 +2634,6 @@ ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēk
     <message>
         <source>Use regular expressions</source>
         <translation>Lietot regulāras izteiksmes</translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation>Izvēlieties datuma dialogu</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Izvēlieties datumu</translation>
     </message>
 </context>
 <context>
@@ -2891,23 +2896,27 @@ ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēk
         <source>Notify via desktop notifications</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tiešsaistē</translation>
     </message>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nav šeit</translation>
     </message>
     <message>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aizņemts</translation>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
@@ -2941,7 +2950,7 @@ ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēk
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iziet</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2984,20 +2993,11 @@ ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēk
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Statuss</translation>
     </message>
     <message>
         <source>Your name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jūsu vārds</translation>
     </message>
     <message>
         <source>Message failed to send</source>
@@ -3041,12 +3041,12 @@ ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēk
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tiešsaistē</translation>
     </message>
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bezsaistē</translation>
     </message>
     <message>
         <source>Friends</source>
@@ -3054,7 +3054,7 @@ ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēk
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grupas</translation>
     </message>
     <message>
         <source>Search Contacts</source>
@@ -3077,7 +3077,7 @@ ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēk
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grupas uzaicinājums</translation>
     </message>
     <message>
         <source>File transfers</source>
@@ -3087,7 +3087,7 @@ ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēk
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iestatījumi</translation>
     </message>
     <message>
         <source>My profile</source>
@@ -3095,29 +3095,20 @@ ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēk
         <translation>Mans profils</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>tiešsaistē</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Neizdevās nosūtīt failu &apos;&apos;%1&apos;&apos;</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
+        <source>File sent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>aizņemts</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
+        <source> sent you a friend request.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
-        <translation>bloķēts</translation>
+        <source> invites you to join a group.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -433,7 +433,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>%n kişi içe aktarılmaya hazır, onay için göndere tıklayın</numerusform>
-            <numerusform>%n kişi içe aktarılmaya hazır, onay için göndere tıklayın</numerusform>
         </translation>
     </message>
     <message>
@@ -612,10 +611,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>%1 aranıyor</translation>
     </message>
     <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>&quot;%1&quot; dosyası gönderilemedi</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Geçici dosya açılamadı</translation>
@@ -633,10 +628,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Arama süresi: </translation>
     </message>
     <message>
-        <source>Load chat history...</source>
-        <translation>Sohbet geçmişini yükle...</translation>
-    </message>
-    <message>
         <source>%1 is typing</source>
         <translation>%1 yazıyor</translation>
     </message>
@@ -652,14 +643,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 artık %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>Dosyaya aktar</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Sohbet günlüğünü kaydet</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -808,24 +791,32 @@ böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
         <comment>Error while sending friendship request</comment>
         <translation>Arkadaş zaten eklendi</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
-        <translation>Yeni grup iletisi alındı</translation>
+        <source>New message</source>
+        <translation type="unfinished">Yeni ileti</translation>
     </message>
     <message>
-        <source>New friend request received</source>
+        <source>Incoming file transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
+        <source>Friend request received</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
-        <translation>Yeni ileti alındı</translation>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1185,10 +1176,6 @@ yerine, sistem tepsisine küçültecek.</translation>
         <translation>Kişilerin durum değişiklerini göster</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>Yapay çevrimdışı mesajlaşma</translation>
-    </message>
-    <message>
         <source>Check for updates</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1210,10 +1197,6 @@ yerine, sistem tepsisine küçültecek.</translation>
     <message>
         <source>Save chat log</source>
         <translation>Sohbet günlüğünü kaydet</translation>
-    </message>
-    <message>
-        <source>Not sent</source>
-        <translation>Gönderilmedi</translation>
     </message>
     <message>
         <source>Cleared</source>
@@ -1248,10 +1231,6 @@ yerine, sistem tepsisine küçültecek.</translation>
         <translation>Bağlantı adresini kopyala</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation>[Sistem iletisi]</translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation>Onay</translation>
     </message>
@@ -1262,6 +1241,18 @@ yerine, sistem tepsisine küçültecek.</translation>
     <message>
         <source>Search in text</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Sohbet geçmişini yükle...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Dosyaya aktar</translation>
     </message>
 </context>
 <context>
@@ -1304,26 +1295,10 @@ yerine, sistem tepsisine küçültecek.</translation>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Boş&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 başlığı %2 olarak ayarladı</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1341,7 +1316,6 @@ yerine, sistem tepsisine küçültecek.</translation>
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation>
-            <numerusform>%n kullanıcı sohbette</numerusform>
             <numerusform>%n kullanıcı sohbette</numerusform>
         </translation>
     </message>
@@ -1407,7 +1381,6 @@ yerine, sistem tepsisine küçültecek.</translation>
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation>
-            <numerusform>%n kullanıcı sohbette</numerusform>
             <numerusform>%n kullanıcı sohbette</numerusform>
         </translation>
     </message>
@@ -1660,12 +1633,28 @@ Profil geçmişinizi içermez.</translation>
         <translation>Geçmiş İletişim Kutusunu Yükle</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Geçmiş yükleme başlangıcı:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 ileti</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1733,12 +1722,6 @@ Lütfen aynı parolayı iki kez girdiğinizden emin olun.</translation>
         <translation>Bu adda bir profil zaten var.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Bilinmeten hata: Yeni bir profil oluşturulamadı.
-Bu hatayla karşılaştıysanız, lütfen bildirin.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load profile</source>
         <translation>Profil yüklenemedi</translation>
     </message>
@@ -1757,10 +1740,6 @@ Yeni birini oluşturmak isteyebilirsiniz.</translation>
     <message>
         <source>This profile is already in use.</source>
         <translation>Bu profil zaten kullanımda.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>Bu profil zaten kullanımda. Diğer istemcileri kapatın.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -1962,7 +1941,6 @@ Yeni birini oluşturmak isteyebilirsiniz.</translation>
     <message numerus="yes">
         <source>Unread message(s)</source>
         <translation>
-            <numerusform>Okunmamış ileti</numerusform>
             <numerusform>Okunmamış ileti</numerusform>
         </translation>
     </message>
@@ -2511,6 +2489,35 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <source>Dark violet</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">çevrimiçi</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">uzakta</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">meşgul</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">çevrimdışı</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">yasaklandı</translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2614,14 +2621,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2885,6 +2884,10 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <source>Notify via desktop notifications</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2914,10 +2917,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
     <message>
         <source>Your name</source>
         <translation>Adınız</translation>
-    </message>
-    <message>
-        <source>Your status</source>
-        <translation>Durumunuz</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -3029,11 +3028,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Önceki Konuşma</translation>
     </message>
     <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Boş&gt;</translation>
-    </message>
-    <message>
         <source>Groupchat #%1</source>
         <translation>Grup sohbeti #%1</translation>
     </message>
@@ -3045,13 +3039,11 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <source>%n New Friend Request(s)</source>
         <translation>
             <numerusform>%n Yeni Arkadaşlık İsteği</numerusform>
-            <numerusform>%n Yeni Arkadaşlık İsteği</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
         <translation>
-            <numerusform>%n Yeni Grup Daveti</numerusform>
             <numerusform>%n Yeni Grup Daveti</numerusform>
         </translation>
     </message>
@@ -3086,29 +3078,20 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Profilim</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>çevrimiçi</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">&quot;%1&quot; dosyası gönderilemedi</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>uzakta</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>meşgul</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>çevrimdışı</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
-        <translation>yasaklandı</translation>
+        <source> invites you to join a group.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
