@@ -88,18 +88,18 @@ QString secondsToDHMS(quint32 duration)
 
     // I assume no one will ever have call longer than a month
     if (days) {
-        return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
+        return cD + res.asprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
     }
 
     if (hours) {
-        return cD + res.sprintf("%02dh %02dm %02ds", hours, minutes, seconds);
+        return cD + res.asprintf("%02dh %02dm %02ds", hours, minutes, seconds);
     }
 
     if (minutes) {
-        return cD + res.sprintf("%02dm %02ds", minutes, seconds);
+        return cD + res.asprintf("%02dm %02ds", minutes, seconds);
     }
 
-    return cD + res.sprintf("%02ds", seconds);
+    return cD + res.asprintf("%02ds", seconds);
 }
 } // namespace
 
