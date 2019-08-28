@@ -731,6 +731,8 @@ void ChatLog::removeFirsts(const int num)
         lines.clear();
     }
 
+    clearSelection();
+
     for (int i = 0; i < lines.size(); ++i) {
         lines[i]->setRow(i);
     }
@@ -744,6 +746,8 @@ void ChatLog::removeLasts(const int num)
     } else {
         lines.clear();
     }
+
+    clearSelection();
 }
 
 void ChatLog::setScroll(const bool scroll)
