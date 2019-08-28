@@ -262,23 +262,23 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Celle-ci est la clé publique de votre ami, utilisez-la pour vérifier son identité via un autre canal. Vous ne pouvez pas envoyer celle-ci à d&apos;autres personnes pour qu&apos;elles puissent ajouter ce contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Clé publique (non le ToxID) :</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Confirmation</translation>
+        <translation>Confirmation</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Etes-vous sûr de supprimer l&apos;historique des conversations avec %1 ?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la suppression de l&apos;historique de discussions avec %1 !</translation>
     </message>
 </context>
 <context>
@@ -301,15 +301,15 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le lien de téléchargement de la mise à jour</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Mise à jour disponible</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox est à jour ✓</translation>
     </message>
 </context>
 <context>
@@ -579,7 +579,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer la découverte du réseau local</translation>
     </message>
 </context>
 <context>
@@ -664,12 +664,13 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Le nom de fichier contient des caractères non autorisés</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les caractères illégaux ont été changés en _
+afin que vous puissiez enregistrer le fichier sur windows.</translation>
     </message>
 </context>
 <context>
@@ -809,19 +810,19 @@ so you can save the file on windows.</source>
     <name>DesktopNotify</name>
     <message>
         <source>New group message received</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau message de groupe reçu</translation>
     </message>
     <message>
         <source>New friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouvelle demande d&apos;ami reçue</translation>
     </message>
     <message>
         <source>New group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouvelle invitation de groupe reçue</translation>
     </message>
     <message>
         <source>New message received</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau message reçu</translation>
     </message>
 </context>
 <context>
@@ -908,7 +909,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Commande à distance en pause</translation>
     </message>
 </context>
 <context>
@@ -1185,19 +1186,19 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier des mises à jour</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérification orthographique</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille maximale du fichier pour autoaccepter (0 pour désactiver):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> Mo</translation>
     </message>
 </context>
 <context>
@@ -1244,19 +1245,19 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>[System message]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Message de système]</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Confirmation</translation>
+        <translation>Confirmation</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous êtes sûr de vouloir effacer tous les messages affichés ?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Chercher dans le texte</translation>
     </message>
 </context>
 <context>
@@ -1275,27 +1276,27 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Plein Écran</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Exhiber/occulter l&apos;aperçu vidéo</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Couper le son</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Couper le micro</translation>
+        <translation>Couper le micro</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Terminer l&apos;appel vidéo</translation>
+        <translation>Terminer l&apos;appel vidéo</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitter le mode plein écran</translation>
     </message>
 </context>
 <context>
@@ -1314,39 +1315,39 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>%1 is online</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 est en ligne</translation>
     </message>
     <message>
         <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Un nouvel utilisateur s&apos;est connecté au groupe</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 a rejoint le groupe</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 maintenant s&apos;appele %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 a quitté le groupe</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n utilisateur dans le chat</numerusform>
+            <numerusform>%n utilisateurs dans le chat</numerusform>
         </translation>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>muet</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>activer le son</translation>
     </message>
 </context>
 <context>
@@ -1401,18 +1402,18 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n utilisateur dans le chat</numerusform>
+            <numerusform>%n utilisateurs dans le chat</numerusform>
         </translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau message</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">Connecté(e)</translation>
+        <translation>Connecté(e)</translation>
     </message>
 </context>
 <context>
@@ -2055,7 +2056,7 @@ Les changements de format de sauvegarde sont possibles, ce qui pourrait entraine
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Je toxe sur qTox</translation>
+        <translation>Je toxe sur qTox</translation>
     </message>
 </context>
 <context>
@@ -2278,7 +2279,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Images (%1)</translation>
+        <translation>Images (%1)</translation>
     </message>
 </context>
 <context>
@@ -2489,23 +2490,23 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Foncé</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Bleu foncé</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Olive</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Rouge foncé</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Violet foncé</translation>
     </message>
 </context>
 <context>
@@ -2563,62 +2564,62 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le texte n&apos;a pas pu être trouvé.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lancer la recherche :</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>à partir de la fin</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>à partir du début</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>après la date</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>avant la date</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00/00/0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensible aux majuscules et minuscules</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Seulement mots entiers</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser des expressions communes</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenêtre pour sélection de date</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez une date</translation>
     </message>
 </context>
 <context>
@@ -2849,37 +2850,37 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser des pseudonymes colorés dans les chats</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Afficher une notification lorsque vous recevez un nouveau message et que la fenêtre n&apos;est pas sélectionnée.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Notifier</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Notifier des nouveaux messages dans les discussions de groupe uniquement lorsque vous êtes mentionné.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne notifier des discussions de groupe que lorsque vous êtes mentionné</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Jouer un son</translation>
+        <translation>Jouer un son</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Jouer un son lorsque vous êtes &quot;Occupé(e)&quot;</translation>
+        <translation>Jouer un son lorsque vous êtes &quot;Occupé(e)&quot;</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Notifier via les notifications du bureau</translation>
     </message>
 </context>
 <context>
@@ -3084,27 +3085,27 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">connecté(e)</translation>
+        <translation>connecté(e)</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">absent(e)</translation>
+        <translation>absent(e)</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">occupé(e)</translation>
+        <translation>occupé(e)</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">hors ligne</translation>
+        <translation>hors ligne</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>bloqué</translation>
     </message>
 </context>
 </TS>

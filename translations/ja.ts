@@ -146,7 +146,7 @@ which may lead to problems with video calls.</source>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>既知の問題の一覧が Github の %1 で見つかるかもしれません。qTox のバグやセキュリティの脆弱性を発見したら、ウィキの %2 の記事のガイドラインに沿って報告してください。</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
@@ -155,7 +155,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation>Github で %1 の完全なリストを参照</translation>
+        <translation>Github で %1 の完全な一覧を参照</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -270,7 +270,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">確認</translation>
+        <translation>確認</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
@@ -429,8 +429,8 @@ which may lead to problems with video calls.</source>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n 件の連絡先をインポートする準備が整いました。確認するには送信を押してください</numerusform>
         </translation>
     </message>
     <message>
@@ -1245,7 +1245,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">確認</translation>
+        <translation>確認</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
@@ -1284,11 +1284,11 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">マイクをミュート</translation>
+        <translation>マイクをミュート</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">ビデオ通話を終了</translation>
+        <translation>ビデオ通話を終了</translation>
     </message>
     <message>
         <source>Exit full screen</source>
@@ -1407,7 +1407,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">オンライン</translation>
+        <translation>オンライン</translation>
     </message>
 </context>
 <context>
@@ -1950,7 +1950,7 @@ You may want to create one.</source>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>未読メッセージ</numerusform>
         </translation>
     </message>
@@ -2047,7 +2047,7 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">qTox で tox しています</translation>
+        <translation>qTox で tox しています</translation>
     </message>
 </context>
 <context>
@@ -2267,7 +2267,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">画像 (%1)</translation>
+        <translation>画像 (%1)</translation>
     </message>
 </context>
 <context>
@@ -2563,7 +2563,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <source>Start search:</source>
@@ -2860,11 +2860,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">音を再生</translation>
+        <translation>音を再生</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">多忙な際に音声を再生</translation>
+        <translation>多忙の際に音声を再生</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
@@ -2931,14 +2931,14 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n 友達リクエスト</numerusform>
+        <translation>
+            <numerusform>%n 件の新しい友達リクエスト</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n 新グループチャット招待</numerusform>
+        <translation>
+            <numerusform>%n 件の新しいグループチャット招待</numerusform>
         </translation>
     </message>
     <message>
@@ -3071,22 +3071,22 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">オンライン</translation>
+        <translation>オンライン</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">退席中</translation>
+        <translation>退席中</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">多忙</translation>
+        <translation>多忙</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">オフライン</translation>
+        <translation>オフライン</translation>
     </message>
     <message>
         <source>blocked</source>

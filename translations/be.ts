@@ -262,23 +262,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Гэта адкрыты ключ вашага сябра, выкарыстоўвайце яго, каб пацвердзіць яго асобу з дапамогай іншага канала. Вы не можаце адправіць гэта іншым людзям, каб яны маглі дадаць гэты кантакт.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Публічны ключ (не ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Пацвярджэнне</translation>
+        <translation>Пацвярджэнне</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы ўпэўнены, што хочаце выдаліць гісторыю чату %1?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася выдаліць гісторыю чату %1!</translation>
     </message>
 </context>
 <context>
@@ -301,15 +301,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Адкрыць спасылку для спампавання абнаўлення</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Абнаўненне даступнае</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox абноўлены ✓</translation>
     </message>
 </context>
 <context>
@@ -580,7 +580,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Уключыць выяўленне LAN</translation>
     </message>
 </context>
 <context>
@@ -666,12 +666,13 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва файла змяшчае недапушчальныя сімвалы</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Недапушчальныя сімвалы будуць зменены на _,
+так што вы можаце захаваць файл у windows.</translation>
     </message>
 </context>
 <context>
@@ -811,19 +812,19 @@ so you can save the file on windows.</source>
     <name>DesktopNotify</name>
     <message>
         <source>New group message received</source>
-        <translation type="unfinished"></translation>
+        <translation>Атрымана новае групавое паведамленне</translation>
     </message>
     <message>
         <source>New friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Атрыманы новы запыт сяброўства</translation>
     </message>
     <message>
         <source>New group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Атрымана новае запрашэнне ад групы</translation>
     </message>
     <message>
         <source>New message received</source>
-        <translation type="unfinished"></translation>
+        <translation>Атрымана новае паведамленне</translation>
     </message>
 </context>
 <context>
@@ -915,7 +916,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Аддалены бок прыпыніўся</translation>
     </message>
 </context>
 <context>
@@ -1191,19 +1192,19 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Праверыць наяўнасць абнаўленняў</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Праверка арфаграфіі</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Максімальны памер файла для аўтапрыёма (0 для адключэння):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> МБ</translation>
     </message>
 </context>
 <context>
@@ -1250,19 +1251,19 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>[System message]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Сістэмнае паведамленне]</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Пацвярджэнне</translation>
+        <translation>Пацвярджэнне</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы ўпэўнены, што хочаце выдаліць усе адлюстраваныя паведамленні?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук у тэксце</translation>
     </message>
 </context>
 <context>
@@ -1281,27 +1282,27 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>На ўвесь экран</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Пераключыць папярэдні прагляд відэа</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Адключыць аўдыё</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Адключыць мікрафон</translation>
+        <translation>Адключыць мікрафон</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Скончыць відэавыклік</translation>
+        <translation>Скончыць відэавыклік</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Выхад з паўнаэкраннага рэжыму</translation>
     </message>
 </context>
 <context>
@@ -1320,40 +1321,40 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 is online</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 у сеціве</translation>
     </message>
     <message>
         <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Новы карыстальнік далучыўся да групы</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 далучыўся да групы</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 цяпер вядомы як %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 пакінуў групу</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n карыстальнік у чаце</numerusform>
+            <numerusform>%n карыстальнікі ў чаце</numerusform>
+            <numerusform>%n карыстальнікаў у чаце</numerusform>
         </translation>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>прыглушыць</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>уключаць</translation>
     </message>
 </context>
 <context>
@@ -1408,19 +1409,19 @@ instead of system taskbar.</source>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n карыстальнік у чаце</numerusform>
+            <numerusform>%n карыстальнікі ў чаце</numerusform>
+            <numerusform>%n карыстальнікаў у чаце</numerusform>
         </translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Новае паведамленне</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">У сеціве</translation>
+        <translation>У сеціве</translation>
     </message>
 </context>
 <context>
@@ -2064,7 +2065,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Карыстаю qTox</translation>
+        <translation>Карыстаю qTox</translation>
     </message>
 </context>
 <context>
@@ -2287,7 +2288,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Малюнкі (%1)</translation>
+        <translation>Малюнкі (%1)</translation>
     </message>
 </context>
 <context>
@@ -2498,23 +2499,23 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Цёмны</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Цёмна-сіні</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Цёмна-аліўкавы</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Цёмна-чырвоны</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Цёмна-фіялетавы</translation>
     </message>
 </context>
 <context>
@@ -2572,62 +2573,62 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Тэкст не можа быць знойдзены.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукаць</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пачаць шукаць:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>з канца</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>з пачатку</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>пасля даты</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>да даты</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Улічваючы рэгістр</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Словы толькі цалкам</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ужываць рэгулярны выраз</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Дыялог выбару даты</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбраць дату</translation>
     </message>
 </context>
 <context>
@@ -2858,37 +2859,37 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Выкарыстоўваць каляровыя мянушкі ў чатах</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Паказваць апавяшчэнне, калі вы атрымалі новае паведамленне і вакно неактыўнае.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Апавясціць</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Апавяшчаць толькі аб новых паведамленнях у групавых чатах, калі ўзгадваемся.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Групавыя чаты апавяшчаюцца, толькі калі ўзгадваемся</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Прайграваць гук</translation>
+        <translation>Прайграваць гук</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Прайграваць гук, калі заняты</translation>
+        <translation>Прайграваць гук, калі заняты</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Апавяшчаць праз працоўны стол</translation>
     </message>
 </context>
 <context>
@@ -3096,27 +3097,27 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">у сеціве</translation>
+        <translation>у сеціве</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">адышоў</translation>
+        <translation>адышоў</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">заняты</translation>
+        <translation>заняты</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">па-за сеткай</translation>
+        <translation>па-за сеткай</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>блакаваны</translation>
     </message>
 </context>
 </TS>

@@ -261,11 +261,11 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dette er den offentlige nøkkelen tilhørende din venn, bruk den til å bekrefte identiteten via en annen kanal. Du kan ikke sende dette til andre folk slik at de kan legge til denne kontakten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Offentlig nøkel (ikke Tox ID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
@@ -273,11 +273,11 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Er du sikker på at du ønsker å fjerne %1 sludrehistorikk?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klarte ikke å fjerne sludrehistorikk med %1.</translation>
     </message>
 </context>
 <context>
@@ -300,15 +300,15 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Åpne oppdateringsnedlastingslenke</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oppgradering tilgjengelig</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">qTox er av nyeste dato ✓</translation>
     </message>
 </context>
 <context>
@@ -579,7 +579,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Skru på LAN-oppdagelse</translation>
     </message>
 </context>
 <context>
@@ -665,12 +665,13 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filnavnet inneholdt ulovlige tegn</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ulovlige tegn har blitt endret til _ 
+slik at du kan lagre filen på Windows.</translation>
     </message>
 </context>
 <context>
@@ -810,19 +811,19 @@ so you can save the file on windows.</source>
     <name>DesktopNotify</name>
     <message>
         <source>New group message received</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ny gruppemelding mottatt</translation>
     </message>
     <message>
         <source>New friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ny venneforespørsel mottatt</translation>
     </message>
     <message>
         <source>New group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ny gruppeinvitasjon mottatt</translation>
     </message>
     <message>
         <source>New message received</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ny melding mottatt</translation>
     </message>
 </context>
 <context>
@@ -909,7 +910,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annensteds fra pauset</translation>
     </message>
 </context>
 <context>
@@ -1185,19 +1186,19 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Se etter nye versjoner</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Stavekontroll</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Maksimal automatisk godkjente filstørrelse (0 for å skru av):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
@@ -1244,7 +1245,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>[System message]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Systemmelding]</translation>
     </message>
     <message>
         <source>Confirmation</source>
@@ -1252,11 +1253,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Er du sikker på at du ønsker å tømme alle viste meldinger?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Søk i tekst</translation>
     </message>
 </context>
 <context>
@@ -1275,15 +1276,15 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Fullskjermsvisning</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Veksle videoforhåndsvisning</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Forstum lyd</translation>
     </message>
     <message>
         <source>Mute microphone</source>
@@ -1295,7 +1296,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutt fullskjermsvisning</translation>
     </message>
 </context>
 <context>
@@ -1314,39 +1315,39 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 is online</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 er pålogget</translation>
     </message>
     <message>
         <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
+        <translation>En ny bruker har koblet til gruppen</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 har tatt del i gruppen</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 går nå under navnet %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 har forlatt gruppen</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n bruker i sludringen</numerusform>
+            <numerusform>%n brukere i sludringen</numerusform>
         </translation>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>forstum</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>opphev forstumming</translation>
     </message>
 </context>
 <context>
@@ -1402,13 +1403,13 @@ instead of system taskbar.</source>
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n bruker i sludringen</numerusform>
+            <numerusform>%n brukere i sludringen</numerusform>
         </translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny melding</translation>
     </message>
     <message>
         <source>Online</source>
@@ -1957,7 +1958,7 @@ Det kan hende du ønsker å opprette en.</translation>
         <source>Unread message(s)</source>
         <translation>
             <numerusform>Ulest melding</numerusform>
-            <numerusform></numerusform>
+            <numerusform>Uleste meldinger</numerusform>
         </translation>
     </message>
 </context>
@@ -2487,23 +2488,23 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Mørkt</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Mørkeblått</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Mørk olivengrønn</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Mørkerød</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Mørkelilla</translation>
     </message>
 </context>
 <context>
@@ -2561,11 +2562,11 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fant ikke teksten</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
 </context>
 <context>
@@ -2576,47 +2577,47 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Søk:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>Fra slutten</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>Fra begynnelsen</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>Etter dato</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>Før dato</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Forskjell på små og store bokstaver</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Kun hele ord</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk regulære uttrykk</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg datodialog</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg en dato</translation>
     </message>
 </context>
 <context>
@@ -2847,25 +2848,25 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk fargede kallenavn i sludringer</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vis en merknad når du mottar en ny melding, og vinduet ikke er i fokus.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsle</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kun varsle om nye meldinger i gruppesludringer når nevnt.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppesludringer varsler kun når nevnt</translation>
     </message>
     <message>
         <source>Play sound</source>
@@ -2877,7 +2878,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsle via skrivebordsmerknader</translation>
     </message>
 </context>
 <context>
@@ -3102,7 +3103,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>blokkert</translation>
     </message>
 </context>
 </TS>

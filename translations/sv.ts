@@ -189,11 +189,11 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">Använda alias:</translation>
+        <translation>Använda alias:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">HISTORIK AV ALIAS</translation>
+        <translation>HISTORIK AV ALIAS</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
@@ -205,7 +205,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Standardkatalog för att spara filer:</translation>
+        <translation>Standardkatalog för att spara filer:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -245,7 +245,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished">Inmatningsfält för anteckningar om kontakten</translation>
+        <translation>Inmatningsfält för anteckningar om kontakten</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>

@@ -2414,7 +2414,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translatorcomment>That means &quot;Hi, I&apos;m %1! Please, add me to you contact list.
 It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian noun can&apos;t mean a verb (like &quot;call&quot; for noun and verb in English)</translatorcomment>
-        <translation>Привіт, я %1! Додай мене в свій список контактів, будь ласка.</translation>
+        <translation>Привіт, я %1! Додай мене в свій список контактів, будь ласка?</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>

@@ -494,7 +494,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation>Denníky (* .log)</translation>
+        <translation>Denníky (*.log)</translation>
     </message>
 </context>
 <context>

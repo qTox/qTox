@@ -91,7 +91,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Übertragene Tonqualität. Verringere Sie diese Einstellung, wenn Ihre Bandbreite nicht ausreichend ist oder wenn Sie die Internetauslastung verringern möchten.</translation>
+        <translation>Übertragene Tonqualität. Verringern Sie diese Einstellung, wenn Ihre Bandbreite nicht ausreichend ist oder wenn Sie die Internetauslastung verringern möchten.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -260,23 +260,23 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dies ist der öffentliche Schlüssel Ihres Freundes, verwenden Sie es, um seine Identität über einen anderen Kanal zu überprüfen. Das kann man nicht an andere Personen schicken, damit sie diesen Kontakt hinzufügen können.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffentlicher Schlüssel (nicht ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Bestätigung</translation>
+        <translation>Bestätigung</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Soll der Chatverlauf mit %1 gelöscht werden?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Chatverlauf mit %1 konnte nicht gelöscht werden!</translation>
     </message>
 </context>
 <context>
@@ -299,26 +299,26 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Update herunterladen</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Update verfügbar</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox ist auf dem neusten Stand ✓</translation>
     </message>
 </context>
 <context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
-        <translation>Einen Freund hinzufügen</translation>
+        <translation>Freunde hinzufügen</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation>Ungültiges Format</translation>
+        <translation>Ungültige Tox ID</translation>
     </message>
     <message>
         <source>Send friend request</source>
@@ -346,7 +346,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>Tox ID, entweder 76 hexadezimalen Zeichen oder name@beispiel.de</translation>
+        <translation>Tox ID, entweder 76 hexadezimale Zeichen oder name@beispiel.de</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
@@ -358,7 +358,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation>Nachricht eingeben, die mit der Freundschaftsanfrage gesendet werden soll oder leer lassen, um die Standardnachricht zu senden</translation>
+        <translation>Nachricht eingeben, die mit der Freundschaftsanfrage gesendet werden soll (optional)</translation>
     </message>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
@@ -389,12 +389,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>Wir konnten keine Kontakte zum Importieren in dieser Datei finden!</translation>
+        <translation>Die Datei enthält keine Kontakte zum Importieren!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation>Tox-Kennung</translation>
+        <translation>ToxID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -428,8 +428,8 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
-            <numerusform>Bereit zum Importieren eines Kontakts? Klicken Sie auf Senden, um den Import zu bestätigen.</numerusform>
-            <numerusform>Bereit zum Importieren von %n Kontakten? Klicken Sie auf Senden, um den Import zu bestätigen.</numerusform>
+            <numerusform>%n Kontakt wird importiert. Klicken Sie auf Senden, um den Import zu bestätigen.</numerusform>
+            <numerusform>%n Kontakte werden importiert. Kicken Sie auf Senden, um den Import zu bestätigen.</numerusform>
         </translation>
     </message>
     <message>
@@ -445,7 +445,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Wenn du %1 nicht weißt, was du tust, solltest du hier %2 ändern. Änderungen, die du hier machst, könnten zu Problemen mit qTox und sogar dem Verlust deiner Daten, z.B. dem Verlauf, führen.</translation>
+        <translation>Wenn du nicht %1 weißt, was du tust, solltest du hier %2 ändern. Änderungen, die du hier machst, könnten zu Problemen mit qTox und sogar dem Verlust deiner Daten, z.B. dem Verlauf, führen.</translation>
     </message>
     <message>
         <source>really</source>
@@ -577,7 +577,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Netzwerkerkennung aktivieren</translation>
     </message>
 </context>
 <context>
@@ -612,7 +612,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation>„%1“ konnte nicht gesendet werden</translation>
+        <translation>Datei „%1“ konnte nicht gesendet werden</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -663,12 +663,13 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Dateiname enthält nicht unterstützte Satzzeichen</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht unterstützte Satzzeichen wurden zu  _  geändert, 
+um sie in Windows speichern zu können.</translation>
     </message>
 </context>
 <context>
@@ -679,19 +680,19 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation>Anrufen</translation>
+        <translation>Sprachanruf starten</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation>Auflegen</translation>
+        <translation>Sprachanruf beenden</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation>Anruf beenden</translation>
+        <translation>Sprachanruf abbrechen</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation>Anruf annehmen</translation>
+        <translation>Sprachanruf annehmen</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
@@ -810,19 +811,19 @@ so you can save the file on windows.</source>
     <name>DesktopNotify</name>
     <message>
         <source>New group message received</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Gruppennachricht erhalten</translation>
     </message>
     <message>
         <source>New friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Freundschaftsanfrage erhalten</translation>
     </message>
     <message>
         <source>New group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Gruppeneinladung erhalten</translation>
     </message>
     <message>
         <source>New message received</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Nachricht erhalten</translation>
     </message>
 </context>
 <context>
@@ -830,7 +831,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Form</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation>Von</translation>
+        <translation>Eingabemaske</translation>
     </message>
     <message>
         <source>10Mb</source>
@@ -883,12 +884,12 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Pause transfer</source>
-        <translation>Übertragung pausieren</translation>
+        <translation>Übertragung anhalten</translation>
     </message>
     <message>
         <source>Paused</source>
         <comment>file transfer widget</comment>
-        <translation>Pausiert</translation>
+        <translation>Angehalten</translation>
     </message>
     <message>
         <source>Open file</source>
@@ -914,7 +915,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Remote Angehalten</translation>
     </message>
 </context>
 <context>
@@ -969,15 +970,15 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
-        <translation>Jemand lädt dich in seine Kontaktliste ein</translation>
+        <translation>Jemand lädt dich in seine Freundesliste ein</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>ID:</translation>
+        <translation>Benutzer-ID:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation>Freundschaftsanfrage:</translation>
+        <translation>Nachrichtentext der Freundschaftsanfrage:</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -1032,7 +1033,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Set alias...</source>
-        <translation>Namen setzen ...</translation>
+        <translation>Pseudonym wählen...</translation>
     </message>
     <message>
         <source>Auto accept files from this friend</source>
@@ -1051,7 +1052,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Speicherort angeben</translation>
+        <translation>Speicherort für empfangene Dateien wählen</translation>
     </message>
     <message>
         <source>New message</source>
@@ -1084,7 +1085,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Datei-Speicherort angeben</translation>
+        <translation>Speicherort für empfangenen Dateien wählen</translation>
     </message>
 </context>
 <context>
@@ -1095,7 +1096,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>qTox muss neugestartet werden, um die Änderungen zu übernehmen.</translation>
+        <translation>Die Änerung wird erst nach Neustart von qtox aktiv.</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -1131,13 +1132,13 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation>In Systemleiste schließen</translation>
+        <translation>In Systemleiste minimieren</translation>
     </message>
     <message>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Durch das Klicken auf „Minimieren“ (_) wird qTox in die Systemleiste minimiert.</translation>
+        <translation>Durch Klicken auf „Minimieren“ (_) wird qTox in den Systemabschnitt minimiert und verschwindet von der Startleiste.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
@@ -1145,7 +1146,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Autostart</source>
-        <translation>Automatisch zusammen mit dem Betriebssystem starten</translation>
+        <translation>Autostart</translation>
     </message>
     <message>
         <source>Set where files will be saved.</source>
@@ -1178,7 +1179,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Faux offline messaging</source>
-        <translation>Pseudo-Offline-Nachrichten</translation>
+        <translation>Offline-Dateiversand</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
@@ -1190,19 +1191,19 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf Aktualisierungen prüfen</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechtschreibprüfung</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Max. automatisch akzeptierte Dateigröße (0 zum Deaktivieren):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
@@ -1217,11 +1218,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Send file(s)</source>
-        <translation>Datei senden</translation>
+        <translation>Datei(en) senden</translation>
     </message>
     <message>
         <source>Send a screenshot</source>
-        <translation>Sende einen Screenshot</translation>
+        <translation>Screenshot versenden</translation>
     </message>
     <message>
         <source>Save chat log</source>
@@ -1237,7 +1238,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Cleared</source>
-        <translation>Gesprächsverlauf entfernt</translation>
+        <translation>Gelöscht</translation>
     </message>
     <message>
         <source>Quote selected text</source>
@@ -1249,19 +1250,19 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>[System message]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Systemmeldung]</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Bestätigung</translation>
+        <translation>Bestätigung</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sollen wirklich alle angezeigten Nachrichten gelöscht werden?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche im Text</translation>
     </message>
 </context>
 <context>
@@ -1272,35 +1273,35 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation>Zeige Nachrichten</translation>
+        <translation>Nachrichten anzeigen</translation>
     </message>
     <message>
         <source>Hide Messages</source>
-        <translation>Verstecke Nachrichten</translation>
+        <translation>Nachrichten nicht anzeigen</translation>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollbild</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Videovorschau umschalten</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Ton stummschalten</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Mikrofon stummschalten</translation>
+        <translation>Mikrofon stummschalten</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Videoanruf beenden</translation>
+        <translation>Videoanruf beenden</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollbild verlassen</translation>
     </message>
 </context>
 <context>
@@ -1319,39 +1320,39 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 is online</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ist online</translation>
     </message>
     <message>
         <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein neuer Benutzer ist der Gruppe beigetreten</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ist der Gruppe beigetreten</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 heißt ab sofort %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 hat die Gruppe verlassen</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Benutzer im Chat</numerusform>
+            <numerusform>%n Benutzer im Chat</numerusform>
         </translation>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>stumm</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>Stummschaltung aufheben</translation>
     </message>
 </context>
 <context>
@@ -1388,7 +1389,7 @@ instead of system taskbar.</source>
     <name>GroupWidget</name>
     <message>
         <source>Set title...</source>
-        <translation>Titel ändern …</translation>
+        <translation>Namen festlegen …</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
@@ -1406,18 +1407,18 @@ instead of system taskbar.</source>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Benutzer im Chat</numerusform>
+            <numerusform>%n Benutzer im Chat</numerusform>
         </translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Nachricht</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">Online</translation>
+        <translation>Online</translation>
     </message>
 </context>
 <context>
@@ -1428,14 +1429,14 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation>ID Informationen</translation>
+        <translation>Tox-ID</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Dies ist deine persönliche Adresse. Damit können dich andere qTox-Nutzer erreichen.
-Teile sie mit deinen Freunden um zu kommunizieren.</translation>
+        <translation>Mit dieser Zeichenkette können dich andere Tox-Clients kontaktieren. 
+Teile sie mit deinen Freunden, um mit ihnen zu chatten.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
@@ -1470,7 +1471,7 @@ Teile sie mit deinen Freunden um zu kommunizieren.</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Dieser QR-Code enthält deine Tox ID. Du kannst sie so mit deinen Freunden teilen.</translation>
+        <translation>Dieser QR-Code enthält deine Tox ID. So kannst du sie auch mit deinen Freunden teilen.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1594,7 +1595,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>Optionale ToxMe Biografie, sichtbar auf ToxMe</translation>
+        <translation>Auf ToxMe angezeigte Biografie (optional)</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
@@ -1626,7 +1627,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation>Passwort vom Profil entfernen</translation>
+        <translation>Passwort des Profils löschen</translation>
     </message>
     <message>
         <source>Change profile password</source>
@@ -1657,11 +1658,11 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation>Lade Gesprächsverlauf</translation>
+        <translation>Gesprächsverlauf laden</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation>Den Verlauf von einem bestimmten Datum bis heute anzeigen:</translation>
+        <translation>Verlauf laden seit:</translation>
     </message>
     <message>
         <source>%1 messages</source>
@@ -1672,7 +1673,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     <name>LoginScreen</name>
     <message>
         <source>Username:</source>
-        <translation>Profilname:</translation>
+        <translation>Benutzername:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -1716,7 +1717,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>The username must not be empty.</source>
-        <translation>Der Profilname darf nicht leer sein.</translation>
+        <translation>Der Benutzername darf nicht leer sein.</translation>
     </message>
     <message>
         <source>The password must be at least 6 characters long.</source>
@@ -1752,7 +1753,7 @@ Bitte melde diesen Fehler an die Entwickler.</translation>
 You may want to create one.</source>
         <translation>Es wurde kein Profil ausgewählt.
 
-Möglicherweise möchtest du ein neues Profil erstellen.</translation>
+Du kannst aber eins erstellen.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
@@ -1780,7 +1781,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation>Eingabefeld für das Passwort, es kann leer bleiben (kein Passwort) oder du wählst ein mindestens 6 Zeichen langes Passwort</translation>
+        <translation>Eingabefeld für das Passwort. Du kannst es leer lassen oder ein Passwort mit mindestens 6 Zeichen eingeben</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
@@ -1788,7 +1789,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation>Neues Profil erstellen</translation>
+        <translation>Schaltfläche zum Erstellen eines neuen Profils</translation>
     </message>
     <message>
         <source>Profile list</source>
@@ -1804,7 +1805,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation>Automatisch laden checkbox</translation>
+        <translation>Kontrollkästchen für automatisches Laden</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1812,7 +1813,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation>Ausgewähltes Profil laden</translation>
+        <translation>Schaltfläche Ausgewähltes Profil laden</translation>
     </message>
     <message>
         <source>New profile creation page</source>
@@ -1840,11 +1841,11 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Add friends</source>
-        <translation>Einen Freund hinzufügen</translation>
+        <translation>Freunde hinzufügen</translation>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation>Eine neue Gruppe eröffnen</translation>
+        <translation>Einen Gruppenchat eröffnen</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
@@ -1888,7 +1889,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation>Suche für bekannte Freunde</translation>
+        <translation>Suche nach bekannten Freunde</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
@@ -1896,7 +1897,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation>Einstellungen bzgl. Sortierung und Sichtbarkeit deiner Freunde</translation>
+        <translation>Sortierung und Sichtbarkeit deiner Freunde einstellen</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
@@ -1908,15 +1909,15 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation>Gruppenchat-Einstellungungsseite öffnen</translation>
+        <translation>Gruppenchat-Verwaltung öffnen</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation>Dateiübertragungshistorie</translation>
+        <translation>Dateiübertragungsverlauf</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation>Öffne Dateitransferhistorie</translation>
+        <translation>Öffne Dateitransferverlauf</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1972,7 +1973,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation>Feststelltaste aktiviert</translation>
+        <translation>FESTSTELLTASTE AKTIVIERT</translation>
     </message>
 </context>
 <context>
@@ -2043,11 +2044,11 @@ Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führ
     </message>
     <message>
         <source>BlackList</source>
-        <translation>Insolventenliste</translation>
+        <translation>Schwarze Liste</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation>Filtere Gruppennachricht nach öffentlichen Schlüssel des Gruppenmitglieds. Füge öffentlichen Schlüssel hier ein, ein Schlüssel pro Zeile.</translation>
+        <translation>Gruppennachricht nach öffentlichen Schlüssel des Gruppenmitglieds filtern.  Füge öffentlichen Schlüssel hier ein, ein Schlüssel pro Zeile.</translation>
     </message>
 </context>
 <context>
@@ -2062,7 +2063,7 @@ Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führ
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Toxe mit qTox</translation>
+        <translation>Toxen mit qTox</translation>
     </message>
 </context>
 <context>
@@ -2094,17 +2095,17 @@ Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führ
     </message>
     <message>
         <source>Unable to read this image.</source>
-        <translation>Kann dieses Bild nicht lesen.</translation>
+        <translation>Bild kann nicht gelesen  werden.</translation>
     </message>
     <message>
         <source>The supplied image is too large.
 Please use another image.</source>
         <translation>Das Bild ist zu groß.
-Bitte benutze ein anderes.</translation>
+Bitte verwende ein anderes.</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>Konnte das Profil nicht in „%1“ umbenennen</translation>
+        <translation>Profil konnte nicht in „%1“ umbenannt werden</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2149,12 +2150,12 @@ Bitte benutze ein anderes.</translation>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Bist du sicher, dass das gewählte Profil gelöschen werden soll?</translation>
+        <translation>Bist du sicher, dass das gewählte Profil gelöscht werden soll?</translation>
     </message>
     <message>
         <source>Save</source>
         <comment>save qr image</comment>
-        <translation>Bild speichern</translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <source>Save QrCode (*.png)</source>
@@ -2184,7 +2185,7 @@ Bitte benutze ein anderes.</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>Der Benutzer %1@%2 wurde erfolgreich der Datenbank hinzugefügt. Bitte Passwort speichern</translation>
+        <translation>%1@%2 wurde erfolgreich der Datenbank hinzugefügt. Bitte Passwort speichern</translation>
     </message>
     <message>
         <source>Toxme error</source>
@@ -2221,7 +2222,7 @@ Bitte benutze ein anderes.</translation>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation>Diese Zeichenkette teilt anderen Tox-Klienten mit, wie sie dich kontaktieren können.
+        <translation>Diese Zeichenkette teilt anderen Tox-Clients mit, wie sie dich kontaktieren können.
 Teile sie mit deinen Freunden um zu kommunizieren.
 
 Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</translation>
@@ -2285,7 +2286,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Bilder (%1)</translation>
+        <translation>Bilder (%1)</translation>
     </message>
 </context>
 <context>
@@ -2496,23 +2497,23 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Dunkel</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Dunkelblau</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Dunkeloliv</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Dunkelrot</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Dunkelviolett</translation>
     </message>
 </context>
 <context>
@@ -2570,62 +2571,62 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Text konnte nicht gefunden werden.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Von</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche starten:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>vom Ende</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>vom Anfang</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>nach dem Datum</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>vor dem Datum</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Groß-/Kleinschreibung beachten</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur ganze Wörter</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Reguläre Ausdrücke verwenden</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Datumsauswahl-Dialog</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie ein Datum</translation>
     </message>
 </context>
 <context>
@@ -2856,37 +2857,37 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbige Spitznamen in Chats verwenden</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zeigt eine Benachrichtigung an, wenn Sie eine neue Nachricht erhalten und das Fenster nicht ausgewählt ist.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigen</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nur über neue Nachrichten in Gruppenchats benachrichtigen , wenn sie erwähnt werden.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppen-Chats benachrichtigen nur, wenn sie erwähnt werden</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Spiele einen Ton ab</translation>
+        <translation>Ton abspielen</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Auch Ton abspielen wenn „beschäftigt”</translation>
+        <translation>Ton abspielen wenn „Beschäftigt”</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Über Desktop-Benachrichtigungen benachrichtigen</translation>
     </message>
 </context>
 <context>
@@ -3093,27 +3094,27 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Online</translation>
+        <translation>Online</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Abwesend</translation>
+        <translation>abwesend</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Beschäftigt</translation>
+        <translation>beschäftigt</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Offline</translation>
+        <translation>offline</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>blockiert</translation>
     </message>
 </context>
 </TS>

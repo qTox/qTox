@@ -262,23 +262,23 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aceasta este cheia publică a prietenului tău, folosește-o pentru a-și verifica identitatea prin alt canal. Nu puteți trimite acest lucru altor persoane pentru a putea adăuga acest contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Cheie publică (nu ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Confirmare</translation>
+        <translation>Confirmare</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sigur eliminați %1 Istoricul conversațiilor?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu s-a reușit eliminarea istoricului conversațiilor cu %1!</translation>
     </message>
 </context>
 <context>
@@ -301,15 +301,15 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschideți linkul de descărcare a actualizării</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizare disponibilă</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox este actualizat ✓</translation>
     </message>
 </context>
 <context>
@@ -580,7 +580,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Activare descoperire LAN</translation>
     </message>
 </context>
 <context>
@@ -666,12 +666,13 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Denumirea fișierului conține caractere neconforme</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Caracterele neconforme au fost schimbate în _ 
+astfel încât să puteți salva fișierul pe Windows.</translation>
     </message>
 </context>
 <context>
@@ -811,19 +812,19 @@ so you can save the file on windows.</source>
     <name>DesktopNotify</name>
     <message>
         <source>New group message received</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesaj de grup nou primit</translation>
     </message>
     <message>
         <source>New friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Noua cerere de prietenie primită</translation>
     </message>
     <message>
         <source>New group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Invitație de grup nou primită</translation>
     </message>
     <message>
         <source>New message received</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesaj nou primit</translation>
     </message>
 </context>
 <context>
@@ -915,7 +916,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Întrerupt la distanță</translation>
     </message>
 </context>
 <context>
@@ -1193,19 +1194,19 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Căutați actualizări</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Verificarea ortografiei</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensiunea maximă a fișierului auto-acceptat (0 pentru a dezactiva):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
@@ -1252,19 +1253,19 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>[System message]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Mesaj sistem]</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Confirmare</translation>
+        <translation>Confirmare</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sunteți sigur că doriți să ștergeți toate mesajele afișate?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Căutați în text</translation>
     </message>
 </context>
 <context>
@@ -1283,27 +1284,27 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecran complet</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Comutați previzualizarea video</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Dezactivare sunet</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Microfon fără sunet</translation>
+        <translation>Dezactivare microfon</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Terminați apelul video</translation>
+        <translation>Terminați apelul video</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieșire ecran complet</translation>
     </message>
 </context>
 <context>
@@ -1322,40 +1323,40 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 is online</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 este online</translation>
     </message>
     <message>
         <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Un nou utilizator sa conectat la grup</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 sa alăturat grupului</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 este acum cunoscut ca %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 a părăsit grupul</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n utilizator în conversație</numerusform>
+            <numerusform>%n utilizatori în conversație</numerusform>
+            <numerusform>%n utilizatori în conversație</numerusform>
         </translation>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>mut</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>cu sunet</translation>
     </message>
 </context>
 <context>
@@ -1410,19 +1411,19 @@ instead of system taskbar.</source>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n utilizator(i) în conversație</numerusform>
+            <numerusform>%n utilizatori în conversație</numerusform>
+            <numerusform>%n utilizatori în conversație</numerusform>
         </translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesaj nou</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">Conectat</translation>
+        <translation>Conectat</translation>
     </message>
 </context>
 <context>
@@ -2066,7 +2067,7 @@ Salvarea modificărilor formatelor este posibilă, ceea ce poate duce la pierder
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Folosiți Tox în qTox</translation>
+        <translation>Folosiți Tox în qTox</translation>
     </message>
 </context>
 <context>
@@ -2289,7 +2290,7 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Imagini (%1)</translation>
+        <translation>Imagini (%1)</translation>
     </message>
 </context>
 <context>
@@ -2500,23 +2501,23 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Întunecat</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Albastru închis</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Măsliniu întunecat</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Roșu închis</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Violet închis</translation>
     </message>
 </context>
 <context>
@@ -2574,62 +2575,62 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Textul nu a putut fi găsit.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Începe</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Formă</translation>
+        <translation>Formă</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Începe căutare:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>de la sfârșit</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>de la început</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>după dată</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>înainte de data</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Caz sensibil</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Numai cuvinte întregi</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizare expresii regulate</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectare dialog dată</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectați o dată</translation>
     </message>
 </context>
 <context>
@@ -2860,37 +2861,37 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizați porecle colorate în conversații</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Afișați o notificare atunci când primiți un mesaj nou și fereastra nu este selectată.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Notificare</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Notificați numai despre mesajele noi în conversațiile de grup atunci când sunt menționate.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Conversațiile de grup se notifică numai atunci când sunt menționate</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Redă sunet</translation>
+        <translation>Redă sunet</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Redă sunet când sunteți ocupat</translation>
+        <translation>Redă sunet când sunteți ocupat</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Notificare prin notificări pe desktop</translation>
     </message>
 </context>
 <context>
@@ -3098,27 +3099,27 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">conectat</translation>
+        <translation>conectat</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">departe</translation>
+        <translation>departe</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">ocupat</translation>
+        <translation>ocupat</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">deconectat</translation>
+        <translation>deconectat</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>blocat</translation>
     </message>
 </context>
 </TS>
