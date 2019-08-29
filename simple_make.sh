@@ -86,20 +86,25 @@ dnf_install() {
         git
         glib2-devel
         gtk2-devel
+        kf5-sonnet-devel
+        libconfig-devel
+        libexif-devel
         libsodium-devel
-        libtool
         libvpx-devel
         libXScrnSaver-devel
         openal-soft-devel
         openssl-devel
         opus-devel
         qrencode-devel
+        qt5-devel
+        qt5-qtdoc
         qt5-qtsvg
         qt5-qtsvg-devel
         qt5-qttools-devel
-        qt-creator
-        qt-devel
-        qt-doc
+        qtsingleapplication-qt5
+        readline-devel
+        sqlcipher-devel
+        sqlite-devel
     )
     sudo dnf install "${dnf_packages[@]}"
 }
@@ -107,17 +112,19 @@ dnf_install() {
 # Fedora by default doesn't include libs in /usr/local/lib so add it
 fedora_locallib() {
     local llib_file="/etc/ld.so.conf.d/locallib.conf"
-    local llib_line="/usr/local/lib/"
+    local llib_lines=("/usr/local/lib/" "/usr/local/lib64/")
 
     # check whether needed line already exists
     is_locallib() {
-        grep -q "^$llib_line\$" "$llib_file"
+        grep -q "^$1\$" "$llib_file"
     }
 
-    # proceed only if line doesn't exist
-    is_locallib \
-        || echo "$llib_line" \
-            | sudo tee -a "$llib_file"
+    # add each line only if it doesn't exist
+    for llib_line in "${llib_lines[@]}"; do\
+        is_locallib "$llib_line" \
+       	    || echo "$llib_line" \
+                | sudo tee -a "$llib_file";
+    done
 }
 
 zypper_install() {
@@ -153,6 +160,7 @@ zypper_install() {
 }
 
 main() {
+    local BOOTSTRAP_ARGS=""
     if command -v zypper && [ -f /etc/products.d/openSUSE.prod ]
     then
         zypper_install
@@ -166,11 +174,13 @@ main() {
     then
         dnf_install
         fedora_locallib
+        export PKG_CONFIG_PATH="${PKG_CONFIG_PATH-}:/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig"
+        BOOTSTRAP_ARGS="--without-sqlcipher"
     else
         echo "Unknown package manager, attempting to compile anyways"
     fi
 
-    ./bootstrap.sh
+    ./bootstrap.sh ${BOOTSTRAP_ARGS}
     mkdir -p _build
     cd _build
     cmake ../
