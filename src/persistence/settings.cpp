@@ -292,137 +292,185 @@ void Settings::updateProfileData(Profile* profile, const QCommandLineParser* par
     saveGlobal();
     loadPersonal(profile->getName(), profile->getPasskey());
     if (parser) {
-        applyCommandLineOptions(parser);
+        applyCommandLineOptions(*parser);
     }
 }
+
 /**
- * Applies command line options on top of loaded settings. Fails without changes if attempting to
- * apply contradicting settings.
- * @param parser
- * @return Success indicator (success = true)
+ * Verifies that commandline proxy settings are at least reasonable. Does not verify provided IP
+ * or hostname addresses are valid. Code duplication with Settings::applyCommandLineOptions, which
+ * also verifies arguments, should be removed in a future refactor.
+ * @param parser QCommandLineParser instance
  */
-bool Settings::applyCommandLineOptions(const QCommandLineParser* parser)
+bool Settings::verifyProxySettings(const QCommandLineParser& parser)
 {
-    QString IPv6Setting = parser->value("I");
-    QString LANSetting = parser->value("L");
-    QString UDPSetting = parser->value("U");
-    QString proxySettingString = parser->value("proxy");
-    QStringList proxySettings = proxySettingString.split(":");
+    QString IPv6SettingString = parser.value("I").toLower();
+    QString LANSettingString = parser.value("L").toLower();
+    QString UDPSettingString = parser.value("U").toLower();
+    QString proxySettingString = parser.value("proxy").toLower();
+    QStringList proxySettingStrings = proxySettingString.split(":");
+
+    const QString SOCKS5 = QStringLiteral("socks5");
+    const QString HTTP = QStringLiteral("http");
+    const QString NONE = QStringLiteral("none");
+    const QString ON = QStringLiteral("on");
+    const QString OFF = QStringLiteral("off");
+
     // Check for incompatible settings
     bool activeProxyType = false;
 
-    if (parser->isSet("P")) {
-        activeProxyType = proxySettings[0].compare(QString("SOCKS5"), Qt::CaseInsensitive) == 0
-                          || proxySettings[0].compare(QString("HTTP"), Qt::CaseInsensitive) == 0;
+    if (parser.isSet("P")) {
+        activeProxyType = proxySettingStrings[0] == SOCKS5 || proxySettingStrings[0] == HTTP;
     }
 
-
-    if (activeProxyType && (UDPSetting.compare(QString("on"), Qt::CaseInsensitive) == 0)) {
-        qCritical() << "Cannot set UDP on with proxy.";
-        return false;
-    }
-
-    if (activeProxyType && (LANSetting.compare(QString("on"), Qt::CaseInsensitive) == 0)) {
-        qCritical() << "Cannot set LAN discovery on with proxy.";
-        return false;
-    }
-
-    if ((LANSetting.compare(QString("on"), Qt::CaseInsensitive) == 0)
-        && (UDPSetting.compare(QString("off"), Qt::CaseInsensitive) == 0)) {
-        qCritical() << "Incompatible UDP/LAN settings.";
-        return false;
-    }
-
-    if (parser->isSet("I")) {
-        if (IPv6Setting.compare(QString("on"), Qt::CaseInsensitive) == 0) {
-            enableIPv6 = true;
-            qDebug() << "Setting IPv6 ON.";
-        } else if (IPv6Setting.compare(QString("off"), Qt::CaseInsensitive) == 0) {
-            enableIPv6 = false;
-            qDebug() << "Setting IPv6 OFF.";
-        } else {
+    if (parser.isSet("I")) {
+        if (!(IPv6SettingString == ON || IPv6SettingString == OFF)) {
             qCritical() << "Unable to parse IPv6 setting.";
             return false;
         }
     }
 
-    if (parser->isSet("U")) {
-        if (UDPSetting.compare(QString("on"), Qt::CaseInsensitive) == 0) {
-            forceTCP = false;
-            qDebug() << "Setting UDP ON.";
-            if (proxyType != ICoreSettings::ProxyType::ptNone) {
-                qDebug() << "Cannot use UDP with proxy; disabling proxy settings.";
-                proxyType = ICoreSettings::ProxyType::ptNone;
-            }
-        } else if (UDPSetting.compare(QString("off"), Qt::CaseInsensitive) == 0) {
-            forceTCP = true;
-            qDebug() << "Setting UDP OFF.";
-        } else {
+    if (parser.isSet("U")) {
+        if (!(UDPSettingString == ON || UDPSettingString == OFF)) {
             qCritical() << "Unable to parse UDP setting.";
             return false;
         }
     }
 
-    if (parser->isSet("L")) {
-        if (LANSetting.compare(QString("on"), Qt::CaseInsensitive) == 0) {
-            qDebug() << "Setting LAN Discovery ON.";
-            enableLanDiscovery = true;
-            if (forceTCP) {
-                qDebug() << "Cannot use LAN discovery without UDP; enabling UDP.";
-                proxyType = ICoreSettings::ProxyType::ptNone;
-            }
-            if (proxyType != ICoreSettings::ProxyType::ptNone) {
-                qDebug() << "Cannot use LAN discovery with proxy; disabling proxy settings.";
-                proxyType = ICoreSettings::ProxyType::ptNone;
-            }
-        } else if (LANSetting.compare(QString("off"), Qt::CaseInsensitive) == 0) {
-            enableLanDiscovery = false;
-            qDebug() << "Setting LAN Discovery OFF.";
-        } else {
+    if (parser.isSet("L")) {
+        if (!(LANSettingString == ON || LANSettingString == OFF)) {
             qCritical() << "Unable to parse LAN setting.";
             return false;
         }
     }
+    if (activeProxyType && UDPSettingString == ON) {
+        qCritical() << "Cannot set UDP on with proxy.";
+        return false;
+    }
 
-    if (parser->isSet("P")) {
-        if (proxySettings[0].compare(QString("NONE"), Qt::CaseInsensitive) == 0) {
-            proxyType = ICoreSettings::ProxyType::ptNone;
-            proxyAddr = "";
-            proxyPort = 0;
-            qDebug() << "Setting proxy type to NONE.";
+    if (activeProxyType && LANSettingString == ON) {
+        qCritical() << "Cannot set LAN discovery on with proxy.";
+        return false;
+    }
+
+    if (LANSettingString == ON && UDPSettingString == OFF) {
+        qCritical() << "Incompatible UDP/LAN settings.";
+        return false;
+    }
+
+    if (parser.isSet("P")) {
+        if (proxySettingStrings[0] == NONE) {
+            // slightly lazy check here, accepting 'NONE[:.*]' is fine since no other
+            // arguments will be investigated when proxy settings are applied.
             return true;
         }
         // Since the first argument isn't 'none', verify format of remaining arguments
-        if (proxySettings.size() != 3) {
+        if (proxySettingStrings.size() != 3) {
             qCritical() << "Invalid number of proxy arguments.";
             return false;
         }
 
-        if (proxySettings[0].compare(QString("SOCKS5"), Qt::CaseInsensitive) == 0) {
-            proxyType = ICoreSettings::ProxyType::ptSOCKS5;
-            forceTCP = true;
-            enableLanDiscovery = false;
-            qDebug() << "Setting proxy type to SOCKS5.";
-        } else if (proxySettings[0].compare(QString("HTTP"), Qt::CaseInsensitive) == 0) {
-            proxyType = ICoreSettings::ProxyType::ptHTTP;
-            forceTCP = true;
-            enableLanDiscovery = false;
-            qDebug() << "Setting proxy type to HTTP.";
-        } else {
+        if (!(proxySettingStrings[0] == SOCKS5 || proxySettingStrings[0] == HTTP)) {
             qCritical() << "Unable to parse proxy type.";
             return false;
         }
 
-        // Kriby: Sanity checking IPv4+IPv6/hostnames sure is a lot of work!
-        proxyAddr = proxySettings[1];
-        qDebug() << QString("Setting proxy address to %1.").arg(proxySettings[1]);
+        // TODO(Kriby): Sanity check IPv4/IPv6 addresses/hostnames?
 
-        int portNumber = proxySettings[2].toInt();
-        if (portNumber > 0 && portNumber < 65536) {
-            proxyPort = portNumber;
-            qDebug() << QString("Setting port number to %1.").arg(portNumber);
-        } else {
+        int portNumber = proxySettingStrings[2].toInt();
+        if (!(portNumber > 0 && portNumber < 65536)) {
             qCritical() << "Invalid port number range.";
+        }
+    }
+    return true;
+}
+
+/**
+ * Applies command line options on top of loaded settings. Fails without changes if attempting to
+ * apply contradicting settings.
+ * @param parser QCommandLineParser instance
+ * @return Success indicator (success = true)
+ */
+bool Settings::applyCommandLineOptions(const QCommandLineParser& parser)
+{
+    if (!verifyProxySettings(parser)) {
+        return false;
+    };
+
+    QString IPv6Setting = parser.value("I").toUpper();
+    QString LANSetting = parser.value("L").toUpper();
+    QString UDPSetting = parser.value("U").toUpper();
+    QString proxySettingString = parser.value("proxy").toUpper();
+    QStringList proxySettings = proxySettingString.split(":");
+
+    const QString SOCKS5 = QStringLiteral("SOCKS5");
+    const QString HTTP = QStringLiteral("HTTP");
+    const QString NONE = QStringLiteral("NONE");
+    const QString ON = QStringLiteral("ON");
+    const QString OFF = QStringLiteral("OFF");
+
+
+    if (parser.isSet("I")) {
+        enableIPv6 = IPv6Setting == ON;
+        qDebug() << QString("Setting IPv6 %1.").arg(IPv6Setting);
+    }
+
+    if (parser.isSet("P")) {
+        qDebug() << QString("Setting proxy type to %1.").arg(proxySettings[0]);
+
+        quint16 portNumber = 0;
+        QString address = "";
+
+        if (proxySettings[0] == NONE) {
+            proxyType = ICoreSettings::ProxyType::ptNone;
+        } else {
+            if (proxySettings[0] == SOCKS5) {
+                proxyType = ICoreSettings::ProxyType::ptSOCKS5;
+            } else if (proxySettings[0] == HTTP) {
+                proxyType = ICoreSettings::ProxyType::ptHTTP;
+            } else {
+                qCritical() << "Failed to set valid proxy type";
+                assert(false); // verifyProxySettings should've made this impossible
+            }
+
+            forceTCP = true;
+            enableLanDiscovery = false;
+
+            address = proxySettings[1];
+            portNumber = static_cast<quint16>(proxySettings[2].toInt());
+        }
+
+
+        proxyAddr = address;
+        qDebug() << QString("Setting proxy address to %1.").arg(address);
+        proxyPort = portNumber;
+        qDebug() << QString("Setting port number to %1.").arg(portNumber);
+    }
+
+    if (parser.isSet("U")) {
+        bool shouldForceTCP = UDPSetting == OFF;
+        if (!shouldForceTCP && proxyType != ICoreSettings::ProxyType::ptNone) {
+            qDebug() << "Cannot use UDP with proxy; disable proxy explicitly with '-P none'.";
+        } else {
+            forceTCP = shouldForceTCP;
+            qDebug() << QString("Setting UDP %1.").arg(UDPSetting);
+        }
+    }
+
+    if (parser.isSet("L")) {
+        bool shouldEnableLAN = LANSetting == ON;
+
+        if (shouldEnableLAN && proxyType != ICoreSettings::ProxyType::ptNone) {
+            qDebug()
+                << "Cannot use LAN discovery with proxy; disable proxy explicitly with '-P none'.";
+        } else {
+            enableLanDiscovery = shouldEnableLAN;
+            qDebug() << QString("Setting LAN Discovery %1.").arg(LANSetting);
+            if (enableLanDiscovery) {
+                if (forceTCP) {
+                    qDebug() << "Cannot use LAN discovery without UDP; enabling UDP.";
+                }
+            }
         }
     }
     return true;
