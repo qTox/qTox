@@ -239,7 +239,8 @@ signals:
     void blackListChanged(QStringList& blist);
 
 public:
-    bool applyCommandLineOptions(const QCommandLineParser* parser);
+    bool applyCommandLineOptions(const QCommandLineParser& parser);
+    static bool verifyProxySettings(const QCommandLineParser& parser);
 
     bool getMakeToxPortable() const;
     void setMakeToxPortable(bool newValue);
