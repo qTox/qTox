@@ -165,6 +165,87 @@ void Core::registerCallbacks(Tox* tox)
     tox_callback_conference_title(tox, onGroupTitleChange);
 }
 
+std::unique_ptr<Tox, Core::ToxDeleter> Core::makeTox(ToxOptions* toxOptions, ToxCoreErrors* err)
+{
+    Tox_Err_New tox_err;
+    ToxPtr tox(tox_new(*toxOptions, &tox_err));
+
+    switch (tox_err) {
+    case TOX_ERR_NEW_OK:
+        break;
+
+    case TOX_ERR_NEW_LOAD_BAD_FORMAT:
+        qCritical() << "failed to parse Tox save data";
+        if (err) {
+            *err = ToxCoreErrors::BAD_PROXY;
+        }
+        return nullptr;
+
+    case TOX_ERR_NEW_PORT_ALLOC:
+        if (toxOptions->getIPv6Enabled()) {
+            toxOptions->setIPv6Enabled(false);
+            tox = ToxPtr(tox_new(*toxOptions, &tox_err));
+            if (tox_err == TOX_ERR_NEW_OK) {
+                qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery "
+                              "may not work properly.";
+                return std::move(tox);
+            }
+        }
+
+        qCritical() << "can't to bind the port";
+        if (err) {
+            *err = ToxCoreErrors::FAILED_TO_START;
+        }
+        return nullptr;
+
+    case TOX_ERR_NEW_PROXY_BAD_HOST:
+    case TOX_ERR_NEW_PROXY_BAD_PORT:
+    case TOX_ERR_NEW_PROXY_BAD_TYPE:
+        qCritical() << "bad proxy, error code:" << tox_err;
+        if (err) {
+            *err = ToxCoreErrors::BAD_PROXY;
+        }
+        return nullptr;
+
+    case TOX_ERR_NEW_PROXY_NOT_FOUND:
+        qCritical() << "proxy not found";
+        if (err) {
+            *err = ToxCoreErrors::BAD_PROXY;
+        }
+        return nullptr;
+
+    case TOX_ERR_NEW_LOAD_ENCRYPTED:
+        qCritical() << "attempted to load encrypted Tox save data";
+        if (err) {
+            *err = ToxCoreErrors::INVALID_SAVE;
+        }
+        return nullptr;
+
+    case TOX_ERR_NEW_MALLOC:
+        qCritical() << "memory allocation failed";
+        if (err) {
+            *err = ToxCoreErrors::ERROR_ALLOC;
+        }
+        return nullptr;
+
+    case TOX_ERR_NEW_NULL:
+        qCritical() << "a parameter was null";
+        if (err) {
+            *err = ToxCoreErrors::FAILED_TO_START;
+        }
+        return nullptr;
+
+    default:
+        qCritical() << "Tox core failed to start, unknown error code:" << tox_err;
+        if (err) {
+            *err = ToxCoreErrors::FAILED_TO_START;
+        }
+        return nullptr;
+    }
+
+    return std::move(tox);
+}
+
 /**
  * @brief Factory method for the Core object
  * @param savedata empty if new profile or saved data else
@@ -198,107 +279,15 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
         return {};
     }
 
-    Tox_Err_New tox_err;
-    core->tox = ToxPtr(tox_new(*toxOptions, &tox_err));
 
-    switch (tox_err) {
-    case TOX_ERR_NEW_OK:
-        break;
-
-    case TOX_ERR_NEW_LOAD_BAD_FORMAT:
-        qCritical() << "failed to parse Tox save data";
-        if (err) {
-            *err = ToxCoreErrors::BAD_PROXY;
-        }
-        return {};
-
-    case TOX_ERR_NEW_PORT_ALLOC:
-        if (toxOptions->getIPv6Enabled()) {
-            toxOptions->setIPv6Enabled(false);
-            core->tox = ToxPtr(tox_new(*toxOptions, &tox_err));
-            if (tox_err == TOX_ERR_NEW_OK) {
-                qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery "
-                              "may not work properly.";
-                break;
-            }
-        }
-
-        qCritical() << "can't to bind the port";
-        if (err) {
-            *err = ToxCoreErrors::FAILED_TO_START;
-        }
-        return {};
-
-    case TOX_ERR_NEW_PROXY_BAD_HOST:
-    case TOX_ERR_NEW_PROXY_BAD_PORT:
-    case TOX_ERR_NEW_PROXY_BAD_TYPE:
-        qCritical() << "bad proxy, error code:" << tox_err;
-        if (err) {
-            *err = ToxCoreErrors::BAD_PROXY;
-        }
-        return {};
-
-    case TOX_ERR_NEW_PROXY_NOT_FOUND:
-        qCritical() << "proxy not found";
-        if (err) {
-            *err = ToxCoreErrors::BAD_PROXY;
-        }
-        return {};
-
-    case TOX_ERR_NEW_LOAD_ENCRYPTED:
-        qCritical() << "attempted to load encrypted Tox save data";
-        if (err) {
-            *err = ToxCoreErrors::INVALID_SAVE;
-        }
-        return {};
-
-    case TOX_ERR_NEW_MALLOC:
-        qCritical() << "memory allocation failed";
-        if (err) {
-            *err = ToxCoreErrors::ERROR_ALLOC;
-        }
-        return {};
-
-    case TOX_ERR_NEW_NULL:
-        qCritical() << "a parameter was null";
-        if (err) {
-            *err = ToxCoreErrors::FAILED_TO_START;
-        }
-        return {};
-
-    default:
-        qCritical() << "Tox core failed to start, unknown error code:" << tox_err;
-        if (err) {
-            *err = ToxCoreErrors::FAILED_TO_START;
-        }
+    core->tox = makeTox(toxOptions.get(), err);
+    if (core->tox == nullptr) {
         return {};
     }
-
     // tox should be valid by now
-    assert(core->tox != nullptr);
 
     // toxcore is successfully created, create toxav
-    // TODO(sudden6): don't create CoreAv here, Core should be usable without CoreAV
-    core->av = CoreAV::makeCoreAV(core->tox.get());
-    if (!core->av) {
-        qCritical() << "Toxav failed to start";
-        if (err) {
-            *err = ToxCoreErrors::FAILED_TO_START;
-        }
-        return {};
-    }
-
-    // create CoreFile
-    core->file = CoreFile::makeCoreFile(core.get(), core->tox.get(), core->coreLoopLock);
-    if (!core->file) {
-        qCritical() << "CoreFile failed to start";
-        if (err) {
-            *err = ToxCoreErrors::FAILED_TO_START;
-        }
-        return {};
-    }
-
-    registerCallbacks(core->tox.get());
+    core->registerToxInstance(err);
 
     // connect the thread with the Core
     connect(thread, &QThread::started, core.get(), &Core::onStarted);
@@ -307,6 +296,47 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
     // when leaving this function 'core' should be ready for it's start() action or
     // a nullptr
     return core;
+}
+
+bool Core::registerToxInstance(ToxCoreErrors* err)
+{
+    // TODO(sudden6): don't create CoreAv here, Core should be usable without CoreAV
+    av = CoreAV::makeCoreAV(tox.get());
+    if (!av) {
+        qCritical() << "Toxav failed to start";
+        if (err) {
+            *err = ToxCoreErrors::FAILED_TO_START;
+        }
+        return false;
+    }
+
+    // create CoreFile
+    file = CoreFile::makeCoreFile(this, tox.get(), coreLoopLock);
+    if (!file) {
+        qCritical() << "CoreFile failed to start";
+        if (err) {
+            *err = ToxCoreErrors::FAILED_TO_START;
+        }
+        return false;
+    }
+
+    registerCallbacks(tox.get());
+    return true;
+}
+
+void Core::remakeTox(const QByteArray& savedata, const ICoreSettings* const settings)
+{
+    av.reset();
+
+    ToxCoreErrors err;
+    auto toxOptions = ToxOptions::makeToxOptions(savedata, settings);
+    tox = makeTox(toxOptions.get(), &err);
+    // tox should be valid by now
+    assert(tox != nullptr);
+
+    // toxcore is successfully created, create toxav
+    registerToxInstance(&err);
+    av->start();
 }
 
 void Core::onStarted()

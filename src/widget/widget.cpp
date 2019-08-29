@@ -663,6 +663,7 @@ void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 
 void Widget::onCoreChanged(Core& core)
 {
+    this->core = &core;
 
     connect(&core, &Core::connected, this, &Widget::onConnected);
     connect(&core, &Core::disconnected, this, &Widget::onDisconnected);
@@ -693,6 +694,29 @@ void Widget::onCoreChanged(Core& core)
     connect(this, &Widget::friendRequestAccepted, &core, &Core::acceptFriendRequest);
 
     sharedMessageProcessorParams.setPublicKey(core.getSelfPublicKey().toString());
+}
+
+void Widget::onCoreAVChanged(Core& core)
+{
+    const CoreAV* av = core.getAv();
+    connect(av, &CoreAV::avInvite, this, &Widget::onAvInvite);
+    connect(av, &CoreAV::avStart, this, &Widget::onAvStart);
+    connect(av, &CoreAV::avEnd, this, &Widget::onAvEnd);
+}
+
+void Widget::onAvInvite(uint32_t friendId, bool video)
+{
+    chatForms[core->getFriendPublicKey(friendId)]->onAvInvite(friendId, video);
+}
+
+void Widget::onAvStart(uint32_t friendId, bool video)
+{
+    chatForms[core->getFriendPublicKey(friendId)]->onAvStart(friendId, video);
+}
+
+void Widget::onAvEnd(uint32_t friendId, bool error)
+{
+    chatForms[core->getFriendPublicKey(friendId)]->onAvEnd(friendId, error);
 }
 
 void Widget::onConnected()
@@ -1121,6 +1145,9 @@ void Widget::onRejectCall(uint32_t friendId)
 
 void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 {
+    if (FriendList::findFriend(friendPk)) {
+        return;
+    }
     settings.updateFriendAddress(friendPk.toString());
 
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);

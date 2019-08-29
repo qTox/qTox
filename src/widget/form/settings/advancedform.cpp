@@ -29,8 +29,8 @@
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
-#include "src/nexus.h"
 #include "src/model/status.h"
+#include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
@@ -223,7 +223,7 @@ void AdvancedForm::on_reconnectButton_clicked()
         return;
     }
 
-    emit Core::getInstance()->statusSet(Status::Status::Offline);
+    Core::getInstance()->setStatus(Status::Status::Offline);
     Nexus::getProfile()->restartCore();
 }
 

@@ -31,8 +31,8 @@
 #include "toxid.h"
 #include "toxpk.h"
 
-#include "src/util/strongtype.h"
 #include "src/model/status.h"
+#include "src/util/strongtype.h"
 #include <tox/tox.h>
 
 #include <QMutex>
@@ -50,8 +50,10 @@ class ICoreSettings;
 class GroupInvite;
 class Profile;
 class Core;
+class ToxOptions;
 
 using ToxCorePtr = std::unique_ptr<Core>;
+
 
 class Core : public QObject,
              public ICoreFriendMessageSender,
@@ -60,6 +62,16 @@ class Core : public QObject,
              public ICoreGroupQuery
 {
     Q_OBJECT
+
+private:
+    struct ToxDeleter
+    {
+        void operator()(Tox* tox)
+        {
+            tox_kill(tox);
+        }
+    };
+
 public:
     enum class ToxCoreErrors
     {
@@ -103,6 +115,7 @@ public:
     QPair<QByteArray, QByteArray> getKeypair() const;
 
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
+    void remakeTox(const QByteArray& savedata, const ICoreSettings* const settings);
 
 public slots:
     void start();
@@ -216,12 +229,15 @@ private:
     static void onReadReceiptCallback(Tox* tox, uint32_t friendId, uint32_t receipt, void* core);
 
     void sendGroupMessageWithType(int groupId, const QString& message, Tox_Message_Type type);
-    bool sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type, ReceiptNum& receipt);
+    bool sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type,
+                             ReceiptNum& receipt);
     bool parsePeerQueryError(Tox_Err_Conference_Peer_Query error) const;
     bool parseConferenceJoinError(Tox_Err_Conference_Join error) const;
     bool checkConnection();
 
-    void makeTox(QByteArray savedata, ICoreSettings* s);
+    static std::unique_ptr<Tox, ToxDeleter> makeTox(ToxOptions* toxOptions, ToxCoreErrors* err);
+    bool registerToxInstance(ToxCoreErrors* err);
+
     void loadFriends();
     void loadGroups();
     void bootstrapDht();
@@ -236,14 +252,6 @@ private slots:
     void onStarted();
 
 private:
-    struct ToxDeleter
-    {
-        void operator()(Tox* tox)
-        {
-            tox_kill(tox);
-        }
-    };
-
     using ToxPtr = std::unique_ptr<Tox, ToxDeleter>;
     ToxPtr tox;
 

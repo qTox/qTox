@@ -88,6 +88,7 @@ signals:
     void failedToStart();
     void badProxy();
     void coreChanged(Core& core);
+    void coreAVChanged(Core& core);
 
 public slots:
     void onRequestSent(const ToxPk& friendPk, const QString& message);

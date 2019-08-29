@@ -194,6 +194,7 @@ public slots:
     void refreshPeerListsLocal(const QString& username);
     void onUpdateAvailable();
     void onCoreChanged(Core& core);
+    void onCoreAVChanged(Core& core);
 
 signals:
     void friendRequestAccepted(const ToxPk& friendPk);
@@ -244,6 +245,9 @@ private slots:
     void searchCircle(CircleWidget& circleWidget);
     void updateFriendActivity(const Friend& frnd);
     void registerContentDialog(ContentDialog& contentDialog) const;
+    void onAvInvite(uint32_t friendId, bool video);
+    void onAvStart(uint32_t friendId, bool video);
+    void onAvEnd(uint32_t friendId, bool error);
 
 private:
     // QMainWindow overrides

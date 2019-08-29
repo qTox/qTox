@@ -235,6 +235,7 @@ void Nexus::showMainGUI()
     connect(profile, &Profile::selfAvatarChanged, widget, &Widget::onSelfAvatarLoaded);
 
     connect(profile, &Profile::coreChanged, widget, &Widget::onCoreChanged);
+    connect(profile, &Profile::coreAVChanged, widget, &Widget::onCoreAVChanged);
 
     connect(profile, &Profile::failedToStart, widget, &Widget::onFailedToStartCore,
             Qt::BlockingQueuedConnection);
@@ -389,7 +390,7 @@ void Nexus::updateWindowsArg(QWindow* closedWindow)
         QAction* action = windowActions->addAction(windowList[i]->title());
         action->setCheckable(true);
         action->setChecked(windowList[i] == activeWindow);
-        connect(action, &QAction::triggered, [=] { onOpenWindow(windowList[i]);});
+        connect(action, &QAction::triggered, [=] { onOpenWindow(windowList[i]); });
         windowMenu->addAction(action);
         dockMenu->insertAction(dockLast, action);
     }

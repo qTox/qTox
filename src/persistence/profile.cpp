@@ -420,6 +420,7 @@ void Profile::startCore()
     // kriby: code duplication belongs in initCore, but cannot yet due to Core/Profile coupling
     connect(core.get(), &Core::requestSent, this, &Profile::onRequestSent);
     emit coreChanged(*core);
+    emit coreAVChanged(*core);
 
     core->start();
 
@@ -915,18 +916,13 @@ void Profile::restartCore()
 
         // save to disk just in case
         if (saveToxSave(savedata)) {
-            qDebug() << "Restarting Core";
-            const bool isNewProfile{false};
+            qDebug() << "Restarting Core Tox Instance";
             IAudioControl* audioBak = core->getAv()->getAudio();
             assert(audioBak != nullptr);
-            initCore(savedata, Settings::getInstance(), isNewProfile);
+            disconnect(core->getAv());
+            core->remakeTox(savedata, &Settings::getInstance());
             core->getAv()->setAudio(*audioBak);
-
-            // kriby: code duplication belongs in initCore, but cannot yet due to Core/Profile coupling
-            connect(core.get(), &Core::requestSent, this, &Profile::onRequestSent);
-            emit coreChanged(*core);
-
-            core->start();
+            emit coreAVChanged(*core);
         } else {
             qCritical() << "Failed to save, not restarting core";
         }
