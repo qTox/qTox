@@ -52,7 +52,6 @@ public:
 
     ~CoreAV();
 
-    bool anyActiveCalls() const;
     bool isCallStarted(const Friend* f) const;
     bool isCallStarted(const Group* f) const;
     bool isCallActive(const Friend* f) const;
