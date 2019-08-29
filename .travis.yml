@@ -3,10 +3,11 @@ dist: trusty
 language: cpp
 cache: ccache
 
-# regex is for release tags
+# regex is for master, release branches, and release tags
 branches:
   only:
     - master
+    - /^v\d+\.\d+-dev$/
     - /^v(\d+\.){2}\d+$/
 
 stages:
