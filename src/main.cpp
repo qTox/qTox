@@ -219,12 +219,11 @@ int main(int argc, char* argv[])
 
     uint32_t profileId = settings.getCurrentProfileId();
     IPC ipc(profileId);
-    if (!ipc.isAttached()) {
-        qCritical() << "Can't init IPC";
-        return EXIT_FAILURE;
+    if (ipc.isAttached()) {
+        QObject::connect(&settings, &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId);
+    } else {
+        qWarning() << "Can't init IPC, maybe we're in a jail? Continuing with reduced multi-client functionality.";
     }
-
-    QObject::connect(&settings, &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId);
 
     // For the auto-updater
     if (sodium_init() < 0) {
@@ -278,7 +277,7 @@ int main(int argc, char* argv[])
     bool autoLogin = settings.getAutoLogin();
 
     uint32_t ipcDest = 0;
-    bool doIpc = true;
+    bool doIpc = ipc.isAttached();
     QString eventType, firstParam;
     if (parser.isSet("p")) {
         profileName = parser.value("p");
@@ -359,10 +358,12 @@ int main(int argc, char* argv[])
         }
     }
 
-    // Start to accept Inter-process communication
-    ipc.registerEventHandler("uri", &toxURIEventHandler);
-    ipc.registerEventHandler("save", &toxSaveEventHandler);
-    ipc.registerEventHandler("activate", &toxActivateEventHandler);
+    if (ipc.isAttached()) {
+        // Start to accept Inter-process communication
+        ipc.registerEventHandler("uri", &toxURIEventHandler);
+        ipc.registerEventHandler("save", &toxSaveEventHandler);
+        ipc.registerEventHandler("activate", &toxActivateEventHandler);
+    }
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri")
