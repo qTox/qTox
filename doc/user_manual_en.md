@@ -10,6 +10,7 @@
 * [Quotes](#quotes)
 * [Multi Window Mode](#multi-window-mode)
 * [Keyboard Shortcuts](#keyboard-shortcuts)
+* [Commandline Options](#commandline-options)
 * [Emoji Packs](#emoji-packs)
 
 
@@ -428,6 +429,25 @@ The following shortcuts are currently supported:
 
 In audio group chat microphone mute state will be changed while `Ctrl` + 
 `p` pressed and reverted on release.
+
+## Commandline Options
+
+| Option                             | Action                                             |
+|------------------------------------|----------------------------------------------------|
+| `-p` `<profile>`                   | Use specified unencrypted profile                  |
+| `-l`                               | Force loginscreen                                  |
+| `-I` `<on/off>`                    | Sets IPv6 toggle                                   |
+| `-U` `<on/off>`                    | Sets UDP toggle                                    |
+| `-L` `<on/off>`                    | Sets LAN toggle                                    |
+| `-P` `<protocol>:<address>:<port>` | Applies [proxy options](#commandline-proxy-options)|
+
+### Commandline Proxy Options
+Protocol: NONE, HTTP or SOCKS5 <br>
+Address: Proxy address <br>
+Port: Proxy port number (0-65535) <br>
+Example input: <br>
+`qtox -P SOCKS5:192.168.0.1:2121` <br>
+`qtox -P none`
 
 ## Emoji Packs
 
