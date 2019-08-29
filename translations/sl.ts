@@ -587,10 +587,6 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
 <context>
     <name>ChatForm</name>
     <message>
-        <source>Load chat history...</source>
-        <translation>Naloži zgodovino pogovorov...</translation>
-    </message>
-    <message>
         <source>Send a file</source>
         <translation>Pošlji datoteko</translation>
     </message>
@@ -601,10 +597,6 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
     <message>
         <source>%1 calling</source>
         <translation>%1 te kliče</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Pošiljanje datoteke &quot;%1&quot; ni uspelo</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
@@ -651,14 +643,6 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 je zdaj %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>Prenesi v datoteko</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation type="unfinished">Shrani zgodovino pogovorov</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -806,23 +790,31 @@ so you can save the file on windows.</source>
         <comment>Error while sending friendship request</comment>
         <translation type="unfinished">Stik je že dodan</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
+        <source>New message</source>
+        <translation type="unfinished">Novo sporočilo</translation>
+    </message>
+    <message>
+        <source>Incoming file transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New friend request received</source>
+        <source>Friend request received</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
+        <source>New group message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
+        <source>Group invite received</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1175,11 +1167,6 @@ namesto da bi ostal med programi.</translation>
         <translation>Pokaži spremembe statusa stika</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translatorcomment>Preveri</translatorcomment>
-        <translation>Pošiljanje sporočil nedosegljivim</translation>
-    </message>
-    <message>
         <source>Start qTox on operating system startup (current profile).</source>
         <translation>Odpri qTox na zagon operacijskega sistema (sedanji profil).</translation>
     </message>
@@ -1227,10 +1214,6 @@ namesto da bi ostal med programi.</translation>
         <translation>Skrij prikazana sporočila</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>Ni bilo poslano</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>Skrito</translation>
     </message>
@@ -1247,10 +1230,6 @@ namesto da bi ostal med programi.</translation>
         <translation>Kopiraj naslov povezave</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1261,6 +1240,18 @@ namesto da bi ostal med programi.</translation>
     <message>
         <source>Search in text</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Naloži zgodovino pogovorov...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Prenesi v datoteko</translation>
     </message>
 </context>
 <context>
@@ -1303,26 +1294,10 @@ namesto da bi ostal med programi.</translation>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;prazno&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation type="unfinished">%1 je spremenil naslov v %2</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1663,12 +1638,28 @@ Profil ne vsebuje tvoje zgodovine pogovorov.</translation>
         <translation>Naloži zgodovino pogovorov</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Naloži zgodovino od:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 sporočil</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1740,12 +1731,6 @@ Prosimo, da vnesete dvakrat pravilno geslo.</translation>
         <translation>Profil s tem imenom že obstaja.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Neznana napaka: ne morem ustvariti nov profil.
-Če je prišlo do te napake, prosimo, o tem obvestite.</translation>
-    </message>
-    <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation>Z geslom zaščitenih profilov ni mogoče samodejno naložiti.</translation>
     </message>
@@ -1768,10 +1753,6 @@ Lahko ustvarite enega.</translation>
     <message>
         <source>This profile is already in use.</source>
         <translation>Ta profil je že v uporabi.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2510,6 +2491,35 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Dark violet</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">dosegljiv</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">odsoten</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">zaseden</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">nedosegljiv</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2613,14 +2623,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2884,6 +2886,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Notify via desktop notifications</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2936,15 +2942,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Your name</source>
         <translation type="unfinished">Tvoje ime</translation>
-    </message>
-    <message>
-        <source>Your status</source>
-        <translation type="unfinished">Tvoje stanje</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished">&lt;prazno&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
@@ -3089,28 +3086,19 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished">Moj profil</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">dosegljiv</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Pošiljanje datoteke &quot;%1&quot; ni uspelo</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">odsoten</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">zaseden</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">nedosegljiv</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
+        <source> invites you to join a group.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

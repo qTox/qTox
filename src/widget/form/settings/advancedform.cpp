@@ -27,9 +27,6 @@
 #include <QMessageBox>
 #include <QProcess>
 
-#include "src/core/core.h"
-#include "src/core/coreav.h"
-#include "src/nexus.h"
 #include "src/model/status.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
@@ -73,9 +70,11 @@ AdvancedForm::AdvancedForm()
     QString warningBody = tr("Unless you %1 know what you are doing, "
                              "please do %2 change anything here. Changes "
                              "made here may lead to problems with qTox, and even "
-                             "to loss of your data, e.g. history.")
+                             "to loss of your data, e.g. history."
+                             "%3")
                               .arg(QString("<b>%1</b>").arg(tr("really")))
-                              .arg(QString("<b>%1</b>").arg(tr("not")));
+                              .arg(QString("<b>%1</b>").arg(tr("not")))
+                              .arg(QString("<p>%1</p>").arg(tr("Changes here are applied only after restarting qTox.")));
 
     QString warning = QString("<div style=\"color:#ff0000;\">"
                               "<p><b>%1</b></p><p>%2</p></div>")
@@ -213,18 +212,6 @@ void AdvancedForm::on_proxyType_currentIndexChanged(int index)
     bodyUI->cbEnableUDP->setChecked(!proxyEnabled);
 
     Settings::getInstance().setProxyType(proxytype);
-}
-
-void AdvancedForm::on_reconnectButton_clicked()
-{
-    if (Core::getInstance()->getAv()->anyActiveCalls()) {
-        QMessageBox::warning(this, tr("Call active", "popup title"),
-                             tr("You can't disconnect while a call is active!", "popup text"));
-        return;
-    }
-
-    emit Core::getInstance()->statusSet(Status::Status::Offline);
-    Nexus::getProfile()->restartCore();
 }
 
 /**

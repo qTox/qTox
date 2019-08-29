@@ -584,10 +584,6 @@ which may lead to problems with video calls.</source>
 <context>
     <name>ChatForm</name>
     <message>
-        <source>Load chat history...</source>
-        <translation>تاریخچه چت را بارگذاری کن...</translation>
-    </message>
-    <message>
         <source>Send a file</source>
         <translation>یک فایل ارسال کنید</translation>
     </message>
@@ -610,10 +606,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Calling %1</source>
         <translation>درحال تماس گرفتن با %1</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>ارسال فایل «%1» ممکن نبود</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -649,14 +641,6 @@ which may lead to problems with video calls.</source>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 الان %2</translation>
-    </message>
-    <message>
-        <source>Export to file</source>
-        <translation>در یک فایل ذخیره کن</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>ذخیره کردن لاگ چت</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
@@ -804,23 +788,31 @@ so you can save the file on windows.</source>
         <comment>Error while sending friendship request</comment>
         <translation>این دوست از قبل وجود دارد</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
+        <source>New message</source>
+        <translation type="unfinished">پیام جدید</translation>
+    </message>
+    <message>
+        <source>Incoming file transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New friend request received</source>
+        <source>Friend request received</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
+        <source>New group message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
+        <source>Group invite received</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1178,10 +1170,6 @@ instead of system taskbar.</source>
         <translation>تغیر وضعیت مخاطب را نشان بده</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>پیام رسانی برون خط Faux</translation>
-    </message>
-    <message>
         <source>Start qTox on operating system startup (current profile).</source>
         <translation>راه اندازی qTox در زمان ورود به سیستم عامل (کاربر کنونی).</translation>
     </message>
@@ -1233,10 +1221,6 @@ instead of system taskbar.</source>
         <translation>پاک کردن پیام های نشان داده شده</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>ارسال نشده</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>پاک شد</translation>
     </message>
@@ -1249,10 +1233,6 @@ instead of system taskbar.</source>
         <translation>کپی کردن لینک</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation type="unfinished">تأیید</translation>
     </message>
@@ -1263,6 +1243,18 @@ instead of system taskbar.</source>
     <message>
         <source>Search in text</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">تاریخچه چت را بارگذاری کن...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">در یک فایل ذخیره کن</translation>
     </message>
 </context>
 <context>
@@ -1305,26 +1297,10 @@ instead of system taskbar.</source>
     </message>
 </context>
 <context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Empty&gt;</translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 عنوان را به %2 تغییر داد</translation>
-    </message>
-    <message>
-        <source>%1 is online</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
@@ -1659,12 +1635,28 @@ Profile does not contain your history.</source>
         <translation>بارگذاری دیالوگ تاریخچه</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>بارگذاری تاریخچه از:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 پیام</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1732,12 +1724,6 @@ Please make sure to enter same password twice.</source>
         <translation>پروفایلی با همین نام از قبل موجود است.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>خطای نامعلوم: امکان ساخت پروفایل جدید وجود ندارد.
-اگر با این خطا مواجه میشوید لطفا آن را گزارش کنید.</translation>
-    </message>
-    <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation>پروفایل هایی که با رمز عبور محافظت می شوند، قابلیت بارگذاری به شکل خودکار را ندارند.</translation>
     </message>
@@ -1760,10 +1746,6 @@ You may want to create one.</source>
     <message>
         <source>This profile is already in use.</source>
         <translation>این پروفایل در حال استفاده میباشد.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>این پروفایل در حال استفاده است. از سایر پنجره ها و ابزار های Tox خارج شوید.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2510,6 +2492,35 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Dark violet</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">آنلاین هستش</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">پای سیستم نیست</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">سرش شلوغه</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">دستگاهش خاموشه</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2613,14 +2624,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2885,6 +2888,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Notify via desktop notifications</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hide message sender and contents</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2985,15 +2992,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>نام شما</translation>
     </message>
     <message>
-        <source>Your status</source>
-        <translation>وضضعیت شما</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Empty&gt;</translation>
-    </message>
-    <message>
         <source>Message failed to send</source>
         <translation>ارسال پیام با خطا مواجه شد</translation>
     </message>
@@ -3085,28 +3083,19 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>پروفایل من</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">آنلاین هستش</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">ارسال فایل «%1» ممکن نبود</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">پای سیستم نیست</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">سرش شلوغه</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">دستگاهش خاموشه</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
+        <source> invites you to join a group.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

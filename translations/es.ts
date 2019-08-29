@@ -262,23 +262,23 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta es la clave pública de su amigo, utilícela para verificar su identidad a través de otro canal. No puedes enviarla a otras personas para que puedan agregar este contacto.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Clave pública (no el ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Confirmación</translation>
+        <translation>Confirmación</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Estás seguro de eliminar %1 historial de chat?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Error al eliminar el historial de chat con %1!</translation>
     </message>
 </context>
 <context>
@@ -301,15 +301,15 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir enlace de descarga de actualización</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualización disponible</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox está actualizado ✓</translation>
     </message>
 </context>
 <context>
@@ -580,7 +580,7 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar la detección de LAN</translation>
     </message>
 </context>
 <context>
@@ -606,10 +606,6 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>%1 llamando</translation>
     </message>
     <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>No se pudo enviar el archivo %1</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Error al abrir el archivo temporal</translation>
@@ -625,10 +621,6 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Call duration: </source>
         <translation>Duración de la llamada: </translation>
-    </message>
-    <message>
-        <source>Load chat history...</source>
-        <translation>Cargar historial de chat...</translation>
     </message>
     <message>
         <source>Calling %1</source>
@@ -652,25 +644,18 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>%1 ahora está %2</translation>
     </message>
     <message>
-        <source>Export to file</source>
-        <translation>Exportar al archivo</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Guardar registro del chat</translation>
-    </message>
-    <message>
         <source>Call with %1 ended unexpectedly. %2</source>
         <translation>Llamada con %1 terminó inesperadamente. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del archivo contenía caracteres no válidos</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Los caracteres no válidos fueran cambiados a _
+para que puedas guardar el archivo en windows.</translation>
     </message>
 </context>
 <context>
@@ -805,23 +790,31 @@ so you can save the file on windows.</source>
         <comment>Error while sending friendship request</comment>
         <translation>Amigo ya fue agregado</translation>
     </message>
+    <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
-        <source>New group message received</source>
+        <source>New message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New friend request received</source>
+        <source>Incoming file transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group invite received</source>
+        <source>Friend request received</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New message received</source>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -909,7 +902,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Remoto pausado</translation>
     </message>
 </context>
 <context>
@@ -1168,10 +1161,6 @@ en lugar de la barra de tareas del sistema.</translation>
         <translation>Mostrar ícono en la bandeja</translation>
     </message>
     <message>
-        <source>Faux offline messaging</source>
-        <translation>Simular envío &quot;offline&quot; de mensajes</translation>
-    </message>
-    <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
         <translation>Se puede configurar de forma personalizada con clic derecho sobre el amigo.</translation>
@@ -1186,19 +1175,19 @@ en lugar de la barra de tareas del sistema.</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Verificar actualizaciones</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Corrección ortográfica</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño máximo de archivo con aceptación automática (0 para deshabilitar):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
@@ -1228,10 +1217,6 @@ en lugar de la barra de tareas del sistema.</translation>
         <translation>Borrar mensajes actuales</translation>
     </message>
     <message>
-        <source>Not sent</source>
-        <translation>No enviado</translation>
-    </message>
-    <message>
         <source>Cleared</source>
         <translation>Borrado</translation>
     </message>
@@ -1244,20 +1229,28 @@ en lugar de la barra de tareas del sistema.</translation>
         <translation>Copiar la dirección del enlace</translation>
     </message>
     <message>
-        <source>[System message]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Confirmación</translation>
+        <translation>Confirmación</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Estás seguro de que desea borrar todos los mensajes mostrados?</translation>
     </message>
     <message>
         <source>Search in text</source>
+        <translation>Buscar en el texto</translation>
+    </message>
+    <message>
+        <source>Go to current date</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Cargar historial de chat...</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished">Exportar al archivo</translation>
     </message>
 </context>
 <context>
@@ -1276,35 +1269,27 @@ en lugar de la barra de tareas del sistema.</translation>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Pantalla completa</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Exhibir vista previa de vídeo</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Silenciar el audio</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Silenciar micrófono</translation>
+        <translation>Silenciar micrófono</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Terminar videollamada</translation>
+        <translation>Terminar videollamada</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Group</name>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Vacío&gt;</translation>
+        <translation>Salir de pantalla completa</translation>
     </message>
 </context>
 <context>
@@ -1314,40 +1299,32 @@ en lugar de la barra de tareas del sistema.</translation>
         <translation>%1 ha establecido el título a: %2</translation>
     </message>
     <message>
-        <source>%1 is online</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A new user has connected to the group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 se ha unido al grupo</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ahora es conocido como %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ha dejado el grupo</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n usuario en el chat</numerusform>
+            <numerusform>%n usuarios en el chat</numerusform>
         </translation>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>mudo</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>activar el sonido</translation>
     </message>
 </context>
 <context>
@@ -1402,18 +1379,18 @@ en lugar de la barra de tareas del sistema.</translation>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n usuario en el chat</numerusform>
+            <numerusform>%n usuarios en el chat</numerusform>
         </translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuevo Mensaje</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectado</translation>
     </message>
 </context>
 <context>
@@ -1656,12 +1633,28 @@ El perfil no contiene tu historial.</translation>
         <translation>Cargar historial</translation>
     </message>
     <message>
-        <source>Load history from:</source>
-        <translation>Cargar historial desde:</translation>
+        <source>Load history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 messages</source>
-        <translation>%1 mensajes</translation>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(about 100 messages are loaded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished">Ventana de selección de fecha</translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Seleccione una fecha</translation>
     </message>
 </context>
 <context>
@@ -1729,22 +1722,12 @@ Verifica que sea la misma en ambos recuadros.</translation>
         <translation>Ya existe un perfil con ese nombre.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation>Error desconocido: no se pudo crear un nuevo perfil.
-Por favor reporta este error.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load this profile</source>
         <translation>No se pudo cargar el perfil</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
         <translation>Ese perfil ya está en uso.</translation>
-    </message>
-    <message>
-        <source>Profile already in use. Close other clients.</source>
-        <translation>Perfil ya está en uso. Cierra otros clientes.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -2055,7 +2038,7 @@ Es posible que haya cambios en el formato de guardado, lo que puede generar una 
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Toxeando con qTox</translation>
+        <translation>Toxeando con qTox</translation>
     </message>
 </context>
 <context>
@@ -2278,7 +2261,7 @@ Este ID incluye el código NoSpam (en azul) y la suma de comprobación (en gris)
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Imágenes (%1)</translation>
+        <translation>Imágenes (%1)</translation>
     </message>
 </context>
 <context>
@@ -2489,23 +2472,52 @@ Este ID incluye el código NoSpam (en azul) y la suma de comprobación (en gris)
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Oscuro</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Azul oscuro</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Verde oscuro</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Rojo oscuro</translation>
     </message>
     <message>
         <source>Dark violet</source>
+        <translation>Morado</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">conectado</translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">ausente</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">ocupado</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">desconectado</translation>
+    </message>
+    <message>
+        <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">bloqueado</translation>
     </message>
 </context>
 <context>
@@ -2563,62 +2575,54 @@ Este ID incluye el código NoSpam (en azul) y la suma de comprobación (en gris)
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto no encontrado.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Plantilla</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar búsqueda:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>desde el final</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>desde el principio</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>después de la fecha</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>antes de la fecha</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00/00/0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Distingue mayúsculas y minúsculas</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Sólo palabras enteras</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar expresiones comunes</translation>
     </message>
 </context>
 <context>
@@ -2849,36 +2853,40 @@ Este ID incluye el código NoSpam (en azul) y la suma de comprobación (en gris)
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar apodos coloridos en los chats</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar una notificación cuando reciba un nuevo mensaje y la ventana no esté seleccionada.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Notificar</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sólo notificar sobre nuevos mensajes en los chat de grupo cuando seas mencionado.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Sólo notificar de chat de grupo cuando seas mencionado</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Reproducir sonido</translation>
+        <translation>Reproducir audio</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Reproducir sonido en estado &apos;Ocupado&apos;</translation>
+        <translation>Reproducir sonido mientras Ocupado</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
+        <translation>Notificar a través de notificaciones de escritorio</translation>
+    </message>
+    <message>
+        <source>Hide message sender and contents</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2907,11 +2915,6 @@ Este ID incluye el código NoSpam (en azul) y la suma de comprobación (en gris)
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Se produjo un error al iniciar toxcore con la configuración actual de proxy. Por favor modifica la configuración y reinicia qTox.</translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation>&lt;Vacío&gt;</translation>
     </message>
     <message>
         <source>Create new group...</source>
@@ -3026,10 +3029,6 @@ Este ID incluye el código NoSpam (en azul) y la suma de comprobación (en gris)
         <translation>Tu nombre</translation>
     </message>
     <message>
-        <source>Your status</source>
-        <translation>Tu estado</translation>
-    </message>
-    <message>
         <source>Status</source>
         <translation>Estado</translation>
     </message>
@@ -3082,28 +3081,19 @@ Este ID incluye el código NoSpam (en azul) y la suma de comprobación (en gris)
         <translation>Mi perfil</translation>
     </message>
     <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">conectado</translation>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">No se pudo enviar el archivo %1</translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">ausente</translation>
+        <source>File sent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">ocupado</translation>
+        <source> sent you a friend request.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation type="unfinished">desconectado</translation>
-    </message>
-    <message>
-        <source>blocked</source>
-        <comment>contact status</comment>
+        <source> invites you to join a group.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

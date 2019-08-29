@@ -190,16 +190,6 @@ void CoreAV::process()
 }
 
 /**
- * @brief Check, if any calls are currently active.
- * @return true if any calls are currently active, false otherwise
- * @note A call about to start is not yet active.
- */
-bool CoreAV::anyActiveCalls() const
-{
-    return !calls.empty();
-}
-
-/**
  * @brief Checks the call status for a Tox friend.
  * @param f the friend to check
  * @return true, if call is started for the friend, false otherwise

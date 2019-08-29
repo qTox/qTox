@@ -1089,11 +1089,6 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
     QList<ChatLine::Ptr> beforeLines;
     QList<ChatLine::Ptr> afterLines;
 
-    if (!messages.empty() && !(messages.rbegin()->first == begin || messages.begin()->first == end
-                              || messages.rbegin()->first.get() + 1 == begin.get())) {
-        return;
-    }
-
     for (auto i = begin; i < end; ++i) {
         auto chatMessage = getChatMessageForIdx(i, messages);
         renderItem(chatLog.at(i), needsToHideName(i), colorizeNames, chatMessage);

@@ -902,40 +902,6 @@ const ToxEncrypt* Profile::getPasskey() const
 }
 
 /**
- * @brief Delete core and restart a new one
- */
-void Profile::restartCore()
-{
-    GUI::setEnabled(false); // Core::reset re-enables it
-
-    if (core && !isRemoved) {
-        // TODO(sudden6): there's a potential race condition between unlocking the core loop
-        // and killing the core
-        const QByteArray& savedata = core->getToxSaveData();
-
-        // save to disk just in case
-        if (saveToxSave(savedata)) {
-            qDebug() << "Restarting Core";
-            const bool isNewProfile{false};
-            IAudioControl* audioBak = core->getAv()->getAudio();
-            assert(audioBak != nullptr);
-            initCore(savedata, Settings::getInstance(), isNewProfile);
-            core->getAv()->setAudio(*audioBak);
-
-            // kriby: code duplication belongs in initCore, but cannot yet due to Core/Profile coupling
-            connect(core.get(), &Core::requestSent, this, &Profile::onRequestSent);
-            emit coreChanged(*core);
-
-            core->start();
-        } else {
-            qCritical() << "Failed to save, not restarting core";
-        }
-    }
-
-    GUI::setEnabled(true);
-}
-
-/**
  * @brief Changes the encryption password and re-saves everything with it
  * @param newPassword Password for encryption, if empty profile will be decrypted.
  * @param oldPassword Supply previous password if already encrypted or empty QString if not yet

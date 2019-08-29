@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.0" language="lv" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>Audio / Vidéo</translation>
+        <translation>Audio/Video</translation>
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>Résolution par défaut</translation>
+        <translation>Noklusējuma izšķirtspēja</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Désactivé</translation>
+        <translation>Atspējots</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation>Sélectionner une région</translation>
+        <translation>Izvēlieties reģionu</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation>Écran %1</translation>
+        <translation>Ekrāns %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Paramètres sonores</translation>
+        <translation>Audio iestatījumi</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Gain sonore</translation>
+        <translation>Pastiprinājums</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Périphérique de lecture</translation>
+        <translation>Atskaņošanas ierīce</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Utiliser le curseur afin de régler le volume de vos haut-parleurs.</translation>
+        <translation>Izmantojiet slīdni, lai iestatītu skaļruņu skaļumu.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Périphérique d&apos;enregistrement</translation>
+        <translation>Ierakstīšanas ierīce</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Niveau de volume</translation>
+        <translation>Skaļums</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Paramètres vidéo</translation>
+        <translation>Video iestatījumi</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Périphérique vidéo</translation>
+        <translation>Video ierīce</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -61,163 +61,163 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Définir la résolution de votre caméra.
-Plus la valeur sera élevée, plus la qualité de vidéo rendue à vos contacts sera bonne.
-Notez cependant qu&apos;une meilleure qualité vidéo nécessitera une meilleure connexion internet.
-Il se peut parfois que votre connexion internet ne puisse pas supporter une qualité vidéo supérieure,
-ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
+        <translation>Iestatiet kameras izšķirtspēju.
+Jo lielāka vērtība, jo augstākā kvalitātē video varēs redzēt Jūsu draugi.
+Ņemiet vērā, jo labāka ir video kvalitāte, jo ir nepieciešams labāks interneta pieslēgums.
+Nosūtot augstas kvalitātes video, dažreiz savienojums var būt nepietiekami labs,
+kas var radīt video zvanu problēmas.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>Résolution</translation>
+        <translation>Izšķirtspēja</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Actualiser la liste des périphériques</translation>
+        <translation>Pārskenēt ierīces</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation>Son de test</translation>
+        <translation>Skaņas pārbaude</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>Active le serveur audio expérimental avec prise en charge de l&apos;annulation d&apos;écho, nécessite le redémarrage de qTox pour prendre effet.</translation>
+        <translation>Ietver eksperimentālu skaņas sistēmu, ar atbalss slāpēšanas atbalstu. Nepieciešams restartēt qTox, lai stātos spēkā.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation>Activer le moteur audio expérimental</translation>
+        <translation>Iespējot eksperimentālo audio sistēmu</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation>Qualité audio</translation>
+        <translation>Audio kvalitāte</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Qualité audio transmise. Baissez ce paramètre si votre bande passante n&apos;est pas assez élevée ou si vous souhaitez réduire l&apos;utilisation d&apos;Internet.</translation>
+        <translation>Pārraidītās skaņas kvalitāte. Samaziniet iestatījuma vērtību, ja savienojums nav pietiekami ātrs vai vēlaties samazināt interneta izmantošanu.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation>Haute (64Kbps)</translation>
+        <translation>Augsts (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation>Moyenne (32 kbps)</translation>
+        <translation>Vidējs (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation>Basse (16 Kbits/s)</translation>
+        <translation>Zems (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation>Très faible (8 kbps)</translation>
+        <translation>Ļoti zems (8 kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Seuil</translation>
+        <translation>Slieksnis</translation>
     </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
         <source>About</source>
-        <translation>À propos</translation>
+        <translation>Par</translation>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation>Auteur d&apos;origine : %1</translation>
+        <translation>Sākotnējais autors: %1</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation>Vous utilisez actuellement la version %1 de qTox.</translation>
+        <translation>Jūs lietojat qTox versiju %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation>Algorithme de sécurisation employé : %1</translation>
+        <translation>Saistības kešs: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation>Version de toxcore : %1</translation>
+        <translation>Tox kodola versija: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation>Version de Qt : %1</translation>
+        <translation>Qt versija: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>Une liste de tous les problèmes connus peut être trouvée sur notre %1 sur le site internet Github. Si vous découvrez un bogue ou une faille de sécurité dans qTox, merci de bien vouloir nous la reporter en suivant les règles décrites dans notre article wiki %2.</translation>
+        <translation>Visu zināmo problēmu sarakstu Jūs varat atrast mūsu %1 vietnē Github. Ja Jūs atklājat kādu kļūdu vai neaizsargātību qTox drošības jomā, lūdzu ziņojiet par to saskaņā ar mūsu %2 wiki raksta vadlīnijām.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation>Cliquer ici afin de rapporter un bogue.</translation>
+        <translation>Noklikšķiniet šeit, lai ziņotu par kļūdu.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation>Voir une liste complète de %1 sur Github</translation>
+        <translation>Pilnu sarakstu %1 skatiet Github vietnē</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>Suivi de bogue</translation>
+        <translation>kļūdu sekotājs</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Comment rédiger un rapport de bogue</translation>
+        <translation>Rakstīt lietderīgu kļūdu ziņojumu</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>contributeurs</translation>
+        <translation>izstrādātāji</translation>
     </message>
 </context>
 <context>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation>Discussion</translation>
+        <translation>Dialogs</translation>
     </message>
     <message>
         <source>username</source>
-        <translation>nom d&apos;utilisateur</translation>
+        <translation>lietotāja vārds</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation>statut</translation>
+        <translation>statusa ziņojums</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation>Alias utilisés :</translation>
+        <translation>Izmantotie pseidonīmi:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation>HISTORIQUE DES ALIAS</translation>
+        <translation>PSEIDONĪMU VĒSTURE</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation>Si actif, accepte automatiquement les fichiers du contact</translation>
+        <translation>Automātiski pieņemt failus no izvēlētā kontakta</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation>Accepter automatiquement les fichiers</translation>
+        <translation>Automātiski pieņemt failus</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Répertoire d&apos;enregistrement par défaut des fichiers :</translation>
+        <translation>Noklusējuma mape failu saglabāšanai:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation>L&apos;acceptation automatique est désactivée pour ce contact</translation>
+        <translation>Automātiska failu pieņemšana no šī kontakta ir aizliegta</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation>Acceptation automatique des appels :</translation>
+        <translation>Automātiska zvanu saņemšana:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation>Manuel</translation>
+        <translation>Manuāli</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -225,67 +225,67 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation>Audio + Vidéo</translation>
+        <translation>Audio + Video</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation>Si activé, accepte automatiquement les invitations de ce contact à des discussions de groupe.</translation>
+        <translation>Automātiski pieņemt grupas tērzēšanas ielūgumus no šī kontakta.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation>Accepter automatiquement les invitations de groupe</translation>
+        <translation>Automātiski pieņemt grupas ielūgumus</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation>Effacer l&apos;historique (l&apos;opération est irréversible !)</translation>
+        <translation>Dzēst vēsturi (darbību nevar atsaukt!)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notes</translation>
+        <translation>Piezīmes</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation>Champ de saisie des notes du contact</translation>
+        <translation>Ievades piezīmju lauks par kontaktu</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation>Vous pouvez enregistrer ici des commentaires sur ce contact.</translation>
+        <translation>Šeit Jūs varat saglabāt komentāru par šo kontaktu.</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation>Historique effacé</translation>
+        <translation>Vēsture ir dzēsta</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation>Sélectionner un répertoire d&apos;acceptation automatique</translation>
+        <translation>Izvēlieties automātiskās pieņemšanas mapi</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Celle-ci est la clé publique de votre ami, utilisez-la pour vérifier son identité via un autre canal. Vous ne pouvez pas envoyer celle-ci à d&apos;autres personnes pour qu&apos;elles puissent ajouter ce contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Šī ir Jūsu drauga publiskā atslēga, pielietojiet to, lai pārbaudītu savu identitāti, izmantojot citu kanālu. To nevar nosūtīt citiem cilvēkiem, lai viņi varētu pievienot šo kontaktu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation>Clé publique (non le ToxID) :</translation>
+        <translation>Publiskā atslēga (nevis ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Confirmation</translation>
+        <translation>Apstiprinājums</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation>Etes-vous sûr de supprimer l&apos;historique des conversations avec %1 ?</translation>
+        <translation>Vai tiešām vēlaties dzēst %1 tērzēšanas vēsturi?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation>Échec de la suppression de l&apos;historique de discussions avec %1 !</translation>
+        <translation>Neizdevās dzēst tērzēšanas vēsturi ar %1!</translation>
     </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
-        <translation>Version</translation>
+        <translation>Versija</translation>
     </message>
     <message>
         <source>License</source>
@@ -293,207 +293,208 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Authors</source>
-        <translation>Auteurs</translation>
+        <translation>Autori</translation>
     </message>
     <message>
         <source>Known Issues</source>
-        <translation>Problèmes connus</translation>
+        <translation>Zināmās problēmas</translation>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation>Ouvrir le lien de téléchargement de la mise à jour</translation>
+        <translation>Atvērt atjaunināšanas lejupielādes saiti</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation>Mise à jour disponible</translation>
+        <translation>Pieejams atjauninājums</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation>qTox est à jour ✓</translation>
+        <translation>qTox ir atjaunināts ✓</translation>
     </message>
 </context>
 <context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
-        <translation>Ajouter des contacts</translation>
+        <translation>Pievienot draugus</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation>Le format de l&apos;identifiant Tox est invalide</translation>
+        <translation>Nederīgs Tox ID formāts</translation>
     </message>
     <message>
         <source>Send friend request</source>
-        <translation>Envoyer une demande de contact</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t add friend</source>
-        <translation>Impossible d&apos;ajouter le contact</translation>
+        <translation>Nosūtīt draudzības pieprasījumu</translation>
     </message>
     <message>
         <source>Add a friend</source>
-        <translation>Ajouter un contact</translation>
+        <translation>Pievienot draugu</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation>Demandes de contact</translation>
+        <translation>Draudzības uzaicinājums</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Accepter</translation>
+        <translation>Pieņemt</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation>Rejeter</translation>
+        <translation>Noraidīt</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation>Nevar pievienot draugu</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>Identifiant Tox : soit 76 caractères hexadécimaux, soit nom@exemple.com</translation>
+        <translation>Tox ID, vai 76 heksadecimālās rakstzīmes, vai name@example.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation>Renseignez l&apos;identifiant Tox de votre contact</translation>
+        <translation>Ierakstiet sava drauga Tox ID</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation>Message de demande de contact</translation>
+        <translation>Draudzības pieprasījuma ziņojums</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation>Renseignez un message à joindre à la demande de contact ou bien laissez le champ vide afin d&apos;envoyer le message type par défaut</translation>
+        <translation>Ierakstiet ziņojumu, lai nosūtītu kopā ar draudzības pieprasījumu, vai atstājiet tukšu, lai nosūtītu noklusējuma ziņojumu</translation>
     </message>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>Tox ID n&apos;est pas valable ou n&apos;existe pas</translation>
+        <translation>%1 Tox ID ir nederīgs vai neeksistē</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation>Vous ne pouvez pas vous ajouter vous-même comme contact !</translation>
+        <translation>Jūs nevarat pievienot sevi kā draugu!</translation>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation>Ouvrir la liste de contacts</translation>
+        <translation>Atvērt kontaktu sarakstu</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation>Impossible d&apos;ouvrir le fichier</translation>
+        <translation>Nevar atvērt failu</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation>Impossible d&apos;ouvrir le fichier de contact</translation>
+        <translation>Nevar atvērt kontakta failu</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation>Fichier non valide</translation>
+        <translation>Nederīgs fails</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>On n&apos;a trouvé aucun contact à importer dans ce fichier !</translation>
+        <translation>Neizdevās atrast nevienu kontaktu ko importēt Jūsu izvēlētajā failā!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation>ID Tox</translation>
+        <translation>Tox-ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation>soit 76 caractères hexadécimaux, soit nom@exemple.com</translation>
+        <translation>76 heksadecimālās rakstzīmes vai name@example.com</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation>Message</translation>
+        <translation>Ziņojums</translation>
     </message>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation>Ouvrir</translation>
+        <translation>Atvērt</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation>Envoyer des demandes d&apos;amitié</translation>
+        <translation>Nosūtīt draudzības pieprasījumus</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation>Salut, c&apos;est %1. Peut-on discuter ?</translation>
+        <translation>Sveiki, šeit %1! Vai pievienosiet mani savos draugos?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation>Importer une liste de contacts, un Tox ID par ligne</translation>
+        <translation>Importēt kontaktu sarakstu, vienu Tox ID katrā rindā</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
-        <translation>
-            <numerusform>Prêt à importer %n contact(s), cliquez sur envoyer pour confirmer</numerusform>
-            <numerusform>Prêt à importer %n contacts, cliquez sur envoyer pour confirmer</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation>Importer des contacts</translation>
+        <translation>Importēt kontaktus</translation>
     </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
-        <translation>Avancé</translation>
+        <translation>Papildus</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>À moins que vous ne sachiez %1 ce que vous faites, merci de ne rien modifier %2 ici. Les changements effectués ici peuvent conduire à des problèmes lors de l&apos;utilisation de qTox, même la perte de vos données, par exemple l&apos;historique.</translation>
+        <translation>Ja Jūs %1 nezināt ko darat, lūdzu, neveiciet %2 nekādas izmaiņas. Veiktās izmaiņas var izraisīt problēmas qTox darbībā, kā arī zaudēt datus (piemēram, vēsturi).</translation>
     </message>
     <message>
         <source>really</source>
-        <translation>réellement</translation>
+        <translation>tiešām</translation>
     </message>
     <message>
         <source>not</source>
-        <translation>ne pas</translation>
+        <translation>nav</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation>NOTE IMPORTANTE</translation>
+        <translation>SVARĪGA PIEZĪME</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation>Réinitialiser les paramètres</translation>
+        <translation>Sākotnējie iestatījumi</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation>Attention : tous les paramètres vont être réinitialisés ! Êtes-vous certain(e) ?</translation>
+        <translation>Visi iestatījumi tiks atiestatīti sākotnējā stāvoklī. Vai Jūs esat pārliecināts?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Oui</translation>
+        <translation>Jā</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Non</translation>
+        <translation>Nē</translation>
     </message>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation>Appel en cours</translation>
+        <translation>Zvans ir aktīvs</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Vous ne pouvez pas vous déconnecter durant un appel !</translation>
+        <translation>Jūs nevarat atvienoties, kad zvans ir aktīvs!</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation>Sauvegarder le fichier</translation>
+        <translation>Saglabāt failu</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation>Journaux  (*.log)</translation>
+        <translation>Žurnāls (*.log)</translation>
     </message>
 </context>
 <context>
@@ -501,56 +502,56 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Sauvegardera les paramètres dans le répertoire courant au lieu du répertoire habituel de configuration</translation>
+        <translation>Saglabājiet iestatījumus darba direktorijā, nevis standarta iestatījumu mapē</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
-        <translation>Rendre Tox portable</translation>
+        <translation>Tox portatīvais režīms</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation>Réinitialiser vers les paramètres par défaut</translation>
+        <translation>Atjaunot sākotnējos iestatījumus</translation>
     </message>
     <message>
         <source>Portable</source>
-        <translation>Portable</translation>
+        <translation>Portatīvs</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation>Paramètres de connexion</translation>
+        <translation>Savienojuma iestatījumi</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Activer IPv6 (recommandé)</translation>
+        <translation>Iespējot IPv6 (ieteicams)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Désactiver ceci permettra par exemple d&apos;utiliser Tox à travers Tor. Désactiver seulement si nécessaire, car cela ajoutera une charge supplémentaire au réseau Tox.</translation>
+        <translation>Piemēram, izslēgšana ļauj izmantot Tox virs Tor. Tomēr, tas palielinās Tox tīkla slodzi, tāpēc atvienojiet to tikai tad, kad tas ir nepieciešams.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Activer UDP (recommandé)</translation>
+        <translation>Iespējot UDP (ieteicams)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation>Type de proxy :</translation>
+        <translation>Starpniekservera (Proxy) veids:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation>Adresse :</translation>
+        <translation>Adrese:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Port :</translation>
+        <translation>Ports:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Aucun(e)</translation>
+        <translation>Nav</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -563,187 +564,188 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation>Se reconnecter</translation>
+        <translation>No jauna pievienojiet savienojumu</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation>Déboguer</translation>
+        <translation>Atkļūdošana</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation>Exporter la journalisation de débogage</translation>
+        <translation>Eksportēt atkļūdošanas žurnālu</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation>Copier le journal de débogage</translation>
+        <translation>Kopēt atkļūdošanas žurnālu</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation>Activer la découverte du réseau local</translation>
+        <translation>Iespējot lokālā tīkla (LAN) noteikšanu</translation>
     </message>
 </context>
 <context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
-        <translation>Envoyer un fichier</translation>
+        <translation>Sūtīt failu</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation>qTox n&apos;a pas pu ouvrir %1</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>Appel de %1 en cours</translation>
-    </message>
-    <message>
-        <source>%1 calling</source>
-        <translation>%1 appelle</translation>
+        <translation>qTox nevarēja atvērt %1</translation>
     </message>
     <message>
         <source>Unable to open</source>
-        <translation>Impossible d&apos;ouvrir</translation>
+        <translation>Nevar atvērt</translation>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation>Mauvaise idée</translation>
+        <translation>Slikta ideja</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation>Ienākošais zvans no %1</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation>Zvans %1</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation>Échec de l&apos;ouverture du fichier temporaire</translation>
+        <translation>Neizdevās atvērt pagaidu failu</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
-        <translation>qTox n&apos;a pas pu sauvegarder la capture d&apos;écran</translation>
+        <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
+        <translation>qTox nevarēja saglabāt ekrānuzņēmumu</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation>Appel avec %1 terminé. %2</translation>
+        <translation>Saruna ar %1 beidzās. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
-        <translation>Durée de l&apos;appel : </translation>
+        <translation>Sarunas ilgums: </translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation>%1 est en train d&apos;écrire</translation>
+        <translation>%1 raksta</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copier</translation>
+        <translation>Kopēt</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation>Vous essayez d&apos;envoyer un fichier séquentiel, ce qui ne fonctionnera pas !</translation>
+        <translation>Jūs mēģināt nosūtīt secīgu failu, kas nedarbosies!</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 est maintenant %2</translation>
+        <translation>%1 tagad ir %2</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>L&apos;appel avec %1 s&apos;est terminé de façon inattendue. %2</translation>
+        <translation>Saruna ar %1 negaidīti beidzās. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation>Le nom de fichier contient des caractères non autorisés</translation>
+        <translation>Faila nosaukums satur nederīgas rakstzīmes</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation>Les caractères illégaux ont été changés en _
-afin que vous puissiez enregistrer le fichier sur windows.</translation>
+        <translation>Nederīgās rakstzīmes ir nomainītas uz _
+lai Jūs varētu saglabāt failu.</translation>
     </message>
 </context>
 <context>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation>Impossible de démarrer l&apos;appel audio</translation>
+        <translation>Nevar sākt audio zvanu</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation>Démarrer un appel audio</translation>
+        <translation>Sākt audio zvanu</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation>Terminer l&apos;appel audio</translation>
+        <translation>Beigt audio zvanu</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation>Annuler l&apos;appel audio</translation>
+        <translation>Atcelt audio zvanu</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation>Accepter l&apos;appel audio</translation>
+        <translation>Pieņemt audio zvanu</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation>Impossible de démarrer l&apos;appel vidéo</translation>
+        <translation>Nevar sākt videozvanu</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation>Démarrer un appel vidéo</translation>
+        <translation>Sākt videozvanu</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation>Terminer l&apos;appel vidéo</translation>
+        <translation>Beigt videozvanu</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation>Annuler l&apos;appel vidéo</translation>
+        <translation>Atcelt videozvanu</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation>Accepter l&apos;appel vidéo</translation>
+        <translation>Atcelt videozvanu</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation>Le son ne peut être coupé que lors d&apos;un appel</translation>
+        <translation>Skaņu var izslēgt tikai sarunas laikā</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation>Réactiver le son de l&apos;appel</translation>
+        <translation>Ieslēgt skaņu</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation>Couper le son de l&apos;appel</translation>
+        <translation>Izslēgt skaņu</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation>Le micro ne peut être coupé que lors d&apos;un appel</translation>
+        <translation>Mikrofonu var izslēgt tikai sarunas laikā</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation>Réactiver le micro</translation>
+        <translation>Ieslēgt mikrofonu</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation>Couper le micro</translation>
+        <translation>Izslēgt mikrofonu</translation>
     </message>
 </context>
 <context>
     <name>ChatLog</name>
     <message>
         <source>Copy</source>
-        <translation>Copier</translation>
+        <translation>Kopēt</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Tout sélectionner</translation>
+        <translation>Izvēlēties visu</translation>
     </message>
     <message>
         <source>pending</source>
-        <translation>en cours</translation>
+        <translation>gaida</translation>
     </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>Entrez votre message ici...</translation>
+        <translation>Ierakstiet savu ziņojumu šeit ...</translation>
     </message>
 </context>
 <context>
@@ -751,43 +753,43 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     <message>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation>Renommer le cercle</translation>
+        <translation>Pārdēvēt sarakstu</translation>
     </message>
     <message>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation>Supprimer le cercle</translation>
+        <translation>Dzēst sarakstu</translation>
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation>Tout ouvrir dans une nouvelle fenêtre</translation>
+        <translation>Atveriet visu jaunā logā</translation>
     </message>
 </context>
 <context>
     <name>Core</name>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation>/me souhaiterait vous ajouter à sa liste de contacts, &quot;%1&quot;</translation>
+        <translation>/me piedāvā draudzību, &apos;&apos;%1&apos;&apos;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Identifiant Tox invalide</translation>
+        <translation>Nederīgs Tox ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Vous devez écrire un message avec votre demande</translation>
+        <translation>Jums ir jāsagatavo ziņojums ar pieprasījuma tekstu</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Votre message est trop long !</translation>
+        <translation>Jūsu ziņojums ir pārāk liels!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Ce contact a déjà été ajouté</translation>
+        <translation>Draugs ir jau pievienots</translation>
     </message>
     <message>
         <source>Groupchat %1</source>
@@ -798,7 +800,7 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Nouveau message</translation>
+        <translation type="unfinished">Jauna ziņa</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
@@ -821,87 +823,92 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     <name>FileTransferWidget</name>
     <message>
         <source>Form</source>
-        <translation>Formulaire</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>10Mb</source>
-        <translation>10 Mb</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>10Mb</translation>
     </message>
     <message>
         <source>0kb/s</source>
-        <translation>0 Kb/s</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>0kb/s</translation>
     </message>
     <message>
         <source>ETA:10:10</source>
-        <translation>Temps restant estimé : 10:10</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>Atlicis: 10:10</translation>
     </message>
     <message>
         <source>Filename</source>
-        <translation>Nom du fichier</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>Faila nosaukums</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation>En attente d&apos;envoi...</translation>
+        <translation>Gaida nosūtīšanu ...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation>Accepter de recevoir ce fichier</translation>
+        <translation>Ļaut saņemt šo failu</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>L&apos;emplacement n&apos;est pas accessible en écriture</translation>
+        <translation>Nevar ierakstīt atrašanās vietu</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Vous ne disposez pas des permissions nécessaires pour écrire à cet emplacement. Choisissez-en un autre ou annulez la boîte de dialogue de sauvegarde.</translation>
+        <translation>Jums nav atļaujas veikt ierakstus šajā mapē. Izvēlieties citu mapi vai atceliet saglabāšanas dialoglodziņu.</translation>
     </message>
     <message>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
-        <translation>Reprise…</translation>
+        <translation>Atsākt ...</translation>
     </message>
     <message>
         <source>Cancel transfer</source>
-        <translation>Annuler le transfert</translation>
+        <translation>Atcelt pārsūtīšanu</translation>
     </message>
     <message>
         <source>Pause transfer</source>
-        <translation>Mettre en pause le transfert</translation>
+        <translation>Apturēt pārsūtīšanu</translation>
     </message>
     <message>
         <source>Paused</source>
         <comment>file transfer widget</comment>
-        <translation>En pause</translation>
+        <translation>Apturēts</translation>
     </message>
     <message>
         <source>Open file</source>
-        <translation>Ouvrir un fichier</translation>
+        <translation>Atvērt failu</translation>
     </message>
     <message>
         <source>Open file directory</source>
-        <translation>Ouvrir le répertoire du fichier</translation>
+        <translation>Atvērt faila mapi</translation>
     </message>
     <message>
         <source>Resume transfer</source>
-        <translation>Reprendre le transfert</translation>
+        <translation>Turpināt pārsūtīšanu</translation>
     </message>
     <message>
         <source>Accept transfer</source>
-        <translation>Accepter le transfert</translation>
+        <translation>Atļaut pārsūtīšanu</translation>
     </message>
     <message>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation>Sauvegarder un fichier</translation>
+        <translation>Saglabāt failu</translation>
     </message>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation>Commande à distance en pause</translation>
+        <translation>Tālvadība apturēta</translation>
     </message>
 </context>
 <context>
@@ -909,42 +916,42 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     <message>
         <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Fichiers transférés</translation>
+        <translation>Pārsūtītie faili</translation>
     </message>
     <message>
         <source>Downloads</source>
-        <translation>Téléchargements</translation>
+        <translation>Lejupielādes</translation>
     </message>
     <message>
         <source>Uploads</source>
-        <translation>Envois</translation>
+        <translation>Augšupielādes</translation>
     </message>
 </context>
 <context>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation>Aujourd&apos;hui</translation>
+        <translation>Šodien</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation>Hier</translation>
+        <translation>Vakar</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation>Ces 7 derniers jours</translation>
+        <translation>Pēdējās 7 dienas</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation>Ce mois-ci</translation>
+        <translation>Šis mēnesis</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation>Plus anciens que 6 mois</translation>
+        <translation>Vecāki par 6 mēnešiem</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>Jamais</translation>
+        <translation>Nekad</translation>
     </message>
 </context>
 <context>
@@ -952,29 +959,29 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     <message>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Demandes de contact</translation>
+        <translation>Draudzības uzaicinājums</translation>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
-        <translation>Quelqu&apos;un vient de vous ajouter à sa liste de contacts</translation>
+        <translation>Kāds vēlas Jūs pievienot kā draugu</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>Identifiant d&apos;utilisateur :</translation>
+        <translation>Lietotāja ID:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation>Message de demande de contact :</translation>
+        <translation>Draudzības pieprasījuma ziņojums:</translation>
     </message>
     <message>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
-        <translation>Accepter</translation>
+        <translation>Pieņemt</translation>
     </message>
     <message>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
-        <translation>Rejeter</translation>
+        <translation>Noraidīt</translation>
     </message>
 </context>
 <context>
@@ -982,262 +989,263 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     <message>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
-        <translation>Inviter au groupe</translation>
+        <translation>Ielūgt pievienoties grupai</translation>
     </message>
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation>Déplacer vers le cercle…</translation>
+        <translation>Pārvietot uz sarakstu ...</translation>
     </message>
     <message>
         <source>To new circle</source>
-        <translation>Vers un nouveau cercle</translation>
+        <translation>Jaunajā sarakstā</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Retirer du cercle &apos;%1&apos;</translation>
+        <translation>Izņemt no saraksta &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Déplacer vers le cercle &quot;%1&quot;</translation>
+        <translation>Pārvietot uz sarakstu &apos;&apos;%1&apos;&apos;</translation>
+    </message>
+    <message>
+        <source>Open chat in new window</source>
+        <translation>Atvērt tērzēšanu jaunā logā</translation>
+    </message>
+    <message>
+        <source>Remove chat from this window</source>
+        <translation>Izņemt tērzēšanu no šī loga</translation>
+    </message>
+    <message>
+        <source>To new group</source>
+        <translation>Uz jaunu grupu</translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation>Uzaicināt uz grupu &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Set alias...</source>
-        <translation>Définir un alias...</translation>
+        <translation>Iestatīt pseidonīmu ...</translation>
     </message>
     <message>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Acceptation automatique des fichiers de ce contact</translation>
-    </message>
-    <message>
-        <source>New message</source>
-        <translation>Nouveau message</translation>
-    </message>
-    <message>
-        <source>Online</source>
-        <translation>Connecté(e)</translation>
-    </message>
-    <message>
-        <source>Away</source>
-        <translation>Absent(e)</translation>
-    </message>
-    <message>
-        <source>Busy</source>
-        <translation>Occupé(e)</translation>
-    </message>
-    <message>
-        <source>Offline</source>
-        <translation>Hors ligne</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Sélectionner un répertoire d&apos;acceptation automatique</translation>
-    </message>
-    <message>
-        <source>Open chat in new window</source>
-        <translation>Ouvrir la discussion dans une nouvelle fenêtre</translation>
-    </message>
-    <message>
-        <source>Remove chat from this window</source>
-        <translation>Retirer la discussion de cette fenêtre</translation>
+        <translation>Automātiski pieņemt failus no šī drauga</translation>
     </message>
     <message>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Supprimer ce contact</translation>
-    </message>
-    <message>
-        <source>To new group</source>
-        <translation>Vers un nouveau groupe</translation>
-    </message>
-    <message>
-        <source>Invite to group &apos;%1&apos;</source>
-        <translation>Inviter au groupe &apos;%1&apos;</translation>
+        <translation>Noņemt draugu</translation>
     </message>
     <message>
         <source>Show details</source>
-        <translation>Afficher les détails</translation>
+        <translation>Rādīt detalizētu informāciju</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation>Izvēlieties automātiskās pieņemšanas mapi</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Jauna ziņa</translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation>Tiešsaistē</translation>
+    </message>
+    <message>
+        <source>Away</source>
+        <translation>Nav šeit</translation>
+    </message>
+    <message>
+        <source>Busy</source>
+        <translation>Aizņemts</translation>
+    </message>
+    <message>
+        <source>Offline</source>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>Bezsaistē</translation>
     </message>
 </context>
 <context>
     <name>GeneralForm</name>
     <message>
         <source>General</source>
-        <translation>Général</translation>
+        <translation>Vispārīgi</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Sélectionner un répertoire d&apos;acceptation automatique</translation>
+        <translation>Izvēlieties automātiskās pieņemšanas mapi</translation>
     </message>
 </context>
 <context>
     <name>GeneralSettings</name>
     <message>
         <source>General Settings</source>
-        <translation>Paramètres généraux</translation>
+        <translation>Vispārīgie iestatījumi</translation>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>La traduction peut ne pas prendre effet tant que qTox n&apos;aura pas redémarrer.</translation>
-    </message>
-    <message>
-        <source>Start in tray</source>
-        <translation>Démarrer dans la barre d&apos;état</translation>
-    </message>
-    <message>
-        <source>Close to tray</source>
-        <translation>Fermer dans la barre d&apos;état</translation>
-    </message>
-    <message>
-        <source>Minimize to tray</source>
-        <translation>Minimiser dans la barre d&apos;état</translation>
-    </message>
-    <message>
-        <source>Start qTox on operating system startup (current profile).</source>
-        <translation>Démarrer le profil actuel de qTox lors du démarrage du système.</translation>
-    </message>
-    <message>
-        <source>Show contacts&apos; status changes</source>
-        <translation>Afficher les changements de statut des contacts</translation>
-    </message>
-    <message>
-        <source>Auto away after (0 to disable):</source>
-        <translation>Se rendre automatiquement absent(e) après (entrez 0 pour désactiver) :</translation>
-    </message>
-    <message>
-        <source>Set to 0 to disable</source>
-        <translation>Mettre 0 pour désactiver</translation>
+        <translation>Tulkojums neizmainīsies, kamēr no jauna  neatvērsiet qTox.</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation>Langue :</translation>
+        <translation>Valoda:</translation>
+    </message>
+    <message>
+        <source>Show system tray icon</source>
+        <translation>Rādīt sistēmas paneļa ikonu</translation>
     </message>
     <message>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation>Activer l’icône claire dans la barre d&apos;état.</translation>
+        <translation>Iespējot gaišu paneļa ikonu.</translation>
+    </message>
+    <message>
+        <source>Light icon</source>
+        <translation>Gaiša ikona</translation>
     </message>
     <message>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>qTox démarrera minimisé dans la barre d&apos;état.</translation>
+        <translation>qTox palaidīsies minimizēts sistēmas panelī.</translation>
+    </message>
+    <message>
+        <source>Start in tray</source>
+        <translation>Palaisties minimizētam sistēmas panelī</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Après avoir cliqué sur fermer (X), qTox se minimisera dans la barre d&apos;état,
-au lieu de se fermer lui-même.</translation>
+        <translation>Nospiežot uz loga aizvēršanas ikonu (X), qTox netiks aizvērts pavisam,
+bet tiks minimizēts sistēmas panelī.</translation>
+    </message>
+    <message>
+        <source>Close to tray</source>
+        <translation>Aizverot, minimizēties sistēmas panelī</translation>
     </message>
     <message>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Après avoir cliqué sur minimiser (_), qTox se minimisera lui-même dans la barre d&apos;état,
-au lieu de se minimiser dans la barre des tâches du système.</translation>
+        <translation>Pēc minimizēšanas (_) nospiešanas, qTox minimizēsies sistēmas panelī,
+neviss sistēmas uzdevumjoslā.</translation>
+    </message>
+    <message>
+        <source>Minimize to tray</source>
+        <translation>Minimizēt sistēmas panelī</translation>
     </message>
     <message>
         <source>Autostart</source>
-        <translation>Démarrer avec l&apos;ordinateur</translation>
+        <translation>Automātiskā palaišana</translation>
     </message>
     <message>
         <source>Set where files will be saved.</source>
-        <translation>Choisir où les fichiers seront sauvegardés.</translation>
-    </message>
-    <message>
-        <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Votre statut sera modifié en &quot;Absent(e)&quot; après la période d&apos;inactivité que vous avez définie.</translation>
-    </message>
-    <message>
-        <source>Default directory to save files:</source>
-        <translation>Répertoire par défaut d&apos;enregistrement des fichiers :</translation>
-    </message>
-    <message>
-        <source>Show system tray icon</source>
-        <translation>Montrer l&apos;icône système dans la barre d&apos;état</translation>
-    </message>
-    <message>
-        <source>Light icon</source>
-        <translation>Icône claire</translation>
+        <translation>Norādiet, kur tiks saglabāti faili.</translation>
     </message>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Vous pouvez définir cela pour chaque contact en faisant un un clic-droit sur leur nom.</translation>
+        <translation>Jūs varat iestatīt to katram draugam, noklikšķinot ar peles labo taustiņu uz tā.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
-        <translation>Acceptation automatique des fichiers</translation>
+        <translation>Automātiski pieņemt failus</translation>
+    </message>
+    <message>
+        <source>Set to 0 to disable</source>
+        <translation>Iestatiet 0, lai atspējotu</translation>
+    </message>
+    <message>
+        <source>Your status is changed to Away after set period of inactivity.</source>
+        <translation>Jūsu statuss tiek mainīts uz &apos;&apos;Nav šeit&apos;&apos; pēc noteiktā bezdarbības perioda.</translation>
+    </message>
+    <message>
+        <source>Auto away after (0 to disable):</source>
+        <translation>Automātiski iestatīt &apos;&apos;Nav šeit&apos;&apos; pēc (0, lai atspējotu):</translation>
+    </message>
+    <message>
+        <source>Show contacts&apos; status changes</source>
+        <translation>Rādīt kontaktpersonu statusa izmaiņas</translation>
+    </message>
+    <message>
+        <source>Start qTox on operating system startup (current profile).</source>
+        <translation>Startēt qTox, kad ielādējas operētājsistēma (pašreizējo profilu).</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation>Standarta mape failu saglabāšanai:</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Vérifier des mises à jour</translation>
+        <translation>Pārbaudīt, vai ir pieejami atjauninājumi</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation>Vérification orthographique</translation>
+        <translation>Pareizrakstības pārbaude</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation>Taille maximale du fichier pour autoaccepter (0 pour désactiver):</translation>
+        <translation>Faila automātiskās saņemšanas maksimālais lielums (0, lai atspējotu):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation> Mo</translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
         <source>Send message</source>
-        <translation>Envoyer le message</translation>
+        <translation>Nosūtīt ziņu</translation>
     </message>
     <message>
         <source>Smileys</source>
-        <translation>Émoticônes</translation>
+        <translation>Smaidiņi</translation>
     </message>
     <message>
         <source>Send file(s)</source>
-        <translation>Envoyer un ou des fichier(s)</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Sauvegarder le journal de discussion</translation>
+        <translation>Nosūtīt failu(s)</translation>
     </message>
     <message>
         <source>Send a screenshot</source>
-        <translation>Envoyer une capture d&apos;écran</translation>
+        <translation>Nosūtīt ekrānuzņēmumu</translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation>Saglabāt tērzēšanas žurnālu</translation>
     </message>
     <message>
         <source>Clear displayed messages</source>
-        <translation>Effacer les messages affichés</translation>
+        <translation>Notīrīt redzamos ziņojumus</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation>Effacé</translation>
+        <translation>Notīrīts</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation>Citer le texte sélectionné</translation>
+        <translation>Citēt izvēlēto tekstu</translation>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation>Copier l&apos;adresse du lien</translation>
+        <translation>Kopēt saites adresi</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Confirmation</translation>
+        <translation>Apstiprinājums</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation>Vous êtes sûr de vouloir effacer tous les messages affichés ?</translation>
+        <translation>Jūs esat pārliecināts, ka vēlaties dzēst visus redzamos ziņojumus?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation>Chercher dans le texte</translation>
+        <translation>Meklēt tekstā</translation>
     </message>
     <message>
         <source>Go to current date</source>
@@ -1245,392 +1253,393 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Chargement de l&apos;historique de discussion...</translation>
+        <translation type="unfinished">Ielādēt tērzēšanas vēsturi ...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Exporter vers le fichier</translation>
+        <translation type="unfinished">Eksportēt failā</translation>
     </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
     <message>
         <source>Tox video</source>
-        <translation>Vidéo Tox</translation>
+        <translation>Tox video konference</translation>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation>Afficher les messages</translation>
+        <translation>Rādīt ziņojumus</translation>
     </message>
     <message>
         <source>Hide Messages</source>
-        <translation>Cacher les messages</translation>
+        <translation>Slēpt ziņojumus</translation>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation>Plein Écran</translation>
+        <translation>Pilnekrāna režīms</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation>Exhiber/occulter l&apos;aperçu vidéo</translation>
+        <translation>Pārslēgt video priekšskatījumu</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation>Couper le son</translation>
+        <translation>Izslēgt skaņu</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation>Couper le micro</translation>
+        <translation>Izslēgt mikrofonu</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation>Terminer l&apos;appel vidéo</translation>
+        <translation>Beigt videozvanu</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation>Quitter le mode plein écran</translation>
+        <translation>Iziet no pilnekrāna režīma</translation>
     </message>
 </context>
 <context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation>%1 a modifié le titre en %2</translation>
+        <translation>%1 mainīja nosaukumu uz %2</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation>%1 a rejoint le groupe</translation>
+        <translation>%1 pievienojās grupai</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation>%1 maintenant s&apos;appele %2</translation>
+        <translation>%1 tagad ir zināms kā %2]</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation>%1 a quitté le groupe</translation>
+        <translation>%1 pameta grupu</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>
-            <numerusform>%n utilisateur dans le chat</numerusform>
-            <numerusform>%n utilisateurs dans le chat</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <source>mute</source>
-        <translation>muet</translation>
+        <translation>izslēgt skaņu</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation>activer le son</translation>
+        <translation>ieslēgt skaņu</translation>
     </message>
 </context>
 <context>
     <name>GroupInviteForm</name>
     <message>
         <source>Groups</source>
-        <translation>Groupes</translation>
+        <translation>Grupas</translation>
     </message>
     <message>
         <source>Create new group</source>
-        <translation>Créer un nouveau groupe</translation>
+        <translation>Izveidot jaunu grupu</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation>Invitations de groupe</translation>
+        <translation>Grupas uzaicinājums</translation>
     </message>
 </context>
 <context>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation>Invité(e) par %1 le %2 à %3.</translation>
+        <translation>Uzaicinājis %1 ap %2 vietnē %3.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation>Rejoindre</translation>
+        <translation>Pievienoties</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation>Refuser</translation>
+        <translation>Atteikties</translation>
     </message>
 </context>
 <context>
     <name>GroupWidget</name>
     <message>
         <source>Set title...</source>
-        <translation>Changer le titre...</translation>
+        <translation>Uzstādīt nosaukumu ...</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation>Ouvrir la discussion dans une nouvelle fenêtre</translation>
+        <translation>Atvērt tērzēšanu jaunā logā</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation>Retirer la discussion de cette fenêtre</translation>
+        <translation>Noņemt tērzēšanu no šī loga</translation>
     </message>
     <message>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
-        <translation>Quitter le groupe</translation>
+        <translation>Iziet no grupas</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>
-            <numerusform>%n utilisateur dans le chat</numerusform>
-            <numerusform>%n utilisateurs dans le chat</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation>Nouveau message</translation>
+        <translation>Jauns ziņojums</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation>Connecté(e)</translation>
+        <translation>Tiešsaistē</translation>
     </message>
 </context>
 <context>
     <name>IdentitySettings</name>
     <message>
         <source>Public Information</source>
-        <translation>Informations publiques</translation>
+        <translation>Publiskā informācija</translation>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation>Identifiant Tox</translation>
+        <translation>Tox-ID informācija</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Cette suite de caractères renseigne aux autres clients Tox la façon de vous contacter.
-Partagez-la avec vos contacts afin de pouvoir communiquer avec eux.</translation>
+        <translation>Šis rakstzīmju kopums norāda citiem Tox klientiem, kā sazināties ar Jums.
+Izsūtiet to saviem draugiem, lai sazinātos.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation>Votre identifiant Tox (cliquer pour copier)</translation>
-    </message>
-    <message>
-        <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Cette image est un QR code qui contient votre identifiant Tox.
-Vous pouvez aussi bien la partager avec vos contacts.</translation>
-    </message>
-    <message>
-        <source>Save image</source>
-        <translation>Enregistrer l&apos;image</translation>
-    </message>
-    <message>
-        <source>Copy image</source>
-        <translation>Copier l&apos;image</translation>
+        <translation>Jūsu Tox ID (noklikšķiniet uz tā, lai to nokopētu)</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation>Profil</translation>
+        <translation>Profils</translation>
     </message>
     <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation>Renommer le profil.</translation>
-    </message>
-    <message>
-        <source>Delete profile.</source>
-        <comment>delete profile button tooltip</comment>
-        <translation>Supprimer le profil.</translation>
+        <translation>Pārdēvēt profilu.</translation>
     </message>
     <message>
         <source>Go back to the login screen</source>
         <comment>tooltip for logout button</comment>
-        <translation>Retourner à l&apos;écran de connexion</translation>
+        <translation>Atgriezieties pieteikšanās logā</translation>
     </message>
     <message>
         <source>Logout</source>
         <comment>import profile button</comment>
-        <translation>Déconnexion</translation>
+        <translation>Iziet</translation>
     </message>
     <message>
         <source>Remove password</source>
-        <translation>Supprimer le mot de passe</translation>
+        <translation>Dzēst paroli</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation>Changer de mot de passe</translation>
+        <translation>Nomainīt paroli</translation>
+    </message>
+    <message>
+        <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
+        <translation>Šis QR kods satur Jūsu Tox ID. Ar to Jūs varat dalīties starp saviem draugiem.</translation>
+    </message>
+    <message>
+        <source>Save image</source>
+        <translation>Saglabāt attēlu</translation>
+    </message>
+    <message>
+        <source>Copy image</source>
+        <translation>Kopēt attēlu</translation>
     </message>
     <message>
         <source>Rename</source>
         <comment>rename profile button</comment>
-        <translation>Renommer</translation>
+        <translation>Pārdēvēt</translation>
     </message>
     <message>
-        <source>Export</source>
-        <comment>export profile button</comment>
-        <translation>Exporter</translation>
+        <source>Delete profile.</source>
+        <comment>delete profile button tooltip</comment>
+        <translation>Dzēst profilu.</translation>
     </message>
     <message>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation>Vous permet d&apos;exporter votre profil Tox dans un fichier.
-Ce fichier ne contient pas votre historique de discussions.</translation>
+        <translation>Eksportēt Tox profilu failā.
+Šis profila fails nesatur tērzēšanas vēsturi.</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <comment>export profile button</comment>
+        <translation>Eksportēt</translation>
     </message>
     <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
-        <translation>Supprimer</translation>
+        <translation>Dzēst</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation>Serveur</translation>
+        <translation>Serveris</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation>Cacher mon nom de la liste publique</translation>
+        <translation>Slēpt manu vārdu no publiskā saraksta</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>S&apos;inscrire</translation>
+        <translation>Reģistrēties</translation>
     </message>
     <message>
         <source>Your password</source>
-        <translation>Votre mot de passe</translation>
+        <translation>Jūsu parole</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Mise à jour</translation>
+        <translation>Atjaunināt</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation>S&apos;inscrire sur ToxMe</translation>
+        <translation>Piereģistrēties ToxMe</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation>Votre nom sur le service ToxMe.</translation>
+        <translation>Nosaukums ToxMe pakalpojumam.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation>Facultatif. Écrivez quelque-chose à propos de vous. Ou à propos de votre chat.</translation>
+        <translation>Nav obligāti. Kaut ko par Jums.  :) ... vai par Jūsu kaķi.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation>Facultatif. Écrivez quelque-chose à propos de vous. Ou à propos de votre chat.</translation>
+        <translation>Nav obligāti. Kaut ko par Jums.  :) ... vai par Jūsu kaķi.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation>Service ToxMe auquel s&apos;inscrire.</translation>
+        <translation>ToxMe reģistrēšanās pakalpojums.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation>Si non cochée, votre nom sur ToxMe sera visible publiquement.</translation>
+        <translation>Ja nav iestatīts, ToxMe ieraksti ir publiski redzami.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation>Supprimer le mot de passe et le chiffrement de votre profil.</translation>
+        <translation>Dzēst savu paroli un šifrēšanu no sava profila.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation>Saisie du nom</translation>
+        <translation>Ierakstīt vārdu</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation>Nom visible par les contacts</translation>
+        <translation>Vārds ir redzams kontaktiem</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Entrez un statut</translation>
+        <translation>Ierakstīt statusa ziņojumu</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation>Statut visible par les contacts</translation>
+        <translation>Statusa ziņojums redzams kontaktpersonām</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation>Votre identifiant Tox</translation>
+        <translation>Jūsu Tox ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation>Sauvegarder l&apos;image QR code dans un fichier</translation>
+        <translation>Saglabājiet QR attēlu kā failu</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation>Copier l&apos;image QR Code dans le presse-papier</translation>
+        <translation>Kopējiet QR attēlu uz starpliktuvi</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation>Nom d&apos;utilisateur ToxMe à montrer sur ToxMe</translation>
+        <translation>ToxMe lietotājvārds tiks parādīts ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>Biographie facultative de ToxMe à montrer sur ToxMe</translation>
+        <translation>Nav obligāti, ToxMe biogrāfija, kas tiks parādīta ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation>Adresse du service ToxMe</translation>
+        <translation>ToxMe pakalpojuma adrese</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation>Visibilité sur le service ToxMe</translation>
+        <translation>ToxMe pakalpojuma redzamība</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Mot de passe</translation>
+        <translation>Parole</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation>Mettre à jour l&apos;entrée ToxMe</translation>
+        <translation>Atjaunināt ToxMe ierakstu</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation>Renommer le profil.</translation>
+        <translation>Pārdēvēt profilu.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation>Supprimer le profil.</translation>
+        <translation>Dzēst profilu.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation>Exporter le profil</translation>
+        <translation>Eksportēt profilu</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation>Supprimer le mot de passe du profil</translation>
+        <translation>Dzēsr paroli no profila</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation>Changer le mot de passe du profil</translation>
+        <translation>Mainīt profila paroli</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation>Mon prénom :</translation>
+        <translation>Mans vārds:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation>Mon statut :</translation>
+        <translation>Mans statuss:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation>Mon nom d&apos;utilisateur</translation>
+        <translation>Mans lietotājvārds</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation>Ma biographie</translation>
+        <translation>Mana biogrāfija</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation>Mon profil</translation>
+        <translation>Mans profils</translation>
     </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation>Charger l’historique de discussions</translation>
+        <translation>Ielādēt vēstures dialogu</translation>
     </message>
     <message>
         <source>Load history</source>
@@ -1650,259 +1659,260 @@ Ce fichier ne contient pas votre historique de discussions.</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished">Fenêtre pour sélection de date</translation>
+        <translation type="unfinished">Izvēlieties datuma dialogu</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Sélectionnez une date</translation>
+        <translation type="unfinished">Izvēlieties datumu</translation>
     </message>
 </context>
 <context>
     <name>LoginScreen</name>
     <message>
         <source>Username:</source>
-        <translation>Nom d&apos;utilisateur :</translation>
+        <translation>Lietotājvārds:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Mot de passe :</translation>
+        <translation>Parole:</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>Confirmation :</translation>
+        <translation>Apstiprināt:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation>Robustesse du mot de passe : %p%</translation>
+        <translation>Paroles sarežģītība: %p%</translation>
     </message>
     <message>
         <source>Create Profile</source>
-        <translation>Créer le profil</translation>
+        <translation>Izveidot profilu</translation>
     </message>
     <message>
         <source>If the profile does not have a password, qTox can skip the login screen</source>
-        <translation>Si le profil n&apos;a pas de mot de passe, qTox peut passer l&apos;écran de connexion</translation>
+        <translation>Ja profilam nav paroles, qTox var izlaist pieteikšanās logu</translation>
     </message>
     <message>
         <source>Load automatically</source>
-        <translation>Charger automatiquement</translation>
+        <translation>Ielādēt automātiski</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation>Charger</translation>
+        <translation>Ielādēt</translation>
     </message>
     <message>
         <source>Load Profile</source>
-        <translation>Charger un profil</translation>
+        <translation>Ielādēt profilu</translation>
     </message>
     <message>
         <source>New Profile</source>
-        <translation>Nouveau profil</translation>
+        <translation>Jauns profils</translation>
     </message>
     <message>
         <source>Couldn&apos;t create a new profile</source>
-        <translation>Impossible de créer un nouveau profil</translation>
+        <translation>Nevar izveidot jaunu profilu</translation>
     </message>
     <message>
         <source>The username must not be empty.</source>
-        <translation>Le nom d&apos;utilisateur ne doit pas être vide.</translation>
+        <translation>Lietotājvārda lauks nedrīkst būt tukšs.</translation>
     </message>
     <message>
         <source>The password must be at least 6 characters long.</source>
-        <translation>Le mot de passe doit contenir un minimum de 6 caractères.</translation>
+        <translation>Parolei jābūt ar vismaz 6 rakstzīmēm.</translation>
     </message>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation>Les mots de passe que vous avez saisis sont différents.
-Veuillez vous assurer d&apos;entrer deux fois le même mot de passe.</translation>
+        <translation>Ievadītās paroles ir atšķirīgas.
+Lūdzu, divreiz ievadiet vienu un to pašu paroli.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
-        <translation>Un profil avec ce nom existe déjà.</translation>
+        <translation>Profils ar šādu vārdu jau pastāv.</translation>
+    </message>
+    <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation>Ar paroli aizsargātus profilus nevar automātiski ielādēt.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
-        <translation>Impossible de charger le profil</translation>
+        <translation>Nevar ielādēt profilu</translation>
     </message>
     <message>
         <source>There is no selected profile.
 
 You may want to create one.</source>
-        <translation>Aucun profil n&apos;est sélectionné.
+        <translation>Nav izvēlētā profila.
 
-Vous voudrez peut-être en créer un.</translation>
+Jūs varat izveidot jaunu.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
-        <translation>Impossible de charger ce profil</translation>
+        <translation>Nevar ielādēt šo profilu</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
-        <translation>Ce profil est déjà utilisé.</translation>
+        <translation>Šis profils jau tiek lietots.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
-        <translation>Mot de passe incorrect.</translation>
+        <translation>Nepareiza parole.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importer</translation>
-    </message>
-    <message>
-        <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation>Les profils protégés par un mot de passe ne peuvent pas être chargés automatiquement.</translation>
+        <translation>Importēt</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation>Champ de saisie du nom d&apos;utilisateur</translation>
+        <translation>Lietotājvārda ievades lauks</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation>Champ de saisie du mot de passe. Vous pouvez le laisser vide (pas de mot de passe) ou bien saisir un minimum de 6 caractères</translation>
+        <translation>Paroles ievades lauku var atstāt tukšu (bez paroles), vai ierakstiet vismaz 6 rakstzīmes</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation>Champ de confirmation du mot de passe</translation>
+        <translation>Paroles apstiprinājuma lauks</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation>Créer un nouveau bouton de profil</translation>
+        <translation>Izveidojiet jaunu profila pogu</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation>Liste des profils</translation>
+        <translation>Profila saraksts</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation>Liste des profils</translation>
+        <translation>Profilu saraksts</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation>Champ de saisie du mot de passe</translation>
+        <translation>Paroles ievade</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation>Case à cocher pour un chargement automatique</translation>
+        <translation>Automātiski ielādēt izvēles rūtiņu</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation>Importer un profil</translation>
+        <translation>Importēt profilu</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation>Bouton pour charger le profil sélectionné</translation>
+        <translation>Ielādēt izvēlēto profila pogu</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation>Page de création d&apos;un nouveau profil</translation>
+        <translation>Jauna profila izveidošanas lapa</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation>Page de chargement d&apos;un profil existant</translation>
+        <translation>Esošo profilu ielādes lapa</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Your name</source>
-        <translation>Votre nom</translation>
+        <translation>Jūsu vārds</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation>Votre statut</translation>
+        <translation>Jūsu statuss</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>…</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>...</translation>
     </message>
     <message>
         <source>Add friends</source>
-        <translation>Ajouter des contacts</translation>
+        <translation>Pievienot draugus</translation>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation>Créer un groupe de discussion instantanée</translation>
+        <translation>Izveidot grupas tērzēšanu</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation>Voir les transferts de fichiers terminés</translation>
+        <translation>Skatīt pilnībā pārsūtītos failus</translation>
     </message>
     <message>
         <source>Change your settings</source>
-        <translation>Changer vos paramètres</translation>
+        <translation>Mainīt iestatījumus</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Fermer</translation>
+        <translation>Aizvērt</translation>
     </message>
     <message>
         <source>Open profile</source>
-        <translation>Ouvrir le profil</translation>
+        <translation>Atvērt profilu</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation>Ouvrir la page du profil lorsque cliqué</translation>
+        <translation>Skatīt profilu uzklikšķinot</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Renseigner un statut</translation>
+        <translation>Statusa ziņojumu ievadīšana</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation>Renseigner votre message de statut qui sera affiché aux autres</translation>
+        <translation>Iestatiet statusa ziņojumu, kas tiks rādīts citiem</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>Statut</translation>
+        <translation>Statuss</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation>Changer votre statut</translation>
+        <translation>Iestatiet pieejamības statusu</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation>Recherche de contacts</translation>
+        <translation>Kontaktu meklēšana</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation>Rechercher parmi les noms de contacts</translation>
+        <translation>Zināmo draugu kontaktu meklēšanas lauks</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation>Tri et visibilité</translation>
+        <translation>Šķirošana un redzamība</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation>Régler le tri et la visibilité de vos contacts</translation>
+        <translation>Iestatiet draugu šķirošanu un redzamību</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation>Ouvrir la page ajout de contacts</translation>
+        <translation>Atvērt draugu pievienošanas lapu</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation>Discussion de groupe</translation>
+        <translation>Grupas tērzēšana</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation>Ouvrir la page de gestion du groupe de discussion</translation>
+        <translation>Atvērt grupas tērzēšanas iestatījumu lapu</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation>Historique de transferts de fichiers</translation>
+        <translation>Failu pārsūtīšanas vēsture</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation>Ouvrir l&apos;historique de transferts de fichiers</translation>
+        <translation>Atvērt failu pārsūtīšanas vēsturi</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Paramètres</translation>
+        <translation>Iestatījumi</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation>Ouvrir les paramètres</translation>
+        <translation>Atvērt iestatījumus</translation>
     </message>
 </context>
 <context>
@@ -1910,39 +1920,40 @@ Vous voudrez peut-être en créer un.</translation>
     <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
-        <translation>Affichage</translation>
+        <translation>Skatīt</translation>
     </message>
     <message>
         <source>Window</source>
         <comment>OS X Menu bar</comment>
-        <translation>Fenêtre</translation>
+        <translation>Logs</translation>
     </message>
     <message>
         <source>Minimize</source>
         <comment>OS X Menu bar</comment>
-        <translation>Minimiser</translation>
+        <translation>Minimizēt</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation>Envoyer tout au premier plan</translation>
+        <translation>Novietot visu priekšā</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
-        <translation>Quitter le plein écran</translation>
+        <translation>Iziet no pilnekrāna režīma</translation>
     </message>
     <message>
         <source>Enter Fullscreen</source>
-        <translation>Entrer en plein écran</translation>
+        <translation>Aktivizēt pilnekrāna režīmu</translation>
     </message>
 </context>
 <context>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation>
-            <numerusform>%n message(s) non-lu(s)</numerusform>
-            <numerusform>%n messages non-lus</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -1950,22 +1961,22 @@ Vous voudrez peut-être en créer un.</translation>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation>MAJUSCULES ACTIVÉES</translation>
+        <translation>Ir ieslēgts &apos;&apos;Caps Lock&apos;&apos;</translation>
     </message>
 </context>
 <context>
     <name>PrivacyForm</name>
     <message>
         <source>Privacy</source>
-        <translation>Vie privée</translation>
+        <translation>Konfidencialitāte</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Confirmation</translation>
+        <translation>Apstiprinājums</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation>Êtes-vous certain(e) de vouloir supprimer définitivement l&apos;intégralité de l&apos;historique de discussions ?</translation>
+        <translation>Vai Jūs vēlaties neatgriezeniski dzēst visu tērzēšanas vēsturi?</translation>
     </message>
 </context>
 <context>
@@ -1973,295 +1984,295 @@ Vous voudrez peut-être en créer un.</translation>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation>Vos contacts pourront voir lorsque vous êtes en train d&apos;écrire.</translation>
+        <translation>Jūsu draugi varēs redzēt, kad rakstāt.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation>Envoyer les notifications de frappe</translation>
+        <translation>Sūtīt informāciju par ziņojuma sastādīšanu</translation>
     </message>
     <message>
         <source>Keep chat history</source>
-        <translation>Conserver l&apos;historique des discussions</translation>
+        <translation>Saglabāt tērzēšanas vēsturi</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>Le code anti-spam fait partie de votre identifiant Tox.
-Si vous êtes embêté(e) par des demandes de contacts non sollicitées, vous devriez changer votre code anti-spam.
-Les personnes ne seront plus en mesure de vous ajouter avec votre ancien identifiant, mais vous conserverez vos contacts actuels.</translation>
+        <translation>Jūsu Tox ID kodā ietilpst AntiSpam daļa.
+Ja Jūs bieži saņemat kļūdainus draudzības pieprasījumus, Jūs varat mainīt AntiSpam daļu.
+Lietotāji vairs nespēs pievienot Jūs ar Jūsu veco ID, bet Jūsu pašreizējie draugi tiks saglabāti .</translation>
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>Code anti-spam</translation>
+        <translation>AntiSpam</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>Le code anti-spam fait partie de votre identifiant et peut être remplacé à souhait.
-Si vous êtes embêté(e) par des demandes de contacts non sollicitées, changez votre code anti-spam.</translation>
+        <translation>AntiSpam ir daļa no Jūsu ID, kuru varat mainīt pēc vēlēšanās.
+Ja saņemat surogātpastu ar draudzības pieprasījumiem, nomainiet AntiSpam daļu.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation>Générer un code anti-spam aléatoire</translation>
+        <translation>Ģenerēt nejaušu AntiSpam vērtību</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation>La conservation de l&apos;historique de discussions est toujours en phase développement informatique.
-Les changements de format de sauvegarde sont possibles, ce qui pourrait entrainer des pertes de données.</translation>
+        <translation>Čata vēstures saglabāšana atrodas izstrādes procesā.
+Iespējama saglabāšanas formāta izmaiņas, kas var novest pie datu zaudēšanas.</translation>
     </message>
     <message>
         <source>Privacy</source>
-        <translation>Vie privée</translation>
+        <translation>Konfidencialitātes politika</translation>
     </message>
     <message>
         <source>BlackList</source>
-        <translation>Liste noire</translation>
+        <translation>Melnais saraksts</translation>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation>Filtrer le message de groupe par clé publique du membre du groupe. Mettre la clé publique ici, une par ligne.</translation>
+        <translation>Filtrēt grupu ziņojumus, izmantojot publisko atslēgu. Norādiet publiskās atslēgas, pa vienai katrā rindā.</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation>Impossible de dériver la clé du mot de passe, le profil n&apos;utilisera pas le nouveau mot de passe.</translation>
+        <translation>Neizdevās iegūt atslēgu no paroles, profils neizmantos jauno paroli.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Impossible de modifier le mot de passe dans la base de données, il peut être endommagé ou utiliser l&apos;ancien mot de passe.</translation>
+        <translation>Nesanāca nomainīt paroli datu bāzē, tā varētu būt bojāta, vai tiek izmantota vecā parole.</translation>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation>Je toxe sur qTox</translation>
+        <translation>Tērzēt qTox</translation>
     </message>
 </context>
 <context>
     <name>ProfileForm</name>
     <message>
-        <source>Current profile: </source>
-        <translation>Profil actuel : </translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
         <source>Choose a profile picture</source>
-        <translation>Choisissez une image de profil</translation>
+        <translation>Izvēlieties profila attēlu</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Erreur</translation>
-    </message>
-    <message>
-        <source>Unable to open this file.</source>
-        <translation>Impossible d&apos;ouvrir ce fichier.</translation>
-    </message>
-    <message>
-        <source>Unable to read this image.</source>
-        <translation>Impossible de lire cette image.</translation>
-    </message>
-    <message>
-        <source>The supplied image is too large.
-Please use another image.</source>
-        <translation>L&apos;image fournie est trop volumineuse.
-Veuillez utiliser une autre image.</translation>
+        <translation>Kļūda</translation>
     </message>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation>Renommer &quot;%1&quot;</translation>
+        <translation>Pārdēvēt &apos;&apos;%1&apos;&apos;</translation>
+    </message>
+    <message>
+        <source>Unable to open this file.</source>
+        <translation>Nevar atvērt šo failu.</translation>
+    </message>
+    <message>
+        <source>Current profile: </source>
+        <translation>Pašreizējais profils: </translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Dzēst</translation>
+    </message>
+    <message>
+        <source>Unable to read this image.</source>
+        <translation>Nevar nolasīt attēlu.</translation>
+    </message>
+    <message>
+        <source>The supplied image is too large.
+Please use another image.</source>
+        <translation>Izvēlētais attēls pārāk liels.
+Lūdzu, izvēlieties citu attēlu.</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>Impossible de renommer le profil en &quot;%1&quot;</translation>
+        <translation>Nevarēja pārdēvēt profilu uz &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>L&apos;emplacement n&apos;est pas inscriptible</translation>
+        <translation>Šajā mapē nevar veikt ierakstu</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Vous n&apos;avez pas la permission d&apos;écrire à cet emplacement. Choisissez-en un autre ou bien décochez la boîte de dialogue de sauvegarde.</translation>
+        <translation>Jums nav atļaujas veikt ierakstu šajā mapē. Izvēlieties citu mapi, vai atceliet saglabāšanu.</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation>Erreur lors de la copie du fichier</translation>
+        <translation>Neizdevās nokopēt failu</translation>
     </message>
     <message>
         <source>The file you chose could not be written to.</source>
-        <translation>Le fichier que vous avez choisi ne peut pas être inscris.</translation>
+        <translation>Diemžēl nav iespējams ierakstīt izvēlētajā failā.</translation>
     </message>
     <message>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
-        <translation>Êtes-vous certain(e) de vouloir supprimer le profil ?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete this profile?</source>
-        <comment>deletion confirmation text</comment>
-        <translation>Êtes-vous certain(e) de vouloir supprimer ce profil ?</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <comment>save qr image</comment>
-        <translation>Enregistrer</translation>
-    </message>
-    <message>
-        <source>Save QrCode (*.png)</source>
-        <comment>save dialog filter</comment>
-        <translation>Enregistrer le QR code (*.png)</translation>
+        <translation>Vai tiešām dzēst profilu?</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
-        <translation>Rien à supprimer</translation>
+        <translation>Nav ko dzēst</translation>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
-        <translation>Votre profil n&apos;a pas de mot de passe !</translation>
+        <translation>Jūsu profilam nav paroles!</translation>
     </message>
     <message>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation>Êtes-vous certain(e) de vouloir supprimer le mot de passe ?</translation>
+        <translation>Vai tiešām dzēst paroli?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
-        <translation>Veuillez entrer un nouveau mot de passe.</translation>
+        <translation>Lūdzu, ievadiet jauno paroli.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this profile?</source>
+        <comment>deletion confirmation text</comment>
+        <translation>Vai esat pārliecināts, ka vēlaties izdzēst izvēlēto profilu?</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <comment>save qr image</comment>
+        <translation>Saglabāt</translation>
+    </message>
+    <message>
+        <source>Save QrCode (*.png)</source>
+        <comment>save dialog filter</comment>
+        <translation>Saglabāt QR kodu (*.png)</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation>Des fichiers n&apos;ont pas pu être supprimés !</translation>
+        <translation>Failus nevar izdzēst!</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation>Inscription (en cours)</translation>
+        <translation>Reģistrācija (procesā)</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation>Mise à jour (en cours)</translation>
+        <translation>Atjaunina (procesā)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation>Terminé !</translation>
+        <translation>Gatavs!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation>Le compte %1@%2 a été mis à jour avec succès</translation>
+        <translation>Konts %1@%2 veiksmīgi atjaunināts</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>%1@2 a été ajouté avec succès dans la base de données. Sauvegardez votre mot de passe</translation>
+        <translation>%1@%2 veiksmīgi pievienots datu bāzei. Saglabājiet savu paroli</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation>Erreur Toxme</translation>
+        <translation>Pievienošanās kļūda</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>Inscription</translation>
+        <translation>Reģistrēties</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Mise à jour</translation>
+        <translation>Atjaunināt</translation>
     </message>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation>Changer de mot de passe</translation>
+        <translation>Nomainīt paroli</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation>Choisir un mot de passe de profil</translation>
+        <translation>Iestatiet profila paroli</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation>Emplacement actuel de votre profil : %1</translation>
+        <translation>Pašreizējā profila atrašanās vieta: %1</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation>Impossible de changer le mot de passe</translation>
+        <translation>Nesanāca nomainīt paroli</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation>Cette chaîne de caractères renseigne aux autres clients Tox la manière de vous contacter.
-Partagez-la avec vos contacts afin de communiquer.
+        <translation>Šis rakstzīmju kopums norāda citiem Tox klientiem, kā sazināties ar Jums.
+Izsūtiet to saviem draugiem, lai sazinātos.
 
-Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en gris).</translation>
+ID kods ietver sevī AntiSpam koda daļu (zilā krāsā) un kontrolsummu (pelēkā krāsā).</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation>Un chemin vide n&apos;est pas valide</translation>
+        <translation>Norāde bez galamērķa nav pieļaujama</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation>Renommage échoué</translation>
+        <translation>Neizdevās pārdēvēt</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation>Le profil existe déjà</translation>
+        <translation>Profils jau pastāv</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation>Un profil nommé &quot;%1&quot; existe déjà.</translation>
+        <translation>Profils ar nosaukumu &apos;&apos;%1&apos;&apos; jau pastāv.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation>Nom vide</translation>
+        <translation>Tukšs nosaukums</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation>Le nom ne peut être vide</translation>
+        <translation>Tukšs nosaukums nav pieļaujams</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation>Chemin vide</translation>
+        <translation>Norāde bez galamērķa</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Impossible de modifier le mot de passe dans la base de données, elle peut être endommagée, ou utilisez l&apos;ancien mot de passe.</translation>
+        <translation>Nesanāca nomainīt paroli datu bāzē, tā varētu būt bojāta, vai tiek izmantota vecā parole.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation>Exporter le profil</translation>
+        <translation>Eksportēt profilu</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation>Fichier de sauvegarde Tox (*.tox)</translation>
+        <translation>Saglabātais Tox fails (* .tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation>Les fichiers suivants ne peuvent pas être supprimés :</translation>
+        <translation>Nevarēja izdzēst sekojošus failus:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation>Veuillez les supprimer manuellement.</translation>
+        <translation>Lūdzu, izdzēsiet tos manuāli.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation>Êtes-vous certain(e) de vouloir supprimer votre mot de passe ?</translation>
+        <translation>Vai tiešām vēlaties dzēst savu paroli?</translation>
     </message>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation>Images (%1)</translation>
+        <translation>Attēli (%1)</translation>
     </message>
 </context>
 <context>
@@ -2269,226 +2280,226 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation>Importer un profil</translation>
+        <translation>Importēt profilu</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation>Fichier de sauvegarde Tox (*.tox)</translation>
+        <translation>Saglabātais Tox fails (* .tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation>Fichier non-Tox ignoré</translation>
+        <translation>Ignorēt ne-Tox failus</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attention : vous avez choisi un fichier de sauvegarde non-Tox; ignoré.</translation>
+        <translation>Brīdinājums: Jūs neesat izvēlējies Tox saglabāšanas failu; tas tiks ignorēts.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation>Le profil existe déjà</translation>
+        <translation>Profils jau pastāv</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Un profil nommé &quot;%1&quot; existe déjà. Voulez-vous le supprimer ?</translation>
+        <translation>Profils ar nosaukumu &apos;&apos;%1&apos;&apos; jau pastāv. Vai vēlaties to dzēst?</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation>Le fichier n&apos;existe pas</translation>
+        <translation>Fails nepastāv</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation>Le profile n&apos;existe pas</translation>
+        <translation>Profils nepastāv</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation>Profil importé</translation>
+        <translation>Profils importēts</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation>%1.tox à été importé avec succès</translation>
+        <translation>%1.tox tika veiksmīgi importēts</translation>
     </message>
 </context>
 <context>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation>D&apos;accord</translation>
+        <translation>Labi</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Atcelt</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Oui</translation>
+        <translation>Jā</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Non</translation>
+        <translation>Nē</translation>
     </message>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation>LTR</translation>
+        <translation>No labās puses uz kreiso</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation>Impossible d&apos;ajouter le contact</translation>
+        <translation>Neizdevās pievienot draugu</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 n&apos;est pas une adresse Toxme valide.</translation>
+        <translation>%1 nav derīga ToxMe adrese.</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Vous ne pouvez pas vous ajouter vous-même comme contact !</translation>
+        <translation>Jūs nevarat pievienot sevi kā draugu!</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation>URI Tox à analyser</translation>
+        <translation>Tox URI apstrādei</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation>Démarrer une nouvelle instance et charger le profil spécifié.</translation>
+        <translation>Uzsāk jaunu instanci un ielādē norādīto profilu.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation>profil</translation>
+        <translation>profils</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>Défaut</translation>
+        <translation>Noklusējuma</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Bleu</translation>
+        <translation>Zils</translation>
     </message>
     <message>
         <source>Olive</source>
-        <translation>Olive</translation>
+        <translation>Olīvu</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Rouge</translation>
+        <translation>Sarkans</translation>
     </message>
     <message>
         <source>Violet</source>
-        <translation>Violet</translation>
+        <translation>Violeta</translation>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation>Appel entrant...</translation>
+        <translation>Ienākošais zvans ...</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>Salut, c&apos;est %1. On se toxe ?</translation>
+        <translation>Sveiki, šeit %1! Vai pievienosiet mani savos draugos?</translation>
     </message>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation>Aucune</translation>
+        <translation>Nav</translation>
     </message>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
-        <translation>Bureau</translation>
+        <translation>Darbvirsma</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation>Ce serveur ne supporte pas Toxme</translation>
+        <translation>Serveris neatbalsta ToxMe</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation>Vous faites trop de requêtes. Attendez une heure et réessayez</translation>
+        <translation>Jūs esat veikuši pārāk daudz pieprasījumu. Pagaidiet vienu stundu un mēģiniet vēlreiz</translation>
     </message>
     <message>
         <source>This name is already in use</source>
-        <translation>Ce nom est déjà utilisé</translation>
+        <translation>Šis lietotāja vārds jau tiek lietots</translation>
     </message>
     <message>
         <source>This Tox ID is already registered under another name</source>
-        <translation>Cet identifiant Tox est déjà inscrit sous un autre nom</translation>
+        <translation>Šis Tox ID jau ir reģistrēts zem cita lietotāja vārda</translation>
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
-        <translation>Veuillez ne pas mettre d&apos;espace dans votre nom</translation>
+        <translation>Lūdzu neizmantojiet tukšzīmi Jūsu lietotāja vārdā</translation>
     </message>
     <message>
         <source>Password incorrect</source>
-        <translation>Mot de passe incorrect</translation>
+        <translation>Nepareiza parole</translation>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
-        <translation>Vous ne pouvez pas utiliser ce nom</translation>
+        <translation>Jūs nevarat izmantot šo lietotāja vārdu</translation>
     </message>
     <message>
         <source>Name not found</source>
-        <translation>Nom introuvable</translation>
+        <translation>Lietotāja vārds nav atrasts</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation>Identifiant Tox non envoyé</translation>
+        <translation>Tox ID nav nosūtīts</translation>
     </message>
     <message>
         <source>That user does not exist</source>
-        <translation>Cet utilisateur n&apos;existe pas</translation>
+        <translation>Šāds lietotājs neeksistē</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Erreur</translation>
+        <translation>Kļūda</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox ne peux pas ouvrir vos journaux de discussions. Ils seront désactivés.</translation>
+        <translation>qTox nevar atvērt tērzēšanas vēsturi, tā tiks atslēgta.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation>Problème avec la connexion HTTPS</translation>
+        <translation>Problēma ar HTTPS savienojumu</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation>Erreur interne de Toxme</translation>
+        <translation>Iekšēja ToxMe kļūda</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation>Reformatage du texte en cours...</translation>
+        <translation>Notiek teksta atkārtota formatēšana ...</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation>Démarre une nouvelle instance et ouvre l&apos;écran de connexion.</translation>
+        <translation>Uzsāk jaunu instanci un atver pieteikšanās logu.</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Foncé</translation>
+        <translation>Tumšs</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation>Bleu foncé</translation>
+        <translation>Tumši zils</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation>Olive</translation>
+        <translation>Tumši olīvu</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation>Rouge foncé</translation>
+        <translation>Tumši sarkans</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation>Violet foncé</translation>
+        <translation>Tumši violets</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
@@ -2497,50 +2508,50 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">connecté(e)</translation>
+        <translation type="unfinished">tiešsaistē</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">absent(e)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">occupé(e)</translation>
+        <translation type="unfinished">aizņemts</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">hors ligne</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">bloqué</translation>
+        <translation type="unfinished">bloķēts</translation>
     </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Supprimer ce contact</translation>
+        <translation>Dzēst draugu</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation>Supprimer également l&apos;historique de discussions</translation>
+        <translation>Arī noņemt tērzēšanas vēsturi</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Supprimer</translation>
+        <translation>Dzēst</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Êtes-vous certain(e) de vouloir supprimer %1 de votre liste de contacts ?</translation>
+        <translation>Vai Jūs tiešām vēlaties dzēst %1 no kontaktpersonu saraksta?</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Si activé, efface tout l&apos;historique de discussions avec ce contact</translation>
+        <translation>Dzēš visu tērzēšanas vēsturi ar draugu, ja tiek iestatīts</translation>
     </message>
 </context>
 <context>
@@ -2548,131 +2559,131 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Cliquez et faites glisser pour sélectionner une région. Appuyez sur %1 pour masquer / afficher la fenêtre qTox ou bien %2 pour annuler.</translation>
+        <translation>Noklikšķiniet un velciet, lai atlasītu reģionu. Nospiediet %1, lai paslēptu/rādītu qTox logu, vai %2, lai atceltu.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation>Espace</translation>
+        <translation>Tukšzīme</translation>
     </message>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation>Échap</translation>
+        <translation>Atcelt</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Appuyer sur %1 pour envoyer une capture d&apos;écran de la sélection, %2 pour masquer / afficher la fenêtre qTox ou bien %3 pour annuler.</translation>
+        <translation>Nospiediet %1, lai nosūtītu atlases ekrānuzņēmumu, %2, lai paslēptu/rādītu qTox logu, vai %3, lai atceltu.</translation>
     </message>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
-        <translation>Entrée</translation>
+        <translation>Ievadīt</translation>
     </message>
 </context>
 <context>
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation>Le texte n&apos;a pas pu être trouvé.</translation>
+        <translation>Tekstu nevar atrast.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Démarrer</translation>
+        <translation>Sākt</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation>Formulaire</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation>Lancer la recherche :</translation>
+        <translation>Sākt meklēšanu:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation>à partir de la fin</translation>
+        <translation>no beigām</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation>à partir du début</translation>
+        <translation>no sākuma</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation>après la date</translation>
+        <translation>pēc datuma</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation>avant la date</translation>
+        <translation>līdz datumam</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation>00/00/0000</translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>Sensible aux majuscules et minuscules</translation>
+        <translation>Ieskaitot reģistru</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation>Seulement mots entiers</translation>
+        <translation>Tikai veseli vārdi</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation>Utiliser des expressions communes</translation>
+        <translation>Lietot regulāras izteiksmes</translation>
     </message>
 </context>
 <context>
     <name>SetPasswordDialog</name>
     <message>
         <source>Set your password</source>
-        <translation>Choisissez un mot de passe</translation>
+        <translation>Uzstādiet savu paroli</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>Confirmation :</translation>
+        <translation>Apstiprināt:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Mot de passe :</translation>
+        <translation>Parole:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation>Robustesse du mot de passe : %p%</translation>
+        <translation>Paroles sarežģītība: %p%</translation>
     </message>
     <message>
         <source>The password is too short</source>
-        <translation>Le mot de passe est trop court</translation>
+        <translation>Parole ir pārāk īsa</translation>
     </message>
     <message>
         <source>The password doesn&apos;t match.</source>
-        <translation>Le mot de passe ne correspond pas.</translation>
+        <translation>Paroles nesakrīt.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation>Confirmer le mot de passe</translation>
+        <translation>Apstipriniet paroli</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation>Champ de saisie pour confirmer le mot de passe</translation>
+        <translation>Apstipriniet paroles ievadi</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation>Champ de saisie du mot de passe</translation>
+        <translation>Paroles ievade</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation>Champ de saisie du mot de passe, d&apos;une longueur minimale de 6 caractères</translation>
+        <translation>Paroles ievades lauks, ar vismaz 6 rakstzīmēm</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Circle #%1</source>
-        <translation>Cercle nᵒ%1</translation>
+        <translation>Uz sarakstu #%1</translation>
     </message>
 </context>
 <context>
@@ -2680,210 +2691,210 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation>Ajouter un contact</translation>
+        <translation>Pievienot draugu</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
-        <translation>Voulez-vous ajouter %1 à vos contacts ?</translation>
+        <translation>Vai vēlaties pievienot %1 kā draugu?</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>Identifiant utilisateur :</translation>
+        <translation>Lietotāja ID:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation>Joindre un message de demande :</translation>
+        <translation>Draudzības pieprasījuma ziņojums:</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Send a friend request</comment>
-        <translation>Envoyer</translation>
+        <translation>Sūtīt</translation>
     </message>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation>Annuler</translation>
+        <translation>Atcelt</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation>Aucun(e)</translation>
+        <translation>Nav</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation>Interface utilisateur</translation>
+        <translation>Lietotāja Interfeiss</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation>Discussion instantanée</translation>
+        <translation>Tērzēšana</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation>Police de caractères de base :</translation>
+        <translation>Pamatfonts:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation>pixels</translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation>Taille : </translation>
+        <translation>Lielumu: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Le nouveau choix de style de texte peut ne pas être chargé avant un redémarrage de qTox.</translation>
+        <translation>Teksta jaunais stils tiks pielietots pēc qTox atkārtotas palaišanas.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation>Format du style de texte :</translation>
+        <translation>Teksta stila formāts:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation>Choisir une préférence de style de texte.</translation>
+        <translation>Izvēlieties teksta vēlamo stilu.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation>Texte en clair</translation>
+        <translation>Vienkāršs teksts</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation>Afficher les caractères formatés</translation>
+        <translation>Rādīt formatēšanas zīmes</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation>Ne pas afficher les caractères formatés</translation>
+        <translation>Nerādīt formatēšanas zīmes</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation>Nouveau message</translation>
+        <translation>Jauna ziņa</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Ouvrir la fenêtre qTox quand vous recevez un nouveau message et qu&apos;aucune fenêtre n&apos;est ouverte.</translation>
+        <translation>Atvērt qTox logu, kad Jūs esat saņēmis jaunu ziņu, ja līdz šim tā nav bijusi atvērta.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation>Ouvrir une fenêtre</translation>
+        <translation>Atvērt logu</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation>Liste de contacts</translation>
+        <translation>Kontaktu saraksts</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>Si coché, les groupes de discussions seront positionnés en haut de la liste de contacts. Sinon, ils seront positionnés en dessous des contacts connectés.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation>Positionner les groupes de discussions en haut de la liste des contacts</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>Votre liste de contacts sera affichée en mode compact.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation>Liste de contacts compacte</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation>Mode multi-fenêtres</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation>Ouvrir chaque discussion instantanée dans une fenêtre individuelle</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation>Émoticônes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation>Utiliser les émoticônes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Pack d&apos;émoticônes :</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation>Taille de l&apos;émoticône :</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source> px</source>
-        <translation> pixels</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation>Thème</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation>Style :</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation>Couleur du thème :</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation>Format de l&apos;horodatage :</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation>Format de la date :</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation>Si elle est activée, chaque contact sans avatar défini aura un avatar généré basé sur son ID Tox au lieu d&apos;une image par défaut. Requiert un redémarrage pour être appliquer.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation>Utiliser des identicons au lieu d&apos;avatars vides</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation>Utiliser des pseudonymes colorés dans les chats</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation>Afficher une notification lorsque vous recevez un nouveau message et que la fenêtre n&apos;est pas sélectionnée.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation>Notifier</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation>Notifier des nouveaux messages dans les discussions de groupe uniquement lorsque vous êtes mentionné.</translation>
+        <translation>Paziņo tikai par jaunām grupas tērzēšanas ziņām, ja tas ir minēts.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation>Ne notifier des discussions de groupe que lorsque vous êtes mentionné</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation>Jouer un son</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Jouer un son lorsque vous êtes &quot;Occupé(e)&quot;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation>Notifier via les notifications du bureau</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hide message sender and contents</source>
@@ -2894,195 +2905,198 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <name>Widget</name>
     <message>
         <source>Online</source>
-        <translation>Connecté(e)</translation>
-    </message>
-    <message>
-        <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation>Connecté(e)</translation>
+        <translation type="unfinished">Tiešsaistē</translation>
     </message>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Absent(e)</translation>
+        <translation type="unfinished">Nav šeit</translation>
     </message>
     <message>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation>Occupé(e)</translation>
+        <translation type="unfinished">Aizņemts</translation>
+    </message>
+    <message>
+        <source>toxcore failed to start, the application will terminate after you close this message.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>ToxCore n&apos;a pas pu démarrer avec vos paramètres de proxy. qTox ne peut donc pas démarrer. Merci de modifier vos paramètres et de redémarrer l&apos;application.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Fichier</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Edit Profile</source>
-        <translation>Éditer le profil</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Change Status</source>
-        <translation>Modifier le statut</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Log out</source>
-        <translation>Déconnexion</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Éditer</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation>Filtrer…</translation>
-    </message>
-    <message>
-        <source>Contacts</source>
-        <translation>Contacts</translation>
-    </message>
-    <message>
-        <source>Add Contact...</source>
-        <translation>Ajouter un contact…</translation>
-    </message>
-    <message>
-        <source>Next Conversation</source>
-        <translation>Discussion suivante</translation>
-    </message>
-    <message>
-        <source>Previous Conversation</source>
-        <translation>Discussion précédente</translation>
-    </message>
-    <message>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation>Fichier exécutable</translation>
-    </message>
-    <message>
-        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
-        <comment>popup text</comment>
-        <translation>Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous certain(e) de vouloir ouvrir ce fichier ?</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t request friendship</source>
-        <translation>Impossible de demander l&apos;ajout du contact</translation>
-    </message>
-    <message>
-        <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>toxcore n&apos;a pas réussi à démarrer. L&apos;application s&apos;arrêtera quand vous fermerez ce message.</translation>
-    </message>
-    <message>
-        <source>Your name</source>
-        <translation>Votre nom</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation>Statut</translation>
-    </message>
-    <message>
-        <source>Message failed to send</source>
-        <translation>L&apos;envoi du message a échoué</translation>
-    </message>
-    <message>
-        <source>Add new circle...</source>
-        <translation>Ajouter un nouveau cercle…</translation>
-    </message>
-    <message>
-        <source>By Name</source>
-        <translation>Par nom</translation>
-    </message>
-    <message>
-        <source>By Activity</source>
-        <translation>Par activité</translation>
-    </message>
-    <message>
-        <source>All</source>
-        <translation>Tous</translation>
-    </message>
-    <message>
-        <source>Offline</source>
-        <translation>Hors ligne</translation>
-    </message>
-    <message>
-        <source>Friends</source>
-        <translation>Contacts</translation>
-    </message>
-    <message>
-        <source>Groups</source>
-        <translation>Groupes</translation>
-    </message>
-    <message>
-        <source>Search Contacts</source>
-        <translation>Recherche de contacts</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation>Déconnexion</translation>
+        <translation type="unfinished">Iziet</translation>
     </message>
     <message>
         <source>Exit</source>
         <comment>Tray action menu to exit tox</comment>
-        <translation>Quitter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Groupchat #%1</source>
-        <translation>Groupe de discussion #%1</translation>
+        <source>Filter...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Contact...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next Conversation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous Conversation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executable file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
+        <comment>popup text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t request friendship</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Statuss</translation>
+    </message>
+    <message>
+        <source>Your name</source>
+        <translation type="unfinished">Jūsu vārds</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create new group...</source>
-        <translation>Créer un nouveau groupe...</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add new circle...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation>
-            <numerusform>%n nouvelle(s) demande(s) de contact</numerusform>
-            <numerusform>%n nouvelles demandes de contact</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation>
-            <numerusform>%n nouvelle(s) invitation(s) de groupe</numerusform>
-            <numerusform>%n nouvelles invitations de groupe</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>By Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By Activity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation type="unfinished">Tiešsaistē</translation>
+    </message>
+    <message>
+        <source>Offline</source>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation type="unfinished">Bezsaistē</translation>
+    </message>
+    <message>
+        <source>Friends</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished">Grupas</translation>
+    </message>
+    <message>
+        <source>Search Contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation>Afficher</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation>Ajouter un contact</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation>Invitations de groupe</translation>
+        <translation type="unfinished">Grupas uzaicinājums</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation>Transferts de fichiers</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation>Paramètres</translation>
+        <translation type="unfinished">Iestatījumi</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation>Mon profil</translation>
+        <translation>Mans profils</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Impossible d&apos;envoyer le fichier &quot;%1&quot;</translation>
+        <translation type="unfinished">Neizdevās nosūtīt failu &apos;&apos;%1&apos;&apos;</translation>
     </message>
     <message>
         <source>File sent</source>
