@@ -145,11 +145,6 @@ ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& me
     connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
     connect(coreFile, &CoreFile::fileNameChanged, this, &ChatForm::onFileNameChanged);
 
-    const CoreAV* av = core->getAv();
-    connect(av, &CoreAV::avInvite, this, &ChatForm::onAvInvite);
-    connect(av, &CoreAV::avStart, this, &ChatForm::onAvStart);
-    connect(av, &CoreAV::avEnd, this, &ChatForm::onAvEnd);
-
     connect(headWidget, &ChatFormHeader::callTriggered, this, &ChatForm::onCallTriggered);
     connect(headWidget, &ChatFormHeader::videoCallTriggered, this, &ChatForm::onVideoCallTriggered);
     connect(headWidget, &ChatFormHeader::micMuteToggle, this, &ChatForm::onMicMuteToggle);
