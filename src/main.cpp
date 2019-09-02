@@ -215,6 +215,24 @@ int main(int argc, char* argv[])
         QCommandLineOption(QStringList() << "l"
                                          << "login",
                            QObject::tr("Starts new instance and opens the login screen.")));
+    parser.addOption(QCommandLineOption(QStringList() << "I"
+                                                      << "IPv6",
+                                        QObject::tr("Sets IPv6 <on>/<off>. Default is ON."),
+                                        QObject::tr("on/off")));
+    parser.addOption(QCommandLineOption(QStringList() << "U"
+                                                      << "UDP",
+                                        QObject::tr("Sets UDP <on>/<off>. Default is ON."),
+                                        QObject::tr("on/off")));
+    parser.addOption(
+        QCommandLineOption(QStringList() << "L"
+                                         << "LAN",
+                           QObject::tr(
+                               "Sets LAN discovery <on>/<off>. UDP off overrides. Default is ON."),
+                           QObject::tr("on/off")));
+    parser.addOption(QCommandLineOption(QStringList() << "P"
+                                                      << "proxy",
+                                        QObject::tr("Sets proxy settings. Default is NONE."),
+                                        QObject::tr("(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)")));
     parser.process(*a);
 
     uint32_t profileId = settings.getCurrentProfileId();
@@ -331,6 +349,10 @@ int main(int argc, char* argv[])
         }
     }
 
+    if (!Settings::verifyProxySettings(parser)) {
+        return -1;
+    }
+
     // TODO(sudden6): remove once we get rid of Nexus
     Nexus& nexus = Nexus::getInstance();
     // TODO(kriby): Consider moving application initializing variables into a globalSettings object
@@ -343,16 +365,16 @@ int main(int argc, char* argv[])
     // Further: generate view instances separately (loginScreen, mainGUI, audio)
     Profile* profile = nullptr;
     if (autoLogin && Profile::exists(profileName) && !Profile::isEncrypted(profileName)) {
-        profile = Profile::loadProfile(profileName, QString(), settings);
+        profile = Profile::loadProfile(profileName, QString(), settings, &parser);
         if (!profile) {
             QMessageBox::information(nullptr, QObject::tr("Error"),
                                      QObject::tr("Failed to load profile automatically."));
         }
     }
     if (profile) {
-        settings.updateProfileData(profile);
         nexus.bootstrapWithProfile(profile);
     } else {
+        nexus.setParser(&parser);
         int returnval = nexus.showLogin(profileName);
         if (returnval != 0) {
             return returnval;

@@ -39,6 +39,7 @@
 #include <QPixmap>
 
 class Profile;
+class QCommandLineParser;
 
 namespace Db {
 enum class syncType;
@@ -170,7 +171,7 @@ public slots:
     void saveGlobal();
     void sync();
     void setAutoLogin(bool state);
-    void updateProfileData(Profile* profile);
+    void updateProfileData(Profile* profile, const QCommandLineParser* parser);
 
 signals:
     // General
@@ -238,6 +239,9 @@ signals:
     void blackListChanged(QStringList& blist);
 
 public:
+    bool applyCommandLineOptions(const QCommandLineParser& parser);
+    static bool verifyProxySettings(const QCommandLineParser& parser);
+
     bool getMakeToxPortable() const;
     void setMakeToxPortable(bool newValue);
 

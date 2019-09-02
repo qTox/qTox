@@ -291,7 +291,8 @@ Profile::Profile(const QString& name, const QString& password, std::unique_ptr<T
  *
  * @note If the profile is already in use return nullptr.
  */
-Profile* Profile::loadProfile(const QString& name, const QString& password, Settings& settings)
+Profile* Profile::loadProfile(const QString& name, const QString& password, Settings& settings,
+                              const QCommandLineParser* parser)
 {
     if (ProfileLocker::hasLock()) {
         qCritical() << "Tried to load profile " << name << ", but another profile is already locked!";
@@ -315,7 +316,7 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
     Profile* p = new Profile(name, password, std::move(tmpKey));
 
     // Core settings are saved per profile, need to load them before starting Core
-    settings.loadPersonal(name, tmpKey.get());
+    settings.updateProfileData(p, parser);
 
     p->initCore(toxsave, settings, /*isNewProfile*/ false);
     p->loadDatabase(password);
@@ -331,19 +332,21 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
  *
  * @note If the profile is already in use return nullptr.
  */
-Profile* Profile::createProfile(const QString& userName, const QString& password,
-                                const Settings& settings)
+Profile* Profile::createProfile(const QString& name, const QString& password, Settings& settings,
+                                const QCommandLineParser* parser)
 {
     CreateToxDataError error;
-    QString path = Settings::getInstance().getSettingsDirPath() + userName + ".tox";
-    std::unique_ptr<ToxEncrypt> tmpKey = createToxData(userName, password, path, error);
+    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+    std::unique_ptr<ToxEncrypt> tmpKey = createToxData(name, password, path, error);
 
-    if (logCreateToxDataError(error, userName)) {
+    if (logCreateToxDataError(error, name)) {
         return nullptr;
     }
 
-    settings.createPersonal(userName);
-    Profile* p = new Profile(userName, password, std::move(tmpKey));
+    settings.createPersonal(name);
+    Profile* p = new Profile(name, password, std::move(tmpKey));
+    settings.updateProfileData(p, parser);
+
     p->initCore(QByteArray(), settings, /*isNewProfile*/ true);
     p->loadDatabase(password);
     return p;
