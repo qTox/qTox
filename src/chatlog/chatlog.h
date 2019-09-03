@@ -58,6 +58,8 @@ public:
     void selectAll();
     void fontChanged(const QFont& font);
     void reloadTheme();
+    void moveSelectionRectUpIfMulti(int offset);
+    void moveSelectionRectDownIfMulti(int offset);
     void removeFirsts(const int num);
     void removeLasts(const int num);
     void setScroll(const bool scroll);
