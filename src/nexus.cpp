@@ -158,6 +158,8 @@ int Nexus::showLogin(const QString& profileName)
     LoginScreen loginScreen{profileName};
     connectLoginScreen(loginScreen);
 
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+
     // TODO(kriby): Move core out of profile
     // This is awkward because the core is in the profile
     // The connection order ensures profile will be ready for bootstrap for now
