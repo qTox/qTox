@@ -217,8 +217,6 @@ private:
 
     void sendGroupMessageWithType(int groupId, const QString& message, Tox_Message_Type type);
     bool sendMessageWithType(uint32_t friendId, const QString& message, Tox_Message_Type type, ReceiptNum& receipt);
-    bool parsePeerQueryError(Tox_Err_Conference_Peer_Query error) const;
-    bool parseConferenceJoinError(Tox_Err_Conference_Join error) const;
     bool checkConnection();
 
     void makeTox(QByteArray savedata, ICoreSettings* s);
