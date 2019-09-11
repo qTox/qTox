@@ -119,6 +119,76 @@ bool parseConferenceSendMessageError(Tox_Err_Conference_Send_Message error)
         return false;
     }
 }
+
+/**
+ * @brief Print in console text of error.
+ * @param error Error to handle.
+ * @return True if no error, false otherwise.
+ */
+bool parsePeerQueryError(Tox_Err_Conference_Peer_Query error)
+{
+    switch (error) {
+    case TOX_ERR_CONFERENCE_PEER_QUERY_OK:
+        return true;
+
+    case TOX_ERR_CONFERENCE_PEER_QUERY_CONFERENCE_NOT_FOUND:
+        qCritical() << "Conference not found";
+        return false;
+
+    case TOX_ERR_CONFERENCE_PEER_QUERY_NO_CONNECTION:
+        qCritical() << "No connection";
+        return false;
+
+    case TOX_ERR_CONFERENCE_PEER_QUERY_PEER_NOT_FOUND:
+        qCritical() << "Peer not found";
+        return false;
+
+    default:
+        qCritical() << "Unknown error code:" << error;
+        return false;
+    }
+}
+
+/**
+ * @brief Print in console text of error.
+ * @param error Error to handle.
+ * @return True if no error, false otherwise.
+ */
+bool parseConferenceJoinError(Tox_Err_Conference_Join error)
+{
+    switch (error) {
+    case TOX_ERR_CONFERENCE_JOIN_OK:
+        return true;
+
+    case TOX_ERR_CONFERENCE_JOIN_DUPLICATE:
+        qCritical() << "Conference duplicate";
+        return false;
+
+    case TOX_ERR_CONFERENCE_JOIN_FAIL_SEND:
+        qCritical() << "Conference join failed to send";
+        return false;
+
+    case TOX_ERR_CONFERENCE_JOIN_FRIEND_NOT_FOUND:
+        qCritical() << "Friend not found";
+        return false;
+
+    case TOX_ERR_CONFERENCE_JOIN_INIT_FAIL:
+        qCritical() << "Init fail";
+        return false;
+
+    case TOX_ERR_CONFERENCE_JOIN_INVALID_LENGTH:
+        qCritical() << "Invalid length";
+        return false;
+
+    case TOX_ERR_CONFERENCE_JOIN_WRONG_TYPE:
+        qCritical() << "Wrong conference type";
+        return false;
+
+    default:
+        qCritical() << "Unknown error code:" << error;
+        return false;
+    }
+}
 } // namespace
 
 Core::Core(QThread* coreThread)
@@ -1092,35 +1162,6 @@ QVector<uint32_t> Core::getFriendList() const
     return friends;
 }
 
-/**
- * @brief Print in console text of error.
- * @param error Error to handle.
- * @return True if no error, false otherwise.
- */
-bool Core::parsePeerQueryError(Tox_Err_Conference_Peer_Query error) const
-{
-    switch (error) {
-    case TOX_ERR_CONFERENCE_PEER_QUERY_OK:
-        return true;
-
-    case TOX_ERR_CONFERENCE_PEER_QUERY_CONFERENCE_NOT_FOUND:
-        qCritical() << "Conference not found";
-        return false;
-
-    case TOX_ERR_CONFERENCE_PEER_QUERY_NO_CONNECTION:
-        qCritical() << "No connection";
-        return false;
-
-    case TOX_ERR_CONFERENCE_PEER_QUERY_PEER_NOT_FOUND:
-        qCritical() << "Peer not found";
-        return false;
-
-    default:
-        qCritical() << "Unknown error code:" << error;
-        return false;
-    }
-}
-
 GroupId Core::getGroupPersistentId(uint32_t groupNumber) const
 {
     QMutexLocker ml{&coreLoopLock};
@@ -1251,47 +1292,6 @@ bool Core::getGroupAvEnabled(int groupId) const
     }
 
     return type == TOX_CONFERENCE_TYPE_AV;
-}
-
-/**
- * @brief Print in console text of error.
- * @param error Error to handle.
- * @return True if no error, false otherwise.
- */
-bool Core::parseConferenceJoinError(Tox_Err_Conference_Join error) const
-{
-    switch (error) {
-    case TOX_ERR_CONFERENCE_JOIN_OK:
-        return true;
-
-    case TOX_ERR_CONFERENCE_JOIN_DUPLICATE:
-        qCritical() << "Conference duplicate";
-        return false;
-
-    case TOX_ERR_CONFERENCE_JOIN_FAIL_SEND:
-        qCritical() << "Conference join failed to send";
-        return false;
-
-    case TOX_ERR_CONFERENCE_JOIN_FRIEND_NOT_FOUND:
-        qCritical() << "Friend not found";
-        return false;
-
-    case TOX_ERR_CONFERENCE_JOIN_INIT_FAIL:
-        qCritical() << "Init fail";
-        return false;
-
-    case TOX_ERR_CONFERENCE_JOIN_INVALID_LENGTH:
-        qCritical() << "Invalid length";
-        return false;
-
-    case TOX_ERR_CONFERENCE_JOIN_WRONG_TYPE:
-        qCritical() << "Wrong conference type";
-        return false;
-
-    default:
-        qCritical() << "Unknown error code:" << error;
-        return false;
-    }
 }
 
 /**
