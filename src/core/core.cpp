@@ -1156,11 +1156,12 @@ QString Core::getUsername() const
     }
 
     int size = tox_self_get_name_size(tox.get());
-    uint8_t* name = new uint8_t[size];
-    tox_self_get_name(tox.get(), name);
-    sname = ToxString(name, size).getQString();
-    delete[] name;
-    return sname;
+    if (!size) {
+        return {};
+    }
+    std::vector<uint8_t> nameBuf(size);
+    tox_self_get_name(tox.get(), nameBuf.data());
+    return ToxString(nameBuf.data(), size).getQString();
 }
 
 void Core::setUsername(const QString& username)
@@ -1237,14 +1238,12 @@ QString Core::getStatusMessage() const
     assert(tox != nullptr);
 
     size_t size = tox_self_get_status_message_size(tox.get());
-    if (size == 0) {
+    if (!size) {
         return {};
     }
-    uint8_t* name = new uint8_t[size];
-    tox_self_get_status_message(tox.get(), name);
-    QString sname = ToxString(name, size).getQString();
-    delete[] name;
-    return sname;
+    std::vector<uint8_t> nameBuf(size);
+    tox_self_get_status_message(tox.get(), nameBuf.data());
+    return ToxString(nameBuf.data(), size).getQString();
 }
 
 /**
@@ -1328,8 +1327,8 @@ void Core::loadFriends()
         return;
     }
 
-    uint32_t* ids = new uint32_t[friendCount];
-    tox_self_get_friend_list(tox.get(), ids);
+    std::vector<uint32_t> ids(friendCount);
+    tox_self_get_friend_list(tox.get(), ids.data());
     uint8_t friendPk[TOX_PUBLIC_KEY_SIZE] = {0x00};
     for (size_t i = 0; i < friendCount; ++i) {
         Tox_Err_Friend_Get_Public_Key keyError;
@@ -1341,7 +1340,7 @@ void Core::loadFriends()
         emit friendUsernameChanged(ids[i], getFriendUsername(ids[i]));
         Tox_Err_Friend_Query queryError;
         size_t statusMessageSize = tox_friend_get_status_message_size(tox.get(), ids[i], &queryError);
-        if (PARSE_ERR(ToxErrFriendQuery, queryError)) {
+        if (PARSE_ERR(ToxErrFriendQuery, queryError) && statusMessageSize) {
             std::vector<uint8_t> messageData(statusMessageSize);
             tox_friend_get_status_message(tox.get(), ids[i], messageData.data(), &queryError);
             QString friendStatusMessage = ToxString(messageData.data(), statusMessageSize).getQString();
@@ -1349,7 +1348,6 @@ void Core::loadFriends()
         }
         checkLastOnline(ids[i]);
     }
-    delete[] ids;
 }
 
 void Core::loadGroups()
@@ -1361,8 +1359,8 @@ void Core::loadGroups()
         return;
     }
 
-    auto groupNumbers = new uint32_t[groupCount];
-    tox_conference_get_chatlist(tox.get(), groupNumbers);
+    std::vector<uint32_t> groupNumbers(groupCount);
+    tox_conference_get_chatlist(tox.get(), groupNumbers.data());
 
     for (size_t i = 0; i < groupCount; ++i) {
         Tox_Err_Conference_Title error;
@@ -1371,12 +1369,11 @@ void Core::loadGroups()
         size_t titleSize = tox_conference_get_title_size(tox.get(), groupNumber, &error);
         const GroupId persistentId = getGroupPersistentId(groupNumber);
         const QString defaultName = tr("Groupchat %1").arg(persistentId.toString().left(8));
-        if (PARSE_ERR(ToxErrConferenceTitle, error)) {
-            QByteArray nameByteArray = QByteArray(static_cast<int>(titleSize), Qt::Uninitialized);
-            tox_conference_get_title(tox.get(), groupNumber,
-                                     reinterpret_cast<uint8_t*>(nameByteArray.data()), &error);
+        if (PARSE_ERR(ToxErrConferenceTitle, error) || !titleSize) {
+            std::vector<uint8_t> nameBuf(titleSize);
+            tox_conference_get_title(tox.get(), groupNumber, nameBuf.data(), &error);
             if (PARSE_ERR(ToxErrConferenceTitle, error)) {
-                name = ToxString(nameByteArray).getQString();
+                name = ToxString(nameBuf.data(), titleSize).getQString();
             } else {
                 name = defaultName;
             }
@@ -1390,8 +1387,6 @@ void Core::loadGroups()
         }
         emit emptyGroupCreated(groupNumber, persistentId, name);
     }
-
-    delete[] groupNumbers;
 }
 
 void Core::checkLastOnline(uint32_t friendId)
@@ -1422,11 +1417,10 @@ GroupId Core::getGroupPersistentId(uint32_t groupNumber) const
 {
     QMutexLocker ml{&coreLoopLock};
 
-    size_t conferenceIdSize = TOX_CONFERENCE_UID_SIZE;
-    QByteArray groupPersistentId(conferenceIdSize, Qt::Uninitialized);
+    std::vector<uint8_t> idBuff(TOX_CONFERENCE_UID_SIZE);
     if (tox_conference_get_id(tox.get(), groupNumber,
-                              reinterpret_cast<uint8_t*>(groupPersistentId.data()))) {
-        return GroupId{groupPersistentId};
+                              idBuff.data())) {
+        return GroupId{idBuff.data()};
     } else {
         qCritical() << "Failed to get conference ID of group" << groupNumber;
         return {};
@@ -1459,19 +1453,17 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
 
     Tox_Err_Conference_Peer_Query error;
     size_t length = tox_conference_peer_get_name_size(tox.get(), groupId, peerId, &error);
+    if (!PARSE_ERR(ToxErrConferencePeerQuery, error) || !length) {
+        return QString{};
+    }
+
+    std::vector<uint8_t> nameBuf(length);
+    tox_conference_peer_get_name(tox.get(), groupId, peerId, nameBuf.data(), &error);
     if (!PARSE_ERR(ToxErrConferencePeerQuery, error)) {
         return QString{};
     }
 
-    QByteArray name(length, Qt::Uninitialized);
-    uint8_t* namePtr = reinterpret_cast<uint8_t*>(name.data());
-    bool success = tox_conference_peer_get_name(tox.get(), groupId, peerId, namePtr, &error);
-    if (!PARSE_ERR(ToxErrConferencePeerQuery, error)) {
-        return QString{};
-    }
-    assert(success);
-
-    return ToxString(name).getQString();
+    return ToxString(nameBuf.data(), length).getQString();
 }
 
 /**
@@ -1483,11 +1475,10 @@ ToxPk Core::getGroupPeerPk(int groupId, int peerId) const
 
     uint8_t friendPk[TOX_PUBLIC_KEY_SIZE] = {0x00};
     Tox_Err_Conference_Peer_Query error;
-    bool success = tox_conference_peer_get_public_key(tox.get(), groupId, peerId, friendPk, &error);
+    tox_conference_peer_get_public_key(tox.get(), groupId, peerId, friendPk, &error);
     if (!PARSE_ERR(ToxErrConferencePeerQuery, error)) {
         return ToxPk{};
     }
-    assert(success);
 
     return ToxPk(friendPk);
 }
@@ -1511,15 +1502,14 @@ QStringList Core::getGroupPeerNames(int groupId) const
     for (uint32_t i = 0; i < nPeers; ++i) {
         Tox_Err_Conference_Peer_Query error;
         size_t length = tox_conference_peer_get_name_size(tox.get(), groupId, i, &error);
-        if (!PARSE_ERR(ToxErrConferencePeerQuery, error)) {
+        if (!PARSE_ERR(ToxErrConferencePeerQuery, error) || !length) {
             continue;
         }
 
-        QByteArray name(length, Qt::Uninitialized);
-        uint8_t* namePtr = reinterpret_cast<uint8_t*>(name.data());
-        bool ok = tox_conference_peer_get_name(tox.get(), groupId, i, namePtr, &error);
-        if (ok && PARSE_ERR(ToxErrConferencePeerQuery, error)) {
-            names.append(ToxString(name).getQString());
+        std::vector<uint8_t> nameBuf(length);
+        tox_conference_peer_get_name(tox.get(), groupId, i, nameBuf.data(), &error);
+        if (PARSE_ERR(ToxErrConferencePeerQuery, error)) {
+            names.append(ToxString(nameBuf.data(), length).getQString());
         }
     }
 
@@ -1678,22 +1668,17 @@ QString Core::getFriendUsername(uint32_t friendnumber) const
     QMutexLocker ml{&coreLoopLock};
 
     Tox_Err_Friend_Query error;
-    size_t namesize = tox_friend_get_name_size(tox.get(), friendnumber, &error);
-    if (!PARSE_ERR(ToxErrFriendQuery, error)) {
-        qWarning() << "getFriendUsername: Failed to get name size for friend " << friendnumber;
+    size_t nameSize = tox_friend_get_name_size(tox.get(), friendnumber, &error);
+    if (!PARSE_ERR(ToxErrFriendQuery, error) || !nameSize) {
         return QString();
     }
 
-    uint8_t* name = new uint8_t[namesize];
-    tox_friend_get_name(tox.get(), friendnumber, name, &error);
+    std::vector<uint8_t> nameBuf(nameSize);
+    tox_friend_get_name(tox.get(), friendnumber, nameBuf.data(), &error);
     if (!PARSE_ERR(ToxErrFriendQuery, error)) {
-        qWarning() << "getFriendUsername: Failed to get name of friend " << friendnumber;
-        delete[] name;
         return QString();
     }
-    ToxString sname(name, namesize);
-    delete[] name;
-    return sname.getQString();
+    return ToxString(nameBuf.data(), nameSize).getQString();
 }
 
 QStringList Core::splitMessage(const QString& message)
@@ -1744,31 +1729,27 @@ QString Core::getPeerName(const ToxPk& id) const
 {
     QMutexLocker ml{&coreLoopLock};
 
-    QString name;
     Tox_Err_Friend_By_Public_Key keyError;
     uint32_t friendId = tox_friend_by_public_key(tox.get(), id.getData(), &keyError);
     if (!PARSE_ERR(ToxErrFriendByPublicKey, keyError)) {
         qWarning() << "getPeerName: No such peer";
-        return name;
+        return {};
     }
 
     Tox_Err_Friend_Query queryError;
     const size_t nameSize = tox_friend_get_name_size(tox.get(), friendId, &queryError);
-    if (!PARSE_ERR(ToxErrFriendQuery, queryError)) {
-        return name;
+    if (!PARSE_ERR(ToxErrFriendQuery, queryError) || !nameSize) {
+        return {};
     }
 
-    uint8_t* cname = new uint8_t[nameSize < tox_max_name_length() ? tox_max_name_length() : nameSize];
-    tox_friend_get_name(tox.get(), friendId, cname, &queryError);
+    std::vector<uint8_t> nameBuf(nameSize);
+    tox_friend_get_name(tox.get(), friendId, nameBuf.data(), &queryError);
     if (!PARSE_ERR(ToxErrFriendQuery, queryError)) {
         qWarning() << "getPeerName: Can't get name of friend " + QString().setNum(friendId);
-        delete[] cname;
-        return name;
+        return {};
     }
 
-    name = ToxString(cname, nameSize).getQString();
-    delete[] cname;
-    return name;
+    return ToxString(nameBuf.data(), nameSize).getQString();
 }
 
 /**
