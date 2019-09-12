@@ -698,7 +698,7 @@ void Widget::onCoreChanged(Core& core)
 void Widget::onConnected()
 {
     ui->statusButton->setEnabled(true);
-    emit statusSet(core->getStatus());
+    emit core->statusSet(core->getStatus());
 }
 
 void Widget::onDisconnected()
