@@ -75,7 +75,8 @@ git patchelf tclsh libssl-dev cmake extra-cmake-modules build-essential \
 check checkinstall libavdevice-dev libexif-dev libgdk-pixbuf2.0-dev \
 libgtk2.0-dev libopenal-dev libopus-dev libqrencode-dev libqt5opengl5-dev \
 libqt5svg5-dev libsodium-dev libtool libvpx-dev libxss-dev \
-qt5-default qttools5-dev qttools5-dev-tools qtdeclarative5-dev
+qt5-default qttools5-dev qttools5-dev-tools qtdeclarative5-dev \
+fcitx-frontend-qt5 uim-qt5
 
 # get version
 cd "$QTOX_SRC_DIR"
