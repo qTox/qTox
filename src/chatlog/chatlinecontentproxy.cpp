@@ -78,6 +78,7 @@ QWidget* ChatLineContentProxy::getWidget() const
 
 void ChatLineContentProxy::setWidth(qreal width)
 {
+    prepareGeometryChange();
     proxy->widget()->setFixedWidth(qMax(static_cast<int>(width * widthPercent), widthMin));
 }
 
