@@ -592,7 +592,11 @@ void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uin
                               size_t length, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
-    QString author = core->getGroupPeerName(groupId, peerId);
+    QString author{};
+    // from tox.h: "If peer_number == UINT32_MAX, then author is unknown (e.g. initial joining the conference)."
+    if (peerId != std::numeric_limits<uint32_t>::max()) {
+        author = core->getGroupPeerName(groupId, peerId);
+    }
     emit core->saveRequest();
     emit core->groupTitleChanged(groupId, author, ToxString(cTitle, length).getQString());
 }
