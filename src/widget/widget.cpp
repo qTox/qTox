@@ -691,6 +691,7 @@ void Widget::onCoreChanged(Core& core)
     connect(this, &Widget::statusSet, &core, &Core::setStatus);
     connect(this, &Widget::friendRequested, &core, &Core::requestFriendship);
     connect(this, &Widget::friendRequestAccepted, &core, &Core::acceptFriendRequest);
+    connect(this, &Widget::changeGroupTitle, &core, &Core::changeGroupTitle);
 
     sharedMessageProcessorParams.setPublicKey(core.getSelfPublicKey().toString());
 }
@@ -2141,7 +2142,6 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     connect(widget, &GroupWidget::middleMouseClicked, this, [=]() { removeGroup(groupId); });
     connect(widget, &GroupWidget::chatroomWidgetClicked, form, &ChatForm::focusInput);
     connect(newgroup, &Group::titleChangedByUser, this, &Widget::titleChangedByUser);
-    connect(this, &Widget::changeGroupTitle, core, &Core::changeGroupTitle);
     connect(core, &Core::usernameSet, newgroup, &Group::setSelfName);
 
     FilterCriteria filter = getFilterCriteria();
