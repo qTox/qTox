@@ -194,6 +194,7 @@ private slots:
     void onFileInserted(RowId dbId, QString fileId);
 
 private:
+    bool historyAccessBlocked();
     static RawDatabase::Query generateFileFinished(RowId fileId, bool success,
                                                    const QString& filePath, const QByteArray& fileHash);
     std::shared_ptr<RawDatabase> db;
