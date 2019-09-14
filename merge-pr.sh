@@ -52,6 +52,7 @@ source_functions() {
 main() {
     local remote_name="upstream"
     local merge_branch="merge"
+    local base_branch=$(git branch | grep \* | cut -d ' ' -f2)
     source_functions
     exit_if_not_pr $PR
     add_remote
