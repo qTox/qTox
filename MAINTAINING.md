@@ -58,7 +58,9 @@ git config --global alias.logs 'log --show-signature'
   merge-commit **must** be signed. To simplify the process, and ensure that
   things are done "right", it's preferable to use the [`merge-pr.sh`] script,
   which does that for you automatically.
-- **use** [`merge-pr.sh`] script to merge PRs, e.g. `./merge-pr.sh 1234`.
+- **use** [`merge-pr.sh`] script to merge PRs. First checkout the target
+  branch, usually either `master` or a release dev branch e.g. `v1.17-dev`,
+  make sure it's up to date with qTox/qTox, then e.g. `./merge-pr.sh 1234`.
 
   You don't have to use it, but then you're running into risk of breaking
   travis build of master & other PRs, since it verifies all commit messages,
