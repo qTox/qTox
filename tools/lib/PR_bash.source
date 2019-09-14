@@ -60,24 +60,24 @@ add_remote() {
 after_merge_msg() {
     echo ""
     echo "PR #$PR was merged into «$@$PR» branch."
-    echo "To compare with master:"
+    echo "To compare with $base_branch:"
     echo ""
-    echo "  git diff master..$@$PR"
+    echo "  git diff $base_branch..$@$PR"
     echo ""
     if [[ "$@" == "merge" ]]
     then
-        echo "To push that to master on github:"
+        echo "To push that to $base_branch on github:"
         echo ""
-        echo "  git checkout master && git merge --ff $@$PR && git push upstream master"
+        echo "  git checkout $base_branch && git merge --ff $@$PR && git push upstream $base_branch"
         echo ""
-        echo "After pushing to master, delete branches:"
+        echo "After pushing to $base_branch, delete branches:"
         echo ""
         echo "  git branch -d {$@,}$PR"
         echo ""
     fi
     echo "To discard any changes:"
     echo ""
-    echo "  git checkout master && git branch -D {$@,}$PR"
+    echo "  git checkout $base_branch && git branch -D {$@,}$PR"
     echo ""
 }
 
@@ -88,7 +88,7 @@ after_merge_failure_msg() {
     echo ""
     echo "You may want to remove not merged branches, if they exist:"
     echo ""
-    echo "  git checkout master && git branch -D {$@,}$PR"
+    echo "  git checkout $base_branch && git branch -D {$@,}$PR"
     echo ""
 }
 
@@ -100,16 +100,13 @@ rm_obsolete_branch() {
 get_sources() {
     add_remote
     rm_obsolete_branch
-    git fetch $remote_name && \
-    git checkout master && \
-    git rebase $remote_name/master master && \
     git fetch $remote_name pull/$PR/head:$PR && \
-    git checkout master -b $merge_branch$PR
+    git checkout $base_branch -b $merge_branch$PR
 }
 
 # check whether to sign
 merge() {
     "${@}" --no-ff $PR -m "Merge pull request #$PR
 $OPT_MSG
-$(git shortlog master..$PR)"
+$(git shortlog $base_branch..$PR)"
 }
