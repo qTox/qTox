@@ -225,7 +225,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     }
 #endif
     else if (mode) {
-        qWarning() << "Video mode-setting not implemented for input " << iformat->name;
+        qWarning().nospace() << "No known options for " << iformat->name << ", using defaults.";
         Q_UNUSED(mode);
     }
 

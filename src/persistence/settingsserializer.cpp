@@ -330,7 +330,7 @@ void SettingsSerializer::readSerialized()
     // Decrypt
     if (ToxEncrypt::isEncrypted(data)) {
         if (!passKey) {
-            qCritical() << "The settings file is encrypted, but we don't have a passkey!";
+            qCritical() << "The settings file is encrypted, but we don't have a password!";
             return;
         }
 

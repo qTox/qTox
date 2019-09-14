@@ -786,7 +786,7 @@ void GenericChatForm::clearChatArea(bool confirm, bool inform)
     if (confirm) {
         QMessageBox::StandardButton mboxResult =
                 QMessageBox::question(this, tr("Confirmation"),
-                                      tr("You are sure that you want to clear all displayed messages?"),
+                                      tr("Are you sure that you want to clear all displayed messages?"),
                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
         if (mboxResult == QMessageBox::No) {
             return;

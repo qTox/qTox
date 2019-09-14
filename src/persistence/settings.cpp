@@ -70,7 +70,7 @@ Settings::Settings()
     , currentProfileId(0)
 {
     settingsThread = new QThread();
-    settingsThread->setObjectName("qTox Settings");
+    settingsThread->setObjectName("qTox settings");
     settingsThread->start(QThread::LowPriority);
     moveToThread(settingsThread);
     loadGlobal();
@@ -349,7 +349,7 @@ bool Settings::verifyProxySettings(const QCommandLineParser& parser)
     }
 
     if (activeProxyType && LANSettingString == ON) {
-        qCritical() << "Cannot set LAN discovery on with proxy.";
+        qCritical() << "Cannot use LAN discovery with proxy.";
         return false;
     }
 
@@ -1412,7 +1412,7 @@ QNetworkProxy Settings::getProxy() const
         break;
     default:
         proxy.setType(QNetworkProxy::NoProxy);
-        qWarning() << "Invalid Proxy type, setting to NoProxy";
+        qWarning() << "Invalid proxy type, setting to NoProxy";
         break;
     }
 

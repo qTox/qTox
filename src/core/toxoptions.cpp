@@ -72,7 +72,7 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
     Tox_Options* tox_opts = tox_options_new(nullptr);
 
     if (!tox_opts) {
-        qWarning() << "failed to create Tox_Options";
+        qWarning() << "Failed to create Tox_Options";
         return {};
     }
 
@@ -119,9 +119,9 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
 
     if (proxyType != ICoreSettings::ProxyType::ptNone) {
         if (static_cast<uint32_t>(proxyAddr.length()) > tox_max_hostname_length()) {
-            qWarning() << "proxy address" << proxyAddr << "is too long";
+            qWarning() << "Proxy address" << proxyAddr << "is too long";
         } else if (!proxyAddr.isEmpty() && proxyPort > 0) {
-            qDebug() << "using proxy" << proxyAddr << ":" << proxyPort;
+            qDebug() << "Using proxy" << proxyAddr << ":" << proxyPort;
             // protection against changings in Tox_Proxy_Type enum
             if (proxyType == ICoreSettings::ProxyType::ptSOCKS5) {
                 tox_options_set_proxy_type(*toxOptions, TOX_PROXY_TYPE_SOCKS5);
@@ -133,7 +133,7 @@ std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedat
             tox_options_set_proxy_port(*toxOptions, proxyPort);
 
             if (!forceTCP) {
-                qDebug() << "Proxy and UDP enabled, this is a security risk, forcing TCP only";
+                qDebug() << "Proxy and UDP enabled. This is a security risk. Forcing TCP only.";
                 forceTCP = true;
             }
         }

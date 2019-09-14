@@ -360,7 +360,7 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
          <property name="title">
-          <string>Known Issues</string>
+          <string>Known issues</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>

@@ -34,7 +34,7 @@ FriendRequestDialog::FriendRequestDialog(QWidget* parent, const QString& userId,
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Friend request", "Title of the window to aceept/deny a friend request"));
 
-    QLabel* friendsLabel = new QLabel(tr("Someone wants to make friends with you"), this);
+    QLabel* friendsLabel = new QLabel(tr("Someone wants to add you as a friend"), this);
     QLabel* userIdLabel = new QLabel(tr("User ID:"), this);
     QLineEdit* userIdEdit = new QLineEdit(userId, this);
     userIdEdit->setCursorPosition(0);

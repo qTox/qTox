@@ -293,7 +293,7 @@ void OpenAL::destroySink(AlSink& sink)
     const auto soundSinksErased = soundSinks.erase(&sink);
 
     if (sinksErased == 0 && soundSinksErased == 0) {
-        qWarning() << "Destroying non-existant source";
+        qWarning() << "Erasing non-existent source";
         return;
     }
 
@@ -350,7 +350,7 @@ void OpenAL::destroySource(AlSource& source)
 
     const auto s = sources.find(&source);
     if (s == sources.end()) {
-        qWarning() << "Destroyed non-existant source";
+        qWarning() << "Erased non-existent source";
         return;
     }
 
@@ -446,7 +446,7 @@ bool OpenAL::initOutput(const QString& deviceName)
     alOutDev = alcOpenDevice(tmpDevName);
 
     if (!alOutDev) {
-        qWarning() << "Cannot open output audio device" << deviceName;
+        qWarning() << "Cannot open audio output device" << deviceName;
         return false;
     }
 
@@ -455,7 +455,7 @@ bool OpenAL::initOutput(const QString& deviceName)
     checkAlcError(alOutDev);
 
     if (!alcMakeContextCurrent(alOutContext)) {
-        qWarning() << "Cannot create output audio context";
+        qWarning() << "Cannot create audio output context";
         return false;
     }
 
@@ -475,7 +475,7 @@ void OpenAL::playMono16Sound(AlSink& sink, const IAudioSink::Sound& sound)
     const uint sourceId = sink.getSourceId();
     QFile sndFile(IAudioSink::getSound(sound));
     if (!sndFile.exists()) {
-        qDebug() << "Trying to open non existent sound file";
+        qDebug() << "Trying to open non-existent sound file";
         return;
     }
 
@@ -600,7 +600,7 @@ void OpenAL::cleanupOutput()
 
     if (alOutDev) {
         if (!alcMakeContextCurrent(nullptr)) {
-            qWarning("Failed to clear audio context.");
+            qWarning("Failed to clear audio context");
         }
 
         alcDestroyContext(alOutContext);
@@ -610,7 +610,7 @@ void OpenAL::cleanupOutput()
         if (alcCloseDevice(alOutDev)) {
             alOutDev = nullptr;
         } else {
-            qWarning("Failed to close output.");
+            qWarning("Failed to close output");
         }
     }
 }

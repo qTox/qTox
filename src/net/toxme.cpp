@@ -97,7 +97,7 @@ QByteArray Toxme::prepareEncryptedJson(QString url, int action, QString payload)
 {
     QPair<QByteArray, QByteArray> keypair = Core::getInstance()->getKeypair();
     if (keypair.first.isEmpty() || keypair.second.isEmpty()) {
-        qWarning() << "prepareEncryptedJson: Couldn't get our keypair, aborting";
+        qWarning() << "prepareEncryptedJson: Couldn't get keypair, aborting";
         return QByteArray();
     }
 
@@ -225,13 +225,13 @@ QString Toxme::getErrorMessage(int errorCode)
     case ToxmeData::NoPassword:
         return "No password in response";
     case ToxmeData::ServerError:
-        return "Server doesn't support Toxme";
+        return "Server doesn't support ToxMe";
     case -1:
         return "You must send POST requests to /api";
     case -2:
         return "Problem with HTTPS connection";
     case -3:
-        return "I was unable to read your encrypted payload";
+        return "Unable to read encrypted payload";
     case -4:
         return "You're making too many requests. Wait an hour and try again";
     case -25:
@@ -253,7 +253,7 @@ QString Toxme::getErrorMessage(int errorCode)
     case -42:
         return "That user does not exist";
     case -43:
-        return "Internal lookup error. Please file a bug";
+        return "Internal lookup error. Please file a bug report.";
     default:
         return QString("Unknown error (%1)").arg(errorCode);
     }
@@ -268,7 +268,7 @@ QString Toxme::translateErrorMessage(int errorCode)
 {
     switch (errorCode) {
     case ToxmeData::ServerError:
-        return QObject::tr("Server doesn't support Toxme");
+        return QObject::tr("Server doesn't support ToxMe");
     case -2:
         return QObject::tr("Problem with HTTPS connection");
     case -4:

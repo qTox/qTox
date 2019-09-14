@@ -209,7 +209,7 @@ void FriendListWidget::sortByMode(SortingMode mode)
             { Time::Yesterday, tr("Yesterday",                  COMMENT) },
             { Time::ThisWeek,  tr("Last 7 days",                COMMENT) },
             { Time::ThisMonth, tr("This month",                 COMMENT) },
-            { Time::LongAgo,   tr("Older than 6 Months",        COMMENT) },
+            { Time::LongAgo,   tr("Older than 6 months",        COMMENT) },
             { Time::Never,     tr("Never",                      COMMENT) },
             { Time::Month1Ago, ql.monthName(today.addMonths(-1).month()) },
             { Time::Month2Ago, ql.monthName(today.addMonths(-2).month()) },

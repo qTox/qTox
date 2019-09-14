@@ -233,7 +233,7 @@ void FileTransferWidget::paintEvent(QPaintEvent*)
 
 QString FileTransferWidget::getHumanReadableSize(qint64 size)
 {
-    static const char* suffix[] = {"B", "kiB", "MiB", "GiB", "TiB"};
+    static const char* suffix[] = {"B", "KiB", "MiB", "GiB", "TiB"};
     int exp = 0;
 
     if (size > 0) {
@@ -287,7 +287,7 @@ void FileTransferWidget::updateWidgetText(ToxFile const& file)
         if (file.pauseStatus.localPaused()) {
             ui->progressLabel->setText(tr("Paused", "file transfer widget"));
         } else {
-            ui->progressLabel->setText(tr("Remote Paused", "file transfer widget"));
+            ui->progressLabel->setText(tr("Remote paused", "file transfer widget"));
         }
         break;
     case ToxFile::TRANSMITTING:

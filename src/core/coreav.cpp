@@ -126,7 +126,7 @@ CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core)
     case TOXAV_ERR_NEW_OK:
         break;
     case TOXAV_ERR_NEW_MALLOC:
-        qCritical() << "Failed to allocate ressources for ToxAV";
+        qCritical() << "Failed to allocate resources for ToxAV";
         return {};
     case TOXAV_ERR_NEW_MULTIPLE:
         qCritical() << "Attempted to create multiple ToxAV instances";
@@ -260,7 +260,7 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
         return ret;
     }
 
-    qDebug() << QString("answering call %1").arg(friendNum);
+    qDebug() << QString("Answering call %1").arg(friendNum);
     auto it = calls.find(friendNum);
     assert(it != calls.end());
     TOXAV_ERR_ANSWER err;
@@ -544,8 +544,7 @@ VideoSource* CoreAV::getVideoSourceFromCall(int friendNum) const
 {
     auto it = calls.find(friendNum);
     if (it == calls.end()) {
-        qWarning() << "CoreAV::getVideoSourceFromCall: No such call, did it die before we finished "
-                      "answering?";
+        qWarning() << "CoreAV::getVideoSourceFromCall: No such call, possibly cancelled";
         return nullptr;
     }
 
@@ -738,7 +737,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         /// but since currently the toxav callbacks are fired from the toxcore thread,
         /// we'll always reach this point through a non-blocking queud connection, so not in the
         /// callback.
-        qWarning() << QString("Rejecting call invite from %1, we're already in that call!").arg(friendNum);
+        qWarning() << QString("Rejecting call invite from %1, you're already in that call!").arg(friendNum);
         toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
         return;
     }

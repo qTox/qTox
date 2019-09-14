@@ -68,7 +68,7 @@ bool handleToxURI(const QString& toxURI)
     if (!toxId.isValid()) {
         toxId = Toxme::lookup(toxaddr);
         if (!toxId.isValid()) {
-            error = QMessageBox::tr("%1 is not a valid Toxme address.").arg(toxaddr);
+            error = QMessageBox::tr("%1 is not a valid ToxMe address.").arg(toxaddr);
         }
     } else if (toxId == core->getSelfId()) {
         error = QMessageBox::tr("You can't add yourself as a friend!",

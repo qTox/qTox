@@ -37,7 +37,7 @@ public:
     ~UserInterfaceForm();
     virtual QString getFormName() final override
     {
-        return tr("User Interface");
+        return tr("User interface");
     }
 
 private slots:
