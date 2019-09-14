@@ -38,7 +38,7 @@
        <item>
         <widget class="QGroupBox" name="audioGroup">
          <property name="title">
-          <string>Audio Settings</string>
+          <string>Audio settings</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
           <property name="bottomMargin">
@@ -64,7 +64,7 @@
           <item row="1" column="1">
            <widget class="QSlider" name="playbackSlider">
             <property name="toolTip">
-             <string>Use slider to set volume of your speakers.</string>
+             <string>Use slider to set the volume of your speakers.</string>
             </property>
             <property name="maximum">
              <number>100</number>
@@ -155,7 +155,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</string>
+             <string>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</string>
             </property>
            </widget>
           </item>
@@ -178,7 +178,7 @@
        <item>
         <widget class="QGroupBox" name="videoGroup">
          <property name="title">
-          <string>Video Settings</string>
+          <string>Video settings</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
@@ -215,7 +215,7 @@ which may lead to problems with video calls.</string>
               <property name="toolTip">
                <string>Set resolution of your camera.
 The higher values, the better video quality your friends may get.
-Note though that with better video quality there is needed better internet connection.
+Note that with better video quality, you use more bandwidth.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</string>
               </property>

@@ -63,7 +63,7 @@ void SetPasswordDialog::onPasswordEdit()
         ui->body->setText(body);
     } else if (pswd.length() < 6) {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-        ui->body->setText(body + tr("The password is too short"));
+        ui->body->setText(body + tr("The password is too short."));
     } else if (pswd != ui->repasswordlineEdit->text()) {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
         ui->body->setText(body + tr("The password doesn't match."));

@@ -711,7 +711,7 @@ void Widget::onFailedToStartCore()
 {
     QMessageBox critical(this);
     critical.setText(tr(
-        "toxcore failed to start, the application will terminate after you close this message."));
+        "Toxcore failed to start, the application will terminate after you close this message."));
     critical.setIcon(QMessageBox::Critical);
     critical.exec();
     qApp->exit(EXIT_FAILURE);
@@ -721,7 +721,7 @@ void Widget::onBadProxyCore()
 {
     settings.setProxyType(Settings::ProxyType::ptNone);
     QMessageBox critical(this);
-    critical.setText(tr("toxcore failed to start with your proxy settings. "
+    critical.setText(tr("Toxcore failed to start with your proxy settings. "
                         "qTox cannot run; please modify your "
                         "settings and restart.",
                         "popup text"));
@@ -1212,7 +1212,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
 void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
 {
-    QString info = QString(tr("Couldn't request friendship"));
+    QString info = QString(tr("Couldn't send friend request"));
     if (!errorInfo.isEmpty()) {
         info = info + QStringLiteral(": ") + errorInfo;
     }
@@ -2586,7 +2586,7 @@ void Widget::friendRequestsUpdate()
     }
 
     if (friendRequestsButton) {
-        friendRequestsButton->setText(tr("%n New Friend Request(s)", "", unreadFriendRequests));
+        friendRequestsButton->setText(tr("%n new friend request(s)", "", unreadFriendRequests));
     }
 }
 
@@ -2604,7 +2604,7 @@ void Widget::groupInvitesUpdate()
     }
 
     if (groupInvitesButton) {
-        groupInvitesButton->setText(tr("%n New Group Invite(s)", "", unreadGroupInvites));
+        groupInvitesButton->setText(tr("%n new group invite(s)", "", unreadGroupInvites));
     }
 }
 
@@ -2632,22 +2632,22 @@ void Widget::retranslateUi()
     setUsername(core->getUsername());
     setStatusMessage(core->getStatusMessage());
 
-    filterDisplayName->setText(tr("By Name"));
-    filterDisplayActivity->setText(tr("By Activity"));
+    filterDisplayName->setText(tr("By name"));
+    filterDisplayActivity->setText(tr("By activity"));
     filterAllAction->setText(tr("All"));
     filterOnlineAction->setText(tr("Online"));
     filterOfflineAction->setText(tr("Offline"));
     filterFriendsAction->setText(tr("Friends"));
     filterGroupsAction->setText(tr("Groups"));
-    ui->searchContactText->setPlaceholderText(tr("Search Contacts"));
+    ui->searchContactText->setPlaceholderText(tr("Search contacts"));
     updateFilterText();
 
-    ui->searchContactText->setPlaceholderText(tr("Search Contacts"));
+    ui->searchContactText->setPlaceholderText(tr("Search contacts"));
     statusOnline->setText(tr("Online", "Button to set your status to 'Online'"));
     statusAway->setText(tr("Away", "Button to set your status to 'Away'"));
     statusBusy->setText(tr("Busy", "Button to set your status to 'Busy'"));
     actionLogout->setText(tr("Logout", "Tray action menu to logout user"));
-    actionQuit->setText(tr("Exit", "Tray action menu to exit tox"));
+    actionQuit->setText(tr("Exit", "Tray action menu to exit Tox"));
     actionShow->setText(tr("Show", "Tray action menu to show qTox window"));
 
     if (!settings.getSeparateWindow() && (settingsWidget && settingsWidget->isShown())) {
@@ -2666,12 +2666,12 @@ void Widget::retranslateUi()
     fileMenu->setText(tr("File"));
     editMenu->setText(tr("Edit"));
     contactMenu->setText(tr("Contacts"));
-    changeStatusMenu->menuAction()->setText(tr("Change Status"));
-    editProfileAction->setText(tr("Edit Profile"));
-    logoutAction->setText(tr("Log out"));
-    addContactAction->setText(tr("Add Contact..."));
-    nextConversationAction->setText(tr("Next Conversation"));
-    previousConversationAction->setText(tr("Previous Conversation"));
+    changeStatusMenu->menuAction()->setText(tr("Change status"));
+    editProfileAction->setText(tr("Edit profile"));
+    logoutAction->setText(tr("Logout"));
+    addContactAction->setText(tr("Add contact..."));
+    nextConversationAction->setText(tr("Next conversation"));
+    previousConversationAction->setText(tr("Previous conversation"));
 #endif
 }
 

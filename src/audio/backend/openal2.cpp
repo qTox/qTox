@@ -194,7 +194,7 @@ bool OpenAL2::initOutputEchoCancel()
         return false;
     }
 
-    qDebug() << "Echo cancelation enabled";
+    qDebug() << "Echo cancellation enabled";
     return true;
 }
 
@@ -218,7 +218,7 @@ bool OpenAL2::initOutput(const QString& deviceName)
     alOutDev = alcOpenDevice(tmpDevName);
 
     if (!alOutDev) {
-        qWarning() << "Cannot open output audio device" << deviceName;
+        qWarning() << "Cannot open audio output device" << deviceName;
         return false;
     }
 
@@ -227,7 +227,7 @@ bool OpenAL2::initOutput(const QString& deviceName)
     checkAlcError(alOutDev);
 
     if (!alcMakeContextCurrent(alOutContext)) {
-        qWarning() << "Cannot create output audio context";
+        qWarning() << "Cannot create audio output context";
         return false;
     }
 
