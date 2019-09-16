@@ -131,10 +131,8 @@ CameraSource& CameraSource::getInstance()
 
 void CameraSource::destroyInstance()
 {
-    if (instance) {
-        delete instance;
-        instance = nullptr;
-    }
+    delete instance;
+    instance = nullptr;
 }
 
 /**
