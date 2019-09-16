@@ -488,6 +488,7 @@ void Core::onFriendMessage(Tox*, uint32_t friendId, Tox_Message_Type type, const
 void Core::onFriendNameChange(Tox*, uint32_t friendId, const uint8_t* cName, size_t cNameSize, void* core)
 {
     QString newName = ToxString(cName, cNameSize).getQString();
+    // no saveRequest, this callback is called on every connection, not just on name change
     emit static_cast<Core*>(core)->friendUsernameChanged(friendId, newName);
 }
 
@@ -500,6 +501,7 @@ void Core::onStatusMessageChanged(Tox*, uint32_t friendId, const uint8_t* cMessa
                                   size_t cMessageSize, void* core)
 {
     QString message = ToxString(cMessage, cMessageSize).getQString();
+    // no saveRequest, this callback is called on every connection, not just on name change
     emit static_cast<Core*>(core)->friendStatusMessageChanged(friendId, message);
 }
 
@@ -520,6 +522,7 @@ void Core::onUserStatusChanged(Tox*, uint32_t friendId, Tox_User_Status userstat
         break;
     }
 
+    // no saveRequest, this callback is called on every connection, not just on name change
     emit static_cast<Core*>(core)->friendStatusChanged(friendId, status);
 }
 
@@ -571,6 +574,7 @@ void Core::onGroupPeerListChange(Tox*, uint32_t groupId, void* vCore)
 {
     const auto core = static_cast<Core*>(vCore);
     qDebug() << QString("Group %1 peerlist changed").arg(groupId);
+    // no saveRequest, this callback is called on every connection to group peer, not just on brand new peers
     emit core->groupPeerlistChanged(groupId);
 }
 
@@ -589,6 +593,7 @@ void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uin
 {
     Core* core = static_cast<Core*>(vCore);
     QString author = core->getGroupPeerName(groupId, peerId);
+    emit core->saveRequest();
     emit core->groupTitleChanged(groupId, author, ToxString(cTitle, length).getQString());
 }
 
@@ -752,6 +757,7 @@ void Core::changeGroupTitle(int groupId, const QString& title)
     Tox_Err_Conference_Title error;
     bool success = tox_conference_set_title(tox.get(), groupId, cTitle.data(), cTitle.size(), &error);
     if (success && error == TOX_ERR_CONFERENCE_TITLE_OK) {
+        emit saveRequest();
         emit groupTitleChanged(groupId, getUsername(), title);
         return;
     }
@@ -795,6 +801,7 @@ void Core::removeGroup(int groupId)
     Tox_Err_Conference_Delete error;
     bool success = tox_conference_delete(tox.get(), groupId, &error);
     if (success && error == TOX_ERR_CONFERENCE_DELETE_OK) {
+        emit saveRequest();
         av->leaveGroupCall(groupId);
         return;
     }
@@ -1323,6 +1330,7 @@ uint32_t Core::joinGroupchat(const GroupInvite& inviteInfo)
         qWarning() << "joinGroupchat: Unknown groupchat type " << confType;
     }
     if (groupNum != std::numeric_limits<uint32_t>::max()) {
+        emit saveRequest();
         emit groupJoined(groupNum, getGroupPersistentId(groupNum));
     }
     return groupNum;
@@ -1362,6 +1370,7 @@ int Core::createGroup(uint8_t type)
 
         switch (error) {
         case TOX_ERR_CONFERENCE_NEW_OK:
+            emit saveRequest();
             emit emptyGroupCreated(groupId, getGroupPersistentId(groupId));
             return groupId;
 
@@ -1374,6 +1383,7 @@ int Core::createGroup(uint8_t type)
         }
     } else if (type == TOX_CONFERENCE_TYPE_AV) {
         uint32_t groupId = toxav_add_av_groupchat(tox.get(), CoreAV::groupCallCallback, this);
+        emit saveRequest();
         emit emptyGroupCreated(groupId, getGroupPersistentId(groupId));
         return groupId;
     } else {

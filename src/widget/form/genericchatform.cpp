@@ -1199,7 +1199,7 @@ void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& line)
 {
     const auto date = getTime(line);
 
-    if (date.isValid() && date != QDateTime::currentDateTime()) {
+    if (date.isValid() && date.date() != QDate::currentDate()) {
         const auto dateText = QStringLiteral("<b>%1<\b>").arg(date.toString(Settings::getInstance().getDateFormat()));
         dateInfo->setText(dateText);
         dateInfo->setVisible(true);
