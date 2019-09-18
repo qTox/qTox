@@ -861,8 +861,8 @@ fi
 # VPX
 
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
-VPX_VERSION=v1.8.0
-VPX_HASH="86df18c694e1c06cc8f83d2d816e9270747a0ce6abe316e93a4f4095689373f6"
+VPX_VERSION=v1.8.1
+VPX_HASH="df19b8f24758e90640e1ab228ab4a4676ec3df19d23e4593375e6f3847dee03e"
 VPX_FILENAME="libvpx-$VPX_VERSION.tar.gz"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
@@ -878,11 +878,17 @@ then
   if [[ "$ARCH" == "x86_64" ]]
   then
     VPX_TARGET=x86_64-win64-gcc
+    # There is a bug in gcc that breaks avx512 on 64-bit Windows https://gcc.gnu.org/bugzilla/show_bug.cgi?id=54412
+    # VPX fails to build due to it.
+    # This is a workaround as suggested in https://stackoverflow.com/questions/43152633
+    VPX_CFLAGS="-fno-asynchronous-unwind-tables"
   elif [[ "$ARCH" == "i686" ]]
   then
     VPX_TARGET=x86-win32-gcc
+    VPX_CFLAGS=""
   fi
 
+  CFLAGS="$VPX_CFLAGS" \
   CROSS="$ARCH-w64-mingw32-" ./configure --target="$VPX_TARGET" \
                                          --prefix="$VPX_PREFIX_DIR" \
                                          --disable-shared \
