@@ -271,12 +271,12 @@ fi
 
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
-QT_MINOR=9
-QT_PATCH=8
+QT_MINOR=12
+QT_PATCH=5
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.9/5.9.8/single/qt-everywhere-opensource-src-5.9.8.tar.xz.mirrorlist
-QT_HASH="86aca7dc37f161fc730a9d4f6bddf684962ca560327682e282ff61bf8b859c36"
-QT_FILENAME="qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
+# hash from https://download.qt.io/archive/qt/5.12/5.12.5/single/qt-everywhere-src-5.12.5.tar.xz.mirrorlist
+QT_HASH="a2299e21db7767caf98242767bffb18a2a88a42fee2d6a393bedd234f8c91298"
+QT_FILENAME="qt-everywhere-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
   rm -rf "$QT_PREFIX_DIR"
@@ -322,7 +322,6 @@ then
     -skip datavis3d \
     -skip declarative \
     -skip doc \
-    -skip enginio \
     -skip gamepad \
     -skip graphicaleffects \
     -skip imageformats \
@@ -345,13 +344,13 @@ then
     -skip wayland \
     -skip webchannel \
     -skip webengine \
+    -skip webglplugin \
     -skip websockets \
     -skip webview \
     -skip x11extras \
     -skip xmlpatterns \
     -no-dbus \
     -no-icu \
-    -no-qml-debug \
     -no-compile-examples \
     -qt-libjpeg \
     -qt-libpng \
