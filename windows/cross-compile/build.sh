@@ -38,9 +38,9 @@ readonly QTOX_SRC_DIR="/qtox"
 
 
 # Make sure we run in an expected environment
-if [ ! -f /etc/os-release ] || ! cat /etc/os-release | grep -qi 'stretch'
+if [ ! -f /etc/os-release ] || ! cat /etc/os-release | grep -qi 'buster'
 then
-  echo "Error: This script should be run on Debian Stretch."
+  echo "Error: This script should be run on Debian Buster."
   exit 1
 fi
 
@@ -136,6 +136,7 @@ apt-get install -y --no-install-recommends \
                    cmake \
                    git \
                    libtool \
+                   nsis \
                    pkg-config \
                    tclsh \
                    unzip \
@@ -985,78 +986,6 @@ then
 else
   echo "Using cached build of mingw-w64-debug-scripts `cat $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done`"
 fi
-
-
-# NSIS
-
-NSIS_PREFIX_DIR="$DEP_DIR/nsis"
-NSIS_VERSION="Debian Unstable"
-#NSIS_HASH=
-if [ ! -f "$NSIS_PREFIX_DIR/done" ]
-then
-  rm -rf "$NSIS_PREFIX_DIR"
-  mkdir -p "$NSIS_PREFIX_DIR"
-
-  # We want to use NSIS 3, instead of NSIS 2, because it added Windows 8 and 10
-  # support, as well as unicode support. NSIS 3 is not packaged in Debian Stretch
-  # and building it manually appears to be quite a challenge. Luckily it's
-  # packaged in Debian Unstable, so we can backport it to our Debian version
-  # with little effort, utilizing maintainer's build script.
-
-  # Keep the indentation of the next echo command as it is, as apt seems to
-  # ignore preferences starting with whitespace.
-  echo "
-Package: *
-Pin: Release a=unstable
-Pin-Priority: -1
-  " >> /etc/apt/preferences
-  echo "
-  # Needed for NSIS 3
-  deb http://httpredir.debian.org/debian unstable main
-  deb-src http://httpredir.debian.org/debian unstable main
-  " >> /etc/apt/sources.list
-  apt-get update
-  # Get dependencies required for building NSIS
-  apt-get install -y --no-install-recommends \
-    build-essential \
-    devscripts \
-    docbook-xsl-ns \
-    docbook5-xml \
-    dpkg-dev \
-    fakeroot \
-    html2text \
-    libcppunit-dev \
-    mingw-w64 \
-    scons \
-    xsltproc \
-    zlib1g-dev
-  apt-get -t unstable install -y --no-install-recommends debhelper
-  mkdir nsis-build
-  cd nsis-build
-  apt-get -t unstable source nsis
-
-  cd nsis-*
-  # The build script is not parallel enough, this speeds things up greatly
-  sed -i "s/scons / scons -j `nproc` /" debian/rules
-  DEB_BUILD_OPTIONS="parallel=`nproc` nocheck" debuild -b -uc -us
-  cd ..
-  mv nsis-common_*.deb "$NSIS_PREFIX_DIR"
-  mv nsis-doc_*.deb "$NSIS_PREFIX_DIR"
-  mv nsis_*.deb "$NSIS_PREFIX_DIR"
-  mv nsis-pluginapi_*.deb "$NSIS_PREFIX_DIR"
-
-  cd ..
-  rm -rf ./nsis-build
-
-  echo -n $NSIS_VERSION > $NSIS_PREFIX_DIR/done
-else
-  echo "Using cached build of NSIS `cat $NSIS_PREFIX_DIR/done`"
-fi
-# Install NSIS
-dpkg -i "$NSIS_PREFIX_DIR"/nsis-common_*.deb
-dpkg -i "$NSIS_PREFIX_DIR"/nsis-doc_*.deb
-dpkg -i "$NSIS_PREFIX_DIR"/nsis_*.deb
-dpkg -i "$NSIS_PREFIX_DIR"/nsis-pluginapi_*.deb
 
 
 # NSIS ShellExecAsUser plugin
