@@ -229,9 +229,9 @@ store_apt_cache()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.0.2s
+OPENSSL_VERSION=1.1.1d
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="cabd5c9492825ce5bd23f3c3aeed6a97f8142f606d893df216411f07d1abab96"
+OPENSSL_HASH="1e3a91bc1f9dfce01af26026f856e064eab4c8ee0a8f457b5ae30b40b8b711f2"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
@@ -244,7 +244,7 @@ then
   rm $OPENSSL_FILENAME
   cd openssl*
 
-  CONFIGURE_OPTIONS="--prefix=$OPENSSL_PREFIX_DIR shared"
+  CONFIGURE_OPTIONS="--prefix=$OPENSSL_PREFIX_DIR --openssldir=${OPENSSL_PREFIX_DIR}/ssl shared"
   if [[ "$ARCH" == "x86_64" ]]
   then
     CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS mingw64 --cross-compile-prefix=x86_64-w64-mingw32-"
@@ -1106,8 +1106,8 @@ cp -r $QT_PREFIX_DIR/plugins/imageformats \
       $QT_PREFIX_DIR/plugins/iconengines \
       $QTOX_PREFIX_DIR
 cp $OPENAL_PREFIX_DIR/bin/OpenAL32.dll $QTOX_PREFIX_DIR
-cp $OPENSSL_PREFIX_DIR/bin/ssleay32.dll \
-   $OPENSSL_PREFIX_DIR/bin/libeay32.dll \
+cp $OPENSSL_PREFIX_DIR/bin/libssl-*.dll \
+   $OPENSSL_PREFIX_DIR/bin/libcrypto-*.dll \
    $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
