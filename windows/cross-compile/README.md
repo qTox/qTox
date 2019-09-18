@@ -45,19 +45,19 @@ To start cross-compiling for 32-bit release version of qTox run:
 sudo docker run --rm \
                 -v /absolute/path/to/your/workspace:/workspace \
                 -v /absolute/path/to/your/qtox:/qtox \
-                debian:stretch-slim \
+                debian:buster-slim \
                 /bin/bash /qtox/windows/cross-compile/build.sh i686 release
 ```
 
 If you want to debug some compilation issue, you might want to instead run:
 
 ```sh
-# Get shell inside Debian Stretch container so that you can poke around if needed
+# Get shell inside Debian Buster container so that you can poke around if needed
 sudo docker run -it \
                 --rm \
                 -v /absolute/path/to/your/workspace:/workspace \
                 -v /absolute/path/to/your/qtox:/qtox \
-                debian:stretch-slim \
+                debian:buster-slim \
                 /bin/bash
 # Run the script
 bash /qtox/windows/cross-compile/build.sh i686 release
@@ -106,7 +106,6 @@ workspace
 │   │   ├── libtoxcore
 │   │   ├── libvpx
 │   │   ├── mingw-w64-debug-scripts
-│   │   ├── nsis
 │   │   └── nsis_shellexecuteasuser
 │   └── qtox
 │       ├── debug
@@ -126,7 +125,6 @@ workspace
     │   ├── libtoxcore
     │   ├── libvpx
     │   ├── mingw-w64-debug-scripts
-    │   ├── nsis
     │   └── nsis_shellexecuteasuser
     └── qtox
         ├── debug

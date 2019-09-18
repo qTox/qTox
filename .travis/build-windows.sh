@@ -113,7 +113,7 @@ sudo docker run --rm \
                 -v "$PWD/workspace":/workspace \
                 -v "$PWD":/qtox \
                 -e TRAVIS_CI_STAGE="$STAGE" \
-                debian:stretch-slim \
+                debian:buster-slim \
                 /bin/bash /qtox/windows/cross-compile/build.sh "$ARCH" "$BUILD_TYPE"
 
 # Purely for debugging
