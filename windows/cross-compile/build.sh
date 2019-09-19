@@ -550,6 +550,26 @@ then
   git checkout $OPENAL_VERSION
   check_sha256_git "$OPENAL_HASH"
 
+# https://github.com/microsoft/vcpkg/blob/3baf583934f3077070e9ed4e7684f743ecced577/ports/openal-soft/cmake-3-11.patch
+> cmake-3-11.patch cat << "EOF"
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a871f4c..f9f6b34 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -965,7 +965,8 @@ OPTION(ALSOFT_REQUIRE_DSOUND "Require DirectSound backend" OFF)
+ OPTION(ALSOFT_REQUIRE_MMDEVAPI "Require MMDevApi backend" OFF)
+ IF(HAVE_WINDOWS_H)
+     # Check MMSystem backend
+-    CHECK_INCLUDE_FILES("windows.h;mmsystem.h" HAVE_MMSYSTEM_H -D_WIN32_WINNT=0x0502)
++    set(CMAKE_REQUIRED_DEFINITIONS -D_WIN32_WINNT=0x0502)
++    CHECK_INCLUDE_FILES("windows.h;mmsystem.h" HAVE_MMSYSTEM_H)
+     IF(HAVE_MMSYSTEM_H)
+         CHECK_SHARED_FUNCTION_EXISTS(waveOutOpen "windows.h;mmsystem.h" winmm "" HAVE_LIBWINMM)
+         IF(HAVE_LIBWINMM)
+EOF
+
+  patch -l < cmake-3-11.patch
+
   mkdir -p build
   cd build
 
