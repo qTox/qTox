@@ -666,9 +666,12 @@ void GenericChatForm::loadHistory(const QDateTime &time, const LoadHistoryDialog
 
     if (type == LoadHistoryDialog::from) {
         loadHistoryFrom(time);
-        auto msg = messages.cbegin()->second;
-        chatWidget->setScroll(true);
-        chatWidget->scrollToLine(msg);
+        if (!messages.empty())
+        {
+            auto msg = messages.cbegin()->second;
+            chatWidget->setScroll(true);
+            chatWidget->scrollToLine(msg);
+        }
     } else {
         loadHistoryTo(time);
     }
