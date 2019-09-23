@@ -7,7 +7,6 @@
     - [Gentoo](#gentoo-easy)
     - [openSUSE](#opensuse-easy)
     - [Slackware](#slackware-easy)
-    - [FreeBSD](#freebsd-easy)
   - [Install git](#install-git)
     - [Arch](#arch-git)
     - [Debian](#debian-git)
@@ -27,6 +26,8 @@
   - [Compile toxcore](#compile-toxcore)
   - [Compile qTox](#compile-qtox)
   - [Security hardening with AppArmor](#security-hardening-with-apparmor)
+- [BSD](#bsd)
+  - [FreeBSD](#freebsd-easy)
 - [OS X](#osx)
 - [Windows](#windows)
   - [Cross-compile from Linux](#cross-compile-from-linux)
@@ -198,24 +199,6 @@ zypper in qtox
 
 qTox SlackBuild and all of its dependencies can be found here:
 http://slackbuilds.org/repository/14.2/network/qTox/
-
-<a name="freebsd-easy" />
-
-#### FreeBSD
-
-qTox is available as a binary package. To install the qTox package:
-
-```bash
-pkg install qTox
-```
-
-The qTox port is also available at ``net-im/qTox``. To build and install qTox
-from sources using the port:
-
-```bash
-cd /usr/ports/net-im/qTox
-make install clean
-```
 
 ----
 
@@ -589,6 +572,25 @@ password for sudo.
 
 See [AppArmor] to enable confinement for increased security.
 
+## BSD
+
+<a name="freebsd-easy" />
+
+#### FreeBSD
+
+qTox is available as a binary package. To install the qTox package:
+
+```bash
+pkg install qTox
+```
+
+The qTox port is also available at ``net-im/qTox``. To build and install qTox
+from sources using the port:
+
+```bash
+cd /usr/ports/net-im/qTox
+make install clean
+```
 
 <a name="osx" />
 
