@@ -54,8 +54,8 @@ private slots:
 void TestMessageProcessor::testSelfMention()
 {
     MessageProcessor::SharedParams sharedParams;
-    const QLatin1Literal testUserName{"MyUserName"};
-    const QLatin1Literal testToxPk{
+    const QLatin1String testUserName{"MyUserName"};
+    const QLatin1String testToxPk{
         "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"};
     sharedParams.onUserNameSet(testUserName);
     sharedParams.setPublicKey(testToxPk);
