@@ -681,16 +681,16 @@ void GenericChatForm::loadHistory(const QDateTime &time, const LoadHistoryDialog
 void GenericChatForm::loadHistoryTo(const QDateTime &time)
 {
     chatWidget->setScroll(false);
-    auto end = ChatLogIdx(0);
+    auto end = chatLog.getFirstIdx();
     if (time.isNull()) {
         end = messages.begin()->first;
     } else {
         end = firstItemAfterDate(time.date(), chatLog);
     }
 
-    auto begin = ChatLogIdx(0);
-    if (end.get() > DEF_NUM_MSG_TO_LOAD) {
-        begin = ChatLogIdx(end.get() - DEF_NUM_MSG_TO_LOAD);
+    auto begin = chatLog.getFirstIdx();
+    if (end - begin > DEF_NUM_MSG_TO_LOAD) {
+        begin = end - DEF_NUM_MSG_TO_LOAD;
     }
 
     if (begin != end) {
@@ -712,26 +712,23 @@ void GenericChatForm::loadHistoryTo(const QDateTime &time)
 bool GenericChatForm::loadHistoryFrom(const QDateTime &time)
 {
     chatWidget->setScroll(false);
-    auto begin = ChatLogIdx(0);
+    auto begin = chatLog.getFirstIdx();
     if (time.isNull()) {
         begin = messages.rbegin()->first;
     } else {
         begin = firstItemAfterDate(time.date(), chatLog);
     }
 
-    int add = DEF_NUM_MSG_TO_LOAD;
-    if (begin.get() + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx().get()) {
-        add = chatLog.getNextIdx().get() - begin.get();
-    }
+    const auto end = chatLog.getNextIdx() < begin + DEF_NUM_MSG_TO_LOAD
+        ? chatLog.getNextIdx()
+        : begin + DEF_NUM_MSG_TO_LOAD;
 
     // The chatLog.getNextIdx() is usually 1 more than the idx on last "messages" item
     // so if we have nothing to load, "add" is equal 1
-    if (add <= 1) {
+    if (end - begin <= 1) {
         chatWidget->setScroll(true);
         return false;
     }
-
-    auto end = ChatLogIdx(begin.get() + add);
 
     renderMessages(begin, end);
 
@@ -986,7 +983,7 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
         return;
     }
 
-    if (chatLog.getNextIdx().get() == messages.rbegin()->first.get() + 1) {
+    if (chatLog.getNextIdx() == messages.rbegin()->first + 1) {
         disableSearchText();
     } else {
         goToCurrentDate();
@@ -1057,41 +1054,41 @@ void GenericChatForm::handleSearchResult(SearchResult result, SearchDirection di
     auto endRenderedIdx = messages.rbegin()->first;
 
     if (direction == SearchDirection::Up) {
-        if (searchIdx.get() < firstRenderedIdx.get()) {
-            if (searchIdx.get() > DEF_NUM_MSG_TO_LOAD / 2) {
-                firstRenderedIdx = ChatLogIdx(searchIdx.get() - DEF_NUM_MSG_TO_LOAD / 2);
+        if (searchIdx < firstRenderedIdx) {
+            if (searchIdx - chatLog.getFirstIdx() > DEF_NUM_MSG_TO_LOAD / 2) {
+                firstRenderedIdx = searchIdx - DEF_NUM_MSG_TO_LOAD / 2;
             } else {
-                firstRenderedIdx = ChatLogIdx(0);
+                firstRenderedIdx = chatLog.getFirstIdx();
             }
         }
 
-        if (endRenderedIdx.get() - firstRenderedIdx.get() > DEF_NUM_MSG_TO_LOAD) {
-            endRenderedIdx = ChatLogIdx(firstRenderedIdx.get() + DEF_NUM_MSG_TO_LOAD);
+        if (endRenderedIdx - firstRenderedIdx > DEF_NUM_MSG_TO_LOAD) {
+            endRenderedIdx = firstRenderedIdx + DEF_NUM_MSG_TO_LOAD;
         }
     } else {
-        if (searchIdx.get() < firstRenderedIdx.get()) {
+        if (searchIdx < firstRenderedIdx) {
             firstRenderedIdx = searchIdx;
         }
 
-        if (firstRenderedIdx == searchIdx || searchIdx.get() > endRenderedIdx.get()) {
-            if (searchIdx.get() + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx().get()) {
+        if (firstRenderedIdx == searchIdx || searchIdx > endRenderedIdx) {
+            if (searchIdx + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx()) {
                 endRenderedIdx = chatLog.getNextIdx();
             } else {
-                endRenderedIdx = ChatLogIdx(searchIdx.get() + DEF_NUM_MSG_TO_LOAD);
+                endRenderedIdx = searchIdx + DEF_NUM_MSG_TO_LOAD;
             }
         }
 
-        if (endRenderedIdx.get() - firstRenderedIdx.get() > DEF_NUM_MSG_TO_LOAD) {
-            if (endRenderedIdx.get() > DEF_NUM_MSG_TO_LOAD) {
-                firstRenderedIdx = ChatLogIdx(endRenderedIdx.get() - DEF_NUM_MSG_TO_LOAD);
+        if (endRenderedIdx - firstRenderedIdx > DEF_NUM_MSG_TO_LOAD) {
+            if (endRenderedIdx - chatLog.getFirstIdx() > DEF_NUM_MSG_TO_LOAD) {
+                firstRenderedIdx = endRenderedIdx - DEF_NUM_MSG_TO_LOAD;
             } else {
-                firstRenderedIdx = ChatLogIdx(0);
+                firstRenderedIdx = chatLog.getFirstIdx();
             }
         }
     }
 
-    if (!messages.empty() && (firstRenderedIdx.get() < messages.begin()->first.get()
-                              || endRenderedIdx.get() > messages.rbegin()->first.get())) {
+    if (!messages.empty() && (firstRenderedIdx < messages.begin()->first
+                              || endRenderedIdx > messages.rbegin()->first)) {
         chatWidget->clear();
         messages.clear();
 
@@ -1166,8 +1163,9 @@ void GenericChatForm::goToCurrentDate()
 {
     chatWidget->clear();
     messages.clear();
-    auto end = ChatLogIdx(chatLog.size());
-    auto begin = end.get() > DEF_NUM_MSG_TO_LOAD ? ChatLogIdx(end.get() - DEF_NUM_MSG_TO_LOAD) : ChatLogIdx(0);
+    auto end = chatLog.getNextIdx();
+    auto numMessages = std::min(DEF_NUM_MSG_TO_LOAD, chatLog.getNextIdx() - chatLog.getFirstIdx());
+    auto begin = end - numMessages;
 
     renderMessages(begin, end);
 }

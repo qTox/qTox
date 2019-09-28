@@ -35,7 +35,7 @@ class QTimer;
 class ChatLineContent;
 struct ToxFile;
 
-static const auto DEF_NUM_MSG_TO_LOAD = 100;
+static const size_t DEF_NUM_MSG_TO_LOAD = 100;
 
 class ChatLog : public QGraphicsView
 {
