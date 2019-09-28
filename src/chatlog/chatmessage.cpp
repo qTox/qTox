@@ -201,7 +201,7 @@ ChatMessage::Ptr ChatMessage::createBusyNotification()
     baseFont.setPixelSize(baseFont.pixelSize() + 2);
     baseFont.setBold(true);
 
-    msg->addColumn(new Text(QObject::tr("Reformatting text in progress.."), baseFont, false, ""),
+    msg->addColumn(new Text(QObject::tr("Reformatting text...", "Waiting for text to be reformatted"), baseFont, false, ""),
                    ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
 
     return msg;

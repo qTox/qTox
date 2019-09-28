@@ -104,7 +104,7 @@
                <string>Start qTox on operating system startup (current profile).</string>
               </property>
               <property name="text">
-               <string>Autostart</string>
+               <string>Auto-start</string>
               </property>
              </widget>
             </item>
@@ -188,7 +188,7 @@
                  </sizepolicy>
                 </property>
                 <property name="toolTip">
-                 <string comment="toolTip for minimize to tray setting">After pressing minimize (_) qTox will minimize itself to tray,
+                 <string comment="toolTip for minimize to tray setting">After pressing minimize (_) qTox will minimize to tray,
 instead of system taskbar.</string>
                 </property>
                 <property name="text">
@@ -205,8 +205,8 @@ instead of system taskbar.</string>
                  </sizepolicy>
                 </property>
                 <property name="toolTip">
-                 <string comment="toolTip for close to tray setting">After pressing close (X) qTox will minimize to tray,
-instead of closing itself.</string>
+                 <string comment="toolTip for close to tray setting">After pressing close (X) qTox will close to tray,
+instead of closing entirely.</string>
                 </property>
                 <property name="text">
                  <string>Close to tray</string>
@@ -235,7 +235,7 @@ instead of closing itself.</string>
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Auto away after (0 to disable):</string>
+               <string>Auto-away after (0 to disable):</string>
               </property>
              </widget>
             </item>
@@ -300,17 +300,17 @@ instead of closing itself.</string>
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string comment="autoaccept cb tooltip">You can set this on a per-friend basis by right clicking them.</string>
+               <string comment="autoaccept cb tooltip">You can set this on a per-friend basis by right clicking individual friends.</string>
               </property>
               <property name="text">
-               <string>Autoaccept files</string>
+               <string>Auto-accept files</string>
               </property>
              </widget>
             </item>
             <item row="4" column="0">
              <widget class="QLabel" name="maxAutoAcceptSizeLabel">
               <property name="text">
-               <string>Max autoaccept file size (0 to disable):</string>
+               <string>Max auto-accept file size (0 to disable):</string>
               </property>
              </widget>
             </item>

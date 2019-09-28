@@ -124,7 +124,7 @@ void CoreFile::sendAvatarFile(uint32_t friendId, const QByteArray& data)
         qCritical() << "Send null";
         return;
     case TOX_ERR_FILE_SEND_TOO_MANY:
-        qCritical() << "To many ougoing transfer";
+        qCritical() << "Too many outgoing transfers";
         return;
     default:
         return;
@@ -368,7 +368,7 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
 {
     if (!accept) {
         // If it's an avatar but we already have it cached, cancel
-        qDebug() << QString("Received avatar request %1:%2, reject, since we have it in cache.")
+        qDebug() << QString("Received avatar request %1:%2. Rejected since it is in cache.")
                         .arg(friendId)
                         .arg(fileId);
         tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
@@ -376,8 +376,7 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
     }
 
     // It's an avatar and we don't have it, autoaccept the transfer
-    qDebug() << QString("Received avatar request %1:%2, accept, since we don't have it "
-                        "in cache.")
+    qDebug() << QString("Received avatar request %1:%2. Accepted.")
                     .arg(friendId)
                     .arg(fileId);
     tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_RESUME, nullptr);
@@ -404,7 +403,7 @@ void CoreFile::onFileControlCallback(Tox*, uint32_t friendId, uint32_t fileId,
 
     if (control == TOX_FILE_CONTROL_CANCEL) {
         if (file->fileKind != TOX_FILE_KIND_AVATAR)
-            qDebug() << "File tranfer" << friendId << ":" << fileId << "cancelled by friend";
+            qDebug() << "File transfer" << friendId << ":" << fileId << "cancelled by friend";
         file->status = ToxFile::CANCELED;
         emit coreFile->fileTransferCancelled(*file);
         coreFile->removeFile(friendId, fileId);

@@ -220,7 +220,7 @@ void ChatForm::onFileNameChanged(const ToxPk& friendPk)
 
     QMessageBox::warning(this, tr("Filename contained illegal characters"),
                          tr("Illegal characters have been changed to _ \n"
-                            "so you can save the file on windows."));
+                            "so you can save the file on Windows."));
 }
 
 void ChatForm::onTextEditChanged()

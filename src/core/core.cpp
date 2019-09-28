@@ -176,14 +176,14 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
 {
     QThread* thread = new QThread();
     if (thread == nullptr) {
-        qCritical() << "could not allocate Core thread";
+        qCritical() << "Could not allocate Core thread";
         return {};
     }
     thread->setObjectName("qTox Core");
 
     auto toxOptions = ToxOptions::makeToxOptions(savedata, settings);
     if (toxOptions == nullptr) {
-        qCritical() << "could not allocate Tox Options data structure";
+        qCritical() << "Could not allocate ToxOptions data structure";
         if (err) {
             *err = ToxCoreErrors::ERROR_ALLOC;
         }
@@ -206,7 +206,7 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
         break;
 
     case TOX_ERR_NEW_LOAD_BAD_FORMAT:
-        qCritical() << "failed to parse Tox save data";
+        qCritical() << "Failed to parse Tox save data";
         if (err) {
             *err = ToxCoreErrors::BAD_PROXY;
         }
@@ -223,7 +223,7 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
             }
         }
 
-        qCritical() << "can't to bind the port";
+        qCritical() << "Can't to bind the port";
         if (err) {
             *err = ToxCoreErrors::FAILED_TO_START;
         }
@@ -232,42 +232,42 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
     case TOX_ERR_NEW_PROXY_BAD_HOST:
     case TOX_ERR_NEW_PROXY_BAD_PORT:
     case TOX_ERR_NEW_PROXY_BAD_TYPE:
-        qCritical() << "bad proxy, error code:" << tox_err;
+        qCritical() << "Bad proxy, error code:" << tox_err;
         if (err) {
             *err = ToxCoreErrors::BAD_PROXY;
         }
         return {};
 
     case TOX_ERR_NEW_PROXY_NOT_FOUND:
-        qCritical() << "proxy not found";
+        qCritical() << "Proxy not found";
         if (err) {
             *err = ToxCoreErrors::BAD_PROXY;
         }
         return {};
 
     case TOX_ERR_NEW_LOAD_ENCRYPTED:
-        qCritical() << "attempted to load encrypted Tox save data";
+        qCritical() << "Attempted to load encrypted Tox save data";
         if (err) {
             *err = ToxCoreErrors::INVALID_SAVE;
         }
         return {};
 
     case TOX_ERR_NEW_MALLOC:
-        qCritical() << "memory allocation failed";
+        qCritical() << "Memory allocation failed";
         if (err) {
             *err = ToxCoreErrors::ERROR_ALLOC;
         }
         return {};
 
     case TOX_ERR_NEW_NULL:
-        qCritical() << "a parameter was null";
+        qCritical() << "A parameter was null";
         if (err) {
             *err = ToxCoreErrors::FAILED_TO_START;
         }
         return {};
 
     default:
-        qCritical() << "Tox core failed to start, unknown error code:" << tox_err;
+        qCritical() << "Toxcore failed to start, unknown error code:" << tox_err;
         if (err) {
             *err = ToxCoreErrors::FAILED_TO_START;
         }
@@ -436,7 +436,7 @@ void Core::bootstrapDht()
 
     int listSize = bootstrapNodes.size();
     if (!listSize) {
-        qWarning() << "no bootstrap list?!?";
+        qWarning() << "No bootstrap node list";
         return;
     }
 
@@ -582,7 +582,7 @@ void Core::onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId, const 
                                  size_t length, void* vCore)
 {
     const auto newName = ToxString(name, length).getQString();
-    qDebug() << QString("Group %1, Peer %2, name changed to %3").arg(groupId).arg(peerId).arg(newName);
+    qDebug() << QString("Group %1, peer %2, name changed to %3").arg(groupId).arg(peerId).arg(newName);
     auto* core = static_cast<Core*>(vCore);
     auto peerPk = core->getGroupPeerPk(groupId, peerId);
     emit core->groupPeerNameChanged(groupId, peerPk, newName);
@@ -626,20 +626,20 @@ QString Core::getFriendRequestErrorMessage(const ToxId& friendId, const QString&
     QMutexLocker ml{&coreLoopLock};
 
     if (!friendId.isValid()) {
-        return tr("Invalid Tox ID", "Error while sending friendship request");
+        return tr("Invalid Tox ID", "Error while sending friend request");
     }
 
     if (message.isEmpty()) {
         return tr("You need to write a message with your request",
-                  "Error while sending friendship request");
+                  "Error while sending friend request");
     }
 
     if (message.length() > static_cast<int>(tox_max_friend_request_length())) {
-        return tr("Your message is too long!", "Error while sending friendship request");
+        return tr("Your message is too long!", "Error while sending friend request");
     }
 
     if (hasFriendWithPublicKey(friendId.getPublicKey())) {
-        return tr("Friend is already added", "Error while sending friendship request");
+        return tr("Friend is already added", "Error while sending friend request");
     }
 
     return QString{};
@@ -661,10 +661,10 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
     uint32_t friendNumber =
         tox_friend_add(tox.get(), friendId.getBytes(), cMessage.data(), cMessage.size(), nullptr);
     if (friendNumber == std::numeric_limits<uint32_t>::max()) {
-        qDebug() << "Failed to request friendship";
+        qDebug() << "Failed to send friend request";
         emit failedToAddFriend(friendPk);
     } else {
-        qDebug() << "Requested friendship of " << friendNumber;
+        qDebug() << "Requested friendship from " << friendNumber;
         emit friendAdded(friendNumber, friendPk);
         emit requestSent(friendPk, message);
     }
@@ -1116,7 +1116,7 @@ bool Core::parsePeerQueryError(Tox_Err_Conference_Peer_Query error) const
         return false;
 
     default:
-        qCritical() << "Unknow error code:" << error;
+        qCritical() << "Unknown error code:" << error;
         return false;
     }
 }
@@ -1289,7 +1289,7 @@ bool Core::parseConferenceJoinError(Tox_Err_Conference_Join error) const
         return false;
 
     default:
-        qCritical() << "Unknow error code:" << error;
+        qCritical() << "Unknown error code:" << error;
         return false;
     }
 }
@@ -1312,7 +1312,7 @@ uint32_t Core::joinGroupchat(const GroupInvite& inviteInfo)
     uint32_t groupNum{std::numeric_limits<uint32_t>::max()};
     switch (confType) {
     case TOX_CONFERENCE_TYPE_TEXT: {
-        qDebug() << QString("Trying to join text groupchat invite sent by friend %1").arg(friendId);
+        qDebug() << QString("Trying to accept invite for text group chat sent by friend %1").arg(friendId);
         Tox_Err_Conference_Join error;
         groupNum = tox_conference_join(tox.get(), friendId, cookie, cookieLength, &error);
         if (!parseConferenceJoinError(error)) {

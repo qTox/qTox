@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Load History Dialog</string>
+   <string>Load history dialog</string>
   </property>
   <property name="modal">
    <bool>true</bool>

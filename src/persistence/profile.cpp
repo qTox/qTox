@@ -170,7 +170,7 @@ bool logLoadToxDataError(const LoadToxDataError& error, const QString& path)
         qWarning() << "The tox save file " << path << " was not found";
         break;
     case LoadToxDataError::COULD_NOT_READ_FILE:
-        qCritical() << "The tox save file " << path << " couldn't' be opened";
+        qCritical() << "The tox save file " << path << " couldn't be opened";
         break;
     case LoadToxDataError::FILE_IS_EMPTY:
         qWarning() << "The tox save file" << path << " is empty!";
@@ -257,7 +257,7 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
             emit failedToStart();
         }
 
-        qDebug() << "failed to start ToxCore";
+        qDebug() << "Failed to start Toxcore";
         return;
     }
 
@@ -941,7 +941,7 @@ QString Profile::setPassword(const QString& newPassword)
 
     QString error{};
     if (!dbSuccess) {
-        error = tr("Couldn't change password on the database, it might be corrupted or use the old "
+        error = tr("Couldn't change database password, it may be corrupted or use the old "
                    "password.");
     }
 

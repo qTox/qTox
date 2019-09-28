@@ -170,7 +170,7 @@ void LoginScreen::onCreateNewProfile()
     if (ui->newPassConfirm->text() != pass) {
         QMessageBox::critical(this, tr("Couldn't create a new profile"),
                               tr("The passwords you've entered are different.\nPlease make sure to "
-                                 "enter same password twice."));
+                                 "enter the same password twice."));
         return;
     }
 

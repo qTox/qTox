@@ -109,7 +109,7 @@ Paths* Paths::makePaths(Portable mode)
     QString basePath = portable ? basePortable : baseNonPortable;
 
     if (basePath.isEmpty()) {
-        qCritical() << "Couldn't find writeable path";
+        qCritical() << "Couldn't find writable path";
         return nullptr;
     }
 
