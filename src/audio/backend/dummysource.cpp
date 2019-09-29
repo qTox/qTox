@@ -17,33 +17,33 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IAUDIOSOURCE_H
-#define IAUDIOSOURCE_H
-
-#include <QObject>
+#include "src/audio/backend/dummysource.h"
+#include "src/audio/backend/openal.h"
 
 /**
- * @fn void Audio::frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels,
- * uint32_t sampling_rate);
- *
- * When there are input subscribers, we regularly emit captured audio frames with this signal
- * Always connect with a blocking queued connection lambda, else the behaviour is undefined
+ * @brief Reserves ressources for an audio source
+ * @param audio Main audio object, must have longer lifetime than this object.
  */
+DummySource::DummySource(OpenAL& al)
+    : audio(al)
+{}
 
-class IAudioSource : public QObject
+DummySource::~DummySource()
 {
-    Q_OBJECT
-public:
-    virtual ~IAudioSource() = default;
+    // unsubscribe only if not already killed
+    if (!killed) {
+        audio.destroySource(*this);
+        killed = true;
+    }
+}
 
-    virtual operator bool() const = 0;
-    virtual void kill() = 0;
+DummySource::operator bool() const
+{
+    return !killed;
+}
 
-signals:
-    void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
-                        uint32_t sampling_rate);
-    void volumeAvailable(float value);
-    void invalidated();
-};
-
-#endif // IAUDIOSOURCE_H
+void DummySource::kill()
+{
+    killed = true;
+    emit invalidated();
+}

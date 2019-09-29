@@ -149,7 +149,7 @@ protected:
     // Qt containers need copy operators, so use stdlib containers
     std::unordered_set<AlSink*> sinks;
     std::unordered_set<AlSink*> soundSinks;
-    std::unordered_set<AlSource*> sources;
+    std::unordered_set<IAudioSource*> sources;
 
     int channels = 0;
     qreal gain = 0;
