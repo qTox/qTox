@@ -29,10 +29,13 @@ Select AppArmor profile from appropriate `security/apparmor/X` subdirectory
 depending on what AppArmor version is available for your Linux distribution
 release:
 
-- 2.13.2
-  - Debian 10 (buster) (or newer)
-  - Ubuntu 19.04 (Disco Dingo) (or newer)
+- 2.13.3
+  - Debian 11 (bullseye) (or newer)
+  - Ubuntu 19.10 (or newer)
   - openSUSE Tumbleweed
+- 2.13.2
+  - Debian 10 (buster)
+  - Ubuntu 19.04 (Disco Dingo)
 - 2.12.1
   - Debian 9 (stretch) or older
   - Ubuntu 18.10 or older
