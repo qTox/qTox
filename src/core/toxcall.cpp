@@ -261,7 +261,7 @@ void ToxGroupCall::onAudioSourceInvalidated()
     auto newSrc = audio.makeSource();
     // TODO(sudden6): move this to audio source
     audioInConn =
-        QObject::connect(audioSource.get(), &IAudioSource::frameAvailable,
+        QObject::connect(newSrc.get(), &IAudioSource::frameAvailable,
                          [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
                              this->av->sendGroupCallAudio(this->groupId, pcm, samples, chans, rate);
                          });
