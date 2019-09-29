@@ -53,45 +53,45 @@ public:
     OpenAL();
     virtual ~OpenAL();
 
-    qreal maxOutputVolume() const
+    qreal maxOutputVolume() const override
     {
         return 1;
     }
-    qreal minOutputVolume() const
+    qreal minOutputVolume() const override
     {
         return 0;
     }
-    qreal outputVolume() const;
-    void setOutputVolume(qreal volume);
+    qreal outputVolume() const override;
+    void setOutputVolume(qreal volume) override;
 
-    qreal minInputGain() const;
-    void setMinInputGain(qreal dB);
+    qreal minInputGain() const override;
+    void setMinInputGain(qreal dB) override;
 
-    qreal maxInputGain() const;
-    void setMaxInputGain(qreal dB);
+    qreal maxInputGain() const override;
+    void setMaxInputGain(qreal dB) override;
 
-    qreal inputGain() const;
-    void setInputGain(qreal dB);
+    qreal inputGain() const override;
+    void setInputGain(qreal dB) override;
 
-    qreal minInputThreshold() const;
-    qreal maxInputThreshold() const;
+    qreal minInputThreshold() const override;
+    qreal maxInputThreshold() const override;
 
-    qreal getInputThreshold() const;
-    void setInputThreshold(qreal normalizedThreshold);
+    qreal getInputThreshold() const override;
+    void setInputThreshold(qreal normalizedThreshold) override;
 
-    void reinitInput(const QString& inDevDesc);
-    bool reinitOutput(const QString& outDevDesc);
+    void reinitInput(const QString& inDevDesc) override;
+    bool reinitOutput(const QString& outDevDesc) override;
 
-    bool isOutputReady() const;
+    bool isOutputReady() const override;
 
-    QStringList outDeviceNames();
-    QStringList inDeviceNames();
+    QStringList outDeviceNames() override;
+    QStringList inDeviceNames() override;
 
-    std::unique_ptr<IAudioSink> makeSink();
+    std::unique_ptr<IAudioSink> makeSink() override;
     void destroySink(AlSink& sink);
 
-    std::unique_ptr<IAudioSource> makeSource();
-    void destroySource(AlSource& source);
+    std::unique_ptr<IAudioSource> makeSource() override;
+    void destroySource(IAudioSource& source);
 
     void startLoop(uint sourceId);
     void stopLoop(uint sourceId);
