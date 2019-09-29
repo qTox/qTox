@@ -36,9 +36,9 @@ public:
     AlSource& operator=(AlSource&& other) = delete;
     ~AlSource();
 
-    operator bool() const;
+    operator bool() const override;
 
-    void kill();
+    void kill() override;
 
 private:
     OpenAL& audio;
