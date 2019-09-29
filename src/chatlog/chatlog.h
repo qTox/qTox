@@ -132,14 +132,14 @@ private:
     void handleMultiClickEvent();
 
 private:
-    enum SelectionMode
+    enum class SelectionMode
     {
         None,
         Precise,
         Multi,
     };
 
-    enum AutoScrollDirection
+    enum class AutoScrollDirection
     {
         NoDirection,
         Up,
@@ -161,13 +161,13 @@ private:
     int selFirstRow = -1;
     int selLastRow = -1;
     QColor selectionRectColor = Style::getColor(Style::SelectText);
-    SelectionMode selectionMode = None;
+    SelectionMode selectionMode = SelectionMode::None;
     QPointF clickPos;
     QGraphicsRectItem* selGraphItem = nullptr;
     QTimer* selectionTimer = nullptr;
     QTimer* workerTimer = nullptr;
     QTimer* multiClickTimer = nullptr;
-    AutoScrollDirection selectionScrollDir = NoDirection;
+    AutoScrollDirection selectionScrollDir = AutoScrollDirection::NoDirection;
     int clickCount = 0;
     QPoint lastClickPos;
     Qt::MouseButton lastClickButton;
