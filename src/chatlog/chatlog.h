@@ -58,8 +58,6 @@ public:
     void selectAll();
     void fontChanged(const QFont& font);
     void reloadTheme();
-    void moveSelectionRectUpIfMulti(int offset);
-    void moveSelectionRectDownIfMulti(int offset);
     void removeFirsts(const int num);
     void removeLasts(const int num);
     void setScroll(const bool scroll);
@@ -130,6 +128,12 @@ private:
     void retranslateUi();
     bool isActiveFileTransfer(ChatLine::Ptr l);
     void handleMultiClickEvent();
+    void moveSelectionRectUpIfSelected(int offset);
+    void moveSelectionRectDownIfSelected(int offset);
+    void movePreciseSelectionDown(int offset);
+    void movePreciseSelectionUp(int offset);
+    void moveMultiSelectionUp(int offset);
+    void moveMultiSelectionDown(int offset);
 
 private:
     enum class SelectionMode

@@ -457,7 +457,7 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
 
     lines = combLines;
 
-    moveSelectionRectDownIfMulti(newLines.size());
+    moveSelectionRectDownIfSelected(newLines.size());
 
     scene->setItemIndexMethod(oldIndexMeth);
 
@@ -727,51 +727,6 @@ void ChatLog::reloadTheme()
     }
 }
 
-/**
- * @brief Adjusts the multi line selection rectangle based on chatlog changing lines
- * @param offset Amount to shift selection rect up by. Must be non-negative.
-  */
-void ChatLog::moveSelectionRectUpIfMulti(int offset)
-{
-    assert(offset >= 0);
-    if (selectionMode != SelectionMode::Multi) {
-        return;
-    }
-    if (selLastRow < offset) { // entire selection now out of bounds
-        clearSelection();
-        return;
-    } else {
-        selLastRow -= offset;
-    }
-    selClickedRow = std::max(0, selClickedRow - offset);
-    selFirstRow = std::max(0, selFirstRow - offset);
-    updateMultiSelectionRect();
-    emit selectionChanged();
-}
-
-/**
- * @brief Adjusts the multi line selection rectangle based on chatlog changing lines
- * @param offset Amount to shift selection rect down by. Must be non-negative.
-  */
-void ChatLog::moveSelectionRectDownIfMulti(int offset)
-{
-    assert(offset >= 0);
-    if (selectionMode != SelectionMode::Multi) {
-        return;
-    }
-    const int lastLine = lines.size() - 1;
-    if (selFirstRow + offset > lastLine) { // entire selection now out of bounds
-        clearSelection();
-        return;
-    } else {
-        selFirstRow += offset;
-    }
-    selClickedRow = std::min(lastLine, selClickedRow + offset);
-    selLastRow = std::min(lastLine, selLastRow + offset);
-    updateMultiSelectionRect();
-    emit selectionChanged();
-}
-
 void ChatLog::removeFirsts(const int num)
 {
     if (lines.size() > num) {
@@ -785,7 +740,7 @@ void ChatLog::removeFirsts(const int num)
         lines[i]->setRow(i);
     }
 
-    moveSelectionRectUpIfMulti(num);
+    moveSelectionRectUpIfSelected(num);
 }
 
 void ChatLog::removeLasts(const int num)
@@ -1099,4 +1054,100 @@ bool ChatLog::isActiveFileTransfer(ChatLine::Ptr l)
     }
 
     return false;
+}
+
+/**
+ * @brief Adjusts the selection based on chatlog changing lines
+ * @param offset Amount to shift selection rect up by. Must be non-negative.
+  */
+void ChatLog::moveSelectionRectUpIfSelected(int offset)
+{
+    assert(offset >= 0);
+    switch (selectionMode)
+    {
+        case SelectionMode::None:
+            return;
+        case SelectionMode::Precise:
+            movePreciseSelectionUp(offset);
+            break;
+        case SelectionMode::Multi:
+            moveMultiSelectionUp(offset);
+            break;
+    }
+}
+
+/**
+ * @brief Adjusts the selections based on chatlog changing lines
+ * @param offset removed from the lines indexes. Must be non-negative.
+  */
+void ChatLog::moveSelectionRectDownIfSelected(int offset)
+{
+    assert(offset >= 0);
+    switch (selectionMode)
+    {
+        case SelectionMode::None:
+            return;
+        case SelectionMode::Precise:
+            movePreciseSelectionDown(offset);
+            break;
+        case SelectionMode::Multi:
+            moveMultiSelectionDown(offset);
+            break;
+    }
+}
+
+void ChatLog::movePreciseSelectionDown(int offset)
+{
+    assert(selFirstRow == selLastRow && selFirstRow == selClickedRow);
+    const int lastLine = lines.size() - 1;
+    if (selClickedRow + offset > lastLine) {
+        clearSelection();
+    } else {
+        const int newRow = selClickedRow + offset;
+        selClickedRow = newRow;
+        selLastRow = newRow;
+        selFirstRow = newRow;
+        emit selectionChanged();
+    }
+}
+
+void ChatLog::movePreciseSelectionUp(int offset)
+{
+    assert(selFirstRow == selLastRow && selFirstRow == selClickedRow);
+    if (selClickedRow < offset) {
+        clearSelection();
+    } else {
+        const int newRow = selClickedRow - offset;
+        selClickedRow = newRow;
+        selLastRow = newRow;
+        selFirstRow = newRow;
+        emit selectionChanged();
+    }
+}
+
+void ChatLog::moveMultiSelectionUp(int offset)
+{
+    if (selLastRow < offset) { // entire selection now out of bounds
+        clearSelection();
+    } else {
+        selLastRow -= offset;
+        selClickedRow = std::max(0, selClickedRow - offset);
+        selFirstRow = std::max(0, selFirstRow - offset);
+        updateMultiSelectionRect();
+        emit selectionChanged();
+    }
+}
+
+void ChatLog::moveMultiSelectionDown(int offset)
+{
+    const int lastLine = lines.size() - 1;
+    if (selFirstRow + offset > lastLine) { // entire selection now out of bounds
+        clearSelection();
+    } else {
+        selFirstRow += offset;
+        selClickedRow = std::min(lastLine, selClickedRow + offset);
+        selLastRow = std::min(lastLine, selLastRow + offset);
+        updateMultiSelectionRect();
+        emit selectionChanged();
+    }
 }
