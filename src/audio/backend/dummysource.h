@@ -17,33 +17,32 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IAUDIOSOURCE_H
-#define IAUDIOSOURCE_H
+#ifndef DUMMYSOURCE_H
+#define DUMMYSOURCE_H
 
+#include "src/audio/iaudiosource.h"
+#include <QMutex>
 #include <QObject>
+#include <atomic>
 
-/**
- * @fn void Audio::frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels,
- * uint32_t sampling_rate);
- *
- * When there are input subscribers, we regularly emit captured audio frames with this signal
- * Always connect with a blocking queued connection lambda, else the behaviour is undefined
- */
-
-class IAudioSource : public QObject
+class OpenAL;
+class DummySource : public IAudioSource
 {
     Q_OBJECT
 public:
-    virtual ~IAudioSource() = default;
+    DummySource(OpenAL& al);
+    DummySource(DummySource& src) = delete;
+    DummySource& operator=(const DummySource&) = delete;
+    DummySource(DummySource&& other) = delete;
+    DummySource& operator=(DummySource&& other) = delete;
+    ~DummySource();
 
-    virtual operator bool() const = 0;
-    virtual void kill() = 0;
+    operator bool() const override;
+    void kill() override;
 
-signals:
-    void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
-                        uint32_t sampling_rate);
-    void volumeAvailable(float value);
-    void invalidated();
+private:
+    OpenAL& audio;
+    std::atomic<bool> killed{false};
 };
 
-#endif // IAUDIOSOURCE_H
+#endif // DUMMYSOURCE_H

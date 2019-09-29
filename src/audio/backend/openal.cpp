@@ -18,6 +18,8 @@
 */
 
 #include "openal.h"
+#include "src/audio/backend/alsource.h"
+#include "src/audio/backend/dummysource.h"
 #include "src/persistence/settings.h"
 
 #include <QDebug>
@@ -322,21 +324,24 @@ std::unique_ptr<IAudioSource> OpenAL::makeSource()
 {
     QMutexLocker locker(&audioLock);
 
-    if (!autoInitInput()) {
+    std::unique_ptr<IAudioSource> source;
+    if (!Settings::getInstance().getAudioInDevEnabled()) {
+        source = std::unique_ptr<IAudioSource>(new DummySource{*this});
+    } else if (!autoInitInput()) {
         qWarning("Failed to subscribe to audio input device.");
         return {};
+    } else {
+        source = std::unique_ptr<IAudioSource>(new AlSource{*this});
+        if (source == nullptr) {
+            return {};
+        }
     }
 
-    auto const source = new AlSource(*this);
-    if (source == nullptr) {
-        return {};
-    }
-
-    sources.insert(source);
+    sources.insert(source.get());
 
     qDebug() << "Subscribed to audio input device [" << sources.size() << "subscriptions ]";
 
-    return std::unique_ptr<IAudioSource>{source};
+    return source;
 }
 
 /**
@@ -344,7 +349,7 @@ std::unique_ptr<IAudioSource> OpenAL::makeSource()
  *
  * If the input device has no more subscriptions, it will be closed.
  */
-void OpenAL::destroySource(AlSource& source)
+void OpenAL::destroySource(IAudioSource& source)
 {
     QMutexLocker locker(&audioLock);
 
