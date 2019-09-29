@@ -269,7 +269,6 @@ profile qtox /usr{,/local}/bin/qtox {
   /{,**/} r,
 
   /dev/ r,
-  /dev/dri/ r,
   /dev/video[0-9]* rw, # webcam
   /etc/fstab r, # file dialog
   /etc/xdg/menus/ r, # file dialog
@@ -324,28 +323,5 @@ profile qtox /usr{,/local}/bin/qtox {
   owner @{HOME}/.local/share/qTox/{,**} rw,
   owner @{HOME}/.local/share/user-places.xbel r, # file dialog
   owner @{PROC}/@{pid}/cmdline r,
-
-  # Backport from more recent qt5-compose-cache-write abstraction
-  # commit 1250402471d9d83134b0faa90239a733a37f23f0
-  owner @{HOME}/.cache/qt_compose_cache_{little,big}_endian_* rwl -> @{HOME}/.cache/#[0-9]*[0-9],
-  owner @{HOME}/.cache/#[0-9]*[0-9] rw, # QSaveFile (anonymous shared memory)
-
-  # Backport kde abstraction
-  # commit aae838faca57905d2dbc27db7bffd595c09d26f0
-  # commit dc3b73daf9f648336a6f9ab90103acc962c0bf40
-  /etc/xdg/kdeglobals r,
-  /usr/share/knotifications5/*.notifyrc r, # KNotification::sendEvent()
-  /usr/share/kubuntu-default-settings/kf5-settings/* r,
-  owner @{HOME}/.cache/ksycoca5_??_* r, # KDE System Configuration Cache
-  owner @{HOME}/.config/baloofilerc r, # indexing options (excludes, etc), used by KFileWidget
-  owner @{HOME}/.config/dolphinrc r, # settings used by KFileWidget
-  owner @{HOME}/.config/kde.org/libphonon.conf r, # for KNotifications::sendEvent()
-  owner @{HOME}/.config/kdeglobals r, # global settings, used by Breeze style, etc.
-  owner @{HOME}/.config/klanguageoverridesrc r, # per-application languages, for KDEPrivate::initializeLanguages() from libKF5XmlGui.so
-  owner @{HOME}/.config/trashrc r, # Used by KFileWidget
-
-  # Backport dri-common abstraction
-  # commit 2d8d2f06d5697d9692330686bb5ddb0095621144
-  /usr/share/drirc.d/{,*.conf} r,
 
 }
