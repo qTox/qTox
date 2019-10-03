@@ -53,9 +53,17 @@ namespace {
  * @return True if no error, false otherwise.
  */
 
-#define PARSE_ERR(ERROR_TYPE, err) parse##ERROR_TYPE(err, __LINE__)
+#define PARSE_ERR(err) parseErr(err, __LINE__)
 
-bool parseToxErrConferenceTitle(Tox_Err_Conference_Title error, int line)
+template <typename T>
+bool parseErr(T, int line)
+{
+    qCritical() << line << ": Unknown error type!";
+    return false;
+}
+
+template <>
+bool parseErr(Tox_Err_Conference_Title error, int line)
 {
     switch (error) {
     case TOX_ERR_CONFERENCE_TITLE_OK:
@@ -79,7 +87,8 @@ bool parseToxErrConferenceTitle(Tox_Err_Conference_Title error, int line)
     }
 }
 
-bool parseToxErrFriendSendMessage(Tox_Err_Friend_Send_Message error, int line)
+template <>
+bool parseErr(Tox_Err_Friend_Send_Message error, int line)
 {
     switch (error) {
     case TOX_ERR_FRIEND_SEND_MESSAGE_OK:
@@ -115,7 +124,8 @@ bool parseToxErrFriendSendMessage(Tox_Err_Friend_Send_Message error, int line)
     }
 }
 
-bool parseToxErrConferenceSendMessage(Tox_Err_Conference_Send_Message error, int line)
+template <>
+bool parseErr(Tox_Err_Conference_Send_Message error, int line)
 {
     switch (error) {
     case TOX_ERR_CONFERENCE_SEND_MESSAGE_OK:
@@ -143,7 +153,8 @@ bool parseToxErrConferenceSendMessage(Tox_Err_Conference_Send_Message error, int
     }
 }
 
-bool parseToxErrConferencePeerQuery(Tox_Err_Conference_Peer_Query error, int line)
+template <>
+bool parseErr(Tox_Err_Conference_Peer_Query error, int line)
 {
     switch (error) {
     case TOX_ERR_CONFERENCE_PEER_QUERY_OK:
@@ -167,7 +178,8 @@ bool parseToxErrConferencePeerQuery(Tox_Err_Conference_Peer_Query error, int lin
     }
 }
 
-bool parseToxErrConferenceJoin(Tox_Err_Conference_Join error, int line)
+template <>
+bool parseErr(Tox_Err_Conference_Join error, int line)
 {
     switch (error) {
     case TOX_ERR_CONFERENCE_JOIN_OK:
@@ -203,7 +215,8 @@ bool parseToxErrConferenceJoin(Tox_Err_Conference_Join error, int line)
     }
 }
 
-bool parseToxErrConferenceGetType(Tox_Err_Conference_Get_Type error, int line)
+template <>
+bool parseErr(Tox_Err_Conference_Get_Type error, int line)
 {
     switch (error) {
     case TOX_ERR_CONFERENCE_GET_TYPE_OK:
@@ -219,7 +232,8 @@ bool parseToxErrConferenceGetType(Tox_Err_Conference_Get_Type error, int line)
     }
 }
 
-bool parseToxErrConferenceInvite(Tox_Err_Conference_Invite error, int line)
+template <>
+bool parseErr(Tox_Err_Conference_Invite error, int line)
 {
     switch (error) {
     case TOX_ERR_CONFERENCE_INVITE_OK:
@@ -243,7 +257,8 @@ bool parseToxErrConferenceInvite(Tox_Err_Conference_Invite error, int line)
     }
 }
 
-bool parseToxErrConferenceNew(Tox_Err_Conference_New error, int line)
+template <>
+bool parseErr(Tox_Err_Conference_New error, int line)
 {
     switch (error) {
     case TOX_ERR_CONFERENCE_NEW_OK:
@@ -259,7 +274,8 @@ bool parseToxErrConferenceNew(Tox_Err_Conference_New error, int line)
     }
 }
 
-bool parseToxErrFriendByPublicKey(Tox_Err_Friend_By_Public_Key error, int line)
+template <>
+bool parseErr(Tox_Err_Friend_By_Public_Key error, int line)
 {
     switch (error) {
     case TOX_ERR_FRIEND_BY_PUBLIC_KEY_OK:
@@ -279,7 +295,8 @@ bool parseToxErrFriendByPublicKey(Tox_Err_Friend_By_Public_Key error, int line)
     }
 }
 
-bool parseToxErrBootstrap(Tox_Err_Bootstrap error, int line)
+template <>
+bool parseErr(Tox_Err_Bootstrap error, int line)
 {
     switch(error) {
     case TOX_ERR_BOOTSTRAP_OK:
@@ -303,7 +320,8 @@ bool parseToxErrBootstrap(Tox_Err_Bootstrap error, int line)
     }
 }
 
-bool parseToxErrFriendAdd(Tox_Err_Friend_Add error, int line)
+template <>
+bool parseErr(Tox_Err_Friend_Add error, int line)
 {
     switch(error) {
     case TOX_ERR_FRIEND_ADD_OK:
@@ -348,7 +366,8 @@ bool parseToxErrFriendAdd(Tox_Err_Friend_Add error, int line)
     }
 }
 
-bool parseToxErrFriendDelete(Tox_Err_Friend_Delete error, int line)
+template <>
+bool parseErr(Tox_Err_Friend_Delete error, int line)
 {
     switch(error) {
     case TOX_ERR_FRIEND_DELETE_OK:
@@ -364,7 +383,8 @@ bool parseToxErrFriendDelete(Tox_Err_Friend_Delete error, int line)
     }
 }
 
-bool parseToxErrSetInfo(Tox_Err_Set_Info error, int line)
+template <>
+bool parseErr(Tox_Err_Set_Info error, int line)
 {
     switch (error) {
     case TOX_ERR_SET_INFO_OK:
@@ -384,7 +404,8 @@ bool parseToxErrSetInfo(Tox_Err_Set_Info error, int line)
     }
 }
 
-bool parseToxErrFriendQuery(Tox_Err_Friend_Query error, int line)
+template <>
+bool parseErr(Tox_Err_Friend_Query error, int line)
 {
     switch (error) {
     case TOX_ERR_FRIEND_QUERY_OK:
@@ -404,7 +425,8 @@ bool parseToxErrFriendQuery(Tox_Err_Friend_Query error, int line)
     }
 }
 
-bool parseToxErrFriendGetPublicKey(Tox_Err_Friend_Get_Public_Key error, int line)
+template <>
+bool parseErr(Tox_Err_Friend_Get_Public_Key error, int line)
 {
     switch (error) {
     case TOX_ERR_FRIEND_GET_PUBLIC_KEY_OK:
@@ -420,7 +442,8 @@ bool parseToxErrFriendGetPublicKey(Tox_Err_Friend_Get_Public_Key error, int line
     }
 }
 
-bool parseToxErrFriendGetLastOnline(Tox_Err_Friend_Get_Last_Online error, int line)
+template <>
+bool parseErr(Tox_Err_Friend_Get_Last_Online error, int line)
 {
     switch (error) {
     case TOX_ERR_FRIEND_GET_LAST_ONLINE_OK:
@@ -436,7 +459,8 @@ bool parseToxErrFriendGetLastOnline(Tox_Err_Friend_Get_Last_Online error, int li
     }
 }
 
-bool parseToxErrSetTyping(Tox_Err_Set_Typing error, int line)
+template <>
+bool parseErr(Tox_Err_Set_Typing error, int line)
 {
     switch (error) {
     case TOX_ERR_SET_TYPING_OK:
@@ -452,7 +476,8 @@ bool parseToxErrSetTyping(Tox_Err_Set_Typing error, int line)
     }
 }
 
-bool parseToxErrConferenceDelete(Tox_Err_Conference_Delete error, int line)
+template <>
+bool parseErr(Tox_Err_Conference_Delete error, int line)
 {
     switch (error) {
     case TOX_ERR_CONFERENCE_DELETE_OK:
@@ -807,12 +832,12 @@ void Core::bootstrapDht()
 
         Tox_Err_Bootstrap error;
         tox_bootstrap(tox.get(), address.constData(), dhtServer.port, pkPtr, &error);
-        if (!PARSE_ERR(ToxErrBootstrap, error)) {
+        if (!PARSE_ERR(error)) {
             qDebug() << "Error bootstrapping from " + dhtServer.name;
         }
 
         tox_add_tcp_relay(tox.get(), address.constData(), dhtServer.port, pkPtr, &error);
-        if (!PARSE_ERR(ToxErrBootstrap, error)) {
+        if (!PARSE_ERR(error)) {
             qDebug() << "Error adding TCP relay from " + dhtServer.name;
         }
 
@@ -959,7 +984,7 @@ void Core::acceptFriendRequest(const ToxPk& friendPk)
     QMutexLocker ml{&coreLoopLock};
     Tox_Err_Friend_Add error;
     uint32_t friendId = tox_friend_add_norequest(tox.get(), friendPk.getData(), &error);
-    if (PARSE_ERR(ToxErrFriendAdd, error)) {
+    if (PARSE_ERR(error)) {
         emit saveRequest();
         emit friendAdded(friendId, friendPk);
     } else {
@@ -1013,7 +1038,7 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
     Tox_Err_Friend_Add error;
     uint32_t friendNumber =
         tox_friend_add(tox.get(), friendId.getBytes(), cMessage.data(), cMessage.size(), &error);
-    if (PARSE_ERR(ToxErrFriendAdd, error)) {
+    if (PARSE_ERR(error)) {
         qDebug() << "Requested friendship from " << friendNumber;
         emit saveRequest();
         emit friendAdded(friendNumber, friendPk);
@@ -1039,7 +1064,7 @@ bool Core::sendMessageWithType(uint32_t friendId, const QString& message, Tox_Me
     Tox_Err_Friend_Send_Message error;
     receipt = ReceiptNum{tox_friend_send_message(tox.get(), friendId, type, cMessage.data(),
                                                  cMessage.size(), &error)};
-    if (PARSE_ERR(ToxErrFriendSendMessage, error)) {
+    if (PARSE_ERR(error)) {
         return true;
     }
     return false;
@@ -1063,7 +1088,7 @@ void Core::sendTyping(uint32_t friendId, bool typing)
 
     Tox_Err_Set_Typing error;
     tox_self_set_typing(tox.get(), friendId, typing, &error);
-    if (!PARSE_ERR(ToxErrSetTyping, error)) {
+    if (!PARSE_ERR(error)) {
         emit failedToSetTyping(typing);
     }
 }
@@ -1083,7 +1108,7 @@ void Core::sendGroupMessageWithType(int groupId, const QString& message, Tox_Mes
     ToxString cMsg(message);
     Tox_Err_Conference_Send_Message error;
     tox_conference_send_message(tox.get(), groupId, type, cMsg.data(), cMsg.size(), &error);
-    if (!PARSE_ERR(ToxErrConferenceSendMessage, error)) {
+    if (!PARSE_ERR(error)) {
         emit groupSentFailed(groupId);
         return;
     }
@@ -1110,7 +1135,7 @@ void Core::changeGroupTitle(int groupId, const QString& title)
     ToxString cTitle(title);
     Tox_Err_Conference_Title error;
     tox_conference_set_title(tox.get(), groupId, cTitle.data(), cTitle.size(), &error);
-    if (PARSE_ERR(ToxErrConferenceTitle, error)) {
+    if (PARSE_ERR(error)) {
         emit saveRequest();
         emit groupTitleChanged(groupId, getUsername(), title);
     }
@@ -1122,7 +1147,7 @@ void Core::removeFriend(uint32_t friendId)
 
     Tox_Err_Friend_Delete error;
     tox_friend_delete(tox.get(), friendId, &error);
-    if (!PARSE_ERR(ToxErrFriendDelete, error)) {
+    if (!PARSE_ERR(error)) {
         emit failedToRemoveFriend(friendId);
         return;
     }
@@ -1137,7 +1162,7 @@ void Core::removeGroup(int groupId)
 
     Tox_Err_Conference_Delete error;
     tox_conference_delete(tox.get(), groupId, &error);
-    if (PARSE_ERR(ToxErrConferenceDelete, error)) {
+    if (PARSE_ERR(error)) {
         emit saveRequest();
         av->leaveGroupCall(groupId);
     }
@@ -1175,7 +1200,7 @@ void Core::setUsername(const QString& username)
     ToxString cUsername(username);
     Tox_Err_Set_Info error;
     tox_self_set_name(tox.get(), cUsername.data(), cUsername.size(), &error);
-    if (!PARSE_ERR(ToxErrSetInfo, error)) {
+    if (!PARSE_ERR(error)) {
         emit failedToSetUsername(username);
         return;
     }
@@ -1267,7 +1292,7 @@ void Core::setStatusMessage(const QString& message)
     ToxString cMessage(message);
     Tox_Err_Set_Info error;
     tox_self_set_status_message(tox.get(), cMessage.data(), cMessage.size(), &error);
-    if (!PARSE_ERR(ToxErrSetInfo, error)) {
+    if (!PARSE_ERR(error)) {
         emit failedToSetStatusMessage(message);
         return;
     }
@@ -1333,14 +1358,14 @@ void Core::loadFriends()
     for (size_t i = 0; i < friendCount; ++i) {
         Tox_Err_Friend_Get_Public_Key keyError;
         tox_friend_get_public_key(tox.get(), ids[i], friendPk, &keyError);
-        if (!PARSE_ERR(ToxErrFriendGetPublicKey, keyError)) {
+        if (!PARSE_ERR(keyError)) {
             continue;
         }
         emit friendAdded(ids[i], ToxPk(friendPk));
         emit friendUsernameChanged(ids[i], getFriendUsername(ids[i]));
         Tox_Err_Friend_Query queryError;
         size_t statusMessageSize = tox_friend_get_status_message_size(tox.get(), ids[i], &queryError);
-        if (PARSE_ERR(ToxErrFriendQuery, queryError) && statusMessageSize) {
+        if (PARSE_ERR(queryError) && statusMessageSize) {
             std::vector<uint8_t> messageData(statusMessageSize);
             tox_friend_get_status_message(tox.get(), ids[i], messageData.data(), &queryError);
             QString friendStatusMessage = ToxString(messageData.data(), statusMessageSize).getQString();
@@ -1369,10 +1394,10 @@ void Core::loadGroups()
         size_t titleSize = tox_conference_get_title_size(tox.get(), groupNumber, &error);
         const GroupId persistentId = getGroupPersistentId(groupNumber);
         const QString defaultName = tr("Groupchat %1").arg(persistentId.toString().left(8));
-        if (PARSE_ERR(ToxErrConferenceTitle, error) || !titleSize) {
+        if (PARSE_ERR(error) || !titleSize) {
             std::vector<uint8_t> nameBuf(titleSize);
             tox_conference_get_title(tox.get(), groupNumber, nameBuf.data(), &error);
-            if (PARSE_ERR(ToxErrConferenceTitle, error)) {
+            if (PARSE_ERR(error)) {
                 name = ToxString(nameBuf.data(), titleSize).getQString();
             } else {
                 name = defaultName;
@@ -1395,7 +1420,7 @@ void Core::checkLastOnline(uint32_t friendId)
 
     Tox_Err_Friend_Get_Last_Online error;
     const uint64_t lastOnline = tox_friend_get_last_online(tox.get(), friendId, &error);
-    if (PARSE_ERR(ToxErrFriendGetLastOnline, error)) {
+    if (PARSE_ERR(error)) {
         emit friendLastSeenChanged(friendId, QDateTime::fromTime_t(lastOnline));
     }
 }
@@ -1437,7 +1462,7 @@ uint32_t Core::getGroupNumberPeers(int groupId) const
 
     Tox_Err_Conference_Peer_Query error;
     uint32_t count = tox_conference_peer_count(tox.get(), groupId, &error);
-    if (!PARSE_ERR(ToxErrConferencePeerQuery, error)) {
+    if (!PARSE_ERR(error)) {
         return std::numeric_limits<uint32_t>::max();
     }
 
@@ -1453,13 +1478,13 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
 
     Tox_Err_Conference_Peer_Query error;
     size_t length = tox_conference_peer_get_name_size(tox.get(), groupId, peerId, &error);
-    if (!PARSE_ERR(ToxErrConferencePeerQuery, error) || !length) {
+    if (!PARSE_ERR(error) || !length) {
         return QString{};
     }
 
     std::vector<uint8_t> nameBuf(length);
     tox_conference_peer_get_name(tox.get(), groupId, peerId, nameBuf.data(), &error);
-    if (!PARSE_ERR(ToxErrConferencePeerQuery, error)) {
+    if (!PARSE_ERR(error)) {
         return QString{};
     }
 
@@ -1476,7 +1501,7 @@ ToxPk Core::getGroupPeerPk(int groupId, int peerId) const
     uint8_t friendPk[TOX_PUBLIC_KEY_SIZE] = {0x00};
     Tox_Err_Conference_Peer_Query error;
     tox_conference_peer_get_public_key(tox.get(), groupId, peerId, friendPk, &error);
-    if (!PARSE_ERR(ToxErrConferencePeerQuery, error)) {
+    if (!PARSE_ERR(error)) {
         return ToxPk{};
     }
 
@@ -1502,13 +1527,13 @@ QStringList Core::getGroupPeerNames(int groupId) const
     for (uint32_t i = 0; i < nPeers; ++i) {
         Tox_Err_Conference_Peer_Query error;
         size_t length = tox_conference_peer_get_name_size(tox.get(), groupId, i, &error);
-        if (!PARSE_ERR(ToxErrConferencePeerQuery, error) || !length) {
+        if (!PARSE_ERR(error) || !length) {
             continue;
         }
 
         std::vector<uint8_t> nameBuf(length);
         tox_conference_peer_get_name(tox.get(), groupId, i, nameBuf.data(), &error);
-        if (PARSE_ERR(ToxErrConferencePeerQuery, error)) {
+        if (PARSE_ERR(error)) {
             names.append(ToxString(nameBuf.data(), length).getQString());
         }
     }
@@ -1526,7 +1551,7 @@ bool Core::getGroupAvEnabled(int groupId) const
     QMutexLocker ml{&coreLoopLock};
     Tox_Err_Conference_Get_Type error;
     Tox_Conference_Type type = tox_conference_get_type(tox.get(), groupId, &error);
-    PARSE_ERR(ToxErrConferenceGetType, error);
+    PARSE_ERR(error);
     // would be nice to indicate to caller that we don't actually know..
     return type == TOX_CONFERENCE_TYPE_AV;
 }
@@ -1552,7 +1577,7 @@ uint32_t Core::joinGroupchat(const GroupInvite& inviteInfo)
         qDebug() << QString("Trying to accept invite for text group chat sent by friend %1").arg(friendId);
         Tox_Err_Conference_Join error;
         groupNum = tox_conference_join(tox.get(), friendId, cookie, cookieLength, &error);
-        if (!PARSE_ERR(ToxErrConferenceJoin, error)) {
+        if (!PARSE_ERR(error)) {
             groupNum = std::numeric_limits<uint32_t>::max();
         }
         break;
@@ -1579,7 +1604,7 @@ void Core::groupInviteFriend(uint32_t friendId, int groupId)
 
     Tox_Err_Conference_Invite error;
     tox_conference_invite(tox.get(), friendId, groupId, &error);
-    PARSE_ERR(ToxErrConferenceInvite, error);
+    PARSE_ERR(error);
 }
 
 int Core::createGroup(uint8_t type)
@@ -1589,7 +1614,7 @@ int Core::createGroup(uint8_t type)
     if (type == TOX_CONFERENCE_TYPE_TEXT) {
         Tox_Err_Conference_New error;
         uint32_t groupId = tox_conference_new(tox.get(), &error);
-        if (PARSE_ERR(ToxErrConferenceNew, error)) {
+        if (PARSE_ERR(error)) {
             emit saveRequest();
             emit emptyGroupCreated(groupId, getGroupPersistentId(groupId));
             return groupId;
@@ -1622,7 +1647,7 @@ bool Core::isFriendOnline(uint32_t friendId) const
 
     Tox_Err_Friend_Query error;
     Tox_Connection connection = tox_friend_get_connection_status(tox.get(), friendId, &error);
-    PARSE_ERR(ToxErrFriendQuery, error);
+    PARSE_ERR(error);
     return connection != TOX_CONNECTION_NONE;
 }
 
@@ -1639,7 +1664,7 @@ bool Core::hasFriendWithPublicKey(const ToxPk& publicKey) const
 
     Tox_Err_Friend_By_Public_Key error;
     uint32_t friendId = tox_friend_by_public_key(tox.get(), publicKey.getData(), &error);
-    return PARSE_ERR(ToxErrFriendByPublicKey, error);
+    return PARSE_ERR(error);
 }
 
 /**
@@ -1652,7 +1677,7 @@ ToxPk Core::getFriendPublicKey(uint32_t friendNumber) const
     uint8_t rawid[TOX_PUBLIC_KEY_SIZE];
     Tox_Err_Friend_Get_Public_Key error;
     tox_friend_get_public_key(tox.get(), friendNumber, rawid, &error);
-    if (!PARSE_ERR(ToxErrFriendGetPublicKey, error)) {
+    if (!PARSE_ERR(error)) {
         qWarning() << "getFriendPublicKey: Getting public key failed";
         return ToxPk();
     }
@@ -1669,13 +1694,13 @@ QString Core::getFriendUsername(uint32_t friendnumber) const
 
     Tox_Err_Friend_Query error;
     size_t nameSize = tox_friend_get_name_size(tox.get(), friendnumber, &error);
-    if (!PARSE_ERR(ToxErrFriendQuery, error) || !nameSize) {
+    if (!PARSE_ERR(error) || !nameSize) {
         return QString();
     }
 
     std::vector<uint8_t> nameBuf(nameSize);
     tox_friend_get_name(tox.get(), friendnumber, nameBuf.data(), &error);
-    if (!PARSE_ERR(ToxErrFriendQuery, error)) {
+    if (!PARSE_ERR(error)) {
         return QString();
     }
     return ToxString(nameBuf.data(), nameSize).getQString();
@@ -1731,20 +1756,20 @@ QString Core::getPeerName(const ToxPk& id) const
 
     Tox_Err_Friend_By_Public_Key keyError;
     uint32_t friendId = tox_friend_by_public_key(tox.get(), id.getData(), &keyError);
-    if (!PARSE_ERR(ToxErrFriendByPublicKey, keyError)) {
+    if (!PARSE_ERR(keyError)) {
         qWarning() << "getPeerName: No such peer";
         return {};
     }
 
     Tox_Err_Friend_Query queryError;
     const size_t nameSize = tox_friend_get_name_size(tox.get(), friendId, &queryError);
-    if (!PARSE_ERR(ToxErrFriendQuery, queryError) || !nameSize) {
+    if (!PARSE_ERR(queryError) || !nameSize) {
         return {};
     }
 
     std::vector<uint8_t> nameBuf(nameSize);
     tox_friend_get_name(tox.get(), friendId, nameBuf.data(), &queryError);
-    if (!PARSE_ERR(ToxErrFriendQuery, queryError)) {
+    if (!PARSE_ERR(queryError)) {
         qWarning() << "getPeerName: Can't get name of friend " + QString().setNum(friendId);
         return {};
     }
