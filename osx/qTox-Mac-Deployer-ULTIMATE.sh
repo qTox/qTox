@@ -170,9 +170,23 @@ install() {
     # needed for kf5-sonnet
     brew tap kde-mac/kde
 
-    # verbose so that build output is shown, otherwise qt5 build has no output for >10 mins
-    # and is killed by Travis CI
-    brew install --verbose ffmpeg libexif qrencode qt5 sqlcipher openal-soft #kf5-sonnet
+    # brew install qt5 might take a long time to build Qt. Travis kills us if
+    # we don't output for 10 minutes. Travis also kills us if we output too much,
+    # so verbose isn't an option. So just output some dots...
+    if [[ $TRAVIS = true ]]
+    then
+        echo "outputting dots to keep travis from killing us..."
+        while true; do
+            echo -n "."
+            sleep 10
+        done &
+        DOT_PID=$!
+    fi
+    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft #kf5-sonnet
+    if [[ $TRAVIS = true ]]
+    then
+        kill $DOT_PID
+    fi
 
     fcho "Cloning filter_audio ... "
     git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio "$FILTERAUIO_DIR"
