@@ -35,6 +35,7 @@ private slots:
     void testCreation();
     void testIsNewDb();
     void test0to1();
+    void test1to2();
     void cleanupTestCase();
 private:
     bool initSucess{false};
@@ -46,7 +47,8 @@ const QString testFileList[] = {
     "testCreation.db",
     "testIsNewDbTrue.db",
     "testIsNewDbFalse.db",
-    "test0to1.db"
+    "test0to1.db",
+    "test1to2.db"
 };
 
 const QMap<QString, QString> schema0 {
@@ -63,6 +65,16 @@ const QMap<QString, QString> schema1 {
     {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
     {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER)"},
     {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"}
+};
+
+// move stuck faux offline messages do a table of "broken" messages
+const QMap<QString, QString> schema2 {
+    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name))"},
+    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY)"},
+    {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
+    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER)"},
+    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"},
+    {"broken_messages", "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY)"}
 };
 
 void TestDbSchema::initTestCase()
@@ -138,6 +150,101 @@ void TestDbSchema::test0to1()
     createSchemaAtVersion(db, schema0);
     QVERIFY(dbSchema0to1(db));
     verifyDb(db, schema1);
+}
+
+void TestDbSchema::test1to2()
+{
+    /*
+    Due to a long standing bug, faux offline message have been able to become stuck
+    going back years. Because of recent fixes to history loading, faux offline
+    messages will correctly all be sent on connection, but this causes an issue of
+    long stuck messages suddenly being delivered to a friend, out of context,
+    creating a confusing interaction. To work around this, this upgrade moves any
+    faux offline messages in a chat that are older than the last successfully
+    delivered message, indicating they were stuck, to a new table,
+    `broken_messages`, preventing them from ever being sent in the future.
+
+    https://github.com/qTox/qTox/issues/5776
+    */
+
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test1to2.db", {}, {}}};
+    createSchemaAtVersion(db, schema1);
+
+    const QString myPk = "AC18841E56CCDEE16E93E10E6AB2765BE54277D67F1372921B5B418A6B330D3D";
+    const QString friend1Pk = "FE34BC6D87B66E958C57BBF205F9B79B62BE0AB8A4EFC1F1BB9EC4D0D8FB0663";
+    const QString friend2Pk = "2A1CBCE227549459C0C20F199DB86AD9BCC436D35BAA1825FFD4B9CA3290D200";
+
+    QVector<RawDatabase::Query> queries;
+    queries += QString("INSERT INTO peers (id, public_key) VALUES (%1, '%2')").arg(0).arg(myPk);
+    queries += QString("INSERT INTO peers (id, public_key) VALUES (%1, '%2')").arg(1).arg(friend1Pk);
+    queries += QString("INSERT INTO peers (id, public_key) VALUES (%1, '%2')").arg(2).arg(friend2Pk);
+
+    // friend 1
+    // first message in chat is pending - but the second is delivered. This message is "broken"
+    queries += RawDatabase::Query{
+        "INSERT INTO history (id, timestamp, chat_id, message, sender_alias) VALUES (1, 1, 1, ?, 0)",
+        {"first message in chat, pending and stuck"}};
+    queries += {"INSERT INTO faux_offline_pending (id) VALUES ("
+                                        "    last_insert_rowid()"
+                                        ");"};
+    // second message is delivered, causing the first to be considered broken
+    queries += RawDatabase::Query{
+        "INSERT INTO history (id, timestamp, chat_id, message, sender_alias) VALUES (2, 2, 1, ?, 0)",
+        {"second message in chat, delivered"}};
+
+    // third message is pending - this is a normal pending message. It should be untouched.
+    queries += RawDatabase::Query{
+        "INSERT INTO history (id, timestamp, chat_id, message, sender_alias) VALUES (3, 3, 1, ?, 0)",
+        {"third message in chat, pending"}};
+    queries += {"INSERT INTO faux_offline_pending (id) VALUES ("
+                                        "    last_insert_rowid()"
+                                        ");"};
+
+    // friend 2
+    // first message is delivered.
+    queries += RawDatabase::Query{
+        "INSERT INTO history (id, timestamp, chat_id, message, sender_alias) VALUES (4, 4, 2, ?, 2)",
+        {"first message by friend in chat, delivered"}};
+
+    // second message is also delivered.
+    queries += RawDatabase::Query{
+        "INSERT INTO history (id, timestamp, chat_id, message, sender_alias) VALUES (5, 5, 2, ?, 0)",
+        {"first message by us in chat, delivered"}};
+
+    // third message is pending, but not broken since there are no delivered messages after it.
+    queries += RawDatabase::Query{
+        "INSERT INTO history (id, timestamp, chat_id, message, sender_alias) VALUES (6, 6, 2, ?, 0)",
+        {"last message in chat, by us, pending"}};
+    queries += {"INSERT INTO faux_offline_pending (id) VALUES ("
+                                        "    last_insert_rowid()"
+                                        ");"};
+
+    QVERIFY(db->execNow(queries));
+    QVERIFY(dbSchema1to2(db));
+    verifyDb(db, schema2);
+
+    long brokenCount = -1;
+    RawDatabase::Query brokenCountQuery = {"SELECT COUNT(*) FROM broken_messages;", [&](const QVector<QVariant>& row) {
+        brokenCount = row[0].toLongLong();
+    }};
+    QVERIFY(db->execNow(brokenCountQuery));
+    QVERIFY(brokenCount == 1); // only friend 1's first message is "broken"
+
+    int fauxOfflineCount = -1;
+    RawDatabase::Query fauxOfflineCountQuery = {"SELECT COUNT(*) FROM faux_offline_pending;", [&](const QVector<QVariant>& row) {
+        fauxOfflineCount = row[0].toLongLong();
+    }};
+    QVERIFY(db->execNow(fauxOfflineCountQuery));
+    // both friend 1's third message and friend 2's third message should still be pending.
+    //The broken message should no longer be pending.
+    QVERIFY(fauxOfflineCount == 2);
+
+    int totalHisoryCount = -1;
+    RawDatabase::Query totalHistoryCountQuery = {"SELECT COUNT(*) FROM history;", [&](const QVector<QVariant>& row) {
+        totalHisoryCount = row[0].toLongLong();
+    }};
+    QVERIFY(db->execNow(totalHistoryCountQuery));
+    QVERIFY(totalHisoryCount == 6); // all messages should still be in history.
 }
 
 QTEST_GUILESS_MAIN(TestDbSchema)
