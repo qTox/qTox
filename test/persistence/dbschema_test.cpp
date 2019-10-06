@@ -38,6 +38,7 @@ private slots:
     void cleanupTestCase();
 private:
     bool initSucess{false};
+    void createSchemaAtVersion(std::shared_ptr<RawDatabase>, const QMap<QString, QString>& schema);
     void verifyDb(std::shared_ptr<RawDatabase> db, const QMap<QString, QString>& expectedSql);
 };
 
@@ -46,6 +47,22 @@ const QString testFileList[] = {
     "testIsNewDbTrue.db",
     "testIsNewDbFalse.db",
     "test0to1.db"
+};
+
+const QMap<QString, QString> schema0 {
+    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name))"},
+    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY)"},
+    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL)"},
+    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"}
+};
+
+// added file transfer history
+const QMap<QString, QString> schema1 {
+    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name))"},
+    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY)"},
+    {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
+    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER)"},
+    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"}
 };
 
 void TestDbSchema::initTestCase()
@@ -69,15 +86,28 @@ void TestDbSchema::cleanupTestCase()
 
 void TestDbSchema::verifyDb(std::shared_ptr<RawDatabase> db, const QMap<QString, QString>& expectedSql)
 {
-    QVERIFY(db->execNow(RawDatabase::Query(QStringLiteral("SELECT name, sql FROM sqlite_master "
-        "WHERE type='table' "
-        "ORDER BY name;"),
+    QVERIFY(db->execNow(RawDatabase::Query(QStringLiteral(
+        "SELECT name, sql FROM sqlite_master "
+        "WHERE type='table';"),
         [&](const QVector<QVariant>& row) {
             const QString tableName = row[0].toString();
-            const QString tableSql = row[1].toString();
+            QString tableSql = row[1].toString();
             QVERIFY(expectedSql.contains(tableName));
-            QVERIFY(expectedSql.value(tableName) == tableSql);
+            // table and column names can be quoted. UPDATE TEABLE automatically quotes the new names, but this
+            // has no functional impact on the schema. Strip quotes for comparison so that our created schema
+            // matches schema made from UPDATE TABLEs.
+            const QString unquotedTableSql = tableSql.remove("\"");
+            QVERIFY(expectedSql.value(tableName) == unquotedTableSql);
         })));
+}
+
+void TestDbSchema::createSchemaAtVersion(std::shared_ptr<RawDatabase> db, const QMap<QString, QString>& schema)
+{
+    QVector<RawDatabase::Query> queries;
+    for (auto const& tableCreation : schema.values()) {
+        queries += tableCreation;
+    }
+    QVERIFY(db->execNow(queries));
 }
 
 void TestDbSchema::testCreation()
@@ -86,14 +116,7 @@ void TestDbSchema::testCreation()
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"testCreation.db", {}, {}}};
     generateCurrentSchema(queries);
     QVERIFY(db->execNow(queries));
-    const QMap<QString, QString> expectedSql {
-        {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name))"},
-        {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY)"},
-        {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
-        {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER)"},
-        {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"}
-    };
-    verifyDb(db, expectedSql);
+    verifyDb(db, schema1);
 }
 
 void TestDbSchema::testIsNewDb()
@@ -102,44 +125,19 @@ void TestDbSchema::testIsNewDb()
     QVERIFY(isNewDb(db) == true);
     db = std::shared_ptr<RawDatabase>{new RawDatabase{"testIsNewDbFalse.db", {}, {}}};
     QVector<RawDatabase::Query> queries;
-    generateCurrentSchema(queries);
+    createSchemaAtVersion(db, schema0);
     QVERIFY(db->execNow(queries));
     QVERIFY(isNewDb(db) == false);
 }
 
 void TestDbSchema::test0to1()
 {
-    const QMap<QString, QString> expectedSql {
-        {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name))"},
-        {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY)"},
-        {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
-        {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER)"},
-        {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"}
-    };
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test0to1.db", {}, {}}};
+    createSchemaAtVersion(db, schema0);
     QVector<RawDatabase::Query> queries;
-    queries += RawDatabase::Query(QStringLiteral(
-        "CREATE TABLE peers "
-        "(id INTEGER PRIMARY KEY, "
-        "public_key TEXT NOT NULL UNIQUE);"
-        "CREATE TABLE aliases "
-        "(id INTEGER PRIMARY KEY, "
-        "owner INTEGER, "
-        "display_name BLOB NOT NULL, "
-        "UNIQUE(owner, display_name));"
-        "CREATE TABLE history "
-        "(id INTEGER PRIMARY KEY, "
-        "timestamp INTEGER NOT NULL, "
-        "chat_id INTEGER NOT NULL, "
-        "sender_alias INTEGER NOT NULL, "
-        "message BLOB NOT NULL);"
-        "CREATE TABLE faux_offline_pending "
-        "(id INTEGER PRIMARY KEY);"));
-    QVERIFY(db->execNow(queries));
-    queries.clear();
     dbSchema0to1(db, queries);
     QVERIFY(db->execNow(queries));
-    verifyDb(db, expectedSql);
+    verifyDb(db, schema1);
 }
 
 QTEST_GUILESS_MAIN(TestDbSchema)
