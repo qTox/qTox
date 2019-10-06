@@ -26,7 +26,7 @@
 #include "db/rawdatabase.h"
 
 namespace {
-static constexpr int SCHEMA_VERSION = 1;
+static constexpr int SCHEMA_VERSION = 2;
 
 bool createCurrentSchema(RawDatabase& db)
 {
@@ -61,7 +61,8 @@ bool createCurrentSchema(RawDatabase& db)
         "file_size INTEGER NOT NULL, "
         "direction INTEGER NOT NULL, "
         "file_state INTEGER NOT NULL);"
-        "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY);"));
+        "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY);"
+        "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY);"));
     queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
     return db.execNow(queries);
 }
@@ -100,6 +101,55 @@ bool dbSchema0to1(RawDatabase& db)
         RawDatabase::Query(QStringLiteral("ALTER TABLE history ADD file_id INTEGER;"));
     queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 1;"));
     return db.execNow(queries);
+}
+
+bool dbSchema1to2(RawDatabase& db)
+{
+    // Any faux_offline_pending message, in a chat that has newer delivered
+    // message is decided to be broken. It must be moved from
+    // faux_offline_pending to broken_messages
+
+    // the last non-pending message in each chat
+    QString lastDeliveredQuery = QString(
+        "SELECT chat_id, history_id FROM ("
+            "SELECT chat_id, history.id AS history_id, faux_offline_pending.id AS faux_offline_pending_id "
+            "FROM history JOIN peers chat ON chat_id = chat.id "
+            "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+            "WHERE faux_offline_pending.id IS NULL "
+            "ORDER BY history.id DESC) latest_delivered "
+        "GROUP BY chat_id,faux_offline_pending_id;"
+    );
+
+    QVector<RawDatabase::Query> upgradeQueries;
+    upgradeQueries +=
+        RawDatabase::Query(QStringLiteral(
+            "CREATE TABLE broken_messages "
+            "(id INTEGER PRIMARY KEY);"));
+
+    auto rowCallback = [&upgradeQueries](const QVector<QVariant>& row) {
+        auto chatId = row[0].toLongLong();
+        auto lastDeliveredHistoryId = row[1].toLongLong();
+        upgradeQueries += QString("INSERT INTO broken_messages "
+            "SELECT faux_offline_pending.id FROM "
+            "history JOIN faux_offline_pending "
+            "ON faux_offline_pending.id = history.id "
+            "WHERE history.chat_id=%1 "
+            "AND history.id < %2;").arg(chatId).arg(lastDeliveredHistoryId);
+    };
+    // note this doesn't modify the db, just generate new queries, so is safe
+    // to run outside of our upgrade transaction
+    if (!db.execNow({lastDeliveredQuery, rowCallback})) {
+        return false;
+    }
+
+    upgradeQueries += QString(
+        "DELETE FROM faux_offline_pending "
+        "WHERE id in ("
+            "SELECT id FROM broken_messages);");
+
+    upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 2;"));
+
+    return db.execNow(upgradeQueries);
 }
 
 /**
@@ -160,9 +210,14 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
         }
     }
         // fallthrough
-    // case 1:
-    //    dbSchema1to2(queries);
-    //    //fallthrough
+    case 1:
+       if (!dbSchema1to2(*db)) {
+            qCritical() << "Failed to upgrade db to schema version 2, aborting";
+            db.reset();
+            return;
+       }
+       qDebug() << "Database upgraded incrementally to schema version 2";
+       //fallthrough
     // etc.
     default:
         qInfo() << "Database upgrade finished (databaseSchemaVersion" << databaseSchemaVersion
@@ -262,6 +317,7 @@ void History::eraseHistory()
                 "DELETE FROM aliases;"
                 "DELETE FROM peers;"
                 "DELETE FROM file_transfers;"
+                "DELETE FROM broken_messages;"
                 "VACUUM;");
 }
 
@@ -285,6 +341,12 @@ void History::removeFriendHistory(const QString& friendPk)
                                 "WHERE faux_offline_pending.id IN ( "
                                 "    SELECT faux_offline_pending.id FROM faux_offline_pending "
                                 "    LEFT JOIN history ON faux_offline_pending.id = history.id "
+                                "    WHERE chat_id=%1 "
+                                "); "
+                                "DELETE FROM broken_messages "
+                                "WHERE broken_messages.id IN ( "
+                                "    SELECT broken_messages.id FROM broken_messages "
+                                "    LEFT JOIN history ON broken_messages.id = history.id "
                                 "    WHERE chat_id=%1 "
                                 "); "
                                 "DELETE FROM history WHERE chat_id=%1; "
