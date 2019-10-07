@@ -114,8 +114,7 @@ void TestDbSchema::testCreation()
 {
     QVector<RawDatabase::Query> queries;
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"testCreation.db", {}, {}}};
-    generateCurrentSchema(queries);
-    QVERIFY(db->execNow(queries));
+    QVERIFY(createCurrentSchema(db));
     verifyDb(db, schema1);
 }
 
@@ -124,9 +123,7 @@ void TestDbSchema::testIsNewDb()
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"testIsNewDbTrue.db", {}, {}}};
     QVERIFY(isNewDb(db) == true);
     db = std::shared_ptr<RawDatabase>{new RawDatabase{"testIsNewDbFalse.db", {}, {}}};
-    QVector<RawDatabase::Query> queries;
     createSchemaAtVersion(db, schema0);
-    QVERIFY(db->execNow(queries));
     QVERIFY(isNewDb(db) == false);
 }
 
@@ -134,9 +131,7 @@ void TestDbSchema::test0to1()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test0to1.db", {}, {}}};
     createSchemaAtVersion(db, schema0);
-    QVector<RawDatabase::Query> queries;
-    dbSchema0to1(db, queries);
-    QVERIFY(db->execNow(queries));
+    QVERIFY(dbSchema0to1(db));
     verifyDb(db, schema1);
 }
 

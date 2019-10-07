@@ -28,8 +28,9 @@
 namespace {
 static constexpr int SCHEMA_VERSION = 1;
 
-void generateCurrentSchema(QVector<RawDatabase::Query>& queries)
+bool createCurrentSchema(std::shared_ptr<RawDatabase> db)
 {
+    QVector<RawDatabase::Query> queries;
     queries += RawDatabase::Query(QStringLiteral(
         "CREATE TABLE peers (id INTEGER PRIMARY KEY, "
         "public_key TEXT NOT NULL UNIQUE);"
@@ -61,6 +62,8 @@ void generateCurrentSchema(QVector<RawDatabase::Query>& queries)
         "direction INTEGER NOT NULL, "
         "file_state INTEGER NOT NULL);"
         "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY);"));
+    queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
+    return db->execNow(queries);
 }
 
 bool isNewDb(std::shared_ptr<RawDatabase> db)
@@ -76,8 +79,9 @@ bool isNewDb(std::shared_ptr<RawDatabase> db)
     return newDb;
 }
 
-void dbSchema0to1(std::shared_ptr<RawDatabase> db, QVector<RawDatabase::Query>& queries)
+bool dbSchema0to1(std::shared_ptr<RawDatabase> db)
 {
+    QVector<RawDatabase::Query> queries;
     queries +=
         RawDatabase::Query(QStringLiteral(
             "CREATE TABLE file_transfers "
@@ -92,6 +96,8 @@ void dbSchema0to1(std::shared_ptr<RawDatabase> db, QVector<RawDatabase::Query>& 
             "file_state INTEGER NOT NULL);"));
     queries +=
         RawDatabase::Query(QStringLiteral("ALTER TABLE history ADD file_id INTEGER;"));
+    queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 1;"));
+    return db->execNow(queries);
 }
 
 /**
@@ -128,15 +134,14 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase> db)
         // Note: 0 is a special version that is actually two versions.
         //   possibility 1) it is a newly created database and it neesds the current schema to be created.
         //   possibility 2) it is a old existing database, before version 1 and before we saved schema version,
-        //       and need to be updated.
+        //       and needs to be updated.
         if (isNewDb(db)) {
-            generateCurrentSchema(queries);
-            queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
-            db->execLater(queries);
+            createCurrentSchema(db);
             qDebug() << "Database created at schema version" << SCHEMA_VERSION;
             break; // new db is the only case where we don't incrementally upgrade through each version
         } else {
-            dbSchema0to1(db, queries);
+            dbSchema0to1(db);
+            qDebug() << "Database upgraded incrementally to schema version 1";
         }
         // fallthrough
     // case 1:
@@ -144,9 +149,7 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase> db)
     //    //fallthrough
     // etc.
     default:
-        queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
-        db->execLater(queries);
-        qDebug() << "Database upgrade finished (databaseSchemaVersion" << databaseSchemaVersion
+        qInfo() << "Database upgrade finished (databaseSchemaVersion" << databaseSchemaVersion
                 << "->" << SCHEMA_VERSION << ")";
     }
 }
