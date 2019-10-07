@@ -28,7 +28,7 @@
 namespace {
 static constexpr int SCHEMA_VERSION = 1;
 
-bool createCurrentSchema(std::shared_ptr<RawDatabase> db)
+bool createCurrentSchema(std::shared_ptr<RawDatabase>& db)
 {
     QVector<RawDatabase::Query> queries;
     queries += RawDatabase::Query(QStringLiteral(
@@ -66,7 +66,7 @@ bool createCurrentSchema(std::shared_ptr<RawDatabase> db)
     return db->execNow(queries);
 }
 
-bool isNewDb(std::shared_ptr<RawDatabase> db)
+bool isNewDb(std::shared_ptr<RawDatabase>& db, bool& success)
 {
     bool newDb;
     if (!db->execNow(RawDatabase::Query("SELECT COUNT(*) FROM sqlite_master;",
@@ -74,12 +74,14 @@ bool isNewDb(std::shared_ptr<RawDatabase> db)
                                             newDb = row[0].toLongLong() == 0;
                                         }))) {
         db.reset();
-        return false; // TODO: propogate error
+        success = false;
+        return false;
     }
+    success = true;
     return newDb;
 }
 
-bool dbSchema0to1(std::shared_ptr<RawDatabase> db)
+bool dbSchema0to1(std::shared_ptr<RawDatabase>& db)
 {
     QVector<RawDatabase::Query> queries;
     queries +=
@@ -105,7 +107,7 @@ bool dbSchema0to1(std::shared_ptr<RawDatabase> db)
 * @note On future alterations of the database all you have to do is bump the SCHEMA_VERSION
 * variable and add another case to the switch statement below. Make sure to fall through on each case.
 */
-void dbSchemaUpgrade(std::shared_ptr<RawDatabase> db)
+void dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
 {
     int64_t databaseSchemaVersion;
 
@@ -127,22 +129,36 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase> db)
         return;
     }
 
-    QVector<RawDatabase::Query> queries;
-    // Make sure to handle the un-created case as well in the following upgrade code
     switch (databaseSchemaVersion) {
-    case 0:
+    case 0: {
         // Note: 0 is a special version that is actually two versions.
         //   possibility 1) it is a newly created database and it neesds the current schema to be created.
         //   possibility 2) it is a old existing database, before version 1 and before we saved schema version,
         //       and needs to be updated.
-        if (isNewDb(db)) {
-            createCurrentSchema(db);
+        bool success = false;
+        const bool newDb = isNewDb(db, success);
+        if (!success) {
+            qCritical() << "Failed to create current db schema";
+            db.reset();
+            return;
+        }
+        if (newDb) {
+            if (!createCurrentSchema(db)) {
+                qCritical() << "Failed to create current db schema";
+                db.reset();
+                return;
+            }
             qDebug() << "Database created at schema version" << SCHEMA_VERSION;
             break; // new db is the only case where we don't incrementally upgrade through each version
         } else {
-            dbSchema0to1(db);
+            if (!dbSchema0to1(db)) {
+                qCritical() << "Failed to upgrade db to schema version 1, aborting";
+                db.reset();
+                return;
+            }
             qDebug() << "Database upgraded incrementally to schema version 1";
         }
+    }
         // fallthrough
     // case 1:
     //    dbSchema1to2(queries);
