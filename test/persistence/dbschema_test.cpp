@@ -121,10 +121,15 @@ void TestDbSchema::testCreation()
 void TestDbSchema::testIsNewDb()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"testIsNewDbTrue.db", {}, {}}};
-    QVERIFY(isNewDb(db) == true);
+    bool bSuccess;
+    bool bIsNewDb = isNewDb(db, bSuccess);
+    QVERIFY(bSuccess);
+    QVERIFY(bIsNewDb == true);
     db = std::shared_ptr<RawDatabase>{new RawDatabase{"testIsNewDbFalse.db", {}, {}}};
     createSchemaAtVersion(db, schema0);
-    QVERIFY(isNewDb(db) == false);
+    bIsNewDb = isNewDb(db, bSuccess);
+    QVERIFY(bSuccess);
+    QVERIFY(bIsNewDb == false);
 }
 
 void TestDbSchema::test0to1()
