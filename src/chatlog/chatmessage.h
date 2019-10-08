@@ -57,7 +57,7 @@ public:
     static ChatMessage::Ptr createTypingNotification();
     static ChatMessage::Ptr createBusyNotification();
 
-    void markAsSent(const QDateTime& time);
+    void markAsDelivered(const QDateTime& time);
     QString toString() const;
     bool isAction() const;
     void setAsAction();
