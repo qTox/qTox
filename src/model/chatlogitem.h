@@ -29,6 +29,7 @@
 struct ChatLogMessage
 {
     bool isComplete;
+    bool isBroken;
     Message message;
 };
 
