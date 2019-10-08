@@ -417,7 +417,7 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
  */
 void ChatHistory::dispatchUnsentMessages(IMessageDispatcher& messageDispatcher)
 {
-    auto unsentMessages = history->getUnsentMessagesForFriend(f.getPublicKey());
+    auto unsentMessages = history->getUndeliveredMessagesForFriend(f.getPublicKey());
     for (auto& message : unsentMessages) {
         // We should only store messages as unsent, if this changes in the
         // future we need to extend this logic
@@ -451,7 +451,7 @@ void ChatHistory::handleDispatchedMessage(DispatchedMessageId dispatchId, RowId 
     if (completedMessageIt == completedMessages.end()) {
         dispatchedMessageRowIdMap.insert(dispatchId, historyId);
     } else {
-        history->markAsSent(historyId);
+        history->markAsDelivered(historyId);
         completedMessages.erase(completedMessageIt);
     }
 }
@@ -463,7 +463,7 @@ void ChatHistory::completeMessage(DispatchedMessageId id)
     if (dispatchedMessageIt == dispatchedMessageRowIdMap.end()) {
         completedMessages.insert(id);
     } else {
-        history->markAsSent(*dispatchedMessageIt);
+        history->markAsDelivered(*dispatchedMessageIt);
         dispatchedMessageRowIdMap.erase(dispatchedMessageIt);
     }
 }

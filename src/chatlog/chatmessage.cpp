@@ -109,7 +109,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     if (!date.isNull())
-        msg->markAsSent(date);
+        msg->markAsDelivered(date);
 
     return msg;
 }
@@ -207,7 +207,7 @@ ChatMessage::Ptr ChatMessage::createBusyNotification()
     return msg;
 }
 
-void ChatMessage::markAsSent(const QDateTime& time)
+void ChatMessage::markAsDelivered(const QDateTime& time)
 {
     QFont baseFont = Settings::getInstance().getChatMessageFont();
 
