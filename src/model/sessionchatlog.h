@@ -51,6 +51,8 @@ public:
                                     const ChatLogMessage& message);
     void insertIncompleteMessageAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName,
                                       const ChatLogMessage& message, DispatchedMessageId dispatchId);
+    void insertBrokenMessageAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName,
+                                  const ChatLogMessage& message);
     void insertFileAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName, const ChatLogFile& file);
 
 public slots:
