@@ -64,6 +64,30 @@ bool LogConferenceTitleError(TOX_ERR_CONFERENCE_TITLE error)
     return error;
 }
 
+bool parseToxErrBootstrap(Tox_Err_Bootstrap error)
+{
+    switch(error) {
+    case TOX_ERR_BOOTSTRAP_OK:
+        return true;
+
+    case TOX_ERR_BOOTSTRAP_NULL:
+        qCritical() << "null argument when not expected";
+        return false;
+
+    case TOX_ERR_BOOTSTRAP_BAD_HOST:
+        qCritical() << "Could not resolve hostname, or invalid IP address";
+        return false;
+
+    case TOX_ERR_BOOTSTRAP_BAD_PORT:
+        qCritical() << "out of range port";
+        return false;
+
+    default:
+        qCritical() << "Unknown Tox_Err_bootstrap error code:" << error;
+        return false;
+    }
+}
+
 bool parseFriendSendMessageError(Tox_Err_Friend_Send_Message error)
 {
     switch (error) {
@@ -448,21 +472,19 @@ void Core::bootstrapDht()
         QString dhtServerAddress = dhtServer.address.toLatin1();
         QString port = QString::number(dhtServer.port);
         QString name = dhtServer.name;
-        qDebug() << QString("Connecting to %1:%2 (%3)").arg(dhtServerAddress, port, name);
+        qDebug() << QString("Connecting to a bootstrap node...");
         QByteArray address = dhtServer.address.toLatin1();
         // TODO: constucting the pk via ToxId is a workaround
         ToxPk pk = ToxId{dhtServer.userId}.getPublicKey();
 
-
         const uint8_t* pkPtr = pk.getData();
 
-        if (!tox_bootstrap(tox.get(), address.constData(), dhtServer.port, pkPtr, nullptr)) {
-            qDebug() << "Error bootstrapping from " + dhtServer.name;
-        }
+        Tox_Err_Bootstrap error;
+        tox_bootstrap(tox.get(), address.constData(), dhtServer.port, pkPtr, &error);
+        parseToxErrBootstrap(error);
 
-        if (!tox_add_tcp_relay(tox.get(), address.constData(), dhtServer.port, pkPtr, nullptr)) {
-            qDebug() << "Error adding TCP relay from " + dhtServer.name;
-        }
+        tox_add_tcp_relay(tox.get(), address.constData(), dhtServer.port, pkPtr, &error);
+        parseToxErrBootstrap(error);
 
         ++j;
         ++i;
