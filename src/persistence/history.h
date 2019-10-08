@@ -105,33 +105,38 @@ struct FileDbInsertionData
 };
 Q_DECLARE_METATYPE(FileDbInsertionData);
 
+enum class MessageState
+{
+    complete,
+    pending,
+    broken
+};
+
 class History : public QObject, public std::enable_shared_from_this<History>
 {
     Q_OBJECT
 public:
     struct HistMessage
     {
-        HistMessage(RowId id, bool isPending, bool isBroken, QDateTime timestamp, QString chat, QString dispName,
+        HistMessage(RowId id, MessageState state, QDateTime timestamp, QString chat, QString dispName,
                     QString sender, QString message)
             : chat{chat}
             , sender{sender}
             , dispName{dispName}
             , timestamp{timestamp}
             , id{id}
-            , isPending{isPending}
-            , isBroken{isBroken}
+            , state{state}
             , content(std::move(message))
         {}
 
-        HistMessage(RowId id, bool isPending, bool isBroken, QDateTime timestamp, QString chat, QString dispName,
+        HistMessage(RowId id, MessageState state, QDateTime timestamp, QString chat, QString dispName,
                     QString sender, ToxFile file)
             : chat{chat}
             , sender{sender}
             , dispName{dispName}
             , timestamp{timestamp}
             , id{id}
-            , isPending{isPending}
-            , isBroken{isBroken}
+            , state{state}
             , content(std::move(file))
         {}
 
@@ -141,8 +146,7 @@ public:
         QString dispName;
         QDateTime timestamp;
         RowId id;
-        bool isPending;
-        bool isBroken;
+        MessageState state;
         HistMessageContent content;
     };
 
