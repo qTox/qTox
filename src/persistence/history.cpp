@@ -223,6 +223,20 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
                 << "->" << SCHEMA_VERSION << ")";
     }
 }
+
+MessageState getMessageState(bool isPending, bool isBroken)
+{
+    assert(!(isPending && isBroken));
+    MessageState messageState;
+    if (isPending) {
+        messageState = MessageState::pending;
+    } else if (isBroken) {
+        messageState = MessageState::broken;
+    } else {
+        messageState = MessageState::complete;
+    }
+    return messageState;
+}
 } // namespace
 
 /**
@@ -665,8 +679,11 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
         auto isBroken = !row[13].isNull();
+
+        MessageState messageState = getMessageState(isPending, isBroken);
+
         if (row[7].isNull()) {
-            messages += {id, isPending, isBroken, timestamp, friend_key,
+            messages += {id, messageState, timestamp, friend_key,
                          display_name, sender_key, row[6].toString()};
         } else {
             ToxFile file;
@@ -678,7 +695,7 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
             file.direction = static_cast<ToxFile::FileDirection>(row[11].toLongLong());
             file.status = static_cast<ToxFile::FileStatus>(row[12].toInt());
             messages +=
-                {id, isPending, isBroken, timestamp, friend_key, display_name, sender_key, file};
+                {id, messageState, timestamp, friend_key, display_name, sender_key, file};
         }
     };
 
@@ -712,7 +729,10 @@ QList<History::HistMessage> History::getUndeliveredMessagesForFriend(const ToxPk
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
         auto isBroken = !row[7].isNull();
-        ret += {id, isPending, isBroken, timestamp, friend_key,
+
+        MessageState messageState = getMessageState(isPending, isBroken);
+
+        ret += {id, messageState, timestamp, friend_key,
                 display_name, sender_key, row[6].toString()};
     };
 
@@ -746,7 +766,10 @@ QList<History::HistMessage> History::getBrokenMessagesForFriend(const ToxPk& fri
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
         auto isBroken = !row[8].isNull();
-        ret += {id, isPending, isBroken, timestamp, friend_key,
+
+        MessageState messageState = getMessageState(isPending, isBroken);
+
+        ret += {id, messageState, timestamp, friend_key,
                 display_name, sender_key, row[6].toString()};
     };
 

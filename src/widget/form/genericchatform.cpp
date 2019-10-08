@@ -179,7 +179,7 @@ ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool col
     }
 
     // Spinner is displayed by passing in an empty date
-    auto timestamp = chatLogMessage.isComplete ? chatLogMessage.message.timestamp : QDateTime();
+    auto timestamp = chatLogMessage.state == MessageState::complete ? chatLogMessage.message.timestamp : QDateTime();
 
     return ChatMessage::createChatMessage(displayName, chatLogMessage.message.content, messageType,
                                           isSelf, timestamp, colorizeNames);
@@ -190,7 +190,7 @@ void renderMessage(const QString& displayName, bool isSelf, bool colorizeNames,
 {
 
     if (chatMessage) {
-        if (chatLogMessage.isComplete) {
+        if (chatLogMessage.state == MessageState::complete) {
             chatMessage->markAsDelivered(chatLogMessage.message.timestamp);
         }
     } else {
