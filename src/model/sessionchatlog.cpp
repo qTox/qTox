@@ -324,6 +324,20 @@ void SessionChatLog::insertIncompleteMessageAtIdx(ChatLogIdx idx, const ToxPk& s
     outgoingMessages.insert(dispatchId, idx);
 }
 
+void SessionChatLog::insertBrokenMessageAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName,
+                                              const ChatLogMessage& message)
+{
+    auto item = ChatLogItem(sender, message);
+
+    if (!senderName.isEmpty()) {
+        item.setDisplayName(senderName);
+    }
+
+    assert(message.state == MessageState::broken);
+
+    items.emplace(idx, std::move(item));
+}
+
 void SessionChatLog::insertFileAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName, const ChatLogFile& file)
 {
     auto item = ChatLogItem(sender, file);

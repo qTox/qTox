@@ -178,11 +178,9 @@ ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool col
         messageType = ChatMessage::MessageType::ALERT;
     }
 
-    // Spinner is displayed by passing in an empty date
-    auto timestamp = chatLogMessage.state == MessageState::complete ? chatLogMessage.message.timestamp : QDateTime();
-
+    const auto timestamp = chatLogMessage.message.timestamp;
     return ChatMessage::createChatMessage(displayName, chatLogMessage.message.content, messageType,
-                                          isSelf, timestamp, colorizeNames);
+                                          isSelf, chatLogMessage.state, timestamp, colorizeNames);
 }
 
 void renderMessage(const QString& displayName, bool isSelf, bool colorizeNames,

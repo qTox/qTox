@@ -394,19 +394,23 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
                 std::find_if(dispatchedMessageRowIdMap.begin(), dispatchedMessageRowIdMap.end(),
                              [&](RowId dispatchedId) { return dispatchedId == message.id; });
 
-            MessageState messageState;
-            if (dispatchedMessageIt == dispatchedMessageRowIdMap.end()) {
-                messageState = MessageState::complete;
-            } else {
-                messageState = MessageState::pending;
-            }
-            auto chatLogMessage = ChatLogMessage{messageState, processedMessage};
-            if (messageState == MessageState::complete) {
-                sessionChatLog.insertCompleteMessageAtIdx(currentIdx, sender, message.dispName,
-                                                          chatLogMessage);
-            } else {
-                sessionChatLog.insertIncompleteMessageAtIdx(currentIdx, sender, message.dispName,
-                                                            chatLogMessage, dispatchedMessageIt.key());
+            assert((message.state != MessageState::pending && dispatchedMessageIt == dispatchedMessageRowIdMap.end()) ||
+                   (message.state == MessageState::pending && dispatchedMessageIt != dispatchedMessageRowIdMap.end()));
+
+            auto chatLogMessage = ChatLogMessage{message.state, processedMessage};
+            switch (message.state) {
+                case MessageState::complete:
+                    sessionChatLog.insertCompleteMessageAtIdx(currentIdx, sender, message.dispName,
+                                                              chatLogMessage);
+                    break;
+                case MessageState::pending:
+                    sessionChatLog.insertIncompleteMessageAtIdx(currentIdx, sender, message.dispName,
+                                                                chatLogMessage, dispatchedMessageIt.key());
+                    break;
+                case MessageState::broken:
+                    sessionChatLog.insertBrokenMessageAtIdx(currentIdx, sender, message.dispName,
+                                                            chatLogMessage);
+                    break;
             }
             break;
         }
