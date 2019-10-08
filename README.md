@@ -47,7 +47,7 @@ Windows | Linux | OS X | FreeBSD
 --------|-------|------|--------
 **[64 bit release]**| **[Arch]**, **[Debian]**, **[Fedora]**, **[Gentoo]**, **[openSUSE]**, **[Ubuntu]** | **[Latest release]**  | **[Package & Port]**
 [32 bit release]|**[AppImage]**, [Flatpak] | [Building instructions] |
-[64 bit][64nightly], [32 bit][32nightly] nightly | [From Source] | |
+[64 bit][64nightly], [32 bit][32nightly] nightly | [From Source], [Flatpak nightly], [AppImage nightly] | [Latest nightly] |
 
 _**Bold** options are recommended._
 
@@ -160,16 +160,19 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
 [64 bit release]: https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-x86_64-release.exe
 [32 bit release]: https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-i686-release.exe
-[32nightly]: https://build.tox.chat/view/qtox/job/qTox-cmake-nightly_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox-cmake-nightly_build_windows_x86_release.zip
-[64nightly]: https://build.tox.chat/view/qtox/job/qTox-cmake-nightly_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox-cmake-nightly_build_windows_x86-64_release.zip
+[32nightly]: https://github.com/qTox/qTox-nightly-releases/releases/download/ci-master-latest/setup-qtox-i686-release.exe
+[64nightly]: https://github.com/qTox/qTox-nightly-releases/releases/download/ci-master-latest/setup-qtox-x86_64-release.exe
 [Flatpak]: https://github.com/qTox/qTox/releases/download/v1.16.3/qTox-v1.16.3.x86_64.flatpak
+[Flatpak nightly]: https://github.com/qTox/qTox-nightly-releases/releases/download/ci-master-latest/qtox.flatpak
 [AppImage]: https://github.com/qTox/qTox/releases/download/v1.16.3/qTox-v1.16.3.x86_64.AppImage
+[AppImage nightly]: https://github.com/qTox/qTox-nightly-releases/releases/tag/ci-master-latest
 [Arch]: /INSTALL.md#arch
 [Building instructions]: /INSTALL.md#os-x
 [Contributing]: /CONTRIBUTING.md#how-to-start-contributing
 [Debian]: https://packages.debian.org/search?keywords=qtox
 [easy issues]: https://github.com/qTox/qTox/labels/E-easy
 [Latest release]: https://github.com/qTox/qTox/releases/download/v1.16.3/qTox.dmg
+[Latest nightly]: https://github.com/qTox/qTox-nightly-releases/releases/download/ci-master-latest/qTox.dmg
 [Fedora]: /INSTALL.md#fedora
 [Gentoo]: /INSTALL.md#gentoo
 [openSUSE]: /INSTALL.md#opensuse
@@ -185,8 +188,6 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 [reporting bugs]: https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports
 [Reviewing and testing pull requests]: /CONTRIBUTING.md#reviews
 [Roadmap]: https://github.com/qTox/qTox/milestones
-[sig-32]: https://qtox-win.pkg.tox.chat/qtox/win32/download-sig
-[sig-64]: https://qtox-win.pkg.tox.chat/qtox/win64/download-sig
 [Testing]: https://github.com/qTox/qTox/wiki/Testing
 [Translating, it's easy]: /translations/README.md
 [User Manual]: /doc/user_manual_en.md
