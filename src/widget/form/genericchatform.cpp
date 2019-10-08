@@ -191,7 +191,7 @@ void renderMessage(const QString& displayName, bool isSelf, bool colorizeNames,
 
     if (chatMessage) {
         if (chatLogMessage.isComplete) {
-            chatMessage->markAsSent(chatLogMessage.message.timestamp);
+            chatMessage->markAsDelivered(chatLogMessage.message.timestamp);
         }
     } else {
         chatMessage = createMessage(displayName, isSelf, colorizeNames, chatLogMessage);
@@ -543,9 +543,8 @@ void GenericChatForm::onSendTriggered()
 
 /**
  * @brief Show, is it needed to hide message author name or not
- * @param messageAuthor Author of the sent message
- * @oaran messageTime DateTime of the sent message
- * @return True if it's needed to hide name, false otherwise
+ * @param idx ChatLogIdx of the message
+ * @return True if the name should be hidden, false otherwise
  */
 bool GenericChatForm::needsToHideName(ChatLogIdx idx) const
 {

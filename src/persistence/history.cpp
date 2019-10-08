@@ -367,13 +367,13 @@ void History::removeFriendHistory(const QString& friendPk)
  * @param message Message to save.
  * @param sender Sender to save.
  * @param time Time of message sending.
- * @param isSent True if message was already sent.
+ * @param isDelivered True if message was already delivered.
  * @param dispName Name, which should be displayed.
  * @param insertIdCallback Function, called after query execution.
  */
 QVector<RawDatabase::Query>
 History::generateNewMessageQueries(const QString& friendPk, const QString& message,
-                                   const QString& sender, const QDateTime& time, bool isSent,
+                                   const QString& sender, const QDateTime& time, bool isDelivered,
                                    QString dispName, std::function<void(RowId)> insertIdCallback)
 {
     QVector<RawDatabase::Query> queries;
@@ -434,7 +434,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
                                .arg(senderId),
                            {message.toUtf8(), dispName.toUtf8()}, insertIdCallback);
 
-    if (!isSent) {
+    if (!isDelivered) {
         queries += RawDatabase::Query{"INSERT INTO faux_offline_pending (id) VALUES ("
                                       "    last_insert_rowid()"
                                       ");"};
@@ -564,12 +564,12 @@ void History::addNewFileMessage(const QString& friendPk, const QString& fileId,
  * @param message Message to save.
  * @param sender Sender to save.
  * @param time Time of message sending.
- * @param isSent True if message was already sent.
+ * @param isDelivered True if message was already delivered.
  * @param dispName Name, which should be displayed.
  * @param insertIdCallback Function, called after query execution.
  */
 void History::addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
-                            const QDateTime& time, bool isSent, QString dispName,
+                            const QDateTime& time, bool isDelivered, QString dispName,
                             const std::function<void(RowId)>& insertIdCallback)
 {
     if (!Settings::getInstance().getEnableLogging()) {
@@ -580,7 +580,7 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
         return;
     }
 
-    db->execLater(generateNewMessageQueries(friendPk, message, sender, time, isSent, dispName,
+    db->execLater(generateNewMessageQueries(friendPk, message, sender, time, isDelivered, dispName,
                                             insertIdCallback));
 }
 
@@ -657,14 +657,14 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
         // dispName and message could have null bytes, QString::fromUtf8
         // truncates on null bytes so we strip them
         auto id = RowId{row[0].toLongLong()};
-        auto isOfflineMessage = row[1].isNull();
+        auto isPending = !row[1].isNull();
         auto timestamp = QDateTime::fromMSecsSinceEpoch(row[2].toLongLong());
         auto friend_key = row[3].toString();
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
         if (row[7].isNull()) {
-            messages += {id,           isOfflineMessage, timestamp,        friend_key,
-                         display_name, sender_key,       row[6].toString()};
+            messages += {id, isPending, timestamp, friend_key,
+                         display_name, sender_key, row[6].toString()};
         } else {
             ToxFile file;
             file.fileKind = TOX_FILE_KIND_DATA;
@@ -675,7 +675,7 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
             file.direction = static_cast<ToxFile::FileDirection>(row[11].toLongLong());
             file.status = static_cast<ToxFile::FileStatus>(row[12].toInt());
             messages +=
-                {id, isOfflineMessage, timestamp, friend_key, display_name, sender_key, file};
+                {id, isPending, timestamp, friend_key, display_name, sender_key, file};
         }
     };
 
@@ -684,7 +684,7 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
     return messages;
 }
 
-QList<History::HistMessage> History::getUnsentMessagesForFriend(const ToxPk& friendPk)
+QList<History::HistMessage> History::getUndeliveredMessagesForFriend(const ToxPk& friendPk)
 {
     auto queryText =
         QString("SELECT history.id, faux_offline_pending.id, timestamp, chat.public_key, "
@@ -702,13 +702,13 @@ QList<History::HistMessage> History::getUnsentMessagesForFriend(const ToxPk& fri
         // dispName and message could have null bytes, QString::fromUtf8
         // truncates on null bytes so we strip them
         auto id = RowId{row[0].toLongLong()};
-        auto isOfflineMessage = row[1].isNull();
+        auto isPending = !row[1].isNull();
         auto timestamp = QDateTime::fromMSecsSinceEpoch(row[2].toLongLong());
         auto friend_key = row[3].toString();
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
-        ret += {id,           isOfflineMessage, timestamp,        friend_key,
-                display_name, sender_key,       row[6].toString()};
+        ret += {id, isPending, timestamp, friend_key,
+                display_name, sender_key, row[6].toString()};
     };
 
     db->execNow({queryText, rowCallback});
@@ -865,12 +865,12 @@ QList<History::DateIdx> History::getNumMessagesForFriendBeforeDateBoundaries(con
 }
 
 /**
- * @brief Marks a message as sent.
+ * @brief Marks a message as delivered.
  * Removing message from the faux-offline pending messages list.
  *
  * @param id Message ID.
  */
-void History::markAsSent(RowId messageId)
+void History::markAsDelivered(RowId messageId)
 {
     if (!isValid()) {
         return;
