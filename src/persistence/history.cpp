@@ -642,12 +642,13 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
                 "message, file_transfers.file_restart_id, "
                 "file_transfers.file_path, file_transfers.file_name, "
                 "file_transfers.file_size, file_transfers.direction, "
-                "file_transfers.file_state FROM history "
+                "file_transfers.file_state, broken_messages.id FROM history "
                 "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                 "JOIN peers chat ON history.chat_id = chat.id "
                 "JOIN aliases ON sender_alias = aliases.id "
                 "JOIN peers sender ON aliases.owner = sender.id "
                 "LEFT JOIN file_transfers ON history.file_id = file_transfers.id "
+                "LEFT JOIN broken_messages ON history.id = broken_messages.id "
                 "WHERE chat.public_key='%1' "
                 "LIMIT %2 OFFSET %3;")
             .arg(friendPk.toString())
@@ -663,8 +664,9 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
         auto friend_key = row[3].toString();
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
+        auto isBroken = !row[13].isNull();
         if (row[7].isNull()) {
-            messages += {id, isPending, timestamp, friend_key,
+            messages += {id, isPending, isBroken, timestamp, friend_key,
                          display_name, sender_key, row[6].toString()};
         } else {
             ToxFile file;
@@ -676,7 +678,7 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
             file.direction = static_cast<ToxFile::FileDirection>(row[11].toLongLong());
             file.status = static_cast<ToxFile::FileStatus>(row[12].toInt());
             messages +=
-                {id, isPending, timestamp, friend_key, display_name, sender_key, file};
+                {id, isPending, isBroken, timestamp, friend_key, display_name, sender_key, file};
         }
     };
 
@@ -689,12 +691,13 @@ QList<History::HistMessage> History::getUndeliveredMessagesForFriend(const ToxPk
 {
     auto queryText =
         QString("SELECT history.id, faux_offline_pending.id, timestamp, chat.public_key, "
-                "aliases.display_name, sender.public_key, message "
+                "aliases.display_name, sender.public_key, message, broken_messages.id "
                 "FROM history "
                 "JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                 "JOIN peers chat on history.chat_id = chat.id "
                 "JOIN aliases on sender_alias = aliases.id "
                 "JOIN peers sender on aliases.owner = sender.id "
+                "LEFT JOIN broken_messages ON history.id = broken_messages.id "
                 "WHERE chat.public_key='%1';")
             .arg(friendPk.toString());
 
@@ -708,7 +711,42 @@ QList<History::HistMessage> History::getUndeliveredMessagesForFriend(const ToxPk
         auto friend_key = row[3].toString();
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
-        ret += {id, isPending, timestamp, friend_key,
+        auto isBroken = !row[7].isNull();
+        ret += {id, isPending, isBroken, timestamp, friend_key,
+                display_name, sender_key, row[6].toString()};
+    };
+
+    db->execNow({queryText, rowCallback});
+
+    return ret;
+}
+
+QList<History::HistMessage> History::getBrokenMessagesForFriend(const ToxPk& friendPk)
+{
+    auto queryText =
+        QString("SELECT history.id, faux_offline_pending.id, timestamp, chat.public_key, "
+                "aliases.display_name, sender.public_key, message, broken_messages.id "
+                "FROM history "
+                "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+                "JOIN peers chat on history.chat_id = chat.id "
+                "JOIN aliases on sender_alias = aliases.id "
+                "JOIN peers sender on aliases.owner = sender.id "
+                "JOIN broken_messages ON history.id = broken_messages.id "
+                "WHERE chat.public_key='%1';")
+            .arg(friendPk.toString());
+
+    QList<History::HistMessage> ret;
+    auto rowCallback = [&ret](const QVector<QVariant>& row) {
+        // dispName and message could have null bytes, QString::fromUtf8
+        // truncates on null bytes so we strip them
+        auto id = RowId{row[0].toLongLong()};
+        auto isPending = !row[1].isNull();
+        auto timestamp = QDateTime::fromMSecsSinceEpoch(row[2].toLongLong());
+        auto friend_key = row[3].toString();
+        auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
+        auto sender_key = row[5].toString();
+        auto isBroken = !row[8].isNull();
+        ret += {id, isPending, isBroken, timestamp, friend_key,
                 display_name, sender_key, row[6].toString()};
     };
 

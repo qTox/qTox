@@ -111,7 +111,7 @@ class History : public QObject, public std::enable_shared_from_this<History>
 public:
     struct HistMessage
     {
-        HistMessage(RowId id, bool isPending, QDateTime timestamp, QString chat, QString dispName,
+        HistMessage(RowId id, bool isPending, bool isBroken, QDateTime timestamp, QString chat, QString dispName,
                     QString sender, QString message)
             : chat{chat}
             , sender{sender}
@@ -119,10 +119,11 @@ public:
             , timestamp{timestamp}
             , id{id}
             , isPending{isPending}
+            , isBroken{isBroken}
             , content(std::move(message))
         {}
 
-        HistMessage(RowId id, bool isPending, QDateTime timestamp, QString chat, QString dispName,
+        HistMessage(RowId id, bool isPending, bool isBroken, QDateTime timestamp, QString chat, QString dispName,
                     QString sender, ToxFile file)
             : chat{chat}
             , sender{sender}
@@ -130,6 +131,7 @@ public:
             , timestamp{timestamp}
             , id{id}
             , isPending{isPending}
+            , isBroken{isBroken}
             , content(std::move(file))
         {}
 
@@ -140,6 +142,7 @@ public:
         QDateTime timestamp;
         RowId id;
         bool isPending;
+        bool isBroken;
         HistMessageContent content;
     };
 
@@ -172,6 +175,7 @@ public:
     size_t getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date);
     QList<HistMessage> getMessagesForFriend(const ToxPk& friendPk, size_t firstIdx, size_t lastIdx);
     QList<HistMessage> getUndeliveredMessagesForFriend(const ToxPk& friendPk);
+    QList<HistMessage> getBrokenMessagesForFriend(const ToxPk& friendPk);
     QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);
     QList<DateIdx> getNumMessagesForFriendBeforeDateBoundaries(const ToxPk& friendPk,
