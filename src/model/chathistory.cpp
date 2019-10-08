@@ -394,9 +394,14 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
                 std::find_if(dispatchedMessageRowIdMap.begin(), dispatchedMessageRowIdMap.end(),
                              [&](RowId dispatchedId) { return dispatchedId == message.id; });
 
-            bool isComplete = dispatchedMessageIt == dispatchedMessageRowIdMap.end();
-            auto chatLogMessage = ChatLogMessage{isComplete, processedMessage};
-            if (isComplete) {
+            MessageState messageState;
+            if (dispatchedMessageIt == dispatchedMessageRowIdMap.end()) {
+                messageState = MessageState::complete;
+            } else {
+                messageState = MessageState::pending;
+            }
+            auto chatLogMessage = ChatLogMessage{messageState, processedMessage};
+            if (messageState == MessageState::complete) {
                 sessionChatLog.insertCompleteMessageAtIdx(currentIdx, sender, message.dispName,
                                                           chatLogMessage);
             } else {

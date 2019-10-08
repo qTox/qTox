@@ -303,7 +303,7 @@ void SessionChatLog::insertCompleteMessageAtIdx(ChatLogIdx idx, const ToxPk& sen
         item.setDisplayName(senderName);
     }
 
-    assert(message.isComplete == true);
+    assert(message.state == MessageState::complete);
 
     items.emplace(idx, std::move(item));
 }
@@ -318,7 +318,7 @@ void SessionChatLog::insertIncompleteMessageAtIdx(ChatLogIdx idx, const ToxPk& s
         item.setDisplayName(senderName);
     }
 
-    assert(message.isComplete == false);
+    assert(message.state == MessageState::pending);
 
     items.emplace(idx, std::move(item));
     outgoingMessages.insert(dispatchId, idx);
@@ -344,7 +344,7 @@ void SessionChatLog::onMessageReceived(const ToxPk& sender, const Message& messa
     auto messageIdx = nextIdx++;
 
     ChatLogMessage chatLogMessage;
-    chatLogMessage.isComplete = true;
+    chatLogMessage.state = MessageState::complete;
     chatLogMessage.message = message;
     items.emplace(messageIdx, ChatLogItem(sender, chatLogMessage));
 
@@ -360,7 +360,7 @@ void SessionChatLog::onMessageSent(DispatchedMessageId id, const Message& messag
     auto messageIdx = nextIdx++;
 
     ChatLogMessage chatLogMessage;
-    chatLogMessage.isComplete = false;
+    chatLogMessage.state = MessageState::pending;
     chatLogMessage.message = message;
     items.emplace(messageIdx, ChatLogItem(coreIdHandler.getSelfPublicKey(), chatLogMessage));
 
@@ -390,7 +390,7 @@ void SessionChatLog::onMessageComplete(DispatchedMessageId id)
         return;
     }
 
-    messageIt->second.getContentAsMessage().isComplete = true;
+    messageIt->second.getContentAsMessage().state = MessageState::complete;
 
     emit this->itemUpdated(messageIt->first);
 }
