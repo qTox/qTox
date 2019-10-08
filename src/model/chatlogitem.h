@@ -23,13 +23,13 @@
 #include "src/core/toxfile.h"
 #include "src/core/toxpk.h"
 #include "src/model/message.h"
+#include "src/persistence/history.h"
 
 #include <memory>
 
 struct ChatLogMessage
 {
-    bool isComplete;
-    bool isBroken;
+    MessageState state;
     Message message;
 };
 
