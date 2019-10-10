@@ -1020,8 +1020,7 @@ void Widget::playNotificationSound(IAudioSink::Sound sound, bool loop)
         }
     }
 
-    connect(audioNotification.get(), &IAudioSink::finishedPlaying, this,
-            &Widget::cleanupNotificationSound);
+    audioNotification->connectTo_finishedPlaying(this, [this](){ cleanupNotificationSound(); });
 
     audioNotification->playMono16Sound(sound);
 

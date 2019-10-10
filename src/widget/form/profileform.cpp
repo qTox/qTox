@@ -147,7 +147,7 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
 
     connect(bodyUI->toxIdLabel, &CroppingLabel::clicked, this, &ProfileForm::copyIdClicked);
     connect(toxId, &ClickableTE::clicked, this, &ProfileForm::copyIdClicked);
-    connect(profileInfo, &IProfileInfo::idChanged, this, &ProfileForm::setToxId);
+    profileInfo->connectTo_idChanged(this, [=](const ToxId& id) { setToxId(id); });
     connect(bodyUI->userName, &QLineEdit::editingFinished, this, &ProfileForm::onUserNameEdited);
     connect(bodyUI->statusMessage, &QLineEdit::editingFinished,
             this, &ProfileForm::onStatusMessageEdited);
@@ -166,9 +166,11 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
     connect(bodyUI->saveQr, &QPushButton::clicked, this, &ProfileForm::onSaveQrClicked);
     connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::onCopyQrClicked);
 
-    connect(profileInfo, &IProfileInfo::usernameChanged, this,
+    profileInfo->connectTo_usernameChanged(
+            this,
             [=](const QString& val) { bodyUI->userName->setText(val); });
-    connect(profileInfo, &IProfileInfo::statusMessageChanged, this,
+    profileInfo->connectTo_statusMessageChanged(
+            this,
             [=](const QString& val) { bodyUI->statusMessage->setText(val); });
 
     for (QComboBox* cb : findChildren<QComboBox*>()) {
