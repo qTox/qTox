@@ -17,6 +17,9 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QObject>
+#include "src/model/interface.h"
+#include "src/core/toxpk.h"
 #include "iprofileinfo.h"
 
 class Core;
@@ -24,8 +27,9 @@ class QFile;
 class QPoint;
 class Profile;
 
-class ProfileInfo : public IProfileInfo
+class ProfileInfo : public QObject, public IProfileInfo
 {
+    Q_OBJECT
 public:
     ProfileInfo(Core* core, Profile* profile);
 
@@ -49,6 +53,10 @@ public:
 
     SetAvatarResult setAvatar(const QString& path) override;
     void removeAvatar() override;
+
+    SIGNAL_IMPL(ProfileInfo, idChanged, const ToxId& id)
+    SIGNAL_IMPL(ProfileInfo, usernameChanged, const QString& name)
+    SIGNAL_IMPL(ProfileInfo, statusMessageChanged, const QString& message)
 
 private:
     IProfileInfo::SetAvatarResult createAvatarFromFile(QFile& file, QByteArray& avatar);
