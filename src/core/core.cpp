@@ -797,24 +797,19 @@ void Core::bootstrapDht()
         QString dhtServerAddress = dhtServer.address.toLatin1();
         QString port = QString::number(dhtServer.port);
         QString name = dhtServer.name;
-        qDebug() << QString("Connecting to %1:%2 (%3)").arg(dhtServerAddress, port, name);
+        qDebug() << QString("Connecting to a bootstrap node...");
         QByteArray address = dhtServer.address.toLatin1();
         // TODO: constucting the pk via ToxId is a workaround
         ToxPk pk = ToxId{dhtServer.userId}.getPublicKey();
-
 
         const uint8_t* pkPtr = pk.getData();
 
         Tox_Err_Bootstrap error;
         tox_bootstrap(tox.get(), address.constData(), dhtServer.port, pkPtr, &error);
-        if (!PARSE_ERR(error)) {
-            qDebug() << "Error bootstrapping from " + dhtServer.name;
-        }
+        PARSE_ERR(error);
 
         tox_add_tcp_relay(tox.get(), address.constData(), dhtServer.port, pkPtr, &error);
-        if (!PARSE_ERR(error)) {
-            qDebug() << "Error adding TCP relay from " + dhtServer.name;
-        }
+        PARSE_ERR(error);
 
         ++j;
         ++i;
@@ -1450,6 +1445,11 @@ uint32_t Core::getGroupNumberPeers(int groupId) const
 QString Core::getGroupPeerName(int groupId, int peerId) const
 {
     QMutexLocker ml{&coreLoopLock};
+
+    // from tox.h: "If peer_number == UINT32_MAX, then author is unknown (e.g. initial joining the conference)."
+    if (peerId != std::numeric_limits<uint32_t>::max()) {
+        return {};
+    }
 
     Tox_Err_Conference_Peer_Query error;
     size_t length = tox_conference_peer_get_name_size(tox.get(), groupId, peerId, &error);
