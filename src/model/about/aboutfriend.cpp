@@ -28,17 +28,17 @@ AboutFriend::AboutFriend(const Friend* f, IFriendSettings* const s)
     : f{f}
     , settings{s}
 {
-    s->connectTo_contactNoteChanged([=](const ToxPk& pk, const QString& note) {
+    s->connectTo_contactNoteChanged(this, [=](const ToxPk& pk, const QString& note) {
         emit noteChanged(note);
     });
-    s->connectTo_autoAcceptCallChanged(
+    s->connectTo_autoAcceptCallChanged(this,
             [=](const ToxPk& pk, IFriendSettings::AutoAcceptCallFlags flag) {
         emit autoAcceptCallChanged(flag);
     });
-    s->connectTo_autoAcceptDirChanged([=](const ToxPk& pk, const QString& dir) {
+    s->connectTo_autoAcceptDirChanged(this, [=](const ToxPk& pk, const QString& dir) {
         emit autoAcceptDirChanged(dir);
     });
-    s->connectTo_autoGroupInviteChanged([=](const ToxPk& pk, bool enable) {
+    s->connectTo_autoGroupInviteChanged(this, [=](const ToxPk& pk, bool enable) {
         emit autoGroupInviteChanged(enable);
     });
 }
