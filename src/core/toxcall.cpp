@@ -139,9 +139,7 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av, 
         qDebug() << "Audio input connection not working";
     }
 
-    audioSinkInvalid = QObject::connect(sink.get(), &IAudioSink::invalidated,
-                                        [this]() { this->onAudioSinkInvalidated(); });
-
+    audioSinkInvalid = sink->connectTo_invalidated([this]() { this->onAudioSinkInvalidated(); });
 
     // register video
     if (videoEnabled) {
@@ -185,8 +183,7 @@ void ToxFriendCall::onAudioSinkInvalidated()
 {
     auto newSink = audio.makeSink();
 
-    audioSinkInvalid = QObject::connect(newSink.get(), &IAudioSink::invalidated,
-                                        [this]() { this->onAudioSinkInvalidated(); });
+    audioSinkInvalid = newSink->connectTo_invalidated([this]() { this->onAudioSinkInvalidated(); });
     sink = std::move(newSink);
 }
 
@@ -272,9 +269,7 @@ void ToxGroupCall::removePeer(ToxPk peerId)
 void ToxGroupCall::addPeer(ToxPk peerId)
 {
     std::unique_ptr<IAudioSink> newSink = audio.makeSink();
-    QMetaObject::Connection con =
-        QObject::connect(newSink.get(), &IAudioSink::invalidated,
-                         [this, peerId]() { this->onAudioSinkInvalidated(peerId); });
+    QMetaObject::Connection con = newSink->connectTo_invalidated([this, peerId]() { this->onAudioSinkInvalidated(peerId); });
 
     peers.emplace(peerId, std::move(newSink));
     sinkInvalid.insert({peerId, con});

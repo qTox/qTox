@@ -21,7 +21,7 @@
 #define ABOUT_FRIEND_H
 
 #include "iaboutfriend.h"
-
+#include "src/model/interface.h"
 #include "src/persistence/ifriendsettings.h"
 
 #include <QObject>
@@ -29,7 +29,7 @@
 class Friend;
 class IFriendSettings;
 
-class AboutFriend : public IAboutFriend
+class AboutFriend : public QObject, public IAboutFriend
 {
     Q_OBJECT
 

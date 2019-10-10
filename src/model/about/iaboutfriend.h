@@ -22,12 +22,11 @@
 
 #include "src/model/interface.h"
 #include "src/persistence/ifriendsettings.h"
+
 #include <QObject>
 
-class IAboutFriend : public QObject
+class IAboutFriend
 {
-    Q_OBJECT
-
 public:
     virtual QString getName() const = 0;
     virtual QString getStatusMessage() const = 0;
