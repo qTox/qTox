@@ -38,8 +38,10 @@ class AudioFilterer;
 class CoreVideoSource;
 class CoreAV;
 
-class ToxCall
+class ToxCall : public QObject
 {
+    Q_OBJECT
+
 protected:
     ToxCall() = delete;
     ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio);

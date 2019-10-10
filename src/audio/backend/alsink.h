@@ -23,11 +23,12 @@
 #include <QMutex>
 #include <QObject>
 
+#include "src/model/interface.h"
 #include "src/audio/iaudiosink.h"
 
 class OpenAL;
 class QMutex;
-class AlSink : public IAudioSink
+class AlSink : public QObject, public IAudioSink
 {
     Q_OBJECT
 public:
@@ -38,15 +39,18 @@ public:
     AlSink& operator=(AlSink&& other) = delete;
     ~AlSink();
 
-    void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const;
-    void playMono16Sound(const IAudioSink::Sound& sound);
-    void startLoop();
-    void stopLoop();
+    void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const override;
+    void playMono16Sound(const IAudioSink::Sound& sound) override;
+    void startLoop() override;
+    void stopLoop() override;
 
-    operator bool() const;
+    operator bool() const override;
 
     uint getSourceId() const;
     void kill();
+
+    SIGNAL_IMPL(AlSink, finishedPlaying)
+    SIGNAL_IMPL(AlSink, invalidated)
 
 private:
     OpenAL& audio;

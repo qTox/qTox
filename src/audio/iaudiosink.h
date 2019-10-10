@@ -24,6 +24,8 @@
 
 #include <QObject>
 
+#include "src/model/interface.h"
+
 /**
  * @brief The IAudioSink class represents an interface to devices that can play audio.
  *
@@ -65,9 +67,8 @@
  *
  */
 
-class IAudioSink : public QObject
+class IAudioSink
 {
-    Q_OBJECT
 public:
     enum class Sound
     {
@@ -106,8 +107,8 @@ public:
     virtual operator bool() const = 0;
 
 signals:
-    void finishedPlaying();
-    void invalidated();
+    DECLARE_SIGNAL(finishedPlaying);
+    DECLARE_SIGNAL(invalidated);
 };
 
 #endif // IAUDIOSINK_H
