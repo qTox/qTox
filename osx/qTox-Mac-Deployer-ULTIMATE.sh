@@ -92,6 +92,26 @@ install() {
         read -n1 -rsp $'Press any key to continue or Ctrl+C to exit...\n'
     fi
 
+    # osx 10.13 High Sierra doesn't come with a /usr/local/sbin, yet it is needed by some brew packages
+    NEEDED_DEP_DIR="/usr/local/sbin"
+    if [[ $TRAVIS = true ]]
+    then
+        sudo mkdir -p $NEEDED_DEP_DIR
+        sudo chown -R $(whoami) $NEEDED_DEP_DIR
+    elif [[ ! -d $NEEDED_DEP_DIR ]]
+    then
+        fcho "The direcory $NEEDED_DEP_DIR must exist for some development packages."
+        read -r -p "Would you like to create it now, and set the owner to $(whoami)? [y/N] " response
+        if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+        then
+            sudo mkdir $NEEDED_DEP_DIR
+            sudo chown -R $(whoami) $NEEDED_DEP_DIR
+        else
+            fcho "Cannot proceed without $NEEDED_DEP_DIR. Exiting."
+            exit 0
+        fi
+    fi
+
     #fcho "Installing x-code Command line tools ..."
     #xcode-select --install
 
