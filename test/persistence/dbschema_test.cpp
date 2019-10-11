@@ -36,6 +36,7 @@ private slots:
     void testIsNewDb();
     void test0to1();
     void test1to2();
+    void test2to3();
     void cleanupTestCase();
 private:
     bool initSucess{false};
@@ -48,7 +49,8 @@ const QString testFileList[] = {
     "testIsNewDbTrue.db",
     "testIsNewDbFalse.db",
     "test0to1.db",
-    "test1to2.db"
+    "test1to2.db",
+    "test2to3.db"
 };
 
 const QMap<QString, QString> schema0 {
@@ -76,6 +78,9 @@ const QMap<QString, QString> schema2 {
     {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"},
     {"broken_messages", "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY)"}
 };
+
+// move stuck 0-length action messages to the existing "broken_messages" table. Not a real schema upgrade.
+const auto schema3 = schema2;
 
 void TestDbSchema::initTestCase()
 {
@@ -245,6 +250,68 @@ void TestDbSchema::test1to2()
     }};
     QVERIFY(db->execNow(totalHistoryCountQuery));
     QVERIFY(totalHisoryCount == 6); // all messages should still be in history.
+}
+
+void TestDbSchema::test2to3()
+{
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test2to3.db", {}, {}}};
+    createSchemaAtVersion(db, schema2);
+
+    // since we don't enforce foreign key contraints in the db, we can stick in IDs to other tables
+    // to avoid generating proper entries for peers and aliases tables, since they aren't actually
+    // relevant for the test.
+
+    QVector<RawDatabase::Query> queries;
+    // pending message, should be moved out
+    queries += RawDatabase::Query{
+        "INSERT INTO history (id, timestamp, chat_id, message, sender_alias) VALUES (1, 1, 0, ?, 0)",
+        {"/me "}};
+    queries += {"INSERT INTO faux_offline_pending (id) VALUES ("
+                                        "    last_insert_rowid()"
+                                        ");"};
+
+    // non pending message with the content "/me ". Maybe it was sent by a friend using a different client.
+    queries += RawDatabase::Query{
+        "INSERT INTO history (id, timestamp, chat_id, message, sender_alias) VALUES (2, 2, 0, ?, 2)",
+        {"/me "}};
+
+    // non pending message sent by us
+    queries += RawDatabase::Query{
+        "INSERT INTO history (id, timestamp, chat_id, message, sender_alias) VALUES (3, 3, 0, ?, 1)",
+        {"a normal message"}};
+
+    // pending normal message sent by us
+    queries += RawDatabase::Query{
+        "INSERT INTO history (id, timestamp, chat_id, message, sender_alias) VALUES (4, 3, 0, ?, 1)",
+        {"a normal faux offline message"}};
+    queries += {"INSERT INTO faux_offline_pending (id) VALUES ("
+                                        "    last_insert_rowid()"
+                                        ");"};
+    QVERIFY(db->execNow(queries));
+    QVERIFY(dbSchema2to3(db));
+
+    long brokenCount = -1;
+    RawDatabase::Query brokenCountQuery = {"SELECT COUNT(*) FROM broken_messages;", [&](const QVector<QVariant>& row) {
+        brokenCount = row[0].toLongLong();
+    }};
+    QVERIFY(db->execNow(brokenCountQuery));
+    QVERIFY(brokenCount == 1);
+
+    int fauxOfflineCount = -1;
+    RawDatabase::Query fauxOfflineCountQuery = {"SELECT COUNT(*) FROM faux_offline_pending;", [&](const QVector<QVariant>& row) {
+        fauxOfflineCount = row[0].toLongLong();
+    }};
+    QVERIFY(db->execNow(fauxOfflineCountQuery));
+    QVERIFY(fauxOfflineCount == 1);
+
+    int totalHisoryCount = -1;
+    RawDatabase::Query totalHistoryCountQuery = {"SELECT COUNT(*) FROM history;", [&](const QVector<QVariant>& row) {
+        totalHisoryCount = row[0].toLongLong();
+    }};
+    QVERIFY(db->execNow(totalHistoryCountQuery));
+    QVERIFY(totalHisoryCount == 4);
+
+    verifyDb(db, schema3);
 }
 
 QTEST_GUILESS_MAIN(TestDbSchema)
