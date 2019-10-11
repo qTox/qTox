@@ -934,6 +934,26 @@ then
   bsdtar --no-same-owner --no-same-permissions -xf "$KF5SONNET_FILENAME"
   rm $KF5SONNET_FILENAME
   cd sonnet*
+
+  cd cmake
+# Do not remove trailing whitespace and dont replace tabs with spaces in the patch below,
+#  otherwise the patch will fail to apply
+> FindHUNSPELL.cmake-patch cat << "EOF"
+--- FindHUNSPELL.cmake
++++ FindHUNSPELL.cmake
+@@ -40,7 +40,7 @@ find_path(HUNSPELL_INCLUDE_DIRS
+           HINTS ${PKG_HUNSPELL_INCLUDE_DIRS}
+ )
+ find_library(HUNSPELL_LIBRARIES
+-             NAMES ${PKG_HUNSPELL_LIBRARIES} hunspell hunspell-1.6 hunspell-1.5 hunspell-1.4 hunspell-1.3 hunspell-1.2 libhunspell
++             NAMES ${PKG_HUNSPELL_LIBRARIES} hunspell hunspell-1.7 hunspell-1.6 hunspell-1.5 hunspell-1.4 hunspell-1.3 hunspell-1.2 libhunspell
+              HINTS ${PKG_HUNSPELL_LIBRARY_DIRS}
+ )
+
+EOF
+  patch -l < FindHUNSPELL.cmake-patch
+  cd ..
+
   mkdir build
   cd build
   echo "
