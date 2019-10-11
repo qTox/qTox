@@ -877,9 +877,9 @@ fi
 # extra-cmake-modules
 # version available in debian stretch repos is not new enough
 ECM_PREFIX_DIR="$DEP_DIR/ECM"
-KDE_FRAMEWORK_VERSION=5.49
+KDE_FRAMEWORK_VERSION=5.62
 ECM_VERSION=$KDE_FRAMEWORK_VERSION.0
-ECM_HASH="c09fb851751f2e1c1231130dbce62d5dab396444fce7ed18662ada9ebd7ced1e"
+ECM_HASH="e07acfecef1b4c7a481a253b58b75072a4f887376301108ed2c753b5002adcd4"
 ECM_FILENAME="extra-cmake-modules-$ECM_VERSION.tar.xz"
 if [ ! -f "$ECM_PREFIX_DIR/done" ]
 then
@@ -922,7 +922,7 @@ fi
 
 KF5SONNET_PREFIX_DIR="$DEP_DIR/sonnet"
 KF5SONNET_VERSION=$KDE_FRAMEWORK_VERSION.0
-KF5SONNET_HASH="63053a671a8dc7a2a97cd49fe915e02e4b37fe41a06f3cd8785a7218d4acb754"
+KF5SONNET_HASH="a1a2d3500d7fc51d94fd6f9d951c83be86436284aeda8416963fc5213956a69a"
 KF5SONNET_FILENAME="sonnet-$KF5SONNET_VERSION.tar.xz"
 if [ ! -f "$KF5SONNET_PREFIX_DIR/done" ]
 then
@@ -955,7 +955,7 @@ then
   echo -n $KF5SONNET_VERSION > $KF5SONNET_PREFIX_DIR/done
 
   cd ..
-  rm -rf ./sonnet*
+  # rm -rf ./sonnet*
 else
   echo "Using cached build of KF5Sonnet `cat $KF5SONNET_PREFIX_DIR/done`"
 fi
