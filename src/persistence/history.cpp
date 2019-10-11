@@ -26,7 +26,7 @@
 #include "db/rawdatabase.h"
 
 namespace {
-static constexpr int SCHEMA_VERSION = 2;
+static constexpr int SCHEMA_VERSION = 3;
 
 bool createCurrentSchema(RawDatabase& db)
 {
@@ -152,6 +152,34 @@ bool dbSchema1to2(RawDatabase& db)
     return db.execNow(upgradeQueries);
 }
 
+bool dbSchema2to3(RawDatabase& db)
+{
+    // Any faux_offline_pending message with the content "/me " are action
+    // messages that qTox previously let a user enter, but that will cause an
+    // action type message to be sent to toxcore, with 0 length, which will
+    // always fail. They must be be moved from faux_offline_pending to broken_messages
+    // to avoid qTox from erroring trying to send them on every connect
+
+    const QString emptyActionMessageString = "/me ";
+
+    QVector<RawDatabase::Query> upgradeQueries;
+    upgradeQueries += RawDatabase::Query{QString("INSERT INTO broken_messages "
+            "SELECT faux_offline_pending.id FROM "
+            "history JOIN faux_offline_pending "
+            "ON faux_offline_pending.id = history.id "
+            "WHERE history.message = ?;"),
+            {emptyActionMessageString.toUtf8()}};
+
+    upgradeQueries += QString(
+        "DELETE FROM faux_offline_pending "
+        "WHERE id in ("
+            "SELECT id FROM broken_messages);");
+
+    upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 3;"));
+
+    return db.execNow(upgradeQueries);
+}
+
 /**
 * @brief Upgrade the db schema
 * @note On future alterations of the database all you have to do is bump the SCHEMA_VERSION
@@ -218,6 +246,13 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
        }
        qDebug() << "Database upgraded incrementally to schema version 2";
        //fallthrough
+    case 2:
+       if (!dbSchema2to3(*db)) {
+            qCritical() << "Failed to upgrade db to schema version 3, aborting";
+            db.reset();
+            return;
+       }
+       qDebug() << "Database upgraded incrementally to schema version 3";
     // etc.
     default:
         qInfo() << "Database upgrade finished (databaseSchemaVersion" << databaseSchemaVersion
