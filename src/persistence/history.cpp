@@ -26,7 +26,7 @@
 #include "db/rawdatabase.h"
 
 namespace {
-static constexpr int SCHEMA_VERSION = 3;
+static constexpr int SCHEMA_VERSION = 4;
 
 bool createCurrentSchema(RawDatabase& db)
 {
@@ -63,6 +63,9 @@ bool createCurrentSchema(RawDatabase& db)
         "file_state INTEGER NOT NULL);"
         "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY);"
         "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY);"));
+    // sqlite doesn't support including the index as part of the CREATE TABLE statement, so add a second query
+    queries += RawDatabase::Query(
+        "CREATE INDEX chat_id_idx on history (chat_id);");
     queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
     return db.execNow(queries);
 }
@@ -178,6 +181,18 @@ bool dbSchema2to3(RawDatabase& db)
     return db.execNow(upgradeQueries);
 }
 
+bool dbSchema3to4(RawDatabase& db)
+{
+    QVector<RawDatabase::Query> upgradeQueries;
+    upgradeQueries += RawDatabase::Query{QString(
+        "CREATE INDEX chat_id_idx on history (chat_id);")};
+
+    upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 4;"));
+
+    return db.execNow(upgradeQueries);
+}
+
+
 /**
 * @brief Upgrade the db schema
 * @note On future alterations of the database all you have to do is bump the SCHEMA_VERSION
@@ -252,6 +267,13 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
             return;
        }
        qDebug() << "Database upgraded incrementally to schema version 3";
+    case 3:
+       if (!dbSchema3to4(*db)) {
+            qCritical() << "Failed to upgrade db to schema version 4, aborting";
+            db.reset();
+            return;
+       }
+       qDebug() << "Database upgraded incrementally to schema version 4";
     // etc.
     default:
         qInfo() << "Database upgrade finished (databaseSchemaVersion" << databaseSchemaVersion
