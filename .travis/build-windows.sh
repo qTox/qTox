@@ -108,6 +108,9 @@ ls -lbh "$CACHE_DIR"
 # Purely for debugging
 ls -lbh "$PWD"
 
+sudo apt-get update -qq
+sudo apt-get install libseccomp2 -y --force-yes
+
 # Build
 sudo docker run --rm \
                 -v "$PWD/workspace":/workspace \
