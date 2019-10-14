@@ -10,6 +10,9 @@ be applied by simply running clang-format over the source code in question.
 You can run [`tools/format-code.sh`] to format all C++ files tracked by
 git.
 
+In case something is not specified in the following paragraphs, the
+[CppCoreGuidelines] apply.
+
 ## Coding Standard
 
 qTox is written under **[ISO/IEC 14882:2011 (C++11)][ISO/IEC/C++11]** without
@@ -300,6 +303,24 @@ void foo(int* x, int&&); // Forward function declaration pointers and rvalue ref
                          // even if there is no name.
 ```
 
+To avoid side effects, calling a static member function via an object-expression
+is not allowed. The only allowed way is via the class name.
+
+```c++
+class foo {
+public:
+   static void bar();
+};
+
+foo& g();
+
+void f()
+{
+   foo::bar(); // OK: no object necessary             
+   g().bar(); // Not OK: g() can cause side effects
+}
+```
+
 ### Unary Increment/Decrement
 
 When the use of the prefix and postfix notation for increment and decrement
@@ -550,4 +571,5 @@ For more info, see:
 [QStringLiteral explained]: https://woboq.com/blog/qstringliteral.html
 [String concatenation with QStringBuilder]: https://blog.qt.io/blog/2011/06/13/string-concatenation-with-qstringbuilder/
 [Latin-1]: https://en.wikipedia.org/wiki/ISO/IEC_8859-1
+[CppCoreGuidelines]: https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#main
 
