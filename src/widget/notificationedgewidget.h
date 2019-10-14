@@ -41,7 +41,7 @@ signals:
     void clicked();
 
 protected:
-    void mouseReleaseEvent(QMouseEvent* event) final override;
+    void mouseReleaseEvent(QMouseEvent* event) final;
 
 private:
     QLabel* textLabel;

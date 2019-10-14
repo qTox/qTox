@@ -107,16 +107,16 @@ protected:
     void scrollToBottom();
     void startResizeWorker(ChatLine::Ptr anchorLine = nullptr);
 
-    virtual void mouseDoubleClickEvent(QMouseEvent* ev) final override;
-    virtual void mousePressEvent(QMouseEvent* ev) final override;
-    virtual void mouseReleaseEvent(QMouseEvent* ev) final override;
-    virtual void mouseMoveEvent(QMouseEvent* ev) final override;
-    virtual void scrollContentsBy(int dx, int dy) final override;
-    virtual void resizeEvent(QResizeEvent* ev) final override;
-    virtual void showEvent(QShowEvent*) final override;
-    virtual void focusInEvent(QFocusEvent* ev) final override;
-    virtual void focusOutEvent(QFocusEvent* ev) final override;
-    virtual void wheelEvent(QWheelEvent *event) final override;
+    void mouseDoubleClickEvent(QMouseEvent* ev) final;
+    void mousePressEvent(QMouseEvent* ev) final;
+    void mouseReleaseEvent(QMouseEvent* ev) final;
+    void mouseMoveEvent(QMouseEvent* ev) final;
+    void scrollContentsBy(int dx, int dy) final;
+    void resizeEvent(QResizeEvent* ev) final;
+    void showEvent(QShowEvent*) final;
+    void focusInEvent(QFocusEvent* ev) final;
+    void focusOutEvent(QFocusEvent* ev) final;
+    void wheelEvent(QWheelEvent *event) final;
 
     void updateMultiSelectionRect();
     void updateTypingNotification();

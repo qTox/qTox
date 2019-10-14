@@ -37,7 +37,7 @@ public slots:
     void updateTracking(GenericChatroomWidget* widget);
 
 protected:
-    void resizeEvent(QResizeEvent* event) final override;
+    void resizeEvent(QResizeEvent* event) final;
 
 private slots:
     void findNextWidget();

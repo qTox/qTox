@@ -52,7 +52,7 @@ public slots:
         return nullptr;
     }
 
-    virtual bool eventFilter(QObject*, QEvent*) final override;
+    bool eventFilter(QObject*, QEvent*) final;
 
     bool isActive();
 

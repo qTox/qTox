@@ -57,12 +57,12 @@ private slots:
     void onLabelContextMenuRequested(const QPoint& localPos);
 
 protected:
-    virtual GenericNetCamView* createNetcam() final override;
-    virtual void keyPressEvent(QKeyEvent* ev) final override;
-    virtual void keyReleaseEvent(QKeyEvent* ev) final override;
+    GenericNetCamView* createNetcam() final;
+    void keyPressEvent(QKeyEvent* ev) final;
+    void keyReleaseEvent(QKeyEvent* ev) final;
     // drag & drop
-    virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
-    virtual void dropEvent(QDropEvent* ev) final override;
+    void dragEnterEvent(QDragEnterEvent* ev) final;
+    void dropEvent(QDropEvent* ev) final;
 
 private:
     void retranslateUi();

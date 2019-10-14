@@ -38,7 +38,7 @@ signals:
     void clicked();
 
 protected:
-    void mousePressEvent(QMouseEvent*) final override;
+    void mousePressEvent(QMouseEvent*) final;
 
 private:
     void updatePixmap();

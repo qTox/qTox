@@ -40,15 +40,15 @@ signals:
     void newContentDialog(ContentDialog& contentDialog);
 
 protected:
-    void contextMenuEvent(QContextMenuEvent* event) final override;
-    void dragEnterEvent(QDragEnterEvent* event) final override;
-    void dragLeaveEvent(QDragLeaveEvent* event) final override;
-    void dropEvent(QDropEvent* event) final override;
+    void contextMenuEvent(QContextMenuEvent* event) final;
+    void dragEnterEvent(QDragEnterEvent* event) final;
+    void dragLeaveEvent(QDragLeaveEvent* event) final;
+    void dropEvent(QDropEvent* event) final;
 
 private:
-    void onSetName() final override;
-    void onExpand() final override;
-    void onAddFriendWidget(FriendWidget* w) final override;
+    void onSetName() final;
+    void onExpand() final;
+    void onAddFriendWidget(FriendWidget* w) final;
     void updateID(int index);
 
     static QHash<int, CircleWidget*> circleList;
