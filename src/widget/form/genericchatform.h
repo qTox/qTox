@@ -75,9 +75,6 @@ public:
     ~GenericChatForm() override;
 
     void setName(const QString& newName);
-    virtual void show() final
-    {
-    }
     virtual void show(ContentLayout* contentLayout);
     virtual void reloadTheme();
 
@@ -150,11 +147,11 @@ protected:
     virtual GenericNetCamView* createNetcam() = 0;
     virtual void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
-    virtual void hideEvent(QHideEvent* event) override;
-    virtual void showEvent(QShowEvent*) override;
-    virtual bool event(QEvent*) final override;
-    virtual void resizeEvent(QResizeEvent* event) final override;
-    virtual bool eventFilter(QObject* object, QEvent* event) final override;
+    void hideEvent(QHideEvent* event) override;
+    void showEvent(QShowEvent*) override;
+    bool event(QEvent*) final;
+    void resizeEvent(QResizeEvent* event) final;
+    bool eventFilter(QObject* object, QEvent* event) final;
     void disableSearchText();
     void enableSearchText();
     bool searchInText(const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);

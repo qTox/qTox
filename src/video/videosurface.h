@@ -49,9 +49,9 @@ protected:
     void subscribe();
     void unsubscribe();
 
-    virtual void paintEvent(QPaintEvent* event) final override;
-    virtual void resizeEvent(QResizeEvent* event) final override;
-    virtual void showEvent(QShowEvent* event) final override;
+    void paintEvent(QPaintEvent* event) final;
+    void resizeEvent(QResizeEvent* event) final;
+    void showEvent(QShowEvent* event) final;
 
 private slots:
     void onNewFrameAvailable(const std::shared_ptr<VideoFrame>& newFrame);

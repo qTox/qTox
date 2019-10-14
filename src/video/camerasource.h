@@ -43,8 +43,8 @@ public:
     bool isNone() const;
 
     // VideoSource interface
-    virtual void subscribe() override;
-    virtual void unsubscribe() override;
+    void subscribe() override;
+    void unsubscribe() override;
 
 public slots:
     void setupDevice(const QString& deviceName, const VideoMode& mode);

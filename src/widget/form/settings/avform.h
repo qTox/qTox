@@ -45,7 +45,7 @@ public:
     AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
            IAudioSettings* audioSettings, IVideoSettings* videoSettings);
     ~AVForm() override;
-    QString getFormName() final override
+    QString getFormName() final
     {
         return tr("Audio/Video");
     }
@@ -90,8 +90,8 @@ protected:
     void updateVideoModes(int curIndex);
 
 private:
-    void hideEvent(QHideEvent* event) final override;
-    void showEvent(QShowEvent* event) final override;
+    void hideEvent(QHideEvent* event) final;
+    void showEvent(QShowEvent* event) final;
     void open(const QString& devName, const VideoMode& mode);
     int getStepsFromValue(qreal val, qreal valMin, qreal valMax);
     qreal getValueFromSteps(int steps, qreal valMin, qreal valMax);

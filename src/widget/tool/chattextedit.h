@@ -38,7 +38,7 @@ signals:
     void pasteImage(const QPixmap& pixmap);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent* event) final override;
+    void keyPressEvent(QKeyEvent* event) final;
 
 private:
     void retranslateUi();

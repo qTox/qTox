@@ -62,7 +62,7 @@ protected:
 
     bool drawButtonAreaNeeded() const;
 
-    virtual void paintEvent(QPaintEvent*) final override;
+    void paintEvent(QPaintEvent*) final;
 
 private slots:
     void onLeftButtonClicked();

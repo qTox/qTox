@@ -39,7 +39,7 @@ class AboutForm : public GenericForm
 public:
     AboutForm(UpdateCheck* updateCheck);
     ~AboutForm();
-    virtual QString getFormName() final override
+    QString getFormName() final
     {
         return tr("About");
     }

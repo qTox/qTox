@@ -38,7 +38,7 @@ class LoginScreen : public QDialog
 public:
     LoginScreen(const QString& initialProfileName = QString(), QWidget* parent = nullptr);
     ~LoginScreen();
-    bool event(QEvent* event) final override;
+    bool event(QEvent* event) final;
 
 signals:
 
@@ -48,7 +48,7 @@ signals:
     void loadProfile(QString name, const QString& pass);
 
 protected:
-    virtual void closeEvent(QCloseEvent* event) final override;
+    void closeEvent(QCloseEvent* event) final;
 
 public slots:
     void onProfileLoaded();

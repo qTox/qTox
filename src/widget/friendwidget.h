@@ -36,14 +36,14 @@ class FriendWidget : public GenericChatroomWidget
 public:
     FriendWidget(std::shared_ptr<FriendChatroom> chatform, bool compact);
 
-    void contextMenuEvent(QContextMenuEvent* event) override final;
-    void setAsActiveChatroom() override final;
-    void setAsInactiveChatroom() override final;
-    void updateStatusLight() override final;
-    void resetEventFlags() override final;
-    QString getStatusString() const override final;
-    const Friend* getFriend() const override final;
-    const Contact* getContact() const override final;
+    void contextMenuEvent(QContextMenuEvent* event) final;
+    void setAsActiveChatroom() final;
+    void setAsInactiveChatroom() final;
+    void updateStatusLight() final;
+    void resetEventFlags() final;
+    QString getStatusString() const final;
+    const Friend* getFriend() const final;
+    const Contact* getContact() const final;
 
     void search(const QString& searchString, bool hide = false);
 
@@ -64,8 +64,8 @@ public slots:
     void setActive(bool active);
 
 protected:
-    virtual void mousePressEvent(QMouseEvent* ev) override;
-    virtual void mouseMoveEvent(QMouseEvent* ev) override;
+    void mousePressEvent(QMouseEvent* ev) override;
+    void mouseMoveEvent(QMouseEvent* ev) override;
     void setFriendAlias();
 
 private slots:

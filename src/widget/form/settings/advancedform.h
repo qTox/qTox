@@ -34,7 +34,7 @@ class AdvancedForm : public GenericForm
 public:
     AdvancedForm();
     ~AdvancedForm();
-    virtual QString getFormName() final override
+    QString getFormName() final
     {
         return tr("Advanced");
     }
