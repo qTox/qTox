@@ -46,7 +46,6 @@
 #include "groupwidget.h"
 #include "maskablepixmapwidget.h"
 #include "splitterrestorer.h"
-#include "systemtrayicon.h"
 #include "form/groupchatform.h"
 #include "src/audio/audio.h"
 #include "src/chatlog/content/filetransferwidget.h"
@@ -584,7 +583,6 @@ Widget::~Widget()
         delete form;
     }
 
-    delete icon;
     delete profileForm;
     delete profileInfo;
     delete addFriendForm;
@@ -2251,7 +2249,7 @@ void Widget::onTryCreateTrayIcon()
     static int32_t tries = 15;
     if (!icon && tries--) {
         if (QSystemTrayIcon::isSystemTrayAvailable()) {
-            icon = new SystemTrayIcon();
+            icon = std::unique_ptr<QSystemTrayIcon>(new QSystemTrayIcon);
             updateIcons();
             trayMenu = new QMenu(this);
 
@@ -2266,9 +2264,7 @@ void Widget::onTryCreateTrayIcon()
             trayMenu->addAction(actionQuit);
             icon->setContextMenu(trayMenu);
 
-            // don't activate qTox widget on tray icon click in Unity backend (see #3419)
-            if (icon->backend() != SystrayBackendType::Unity)
-                connect(icon, &SystemTrayIcon::activated, this, &Widget::onIconClick);
+            connect(icon.get(), &QSystemTrayIcon::activated, this, &Widget::onIconClick);
 
             if (settings.getShowSystemTray()) {
                 icon->show();
