@@ -19,8 +19,6 @@
 # stop as soon as one of steps will fail
 set -e -o pipefail
 
-# Qt 5.5, since that's the lowest supported version
-sudo add-apt-repository -y ppa:beineri/opt-qt551-trusty
 sudo apt-get update -qq
 
 # install needed Qt, OpenAL, opus, qrencode, GTK tray deps, sqlcipher
@@ -43,15 +41,12 @@ sudo apt-get install -y --force-yes \
     libtool \
     libvpx-dev \
     libxss-dev qrencode \
-    qt55base \
-    qt55script \
-    qt55svg \
-    qt55tools \
-    qt55xmlpatterns \
+    qt5-default \
+    qttools5-dev-tools \
+    qttools5-dev \
+    libqt5opengl5-dev \
+    libqt5svg5-dev \
     pkg-config || yes
-
-# Qt
-source /opt/qt55/bin/qt55-env.sh || yes
 
 # ffmpeg
 if [ ! -e "libs" ]; then mkdir libs; fi

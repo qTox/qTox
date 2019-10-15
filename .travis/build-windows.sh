@@ -108,6 +108,11 @@ ls -lbh "$CACHE_DIR"
 # Purely for debugging
 ls -lbh "$PWD"
 
+sudo apt-get update -qq
+# even though we're building in docker, libseccomp2 is used by docker, and needs to be up to date
+# to support functionality used by Qt's configure
+sudo apt-get install libseccomp2 -y --force-yes
+
 # Build
 sudo docker run --rm \
                 -v "$PWD/workspace":/workspace \

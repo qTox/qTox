@@ -60,7 +60,7 @@ update_flatpak() {
 
 update_travis() {
     cd .travis
-    perl -i -0pe "s|$VERSION_PATTERN( --depth=1 https://github.com/toktok/c-toxcore)|$@\${1}|gms" build-ubuntu-14-04.sh
+    perl -i -0pe "s|$VERSION_PATTERN( --depth=1 https://github.com/toktok/c-toxcore)|$@\${1}|gms" build-ubuntu-16-04.sh
     cd ..
 }
 
