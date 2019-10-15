@@ -407,7 +407,8 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
 
     layout(lines.last()->getRow(), lines.size(), useableWidth());
 
-    if (visibleLines.size() > 1) {
+    // user sends one message, but program sometimes sends message with date, and we have 2 messages
+    if (newLines.size() > 2 && visibleLines.size() > 1) {
         startResizeWorker(visibleLines[1]);
     } else {
         startResizeWorker();
