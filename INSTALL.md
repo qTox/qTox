@@ -250,7 +250,7 @@ corresponding parts.
 #### Arch Linux
 
 ```bash
-sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg opus libvpx libsodium
+sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg opus libvpx libsodium sqlcipher
 ```
 
 
