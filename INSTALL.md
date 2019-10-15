@@ -20,8 +20,7 @@
     - [Fedora](#fedora-other-deps)
     - [openSUSE](#opensuse-other-deps)
     - [Slackware](#slackware-other-deps)
-    - [Ubuntu >=15.04](#ubuntu-other-deps)
-    - [Ubuntu >=16.04](#ubuntu-other-1604-deps)
+    - [Ubuntu](#ubuntu-other-deps)
   - [sqlcipher](#sqlcipher)
   - [Compile toxcore](#compile-toxcore)
   - [Compile qTox](#compile-qtox)
@@ -290,8 +289,6 @@ sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg opus libvpx
 
 #### Debian
 
-**Note that only Debian >=9 stable (stretch) is supported.**
-
 ```bash
 sudo apt-get install \
     automake \
@@ -363,8 +360,6 @@ sudo dnf install \
     sqlcipher-devel
 ```
 
-**Go to [sqlcipher](#sqlcipher) section to compile it if necessary.**
-
 <a name="opensuse-other-deps" />
 
 #### openSUSE
@@ -404,44 +399,7 @@ http://slackbuilds.org/repository/14.2/network/qTox/
 
 <a name="ubuntu-other-deps" />
 
-#### Ubuntu >=15.04
-
-```bash
-sudo apt-get install \
-    automake \
-    autotools-dev \
-    build-essential cmake \
-    check \
-    checkinstall \
-    libavcodec-ffmpeg-dev \
-    libavdevice-ffmpeg-dev \
-    libavfilter-ffmpeg-dev \
-    libavutil-ffmpeg-dev \
-    libexif-dev \
-    libgdk-pixbuf2.0-dev \
-    libglib2.0-dev \
-    libgtk2.0-dev \
-    libkdeui5 \
-    libopenal-dev \
-    libopus-dev \
-    libqrencode-dev \
-    libqt5opengl5-dev \
-    libqt5svg5-dev \
-    libsodium-dev \
-    libsqlcipher-dev \
-    libswresample-ffmpeg-dev \
-    libswscale-ffmpeg-dev \
-    libtool \
-    libvpx-dev \
-    libxss-dev \
-    qrencode \
-    qt5-default \
-    qttools5-dev-tools
-```
-
-<a name="ubuntu-other-1604-deps" />
-
-#### Ubuntu >=16.04:
+#### Ubuntu:
 
 ```bash
 sudo apt-get install \
@@ -471,22 +429,6 @@ sudo apt-get install \
     qt5-default \
     qttools5-dev-tools \
     qttools5-dev
-```
-
-### sqlcipher
-
-If you are not using an old version of Fedora, skip this section, and go
-directly to compiling
-[**toxcore**](#compile-toxcore).
-
-```bash
-git clone https://github.com/sqlcipher/sqlcipher
-cd sqlcipher
-./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
-    LDFLAGS="-lcrypto"
-make
-sudo make install
-cd ..
 ```
 
 ### Compile toxcore
