@@ -114,11 +114,11 @@ install_toxcore() {
         # compile and install
         if [[ $SYSTEM_WIDE = "false" ]]
         then
-            cmake . -DCMAKE_INSTALL_PREFIX=${BASE_DIR}
+            cmake . -DCMAKE_INSTALL_PREFIX=${BASE_DIR} -DBOOTSTRAP_DAEMON=OFF
             make -j $(nproc)
             make install
         else
-            cmake .
+            cmake . -DBOOTSTRAP_DAEMON=OFF
             make -j $(nproc)
             sudo make install
             sudo ldconfig
