@@ -391,8 +391,8 @@ int main(int argc, char* argv[])
     } else {
         nexus.setParser(&parser);
         int returnval = nexus.showLogin(profileName);
-        if (returnval != 0) {
-            return returnval;
+        if (returnval == QDialog::Rejected) {
+            return -1;
         }
     }
 
