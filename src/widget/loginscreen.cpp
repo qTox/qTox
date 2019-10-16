@@ -72,9 +72,15 @@ LoginScreen::~LoginScreen()
     delete ui;
 }
 
+void LoginScreen::reject()
+{
+    // Reject is triggered by pressing escape, and returns 0 by default.
+    // Instead, unify behavior with closeEvent.
+    this->closeEvent(nullptr);
+}
+
 void LoginScreen::closeEvent(QCloseEvent* event)
 {
-
     // If we are in the bootstrap, returning -1 will give us something to exit with in main.cpp
     this->setResult(-1);
     // If we are in application exec, we can quit by closing it, instead.
@@ -113,7 +119,8 @@ void LoginScreen::onProfileLoaded()
     done(0);
 }
 
-void LoginScreen::onProfileLoadFailed() {
+void LoginScreen::onProfileLoadFailed()
+{
     QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
     ui->loginPassword->setFocus();
     ui->loginPassword->selectAll();

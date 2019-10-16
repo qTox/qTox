@@ -21,9 +21,9 @@
 #ifndef LOGINSCREEN_H
 #define LOGINSCREEN_H
 
+#include <QDialog>
 #include <QShortcut>
 #include <QToolButton>
-#include <QDialog>
 
 class Profile;
 
@@ -48,6 +48,7 @@ signals:
     void loadProfile(QString name, const QString& pass);
 
 protected:
+    virtual void reject() final override;
     virtual void closeEvent(QCloseEvent* event) final override;
 
 public slots:
