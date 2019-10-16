@@ -63,6 +63,10 @@
  <url type="homepage">https://qtox.github.io</url>
  <update_contact>barrdetwix@gmail.com</update_contact>
  <project_group>qTox</project_group>
+   <content_rating type="oars-1.0">
+    <content_attribute id="social-chat">intense</content_attribute>
+    <content_attribute id="social-audio">intense</content_attribute>
+  </content_rating>
  <releases>
 ​  <release version="1.16.3" date="2018-07-21"/>
  </releases>
