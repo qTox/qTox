@@ -145,6 +145,7 @@
         {
             "name": "c-toxcore",
             "buildsystem": "cmake-ninja",
+            "config-opts": ["-DBOOTSTRAP_DAEMON=OFF"],
             "sources": [
                 {
                     "type": "git",
