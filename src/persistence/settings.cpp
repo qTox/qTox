@@ -53,9 +53,6 @@
  * @warning Don't use it to save every single thing you want to save, use it
  * for some general purpose widgets, such as MainWindows or Splitters,
  * which have widget->saveX() and widget->loadX() methods.
- *
- * @var QString Settings::toxmeInfo
- * @brief Toxme info like name@server
  */
 
 const QString Settings::globalSettingsFile = "qtox.ini";
@@ -581,15 +578,6 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
         ps.endArray();
     }
     ps.endGroup();
-
-    ps.beginGroup("Toxme");
-    {
-        toxmeInfo = ps.value("info", "").toString();
-        toxmeBio = ps.value("bio", "").toString();
-        toxmePriv = ps.value("priv", false).toBool();
-        toxmePass = ps.value("pass", "").toString();
-    }
-    ps.endGroup();
 }
 
 void Settings::resetToDefault()
@@ -851,16 +839,6 @@ void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
         ps.setValue("blackList", blackList.join('\n'));
     }
     ps.endGroup();
-
-    ps.beginGroup("Toxme");
-    {
-        ps.setValue("info", toxmeInfo);
-        ps.setValue("bio", toxmeBio);
-        ps.setValue("priv", toxmePriv);
-        ps.setValue("pass", toxmePass);
-    }
-    ps.endGroup();
-
     ps.save();
 }
 
@@ -1273,93 +1251,6 @@ void Settings::setTranslation(const QString& newValue)
     if (newValue != translation) {
         translation = newValue;
         emit translationChanged(translation);
-    }
-}
-
-void Settings::deleteToxme()
-{
-    setToxmeInfo("");
-    setToxmeBio("");
-    setToxmePriv(false);
-    setToxmePass("");
-}
-
-void Settings::setToxme(QString name, QString server, QString bio, bool priv, QString pass)
-{
-    setToxmeInfo(name + "@" + server);
-    setToxmeBio(bio);
-    setToxmePriv(priv);
-    if (!pass.isEmpty())
-        setToxmePass(pass);
-}
-
-QString Settings::getToxmeInfo() const
-{
-    QMutexLocker locker{&bigLock};
-    return toxmeInfo;
-}
-
-void Settings::setToxmeInfo(const QString& info)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (info != toxmeInfo) {
-        if (info.split("@").size() == 2) {
-            toxmeInfo = info;
-            emit toxmeInfoChanged(toxmeInfo);
-        } else {
-            qWarning() << info << "is not a valid toxme string -> value ignored.";
-        }
-    }
-}
-
-QString Settings::getToxmeBio() const
-{
-    QMutexLocker locker{&bigLock};
-    return toxmeBio;
-}
-
-void Settings::setToxmeBio(const QString& bio)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (bio != toxmeBio) {
-        toxmeBio = bio;
-        emit toxmeBioChanged(toxmeBio);
-    }
-}
-
-bool Settings::getToxmePriv() const
-{
-    QMutexLocker locker{&bigLock};
-    return toxmePriv;
-}
-
-void Settings::setToxmePriv(bool priv)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (priv != toxmePriv) {
-        toxmePriv = priv;
-        emit toxmePrivChanged(toxmePriv);
-    }
-}
-
-QString Settings::getToxmePass() const
-{
-    QMutexLocker locker{&bigLock};
-    return toxmePass;
-}
-
-void Settings::setToxmePass(const QString& pass)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (pass != toxmePass) {
-        toxmePass = pass;
-
-        // password is not exposed for security reasons
-        emit toxmePassChanged();
     }
 }
 
