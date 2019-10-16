@@ -80,15 +80,12 @@ private slots:
     void onChangePassClicked();
     void onAvatarClicked();
     void showProfilePictureContextMenu(const QPoint& point);
-    void onRegisterButtonClicked();
 
 private:
-    void showExistingToxme();
     void retranslateUi();
     void prFileLabelUpdate();
     bool eventFilter(QObject* object, QEvent* event);
     void refreshProfiles();
-    void showRegisterToxme();
     static QString getSupportedImageFilter();
 
 private:
