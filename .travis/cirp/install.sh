@@ -28,7 +28,7 @@ else
   python3 --version || true
   pyenv versions || true
 
-  pyenv global 3.6
+  pyenv global 3.7
 fi
 
 pip install --upgrade pip
