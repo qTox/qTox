@@ -83,8 +83,9 @@ public:
     static QFont getFont(Font font);
     static const QString resolve(const QString& filename, const QFont& baseFont = QFont());
     static void repolish(QWidget* w);
-    static void setThemeColor(int color);
+    static void setThemeColor();
     static void setThemeColor(const QColor& color);
+    static void setExtraThemeColor(const QColor& color);
     static void applyTheme();
     static QPixmap scaleSvgImage(const QString& path, uint32_t width, uint32_t height);
     static void initPalette();
@@ -98,6 +99,8 @@ private:
     Style();
 
 private:
+    static void init();
+
     static QList<ThemeNameColor> themeNameColors;
     static std::map<std::pair<const QString, const QFont>, const QString> stylesheetsCache;
     static QMap<ColorPalette, QString> aliasColors;
