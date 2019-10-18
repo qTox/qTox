@@ -87,36 +87,6 @@ of spell check).
 
 Disabled if dependencies are missing during compilation.
 
-#### KDE Status Notifier / GTK tray backend
-
-| Name        | Version |
-|-------------|---------|
-| [Atk]       | >= 2.14 |
-| [Cairo]     |         |
-| [GdkPixbuf] | >= 2.31 |
-| [GLib]      | >= 2.0  |
-| [GTK+]      | >= 2.0  |
-| [Pango]     | >= 1.18 |
-
-To disable: `-DENABLE_STATUSNOTIFIER=False -DENABLE_GTK_SYSTRAY=False`
-
-#### Unity tray backend
-
-Disabled by default.
-
-| Name              | Version   |
-|-------------------|-----------|
-| [Atk]             | >= 2.14   |
-| [Cairo]           |           |
-| [DBus Menu]       | >= 0.6    |
-| [GdkPixbuf]       | >= 2.31   |
-| [GLib]            | >= 2.0    |
-| [GTK+]            | >= 2.0    |
-| [libappindicator] | >= 0.4.92 |
-| [Pango]           | >= 1.18   |
-
-To enable: `-DENABLE_APPINDICATOR=True`
-
 #### Snorenotify desktop notification backend
 
 Disabled by default
@@ -772,10 +742,6 @@ Switches:
 [DBus Menu]: https://launchpad.net/libdbusmenu
 [FFmpeg]: https://www.ffmpeg.org/
 [GCC]: https://gcc.gnu.org/
-[GdkPixbuf]: https://developer.gnome.org/gdk-pixbuf/
-[GLib]: https://wiki.gnome.org/Projects/GLib
-[GTK+]: https://www.gtk.org/
-[libappindicator]: https://launchpad.net/libappindicator
 [libX11]: https://www.x.org/wiki/
 [libXScrnSaver]: https://www.x.org/wiki/Releases/ModuleVersions/
 [MinGW]: http://www.mingw.org/

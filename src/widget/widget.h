@@ -277,7 +277,7 @@ private:
     void cleanupNotificationSound();
 
 private:
-    SystemTrayIcon* icon = nullptr;
+    std::unique_ptr<QSystemTrayIcon> icon;
     QMenu* trayMenu;
     QAction* statusOnline;
     QAction* statusAway;
