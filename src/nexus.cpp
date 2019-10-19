@@ -163,6 +163,11 @@ int Nexus::showLogin(const QString& profileName)
     // The connection order ensures profile will be ready for bootstrap for now
     connect(this, &Nexus::currentProfileChanged, this, &Nexus::bootstrapWithProfile);
     int returnval = loginScreen.exec();
+    if (returnval == QDialog::Rejected) {
+        // Kriby: This will terminate the main application loop, necessary until we refactor
+        // away the split startup/return to login behavior.
+        qApp->quit();
+    }
     disconnect(this, &Nexus::currentProfileChanged, this, &Nexus::bootstrapWithProfile);
     return returnval;
 }
