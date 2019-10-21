@@ -56,11 +56,6 @@ if(APPLE)
     /usr/local/opt/openal-soft/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
 endif()
 
-if(${APPIMAGE_UPDATER_BRIDGE})
-  set(ENV{PKG_CONFIG_PATH}
-    /usr/local/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
-endif()
-
 execute_process(
   COMMAND brew --prefix qt5
   OUTPUT_VARIABLE QT_PREFIX_PATH
@@ -647,11 +642,12 @@ endif()
 if(${UPDATE_CHECK})
     add_definitions(-DUPDATE_CHECK_ENABLED=1)
     if(${APPIMAGE_UPDATER_BRIDGE})
-        search_dependency(AIUB  PACKAGE AppImageUpdaterBridge)
-        if(AIUB_FOUND)
-		message(STATUS "using AppImageUpdaterBridge")
+        find_package(AppImageUpdaterBridge)
+        if(AppImageUpdaterBridge_FOUND)
+                message(STATUS "using AppImageUpdaterBridge")
                 add_definitions(-DAPPIMAGE_UPDATER_BRIDGE_ENABLED=1)
-	else()
+                add_dependency(AppImageUpdaterBridge)
+        else()
                 message(STATUS "cannot find AppImageUpdaterBridge , ignoring cmake flag")
         endif()
     else()
