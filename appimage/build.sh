@@ -126,8 +126,8 @@ make
 
 make DESTDIR="$QTOX_APP_DIR" install ; find "$QTOX_APP_DIR"
 
-# is master as of 2018-04-25
-LDQT_HASH="9c90a882ac744b5f704598e9588450ddfe487c67"
+# is release #6 as of 2019-10-23
+LDQT_HASH="37631e5640d8f7c31182fa72b31266bbdf6939fc"
 # build linuxdeployqt
 git clone https://github.com/probonopd/linuxdeployqt.git "$LDQT_BUILD_DIR"
 cd "$LDQT_BUILD_DIR"
@@ -136,8 +136,8 @@ qmake
 make
 make install
 
-# is master as of 2018-04-25
-AITOOL_HASH="5d93115f279d94a4d23dfd64fb8ccd109e98f039"
+# is release #12 as of 2019-10-23
+AITOOL_HASH="effcebc1d81c5e174a48b870cb420f490fb5fb4d"
 # build appimagetool
 git clone -b master --single-branch --recursive \
 https://github.com/AppImage/AppImageKit "$AITOOL_BUILD_DIR"
