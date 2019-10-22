@@ -45,11 +45,7 @@ public:
     }
 
 public slots:
-#ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
     void onUpdateAvailable(QString latestVersion, QUrl link);
-#else
-    void onUpdateAvailable();
-#endif
     void onUpToDate();
     void onUpdateCheckFailed();
 
@@ -62,9 +58,7 @@ private:
     Ui::AboutSettings* bodyUI;
     QTimer* progressTimer;
     UpdateCheck* updateCheck;
-#ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
     QMetaObject::Connection linkConnection;
-#endif
 };
 
 #endif // ABOUTFORM_H

@@ -96,10 +96,6 @@ void AboutForm::replaceVersions()
         connect(updateCheck, &UpdateCheck::updateAvailable, this, &AboutForm::onUpdateAvailable);
         connect(updateCheck, &UpdateCheck::upToDate, this, &AboutForm::onUpToDate);
         connect(updateCheck, &UpdateCheck::updateCheckFailed, this, &AboutForm::onUpdateCheckFailed);
-#ifdef APPIMAGE_UPDATER_BRIDGE_ENABLED
-        connect(bodyUI->updateAvailableButton, &QPushButton::clicked, updateCheck,
-                &UpdateCheck::initUpdate);
-#endif
     } else {
         qWarning() << "AboutForm passed null UpdateCheck!";
     }
@@ -169,7 +165,6 @@ void AboutForm::replaceVersions()
     bodyUI->authorInfo->setText(authorInfo);
 }
 
-#ifndef APPIMAGE_UPDATER_BRIDGE_ENABLED
 void AboutForm::onUpdateAvailable(QString latestVersion, QUrl link)
 {
     QObject::disconnect(linkConnection);
@@ -177,12 +172,6 @@ void AboutForm::onUpdateAvailable(QString latestVersion, QUrl link)
                              [link]() { QDesktopServices::openUrl(link); });
     bodyUI->updateStack->setCurrentIndex(static_cast<int>(updateIndex::available));
 }
-#else
-void AboutForm::onUpdateAvailable()
-{
-    bodyUI->updateStack->setCurrentIndex(static_cast<int>(updateIndex::available));
-}
-#endif
 
 void AboutForm::onUpToDate()
 {
