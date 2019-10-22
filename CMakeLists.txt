@@ -290,6 +290,8 @@ set(${PROJECT_NAME}_SOURCES
   src/chatlog/content/text.h
   src/chatlog/content/timestamp.cpp
   src/chatlog/content/timestamp.h
+  src/chatlog/content/broken.cpp
+  src/chatlog/content/broken.h
   src/chatlog/customtextdocument.cpp
   src/chatlog/customtextdocument.h
   src/chatlog/documentcache.cpp

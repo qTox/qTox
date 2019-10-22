@@ -72,15 +72,6 @@ LoginScreen::~LoginScreen()
     delete ui;
 }
 
-void LoginScreen::closeEvent(QCloseEvent* event)
-{
-
-    // If we are in the bootstrap, returning -1 will give us something to exit with in main.cpp
-    this->setResult(-1);
-    // If we are in application exec, we can quit by closing it, instead.
-    qApp->quit();
-}
-
 /**
  * @brief Resets the UI, clears all fields.
  */
@@ -110,10 +101,11 @@ void LoginScreen::reset(const QString& initialProfileName)
 
 void LoginScreen::onProfileLoaded()
 {
-    done(0);
+    done(QDialog::Accepted);
 }
 
-void LoginScreen::onProfileLoadFailed() {
+void LoginScreen::onProfileLoadFailed()
+{
     QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
     ui->loginPassword->setFocus();
     ui->loginPassword->selectAll();
