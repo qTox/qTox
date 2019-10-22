@@ -35,8 +35,6 @@ readonly QTOX_APP_DIR="$BUILD_DIR"/appdir
 readonly LDQT_BUILD_DIR="$BUILD_DIR"/ldqt
 # "appimagetool" becomes aitool
 readonly AITOOL_BUILD_DIR="$BUILD_DIR"/aitool
-# sqlcipher build directory
-readonly SQLCIPHER_BUILD_DIR="$BUILD_DIR"/sqlcipher
 # ldqt binary
 readonly LDQT_BIN="/usr/lib/x86_64-linux-gnu/qt5/bin/linuxdeployqt"
 # aitool binary
@@ -70,7 +68,7 @@ check checkinstall libavdevice-dev libexif-dev libgdk-pixbuf2.0-dev \
 libgtk2.0-dev libopenal-dev libopus-dev libqrencode-dev libqt5opengl5-dev \
 libqt5svg5-dev libsodium-dev libtool libvpx-dev libxss-dev \
 qt5-default qttools5-dev qttools5-dev-tools qtdeclarative5-dev \
-fcitx-frontend-qt5 uim-qt5
+fcitx-frontend-qt5 uim-qt5 libsqlcipher-dev
 
 # get version
 cd "$QTOX_SRC_DIR"
@@ -92,17 +90,6 @@ make
 make install
 
 cd "$BUILD_DIR"
-
-# we need a custom built sqlcipher version because of a Debian bug
-# https://bugs.debian.org/850421
-git clone https://github.com/sqlcipher/sqlcipher.git "$SQLCIPHER_BUILD_DIR"
-cd "$SQLCIPHER_BUILD_DIR"
-git checkout tags/v3.4.2
-./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
-LDFLAGS="-lcrypto"
-
-make
-make install
 
 # copy qtox source
 cp -r "$QTOX_SRC_DIR" "$QTOX_BUILD_DIR"
