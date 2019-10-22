@@ -26,7 +26,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra dependencies" ON)
 option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 option(UPDATE_CHECK "Enable automatic update check" ON)
-option(APPIMAGE_UPDATER_BRIDGE "Use AppImageUpdaterBridge to do the update" OFF)
 option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
 option(SVGZ_ICON "Compress the SVG icon of qTox" ON)
@@ -54,11 +53,6 @@ set(ENV{PKG_CONFIG_PATH}
 if(APPLE)
   set(ENV{PKG_CONFIG_PATH}
     /usr/local/opt/openal-soft/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
-endif()
-
-if(${APPIMAGE_UPDATER_BRIDGE})
-  set(ENV{PKG_CONFIG_PATH}
-    /usr/local/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
 endif()
 
 execute_process(
@@ -648,17 +642,6 @@ endif()
 
 if(${UPDATE_CHECK})
     add_definitions(-DUPDATE_CHECK_ENABLED=1)
-    if(${APPIMAGE_UPDATER_BRIDGE})
-        search_dependency(AIUB  PACKAGE AppImageUpdaterBridge)
-        if(AIUB_FOUND)
-		message(STATUS "using AppImageUpdaterBridge")
-                add_definitions(-DAPPIMAGE_UPDATER_BRIDGE_ENABLED=1)
-	else()
-                message(STATUS "cannot find AppImageUpdaterBridge , ignoring cmake flag")
-        endif()
-    else()
-        message(STATUS "not using AppImageUpdaterBridge")
-    endif()
     set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
         src/net/updatecheck.cpp
         src/net/updatecheck.h)
