@@ -47,12 +47,6 @@ readonly APT_FLAGS="-y --no-install-recommends"
 readonly SNORE_GIT="https://github.com/KDE/snorenotify"
 # snorenotify build directory
 readonly SNORE_BUILD_DIR="$BUILD_DIR"/snorenotify
-# "appimage updater bridge" becomes aub
-readonly AUB_SRC_DIR="$BUILD_DIR"/aub
-# aub source
-readonly AUB_GIT="https://github.com/antony-jr/AppImageUpdaterBridge"
-# aub build dir
-readonly AUB_BUILD_DIR="$BUILD_DIR"/aub/build
 
 # update information to be embeded in AppImage
 if [ "cron" == "${TRAVIS_EVENT_TYPE:-}" ]
@@ -106,18 +100,6 @@ cd "$SQLCIPHER_BUILD_DIR"
 git checkout tags/v3.4.2
 ./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
 LDFLAGS="-lcrypto"
-
-make
-make install
-
-# build aub into a static library and later use it in
-# qTox
-git clone "$AUB_GIT" "$AUB_SRC_DIR"
-cd "$AUB_SRC_DIR" # we need to checkout first
-git checkout tags/v1.1.2
-mkdir $AUB_BUILD_DIR
-cd $AUB_BUILD_DIR
-cmake .. -DLOGGING_DISABLED=ON
 
 make
 make install
