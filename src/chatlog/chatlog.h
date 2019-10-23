@@ -67,6 +67,7 @@ public:
 
     bool isEmpty() const;
     bool hasTextToBeCopied() const;
+    bool stickToBottom() const;
 
     ChatLine::Ptr getTypingNotification() const;
     QVector<ChatLine::Ptr> getLines();
@@ -97,7 +98,6 @@ protected:
 
     void layout(int start, int end, qreal width);
     bool isOverSelection(QPointF scenePos) const;
-    bool stickToBottom() const;
 
     qreal useableWidth() const;
 

@@ -1099,7 +1099,9 @@ void GenericChatForm::handleSearchResult(SearchResult result, SearchDirection di
 
 void GenericChatForm::renderMessage(ChatLogIdx idx)
 {
-    renderMessages(idx, idx + 1);
+    if (chatWidget->stickToBottom()) {
+        renderMessages(idx, idx + 1);
+    }
 }
 
 void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
