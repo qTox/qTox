@@ -246,10 +246,6 @@ void Settings::loadGlobal()
         outVolume = s.value("outVolume", 100).toInt();
         enableTestSound = s.value("enableTestSound", true).toBool();
         audioBitrate = s.value("audioBitrate", 64).toInt();
-        enableBackend2 = false;
-#ifdef USE_FILTERAUDIO
-        enableBackend2 = s.value("enableBackend2", false).toBool();
-#endif
     }
     s.endGroup();
 
@@ -726,7 +722,6 @@ void Settings::saveGlobal()
         s.setValue("outVolume", outVolume);
         s.setValue("enableTestSound", enableTestSound);
         s.setValue("audioBitrate", audioBitrate);
-        s.setValue("enableBackend2", enableBackend2);
     }
     s.endGroup();
 
@@ -2118,22 +2113,6 @@ void Settings::setAudioBitrate(int bitrate)
     if (bitrate != audioBitrate) {
         audioBitrate = bitrate;
         emit audioBitrateChanged(audioBitrate);
-    }
-}
-
-bool Settings::getEnableBackend2() const
-{
-    QMutexLocker locker{&bigLock};
-    return enableBackend2;
-}
-
-void Settings::setEnableBackend2(bool enabled)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (enabled != enableBackend2) {
-        enableBackend2 = enabled;
-        emit enableBackend2Changed(enabled);
     }
 }
 
