@@ -83,10 +83,12 @@ public:
     static QString resolveToxPk(const ToxPk& pk);
     QDateTime getLatestTime() const;
     QDateTime getFirstTime() const;
+    bool isNeedMessageAlert() const;
 
 signals:
     void messageInserted();
     void messageNotFoundShow(SearchDirection direction);
+    void stickToBottom();
 
 public slots:
     void focusInput();

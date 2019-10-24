@@ -433,6 +433,11 @@ QDateTime GenericChatForm::getFirstTime() const
     return getTime(chatWidget->getFirstLine());
 }
 
+bool GenericChatForm::isNeedMessageAlert() const
+{
+    return !chatWidget->stickToBottom();
+}
+
 void GenericChatForm::reloadTheme()
 {
     const Settings& s = Settings::getInstance();
@@ -1189,6 +1194,8 @@ void GenericChatForm::loadHistoryUpper()
     auto msg = messages.crbegin()->second;
     if (loadHistoryFrom(QDateTime())) {
         chatWidget->scrollToLine(msg);
+    } else {
+        emit stickToBottom();
     }
 }
 
