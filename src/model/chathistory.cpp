@@ -122,6 +122,7 @@ ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& co
     // We don't manage any of the item updates ourselves, we just forward along
     // the underlying sessionChatLog's updates
     connect(&sessionChatLog, &IChatLog::itemUpdated, this, &IChatLog::itemUpdated);
+    connect(&sessionChatLog, &IChatLog::messageSent, this, &IChatLog::messageSent);
 }
 
 const ChatLogItem& ChatHistory::at(ChatLogIdx idx) const

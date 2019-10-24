@@ -371,6 +371,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     connect(this, &GenericChatForm::messageNotFoundShow, searchForm, &SearchForm::showMessageNotFound);
 
     connect(&chatLog, &IChatLog::itemUpdated, this, &GenericChatForm::renderMessage);
+    connect(&chatLog, &IChatLog::messageSent, this, &GenericChatForm::goToCurrentDate);
 
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &GenericChatForm::onSendTriggered);
 

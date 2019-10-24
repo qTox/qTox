@@ -140,6 +140,7 @@ public:
 
 signals:
     void itemUpdated(ChatLogIdx idx);
+    void messageSent();
 };
 
 #endif /*ICHAT_LOG_H*/
