@@ -139,7 +139,7 @@ public:
                                                         size_t maxDates) const = 0;
 
 signals:
-    void itemUpdated(ChatLogIdx idx);
+    void itemUpdated(ChatLogIdx idx, bool isSend = false);
 };
 
 #endif /*ICHAT_LOG_H*/

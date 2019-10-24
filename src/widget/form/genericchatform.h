@@ -122,7 +122,7 @@ protected slots:
     void onSearchUp(const QString& phrase, const ParameterSearch& parameter);
     void onSearchDown(const QString& phrase, const ParameterSearch& parameter);
     void handleSearchResult(SearchResult result, SearchDirection direction);
-    void renderMessage(ChatLogIdx idx);
+    void renderMessage(ChatLogIdx idx, bool isSend);
     void renderMessages(ChatLogIdx begin, ChatLogIdx end,
                         std::function<void(void)> onCompletion = std::function<void(void)>());
     void goToCurrentDate();

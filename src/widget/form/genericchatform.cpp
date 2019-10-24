@@ -1102,10 +1102,12 @@ void GenericChatForm::handleSearchResult(SearchResult result, SearchDirection di
     renderMessages(endRenderedIdx, firstRenderedIdx, [this]{enableSearchText();});
 }
 
-void GenericChatForm::renderMessage(ChatLogIdx idx)
+void GenericChatForm::renderMessage(ChatLogIdx idx, bool isSend)
 {
     if (chatWidget->stickToBottom()) {
         renderMessages(idx, idx + 1);
+    } else if (isSend) {
+        goToCurrentDate();
     }
 }
 
