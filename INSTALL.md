@@ -352,7 +352,11 @@ sudo zypper install \
     patterns-openSUSE-devel_basis \
     qrencode-devel \
     sqlcipher-devel \
-    sonnet-devel
+    sonnet-devel \
+    qt5-linguist-devel \
+    libQt5Test-devel \
+    ffmpeg-4-libavcodec-devel \
+    ffmpeg-4-libavdevice-devel
 ```
 
 <a name="slackware-other-deps" />
