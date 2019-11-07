@@ -38,9 +38,9 @@ readonly QTOX_SRC_DIR="/qtox"
 
 
 # Make sure we run in an expected environment
-if [ ! -f /etc/os-release ] || ! cat /etc/os-release | grep -qi 'stretch'
+if [ ! -f /etc/os-release ] || ! cat /etc/os-release | grep -qi 'buster'
 then
-  echo "Error: This script should be run on Debian Stretch."
+  echo "Error: This script should be run on Debian Buster."
   exit 1
 fi
 
@@ -136,6 +136,7 @@ apt-get install -y --no-install-recommends \
                    cmake \
                    git \
                    libtool \
+                   nsis \
                    pkg-config \
                    tclsh \
                    unzip \
@@ -228,9 +229,9 @@ store_apt_cache()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.0.2s
+OPENSSL_VERSION=1.1.1d
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="cabd5c9492825ce5bd23f3c3aeed6a97f8142f606d893df216411f07d1abab96"
+OPENSSL_HASH="1e3a91bc1f9dfce01af26026f856e064eab4c8ee0a8f457b5ae30b40b8b711f2"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
@@ -243,7 +244,7 @@ then
   rm $OPENSSL_FILENAME
   cd openssl*
 
-  CONFIGURE_OPTIONS="--prefix=$OPENSSL_PREFIX_DIR shared"
+  CONFIGURE_OPTIONS="--prefix=$OPENSSL_PREFIX_DIR --openssldir=${OPENSSL_PREFIX_DIR}/ssl shared"
   if [[ "$ARCH" == "x86_64" ]]
   then
     CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS mingw64 --cross-compile-prefix=x86_64-w64-mingw32-"
@@ -270,12 +271,12 @@ fi
 
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
-QT_MINOR=9
-QT_PATCH=8
+QT_MINOR=12
+QT_PATCH=5
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.9/5.9.8/single/qt-everywhere-opensource-src-5.9.8.tar.xz.mirrorlist
-QT_HASH="86aca7dc37f161fc730a9d4f6bddf684962ca560327682e282ff61bf8b859c36"
-QT_FILENAME="qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
+# hash from https://download.qt.io/archive/qt/5.12/5.12.5/single/qt-everywhere-src-5.12.5.tar.xz.mirrorlist
+QT_HASH="a2299e21db7767caf98242767bffb18a2a88a42fee2d6a393bedd234f8c91298"
+QT_FILENAME="qt-everywhere-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
   rm -rf "$QT_PREFIX_DIR"
@@ -321,7 +322,6 @@ then
     -skip datavis3d \
     -skip declarative \
     -skip doc \
-    -skip enginio \
     -skip gamepad \
     -skip graphicaleffects \
     -skip imageformats \
@@ -344,13 +344,13 @@ then
     -skip wayland \
     -skip webchannel \
     -skip webengine \
+    -skip webglplugin \
     -skip websockets \
     -skip webview \
     -skip x11extras \
     -skip xmlpatterns \
     -no-dbus \
     -no-icu \
-    -no-qml-debug \
     -no-compile-examples \
     -qt-libjpeg \
     -qt-libpng \
@@ -403,8 +403,8 @@ then
   rm $SQLCIPHER_FILENAME
   cd sqlcipher*
 
-  sed -i s/'LIBS="-lcrypto  $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
-  sed -i s/'LIBS="-lcrypto $LIBS"'/'LIBS="-lcrypto -lgdi32  $LIBS"'/g configure
+  sed -i s/'LIBS="-lcrypto  $LIBS"'/'LIBS="-lcrypto -lgdi32 -lws2_32  $LIBS"'/g configure
+  sed -i s/'LIBS="-lcrypto $LIBS"'/'LIBS="-lcrypto -lgdi32 -lws2_32 $LIBS"'/g configure
   sed -i s/'if test "$TARGET_EXEEXT" = ".exe"'/'if test ".exe" = ".exe"'/g configure
   sed -i 's|exec $PWD/mksourceid manifest|exec $PWD/mksourceid.exe manifest|g' tool/mksqlite3h.tcl
 
@@ -450,8 +450,8 @@ fi
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
-FFMPEG_VERSION=4.1.3
-FFMPEG_HASH="0c3020452880581a8face91595b239198078645e7d7184273b8bcc7758beb63d"
+FFMPEG_VERSION=4.2.1
+FFMPEG_HASH="cec7c87e9b60d174509e263ac4011b522385fd0775292e1670ecc1180c9bb6d4"
 FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
@@ -549,6 +549,26 @@ then
   cd openal*
   git checkout $OPENAL_VERSION
   check_sha256_git "$OPENAL_HASH"
+
+# https://github.com/microsoft/vcpkg/blob/3baf583934f3077070e9ed4e7684f743ecced577/ports/openal-soft/cmake-3-11.patch
+> cmake-3-11.patch cat << "EOF"
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a871f4c..f9f6b34 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -965,7 +965,8 @@ OPTION(ALSOFT_REQUIRE_DSOUND "Require DirectSound backend" OFF)
+ OPTION(ALSOFT_REQUIRE_MMDEVAPI "Require MMDevApi backend" OFF)
+ IF(HAVE_WINDOWS_H)
+     # Check MMSystem backend
+-    CHECK_INCLUDE_FILES("windows.h;mmsystem.h" HAVE_MMSYSTEM_H -D_WIN32_WINNT=0x0502)
++    set(CMAKE_REQUIRED_DEFINITIONS -D_WIN32_WINNT=0x0502)
++    CHECK_INCLUDE_FILES("windows.h;mmsystem.h" HAVE_MMSYSTEM_H)
+     IF(HAVE_MMSYSTEM_H)
+         CHECK_SHARED_FUNCTION_EXISTS(waveOutOpen "windows.h;mmsystem.h" winmm "" HAVE_LIBWINMM)
+         IF(HAVE_LIBWINMM)
+EOF
+
+  patch -l < cmake-3-11.patch
 
   mkdir -p build
   cd build
@@ -861,8 +881,8 @@ fi
 # VPX
 
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
-VPX_VERSION=v1.8.0
-VPX_HASH="86df18c694e1c06cc8f83d2d816e9270747a0ce6abe316e93a4f4095689373f6"
+VPX_VERSION=v1.8.1
+VPX_HASH="df19b8f24758e90640e1ab228ab4a4676ec3df19d23e4593375e6f3847dee03e"
 VPX_FILENAME="libvpx-$VPX_VERSION.tar.gz"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
@@ -878,11 +898,17 @@ then
   if [[ "$ARCH" == "x86_64" ]]
   then
     VPX_TARGET=x86_64-win64-gcc
+    # There is a bug in gcc that breaks avx512 on 64-bit Windows https://gcc.gnu.org/bugzilla/show_bug.cgi?id=54412
+    # VPX fails to build due to it.
+    # This is a workaround as suggested in https://stackoverflow.com/questions/43152633
+    VPX_CFLAGS="-fno-asynchronous-unwind-tables"
   elif [[ "$ARCH" == "i686" ]]
   then
     VPX_TARGET=x86-win32-gcc
+    VPX_CFLAGS=""
   fi
 
+  CFLAGS="$VPX_CFLAGS" \
   CROSS="$ARCH-w64-mingw32-" ./configure --target="$VPX_TARGET" \
                                          --prefix="$VPX_PREFIX_DIR" \
                                          --disable-shared \
@@ -985,78 +1011,6 @@ then
 else
   echo "Using cached build of mingw-w64-debug-scripts `cat $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done`"
 fi
-
-
-# NSIS
-
-NSIS_PREFIX_DIR="$DEP_DIR/nsis"
-NSIS_VERSION="Debian Unstable"
-#NSIS_HASH=
-if [ ! -f "$NSIS_PREFIX_DIR/done" ]
-then
-  rm -rf "$NSIS_PREFIX_DIR"
-  mkdir -p "$NSIS_PREFIX_DIR"
-
-  # We want to use NSIS 3, instead of NSIS 2, because it added Windows 8 and 10
-  # support, as well as unicode support. NSIS 3 is not packaged in Debian Stretch
-  # and building it manually appears to be quite a challenge. Luckily it's
-  # packaged in Debian Unstable, so we can backport it to our Debian version
-  # with little effort, utilizing maintainer's build script.
-
-  # Keep the indentation of the next echo command as it is, as apt seems to
-  # ignore preferences starting with whitespace.
-  echo "
-Package: *
-Pin: Release a=unstable
-Pin-Priority: -1
-  " >> /etc/apt/preferences
-  echo "
-  # Needed for NSIS 3
-  deb http://httpredir.debian.org/debian unstable main
-  deb-src http://httpredir.debian.org/debian unstable main
-  " >> /etc/apt/sources.list
-  apt-get update
-  # Get dependencies required for building NSIS
-  apt-get install -y --no-install-recommends \
-    build-essential \
-    devscripts \
-    docbook-xsl-ns \
-    docbook5-xml \
-    dpkg-dev \
-    fakeroot \
-    html2text \
-    libcppunit-dev \
-    mingw-w64 \
-    scons \
-    xsltproc \
-    zlib1g-dev
-  apt-get -t unstable install -y --no-install-recommends debhelper
-  mkdir nsis-build
-  cd nsis-build
-  apt-get -t unstable source nsis
-
-  cd nsis-*
-  # The build script is not parallel enough, this speeds things up greatly
-  sed -i "s/scons / scons -j `nproc` /" debian/rules
-  DEB_BUILD_OPTIONS="parallel=`nproc` nocheck" debuild -b -uc -us
-  cd ..
-  mv nsis-common_*.deb "$NSIS_PREFIX_DIR"
-  mv nsis-doc_*.deb "$NSIS_PREFIX_DIR"
-  mv nsis_*.deb "$NSIS_PREFIX_DIR"
-  mv nsis-pluginapi_*.deb "$NSIS_PREFIX_DIR"
-
-  cd ..
-  rm -rf ./nsis-build
-
-  echo -n $NSIS_VERSION > $NSIS_PREFIX_DIR/done
-else
-  echo "Using cached build of NSIS `cat $NSIS_PREFIX_DIR/done`"
-fi
-# Install NSIS
-dpkg -i "$NSIS_PREFIX_DIR"/nsis-common_*.deb
-dpkg -i "$NSIS_PREFIX_DIR"/nsis-doc_*.deb
-dpkg -i "$NSIS_PREFIX_DIR"/nsis_*.deb
-dpkg -i "$NSIS_PREFIX_DIR"/nsis-pluginapi_*.deb
 
 
 # NSIS ShellExecAsUser plugin
@@ -1178,8 +1132,8 @@ cp -r $QT_PREFIX_DIR/plugins/imageformats \
       $QT_PREFIX_DIR/plugins/iconengines \
       $QTOX_PREFIX_DIR
 cp $OPENAL_PREFIX_DIR/bin/OpenAL32.dll $QTOX_PREFIX_DIR
-cp $OPENSSL_PREFIX_DIR/bin/ssleay32.dll \
-   $OPENSSL_PREFIX_DIR/bin/libeay32.dll \
+cp $OPENSSL_PREFIX_DIR/bin/libssl-*.dll \
+   $OPENSSL_PREFIX_DIR/bin/libcrypto-*.dll \
    $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR

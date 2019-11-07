@@ -21,9 +21,9 @@
 #ifndef LOGINSCREEN_H
 #define LOGINSCREEN_H
 
+#include <QDialog>
 #include <QShortcut>
 #include <QToolButton>
-#include <QDialog>
 
 class Profile;
 
@@ -38,7 +38,7 @@ class LoginScreen : public QDialog
 public:
     LoginScreen(const QString& initialProfileName = QString(), QWidget* parent = nullptr);
     ~LoginScreen();
-    bool event(QEvent* event) final override;
+    bool event(QEvent* event) final;
 
 signals:
 
@@ -46,9 +46,6 @@ signals:
     void autoLoginChanged(bool state);
     void createNewProfile(QString name, const QString& pass);
     void loadProfile(QString name, const QString& pass);
-
-protected:
-    virtual void closeEvent(QCloseEvent* event) final override;
 
 public slots:
     void onProfileLoaded();

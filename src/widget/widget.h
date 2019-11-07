@@ -247,12 +247,12 @@ private slots:
 
 private:
     // QMainWindow overrides
-    bool eventFilter(QObject* obj, QEvent* event) final override;
-    bool event(QEvent* e) final override;
-    void closeEvent(QCloseEvent* event) final override;
-    void changeEvent(QEvent* event) final override;
-    void resizeEvent(QResizeEvent* event) final override;
-    void moveEvent(QMoveEvent* event) final override;
+    bool eventFilter(QObject* obj, QEvent* event) final;
+    bool event(QEvent* e) final;
+    void closeEvent(QCloseEvent* event) final;
+    void changeEvent(QEvent* event) final;
+    void resizeEvent(QResizeEvent* event) final;
+    void moveEvent(QMoveEvent* event) final;
 
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
@@ -277,7 +277,7 @@ private:
     void cleanupNotificationSound();
 
 private:
-    SystemTrayIcon* icon = nullptr;
+    std::unique_ptr<QSystemTrayIcon> icon;
     QMenu* trayMenu;
     QAction* statusOnline;
     QAction* statusAway;

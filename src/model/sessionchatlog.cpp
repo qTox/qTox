@@ -289,13 +289,8 @@ std::vector<IChatLog::DateChatLogIdxPair> SessionChatLog::getDateIdxs(const QDat
     return ret;
 }
 
-std::size_t SessionChatLog::size() const
-{
-    return items.size();
-}
-
-void SessionChatLog::insertMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName,
-                                        ChatLogMessage message)
+void SessionChatLog::insertCompleteMessageAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName,
+                                                const ChatLogMessage& message)
 {
     auto item = ChatLogItem(sender, message);
 
@@ -303,10 +298,42 @@ void SessionChatLog::insertMessageAtIdx(ChatLogIdx idx, ToxPk sender, QString se
         item.setDisplayName(senderName);
     }
 
+    assert(message.state == MessageState::complete);
+
     items.emplace(idx, std::move(item));
 }
 
-void SessionChatLog::insertFileAtIdx(ChatLogIdx idx, ToxPk sender, QString senderName, ChatLogFile file)
+void SessionChatLog::insertIncompleteMessageAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName,
+                                                  const ChatLogMessage& message,
+                                                  DispatchedMessageId dispatchId)
+{
+    auto item = ChatLogItem(sender, message);
+
+    if (!senderName.isEmpty()) {
+        item.setDisplayName(senderName);
+    }
+
+    assert(message.state == MessageState::pending);
+
+    items.emplace(idx, std::move(item));
+    outgoingMessages.insert(dispatchId, idx);
+}
+
+void SessionChatLog::insertBrokenMessageAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName,
+                                              const ChatLogMessage& message)
+{
+    auto item = ChatLogItem(sender, message);
+
+    if (!senderName.isEmpty()) {
+        item.setDisplayName(senderName);
+    }
+
+    assert(message.state == MessageState::broken);
+
+    items.emplace(idx, std::move(item));
+}
+
+void SessionChatLog::insertFileAtIdx(ChatLogIdx idx, const ToxPk& sender, const QString& senderName, const ChatLogFile& file)
 {
     auto item = ChatLogItem(sender, file);
 
@@ -326,7 +353,7 @@ void SessionChatLog::onMessageReceived(const ToxPk& sender, const Message& messa
     auto messageIdx = nextIdx++;
 
     ChatLogMessage chatLogMessage;
-    chatLogMessage.isComplete = true;
+    chatLogMessage.state = MessageState::complete;
     chatLogMessage.message = message;
     items.emplace(messageIdx, ChatLogItem(sender, chatLogMessage));
 
@@ -342,7 +369,7 @@ void SessionChatLog::onMessageSent(DispatchedMessageId id, const Message& messag
     auto messageIdx = nextIdx++;
 
     ChatLogMessage chatLogMessage;
-    chatLogMessage.isComplete = false;
+    chatLogMessage.state = MessageState::pending;
     chatLogMessage.message = message;
     items.emplace(messageIdx, ChatLogItem(coreIdHandler.getSelfPublicKey(), chatLogMessage));
 
@@ -372,7 +399,7 @@ void SessionChatLog::onMessageComplete(DispatchedMessageId id)
         return;
     }
 
-    messageIt->second.getContentAsMessage().isComplete = true;
+    messageIt->second.getContentAsMessage().state = MessageState::complete;
 
     emit this->itemUpdated(messageIt->first);
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2019 by The qTox Project Contributors
+    Copyright © 2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,35 +17,29 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHATTEXTEDIT_H
-#define CHATTEXTEDIT_H
+#ifndef BROKEN_H
+#define BROKEN_H
 
-#include <QTextEdit>
+#include "../chatlinecontent.h"
 
-class ChatTextEdit final : public QTextEdit
+#include <QObject>
+#include <QPixmap>
+
+class Broken : public ChatLineContent
 {
     Q_OBJECT
 public:
-    explicit ChatTextEdit(QWidget* parent = nullptr);
-    ~ChatTextEdit();
-    void setLastMessage(QString lm);
-    void sendKeyEvent(QKeyEvent* event);
-
-signals:
-    void enterPressed();
-    void tabPressed();
-    void keyPressed();
-    void pasteImage(const QPixmap& pixmap);
-
-protected:
-    void keyPressEvent(QKeyEvent* event) final;
+    Broken(const QString& img, QSize size);
+    QRectF boundingRect() const override;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+                       QWidget* widget) override;
+    void setWidth(qreal width) override;
+    void visibilityChanged(bool visible) override;
+    qreal getAscent() const override;
 
 private:
-    void retranslateUi();
-    bool pasteIfImage(QKeyEvent* event);
-
-private:
-    QString lastMessage;
+    QSize size;
+    QPixmap pmap;
 };
 
-#endif // CHATTEXTEDIT_H
+#endif // BROKEN_H

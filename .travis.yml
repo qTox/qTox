@@ -1,5 +1,5 @@
 sudo: required
-dist: trusty
+dist: xenial
 language: cpp
 cache: ccache
 
@@ -44,7 +44,7 @@ jobs:
     # the actual compilin'
     - stage: Linux
       os: linux
-      env: JOB=build-ubuntu-14-04
+      env: JOB=build-ubuntu-16-04
       script: "./.travis/$JOB.sh"
     - stage: "Windows Stage 1: Dependencies (OpenSSL, Qt)"
       os: linux
@@ -146,7 +146,7 @@ jobs:
           - /opt/build-windows/x86_64
     - stage: "macOS, AppImage and Flatpak"
       os: osx
-      osx_image: xcode9.2
+      osx_image: xcode9.3
       env: JOB=build-osx
       cache:
         timeout: 300 # seconds

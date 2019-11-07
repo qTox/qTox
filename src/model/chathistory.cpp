@@ -94,9 +94,10 @@ ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& co
     , settings(settings_)
     , coreIdHandler(coreIdHandler)
 {
-    connect(&messageDispatcher, &IMessageDispatcher::messageSent, this, &ChatHistory::onMessageSent);
     connect(&messageDispatcher, &IMessageDispatcher::messageComplete, this,
             &ChatHistory::onMessageComplete);
+    connect(&messageDispatcher, &IMessageDispatcher::messageReceived, this,
+            &ChatHistory::onMessageReceived);
 
     if (canUseHistory()) {
         // Defer messageSent callback until we finish firing off all our unsent messages.
@@ -105,8 +106,7 @@ ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& co
     }
 
     // Now that we've fired off our unsent messages we can connect the message
-    connect(&messageDispatcher, &IMessageDispatcher::messageReceived, this,
-            &ChatHistory::onMessageReceived);
+    connect(&messageDispatcher, &IMessageDispatcher::messageSent, this, &ChatHistory::onMessageSent);
 
     // NOTE: this has to be done _after_ sending all sent messages since initial
     // state of the message has to be marked according to our dispatch state
@@ -224,15 +224,6 @@ std::vector<IChatLog::DateChatLogIdxPair> ChatHistory::getDateIdxs(const QDate& 
     } else {
         return sessionChatLog.getDateIdxs(startDate, maxDates);
     }
-}
-
-std::size_t ChatHistory::size() const
-{
-    if (canUseHistory()) {
-        return history->getNumMessagesForFriend(f.getPublicKey());
-    }
-
-    return sessionChatLog.size();
 }
 
 void ChatHistory::onFileUpdated(const ToxPk& sender, const ToxFile& file)
@@ -394,15 +385,23 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
                 std::find_if(dispatchedMessageRowIdMap.begin(), dispatchedMessageRowIdMap.end(),
                              [&](RowId dispatchedId) { return dispatchedId == message.id; });
 
-            bool isComplete = dispatchedMessageIt == dispatchedMessageRowIdMap.end();
+            assert((message.state != MessageState::pending && dispatchedMessageIt == dispatchedMessageRowIdMap.end()) ||
+                   (message.state == MessageState::pending && dispatchedMessageIt != dispatchedMessageRowIdMap.end()));
 
-            if (isComplete) {
-                auto chatLogMessage = ChatLogMessage{true, processedMessage};
-                sessionChatLog.insertMessageAtIdx(currentIdx, sender, message.dispName, chatLogMessage);
-            } else {
-                // If the message is incomplete we have to pretend we sent it to ensure
-                // sessionChatLog state is correct
-                sessionChatLog.onMessageSent(dispatchedMessageIt.key(), processedMessage);
+            auto chatLogMessage = ChatLogMessage{message.state, processedMessage};
+            switch (message.state) {
+                case MessageState::complete:
+                    sessionChatLog.insertCompleteMessageAtIdx(currentIdx, sender, message.dispName,
+                                                              chatLogMessage);
+                    break;
+                case MessageState::pending:
+                    sessionChatLog.insertIncompleteMessageAtIdx(currentIdx, sender, message.dispName,
+                                                                chatLogMessage, dispatchedMessageIt.key());
+                    break;
+                case MessageState::broken:
+                    sessionChatLog.insertBrokenMessageAtIdx(currentIdx, sender, message.dispName,
+                                                            chatLogMessage);
+                    break;
             }
             break;
         }
@@ -418,7 +417,7 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
  */
 void ChatHistory::dispatchUnsentMessages(IMessageDispatcher& messageDispatcher)
 {
-    auto unsentMessages = history->getUnsentMessagesForFriend(f.getPublicKey());
+    auto unsentMessages = history->getUndeliveredMessagesForFriend(f.getPublicKey());
     for (auto& message : unsentMessages) {
         // We should only store messages as unsent, if this changes in the
         // future we need to extend this logic
@@ -452,7 +451,7 @@ void ChatHistory::handleDispatchedMessage(DispatchedMessageId dispatchId, RowId 
     if (completedMessageIt == completedMessages.end()) {
         dispatchedMessageRowIdMap.insert(dispatchId, historyId);
     } else {
-        history->markAsSent(historyId);
+        history->markAsDelivered(historyId);
         completedMessages.erase(completedMessageIt);
     }
 }
@@ -464,7 +463,7 @@ void ChatHistory::completeMessage(DispatchedMessageId id)
     if (dispatchedMessageIt == dispatchedMessageRowIdMap.end()) {
         completedMessages.insert(id);
     } else {
-        history->markAsSent(*dispatchedMessageIt);
+        history->markAsDelivered(*dispatchedMessageIt);
         dispatchedMessageRowIdMap.erase(dispatchedMessageIt);
     }
 }

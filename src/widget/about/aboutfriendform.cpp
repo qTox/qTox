@@ -73,7 +73,7 @@ AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* 
 static QString getAutoAcceptDir(const QString& dir)
 {
     //: popup title
-    const QString title = AboutFriendForm::tr("Choose an auto accept directory");
+    const QString title = AboutFriendForm::tr("Choose an auto-accept directory");
     return QFileDialog::getExistingDirectory(Q_NULLPTR, title, dir);
 }
 
@@ -95,7 +95,7 @@ void AboutFriendForm::onAutoAcceptDirChanged(const QString& path)
     const bool enabled = path.isNull();
     ui->autoacceptfile->setChecked(enabled);
     ui->selectSaveDir->setEnabled(enabled);
-    ui->selectSaveDir->setText(enabled ? path : tr("Auto accept for this contact is disabled"));
+    ui->selectSaveDir->setText(enabled ? path : tr("Auto-accept for this contact is disabled"));
 }
 
 

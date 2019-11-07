@@ -33,13 +33,13 @@ class GroupWidget final : public GenericChatroomWidget
 public:
     GroupWidget(std::shared_ptr<GroupChatroom> chatroom, bool compact);
     ~GroupWidget();
-    void setAsInactiveChatroom() final override;
-    void setAsActiveChatroom() final override;
-    void updateStatusLight() final override;
-    void resetEventFlags() final override;
-    QString getStatusString() const final override;
-    Group* getGroup() const final override;
-    const Contact* getContact() const final override;
+   void setAsInactiveChatroom() final;
+    void setAsActiveChatroom() final;
+    void updateStatusLight() final;
+    void resetEventFlags() final;
+    QString getStatusString() const final;
+    Group* getGroup() const final;
+    const Contact* getContact() const final;
     void setName(const QString& name);
     void editName();
 
@@ -48,9 +48,9 @@ signals:
     void removeGroup(const GroupId& groupId);
 
 protected:
-    void contextMenuEvent(QContextMenuEvent* event) final override;
-    void mousePressEvent(QMouseEvent* event) final override;
-    void mouseMoveEvent(QMouseEvent* event) final override;
+    void contextMenuEvent(QContextMenuEvent* event) final;
+    void mousePressEvent(QMouseEvent* event) final;
+    void mouseMoveEvent(QMouseEvent* event) final;
     void dragEnterEvent(QDragEnterEvent* ev) override;
     void dragLeaveEvent(QDragLeaveEvent* ev) override;
     void dropEvent(QDropEvent* ev) override;

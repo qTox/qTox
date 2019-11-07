@@ -29,7 +29,7 @@ public:
     explicit ScreenGrabberChooserRectItem(QGraphicsScene* scene);
     ~ScreenGrabberChooserRectItem();
 
-    virtual QRectF boundingRect() const final override;
+    QRectF boundingRect() const final;
     void beginResize(QPointF mousePos);
 
     QRect chosenRect() const;
@@ -43,7 +43,7 @@ signals:
     void regionChosen(QRect rect);
 
 protected:
-    virtual bool sceneEventFilter(QGraphicsItem* watched, QEvent* event) final override;
+    bool sceneEventFilter(QGraphicsItem* watched, QEvent* event) final;
 
 private:
     enum State

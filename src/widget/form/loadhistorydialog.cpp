@@ -77,7 +77,7 @@ LoadHistoryDialog::LoadType LoadHistoryDialog::getLoadType()
 
 void LoadHistoryDialog::enableSearchMode()
 {
-    setWindowTitle(tr("Select Date Dialog"));
+    setWindowTitle(tr("Select date dialog"));
     ui->fromLabel->setText(tr("Select a date"));
     ui->loadTypeComboBox->setVisible(false);
     ui->infoLabel->setVisible(false);

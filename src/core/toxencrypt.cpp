@@ -120,7 +120,7 @@ QByteArray ToxEncrypt::encryptPass(const QString& password, const QByteArray& pl
 QByteArray ToxEncrypt::decryptPass(const QString& password, const QByteArray& ciphertext)
 {
     if (!isEncrypted(ciphertext)) {
-        qWarning() << "The data was not encrypted using this module or it's corrupted.";
+        qWarning() << "The data was not encrypted using this module, or it's corrupted.";
         return QByteArray{};
     }
 
@@ -182,7 +182,7 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password)
 std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, const QByteArray& toxSave)
 {
     if (!isEncrypted(toxSave)) {
-        qWarning() << "The data was not encrypted using this module or it's corrupted.";
+        qWarning() << "The data was not encrypted using this module, or it's corrupted.";
         return std::unique_ptr<ToxEncrypt>{};
     }
 
@@ -218,7 +218,7 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, 
 QByteArray ToxEncrypt::encrypt(const QByteArray& plaintext) const
 {
     if (!passKey) {
-        qCritical() << "The passKey is invalid.";
+        qCritical() << "The passkey is invalid.";
         return QByteArray{};
     }
 
@@ -245,7 +245,7 @@ QByteArray ToxEncrypt::encrypt(const QByteArray& plaintext) const
 QByteArray ToxEncrypt::decrypt(const QByteArray& ciphertext) const
 {
     if (!isEncrypted(ciphertext)) {
-        qWarning() << "The data was not encrypted using this module or it's corrupted.";
+        qWarning() << "The data was not encrypted using this module, or it's corrupted.";
         return QByteArray{};
     }
 

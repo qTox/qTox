@@ -60,7 +60,7 @@ void osx::moveToAppFolder()
 
             if ((appdir_noqtox + "qtox.app") != appdir) // quick safety check
             {
-                qDebug() << "OS X: Attmepted to delete non qTox directory!";
+                qDebug() << "OS X: Attempted to delete non-qTox directory!";
                 exit(EXIT_UPDATE_MACX_FAIL);
             }
 
@@ -72,7 +72,7 @@ void osx::moveToAppFolder()
             if (old_app.removeRecursively()) // We've just deleted the running program
                 qDebug() << "OS X: Cleaned up old directory";
             else
-                qDebug() << "OS X: This should never happen, the directory failed to delete";
+                qDebug() << "OS X: The directory failed to delete (this should never happen)";
 
             if (fork() != 0) // Forking is required otherwise it won't actually cleanly launch
                 exit(EXIT_UPDATE_MACX);

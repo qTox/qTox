@@ -35,9 +35,9 @@ class UserInterfaceForm : public GenericForm
 public:
     explicit UserInterfaceForm(SettingsWidget* myParent);
     ~UserInterfaceForm();
-    virtual QString getFormName() final override
+    QString getFormName() final
     {
-        return tr("User Interface");
+        return tr("User interface");
     }
 
 private slots:

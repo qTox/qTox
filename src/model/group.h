@@ -61,7 +61,7 @@ public:
     void setSelfName(const QString& name);
     QString getSelfName() const;
 
-    bool useHistory() const override final;
+    bool useHistory() const final;
 
 signals:
     void titleChangedByUser(const QString& title);

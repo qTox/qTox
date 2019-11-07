@@ -35,7 +35,7 @@ class QTimer;
 class ChatLineContent;
 struct ToxFile;
 
-static const auto DEF_NUM_MSG_TO_LOAD = 100;
+static const size_t DEF_NUM_MSG_TO_LOAD = 100;
 
 class ChatLog : public QGraphicsView
 {
@@ -58,8 +58,6 @@ public:
     void selectAll();
     void fontChanged(const QFont& font);
     void reloadTheme();
-    void moveSelectionRectUpIfMulti(int offset);
-    void moveSelectionRectDownIfMulti(int offset);
     void removeFirsts(const int num);
     void removeLasts(const int num);
     void setScroll(const bool scroll);
@@ -109,16 +107,16 @@ protected:
     void scrollToBottom();
     void startResizeWorker(ChatLine::Ptr anchorLine = nullptr);
 
-    virtual void mouseDoubleClickEvent(QMouseEvent* ev) final override;
-    virtual void mousePressEvent(QMouseEvent* ev) final override;
-    virtual void mouseReleaseEvent(QMouseEvent* ev) final override;
-    virtual void mouseMoveEvent(QMouseEvent* ev) final override;
-    virtual void scrollContentsBy(int dx, int dy) final override;
-    virtual void resizeEvent(QResizeEvent* ev) final override;
-    virtual void showEvent(QShowEvent*) final override;
-    virtual void focusInEvent(QFocusEvent* ev) final override;
-    virtual void focusOutEvent(QFocusEvent* ev) final override;
-    virtual void wheelEvent(QWheelEvent *event) final override;
+    void mouseDoubleClickEvent(QMouseEvent* ev) final;
+    void mousePressEvent(QMouseEvent* ev) final;
+    void mouseReleaseEvent(QMouseEvent* ev) final;
+    void mouseMoveEvent(QMouseEvent* ev) final;
+    void scrollContentsBy(int dx, int dy) final;
+    void resizeEvent(QResizeEvent* ev) final;
+    void showEvent(QShowEvent*) final;
+    void focusInEvent(QFocusEvent* ev) final;
+    void focusOutEvent(QFocusEvent* ev) final;
+    void wheelEvent(QWheelEvent *event) final;
 
     void updateMultiSelectionRect();
     void updateTypingNotification();
@@ -130,16 +128,22 @@ private:
     void retranslateUi();
     bool isActiveFileTransfer(ChatLine::Ptr l);
     void handleMultiClickEvent();
+    void moveSelectionRectUpIfSelected(int offset);
+    void moveSelectionRectDownIfSelected(int offset);
+    void movePreciseSelectionDown(int offset);
+    void movePreciseSelectionUp(int offset);
+    void moveMultiSelectionUp(int offset);
+    void moveMultiSelectionDown(int offset);
 
 private:
-    enum SelectionMode
+    enum class SelectionMode
     {
         None,
         Precise,
         Multi,
     };
 
-    enum AutoScrollDirection
+    enum class AutoScrollDirection
     {
         NoDirection,
         Up,
@@ -161,13 +165,13 @@ private:
     int selFirstRow = -1;
     int selLastRow = -1;
     QColor selectionRectColor = Style::getColor(Style::SelectText);
-    SelectionMode selectionMode = None;
+    SelectionMode selectionMode = SelectionMode::None;
     QPointF clickPos;
     QGraphicsRectItem* selGraphItem = nullptr;
     QTimer* selectionTimer = nullptr;
     QTimer* workerTimer = nullptr;
     QTimer* multiClickTimer = nullptr;
-    AutoScrollDirection selectionScrollDir = NoDirection;
+    AutoScrollDirection selectionScrollDir = AutoScrollDirection::NoDirection;
     int clickCount = 0;
     QPoint lastClickPos;
     Qt::MouseButton lastClickButton;

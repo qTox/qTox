@@ -62,6 +62,7 @@ pacman_install() {
         opus
         qrencode
         qt5
+        sqlcipher
     )
     sudo pacman -S --needed "${pacman_packages[@]}"
 }

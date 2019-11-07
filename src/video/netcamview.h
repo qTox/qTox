@@ -46,7 +46,7 @@ public:
     void toggleVideoPreview();
 
 protected:
-    void showEvent(QShowEvent* event) final override;
+    void showEvent(QShowEvent* event) final;
 
 private slots:
     void updateRatio();

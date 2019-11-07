@@ -146,7 +146,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     circleMenu->addSeparator();
 
     for (const auto circle : chatroom->getOtherCircles()) {
-        QAction* action = new QAction(tr("Move  to circle \"%1\"").arg(circle.name), circleMenu);
+        QAction* action = new QAction(tr("Move to circle \"%1\"").arg(circle.name), circleMenu);
         connect(action, &QAction::triggered, [=]() { moveToCircle(circle.circleId); });
         circleMenu->addAction(action);
     }
@@ -165,7 +165,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     if (chatroom->friendCanBeRemoved()) {
         const auto friendPk = chatroom->getFriend()->getPublicKey();
         const auto removeAction =
-            menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
+            menu.addAction(tr("Remove friend", "Menu to remove the friend from the friend list"));
         connect(removeAction, &QAction::triggered, this, [=]() { emit removeFriend(friendPk); },
                 Qt::QueuedConnection);
     }

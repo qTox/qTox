@@ -52,6 +52,9 @@ source_functions() {
 main() {
     local remote_name="upstream"
     local merge_branch="merge"
+    local base_branch # because assigning on the same line will break error code parsing.. http://www.tldp.org/LDP/abs/html/localvar.html
+    base_branch=$(git symbolic-ref HEAD --short)
+
     source_functions
     exit_if_not_pr $PR
     add_remote

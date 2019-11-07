@@ -48,7 +48,7 @@ public:
     void reloadTheme();
 
 protected:
-    virtual void showEvent(QShowEvent* event) final override;
+    void showEvent(QShowEvent* event) final;
 
 private:
     // TODO: Merge with 'createButton' from chatformheader.cpp
@@ -101,7 +101,7 @@ public:
     LineEdit(QWidget* parent = nullptr);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent* event) final override;
+    void keyPressEvent(QKeyEvent* event) final;
 
 signals:
     void clickEnter();

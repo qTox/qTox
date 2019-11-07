@@ -111,7 +111,7 @@
              <string>New text styling preference may not load until qTox restarts.</string>
             </property>
             <property name="text">
-             <string>Text Style format:</string>
+             <string>Text style format:</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -152,7 +152,7 @@
           <item row="2" column="1">
            <widget class="QCheckBox" name="useNameColors">
             <property name="text">
-             <string>Use colored nicknames in chats</string>
+             <string>Use colored nicknames in group chats</string>
             </property>
            </widget>
           </item>
@@ -186,7 +186,7 @@
             <item>
              <widget class="QCheckBox" name="groupOnlyNotfiyWhenMentioned">
               <property name="toolTip">
-               <string comment="toolTip for Group chats only notify when mentioned">Onlys notify about new messages in groupchats when mentioned.</string>
+               <string comment="toolTip for Group chats only notify when mentioned">Only notify about new messages in group chats when mentioned.</string>
               </property>
               <property name="text">
                <string>Group chats only notify when mentioned</string>
@@ -252,7 +252,7 @@
           <item>
            <widget class="QCheckBox" name="cbGroupchatPosition">
             <property name="toolTip">
-             <string comment="toolTip for groupchat positioning">If checked, groupchats will be placed at the top of the friends list, otherwise, they'll be placed below online friends.</string>
+             <string comment="toolTip for groupchat positioning">If checked, group chats will be placed at the top of the friends list, otherwise, they'll be placed below online friends.</string>
             </property>
             <property name="text">
              <string>Place groupchats at top of friend list</string>
@@ -302,7 +302,7 @@
           <item>
            <widget class="QCheckBox" name="cbShowIdenticons">
             <property name="toolTip">
-             <string comment="toolTip for show identicons">If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</string>
+             <string comment="toolTip for show identicons">If enabled, every contact without an avatar will have a generated icon based on their Tox ID instead of the default picture. Requires restart to apply.</string>
             </property>
             <property name="text">
              <string>Use identicons instead of empty avatars</string>
@@ -328,7 +328,7 @@
           <item row="1" column="0">
            <widget class="QLabel" name="smileyPackLabel">
             <property name="text">
-             <string extracomment="Text on smiley pack label">Smiley Pack:</string>
+             <string extracomment="Text on smiley pack label">Smiley pack:</string>
             </property>
            </widget>
           </item>
@@ -532,7 +532,7 @@
             <item>
              <widget class="QLabel" name="timeExample">
               <property name="text">
-               <string notr="true">Time Example</string>
+               <string notr="true">Time example</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

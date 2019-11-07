@@ -26,6 +26,7 @@
 #include "content/spinner.h"
 #include "content/text.h"
 #include "content/timestamp.h"
+#include "content/broken.h"
 #include "src/widget/style.h"
 
 #include <QDebug>
@@ -33,6 +34,7 @@
 
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
+#include "src/persistence/history.h"
 
 #define NAME_COL_WIDTH 90.0
 #define TIME_COL_WIDTH 90.0
@@ -43,7 +45,8 @@ ChatMessage::ChatMessage()
 }
 
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
-                                                MessageType type, bool isMe, const QDateTime& date, bool colorizeName)
+                                                MessageType type, bool isMe, MessageState state,
+                                                const QDateTime& date, bool colorizeName)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
@@ -105,12 +108,21 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
                                                        ? QString("%1 %2").arg(sender, rawMessage)
                                                        : rawMessage),
                    ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Spinner(Style::getImagePath("chatArea/spinner.svg"), QSize(16, 16), 360.0 / 1.6),
-                   ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
-    if (!date.isNull())
-        msg->markAsSent(date);
-
+    switch (state) {
+        case MessageState::complete:
+            msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), baseFont),
+                        ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+            break;
+        case MessageState::pending:
+            msg->addColumn(new Spinner(Style::getImagePath("chatArea/spinner.svg"), QSize(16, 16), 360.0 / 1.6),
+                        ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+            break;
+        case MessageState::broken:
+            msg->addColumn(new Broken(Style::getImagePath("chatArea/error.svg"), QSize(16, 16)),
+                        ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+            break;
+    }
     return msg;
 }
 
@@ -201,13 +213,13 @@ ChatMessage::Ptr ChatMessage::createBusyNotification()
     baseFont.setPixelSize(baseFont.pixelSize() + 2);
     baseFont.setBold(true);
 
-    msg->addColumn(new Text(QObject::tr("Reformatting text in progress.."), baseFont, false, ""),
+    msg->addColumn(new Text(QObject::tr("Reformatting text...", "Waiting for text to be reformatted"), baseFont, false, ""),
                    ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
 
     return msg;
 }
 
-void ChatMessage::markAsSent(const QDateTime& time)
+void ChatMessage::markAsDelivered(const QDateTime& time)
 {
     QFont baseFont = Settings::getInstance().getChatMessageFont();
 

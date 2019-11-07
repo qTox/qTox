@@ -7,7 +7,6 @@
     - [Gentoo](#gentoo-easy)
     - [openSUSE](#opensuse-easy)
     - [Slackware](#slackware-easy)
-    - [FreeBSD](#freebsd-easy)
   - [Install git](#install-git)
     - [Arch](#arch-git)
     - [Debian](#debian-git)
@@ -21,12 +20,12 @@
     - [Fedora](#fedora-other-deps)
     - [openSUSE](#opensuse-other-deps)
     - [Slackware](#slackware-other-deps)
-    - [Ubuntu >=15.04](#ubuntu-other-deps)
-    - [Ubuntu >=16.04](#ubuntu-other-1604-deps)
-  - [sqlcipher](#sqlcipher)
+    - [Ubuntu](#ubuntu-other-deps)
   - [Compile toxcore](#compile-toxcore)
   - [Compile qTox](#compile-qtox)
   - [Security hardening with AppArmor](#security-hardening-with-apparmor)
+- [BSD](#bsd)
+  - [FreeBSD](#freebsd-easy)
 - [OS X](#osx)
 - [Windows](#windows)
   - [Cross-compile from Linux](#cross-compile-from-linux)
@@ -87,36 +86,6 @@ of spell check).
 | [libX11]        | >= 1.6.0 |
 
 Disabled if dependencies are missing during compilation.
-
-#### KDE Status Notifier / GTK tray backend
-
-| Name        | Version |
-|-------------|---------|
-| [Atk]       | >= 2.14 |
-| [Cairo]     |         |
-| [GdkPixbuf] | >= 2.31 |
-| [GLib]      | >= 2.0  |
-| [GTK+]      | >= 2.0  |
-| [Pango]     | >= 1.18 |
-
-To disable: `-DENABLE_STATUSNOTIFIER=False -DENABLE_GTK_SYSTRAY=False`
-
-#### Unity tray backend
-
-Disabled by default.
-
-| Name              | Version   |
-|-------------------|-----------|
-| [Atk]             | >= 2.14   |
-| [Cairo]           |           |
-| [DBus Menu]       | >= 0.6    |
-| [GdkPixbuf]       | >= 2.31   |
-| [GLib]            | >= 2.0    |
-| [GTK+]            | >= 2.0    |
-| [libappindicator] | >= 0.4.92 |
-| [Pango]           | >= 1.18   |
-
-To enable: `-DENABLE_APPINDICATOR=True`
 
 #### Snorenotify desktop notification backend
 
@@ -198,24 +167,6 @@ zypper in qtox
 
 qTox SlackBuild and all of its dependencies can be found here:
 http://slackbuilds.org/repository/14.2/network/qTox/
-
-<a name="freebsd-easy" />
-
-#### FreeBSD
-
-qTox is available as a binary package. To install the qTox package:
-
-```bash
-pkg install qTox
-```
-
-The qTox port is also available at ``net-im/qTox``. To build and install qTox
-from sources using the port:
-
-```bash
-cd /usr/ports/net-im/qTox
-make install clean
-```
 
 ----
 
@@ -299,15 +250,13 @@ corresponding parts.
 #### Arch Linux
 
 ```bash
-sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg opus libvpx libsodium
+sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg opus libvpx libsodium sqlcipher
 ```
 
 
 <a name="debian-other-deps" />
 
 #### Debian
-
-**Note that only Debian >=9 stable (stretch) is supported.**
 
 ```bash
 sudo apt-get install \
@@ -380,8 +329,6 @@ sudo dnf install \
     sqlcipher-devel
 ```
 
-**Go to [sqlcipher](#sqlcipher) section to compile it if necessary.**
-
 <a name="opensuse-other-deps" />
 
 #### openSUSE
@@ -405,7 +352,11 @@ sudo zypper install \
     patterns-openSUSE-devel_basis \
     qrencode-devel \
     sqlcipher-devel \
-    sonnet-devel
+    sonnet-devel \
+    qt5-linguist-devel \
+    libQt5Test-devel \
+    ffmpeg-4-libavcodec-devel \
+    ffmpeg-4-libavdevice-devel
 ```
 
 <a name="slackware-other-deps" />
@@ -421,44 +372,7 @@ http://slackbuilds.org/repository/14.2/network/qTox/
 
 <a name="ubuntu-other-deps" />
 
-#### Ubuntu >=15.04
-
-```bash
-sudo apt-get install \
-    automake \
-    autotools-dev \
-    build-essential cmake \
-    check \
-    checkinstall \
-    libavcodec-ffmpeg-dev \
-    libavdevice-ffmpeg-dev \
-    libavfilter-ffmpeg-dev \
-    libavutil-ffmpeg-dev \
-    libexif-dev \
-    libgdk-pixbuf2.0-dev \
-    libglib2.0-dev \
-    libgtk2.0-dev \
-    libkdeui5 \
-    libopenal-dev \
-    libopus-dev \
-    libqrencode-dev \
-    libqt5opengl5-dev \
-    libqt5svg5-dev \
-    libsodium-dev \
-    libsqlcipher-dev \
-    libswresample-ffmpeg-dev \
-    libswscale-ffmpeg-dev \
-    libtool \
-    libvpx-dev \
-    libxss-dev \
-    qrencode \
-    qt5-default \
-    qttools5-dev-tools
-```
-
-<a name="ubuntu-other-1604-deps" />
-
-#### Ubuntu >=16.04:
+#### Ubuntu:
 
 ```bash
 sudo apt-get install \
@@ -490,22 +404,6 @@ sudo apt-get install \
     qttools5-dev
 ```
 
-### sqlcipher
-
-If you are not using an old version of Fedora, skip this section, and go
-directly to compiling
-[**toxcore**](#compile-toxcore).
-
-```bash
-git clone https://github.com/sqlcipher/sqlcipher
-cd sqlcipher
-./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
-    LDFLAGS="-lcrypto"
-make
-sudo make install
-cd ..
-```
-
 ### Compile toxcore
 
 Normally you don't want to do that, `bootstrap.sh` will do it for you.
@@ -516,7 +414,7 @@ Provided that you have all required dependencies installed, you can simply run:
 git clone https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
 git checkout v0.2.10
-cmake .
+cmake . -DBOOTSTRAP_DAEMON=OFF
 make -j$(nproc)
 sudo make install
 
@@ -589,12 +487,31 @@ password for sudo.
 
 See [AppArmor] to enable confinement for increased security.
 
+## BSD
+
+<a name="freebsd-easy" />
+
+#### FreeBSD
+
+qTox is available as a binary package. To install the qTox package:
+
+```bash
+pkg install qTox
+```
+
+The qTox port is also available at ``net-im/qTox``. To build and install qTox
+from sources using the port:
+
+```bash
+cd /usr/ports/net-im/qTox
+make install clean
+```
 
 <a name="osx" />
 
 ## OS X
 
-Supported OS X versions: >=10.8. (NOTE: only 10.12 is tested during CI)
+Supported OS X versions: >=10.8. (NOTE: only 10.13 is tested during CI)
 
 Compiling qTox on OS X for development requires 2 tools:
 [Xcode](https://developer.apple.com/xcode/) and [homebrew](https://brew.sh).
@@ -829,10 +746,6 @@ Switches:
 [DBus Menu]: https://launchpad.net/libdbusmenu
 [FFmpeg]: https://www.ffmpeg.org/
 [GCC]: https://gcc.gnu.org/
-[GdkPixbuf]: https://developer.gnome.org/gdk-pixbuf/
-[GLib]: https://wiki.gnome.org/Projects/GLib
-[GTK+]: https://www.gtk.org/
-[libappindicator]: https://launchpad.net/libappindicator
 [libX11]: https://www.x.org/wiki/
 [libXScrnSaver]: https://www.x.org/wiki/Releases/ModuleVersions/
 [MinGW]: http://www.mingw.org/
@@ -841,7 +754,6 @@ Switches:
 [pkg-config]: https://www.freedesktop.org/wiki/Software/pkg-config/
 [qrencode]: https://fukuchi.org/works/qrencode/
 [Qt]: https://www.qt.io/
-[sqlcipher]: https://www.zetetic.net/sqlcipher/
 [toxcore]: https://github.com/TokTok/c-toxcore/
 [filteraudio]: https://github.com/irungentoo/filter_audio
 [sonnet]: https://github.com/KDE/sonnet

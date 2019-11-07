@@ -34,7 +34,7 @@ class GeneralForm : public GenericForm
 public:
     explicit GeneralForm(SettingsWidget* parent);
     ~GeneralForm();
-    virtual QString getFormName() final override
+    QString getFormName() final
     {
         return tr("General");
     }

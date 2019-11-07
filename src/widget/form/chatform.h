@@ -52,8 +52,8 @@ public:
 
     void setFriendTyping(bool isTyping);
 
-    virtual void show(ContentLayout* contentLayout) final override;
-    virtual void reloadTheme() final override;
+    void show(ContentLayout* contentLayout) final;
+    void reloadTheme() final;
 
     static const QString ACTION_PREFIX;
 
@@ -109,12 +109,12 @@ private:
     void updateCallButtons();
 
 protected:
-    GenericNetCamView* createNetcam() final override;
-    void insertChatMessage(ChatMessage::Ptr msg) final override;
-    void dragEnterEvent(QDragEnterEvent* ev) final override;
-    void dropEvent(QDropEvent* ev) final override;
-    void hideEvent(QHideEvent* event) final override;
-    void showEvent(QShowEvent* event) final override;
+    GenericNetCamView* createNetcam() final;
+    void insertChatMessage(ChatMessage::Ptr msg) final;
+    void dragEnterEvent(QDragEnterEvent* ev) final;
+    void dropEvent(QDropEvent* ev) final;
+    void hideEvent(QHideEvent* event) final;
+    void showEvent(QShowEvent* event) final;
 
 private:
     Friend* f;

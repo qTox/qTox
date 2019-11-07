@@ -55,7 +55,7 @@ signals:
     void groupInvitesSeen();
 
 protected:
-    void showEvent(QShowEvent* event) final override;
+    void showEvent(QShowEvent* event) final;
 
 private:
     void retranslateUi();

@@ -83,7 +83,7 @@ public:
     }
 
 protected:
-    void resizeEvent(QResizeEvent* event) final override
+    void resizeEvent(QResizeEvent* event) final
     {
         updateSize();
         QWidget::resizeEvent(event);

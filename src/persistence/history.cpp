@@ -26,10 +26,11 @@
 #include "db/rawdatabase.h"
 
 namespace {
-static constexpr int SCHEMA_VERSION = 1;
+static constexpr int SCHEMA_VERSION = 2;
 
-void generateCurrentSchema(QVector<RawDatabase::Query>& queries)
+bool createCurrentSchema(RawDatabase& db)
 {
+    QVector<RawDatabase::Query> queries;
     queries += RawDatabase::Query(QStringLiteral(
         "CREATE TABLE peers (id INTEGER PRIMARY KEY, "
         "public_key TEXT NOT NULL UNIQUE);"
@@ -60,10 +61,13 @@ void generateCurrentSchema(QVector<RawDatabase::Query>& queries)
         "file_size INTEGER NOT NULL, "
         "direction INTEGER NOT NULL, "
         "file_state INTEGER NOT NULL);"
-        "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY);"));
+        "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY);"
+        "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY);"));
+    queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
+    return db.execNow(queries);
 }
 
-bool isNewDb(std::shared_ptr<RawDatabase> db)
+bool isNewDb(std::shared_ptr<RawDatabase>& db, bool& success)
 {
     bool newDb;
     if (!db->execNow(RawDatabase::Query("SELECT COUNT(*) FROM sqlite_master;",
@@ -71,13 +75,16 @@ bool isNewDb(std::shared_ptr<RawDatabase> db)
                                             newDb = row[0].toLongLong() == 0;
                                         }))) {
         db.reset();
-        return false; // TODO: propogate error
+        success = false;
+        return false;
     }
+    success = true;
     return newDb;
 }
 
-void dbSchema0to1(std::shared_ptr<RawDatabase> db, QVector<RawDatabase::Query>& queries)
+bool dbSchema0to1(RawDatabase& db)
 {
+    QVector<RawDatabase::Query> queries;
     queries +=
         RawDatabase::Query(QStringLiteral(
             "CREATE TABLE file_transfers "
@@ -92,6 +99,55 @@ void dbSchema0to1(std::shared_ptr<RawDatabase> db, QVector<RawDatabase::Query>& 
             "file_state INTEGER NOT NULL);"));
     queries +=
         RawDatabase::Query(QStringLiteral("ALTER TABLE history ADD file_id INTEGER;"));
+    queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 1;"));
+    return db.execNow(queries);
+}
+
+bool dbSchema1to2(RawDatabase& db)
+{
+    // Any faux_offline_pending message, in a chat that has newer delivered
+    // message is decided to be broken. It must be moved from
+    // faux_offline_pending to broken_messages
+
+    // the last non-pending message in each chat
+    QString lastDeliveredQuery = QString(
+        "SELECT chat_id, MAX(history.id) FROM "
+        "history JOIN peers chat ON chat_id = chat.id "
+        "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+        "WHERE faux_offline_pending.id IS NULL "
+        "GROUP BY chat_id;");
+
+    QVector<RawDatabase::Query> upgradeQueries;
+    upgradeQueries +=
+        RawDatabase::Query(QStringLiteral(
+            "CREATE TABLE broken_messages "
+            "(id INTEGER PRIMARY KEY);"));
+
+    auto rowCallback = [&upgradeQueries](const QVector<QVariant>& row) {
+        auto chatId = row[0].toLongLong();
+        auto lastDeliveredHistoryId = row[1].toLongLong();
+
+        upgradeQueries += QString("INSERT INTO broken_messages "
+            "SELECT faux_offline_pending.id FROM "
+            "history JOIN faux_offline_pending "
+            "ON faux_offline_pending.id = history.id "
+            "WHERE history.chat_id=%1 "
+            "AND history.id < %2;").arg(chatId).arg(lastDeliveredHistoryId);
+    };
+    // note this doesn't modify the db, just generate new queries, so is safe
+    // to run outside of our upgrade transaction
+    if (!db.execNow({lastDeliveredQuery, rowCallback})) {
+        return false;
+    }
+
+    upgradeQueries += QString(
+        "DELETE FROM faux_offline_pending "
+        "WHERE id in ("
+            "SELECT id FROM broken_messages);");
+
+    upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 2;"));
+
+    return db.execNow(upgradeQueries);
 }
 
 /**
@@ -99,7 +155,7 @@ void dbSchema0to1(std::shared_ptr<RawDatabase> db, QVector<RawDatabase::Query>& 
 * @note On future alterations of the database all you have to do is bump the SCHEMA_VERSION
 * variable and add another case to the switch statement below. Make sure to fall through on each case.
 */
-void dbSchemaUpgrade(std::shared_ptr<RawDatabase> db)
+void dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
 {
     int64_t databaseSchemaVersion;
 
@@ -121,34 +177,64 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase> db)
         return;
     }
 
-    QVector<RawDatabase::Query> queries;
-    // Make sure to handle the un-created case as well in the following upgrade code
     switch (databaseSchemaVersion) {
-    case 0:
+    case 0: {
         // Note: 0 is a special version that is actually two versions.
         //   possibility 1) it is a newly created database and it neesds the current schema to be created.
         //   possibility 2) it is a old existing database, before version 1 and before we saved schema version,
-        //       and need to be updated.
-        if (isNewDb(db)) {
-            generateCurrentSchema(queries);
-            queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
-            db->execLater(queries);
+        //       and needs to be updated.
+        bool success = false;
+        const bool newDb = isNewDb(db, success);
+        if (!success) {
+            qCritical() << "Failed to create current db schema";
+            db.reset();
+            return;
+        }
+        if (newDb) {
+            if (!createCurrentSchema(*db)) {
+                qCritical() << "Failed to create current db schema";
+                db.reset();
+                return;
+            }
             qDebug() << "Database created at schema version" << SCHEMA_VERSION;
             break; // new db is the only case where we don't incrementally upgrade through each version
         } else {
-            dbSchema0to1(db, queries);
+            if (!dbSchema0to1(*db)) {
+                qCritical() << "Failed to upgrade db to schema version 1, aborting";
+                db.reset();
+                return;
+            }
+            qDebug() << "Database upgraded incrementally to schema version 1";
         }
+    }
         // fallthrough
-    // case 1:
-    //    dbSchema1to2(queries);
-    //    //fallthrough
+    case 1:
+       if (!dbSchema1to2(*db)) {
+            qCritical() << "Failed to upgrade db to schema version 2, aborting";
+            db.reset();
+            return;
+       }
+       qDebug() << "Database upgraded incrementally to schema version 2";
+       //fallthrough
     // etc.
     default:
-        queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
-        db->execLater(queries);
-        qDebug() << "Database upgrade finished (databaseSchemaVersion" << databaseSchemaVersion
+        qInfo() << "Database upgrade finished (databaseSchemaVersion" << databaseSchemaVersion
                 << "->" << SCHEMA_VERSION << ")";
     }
+}
+
+MessageState getMessageState(bool isPending, bool isBroken)
+{
+    assert(!(isPending && isBroken));
+    MessageState messageState;
+    if (isPending) {
+        messageState = MessageState::pending;
+    } else if (isBroken) {
+        messageState = MessageState::broken;
+    } else {
+        messageState = MessageState::complete;
+    }
+    return messageState;
 }
 } // namespace
 
@@ -243,6 +329,7 @@ void History::eraseHistory()
                 "DELETE FROM aliases;"
                 "DELETE FROM peers;"
                 "DELETE FROM file_transfers;"
+                "DELETE FROM broken_messages;"
                 "VACUUM;");
 }
 
@@ -268,6 +355,12 @@ void History::removeFriendHistory(const QString& friendPk)
                                 "    LEFT JOIN history ON faux_offline_pending.id = history.id "
                                 "    WHERE chat_id=%1 "
                                 "); "
+                                "DELETE FROM broken_messages "
+                                "WHERE broken_messages.id IN ( "
+                                "    SELECT broken_messages.id FROM broken_messages "
+                                "    LEFT JOIN history ON broken_messages.id = history.id "
+                                "    WHERE chat_id=%1 "
+                                "); "
                                 "DELETE FROM history WHERE chat_id=%1; "
                                 "DELETE FROM aliases WHERE owner=%1; "
                                 "DELETE FROM peers WHERE id=%1; "
@@ -288,13 +381,13 @@ void History::removeFriendHistory(const QString& friendPk)
  * @param message Message to save.
  * @param sender Sender to save.
  * @param time Time of message sending.
- * @param isSent True if message was already sent.
+ * @param isDelivered True if message was already delivered.
  * @param dispName Name, which should be displayed.
  * @param insertIdCallback Function, called after query execution.
  */
 QVector<RawDatabase::Query>
 History::generateNewMessageQueries(const QString& friendPk, const QString& message,
-                                   const QString& sender, const QDateTime& time, bool isSent,
+                                   const QString& sender, const QDateTime& time, bool isDelivered,
                                    QString dispName, std::function<void(RowId)> insertIdCallback)
 {
     QVector<RawDatabase::Query> queries;
@@ -355,7 +448,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
                                .arg(senderId),
                            {message.toUtf8(), dispName.toUtf8()}, insertIdCallback);
 
-    if (!isSent) {
+    if (!isDelivered) {
         queries += RawDatabase::Query{"INSERT INTO faux_offline_pending (id) VALUES ("
                                       "    last_insert_rowid()"
                                       ");"};
@@ -485,12 +578,12 @@ void History::addNewFileMessage(const QString& friendPk, const QString& fileId,
  * @param message Message to save.
  * @param sender Sender to save.
  * @param time Time of message sending.
- * @param isSent True if message was already sent.
+ * @param isDelivered True if message was already delivered.
  * @param dispName Name, which should be displayed.
  * @param insertIdCallback Function, called after query execution.
  */
 void History::addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
-                            const QDateTime& time, bool isSent, QString dispName,
+                            const QDateTime& time, bool isDelivered, QString dispName,
                             const std::function<void(RowId)>& insertIdCallback)
 {
     if (!Settings::getInstance().getEnableLogging()) {
@@ -501,7 +594,7 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
         return;
     }
 
-    db->execLater(generateNewMessageQueries(friendPk, message, sender, time, isSent, dispName,
+    db->execLater(generateNewMessageQueries(friendPk, message, sender, time, isDelivered, dispName,
                                             insertIdCallback));
 }
 
@@ -562,12 +655,13 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
                 "message, file_transfers.file_restart_id, "
                 "file_transfers.file_path, file_transfers.file_name, "
                 "file_transfers.file_size, file_transfers.direction, "
-                "file_transfers.file_state FROM history "
+                "file_transfers.file_state, broken_messages.id FROM history "
                 "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                 "JOIN peers chat ON history.chat_id = chat.id "
                 "JOIN aliases ON sender_alias = aliases.id "
                 "JOIN peers sender ON aliases.owner = sender.id "
                 "LEFT JOIN file_transfers ON history.file_id = file_transfers.id "
+                "LEFT JOIN broken_messages ON history.id = broken_messages.id "
                 "WHERE chat.public_key='%1' "
                 "LIMIT %2 OFFSET %3;")
             .arg(friendPk.toString())
@@ -578,14 +672,18 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
         // dispName and message could have null bytes, QString::fromUtf8
         // truncates on null bytes so we strip them
         auto id = RowId{row[0].toLongLong()};
-        auto isOfflineMessage = row[1].isNull();
+        auto isPending = !row[1].isNull();
         auto timestamp = QDateTime::fromMSecsSinceEpoch(row[2].toLongLong());
         auto friend_key = row[3].toString();
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
+        auto isBroken = !row[13].isNull();
+
+        MessageState messageState = getMessageState(isPending, isBroken);
+
         if (row[7].isNull()) {
-            messages += {id,           isOfflineMessage, timestamp,        friend_key,
-                         display_name, sender_key,       row[6].toString()};
+            messages += {id, messageState, timestamp, friend_key,
+                         display_name, sender_key, row[6].toString()};
         } else {
             ToxFile file;
             file.fileKind = TOX_FILE_KIND_DATA;
@@ -596,7 +694,7 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
             file.direction = static_cast<ToxFile::FileDirection>(row[11].toLongLong());
             file.status = static_cast<ToxFile::FileStatus>(row[12].toInt());
             messages +=
-                {id, isOfflineMessage, timestamp, friend_key, display_name, sender_key, file};
+                {id, messageState, timestamp, friend_key, display_name, sender_key, file};
         }
     };
 
@@ -605,16 +703,17 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
     return messages;
 }
 
-QList<History::HistMessage> History::getUnsentMessagesForFriend(const ToxPk& friendPk)
+QList<History::HistMessage> History::getUndeliveredMessagesForFriend(const ToxPk& friendPk)
 {
     auto queryText =
         QString("SELECT history.id, faux_offline_pending.id, timestamp, chat.public_key, "
-                "aliases.display_name, sender.public_key, message "
+                "aliases.display_name, sender.public_key, message, broken_messages.id "
                 "FROM history "
                 "JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                 "JOIN peers chat on history.chat_id = chat.id "
                 "JOIN aliases on sender_alias = aliases.id "
                 "JOIN peers sender on aliases.owner = sender.id "
+                "LEFT JOIN broken_messages ON history.id = broken_messages.id "
                 "WHERE chat.public_key='%1';")
             .arg(friendPk.toString());
 
@@ -623,15 +722,17 @@ QList<History::HistMessage> History::getUnsentMessagesForFriend(const ToxPk& fri
         // dispName and message could have null bytes, QString::fromUtf8
         // truncates on null bytes so we strip them
         auto id = RowId{row[0].toLongLong()};
-        auto isOfflineMessage = row[1].isNull();
+        auto isPending = !row[1].isNull();
         auto timestamp = QDateTime::fromMSecsSinceEpoch(row[2].toLongLong());
         auto friend_key = row[3].toString();
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
-        if (row[6].isNull()) {
-            ret += {id,           isOfflineMessage, timestamp,        friend_key,
-                    display_name, sender_key,       row[6].toString()};
-        }
+        auto isBroken = !row[7].isNull();
+
+        MessageState messageState = getMessageState(isPending, isBroken);
+
+        ret += {id, messageState, timestamp, friend_key,
+                display_name, sender_key, row[6].toString()};
     };
 
     db->execNow({queryText, rowCallback});
@@ -788,12 +889,12 @@ QList<History::DateIdx> History::getNumMessagesForFriendBeforeDateBoundaries(con
 }
 
 /**
- * @brief Marks a message as sent.
+ * @brief Marks a message as delivered.
  * Removing message from the faux-offline pending messages list.
  *
  * @param id Message ID.
  */
-void History::markAsSent(RowId messageId)
+void History::markAsDelivered(RowId messageId)
 {
     if (!isValid()) {
         return;

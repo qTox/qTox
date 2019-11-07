@@ -105,31 +105,38 @@ struct FileDbInsertionData
 };
 Q_DECLARE_METATYPE(FileDbInsertionData);
 
+enum class MessageState
+{
+    complete,
+    pending,
+    broken
+};
+
 class History : public QObject, public std::enable_shared_from_this<History>
 {
     Q_OBJECT
 public:
     struct HistMessage
     {
-        HistMessage(RowId id, bool isSent, QDateTime timestamp, QString chat, QString dispName,
+        HistMessage(RowId id, MessageState state, QDateTime timestamp, QString chat, QString dispName,
                     QString sender, QString message)
             : chat{chat}
             , sender{sender}
             , dispName{dispName}
             , timestamp{timestamp}
             , id{id}
-            , isSent{isSent}
+            , state{state}
             , content(std::move(message))
         {}
 
-        HistMessage(RowId id, bool isSent, QDateTime timestamp, QString chat, QString dispName,
+        HistMessage(RowId id, MessageState state, QDateTime timestamp, QString chat, QString dispName,
                     QString sender, ToxFile file)
             : chat{chat}
             , sender{sender}
             , dispName{dispName}
             , timestamp{timestamp}
             , id{id}
-            , isSent{isSent}
+            , state{state}
             , content(std::move(file))
         {}
 
@@ -139,7 +146,7 @@ public:
         QString dispName;
         QDateTime timestamp;
         RowId id;
-        bool isSent;
+        MessageState state;
         HistMessageContent content;
     };
 
@@ -160,7 +167,7 @@ public:
     void eraseHistory();
     void removeFriendHistory(const QString& friendPk);
     void addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
-                       const QDateTime& time, bool isSent, QString dispName,
+                       const QDateTime& time, bool isDelivered, QString dispName,
                        const std::function<void(RowId)>& insertIdCallback = {});
 
     void addNewFileMessage(const QString& friendPk, const QString& fileId,
@@ -171,18 +178,18 @@ public:
     size_t getNumMessagesForFriend(const ToxPk& friendPk);
     size_t getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date);
     QList<HistMessage> getMessagesForFriend(const ToxPk& friendPk, size_t firstIdx, size_t lastIdx);
-    QList<HistMessage> getUnsentMessagesForFriend(const ToxPk& friendPk);
+    QList<HistMessage> getUndeliveredMessagesForFriend(const ToxPk& friendPk);
     QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);
     QList<DateIdx> getNumMessagesForFriendBeforeDateBoundaries(const ToxPk& friendPk,
                                                                const QDate& from, size_t maxNum);
 
-    void markAsSent(RowId messageId);
+    void markAsDelivered(RowId messageId);
 
 protected:
     QVector<RawDatabase::Query>
     generateNewMessageQueries(const QString& friendPk, const QString& message,
-                              const QString& sender, const QDateTime& time, bool isSent,
+                              const QString& sender, const QDateTime& time, bool isDelivered,
                               QString dispName, std::function<void(RowId)> insertIdCallback = {});
 
 signals:

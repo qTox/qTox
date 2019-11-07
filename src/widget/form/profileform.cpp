@@ -79,23 +79,23 @@ static const QMap<IProfileInfo::RenameResult, QPair<QString, QString>> RENAME_ER
 static const QMap<IProfileInfo::SaveResult, QPair<QString, QString>> SAVE_ERROR = {
     { IProfileInfo::SaveResult::NoWritePermission,
       { ProfileForm::tr("Location not writable", "Title of permissions popup"),
-        ProfileForm::tr("You do not have permission to write that location. Choose "
+        ProfileForm::tr("You do not have permission to write to that location. Choose "
         "another, or cancel the save dialog.", "text of permissions popup") },
     },
     { IProfileInfo::SaveResult::Error,
-      { ProfileForm::tr("Failed to copy file"),
-        ProfileForm::tr("The file you chose could not be written to.") }
+      { ProfileForm::tr("Failed to save file"),
+        ProfileForm::tr("The file you chose could not be saved.") }
     },
     { IProfileInfo::SaveResult::EmptyPath,
       { ProfileForm::tr("Empty path"),
-        ProfileForm::tr("Empty path is unavaliable") }
+        ProfileForm::tr("Empty path is unavaliable.") }
     },
 };
 
 static const QPair<QString, QString> CAN_NOT_CHANGE_PASSWORD = {
     ProfileForm::tr("Couldn't change password"),
-    ProfileForm::tr("Couldn't change password on the database, "
-    "it might be corrupted or use the old password.")
+    ProfileForm::tr("Couldn't change database password, "
+    "it may be corrupted or use the old password.")
 };
 
 ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
@@ -378,7 +378,7 @@ void ProfileForm::onExportClicked()
 
 void ProfileForm::onDeleteClicked()
 {
-    const QString title = tr("Really delete profile?", "deletion confirmation title");
+    const QString title = tr("Delete profile", "deletion confirmation title");
     const QString question = tr("Are you sure you want to delete this profile?",
                             "deletion confirmation text");
     if (!GUI::askQuestion(title, question)) {
@@ -449,9 +449,9 @@ void ProfileForm::onDeletePassClicked()
         return;
     }
 
-    const QString title = tr("Really delete password?", "deletion confirmation title");
+    const QString title = tr("Remove password", "deletion confirmation title");
     //: deletion confirmation text
-    const QString body = tr("Are you sure you want to delete your password?");
+    const QString body = tr("Are you sure you want to remove your password?");
     if (!GUI::askQuestion(title, body)) {
         return;
     }
@@ -481,8 +481,8 @@ void ProfileForm::retranslateUi()
     setPasswordButtonsText();
     // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it
     // dynamically
-    toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact "
-                         "you.\nShare it with your friends to communicate.\n\n"
+    toxId->setToolTip(tr("This ID allows other Tox users to add and contact you.\n"
+                         "Share it with your friends to begin chatting.\n\n"
                          "This ID includes the NoSpam code (in blue), and the checksum (in gray)."));
 }
 
@@ -554,7 +554,7 @@ void ProfileForm::onRegisterButtonClicked()
             break;
         case ToxmeData::Ok:
             GUI::showInfo(tr("Done!"),
-                          tr("Successfully added %1@%2 to the database. Save your password")
+                          tr("Successfully added %1@%2 to the database. Save your password.")
                               .arg(name, server));
             Settings::getInstance().setToxme(name, server, bio, privacy, response);
             showExistingToxme();

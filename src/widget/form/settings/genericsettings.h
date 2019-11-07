@@ -35,7 +35,7 @@ public:
     QPixmap getFormIcon();
 
 protected:
-    bool eventFilter(QObject* o, QEvent* e) final override;
+    bool eventFilter(QObject* o, QEvent* e) final;
     void eventsInit();
 
 protected:

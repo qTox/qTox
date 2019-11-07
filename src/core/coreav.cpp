@@ -126,7 +126,7 @@ CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core)
     case TOXAV_ERR_NEW_OK:
         break;
     case TOXAV_ERR_NEW_MALLOC:
-        qCritical() << "Failed to allocate ressources for ToxAV";
+        qCritical() << "Failed to allocate resources for ToxAV";
         return {};
     case TOXAV_ERR_NEW_MULTIPLE:
         qCritical() << "Attempted to create multiple ToxAV instances";
@@ -260,7 +260,7 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
         return ret;
     }
 
-    qDebug() << QString("answering call %1").arg(friendNum);
+    qDebug() << QString("Answering call %1").arg(friendNum);
     auto it = calls.find(friendNum);
     assert(it != calls.end());
     TOXAV_ERR_ANSWER err;
@@ -544,8 +544,7 @@ VideoSource* CoreAV::getVideoSourceFromCall(int friendNum) const
 {
     auto it = calls.find(friendNum);
     if (it == calls.end()) {
-        qWarning() << "CoreAV::getVideoSourceFromCall: No such call, did it die before we finished "
-                      "answering?";
+        qWarning() << "CoreAV::getVideoSourceFromCall: No such call, possibly cancelled";
         return nullptr;
     }
 

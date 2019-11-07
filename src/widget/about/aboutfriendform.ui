@@ -173,7 +173,7 @@
         <string>Automatically accept files from contact if set</string>
        </property>
        <property name="text">
-        <string>Auto accept files</string>
+        <string>Auto-accept files</string>
        </property>
       </widget>
      </item>
@@ -187,7 +187,7 @@
      <item row="8" column="1">
       <widget class="QPushButton" name="selectSaveDir">
        <property name="text">
-        <string>Auto accept for this contact is disabled</string>
+        <string>Auto-accept for this contact is disabled</string>
        </property>
       </widget>
      </item>
@@ -196,7 +196,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Auto accept call:</string>
+          <string>Auto-accept call:</string>
          </property>
         </widget>
        </item>
@@ -227,7 +227,7 @@
         <string>Automatically accept group chat invitations from this contact if set.</string>
        </property>
        <property name="text">
-        <string>Auto accept group invites</string>
+        <string>Auto-accept group invites</string>
        </property>
       </widget>
      </item>
@@ -255,7 +255,7 @@
          <string/>
         </property>
         <property name="placeholderText">
-         <string>You can save comment about this contact here.</string>
+         <string>You can save comments about this contact here.</string>
         </property>
        </widget>
       </item>

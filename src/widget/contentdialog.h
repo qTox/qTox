@@ -92,9 +92,9 @@ public slots:
     void setUsername(const QString& newName);
 
 protected:
-    bool event(QEvent* event) final override;
-    void dragEnterEvent(QDragEnterEvent* event) final override;
-    void dropEvent(QDropEvent* event) final override;
+    bool event(QEvent* event) final;
+    void dragEnterEvent(QDragEnterEvent* event) final;
+    void dropEvent(QDropEvent* event) final;
     void changeEvent(QEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
     void moveEvent(QMoveEvent* event) override;

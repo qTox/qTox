@@ -55,8 +55,8 @@ public slots:
     void moveFriendWidgets(FriendListWidget* friendList);
 
 protected:
-    virtual void leaveEvent(QEvent* event) final override;
-    virtual void mouseReleaseEvent(QMouseEvent* event) final override;
+    void leaveEvent(QEvent* event) final;
+    void mouseReleaseEvent(QMouseEvent* event) final;
 
     void editName();
     void setContainerAttribute(Qt::WidgetAttribute attribute, bool enabled);

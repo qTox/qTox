@@ -110,12 +110,12 @@ QSize GenericNetCamView::getSurfaceMinSize()
 void GenericNetCamView::setShowMessages(bool show, bool notify)
 {
     if (!show) {
-        toggleMessagesButton->setText(tr("Hide Messages"));
+        toggleMessagesButton->setText(tr("Hide messages"));
         toggleMessagesButton->setIcon(QIcon());
         return;
     }
 
-    toggleMessagesButton->setText(tr("Show Messages"));
+    toggleMessagesButton->setText(tr("Show messages"));
 
     if (notify) {
         toggleMessagesButton->setIcon(QIcon(Style::getImagePath("chatArea/info.svg")));
