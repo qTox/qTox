@@ -1502,7 +1502,9 @@ QStringList Core::getGroupPeerNames(int groupId) const
     for (uint32_t i = 0; i < nPeers; ++i) {
         Tox_Err_Conference_Peer_Query error;
         size_t length = tox_conference_peer_get_name_size(tox.get(), groupId, i, &error);
+
         if (!PARSE_ERR(error) || !length) {
+            names.append(QString());
             continue;
         }
 
@@ -1510,8 +1512,12 @@ QStringList Core::getGroupPeerNames(int groupId) const
         tox_conference_peer_get_name(tox.get(), groupId, i, nameBuf.data(), &error);
         if (PARSE_ERR(error)) {
             names.append(ToxString(nameBuf.data(), length).getQString());
+        } else {
+            names.append(QString());
         }
     }
+
+    assert(names.size() == nPeers);
 
     return names;
 }
