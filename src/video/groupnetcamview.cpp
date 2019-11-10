@@ -128,6 +128,11 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
 
     QScrollArea* scrollArea = new QScrollArea();
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    // Note this is needed to prevent oscillations that result in segfaults
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    scrollArea->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum));
+
     scrollArea->setFrameStyle(QFrame::NoFrame);
     QWidget* widget = new QWidget(nullptr);
     scrollArea->setWidgetResizable(true);
