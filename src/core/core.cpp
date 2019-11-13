@@ -21,6 +21,7 @@
 #include "core.h"
 #include "coreav.h"
 #include "corefile.h"
+#include "src/core/coreext.h"
 #include "src/core/dhtserver.h"
 #include "src/core/icoresettings.h"
 #include "src/core/toxlogger.h"
@@ -515,6 +516,7 @@ void Core::registerCallbacks(Tox* tox)
     tox_callback_conference_peer_list_changed(tox, onGroupPeerListChange);
     tox_callback_conference_peer_name(tox, onGroupPeerNameChange);
     tox_callback_conference_title(tox, onGroupTitleChange);
+    tox_callback_friend_lossless_packet(tox, onLosslessPacket);
 }
 
 /**
@@ -639,6 +641,9 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
         return {};
     }
 
+    core->ext = CoreExt::makeCoreExt(core->tox.get());
+    connect(core.get(), &Core::friendStatusChanged, core->ext.get(), &CoreExt::onFriendStatusChanged);
+
     registerCallbacks(core->tox.get());
 
     // connect the thread with the Core
@@ -714,6 +719,16 @@ QMutex &Core::getCoreLoopLock() const
     return coreLoopLock;
 }
 
+const CoreExt* Core::getExt() const
+{
+    return ext.get();
+}
+
+CoreExt* Core::getExt()
+{
+    return ext.get();
+}
+
 /* Using the now commented out statements in checkConnection(), I watched how
  * many ticks disconnects-after-initial-connect lasted. Out of roughly 15 trials,
  * 5 disconnected; 4 were DCd for less than 20 ticks, while the 5th was ~50 ticks.
@@ -734,6 +749,7 @@ void Core::process()
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
     tox_iterate(tox.get(), this);
+    ext->process();
 
 #ifdef DEBUG
     // we want to see the debug messages immediately
@@ -986,6 +1002,16 @@ void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uin
     }
     emit core->saveRequest();
     emit core->groupTitleChanged(groupId, author, ToxString(cTitle, length).getQString());
+}
+
+/**
+ * @brief Handling of custom lossless packets received by toxcore. Currently only used to forward toxext packets to CoreExt
+ */
+void Core::onLosslessPacket(Tox*, uint32_t friendId,
+                            const uint8_t* data, size_t length, void* vCore)
+{
+    Core* core = static_cast<Core*>(vCore);
+    core->ext->onLosslessPacket(friendId, data, length);
 }
 
 void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void* core)

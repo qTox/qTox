@@ -44,6 +44,7 @@
 
 class CoreAV;
 class CoreFile;
+class CoreExt;
 class IAudioControl;
 class ICoreSettings;
 class GroupInvite;
@@ -78,6 +79,8 @@ public:
     CoreFile* getCoreFile() const;
     Tox* getTox() const;
     QMutex& getCoreLoopLock() const;
+    const CoreExt* getExt() const;
+    CoreExt* getExt();
 
     ~Core();
 
@@ -215,6 +218,9 @@ private:
                                       size_t length, void* core);
     static void onGroupTitleChange(Tox* tox, uint32_t groupId, uint32_t peerId,
                                    const uint8_t* cTitle, size_t length, void* vCore);
+
+    static void onLosslessPacket(Tox* tox, uint32_t friendId,
+                                   const uint8_t* data, size_t length, void* core);
     static void onReadReceiptCallback(Tox* tox, uint32_t friendId, uint32_t receipt, void* core);
 
     void sendGroupMessageWithType(int groupId, const QString& message, Tox_Message_Type type);
@@ -249,6 +255,7 @@ private:
 
     std::unique_ptr<CoreFile> file;
     CoreAV* av = nullptr;
+    std::unique_ptr<CoreExt> ext;
     QTimer* toxTimer = nullptr;
     // recursive, since we might call our own functions
     mutable QMutex coreLoopLock{QMutex::Recursive};

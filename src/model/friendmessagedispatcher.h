@@ -35,18 +35,22 @@ class FriendMessageDispatcher : public IMessageDispatcher
     Q_OBJECT
 public:
     FriendMessageDispatcher(Friend& f, MessageProcessor processor,
-                            ICoreFriendMessageSender& messageSender);
+                            ICoreFriendMessageSender& messageSender,
+                            ICoreExtPacketAllocator& coreExt);
 
     std::pair<DispatchedMessageId, DispatchedMessageId> sendMessage(bool isAction,
                                                                     const QString& content) override;
     void onMessageReceived(bool isAction, const QString& content);
     void onReceiptReceived(ReceiptNum receipt);
+    void onExtMessageReceived(const QString& message);
+    void onExtReceiptReceived(uint64_t receiptId);
     void clearOutgoingMessages();
 private slots:
     void onFriendOnlineOfflineChanged(const ToxPk& key, bool isOnline);
 
 private:
     Friend& f;
+    ICoreExtPacketAllocator& coreExtPacketAllocator;
     DispatchedMessageId nextMessageId = DispatchedMessageId(0);
 
     ICoreFriendMessageSender& messageSender;
