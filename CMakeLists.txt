@@ -227,6 +227,8 @@ set(${PROJECT_NAME}_SOURCES
   src/chatlog/textformatter.h
   src/core/coreav.cpp
   src/core/coreav.h
+  src/core/coreext.cpp
+  src/core/coreext.h
   src/core/core.cpp
   src/core/corefile.cpp
   src/core/corefile.h

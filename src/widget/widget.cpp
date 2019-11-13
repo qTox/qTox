@@ -693,6 +693,13 @@ void Widget::onCoreChanged(Core& core)
     connect(&core, &Core::friendTypingChanged, this, &Widget::onFriendTypingChanged);
     connect(&core, &Core::groupSentFailed, this, &Widget::onGroupSendFailed);
     connect(&core, &Core::usernameSet, this, &Widget::refreshPeerListsLocal);
+
+    auto coreExt = core.getExt();
+
+    connect(coreExt, &CoreExt::extendedMessageReceived, this, &Widget::onFriendExtMessageReceived);
+    connect(coreExt, &CoreExt::extendedReceiptReceived, this, &Widget::onExtReceiptReceived);
+    connect(coreExt, &CoreExt::extendedMessageSupport, this, &Widget::onExtendedMessageSupport);
+
     connect(this, &Widget::statusSet, &core, &Core::setStatus);
     connect(this, &Widget::friendRequested, &core, &Core::requestFriendship);
     connect(this, &Widget::friendRequestAccepted, &core, &Core::acceptFriendRequest);
@@ -1144,7 +1151,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
     auto messageProcessor = MessageProcessor(sharedMessageProcessorParams);
     auto friendMessageDispatcher =
-        std::make_shared<FriendMessageDispatcher>(*newfriend, std::move(messageProcessor), *core);
+        std::make_shared<FriendMessageDispatcher>(*newfriend, std::move(messageProcessor), *core, *core->getExt());
 
     // Note: We do not have to connect the message dispatcher signals since
     // ChatHistory hooks them up in a very specific order
@@ -1397,6 +1404,39 @@ void Widget::onReceiptReceived(int friendId, ReceiptNum receipt)
     }
 
     friendMessageDispatchers[f->getPublicKey()]->onReceiptReceived(receipt);
+}
+
+void Widget::onExtendedMessageSupport(uint32_t friendNumber, bool compatible)
+{
+    const auto& friendKey = FriendList::id2Key(friendNumber);
+    Friend* f = FriendList::findFriend(friendKey);
+    if (!f) {
+        return;
+    }
+
+    f->setExtendedMessageSupport(compatible);
+}
+
+void Widget::onFriendExtMessageReceived(uint32_t friendNumber, const QString& message)
+{
+    const auto& friendKey = FriendList::id2Key(friendNumber);
+    Friend* f = FriendList::findFriend(friendKey);
+    if (!f) {
+        return;
+    }
+
+    friendMessageDispatchers[f->getPublicKey()]->onExtMessageReceived(message);
+}
+
+void Widget::onExtReceiptReceived(uint32_t friendNumber, uint64_t receiptId)
+{
+    const auto& friendKey = FriendList::id2Key(friendNumber);
+    Friend* f = FriendList::findFriend(friendKey);
+    if (!f) {
+        return;
+    }
+
+    friendMessageDispatchers[f->getPublicKey()]->onExtReceiptReceived(receiptId);
 }
 
 void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
