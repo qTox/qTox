@@ -21,6 +21,8 @@
 #include "friend.h"
 #include "src/core/core.h"
 
+#include <cassert>
+
 void MessageProcessor::SharedParams::onUserNameSet(const QString& username)
 {
     QString sanename = username;
@@ -49,11 +51,14 @@ MessageProcessor::MessageProcessor(const MessageProcessor::SharedParams& sharedP
 /**
  * @brief Converts an outgoing message into one (or many) sanitized Message(s)
  */
-std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QString const& content)
+std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QString const& content, bool needsSplit)
 {
     std::vector<Message> ret;
 
-    QStringList splitMsgs = Core::splitMessage(content);
+    const auto splitMsgs = needsSplit
+        ? Core::splitMessage(content)
+        : QStringList({content});
+
     ret.reserve(splitMsgs.size());
 
     QDateTime timestamp = QDateTime::currentDateTime();
@@ -69,11 +74,10 @@ std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QSt
     return ret;
 }
 
-
 /**
  * @brief Converts an incoming message into a sanitized Message
  */
-Message MessageProcessor::processIncomingMessage(bool isAction, QString const& message)
+Message MessageProcessor::processIncomingCoreMessage(bool isAction, QString const& message)
 {
     QDateTime timestamp = QDateTime::currentDateTime();
     auto ret = Message{};
@@ -108,4 +112,18 @@ Message MessageProcessor::processIncomingMessage(bool isAction, QString const& m
     }
 
     return ret;
+}
+
+Message MessageProcessor::processIncomingExtMessage(const QString& content)
+{
+    // Note: detectingMentions not implemented here since mentions are only
+    // currently useful in group messages which do not support extensions. If we
+    // were to support mentions we would probably want to do something more
+    // intelligent anyways
+    assert(detectingMentions == false);
+    auto message = Message();
+    message.timestamp = QDateTime::currentDateTime();
+    message.content = content;
+
+    return message;
 }
