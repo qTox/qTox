@@ -171,3 +171,14 @@ bool Friend::useHistory() const
 {
     return true;
 }
+
+void Friend::setExtendedMessageSupport(bool supported)
+{
+    supportedExtensions[ExtensionType::messages] = supported;
+    emit extensionSupportChanged(supportedExtensions);
+}
+
+ExtensionSet Friend::getSupportedExtensions() const
+{
+    return supportedExtensions;
+}

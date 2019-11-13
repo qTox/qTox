@@ -41,7 +41,7 @@ GroupMessageDispatcher::sendMessage(bool isAction, QString const& content)
     const auto firstMessageId = nextMessageId;
     auto lastMessageId = firstMessageId;
 
-    for (auto const& message : processor.processOutgoingMessage(isAction, content)) {
+    for (auto const& message : processor.processOutgoingMessage(isAction, content, true /*needsSplit*/)) {
         auto messageId = nextMessageId++;
         lastMessageId = messageId;
         if (group.getPeersCount() != 1) {
@@ -84,5 +84,5 @@ void GroupMessageDispatcher::onMessageReceived(const ToxPk& sender, bool isActio
         return;
     }
 
-    emit messageReceived(sender, processor.processIncomingMessage(isAction, content));
+    emit messageReceived(sender, processor.processIncomingCoreMessage(isAction, content));
 }
