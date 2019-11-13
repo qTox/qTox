@@ -20,6 +20,8 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
+#include "src/core/coreext.h"
+
 #include <QDateTime>
 #include <QRegularExpression>
 #include <QString>
@@ -27,6 +29,7 @@
 #include <vector>
 
 class Friend;
+class CoreExt;
 
 // NOTE: This could be extended in the future to handle all text processing (see
 // ChatMessage::createChatMessage)
@@ -90,9 +93,9 @@ public:
 
     MessageProcessor(const SharedParams& sharedParams);
 
-    std::vector<Message> processOutgoingMessage(bool isAction, QString const& content);
-
-    Message processIncomingMessage(bool isAction, QString const& message);
+    std::vector<Message> processOutgoingMessage(bool isAction, const QString& content, bool needsSplit);
+    Message processIncomingCoreMessage(bool isAction, const QString& content);
+    Message processIncomingExtMessage(const QString& content);
 
     /**
      * @brief Enables mention detection in the processor

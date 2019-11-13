@@ -22,6 +22,7 @@
 
 #include "contact.h"
 #include "src/core/core.h"
+#include "src/core/extension.h"
 #include "src/core/toxid.h"
 #include "src/core/contactid.h"
 #include "src/model/status.h"
@@ -51,21 +52,25 @@ public:
     uint32_t getId() const override;
     const ContactId& getPersistentId() const override;
 
+    void finishNegotiation();
     void setStatus(Status::Status s);
     Status::Status getStatus() const;
     bool isOnline() const;
 
     bool useHistory() const final;
 
+    void setExtendedMessageSupport(bool supported);
+    ExtensionSet getSupportedExtensions() const;
+
 signals:
     void nameChanged(const ToxPk& friendId, const QString& name);
     void aliasChanged(const ToxPk& friendId, QString alias);
     void statusChanged(const ToxPk& friendId, Status::Status status);
     void statusMessageChanged(const ToxPk& friendId, const QString& message);
+    void extensionSupportChanged(ExtensionSet extensions);
     void loadChatHistory();
 
 public slots:
-
 private:
     QString userName;
     QString userAlias;
@@ -74,6 +79,7 @@ private:
     uint32_t friendId;
     bool hasNewEvents;
     Status::Status friendStatus;
+    ExtensionSet supportedExtensions;
 };
 
 #endif // FRIEND_H
