@@ -28,6 +28,45 @@
 #include <deque>
 
 
+class MockCoreExtPacket : public ICoreExtPacket
+{
+public:
+
+    MockCoreExtPacket(uint64_t& numSentMessages, uint64_t& currentReceiptId)
+        : numSentMessages(numSentMessages)
+        , currentReceiptId(currentReceiptId)
+    {}
+
+    uint64_t addExtendedMessage(QString message) override
+    {
+        this->message = message;
+        return currentReceiptId++;
+    }
+
+    bool send() override
+    {
+        numSentMessages++;
+        return true;
+    }
+
+    uint64_t& numSentMessages;
+    uint64_t& currentReceiptId;
+    QDateTime senderTimestamp;
+    QString message;
+};
+
+class MockCoreExtPacketAllocator : public ICoreExtPacketAllocator
+{
+public:
+    std::unique_ptr<ICoreExtPacket> getPacket(uint32_t friendId) override
+    {
+        return std::unique_ptr<MockCoreExtPacket>(new MockCoreExtPacket(numSentMessages, currentReceiptId));
+    }
+
+    uint64_t numSentMessages;
+    uint64_t currentReceiptId;
+};
+
 class MockFriendMessageSender : public ICoreFriendMessageSender
 {
 public:
@@ -69,6 +108,8 @@ private slots:
     void testMessageSending();
     void testOfflineMessages();
     void testFailedMessage();
+    void testNegotiationFailure();
+    void testNegotiationSuccess();
 
     void onMessageSent(DispatchedMessageId id, Message message)
     {
@@ -93,6 +134,7 @@ private:
     // All unique_ptrs to make construction/init() easier to manage
     std::unique_ptr<Friend> f;
     std::unique_ptr<MockFriendMessageSender> messageSender;
+    std::unique_ptr<MockCoreExtPacketAllocator> coreExtPacketAllocator;
     std::unique_ptr<MessageProcessor::SharedParams> sharedProcessorParams;
     std::unique_ptr<MessageProcessor> messageProcessor;
     std::unique_ptr<FriendMessageDispatcher> friendMessageDispatcher;
@@ -110,11 +152,12 @@ void TestFriendMessageDispatcher::init()
     f = std::unique_ptr<Friend>(new Friend(0, ToxPk()));
     f->setStatus(Status::Status::Online);
     messageSender = std::unique_ptr<MockFriendMessageSender>(new MockFriendMessageSender());
+    coreExtPacketAllocator = std::unique_ptr<MockCoreExtPacketAllocator>(new MockCoreExtPacketAllocator());
     sharedProcessorParams =
         std::unique_ptr<MessageProcessor::SharedParams>(new MessageProcessor::SharedParams());
     messageProcessor = std::unique_ptr<MessageProcessor>(new MessageProcessor(*sharedProcessorParams));
     friendMessageDispatcher = std::unique_ptr<FriendMessageDispatcher>(
-        new FriendMessageDispatcher(*f, *messageProcessor, *messageSender));
+        new FriendMessageDispatcher(*f, *messageProcessor, *messageSender, *coreExtPacketAllocator));
 
     connect(friendMessageDispatcher.get(), &FriendMessageDispatcher::messageSent, this,
             &TestFriendMessageDispatcher::onMessageSent);
@@ -225,6 +268,27 @@ void TestFriendMessageDispatcher::testFailedMessage()
     f->setStatus(Status::Status::Online);
 
     QVERIFY(messageSender->numSentMessages == 1);
+}
+
+void TestFriendMessageDispatcher::testNegotiationFailure()
+{
+    friendMessageDispatcher->sendMessage(false, "test");
+
+    QVERIFY(messageSender->numSentMessages == 1);
+    QVERIFY(coreExtPacketAllocator->numSentMessages == 0);
+}
+
+void TestFriendMessageDispatcher::testNegotiationSuccess()
+{
+    f->setExtendedMessageSupport(true);
+
+    friendMessageDispatcher->sendMessage(false, "test");
+
+    QVERIFY(coreExtPacketAllocator->numSentMessages == 1);
+
+    friendMessageDispatcher->sendMessage(false, "test");
+    QVERIFY(coreExtPacketAllocator->numSentMessages == 2);
+    QVERIFY(messageSender->numSentMessages == 0);
 }
 
 QTEST_GUILESS_MAIN(TestFriendMessageDispatcher)

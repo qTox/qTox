@@ -33,6 +33,9 @@ find_package(Qt5Test          REQUIRED)
 find_package(Qt5Widgets       REQUIRED)
 find_package(Qt5Xml           REQUIRED)
 
+find_package(ToxExt                         REQUIRED)
+find_package(ToxExtensionMessages           REQUIRED)
+
 function(add_dependency)
   set(ALL_LIBRARIES ${ALL_LIBRARIES} ${ARGN} PARENT_SCOPE)
 endfunction()
@@ -46,6 +49,10 @@ add_dependency(
   Qt5::Svg
   Qt5::Widgets
   Qt5::Xml)
+
+add_dependency(
+  ToxExt::ToxExt
+  ToxExtensionMessages::ToxExtensionMessages)
 
 include(CMakeParseArguments)
 
