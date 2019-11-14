@@ -68,18 +68,6 @@
  * deadlock.
  */
 
-/**
- * @brief Maps friend IDs to ToxFriendCall.
- * @note Need to use STL container here, because Qt containers need a copy constructor.
- */
-std::map<uint32_t, CoreAV::ToxFriendCallPtr> CoreAV::calls;
-
-/**
- * @brief Maps group IDs to ToxGroupCalls.
- * @note Need to use STL container here, because Qt containers need a copy constructor.
- */
-std::map<int, CoreAV::ToxGroupCallPtr> CoreAV::groupCalls;
-
 CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav)
     : audio{nullptr}
     , toxav{std::move(toxav)}
@@ -788,12 +776,12 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
 
     if (state & TOXAV_FRIEND_CALL_STATE_ERROR) {
         qWarning() << "Call with friend" << friendNum << "died of unnatural causes!";
-        calls.erase(friendNum);
+        self->calls.erase(friendNum);
         // why not self->
         emit self->avEnd(friendNum, true);
     } else if (state & TOXAV_FRIEND_CALL_STATE_FINISHED) {
         qDebug() << "Call with friend" << friendNum << "finished quietly";
-        calls.erase(friendNum);
+        self->calls.erase(friendNum);
         // why not self->
         emit self->avEnd(friendNum);
     } else {
@@ -874,7 +862,7 @@ void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, 
                                 uint8_t channels, uint32_t samplingRate, void* vSelf)
 {
     CoreAV* self = static_cast<CoreAV*>(vSelf);
-    auto it = calls.find(friendNum);
+    auto it = self->calls.find(friendNum);
     if (it == self->calls.end()) {
         return;
     }
@@ -890,10 +878,12 @@ void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, 
 
 void CoreAV::videoFrameCallback(ToxAV*, uint32_t friendNum, uint16_t w, uint16_t h,
                                 const uint8_t* y, const uint8_t* u, const uint8_t* v,
-                                int32_t ystride, int32_t ustride, int32_t vstride, void*)
+                                int32_t ystride, int32_t ustride, int32_t vstride, void* vSelf)
 {
-    auto it = calls.find(friendNum);
-    if (it == calls.end()) {
+    auto self = static_cast<CoreAV*>(vSelf);
+
+    auto it = self->calls.find(friendNum);
+    if (it == self->calls.end()) {
         return;
     }
 

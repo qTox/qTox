@@ -524,17 +524,17 @@ void GenericChatForm::onSendTriggered()
 {
     auto msg = msgEdit->toPlainText();
 
+    bool isAction = msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive);
+    if (isAction) {
+        msg.remove(0, ChatForm::ACTION_PREFIX.length());
+    }
+
     if (msg.isEmpty()) {
         return;
     }
 
     msgEdit->setLastMessage(msg);
     msgEdit->clear();
-
-    bool isAction = msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive);
-    if (isAction) {
-        msg.remove(0, ChatForm::ACTION_PREFIX.length());
-    }
 
     messageDispatcher.sendMessage(isAction, msg);
 }
