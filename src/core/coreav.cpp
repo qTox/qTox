@@ -86,8 +86,7 @@ CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav)
 
     connect(iterateTimer, &QTimer::timeout, this, &CoreAV::process);
     connect(coreavThread.get(), &QThread::finished, iterateTimer, &QTimer::stop);
-
-    coreavThread->start();
+    connect(coreavThread.get(), &QThread::started, this, &CoreAV::process);
 }
 
 void CoreAV::connectCallbacks(ToxAV& toxav)
@@ -164,10 +163,7 @@ CoreAV::~CoreAV()
  */
 void CoreAV::start()
 {
-    // Timers can only be touched from their own thread
-    if (QThread::currentThread() != coreavThread.get())
-        return (void)QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection);
-    iterateTimer->start();
+    coreavThread->start();
 }
 
 void CoreAV::process()
