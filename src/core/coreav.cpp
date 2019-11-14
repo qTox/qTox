@@ -168,6 +168,7 @@ void CoreAV::start()
 
 void CoreAV::process()
 {
+    assert(QThread::currentThread() == coreavThread.get());
     toxav_iterate(toxav.get());
     iterateTimer->start(toxav_iteration_interval(toxav.get()));
 }
@@ -235,7 +236,10 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
 {
     QMutexLocker locker{&callsLock};
 
-    qDebug() << QString("answering call %1").arg(friendNum);
+    // This callback should come from the Core thread
+    assert(QThread::currentThread() != coreavThread.get());
+
+    qDebug() << QString("Answering call %1").arg(friendNum);
     auto it = calls.find(friendNum);
     assert(it != calls.end());
     TOXAV_ERR_ANSWER err;
@@ -256,6 +260,9 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
 bool CoreAV::startCall(uint32_t friendNum, bool video)
 {
     QMutexLocker locker{&callsLock};
+
+    // This callback should come from the Core thread
+    assert(QThread::currentThread() != coreavThread.get());
 
     qDebug() << QString("Starting call with %1").arg(friendNum);
     auto it = calls.find(friendNum);
@@ -281,6 +288,9 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
 bool CoreAV::cancelCall(uint32_t friendNum)
 {
     QMutexLocker locker{&callsLock};
+
+    // This callback should come from the Core thread
+    assert(QThread::currentThread() != coreavThread.get());
 
     qDebug() << QString("Cancelling call with %1").arg(friendNum);
     if (!toxav_call_control(toxav.get(), friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr)) {
@@ -450,6 +460,7 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
     CoreAV* cav = c->getAv();
 
     QMutexLocker locker{&cav->callsLock};
+    assert(QThread::currentThread() == cav->coreavThread.get());
 
     const ToxPk peerPk = c->getGroupPeerPk(group, peer);
     const Settings& s = Settings::getInstance();
@@ -550,6 +561,7 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
                                 uint32_t rate) const
 {
     QMutexLocker locker{&callsLock};
+    assert(QThread::currentThread() == coreavThread.get());
 
     std::map<int, ToxGroupCallPtr>::const_iterator it = groupCalls.find(groupId);
     if (it == groupCalls.end()) {
@@ -673,6 +685,8 @@ bool CoreAV::isCallOutputMuted(const Friend* f) const
 void CoreAV::sendNoVideo()
 {
     QMutexLocker locker{&callsLock};
+    // This callback should come from the Core thread
+    assert(QThread::currentThread() != coreavThread.get());
 
     // We don't change the audio bitrate, but we signal that we're not sending video anymore
     qDebug() << "CoreAV: Signaling end of video sending";
@@ -688,6 +702,8 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
     CoreAV* self = static_cast<CoreAV*>(vSelf);
 
     QMutexLocker locker{&self->callsLock};
+    // This callback should come from the Core thread
+    assert(QThread::currentThread() != self->coreavThread.get());
 
     // Audio backend must be set before receiving a call
     assert(self->audio != nullptr);
@@ -717,6 +733,8 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
 {
     Q_UNUSED(toxav);
     CoreAV* self = static_cast<CoreAV*>(vSelf);
+    // This callback should come from the Core thread
+    assert(QThread::currentThread() != self->coreavThread.get());
 
     QMutexLocker locker{&self->callsLock};
 
@@ -800,6 +818,8 @@ void CoreAV::audioFrameCallback(ToxAV*, uint32_t friendNum, const int16_t* pcm, 
                                 uint8_t channels, uint32_t samplingRate, void* vSelf)
 {
     CoreAV* self = static_cast<CoreAV*>(vSelf);
+    // This callback should come from the CoreAV thread
+    assert(QThread::currentThread() == self->coreavThread.get());
     QMutexLocker locker{&self->callsLock};
 
     auto it = self->calls.find(friendNum);
@@ -821,6 +841,8 @@ void CoreAV::videoFrameCallback(ToxAV*, uint32_t friendNum, uint16_t w, uint16_t
                                 int32_t ystride, int32_t ustride, int32_t vstride, void* vSelf)
 {
     auto self = static_cast<CoreAV*>(vSelf);
+    // This callback should come from the CoreAV thread
+    assert(QThread::currentThread() == self->coreavThread.get());
     QMutexLocker locker{&self->callsLock};
 
     auto it = self->calls.find(friendNum);
