@@ -23,6 +23,7 @@
 
 #include "src/core/toxcall.h"
 #include <QObject>
+#include <QMutex>
 #include <atomic>
 #include <memory>
 #include <tox/toxav.h>
@@ -145,7 +146,9 @@ private:
      * @note Need to use STL container here, because Qt containers need a copy constructor.
      */
     std::map<int, ToxGroupCallPtr> groupCalls;
-    std::atomic_flag threadSwitchLock;
+
+    // protect 'calls' and 'groupCalls' from being modified by ToxAV and Tox threads
+    mutable QMutex callsLock{QMutex::Recursive};
 };
 
 #endif // COREAV_H
