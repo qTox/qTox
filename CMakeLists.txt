@@ -371,6 +371,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/contentlayout.h
   src/widget/emoticonswidget.cpp
   src/widget/emoticonswidget.h
+  src/widget/extensionstatus.cpp
+  src/widget/extensionstatus.h
   src/widget/flowlayout.cpp
   src/widget/flowlayout.h
   src/widget/searchform.cpp

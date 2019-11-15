@@ -18,6 +18,9 @@
 */
 
 #include "chatformheader.h"
+#include "extensionstatus.h"
+
+#include "src/model/status.h"
 
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/style.h"
@@ -116,6 +119,11 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     avatar = new MaskablePixmapWidget(this, AVATAR_SIZE, ":/img/avatar_mask.svg");
     avatar->setObjectName("avatar");
 
+    nameLine = new QHBoxLayout();
+    nameLine->setSpacing(3);
+
+    extensionStatus = new ExtensionStatus();
+
     nameLabel = new CroppingLabel();
     nameLabel->setObjectName("nameLabel");
     nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
@@ -123,9 +131,12 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     nameLabel->setTextFormat(Qt::PlainText);
     connect(nameLabel, &CroppingLabel::editFinished, this, &ChatFormHeader::nameChanged);
 
+    nameLine->addWidget(extensionStatus);
+    nameLine->addWidget(nameLabel);
+
     headTextLayout = new QVBoxLayout();
     headTextLayout->addStretch();
-    headTextLayout->addWidget(nameLabel);
+    headTextLayout->addLayout(nameLine);
     headTextLayout->addStretch();
 
     micButton = createButton("micButton", this, &ChatFormHeader::micMuteToggle);
@@ -218,6 +229,11 @@ void ChatFormHeader::showCallConfirm()
 void ChatFormHeader::removeCallConfirm()
 {
     callConfirm.reset(nullptr);
+}
+
+void ChatFormHeader::updateExtensionSupport(ExtensionSet extensions)
+{
+    extensionStatus->onExtensionSetUpdate(extensions);
 }
 
 void ChatFormHeader::updateCallButtons(bool online, bool audio, bool video)
