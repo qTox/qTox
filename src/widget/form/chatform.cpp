@@ -178,6 +178,8 @@ ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& me
             [this] { onAnswerCallTriggered(lastCallIsVideo); });
     connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
 
+    connect(f, &Friend::extensionSupportChanged, this, &ChatForm::onExtensionSupportChanged);
+
     updateCallButtons();
 
     setAcceptDrops(true);
@@ -221,6 +223,11 @@ void ChatForm::onFileNameChanged(const ToxPk& friendPk)
     QMessageBox::warning(this, tr("Filename contained illegal characters"),
                          tr("Illegal characters have been changed to _ \n"
                             "so you can save the file on Windows."));
+}
+
+void ChatForm::onExtensionSupportChanged(ExtensionSet extensions)
+{
+    headWidget->updateExtensionSupport(extensions);
 }
 
 void ChatForm::onTextEditChanged()
