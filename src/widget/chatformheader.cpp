@@ -19,6 +19,8 @@
 
 #include "chatformheader.h"
 
+#include "src/model/status.h"
+
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/callconfirmwidget.h"
@@ -116,6 +118,12 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     avatar = new MaskablePixmapWidget(this, AVATAR_SIZE, ":/img/avatar_mask.svg");
     avatar->setObjectName("avatar");
 
+    nameLine = new QHBoxLayout();
+    nameLine->setSpacing(3);
+
+    extensionStatus = new QLabel();
+    updateExtensionSupport(ExtensionSet());
+
     nameLabel = new CroppingLabel();
     nameLabel->setObjectName("nameLabel");
     nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
@@ -123,9 +131,12 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     nameLabel->setTextFormat(Qt::PlainText);
     connect(nameLabel, &CroppingLabel::editFinished, this, &ChatFormHeader::nameChanged);
 
+    nameLine->addWidget(extensionStatus);
+    nameLine->addWidget(nameLabel);
+
     headTextLayout = new QVBoxLayout();
     headTextLayout->addStretch();
-    headTextLayout->addWidget(nameLabel);
+    headTextLayout->addLayout(nameLine);
     headTextLayout->addStretch();
 
     micButton = createButton("micButton", this, &ChatFormHeader::micMuteToggle);
@@ -218,6 +229,30 @@ void ChatFormHeader::showCallConfirm()
 void ChatFormHeader::removeCallConfirm()
 {
     callConfirm.reset(nullptr);
+}
+
+void ChatFormHeader::updateExtensionSupport(ExtensionSet extensions)
+{
+    QString iconName;
+    QString hoverText;
+    if (extensions.all()) {
+        iconName = ":/img/status/extensions_available.svg";
+        hoverText = tr("All extensions supported");
+    } else if (extensions.none()) {
+        iconName = ":/img/status/extensions_unavailable.svg";
+        hoverText = tr("No extensions supported");
+    } else {
+        iconName = ":/img/status/extensions_partial.svg";
+        hoverText = tr("Not all extensions supported");
+    }
+
+    hoverText += "\n";
+    hoverText += tr("Multipart Messages: ");
+    hoverText += extensions[ExtensionType::messages] ? "✔" : "❌";
+
+    auto pixmap = QIcon(iconName).pixmap(QSize(16, 16));
+    extensionStatus->setPixmap(pixmap);
+    extensionStatus->setToolTip(hoverText);
 }
 
 void ChatFormHeader::updateCallButtons(bool online, bool audio, bool video)
