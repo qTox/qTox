@@ -37,7 +37,7 @@
 class LabeledVideo : public QFrame
 {
 public:
-    LabeledVideo(const QPixmap& avatar, QWidget* parent = nullptr, bool expanding = true)
+    LabeledVideo(const QPixmap& avatar, QString fontColorString, QWidget* parent = nullptr, bool expanding = true)
         : QFrame(parent)
     {
         qDebug() << "Created expanding? " << expanding;
@@ -48,7 +48,7 @@ public:
         connect(videoSurface, &VideoSurface::ratioChanged, this, &LabeledVideo::updateSize);
         label = new CroppingLabel(this);
         label->setTextFormat(Qt::PlainText);
-        label->setStyleSheet("color: white");
+        label->setStyleSheet(QString("color: %1").arg(fontColorString));
 
         label->setAlignment(Qt::AlignCenter);
 
@@ -108,7 +108,7 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
     : GenericNetCamView(parent)
     , group(group)
 {
-    videoLabelSurface = new LabeledVideo(QPixmap(), this, false);
+    videoLabelSurface = new LabeledVideo(QPixmap(), "white", this, false);
     videoSurface = videoLabelSurface->getVideoSurface();
     videoSurface->setMinimumHeight(256);
     videoSurface->setContentsMargins(6, 6, 6, 0);
@@ -128,13 +128,18 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
 
     QScrollArea* scrollArea = new QScrollArea();
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    // Note this is needed to prevent oscillations that result in segfaults
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    scrollArea->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum));
+
     scrollArea->setFrameStyle(QFrame::NoFrame);
     QWidget* widget = new QWidget(nullptr);
     scrollArea->setWidgetResizable(true);
     horLayout = new QHBoxLayout(widget);
     horLayout->addStretch(1);
 
-    selfVideoSurface = new LabeledVideo(Nexus::getProfile()->loadAvatar(), this);
+    selfVideoSurface = new LabeledVideo(Nexus::getProfile()->loadAvatar(), "black", this);
     horLayout->addWidget(selfVideoSurface);
 
     horLayout->addStretch(1);
@@ -171,7 +176,7 @@ void GroupNetCamView::clearPeers()
 void GroupNetCamView::addPeer(const ToxPk& peer, const QString& name)
 {
     QPixmap groupAvatar = Nexus::getProfile()->loadAvatar(peer);
-    LabeledVideo* labeledVideo = new LabeledVideo(groupAvatar, this);
+    LabeledVideo* labeledVideo = new LabeledVideo(groupAvatar, "black", this);
     labeledVideo->setText(name);
     horLayout->insertWidget(horLayout->count() - 1, labeledVideo);
     PeerVideo peerVideo;
