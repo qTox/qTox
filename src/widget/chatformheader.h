@@ -21,14 +21,19 @@
 
 #include <QWidget>
 
+#include "src/core/extension.h"
+
 #include <memory>
 
 class MaskablePixmapWidget;
 class QVBoxLayout;
+class QHBoxLayout;
 class CroppingLabel;
 class QPushButton;
 class QToolButton;
 class CallConfirmWidget;
+class QLabel;
+class ExtensionStatus;
 
 class ChatFormHeader : public QWidget
 {
@@ -64,6 +69,7 @@ public:
     void showCallConfirm();
     void removeCallConfirm();
 
+    void updateExtensionSupport(ExtensionSet extensions);
     void updateCallButtons(bool online, bool audio, bool video = false);
     void updateMuteMicButton(bool active, bool inputMuted);
     void updateMuteVolButton(bool active, bool outputMuted);
@@ -97,6 +103,8 @@ private:
     Mode mode;
     MaskablePixmapWidget* avatar;
     QVBoxLayout* headTextLayout;
+    QHBoxLayout* nameLine;
+    ExtensionStatus* extensionStatus;
     CroppingLabel* nameLabel;
 
     QPushButton* callButton;

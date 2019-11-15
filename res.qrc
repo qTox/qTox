@@ -28,6 +28,9 @@
         <file>img/status/offline_notification.svg</file>
         <file>img/status/online.svg</file>
         <file>img/status/online_notification.svg</file>
+        <file>img/status/extensions_available.svg</file>
+        <file>img/status/extensions_partial.svg</file>
+        <file>img/status/extensions_unavailable.svg</file>
         <file>img/taskbar/dark/taskbar_online.svg</file>
         <file>img/taskbar/dark/taskbar_online_event.svg</file>
         <file>img/taskbar/dark/taskbar_away.svg</file>
