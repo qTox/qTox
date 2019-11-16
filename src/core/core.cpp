@@ -303,7 +303,7 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
 
     // toxcore is successfully created, create toxav
     // TODO(sudden6): don't create CoreAv here, Core should be usable without CoreAV
-    core->av = CoreAV::makeCoreAV(core->tox.get());
+    core->av = CoreAV::makeCoreAV(core->tox.get(), core->coreLoopLock);
     if (!core->av) {
         qCritical() << "Toxav failed to start";
         if (err) {
