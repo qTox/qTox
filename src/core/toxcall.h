@@ -95,16 +95,10 @@ public:
     ToxFriendCall& operator=(ToxFriendCall&& other) = delete;
     ~ToxFriendCall();
 
-    void startTimeout(uint32_t callId);
-    void stopTimeout();
-
     TOXAV_FRIEND_CALL_STATE getState() const;
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
     void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const;
-
-protected:
-    std::unique_ptr<QTimer> timeoutTimer;
 
 private:
     QMetaObject::Connection audioSinkInvalid;
@@ -113,7 +107,6 @@ private:
 
 private:
     TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
-    static constexpr int CALL_TIMEOUT = 45000;
     std::unique_ptr<IAudioSink> sink = nullptr;
     uint32_t friendId;
 };

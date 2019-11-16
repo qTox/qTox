@@ -46,7 +46,7 @@ class CoreAV : public QObject
 
 public:
     using CoreAVPtr = std::unique_ptr<CoreAV>;
-    static CoreAVPtr makeCoreAV(Tox* core);
+    static CoreAVPtr makeCoreAV(Tox* core, QMutex& coreLock);
 
     void setAudio(IAudioControl& newAudio);
     IAudioControl* getAudio();
@@ -112,7 +112,7 @@ private:
         }
     };
 
-    explicit CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox);
+    explicit CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, QMutex &toxCoreLock);
     void connectCallbacks(ToxAV& toxav);
 
     void process();
@@ -149,6 +149,13 @@ private:
 
     // protect 'calls' and 'groupCalls' from being modified by ToxAV and Tox threads
     mutable QMutex callsLock{QMutex::Recursive};
+
+    /**
+     * @brief needed to synchronize with the Core thread, some toxav_* functions
+     *        must not execute at the same time as tox_iterate()
+     * @note This must be a recursive mutex as we're going to lock it in callbacks
+     */
+    QMutex& coreLock;
 };
 
 #endif // COREAV_H

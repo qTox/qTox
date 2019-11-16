@@ -190,29 +190,6 @@ void ToxFriendCall::onAudioSinkInvalidated()
     sink = std::move(newSink);
 }
 
-void ToxFriendCall::startTimeout(uint32_t callId)
-{
-    if (!timeoutTimer) {
-        timeoutTimer = std::unique_ptr<QTimer>{new QTimer{}};
-        // We might move, so we need copies of members. CoreAV won't move while we're alive
-        CoreAV* avCopy = av;
-        QObject::connect(timeoutTimer.get(), &QTimer::timeout,
-                         [avCopy, callId]() { avCopy->timeoutCall(callId); });
-    }
-
-    if (!timeoutTimer->isActive())
-        timeoutTimer->start(CALL_TIMEOUT);
-}
-
-void ToxFriendCall::stopTimeout()
-{
-    if (!timeoutTimer)
-        return;
-
-    timeoutTimer->stop();
-    timeoutTimer.reset();
-}
-
 TOXAV_FRIEND_CALL_STATE ToxFriendCall::getState() const
 {
     return state;
