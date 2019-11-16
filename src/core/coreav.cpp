@@ -68,11 +68,12 @@
  * deadlock.
  */
 
-CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav)
+CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav, QMutex& toxCoreLock)
     : audio{nullptr}
     , toxav{std::move(toxav)}
     , coreavThread{new QThread{this}}
     , iterateTimer{new QTimer{this}}
+    , coreLock{toxCoreLock}
 {
     assert(coreavThread);
     assert(iterateTimer);
@@ -104,7 +105,7 @@ void CoreAV::connectCallbacks(ToxAV& toxav)
  * @param core pointer to the Tox instance
  * @return CoreAV instance on success, {} on failure
  */
-CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core)
+CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core, QMutex &toxCoreLock)
 {
     TOXAV_ERR_NEW err;
     std::unique_ptr<ToxAV, ToxAVDeleter> toxav{toxav_new(core, &err)};
@@ -124,7 +125,7 @@ CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core)
 
     assert(toxav != nullptr);
 
-    return CoreAVPtr{new CoreAV{std::move(toxav)}};
+    return CoreAVPtr{new CoreAV{std::move(toxav), toxCoreLock}};
 }
 
 /**
@@ -235,9 +236,7 @@ bool CoreAV::isCallVideoEnabled(const Friend* f) const
 bool CoreAV::answerCall(uint32_t friendNum, bool video)
 {
     QMutexLocker locker{&callsLock};
-
-    // This callback should come from the Core thread
-    assert(QThread::currentThread() != coreavThread.get());
+    QMutexLocker coreLocker{&coreLock};
 
     qDebug() << QString("Answering call %1").arg(friendNum);
     auto it = calls.find(friendNum);
@@ -260,9 +259,7 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
 bool CoreAV::startCall(uint32_t friendNum, bool video)
 {
     QMutexLocker locker{&callsLock};
-
-    // This callback should come from the Core thread
-    assert(QThread::currentThread() != coreavThread.get());
+    QMutexLocker coreLocker{&coreLock};
 
     qDebug() << QString("Starting call with %1").arg(friendNum);
     auto it = calls.find(friendNum);
@@ -280,17 +277,14 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     assert(audio != nullptr);
     ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall(friendNum, video, *this, *audio));
     assert(call != nullptr);
-    auto ret = calls.emplace(friendNum, std::move(call));
-    ret.first->second->startTimeout(friendNum);
+    calls.emplace(friendNum, std::move(call));
     return true;
 }
 
 bool CoreAV::cancelCall(uint32_t friendNum)
 {
     QMutexLocker locker{&callsLock};
-
-    // This callback should come from the Core thread
-    assert(QThread::currentThread() != coreavThread.get());
+    QMutexLocker coreLocker{&coreLock};
 
     qDebug() << QString("Cancelling call with %1").arg(friendNum);
     if (!toxav_call_control(toxav.get(), friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr)) {
@@ -380,6 +374,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
     if (call.getNullVideoBitrate()) {
         qDebug() << "Restarting video stream to friend" << callId;
+        QMutexLocker coreLocker{&coreLock};
         toxav_video_set_bit_rate(toxav.get(), callId, VIDEO_DEFAULT_BITRATE, nullptr);
         call.setNullVideoBitrate(false);
     }
@@ -756,7 +751,6 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
     } else {
         // If our state was null, we started the call and were still ringing
         if (!call.getState() && state) {
-            call.stopTimeout();
             call.setActive(true);
             emit self->avStart(friendNum, call.getVideoEnabled());
         } else if ((call.getState() & TOXAV_FRIEND_CALL_STATE_SENDING_V)
