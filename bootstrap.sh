@@ -49,14 +49,20 @@ readonly BASE_DIR="${SCRIPT_DIR}/${INSTALL_DIR}"
 
 # versions of libs to checkout
 readonly TOXCORE_VERSION="v0.2.12"
+readonly TOXEXT_VERSION="v0.0.2"
+readonly TOX_EXT_MESSAGES_VERSION="v0.0.2"
 readonly SQLCIPHER_VERSION="v4.3.0"
 
 # directory names of cloned repositories
 readonly TOXCORE_DIR="libtoxcore-$TOXCORE_VERSION"
+readonly TOXEXT_DIR="toxext-$TOXEXT_VERSION"
+readonly TOX_EXT_MESSAGES_DIR="tox_ext_messages-$TOXEXT_VERSION"
 readonly SQLCIPHER_DIR="sqlcipher-$SQLCIPHER_VERSION"
 
 # default values for user given parameters
 INSTALL_TOX=true
+INSTALL_TOXEXT=true
+INSTALL_TOX_EXT_MESSAGES=true
 INSTALL_SQLCIPHER=false
 SYSTEM_WIDE=true
 KEEP_BUILD_FILES=false
@@ -128,6 +134,57 @@ install_toxcore() {
     fi
 }
 
+install_toxext() {
+    if [[ $INSTALL_TOXEXT = "true" ]]
+    then
+        git clone https://github.com/toxext/toxext.git \
+            --branch $TOXEXT_VERSION \
+            "${BASE_DIR}/${TOXEXT_DIR}"
+
+        pushd ${BASE_DIR}/${TOXEXT_DIR}
+
+        # compile and install
+        if [[ $SYSTEM_WIDE = "false" ]]
+        then
+            cmake . -DCMAKE_INSTALL_PREFIX=${BASE_DIR}
+            make -j $(nproc)
+            make install
+        else
+            cmake .
+            make -j $(nproc)
+            sudo make install
+            sudo ldconfig
+        fi
+
+        popd
+    fi
+}
+
+install_tox_ext_messages() {
+    if [[ $INSTALL_TOX_EXT_MESSAGES = "true" ]]
+    then
+        git clone https://github.com/toxext/tox_extension_messages.git \
+            --branch $TOX_EXT_MESSAGES_VERSION \
+            "${BASE_DIR}/${TOX_EXT_MESSAGES_DIR}"
+
+        pushd ${BASE_DIR}/${TOX_EXT_MESSAGES_DIR}
+
+        # compile and install
+        if [[ $SYSTEM_WIDE = "false" ]]
+        then
+            cmake . -DCMAKE_INSTALL_PREFIX=${BASE_DIR}
+            make -j $(nproc)
+            make install
+        else
+            cmake .
+            make -j $(nproc)
+            sudo make install
+            sudo ldconfig
+        fi
+
+        popd
+    fi
+}
 
 install_sqlcipher() {
     if [[ $INSTALL_SQLCIPHER = "true" ]]
@@ -178,6 +235,22 @@ main() {
         then
             INSTALL_TOX=false
             shift
+        elif [ ${1} = "--with-toxext" ]
+        then
+            INSTALL_TOXEXT=true
+            shift
+        elif [ ${1} = "--without-toxext" ]
+        then
+            INSTALL_TOXEXT=false
+            shift
+        elif [ ${1} = "--with-toxext-messages" ]
+        then
+            INSTALL_TOX_EXT_MESSAGES=true
+            shift
+        elif [ ${1} = "--without-toxext-messages" ]
+        then
+            INSTALL_TOX_EXT_MESSAGES=false
+            shift
         elif [ ${1} = "--with-sqlcipher" ]
         then
             INSTALL_SQLCIPHER=true
@@ -221,6 +294,8 @@ main() {
 
     ############### install step ###############
     install_toxcore
+    install_toxext
+    install_tox_ext_messages
     install_sqlcipher
 
     ############### cleanup step ###############

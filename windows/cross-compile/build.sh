@@ -1030,6 +1030,109 @@ else
   echo "Using cached build of Toxcore `cat $TOXCORE_PREFIX_DIR/done`"
 fi
 
+# toxext
+TOXEXT_PREFIX_DIR="$DEP_DIR/toxext"
+TOXEXT_VERSION=0.0.2
+TOXEXT_HASH="047093eeed396ea9b4a3f0cd0a6bc4e0e09b339e2b03ba4b676e30888fe6acde"
+TOXEXT_FILENAME="toxext-$TOXEXT_VERSION.tar.gz"
+if [ ! -f "$TOXEXT_PREFIX_DIR/done" ]
+then
+  rm -rf "$TOXEXT_PREFIX_DIR"
+  mkdir -p "$TOXEXT_PREFIX_DIR"
+
+  curl $CURL_OPTIONS https://github.com/toxext/toxext/archive/v$TOXEXT_VERSION.tar.gz -o $TOXEXT_FILENAME
+  check_sha256 "$TOXEXT_HASH" "$TOXEXT_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$TOXEXT_FILENAME"
+  rm "$TOXEXT_FILENAME"
+  cd toxext*
+
+  mkdir -p build
+  cd build
+
+  export PKG_CONFIG_PATH="$OPUS_PREFIX_DIR/lib/pkgconfig:$SODIUM_PREFIX_DIR/lib/pkgconfig:$VPX_PREFIX_DIR/lib/pkgconfig:$TOXCORE_PREFIX_DIR/lib/pkgconfig"
+  export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
+
+  echo "
+      SET(CMAKE_SYSTEM_NAME Windows)
+
+      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $OPUS_PREFIX_DIR $SODIUM_PREFIX_DIR $VPX_PREFIX_DIR $TOXCORE_PREFIX_DIR)
+  " > toolchain.cmake
+
+  cmake -DCMAKE_INSTALL_PREFIX=$TOXEXT_PREFIX_DIR \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
+        ..
+
+  make
+  make install
+  echo -n $TOXEXT_VERSION > $TOXEXT_PREFIX_DIR/done
+
+  unset PKG_CONFIG_PATH
+  unset PKG_CONFIG_LIBDIR
+
+  cd ..
+
+  cd ..
+  rm -rf ./toxext*
+else
+  echo "Using cached build of ToxExt `cat $TOXEXT_PREFIX_DIR/done`"
+fi
+
+# tox_extension_messages
+TOX_EXTENSION_MESSAGES_PREFIX_DIR="$DEP_DIR/tox_extension_messages"
+TOX_EXTENSION_MESSAGES_VERSION=0.0.2
+TOX_EXTENSION_MESSAGES_HASH="95e8cdd1de6cc7ba561620716f340e9606a06b3c2ff9c9020af4784c22fd0d7f"
+TOX_EXTENSION_MESSAGES_FILENAME="tox_extension_messages-$TOX_EXTENSION_MESSAGES_VERSION.tar.gz"
+if [ ! -f "$TOX_EXTENSION_MESSAGES_PREFIX_DIR/done" ]
+then
+  rm -rf "$TOX_EXTENSION_MESSAGES_PREFIX_DIR"
+  mkdir -p "$TOX_EXTENSION_MESSAGES_PREFIX_DIR"
+
+  curl $CURL_OPTIONS https://github.com/toxext/tox_extension_messages/archive/v$TOX_EXTENSION_MESSAGES_VERSION.tar.gz -o $TOX_EXTENSION_MESSAGES_FILENAME
+  check_sha256 "$TOX_EXTENSION_MESSAGES_HASH" "$TOX_EXTENSION_MESSAGES_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$TOX_EXTENSION_MESSAGES_FILENAME"
+  rm "$TOX_EXTENSION_MESSAGES_FILENAME"
+  cd tox_extension_messages*
+
+  mkdir -p build
+  cd build
+
+  export PKG_CONFIG_PATH="$OPUS_PREFIX_DIR/lib/pkgconfig:$SODIUM_PREFIX_DIR/lib/pkgconfig:$VPX_PREFIX_DIR/lib/pkgconfig:$TOXCORE_PREFIX_DIR/lib/pkgconfig"
+  export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
+
+  echo "
+      SET(CMAKE_SYSTEM_NAME Windows)
+
+      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $OPUS_PREFIX_DIR $SODIUM_PREFIX_DIR $VPX_PREFIX_DIR $TOXCORE_PREFIX_DIR $TOXEXT_PREFIX_DIR)
+  " > toolchain.cmake
+
+  cmake -DCMAKE_INSTALL_PREFIX=$TOX_EXTENSION_MESSAGES_PREFIX_DIR \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
+        ..
+
+  make
+  make install
+  echo -n $TOX_EXTENSION_MESSAGES_VERSION > $TOX_EXTENSION_MESSAGES_PREFIX_DIR/done
+
+  unset PKG_CONFIG_PATH
+  unset PKG_CONFIG_LIBDIR
+
+  cd ..
+
+  cd ..
+  rm -rf ./tox_extension_messages*
+else
+  echo "Using cached build of tox_extension_messages `cat $TOX_EXTENSION_MESSAGES_PREFIX_DIR/done`"
+fi
 
 set +u
 if [[ -n "$TRAVIS_CI_STAGE" ]] || [[ "$BUILD_TYPE" == "debug" ]]
