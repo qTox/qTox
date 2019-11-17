@@ -69,6 +69,7 @@ signals:
     void loadChatHistory();
 
 public slots:
+    void onNegotiationComplete();
 private:
     QString userName;
     QString userAlias;
@@ -77,5 +78,6 @@ private:
     uint32_t friendId;
     bool hasNewEvents;
     Status::Status friendStatus;
+    bool isNegotiating;
     ExtensionSet supportedExtensions;
 };
