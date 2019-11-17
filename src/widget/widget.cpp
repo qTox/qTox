@@ -334,7 +334,8 @@ void Widget::init()
     // initial request with the sanitized name so there is no work for us to do
 
     // keyboard shortcuts
-    new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
+    auto* const quitShortcut = new QShortcut(Qt::CTRL + Qt::Key_Q, this);
+    connect(quitShortcut, &QShortcut::activated, qApp, &QApplication::quit);
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(nextContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
