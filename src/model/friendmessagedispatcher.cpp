@@ -50,7 +50,7 @@ FriendMessageDispatcher::FriendMessageDispatcher(Friend& f_, MessageProcessor pr
     , offlineMsgEngine(&f_, &messageSender_)
     , processor(std::move(processor_))
 {
-    connect(&f, &Friend::statusChanged, this, &FriendMessageDispatcher::onFriendStatusChange);
+    connect(&f, &Friend::onlineOfflineChanged, this, &FriendMessageDispatcher::onFriendOnlineOfflineChanged);
 }
 
 /**
@@ -108,9 +108,9 @@ void FriendMessageDispatcher::onReceiptReceived(ReceiptNum receipt)
  * @brief Handles status change for friend
  * @note Parameters just to fit slot api
  */
-void FriendMessageDispatcher::onFriendStatusChange(const ToxPk&, Status::Status)
+void FriendMessageDispatcher::onFriendOnlineOfflineChanged(const ToxPk&, bool isOnline)
 {
-    if (Status::isOnline(f.getStatus())) {
+    if (isOnline) {
         offlineMsgEngine.deliverOfflineMsgs();
     }
 }
