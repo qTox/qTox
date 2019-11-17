@@ -133,7 +133,7 @@ void TestMessageProcessor::testOutgoingMessage()
         testStr += "a";
     }
 
-    auto messages = messageProcessor.processOutgoingMessage(false, testStr, true /*needsSplit*/);
+    auto messages = messageProcessor.processOutgoingMessage(false, testStr, ExtensionSet());
 
     // The message processor should split our messages
     QVERIFY(messages.size() == 2);

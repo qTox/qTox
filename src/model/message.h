@@ -21,6 +21,7 @@
 #define MESSAGE_H
 
 #include "src/core/coreext.h"
+#include "src/core/extension.h"
 
 #include <QDateTime>
 #include <QRegularExpression>
@@ -54,6 +55,7 @@ struct Message
     bool isAction;
     QString content;
     QDateTime timestamp;
+    ExtensionSet extensionSet;
     std::vector<MessageMetadata> metadata;
 };
 
@@ -93,7 +95,7 @@ public:
 
     MessageProcessor(const SharedParams& sharedParams);
 
-    std::vector<Message> processOutgoingMessage(bool isAction, const QString& content, bool needsSplit);
+    std::vector<Message> processOutgoingMessage(bool isAction, const QString& content, ExtensionSet extensions);
     Message processIncomingCoreMessage(bool isAction, const QString& content);
     Message processIncomingExtMessage(const QString& content);
 

@@ -41,6 +41,8 @@ public:
 
     std::pair<DispatchedMessageId, DispatchedMessageId> sendMessage(bool isAction,
                                                                     const QString& content) override;
+
+    DispatchedMessageId sendExtendedMessage(const QString& content, ExtensionSet extensions) override;
     void onMessageReceived(bool isAction, const QString& content);
     void onReceiptReceived(ReceiptNum receipt);
     void onExtMessageReceived(const QString& message);
@@ -50,6 +52,11 @@ private slots:
     void onFriendStatusChange(const ToxPk& key, Status::Status status);
 
 private:
+    void sendProcessedMessage(Message const& msg, OfflineMsgEngine::CompletionFn fn);
+    void sendExtendedProcessedMessage(Message const& msg, OfflineMsgEngine::CompletionFn fn);
+    void sendCoreProcessedMessage(Message const& msg, OfflineMsgEngine::CompletionFn fn);
+    OfflineMsgEngine::CompletionFn getCompletionFn(DispatchedMessageId messageId);
+
     Friend& f;
     ICoreExtPacketAllocator& coreExtPacketAllocator;
     DispatchedMessageId nextMessageId = DispatchedMessageId(0);

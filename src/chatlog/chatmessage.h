@@ -60,6 +60,7 @@ public:
     static ChatMessage::Ptr createBusyNotification();
 
     void markAsDelivered(const QDateTime& time);
+    void markAsBroken();
     QString toString() const;
     bool isAction() const;
     void setAsAction();
