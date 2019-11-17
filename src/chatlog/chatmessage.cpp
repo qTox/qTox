@@ -228,6 +228,11 @@ void ChatMessage::markAsDelivered(const QDateTime& time)
     replaceContent(2, new Timestamp(time, Settings::getInstance().getTimestampFormat(), baseFont));
 }
 
+void ChatMessage::markAsBroken()
+{
+    replaceContent(2, new Broken(Style::getImagePath("chatArea/error.svg"), QSize(16, 16)));
+}
+
 QString ChatMessage::toString() const
 {
     ChatLineContent* c = getContent(1);

@@ -133,10 +133,17 @@ void TestMessageProcessor::testOutgoingMessage()
         testStr += "a";
     }
 
-    auto messages = messageProcessor.processOutgoingMessage(false, testStr, true /*needsSplit*/);
+    auto messages = messageProcessor.processOutgoingMessage(false, testStr, ExtensionSet());
 
     // The message processor should split our messages
     QVERIFY(messages.size() == 2);
+
+    auto extensionSet = ExtensionSet();
+    extensionSet[ExtensionType::messages] = true;
+    messages = messageProcessor.processOutgoingMessage(false, testStr, extensionSet);
+
+    // If we have multipart messages we shouldn't split our messages
+    QVERIFY(messages.size() == 1);
 }
 
 /**
