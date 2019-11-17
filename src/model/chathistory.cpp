@@ -98,6 +98,8 @@ ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& co
             &ChatHistory::onMessageComplete);
     connect(&messageDispatcher, &IMessageDispatcher::messageReceived, this,
             &ChatHistory::onMessageReceived);
+    connect(&messageDispatcher, &IMessageDispatcher::messageBroken, this,
+            &ChatHistory::onMessageBroken);
 
     if (canUseHistory()) {
         // Defer messageSent callback until we finish firing off all our unsent messages.
@@ -279,7 +281,7 @@ void ChatHistory::onMessageReceived(const ToxPk& sender, const Message& message)
             content = ChatForm::ACTION_PREFIX + content;
         }
 
-        history->addNewMessage(friendPk, content, friendPk, message.timestamp, true, displayName);
+        history->addNewMessage(friendPk, content, friendPk, message.timestamp, true, message.extensionSet, displayName);
     }
 
     sessionChatLog.onMessageReceived(sender, message);
@@ -300,7 +302,7 @@ void ChatHistory::onMessageSent(DispatchedMessageId id, const Message& message)
 
         auto onInsertion = [this, id](RowId historyId) { handleDispatchedMessage(id, historyId); };
 
-        history->addNewMessage(friendPk, content, selfPk, message.timestamp, false, username,
+        history->addNewMessage(friendPk, content, selfPk, message.timestamp, false, message.extensionSet, username,
                                onInsertion);
     }
 
@@ -314,6 +316,15 @@ void ChatHistory::onMessageComplete(DispatchedMessageId id)
     }
 
     sessionChatLog.onMessageComplete(id);
+}
+
+void ChatHistory::onMessageBroken(DispatchedMessageId id, BrokenMessageReason reason)
+{
+    if (canUseHistory()) {
+        breakMessage(id, reason);
+    }
+
+    sessionChatLog.onMessageBroken(id, reason);
 }
 
 /**
@@ -418,6 +429,13 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
 void ChatHistory::dispatchUnsentMessages(IMessageDispatcher& messageDispatcher)
 {
     auto unsentMessages = history->getUndeliveredMessagesForFriend(f.getPublicKey());
+
+    auto requiredExtensions = std::accumulate(
+        unsentMessages.begin(), unsentMessages.end(),
+        ExtensionSet(), [] (const ExtensionSet& a, const History::HistMessage& b) {
+            return a | b.extensionSet;
+        });
+
     for (auto& message : unsentMessages) {
         // We should only store messages as unsent, if this changes in the
         // future we need to extend this logic
@@ -431,12 +449,14 @@ void ChatHistory::dispatchUnsentMessages(IMessageDispatcher& messageDispatcher)
         // with the new timestamp. This is intentional as everywhere else we use
         // attempted send time (which is whenever the it was initially inserted
         // into history
-        auto dispatchIds = messageDispatcher.sendMessage(isAction, messageContent);
+        auto dispatchId = (requiredExtensions.none())
+            // We should only send a single message, but in the odd case where we end
+            // up having to split more than when we added the message to history we'll
+            // just associate the last dispatched id with the history message
+            ? messageDispatcher.sendMessage(isAction, messageContent).second
+            : messageDispatcher.sendExtendedMessage(messageContent, requiredExtensions);
 
-        // We should only send a single message, but in the odd case where we end
-        // up having to split more than when we added the message to history we'll
-        // just associate the last dispatched id with the history message
-        handleDispatchedMessage(dispatchIds.second, message.id);
+        handleDispatchedMessage(dispatchId, message.id);
 
         // We don't add the messages to the underlying chatlog since
         // 1. We don't even know the ChatLogIdx of this message
@@ -448,11 +468,20 @@ void ChatHistory::dispatchUnsentMessages(IMessageDispatcher& messageDispatcher)
 void ChatHistory::handleDispatchedMessage(DispatchedMessageId dispatchId, RowId historyId)
 {
     auto completedMessageIt = completedMessages.find(dispatchId);
-    if (completedMessageIt == completedMessages.end()) {
-        dispatchedMessageRowIdMap.insert(dispatchId, historyId);
-    } else {
+    auto brokenMessageIt = brokenMessages.find(dispatchId);
+
+    const auto isCompleted = completedMessageIt != completedMessages.end();
+    const auto isBroken = brokenMessageIt != brokenMessages.end();
+    assert(!(isCompleted && isBroken));
+
+    if (isCompleted) {
         history->markAsDelivered(historyId);
         completedMessages.erase(completedMessageIt);
+    } else if (isBroken) {
+        history->markAsBroken(historyId, brokenMessageIt.value());
+        brokenMessages.erase(brokenMessageIt);
+    } else {
+        dispatchedMessageRowIdMap.insert(dispatchId, historyId);
     }
 }
 
@@ -464,6 +493,18 @@ void ChatHistory::completeMessage(DispatchedMessageId id)
         completedMessages.insert(id);
     } else {
         history->markAsDelivered(*dispatchedMessageIt);
+        dispatchedMessageRowIdMap.erase(dispatchedMessageIt);
+    }
+}
+
+void ChatHistory::breakMessage(DispatchedMessageId id, BrokenMessageReason reason)
+{
+    auto dispatchedMessageIt = dispatchedMessageRowIdMap.find(id);
+
+    if (dispatchedMessageIt == dispatchedMessageRowIdMap.end()) {
+        brokenMessages.insert(id, reason);
+    } else {
+        history->markAsBroken(*dispatchedMessageIt, reason);
         dispatchedMessageRowIdMap.erase(dispatchedMessageIt);
     }
 }

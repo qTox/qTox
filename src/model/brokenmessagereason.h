@@ -1,5 +1,5 @@
 /*
-    Copyright © 2019 by The qTox Project Contributors
+    Copyright © 2015-2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,28 +17,14 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QString>
-#include <QPixmap>
+#ifndef BROKEN_MESSAGE_REASON_H
+#define BROKEN_MESSAGE_REASON_H
 
-#ifndef STATUS_H
-#define STATUS_H
-
-namespace Status
+// NOTE: Numbers are important here as this is cast to an int and persisted in the DB
+enum class BrokenMessageReason
 {
-    // Status::Status is weird, but Status is a fitting name for both the namespace and enum class..
-    enum class Status
-    {
-        Online = 0,
-        Away,
-        Busy,
-        Offline,
-        Blocked,
-        Negotiating,
-    };
+    unknown = 0,
+    unsupportedExtensions = 1
+};
 
-    QString getIconPath(Status status, bool event = false);
-    QString getTitle(Status status);
-    QString getAssetSuffix(Status status);
-}
-
-#endif // STATUS_H
+#endif /* BROKEN_MESSAGE_REASON_H */

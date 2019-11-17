@@ -58,6 +58,7 @@ public slots:
     void onMessageReceived(const ToxPk& sender, const Message& message);
     void onMessageSent(DispatchedMessageId id, const Message& message);
     void onMessageComplete(DispatchedMessageId id);
+    void onMessageBroken(DispatchedMessageId id, BrokenMessageReason reason);
 
     void onFileUpdated(const ToxPk& sender, const ToxFile& file);
     void onFileTransferRemotePausedUnpaused(const ToxPk& sender, const ToxFile& file, bool paused);

@@ -670,7 +670,7 @@ void Widget::onCoreChanged(Core& core)
     connect(&core, &Core::friendAdded, this, &Widget::addFriend);
     connect(&core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
     connect(&core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
-    connect(&core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
+    connect(&core, &Core::friendStatusChanged, this, &Widget::onCoreFriendStatusChanged);
     connect(&core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
     connect(&core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
     connect(&core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
@@ -1186,6 +1186,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     friendAlertConnections.insert(friendPk, notifyReceivedConnection);
     connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayedNameChanged);
+    connect(newfriend, &Friend::statusChanged, this, &Widget::onFriendStatusChanged);
 
     connect(friendForm, &ChatForm::incomingNotification, this, &Widget::incomingNotification);
     connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
@@ -1226,7 +1227,7 @@ void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
     QMessageBox::critical(nullptr, "Error", info);
 }
 
-void Widget::onFriendStatusChanged(int friendId, Status::Status status)
+void Widget::onCoreFriendStatusChanged(int friendId, Status::Status status)
 {
     const auto& friendPk = FriendList::id2Key(friendId);
     Friend* f = FriendList::findFriend(friendPk);
@@ -1234,18 +1235,40 @@ void Widget::onFriendStatusChanged(int friendId, Status::Status status)
         return;
     }
 
-    bool isActualChange = f->getStatus() != status;
+    auto const oldStatus = f->getStatus();
+    f->setStatus(status);
+    auto const newStatus = f->getStatus();
 
-    FriendWidget* widget = friendWidgets[f->getPublicKey()];
-    if (isActualChange) {
-        if (!f->isOnline()) {
-            contactListWidget->moveWidget(widget, Status::Status::Online);
-        } else if (status == Status::Status::Offline) {
-            contactListWidget->moveWidget(widget, Status::Status::Offline);
-        }
+    auto const startedNegotiating = (newStatus == Status::Status::Negotiating && oldStatus != newStatus);
+    if (startedNegotiating) {
+        constexpr auto negotiationTimeoutMs = 1000;
+        auto timer = std::unique_ptr<QTimer>(new QTimer);
+        timer->setSingleShot(true);
+        timer->setInterval(negotiationTimeoutMs);
+        connect(timer.get(), &QTimer::timeout, f, &Friend::onNegotiationComplete);
+        timer->start();
+        negotiateTimers[friendPk] = std::move(timer);
     }
 
-    f->setStatus(status);
+    // Any widget behavior will be triggered based off of the status
+    // transformations done by the Friend class
+}
+
+void Widget::onFriendStatusChanged(const ToxPk& friendPk, Status::Status status)
+{
+    Friend* f = FriendList::findFriend(friendPk);
+    if (!f) {
+        return;
+    }
+
+    FriendWidget* widget = friendWidgets[f->getPublicKey()];
+
+    if (!f->isOnline()) {
+        contactListWidget->moveWidget(widget, Status::Status::Online);
+    } else if (status == Status::Status::Offline) {
+        contactListWidget->moveWidget(widget, Status::Status::Offline);
+    }
+
     widget->updateStatusLight();
     if (widget->isActive()) {
         setWindowTitle(widget->getTitle());
@@ -2142,6 +2165,8 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
             &SessionChatLog::onMessageSent);
     connect(messageDispatcher.get(), &IMessageDispatcher::messageComplete, groupChatLog.get(),
             &SessionChatLog::onMessageComplete);
+    connect(messageDispatcher.get(), &IMessageDispatcher::messageBroken, groupChatLog.get(),
+            &SessionChatLog::onMessageBroken);
 
     auto notifyReceivedCallback = [this, groupId](const ToxPk& author, const Message& message) {
         auto isTargeted = std::any_of(message.metadata.begin(), message.metadata.end(),

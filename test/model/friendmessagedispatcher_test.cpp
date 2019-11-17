@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
+#include <set>
 #include <deque>
 
 
@@ -110,6 +111,8 @@ private slots:
     void testFailedMessage();
     void testNegotiationFailure();
     void testNegotiationSuccess();
+    void testOfflineExtensionMessages();
+    void testSentMessageExtensionSetReduced();
 
     void onMessageSent(DispatchedMessageId id, Message message)
     {
@@ -130,6 +133,11 @@ private slots:
         receivedMessages.push_back(std::move(message));
     }
 
+    void onMessageBroken(DispatchedMessageId id, BrokenMessageReason)
+    {
+        brokenMessages.insert(id);
+    }
+
 private:
     // All unique_ptrs to make construction/init() easier to manage
     std::unique_ptr<Friend> f;
@@ -139,6 +147,7 @@ private:
     std::unique_ptr<MessageProcessor> messageProcessor;
     std::unique_ptr<FriendMessageDispatcher> friendMessageDispatcher;
     std::map<DispatchedMessageId, Message> outgoingMessages;
+    std::set<DispatchedMessageId> brokenMessages;
     std::deque<Message> receivedMessages;
 };
 
@@ -151,6 +160,7 @@ void TestFriendMessageDispatcher::init()
 {
     f = std::unique_ptr<Friend>(new Friend(0, ToxPk()));
     f->setStatus(Status::Status::Online);
+    f->onNegotiationComplete();
     messageSender = std::unique_ptr<MockFriendMessageSender>(new MockFriendMessageSender());
     coreExtPacketAllocator = std::unique_ptr<MockCoreExtPacketAllocator>(new MockCoreExtPacketAllocator());
     sharedProcessorParams =
@@ -165,9 +175,12 @@ void TestFriendMessageDispatcher::init()
             &TestFriendMessageDispatcher::onMessageComplete);
     connect(friendMessageDispatcher.get(), &FriendMessageDispatcher::messageReceived, this,
             &TestFriendMessageDispatcher::onMessageReceived);
+    connect(friendMessageDispatcher.get(), &FriendMessageDispatcher::messageBroken, this,
+            &TestFriendMessageDispatcher::onMessageBroken);
 
     outgoingMessages = std::map<DispatchedMessageId, Message>();
     receivedMessages = std::deque<Message>();
+    brokenMessages = std::set<DispatchedMessageId>();
 }
 
 /**
@@ -237,6 +250,7 @@ void TestFriendMessageDispatcher::testOfflineMessages()
     QVERIFY(outgoingMessages.size() == 3);
 
     f->setStatus(Status::Status::Online);
+    f->onNegotiationComplete();
 
     QVERIFY(messageSender->numSentActions == 1);
     QVERIFY(messageSender->numSentMessages == 2);
@@ -266,21 +280,34 @@ void TestFriendMessageDispatcher::testFailedMessage()
     messageSender->canSend = true;
     f->setStatus(Status::Status::Offline);
     f->setStatus(Status::Status::Online);
+    f->onNegotiationComplete();
 
     QVERIFY(messageSender->numSentMessages == 1);
 }
 
 void TestFriendMessageDispatcher::testNegotiationFailure()
 {
+    f->setStatus(Status::Status::Offline);
+    f->setStatus(Status::Status::Online);
+
+    QVERIFY(f->getStatus() == Status::Status::Negotiating);
+
     friendMessageDispatcher->sendMessage(false, "test");
 
+    QVERIFY(messageSender->numSentMessages == 0);
+
+    f->onNegotiationComplete();
+
     QVERIFY(messageSender->numSentMessages == 1);
-    QVERIFY(coreExtPacketAllocator->numSentMessages == 0);
 }
 
 void TestFriendMessageDispatcher::testNegotiationSuccess()
 {
+    f->setStatus(Status::Status::Offline);
+    f->setStatus(Status::Status::Online);
+
     f->setExtendedMessageSupport(true);
+    f->onNegotiationComplete();
 
     friendMessageDispatcher->sendMessage(false, "test");
 
@@ -289,6 +316,56 @@ void TestFriendMessageDispatcher::testNegotiationSuccess()
     friendMessageDispatcher->sendMessage(false, "test");
     QVERIFY(coreExtPacketAllocator->numSentMessages == 2);
     QVERIFY(messageSender->numSentMessages == 0);
+}
+
+void TestFriendMessageDispatcher::testOfflineExtensionMessages()
+{
+    f->setStatus(Status::Status::Offline);
+
+    auto requiredExtensions = ExtensionSet();
+    requiredExtensions[ExtensionType::messages] = true;
+
+    friendMessageDispatcher->sendExtendedMessage("Test", requiredExtensions);
+
+    f->setStatus(Status::Status::Online);
+    f->setExtendedMessageSupport(true);
+    f->onNegotiationComplete();
+
+    // Ensure that when our friend came online with the desired extensions we
+    // were able to send them our message over the extended message path
+    QVERIFY(coreExtPacketAllocator->numSentMessages == 1);
+
+    f->setStatus(Status::Status::Offline);
+
+    friendMessageDispatcher->sendExtendedMessage("Test", requiredExtensions);
+
+    f->setStatus(Status::Status::Online);
+    f->setExtendedMessageSupport(false);
+    f->onNegotiationComplete();
+
+    // Here we want to make sure that when they do _not_ support extensions
+    // we discard the message instead of attempting to send it over either
+    // channel
+    QVERIFY(coreExtPacketAllocator->numSentMessages == 1);
+    QVERIFY(messageSender->numSentMessages == 0);
+}
+
+void TestFriendMessageDispatcher::testSentMessageExtensionSetReduced()
+{
+    f->setStatus(Status::Status::Online);
+    f->setExtendedMessageSupport(true);
+    f->onNegotiationComplete();
+
+    friendMessageDispatcher->sendMessage(false, "Test");
+
+    f->setStatus(Status::Status::Offline);
+    f->setStatus(Status::Status::Online);
+    f->setExtendedMessageSupport(false);
+    f->onNegotiationComplete();
+
+    // Ensure that when we reduce our extension set we correctly emit the
+    // "messageBroken" signal
+    QVERIFY(brokenMessages.size() == 1);
 }
 
 QTEST_GUILESS_MAIN(TestFriendMessageDispatcher)

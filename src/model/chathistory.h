@@ -22,6 +22,7 @@
 
 #include "ichatlog.h"
 #include "sessionchatlog.h"
+#include "src/model/brokenmessagereason.h"
 #include "src/persistence/history.h"
 
 #include <QSet>
@@ -52,6 +53,7 @@ private slots:
     void onMessageReceived(const ToxPk& sender, const Message& message);
     void onMessageSent(DispatchedMessageId id, const Message& message);
     void onMessageComplete(DispatchedMessageId id);
+    void onMessageBroken(DispatchedMessageId id, BrokenMessageReason reason);
 
 private:
     void ensureIdxInSessionChatLog(ChatLogIdx idx) const;
@@ -59,6 +61,7 @@ private:
     void dispatchUnsentMessages(IMessageDispatcher& messageDispatcher);
     void handleDispatchedMessage(DispatchedMessageId dispatchId, RowId historyId);
     void completeMessage(DispatchedMessageId id);
+    void breakMessage(DispatchedMessageId id, BrokenMessageReason reason);
     bool canUseHistory() const;
 
     Friend& f;
@@ -70,6 +73,9 @@ private:
     // If a message completes before it's inserted into history it will end up
     // in this set
     QSet<DispatchedMessageId> completedMessages;
+    // If a message breaks before it's inserted into history it will end up
+    // in this set
+    QMap<DispatchedMessageId, BrokenMessageReason> brokenMessages;
 
     // If a message is inserted into history before it gets a completion
     // callback it will end up in this map

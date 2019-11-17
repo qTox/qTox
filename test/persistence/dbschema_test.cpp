@@ -37,6 +37,7 @@ private slots:
     void test0to1();
     void test1to2();
     void test2to3();
+    void test3to4();
     void cleanupTestCase();
 private:
     bool initSucess{false};
@@ -50,7 +51,8 @@ const QString testFileList[] = {
     "testIsNewDbFalse.db",
     "test0to1.db",
     "test1to2.db",
-    "test2to3.db"
+    "test2to3.db",
+    "test3to4.db"
 };
 
 const QMap<QString, QString> schema0 {
@@ -81,6 +83,15 @@ const QMap<QString, QString> schema2 {
 
 // move stuck 0-length action messages to the existing "broken_messages" table. Not a real schema upgrade.
 const auto schema3 = schema2;
+
+const QMap<QString, QString> schema4 {
+    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name))"},
+    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY, required_extensions INTEGER NOT NULL DEFAULT 0)"},
+    {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
+    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER)"},
+    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"},
+    {"broken_messages", "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY, reason INTEGER NOT NULL DEFAULT 0)"}
+};
 
 void TestDbSchema::initTestCase()
 {
@@ -132,7 +143,7 @@ void TestDbSchema::testCreation()
     QVector<RawDatabase::Query> queries;
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"testCreation.db", {}, {}}};
     QVERIFY(createCurrentSchema(*db));
-    verifyDb(db, schema3);
+    verifyDb(db, schema4);
 }
 
 void TestDbSchema::testIsNewDb()
@@ -312,6 +323,14 @@ void TestDbSchema::test2to3()
     QVERIFY(totalHisoryCount == 4);
 
     verifyDb(db, schema3);
+}
+
+void TestDbSchema::test3to4()
+{
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test3to4.db", {}, {}}};
+    createSchemaAtVersion(db, schema3);
+    QVERIFY(dbSchema3to4(*db));
+    verifyDb(db, schema4);
 }
 
 QTEST_GUILESS_MAIN(TestDbSchema)
