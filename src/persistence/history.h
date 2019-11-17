@@ -31,6 +31,8 @@
 
 #include "src/core/toxfile.h"
 #include "src/core/toxpk.h"
+#include "src/core/extension.h"
+#include "src/model/brokenmessagereason.h"
 #include "src/persistence/db/rawdatabase.h"
 #include "src/widget/searchtypes.h"
 
@@ -118,7 +120,7 @@ class History : public QObject, public std::enable_shared_from_this<History>
 public:
     struct HistMessage
     {
-        HistMessage(RowId id, MessageState state, QDateTime timestamp, QString chat, QString dispName,
+        HistMessage(RowId id, MessageState state, ExtensionSet extensionSet, QDateTime timestamp, QString chat, QString dispName,
                     QString sender, QString message)
             : chat{chat}
             , sender{sender}
@@ -126,6 +128,7 @@ public:
             , timestamp{timestamp}
             , id{id}
             , state{state}
+            , extensionSet(extensionSet)
             , content(std::move(message))
         {}
 
@@ -147,6 +150,7 @@ public:
         QDateTime timestamp;
         RowId id;
         MessageState state;
+        ExtensionSet extensionSet;
         HistMessageContent content;
     };
 
@@ -167,8 +171,8 @@ public:
     void eraseHistory();
     void removeFriendHistory(const QString& friendPk);
     void addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
-                       const QDateTime& time, bool isDelivered, QString dispName,
-                       const std::function<void(RowId)>& insertIdCallback = {});
+                       const QDateTime& time, bool isDelivered, ExtensionSet extensions,
+                       QString dispName, const std::function<void(RowId)>& insertIdCallback = {});
 
     void addNewFileMessage(const QString& friendPk, const QString& fileId,
                            const QString& fileName, const QString& filePath, int64_t size,
@@ -185,12 +189,13 @@ public:
                                                                const QDate& from, size_t maxNum);
 
     void markAsDelivered(RowId messageId);
+    void markAsBroken(RowId messageId, BrokenMessageReason reason);
 
 protected:
     QVector<RawDatabase::Query>
     generateNewMessageQueries(const QString& friendPk, const QString& message,
                               const QString& sender, const QDateTime& time, bool isDelivered,
-                              QString dispName, std::function<void(RowId)> insertIdCallback = {});
+                              ExtensionSet extensionSet, QString dispName, std::function<void(RowId)> insertIdCallback = {});
 
 signals:
     void fileInsertionReady(FileDbInsertionData data);

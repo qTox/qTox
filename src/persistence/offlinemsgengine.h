@@ -31,23 +31,27 @@
 #include <QSet>
 #include <chrono>
 
-class Friend;
-class ICoreFriendMessageSender;
 
 class OfflineMsgEngine : public QObject
 {
     Q_OBJECT
 public:
-    explicit OfflineMsgEngine(Friend* f, ICoreFriendMessageSender* messageSender);
-
-    using CompletionFn = std::function<void()>;
+    using CompletionFn = std::function<void(bool)>;
+    OfflineMsgEngine();
     void addUnsentMessage(Message const& message, CompletionFn completionCallback);
-    void addSentMessage(ReceiptNum receipt, Message const& message, CompletionFn completionCallback);
-    void deliverOfflineMsgs();
+    void addSentCoreMessage(ReceiptNum receipt, Message const& message, CompletionFn completionCallback);
+    void addSentExtendedMessage(ExtendedReceiptNum receipt, Message const& message, CompletionFn completionCallback);
+
+    struct RemovedMessage
+    {
+        Message message;
+        CompletionFn callback;
+    };
+    std::vector<RemovedMessage> removeAllMessages();
 
 public slots:
-    void removeAllMessages();
     void onReceiptReceived(ReceiptNum receipt);
+    void onExtendedReceiptReceived(ExtendedReceiptNum receipt);
 
 private:
     struct OfflineMessage
@@ -57,18 +61,60 @@ private:
         CompletionFn completionFn;
     };
 
-private slots:
-    void completeMessage(QMap<ReceiptNum, OfflineMessage>::iterator msgIt);
-
-private:
-    void checkForCompleteMessages(ReceiptNum receipt);
-
     QMutex mutex;
-    const Friend* f;
-    ICoreFriendMessageSender* messageSender;
-    QVector<ReceiptNum> receivedReceipts;
-    QMap<ReceiptNum, OfflineMessage> sentMessages;
-    QVector<OfflineMessage> unsentMessages;
+
+    template <class ReceiptT>
+    class ReceiptResolver
+    {
+    public:
+        void notifyMessageSent(ReceiptT receipt, OfflineMessage const& message)
+        {
+            auto receivedReceiptIt = std::find(
+                    receivedReceipts.begin(), receivedReceipts.end(), receipt);
+
+            if (receivedReceiptIt != receivedReceipts.end()) {
+                receivedReceipts.erase(receivedReceiptIt);
+                message.completionFn(true);
+                return;
+            }
+
+            unAckedMessages[receipt] = message;
+        }
+
+        void notifyReceiptReceived(ReceiptT receipt)
+        {
+            auto unackedMessageIt = unAckedMessages.find(receipt);
+            if (unackedMessageIt != unAckedMessages.end()) {
+                unackedMessageIt->second.completionFn(true);
+                unAckedMessages.erase(unackedMessageIt);
+                return;
+            }
+
+            receivedReceipts.push_back(receipt);
+        }
+
+        std::vector<OfflineMessage> clear()
+        {
+            auto ret = std::vector<OfflineMessage>();
+            std::transform(
+                std::make_move_iterator(unAckedMessages.begin()), std::make_move_iterator(unAckedMessages.end()),
+                std::back_inserter(ret),
+                [] (const std::pair<ReceiptT, OfflineMessage>& pair) {
+                    return std::move(pair.second);
+                });
+
+            receivedReceipts.clear();
+            unAckedMessages.clear();
+            return ret;
+        }
+
+        std::vector<ReceiptT> receivedReceipts;
+        std::map<ReceiptT, OfflineMessage> unAckedMessages;
+    };
+
+    ReceiptResolver<ReceiptNum> receiptResolver;
+    ReceiptResolver<ExtendedReceiptNum> extendedReceiptResolver;
+    std::vector<OfflineMessage> unsentMessages;
 };
 
 #endif // OFFLINEMSGENGINE_H

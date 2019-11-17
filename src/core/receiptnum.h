@@ -28,4 +28,7 @@
 using ReceiptNum = NamedType<uint32_t, struct ReceiptNumTag, Orderable>;
 Q_DECLARE_METATYPE(ReceiptNum);
 
+using ExtendedReceiptNum = NamedType<uint32_t, struct ExtendedReceiptNumTag, Orderable>;
+Q_DECLARE_METATYPE(ExtendedReceiptNum);
+
 #endif /* RECEIPT_NUM_H */

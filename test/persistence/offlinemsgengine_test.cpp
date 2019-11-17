@@ -23,170 +23,163 @@
 
 #include <QtTest/QtTest>
 
-struct MockFriendMessageSender : public QObject, public ICoreFriendMessageSender
-{
-    Q_OBJECT
-public:
-    MockFriendMessageSender(Friend* f)
-        : f(f){};
-    bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) override
-    {
-        return false;
-    }
-    bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) override
-    {
-        if (f->isOnline()) {
-            receipt.get() = receiptNum++;
-            if (!dropReceipts) {
-                msgs.push_back(message);
-                emit receiptReceived(receipt);
-            }
-            numMessagesSent++;
-        } else {
-            numMessagesFailed++;
-        }
-        return f->isOnline();
-    }
-
-signals:
-    void receiptReceived(ReceiptNum receipt);
-
-public:
-    Friend* f;
-    bool dropReceipts = false;
-    size_t numMessagesSent = 0;
-    size_t numMessagesFailed = 0;
-    int receiptNum = 0;
-    std::vector<QString> msgs;
-};
-
 class TestOfflineMsgEngine : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void testReceiptResolution();
-    void testOfflineFriend();
-    void testSentUnsentCoordination();
+    void testReceiptBeforeMessage();
+    void testReceiptAfterMessage();
+    void testResendWorkflow();
+    void testTypeCoordination();
     void testCallback();
+    void testExtendedMessageCoordination();
 };
 
-class OfflineMsgEngineFixture
-{
-public:
-    OfflineMsgEngineFixture()
-        : f(0, ToxPk(QByteArray(32, 0)))
-        , friendMessageSender(&f)
-        , offlineMsgEngine(&f, &friendMessageSender)
-    {
-        f.setStatus(Status::Status::Online);
-        QObject::connect(&friendMessageSender, &MockFriendMessageSender::receiptReceived,
-                         &offlineMsgEngine, &OfflineMsgEngine::onReceiptReceived);
-    }
+void completionFn(bool) {}
 
-    Friend f;
-    MockFriendMessageSender friendMessageSender;
+void TestOfflineMsgEngine::testReceiptBeforeMessage()
+{
     OfflineMsgEngine offlineMsgEngine;
-};
-
-void completionFn() {}
-
-void TestOfflineMsgEngine::testReceiptResolution()
-{
-    OfflineMsgEngineFixture fixture;
 
     Message msg{false, QString(), QDateTime()};
 
-    ReceiptNum receipt;
-    fixture.friendMessageSender.sendMessage(0, msg.content, receipt);
-    fixture.offlineMsgEngine.addSentMessage(receipt, msg, completionFn);
+    auto const receipt = ReceiptNum(0);
+    offlineMsgEngine.onReceiptReceived(receipt);
+    offlineMsgEngine.addSentCoreMessage(receipt, Message(), completionFn);
 
-    // We should have no offline messages to deliver if we resolved our receipt
-    // correctly
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
+    auto const removedMessages = offlineMsgEngine.removeAllMessages();
 
-    QVERIFY(fixture.friendMessageSender.numMessagesSent == 1);
-
-    // If we drop receipts we should keep trying to send messages every time we
-    // "deliverOfflineMsgs"
-    fixture.friendMessageSender.dropReceipts = true;
-    fixture.friendMessageSender.sendMessage(0, msg.content, receipt);
-    fixture.offlineMsgEngine.addSentMessage(receipt, msg, completionFn);
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
-
-    QVERIFY(fixture.friendMessageSender.numMessagesSent == 5);
-
-    // And once we stop dropping and try one more time we should run out of
-    // messages to send again
-    fixture.friendMessageSender.dropReceipts = false;
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
-    QVERIFY(fixture.friendMessageSender.numMessagesSent == 6);
+    QVERIFY(removedMessages.empty());
 }
 
-void TestOfflineMsgEngine::testOfflineFriend()
+void TestOfflineMsgEngine::testReceiptAfterMessage()
 {
-    OfflineMsgEngineFixture fixture;
+    OfflineMsgEngine offlineMsgEngine;
 
-    Message msg{false, QString(), QDateTime()};
+    auto const receipt = ReceiptNum(0);
+    offlineMsgEngine.addSentCoreMessage(receipt, Message(), completionFn);
+    offlineMsgEngine.onReceiptReceived(receipt);
 
-    fixture.f.setStatus(Status::Status::Offline);
+    auto const removedMessages = offlineMsgEngine.removeAllMessages();
 
-    fixture.offlineMsgEngine.addUnsentMessage(msg, completionFn);
-    fixture.offlineMsgEngine.addUnsentMessage(msg, completionFn);
-    fixture.offlineMsgEngine.addUnsentMessage(msg, completionFn);
-    fixture.offlineMsgEngine.addUnsentMessage(msg, completionFn);
-    fixture.offlineMsgEngine.addUnsentMessage(msg, completionFn);
-
-    fixture.f.setStatus(Status::Status::Online);
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
-
-
-    QVERIFY(fixture.friendMessageSender.numMessagesFailed == 0);
-    QVERIFY(fixture.friendMessageSender.numMessagesSent == 5);
+    QVERIFY(removedMessages.empty());
 }
 
-void TestOfflineMsgEngine::testSentUnsentCoordination()
+void TestOfflineMsgEngine::testResendWorkflow()
 {
-    OfflineMsgEngineFixture fixture;
-    Message msg{false, QString("a"), QDateTime()};
-    ReceiptNum receipt;
+    OfflineMsgEngine offlineMsgEngine;
 
-    fixture.offlineMsgEngine.addUnsentMessage(msg, completionFn);
-    msg.content = "b";
-    fixture.friendMessageSender.dropReceipts = true;
-    fixture.friendMessageSender.sendMessage(0, msg.content, receipt);
-    fixture.friendMessageSender.dropReceipts = false;
-    fixture.offlineMsgEngine.addSentMessage(receipt, msg, completionFn);
-    msg.content = "c";
-    fixture.offlineMsgEngine.addUnsentMessage(msg, completionFn);
+    auto const receipt = ReceiptNum(0);
+    offlineMsgEngine.addSentCoreMessage(receipt, Message(), completionFn);
+    auto messagesToResend = offlineMsgEngine.removeAllMessages();
 
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
+    QVERIFY(messagesToResend.size() == 1);
 
-    auto expectedResponseOrder = std::vector<QString>{"a", "b", "c"};
-    QVERIFY(fixture.friendMessageSender.msgs == expectedResponseOrder);
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(0), Message(), completionFn);
+    offlineMsgEngine.onReceiptReceived(ReceiptNum(0));
+
+    messagesToResend = offlineMsgEngine.removeAllMessages();
+    QVERIFY(messagesToResend.size() == 0);
+
+    auto const nullMsg = Message();
+    auto msg2 = Message();
+    auto msg3 = Message();
+    msg2.content = "msg2";
+    msg3.content = "msg3";
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(0), nullMsg, completionFn);
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(1), nullMsg, completionFn);
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(2), msg2, completionFn);
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(3), msg3, completionFn);
+
+    offlineMsgEngine.onReceiptReceived(ReceiptNum(0));
+    offlineMsgEngine.onReceiptReceived(ReceiptNum(1));
+    offlineMsgEngine.onReceiptReceived(ReceiptNum(3));
+
+    messagesToResend = offlineMsgEngine.removeAllMessages();
+    QVERIFY(messagesToResend.size() == 1);
+    QVERIFY(messagesToResend[0].message.content == "msg2");
+}
+
+
+void TestOfflineMsgEngine::testTypeCoordination()
+{
+    OfflineMsgEngine offlineMsgEngine;
+
+    auto msg1 = Message();
+    auto msg2 = Message();
+    auto msg3 = Message();
+    auto msg4 = Message();
+    auto msg5 = Message();
+
+    msg1.content = "msg1";
+    msg2.content = "msg2";
+    msg3.content = "msg3";
+    msg4.content = "msg4";
+    msg5.content = "msg5";
+
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(1), msg1, completionFn);
+    offlineMsgEngine.addUnsentMessage(msg2, completionFn);
+    offlineMsgEngine.addSentExtendedMessage(ExtendedReceiptNum(1), msg3, completionFn);
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(2), msg4, completionFn);
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(3), msg5, completionFn);
+
+    const auto messagesToResend = offlineMsgEngine.removeAllMessages();
+
+    QVERIFY(messagesToResend[0].message.content == "msg1");
+    QVERIFY(messagesToResend[1].message.content == "msg2");
+    QVERIFY(messagesToResend[2].message.content == "msg3");
+    QVERIFY(messagesToResend[3].message.content == "msg4");
+    QVERIFY(messagesToResend[4].message.content == "msg5");
 }
 
 void TestOfflineMsgEngine::testCallback()
 {
-    OfflineMsgEngineFixture fixture;
+    OfflineMsgEngine offlineMsgEngine;
 
     size_t numCallbacks = 0;
-    auto callback = [&numCallbacks] { numCallbacks++; };
+    auto callback = [&numCallbacks] (bool) { numCallbacks++; };
     Message msg{false, QString(), QDateTime()};
     ReceiptNum receipt;
 
-    fixture.friendMessageSender.sendMessage(0, msg.content, receipt);
-    fixture.offlineMsgEngine.addSentMessage(receipt, msg, callback);
-    fixture.offlineMsgEngine.addUnsentMessage(msg, callback);
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(1), Message(), callback);
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(2), Message(), callback);
 
-    fixture.offlineMsgEngine.deliverOfflineMsgs();
+    offlineMsgEngine.onReceiptReceived(ReceiptNum(1));
+    offlineMsgEngine.onReceiptReceived(ReceiptNum(2));
+
     QVERIFY(numCallbacks == 2);
+}
+
+void TestOfflineMsgEngine::testExtendedMessageCoordination()
+{
+    OfflineMsgEngine offlineMsgEngine;
+
+    size_t numCallbacks = 0;
+    auto callback = [&numCallbacks] (bool) { numCallbacks++; };
+
+    auto msg1 = Message();
+    auto msg2 = Message();
+    auto msg3 = Message();
+
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(1), msg1, callback);
+    offlineMsgEngine.addSentExtendedMessage(ExtendedReceiptNum(1), msg1, callback);
+    offlineMsgEngine.addSentCoreMessage(ReceiptNum(2), msg1, callback);
+
+    offlineMsgEngine.onExtendedReceiptReceived(ExtendedReceiptNum(2));
+    QVERIFY(numCallbacks == 0);
+
+    offlineMsgEngine.onReceiptReceived(ReceiptNum(1));
+    QVERIFY(numCallbacks == 1);
+
+    offlineMsgEngine.onReceiptReceived(ReceiptNum(1));
+    QVERIFY(numCallbacks == 1);
+
+    offlineMsgEngine.onExtendedReceiptReceived(ExtendedReceiptNum(1));
+    QVERIFY(numCallbacks == 2);
+
+    offlineMsgEngine.onReceiptReceived(ReceiptNum(2));
+    QVERIFY(numCallbacks == 3);
 }
 
 QTEST_GUILESS_MAIN(TestOfflineMsgEngine)
