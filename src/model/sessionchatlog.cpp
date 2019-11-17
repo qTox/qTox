@@ -420,6 +420,29 @@ void SessionChatLog::onMessageComplete(DispatchedMessageId id)
     emit this->itemUpdated(messageIt->first);
 }
 
+void SessionChatLog::onMessageBroken(DispatchedMessageId id, BrokenMessageReason)
+{
+    auto chatLogIdxIt = outgoingMessages.find(id);
+
+    if (chatLogIdxIt == outgoingMessages.end()) {
+        qWarning() << "Failed to find outgoing message";
+        return;
+    }
+
+    const auto& chatLogIdx = *chatLogIdxIt;
+    auto messageIt = items.find(chatLogIdx);
+
+    if (messageIt == items.end()) {
+        qWarning() << "Failed to look up message in chat log";
+        return;
+    }
+
+    // NOTE: Reason for broken message not currently shown in UI, but it could be
+    messageIt->second.getContentAsMessage().state = MessageState::broken;
+
+    emit this->itemUpdated(messageIt->first);
+}
+
 /**
  * @brief Updates file state in the chatlog
  * @note The files need to be pre-filtered for the current chat since we do no validation

@@ -29,10 +29,8 @@
 #include <QCoreApplication>
 #include <chrono>
 
-OfflineMsgEngine::OfflineMsgEngine(Friend* frnd, ICoreFriendMessageSender* messageSender)
+OfflineMsgEngine::OfflineMsgEngine()
     : mutex(QMutex::Recursive)
-    , f(frnd)
-    , messageSender(messageSender)
 {}
 
 /**
@@ -43,12 +41,13 @@ OfflineMsgEngine::OfflineMsgEngine(Friend* frnd, ICoreFriendMessageSender* messa
 void OfflineMsgEngine::onReceiptReceived(ReceiptNum receipt)
 {
     QMutexLocker ml(&mutex);
-    if (receivedReceipts.contains(receipt)) {
-        qWarning() << "Receievd duplicate receipt" << receipt.get() << "from friend" << f->getId();
-        return;
-    }
-    receivedReceipts.append(receipt);
-    checkForCompleteMessages(receipt);
+    receiptResolver.notifyReceiptReceived(receipt);
+}
+
+void OfflineMsgEngine::onExtendedReceiptReceived(ExtendedReceiptNum receipt)
+{
+    QMutexLocker ml(&mutex);
+    extendedReceiptResolver.notifyReceiptReceived(receipt);
 }
 
 /**
@@ -63,7 +62,7 @@ void OfflineMsgEngine::onReceiptReceived(ReceiptNum receipt)
 void OfflineMsgEngine::addUnsentMessage(Message const& message, CompletionFn completionCallback)
 {
     QMutexLocker ml(&mutex);
-    unsentMessages.append(OfflineMessage{message, std::chrono::steady_clock::now(), completionCallback});
+    unsentMessages.push_back(OfflineMessage{message, std::chrono::steady_clock::now(), completionCallback});
 }
 
 /**
@@ -76,79 +75,51 @@ void OfflineMsgEngine::addUnsentMessage(Message const& message, CompletionFn com
 * @param[in] messageID   database RowId of the message, used to eventually mark messages as received in history
 * @param[in] msg         chat message line in the chatlog, used to eventually set the message's receieved timestamp
 */
-void OfflineMsgEngine::addSentMessage(ReceiptNum receipt, Message const& message,
+void OfflineMsgEngine::addSentCoreMessage(ReceiptNum receipt, Message const& message,
                                       CompletionFn completionCallback)
 {
     QMutexLocker ml(&mutex);
-    assert(!sentMessages.contains(receipt));
-    sentMessages.insert(receipt, {message, std::chrono::steady_clock::now(), completionCallback});
-    checkForCompleteMessages(receipt);
+    receiptResolver.notifyMessageSent(receipt, {message, std::chrono::steady_clock::now(), completionCallback});
 }
 
-/**
-* @brief Deliver all messages, used when a friend comes online.
-*/
-void OfflineMsgEngine::deliverOfflineMsgs()
+void OfflineMsgEngine::addSentExtendedMessage(ExtendedReceiptNum receipt, Message const& message,
+                                      CompletionFn completionCallback)
 {
     QMutexLocker ml(&mutex);
-
-    if (!Status::isOnline(f->getStatus())) {
-        return;
-    }
-
-    if (sentMessages.empty() && unsentMessages.empty()) {
-        return;
-    }
-
-    QVector<OfflineMessage> messages = sentMessages.values().toVector() + unsentMessages;
-    // order messages by authorship time to resend in same order as they were written
-    std::sort(messages.begin(), messages.end(), [](const OfflineMessage& lhs, const OfflineMessage& rhs) {
-        return lhs.authorshipTime < rhs.authorshipTime;
-    });
-    removeAllMessages();
-
-    for (const auto& message : messages) {
-        QString messageText = message.message.content;
-        ReceiptNum receipt;
-        bool messageSent{false};
-        if (message.message.isAction) {
-            messageSent = messageSender->sendAction(f->getId(), messageText, receipt);
-        } else {
-            messageSent = messageSender->sendMessage(f->getId(), messageText, receipt);
-        }
-        if (messageSent) {
-            addSentMessage(receipt, message.message, message.completionFn);
-        } else {
-            qCritical() << "deliverOfflineMsgs failed to send message";
-            addUnsentMessage(message.message, message.completionFn);
-        }
-    }
+    extendedReceiptResolver.notifyMessageSent(receipt, {message, std::chrono::steady_clock::now(), completionCallback});
 }
 
 /**
 * @brief Removes all messages which are being tracked.
 */
-void OfflineMsgEngine::removeAllMessages()
+std::vector<OfflineMsgEngine::RemovedMessage> OfflineMsgEngine::removeAllMessages()
 {
     QMutexLocker ml(&mutex);
-    receivedReceipts.clear();
-    sentMessages.clear();
+    auto messages = receiptResolver.clear();
+    auto extendedMessages = extendedReceiptResolver.clear();
+
+    messages.insert(
+        messages.end(),
+        std::make_move_iterator(extendedMessages.begin()),
+        std::make_move_iterator(extendedMessages.end()));
+
+    messages.insert(
+        messages.end(),
+        std::make_move_iterator(unsentMessages.begin()),
+        std::make_move_iterator(unsentMessages.end()));
+
     unsentMessages.clear();
-}
 
-void OfflineMsgEngine::completeMessage(QMap<ReceiptNum, OfflineMessage>::iterator msgIt)
-{
-    msgIt->completionFn();
-    receivedReceipts.removeOne(msgIt.key());
-    sentMessages.erase(msgIt);
-}
+    std::sort(messages.begin(), messages.end(), [] (const OfflineMessage& a, const OfflineMessage& b) {
+        return a.authorshipTime < b.authorshipTime;
+    });
 
-void OfflineMsgEngine::checkForCompleteMessages(ReceiptNum receipt)
-{
-    auto msgIt = sentMessages.find(receipt);
-    const bool receiptReceived = receivedReceipts.contains(receipt);
-    if (!receiptReceived || msgIt == sentMessages.end()) {
-        return;
-    }
-    completeMessage(msgIt);
+    auto ret = std::vector<RemovedMessage>();
+    ret.reserve(messages.size());
+
+    std::transform(messages.begin(), messages.end(), std::back_inserter(ret), [](const OfflineMessage& msg) {
+        return RemovedMessage{msg.message, msg.completionFn};
+    });
+
+    return ret;
 }

@@ -41,6 +41,8 @@ namespace Status
             return QObject::tr("offline", "contact status");
         case Status::Blocked:
             return QObject::tr("blocked", "contact status");
+        case Status::Negotiating:
+            return QObject::tr("negotitating", "contact status");
         }
 
         assert(false);
@@ -60,6 +62,8 @@ namespace Status
             return "offline";
         case Status::Blocked:
             return "blocked";
+        case Status::Negotiating:
+            return "negotiating";
         }
         assert(false);
         return QStringLiteral("");
@@ -78,6 +82,9 @@ namespace Status
 
     bool isOnline(Status status)
     {
-        return status != Status::Offline && status != Status::Blocked;
+        return status != Status::Offline
+            && status != Status::Blocked
+            // We don't want to treat a friend as online unless we know their feature set
+            && status != Status::Negotiating;
     }
 } // namespace Status
