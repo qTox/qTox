@@ -118,6 +118,30 @@
             ]
         },
         {
+            "name": "toxext",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/toxext/toxext",
+                    "tag": "v0.0.2",
+                    "commit": "0280357a0dded4dd46d0ff29f52875687136472d"
+                }
+            ]
+        },
+        {
+            "name": "tox_extension_messages",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/toxext/tox_extension_messages",
+                    "tag": "v0.0.2",
+                    "commit": "f1f4539cf1aeed0bcc0ad476fbae74cb5bd0cf66"
+                }
+            ]
+        },
+        {
             "name": "qTox",
             "buildsystem": "cmake-ninja",
             "config-opts": [
