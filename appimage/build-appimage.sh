@@ -29,7 +29,7 @@
 
 readonly DEBUG="$1"
 
-# Set this to True to upload the PR version of the 
+# Set this to True to upload the PR version of the
 # AppImage to transfer.sh for testing.
 readonly UPLOAD_PR_APPIMAGE="False"
 
@@ -80,7 +80,7 @@ then
     # the .zsync meta file as the given name below with .zsync
     # extension.
     readonly OUTFILE=./output/qTox-"$TRAVIS_TAG".x86_64.AppImage
- 
+
     # just check if the files are in the right place
     eval "ls $OUTFILE"
     eval "ls $OUTFILE.zsync"
