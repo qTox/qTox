@@ -189,6 +189,8 @@ void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeName
     if (chatMessage) {
         if (chatLogMessage.state == MessageState::complete) {
             chatMessage->markAsDelivered(chatLogMessage.message.timestamp);
+        } else if (chatLogMessage.state == MessageState::broken) {
+            chatMessage->markAsBroken();
         }
     } else {
         chatMessage = createMessage(displayName, isSelf, colorizeNames, chatLogMessage);
