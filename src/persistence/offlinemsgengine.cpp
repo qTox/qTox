@@ -23,6 +23,7 @@
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
+#include "src/model/status.h"
 #include <QMutexLocker>
 #include <QTimer>
 #include <QCoreApplication>
@@ -91,7 +92,7 @@ void OfflineMsgEngine::deliverOfflineMsgs()
 {
     QMutexLocker ml(&mutex);
 
-    if (!f->isOnline()) {
+    if (!Status::isOnline(f->getStatus())) {
         return;
     }
 

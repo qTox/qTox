@@ -19,6 +19,7 @@
 
 #include "friendmessagedispatcher.h"
 #include "src/persistence/settings.h"
+#include "src/model/status.h"
 
 
 namespace {
@@ -69,7 +70,7 @@ FriendMessageDispatcher::sendMessage(bool isAction, const QString& content)
 
         bool messageSent = false;
 
-        if (f.isOnline()) {
+        if (Status::isOnline(f.getStatus())) {
             messageSent = sendMessageToCore(messageSender, f, message, receipt);
         }
 
@@ -109,7 +110,7 @@ void FriendMessageDispatcher::onReceiptReceived(ReceiptNum receipt)
  */
 void FriendMessageDispatcher::onFriendStatusChange(const ToxPk&, Status::Status)
 {
-    if (f.isOnline()) {
+    if (Status::isOnline(f.getStatus())) {
         offlineMsgEngine.deliverOfflineMsgs();
     }
 }

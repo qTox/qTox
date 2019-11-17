@@ -75,4 +75,9 @@ namespace Status
             return ":/img/status/" + statusSuffix + eventSuffix + ".svg";
         }
     }
+
+    bool isOnline(Status status)
+    {
+        return status != Status::Offline && status != Status::Blocked;
+    }
 } // namespace Status

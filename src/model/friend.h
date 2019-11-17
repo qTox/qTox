@@ -53,8 +53,6 @@ public:
 
     void setStatus(Status::Status s);
     Status::Status getStatus() const;
-    bool isOnline() const;
-
     bool useHistory() const override final;
 
 signals:

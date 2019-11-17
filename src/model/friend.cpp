@@ -162,11 +162,6 @@ Status::Status Friend::getStatus() const
     return friendStatus;
 }
 
-bool Friend::isOnline() const
-{
-    return friendStatus != Status::Status::Offline && friendStatus != Status::Status::Blocked;
-}
-
 bool Friend::useHistory() const
 {
     return true;

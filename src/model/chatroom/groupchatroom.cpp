@@ -25,6 +25,7 @@
 #include "src/model/dialogs/idialogsmanager.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
+#include "src/model/status.h"
 #include "src/persistence/settings.h"
 
 GroupChatroom::GroupChatroom(Group* group, IDialogsManager* dialogsManager)
@@ -64,7 +65,7 @@ void GroupChatroom::inviteFriend(const ToxPk& pk)
     const Friend* frnd = FriendList::findFriend(pk);
     const auto friendId = frnd->getId();
     const auto groupId = group->getId();
-    const auto canInvite = frnd->isOnline();
+    const auto canInvite = Status::isOnline(frnd->getStatus());
 
     if (canInvite) {
         Core::getInstance()->groupInviteFriend(friendId, groupId);

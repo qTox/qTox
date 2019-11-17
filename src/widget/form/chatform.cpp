@@ -404,7 +404,7 @@ void ChatForm::updateCallButtons()
     CoreAV* av = Core::getInstance()->getAv();
     const bool audio = av->isCallActive(f);
     const bool video = av->isCallVideoEnabled(f);
-    const bool online = f->isOnline();
+    const bool online = Status::isOnline(f->getStatus());
     headWidget->updateCallButtons(online, audio, video);
     updateMuteMicButton();
     updateMuteVolButton();
@@ -431,7 +431,7 @@ void ChatForm::onFriendStatusChanged(uint32_t friendId, Status::Status status)
         return;
     }
 
-    if (!f->isOnline()) {
+    if (!Status::isOnline(f->getStatus())) {
         // Hide the "is typing" message when a friend goes offline
         setFriendTyping(false);
     }
