@@ -22,6 +22,8 @@
         <file>img/status/away_notification.svg</file>
         <file>img/status/busy.svg</file>
         <file>img/status/busy_notification.svg</file>
+        <file>img/status/negotiating.svg</file>
+        <file>img/status/negotiating_notification.svg</file>
         <file>img/status/offline.svg</file>
         <file>img/status/offline_notification.svg</file>
         <file>img/status/online.svg</file>

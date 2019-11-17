@@ -343,6 +343,8 @@ QString FriendWidget::getStatusString() const
         tr("Away"),
         tr("Busy"),
         tr("Offline"),
+        tr("Blocked"),
+        tr("Negotiating")
     };
 
     return event ? tr("New message") : names.value(status);

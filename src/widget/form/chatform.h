@@ -90,7 +90,7 @@ private slots:
     void onMicMuteToggle();
     void onVolMuteToggle();
 
-    void onFriendStatusChanged(quint32 friendId, Status::Status status);
+    void onFriendStatusChanged(const ToxPk& friendPk, Status::Status status);
     void onFriendTypingChanged(quint32 friendId, bool isTyping);
     void onFriendNameChanged(const QString& name);
     void onStatusMessage(const QString& message);
