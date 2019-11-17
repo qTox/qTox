@@ -41,6 +41,8 @@ QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
+TOX_EXT_DIR="${MAIN_DIR}/toxext"
+TOX_EXT_MESSAGES_DIR="${MAIN_DIR}/tox_extension_messages"
 FILTERAUIO_DIR="${MAIN_DIR}/filter_audio" # Change to Git location
 
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
@@ -80,6 +82,43 @@ build_toxcore() {
     fcho "Installing toxcore."
     make install > /dev/null || exit 1
 }
+
+build_toxext() {
+    echo "Starting Toxext build and install"
+    cd $TOX_EXT_DIR
+    echo "Now working in: ${PWD}"
+
+    [[ $TRAVIS != true ]] \
+    && sleep 3
+
+    mkdir _build && cd _build
+    fcho "Starting cmake ..."
+    PKG_CONFIG_PATH="${LIB_INSTALL_PREFIX}"/lib/pkgconfig cmake -DCMAKE_INSTALL_PREFIX="${LIB_INSTALL_PREFIX}" ..
+    make clean &> /dev/null
+    fcho "Compiling toxext."
+    make > /dev/null || exit 1
+    fcho "Installing toxext."
+    make install > /dev/null || exit 1
+}
+
+build_tox_extension_messages() {
+    echo "Starting tox_extension_messages build and install"
+    cd $TOX_EXT_MESSAGES_DIR
+    echo "Now working in: ${PWD}"
+
+    [[ $TRAVIS != true ]] \
+    && sleep 3
+
+    mkdir _build && cd _build
+    fcho "Starting cmake ..."
+    PKG_CONFIG_PATH="${LIB_INSTALL_PREFIX}"/lib/pkgconfig cmake -DCMAKE_INSTALL_PREFIX="${LIB_INSTALL_PREFIX}" ..
+    make clean &> /dev/null
+    fcho "Compiling tox_extension_messages."
+    make > /dev/null || exit 1
+    fcho "Installing tox_extension_messages."
+    make install > /dev/null || exit 1
+}
+
 
 install() {
     fcho "=============================="
@@ -148,6 +187,26 @@ install() {
         fcho "Cloning Toxcore git ... "
         git clone --branch v0.2.10 --depth=1 https://github.com/toktok/c-toxcore "$TOXCORE_DIR"
     fi
+    # toxext
+    if [[ -e $TOX_EXT_DIR/.git/index ]]
+    then
+        fcho "ToxExt git repo already in place !"
+        cd $TOX_EXT_DIR
+        git pull
+    else
+        fcho "Cloning ToxExt git ... "
+        git clone --branch v0.0.1 --depth=1 https://github.com/toxext/toxext "$TOX_EXT_DIR"
+    fi
+    # tox_extension_messages
+    if [[ -e $TOX_EXT_MESSAGES_DIR/.git/index ]]
+    then
+        fcho "ToxExt git repo already in place !"
+        cd $TOX_EXT_MESSAGES_DIR
+        git pul
+    else
+        fcho "Cloning tox_extension_messages git ... "
+        git clone --branch v0.0.1 --depth=1 https://github.com/toxext/tox_extension_messages "$TOX_EXT_MESSAGES_DIR"
+    fi
     # qTox
     if [[ $TRAVIS = true ]]
     then
@@ -185,6 +244,36 @@ install() {
         brew update > /dev/null
     else
         brew install cmake
+    fi
+
+    # toxcore build
+    if [[ $TRAVIS = true ]]
+    then
+        build_toxext
+    else
+        fcho "If all went well you should now have all the tools needed to compile qTox!"
+        read -r -p "Would you like to install toxext now? [y/N] " response
+        if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+        then
+            build_toxext
+        else
+            fcho "You can simply use the -u command and say [Yes/n] when prompted"
+        fi
+    fi
+
+    # toxcore build
+    if [[ $TRAVIS = true ]]
+    then
+        build_tox_extension_messages
+    else
+        fcho "If all went well you should now have all the tools needed to compile qTox!"
+        read -r -p "Would you like to install tox_extension_messages now? [y/N] " response
+        if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+        then
+            build_tox_extension_messages
+        else
+            fcho "You can simply use the -u command and say [Yes/n] when prompted"
+        fi
     fi
 
     # needed for kf5-sonnet
@@ -268,8 +357,7 @@ build() {
     cd $BUILD_DIR
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
-    export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
-    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF
+    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF -DCMAKE_PREFIX_PATH="$(brew --prefix qt5);${LIB_INSTALL_PREFIX}"
     make -j$(sysctl -n hw.ncpu)
 }
 
@@ -293,6 +381,8 @@ bootstrap() {
 
     #Toxcore
     build_toxcore
+    build_toxext
+    build_tox_extension_messages
 
     #Boot Strap
     fcho "Running: sudo ${QTOX_DIR_VER}/bootstrap-osx.sh"

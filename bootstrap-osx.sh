@@ -52,7 +52,7 @@ copy_libs() {
     echo Copying libraries…
     for lib in "${libs[@]}"
     do
-        cp -v "$lib" "$dest"
+        cp -v -r "$lib" "$dest"
     done
 }
 
