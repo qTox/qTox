@@ -126,16 +126,18 @@ CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc)
 sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.8 --nodoc -y
 sudo ldconfig
 cd ..
+
 # toxcore
 git clone --branch v0.2.12 --depth=1 https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
-autoreconf -if
-CC="ccache $CC" CXX="ccache $CXX" ./configure
-CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc) > /dev/null
+mkdir build-cmake
+cd build-cmake
+CC="ccache $CC" CXX="ccache $CXX" cmake ..
+make -j$(nproc) > /dev/null
 sudo make install
 echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 sudo ldconfig
-cd ..
+cd ../..
 
 # filteraudio
 git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio filteraudio
@@ -144,11 +146,31 @@ CC="ccache $CC" CXX="ccache $CXX" sudo make install -j$(nproc)
 sudo ldconfig
 cd ..
 
-$CC --version
-$CXX --version
+# toxext
+git clone --branch v0.0.2 --depth=1 https://github.com/toxext/toxext toxext
+cd toxext
+mkdir build
+cd build
+cmake ..
+make -j$(nproc)
+sudo make install
+cd ../../
+
+# toxext_messages
+git clone --branch v0.0.2 --depth=1 https://github.com/toxext/tox_extension_messages tox_extension_messages
+cd tox_extension_messages
+mkdir build
+cd build
+cmake ..
+make -j$(nproc)
+sudo make install
+cd ../../
 
 # needed, otherwise ffmpeg doesn't get detected
 export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
+
+$CC --version
+$CXX --version
 
 build_qtox() {
     bdir() {
