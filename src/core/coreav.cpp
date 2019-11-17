@@ -555,7 +555,6 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
                                 uint32_t rate) const
 {
     QMutexLocker locker{&callsLock};
-    assert(QThread::currentThread() == coreavThread.get());
 
     std::map<int, ToxGroupCallPtr>::const_iterator it = groupCalls.find(groupId);
     if (it == groupCalls.end()) {
@@ -679,8 +678,6 @@ bool CoreAV::isCallOutputMuted(const Friend* f) const
 void CoreAV::sendNoVideo()
 {
     QMutexLocker locker{&callsLock};
-    // This callback should come from the Core thread
-    assert(QThread::currentThread() != coreavThread.get());
 
     // We don't change the audio bitrate, but we signal that we're not sending video anymore
     qDebug() << "CoreAV: Signaling end of video sending";
@@ -696,8 +693,6 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
     CoreAV* self = static_cast<CoreAV*>(vSelf);
 
     QMutexLocker locker{&self->callsLock};
-    // This callback should come from the Core thread
-    assert(QThread::currentThread() != self->coreavThread.get());
 
     // Audio backend must be set before receiving a call
     assert(self->audio != nullptr);
@@ -727,8 +722,6 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
 {
     Q_UNUSED(toxav);
     CoreAV* self = static_cast<CoreAV*>(vSelf);
-    // This callback should come from the Core thread
-    assert(QThread::currentThread() != self->coreavThread.get());
 
     QMutexLocker locker{&self->callsLock};
 
