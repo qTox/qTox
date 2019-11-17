@@ -41,7 +41,7 @@ GroupMessageDispatcher::sendMessage(bool isAction, QString const& content)
     const auto firstMessageId = nextMessageId;
     auto lastMessageId = firstMessageId;
 
-    for (auto const& message : processor.processOutgoingMessage(isAction, content, true /*needsSplit*/)) {
+    for (auto const& message : processor.processOutgoingMessage(isAction, content, ExtensionSet())) {
         auto messageId = nextMessageId++;
         lastMessageId = messageId;
         if (group.getPeersCount() != 1) {
@@ -63,6 +63,16 @@ GroupMessageDispatcher::sendMessage(bool isAction, QString const& content)
     }
 
     return std::make_pair(firstMessageId, lastMessageId);
+}
+
+DispatchedMessageId GroupMessageDispatcher::sendExtendedMessage(const QString& content, ExtensionSet extensions)
+{
+    // Stub this api to immediately fail
+    auto messageId = nextMessageId++;
+    auto messages = processor.processOutgoingMessage(false, content, ExtensionSet());
+    emit this->messageSent(messageId, messages[0]);
+    emit this->messageBroken(messageId, BrokenMessageReason::unsupportedExtensions);
+    return messageId;
 }
 
 /**

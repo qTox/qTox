@@ -51,10 +51,11 @@ MessageProcessor::MessageProcessor(const MessageProcessor::SharedParams& sharedP
 /**
  * @brief Converts an outgoing message into one (or many) sanitized Message(s)
  */
-std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QString const& content, bool needsSplit)
+std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QString const& content, ExtensionSet extensions)
 {
     std::vector<Message> ret;
 
+    const auto needsSplit = !extensions[ExtensionType::messages] || isAction;
     const auto splitMsgs = needsSplit
         ? Core::splitMessage(content)
         : QStringList({content});
@@ -68,6 +69,10 @@ std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QSt
                        message.isAction = isAction;
                        message.content = part;
                        message.timestamp = timestamp;
+                       // In theory we could limit this only to the extensions
+                       // required but since Core owns the splitting logic it
+                       // isn't trivial to do that now
+                       message.extensionSet = extensions;
                        return message;
                    });
 
@@ -124,6 +129,7 @@ Message MessageProcessor::processIncomingExtMessage(const QString& content)
     auto message = Message();
     message.timestamp = QDateTime::currentDateTime();
     message.content = content;
+    message.extensionSet |= ExtensionType::messages;
 
     return message;
 }

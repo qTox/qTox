@@ -1068,6 +1068,7 @@ bool Core::sendMessageWithType(uint32_t friendId, const QString& message, Tox_Me
     int size = message.toUtf8().size();
     auto maxSize = static_cast<int>(tox_max_message_length());
     if (size > maxSize) {
+        assert(false);
         qCritical() << "Core::sendMessageWithType called with message of size:" << size
                     << "when max is:" << maxSize << ". Ignoring.";
         return false;

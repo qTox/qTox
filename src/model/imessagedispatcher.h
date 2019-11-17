@@ -21,6 +21,7 @@
 
 #include "src/model/friend.h"
 #include "src/model/message.h"
+#include "src/model/brokenmessagereason.h"
 
 #include <QObject>
 #include <QString>
@@ -44,6 +45,18 @@ public:
      */
     virtual std::pair<DispatchedMessageId, DispatchedMessageId>
     sendMessage(bool isAction, const QString& content) = 0;
+
+    /**
+     * @brief Sends message to associated chat ensuring that extensions are available
+     * @param[in] content Message content
+     * @param[in] extensions extensions required for given message
+     * @return Pair of first and last dispatched message IDs
+     * @note If the provided extensions are not supported the message will be flagged
+     *       as broken
+     */
+    virtual DispatchedMessageId
+    sendExtendedMessage(const QString& content, ExtensionSet extensions) = 0;
+
 signals:
     /**
      * @brief Emitted when a message is received and processed
@@ -62,4 +75,6 @@ signals:
      * @param id Id of message that is completed
      */
     void messageComplete(DispatchedMessageId id);
+
+    void messageBroken(DispatchedMessageId id, BrokenMessageReason reason);
 };
