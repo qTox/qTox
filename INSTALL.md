@@ -34,18 +34,20 @@
 
 ## Dependencies
 
-| Name          | Version     | Modules                                                  |
-|---------------|-------------|----------------------------------------------------------|
-| [Qt]          | >= 5.5.0    | concurrent, core, gui, network, opengl, svg, widget, xml |
-| [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                            |
-| [toxcore]     | >= 0.2.10   | core, av                                                 |
-| [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale             |
-| [CMake]       | >= 2.8.11   |                                                          |
-| [OpenAL Soft] | >= 1.16.0   |                                                          |
-| [qrencode]    | >= 3.0.3    |                                                          |
-| [sqlcipher]   | >= 3.2.0    |                                                          |
-| [pkg-config]  | >= 0.28     |                                                          |
-| [snorenotify] | >= 0.7.0    | optional dependency                                      |
+| Name                     | Version     | Modules                                                  |
+|--------------------------|-------------|----------------------------------------------------------|
+| [Qt]                     | >= 5.5.0    | concurrent, core, gui, network, opengl, svg, widget, xml |
+| [GCC]/[MinGW]            | >= 4.8      | C++11 enabled                                            |
+| [toxcore]                | >= 0.2.10   | core, av                                                 |
+| [FFmpeg]                 | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale             |
+| [CMake]                  | >= 2.8.11   |                                                          |
+| [OpenAL Soft]            | >= 1.16.0   |                                                          |
+| [qrencode]               | >= 3.0.3    |                                                          |
+| [sqlcipher]              | >= 3.2.0    |                                                          |
+| [pkg-config]             | >= 0.28     |                                                          |
+| [snorenotify]            | >= 0.7.0    | optional dependency                                      |
+| [toxext]                 | >= 0.0.1    |                                                          |
+| [tox_extension_messages] | >= 0.0.1    |                                                          |
 
 ## Optional dependencies
 
@@ -424,6 +426,30 @@ echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 sudo ldconfig
 ```
 
+### Compile extensions
+
+qTox uses the toxext library and some of the extensions that go with it.
+
+You will likely have to compile these yourself
+
+```bash
+git clone https://github.com/toxext/toxext.git toxext
+cd toxext
+git checkout v0.0.2
+cmake .
+make -j$(nproc)
+sudo make install
+```
+
+```bash
+git clone https://github.com/toxext/tox_extension_messages.git tox_extension_messages
+cd tox_extension_messages
+git checkout v0.0.2
+cmake .
+make -j$(nproc)
+sudo make install
+```
+
 ### Compile qTox
 
 **Make sure that all the dependencies are installed.**  If you experience
@@ -756,3 +782,5 @@ Switches:
 [toxcore]: https://github.com/TokTok/c-toxcore/
 [sonnet]: https://github.com/KDE/sonnet
 [snorenotify]: https://techbase.kde.org/Projects/Snorenotify
+[toxext]: https://github.com/toxext/toxext
+[tox_extension_messages]: https://github.com/toxext/tox_extension_messages

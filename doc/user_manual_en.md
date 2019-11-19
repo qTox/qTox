@@ -489,3 +489,11 @@ public key, and which changes on every start of a client, so it's best to use a
 [ToxMe service]: #register-on-toxme
 [user profile]: #user-profile
 [profile corner]: #profile-corner
+
+# Extensions
+
+qTox supports extra features through the use of extensions to the tox protocol. Not all contacts are going to support these extensions.
+
+For most cases you won't have to do anything, but you may wonder why behavior of chats is different for some friends. There is a puzzle piece icon to the left of your contact's name in the top of a chat. If it's green that means that they support all the features qTox cares about. If it's yellow it means some of the features are supported. If it's red it means that they don't support any extensions.
+
+You can hover over the icon to see which extensions they support. qTox should dynamically enable/disable features based on the extension set of your friend.
