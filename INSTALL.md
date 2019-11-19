@@ -425,6 +425,30 @@ echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 sudo ldconfig
 ```
 
+### Compile extensions
+
+qTox uses the toxext library and some of the extensions that go with it.
+
+You will likely have to compile these yourself
+
+```bash
+git clone https://github.com/toxext/toxext.git toxext
+cd toxext
+git checkout v0.0.1
+cmake .
+make -j$(nproc)
+sudo make install
+```
+
+```bash
+git clone https://github.com/toxext/tox_extension_messages.git tox_extension_messages
+cd tox_extension_messages
+git checkout v0.0.1
+cmake .
+make -j$(nproc)
+sudo make install
+```
+
 ### Compile qTox
 
 **Make sure that all the dependencies are installed.**  If you experience
