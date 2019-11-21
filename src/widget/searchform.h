@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include <QWidget>
 #include <QLineEdit>
+#include "src/widget/widgetstyle.h"
 #include "searchtypes.h"
 
 class QPushButton;
@@ -28,7 +28,7 @@ class QLabel;
 class LineEdit;
 class SearchSettingsForm;
 
-class SearchForm final : public QWidget
+class SearchForm final : public WidgetStyle
 {
     Q_OBJECT
 public:
@@ -44,7 +44,6 @@ public:
     ParameterSearch getParameterSearch();
     void setFocusEditor();
     void insertEditor(const QString &text);
-    void reloadTheme();
 
 protected:
     void showEvent(QShowEvent* event) final;
@@ -84,6 +83,7 @@ private slots:
 
 public slots:
     void showMessageNotFound(SearchDirection direction);
+    void reloadTheme() override;
 
 signals:
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter);

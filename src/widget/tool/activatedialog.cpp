@@ -22,7 +22,7 @@
 #include <QEvent>
 
 ActivateDialog::ActivateDialog(QWidget* parent, Qt::WindowFlags f)
-    : QDialog(parent, f)
+    : DialogStyle(parent, f)
 {
 }
 

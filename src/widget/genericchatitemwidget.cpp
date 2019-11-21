@@ -19,12 +19,11 @@
 
 #include "genericchatitemwidget.h"
 #include "src/persistence/settings.h"
-#include "src/widget/style.h"
 #include "src/widget/tool/croppinglabel.h"
 #include <QVariant>
 
 GenericChatItemWidget::GenericChatItemWidget(bool compact, QWidget* parent)
-    : QFrame(parent)
+    : FrameStyle(parent)
     , compact(false)
 {
     setProperty("compact", compact);

@@ -29,13 +29,15 @@ public:
     explicit ContentLayout(QWidget* parent);
     ~ContentLayout();
 
-    void reloadTheme();
     void clear();
 
     QFrame mainHLine;
     QHBoxLayout mainHLineLayout;
     QWidget* mainContent;
     QWidget* mainHead;
+
+public slots:
+    void reloadTheme();
 
 private:
     void init();

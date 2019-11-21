@@ -56,7 +56,6 @@ public:
     void scrollToLine(ChatLine::Ptr line);
     void selectAll();
     void fontChanged(const QFont& font);
-    void reloadTheme();
     void removeFirsts(const int num);
     void removeLasts(const int num);
     void setScroll(const bool scroll);
@@ -83,6 +82,7 @@ signals:
 
 public slots:
     void forceRelayout();
+    void reloadTheme();
 
 private slots:
     void onSelectionTimerTimeout();

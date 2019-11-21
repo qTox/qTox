@@ -482,6 +482,9 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/translator.h
   src/widget/widget.cpp
   src/widget/widget.h
+  src/widget/widgetstyle.h
+  src/widget/framestyle.h
+  src/widget/dialogstyle.h
 )
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")

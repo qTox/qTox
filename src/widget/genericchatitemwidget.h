@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include <QFrame>
 #include <QLabel>
+#include "src/widget/framestyle.h"
 
 class CroppingLabel;
 
-class GenericChatItemWidget : public QFrame
+class GenericChatItemWidget : public FrameStyle
 {
     Q_OBJECT
 public:

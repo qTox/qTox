@@ -35,7 +35,7 @@ static std::array<QString, 3> STATE_NAME = {
     QStringLiteral("red"),
 };
 
-SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
+SearchForm::SearchForm(QWidget* parent) : WidgetStyle(parent)
 {
     QVBoxLayout* layout = new QVBoxLayout();
     QHBoxLayout* layoutNavigation = new QHBoxLayout();

@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <QWidget>
+#include "src/widget/widgetstyle.h"
 
-class GenericForm : public QWidget
+class GenericForm : public WidgetStyle
 {
     Q_OBJECT
 public:

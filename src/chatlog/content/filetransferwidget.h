@@ -20,11 +20,11 @@
 #pragma once
 
 #include <QTime>
-#include <QWidget>
 
 #include "src/chatlog/chatlinecontent.h"
 #include "src/chatlog/toxfileprogress.h"
 #include "src/core/toxfile.h"
+#include "src/widget/widgetstyle.h"
 
 class CoreFile;
 
@@ -35,7 +35,7 @@ class FileTransferWidget;
 class QVariantAnimation;
 class QPushButton;
 
-class FileTransferWidget : public QWidget
+class FileTransferWidget : public WidgetStyle
 {
     Q_OBJECT
 
@@ -64,6 +64,9 @@ protected:
 
     void paintEvent(QPaintEvent*) final;
 
+public slots:
+    void reloadTheme() override;
+
 private slots:
     void onLeftButtonClicked();
     void onRightButtonClicked();
@@ -76,6 +79,7 @@ private:
     static bool tryRemoveFile(const QString &filepath);
 
     void updateWidget(ToxFile const& file);
+    void updateBackgroundColor(const ToxFile::FileStatus status);
 
 private:
     CoreFile& coreFile;
