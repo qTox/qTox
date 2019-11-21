@@ -61,10 +61,9 @@ public slots:
     QString getStatusMsg() const;
     QString getTitle() const;
 
-    void reloadTheme();
-
     void activate();
     void compactChange(bool compact);
+    void reloadTheme() override;
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);

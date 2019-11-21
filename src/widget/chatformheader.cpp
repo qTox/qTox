@@ -105,7 +105,7 @@ void setStateName(QAbstractButton* btn, State state)
 }
 
 ChatFormHeader::ChatFormHeader(QWidget* parent)
-    : QWidget(parent)
+    : WidgetStyle(parent)
     , mode{Mode::AV}
     , callState{CallButtonState::Disabled}
     , videoState{CallButtonState::Disabled}
@@ -283,6 +283,7 @@ QSize ChatFormHeader::getAvatarSize() const
 
 void ChatFormHeader::reloadTheme()
 {
+    setStyleSheet(Style::getStylesheet("chatArea/chatHead.css"));
     callButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
     videoButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
     volButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));

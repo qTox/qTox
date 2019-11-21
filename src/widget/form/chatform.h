@@ -54,7 +54,6 @@ public:
     void setFriendTyping(bool isTyping);
 
     void show(ContentLayout* contentLayout) final;
-    void reloadTheme() final;
 
     static const QString ACTION_PREFIX;
 
@@ -77,6 +76,7 @@ public slots:
     void clearChatArea();
     void onShowMessagesClicked();
     void onSplitterMoved(int pos, int index);
+    void reloadTheme() final;
 
 private slots:
     void updateFriendActivityForFile(const ToxFile& file);
