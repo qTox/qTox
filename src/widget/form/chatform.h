@@ -53,7 +53,6 @@ public:
     void setFriendTyping(bool isTyping);
 
     void show(ContentLayout* contentLayout) final;
-    void reloadTheme() final;
 
     static const QString ACTION_PREFIX;
 
@@ -74,6 +73,7 @@ public slots:
     void onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
     void onFileNameChanged(const ToxPk& friendPk);
     void clearChatArea();
+    void reloadTheme() final;
 
 private slots:
     void updateFriendActivityForFile(const ToxFile& file);

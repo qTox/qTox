@@ -249,7 +249,7 @@ ChatLogIdx firstItemAfterDate(QDate date, const IChatLog& chatLog)
 
 GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
                                  IMessageDispatcher& messageDispatcher, QWidget* parent)
-    : QWidget(parent, Qt::Window)
+    : WidgetStyle(parent, Qt::Window)
     , audioInputFlag(false)
     , audioOutputFlag(false)
     , chatLog(chatLog)
@@ -439,12 +439,6 @@ void GenericChatForm::reloadTheme()
     setStyleSheet(Style::getStylesheet("genericChatForm/genericChatForm.css"));
     msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
                            + fontToCss(s.getChatMessageFont(), "QTextEdit"));
-
-    chatWidget->setStyleSheet(Style::getStylesheet("chatArea/chatArea.css"));
-    headWidget->setStyleSheet(Style::getStylesheet("chatArea/chatHead.css"));
-    chatWidget->reloadTheme();
-    headWidget->reloadTheme();
-    searchForm->reloadTheme();
 
     emoteButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
     fileButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));

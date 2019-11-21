@@ -20,9 +20,9 @@
 #ifndef ACTIVATEDIALOG_H
 #define ACTIVATEDIALOG_H
 
-#include <QDialog>
+#include "src/widget/dialogstyle.h"
 
-class ActivateDialog : public QDialog
+class ActivateDialog : public DialogStyle
 {
     Q_OBJECT
 public:

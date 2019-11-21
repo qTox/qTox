@@ -22,6 +22,7 @@
 #include "chatlinecontentproxy.h"
 #include "chatmessage.h"
 #include "content/filetransferwidget.h"
+#include "src/widget/gui.h"
 #include "src/widget/translator.h"
 #include "src/widget/style.h"
 
@@ -121,6 +122,9 @@ ChatLog::ChatLog(const bool canRemove, QWidget* parent)
         copySelectedText(true);
     });
 
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &ChatLog::reloadTheme);
+
+    reloadTheme();
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
 }
@@ -717,6 +721,7 @@ void ChatLog::fontChanged(const QFont& font)
 
 void ChatLog::reloadTheme()
 {
+    setStyleSheet(Style::getStylesheet("chatArea/chatArea.css"));
     setBackgroundBrush(QBrush(Style::getColor(Style::GroundBase), Qt::SolidPattern));
     selectionRectColor = Style::getColor(Style::SelectText);
     selGraphItem->setBrush(QBrush(selectionRectColor));

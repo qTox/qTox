@@ -142,7 +142,6 @@ public:
 
     void clearAllReceipts();
 
-    void reloadTheme();
     static inline QIcon prepareIcon(QString path, int w = 0, int h = 0);
 
     bool groupsVisible() const;
@@ -150,6 +149,7 @@ public:
     void resetIcon();
 
 public slots:
+    void reloadTheme();
     void onShowSettings();
     void onSeparateWindowClicked(bool separate);
     void onSeparateWindowChanged(bool separate, bool clicked);
