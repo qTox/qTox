@@ -20,9 +20,8 @@
 #ifndef CHAT_FORM_HEADER
 #define CHAT_FORM_HEADER
 
-#include <QWidget>
-
 #include <memory>
+#include "src/widget/widgetstyle.h"
 
 class MaskablePixmapWidget;
 class QVBoxLayout;
@@ -31,7 +30,7 @@ class QPushButton;
 class QToolButton;
 class CallConfirmWidget;
 
-class ChatFormHeader : public QWidget
+class ChatFormHeader : public WidgetStyle
 {
     Q_OBJECT
 public:
@@ -72,12 +71,13 @@ public:
     void setAvatar(const QPixmap& img);
     QSize getAvatarSize() const;
 
-    void reloadTheme();
-
     // TODO: Remove
     void addWidget(QWidget* widget, int stretch = 0, Qt::Alignment alignment = Qt::Alignment());
     void addLayout(QLayout* layout);
     void addStretch();
+
+public slots:
+    void reloadTheme() override;
 
 signals:
     void callTriggered();

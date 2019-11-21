@@ -50,7 +50,7 @@
 // downloaded to.
 
 FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
-    : QWidget(parent)
+    : WidgetStyle(parent)
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)
     , backgroundColor(Style::getColor(Style::TransferMiddle))
@@ -231,6 +231,11 @@ void FileTransferWidget::paintEvent(QPaintEvent*)
     }
 }
 
+void FileTransferWidget::reloadTheme()
+{
+    updateBackgroundColor(lastStatus);
+}
+
 QString FileTransferWidget::getHumanReadableSize(qint64 size)
 {
     static const char* suffix[] = {"B", "KiB", "MiB", "GiB", "TiB"};
@@ -249,23 +254,7 @@ void FileTransferWidget::updateWidgetColor(ToxFile const& file)
         return;
     }
 
-    switch (file.status) {
-    case ToxFile::INITIALIZING:
-    case ToxFile::PAUSED:
-    case ToxFile::TRANSMITTING:
-        setBackgroundColor(Style::getColor(Style::TransferMiddle), false);
-        break;
-    case ToxFile::BROKEN:
-    case ToxFile::CANCELED:
-        setBackgroundColor(Style::getColor(Style::TransferBad), true);
-        break;
-    case ToxFile::FINISHED:
-        setBackgroundColor(Style::getColor(Style::TransferGood), true);
-        break;
-    default:
-        qCritical() << "Invalid file status";
-        assert(false);
-    }
+    updateBackgroundColor(file.status);
 }
 
 void FileTransferWidget::updateWidgetText(ToxFile const& file)
@@ -681,5 +670,26 @@ void FileTransferWidget::updateWidget(ToxFile const& file)
     // fallthrough
     default:
         update();
+    }
+}
+
+void FileTransferWidget::updateBackgroundColor(const ToxFile::FileStatus status)
+{
+    switch (status) {
+    case ToxFile::INITIALIZING:
+    case ToxFile::PAUSED:
+    case ToxFile::TRANSMITTING:
+        setBackgroundColor(Style::getColor(Style::TransferMiddle), false);
+        break;
+    case ToxFile::BROKEN:
+    case ToxFile::CANCELED:
+        setBackgroundColor(Style::getColor(Style::TransferBad), true);
+        break;
+    case ToxFile::FINISHED:
+        setBackgroundColor(Style::getColor(Style::TransferGood), true);
+        break;
+    default:
+        qCritical() << "Invalid file status";
+        assert(false);
     }
 }

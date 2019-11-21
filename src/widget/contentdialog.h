@@ -90,6 +90,7 @@ public slots:
     void previousContact();
     void nextContact();
     void setUsername(const QString& newName);
+    void reloadTheme() override;
 
 protected:
     bool event(QEvent* event) final;

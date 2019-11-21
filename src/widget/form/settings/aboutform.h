@@ -48,6 +48,7 @@ public slots:
     void onUpdateAvailable(QString latestVersion, QUrl link);
     void onUpToDate();
     void onUpdateCheckFailed();
+    void reloadTheme() override;
 
 private:
     void retranslateUi();
