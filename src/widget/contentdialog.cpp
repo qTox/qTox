@@ -59,8 +59,7 @@ ContentDialog::ContentDialog(QWidget* parent)
     , videoSurfaceSize(QSize())
     , videoCount(0)
 {
-    const Settings& s = Settings::getInstance();
-    setStyleSheet(Style::getStylesheet("contentDialog/contentDialog.css"));
+    const Settings& s = Settings::getInstance();    
 
     friendLayout->setMargin(0);
     friendLayout->setSpacing(0);
@@ -88,7 +87,6 @@ ContentDialog::ContentDialog(QWidget* parent)
     friendScroll->setFrameStyle(QFrame::NoFrame);
     friendScroll->setLayoutDirection(Qt::RightToLeft);
     friendScroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    friendScroll->setStyleSheet(Style::getStylesheet("friendList/friendList.css"));
     friendScroll->setWidgetResizable(true);
     friendScroll->setWidget(friendWidget);
 
@@ -127,6 +125,8 @@ ContentDialog::ContentDialog(QWidget* parent)
     username = Core::getInstance()->getUsername();
 
     setAcceptDrops(true);
+
+    reloadTheme();
 
     new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(previousContact()));
@@ -433,6 +433,12 @@ void ContentDialog::setUsername(const QString& newName)
 {
     username = newName;
     updateTitleAndStatusIcon();
+}
+
+void ContentDialog::reloadTheme()
+{
+    setStyleSheet(Style::getStylesheet("contentDialog/contentDialog.css"));
+    splitter->widget(0)->setStyleSheet(Style::getStylesheet("friendList/friendList.css"));
 }
 
 bool ContentDialog::event(QEvent* event)
