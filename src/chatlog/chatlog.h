@@ -78,7 +78,7 @@ public:
 signals:
     void selectionChanged();
     void workerTimeoutFinished();
-    void firstVisibleLineChanged(const ChatLine::Ptr&);
+    void firstVisibleLineChanged(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& firstLine);
     void loadHistoryLower();
     void loadHistoryUpper();
 

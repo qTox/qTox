@@ -782,6 +782,10 @@ void ChatLog::checkVisibility(bool causedWheelEvent)
     auto upperBound = std::lower_bound(lowerBound, lines.cend(), getVisibleRect().bottom(),
                                        ChatLine::lessThanBSRectTop);
 
+    const ChatLine::Ptr lastLineBeforeVisible = lowerBound == lines.cbegin()
+        ? ChatLine::Ptr()
+        : *std::prev(lowerBound);
+
     // set visibilty
     QList<ChatLine::Ptr> newVisibleLines;
     for (auto itr = lowerBound; itr != upperBound; ++itr) {
@@ -807,7 +811,7 @@ void ChatLog::checkVisibility(bool causedWheelEvent)
     //  visibleLines.last()->getRow() << " total " << visibleLines.size();
 
     if (!visibleLines.isEmpty()) {
-        emit firstVisibleLineChanged(visibleLines.at(0));
+        emit firstVisibleLineChanged(lastLineBeforeVisible, visibleLines.at(0));
     }
 
     if (causedWheelEvent) {

@@ -117,7 +117,7 @@ protected slots:
     void onExportChat();
     void searchFormShow();
     void onSearchTriggered();
-    void updateShowDateInfo(const ChatLine::Ptr& line);
+    void updateShowDateInfo(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& topLine);
 
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter);
     void onSearchUp(const QString& phrase, const ParameterSearch& parameter);
