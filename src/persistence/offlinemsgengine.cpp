@@ -139,8 +139,8 @@ void OfflineMsgEngine::removeAllMessages()
 void OfflineMsgEngine::completeMessage(QMap<ReceiptNum, OfflineMessage>::iterator msgIt)
 {
     msgIt->completionFn();
-    sentMessages.erase(msgIt);
     receivedReceipts.removeOne(msgIt.key());
+    sentMessages.erase(msgIt);
 }
 
 void OfflineMsgEngine::checkForCompleteMessages(ReceiptNum receipt)
