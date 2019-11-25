@@ -245,7 +245,7 @@ private slots:
     void searchCircle(CircleWidget& circleWidget);
     void updateFriendActivity(const Friend& frnd);
     void registerContentDialog(ContentDialog& contentDialog) const;
-    void changeStatusLight();
+    void turnOffStatusLight();
 
 private:
     // QMainWindow overrides

@@ -1316,9 +1316,6 @@ void Widget::openNewDialog(GenericChatroomWidget* widget)
 
 void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
 {
-    widget->resetEventFlags();
-    widget->updateStatusLight();
-
     GenericChatForm* form;
     GroupId id;
     const Friend* frnd = widget->getFriend();
@@ -1364,7 +1361,7 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
         hideMainForms(widget);
 
         if (currentForm != nullptr) {
-            disconnect(currentForm.get(), &GenericChatForm::stickToBottom, this, &Widget::changeStatusLight);
+            disconnect(currentForm.get(), &GenericChatForm::stickToBottom, this, &Widget::turnOffStatusLight);
         }
 
         if (frnd) {
@@ -1375,7 +1372,11 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
             groupChatForms[group->getPersistentId()]->show(contentLayout);
         }
 
-        connect(currentForm.get(), &GenericChatForm::stickToBottom, this, &Widget::changeStatusLight);
+        connect(currentForm.get(), &GenericChatForm::stickToBottom, this, &Widget::turnOffStatusLight);
+
+        if (!currentForm.get()->isNeedMessageAlert()) {
+            turnOffStatusLight();
+        }
 
         widget->setAsActiveChatroom();
         setWindowTitle(widget->getTitle());
@@ -1839,7 +1840,7 @@ void Widget::registerContentDialog(ContentDialog& contentDialog) const
 #endif
 }
 
-void Widget::changeStatusLight()
+void Widget::turnOffStatusLight()
 {
     if (activeChatroomWidget) {
         activeChatroomWidget->resetEventFlags();
@@ -2205,8 +2206,6 @@ bool Widget::event(QEvent* e)
         ui->friendList->updateVisualTracking();
         break;
     case QEvent::WindowActivate:
-        changeStatusLight();
-
         if (eventFlag) {
             resetIcon();
         }
