@@ -6,7 +6,7 @@ cache: ccache
 # regex is for master, release branches, and release tags
 branches:
   only:
-    - add_chatlog_test
+    - master
     - /^v\d+\.\d+-dev$/
     - /^v(\d+\.){2}\d+$/
 
