@@ -1166,10 +1166,6 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
 
     auto notifyReceivedCallback = [this, friendPk](const ToxPk& author, const Message& message) {
-        auto isTargeted = std::any_of(message.metadata.begin(), message.metadata.end(),
-                                      [](MessageMetadata metadata) {
-                                          return metadata.type == MessageMetadataType::selfMention;
-                                      });
         newFriendMessageAlert(friendPk, message.content);
     };
 
