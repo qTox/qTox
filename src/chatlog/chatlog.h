@@ -59,6 +59,7 @@ public:
     void fontChanged(const QFont& font);
     void reloadTheme();
     void removeFirsts(const int num);
+    void removeLinesAroundView();
     void removeLasts(const int num);
     void setScroll(const bool scroll);
     int getNumRemove() const;
