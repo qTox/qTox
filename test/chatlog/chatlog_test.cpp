@@ -23,6 +23,8 @@
 #include <QtTest/QtTest>
 #include <QScrollBar>
 
+#include <iostream>
+
 class TestChatlog : public QObject
 {
     Q_OBJECT
@@ -41,14 +43,21 @@ private:
 
 void TestChatlog::initTestCase()
 {
+    std::cout << 1 <<'\n';
     chatlog = new ChatLog(false);
+    std::cout << 2 <<'\n';
     chatlog->setBackgroundBrush(QBrush(Qt::white));
+    std::cout << 3 <<'\n';
     chatlog->setScroll(true);
+    std::cout << 4 <<'\n';
     chatlog->resize(800, 600);
+    std::cout << 5 <<'\n';
     chatlog->show();
+    std::cout << 6 <<'\n';
 
     scbar = chatlog->verticalScrollBar();
     scbar->setEnabled(false);
+    std::cout << 7 <<'\n';
 }
 
 void TestChatlog::cleanupTestCase()
