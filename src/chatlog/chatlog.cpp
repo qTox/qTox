@@ -394,6 +394,8 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
     if (newLines.isEmpty())
         return;
 
+    const bool stickToBtm = stickToBottom();
+
     if (canRemove && lines.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
         removeFirsts(DEF_NUM_MSG_TO_LOAD);
     }
@@ -406,12 +408,14 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
     }
 
     layout(lines.last()->getRow(), lines.size(), useableWidth());
+    updateSceneRect();
 
-    if (visibleLines.size() > 1) {
-        startResizeWorker(visibleLines[1]);
-    } else {
-        startResizeWorker();
+    if (stickToBtm) {
+        scrollToBottom();
     }
+
+    checkVisibility();
+    updateTypingNotification();
 }
 
 void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
