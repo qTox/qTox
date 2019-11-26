@@ -644,7 +644,7 @@ QDateTime GenericChatForm::getTime(const ChatLine::Ptr &chatLine) const
         if (timestamp) {
             return timestamp->getTime();
         } else {
-            return QDateTime::currentDateTime();
+            return QDateTime();
         }
     }
 
@@ -1190,9 +1190,14 @@ void GenericChatForm::loadHistoryUpper()
     }
 }
 
-void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& line)
+void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& topLine)
 {
-    const auto date = getTime(line);
+    // If the dateInfo is visible we need to pretend the top line is the one
+    // covered by the date to prevent oscillations
+    const auto effectiveTopLine = (dateInfo->isVisible() && prevLine)
+        ? prevLine : topLine;
+
+    const auto date = getTime(effectiveTopLine);
 
     if (date.isValid() && date.date() != QDate::currentDate()) {
         const auto dateText = QStringLiteral("<b>%1<\b>").arg(date.toString(Settings::getInstance().getDateFormat()));
