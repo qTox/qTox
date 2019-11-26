@@ -187,7 +187,7 @@ private:
     qreal lineSpacing = 5.0f;
 
     int numRemove{0};
-    const int maxMessages{300};
+    const int maxMessages{200};
     bool canRemove;
 };
 
