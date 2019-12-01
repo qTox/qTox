@@ -92,7 +92,7 @@ void AboutFriendForm::onAutoAcceptDirClicked()
 
 void AboutFriendForm::onAutoAcceptDirChanged(const QString& path)
 {
-    const bool enabled = path.isNull();
+    const bool enabled = !path.isNull();
     ui->autoacceptfile->setChecked(enabled);
     ui->selectSaveDir->setEnabled(enabled);
     ui->selectSaveDir->setText(enabled ? path : tr("Auto-accept for this contact is disabled"));
