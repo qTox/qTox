@@ -24,6 +24,7 @@
 #include "src/core/toxcall.h"
 #include <QObject>
 #include <QMutex>
+#include <QReadWriteLock>
 #include <atomic>
 #include <memory>
 #include <tox/toxav.h>
@@ -148,7 +149,7 @@ private:
     std::map<int, ToxGroupCallPtr> groupCalls;
 
     // protect 'calls' and 'groupCalls' from being modified by ToxAV and Tox threads
-    mutable QMutex callsLock{QMutex::Recursive};
+    mutable QReadWriteLock callsLock{QReadWriteLock::Recursive};
 
     /**
      * @brief needed to synchronize with the Core thread, some toxav_* functions
