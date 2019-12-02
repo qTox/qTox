@@ -248,6 +248,7 @@ bool dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
         }
     }
         // fallthrough
+
     case 1:
        if (!dbSchema1to2(*db)) {
             qCritical() << "Failed to upgrade db to schema version 2, aborting";
