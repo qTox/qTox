@@ -19,6 +19,7 @@
 
 #include "src/core/core.h"
 #include "src/model/friend.h"
+#include "src/model/status.h"
 #include "src/persistence/offlinemsgengine.h"
 
 #include <QtTest/QtTest>
@@ -35,7 +36,7 @@ public:
     }
     bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) override
     {
-        if (f->isOnline()) {
+        if (Status::isOnline(f->getStatus())) {
             receipt.get() = receiptNum++;
             if (!dropReceipts) {
                 msgs.push_back(message);
@@ -45,7 +46,7 @@ public:
         } else {
             numMessagesFailed++;
         }
-        return f->isOnline();
+        return Status::isOnline(f->getStatus());
     }
 
 signals:

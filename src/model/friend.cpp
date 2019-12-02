@@ -152,19 +152,21 @@ bool Friend::getEventFlag() const
 void Friend::setStatus(Status::Status s)
 {
     if (friendStatus != s) {
+        auto oldStatus = friendStatus;
         friendStatus = s;
         emit statusChanged(friendPk, friendStatus);
+        if (!Status::isOnline(oldStatus) && Status::isOnline(friendStatus)) {
+            emit onlineOfflineChanged(friendPk, true);
+        } else if (Status::isOnline(oldStatus) && !Status::isOnline(friendStatus)) {
+            emit onlineOfflineChanged(friendPk, false);
+        }
+
     }
 }
 
 Status::Status Friend::getStatus() const
 {
     return friendStatus;
-}
-
-bool Friend::isOnline() const
-{
-    return friendStatus != Status::Status::Offline && friendStatus != Status::Status::Blocked;
 }
 
 bool Friend::useHistory() const

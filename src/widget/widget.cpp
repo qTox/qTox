@@ -1228,7 +1228,7 @@ void Widget::onFriendStatusChanged(int friendId, Status::Status status)
 
     FriendWidget* widget = friendWidgets[f->getPublicKey()];
     if (isActualChange) {
-        if (!f->isOnline()) {
+        if (!Status::isOnline(f->getStatus())) {
             contactListWidget->moveWidget(widget, Status::Status::Online);
         } else if (status == Status::Status::Offline) {
             contactListWidget->moveWidget(widget, Status::Status::Offline);

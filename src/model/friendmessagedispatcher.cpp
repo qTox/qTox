@@ -19,6 +19,7 @@
 
 #include "friendmessagedispatcher.h"
 #include "src/persistence/settings.h"
+#include "src/model/status.h"
 
 
 namespace {
@@ -49,7 +50,7 @@ FriendMessageDispatcher::FriendMessageDispatcher(Friend& f_, MessageProcessor pr
     , offlineMsgEngine(&f_, &messageSender_)
     , processor(std::move(processor_))
 {
-    connect(&f, &Friend::statusChanged, this, &FriendMessageDispatcher::onFriendStatusChange);
+    connect(&f, &Friend::onlineOfflineChanged, this, &FriendMessageDispatcher::onFriendOnlineOfflineChanged);
 }
 
 /**
@@ -69,7 +70,7 @@ FriendMessageDispatcher::sendMessage(bool isAction, const QString& content)
 
         bool messageSent = false;
 
-        if (f.isOnline()) {
+        if (Status::isOnline(f.getStatus())) {
             messageSent = sendMessageToCore(messageSender, f, message, receipt);
         }
 
@@ -107,9 +108,9 @@ void FriendMessageDispatcher::onReceiptReceived(ReceiptNum receipt)
  * @brief Handles status change for friend
  * @note Parameters just to fit slot api
  */
-void FriendMessageDispatcher::onFriendStatusChange(const ToxPk&, Status::Status)
+void FriendMessageDispatcher::onFriendOnlineOfflineChanged(const ToxPk&, bool isOnline)
 {
-    if (f.isOnline()) {
+    if (isOnline) {
         offlineMsgEngine.deliverOfflineMsgs();
     }
 }

@@ -980,6 +980,10 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
         return;
     }
 
+    if (messages.size() == 0) {
+        return;
+    }
+
     if (chatLog.getNextIdx() == messages.rbegin()->first + 1) {
         disableSearchText();
     } else {

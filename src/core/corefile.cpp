@@ -95,9 +95,9 @@ void CoreFile::sendAvatarFile(uint32_t friendId, const QByteArray& data)
     uint8_t *file_id = nullptr;
     uint8_t *file_name = nullptr;
     size_t nameLength = 0;
+    uint8_t avatarHash[TOX_HASH_LENGTH];
     if (!data.isEmpty()) {
         static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH, "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
-        uint8_t avatarHash[TOX_HASH_LENGTH];
         tox_hash(avatarHash, (uint8_t*)data.data(), data.size());
         filesize = data.size();
         file_id = avatarHash;

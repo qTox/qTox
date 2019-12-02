@@ -22,6 +22,7 @@
 #include "src/model/dialogs/idialogsmanager.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
+#include "src/model/status.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentdialog.h"
 
@@ -67,7 +68,7 @@ void FriendChatroom::setActive(bool _active)
 
 bool FriendChatroom::canBeInvited() const
 {
-    return frnd->isOnline();
+    return Status::isOnline(frnd->getStatus());
 }
 
 int FriendChatroom::getCircleId() const
