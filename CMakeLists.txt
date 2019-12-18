@@ -714,3 +714,12 @@ target_link_libraries(${PROJECT_NAME}
 
 include(Testing)
 include(Installation)
+
+if (DEFINED ENV{IN_NIX_SHELL})
+  # the qtox binary must be "wrapped" to find the Qt platform plugin
+  # and other dependencies at runtime
+  add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND nix-shell --run "wrapQtApp ${PROJECT_NAME}")
+endif()

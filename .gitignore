@@ -16,6 +16,7 @@ qtox
 build-*-Release
 build-*-Profile
 build-*-Debug
+.qtox-wrapped
 
 # Folders
 _[Bb]uild*/
