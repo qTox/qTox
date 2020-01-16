@@ -18,6 +18,7 @@
 */
 
 #include "genericsettings.h"
+#include "src/widget/gui.h"
 
 #include <QCheckBox>
 #include <QComboBox>
@@ -34,6 +35,7 @@
 GenericForm::GenericForm(const QPixmap& icon)
     : formIcon(icon)
 {
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &GenericForm::reloadTheme);
 }
 
 QPixmap GenericForm::getFormIcon()

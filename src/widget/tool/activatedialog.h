@@ -20,14 +20,17 @@
 #ifndef ACTIVATEDIALOG_H
 #define ACTIVATEDIALOG_H
 
-#include "src/widget/dialogstyle.h"
+#include <QDialog>
 
-class ActivateDialog : public DialogStyle
+class ActivateDialog : public QDialog
 {
     Q_OBJECT
 public:
     ActivateDialog(QWidget* parent = nullptr, Qt::WindowFlags f = nullptr);
     bool event(QEvent* event) override;
+
+public slots:
+    virtual void reloadTheme() {}
 
 signals:
     void windowStateChanged(Qt::WindowStates state);

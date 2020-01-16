@@ -21,8 +21,8 @@
 #define ABOUT_USER_FORM_H
 
 #include "src/model/about/iaboutfriend.h"
-#include "src/widget/dialogstyle.h"
 
+#include <QDialog>
 #include <QPointer>
 
 #include <memory>
@@ -31,7 +31,7 @@ namespace Ui {
 class AboutFriendForm;
 }
 
-class AboutFriendForm : public DialogStyle
+class AboutFriendForm : public QDialog
 {
     Q_OBJECT
 
@@ -47,7 +47,7 @@ signals:
     void histroyRemoved();
 
 public slots:
-    void reloadTheme() override;
+    void reloadTheme();
 
 private slots:
     void onAutoAcceptDirChanged(const QString& path);

@@ -21,11 +21,11 @@
 #define FILETRANSFERWIDGET_H
 
 #include <QTime>
+#include <QWidget>
 
 #include "src/chatlog/chatlinecontent.h"
 #include "src/chatlog/toxfileprogress.h"
 #include "src/core/toxfile.h"
-#include "src/widget/widgetstyle.h"
 
 
 namespace Ui {
@@ -35,7 +35,7 @@ class FileTransferWidget;
 class QVariantAnimation;
 class QPushButton;
 
-class FileTransferWidget : public WidgetStyle
+class FileTransferWidget : public QWidget
 {
     Q_OBJECT
 
@@ -65,7 +65,7 @@ protected:
     void paintEvent(QPaintEvent*) final;
 
 public slots:
-    void reloadTheme() override;
+    void reloadTheme();
 
 private slots:
     void onLeftButtonClicked();

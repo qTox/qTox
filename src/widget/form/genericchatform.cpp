@@ -36,6 +36,7 @@
 #include "src/widget/contentlayout.h"
 #include "src/widget/emoticonswidget.h"
 #include "src/widget/form/chatform.h"
+#include "src/widget/gui.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/searchform.h"
 #include "src/widget/style.h"
@@ -248,7 +249,7 @@ ChatLogIdx firstItemAfterDate(QDate date, const IChatLog& chatLog)
 
 GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
                                  IMessageDispatcher& messageDispatcher, QWidget* parent)
-    : WidgetStyle(parent, Qt::Window)
+    : QWidget(parent, Qt::Window)
     , audioInputFlag(false)
     , audioOutputFlag(false)
     , chatLog(chatLog)
@@ -371,6 +372,8 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     connect(&chatLog, &IChatLog::itemUpdated, this, &GenericChatForm::renderMessage);
 
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &GenericChatForm::onSendTriggered);
+
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &GenericChatForm::reloadTheme);
 
     reloadTheme();
 

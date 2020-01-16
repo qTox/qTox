@@ -19,6 +19,7 @@
 
 #include "chatformheader.h"
 
+#include "src/widget/gui.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/callconfirmwidget.h"
@@ -105,7 +106,7 @@ void setStateName(QAbstractButton* btn, State state)
 }
 
 ChatFormHeader::ChatFormHeader(QWidget* parent)
-    : WidgetStyle(parent)
+    : QWidget(parent)
     , mode{Mode::AV}
     , callState{CallButtonState::Disabled}
     , videoState{CallButtonState::Disabled}
@@ -154,6 +155,8 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
 
     updateButtonsView();
     Translator::registerHandler(std::bind(&ChatFormHeader::retranslateUi, this), this);
+
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &ChatFormHeader::reloadTheme);
 }
 
 ChatFormHeader::~ChatFormHeader() = default;
