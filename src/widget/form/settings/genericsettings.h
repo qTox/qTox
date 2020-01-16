@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "src/widget/widgetstyle.h"
+#include <QWidget>
 
-class GenericForm : public WidgetStyle
+class GenericForm : public QWidget
 {
     Q_OBJECT
 public:
@@ -32,6 +32,9 @@ public:
 
     virtual QString getFormName() = 0;
     QPixmap getFormIcon();
+
+public slots:
+    virtual void reloadTheme() {}
 
 protected:
     bool eventFilter(QObject* o, QEvent* e) final;

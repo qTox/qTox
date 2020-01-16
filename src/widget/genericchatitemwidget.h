@@ -20,11 +20,11 @@
 #pragma once
 
 #include <QLabel>
-#include "src/widget/framestyle.h"
+#include <QFrame>
 
 class CroppingLabel;
 
-class GenericChatItemWidget : public FrameStyle
+class GenericChatItemWidget : public QFrame
 {
     Q_OBJECT
 public:
@@ -45,6 +45,9 @@ public:
     void searchName(const QString& searchString, bool hideAll);
 
     Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
+
+public slots:
+    virtual void reloadTheme() {}
 
 protected:
     CroppingLabel* nameLabel;

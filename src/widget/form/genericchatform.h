@@ -24,9 +24,9 @@
 #include "src/model/ichatlog.h"
 #include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/searchtypes.h"
-#include "src/widget/widgetstyle.h"
 
 #include <QMenu>
+#include <QWidget>
 
 /**
  * Spacing in px inserted when the author of the last message changes
@@ -65,7 +65,7 @@ class SpellCheckDecorator;
 }
 #endif
 
-class GenericChatForm : public WidgetStyle
+class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
@@ -90,7 +90,7 @@ public slots:
     void focusInput();
     void onChatMessageFontChanged(const QFont& font);
     void setColorizedNames(bool enable);
-    void reloadTheme() override;
+    virtual void reloadTheme();
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
