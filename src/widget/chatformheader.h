@@ -20,8 +20,9 @@
 #ifndef CHAT_FORM_HEADER
 #define CHAT_FORM_HEADER
 
+#include <QWidget>
+
 #include <memory>
-#include "src/widget/widgetstyle.h"
 
 class MaskablePixmapWidget;
 class QVBoxLayout;
@@ -30,7 +31,7 @@ class QPushButton;
 class QToolButton;
 class CallConfirmWidget;
 
-class ChatFormHeader : public WidgetStyle
+class ChatFormHeader : public QWidget
 {
     Q_OBJECT
 public:
@@ -77,7 +78,7 @@ public:
     void addStretch();
 
 public slots:
-    void reloadTheme() override;
+    void reloadTheme();
 
 signals:
     void callTriggered();

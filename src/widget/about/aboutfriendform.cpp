@@ -27,7 +27,7 @@
 #include <QMessageBox>
 
 AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* parent)
-    : DialogStyle(parent)
+    : QDialog(parent)
     , ui(new Ui::AboutFriendForm)
     , about{std::move(_about)}
 {
@@ -66,6 +66,8 @@ AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* 
     ui->note->setPlainText(about->getNote());
     ui->statusMessage->setText(about->getStatusMessage());
     ui->avatar->setPixmap(about->getAvatar());
+
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &AboutFriendForm::reloadTheme);
 
     reloadTheme();
 }

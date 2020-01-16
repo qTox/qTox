@@ -50,7 +50,7 @@
 // downloaded to.
 
 FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
-    : WidgetStyle(parent)
+    : QWidget(parent)
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)
     , backgroundColor(Style::getColor(Style::TransferMiddle))
@@ -92,6 +92,8 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
     connect(ui->rightButton, &QPushButton::clicked, this, &FileTransferWidget::onRightButtonClicked);
     connect(ui->previewButton, &QPushButton::clicked, this,
             &FileTransferWidget::onPreviewButtonClicked);
+
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &FileTransferWidget::reloadTheme);
 
     // Set lastStatus to anything but the file's current value, this forces an update
     lastStatus = file.status == ToxFile::FINISHED ? ToxFile::INITIALIZING : ToxFile::FINISHED;

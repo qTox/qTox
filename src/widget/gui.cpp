@@ -94,6 +94,9 @@ void GUI::setWindowTitle(const QString& title)
 
 /**
  * @brief Reloads the application theme and redraw the window.
+ *
+ * For reload theme need connect signal themeReload() to function for reload
+ * For example: connect(&GUI::getInstance(), &GUI::themeReload, this, &SomeClass::reloadTheme);
  */
 void GUI::reloadTheme()
 {
