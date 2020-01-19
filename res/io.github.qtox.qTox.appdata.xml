@@ -53,11 +53,11 @@
  <screenshots>
   <screenshot type="default">
    <image>https://i.imgur.com/olb89CN.png</image>
-   <caption>A sample conversation taking place on qTox.</caption>
+   <caption>A sample conversation taking place on qTox</caption>
   </screenshot>
   <screenshot>
    <image>https://i.imgur.com/tmX8z9s.png</image>
-   <caption>A sample groupchat discussion taking place on qTox.</caption>
+   <caption>A sample groupchat discussion taking place on qTox</caption>
   </screenshot>
  </screenshots>
  <url type="homepage">https://qtox.github.io</url>
