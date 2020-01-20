@@ -159,12 +159,14 @@ Core::Core(QThread* coreThread)
 
 Core::~Core()
 {
-    // need to reset av first, because it uses tox
-    av.reset();
-
+    /*
+     * First stop the thread to stop the timer and avoid Core emitting callbacks
+     * into an already destructed CoreAV.
+     */
     coreThread->exit(0);
     coreThread->wait();
 
+    av.reset();
     tox.reset();
 }
 
