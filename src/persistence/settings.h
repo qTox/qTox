@@ -190,10 +190,6 @@ signals:
     void notifyHideChanged(bool enabled);
     void groupAlwaysNotifyChanged(bool enabled);
     void translationChanged(const QString& translation);
-    void toxmeInfoChanged(const QString& info);
-    void toxmeBioChanged(const QString& bio);
-    void toxmePrivChanged(bool priv);
-    void toxmePassChanged();
     void currentProfileIdChanged(quint32 id);
     void enableLoggingChanged(bool enabled);
     void autoAwayTimeChanged(int minutes);
@@ -275,21 +271,6 @@ public:
 
     QString getTranslation() const;
     void setTranslation(const QString& newValue);
-
-    // Toxme
-    void deleteToxme();
-    void setToxme(QString name, QString server, QString bio, bool priv, QString pass = "");
-    QString getToxmeInfo() const;
-    void setToxmeInfo(const QString& info);
-
-    QString getToxmeBio() const;
-    void setToxmeBio(const QString& bio);
-
-    bool getToxmePriv() const;
-    void setToxmePriv(bool priv);
-
-    QString getToxmePass() const;
-    void setToxmePass(const QString& pass);
 
     void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
@@ -641,12 +622,6 @@ private:
 
     QString currentProfile;
     uint32_t currentProfileId;
-
-    // Toxme Info
-    QString toxmeInfo;
-    QString toxmeBio;
-    bool toxmePriv;
-    QString toxmePass;
 
     bool enableLogging;
 
