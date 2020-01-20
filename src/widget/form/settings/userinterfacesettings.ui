@@ -14,16 +14,7 @@
    <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="leftMargin">
-    <number>6</number>
-   </property>
-   <property name="topMargin">
-    <number>6</number>
-   </property>
-   <property name="rightMargin">
-    <number>6</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>6</number>
    </property>
    <item>
@@ -38,9 +29,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-48</y>
-        <width>642</width>
-        <height>1004</height>
+        <y>0</y>
+        <width>662</width>
+        <height>956</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -50,16 +41,7 @@
           <string>Chat</string>
          </property>
          <layout class="QFormLayout" name="formLayout_2">
-          <property name="leftMargin">
-           <number>9</number>
-          </property>
-          <property name="topMargin">
-           <number>9</number>
-          </property>
-          <property name="rightMargin">
-           <number>9</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>9</number>
           </property>
           <item row="0" column="0">
@@ -521,7 +503,7 @@
             <item>
              <widget class="QPushButton" name="choiceExtraColor">
               <property name="text">
-               <string>Choice</string>
+               <string>Choose colors</string>
               </property>
              </widget>
             </item>
