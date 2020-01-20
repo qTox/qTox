@@ -151,9 +151,16 @@ IAudioControl* CoreAV::getAudio()
 
 CoreAV::~CoreAV()
 {
+    /* Gracefully leave calls and group calls to avoid deadlocks in destructor */
     for (const auto& call : calls) {
         cancelCall(call.first);
     }
+    for (const auto& call : groupCalls) {
+        leaveGroupCall(call.first);
+    }
+
+    assert(calls.empty());
+    assert(groupCalls.empty());
 
     coreavThread->exit(0);
     coreavThread->wait();
@@ -452,12 +459,19 @@ void CoreAV::toggleMuteCallOutput(const Friend* f)
 void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const int16_t* data,
                                unsigned samples, uint8_t channels, uint32_t sample_rate, void* core)
 {
+    /*
+     * Currently group call audio decoding is handled in the Tox thread by c-toxcore,
+     * so we can be sure that this function is always called from the Core thread.
+     * To change this, an API change in c-toxcore is needed and this function probably must be
+     * changed.
+     * See https://github.com/TokTok/c-toxcore/issues/1364 for details.
+     */
+
     Q_UNUSED(tox);
     Core* c = static_cast<Core*>(core);
     CoreAV* cav = c->getAv();
 
     QReadLocker locker{&cav->callsLock};
-    assert(QThread::currentThread() == cav->coreavThread.get());
 
     const ToxPk peerPk = c->getGroupPeerPk(group, peer);
     const Settings& s = Settings::getInstance();
