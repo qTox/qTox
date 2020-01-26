@@ -489,7 +489,6 @@ std::unique_ptr<NetCamView> ChatForm::createNetcam()
     connect(view.get(), &NetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
     connect(view.get(), &NetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
     connect(view.get(), &NetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
-    connect(view.get(), &NetCamView::videoPreviewToggle, view.get(), &NetCamView::toggleVideoPreview);
     return view;
 }
 

@@ -96,7 +96,7 @@ NetCamView::NetCamView(ToxPk friendPk, QWidget* parent)
     exitFullScreenButton = createButton("exitFullScreenButton", "none");
     exitFullScreenButton->setToolTip(tr("Exit full screen"));
 
-    connect(videoPreviewButton, &QPushButton::clicked, this, &NetCamView::genericToggleVideoPreview);
+    connect(videoPreviewButton, &QPushButton::clicked, this, &NetCamView::toggleVideoPreview);
     connect(volumeButton, &QPushButton::clicked, this, &NetCamView::volMuteToggle);
     connect(microphoneButton, &QPushButton::clicked, this, &NetCamView::micMuteToggle);
     connect(endVideoButton, &QPushButton::clicked, this, &NetCamView::endVideoCall);
@@ -217,15 +217,6 @@ void NetCamView::updateFrameSize(QSize size)
         selfFrame->setMaximumHeight(selfFrame->maximumWidth() / selfVideoSurface->getRatio());
 }
 
-void NetCamView::toggleVideoPreview()
-{
-    if (selfFrame->isHidden()) {
-        selfFrame->show();
-    } else {
-        selfFrame->hide();
-    }
-}
-
 QSize NetCamView::getSurfaceMinSize()
 {
     QSize surfaceSize = videoSurface->minimumSize();
@@ -292,10 +283,14 @@ void NetCamView::endVideoCall()
     emit videoCallEnd();
 }
 
-void NetCamView::genericToggleVideoPreview()
+void NetCamView::toggleVideoPreview()
 {
     toggleButtonState(videoPreviewButton);
-    emit videoPreviewToggle();
+    if (selfFrame->isHidden()) {
+        selfFrame->show();
+    } else {
+        selfFrame->hide();
+    }
 }
 
 QPushButton* NetCamView::createButton(const QString& name, const QString& state)
