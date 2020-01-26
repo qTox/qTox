@@ -113,7 +113,7 @@ private:
     void hideNetcam();
 
 protected:
-    GenericNetCamView* createNetcam();
+    std::unique_ptr<GenericNetCamView> createNetcam();
     void insertChatMessage(ChatMessage::Ptr msg) final;
     void dragEnterEvent(QDragEnterEvent* ev) final;
     void dropEvent(QDropEvent* ev) final;
@@ -131,6 +131,7 @@ private:
     QAction* copyStatusAction;
     bool isTyping;
     bool lastCallIsVideo;
+    std::unique_ptr<GenericNetCamView> netcam;
 };
 
 #endif // CHATFORM_H

@@ -390,8 +390,6 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     auto firstChatLogIdx = (chatLogIdxRange < DEF_NUM_MSG_TO_LOAD) ? chatLog.getFirstIdx() : chatLog.getNextIdx() - DEF_NUM_MSG_TO_LOAD;
 
     renderMessages(firstChatLogIdx, chatLog.getNextIdx());
-
-    netcam = nullptr;
 }
 
 GenericChatForm::~GenericChatForm()

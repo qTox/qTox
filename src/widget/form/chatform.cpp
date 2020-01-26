@@ -191,8 +191,6 @@ ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& me
 ChatForm::~ChatForm()
 {
     Translator::unregister(this);
-    delete netcam;
-    netcam = nullptr;
 }
 
 void ChatForm::setStatusMessage(const QString& newMessage)
@@ -480,18 +478,18 @@ void ChatForm::onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic)
     headWidget->setAvatar(pic);
 }
 
-GenericNetCamView* ChatForm::createNetcam()
+std::unique_ptr<GenericNetCamView> ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
     uint32_t friendId = f->getId();
-    NetCamView* view = new NetCamView(f->getPublicKey(), this);
+    std::unique_ptr<NetCamView> view = std::unique_ptr<NetCamView>(new NetCamView(f->getPublicKey(), this));
     CoreAV* av = Core::getInstance()->getAv();
     VideoSource* source = av->getVideoSourceFromCall(friendId);
     view->show(source, f->getDisplayedName());
-    connect(view, &GenericNetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
-    connect(view, &GenericNetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
-    connect(view, &GenericNetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
-    connect(view, &GenericNetCamView::videoPreviewToggle, view, &NetCamView::toggleVideoPreview);
+    connect(view.get(), &GenericNetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
+    connect(view.get(), &GenericNetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
+    connect(view.get(), &GenericNetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
+    connect(view.get(), &GenericNetCamView::videoPreviewToggle, view.get(), &NetCamView::toggleVideoPreview);
     return view;
 }
 
@@ -718,10 +716,10 @@ void ChatForm::showNetcam()
         netcam = createNetcam();
     }
 
-    connect(netcam, &GenericNetCamView::showMessageClicked, this,
+    connect(netcam.get(), &GenericNetCamView::showMessageClicked, this,
             &ChatForm::onShowMessagesClicked);
 
-    bodySplitter->insertWidget(0, netcam);
+    bodySplitter->insertWidget(0, netcam.get());
     bodySplitter->setCollapsible(0, false);
 
     QSize minSize = netcam->getSurfaceMinSize();
@@ -744,8 +742,7 @@ void ChatForm::hideNetcam()
 
     netcam->close();
     netcam->hide();
-    delete netcam;
-    netcam = nullptr;
+    netcam.reset();
 }
 
 void ChatForm::onSplitterMoved(int, int)
