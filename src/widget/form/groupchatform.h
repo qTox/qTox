@@ -57,7 +57,6 @@ private slots:
     void onLabelContextMenuRequested(const QPoint& localPos);
 
 protected:
-    GenericNetCamView* createNetcam() final;
     void keyPressEvent(QKeyEvent* ev) final;
     void keyReleaseEvent(QKeyEvent* ev) final;
     // drag & drop

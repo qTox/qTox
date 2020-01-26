@@ -142,9 +142,6 @@ protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
                                    const QDateTime& datetime, bool isAction, bool isSent, bool colorizeName = false);
     bool needsToHideName(ChatLogIdx idx) const;
-    void showNetcam();
-    void hideNetcam();
-    virtual GenericNetCamView* createNetcam() = 0;
     virtual void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
     void hideEvent(QHideEvent* event) override;

@@ -107,9 +107,11 @@ private:
     void startCounter();
     void stopCounter(bool error = false);
     void updateCallButtons();
+    void showNetcam();
+    void hideNetcam();
 
 protected:
-    GenericNetCamView* createNetcam() final;
+    GenericNetCamView* createNetcam();
     void insertChatMessage(ChatMessage::Ptr msg) final;
     void dragEnterEvent(QDragEnterEvent* ev) final;
     void dropEvent(QDropEvent* ev) final;
