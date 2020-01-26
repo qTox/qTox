@@ -478,7 +478,7 @@ void ChatForm::onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic)
     headWidget->setAvatar(pic);
 }
 
-std::unique_ptr<GenericNetCamView> ChatForm::createNetcam()
+std::unique_ptr<NetCamView> ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
     uint32_t friendId = f->getId();
