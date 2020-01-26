@@ -342,7 +342,6 @@ void GroupChatForm::onCallClicked()
         audioInputFlag = true;
         audioOutputFlag = true;
         inCall = true;
-        showNetcam();
     } else {
         leaveGroupCall();
     }
@@ -477,5 +476,4 @@ void GroupChatForm::leaveGroupCall()
     audioInputFlag = false;
     audioOutputFlag = false;
     inCall = false;
-    hideNetcam();
 }
