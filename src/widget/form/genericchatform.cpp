@@ -297,7 +297,6 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
     bodySplitter = new QSplitter(Qt::Vertical, this);
-    connect(bodySplitter, &QSplitter::splitterMoved, this, &GenericChatForm::onSplitterMoved);
     QWidget* contentWidget = new QWidget(this);
     bodySplitter->addWidget(contentWidget);
 
@@ -864,24 +863,6 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
     }
 
     return false;
-}
-
-void GenericChatForm::onSplitterMoved(int, int)
-{
-    if (netcam)
-        netcam->setShowMessages(bodySplitter->sizes()[1] == 0);
-}
-
-void GenericChatForm::onShowMessagesClicked()
-{
-    if (netcam) {
-        if (bodySplitter->sizes()[1] == 0)
-            bodySplitter->setSizes({1, 1});
-        else
-            bodySplitter->setSizes({1, 0});
-
-        onSplitterMoved(0, 0);
-    }
 }
 
 void GenericChatForm::quoteSelectedText()
