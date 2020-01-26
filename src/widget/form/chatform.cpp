@@ -486,10 +486,10 @@ std::unique_ptr<NetCamView> ChatForm::createNetcam()
     CoreAV* av = Core::getInstance()->getAv();
     VideoSource* source = av->getVideoSourceFromCall(friendId);
     view->show(source, f->getDisplayedName());
-    connect(view.get(), &GenericNetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
-    connect(view.get(), &GenericNetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
-    connect(view.get(), &GenericNetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
-    connect(view.get(), &GenericNetCamView::videoPreviewToggle, view.get(), &NetCamView::toggleVideoPreview);
+    connect(view.get(), &NetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
+    connect(view.get(), &NetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
+    connect(view.get(), &NetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
+    connect(view.get(), &NetCamView::videoPreviewToggle, view.get(), &NetCamView::toggleVideoPreview);
     return view;
 }
 
@@ -716,7 +716,7 @@ void ChatForm::showNetcam()
         netcam = createNetcam();
     }
 
-    connect(netcam.get(), &GenericNetCamView::showMessageClicked, this,
+    connect(netcam.get(), &NetCamView::showMessageClicked, this,
             &ChatForm::onShowMessagesClicked);
 
     bodySplitter->insertWidget(0, netcam.get());

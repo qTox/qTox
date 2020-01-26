@@ -30,7 +30,6 @@
 #include "src/model/group.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
-#include "src/video/genericnetcamview.h"
 #include "src/widget/chatformheader.h"
 #include "src/widget/contentdialog.h"
 #include "src/widget/contentdialogmanager.h"
