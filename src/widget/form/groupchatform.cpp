@@ -28,7 +28,6 @@
 #include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/model/group.h"
-#include "src/video/groupnetcamview.h"
 #include "src/widget/chatformheader.h"
 #include "src/widget/flowlayout.h"
 #include "src/widget/form/chatform.h"
@@ -44,6 +43,7 @@
 #include <QRegularExpression>
 #include <QTimer>
 #include <QToolButton>
+#include <QPushButton>
 
 namespace
 {
@@ -211,10 +211,6 @@ void GroupChatForm::updateUserNames()
         peerLabels.insert(peerPk, label);
     }
 
-    if (netcam != nullptr) {
-        static_cast<GroupNetCamView*>(netcam)->clearPeers();
-    }
-
     // add the labels in alphabetical order into the layout
     auto nickLabelList = peerLabels.values();
 
@@ -261,9 +257,6 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
         peerAudioTimers[peerPk] = new QTimer(this);
         peerAudioTimers[peerPk]->setSingleShot(true);
         connect(peerAudioTimers[peerPk], &QTimer::timeout, [this, peerPk] {
-            if (netcam) {
-                static_cast<GroupNetCamView*>(netcam)->removePeer(peerPk);
-            }
             auto it = peerLabels.find(peerPk);
             if (it != peerLabels.end()) {
                 peerLabels[peerPk]->setProperty("playingAudio", LABEL_PEER_NOT_PLAYING_AUDIO);
@@ -273,11 +266,6 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
             delete peerAudioTimers[peerPk];
             peerAudioTimers[peerPk] = nullptr;
         });
-        if (netcam) {
-            static_cast<GroupNetCamView*>(netcam)->removePeer(peerPk);
-            const auto nameIt = group->getPeerList().find(peerPk);
-            static_cast<GroupNetCamView*>(netcam)->addPeer(peerPk, nameIt.value());
-        }
     }
 
     peerLabels[peerPk]->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH));
@@ -342,7 +330,6 @@ void GroupChatForm::onCallClicked()
         audioInputFlag = true;
         audioOutputFlag = true;
         inCall = true;
-        showNetcam();
     } else {
         leaveGroupCall();
     }
@@ -360,17 +347,7 @@ void GroupChatForm::onCallClicked()
 
 GenericNetCamView* GroupChatForm::createNetcam()
 {
-    auto view = new GroupNetCamView(group->getId(), this);
-
-    const auto& names = group->getPeerList();
-    const auto ownPk = Core::getInstance()->getSelfPublicKey();
-    for (const auto& peerPk : names.keys()) {
-        auto timerIt = peerAudioTimers.find(peerPk);
-        if (peerPk != ownPk && timerIt != peerAudioTimers.end()) {
-            static_cast<GroupNetCamView*>(view)->addPeer(peerPk, names.find(peerPk).value());
-        }
-    }
-    return view;
+    return static_cast<GenericNetCamView*>(nullptr);
 }
 
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)
@@ -477,5 +454,4 @@ void GroupChatForm::leaveGroupCall()
     audioInputFlag = false;
     audioOutputFlag = false;
     inCall = false;
-    hideNetcam();
 }
