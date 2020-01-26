@@ -410,8 +410,6 @@ set(${PROJECT_NAME}_SOURCES
   src/video/corevideosource.h
   src/video/genericnetcamview.cpp
   src/video/genericnetcamview.h
-  src/video/groupnetcamview.cpp
-  src/video/groupnetcamview.h
   src/video/ivideosettings.h
   src/video/netcamview.cpp
   src/video/netcamview.h
