@@ -74,6 +74,8 @@ public slots:
     void onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
     void onFileNameChanged(const ToxPk& friendPk);
     void clearChatArea();
+    void onShowMessagesClicked();
+    void onSplitterMoved(int pos, int index);
 
 private slots:
     void updateFriendActivityForFile(const ToxFile& file);

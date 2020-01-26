@@ -179,6 +179,8 @@ ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& me
             [this] { onAnswerCallTriggered(lastCallIsVideo); });
     connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
 
+    connect(bodySplitter, &QSplitter::splitterMoved, this, &ChatForm::onSplitterMoved);
+
     updateCallButtons();
 
     setAcceptDrops(true);
@@ -740,4 +742,22 @@ void ChatForm::hideNetcam()
     netcam->hide();
     delete netcam;
     netcam = nullptr;
+}
+
+void ChatForm::onSplitterMoved(int, int)
+{
+    if (netcam)
+        netcam->setShowMessages(bodySplitter->sizes()[1] == 0);
+}
+
+void ChatForm::onShowMessagesClicked()
+{
+    if (netcam) {
+        if (bodySplitter->sizes()[1] == 0)
+            bodySplitter->setSizes({1, 1});
+        else
+            bodySplitter->setSizes({1, 0});
+
+        onSplitterMoved(0, 0);
+    }
 }

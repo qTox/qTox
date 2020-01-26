@@ -106,8 +106,6 @@ protected slots:
     void onSelectAllClicked();
     void showFileMenu();
     void hideFileMenu();
-    void onShowMessagesClicked();
-    void onSplitterMoved(int pos, int index);
     void quoteSelectedText();
     void copyLink();
     void onLoadHistory();
