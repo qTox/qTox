@@ -131,6 +131,7 @@ private:
     QAction* copyStatusAction;
     bool isTyping;
     bool lastCallIsVideo;
+    GenericNetCamView* netcam{nullptr};
 };
 
 #endif // CHATFORM_H

@@ -186,7 +186,6 @@ protected:
     Sonnet::SpellCheckDecorator* decorator{nullptr};
 #endif
     FlyoutOverlayWidget* fileFlyout;
-    GenericNetCamView* netcam;
     Widget* parent;
 
     IChatLog& chatLog;
