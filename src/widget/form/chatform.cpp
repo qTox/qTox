@@ -488,10 +488,10 @@ NetCamView* ChatForm::createNetcam()
     CoreAV* av = Core::getInstance()->getAv();
     VideoSource* source = av->getVideoSourceFromCall(friendId);
     view->show(source, f->getDisplayedName());
-    connect(view, &GenericNetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
-    connect(view, &GenericNetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
-    connect(view, &GenericNetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
-    connect(view, &GenericNetCamView::videoPreviewToggle, view, &NetCamView::toggleVideoPreview);
+    connect(view, &NetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
+    connect(view, &NetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
+    connect(view, &NetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
+    connect(view, &NetCamView::videoPreviewToggle, view, &NetCamView::toggleVideoPreview);
     return view;
 }
 
@@ -717,7 +717,7 @@ void ChatForm::showNetcam()
     if (!netcam)
         netcam = createNetcam();
 
-    connect(netcam, &GenericNetCamView::showMessageClicked, this,
+    connect(netcam, &NetCamView::showMessageClicked, this,
             &ChatForm::onShowMessagesClicked);
 
     bodySplitter->insertWidget(0, netcam);

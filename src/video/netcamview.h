@@ -21,16 +21,22 @@
 #define NETCAMVIEW_H
 
 #include "src/core/toxpk.h"
-#include "genericnetcamview.h"
 #include <QVector>
+#include <QWidget>
 
 class QHBoxLayout;
 struct vpx_image;
 class VideoSource;
 class QFrame;
 class MovableWidget;
+class QVBoxLayout;
+class VideoSurface;
+class QPushButton;
+class QKeyEvent;
+class QCloseEvent;
+class QShowEvent;
 
-class NetCamView : public GenericNetCamView
+class NetCamView : public QWidget
 {
     Q_OBJECT
 
@@ -44,21 +50,54 @@ public:
     void setSource(VideoSource* s);
     void setTitle(const QString& title);
     void toggleVideoPreview();
+    QSize getSurfaceMinSize();
 
 protected:
-    void showEvent(QShowEvent* event) final;
+    void showEvent(QShowEvent* event);
+    QVBoxLayout* verLayout;
+    VideoSurface* videoSurface;
+    QPushButton* enterFullScreenButton = nullptr;
+
+signals:
+    void showMessageClicked();
+    void videoCallEnd();
+    void volMuteToggle();
+    void micMuteToggle();
+    void videoPreviewToggle();
+
+public slots:
+    void setShowMessages(bool show, bool notify = false);
+    void updateMuteVolButton(bool isMuted);
+    void updateMuteMicButton(bool isMuted);
 
 private slots:
     void updateRatio();
 
 private:
     void updateFrameSize(QSize size);
-
+    QPushButton* createButton(const QString& name, const QString& state);
+    void toggleFullScreen();
+    void enterFullScreen();
+    void exitFullScreen();
+    void endVideoCall();
+    void genericToggleVideoPreview();
+    void toggleButtonState(QPushButton* btn);
+    void updateButtonState(QPushButton* btn, bool active);
+    void keyPressEvent(QKeyEvent *event);
+    void closeEvent(QCloseEvent *event);
     VideoSurface* selfVideoSurface;
     MovableWidget* selfFrame;
     ToxPk friendPk;
     bool e;
     QVector<QMetaObject::Connection> connections;
+    QHBoxLayout* buttonLayout = nullptr;
+    QPushButton* toggleMessagesButton = nullptr;
+    QFrame* buttonPanel = nullptr;
+    QPushButton* videoPreviewButton = nullptr;
+    QPushButton* volumeButton = nullptr;
+    QPushButton* microphoneButton = nullptr;
+    QPushButton* endVideoButton = nullptr;
+    QPushButton* exitFullScreenButton = nullptr;
 };
 
 #endif // NETCAMVIEW_H
