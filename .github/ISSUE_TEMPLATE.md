@@ -5,7 +5,6 @@ qTox version: (version numbers in menu `Settings → About`)
 Commit hash:  
 toxcore:  
 Qt:  
-Hardware:  
 …
 
 Reproducible: Always / Almost Always / Sometimes / Rarely / Couldn't Reproduce
