@@ -491,7 +491,6 @@ NetCamView* ChatForm::createNetcam()
     connect(view, &NetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
     connect(view, &NetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
     connect(view, &NetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
-    connect(view, &NetCamView::videoPreviewToggle, view, &NetCamView::toggleVideoPreview);
     return view;
 }
 

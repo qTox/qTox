@@ -49,7 +49,6 @@ public:
 
     void setSource(VideoSource* s);
     void setTitle(const QString& title);
-    void toggleVideoPreview();
     QSize getSurfaceMinSize();
 
 protected:
@@ -63,7 +62,6 @@ signals:
     void videoCallEnd();
     void volMuteToggle();
     void micMuteToggle();
-    void videoPreviewToggle();
 
 public slots:
     void setShowMessages(bool show, bool notify = false);
@@ -80,7 +78,7 @@ private:
     void enterFullScreen();
     void exitFullScreen();
     void endVideoCall();
-    void genericToggleVideoPreview();
+    void toggleVideoPreview();
     void toggleButtonState(QPushButton* btn);
     void updateButtonState(QPushButton* btn, bool active);
     void keyPressEvent(QKeyEvent *event);
