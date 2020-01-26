@@ -32,6 +32,7 @@
 #include "src/model/status.h"
 #include "src/persistence/history.h"
 #include "src/widget/tool/screenshotgrabber.h"
+#include "src/video/netcamview.h"
 
 class CallConfirmWidget;
 class FileTransferInstance;
@@ -113,7 +114,7 @@ private:
     void hideNetcam();
 
 protected:
-    GenericNetCamView* createNetcam();
+    NetCamView* createNetcam();
     void insertChatMessage(ChatMessage::Ptr msg) final;
     void dragEnterEvent(QDragEnterEvent* ev) final;
     void dropEvent(QDropEvent* ev) final;
@@ -131,7 +132,7 @@ private:
     QAction* copyStatusAction;
     bool isTyping;
     bool lastCallIsVideo;
-    GenericNetCamView* netcam{nullptr};
+    NetCamView* netcam{nullptr};
 };
 
 #endif // CHATFORM_H
