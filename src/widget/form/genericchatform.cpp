@@ -1226,35 +1226,3 @@ void GenericChatForm::retranslateUi()
     loadHistoryAction->setText(tr("Load chat history..."));
     exportChatAction->setText(tr("Export to file"));
 }
-
-void GenericChatForm::showNetcam()
-{
-    if (!netcam)
-        netcam = createNetcam();
-
-    connect(netcam, &GenericNetCamView::showMessageClicked, this,
-            &GenericChatForm::onShowMessagesClicked);
-
-    bodySplitter->insertWidget(0, netcam);
-    bodySplitter->setCollapsible(0, false);
-
-    QSize minSize = netcam->getSurfaceMinSize();
-    ContentDialog* current = ContentDialogManager::getInstance()->current();
-    if (current)
-        current->onVideoShow(minSize);
-}
-
-void GenericChatForm::hideNetcam()
-{
-    if (!netcam)
-        return;
-
-    ContentDialog* current = ContentDialogManager::getInstance()->current();
-    if (current)
-        current->onVideoHide();
-
-    netcam->close();
-    netcam->hide();
-    delete netcam;
-    netcam = nullptr;
-}

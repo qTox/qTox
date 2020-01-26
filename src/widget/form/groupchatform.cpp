@@ -345,11 +345,6 @@ void GroupChatForm::onCallClicked()
     headWidget->updateMuteVolButton(inCall, outMute);
 }
 
-GenericNetCamView* GroupChatForm::createNetcam()
-{
-    return static_cast<GenericNetCamView*>(nullptr);
-}
-
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)
 {
     // Push to talk (CTRL+P)

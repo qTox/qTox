@@ -35,6 +35,7 @@
 #include "src/persistence/settings.h"
 #include "src/video/netcamview.h"
 #include "src/widget/chatformheader.h"
+#include "src/widget/contentdialogmanager.h"
 #include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/searchform.h"
@@ -707,4 +708,40 @@ void ChatForm::retranslateUi()
     if (netcam) {
         netcam->setShowMessages(chatWidget->isVisible());
     }
+}
+
+void ChatForm::showNetcam()
+{
+    if (!netcam) {
+        netcam = createNetcam();
+    }
+
+    connect(netcam, &GenericNetCamView::showMessageClicked, this,
+            &ChatForm::onShowMessagesClicked);
+
+    bodySplitter->insertWidget(0, netcam);
+    bodySplitter->setCollapsible(0, false);
+
+    QSize minSize = netcam->getSurfaceMinSize();
+    ContentDialog* current = ContentDialogManager::getInstance()->current();
+    if (current) {
+        current->onVideoShow(minSize);
+    }
+}
+
+void ChatForm::hideNetcam()
+{
+    if (!netcam) {
+        return;
+    }
+
+    ContentDialog* current = ContentDialogManager::getInstance()->current();
+    if (current) {
+        current->onVideoHide();
+    }
+
+    netcam->close();
+    netcam->hide();
+    delete netcam;
+    netcam = nullptr;
 }
