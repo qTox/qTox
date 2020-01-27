@@ -365,7 +365,7 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, 
 
 void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 {
-    QReadLocker locker{&callsLock};
+    QWriteLocker locker{&callsLock};
 
     // We might be running in the FFmpeg thread and holding the CameraSource lock
     // So be careful not to deadlock with anything while toxav locks in toxav_video_send_frame
@@ -420,7 +420,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
  */
 void CoreAV::toggleMuteCallInput(const Friend* f)
 {
-    QReadLocker locker{&callsLock};
+    QWriteLocker locker{&callsLock};
 
     auto it = calls.find(f->getId());
     if (f && (it != calls.end())) {
@@ -435,7 +435,7 @@ void CoreAV::toggleMuteCallInput(const Friend* f)
  */
 void CoreAV::toggleMuteCallOutput(const Friend* f)
 {
-    QReadLocker locker{&callsLock};
+    QWriteLocker locker{&callsLock};
 
     auto it = calls.find(f->getId());
     if (f && (it != calls.end())) {
@@ -503,7 +503,7 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
  */
 void CoreAV::invalidateGroupCallPeerSource(int group, ToxPk peerPk)
 {
-    QReadLocker locker{&callsLock};
+    QWriteLocker locker{&callsLock};
 
     auto it = groupCalls.find(group);
     if (it == groupCalls.end()) {
@@ -594,7 +594,7 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
  */
 void CoreAV::muteCallInput(const Group* g, bool mute)
 {
-    QReadLocker locker{&callsLock};
+    QWriteLocker locker{&callsLock};
 
     auto it = groupCalls.find(g->getId());
     if (g && (it != groupCalls.end())) {
@@ -609,7 +609,7 @@ void CoreAV::muteCallInput(const Group* g, bool mute)
  */
 void CoreAV::muteCallOutput(const Group* g, bool mute)
 {
-    QReadLocker locker{&callsLock};
+    QWriteLocker locker{&callsLock};
 
     auto it = groupCalls.find(g->getId());
     if (g && (it != groupCalls.end())) {
@@ -693,7 +693,7 @@ bool CoreAV::isCallOutputMuted(const Friend* f) const
  */
 void CoreAV::sendNoVideo()
 {
-    QReadLocker locker{&callsLock};
+    QWriteLocker locker{&callsLock};
 
     // We don't change the audio bitrate, but we signal that we're not sending video anymore
     qDebug() << "CoreAV: Signaling end of video sending";
