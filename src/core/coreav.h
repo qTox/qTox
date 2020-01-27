@@ -113,7 +113,7 @@ private:
         }
     };
 
-    explicit CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, QMutex &toxCoreLock);
+    CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, QMutex &toxCoreLock);
     void connectCallbacks(ToxAV& toxav);
 
     void process();
@@ -148,7 +148,7 @@ private:
      */
     std::map<int, ToxGroupCallPtr> groupCalls;
 
-    // protect 'calls' and 'groupCalls' from being modified by ToxAV and Tox threads
+    // protect 'calls' and 'groupCalls'
     mutable QReadWriteLock callsLock{QReadWriteLock::Recursive};
 
     /**
