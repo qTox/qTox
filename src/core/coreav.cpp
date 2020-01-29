@@ -732,9 +732,10 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         state |= TOXAV_FRIEND_CALL_STATE_SENDING_V | TOXAV_FRIEND_CALL_STATE_ACCEPTING_V;
     it.first->second->setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
 
+    // Must explicitely unlock, because a deadlock can happen via ChatForm/Audio
     locker.unlock();
 
-    emit reinterpret_cast<CoreAV*>(self)->avInvite(friendNum, video);
+    emit self->avInvite(friendNum, video);
 }
 
 void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, void* vSelf)
@@ -742,6 +743,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
     Q_UNUSED(toxav);
     CoreAV* self = static_cast<CoreAV*>(vSelf);
 
+    // we must unlock this lock before emitting any signals
     QWriteLocker locker{&self->callsLock};
 
     auto it = self->calls.find(friendNum);
@@ -766,14 +768,18 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
         // If our state was null, we started the call and were still ringing
         if (!call.getState() && state) {
             call.setActive(true);
+            bool videoEnabled = call.getVideoEnabled();
+            call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
             locker.unlock();
-            emit self->avStart(friendNum, call.getVideoEnabled());
+            emit self->avStart(friendNum, videoEnabled);
         } else if ((call.getState() & TOXAV_FRIEND_CALL_STATE_SENDING_V)
                    && !(state & TOXAV_FRIEND_CALL_STATE_SENDING_V)) {
             qDebug() << "Friend" << friendNum << "stopped sending video";
             if (call.getVideoSource()) {
                 call.getVideoSource()->stopSource();
             }
+
+            call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
         } else if (!(call.getState() & TOXAV_FRIEND_CALL_STATE_SENDING_V)
                    && (state & TOXAV_FRIEND_CALL_STATE_SENDING_V)) {
             // Workaround toxav sometimes firing callbacks for "send last frame" -> "stop sending
@@ -784,9 +790,9 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
             if (call.getVideoSource()) {
                 call.getVideoSource()->restartSource();
             }
-        }
 
-        call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
+            call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
+        }
     }
 }
 
