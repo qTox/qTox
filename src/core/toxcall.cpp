@@ -133,14 +133,15 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av, 
                              this->av->sendCallAudio(this->friendId, pcm, samples, chans, rate);
                          });
 
-    audioSrcInvalid = QObject::connect(audioSource.get(), &IAudioSource::invalidated,
-                                       [this]() { this->onAudioSourceInvalidated(); });
+    connect(audioSource.get(), &IAudioSource::invalidated, this, &ToxFriendCall::onAudioSourceInvalidated);
 
     if (!audioInConn) {
         qDebug() << "Audio input connection not working";
     }
 
-    audioSinkInvalid = sink->connectTo_invalidated(this, [this]() { this->onAudioSinkInvalidated(); });
+    if (sink) {
+        audioSinkInvalid = sink->connectTo_invalidated(this, [this]() { this->onAudioSinkInvalidated(); });
+    }
 
     // register video
     if (videoEnabled) {
@@ -176,15 +177,17 @@ void ToxFriendCall::onAudioSourceInvalidated()
                          });
     audioSource = std::move(newSrc);
 
-    audioSrcInvalid = QObject::connect(audioSource.get(), &IAudioSource::invalidated,
-                                       [this]() { this->onAudioSourceInvalidated(); });
+    connect(audioSource.get(), &IAudioSource::invalidated, this, &ToxFriendCall::onAudioSourceInvalidated);
 }
 
 void ToxFriendCall::onAudioSinkInvalidated()
 {
     auto newSink = audio.makeSink();
 
-    audioSinkInvalid = newSink->connectTo_invalidated(this, [this]() { this->onAudioSinkInvalidated(); });
+    if (newSink) {
+        audioSinkInvalid = newSink->connectTo_invalidated(this, [this]() { this->onAudioSinkInvalidated(); });
+    }
+
     sink = std::move(newSink);
 }
 
@@ -276,7 +279,12 @@ void ToxGroupCall::removePeer(ToxPk peerId)
 void ToxGroupCall::addPeer(ToxPk peerId)
 {
     std::unique_ptr<IAudioSink> newSink = audio.makeSink();
-    QMetaObject::Connection con = newSink->connectTo_invalidated(this, [this, peerId]() { this->onAudioSinkInvalidated(peerId); });
+
+    QMetaObject::Connection con;
+
+    if (newSink) {
+         con = newSink->connectTo_invalidated(this, [this, peerId]() { this->onAudioSinkInvalidated(peerId); });
+    }
 
     peers.emplace(peerId, std::move(newSink));
     sinkInvalid.insert({peerId, con});
