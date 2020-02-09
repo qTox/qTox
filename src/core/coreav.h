@@ -59,11 +59,6 @@ public:
     bool isCallActive(const Friend* f) const;
     bool isCallActive(const Group* g) const;
     bool isCallVideoEnabled(const Friend* f) const;
-    bool sendCallAudio(uint32_t friendNum, const int16_t* pcm, size_t samples, uint8_t chans,
-                       uint32_t rate) const;
-    void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
-    bool sendGroupCallAudio(int groupNum, const int16_t* pcm, size_t samples, uint8_t chans,
-                            uint32_t rate) const;
 
     VideoSource* getVideoSourceFromCall(int callNumber) const;
     void sendNoVideo();
@@ -90,6 +85,11 @@ public slots:
     bool cancelCall(uint32_t friendNum);
     void timeoutCall(uint32_t friendNum);
     void start();
+    bool sendGroupCallAudio(int groupNum, const int16_t* pcm, size_t samples, uint8_t chans,
+                            uint32_t rate) const;
+    bool sendCallAudio(uint32_t friendNum, const int16_t* pcm, size_t samples, uint8_t chans,
+                       uint32_t rate) const;
+    void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
 
 signals:
     void avInvite(uint32_t friendId, bool video);

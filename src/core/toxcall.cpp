@@ -56,9 +56,6 @@ ToxCall::ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio)
 
 ToxCall::~ToxCall()
 {
-    QObject::disconnect(audioInConn);
-    QObject::disconnect(audioSrcInvalid);
-
     if (videoEnabled) {
         QObject::disconnect(videoInConn);
         CameraSource::getInstance().unsubscribe();
@@ -125,18 +122,12 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av, 
     , sink(audio.makeSink())
     , friendId{FriendNum}
 {
-    // TODO(sudden6): move this to audio source
-    audioInConn =
-        QObject::connect(audioSource.get(), &IAudioSource::frameAvailable,
+    connect(audioSource.get(), &IAudioSource::frameAvailable, this,
                          [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
                              this->av->sendCallAudio(this->friendId, pcm, samples, chans, rate);
                          });
 
     connect(audioSource.get(), &IAudioSource::invalidated, this, &ToxFriendCall::onAudioSourceInvalidated);
-
-    if (!audioInConn) {
-        qDebug() << "Audio input connection not working";
-    }
 
     if (sink) {
         audioSinkInvalid = sink->connectTo_invalidated(this, [this]() { this->onAudioSinkInvalidated(); });
@@ -169,8 +160,7 @@ ToxFriendCall::~ToxFriendCall()
 void ToxFriendCall::onAudioSourceInvalidated()
 {
     auto newSrc = audio.makeSource();
-    audioInConn =
-        QObject::connect(newSrc.get(), &IAudioSource::frameAvailable,
+    connect(newSrc.get(), &IAudioSource::frameAvailable, this,
                          [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
                              this->av->sendCallAudio(this->friendId, pcm, samples, chans, rate);
                          });
@@ -213,18 +203,12 @@ ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av, IAudioControl& audio)
     , groupId{GroupNum}
 {
     // register audio
-    audioInConn =
-        QObject::connect(audioSource.get(), &IAudioSource::frameAvailable,
-                         [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
-                             this->av->sendGroupCallAudio(this->groupId, pcm, samples, chans, rate);
-                         });
+    connect(audioSource.get(), &IAudioSource::frameAvailable, this,
+            [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
+                this->av->sendGroupCallAudio(this->groupId, pcm, samples, chans, rate);
+            });
 
-    if (!audioInConn) {
-        qDebug() << "Audio input connection not working";
-    }
-
-    audioSrcInvalid = QObject::connect(audioSource.get(), &IAudioSource::invalidated,
-                                       [this]() { this->onAudioSourceInvalidated(); });
+    connect(audioSource.get(), &IAudioSource::invalidated, this, &ToxGroupCall::onAudioSourceInvalidated);
 }
 
 ToxGroupCall::~ToxGroupCall()
@@ -236,17 +220,14 @@ ToxGroupCall::~ToxGroupCall()
 void ToxGroupCall::onAudioSourceInvalidated()
 {
     auto newSrc = audio.makeSource();
-    // TODO(sudden6): move this to audio source
-    audioInConn =
-        QObject::connect(audioSource.get(), &IAudioSource::frameAvailable,
-                         [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
-                             this->av->sendGroupCallAudio(this->groupId, pcm, samples, chans, rate);
-                         });
+    connect(audioSource.get(), &IAudioSource::frameAvailable,
+            [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
+                this->av->sendGroupCallAudio(this->groupId, pcm, samples, chans, rate);
+            });
 
     audioSource = std::move(newSrc);
 
-    audioSrcInvalid = QObject::connect(audioSource.get(), &IAudioSource::invalidated,
-                                       [this]() { this->onAudioSourceInvalidated(); });
+    connect(audioSource.get(), &IAudioSource::invalidated, this, &ToxGroupCall::onAudioSourceInvalidated);
 }
 
 
