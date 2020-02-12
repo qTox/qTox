@@ -68,6 +68,7 @@ private:
     void retranslateUi();
     void updateUserCount(int numPeers);
     void updateUserNames();
+    void joinGroupCall();
     void leaveGroupCall();
 
 private:

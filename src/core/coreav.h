@@ -68,7 +68,7 @@ public:
     VideoSource* getVideoSourceFromCall(int callNumber) const;
     void sendNoVideo();
 
-    void joinGroupCall(int groupNum);
+    void joinGroupCall(const Group& group);
     void leaveGroupCall(int groupNum);
     void muteCallInput(const Group* g, bool mute);
     void muteCallOutput(const Group* g, bool mute);
