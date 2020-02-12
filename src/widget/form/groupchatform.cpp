@@ -325,18 +325,14 @@ void GroupChatForm::onVolMuteToggle()
 void GroupChatForm::onCallClicked()
 {
     CoreAV* av = Core::getInstance()->getAv();
+
     if (!inCall) {
-        av->joinGroupCall(group->getId());
-        audioInputFlag = true;
-        audioOutputFlag = true;
-        inCall = true;
+        joinGroupCall();
     } else {
         leaveGroupCall();
     }
 
-    const int peersCount = group->getPeersCount();
-    const bool online = peersCount > 1;
-    headWidget->updateCallButtons(online, inCall);
+    headWidget->updateCallButtons(true, inCall);
 
     const bool inMute = av->isGroupCallInputMuted(group);
     headWidget->updateMuteMicButton(inCall, inMute);
@@ -373,11 +369,7 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 void GroupChatForm::updateUserCount(int numPeers)
 {
     nusersLabel->setText(tr("%n user(s) in chat", "Number of users in chat", numPeers));
-    const bool online = numPeers > 1;
-    headWidget->updateCallButtons(online, inCall);
-    if (inCall && (!online || !group->isAvGroupchat())) {
-        leaveGroupCall();
-    }
+    headWidget->updateCallButtons(true, inCall);
 }
 
 void GroupChatForm::retranslateUi()
@@ -440,6 +432,15 @@ void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)
 
         s.setBlackList(blackList);
     }
+}
+
+void GroupChatForm::joinGroupCall()
+{
+    CoreAV* av = Core::getInstance()->getAv();
+    av->joinGroupCall(group);
+    audioInputFlag = true;
+    audioOutputFlag = true;
+    inCall = true;
 }
 
 void GroupChatForm::leaveGroupCall()

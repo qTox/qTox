@@ -535,17 +535,17 @@ VideoSource* CoreAV::getVideoSourceFromCall(int friendNum) const
  * @note Call from the GUI thread.
  * @param groupId Id of group to join
  */
-void CoreAV::joinGroupCall(int groupId)
+void CoreAV::joinGroupCall(Group* group)
 {
     QWriteLocker locker{&callsLock};
 
-    qDebug() << QString("Joining group call %1").arg(groupId);
+    qDebug() << QString("Joining group call %1").arg(group->getId());
 
     // Audio backend must be set before starting a call
     assert(audio != nullptr);
-    ToxGroupCallPtr groupcall = ToxGroupCallPtr(new ToxGroupCall{groupId, *this, *audio});
+    ToxGroupCallPtr groupcall = ToxGroupCallPtr(new ToxGroupCall{group, *this, *audio});
     assert(groupcall != nullptr);
-    auto ret = groupCalls.emplace(groupId, std::move(groupcall));
+    auto ret = groupCalls.emplace(group->getId(), std::move(groupcall));
     if (ret.second == false) {
         qWarning() << "This group call already exists, not joining!";
         return;
