@@ -271,12 +271,12 @@ deploy:
 
 after_success:
   - >
-    test $TRAVIS_PULL_REQUEST == "false"
-    && test $TRAVIS_BRANCH == "master"
-    && test $JOB == "build-docs"
+    test "$TRAVIS_PULL_REQUEST" == "false"
+    && test "$TRAVIS_BRANCH" == "master"
+    && test "$JOB" == "build-docs"
     && bash ./.travis/deploy-docs.sh
   - >
-    test $TRAVIS_PULL_REQUEST == "false"
-    && test $TRAVIS_BRANCH == "master"
-    && test $JOB == "build-gitstats"
+    test "$TRAVIS_PULL_REQUEST" == "false"
+    && test "$TRAVIS_BRANCH" == "master"
+    && test "$JOB" == "build-gitstats"
     && bash ./.travis/deploy-gitstats.sh
