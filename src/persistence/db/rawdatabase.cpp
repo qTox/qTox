@@ -282,7 +282,7 @@ bool RawDatabase::setCipherParameters(int majorVersion, const QString& database)
             return false;
         }
     }
-    qDebug() << "Setting SQLCipher 4.x parameters";
+    qDebug().nospace() << "Setting SQLCipher " << majorVersion << ".x parameters";
     return execNow(defaultParams.replace("database.", prefix));
 }
 
