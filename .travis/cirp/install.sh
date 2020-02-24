@@ -28,7 +28,7 @@ else
   python3 --version || true
   pyenv versions || true
 
-  pyenv global 3.7
+  pyenv global $(pyenv versions | grep -o ' 3\.[5-99]\.[1-99]' | tail -n1)
 fi
 
 pip install --upgrade pip
