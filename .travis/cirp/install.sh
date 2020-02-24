@@ -53,9 +53,9 @@ if ! pip list --format=columns | grep '^ci-release-publisher '
 then
   cd .
   cd "$(mktemp -d)"
-  VERSION="0.2.0a3"
+  VERSION="0.2.0"
   FILENAME="ci_release_publisher-$VERSION-py3-none-any.whl"
-  HASH="399d0c645ea115d72c646c87e3b4094af04018c5bcb6a95abed4c09cdeec8bd3"
+  HASH="da7f139e90c57fb64ed2eb83c883ad6434d7c0598c843f7be7b572377bed4bc4"
   pip download ci_release_publisher==$VERSION
   check_sha256 "$HASH" "$FILENAME"
   pip install --no-index --find-links "$PWD" "$FILENAME"
