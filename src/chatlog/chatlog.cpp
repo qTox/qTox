@@ -407,10 +407,9 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
 
     layout(lines.last()->getRow(), lines.size(), useableWidth());
 
-    if (visibleLines.size() > 1) {
-        startResizeWorker(visibleLines[1]);
-    } else {
-        startResizeWorker();
+    // redo layout only when scrolled down
+    if(stickToBottom()) {
+        startResizeWorker(true);
     }
 }
 
@@ -463,9 +462,9 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
 
     // redo layout
     if (visibleLines.size() > 1) {
-        startResizeWorker(visibleLines[1]);
+        startResizeWorker(stickToBottom(), visibleLines[1]);
     } else {
-        startResizeWorker();
+        startResizeWorker(stickToBottom());
     }
 
 }
@@ -481,7 +480,7 @@ void ChatLog::scrollToBottom()
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
 }
 
-void ChatLog::startResizeWorker(ChatLine::Ptr anchorLine)
+void ChatLog::startResizeWorker(bool stick, ChatLine::Ptr anchorLine)
 {
     if (lines.empty()) {
         isScroll = true;
@@ -491,11 +490,11 @@ void ChatLog::startResizeWorker(ChatLine::Ptr anchorLine)
     // (re)start the worker
     if (!workerTimer->isActive()) {
         // these values must not be reevaluated while the worker is running
-        if (anchorLine) {
-            workerAnchorLine = anchorLine;
-            workerStb = false;
+        workerStb = stick;
+        if (stick) {
+            workerAnchorLine = ChatLine::Ptr();
         } else {
-            workerStb = stickToBottom();
+            workerAnchorLine = anchorLine;
         }
     }
 
@@ -765,7 +764,7 @@ int ChatLog::getNumRemove() const
 
 void ChatLog::forceRelayout()
 {
-    startResizeWorker();
+    startResizeWorker(stickToBottom());
 }
 
 void ChatLog::checkVisibility(bool causedWheelEvent)
@@ -834,7 +833,7 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
     bool stb = stickToBottom();
 
     if (ev->size().width() != ev->oldSize().width()) {
-        startResizeWorker();
+        startResizeWorker(stb);
         stb = false; // let the resize worker handle it
     }
 
@@ -901,8 +900,9 @@ QRectF ChatLog::calculateSceneRect() const
 {
     qreal bottom = (lines.empty() ? 0.0 : lines.last()->sceneBoundingRect().bottom());
 
-    if (typingNotification.get() != nullptr)
+    if (typingNotification.get() != nullptr) {
         bottom += typingNotification->sceneBoundingRect().height() + lineSpacing;
+    }
 
     return QRectF(-margins.left(), -margins.top(), useableWidth(),
                   bottom + margins.bottom() + margins.top());
