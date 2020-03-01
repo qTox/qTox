@@ -173,8 +173,6 @@ protected:
     QAction* exportChatAction;
     QAction* goCurrentDateAction;
 
-    ToxPk previousId;
-
     QMenu menu;
 
     QPushButton* emoteButton;

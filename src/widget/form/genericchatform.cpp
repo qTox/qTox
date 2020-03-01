@@ -623,7 +623,6 @@ void GenericChatForm::setColorizedNames(bool enable)
 void GenericChatForm::addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                                            const QDateTime& datetime)
 {
-    previousId = ToxPk();
     insertChatMessage(ChatMessage::createChatInfoMessage(message, type, datetime));
 }
 
@@ -632,7 +631,6 @@ void GenericChatForm::addSystemDateMessage(const QDate& date)
     const Settings& s = Settings::getInstance();
     QString dateText = date.toString(s.getDateFormat());
 
-    previousId = ToxPk();
     insertChatMessage(ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime()));
 }
 
@@ -791,7 +789,6 @@ void GenericChatForm::clearChatArea(bool confirm, bool inform)
     }
 
     chatWidget->clear();
-    previousId = ToxPk();
 
     if (inform)
         addSystemInfoMessage(tr("Cleared"), ChatMessage::INFO, QDateTime::currentDateTime());
@@ -1148,7 +1145,7 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
         if (onCompletion) {
             auto connection = std::make_shared<QMetaObject::Connection>();
             *connection = connect(chatWidget, &ChatLog::workerTimeoutFinished,
-                                  [onCompletion, connection, this] {
+                                  [onCompletion, connection] {
                                       onCompletion();
                                       disconnect(*connection);
                                   });
