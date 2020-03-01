@@ -81,6 +81,11 @@ git config --global alias.logs 'log --show-signature'
 - if a PR requires changes but there has been no activity from the PR submitter
   for more than 2 months, close the PR.
 
+# Continous Integration
+
+qTox nightly builds can be found in [qTox-nightly-release]. Should one build
+fail, it is important to restart the whole Travis CI pipeline and not just
+a single job or the tool managing the nightly builds can get confused.
 
 # Issues
 
@@ -259,3 +264,4 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [Flathub repository]: https://github.com/flathub/io.github.qtox.qTox
 [`./flatpak/io.github.qtox.qTox.json`]: flatpak/io.github.qtox.qTox.json
 [the Flathub build bot]: https://flathub.org/builds/#/
+[qTox-nightly-release]: https://github.com/qTox/qTox-nightly-releases
