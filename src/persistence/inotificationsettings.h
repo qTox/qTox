@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2019 by The qTox Project Contributors
+    Copyright © 2020 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef INOTIFICATION_SETTINGS_H
-#define INOTIFICATION_SETTINGS_H
+#pragma once
 
 #include <QStringList>
 
@@ -46,5 +45,3 @@ public:
     virtual bool getGroupAlwaysNotify() const = 0;
     virtual void setGroupAlwaysNotify(bool newValue) = 0;
 };
-
-#endif /*INOTIFICATION_SETTINGS_H*/
