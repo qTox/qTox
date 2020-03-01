@@ -1,3 +1,22 @@
+/*
+    Copyright © 2020 by The qTox Project Contributors
+
+    This file is part of qTox, a Qt-based graphical interface for Tox.
+
+    qTox is libre software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    qTox is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with qTox.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "notificationgenerator.h"
 #include "src/chatlog/content/filetransferwidget.h"
 
@@ -24,8 +43,8 @@ namespace
 
     QString generateMultiChatTitle(size_t numChats, size_t numMessages)
     {
-        // FIXME: how do I tr this
-        return QObject::tr("%1 messages from %2 chats")
+        //: e.g. 3 messages from 2 chats
+        return QObject::tr("%1 message(s) from %2 chats")
             .arg(numMessages)
             .arg(numChats);
     }
@@ -37,14 +56,14 @@ namespace
     {
         if (numNotifications[contact] > 1)
         {
-            return QObject::tr("%1 messages from %2")
+            //: e.g. 2 messages from Bob
+            return QObject::tr("%1 message(s) from %2")
                 .arg(numNotifications[contact])
                 .arg(contact->getDisplayedName());
         }
         else
         {
-            return QObject::tr("%1")
-                .arg(contact->getDisplayedName());
+            return contact->getDisplayedName();
         }
     }
 
@@ -200,7 +219,8 @@ NotificationData NotificationGenerator::fileTransferNotification(const Friend* f
     }
     else
     {
-        ret.title = f->getDisplayedName() + " - " + tr("File sent");
+        //: e.g. Bob - file transfer
+        ret.title = tr("%1 - file transfer").arg(f->getDisplayedName());
         ret.message = filename + " (" + FileTransferWidget::getHumanReadableSize(fileSize) + ")";
     }
 
@@ -218,7 +238,7 @@ NotificationData NotificationGenerator::groupInvitationNotification(const Friend
         return ret;
     }
 
-    ret.title = from->getDisplayedName() + tr(" invites you to join a group.");
+    ret.title = tr("%1 invites you to join a group.").arg(from->getDisplayedName());
     ret.message = "";
     ret.pixmap = getSenderAvatar(profile, from->getPublicKey());
 
@@ -234,7 +254,7 @@ NotificationData NotificationGenerator::friendRequestNotification(const ToxPk& s
         return ret;
     }
 
-    ret.title = sender.toString() + tr(" sent you a friend request.");
+    ret.title = tr("Friend request received from %1").arg(sender.toString());
     ret.message = message;
 
     return ret;
