@@ -38,6 +38,7 @@
 #include "src/model/friendmessagedispatcher.h"
 #include "src/model/groupmessagedispatcher.h"
 #if DESKTOP_NOTIFICATIONS
+#include "src/model/notificationgenerator.h"
 #include "src/platform/desktop_notifications/desktopnotify.h"
 #endif
 
@@ -127,7 +128,7 @@ public:
     void addFriendDialog(const Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
     bool newFriendMessageAlert(const ToxPk& friendId, const QString& text, bool sound = true,
-                               bool file = false);
+                               QString filename = QString(), size_t filesize = 0);
     bool newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk, const QString& message,
                               bool notify);
     bool getIsWindowMinimized();
@@ -360,6 +361,7 @@ private:
 
     MessageProcessor::SharedParams sharedMessageProcessorParams;
 #if DESKTOP_NOTIFICATIONS
+    std::unique_ptr<NotificationGenerator> notificationGenerator;
     DesktopNotify notifier;
 #endif
 
