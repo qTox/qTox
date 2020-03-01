@@ -114,11 +114,11 @@ void TestNotificationGenerator::testMultipleFriendMessages()
     f.setName("friendName");
     notificationGenerator->friendMessageNotification(&f, "test");
     auto notificationData = notificationGenerator->friendMessageNotification(&f, "test2");
-    QVERIFY(notificationData.title == "2 messages from friendName");
+    QVERIFY(notificationData.title == "2 message(s) from friendName");
     QVERIFY(notificationData.message == "test2");
 
     notificationData = notificationGenerator->friendMessageNotification(&f, "test3");
-    QVERIFY(notificationData.title == "3 messages from friendName");
+    QVERIFY(notificationData.title == "3 message(s) from friendName");
     QVERIFY(notificationData.message == "test3");
 }
 
@@ -140,7 +140,6 @@ void TestNotificationGenerator::testNotificationClear()
 void TestNotificationGenerator::testGroupMessage()
 {
     Group g(0, GroupId(0), "groupName", false, "selfName", *groupQuery, *coreIdHandler);
-    g.setName("groupName");
     auto sender = groupQuery->getGroupPeerPk(0, 0);
     g.updateUsername(sender, "sender1");
 
@@ -152,15 +151,17 @@ void TestNotificationGenerator::testGroupMessage()
 void TestNotificationGenerator::testMultipleGroupMessages()
 {
     Group g(0, GroupId(0), "groupName", false, "selfName", *groupQuery, *coreIdHandler);
-    g.setName("groupName");
+
     auto sender = groupQuery->getGroupPeerPk(0, 0);
     g.updateUsername(sender, "sender1");
 
     auto sender2 = groupQuery->getGroupPeerPk(0, 1);
     g.updateUsername(sender2, "sender2");
 
+    notificationGenerator->groupMessageNotification(&g, sender, "test1");
+
     auto notificationData = notificationGenerator->groupMessageNotification(&g, sender2, "test2");
-    QVERIFY(notificationData.title == "groupName");
+    QVERIFY(notificationData.title == "2 message(s) from groupName");
     QVERIFY(notificationData.message == "sender2: test2");
 }
 
@@ -175,17 +176,14 @@ void TestNotificationGenerator::testMultipleFriendSourceMessages()
     notificationGenerator->friendMessageNotification(&f, "test1");
     auto notificationData = notificationGenerator->friendMessageNotification(&f2, "test2");
 
-    QVERIFY(notificationData.title == "2 messages from 2 chats");
+    QVERIFY(notificationData.title == "2 message(s) from 2 chats");
     QVERIFY(notificationData.message == "friend1, friend2");
 }
 
 void TestNotificationGenerator::testMultipleGroupSourceMessages()
 {
     Group g(0, GroupId(QByteArray(32, 0)), "groupName", false, "selfName", *groupQuery, *coreIdHandler);
-    g.setName("groupName");
-
-    Group g2(1, GroupId(QByteArray(32, 1)), "groupName", false, "selfName", *groupQuery, *coreIdHandler);
-    g.setName("groupName2");
+    Group g2(1, GroupId(QByteArray(32, 1)), "groupName2", false, "selfName", *groupQuery, *coreIdHandler);
 
     auto sender = groupQuery->getGroupPeerPk(0, 0);
     g.updateUsername(sender, "sender1");
@@ -193,7 +191,7 @@ void TestNotificationGenerator::testMultipleGroupSourceMessages()
     notificationGenerator->groupMessageNotification(&g, sender, "test1");
     auto notificationData = notificationGenerator->groupMessageNotification(&g2, sender, "test1");
 
-    QVERIFY(notificationData.title == "2 messages from 2 chats");
+    QVERIFY(notificationData.title == "2 message(s) from 2 chats");
     QVERIFY(notificationData.message == "groupName, groupName2");
 }
 
@@ -202,8 +200,7 @@ void TestNotificationGenerator::testMixedSourceMessages()
     Friend f(0, ToxPk());
     f.setName("friend");
 
-    Group g(0, GroupId(QByteArray(32, 0)), "groupName", false, "selfName", *groupQuery, *coreIdHandler);
-    g.setName("group");
+    Group g(0, GroupId(QByteArray(32, 0)), "group", false, "selfName", *groupQuery, *coreIdHandler);
 
     auto sender = groupQuery->getGroupPeerPk(0, 0);
     g.updateUsername(sender, "sender1");
@@ -211,11 +208,11 @@ void TestNotificationGenerator::testMixedSourceMessages()
     notificationGenerator->friendMessageNotification(&f, "test1");
     auto notificationData = notificationGenerator->groupMessageNotification(&g, sender, "test2");
 
-    QVERIFY(notificationData.title == "2 messages from 2 chats");
+    QVERIFY(notificationData.title == "2 message(s) from 2 chats");
     QVERIFY(notificationData.message == "friend, group");
 
     notificationData = notificationGenerator->fileTransferNotification(&f, "file", 0);
-    QVERIFY(notificationData.title == "3 messages from 2 chats");
+    QVERIFY(notificationData.title == "3 message(s) from 2 chats");
     QVERIFY(notificationData.message == "friend, group");
 }
 
@@ -226,7 +223,7 @@ void TestNotificationGenerator::testFileTransfer()
 
     auto notificationData = notificationGenerator->fileTransferNotification(&f, "file", 5 * 1024 * 1024 /* 5MB */);
 
-    QVERIFY(notificationData.title == "friend - File sent");
+    QVERIFY(notificationData.title == "friend - file transfer");
     QVERIFY(notificationData.message == "file (5.00MiB)");
 }
 
@@ -238,7 +235,7 @@ void TestNotificationGenerator::testFileTransferAfterMessage()
     notificationGenerator->friendMessageNotification(&f, "test1");
     auto notificationData = notificationGenerator->fileTransferNotification(&f, "file", 5 * 1024 * 1024 /* 5MB */);
 
-    QVERIFY(notificationData.title == "2 messages from friend");
+    QVERIFY(notificationData.title == "2 message(s) from friend");
     QVERIFY(notificationData.message == "Incoming file transfer");
 }
 
@@ -262,7 +259,7 @@ void TestNotificationGenerator::testGroupInviteUncounted()
     notificationGenerator->groupInvitationNotification(&f);
     auto notificationData = notificationGenerator->friendMessageNotification(&f, "test2");
 
-    QVERIFY(notificationData.title == "2 messages from friend");
+    QVERIFY(notificationData.title == "2 message(s) from friend");
     QVERIFY(notificationData.message == "test2");
 }
 
@@ -272,7 +269,7 @@ void TestNotificationGenerator::testFriendRequest()
 
     auto notificationData = notificationGenerator->friendRequestNotification(sender, "request");
 
-    QVERIFY(notificationData.title == "0000000000000000000000000000000000000000000000000000000000000000 sent you a friend request.");
+    QVERIFY(notificationData.title == "Friend request received from 0000000000000000000000000000000000000000000000000000000000000000");
     QVERIFY(notificationData.message == "request");
 }
 
@@ -286,7 +283,7 @@ void TestNotificationGenerator::testFriendRequestUncounted()
     notificationGenerator->friendRequestNotification(sender, "request");
     auto notificationData = notificationGenerator->friendMessageNotification(&f, "test2");
 
-    QVERIFY(notificationData.title == "2 messages from friend");
+    QVERIFY(notificationData.title == "2 message(s) from friend");
     QVERIFY(notificationData.message == "test2");
 }
 
@@ -319,7 +316,6 @@ void TestNotificationGenerator::testSimpleFileTransfer()
 void TestNotificationGenerator::testSimpleGroupMessage()
 {
     Group g(0, GroupId(0), "groupName", false, "selfName", *groupQuery, *coreIdHandler);
-    g.setName("groupName");
     auto sender = groupQuery->getGroupPeerPk(0, 0);
     g.updateUsername(sender, "sender1");
 
@@ -367,7 +363,7 @@ void TestNotificationGenerator::testSimpleMessageToggle()
 
     auto notificationData = notificationGenerator->friendMessageNotification(&f, "test2");
 
-    QVERIFY(notificationData.title == "2 messages from friend");
+    QVERIFY(notificationData.title == "2 message(s) from friend");
     QVERIFY(notificationData.message == "test2");
 }
 
