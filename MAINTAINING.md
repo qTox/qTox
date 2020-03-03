@@ -84,8 +84,9 @@ git config --global alias.logs 'log --show-signature'
 # Continous Integration
 
 qTox nightly builds can be found in [qTox-nightly-release]. Should one build
-fail, it is important to restart the whole Travis CI pipeline and not just
-a single job or the tool managing the nightly builds can get confused.
+fail, it is important to restart the whole Travis CI build and not just a
+single job. The tool managing the nightly builds deletes all build artifacts
+on any job failure, so all need to be rebuilt.
 
 # Issues
 
