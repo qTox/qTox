@@ -46,6 +46,15 @@ cd "$FP_BUILD_DIR"
 # Add 'https://flathub.org' remote:
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
+## Workaround for Flathub download issues: https://github.com/flathub/flathub/issues/845
+# Pre download org.kde.Sdk because it fails often
+for i in {1..5}
+do
+    echo "Download try $i"
+    flatpak --system install flathub -y org.kde.Sdk/x86_64/5.12 | true
+done
+## Workaround end
+
 # Build the qTox flatpak
 flatpak-builder --disable-rofiles-fuse --install-deps-from=flathub --force-clean --repo=tox-repo qTox-flatpak "$QTOX_BUILD_DIR"/flatpak/io.github.qtox.qTox.json
 
