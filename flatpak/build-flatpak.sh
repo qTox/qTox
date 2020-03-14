@@ -35,13 +35,13 @@ then
     docker run --rm --privileged -it \
         -v $PWD:/qtox \
         -v $PWD/output:/output \
-        debian:stretch-slim \
+        debian:buster-slim \
         /bin/bash
 else
     docker run --rm --privileged \
         -v $PWD:/qtox \
         -v $PWD/output:/output \
-        debian:stretch-slim \
+        debian:buster-slim \
         /bin/bash -c "/qtox/flatpak/build.sh"
 fi
 

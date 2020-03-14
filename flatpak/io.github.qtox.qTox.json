@@ -2,7 +2,7 @@
     "app-id": "io.github.qtox.qTox",
     "runtime": "org.kde.Platform",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "5.11",
+    "runtime-version": "5.12",
     "command": "qtox",
     "rename-icon": "qtox",
     "finish-args": [
@@ -11,6 +11,7 @@
         "--socket=wayland",
         "--socket=x11",
         "--share=ipc",
+        "--talk-name=org.kde.StatusNotifierWatcher",
         "--filesystem=xdg-desktop",
         "--filesystem=xdg-documents",
         "--filesystem=xdg-download",
@@ -20,91 +21,60 @@
         "--filesystem=/media",
         "--device=all"
     ],
-    "build-options": {
-        "cflags": "-O3 -DSQLITE_HAS_CODEC",
-        "cxxflags": "-O3"
+    "add-extensions": {
+        "org.freedesktop.Platform.ffmpeg-full": {
+            "directory": "lib/ffmpeg",
+            "version": "18.08",
+            "add-ld-path": "."
+        }
     },
     "cleanup": [
         "/include",
         "/lib/pkgconfig",
-        "/share/man"
+        "/share/man",
+        "*.la",
+        "*.a"
     ],
     "modules": [
         {
-            "name": "libv4l2",
-            "config-opts":
-            [
-                "--disable-libdvbv5",
-                "--disable-v4l-utils",
-                "--disable-qv4l2"
-            ],
-            "sources":
-            [
-                {
-                    "type": "archive",
-                    "url": "https://linuxtv.org/downloads/v4l-utils/v4l-utils-1.14.2.tar.bz2",
-                    "sha256" : "e6b962c4b1253cf852c31da13fd6b5bb7cbe5aa9e182881aec55123bae680692"
-                }
-            ]
-        },
-        {
-            "name": "ffmpeg",
-            "config-opts": [
-                "--disable-everything",
-                "--enable-gpl",
-                "--disable-debug",
-                "--enable-optimizations",
-                "--enable-shared",
-                "--disable-programs",
-                "--disable-protocols",
-                "--disable-doc",
-                "--disable-avfilter",
-                "--disable-avresample",
-                "--disable-filters",
-                "--disable-iconv",
-                "--disable-network",
-                "--disable-postproc",
-                "--enable-libv4l2",
-                "--enable-indev=v4l2",
-                "--enable-libxcb",
-                "--enable-indev=xcbgrab",
-                "--enable-demuxer=h264",
-                "--enable-demuxer=mjpeg",
-                "--enable-parser=h264",
-                "--enable-parser=mjpeg",
-                "--enable-decoder=h264",
-                "--enable-decoder=mjpeg",
-                "--enable-decoder=rawvideo"
+            "name": "tcl",
+            "subdir": "unix",
+            "build-options": {
+                "no-debuginfo": true
+            },
+            "cleanup": [
+                "/bin",
+                "/lib",
+                "/man"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://ffmpeg.org/releases/ffmpeg-4.0.1.tar.bz2",
-                    "sha256" : "7ee591b1e7fb66f055fa514fbd5d98e092ddb3dbe37d2e50ea5c16ab51c21670"
+                    "url": "https://downloads.sourceforge.net/project/tcl/Tcl/8.6.10/tcl8.6.10-src.tar.gz",
+                    "sha256": "5196dbf6638e3df8d5c87b5815c8c2b758496eb6f0e41446596c9a4e638d87ed"
                 }
             ]
         },
         {
             "name": "sqlcipher",
-            "rm-configure": true,
+            "cleanup": [
+                "/bin"
+            ],
             "config-opts": [
                 "--enable-tempstore=yes",
                 "--disable-tcl"
             ],
+            "build-options": {
+                "cflags": "-DSQLITE_HAS_CODEC",
+                "ldflags": "-lcrypto"
+            },
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/sqlcipher/sqlcipher",
-                    "tag": "v3.4.2",
-                    "commit": "c6f709fca81c910ba133aaf6330c28e01ccfe5f8",
+                    "tag": "v4.3.0",
+                    "commit": "ece66fdcbb6b43876d25e8e6308991a097fa8661",
                     "disable-fsckobjects" : true
-                },
-                {
-                    "type": "script",
-                    "dest-filename": "autogen.sh",
-                    "commands": [
-                        "AUTOMAKE=\"automake --foreign\" autoreconf -vfi"
-                    ]
                 }
             ]
         },
@@ -126,13 +96,19 @@
                 {
                     "type": "git",
                     "url": "https://github.com/jedisct1/libsodium",
-                    "tag": "1.0.16",
-                    "commit": "675149b9b8b66ff44152553fb3ebf9858128363d"
+                    "tag": "1.0.18",
+                    "commit": "4f5e89fa84ce1d178a6765b8b46f2b6f91216677"
                 }
             ]
         },
         {
+            /* Reminder: this is included in KDE 5.13 */
             "name": "libqrencode",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DWITH_TOOLS=NO",
+                "-DBUILD_SHARED_LIBS=ON"
+            ],
             "sources": [
                 {
                     "type": "git",

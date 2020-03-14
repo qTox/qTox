@@ -21,15 +21,9 @@ readonly PATCH_DIR="flatpak/patches"
 # use multiple cores when building
 export MAKEFLAGS="-j$(nproc)"
 
-# add backports repo, needed for a recent enough flatpak
-echo "deb http://ftp.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list
-
 # Get packages
 apt-get update
-apt-get install $APT_FLAGS ca-certificates git elfutils wget xz-utils patch bzip2 librsvg2-2 librsvg2-common
-
-# install recent flatpak packages
-apt-get install $APT_FLAGS -t stretch-backports flatpak flatpak-builder
+apt-get install $APT_FLAGS ca-certificates git elfutils wget xz-utils patch bzip2 librsvg2-2 librsvg2-common flatpak flatpak-builder
 
 # create build directory
 mkdir -p "$BUILD_DIR"
@@ -51,7 +45,7 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 for i in {1..5}
 do
     echo "Download try $i"
-    flatpak --system install flathub -y org.kde.Sdk/x86_64/5.12 | true
+    flatpak --system install flathub -y org.kde.Sdk/x86_64/5.12 || true
 done
 ## Workaround end
 
