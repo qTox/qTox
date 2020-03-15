@@ -1183,7 +1183,7 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
     QMutexLocker ml{&coreLoopLock};
 
     // from tox.h: "If peer_number == UINT32_MAX, then author is unknown (e.g. initial joining the conference)."
-    if (peerId != std::numeric_limits<uint32_t>::max()) {
+    if (peerId == std::numeric_limits<uint32_t>::max()) {
         return {};
     }
 
