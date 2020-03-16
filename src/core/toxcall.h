@@ -77,7 +77,6 @@ protected:
     CoreAV* av{nullptr};
     // audio
     IAudioControl& audio;
-    QMetaObject::Connection audioInConn;
     bool muteMic{false};
     bool muteVol{false};
     // video
@@ -86,11 +85,11 @@ protected:
     bool videoEnabled{false};
     bool nullVideoBitrate{false};
     std::unique_ptr<IAudioSource> audioSource = nullptr;
-    QMetaObject::Connection audioSrcInvalid;
 };
 
 class ToxFriendCall : public ToxCall
 {
+    Q_OBJECT
 public:
     ToxFriendCall() = delete;
     ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av, IAudioControl& audio);
@@ -103,12 +102,12 @@ public:
 
     void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const;
 
-private:
-    QMetaObject::Connection audioSinkInvalid;
+private slots:
     void onAudioSourceInvalidated();
     void onAudioSinkInvalidated();
 
 private:
+    QMetaObject::Connection audioSinkInvalid;
     TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
     std::unique_ptr<IAudioSink> sink = nullptr;
     uint32_t friendId;
@@ -116,6 +115,7 @@ private:
 
 class ToxGroupCall : public ToxCall
 {
+    Q_OBJECT
 public:
     ToxGroupCall() = delete;
     ToxGroupCall(const Group& group, CoreAV& av, IAudioControl& audio);
@@ -137,6 +137,7 @@ private:
     std::map<ToxPk, QMetaObject::Connection> sinkInvalid;
     const Group& group;
 
+private slots:
     void onAudioSourceInvalidated();
     void onAudioSinkInvalidated(ToxPk peerId);
 };
