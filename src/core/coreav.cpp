@@ -283,6 +283,8 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     // Audio backend must be set before making a call
     assert(audio != nullptr);
     ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall(friendNum, video, *this, *audio));
+    // Call object must be owned by this thread or there will be locking problems with Audio
+    call->moveToThread(this->thread());
     assert(call != nullptr);
     calls.emplace(friendNum, std::move(call));
     return true;
@@ -543,7 +545,10 @@ void CoreAV::joinGroupCall(const Group& group)
 
     // Audio backend must be set before starting a call
     assert(audio != nullptr);
+
     ToxGroupCallPtr groupcall = ToxGroupCallPtr(new ToxGroupCall{group, *this, *audio});
+    // Call Objects must be owned by CoreAV or there will be locking problems with Audio
+    groupcall->moveToThread(this->thread());
     assert(groupcall != nullptr);
     auto ret = groupCalls.emplace(group.getId(), std::move(groupcall));
     if (ret.second == false) {
@@ -713,6 +718,8 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
     // Audio backend must be set before receiving a call
     assert(self->audio != nullptr);
     ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall{friendNum, video, *self, *self->audio});
+    // Call object must be owned by CoreAV thread or there will be locking problems with Audio
+    call->moveToThread(self->thread());
     assert(call != nullptr);
 
     auto it = self->calls.emplace(friendNum, std::move(call));
