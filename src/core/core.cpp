@@ -34,6 +34,9 @@
 #include "src/util/strongtype.h"
 
 #include <QCoreApplication>
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+#include <QRandomGenerator>
+#endif
 #include <QRegularExpression>
 #include <QString>
 #include <QStringBuilder>
@@ -467,7 +470,11 @@ void Core::bootstrapDht()
     }
 
     int i = 0;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    static int j = QRandomGenerator::global()->generate() % listSize;
+#else
     static int j = qrand() % listSize;
+#endif
     // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
     while (i < 2) {
         const DhtServer& dhtServer = bootstrapNodes[j % listSize];

@@ -175,7 +175,9 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(logMessageHandler);
 
     // initialize random number generator
+#if (QT_VERSION < QT_VERSION_CHECK(5, 15, 0))
     qsrand(time(nullptr));
+#endif
 
     std::unique_ptr<QApplication> a(new QApplication(argc, argv));
 
@@ -207,7 +209,9 @@ int main(int argc, char* argv[])
     osx::migrateProfiles();
 #endif
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 15, 0))
     qsrand(time(nullptr));
+#endif
     Settings& settings = Settings::getInstance();
     QString locale = settings.getTranslation();
     Translator::translate(locale);
