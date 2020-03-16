@@ -96,7 +96,11 @@ bool toxFileIsComplete(ToxFile::FileStatus status)
 std::map<ChatLogIdx, ChatLogItem>::const_iterator
 firstItemAfterDate(QDate date, const std::map<ChatLogIdx, ChatLogItem>& items)
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    return std::lower_bound(items.begin(), items.end(), QDateTime(date.startOfDay()),
+#else
     return std::lower_bound(items.begin(), items.end(), QDateTime(date),
+#endif
                             [](const MessageDateAdaptor& a, MessageDateAdaptor const& b) {
                                 return a.timestamp.date() < b.timestamp.date();
                             });
