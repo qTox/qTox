@@ -957,7 +957,11 @@ QList<History::DateIdx> History::getNumMessagesForFriendBeforeDateBoundaries(con
                                "%4;")
                            .arg(countMessagesForFriend)
                            .arg(friendPkString)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+                           .arg(QDateTime(from.startOfDay()).toMSecsSinceEpoch())
+#else
                            .arg(QDateTime(from).toMSecsSinceEpoch())
+#endif
                            .arg(limitString);
 
     QList<DateIdx> dateIdxs;

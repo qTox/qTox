@@ -33,7 +33,11 @@ public:
     GenericChatItemLayout(const GenericChatItemLayout& layout) = delete;
     ~GenericChatItemLayout();
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    void addSortedWidget(GenericChatItemWidget* widget, int stretch = 0, Qt::Alignment alignment = Qt::Alignment());
+#else
     void addSortedWidget(GenericChatItemWidget* widget, int stretch = 0, Qt::Alignment alignment = nullptr);
+#endif
     int indexOfSortedWidget(GenericChatItemWidget* widget) const;
     bool existsSortedWidget(GenericChatItemWidget* widget) const;
     void removeSortedWidget(GenericChatItemWidget* widget);
