@@ -472,7 +472,6 @@ bool parseErr(Tox_Err_Conference_Delete error, int line)
 
 Core::Core(QThread* coreThread)
     : tox(nullptr)
-    , av(nullptr)
     , toxTimer{new QTimer{this}}
     , coreThread(coreThread)
 {
