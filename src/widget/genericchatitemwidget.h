@@ -20,8 +20,8 @@
 #ifndef GENERICCHATITEMWIDGET_H
 #define GENERICCHATITEMWIDGET_H
 
-#include <QLabel>
 #include <QFrame>
+#include <QLabel>
 
 class CroppingLabel;
 
