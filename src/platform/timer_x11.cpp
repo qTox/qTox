@@ -39,7 +39,10 @@ uint32_t Platform::getIdleTime()
     if (hasExtension) {
         XScreenSaverInfo* info = XScreenSaverAllocInfo();
         if (info) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
             XScreenSaverQueryInfo(display, DefaultRootWindow(display), info);
+#pragma GCC diagnostic pop
             idleTime = info->idle;
             XFree(info);
         } else
