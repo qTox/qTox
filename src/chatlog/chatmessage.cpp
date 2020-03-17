@@ -93,7 +93,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     QColor color = Style::getColor(Style::MainText);
     if (colorizeName) {
         QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Sha256);
-        quint8 *data = (quint8*)hash.data();
+        const auto* data = hash.data();
 
         color.setHsv(data[0], 255, 196);
 

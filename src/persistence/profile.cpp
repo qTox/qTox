@@ -523,8 +523,8 @@ QString Profile::avatarPath(const ToxPk& owner, bool forceUnencrypted)
                       && hashSize <= crypto_generichash_KEYBYTES_MAX,
                   "Key size not supported by libsodium");
     QByteArray hash(hashSize, 0);
-    crypto_generichash((uint8_t*)hash.data(), hashSize, (uint8_t*)idData.data(), idData.size(),
-                       (uint8_t*)pubkeyData.data(), pubkeyData.size());
+    crypto_generichash(reinterpret_cast<uint8_t*>(hash.data()), hashSize, reinterpret_cast<uint8_t*>(idData.data()), idData.size(),
+                       reinterpret_cast<uint8_t*>(pubkeyData.data()), pubkeyData.size());
     return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
 }
 
@@ -728,7 +728,7 @@ QByteArray Profile::getAvatarHash(const ToxPk& owner)
 {
     QByteArray pic = loadAvatarData(owner);
     QByteArray avatarHash(TOX_HASH_LENGTH, 0);
-    tox_hash((uint8_t*)avatarHash.data(), (uint8_t*)pic.data(), pic.size());
+    tox_hash(reinterpret_cast<uint8_t*>(avatarHash.data()), reinterpret_cast<uint8_t*>(pic.data()), pic.size());
     return avatarHash;
 }
 
@@ -812,7 +812,7 @@ bool Profile::isEncrypted(QString name)
         return false;
     }
 
-    saveFile.read((char*)data, TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
+    saveFile.read(reinterpret_cast<char*>(data), TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
     saveFile.close();
 
     return tox_is_data_encrypted(data);
