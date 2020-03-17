@@ -55,7 +55,7 @@ class MockGroupQuery : public ICoreGroupQuery
 public:
     GroupId getGroupPersistentId(uint32_t groupNumber) const override
     {
-        return GroupId(0);
+        return GroupId();
     }
 
     uint32_t getGroupNumberPeers(int groupId) const override
@@ -211,7 +211,7 @@ void TestGroupMessageDispatcher::init()
     groupQuery = std::unique_ptr<MockGroupQuery>(new MockGroupQuery());
     coreIdHandler = std::unique_ptr<MockCoreIdHandler>(new MockCoreIdHandler());
     g = std::unique_ptr<Group>(
-        new Group(0, GroupId(0), "TestGroup", false, "me", *groupQuery, *coreIdHandler));
+        new Group(0, GroupId(), "TestGroup", false, "me", *groupQuery, *coreIdHandler));
     messageSender = std::unique_ptr<MockGroupMessageSender>(new MockGroupMessageSender());
     sharedProcessorParams =
         std::unique_ptr<MessageProcessor::SharedParams>(new MessageProcessor::SharedParams());

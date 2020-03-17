@@ -738,7 +738,9 @@ void RawDatabase::process()
                     const QByteArray& blob = query.blobs[curParam + i];
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
-                    // SQLITE_STATIC uses old-style cast and comes from system headers, so can't be fixed by us
+#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
+                    // SQLITE_STATIC uses old-style cast and 0 as null pointer butcomes from system headers, so can't
+                    // be fixed by us
                     auto sqliteDataType = SQLITE_STATIC;
 #pragma GCC diagnostic pop
                     if (sqlite3_bind_blob(stmt, i + 1, blob.data(), blob.size(), sqliteDataType)

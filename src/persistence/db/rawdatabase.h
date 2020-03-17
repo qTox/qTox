@@ -39,7 +39,10 @@
 #define SQLITE_HAS_CODEC
 #define SQLITE_TEMP_STORE 2
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #include <sqlite3.h>
+#pragma GCC diagnostic pop
 
 using RowId = NamedType<int64_t, struct RowIdTag, Orderable>;
 Q_DECLARE_METATYPE(RowId);

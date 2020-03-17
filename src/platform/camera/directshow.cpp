@@ -42,10 +42,10 @@
 
 static char* wcharToUtf8(wchar_t* w)
 {
-    int l = WideCharToMultiByte(CP_UTF8, 0, w, -1, 0, 0, 0, 0);
+    int l = WideCharToMultiByte(CP_UTF8, 0, w, -1, nullptr, 0, nullptr, nullptr);
     char* s = new char[l];
     if (s)
-        WideCharToMultiByte(CP_UTF8, 0, w, -1, s, l, 0, 0);
+        WideCharToMultiByte(CP_UTF8, 0, w, -1, s, l, nullptr, nullptr);
     return s;
 }
 
@@ -157,7 +157,7 @@ static IBaseFilter* getDevFilter(QString devName)
         if (devName != devIdString)
             goto fail;
 
-        if (m->BindToObject(0, 0, IID_IBaseFilter, reinterpret_cast<void**>(&devFilter)) != S_OK)
+        if (m->BindToObject(nullptr, nullptr, IID_IBaseFilter, reinterpret_cast<void**>(&devFilter)) != S_OK)
             goto fail;
 
     fail:

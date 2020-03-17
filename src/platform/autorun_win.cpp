@@ -57,7 +57,7 @@ inline tstring currentRegistryKeyName()
 
 bool Platform::setAutorun(bool on)
 {
-    HKEY key = 0;
+    HKEY key = nullptr;
     if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),
                      0, KEY_ALL_ACCESS, &key)
         != ERROR_SUCCESS)
@@ -80,7 +80,7 @@ bool Platform::setAutorun(bool on)
 
 bool Platform::getAutorun()
 {
-    HKEY key = 0;
+    HKEY key = nullptr;
     if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),
                      0, KEY_ALL_ACCESS, &key)
         != ERROR_SUCCESS)
@@ -93,7 +93,7 @@ bool Platform::getAutorun()
     DWORD type = REG_SZ;
     bool result = false;
 
-    if (RegQueryValueEx(key, keyName.c_str(), 0, &type, const_cast<PBYTE>(reinterpret_cast<const unsigned char*>(path)), &length) == ERROR_SUCCESS
+    if (RegQueryValueEx(key, keyName.c_str(), nullptr, &type, const_cast<PBYTE>(reinterpret_cast<const unsigned char*>(path)), &length) == ERROR_SUCCESS
         && type == REG_SZ)
         result = true;
 
