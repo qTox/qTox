@@ -82,7 +82,7 @@ ContentDialog::ContentDialog(const Core &core, QWidget* parent)
 
     onGroupchatPositionChanged(s.getGroupchatPosition());
 
-    QScrollArea* friendScroll = new QScrollArea(this);
+    friendScroll = new QScrollArea(this);
     friendScroll->setMinimumWidth(minWidget);
     friendScroll->setFrameStyle(QFrame::NoFrame);
     friendScroll->setLayoutDirection(Qt::RightToLeft);
@@ -438,7 +438,7 @@ void ContentDialog::setUsername(const QString& newName)
 void ContentDialog::reloadTheme()
 {
     setStyleSheet(Style::getStylesheet("contentDialog/contentDialog.css"));
-    splitter->widget(0)->setStyleSheet(Style::getStylesheet("friendList/friendList.css"));
+    friendScroll->setStyleSheet(Style::getStylesheet("friendList/friendList.css"));
 }
 
 bool ContentDialog::event(QEvent* event)
