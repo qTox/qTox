@@ -44,6 +44,7 @@ class GroupChatroom;
 class GroupWidget;
 class QCloseEvent;
 class QSplitter;
+class QScrollArea;
 
 class ContentDialog : public ActivateDialog, public IDialogs
 {
@@ -122,6 +123,7 @@ private:
 private:
     QList<QLayout*> layouts;
     QSplitter* splitter;
+    QScrollArea* friendScroll;
     FriendListLayout* friendLayout;
     GenericChatItemLayout groupLayout;
     ContentLayout* contentLayout;
