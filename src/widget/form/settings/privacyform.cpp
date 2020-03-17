@@ -98,7 +98,7 @@ void PrivacyForm::showEvent(QShowEvent*)
 void PrivacyForm::on_randomNosapamButton_clicked()
 {
     QTime time = QTime::currentTime();
-    qsrand((uint)time.msec());
+    qsrand(static_cast<uint>(time.msec()));
 
     uint32_t newNospam{0};
     for (int i = 0; i < 4; ++i)

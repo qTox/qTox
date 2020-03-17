@@ -294,7 +294,7 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
             return devices;
         }
         if (s->iformat->priv_class) {
-            *(const AVClass**)s->priv_data = s->iformat->priv_class;
+            *reinterpret_cast<const AVClass**>(s->priv_data) = s->iformat->priv_class;
             av_opt_set_defaults(s->priv_data);
         }
     } else {

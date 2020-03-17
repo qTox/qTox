@@ -68,7 +68,7 @@ bool Platform::setAutorun(bool on)
 
     if (on) {
         tstring path = currentCommandLine();
-        result = RegSetValueEx(key, keyName.c_str(), 0, REG_SZ, (PBYTE)path.c_str(),
+        result = RegSetValueEx(key, keyName.c_str(), 0, REG_SZ, const_cast<PBYTE>(reinterpret_cast<const PBYTE>(path.c_str())),
                                path.length() * sizeof(TCHAR))
                  == ERROR_SUCCESS;
     } else
@@ -93,7 +93,7 @@ bool Platform::getAutorun()
     DWORD type = REG_SZ;
     bool result = false;
 
-    if (RegQueryValueEx(key, keyName.c_str(), 0, &type, (PBYTE)path, &length) == ERROR_SUCCESS
+    if (RegQueryValueEx(key, keyName.c_str(), 0, &type, const_cast<PBYTE>(reinterpret_cast<const PBYTE>(path)), &length) == ERROR_SUCCESS
         && type == REG_SZ)
         result = true;
 

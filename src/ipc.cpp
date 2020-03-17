@@ -103,11 +103,11 @@ IPC::~IPC()
 time_t IPC::postEvent(const QString& name, const QByteArray& data, uint32_t dest)
 {
     QByteArray binName = name.toUtf8();
-    if (binName.length() > (int32_t)sizeof(IPCEvent::name)) {
+    if (binName.length() > static_cast<int32_t>(sizeof(IPCEvent::name))) {
         return 0;
     }
 
-    if (data.length() > (int32_t)sizeof(IPCEvent::data)) {
+    if (data.length() > static_cast<int32_t>(sizeof(IPCEvent::data))) {
         return 0;
     }
 
