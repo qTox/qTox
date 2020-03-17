@@ -728,7 +728,7 @@ bool GenericChatForm::loadHistoryFrom(const QDateTime &time)
 
 void GenericChatForm::removeFirstsMessages(const int num)
 {
-    if (messages.size() > num) {
+    if (static_cast<int>(messages.size()) > num) {
         messages.erase(messages.begin(), std::next(messages.begin(), num));
     } else {
         messages.clear();
@@ -737,7 +737,7 @@ void GenericChatForm::removeFirstsMessages(const int num)
 
 void GenericChatForm::removeLastsMessages(const int num)
 {
-    if (messages.size() > num) {
+    if (static_cast<int>(messages.size()) > num) {
         messages.erase(std::next(messages.end(), -num), messages.end());
     } else {
         messages.clear();

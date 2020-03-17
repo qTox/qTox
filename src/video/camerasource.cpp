@@ -18,10 +18,13 @@
 */
 
 extern "C" {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
 #include <libavcodec/avcodec.h>
 #include <libavdevice/avdevice.h>
 #include <libavformat/avformat.h>
 #include <libswscale/swscale.h>
+#pragma GCC diagnostic pop
 }
 #include "cameradevice.h"
 #include "camerasource.h"

@@ -98,7 +98,7 @@ void CoreFile::sendAvatarFile(uint32_t friendId, const QByteArray& data)
     uint8_t avatarHash[TOX_HASH_LENGTH];
     if (!data.isEmpty()) {
         static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH, "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
-        tox_hash(avatarHash, (uint8_t*)data.data(), data.size());
+        tox_hash(avatarHash, reinterpret_cast<const uint8_t*>(data.data()), data.size());
         filesize = data.size();
         file_id = avatarHash;
         file_name = avatarHash;
@@ -135,7 +135,7 @@ void CoreFile::sendAvatarFile(uint32_t friendId, const QByteArray& data)
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.avatarData = data;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
-    tox_file_get_file_id(tox, friendId, fileNum, (uint8_t*)file.resumeFileId.data(),
+    tox_file_get_file_id(tox, friendId, fileNum, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
                          nullptr);
     addFile(friendId, fileNum, file);
 }
@@ -159,7 +159,7 @@ void CoreFile::sendFile(uint32_t friendId, QString filename, QString filePath,
     ToxFile file{fileNum, friendId, fileName.getQString(), filePath, ToxFile::SENDING};
     file.filesize = filesize;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
-    tox_file_get_file_id(tox, friendId, fileNum, (uint8_t*)file.resumeFileId.data(),
+    tox_file_get_file_id(tox, friendId, fileNum, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
                          nullptr);
     if (!file.open(false)) {
         qWarning() << QString("sendFile: Can't open file, error: %1").arg(file.file->errorString());
@@ -355,7 +355,7 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
     file.filesize = filesize;
     file.fileKind = kind;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
-    tox_file_get_file_id(tox, friendId, fileId, (uint8_t*)file.resumeFileId.data(),
+    tox_file_get_file_id(tox, friendId, fileId, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
                          nullptr);
     coreFile->addFile(friendId, fileId, file);
     if (kind != TOX_FILE_KIND_AVATAR) {
@@ -385,7 +385,7 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
     file.filesize = 0;
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
-    tox_file_get_file_id(tox, friendId, fileId, (uint8_t*)file.resumeFileId.data(),
+    tox_file_get_file_id(tox, friendId, fileId, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
                          nullptr);
     addFile(friendId, fileId, file);
 }
@@ -457,7 +457,7 @@ void CoreFile::onFileDataCallback(Tox* tox, uint32_t friendId, uint32_t fileId, 
         memcpy(data.get(), chunk.data(), nread);
     } else {
         file->file->seek(pos);
-        nread = file->file->read((char*)data.get(), length);
+        nread = file->file->read(reinterpret_cast<char*>(data.get()), length);
         if (nread <= 0) {
             qWarning("onFileDataCallback: Failed to read from file");
             file->status = ToxFile::CANCELED;
@@ -467,7 +467,7 @@ void CoreFile::onFileDataCallback(Tox* tox, uint32_t friendId, uint32_t fileId, 
             return;
         }
         file->bytesSent += length;
-        file->hashGenerator->addData((const char*)data.get(), length);
+        file->hashGenerator->addData(reinterpret_cast<const char*>(data.get()), length);
     }
 
     if (!tox_file_send_chunk(tox, friendId, fileId, pos, data.get(), nread, nullptr)) {
@@ -520,12 +520,12 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
     }
 
     if (file->fileKind == TOX_FILE_KIND_AVATAR) {
-        file->avatarData.append((char*)data, length);
+        file->avatarData.append(reinterpret_cast<const char*>(data), length);
     } else {
-        file->file->write((char*)data, length);
+        file->file->write(reinterpret_cast<const char*>(data), length);
     }
     file->bytesSent += length;
-    file->hashGenerator->addData((const char*)data, length);
+    file->hashGenerator->addData(reinterpret_cast<const char*>(data), length);
 
     if (file->fileKind != TOX_FILE_KIND_AVATAR) {
         emit coreFile->fileTransferInfo(*file);

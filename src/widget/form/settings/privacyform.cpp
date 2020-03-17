@@ -102,9 +102,9 @@ void PrivacyForm::on_randomNosapamButton_clicked()
 {
     QTime time = QTime::currentTime();
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
-    QRandomGenerator((uint)time.msec());
+    QRandomGenerator(static_cast<uint>(time.msec()));
 #else
-    qsrand((uint)time.msec());
+    qsrand(static_cast<uint>(time.msec()));
 #endif
 
     uint32_t newNospam{0};

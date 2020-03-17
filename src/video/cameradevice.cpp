@@ -22,8 +22,11 @@
 #include <QDesktopWidget>
 #include <QScreen>
 extern "C" {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
 #include <libavdevice/avdevice.h>
 #include <libavformat/avformat.h>
+#pragma GCC disagnostic pop
 }
 #include "cameradevice.h"
 #include "src/persistence/settings.h"
@@ -294,7 +297,7 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
             return devices;
         }
         if (s->iformat->priv_class) {
-            *(const AVClass**)s->priv_data = s->iformat->priv_class;
+            *static_cast<const AVClass**>(s->priv_data) = s->iformat->priv_class;
             av_opt_set_defaults(s->priv_data);
         }
     } else {
