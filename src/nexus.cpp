@@ -112,7 +112,7 @@ void Nexus::start()
 
 #ifdef Q_OS_MAC
     // TODO: still needed?
-    globalMenuBar = new QMenuBar(0);
+    globalMenuBar = new QMenuBar();
     dockMenu = new QMenu(globalMenuBar);
 
     viewMenu = globalMenuBar->addMenu(QString());

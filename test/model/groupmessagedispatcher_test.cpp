@@ -55,7 +55,7 @@ class MockGroupQuery : public ICoreGroupQuery
 public:
     GroupId getGroupPersistentId(uint32_t groupNumber) const override
     {
-        return GroupId(0);
+        return GroupId();
     }
 
     uint32_t getGroupNumberPeers(int groupId) const override
