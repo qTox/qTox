@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include <QLabel>
 #include <QFrame>
+#include <QLabel>
 
 class CroppingLabel;
 
