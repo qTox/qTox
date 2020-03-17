@@ -109,9 +109,9 @@ private:
     void initCore(const QByteArray& toxsave, const ICoreSettings& s, bool isNewProfile);
 
 private:
-    std::unique_ptr<Core> core = nullptr;
+    std::unique_ptr<Core> core;
     QString name;
-    std::unique_ptr<ToxEncrypt> passkey = nullptr;
+    std::unique_ptr<ToxEncrypt> passkey;
     std::shared_ptr<RawDatabase> database;
     std::shared_ptr<History> history;
     bool isRemoved;

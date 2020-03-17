@@ -251,7 +251,7 @@ private:
     // recursive, since we might call our own functions
     mutable QMutex coreLoopLock{QMutex::Recursive};
 
-    std::unique_ptr<QThread> coreThread = nullptr;
+    std::unique_ptr<QThread> coreThread;
 };
 
 #endif // CORE_HPP

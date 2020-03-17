@@ -139,7 +139,6 @@ Widget* Widget::instance{nullptr};
 
 Widget::Widget(IAudioControl& audio, QWidget* parent)
     : QMainWindow(parent)
-    , icon{nullptr}
     , trayMenu{nullptr}
     , ui(new Ui::MainWindow)
     , activeChatroomWidget{nullptr}

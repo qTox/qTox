@@ -84,7 +84,7 @@ protected:
     QMetaObject::Connection videoInConn;
     bool videoEnabled{false};
     bool nullVideoBitrate{false};
-    std::unique_ptr<IAudioSource> audioSource = nullptr;
+    std::unique_ptr<IAudioSource> audioSource;
 };
 
 class ToxFriendCall : public ToxCall
@@ -109,7 +109,7 @@ private slots:
 private:
     QMetaObject::Connection audioSinkInvalid;
     TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
-    std::unique_ptr<IAudioSink> sink = nullptr;
+    std::unique_ptr<IAudioSink> sink;
     uint32_t friendId;
 };
 

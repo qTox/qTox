@@ -73,7 +73,7 @@ enum class CreateToxDataError
 std::unique_ptr<ToxEncrypt> loadToxData(const QString& password, const QString& filePath,
                                         QByteArray& data, LoadToxDataError& error)
 {
-    std::unique_ptr<ToxEncrypt> tmpKey = nullptr;
+    std::unique_ptr<ToxEncrypt> tmpKey;
     qint64 fileSize = 0;
 
     QFile saveFile(filePath);
@@ -133,7 +133,7 @@ fail:
 std::unique_ptr<ToxEncrypt> createToxData(const QString& name, const QString& password,
                                           const QString& filePath, CreateToxDataError& error)
 {
-    std::unique_ptr<ToxEncrypt> newKey{nullptr};
+    std::unique_ptr<ToxEncrypt> newKey;
     if (!password.isEmpty()) {
         newKey = ToxEncrypt::makeToxEncrypt(password);
         if (!newKey) {

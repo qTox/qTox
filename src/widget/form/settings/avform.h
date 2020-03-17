@@ -104,8 +104,8 @@ private:
     IVideoSettings* videoSettings;
 
     bool subscribedToAudioIn;
-    std::unique_ptr<IAudioSink> audioSink = nullptr;
-    std::unique_ptr<IAudioSource> audioSrc = nullptr;
+    std::unique_ptr<IAudioSink> audioSink;
+    std::unique_ptr<IAudioSource> audioSrc;
     VideoSurface* camVideoSurface;
     CameraSource& camera;
     QVector<QPair<QString, QString>> videoDeviceList;
