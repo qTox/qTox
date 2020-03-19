@@ -105,7 +105,7 @@ protected:
     void updateSceneRect();
     void checkVisibility(bool causedWheelEvent = false);
     void scrollToBottom();
-    void startResizeWorker(ChatLine::Ptr anchorLine = nullptr);
+    void startResizeWorker(bool stick, ChatLine::Ptr anchorLine = nullptr);
 
     void mouseDoubleClickEvent(QMouseEvent* ev) final;
     void mousePressEvent(QMouseEvent* ev) final;
