@@ -161,8 +161,16 @@ void EmoticonsWidget::mousePressEvent(QMouseEvent*)
 
 void EmoticonsWidget::wheelEvent(QWheelEvent* e)
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    const bool vertical = qAbs(e->angleDelta().y()) >= qAbs(e->angleDelta().x());
+    const int delta = vertical ? e->angleDelta().y() : e->angleDelta().x();
+
+    if (vertical) {
+        if (delta < 0) {
+#else
     if (e->orientation() == Qt::Vertical) {
         if (e->delta() < 0) {
+#endif
             stack.setCurrentIndex(stack.currentIndex() + 1);
         } else {
             stack.setCurrentIndex(stack.currentIndex() - 1);
