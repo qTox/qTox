@@ -5,11 +5,11 @@
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>صدا/فیلم</translation>
+        <translation>صدا/ویدیو</translation>
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>وضوح پیشفرض</translation>
+        <translation>تفکیک‌پذیری پیش‌فرض</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -17,11 +17,11 @@
     </message>
     <message>
         <source>Select region</source>
-        <translation>کشور خود را انتخاب کنید</translation>
+        <translation>منطقه را انتخاب کنید</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation>صفحه نمایش ۱٪</translation>
+        <translation>صفحه نمایش %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
@@ -29,15 +29,15 @@
     </message>
     <message>
         <source>Gain</source>
-        <translation>تقویت صدا</translation>
+        <translation>بهره تقویت</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>وسیله منتخب برای پخش</translation>
+        <translation>دستگاه پخش</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>از نوار متحرک برای تنظیم صدای بلندگو استفاده کنید.</translation>
+        <translation>از نوار لغزنده برای تنظیم صدای بلندگو‌های خود استفاده کنید.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -49,11 +49,11 @@
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>تنظیمات ویدئو</translation>
+        <translation>تنظیمات ویدیو</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>دستگاه ویدئویی</translation>
+        <translation>دستگاه ویدیو</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -61,19 +61,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>تنظیم وضوح دوربین.
-مقدار های بیشتر باعث کیفیت بیشتر تصاویر ویدئویی می شوند.
+        <translation>تنظیم تفکیک‌پذیری دوربین.
+مقدار های بیشتر باعث کیفیت بیشتر تصاویر ویدیویی می شوند.
 توجه داشته باشید که برای کیفیت تصویری بهتر به اتصال اینترنت بهتر نیاز دارید.
-گاهی اوقات ممکن است کیفیت اینترنت شما به اندازه کافی برای برقراری ارتباط ویدئویی با کیفیت مناسب نباشد.
-که ممکن است باعث مشکلاتی در تماس های ویدئویی شود.</translation>
+گاهی اوقات ممکن است کیفیت اینترنت شما به اندازه کافی برای برقراری ارتباط ویدیویی با کیفیت مناسب نباشد.
+که ممکن است باعث مشکلاتی در تماس های ویدیویی شود.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>وضوح</translation>
+        <translation>تفکیک‌پذیری</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>اسکن مجدد تجهیزات</translation>
+        <translation>بررسی دوباره دستگاه‌ها</translation>
     </message>
     <message>
         <source>Test Sound</source>
@@ -262,23 +262,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;این کلید عمومی دوست شماست، از آن برای تایید هویتشان از کانال دیگری، استفاده کنید. شما نبایستی این کلید را به دیگران ارسال کنید، زیرا که آنها را قادر به افزدون این مخاطب می‌کند.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>کلید عمومی (نه شناسه Tox ):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">تأیید</translation>
+        <translation>تأیید</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>آیا برای پاک کردن %1 از سابقه گفت‌و‌گو اطمینان دارید؟</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف سابقه گفت‌و‌گو حاوی %1 موفق نبود!</translation>
     </message>
 </context>
 <context>
@@ -301,15 +301,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>لینک دانلود به‌روز‌رسانی را باز کن</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>به‌روز‌رسانی در دسترس است</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox به‌روز است✓</translation>
     </message>
 </context>
 <context>
@@ -578,7 +578,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>اکتشاف LAN را فعال کن</translation>
     </message>
 </context>
 <context>
@@ -610,7 +610,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation>فایل موقت قابل دسترسی و باز شدن نبود</translation>
+        <translation>باز کردن فایل موقت، موفق نبود</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
@@ -648,12 +648,13 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>نام فایل حاوی کاراکتر‌های غیر‎‌مجاز است</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>کاراکتر‌های غیرمجاز به _ تغیبر یافت
+که بتوانید فایل را در ویندوز ذخیره کنید.</translation>
     </message>
 </context>
 <context>
@@ -790,30 +791,30 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>گفت‌و‌گوی گروهی %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">پیام جدید</translation>
+        <translation>پیام جدید</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>انتقال فایل ورودی</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>درخواست دوستی دریافت شد</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>پیام گروهی جدید</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>دعوت به گروه دریافت شد</translation>
     </message>
 </context>
 <context>
@@ -905,7 +906,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>دسترسی راه دور دچار وقفه شد</translation>
     </message>
 </context>
 <context>
@@ -1179,19 +1180,19 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>بررسی به‌روز‌رسانی‌ها</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>بررسی املا</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>حجم بیشینه فایل برای تایید خودکار (0 برای غیر‌فعال کردن):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> مگابایت</translation>
     </message>
 </context>
 <context>
@@ -1234,27 +1235,27 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">تأیید</translation>
+        <translation>تأیید</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>آیا برای حذف همگی پیام‌های نمایش‌داده‌شده اطمینان دارید؟</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>جست‌و‌جو در متن</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>به تاریخ امروز برو</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">تاریخچه چت را بارگذاری کن...</translation>
+        <translation>تاریخچه گفت‌و‌گو را بارگذاری کن...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">در یک فایل ذخیره کن</translation>
+        <translation>در یک فایل ذخیره کن</translation>
     </message>
 </context>
 <context>
@@ -1273,27 +1274,27 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>تمام‌صفحه</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>تغییر وضعیت پیش‌نمایش ویدیو</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>صدا را قطع کن</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">میکروفن را خاموش کن</translation>
+        <translation>میکروفون را قطع کن</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">پایان تماس تصویری</translation>
+        <translation>قطع تماس تصویری</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>خروج از حالت تمام‌صفحه</translation>
     </message>
 </context>
 <context>
@@ -1304,15 +1305,15 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 به گروه پیوست</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 اکنون با عنوان %2 شناخته می‌شود</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 گروه را ترک کرد</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
@@ -1323,11 +1324,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>بی‌صدا</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>رفع حالت بی‌صدا</translation>
     </message>
 </context>
 <context>
@@ -1388,11 +1389,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>پیام جدید</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">آنلاین</translation>
+        <translation>آنلاین</translation>
     </message>
 </context>
 <context>
@@ -1636,27 +1637,27 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>بارگذاری سابقه</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>از</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>به</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(حدود 100 پیام بار‌گذاری شده است)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>انتخاب تاریخ گفت‌و‌گو</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>تاریخی را انتخاب کنید</translation>
     </message>
 </context>
 <context>
@@ -2032,7 +2033,7 @@ Save format changes are possible, which may result in data loss.</source>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation>امکان ایجاد کلید با استفاده از رمز وجود ندارد، پروفایل از رمز جدید استفاده نخواهد کرد.</translation>
+        <translation>ایجاد کلید با استفاده از کلمه عبور ناموفق بود، نمایه از کلمه عبور جدید استفاده نخواهد کرد.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
@@ -2040,7 +2041,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">در حال Tox کردن روی qTox</translation>
+        <translation>در حال Tox کردن روی qTox</translation>
     </message>
 </context>
 <context>
@@ -2096,7 +2097,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation>امکان کپی کردن فایل وجود ندارد</translation>
+        <translation>کپی کردن فایل نا‌موفق بود</translation>
     </message>
     <message>
         <source>The file you chose could not be written to.</source>
@@ -2263,7 +2264,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">تصاویر (%1)</translation>
+        <translation>تصاویر (%1)</translation>
     </message>
 </context>
 <context>
@@ -2474,52 +2475,52 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>تیره</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>آبی تیره</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>زیتونی تیره</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>قرمز تیره</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>بنفش تیره</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>بارگذاری خودکار نمایه موفق نبود.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">آنلاین هستش</translation>
+        <translation>آنلاین</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">پای سیستم نیست</translation>
+        <translation>بیرون مانده</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">سرش شلوغه</translation>
+        <translation>مشغول</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">دستگاهش خاموشه</translation>
+        <translation>آفلاین</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>مسدود</translation>
     </message>
 </context>
 <context>
@@ -2530,7 +2531,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation>همچنین تاریخچه چت را حذف کن</translation>
+        <translation>همچنین سابقه گفت‌و‌گو را حذف کن</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2538,11 +2539,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>آیا مطمئن هستید که میخواهید %1 را از لیست مخاطبین حذف کنید؟</translation>
+        <translation>آیا برای حذف %1 از لیست مخاطبین خود اطمینان دارید؟</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>درصورت وجود همه تاریخچه چت با این دوست را نیز پاک کن</translation>
+        <translation>در صورت وجود تمام سابقه گفت‌و‌گو با دوست را حذف کن</translation>
     </message>
 </context>
 <context>
@@ -2550,12 +2551,12 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>برای انتخاب یک ناحیه روی صفحه کلیک کرده و موس را به اطراف هدایت کنید. با فشردن کلید %1 صفحه qTox نمایش داده/پنهان میشود، فشردن کلید %2 عملیات را کنسل میکند.</translation>
+        <translation>برای انتخاب یک ناحیه روی صفحه کلیک کرده و به اطراف بکشید. کلید %1 را برای نمایش دادن/پنهان کردن صفحه qTox و یا کلید %2 را جهت لغو استفاده کنید.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation>فاصله</translation>
+        <translation>کلید فاصله</translation>
     </message>
     <message>
         <source>Escape</source>
@@ -2565,7 +2566,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>فشردن کلید %1 یک نماگرفت از صفحه را ارسال خواهد کرد، %2 صفحه qTox را نمایش میدهد یا پنهان میکند، و کلید %3 عملیات را متوقف میکند.</translation>
+        <translation>کلید %1 را برای ارسال تصویر انتخابی از صفحه، %2 را برای نمایش دادن/پنهان کردن صفحه qTox و کلید %3 را جهت لغو استفاده کنید..</translation>
     </message>
     <message>
         <source>Enter</source>
@@ -2577,93 +2578,93 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>متن مورد‌نظر یافت نمی‌شود.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>شروع</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">فرم</translation>
+        <translation>فرم</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>شروع جست‌و‌جو:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>از انتها</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>از ابتدا</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>بعد از تاریخ</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>قبل از تاریخ</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>حساس به بزرگ یا کوچک بودن حروف</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>فقط کلمات کامل</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>از عبارت‌های با قاعده استفاده کن</translation>
     </message>
 </context>
 <context>
     <name>SetPasswordDialog</name>
     <message>
         <source>Set your password</source>
-        <translation>رمز خود را تنظیم کنید</translation>
+        <translation>کلمه عبور خود را مشخص کنید</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>ورود مجدد رمز:</translation>
+        <translation>تأیید کلمه عبور:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>ورود رمز:</translation>
+        <translation>کلمه عبور:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation>میزان امنیت رمز عبور: %p%</translation>
+        <translation>امنیت کلمه عبور: %p%</translation>
     </message>
     <message>
         <source>The password is too short</source>
-        <translation>این رمز خیلی کوتاه است</translation>
+        <translation>کلمه عبور خیلی کوتاه است</translation>
     </message>
     <message>
         <source>The password doesn&apos;t match.</source>
-        <translation>رمزهای عبور ورودی با هم یکسان نیستند.</translation>
+        <translation>کلمه‌های عبور ورودی تطبیق ندارند.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation>تأیید رمز عبور</translation>
+        <translation>تأیید کلمه عبور</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation>ورود مجدد رمز عبور و تأیید آن</translation>
+        <translation>تأیید ورود کلمه عبور</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation>ورود رمز عبور</translation>
+        <translation>ورود کلمه عبور</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
@@ -2682,7 +2683,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation>اضافه کردن یک دوست</translation>
+        <translation>افزودن یک دوست</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
@@ -2704,14 +2705,14 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation>کنسل</translation>
+        <translation>لغو</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation>هیچکدام</translation>
+        <translation>هیچ‌کدام</translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -2722,11 +2723,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation>چت</translation>
+        <translation>گفت‌و‌گو</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation>فونت پایه:</translation>
+        <translation>قلم پایه:</translation>
     </message>
     <message>
         <source>px</source>
@@ -2738,27 +2739,27 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>فرمت بندی جدید تنظیم شده برای متن تا زمانی که qTox راه اندازی مجدد نشود بارگذاری نخواهد شد.</translation>
+        <translation>سبک جدید ترجیحی برای متن تا راه اندازی مجدد qTox، بارگذاری نخواهد شد.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation>فرمت و استایل متن:</translation>
+        <translation>قالب‌بندی سبک متن:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation>ظاهر و فرمت متن را انتخاب کنید.</translation>
+        <translation>سبک ترجیحی متن را انتخاب کنید.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation>متن خالی</translation>
+        <translation>متن ساده</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation>نویسه های مربوط به ظاهر و فرمت بندی متن را نیز نشان بده</translation>
+        <translation>نویسه‌های قالب‌بندی را نشان بده</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation>نویسه های مربوط به فرمت بندی متن را نشان نده</translation>
+        <translation>نویسه‌های قالب‌بندی را پنهان کن</translation>
     </message>
     <message>
         <source>New message</source>
@@ -2767,7 +2768,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>زمانی که یک پیام جدید دریافت می شود و پنجره برنامه باز نیست، پنجره qTox را باز کن و نشان بده.</translation>
+        <translation>زمانی که یک پیام جدید دریافت می‌کنید و پنجره برنامه باز نیست، پنجره qTox را باز کن.</translation>
     </message>
     <message>
         <source>Open window</source>
@@ -2780,45 +2781,45 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>اگر تیک کنار این گزینه زده شود، چت های گروهی در بالای لیست دوستان قرار میگیرد، در غیر این صورت، این لیست زیر لیست دوستان آنلاین نشان داده خواهد شد.</translation>
+        <translation>اگر انتخاب شود، گفت‌وگو‌های گروهی در بالای لیست دوستان قرار میگیرند، در غیر این صورت، این لیست زیر لیست دوستان آنلاین نشان داده خواهد شد.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation>چت های گروهی را بالای لیست دوستان قرار بده</translation>
+        <translation>گفت‌و‌گوهای گروهی را بالای لیست دوستان قرار بده</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>لیست مخاطبین شما به شکل فشرده نمایش داده خواهد شد.</translation>
+        <translation>لیست مخاطبین شما به صورت جمع‌و‌جور نمایش داده خواهد شد.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation>لیست مخاطبین به صورت فشرده</translation>
+        <translation>لیست مخاطبین به صورت متراکم</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation>نمایش چند پنجره ای</translation>
+        <translation>حالت چند‌پنجره‌ای</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation>هر گفت و گو را در یک پنجره مجزا باز کن</translation>
+        <translation>هر گفت‌و‌گو را در یک پنجره مجزا باز کن</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation>ایموجی ها</translation>
+        <translation>شکلک‌ها</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation>از ایموجی ها استفاده کن</translation>
+        <translation>از شکلک‌ها استفاده کن</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>بسته شکلک ها:</translation>
+        <translation>شکلک‌های لبخند:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation>اندازه ایموجی:</translation>
+        <translation>اندازه شکلک:</translation>
     </message>
     <message>
         <source> px</source>
@@ -2826,71 +2827,71 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Theme</source>
-        <translation>تِم</translation>
+        <translation>زمینه</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation>استایل:</translation>
+        <translation>سبک:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation>رنگ تِم:</translation>
+        <translation>رنگ زمینه:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation>شکل نمایش ساعت:</translation>
+        <translation>قالب نمایش ساعت:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation>شکل نمایش تاریخ:</translation>
+        <translation>قالب تاریخ:</translation>
     </message>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation>اگر این مورد فعال شود، هر مخاطب به جای یک تصویر پیش فرض، بر اساس شناسه Tox خود یک آواتار دریافت میکند.
-لازم است qTox مجددا راه اندازی شود.</translation>
+        <translation>اگر فعال شود، هر مخاطب بدون چهرک (آواتار) به جای یک تصویر پیش فرض، یک چهرک تولید‌شده بر اساس شناسه Tox خود دریافت می‌کند.
+برای اعمال نیاز به راه‌اندازی دوباره دارد.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation>از تصاویر شناسه ای به جای آواتار های خالی استفاده کن</translation>
+        <translation>از تصاویر شناسه‌ای به جای چهرک‌(آواتار)های خالی استفاده کن</translation>
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>از اسامی مستعار رنگی در گفت‌و‌گو‌ها استفاده کن</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>زمانی که پیامی جدید دریافت می‌کنید و پنجره برنامه در حالت انتخاب نیست، اطلاعیه‌ای نمایش بده.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>آگاه کن</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>تنها در مورد پیام‌های جدید گروه که در آنها نام برده شده‌اید، اطلاع بده.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>در گفت‌و‌گو‌های گروهی تنهای هنگام نام بردن اطلاع بده</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">یک آوای صوتی اجرا کن</translation>
+        <translation>صدا پخش کن</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">پخش صوت هنگامی که مشغول است</translation>
+        <translation>پخش صدا هنگامی که مشغولید</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>از طریق آگهی‌های رایانه، اطلاع بده</translation>
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>محتوا و فرستنده پیام را مخفی کن</translation>
     </message>
 </context>
 <context>
@@ -2912,12 +2913,12 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>toxcore با موفقیت راه اندازی نشد، برنامه بعد از اینکه شما این پیام را بررسی کنید بسته خواهد شد.</translation>
+        <translation>راه اندازی toxcore نا‌موفق بود، برنامه بعد از اینکه شما این پیام را ببندید، بسته خواهد شد.</translation>
     </message>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>امکان راه اندازی toxcore با استفاده از تنظیمات پراکسی شما وجود نداشت. امکان اجرای qTox وجود نداشت؛ لطفا تنظیمات خود را بررسی و به روز رسانی کنید و برنامه را دوباره اجرا کنید.</translation>
+        <translation>راه‌اندازی toxcore با استفاده از تنظیمات پراکسی شما موفق نبود. امکان اجرای qTox وجود ندارد؛ لطفا تنظیمات خود را تغییر داده و برنامه را دوباره اجرا کنید.</translation>
     </message>
     <message>
         <source>File</source>
@@ -2993,7 +2994,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation>ارسال پیام با خطا مواجه شد</translation>
+        <translation>ارسال پیام موفق نبود</translation>
     </message>
     <message>
         <source>Create new group...</source>
@@ -3084,19 +3085,19 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">ارسال فایل «%1» ممکن نبود</translation>
+        <translation>ارسال فایل «%1» موفق نبود</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>فایل ارسال شد</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> یک درخواست دوستی فرستاد.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> شما را به پیوستن به یک گروه دعوت می‌کند.</translation>
     </message>
 </context>
 </TS>

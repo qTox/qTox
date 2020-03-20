@@ -262,23 +262,23 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;See on su sõbra avalik võti. Kasuta seda tema tuvastamiseks mõne teise kanali kaudu. Sa ei saa seda saata teistele inimestele, et nad saaksid lisata ta kontaktiks.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Avalik võti (mitte ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Kinnitus</translation>
+        <translation>Kinnitus</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kas soovite kindlasti eemaldada vestlusajaloo partneriga %1?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Partneri %1 vestlusajaloo eemaldamine nurjus!</translation>
     </message>
 </context>
 <context>
@@ -301,15 +301,15 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava värskenduse allalaadimise link</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Värskendus on saadaval</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox on ajakohane ✓</translation>
     </message>
 </context>
 <context>
@@ -579,7 +579,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Luba kohtvõrgu tuvastamine</translation>
     </message>
 </context>
 <context>
@@ -648,12 +648,13 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Failinimi sisaldas keelatud märke</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keelatud märgid asendati märgiga _ ,
+et saaksid faili Windowsis salvestada.</translation>
     </message>
 </context>
 <context>
@@ -791,30 +792,30 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupivestlus %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Uus sõnum</translation>
+        <translation>Uus sõnum</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Sissetulev failiedastus</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Sõbrakutse on vastu võetud</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Uus grupisõnum</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupikutse on vastu võetud</translation>
     </message>
 </context>
 <context>
@@ -901,7 +902,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Partner peatatud</translation>
     </message>
 </context>
 <context>
@@ -1173,19 +1174,19 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolli värskendusi</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Õigekirja kontroll</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaatselt akepteeritud faili maksimaalne suurus (0 - piiranguteta):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
@@ -1228,27 +1229,27 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Kinnitus</translation>
+        <translation>Kinnitus</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kas soovite kindlasti kustutada kõik kuvatud sõnumid?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Otsi tekstist</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Mine tänasele kuupäevale</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Lae vestluste ajalugu...</translation>
+        <translation>Laadi vestluse ajalugu...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Ekspordi faili</translation>
+        <translation>Ekspordi faili</translation>
     </message>
 </context>
 <context>
@@ -1267,27 +1268,27 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Täisekraan</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Video eelvaate lülitamine</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaigista heli</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Vaigista mikrofon</translation>
+        <translation>Vaigista mikrofon</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Lõpeta videokõne</translation>
+        <translation>Lõpeta videokõne</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Välju täisekraanilt</translation>
     </message>
 </context>
 <context>
@@ -1298,15 +1299,15 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 liitus grupiga</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 on nüüdsest tuntud kui %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 lahkus grupist</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
@@ -1388,7 +1389,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">Vestlusvalmis</translation>
+        <translation>Vestlusvalmis</translation>
     </message>
 </context>
 <context>
@@ -2037,7 +2038,7 @@ Kui saad hulgaliselt soovimatuid sõbrakutseid, muuda seda väärtust.</translat
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Toxi kasutatakse läbi rakenduse nimega qTox</translation>
+        <translation>Toxib rakendusega qTox</translation>
     </message>
 </context>
 <context>
@@ -2260,7 +2261,7 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Pildid (%1)</translation>
+        <translation>Pildid (%1)</translation>
     </message>
 </context>
 <context>
@@ -2497,22 +2498,22 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">ühendatud</translation>
+        <translation>vestlusvalmis</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">eemal</translation>
+        <translation>eemal</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">hõivatud</translation>
+        <translation>hõivatud</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">ühendamata</translation>
+        <translation>ühendamata</translation>
     </message>
     <message>
         <source>blocked</source>
@@ -2586,7 +2587,7 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Aken</translation>
+        <translation>Vorm</translation>
     </message>
     <message>
         <source>Start search:</source>
@@ -2875,11 +2876,11 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Mängi heli</translation>
+        <translation>Helide esitamine</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Olles hõivatud, mängi heli</translation>
+        <translation>Helide esitamine hõivatud olekus</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
@@ -3082,7 +3083,7 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Faili &quot;%1&quot; saatmine luhtus</translation>
+        <translation>Faili &quot;%1&quot; saatmine nurjus</translation>
     </message>
     <message>
         <source>File sent</source>

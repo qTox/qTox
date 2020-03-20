@@ -262,7 +262,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это открытый ключ вашего друга, используйте его, чтобы подтвердить свою личность через другой канал. Вы не можете отправить это другим людям, чтобы они могли добавить этот контакт.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это открытый ключ вашего друга, используйте его, чтобы подтвердить свою личность через другой канал. Вы не можете отправить его другим людям для добавления этого контакта.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
@@ -656,7 +656,8 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished">Незаконные символы были изменены на _ так что вы можете сохранить файл в Windows.</translation>
+        <translation>Некорректные символы были изменены на _ 
+так что вы можете сохранить файл в Windows.</translation>
     </message>
 </context>
 <context>
@@ -793,30 +794,30 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Групповой чат %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Новое сообщение</translation>
+        <translation>Новое сообщение</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Передача входящего файла</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Получен запрос на дружбу</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Новое групповое сообщение</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Получено приглашение в группу</translation>
     </message>
 </context>
 <context>
@@ -903,7 +904,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Удаленная пауза</translation>
     </message>
 </context>
 <context>
@@ -1245,15 +1246,15 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти к текущей дате</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Загрузить историю чата...</translation>
+        <translation>Загрузить историю чата...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Экспорт в файл</translation>
+        <translation>Экспорт в файл</translation>
     </message>
 </context>
 <context>
@@ -1639,27 +1640,27 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить историю</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>от</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>кому</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(загружено около 100 сообщений)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Диалог выбора даты</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Выберите дату</translation>
+        <translation>Выберите дату</translation>
     </message>
 </context>
 <context>
@@ -2044,7 +2045,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Всем привет из qTox&apos;а</translation>
+        <translation>Общайтесь в qTox</translation>
     </message>
 </context>
 <context>
@@ -2267,7 +2268,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Изображения (%1)</translation>
+        <translation>Изображения (%1)</translation>
     </message>
 </context>
 <context>
@@ -2481,7 +2482,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished">Темный</translation>
+        <translation>Темный</translation>
     </message>
     <message>
         <source>Dark blue</source>
@@ -2501,32 +2502,32 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось загрузить профиль автоматически.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">онлайн</translation>
+        <translation>онлайн</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">отошел</translation>
+        <translation>отошел</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">занят</translation>
+        <translation>занят</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Не в сети</translation>
+        <translation>Не в сети</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">блокированный</translation>
+        <translation>заблокирован</translation>
     </message>
 </context>
 <context>
@@ -2588,18 +2589,18 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Начало</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">От</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished">Начните поиск:</translation>
+        <translation>Начать поиск:</translation>
     </message>
     <message>
         <source>from the end</source>
@@ -2619,7 +2620,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished">00.00.0000</translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
@@ -2862,33 +2863,33 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished">Использовать цветные прозвища в чатах</translation>
+        <translation>Использовать красочные никнеймы в чатах</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Показывать уведомление при получении нового сообщения, когда окно не выбрано.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Уведомлять</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Уведомлять о новых сообщениях в групповых чатах только когда вас упоминают.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Получать уведомления в групповых чатах только когда вас упоминают</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Воспроизводить звуки</translation>
+        <translation>Воспроизводить звуки</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Воспроизводить звук, когда Занят</translation>
+        <translation>Воспроизводить звук, когда Занят</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
@@ -2896,7 +2897,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрыть отправителя сообщения и его содержимое</translation>
     </message>
 </context>
 <context>
@@ -3094,19 +3095,19 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Не удалось отправить файл «%1»</translation>
+        <translation>Не удалось отправить файл &quot;%1&quot;</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл отправлен</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> отправил вам запрос на добавление в друзья.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> приглашает вас присоединиться к группе.</translation>
     </message>
 </context>
 </TS>

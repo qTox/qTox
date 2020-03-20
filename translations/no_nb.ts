@@ -792,7 +792,7 @@ slik at du kan lagre filen på Windows.</translation>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppesludring %1</translation>
     </message>
 </context>
 <context>
@@ -803,19 +803,19 @@ slik at du kan lagre filen på Windows.</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Innkommende filoverføring</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Venneforespørsel mottatt</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny gruppemelding</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppeinvitasjon mottatt</translation>
     </message>
 </context>
 <context>
@@ -1241,7 +1241,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Gå til nåværende dato</translation>
     </message>
     <message>
         <source>Load chat history...</source>
@@ -1632,19 +1632,19 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Last inn historikk</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>fra</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>til</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(omtrent 100 meldinger innlastet)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
@@ -2490,7 +2490,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å laste inn profil automatisk.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2885,7 +2885,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjul meldingsavsender og innhold</translation>
     </message>
 </context>
 <context>
@@ -3080,19 +3080,19 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Mislyktes å sende fil &quot;%1&quot;</translation>
+        <translation>Klarte ikke å sende filen &quot;%1&quot;</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil sendt</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> sendte deg en venneforespørsel.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> inviterer deg til en gruppe.</translation>
     </message>
 </context>
 </TS>
