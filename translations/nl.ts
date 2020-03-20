@@ -81,7 +81,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>Schakelt de experimentele audioback-end met ondersteuning voor echo-cancelling in. qTox moet opnieuw opstarten om de wijziging van kracht te laten gaan.</translation>
+        <translation>Schakelt de experimentele audioback-end met ondersteuning voor echo-onderdrukking in. qTox moet opnieuw worden opgestart om de wijziging van kracht te laten gaan.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
@@ -93,7 +93,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Geluidskwaliteit van verstuurde audio. Verlaag deze instelling als je te weinig bandbreedte hebt, of als je je internetverbruik wil beperken.</translation>
+        <translation>Kwaliteit van verstuurde audio. Verlaag deze instelling als je te weinig bandbreedte hebt, of als je je internetverbruik wilt beperken.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -113,7 +113,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Drempel</translation>
+        <translation>Drempelwaarde</translation>
     </message>
 </context>
 <context>
@@ -146,7 +146,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>Een lijst van gekende problemen kan je vinden op onze %1 op GitHub. Als je een probleem of beveiligingsfout in qTox tegenkomt, gelieve deze dan te melden volgens de richtlijnen in ons wiki-artikel %2.</translation>
+        <translation>Een lijst van bekende problemen kun je vinden op onze %1 op GitHub. Als je een probleem of beveiligingsfout in qTox tegenkomt, gelieve deze dan te melden volgens de richtlijnen in ons wiki-artikel %2.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
@@ -155,7 +155,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation>Bekijk een volledige lijst op %1 op GitHub</translation>
+        <translation>Bekijk een volledige lijst van %1 op GitHub</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -177,7 +177,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation>Dialoog</translation>
+        <translation>Dialoogvenster</translation>
     </message>
     <message>
         <source>username</source>
@@ -233,7 +233,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation>Groepsgespreksuitnodigingen automatisch aanvaarden</translation>
+        <translation>Groepsuitnodigingen automatisch aanvaarden</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
@@ -249,7 +249,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation>Hier kan je commentaren over dit contact opslaan.</translation>
+        <translation>Hier kun je commentaren over dit contact opslaan.</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -262,23 +262,23 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dit is de publieke sleutel van jouw vriend, gebruik het om zijn/haar identiteit te bevestigen over een ander kanaal. Je kan dit niet naar andere mensen sturen om dit contact toe te voegen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Publieke sleutel (geen ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Bevestiging</translation>
+        <translation>Bevestiging</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Weet je zeker dat je %1 gespreksgeschiedenis wilt verwijderen?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon chatgeschiedenis met %1 niet verwijderen!</translation>
     </message>
 </context>
 <context>
@@ -301,15 +301,15 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Update-downloadlink openen</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe versie beschikbaar</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">deze qTox versie is actueel ✓</translation>
     </message>
 </context>
 <context>
@@ -328,7 +328,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation>Ongeldig Tox-ID-formaat</translation>
+        <translation>Ongeldige Tox-ID</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -370,7 +370,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation>Je kan jezelf niet als vriend toevoegen!</translation>
+        <translation>Je kunt jezelf niet als vriend toevoegen!</translation>
     </message>
     <message>
         <source>Open contact list</source>
@@ -505,7 +505,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
-        <translation>Maak Tox draagbaar</translation>
+        <translation>Tox portabel maken</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
@@ -513,7 +513,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Portable</source>
-        <translation>Draagbaar</translation>
+        <translation>Portabel</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -579,18 +579,18 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>LAN-herkenning aanzetten</translation>
     </message>
 </context>
 <context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
-        <translation>Verstuur een bestand</translation>
+        <translation>Bestand versturen</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation>qTox kan %1 niet openen</translation>
+        <translation>qTox kon %1 niet openen</translation>
     </message>
     <message>
         <source>%1 calling</source>
@@ -619,7 +619,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Call duration: </source>
-        <translation>Gesprekstijd: </translation>
+        <translation>Gespreksduur: </translation>
     </message>
     <message>
         <source>Calling %1</source>
@@ -648,12 +648,13 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandsnaam bevatte niet-toegestane tekens</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet-toegestane tekens zijn vervangen door _
+zodat je het bestand op kunt slaan in windows.</translation>
     </message>
 </context>
 <context>
@@ -716,7 +717,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation>Microfoon niet meer dempen</translation>
+        <translation>Microfoon ontdempen</translation>
     </message>
     <message>
         <source>Mute microphone</source>
@@ -742,7 +743,7 @@ so you can save the file on windows.</source>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>Typ je bericht hier…</translation>
+        <translation>Typ hier je bericht…</translation>
     </message>
 </context>
 <context>
@@ -790,30 +791,30 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Groepschat %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Nieuw bericht</translation>
+        <translation>Nieuw bericht</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkomende bestandsoverdracht</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Vriendschapsverzoek ontvangen</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuw groepsbericht</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Groepsuitnodiging ontvangen</translation>
     </message>
 </context>
 <context>
@@ -832,7 +833,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>ETA:10:10</source>
-        <translation>ETA:10:10</translation>
+        <translation>Verwachte resterende downloadtijd:10:10</translation>
     </message>
     <message>
         <source>Filename</source>
@@ -900,7 +901,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Extern onderbroken</translation>
     </message>
 </context>
 <context>
@@ -955,7 +956,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
-        <translation>Iemand wil je als vriend toevoegen</translation>
+        <translation>Iemand wil vriendschap met je sluiten</translation>
     </message>
     <message>
         <source>User ID:</source>
@@ -981,7 +982,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
-        <translation>Uitnodigen in groep</translation>
+        <translation>Uitnodigen voor groep</translation>
     </message>
     <message>
         <source>Move to circle...</source>
@@ -1041,11 +1042,11 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation>Gesprek openen in nieuw venster</translation>
+        <translation>Chat openen in nieuw venster</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation>Gesprek verwijderen uit dit venster</translation>
+        <translation>Chat uit dit venster verwijderen</translation>
     </message>
     <message>
         <source>To new group</source>
@@ -1053,7 +1054,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation>Uitnodigen in groep ‘%1’</translation>
+        <translation>Uitnodigen voor groep ‘%1’</translation>
     </message>
     <message>
         <source>Show details</source>
@@ -1080,7 +1081,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>De vertaling zal niet laden totdat qTox herstart.</translation>
+        <translation>De vertaling wordt mogelijk pas geladen als qTox opnieuw is opgestart.</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -1102,11 +1103,11 @@ so you can save the file on windows.</source>
     <message>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>qTox zal geminimaliseerd naar het systeemvak starten.</translation>
+        <translation>qTox zal geminimaliseerd in het systeemvak starten.</translation>
     </message>
     <message>
         <source>Start in tray</source>
-        <translation>Starten in systeemvak</translation>
+        <translation>In systeemvak starten</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will minimize to tray,
@@ -1117,7 +1118,7 @@ in plaats van af te sluiten.</translation>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation>Sluiten naar systeemvak</translation>
+        <translation>Naar systeemvak sluiten</translation>
     </message>
     <message>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
@@ -1128,7 +1129,7 @@ in plaats van naar de taakbalk.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
-        <translation>Minimaliseren naar systeemvak</translation>
+        <translation>Naar systeemvak minimaliseren</translation>
     </message>
     <message>
         <source>Set where files will be saved.</source>
@@ -1161,7 +1162,7 @@ in plaats van naar de taakbalk.</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation>Toon statusverandering van contacten</translation>
+        <translation>Statusveranderingen van contacten tonen</translation>
     </message>
     <message>
         <source>Autostart</source>
@@ -1173,19 +1174,19 @@ in plaats van naar de taakbalk.</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Op nieuwe versies controleren</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Spellingscontrole</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Max. grootte automatisch geaccepteerde bestanden (0 om te deactiveren):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
@@ -1212,12 +1213,12 @@ in plaats van naar de taakbalk.</translation>
     </message>
     <message>
         <source>Clear displayed messages</source>
-        <translation>Getoonde berichten verwijderen</translation>
+        <translation>Getoonde berichten wissen</translation>
     </message>
     <message>
         <source>Cleared</source>
         <translatorcomment>FIXME: Weird translation</translatorcomment>
-        <translation>Geleegd</translation>
+        <translation>Gewist</translation>
     </message>
     <message>
         <source>Quote selected text</source>
@@ -1229,27 +1230,27 @@ in plaats van naar de taakbalk.</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Bevestiging</translation>
+        <translation>Bevestiging</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Weet je zeker dat je alle weergegeven berichten wilt wissen?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekst doorzoeken</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Naar huidige datum gaan</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Gespreksgeschiedenis laden…</translation>
+        <translation>Chatgeschiedenis laden…</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Exporteren naar bestand</translation>
+        <translation>Naar bestand exporteren</translation>
     </message>
 </context>
 <context>
@@ -1268,46 +1269,46 @@ in plaats van naar de taakbalk.</translation>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Volledig scherm</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Videovoorbeeld wisselen</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio dempen</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Microfoon dempen</translation>
+        <translation>Microfoon dempen</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Videogesprek beëindigen</translation>
+        <translation>Videogesprek beëindigen</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Volledig scherm afsluiten</translation>
     </message>
 </context>
 <context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation>%1 heeft de titel ingesteld op %2</translation>
+        <translation>%1 heeft de titel gewijzigd naar %2</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 neemt nu deel aan de groep</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 staat nu bekend als %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 heeft de groep verlaten</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
@@ -1319,11 +1320,11 @@ in plaats van naar de taakbalk.</translation>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>dempen</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>ontdempen</translation>
     </message>
 </context>
 <context>
@@ -1345,7 +1346,7 @@ in plaats van naar de taakbalk.</translation>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation>Uitgenodigd in %1, door %2, om %3.</translation>
+        <translation>Uitgenodigd door %1 op %2 om %3.</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1369,11 +1370,11 @@ in plaats van naar de taakbalk.</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation>Gesprek openen in nieuw venster</translation>
+        <translation>Chat openen in nieuw venster</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation>Gesprek verwijderen uit dit venster</translation>
+        <translation>Chat verwijderen uit dit venster</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
@@ -1385,11 +1386,11 @@ in plaats van naar de taakbalk.</translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuw bericht</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">Online</translation>
+        <translation>Online</translation>
     </message>
 </context>
 <context>
@@ -1415,7 +1416,7 @@ Deel dit met je vrienden om te communiceren.</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Deze QR-code bevat je Tox-ID. Je kan deze met vrienden delen.</translation>
+        <translation>Deze QR-code bevat je Tox-ID. Je kunt deze met vrienden delen.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1485,7 +1486,7 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation>Verberg mijn naam in de openbare lijst</translation>
+        <translation>Mijn naam niet in de openbare lijst opnemen</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1497,7 +1498,7 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation>Bijwerken</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
@@ -1520,7 +1521,7 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation>ToxMe-dienst om op te registreren.</translation>
+        <translation>ToxMe-dienst om bij te registreren.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
@@ -1633,27 +1634,27 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschiedenis laden</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>van</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>tot</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(er zijn ongeveer 100 berichten geladen)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialoogvenster datum selecteren</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een datum</translation>
     </message>
 </context>
 <context>
@@ -1706,7 +1707,7 @@ Voer tweemaal hetzelfde wachtwoord in.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
-        <translation>Een profiel met deze naam bestaat al.</translation>
+        <translation>Er bestaat al een profiel met deze naam.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
@@ -1750,7 +1751,7 @@ Voer tweemaal hetzelfde wachtwoord in.</translation>
 You may want to create one.</source>
         <translation>Er is geen profiel geselecteerd.
 
-Je kan er een aanmaken.</translation>
+Misschien wil je er een maken.</translation>
     </message>
     <message>
         <source>Username input field</source>
@@ -1821,15 +1822,15 @@ Je kan er een aanmaken.</translation>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation>Groepsgesprek aanmaken</translation>
+        <translation>Groepschat aanmaken</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation>Bekijk voltooide bestandsoverdrachten</translation>
+        <translation>Voltooide bestandsoverdrachten bekijken</translation>
     </message>
     <message>
         <source>Change your settings</source>
-        <translation>Verander je instellingen</translation>
+        <translation>Je instellingen wijzigen</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1849,7 +1850,7 @@ Je kan er een aanmaken.</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation>Stel je statusbericht in dat aan anderen getoond zal worden</translation>
+        <translation>Je statusbericht instellen, dat aan anderen getoond zal worden</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1857,35 +1858,35 @@ Je kan er een aanmaken.</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation>Stel beschikbaarheidsstatus in</translation>
+        <translation>Beschikbaarheidsstatus instellen</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation>Zoeken naar contacten</translation>
+        <translation>Contacten doorzoeken</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation>Invoer voor zoeken naar gekende vrienden in contacten</translation>
+        <translation>Invoer voor zoeken naar bekende vrienden in contacten</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation>Sorteren en zichtbaarheid</translation>
+        <translation>Sortering en zichtbaarheid</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation>Stel sorteren en zichtbaarheid van vrienden in</translation>
+        <translation>Sortering en zichtbaarheid van vrienden instellen</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation>Open pagina voor toevoegen van vrienden</translation>
+        <translation>Pagina voor toevoegen van vrienden openen</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation>Groepsgesprek</translation>
+        <translation>Groepschat</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation>Open pagina voor beheer van groepsgesprek</translation>
+        <translation>Groepschat-beheerpagina openen</translation>
     </message>
     <message>
         <source>File transfers history</source>
@@ -1893,7 +1894,7 @@ Je kan er een aanmaken.</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation>Open bestandsoverdrachtgeschiedenis</translation>
+        <translation>Bestandsoverdrachtgeschiedenis openen</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1901,7 +1902,7 @@ Je kan er een aanmaken.</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation>Open instellingen</translation>
+        <translation>Instellingen openen</translation>
     </message>
 </context>
 <context>
@@ -1924,7 +1925,7 @@ Je kan er een aanmaken.</translation>
     <message>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation>Breng alles naar de voorgrond</translation>
+        <translation>Alles naar de voorgrond brengen</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
@@ -1964,7 +1965,7 @@ Je kan er een aanmaken.</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation>Wil je voorgoed alle gespreksgeschiedenis verwijderen?</translation>
+        <translation>Wil je alle chatsgeschiedenis voorgoed verwijderen?</translation>
     </message>
 </context>
 <context>
@@ -1976,11 +1977,11 @@ Je kan er een aanmaken.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation>Typmeldingen sturen</translation>
+        <translation>Typmeldingen versturen</translation>
     </message>
     <message>
         <source>Keep chat history</source>
-        <translation>Gespreksgeschiedenis behouden</translation>
+        <translation>Chatgeschiedenis behouden</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
@@ -1989,7 +1990,7 @@ People will be unable to add you with your old ID, but you will keep your curren
         <comment>toolTip for nospam</comment>
         <translation>NoSpam is een deel van je Tox-ID.
 Als je gebombardeerd wordt met vriendschapsverzoeken is het verstandig om je NoSpam te veranderen.
-Mensen die je oude Tox-ID hebben kunnen je dan niet meer toevoegen, maar je huidige vriendenlijst wordt wel behouden.</translation>
+Mensen die je oude Tox-ID hebben kunnen je dan niet meer toevoegen, maar je huidige vriendenlijst wordt behouden.</translation>
     </message>
     <message>
         <source>NoSpam</source>
@@ -2003,13 +2004,13 @@ Verander de NoSpam als je gebombardeerd wordt met vriendschapsverzoeken.</transl
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation>Genereer een willekeurige NoSpam</translation>
+        <translation>Willekeurige NoSpam genereren</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation>Het opslaan van gespreksgeschiedenis is nog in ontwikkeling.
+        <translation>Het opslaan van chatgeschiedenis is nog in ontwikkeling.
 Het is mogelijk dat er zich veranderingen in het formaat voordoen, wat kan leiden tot gegevensverlies.</translation>
     </message>
     <message>
@@ -2022,7 +2023,7 @@ Het is mogelijk dat er zich veranderingen in het formaat voordoen, wat kan leide
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation>Groepsberichten filteren op publieke sleutel van groepslid. Plaats hier één publieke sleutel per regel.</translation>
+        <translation>Groepsberichten op basis van publieke sleutel van groepslid filteren. Plaats hier één publieke sleutel per regel.</translation>
     </message>
 </context>
 <context>
@@ -2037,7 +2038,7 @@ Het is mogelijk dat er zich veranderingen in het formaat voordoen, wat kan leide
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Toxt met qTox</translation>
+        <translation>Toxt op qTox</translation>
     </message>
 </context>
 <context>
@@ -2060,7 +2061,7 @@ Het is mogelijk dat er zich veranderingen in het formaat voordoen, wat kan leide
     </message>
     <message>
         <source>Unable to read this image.</source>
-        <translation>Kan deze foto niet lezen.</translation>
+        <translation>Kan deze afbeelding niet lezen.</translation>
     </message>
     <message>
         <source>The supplied image is too large.
@@ -2117,7 +2118,7 @@ Gebruik een andere afbeelding.</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
-        <translation>Niks om te verwijderen</translation>
+        <translation>Niets om te verwijderen</translation>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
@@ -2147,7 +2148,7 @@ Gebruik een andere afbeelding.</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation>Update (in verwerking)</translation>
+        <translation>Bijwerken (in verwerking)</translation>
     </message>
     <message>
         <source>Done!</source>
@@ -2155,11 +2156,11 @@ Gebruik een andere afbeelding.</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation>Account %1@%2 is bijgewerkt</translation>
+        <translation>Account %1@%2 met succes bijgewerkt</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>%1@%2 is toegevoegd aan de database. Sla je wachtwoord op</translation>
+        <translation>%1@%2 is met success toegevoegd aan de database. Sla je wachtwoord op</translation>
     </message>
     <message>
         <source>Toxme error</source>
@@ -2171,7 +2172,7 @@ Gebruik een andere afbeelding.</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation>Bijwerken</translation>
     </message>
     <message>
         <source>Change password</source>
@@ -2245,7 +2246,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation>Volgende bestanden konden niet verwijderd worden:</translation>
+        <translation>De volgende bestanden konden niet verwijderd worden:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
@@ -2260,7 +2261,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Afbeeldingen (%1)</translation>
+        <translation>Afbeeldingen (%1)</translation>
     </message>
 </context>
 <context>
@@ -2283,7 +2284,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Waarschuwing: je hebt een bestand gekozen dat geen Tox-opslagbestand is; dit bestand wordt genegeerd.</translation>
+        <translation>Waarschuwing: het door jou gekozen bestand is geen Tox-opslagbestand; het wordt genegeerd.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -2293,7 +2294,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Er bestaat al een profiel met de naam ‘%1’. Wil je het verwijderen?</translation>
+        <translation>Er bestaat al een profiel met de naam ‘%1’. Wil je het wissen?</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
@@ -2309,7 +2310,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation>%1.tox is geïmporteerd</translation>
+        <translation>%1.tox is met succes geïmporteerd</translation>
     </message>
 </context>
 <context>
@@ -2349,7 +2350,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Je kan jezelf niet als vriend toevoegen!</translation>
+        <translation>Je kunt jezelf niet als vriend toevoegen!</translation>
     </message>
 </context>
 <context>
@@ -2376,7 +2377,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     </message>
     <message>
         <source>Olive</source>
-        <translation>Olijf</translation>
+        <translation>Olijfgroen</translation>
     </message>
     <message>
         <source>Red</source>
@@ -2413,15 +2414,15 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
-        <translation>Gebruik geen spaties in je naam</translation>
+        <translation>Je naam mag geen spaties bevatten</translation>
     </message>
     <message>
         <source>Password incorrect</source>
-        <translation>Wachtwoord verkeerd</translation>
+        <translation>Wachtwoord onjuist</translation>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
-        <translation>Je kan deze naam niet gebruiken</translation>
+        <translation>Deze naam kun je niet gebruiken</translation>
     </message>
     <message>
         <source>Name not found</source>
@@ -2471,52 +2472,52 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Donker</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Donkerblauw</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Donkerolijfgroen</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Donkerrood</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Donkerviolet</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon profiel niet automatisch laden.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">online</translation>
+        <translation>online</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">afwezig</translation>
+        <translation>afwezig</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">bezet</translation>
+        <translation>bezet</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">offline</translation>
+        <translation>offline</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>geblokkeerd</translation>
     </message>
 </context>
 <context>
@@ -2562,7 +2563,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Druk op %1 om een schermafdruk van de selectie te sturen, %2 om het qTox-scherm te verbergen/herstellen, of %3 om te annuleren.</translation>
+        <translation>Druk op %1 om een schermafdruk van de selectie te versturen, op %2 om het qTox-scherm te verbergen/herstellen, of op %3 om te annuleren.</translation>
     </message>
     <message>
         <source>Enter</source>
@@ -2574,61 +2575,61 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>De tekst kon niet gevonden worden.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Formulier</translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoekopdracht starten:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>vanaf het einde</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>vanaf het begin</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>na datum</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>vóór datum</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoofdlettergevoelig</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Alleen hele woorden</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Reguliere expressies gebruiken</translation>
     </message>
 </context>
 <context>
     <name>SetPasswordDialog</name>
     <message>
         <source>Set your password</source>
-        <translation>Stel je wachtwoord in</translation>
+        <translation>Je wachtwoord instellen</translation>
     </message>
     <message>
         <source>The password is too short</source>
@@ -2735,7 +2736,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>qTox moet mogelijk herstarten om de nieuwe tekststijlvoorkeur van kracht te laten gaan.</translation>
+        <translation>De nieuwe tekststijlvoorkeur wordt mogelijk niet geladen totdat qTox opnieuw is opgestart.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -2798,7 +2799,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation>Elk gesprek openen in apart venster</translation>
+        <translation>Elke chat openen in een apart venster</translation>
     </message>
     <message>
         <source>Emoticons</source>
@@ -2844,7 +2845,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation>Indien ingeschakeld krijgt elk contact zonder profielfoto een automatisch gegenereerde afbeelding gebaseerd op hun Tox-ID, in plaats van een standaardfoto. Toepassen vereist een herstart.</translation>
+        <translation>Indien ingeschakeld krijgt elk contact zonder profielfoto een automatisch gegenereerde afbeelding gebaseerd op zijn/haar Tox-ID, in plaats van een standaardfoto. Toepassen vereist een herstart.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
@@ -2852,41 +2853,41 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Gekleurde bijnamen in chats gebruiken</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toon een notificatie wanneer je een nieuw bericht ontvangt en het venster niet geselecteerd is.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Melden</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe berichten in groepschats alleen melden als je genoemd wordt.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Groepchats alleen melden als je genoemd wordt</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Geluid afspelen</translation>
+        <translation>Geluid afspelen</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Geluid afspelen indien Bezet</translation>
+        <translation>Geluid afspelen indien Bezet</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Via bureaubladmeldingen melden</translation>
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Afzender en berichtinhoud verbergen</translation>
     </message>
 </context>
 <context>
@@ -2953,7 +2954,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>toxcore kon niet opstarten, de toepassing zal afsluiten na het sluiten van dit bericht.</translation>
+        <translation>toxcore kon niet opstarten, de toepassing zal afsluiten nadat je dit bericht gesloten hebt.</translation>
     </message>
     <message>
         <source>Executable file</source>
@@ -2963,7 +2964,7 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation>Je hebt qTox gevraagd een uitvoerbaar bestand te openen. Uitvoerbare bestanden kunnen schade toebrengen aan je computer. Weet je zeker dat je dit bestand wil openen?</translation>
+        <translation>Je hebt qTox gevraagd een uitvoerbaar bestand te openen. Uitvoerbare bestanden kunnen schade toebrengen aan je computer. Weet je zeker dat je dit bestand wilt openen?</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -3081,19 +3082,19 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Kon bestand ‘%1’ niet verzenden</translation>
+        <translation>Kon bestand ‘%1’ niet verzenden</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand verzonden</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> heeft je een vriendschapsverzoek gestuurd.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> nodigt je uit om aan een groep deel te nemen.</translation>
     </message>
 </context>
 </TS>

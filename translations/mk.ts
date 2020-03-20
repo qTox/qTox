@@ -266,7 +266,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Јавен клуч (не ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>

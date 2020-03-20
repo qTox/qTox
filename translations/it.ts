@@ -791,30 +791,30 @@ in modo da poter salvare il file su windows.</translation>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chat di gruppo %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Nuovo messaggio</translation>
+        <translation>Nuovo messaggio</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Trasferimento file in arrivo</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Richiesta di amicizia ricevuta</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuovo messaggio di gruppo</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Invito di gruppo ricevuto</translation>
     </message>
 </context>
 <context>
@@ -1241,15 +1241,15 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai alla data corrente</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Carica cronologia chat...</translation>
+        <translation>Carica cronologia chat...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Esporta su file</translation>
+        <translation>Esporta su file</translation>
     </message>
 </context>
 <context>
@@ -1634,27 +1634,27 @@ I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica cronologia</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(circa 100 messaggi sono caricati)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished">Finestra di dialogo Seleziona data</translation>
+        <translation>Finestra di dialogo Seleziona data</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Seleziona una data</translation>
+        <translation>Seleziona una data</translation>
     </message>
 </context>
 <context>
@@ -2492,32 +2492,32 @@ Questo ID include il codice NoSpam (in blu), e il checksum (in grigio).</transla
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare automaticamente il profilo.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">in linea</translation>
+        <translation>online</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">assente</translation>
+        <translation>assente</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">occupato</translation>
+        <translation>occupato</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">disconnesso</translation>
+        <translation>offline</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">bloccato</translation>
+        <translation>bloccato</translation>
     </message>
 </context>
 <context>
@@ -2887,7 +2887,7 @@ Questo ID include il codice NoSpam (in blu), e il checksum (in grigio).</transla
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondere il mittente e il contenuto del messaggio</translation>
     </message>
 </context>
 <context>
@@ -3082,19 +3082,19 @@ Questo ID include il codice NoSpam (in blu), e il checksum (in grigio).</transla
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Invio del file &quot;%1&quot; fallito</translation>
+        <translation>Impossibile inviare il file &quot;%1&quot;</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>File inviato</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> ti ha inviato una richiesta di amicizia.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> ti invita a unirti a un gruppo.</translation>
     </message>
 </context>
 </TS>

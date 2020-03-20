@@ -791,30 +791,30 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Conversation de groupe %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Nouveau message</translation>
+        <translation>Nouveau message</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Transfert de fichier entrant</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Demande d&apos;ami reçue</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau message de groupe</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Invitation de groupe reçue</translation>
     </message>
 </context>
 <context>
@@ -1241,15 +1241,15 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller à la date actuelle</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Chargement de l&apos;historique de discussion...</translation>
+        <translation>Charger l&apos;historique de discussion...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Exporter vers le fichier</translation>
+        <translation>Exporter dans un fichier</translation>
     </message>
 </context>
 <context>
@@ -1634,27 +1634,27 @@ Ce fichier ne contient pas votre historique de discussions.</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Charger l&apos;historique</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>de</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>à</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(environ 100 messages ont été téléchargés)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished">Fenêtre pour sélection de date</translation>
+        <translation>Boîte de dialogue Sélectionner une date</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Sélectionnez une date</translation>
+        <translation>Sélectionnez une date</translation>
     </message>
 </context>
 <context>
@@ -2492,32 +2492,32 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger le profil automatiquement.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">connecté(e)</translation>
+        <translation>connecté</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">absent(e)</translation>
+        <translation>absent</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">occupé(e)</translation>
+        <translation>occupé</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">hors ligne</translation>
+        <translation>déconnecté</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">bloqué</translation>
+        <translation>bloqué</translation>
     </message>
 </context>
 <context>
@@ -2887,7 +2887,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Masquer l&apos;expéditeur et le contenu du message</translation>
     </message>
 </context>
 <context>
@@ -3082,19 +3082,19 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Impossible d&apos;envoyer le fichier &quot;%1&quot;</translation>
+        <translation>Impossible d&apos;envoyer le fichier &quot;%1&quot;</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier envoyé</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> vous a envoyé une demande d&apos;amitié.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> vous invite à rejoindre un groupe.</translation>
     </message>
 </context>
 </TS>

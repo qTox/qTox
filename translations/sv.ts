@@ -197,7 +197,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Acceptera filer från kontakt automatiskt om inställd</translation>
+        <translation>Acceptera filer automatiskt från kontakt om angivet</translation>
     </message>
     <message>
         <source>Auto accept files</source>
@@ -229,7 +229,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished">Acceptera automatiskt gruppchattsinbjudningar från denna kontakt om inställd.</translation>
+        <translation>Acceptera gruppchattsinbjudningar automatiskt från denna kontakt om angivet.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
@@ -249,7 +249,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Du kan spara kommentar om denna kontakt här.</translation>
+        <translation>Du kan spara kommentar om denna kontakt här.</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -258,27 +258,27 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished">Välj en acceptera-automatiskt-katalog</translation>
+        <translation>Välj en mapp för acceptera-automatiskt</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detta är din väns offentliga nyckel, använd den för att verifiera dennes identitet via annan kanal. Du kan inte skicka detta till andra människor, så att de kan lägga till denna kontakt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Offentlig nyckel (Inte ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Bekräftelse</translation>
+        <translation>Bekräftelse</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du verkligen ta bort %1 chatthistorik?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte ta bort chatthistoriken med %1!</translation>
     </message>
 </context>
 <context>
@@ -301,15 +301,15 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna nerladdningslänk för uppdatering</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Uppdatering tillgänglig</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox är uppdaterad ✓</translation>
     </message>
 </context>
 <context>
@@ -391,7 +391,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>Vi kunde inte hitta några kontakter att importera från denna fil!</translation>
+        <translation>Kunde inte hitta några kontakter att importera från denna fil!</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -420,7 +420,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation type="unfinished">%1 här! Toxa mig kanske?</translation>
+        <translation>%1 här! Toxa mig kanske?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
@@ -447,7 +447,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Om du inte %1 vet vad du gör, gör %2 ändringar här. Ändringar som görs här kan leda till problem med qTox, och även till förlust av data, t.ex. historik.</translation>
+        <translation>Om du inte verkligen vet vad du gör, gör inga ändringar här. Ändringar som görs här kan leda till problem med qTox, och även till förlust av data, t.ex. historik.</translation>
     </message>
     <message>
         <source>really</source>
@@ -527,7 +527,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Avaktivera detta tillåter, exempelvis, toxande över Tor. Det ger extra belastning till Tox-nätverket, så avmarkera endast när det är nödvändigt.</translation>
+        <translation>Avaktivering av detta tillåter exempelvis toxande över Tor. Det lägger extra belastning på Tox-nätverket, så avmarkera endast när det är nödvändigt.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -579,7 +579,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera LAN-identifiering</translation>
     </message>
 </context>
 <context>
@@ -648,23 +648,24 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filnamnet innehåller förbjudna tecken</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Förbjudet tecken har ändrats till _ 
+så att du kan spara filen på Windows.</translation>
     </message>
 </context>
 <context>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Kan inte börja ljudsamtal</translation>
+        <translation>Kan inte påbörja röstsamtal</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Börja ljudsamtal</translation>
+        <translation>Påbörja röstsamtal</translation>
     </message>
     <message>
         <source>End audio call</source>
@@ -680,11 +681,11 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Kan inte börja videosamtal</translation>
+        <translation>Kan inte påbörja videosamtal</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Börja videosamtal</translation>
+        <translation>Påbörja videosamtal</translation>
     </message>
     <message>
         <source>End video call</source>
@@ -708,11 +709,11 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Mute call</source>
-        <translation type="unfinished">Tysta samtal</translation>
+        <translation>Tysta samtal</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Mikrofon kan endast tystas under ett samtal</translation>
+        <translation>Mikrofon kan endast tystas under ett samtal</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
@@ -790,30 +791,30 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppchatt %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Nytt meddelande</translation>
+        <translation>Nytt meddelande</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkommande filöverföring</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänförfrågan mottagen</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nytt gruppmeddelande</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppinbjudan mottagen</translation>
     </message>
 </context>
 <context>
@@ -900,7 +901,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fjärröverföring pausad</translation>
     </message>
 </context>
 <context>
@@ -931,7 +932,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation>Senaste 7 dagar</translation>
+        <translation>Senaste 7 dagarna</translation>
     </message>
     <message>
         <source>This month</source>
@@ -1082,7 +1083,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>Översättning laddas inte in innan qTox startas om.</translation>
+        <translation>Översättning läses inte in innan qTox startas om.</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -1175,19 +1176,19 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök efter uppdateringar</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Stavningskontroll</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Max filstorlek att ta emot automatiskt (0 för att inaktivera):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
@@ -1230,27 +1231,27 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Bekräftelse</translation>
+        <translation>Bekräftelse</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du verkligen ta bort alla visade meddelanden?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök i text</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Gå till aktuellt datum</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Laddar chatthistorik...</translation>
+        <translation>Läser in chatthistorik...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Exportera till fil</translation>
+        <translation>Exportera till fil</translation>
     </message>
 </context>
 <context>
@@ -1269,46 +1270,46 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Helskärm</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Videoförhandsgranskning på/av</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng av ljudet</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Stäng av mikrofon</translation>
+        <translation>Stäng av mikrofon</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Avsluta videosamtal</translation>
+        <translation>Avsluta videosamtal</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta helskärmsläge</translation>
     </message>
 </context>
 <context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 har satt titeln till %2</translation>
+        <translation>%1 har angett titeln som %2</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 har anslutit till gruppen</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 är nu känd som %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 har lämnat gruppen</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
@@ -1320,11 +1321,11 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>tysta</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">slå på ljud</translation>
     </message>
 </context>
 <context>
@@ -1346,7 +1347,7 @@ istället för aktivitetsfältet för systemet.</translation>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation>Inbjuden av %1 på %2 i %3.</translation>
+        <translation>Inbjuden av %1 den %2 kl. %3.</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1386,11 +1387,11 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nytt meddelande</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">Tillgänglig</translation>
+        <translation>Tillgänglig</translation>
     </message>
 </context>
 <context>
@@ -1630,31 +1631,31 @@ Profilen innehåller inte din historik.</translation>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation>Ladda in historik</translation>
+        <translation>Läs in historik</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Läs in historik</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>från</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>till</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(omkring 100 meddelanden är inlästa)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj datum</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj ett datum</translation>
     </message>
 </context>
 <context>
@@ -1685,7 +1686,7 @@ Profilen innehåller inte din historik.</translation>
     </message>
     <message>
         <source>Load automatically</source>
-        <translation>Ladda automatiskt</translation>
+        <translation>Läs in automatiskt</translation>
     </message>
     <message>
         <source>Import</source>
@@ -1693,7 +1694,7 @@ Profilen innehåller inte din historik.</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation>Ladda</translation>
+        <translation>Läs in</translation>
     </message>
     <message>
         <source>New Profile</source>
@@ -1701,7 +1702,7 @@ Profilen innehåller inte din historik.</translation>
     </message>
     <message>
         <source>Load Profile</source>
-        <translation>Ladda profil</translation>
+        <translation>Läs in profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t create a new profile</source>
@@ -1731,7 +1732,7 @@ Var noga med att ange samma lösenord två gånger.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
-        <translation>Kunde inte ladda profil</translation>
+        <translation>Kunde inte läsa in profil</translation>
     </message>
     <message>
         <source>There is no selected profile.
@@ -1743,7 +1744,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
-        <translation>Kunde inte ladda denna profil</translation>
+        <translation>Kunde inte läsa in denna profil</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
@@ -1783,7 +1784,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation>Ladda automatiskt kryssrutan</translation>
+        <translation>Läs in automatiskt</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1791,7 +1792,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation>Ladda vald profilknapp</translation>
+        <translation>Läs in vald profil</translation>
     </message>
     <message>
         <source>New profile creation page</source>
@@ -2039,7 +2040,7 @@ Om du blir spammad med vänförfrågningar, ändra NoSpam.</translation>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Toxar på qTox</translation>
+        <translation>Toxar på qTox</translation>
     </message>
 </context>
 <context>
@@ -2221,7 +2222,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>Empty name</source>
-        <translation>Tomt namn</translation>
+        <translation>Inget namn</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
@@ -2242,7 +2243,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation type="unfinished">Tox-sparningsfil (*.tox)</translation>
+        <translation>Tox-fil (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
@@ -2262,7 +2263,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Bilder (%1)</translation>
+        <translation>Bilder (%1)</translation>
     </message>
 </context>
 <context>
@@ -2318,7 +2319,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2473,52 +2474,52 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörk</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkblå</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörk oliv</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkröd</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörk lila</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte läsa in profil automatiskt.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">tillgänglig</translation>
+        <translation>tillgänglig</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">borta</translation>
+        <translation>borta</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">upptagen</translation>
+        <translation>upptagen</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">frånkopplad</translation>
+        <translation>frånkopplad</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>blockerad</translation>
     </message>
 </context>
 <context>
@@ -2576,54 +2577,54 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Texten kunde inte hittas.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Formulär</translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja sök:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>från slutet</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>från början</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>efter datum</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>före datum</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Skiftlägeskänslig</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Endast hela ord</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd Regular Expression</translation>
     </message>
 </context>
 <context>
@@ -2737,7 +2738,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Ny textstilsinställning kanske inte laddas förrän qTox startas om.</translation>
+        <translation>Ny textstilsinställning kanske inte läses in förrän qTox startas om.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -2854,41 +2855,41 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd färgade användarnamn i chattar</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Visar avisering när du får ett nytt meddelande och fönstret inte är öppet.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Avisera</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avisera nya meddelanden i gruppchatt endast vid omnämnande.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppchattar aviserar endast vid omnämnande</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Spela ljud</translation>
+        <translation>Spela upp ljud</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Spela upp ljud medan du är Upptagen</translation>
+        <translation>Spela upp ljud medan du är upptagen</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Avisera via skrivbordsavisering</translation>
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Dölj meddelandes avsändare och innehåll</translation>
     </message>
 </context>
 <context>
@@ -3083,19 +3084,19 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Misslyckades att sända fil &quot;%1&quot;</translation>
+        <translation>Kunde inte skicka filen &quot;%1&quot;</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil skickad</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> skickar en vänförfrågan.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> bjuder in dig till en grupp.</translation>
     </message>
 </context>
 </TS>

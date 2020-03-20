@@ -792,30 +792,30 @@ tad dabar galite įrašyti failą Windows sistemoje.</translation>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupės pokalbis %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nauja žinutė</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaunamo failo persiuntimas</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauta kontakto užklausa</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nauja grupės žinutė</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Gautas pakvietimas į grupę</translation>
     </message>
 </context>
 <context>
@@ -1242,15 +1242,15 @@ sistemos juostelėje, o ne programų juostoje.</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Pereiti į dabartinę datą</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Įkelti pokalbių žurnalą...</translation>
+        <translation>Įkelti pokalbių žurnalą...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Eksportuoti į failą</translation>
+        <translation>Eksportuoti į failą</translation>
     </message>
 </context>
 <context>
@@ -1636,27 +1636,27 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Įkelti žurnalą</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>nuo</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>iki</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(yra įkeliama apie 100 žinučių)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished">Datos pasirinkimo dialogas</translation>
+        <translation>Datos pasirinkimo dialogas</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Pasirinkti datą</translation>
+        <translation>Pasirinkti datą</translation>
     </message>
 </context>
 <context>
@@ -2498,32 +2498,32 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko automatiškai įkelti profilio.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">prisijungęs (-usi)</translation>
+        <translation>prisijungęs(-usi)</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">pasišalinęs (-usi)</translation>
+        <translation>pasišalinęs(-usi)</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">užsiėmęs (-usi)</translation>
+        <translation>užsiėmęs(-usi)</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">neprisijungęs (-usi)</translation>
+        <translation>neprisijungęs(-usi)</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">užblokuota(-s)</translation>
+        <translation>užblokuota(-s)</translation>
     </message>
 </context>
 <context>
@@ -2893,7 +2893,7 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Slėpti žinutės siuntėją ir turinį</translation>
     </message>
 </context>
 <context>
@@ -3090,19 +3090,19 @@ Norėdami bendrauti, pasidalinkite juo su savo draugais.
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Nepavyko išsiųsti failo „%1“</translation>
+        <translation>Nepavyko išsiųsti failo „%1“</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Failas išsiųstas</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> išsiuntė jums kontakto užklausą.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> kviečia jus prisijungti prie grupės.</translation>
     </message>
 </context>
 </TS>
