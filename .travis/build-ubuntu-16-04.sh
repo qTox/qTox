@@ -119,7 +119,7 @@ cd ../../
 # libsodium
 git clone git://github.com/jedisct1/libsodium.git
 cd libsodium
-git checkout tags/1.0.8
+git checkout tags/1.0.18
 ./autogen.sh
 CC="ccache $CC" CXX="ccache $CXX" ./configure
 CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc)
