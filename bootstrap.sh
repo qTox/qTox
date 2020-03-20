@@ -49,23 +49,14 @@ readonly BASE_DIR="${SCRIPT_DIR}/${INSTALL_DIR}"
 
 # versions of libs to checkout
 readonly TOXCORE_VERSION="v0.2.10"
-readonly SQLCIPHER_VERSION="v3.4.2"
 
 # directory names of cloned repositories
 readonly TOXCORE_DIR="libtoxcore-$TOXCORE_VERSION"
-readonly SQLCIPHER_DIR="sqlcipher-$SQLCIPHER_VERSION"
 
 # default values for user given parameters
 INSTALL_TOX=true
-INSTALL_SQLCIPHER=false
 SYSTEM_WIDE=true
 KEEP_BUILD_FILES=false
-
-# if Fedora, by default install sqlcipher
-if which dnf &> /dev/null
-then
-    INSTALL_SQLCIPHER=true
-fi
 
 
 print_help() {
@@ -77,8 +68,6 @@ print_help() {
     echo "parameters:"
     echo "    --with-tox             : install/update libtoxcore"
     echo "    --without-tox          : do not install/update libtoxcore"
-    echo "    --with-sqlcipher       : install/update sqlcipher"
-    echo "    --without-sqlcipher    : do not install/update sqlcipher"
     echo "    -h|--help              : displays this help"
     echo "    -l|--local             : install packages into ${INSTALL_DIR}"
     echo "    -k|--keep              : keep build files after installation/update"
@@ -90,7 +79,6 @@ print_help() {
 ############ print debug output ############
 print_debug_output() {
     echo "with tox                    : ${INSTALL_TOX}"
-    echo "with sqlcipher              : ${INSTALL_SQLCIPHER}"
     echo "install system-wide         : ${SYSTEM_WIDE}"
     echo "keep build files            : ${KEEP_BUILD_FILES}"
 }
@@ -98,7 +86,6 @@ print_debug_output() {
 # remove not needed dirs
 remove_build_dirs() {
     rm -rf "${BASE_DIR}/${TOXCORE_DIR}"
-    rm -rf "${BASE_DIR}/${SQLCIPHER_DIR}"
 }
 
 install_toxcore() {
@@ -128,44 +115,6 @@ install_toxcore() {
     fi
 }
 
-
-install_sqlcipher() {
-    if [[ $INSTALL_SQLCIPHER = "true" ]]
-    then
-        git clone https://github.com/sqlcipher/sqlcipher.git \
-            "${BASE_DIR}/${SQLCIPHER_DIR}" \
-            --branch $SQLCIPHER_VERSION \
-            --depth 1
-
-        pushd "${BASE_DIR}/${SQLCIPHER_DIR}"
-        autoreconf -if
-
-        if [[ $SYSTEM_WIDE = "false" ]]
-        then
-            ./configure --prefix="${BASE_DIR}" \
-                --enable-tempstore=yes \
-                CFLAGS="-DSQLITE_HAS_CODEC"
-            make -j$(nproc)
-            make install || \
-                echo "" && \
-                echo "Sqlcipher failed to install locally." && \
-                echo "" && \
-                echo "Try without \"-l|--local\"" && \
-                exit 1
-        else
-            ./configure \
-                --enable-tempstore=yes \
-                CFLAGS="-DSQLITE_HAS_CODEC"
-            make -j$(nproc)
-            sudo make install
-            sudo ldconfig
-        fi
-
-        popd
-    fi
-}
-
-
 main() {
     ########## parse input parameters ##########
     while [ $# -ge 1 ]
@@ -177,14 +126,6 @@ main() {
         elif [ ${1} = "--without-tox" ]
         then
             INSTALL_TOX=false
-            shift
-        elif [ ${1} = "--with-sqlcipher" ]
-        then
-            INSTALL_SQLCIPHER=true
-            shift
-        elif [ ${1} = "--without-sqlcipher" ]
-        then
-            INSTALL_SQLCIPHER=false
             shift
         elif [ ${1} = "-l" -o ${1} = "--local" ]
         then
@@ -221,7 +162,6 @@ main() {
 
     ############### install step ###############
     install_toxcore
-    install_sqlcipher
 
     ############### cleanup step ###############
     # remove cloned repositories
