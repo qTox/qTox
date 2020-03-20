@@ -17,33 +17,33 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ALSOURCE_H
-#define ALSOURCE_H
+#include "src/audio/backend/dummysource.h"
+#include "src/audio/backend/openal.h"
 
-#include "src/audio/iaudiosource.h"
-#include <QMutex>
-#include <QObject>
+/**
+ * @brief Reserves ressources for an audio source
+ * @param audio Main audio object, must have longer lifetime than this object.
+ */
+DummySource::DummySource(OpenAL& al)
+    : audio(al)
+{}
 
-class OpenAL;
-class AlSource : public IAudioSource
+DummySource::~DummySource()
 {
-    Q_OBJECT
-public:
-    AlSource(OpenAL& al);
-    AlSource(AlSource& src) = delete;
-    AlSource& operator=(const AlSource&) = delete;
-    AlSource(AlSource&& other) = delete;
-    AlSource& operator=(AlSource&& other) = delete;
-    ~AlSource();
+    // unsubscribe only if not already killed
+    if (!killed) {
+        audio.destroySource(*this);
+        killed = true;
+    }
+}
 
-    operator bool() const override;
+DummySource::operator bool() const
+{
+    return !killed;
+}
 
-    void kill() override;
-
-private:
-    OpenAL& audio;
-    bool killed = false;
-    mutable QMutex killLock;
-};
-
-#endif // ALSOURCE_H
+void DummySource::kill()
+{
+    killed = true;
+    emit invalidated();
+}

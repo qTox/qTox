@@ -34,9 +34,10 @@ class IAudioSource : public QObject
 {
     Q_OBJECT
 public:
-    virtual ~IAudioSource() {}
+    virtual ~IAudioSource() = default;
 
     virtual operator bool() const = 0;
+    virtual void kill() = 0;
 
 signals:
     void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,

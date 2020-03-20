@@ -17,33 +17,32 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ALSOURCE_H
-#define ALSOURCE_H
+#ifndef DUMMYSOURCE_H
+#define DUMMYSOURCE_H
 
 #include "src/audio/iaudiosource.h"
 #include <QMutex>
 #include <QObject>
+#include <atomic>
 
 class OpenAL;
-class AlSource : public IAudioSource
+class DummySource : public IAudioSource
 {
     Q_OBJECT
 public:
-    AlSource(OpenAL& al);
-    AlSource(AlSource& src) = delete;
-    AlSource& operator=(const AlSource&) = delete;
-    AlSource(AlSource&& other) = delete;
-    AlSource& operator=(AlSource&& other) = delete;
-    ~AlSource();
+    DummySource(OpenAL& al);
+    DummySource(DummySource& src) = delete;
+    DummySource& operator=(const DummySource&) = delete;
+    DummySource(DummySource&& other) = delete;
+    DummySource& operator=(DummySource&& other) = delete;
+    ~DummySource();
 
     operator bool() const override;
-
     void kill() override;
 
 private:
     OpenAL& audio;
-    bool killed = false;
-    mutable QMutex killLock;
+    std::atomic<bool> killed{false};
 };
 
-#endif // ALSOURCE_H
+#endif // DUMMYSOURCE_H
