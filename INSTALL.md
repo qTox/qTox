@@ -46,7 +46,6 @@
 | [qrencode]    | >= 3.0.3    |                                                          |
 | [sqlcipher]   | >= 3.2.0    |                                                          |
 | [pkg-config]  | >= 0.28     |                                                          |
-| [filteraudio] | >= 0.0.1    | optional dependency                                      |
 | [snorenotify] | >= 0.7.0    | optional dependency                                      |
 
 ## Optional dependencies
@@ -812,6 +811,5 @@ Switches:
 [Qt]: https://www.qt.io/
 [sqlcipher]: https://www.zetetic.net/sqlcipher/
 [toxcore]: https://github.com/TokTok/c-toxcore/
-[filteraudio]: https://github.com/irungentoo/filter_audio
 [sonnet]: https://github.com/KDE/sonnet
 [snorenotify]: https://techbase.kde.org/Projects/Snorenotify

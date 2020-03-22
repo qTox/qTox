@@ -124,11 +124,11 @@
           </item>
           <item row="5" column="1" colspan="2">
            <widget class="QProgressBar" name="volumeDisplay">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
             <property name="textVisible">
              <bool>false</bool>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
@@ -156,19 +156,6 @@
             </property>
             <property name="toolTip">
              <string>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbEnableBackend2">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</string>
-            </property>
-            <property name="text">
-             <string>Enable experimental audio backend</string>
             </property>
            </widget>
           </item>

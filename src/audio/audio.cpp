@@ -22,9 +22,6 @@
 #include "src/audio/audio.h"
 #include "src/audio/iaudiosettings.h"
 #include "src/audio/backend/openal.h"
-#ifdef USE_FILTERAUDIO
-#include "src/audio/backend/openal2.h"
-#endif
 
 /**
  * @brief Select the audio backend
@@ -33,14 +30,5 @@
  */
 std::unique_ptr<IAudioControl> Audio::makeAudio(IAudioSettings& settings)
 {
-#ifdef USE_FILTERAUDIO
-    const bool Backend2 = settings.getEnableBackend2();
-
-    if (Backend2) {
-        return std::unique_ptr<IAudioControl>(new OpenAL2());
-    } else
-#endif
-    {
-        return std::unique_ptr<IAudioControl>(new OpenAL());
-    }
+    return std::unique_ptr<IAudioControl>(new OpenAL());
 }
