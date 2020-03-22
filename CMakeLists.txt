@@ -24,7 +24,6 @@ cmake_minimum_required(VERSION 2.8.11)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra dependencies" ON)
-option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 option(UPDATE_CHECK "Enable automatic update check" ON)
 option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
@@ -621,19 +620,6 @@ if(AVFOUNDATION_FOUND)
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
     src/platform/camera/avfoundation.mm
     src/platform/camera/avfoundation.h)
-endif()
-
-if(${USE_FILTERAUDIO})
-    search_dependency(FILTERAUDIO LIBRARY filteraudio HEADER filter_audio.h OPTIONAL)
-    if(${FILTERAUDIO_FOUND})
-        set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-            src/audio/backend/openal2.cpp
-            src/audio/backend/openal2.h)
-        add_definitions(-DUSE_FILTERAUDIO=1)
-        message(STATUS "using filteraudio")
-    else()
-         message(STATUS "not using filteraudio, libfilteraudio not found")
-    endif()
 endif()
 
 if(${UPDATE_CHECK})
