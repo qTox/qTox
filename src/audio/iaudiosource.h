@@ -34,7 +34,7 @@ class IAudioSource : public QObject
 {
     Q_OBJECT
 public:
-    virtual ~IAudioSource() {}
+    virtual ~IAudioSource() = default;
 
     virtual operator bool() const = 0;
 
