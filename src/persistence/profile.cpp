@@ -117,7 +117,7 @@ std::unique_ptr<ToxEncrypt> loadToxData(const QString& password, const QString& 
 
     saveFile.close();
     error = LoadToxDataError::OK;
-    return std::move(tmpKey);
+    return tmpKey;
 fail:
     saveFile.close();
     return nullptr;
