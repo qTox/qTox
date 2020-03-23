@@ -107,7 +107,7 @@ void CoreAV::connectCallbacks(ToxAV& toxav)
  */
 CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core, QMutex &toxCoreLock)
 {
-    TOXAV_ERR_NEW err;
+    Toxav_Err_New err;
     std::unique_ptr<ToxAV, ToxAVDeleter> toxav{toxav_new(core, &err)};
     switch (err) {
     case TOXAV_ERR_NEW_OK:
@@ -248,7 +248,7 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
     qDebug() << QString("Answering call %1").arg(friendNum);
     auto it = calls.find(friendNum);
     assert(it != calls.end());
-    TOXAV_ERR_ANSWER err;
+    Toxav_Err_Answer err;
 
     const uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
     if (toxav_answer(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(),
@@ -346,7 +346,7 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, 
     }
 
     // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
-    TOXAV_ERR_SEND_FRAME err;
+    Toxav_Err_Send_Frame err;
     int retries = 0;
     do {
         if (!toxav_audio_send_frame(toxav.get(), callId, pcm, samples, chans, rate, &err)) {
@@ -398,7 +398,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
     // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
     // We don't want to be dropping iframes because of some lock held by toxav_iterate
-    TOXAV_ERR_SEND_FRAME err;
+    Toxav_Err_Send_Frame err;
     int retries = 0;
     do {
         if (!toxav_video_send_frame(toxav.get(), callId, frame.width, frame.height, frame.y,
