@@ -214,6 +214,7 @@ To get translations into qTox:
 - Update toxcore version number to the latest tag. Currently this needs to be
   done manually by `grep`ing for the current tag.
 - Update the bootstrap nodelist at `./res/nodes.json` from https://nodes.tox.chat/json.
+  This can be done by running [`./tools/update-nodes.sh`]
 - Generate changelog with `clog`.
   - In a `MAJOR`/`MINOR` release tag should include information that changelog
     is located in the `CHANGELOG.md` file, e.g. `For details see CHANGELOG.md`
@@ -260,6 +261,7 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`test-pr.sh`]: /test-pr.sh
 [`./tools/deweblate-translation-file.sh`]: /tools/deweblate-translation-file.sh
 [`./tools/create-tarball.sh`]: /tools/create-tarball.sh
+[`./tools/update-nodes.sh`]: /tools/update-nodes.sh
 [`./tools/update-versions.sh`]: /tools/update-versions.sh
 [`./tools/format-code.sh`]: /tools/format-code.sh
 [Flathub repository]: https://github.com/flathub/io.github.qtox.qTox
