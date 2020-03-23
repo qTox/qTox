@@ -22,7 +22,7 @@ extern "C" {
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #include <libavcodec/avcodec.h>
 #include <libavutil/imgutils.h>
-#pragma GCC disagnostic pop
+#pragma GCC diagnostic pop
 }
 
 #include "corevideosource.h"

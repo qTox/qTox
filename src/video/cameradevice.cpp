@@ -26,7 +26,7 @@ extern "C" {
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #include <libavdevice/avdevice.h>
 #include <libavformat/avformat.h>
-#pragma GCC disagnostic pop
+#pragma GCC diagnostic pop
 }
 #include "cameradevice.h"
 #include "src/persistence/settings.h"
