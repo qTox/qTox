@@ -64,7 +64,7 @@
 
 اگر فایلهای این نیازمندی ها وجود نداشته باشند، qTox بدون قابلیت های مربوطه ساخته خواهد شد.
 
-### نیازمندیهای توسعه 
+### نیازمندیهای توسعه
 
 این فایلها و برنامه ها برای انجام تست و ویرایش کد و سایر کارهای مربوط به توسعه برنامه مورد نیاز هستند. اگر این فایل ها موجود نباشند این قابلیت ها وجود نخواهند داشت.
 
@@ -97,11 +97,11 @@
 برای غیرفعال کردن:
 
 <div dir=ltr>
-  
+
 `-DENABLE_STATUSNOTIFIER=False -DENABLE_GTK_SYSTRAY=False`
 
 <div dir=rtl>
-  
+
 ####   آیکن کنار ساعت در محیط Unity
 
 به شکل پیش فرض غیر فعال میباشد.
@@ -120,7 +120,7 @@
 برای فعال سازی:
 
 <div dir=ltr>
-  
+
 `-DENABLE_APPINDICATOR=True`
 
 <div dir=rtl>
@@ -197,7 +197,7 @@ emerge qtox
 http://slackbuilds.org/repository/14.2/network/qTox/
 
 <div dir=rtl>
-  
+
 
 <a name="فری-بی-اس-دی-آسان" />
 
@@ -224,7 +224,7 @@ make install clean
 ```
 
 <div dir=rtl>
-  
+
 
 ----
 
@@ -305,8 +305,8 @@ sudo apt-get install git
 ```
 
 <div dir=rtl>
-  
-  
+
+
 
 <a name="کپی-کیوتاکس" />
 
@@ -322,8 +322,8 @@ git clone https://github.com/qTox/qTox.git qTox
 ```
 
 <div dir=rtl>
-  
-اقدامات بعدی چنین فرض میکنند که شما کد منبع را در مسیر <div dir=ltr>`/home/$USER/qTox`<div dir=rtl> کپی کرده اید. اگر کد را در مسیر دیگری کپی نموده اید، دستورات زیر را به شکل مناسب تغییر دهید. 
+
+اقدامات بعدی چنین فرض میکنند که شما کد منبع را در مسیر <div dir=ltr>`/home/$USER/qTox`<div dir=rtl> کپی کرده اید. اگر کد را در مسیر دیگری کپی نموده اید، دستورات زیر را به شکل مناسب تغییر دهید.
 
 
 
@@ -342,7 +342,7 @@ sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 ```
 
 <div dir=rtl>
-  
+
 
 <a name="سایر-نیاز-دبیان" />
 
@@ -352,7 +352,7 @@ sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 
 
 <div dir=ltr>
-  
+
 ```bash
 sudo apt-get install \
     build-essential \
@@ -387,7 +387,7 @@ sudo apt-get install \
 **این بدان معنی است که اگر نمیتوان sqlcipher را از منابع فدورا دانلود کرد و نصب نمود، میبایست به شکل جداگانه این کتابخانه دانلود و نصب شود.**
 
 <div dir=ltr>
-  
+
 ```bash
 sudo dnf groupinstall "Development Tools" "C Development Tools and Libraries"
 # (can also use sudo dnf install @"Development Tools")
@@ -482,7 +482,7 @@ sudo apt-get install \
     qttools5-dev-tools
 ```
 <div dir=rtl>
-  
+
 
 <a name="سایر-نیاز-اوبونتو16" />
 
@@ -517,7 +517,7 @@ sudo apt-get install \
 ```
 
 <div dir=rtl>
-  
+
 <a name="نیاز-تاکس-کر" />
 
 ### نیازمندی های toxcore
@@ -530,7 +530,7 @@ sudo apt-get install \
 #### آرچ
 
 <div dir=ltr>
-  
+
 ```bash
 sudo pacman -S --needed opus libvpx libsodium
 ```
@@ -549,7 +549,7 @@ libopus-dev libvpx-dev libsodium-dev libavdevice-dev
 ```
 
 <div dir=rtl>
-  
+
 
 <a name="فدورا-تاکس-کر" />
 
@@ -632,7 +632,7 @@ cd ..
 ```bash
 git clone https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
-git checkout v0.2.10
+git checkout v0.2.11
 autoreconf -if
 ./configure
 make -j$(nproc)
@@ -642,13 +642,13 @@ sudo ldconfig
 ```
 
 <div dir=rtl>
-  
+
 
 <a name="کامپایل-کیو-تاکس" />
 
 ### کامپایل qTox
 
-**مطمئن شوید که تمامی پیش نیاز ها را نصب کرده اید**  
+**مطمئن شوید که تمامی پیش نیاز ها را نصب کرده اید**
 
 اگر در حین کامپایل با مشکلی مواجه شوید بدون تردید پیش نیازی را نصب ندارید. بنابراین مطمئن شوید که *همه آنها را نصب کرده اید*.
 
@@ -689,7 +689,7 @@ make
 apt-file search libswscale/swscale.h
 ```
 <div dir=rtl>
-  
+
 سپس بسته هایی را نصب کنید که فایل های مورد نیاز را فراهم میکنند. دوباره فرمان make را اجرا کنید، در صورت نیاز دوباره این مراحل را تکرار کنید. اگر برایتان امکان پذیر است لیستی از فایلهای مورد نیاز تهیه کنید و برای ما ارسال نمایید تا بتوانیم مشخص کنیم که چه فایلهایی به شکل معمول مورد نیاز کاربران است `;)`
 
 ---
@@ -768,13 +768,13 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 در مرحله اول، تمامی پیش نیاز های موجود در `brew` را نصب کنید.
 
 <div dir=ltr>
-  
+
 ```bash
 brew install git ffmpeg qrencode libtool automake autoconf check qt5 libvpx \
 opus sqlcipher libsodium
 ```
 <div dir=rtl>
-  
+
 در مرحله بعد [toxcore](https://github.com/toktok/c-toxcore/blob/master/INSTALL.md#osx)را نصب کنید
 
 سپس qTox را کپی کنید:

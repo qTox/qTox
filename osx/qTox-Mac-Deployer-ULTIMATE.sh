@@ -146,7 +146,7 @@ install() {
         git pull
     else
         fcho "Cloning Toxcore git ... "
-        git clone --branch v0.2.10 --depth=1 https://github.com/toktok/c-toxcore "$TOXCORE_DIR"
+        git clone --branch v0.2.11 --depth=1 https://github.com/toktok/c-toxcore "$TOXCORE_DIR"
     fi
     # qTox
     if [[ $TRAVIS = true ]]

@@ -413,7 +413,7 @@ Provided that you have all required dependencies installed, you can simply run:
 ```bash
 git clone https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
-git checkout v0.2.10
+git checkout v0.2.11
 cmake . -DBOOTSTRAP_DAEMON=OFF
 make -j$(nproc)
 sudo make install
