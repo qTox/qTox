@@ -106,7 +106,7 @@ struct Orderable : EqualityComparible<T, Underlying>
  * in signals/slots. For queued connections, registering the metatype is also
  * required before the type is used.
  *   using ReceiptNum = NamedType<uint32_t, struct ReceiptNumTag>;
- *   Q_DECLARE_METATYPE(ReceiptNum);
+ *   Q_DECLARE_METATYPE(ReceiptNum)
  *   qRegisterMetaType<ReceiptNum>();
  */
 

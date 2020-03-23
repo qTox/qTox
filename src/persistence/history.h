@@ -103,7 +103,7 @@ struct FileDbInsertionData
     int64_t size;
     int direction;
 };
-Q_DECLARE_METATYPE(FileDbInsertionData);
+Q_DECLARE_METATYPE(FileDbInsertionData)
 
 enum class MessageState
 {
