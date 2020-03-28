@@ -41,7 +41,6 @@ QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
-FILTERAUIO_DIR="${MAIN_DIR}/filter_audio" # Change to Git location
 
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
@@ -207,12 +206,6 @@ install() {
     then
         kill $DOT_PID
     fi
-
-    fcho "Cloning filter_audio ... "
-    git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio "$FILTERAUIO_DIR"
-    cd "$FILTERAUIO_DIR"
-    fcho "Installing filter_audio ... "
-    make install PREFIX="$LIB_INSTALL_PREFIX"
 
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
     QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"

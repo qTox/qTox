@@ -34,22 +34,6 @@ bool needsLoadFromHistory(ChatLogIdx idx, const SessionChatLog& sessionChatLog)
 }
 
 /**
- * @brief Gets the initial chat log index for a sessionChatLog with 0 items loaded from history.
- * Needed to keep history indexes in sync with chat log indexes
- * @param[in] history
- * @param[in] f
- * @return Initial chat log index
- */
-ChatLogIdx getInitialChatLogIdx(History* history, Friend& f)
-{
-    if (!history) {
-        return ChatLogIdx(0);
-    }
-
-    return ChatLogIdx(history->getNumMessagesForFriend(f.getPublicKey()));
-}
-
-/**
  * @brief Finds the first item in sessionChatLog that contains a message
  * @param[in] sessionChatLog
  * @return index of first message
@@ -90,9 +74,9 @@ ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& co
                          const Settings& settings_, IMessageDispatcher& messageDispatcher)
     : f(f_)
     , history(history_)
-    , sessionChatLog(getInitialChatLogIdx(history, f), coreIdHandler)
     , settings(settings_)
     , coreIdHandler(coreIdHandler)
+    , sessionChatLog(getInitialChatLogIdx(), coreIdHandler)
 {
     connect(&messageDispatcher, &IMessageDispatcher::messageComplete, this,
             &ChatHistory::onMessageComplete);
@@ -471,4 +455,19 @@ void ChatHistory::completeMessage(DispatchedMessageId id)
 bool ChatHistory::canUseHistory() const
 {
     return history && settings.getEnableLogging();
+}
+
+/**
+ * @brief Gets the initial chat log index for a sessionChatLog with 0 items loaded from history.
+ * Needed to keep history indexes in sync with chat log indexes
+ * @param[in] history
+ * @param[in] f
+ * @return Initial chat log index
+ */
+ChatLogIdx ChatHistory::getInitialChatLogIdx() const
+{
+    if (canUseHistory()) {
+        return ChatLogIdx(history->getNumMessagesForFriend(f.getPublicKey()));
+    }
+    return ChatLogIdx(0);
 }

@@ -105,6 +105,7 @@ class IAudioControl : public QObject
     Q_OBJECT
 
 public:
+    virtual ~IAudioControl() = default;
     virtual qreal outputVolume() const = 0;
     virtual void setOutputVolume(qreal volume) = 0;
     virtual qreal maxOutputVolume() const = 0;

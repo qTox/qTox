@@ -62,11 +62,6 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
     cbEnableTestSound->setChecked(audioSettings->getEnableTestSound());
     cbEnableTestSound->setToolTip(tr("Play a test sound while changing the output volume."));
 
-#ifndef USE_FILTERAUDIO
-    cbEnableBackend2->setVisible(false);
-#endif
-    cbEnableBackend2->setChecked(audioSettings->getEnableBackend2());
-
     connect(rescanButton, &QPushButton::clicked, this, &AVForm::rescanDevices);
 
     playbackSlider->setTracking(false);
@@ -177,11 +172,6 @@ void AVForm::rescanDevices()
 void AVForm::setVolume(float value)
 {
     volumeDisplay->setValue(getStepsFromValue(value, audio.minOutputVolume(), audio.maxOutputVolume()));
-}
-
-void AVForm::on_cbEnableBackend2_stateChanged()
-{
-    audioSettings->setEnableBackend2(cbEnableBackend2->isChecked());
 }
 
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)

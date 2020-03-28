@@ -52,8 +52,8 @@ T clamp(T x, T min, T max)
     return x;
 }
 
-ChatLog::ChatLog(const bool canRemove, QWidget* parent)
-    : QGraphicsView(parent), canRemove(canRemove)
+ChatLog::ChatLog(QWidget* parent)
+    : QGraphicsView(parent)
 {
     // Create the scene
     busyScene = new QGraphicsScene(this);
@@ -394,7 +394,7 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
     if (newLines.isEmpty())
         return;
 
-    if (canRemove && lines.size() + static_cast<int>(DEF_NUM_MSG_TO_LOAD) >= maxMessages) {
+    if (lines.size() + static_cast<int>(DEF_NUM_MSG_TO_LOAD) >= maxMessages) {
         removeFirsts(DEF_NUM_MSG_TO_LOAD);
     }
 
@@ -444,7 +444,7 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
         combLines.push_back(l);
     }
 
-    if (canRemove && lines.size() + static_cast<int>(DEF_NUM_MSG_TO_LOAD) >= maxMessages) {
+    if (lines.size() + static_cast<int>(DEF_NUM_MSG_TO_LOAD) >= maxMessages) {
         removeLasts(DEF_NUM_MSG_TO_LOAD);
     }
 

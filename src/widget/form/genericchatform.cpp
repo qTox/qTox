@@ -258,7 +258,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
     dateInfo = new QLabel(this);
-    chatWidget = new ChatLog(contact->useHistory(), this);
+    chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);

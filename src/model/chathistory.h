@@ -60,12 +60,13 @@ private:
     void handleDispatchedMessage(DispatchedMessageId dispatchId, RowId historyId);
     void completeMessage(DispatchedMessageId id);
     bool canUseHistory() const;
+    ChatLogIdx getInitialChatLogIdx() const;
 
     Friend& f;
     History* history;
-    mutable SessionChatLog sessionChatLog;
     const Settings& settings;
     const ICoreIdHandler& coreIdHandler;
+    mutable SessionChatLog sessionChatLog;
 
     // If a message completes before it's inserted into history it will end up
     // in this set

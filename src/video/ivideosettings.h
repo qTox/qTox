@@ -27,6 +27,8 @@
 
 class IVideoSettings {
 public:
+    virtual ~IVideoSettings() = default;
+
     virtual QString getVideoDev() const = 0;
     virtual void setVideoDev(const QString& deviceSpecifier) = 0;
 
