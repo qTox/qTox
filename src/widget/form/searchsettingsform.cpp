@@ -38,7 +38,7 @@ SearchSettingsForm::SearchSettingsForm(QWidget *parent) :
     reloadTheme();
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
-    connect(ui->startSearchComboBox, QOverload<int, const QString &>::of(&QComboBox::currentIndexChanged),
+    connect(ui->startSearchComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
 #else
     connect(ui->startSearchComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
 #endif
