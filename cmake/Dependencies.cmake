@@ -58,7 +58,7 @@ function(search_dependency pkg)
 
   # Try pkg-config first.
   if(NOT ${pkg}_FOUND AND arg_PACKAGE)
-    pkg_search_module(${pkg} ${arg_PACKAGE})
+    pkg_check_modules(${pkg} ${arg_PACKAGE})
   endif()
 
   # Then, try OSX frameworks.
