@@ -161,6 +161,11 @@ build_qtox() {
 
     local BUILDDIR=_build
 
+	# Add all warning flags we can
+	export CFLAGS="-Wall -Wextra -Wpedantic -pedantic-errors -Wconversion"
+	export CFLAGS+=" -Werror" # make all warnings fatal
+	export CXXFLAGS="$CFLAGS"
+
     # first build qTox without support for optional dependencies
     echo '*** BUILDING "MINIMAL" VERSION ***'
     cmake -H. -B"$BUILDDIR" \
