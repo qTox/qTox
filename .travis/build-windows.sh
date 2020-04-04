@@ -113,11 +113,17 @@ sudo apt-get update -qq
 # to support functionality used by Qt's configure
 sudo apt-get install libseccomp2 -y --force-yes
 
+# Add all warning flags we can
+CFLAGS="-Wall -Wextra -Wpedantic -pedantic-errors -Wconversion"
+CFLAGS+=" -Werror" # make all warnings fatal
+CXXFLAGS="$CFLAGS"
+
 # Build
 sudo docker run --rm \
                 -v "$PWD/workspace":/workspace \
                 -v "$PWD":/qtox \
                 -e TRAVIS_CI_STAGE="$STAGE" \
+				-e CFLAGS="$CFLAGS" -e CXXFLAGS="$CXXFLAGS" \
                 debian:buster-slim \
                 /bin/bash /qtox/windows/cross-compile/build.sh "$ARCH" "$BUILD_TYPE"
 
