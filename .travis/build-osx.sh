@@ -34,6 +34,11 @@ install_ccache() {
 
 # Build OSX
 build() {
+	# Add all warning flags we can
+	export CFLAGS="-Wall -Wextra -Wpedantic -pedantic-errors -Wconversion"
+	export CFLAGS+=" -Werror" # make all warnings fatal
+	export CXXFLAGS="$CFLAGS"
+
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -b
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -d
