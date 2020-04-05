@@ -665,13 +665,7 @@ void GenericChatForm::loadHistoryTo(const QDateTime &time)
 {
     auto end = chatLog.getFirstIdx();
     if (time.isNull()) {
-        if (messages.size() + 100 >= maxMessages) {
-            end = ChatLogIdx(messages.rbegin()->first.get() - 100);
-            chatWidget->removeLasts(100);
-            removeLastsMessages(100);
-        } else {
-            end = messages.begin()->first;
-        }
+        end = messages.begin()->first;
     } else {
         end = firstItemAfterDate(time.date(), chatLog);
     }
@@ -688,14 +682,7 @@ void GenericChatForm::loadHistoryFrom(const QDateTime &time)
 {
     auto begin = chatLog.getFirstIdx();
     if (time.isNull()) {
-        if (messages.size() + 100 >= maxMessages) {
-            begin = ChatLogIdx(messages.rbegin()->first.get() + 100);
-            chatWidget->removeFirsts(100);
-            removeFirstsMessages(100);
-        } else {
-            begin = messages.rbegin()->first;
-        }
-
+        begin = messages.rbegin()->first;
     } else {
         begin = firstItemAfterDate(time.date(), chatLog);
     }
@@ -706,24 +693,6 @@ void GenericChatForm::loadHistoryFrom(const QDateTime &time)
     }
     auto end = ChatLogIdx(begin.get() + add);
     renderMessages(begin, end);
-}
-
-void GenericChatForm::removeFirstsMessages(const int num)
-{
-    if (static_cast<int>(messages.size()) > num) {
-        messages.erase(messages.begin(), std::next(messages.begin(), num));
-    } else {
-        messages.clear();
-    }
-}
-
-void GenericChatForm::removeLastsMessages(const int num)
-{
-    if (static_cast<int>(messages.size()) > num) {
-        messages.erase(std::next(messages.end(), -100), messages.end());
-    } else {
-        messages.clear();
-    }
 }
 
 
@@ -1037,10 +1006,6 @@ void GenericChatForm::renderItem(const ChatLogItem& item, bool hideName, bool co
 
 void GenericChatForm::renderMessage(ChatLogIdx idx)
 {
-    if (chatWidget->getLines().size() >= maxMessages) {
-        chatWidget->removeFirsts(optimalRemove);
-        removeFirstsMessages(optimalRemove);
-    }
     renderMessages(idx, idx + 1);
 }
 

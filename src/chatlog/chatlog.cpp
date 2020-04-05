@@ -678,30 +678,6 @@ void ChatLog::reloadTheme()
     }
 }
 
-void ChatLog::removeFirsts(const int num)
-{
-    if (lines.size() > num) {
-        lines.erase(lines.begin(), lines.begin()+num);
-    } else {
-        lines.clear();
-    }
-
-    for (int i = 0; i < lines.size(); ++i) {
-        lines[i]->setRow(i);
-    }
-
-    moveSelectionRectUpIfSelected(num);
-}
-
-void ChatLog::removeLasts(const int num)
-{
-    if (lines.size() > num) {
-        lines.erase(lines.end()-num, lines.end());
-    } else {
-        lines.clear();
-    }
-}
-
 void ChatLog::forceRelayout()
 {
     startResizeWorker();
