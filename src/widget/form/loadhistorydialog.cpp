@@ -66,15 +66,6 @@ QDateTime LoadHistoryDialog::getFromDate()
     return res;
 }
 
-LoadHistoryDialog::LoadType LoadHistoryDialog::getLoadType()
-{
-    if (ui->loadTypeComboBox->currentIndex() == 0) {
-        return LoadType::from;
-    }
-
-    return LoadType::to;
-}
-
 void LoadHistoryDialog::setTitle(const QString& title)
 {
     setWindowTitle(title);

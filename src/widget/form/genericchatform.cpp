@@ -822,22 +822,12 @@ void GenericChatForm::onLoadHistory()
 {
     LoadHistoryDialog dlg(&chatLog);
     if (dlg.exec()) {
+        QDateTime time = dlg.getFromDate();
+        auto idx = firstItemAfterDate(dlg.getFromDate().date(), chatLog);
+        auto end = ChatLogIdx(idx.get() + 100);
         chatWidget->clear();
         messages.clear();
-
-        QDateTime time = dlg.getFromDate();
-        auto type = dlg.getLoadType();
-
-        auto begin = firstItemAfterDate(dlg.getFromDate().date(), chatLog);
-        auto end = ChatLogIdx(begin.get() + 1);
-
-        renderMessages(begin, end);
-
-        if (type == LoadHistoryDialog::from) {
-            loadHistoryUpper();
-        } else {
-            loadHistoryLower();
-        }
+        renderMessages(idx, end);
     }
 }
 
@@ -1044,13 +1034,15 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
 
 void GenericChatForm::loadHistoryLower()
 {
-    auto end = messages.begin()->first;
-    auto begin = ChatLogIdx(0);
-    if (end.get() > 100) {
-        begin = ChatLogIdx(end.get() - 100);
+    auto begin = messages.begin()->first;
+
+    if (begin.get() > 100) {
+        begin = ChatLogIdx(begin.get() - 100);
+    } else {
+        begin = ChatLogIdx(0);
     }
 
-    renderMessages(begin, end);
+    renderMessages(begin, chatLog.getNextIdx());
 }
 
 void GenericChatForm::loadHistoryUpper()
