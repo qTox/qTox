@@ -168,8 +168,3 @@ Status::Status Friend::getStatus() const
 {
     return friendStatus;
 }
-
-bool Friend::useHistory() const
-{
-    return true;
-}
