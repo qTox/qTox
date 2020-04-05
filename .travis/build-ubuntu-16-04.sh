@@ -23,7 +23,7 @@ sudo apt-get update -qq
 
 # install needed Qt, OpenAL, opus, qrencode, GTK tray deps, sqlcipher
 # `--force-yes` since we don't care about GPG failing to work with short IDs
-sudo apt-get install -y --force-yes \
+sudo apt-get install --no-install-recommends -y --force-yes \
     automake \
     autotools-dev \
     build-essential \
@@ -162,7 +162,7 @@ build_qtox() {
     local BUILDDIR=_build
 
 	# Add all warning flags we can
-	export CFLAGS="-Wall -Wextra -Wpedantic -pedantic-errors -Wconversion"
+	export CFLAGS="-Wall -Wconversion"
 	export CFLAGS+=" -Werror" # make all warnings fatal
 	export CXXFLAGS="$CFLAGS"
 
@@ -172,7 +172,8 @@ build_qtox() {
         -DSMILEYS=DISABLED \
         -DENABLE_STATUSNOTIFIER=False \
         -DENABLE_GTK_SYSTRAY=False \
-        -DSPELL_CHECK=OFF
+        -DSPELL_CHECK=OFF || \
+		cat /home/travis/build/qTox/qTox/_build/CMakeFiles/CMakeOutput.log /home/travis/build/qTox/qTox/_build/CMakeFiles/CMakeError.log
 
     bdir
 
