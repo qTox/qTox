@@ -652,47 +652,16 @@ void GenericChatForm::loadHistory(const QDateTime &time, const LoadHistoryDialog
     chatWidget->clear();
     messages.clear();
 
+    auto begin = firstItemAfterDate(time.date(), chatLog);
+    auto end = ChatLogIdx(begin.get() + 1);
+
+    renderMessages(begin, end);
+
     if (type == LoadHistoryDialog::from) {
-        loadHistoryFrom(time);
-        auto msg = messages.cbegin()->second;
-        chatWidget->scrollToLine(msg);
+        loadHistoryUpper();
     } else {
-        loadHistoryTo(time);
+        loadHistoryLower();
     }
-}
-
-void GenericChatForm::loadHistoryTo(const QDateTime &time)
-{
-    auto end = chatLog.getFirstIdx();
-    if (time.isNull()) {
-        end = messages.begin()->first;
-    } else {
-        end = firstItemAfterDate(time.date(), chatLog);
-    }
-
-    auto begin = chatLog.getFirstIdx();
-    if (end - begin > DEF_NUM_MSG_TO_LOAD) {
-        begin = end - DEF_NUM_MSG_TO_LOAD;
-    }
-
-    renderMessages(begin, end);
-}
-
-void GenericChatForm::loadHistoryFrom(const QDateTime &time)
-{
-    auto begin = chatLog.getFirstIdx();
-    if (time.isNull()) {
-        begin = messages.rbegin()->first;
-    } else {
-        begin = firstItemAfterDate(time.date(), chatLog);
-    }
-
-    int add = 100;
-    if (begin.get() + 100 > chatLog.getNextIdx().get()) {
-        add = chatLog.getNextIdx().get() - (begin.get() + 100);
-    }
-    auto end = ChatLogIdx(begin.get() + add);
-    renderMessages(begin, end);
 }
 
 
@@ -1068,14 +1037,25 @@ void GenericChatForm::goToCurrentDate()
 
 void GenericChatForm::loadHistoryLower()
 {
-    loadHistoryTo(QDateTime());
+    auto end = messages.begin()->first;
+    auto begin = ChatLogIdx(0);
+    if (end.get() > 100) {
+        begin = ChatLogIdx(end.get() - 100);
+    }
+
+    renderMessages(begin, end);
 }
 
 void GenericChatForm::loadHistoryUpper()
 {
-    auto msg = messages.crbegin()->second;
-    loadHistoryFrom(QDateTime());
-    chatWidget->scrollToLine(msg);
+    auto begin = messages.rbegin()->first;
+
+    int add = 100;
+    if (begin.get() + 100 > chatLog.getNextIdx().get()) {
+        add = chatLog.getNextIdx().get() - (begin.get() + 100);
+    }
+    auto end = ChatLogIdx(begin.get() + add);
+    renderMessages(begin, end);
 }
 
 void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& topLine)

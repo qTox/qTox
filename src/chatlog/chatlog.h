@@ -92,7 +92,7 @@ protected:
 
     void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
-    void checkVisibility(bool causedWheelEvent = false);
+    void checkVisibility(bool causedByScroll = false);
     void scrollToBottom();
     void startResizeWorker();
 
