@@ -55,8 +55,6 @@ public:
     void scrollToLine(ChatLine::Ptr line);
     void selectAll();
     void fontChanged(const QFont& font);
-    void removeFirsts(const int num);
-    void removeLasts(const int num);
 
     QString getSelectedText() const;
 

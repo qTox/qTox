@@ -131,8 +131,6 @@ private:
     void loadHistory(const QDateTime& time, const LoadHistoryDialog::LoadType type);
     void loadHistoryTo(const QDateTime& time);
     void loadHistoryFrom(const QDateTime& time);
-    void removeFirstsMessages(const int num);
-    void removeLastsMessages(const int num);
 
     void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames, ChatMessage::Ptr &chatMessage);
     void renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp, ChatMessage::Ptr &chatMessage);
@@ -191,8 +189,4 @@ protected:
     SearchPos searchPos;
     std::map<ChatLogIdx, ChatMessage::Ptr> messages;
     bool colorizeNames = false;
-
-private:
-    const int maxMessages{300};
-    const int optimalRemove{50};
 };
