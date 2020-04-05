@@ -34,8 +34,6 @@
 
 #include <cassert>
 
-static const auto DEF_NUM_MSG_TO_LOAD = 100;
-
 using ChatLogIdx =
     NamedType<size_t, struct ChatLogIdxTag, Orderable, UnderlyingAddable, UnitlessDifferencable, Incrementable>;
 Q_DECLARE_METATYPE(ChatLogIdx)
