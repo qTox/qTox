@@ -343,7 +343,6 @@ GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, ICha
             &GenericChatForm::onChatContextMenuRequested);
     connect(chatWidget, &ChatLog::firstVisibleLineChanged, this, &GenericChatForm::updateShowDateInfo);
     connect(chatWidget, &ChatLog::loadHistoryLower, this, &GenericChatForm::loadHistoryLower);
-    connect(chatWidget, &ChatLog::loadHistoryUpper, this, &GenericChatForm::loadHistoryUpper);
 
     connect(searchForm, &SearchForm::searchInBegin, this, &GenericChatForm::searchInBegin);
     connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
@@ -788,10 +787,7 @@ void GenericChatForm::onLoadHistory()
     if (dlg.exec()) {
         QDateTime time = dlg.getFromDate();
         auto idx = firstItemAfterDate(dlg.getFromDate().date(), chatLog);
-        auto end = ChatLogIdx(idx.get() + 100);
-        chatWidget->clear();
-        messages.clear();
-        renderMessages(idx, end);
+        renderMessages(idx, chatLog.getNextIdx());
     }
 }
 
@@ -1007,18 +1003,6 @@ void GenericChatForm::loadHistoryLower()
     }
 
     renderMessages(begin, chatLog.getNextIdx());
-}
-
-void GenericChatForm::loadHistoryUpper()
-{
-    auto begin = messages.end()->first;
-
-    int add = 100;
-    if (begin.get() + 100 > chatLog.getNextIdx().get()) {
-        add = chatLog.getNextIdx().get() - (begin.get() + 100);
-    }
-    auto end = ChatLogIdx(begin.get() + add);
-    renderMessages(begin, end);
 }
 
 void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& topLine)
