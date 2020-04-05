@@ -680,8 +680,8 @@ void GenericChatForm::loadHistoryTo(const QDateTime &time)
     }
 
     if (begin != end) {
-        if (searchResult.found == true && searchResult.pos.logIdx == end) {
-            renderMessages(begin, end, [this]{enableSearchText();});
+        if (searchResult.found == true) {
+            renderMessages(begin, searchResult.pos.logIdx, [this]{enableSearchText();});
         } else {
             renderMessages(begin, end);
         }
@@ -943,6 +943,12 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
         goToCurrentDate();
     }
 
+    if (!parameter.time.isNull()) {
+        LoadHistoryDialog::LoadType type = (parameter.period == PeriodSearch::BeforeDate)
+                ? LoadHistoryDialog::to : LoadHistoryDialog::from;
+        loadHistory(parameter.time, type);
+    }
+
     bool bForwardSearch = false;
     switch (parameter.period) {
     case PeriodSearch::WithTheFirst: {
@@ -988,6 +994,12 @@ void GenericChatForm::onSearchUp(const QString& phrase, const ParameterSearch& p
 void GenericChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
 {
     auto result = chatLog.searchForward(searchResult.pos, phrase, parameter);
+
+    if (result.found && result.pos.logIdx.get() > messages.end()->first.get()) {
+        const auto dt = chatLog.at(result.pos.logIdx).getTimestamp();
+        loadHistory(dt, LoadHistoryDialog::from);
+    }
+
     handleSearchResult(result, SearchDirection::Down);
 }
 
@@ -1002,56 +1014,9 @@ void GenericChatForm::handleSearchResult(SearchResult result, SearchDirection di
 
     searchResult = result;
 
-    auto searchIdx = result.pos.logIdx;
+    auto const firstRenderedIdx = (messages.empty()) ? chatLog.getNextIdx() : messages.begin()->first;
 
-    auto firstRenderedIdx = messages.begin()->first;
-    auto endRenderedIdx = messages.rbegin()->first;
-
-    if (direction == SearchDirection::Up) {
-        if (searchIdx < firstRenderedIdx) {
-            if (searchIdx - chatLog.getFirstIdx() > DEF_NUM_MSG_TO_LOAD / 2) {
-                firstRenderedIdx = searchIdx - DEF_NUM_MSG_TO_LOAD / 2;
-            } else {
-                firstRenderedIdx = chatLog.getFirstIdx();
-            }
-        }
-
-        if (endRenderedIdx - firstRenderedIdx > DEF_NUM_MSG_TO_LOAD) {
-            endRenderedIdx = firstRenderedIdx + DEF_NUM_MSG_TO_LOAD;
-        }
-    } else {
-        if (searchIdx < firstRenderedIdx) {
-            firstRenderedIdx = searchIdx;
-        }
-
-        if (firstRenderedIdx == searchIdx || searchIdx > endRenderedIdx) {
-            if (searchIdx + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx()) {
-                endRenderedIdx = chatLog.getNextIdx();
-            } else {
-                endRenderedIdx = searchIdx + DEF_NUM_MSG_TO_LOAD;
-            }
-        }
-
-        if (endRenderedIdx - firstRenderedIdx > DEF_NUM_MSG_TO_LOAD) {
-            if (endRenderedIdx - chatLog.getFirstIdx() > DEF_NUM_MSG_TO_LOAD) {
-                firstRenderedIdx = endRenderedIdx - DEF_NUM_MSG_TO_LOAD;
-            } else {
-                firstRenderedIdx = chatLog.getFirstIdx();
-            }
-        }
-    }
-
-    if (!messages.empty() && (firstRenderedIdx < messages.begin()->first
-                              || endRenderedIdx > messages.rbegin()->first)) {
-        chatWidget->clear();
-        messages.clear();
-
-        auto mediator = endRenderedIdx;
-        endRenderedIdx = firstRenderedIdx;
-        firstRenderedIdx = mediator;
-    }
-
-    renderMessages(endRenderedIdx, firstRenderedIdx, [this]{enableSearchText();});
+    renderMessages(searchResult.pos.logIdx, firstRenderedIdx, [this]{enableSearchText();});
 }
 
 void GenericChatForm::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatMessage::Ptr& chatMessage)
