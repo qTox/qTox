@@ -1108,10 +1108,6 @@ void GenericChatForm::loadHistoryLower()
 
 void GenericChatForm::loadHistoryUpper()
 {
-    if (messages.empty()) {
-        return;
-    }
-
     auto msg = messages.crbegin()->second;
     loadHistoryFrom(QDateTime());
     chatWidget->scrollToLine(msg);
