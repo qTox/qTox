@@ -202,7 +202,4 @@ QString Group::getSelfName() const
     return selfName;
 }
 
-bool Group::useHistory() const
-{
-    return false;
 }
