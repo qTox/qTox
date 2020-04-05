@@ -41,7 +41,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="infoLabel">
+      <widget class="QLabel" name="label">
        <property name="text">
         <string>(about 100 messages are loaded)</string>
        </property>
