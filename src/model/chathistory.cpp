@@ -96,9 +96,10 @@ ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& co
 
     // NOTE: this has to be done _after_ sending all sent messages since initial
     // state of the message has to be marked according to our dispatch state
-    auto firstChatLogIdx = sessionChatLog.getFirstIdx().get() < DEF_NUM_MSG_TO_LOAD
+    constexpr auto defaultNumMessagesToLoad = 100;
+    auto firstChatLogIdx = sessionChatLog.getFirstIdx().get() < defaultNumMessagesToLoad
                                ? ChatLogIdx(0)
-                               : sessionChatLog.getFirstIdx() - DEF_NUM_MSG_TO_LOAD;
+                               : sessionChatLog.getFirstIdx() - defaultNumMessagesToLoad;
 
     if (canUseHistory()) {
         loadHistoryIntoSessionChatLog(firstChatLogIdx);

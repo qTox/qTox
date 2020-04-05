@@ -38,24 +38,18 @@ public:
         to
     };
 
-    enum Mode {
-        common,
-        search
-    };
-
     explicit LoadHistoryDialog(const IChatLog* chatLog, QWidget* parent = nullptr);
-    explicit LoadHistoryDialog(Mode mode, QWidget* parent = nullptr);
+    explicit LoadHistoryDialog(QWidget* parent = nullptr);
     ~LoadHistoryDialog();
 
     QDateTime getFromDate();
     LoadType getLoadType();
+    void turnSearchMode();
 
 public slots:
     void highlightDates(int year, int month);
 
 private:
-    void enableSearchMode();
-
     Ui::LoadHistoryDialog* ui;
     const IChatLog* chatLog;
 };
