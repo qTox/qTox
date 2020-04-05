@@ -160,19 +160,13 @@ SearchResult ChatHistory::searchBackward(SearchPos startIdx, const QString& phra
         history->getDateWhereFindPhrase(f.getPublicKey(), earliestMessageDate, phrase,
                                         parameter);
 
-    if (dateWherePhraseFound.isValid()) {
-        auto loadIdx = history->getNumMessagesForFriendBeforeDate(f.getPublicKey(), dateWherePhraseFound);
-        loadHistoryIntoSessionChatLog(ChatLogIdx(loadIdx));
+    auto loadIdx = history->getNumMessagesForFriendBeforeDate(f.getPublicKey(), dateWherePhraseFound);
+    loadHistoryIntoSessionChatLog(ChatLogIdx(loadIdx));
 
-        // Reset search pos to the message we just loaded to avoid a double search
-        startIdx.logIdx = ChatLogIdx(loadIdx);
-        startIdx.numMatches = 0;
-        return sessionChatLog.searchBackward(startIdx, phrase, parameter);
-    }
-
-    SearchResult ret;
-    ret.found = false;
-    return ret;
+    // Reset search pos to the message we just loaded to avoid a double search
+    startIdx.logIdx = ChatLogIdx(loadIdx);
+    startIdx.numMatches = 0;
+    return sessionChatLog.searchBackward(startIdx, phrase, parameter);
 }
 
 ChatLogIdx ChatHistory::getFirstIdx() const
