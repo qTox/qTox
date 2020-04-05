@@ -24,7 +24,6 @@
 #include "src/widget/style.h"
 
 #include <QFont>
-#include <QTextCursor>
 
 class QTextDocument;
 
@@ -111,9 +110,6 @@ private:
     TextType textType;
     QColor color;
     QColor customColor;
-
-    QTextCursor selectCursor;
-    std::pair<int, int> selectPoint{0, 0};
 };
 
 #endif // TEXT_H
