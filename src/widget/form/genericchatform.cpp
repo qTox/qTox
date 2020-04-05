@@ -698,6 +698,7 @@ void GenericChatForm::loadHistoryFrom(const QDateTime &time)
 
     int add = DEF_NUM_MSG_TO_LOAD;
     if (begin.get() + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx().get()) {
+        auto aTest = chatLog.getNextIdx().get();
         add = chatLog.getNextIdx().get() - begin.get();
     }
     auto end = ChatLogIdx(begin.get() + add);

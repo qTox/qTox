@@ -399,7 +399,7 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
     if (newLines.isEmpty())
         return;
 
-    if (lines.size() + static_cast<int>(DEF_NUM_MSG_TO_LOAD) >= maxMessages) {
+    if (lines.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
         removeFirsts(DEF_NUM_MSG_TO_LOAD);
     }
 
@@ -450,7 +450,7 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
         combLines.push_back(l);
     }
 
-    if (lines.size() + static_cast<int>(DEF_NUM_MSG_TO_LOAD) >= maxMessages) {
+    if (lines.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
         removeLasts(DEF_NUM_MSG_TO_LOAD);
     }
 
@@ -800,6 +800,7 @@ void ChatLog::checkVisibility(bool causedWheelEvent)
     }
 
     if (causedWheelEvent) {
+        qDebug() << "causedWheelEvent";
         if (lowerBound != lines.cend() && lowerBound->get()->row == 0) {
             emit loadHistoryLower();
         } else if (upperBound == lines.cend()) {
