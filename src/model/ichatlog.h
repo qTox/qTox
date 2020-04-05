@@ -138,8 +138,6 @@ public:
     virtual std::vector<DateChatLogIdxPair> getDateIdxs(const QDate& startDate,
                                                         size_t maxDates) const = 0;
 
-    virtual std::size_t size() const = 0;
-
 signals:
     void itemUpdated(ChatLogIdx idx);
 };
