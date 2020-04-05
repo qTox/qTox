@@ -191,4 +191,8 @@ protected:
     SearchPos searchPos;
     std::map<ChatLogIdx, ChatMessage::Ptr> messages;
     bool colorizeNames = false;
+
+private:
+    const int maxMessages{300};
+    const int optimalRemove{50};
 };
