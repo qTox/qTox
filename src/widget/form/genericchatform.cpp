@@ -916,17 +916,7 @@ void GenericChatForm::onSearchTriggered()
 
 void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch& parameter)
 {
-    if (phrase.isEmpty()) {
-        disableSearchText();
-
-        return;
-    }
-
-    if (chatLog.getNextIdx() == messages.rbegin()->first + 1) {
-        disableSearchText();
-    } else {
-        goToCurrentDate();
-    }
+    disableSearchText();
 
     if (!parameter.time.isNull()) {
         LoadHistoryDialog::LoadType type = (parameter.period == PeriodSearch::BeforeDate)
@@ -978,7 +968,7 @@ void GenericChatForm::onSearchUp(const QString& phrase, const ParameterSearch& p
 
 void GenericChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
 {
-    auto result = chatLog.searchForward(searchPos, phrase, parameter);
+    auto result = chatLog.searchForward(searchPos, phrase, parameter);    
 
     if (result.found && result.pos.logIdx.get() > messages.end()->first.get()) {
         const auto dt = chatLog.at(result.pos.logIdx).getTimestamp();
