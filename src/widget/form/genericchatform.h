@@ -138,8 +138,6 @@ private:
     void loadHistory(const QDateTime& time, const LoadHistoryDialog::LoadType type);
     void loadHistoryTo(const QDateTime& time);
     void loadHistoryFrom(const QDateTime& time);
-    void removeFirstsMessages(const int num);
-    void removeLastsMessages(const int num);
 
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
@@ -199,10 +197,6 @@ protected:
     SearchPos searchPos;
     std::map<ChatLogIdx, ChatMessage::Ptr> messages;
     bool colorizeNames = false;
-
-private:
-    const int maxMessages{300};
-    const int optimalRemove{50};
 };
 
 #endif // GENERICCHATFORM_H
