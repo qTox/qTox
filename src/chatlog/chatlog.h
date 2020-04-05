@@ -35,7 +35,6 @@ class ChatLineContent;
 struct ToxFile;
 
 static const size_t DEF_NUM_MSG_TO_LOAD = 100;
-
 class ChatLog : public QGraphicsView
 {
     Q_OBJECT
@@ -58,8 +57,6 @@ public:
     void fontChanged(const QFont& font);
     void removeFirsts(const int num);
     void removeLasts(const int num);
-    void setScroll(const bool scroll);
-    int getNumRemove() const;
 
     QString getSelectedText() const;
 
@@ -99,7 +96,7 @@ protected:
     void updateSceneRect();
     void checkVisibility(bool causedWheelEvent = false);
     void scrollToBottom();
-    void startResizeWorker(ChatLine::Ptr anchorLine = nullptr);
+    void startResizeWorker();
 
     void mouseDoubleClickEvent(QMouseEvent* ev) final;
     void mousePressEvent(QMouseEvent* ev) final;
@@ -170,7 +167,6 @@ private:
     int clickCount = 0;
     QPoint lastClickPos;
     Qt::MouseButton lastClickButton;
-    bool isScroll{true};
 
     // worker vars
     int workerLastIndex = 0;
@@ -180,7 +176,4 @@ private:
     // layout
     QMargins margins = QMargins(10, 10, 10, 10);
     qreal lineSpacing = 5.0f;
-
-    int numRemove{0};
-    const int maxMessages{300};
 };

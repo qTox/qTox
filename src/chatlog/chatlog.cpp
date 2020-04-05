@@ -372,7 +372,6 @@ void ChatLog::reposition(int start, int end, qreal deltaY)
 
 void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 {
-    numRemove = 0;
     if (!l.get())
         return;
 
@@ -396,13 +395,8 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 
 void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
 {
-    numRemove = 0;
     if (newLines.isEmpty())
         return;
-
-    if (lines.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
-        removeFirsts(DEF_NUM_MSG_TO_LOAD);
-    }
 
     for (ChatLine::Ptr l : newLines) {
         l->setRow(lines.size());
@@ -412,17 +406,11 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
     }
 
     layout(lines.last()->getRow(), lines.size(), useableWidth());
-
-    if (visibleLines.size() > 1) {
-        startResizeWorker(visibleLines[1]);
-    } else {
-        startResizeWorker();
-    }
+    startResizeWorker();
 }
 
 void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
 {
-    numRemove = 0;
     if (!l.get())
         return;
 
@@ -431,7 +419,6 @@ void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
 
 void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
 {
-    numRemove = 0;
     if (newLines.isEmpty())
         return;
 
@@ -451,10 +438,6 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
         combLines.push_back(l);
     }
 
-    if (lines.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
-        removeLasts(DEF_NUM_MSG_TO_LOAD);
-    }
-
     // add the old lines
     for (ChatLine::Ptr l : lines) {
         l->setRow(i++);
@@ -468,12 +451,7 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
     scene->setItemIndexMethod(oldIndexMeth);
 
     // redo layout
-    if (visibleLines.size() > 1) {
-        startResizeWorker(visibleLines[1]);
-    } else {
-        startResizeWorker();
-    }
-
+    startResizeWorker();
 }
 
 bool ChatLog::stickToBottom() const
@@ -487,22 +465,19 @@ void ChatLog::scrollToBottom()
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
 }
 
-void ChatLog::startResizeWorker(ChatLine::Ptr anchorLine)
+void ChatLog::startResizeWorker()
 {
     if (lines.empty()) {
-        isScroll = true;
         return;
     }
 
     // (re)start the worker
     if (!workerTimer->isActive()) {
         // these values must not be reevaluated while the worker is running
-        if (anchorLine) {
-            workerAnchorLine = anchorLine;
-            workerStb = false;
-        } else {
-            workerStb = stickToBottom();
-        }
+        workerStb = stickToBottom();
+
+        if (!visibleLines.empty())
+            workerAnchorLine = visibleLines.first();
     }
 
     // switch to busy scene displaying the busy notification if there is a lot
@@ -667,13 +642,8 @@ void ChatLog::scrollToLine(ChatLine::Ptr line)
     if (!line.get())
         return;
 
-    if (workerTimer->isActive()) {
-        workerAnchorLine = line;
-        workerStb = false;
-    } else {
-        updateSceneRect();
-        verticalScrollBar()->setValue(line->sceneBoundingRect().top()); // NOTE: start here
-    }
+    updateSceneRect();
+    verticalScrollBar()->setValue(line->sceneBoundingRect().top());
 }
 
 void ChatLog::selectAll()
@@ -717,7 +687,6 @@ void ChatLog::removeFirsts(const int num)
 {
     if (lines.size() > num) {
         lines.erase(lines.begin(), lines.begin()+num);
-        numRemove = num;
     } else {
         lines.clear();
     }
@@ -733,20 +702,9 @@ void ChatLog::removeLasts(const int num)
 {
     if (lines.size() > num) {
         lines.erase(lines.end()-num, lines.end());
-        numRemove = num;
     } else {
         lines.clear();
     }
-}
-
-void ChatLog::setScroll(const bool scroll)
-{
-    isScroll = scroll;
-}
-
-int ChatLog::getNumRemove() const
-{
-    return numRemove;
 }
 
 void ChatLog::forceRelayout()
@@ -801,7 +759,6 @@ void ChatLog::checkVisibility(bool causedWheelEvent)
     }
 
     if (causedWheelEvent) {
-        qDebug() << "causedWheelEvent";
         if (lowerBound != lines.cend() && lowerBound->get()->row == 0) {
             emit loadHistoryLower();
         } else if (upperBound == lines.cend()) {
@@ -945,7 +902,6 @@ void ChatLog::onWorkerTimeout()
         // hidden during busy screen
         verticalScrollBar()->show();
 
-        isScroll = true;
         emit workerTimeoutFinished();
     }
 }
@@ -1013,10 +969,6 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
 
 void ChatLog::wheelEvent(QWheelEvent *event)
 {
-    if (!isScroll) {
-        return;
-    }
-
     QGraphicsView::wheelEvent(event);
     checkVisibility(true);
 }
