@@ -23,7 +23,6 @@
 #include "src/chatlog/chatmessage.h"
 #include "src/core/toxpk.h"
 #include "src/model/ichatlog.h"
-#include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/searchtypes.h"
 
 #include <QMenu>
@@ -134,7 +133,6 @@ private:
     void retranslateUi();
     void addSystemDateMessage(const QDate& date);
     QDateTime getTime(const ChatLine::Ptr& chatLine) const;
-    void loadHistory(const QDateTime& time, const LoadHistoryDialog::LoadType type);
 
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
