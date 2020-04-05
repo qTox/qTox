@@ -97,7 +97,7 @@ protected:
 
     void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
-    void checkVisibility(bool causedWheelEvent = false);
+    void checkVisibility(bool causedByScroll = false);
     void scrollToBottom();
     void startResizeWorker();
 
@@ -110,7 +110,6 @@ protected:
     virtual void showEvent(QShowEvent*) final override;
     virtual void focusInEvent(QFocusEvent* ev) final override;
     virtual void focusOutEvent(QFocusEvent* ev) final override;
-    virtual void wheelEvent(QWheelEvent *event) final override;
 
     void updateMultiSelectionRect();
     void updateTypingNotification();
