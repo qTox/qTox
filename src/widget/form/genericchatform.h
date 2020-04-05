@@ -136,8 +136,6 @@ private:
     void addSystemDateMessage(const QDate& date);
     QDateTime getTime(const ChatLine::Ptr& chatLine) const;
     void loadHistory(const QDateTime& time, const LoadHistoryDialog::LoadType type);
-    void loadHistoryTo(const QDateTime& time);
-    void loadHistoryFrom(const QDateTime& time);
 
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
