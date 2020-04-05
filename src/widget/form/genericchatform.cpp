@@ -680,11 +680,7 @@ void GenericChatForm::loadHistoryTo(const QDateTime &time)
     }
 
     if (begin != end) {
-        if (searchResult.found == true) {
-            renderMessages(begin, searchResult.pos.logIdx, [this]{enableSearchText();});
-        } else {
-            renderMessages(begin, end);
-        }
+        renderMessages(begin, end);
     } else {
         chatWidget->setScroll(true);
     }
@@ -729,21 +725,11 @@ void GenericChatForm::removeLastsMessages(const int num)
 
 void GenericChatForm::disableSearchText()
 {
-    auto msgIt = messages.find(searchResult.pos.logIdx);
+    auto msgIt = messages.find(searchPos.logIdx);
     if (msgIt != messages.end()) {
         auto text = qobject_cast<Text*>(msgIt->second->getContent(1));
         text->deselectText();
     }
-}
-
-void GenericChatForm::enableSearchText()
-{
-    auto msg = messages.at(searchResult.pos.logIdx);
-    chatWidget->scrollToLine(msg);
-
-    auto text = qobject_cast<Text*>(msg->getContent(1));
-    text->visibilityChanged(true);
-    text->selectText(searchResult.exp, std::make_pair(searchResult.start, searchResult.len));
 }
 
 void GenericChatForm::clearChatArea()
@@ -923,7 +909,6 @@ void GenericChatForm::onExportChat()
 void GenericChatForm::onSearchTriggered()
 {
     if (searchForm->isHidden()) {
-        searchResult.found = false;
         searchForm->removeSearchPhrase();
     }
     disableSearchText();
@@ -953,27 +938,27 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
     switch (parameter.period) {
     case PeriodSearch::WithTheFirst: {
         bForwardSearch = true;
-        searchResult.pos.logIdx = chatLog.getFirstIdx();
-        searchResult.pos.numMatches = 0;
+        searchPos.logIdx = chatLog.getFirstIdx();
+        searchPos.numMatches = 0;
         break;
     }
     case PeriodSearch::WithTheEnd:
     case PeriodSearch::None: {
         bForwardSearch = false;
-        searchResult.pos.logIdx = chatLog.getNextIdx();
-        searchResult.pos.numMatches = 0;
+        searchPos.logIdx = chatLog.getNextIdx();
+        searchPos.numMatches = 0;
         break;
     }
     case PeriodSearch::AfterDate: {
         bForwardSearch = true;
-        searchResult.pos.logIdx = firstItemAfterDate(parameter.time.date(), chatLog);
-        searchResult.pos.numMatches = 0;
+        searchPos.logIdx = firstItemAfterDate(parameter.time.date(), chatLog);
+        searchPos.numMatches = 0;
         break;
     }
     case PeriodSearch::BeforeDate: {
         bForwardSearch = false;
-        searchResult.pos.logIdx = firstItemAfterDate(parameter.time.date(), chatLog);
-        searchResult.pos.numMatches = 0;
+        searchPos.logIdx = firstItemAfterDate(parameter.time.date(), chatLog);
+        searchPos.numMatches = 0;
         break;
     }
     }
@@ -987,13 +972,13 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
 
 void GenericChatForm::onSearchUp(const QString& phrase, const ParameterSearch& parameter)
 {
-    auto result = chatLog.searchBackward(searchResult.pos, phrase, parameter);
+    auto result = chatLog.searchBackward(searchPos, phrase, parameter);
     handleSearchResult(result, SearchDirection::Up);
 }
 
 void GenericChatForm::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
 {
-    auto result = chatLog.searchForward(searchResult.pos, phrase, parameter);
+    auto result = chatLog.searchForward(searchPos, phrase, parameter);
 
     if (result.found && result.pos.logIdx.get() > messages.end()->first.get()) {
         const auto dt = chatLog.at(result.pos.logIdx).getTimestamp();
@@ -1012,11 +997,18 @@ void GenericChatForm::handleSearchResult(SearchResult result, SearchDirection di
 
     disableSearchText();
 
-    searchResult = result;
+    searchPos = result.pos;
 
     auto const firstRenderedIdx = (messages.empty()) ? chatLog.getNextIdx() : messages.begin()->first;
 
-    renderMessages(searchResult.pos.logIdx, firstRenderedIdx, [this]{enableSearchText();});
+    renderMessages(searchPos.logIdx, firstRenderedIdx, [this, result] {
+        auto msg = messages.at(searchPos.logIdx);
+        chatWidget->scrollToLine(msg);
+
+        auto text = qobject_cast<Text*>(msg->getContent(1));
+        text->visibilityChanged(true);
+        text->selectText(result.exp, std::make_pair(result.start, result.len));
+    });
 }
 
 void GenericChatForm::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatMessage::Ptr& chatMessage)

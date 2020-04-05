@@ -671,7 +671,7 @@ void ChatLog::scrollToLine(ChatLine::Ptr line)
         workerStb = false;
     } else {
         updateSceneRect();
-        verticalScrollBar()->setValue(line->sceneBoundingRect().top());
+        verticalScrollBar()->setValue(line->sceneBoundingRect().top()); // NOTE: start here
     }
 }
 
