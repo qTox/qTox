@@ -126,7 +126,6 @@ protected slots:
     void renderMessage(ChatLogIdx idx);
     void renderMessages(ChatLogIdx begin, ChatLogIdx end,
                         std::function<void(void)> onCompletion = std::function<void(void)>());
-    void goToCurrentDate();
 
     void loadHistoryLower();
     void loadHistoryUpper();
@@ -166,7 +165,6 @@ protected:
     QAction* searchAction;
     QAction* loadHistoryAction;
     QAction* exportChatAction;
-    QAction* goCurrentDateAction;
 
     QMenu menu;
 

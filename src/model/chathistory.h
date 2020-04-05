@@ -42,7 +42,6 @@ public:
     ChatLogIdx getFirstIdx() const override;
     ChatLogIdx getNextIdx() const override;
     std::vector<DateChatLogIdxPair> getDateIdxs(const QDate& startDate, size_t maxDates) const override;
-    std::size_t size() const override;
 
 public slots:
     void onFileUpdated(const ToxPk& sender, const ToxFile& file);
