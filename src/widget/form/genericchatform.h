@@ -120,7 +120,6 @@ protected slots:
                         std::function<void(void)> onCompletion = std::function<void(void)>());
 
     void loadHistoryLower();
-    void loadHistoryUpper();
 
 private:
     void retranslateUi();
