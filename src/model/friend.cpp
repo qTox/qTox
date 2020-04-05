@@ -192,9 +192,6 @@ Status::Status Friend::getStatus() const
     return isNegotiating ? Status::Status::Negotiating : friendStatus;
 }
 
-bool Friend::useHistory() const
-{
-    return true;
 }
 
 void Friend::setExtendedMessageSupport(bool supported)
@@ -226,4 +223,3 @@ void Friend::onNegotiationComplete() {
     if (Status::isOnline(getStatus())) {
         emit onlineOfflineChanged(friendPk, true);
     }
-}
