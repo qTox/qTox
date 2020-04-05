@@ -44,7 +44,8 @@ public:
 
     QDateTime getFromDate();
     LoadType getLoadType();
-    void turnSearchMode();
+    void setTitle(const QString& title);
+    void setInfoLabel(const QString& info);
 
 public slots:
     void highlightDates(int year, int month);
