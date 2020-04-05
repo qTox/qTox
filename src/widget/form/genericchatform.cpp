@@ -649,11 +649,6 @@ QDateTime GenericChatForm::getTime(const ChatLine::Ptr &chatLine) const
     return QDateTime();
 }
 
-/**
- * @brief GenericChatForm::loadHistory load history
- * @param time start date
- * @param type indicates the direction of loading history
- */
 void GenericChatForm::loadHistory(const QDateTime &time, const LoadHistoryDialog::LoadType type)
 {
     chatWidget->clear();
@@ -669,10 +664,6 @@ void GenericChatForm::loadHistory(const QDateTime &time, const LoadHistoryDialog
     }
 }
 
-/**
- * @brief GenericChatForm::loadHistoryTo load history before to date "time" or before the first "messages" item
- * @param time start date
- */
 void GenericChatForm::loadHistoryTo(const QDateTime &time)
 {
     chatWidget->setScroll(false);
@@ -699,11 +690,6 @@ void GenericChatForm::loadHistoryTo(const QDateTime &time)
     }
 }
 
-/**
- * @brief GenericChatForm::loadHistoryFrom load history starting from date "time" or from the last "messages" item
- * @param time start date
- * @return true if function loaded history else false
- */
 bool GenericChatForm::loadHistoryFrom(const QDateTime &time)
 {
     chatWidget->setScroll(false);
@@ -714,16 +700,18 @@ bool GenericChatForm::loadHistoryFrom(const QDateTime &time)
         begin = firstItemAfterDate(time.date(), chatLog);
     }
 
-    const auto end = chatLog.getNextIdx() < begin + DEF_NUM_MSG_TO_LOAD
-        ? chatLog.getNextIdx()
-        : begin + DEF_NUM_MSG_TO_LOAD;
+    int add = DEF_NUM_MSG_TO_LOAD;
+    if (begin.get() + DEF_NUM_MSG_TO_LOAD > chatLog.getNextIdx().get()) {
+        auto t = chatLog.getNextIdx();
+        add = chatLog.getNextIdx().get() - begin.get();
+    }
 
-    // The chatLog.getNextIdx() is usually 1 more than the idx on last "messages" item
-    // so if we have nothing to load, "add" is equal 1
-    if (end - begin <= 1) {
+    if (add  <= 1) {
         chatWidget->setScroll(true);
         return false;
     }
+
+    auto end = ChatLogIdx(begin.get() + add);
 
     renderMessages(begin, end);
 
@@ -1183,17 +1171,11 @@ void GenericChatForm::goToCurrentDate()
     renderMessages(begin, end);
 }
 
-/**
- * @brief GenericChatForm::loadHistoryLower load history after scrolling chatlog before first "messages" item
- */
 void GenericChatForm::loadHistoryLower()
 {
     loadHistoryTo(QDateTime());
 }
 
-/**
- * @brief GenericChatForm::loadHistoryUpper load history after scrolling chatlog after last "messages" item
- */
 void GenericChatForm::loadHistoryUpper()
 {
     if (messages.empty()) {
