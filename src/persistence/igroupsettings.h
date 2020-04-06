@@ -27,6 +27,4 @@ public:
     virtual ~IGroupSettings() = default;
     virtual QStringList getBlackList() const = 0;
     virtual void setBlackList(const QStringList& blist) = 0;
-    virtual bool getGroupAlwaysNotify() const = 0;
-    virtual void setGroupAlwaysNotify(bool newValue) = 0;
 };
