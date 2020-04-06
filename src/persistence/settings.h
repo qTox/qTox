@@ -225,6 +225,19 @@ signals:
     void dateFormatChanged(const QString& format);
     void statusChangeNotificationEnabledChanged(bool enabled);
     void spellCheckingEnabledChanged(bool enabled);
+    void enableColorsForMessagesChanged(bool state);
+    void colorNicknameForUserChanged(const QString& color);
+    void boldNicknameForUserChanged(bool state);
+    void italicNicknameForUserChanged(bool state);
+    void colorMsgForUserChanged(const QString& color);
+    void boldMsgForUserChanged(bool state);
+    void italicMsgForUserChanged(bool state);
+    void colorNicknameForFriendsChanged(const QString& color);
+    void boldNicknameForFriendsChanged(bool state);
+    void italicNicknameForFriendsChanged(bool state);
+    void colorMsgForFriendsChanged(const QString& color);
+    void boldMsgForFriendsChanged(bool state);
+    void italicMsgForFriendsChanged(bool state);
 
     // Privacy
     void typingNotificationChanged(bool enabled);
@@ -532,6 +545,45 @@ public:
     bool getCircleExpanded(int id) const;
     void setCircleExpanded(int id, bool expanded);
 
+    void setEnableColorsForMessages(bool state);
+    bool getEnableColorsForMessages() const;
+
+    QString getColorNicknameForUser() const;
+    void setColorNicknameForUser(const QString& color);
+
+    bool getEnableBoldNicknameForUser() const;
+    void setEnableBoldNicknameForUser(bool state);
+
+    bool getEnableItalicNicknameForUser() const;
+    void setEnableItalicNicknameForUser(bool state);
+
+    QString getColorMsgForUser() const;
+    void setColorMsgForUser(const QString& color);
+
+    bool getEnableBoldMsgForUser() const;
+    void setEnableBoldMsgForUser(bool state);
+
+    bool getEnableItalicMsgForUser() const;
+    void setEnableItalicMsgForUser(bool state);
+
+    QString getColorNicknameForFriends() const;
+    void setColorNicknameForFriends(const QString& color);
+
+    bool getEnableBoldNicknameForFriends() const;
+    void setEnableBoldNicknameForFriends(bool state);
+
+    bool getEnableItalicNicknameForFriends() const;
+    void setEnableItalicNicknameForFriends(bool state);
+
+    QString getColorMsgForFriends() const;
+    void setColorMsgForFriends(const QString& color);
+
+    bool getEnableBoldMsgForFriends() const;
+    void setEnableBoldMsgForFriends(bool state);
+
+    bool getEnableItalicMsgForFriends() const;
+    void setEnableItalicMsgForFriends(bool state);
+
     bool addFriendRequest(const QString& friendAddress, const QString& message);
     unsigned int getUnreadFriendRequests() const;
     Request getFriendRequest(int index) const;
@@ -605,6 +657,24 @@ private:
     bool busySound;
     bool groupAlwaysNotify;
     bool nameColors;
+
+    bool enableColorsForMessages;
+
+    QString colorNicknameForUser;
+    bool boldNicknameForUser;
+    bool italicNicknameForUser;
+
+    QString colorMsgForUser;
+    bool boldMsgForUser;
+    bool italicMsgForUser;
+
+    QString colorNicknameForFriends;
+    bool boldNicknameForFriends;
+    bool italicNicknameForFriends;
+
+    QString colorMsgForFriends;
+    bool boldMsgForFriends;
+    bool italicMsgForFriends;
 
     bool forceTCP;
     bool enableLanDiscovery;

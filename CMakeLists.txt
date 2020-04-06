@@ -482,6 +482,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/form/settings/genericsettings.h
   src/widget/form/settings/privacyform.cpp
   src/widget/form/settings/privacyform.h
+  src/widget/form/settings/settingscolormsgwidget.cpp
+  src/widget/form/settings/settingscolormsgwidget.h
   src/widget/form/settings/userinterfaceform.h
   src/widget/form/settings/userinterfaceform.cpp
   src/widget/form/settings/verticalonlyscroller.cpp

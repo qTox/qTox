@@ -1,4 +1,4 @@
-/*
+﻿/*
     Copyright © 2013 by Maxim Biro <nurupo.contributions@gmail.com>
     Copyright © 2014-2019 by The qTox Project Contributors
 
@@ -212,6 +212,20 @@ void Settings::loadGlobal()
                 style = "None";
         }
         nameColors = s.value("nameColors", false).toBool();
+
+        enableColorsForMessages = s.value("enableColorsForMessages", false).toBool();
+        colorNicknameForUser = s.value("colorNicknameForUser", "").toString();
+        boldNicknameForUser = s.value("boldNicknameForUser", false).toBool();
+        italicNicknameForUser = s.value("italicNicknameForUser", false).toBool();
+        colorMsgForUser = s.value("colorMsgForUser", "").toString();
+        boldMsgForUser = s.value("boldMsgForUser", false).toBool();
+        italicMsgForUser = s.value("italicMsgForUser", false).toBool();
+        colorNicknameForFriends = s.value("colorNicknameForFriends", "").toString();
+        boldNicknameForFriends = s.value("boldNicknameForFriends", false).toBool();
+        italicNicknameForFriends = s.value("italicNicknameForFriends", false).toBool();
+        colorMsgForFriends = s.value("colorMsgForFriends", "").toString();
+        boldMsgForFriends = s.value("boldMsgForFriends", false).toBool();
+        italicMsgForFriends = s.value("italicMsgForFriends", false).toBool();
     }
     s.endGroup();
 
@@ -679,6 +693,20 @@ void Settings::saveGlobal()
         s.setValue("nameColors", nameColors);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
         s.setValue("spellCheckingEnabled", spellCheckingEnabled);
+
+        s.setValue("enableColorsForMessages", enableColorsForMessages);
+        s.setValue("colorNicknameForUser", colorNicknameForUser);
+        s.setValue("boldNicknameForUser", boldNicknameForUser);
+        s.setValue("italicNicknameForUser", italicNicknameForUser);
+        s.setValue("colorMsgForUser", colorMsgForUser);
+        s.setValue("boldMsgForUser", boldMsgForUser);
+        s.setValue("italicMsgForUser", italicMsgForUser);
+        s.setValue("colorNicknameForFriends", colorNicknameForFriends);
+        s.setValue("boldNicknameForFriends", boldNicknameForFriends);
+        s.setValue("italicNicknameForFriends", italicNicknameForFriends);
+        s.setValue("colorMsgForFriends", colorMsgForFriends);
+        s.setValue("boldMsgForFriends", boldMsgForFriends);
+        s.setValue("italicMsgForFriends", italicMsgForFriends);
     }
     s.endGroup();
 
@@ -2297,6 +2325,212 @@ void Settings::setCircleExpanded(int id, bool expanded)
 {
     QMutexLocker locker{&bigLock};
     circleLst[id].expanded = expanded;
+}
+
+void Settings::setEnableColorsForMessages(bool state)
+{
+    QMutexLocker locker{&bigLock};
+    if (state != enableColorsForMessages) {
+        enableColorsForMessages = state;
+        emit enableColorsForMessagesChanged(enableColorsForMessages);
+    }
+}
+
+bool Settings::getEnableColorsForMessages() const
+{
+    return enableColorsForMessages;
+}
+
+QString Settings::getColorNicknameForUser() const
+{
+    QMutexLocker locker{&bigLock};
+    return colorNicknameForUser;
+}
+
+void Settings::setColorNicknameForUser(const QString& color)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (color != colorNicknameForUser) {
+        colorNicknameForUser = color;
+        emit colorNicknameForUserChanged(colorNicknameForUser);
+    }
+}
+
+bool Settings::getEnableBoldNicknameForUser() const
+{
+    QMutexLocker locker{&bigLock};
+    return boldNicknameForUser;
+}
+
+void Settings::setEnableBoldNicknameForUser(bool state)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (state != boldNicknameForUser) {
+        boldNicknameForUser = state;
+        emit boldNicknameForUserChanged(boldNicknameForUser);
+    }
+}
+
+bool Settings::getEnableItalicNicknameForUser() const
+{
+    QMutexLocker locker{&bigLock};
+    return italicNicknameForUser;
+}
+
+void Settings::setEnableItalicNicknameForUser(bool state)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (state != italicNicknameForUser) {
+        italicNicknameForUser = state;
+        emit italicNicknameForUserChanged(italicNicknameForUser);
+    }
+}
+
+QString Settings::getColorMsgForUser() const
+{
+    QMutexLocker locker{&bigLock};
+    return colorMsgForUser;
+}
+
+void Settings::setColorMsgForUser(const QString& color)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (color != colorMsgForUser) {
+        colorMsgForUser = color;
+        emit colorMsgForUserChanged(colorMsgForUser);
+    }
+}
+
+bool Settings::getEnableBoldMsgForUser() const
+{
+    QMutexLocker locker{&bigLock};
+    return boldMsgForUser;
+}
+
+void Settings::setEnableBoldMsgForUser(bool state)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (state != boldMsgForUser) {
+        boldMsgForUser = state;
+        emit boldMsgForUserChanged(boldMsgForUser);
+    }
+}
+
+bool Settings::getEnableItalicMsgForUser() const
+{
+    QMutexLocker locker{&bigLock};
+    return italicMsgForUser;
+}
+
+void Settings::setEnableItalicMsgForUser(bool state)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (state != italicMsgForUser) {
+        italicMsgForUser = state;
+        emit italicMsgForUserChanged(italicMsgForUser);
+    }
+}
+
+QString Settings::getColorNicknameForFriends() const
+{
+    QMutexLocker locker{&bigLock};
+    return colorNicknameForFriends;
+}
+
+void Settings::setColorNicknameForFriends(const QString& color)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (color != colorNicknameForFriends) {
+        colorNicknameForFriends = color;
+        emit colorNicknameForFriendsChanged(colorNicknameForFriends);
+    }
+}
+
+bool Settings::getEnableBoldNicknameForFriends() const
+{
+    QMutexLocker locker{&bigLock};
+    return boldNicknameForFriends;
+}
+
+void Settings::setEnableBoldNicknameForFriends(bool state)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (state != boldNicknameForFriends) {
+        boldNicknameForFriends = state;
+        emit boldNicknameForFriendsChanged(boldNicknameForFriends);
+    }
+}
+
+bool Settings::getEnableItalicNicknameForFriends() const
+{
+    QMutexLocker locker{&bigLock};
+    return italicNicknameForFriends;
+}
+
+void Settings::setEnableItalicNicknameForFriends(bool state)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (state != italicNicknameForFriends) {
+        italicNicknameForFriends = state;
+        emit italicNicknameForFriendsChanged(italicNicknameForFriends);
+    }
+}
+
+QString Settings::getColorMsgForFriends() const
+{
+    QMutexLocker locker{&bigLock};
+    return colorMsgForUser;
+}
+
+void Settings::setColorMsgForFriends(const QString& color)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (color != colorMsgForUser) {
+        colorMsgForUser = color;
+        emit colorMsgForUserChanged(colorMsgForUser);
+    }
+}
+
+bool Settings::getEnableBoldMsgForFriends() const
+{
+    QMutexLocker locker{&bigLock};
+    return boldMsgForFriends;
+}
+
+void Settings::setEnableBoldMsgForFriends(bool state)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (state != boldMsgForFriends) {
+        boldMsgForFriends = state;
+        emit boldMsgForFriendsChanged(boldMsgForFriends);
+    }
+}
+
+bool Settings::getEnableItalicMsgForFriends() const
+{
+    QMutexLocker locker{&bigLock};
+    return italicMsgForFriends;
+}
+
+void Settings::setEnableItalicMsgForFriends(bool state)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (state != italicMsgForFriends) {
+        italicMsgForFriends = state;
+        emit italicMsgForFriendsChanged(italicMsgForFriends);
+    }
 }
 
 bool Settings::addFriendRequest(const QString& friendAddress, const QString& message)
