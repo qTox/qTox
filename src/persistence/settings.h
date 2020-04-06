@@ -27,6 +27,7 @@
 #include "src/core/toxfile.h"
 #include "src/persistence/ifriendsettings.h"
 #include "src/persistence/igroupsettings.h"
+#include "src/persistence/inotificationsettings.h"
 #include "src/video/ivideosettings.h"
 
 #include <QDateTime>
@@ -50,7 +51,8 @@ class Settings : public QObject,
                  public IFriendSettings,
                  public IGroupSettings,
                  public IAudioSettings,
-                 public IVideoSettings
+                 public IVideoSettings,
+                 public INotificationSettings
 {
     Q_OBJECT
 
@@ -313,23 +315,23 @@ public:
     bool getCheckUpdates() const;
     void setCheckUpdates(bool newValue);
 
-    bool getNotify() const;
-    void setNotify(bool newValue);
+    bool getNotify() const override;
+    void setNotify(bool newValue) override;
 
-    bool getShowWindow() const;
-    void setShowWindow(bool newValue);
+    bool getShowWindow() const override;
+    void setShowWindow(bool newValue) override;
 
-    bool getDesktopNotify() const;
-    void setDesktopNotify(bool enabled);
+    bool getDesktopNotify() const override;
+    void setDesktopNotify(bool enabled) override;
 
-    bool getNotifySound() const;
-    void setNotifySound(bool newValue);
+    bool getNotifySound() const override;
+    void setNotifySound(bool newValue) override;
 
-    bool getNotifyHide() const;
-    void setNotifyHide(bool newValue);
+    bool getNotifyHide() const override;
+    void setNotifyHide(bool newValue) override;
 
-    bool getBusySound() const;
-    void setBusySound(bool newValue);
+    bool getBusySound() const override;
+    void setBusySound(bool newValue) override;
 
     bool getGroupAlwaysNotify() const override;
     void setGroupAlwaysNotify(bool newValue) override;

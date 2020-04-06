@@ -373,6 +373,7 @@ set(${PROJECT_NAME}_SOURCES
   src/model/sessionchatlog.cpp
   src/model/chathistory.h
   src/model/chathistory.cpp
+  src/model/notificationgenerator.cpp
   src/net/bootstrapnodeupdater.cpp
   src/net/bootstrapnodeupdater.h
   src/net/avatarbroadcaster.cpp
