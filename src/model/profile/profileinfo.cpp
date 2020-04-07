@@ -22,6 +22,7 @@
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
+#include "src/model/toxclientstandards.h"
 
 #include <QApplication>
 #include <QBuffer>
@@ -358,13 +359,11 @@ IProfileInfo::SetAvatarResult ProfileInfo::byteArrayToPng(QByteArray inData, QBy
  */
 IProfileInfo::SetAvatarResult ProfileInfo::scalePngToAvatar(QByteArray& avatar)
 {
-    // https://tox.gitbooks.io/tox-client-standard/content/user_identification/avatar.html
-    constexpr int maxSize = 65535;
     // We do a first rescale to 256x256 in case the image was huge, then keep tryng from here
     constexpr int scaleSizes[] = {256, 128, 64, 32};
 
     for (auto scaleSize : scaleSizes) {
-        if (avatar.size() <= maxSize)
+        if (ToxClientStandards::IsValidAvatarSize(avatar.size()))
             break;
         QImage image;
         image.loadFromData(avatar);
@@ -373,7 +372,7 @@ IProfileInfo::SetAvatarResult ProfileInfo::scalePngToAvatar(QByteArray& avatar)
     }
 
     // If this happens, you're really doing it on purpose.
-    if (avatar.size() > maxSize) {
+    if (!ToxClientStandards::IsValidAvatarSize(avatar.size())) {
         return SetAvatarResult::TooLarge;
     }
     return SetAvatarResult::OK;

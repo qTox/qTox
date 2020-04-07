@@ -24,6 +24,7 @@
 #include "toxstring.h"
 #include "src/persistence/settings.h"
 #include "src/model/status.h"
+#include "src/model/toxclientstandards.h"
 #include <QDebug>
 #include <QDir>
 #include <QFile>
@@ -330,6 +331,13 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
             emit core->friendAvatarRemoved(core->getFriendPublicKey(friendId));
             return;
         } else {
+            if (!ToxClientStandards::IsValidAvatarSize(filesize)) {
+                qWarning() <<
+                    QString("Received avatar request from %1 with size %2.").arg(friendId).arg(filesize) +
+                    QString(" The max size allowed for avatars is %3. Cancelling transfer.").arg(ToxClientStandards::MaxAvatarSize);
+                tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
+                return;
+            }
             static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH,
                           "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
             uint8_t avatarHash[TOX_FILE_ID_LENGTH];
