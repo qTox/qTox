@@ -85,6 +85,16 @@ protected:
     MaskablePixmapWidget* avatar;
     CroppingLabel* statusMessageLabel;
     bool active;
+
+private:
+    void changeStyle();
+    struct Colors{
+        QColor baseBackground;
+        QColor mouseOver;
+        QColor statusLbl;
+        QColor nameLbl;
+    };
+    Colors currentColors;
 };
 
 #endif // GENERICCHATROOMWIDGET_H

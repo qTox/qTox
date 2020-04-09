@@ -42,8 +42,10 @@ GenericChatroomWidget::GenericChatroomWidget(bool compact, QWidget* parent)
     statusMessageLabel = new CroppingLabel(this);
     statusMessageLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setForegroundRole(QPalette::WindowText);
+    statusMessageLabel->setObjectName("statusMessageLabelObj");
 
     nameLabel->setForegroundRole(QPalette::WindowText);
+    nameLabel->setObjectName("nameLabelObj");
 
     Settings& s = Settings::getInstance();
     connect(&s, &Settings::compactLayoutChanged, this, &GenericChatroomWidget::compactChange);
@@ -123,14 +125,38 @@ void GenericChatroomWidget::setActive(bool _active)
 {
     active = _active;
     if (active) {
-        setBackgroundRole(QPalette::Light);
-        statusMessageLabel->setForegroundRole(QPalette::HighlightedText);
-        nameLabel->setForegroundRole(QPalette::HighlightedText);
+        currentColors.baseBackground = Style::getColor(Style::GroundBase); // When active
+        currentColors.statusLbl = Style::getColor(Style::StatusActive); // Color when active
+        currentColors.nameLbl = Style::getColor(Style::NameActive); // Color when active
     } else {
-        setBackgroundRole(QPalette::Window);
-        statusMessageLabel->setForegroundRole(QPalette::WindowText);
-        nameLabel->setForegroundRole(QPalette::WindowText);
+        currentColors.baseBackground = Style::getColor(Style::ThemeMedium); // Base background color
+        currentColors.statusLbl = Style::getColor(Style::GroundExtra); // Base color
+        currentColors.nameLbl = Style::getColor(Style::GroundBase); // Base color
     }
+
+    changeStyle();
+}
+
+void GenericChatroomWidget::changeStyle()
+{
+    QString wgtStyle = QString("GenericChatroomWidget {"
+                               "    background-color: #%1;" // Base background color
+                               "}"
+                               "GenericChatroomWidget:hover {"
+                               "    background-color: #%2;" // On mouse over
+                               "}"
+                               "CroppingLabel#statusMessageLabelObj {"
+                               "    color: #%3;"
+                               "}"
+                               "CroppingLabel#nameLabelObj {"
+                               "    color: #%4;"
+                               "}")
+    .arg(currentColors.baseBackground.rgba(), 0, 16)
+    .arg(currentColors.mouseOver.rgba(), 0, 16)
+    .arg(currentColors.statusLbl.rgba(), 0, 16)
+    .arg(currentColors.nameLbl.rgba(), 0, 16);
+
+    setStyleSheet(wgtStyle);
 }
 
 void GenericChatroomWidget::setName(const QString& name)
@@ -160,23 +186,12 @@ QString GenericChatroomWidget::getTitle() const
 
 void GenericChatroomWidget::reloadTheme()
 {
-    QPalette p;
+    currentColors.baseBackground = Style::getColor(Style::ThemeMedium); // Base background color
+    currentColors.mouseOver = Style::getColor(Style::ThemeLight); // On mouse over
+    currentColors.statusLbl = Style::getColor(Style::GroundExtra); // statusMessageLabel base color
+    currentColors.nameLbl = Style::getColor(Style::GroundBase); // nameLabel base color
 
-    p = statusMessageLabel->palette();
-    p.setColor(QPalette::WindowText, Style::getColor(Style::GroundExtra));       // Base color
-    p.setColor(QPalette::HighlightedText, Style::getColor(Style::StatusActive)); // Color when active
-    statusMessageLabel->setPalette(p);
-
-    p = nameLabel->palette();
-    p.setColor(QPalette::WindowText, Style::getColor(Style::GroundBase));           // Base color
-    p.setColor(QPalette::HighlightedText, Style::getColor(Style::NameActive)); // Color when active
-    nameLabel->setPalette(p);
-
-    p = palette();
-    p.setColor(QPalette::Window, Style::getColor(Style::ThemeMedium));   // Base background color
-    p.setColor(QPalette::Highlight, Style::getColor(Style::ThemeLight)); // On mouse over
-    p.setColor(QPalette::Light, Style::getColor(Style::GroundBase));          // When active
-    setPalette(p);
+    changeStyle();
 }
 
 void GenericChatroomWidget::activate()
