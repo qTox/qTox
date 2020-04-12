@@ -410,6 +410,8 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
     // redo layout only when scrolled down
     if(stickToBottom()) {
         startResizeWorker(true);
+    } else {
+        updateSceneRect();
     }
 }
 
