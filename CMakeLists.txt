@@ -611,10 +611,6 @@ endif()
 
 add_definitions(-DQT_MESSAGELOGCONTEXT=1)
 
-if (NOT DEFINED ENABLE_STATUSNOTIFIER AND UNIX AND NOT APPLE)
-  set(ENABLE_STATUSNOTIFIER True)
-endif()
-
 if(AVFOUNDATION_FOUND)
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
     src/platform/camera/avfoundation.mm

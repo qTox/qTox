@@ -165,8 +165,6 @@ build_qtox() {
     echo '*** BUILDING "MINIMAL" VERSION ***'
     cmake -H. -B"$BUILDDIR" \
         -DSMILEYS=DISABLED \
-        -DENABLE_STATUSNOTIFIER=False \
-        -DENABLE_GTK_SYSTRAY=False \
         -DSPELL_CHECK=OFF
 
     bdir
