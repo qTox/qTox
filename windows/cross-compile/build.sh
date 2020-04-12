@@ -977,6 +977,7 @@ then
         -DCMAKE_BUILD_TYPE=Release \
         -DSPELL_CHECK=OFF \
         -DUPDATE_CHECK=ON \
+        -DSTRICT_OPTIONS=ON \
         ..
 elif [[ "$BUILD_TYPE" == "debug" ]]
 then
@@ -984,6 +985,7 @@ then
         -DCMAKE_BUILD_TYPE=Debug \
         -DSPELL_CHECK=OFF \
         -DUPDATE_CHECK=ON \
+        -DSTRICT_OPTIONS=ON \
         ..
 fi
 

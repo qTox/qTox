@@ -167,6 +167,7 @@ build_qtox() {
         -DSMILEYS=DISABLED \
         -DENABLE_STATUSNOTIFIER=False \
         -DENABLE_GTK_SYSTRAY=False \
+        -DSTRICT_OPTIONS=ON \
         -DSPELL_CHECK=OFF
 
     bdir
@@ -175,7 +176,9 @@ build_qtox() {
     rm -rf "$BUILDDIR"
 
     echo '*** BUILDING "FULL" VERSION ***'
-    cmake -H. -B"$BUILDDIR" -DUPDATE_CHECK=ON
+    cmake -H. -B"$BUILDDIR" \
+        -DUPDATE_CHECK=ON \
+        -DSTRICT_OPTIONS=ON
     bdir
 }
 

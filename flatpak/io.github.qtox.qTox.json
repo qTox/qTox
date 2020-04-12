@@ -133,7 +133,10 @@
         {
             "name": "qTox",
             "buildsystem": "cmake-ninja",
-            "config-opts": ["-DSVGZ_ICON=OFF"],
+            "config-opts": [
+                "-DSVGZ_ICON=OFF",
+                "-DSTRICT_OPTIONS=ON"
+            ],
             "sources": [
                 {
                     "type": "dir",
@@ -143,4 +146,3 @@
         }
     ]
 }
-
