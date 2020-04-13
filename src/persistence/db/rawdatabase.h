@@ -82,6 +82,13 @@ public:
     };
 
 public:
+    enum class SqlCipherParams {
+        // keep these sorted in upgrade order
+        p3_0,
+        halfUpgradedTo4,
+        p4_0
+    };
+
     RawDatabase(const QString& path, const QString& password, const QByteArray& salt);
     ~RawDatabase();
     bool isOpen();
@@ -110,7 +117,7 @@ private:
     QString anonymizeQuery(const QByteArray& query);
     bool openEncryptedDatabaseAtLatestVersion(const QString& hexKey);
     bool updateSavedCipherParameters(const QString& hexKey);
-    bool setCipherParameters(int majorVersion, const QString& database = {});
+    bool setCipherParameters(SqlCipherParams params, const QString& database = {});
     bool setKey(const QString& hexKey);
     int getUserVersion();
     bool encryptDatabase(const QString& newHexKey);
