@@ -146,7 +146,7 @@ void CoreFile::sendFile(uint32_t friendId, QString filename, QString filePath,
     QMutexLocker{coreLoopLock};
 
     ToxString fileName(filename);
-    TOX_ERR_FILE_SEND sendErr;
+    Tox_Err_File_Send sendErr;
     uint32_t fileNum = tox_file_send(tox, friendId, TOX_FILE_KIND_DATA, filesize,
                                      nullptr, fileName.data(), fileName.size(), &sendErr);
     if (sendErr != TOX_ERR_FILE_SEND_OK) {
