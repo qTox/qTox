@@ -192,7 +192,7 @@ bool RawDatabase::openEncryptedDatabaseAtLatestVersion(const QString& hexKey)
         return false;
     }
 
-    if (setCipherParameters(4)) {
+    if (setCipherParameters(SqlCipherParams::p4_0)) {
         if (testUsable()) {
             qInfo() << "Opened database with SQLCipher 4.x parameters";
             return true;
@@ -201,7 +201,7 @@ bool RawDatabase::openEncryptedDatabaseAtLatestVersion(const QString& hexKey)
         }
     } else {
         // setKey again to clear old bad cipher settings
-        if (setKey(hexKey) && setCipherParameters(3) && testUsable()) {
+        if (setKey(hexKey) && setCipherParameters(SqlCipherParams::p3_0) && testUsable()) {
             qInfo() << "Opened database with SQLCipher 3.x parameters";
             return true;
         } else {
@@ -223,7 +223,7 @@ bool RawDatabase::testUsable()
 bool RawDatabase::updateSavedCipherParameters(const QString& hexKey)
 {
     setKey(hexKey); // setKey again because a SELECT has already been run, causing crypto settings to take effect
-    if (!setCipherParameters(3)) {
+    if (!setCipherParameters(SqlCipherParams::p3_0)) {
         return false;
     }
 
@@ -234,7 +234,7 @@ bool RawDatabase::updateSavedCipherParameters(const QString& hexKey)
     if (!execNow("ATTACH DATABASE '" + path + ".tmp' AS sqlcipher4 KEY \"x'" + hexKey + "'\";")) {
         return false;
     }
-    if (!setCipherParameters(4, "sqlcipher4")) {
+    if (!setCipherParameters(SqlCipherParams::p4_0, "sqlcipher4")) {
         return false;
     }
     if (!execNow("SELECT sqlcipher_export('sqlcipher4');")) {
@@ -253,36 +253,44 @@ bool RawDatabase::updateSavedCipherParameters(const QString& hexKey)
     return true;
 }
 
-bool RawDatabase::setCipherParameters(int majorVersion, const QString& database)
+bool RawDatabase::setCipherParameters(SqlCipherParams params, const QString& database)
 {
     QString prefix;
     if (!database.isNull()) {
         prefix = database + ".";
     }
     // from https://www.zetetic.net/blog/2018/11/30/sqlcipher-400-release/
-    const QString default3_xParams{"PRAGMA database.cipher_page_size = 1024; PRAGMA database.kdf_iter = 64000;"
+    const QString default3_xParams{"PRAGMA database.cipher_page_size = 1024;"
+                   "PRAGMA database.kdf_iter = 64000;"
                    "PRAGMA database.cipher_hmac_algorithm = HMAC_SHA1;"
                    "PRAGMA database.cipher_kdf_algorithm = PBKDF2_HMAC_SHA1;"};
-    const QString default4_xParams{"PRAGMA database.cipher_page_size = 4096; PRAGMA database.kdf_iter = 256000;"
+    // cipher_hmac_algorithm and cipher_kdf_algorithm weren't supported in sqlcipher 3.x, so our upgrade to 4 only
+    // applied some of the new params if sqlcipher 3.x was used at the time
+    const QString halfUpgradedTo4Params{"PRAGMA database.cipher_page_size = 4096;"
+                   "PRAGMA database.kdf_iter = 256000;"
+                   "PRAGMA database.cipher_hmac_algorithm = HMAC_SHA1;"
+                   "PRAGMA database.cipher_kdf_algorithm = PBKDF2_HMAC_SHA1;"};
+    const QString default4_xParams{"PRAGMA database.cipher_page_size = 4096;"
+                   "PRAGMA database.kdf_iter = 256000;"
                    "PRAGMA database.cipher_hmac_algorithm = HMAC_SHA512;"
                    "PRAGMA database.cipher_kdf_algorithm = PBKDF2_HMAC_SHA512;"};
 
     QString defaultParams;
-    switch(majorVersion) {
-        case 3: {
+    switch(params) {
+        case SqlCipherParams::p3_0: {
             defaultParams = default3_xParams;
             break;
         }
-        case 4: {
+        case SqlCipherParams::halfUpgradedTo4: {
+            defaultParams = halfUpgradedTo4Params;
+            break;
+        }
+        case SqlCipherParams::p4_0: {
             defaultParams = default4_xParams;
             break;
         }
-        default: {
-            qCritical() << __FUNCTION__ << "called with unsupported SQLCipher major version" << majorVersion;
-            return false;
-        }
     }
-    qDebug().nospace() << "Setting SQLCipher " << majorVersion << ".x parameters";
+    qDebug() << "Setting SQLCipher" << static_cast<int>(params) << "parameters";
     return execNow(defaultParams.replace("database.", prefix));
 }
 
@@ -494,7 +502,7 @@ bool RawDatabase::encryptDatabase(const QString& newHexKey)
         qWarning() << "Failed to export encrypted database";
         return false;
     }
-    if (!setCipherParameters(4, "encrypted")) {
+    if (!setCipherParameters(SqlCipherParams::p4_0, "encrypted")) {
         return false;
     }
     if (!execNow("SELECT sqlcipher_export('encrypted');")) {
