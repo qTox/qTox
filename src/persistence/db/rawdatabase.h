@@ -115,9 +115,11 @@ protected slots:
 
 private:
     QString anonymizeQuery(const QByteArray& query);
-    bool openEncryptedDatabaseAtLatestVersion(const QString& hexKey);
-    bool updateSavedCipherParameters(const QString& hexKey);
+    bool openEncryptedDatabaseAtLatestSupportedVersion(const QString& hexKey);
+    bool updateSavedCipherParameters(const QString& hexKey, SqlCipherParams newParams);
     bool setCipherParameters(SqlCipherParams params, const QString& database = {});
+    SqlCipherParams highestSupportedParams();
+    SqlCipherParams readSavedCipherParams(const QString& hexKey, SqlCipherParams newParams);
     bool setKey(const QString& hexKey);
     int getUserVersion();
     bool encryptDatabase(const QString& newHexKey);
