@@ -175,7 +175,7 @@ bool RawDatabase::open(const QString& path, const QString& hexKey)
     }
 
     if (!hexKey.isEmpty()) {
-        if (!openEncryptedDatabaseAtLatestVersion(hexKey)) {
+        if (!openEncryptedDatabaseAtLatestSupportedVersion(hexKey)) {
             close();
             return false;
         }
@@ -183,7 +183,7 @@ bool RawDatabase::open(const QString& path, const QString& hexKey)
     return true;
 }
 
-bool RawDatabase::openEncryptedDatabaseAtLatestVersion(const QString& hexKey)
+bool RawDatabase::openEncryptedDatabaseAtLatestSupportedVersion(const QString& hexKey)
 {
     // old qTox database are saved with SQLCipher 3.x defaults. New qTox (and for a period during 1.16.3 master) are stored
     // with 4.x defaults. We need to support opening both databases saved with 3.x defaults and 4.x defaults
@@ -192,22 +192,17 @@ bool RawDatabase::openEncryptedDatabaseAtLatestVersion(const QString& hexKey)
         return false;
     }
 
-    if (setCipherParameters(SqlCipherParams::p4_0)) {
+    auto highestSupportedVersion = highestSupportedParams();
+    if (setCipherParameters(highestSupportedVersion)) {
         if (testUsable()) {
-            qInfo() << "Opened database with SQLCipher 4.x parameters";
+            qInfo() << "Opened database with" << static_cast<int>(highestSupportedVersion) << "parameters";
             return true;
         } else {
-            return updateSavedCipherParameters(hexKey);
+            return updateSavedCipherParameters(hexKey, highestSupportedVersion);
         }
     } else {
-        // setKey again to clear old bad cipher settings
-        if (setKey(hexKey) && setCipherParameters(SqlCipherParams::p3_0) && testUsable()) {
-            qInfo() << "Opened database with SQLCipher 3.x parameters";
-            return true;
-        } else {
-            qCritical() << "Failed to open database with SQLCipher 3.x parameters";
-            return false;
-        }
+        qCritical() << "Failed to set latest supported SQLCipher params!";
+        return false;
     }
 }
 
@@ -220,10 +215,11 @@ bool RawDatabase::testUsable()
 /**
  * @brief Changes stored db encryption from SQLCipher 3.x defaults to 4.x defaults
  */
-bool RawDatabase::updateSavedCipherParameters(const QString& hexKey)
+bool RawDatabase::updateSavedCipherParameters(const QString& hexKey, SqlCipherParams newParams)
 {
+    auto currentParams = readSavedCipherParams(hexKey, newParams);
     setKey(hexKey); // setKey again because a SELECT has already been run, causing crypto settings to take effect
-    if (!setCipherParameters(SqlCipherParams::p3_0)) {
+    if (!setCipherParameters(currentParams)) {
         return false;
     }
 
@@ -231,25 +227,26 @@ bool RawDatabase::updateSavedCipherParameters(const QString& hexKey)
     if (user_version < 0) {
         return false;
     }
-    if (!execNow("ATTACH DATABASE '" + path + ".tmp' AS sqlcipher4 KEY \"x'" + hexKey + "'\";")) {
+    if (!execNow("ATTACH DATABASE '" + path + ".tmp' AS newParams KEY \"x'" + hexKey + "'\";")) {
         return false;
     }
-    if (!setCipherParameters(SqlCipherParams::p4_0, "sqlcipher4")) {
+    if (!setCipherParameters(newParams, "newParams")) {
         return false;
     }
-    if (!execNow("SELECT sqlcipher_export('sqlcipher4');")) {
+    if (!execNow("SELECT sqlcipher_export('newParams');")) {
         return false;
     }
-    if (!execNow(QString("PRAGMA sqlcipher4.user_version = %1;").arg(user_version))) {
+    if (!execNow(QString("PRAGMA newParams.user_version = %1;").arg(user_version))) {
         return false;
     }
-    if (!execNow("DETACH DATABASE sqlcipher4;")) {
+    if (!execNow("DETACH DATABASE newParams;")) {
         return false;
     }
     if (!commitDbSwap(hexKey)) {
         return false;
     }
-    qInfo() << "Upgraded database from SQLCipher 3.x defaults to SQLCipher 4.x defaults";
+    qInfo() << "Upgraded database from SQLCipher params" << static_cast<int>(currentParams) << "to" <<
+        static_cast<int>(newParams) << "complete";
     return true;
 }
 
@@ -290,8 +287,53 @@ bool RawDatabase::setCipherParameters(SqlCipherParams params, const QString& dat
             break;
         }
     }
+
     qDebug() << "Setting SQLCipher" << static_cast<int>(params) << "parameters";
     return execNow(defaultParams.replace("database.", prefix));
+}
+
+RawDatabase::SqlCipherParams RawDatabase::highestSupportedParams()
+{
+    QString cipherVersion;
+    if (!execNow(RawDatabase::Query("PRAGMA cipher_version", [&](const QVector<QVariant>& row) {
+            cipherVersion = row[0].toString();
+        }))) {
+        qCritical() << "Failed to read cipher_version";
+        return SqlCipherParams::p3_0;
+    }
+
+    auto majorVersion = cipherVersion.split('.')[0].toInt();
+    SqlCipherParams highestSupportedParams;
+    switch (majorVersion) {
+        case 3: highestSupportedParams = SqlCipherParams::halfUpgradedTo4;
+        case 4: highestSupportedParams = SqlCipherParams::p4_0;
+        default:
+            qCritical() << "Unsupported SQLCipher version detected!";
+            return SqlCipherParams::p3_0;
+    }
+    qDebug() << "Highest supported SQLCipher params on this system is" << static_cast<int>(highestSupportedParams);
+    return highestSupportedParams;
+}
+
+RawDatabase::SqlCipherParams RawDatabase::readSavedCipherParams(const QString& hexKey, SqlCipherParams newParams)
+{
+    for (int i = static_cast<int>(SqlCipherParams::p3_0); i < static_cast<int>(newParams); ++i)
+    {
+        if (!setKey(hexKey)) {
+            goto fail;
+        }
+
+        if (!setCipherParameters(static_cast<SqlCipherParams>(i))) {
+            goto fail;
+        }
+
+        if (testUsable()) {
+            return static_cast<SqlCipherParams>(i);
+        }
+    }
+fail:
+    qCritical() << "Failed to check saved SQLCipher params";
+    return SqlCipherParams::p3_0;
 }
 
 bool RawDatabase::setKey(const QString& hexKey)
