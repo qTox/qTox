@@ -29,7 +29,7 @@
 #include <src/persistence/settings.h>
 #include <iostream>
 
-Q_DECLARE_METATYPE(QList<DhtServer>);
+Q_DECLARE_METATYPE(QList<DhtServer>)
 
 class MockSettings : public QObject, public ICoreSettings
 {
