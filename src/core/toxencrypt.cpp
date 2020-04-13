@@ -186,7 +186,7 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, 
         return std::unique_ptr<ToxEncrypt>{};
     }
 
-    TOX_ERR_GET_SALT saltError;
+    Tox_Err_Get_Salt saltError;
     uint8_t salt[TOX_PASS_SALT_LENGTH];
     tox_get_salt(reinterpret_cast<const uint8_t*>(toxSave.constData()), salt, &saltError);
 
@@ -196,7 +196,7 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, 
     }
 
     QByteArray pass = password.toUtf8();
-    TOX_ERR_KEY_DERIVATION keyError;
+    Tox_Err_Key_Derivation keyError;
     Tox_Pass_Key* const passKey = tox_pass_key_derive_with_salt(
         reinterpret_cast<const uint8_t*>(pass.constData()),
         static_cast<size_t>(pass.length()), salt, &keyError);
