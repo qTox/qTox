@@ -1,0 +1,21 @@
+GenericChatroomWidget {
+    background-color: @themeMedium; /* Base background color */
+}
+GenericChatroomWidget:hover {
+    background-color: @themeLight; /* On mouse over */
+}
+GenericChatroomWidget[active="true"] {
+    background-color: @groundBase; /* When active */
+}
+CroppingLabel#statusMessageLabelObj { 
+    color: @groundExtra; /* Base color */
+}
+CroppingLabel#statusMessageLabelObj[active="true"] { 
+    color: @statusActive; /* Color when active */
+}
+CroppingLabel#nameLabelObj {
+    color: @groundBase; /* Base color */
+}
+CroppingLabel#nameLabelObj[active="true"] {
+    color: @nameActive;  /* Color when active */
+}

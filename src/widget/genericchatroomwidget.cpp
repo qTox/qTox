@@ -124,39 +124,11 @@ bool GenericChatroomWidget::isActive()
 void GenericChatroomWidget::setActive(bool _active)
 {
     active = _active;
-    if (active) {
-        currentColors.baseBackground = Style::getColor(Style::GroundBase); // When active
-        currentColors.statusLbl = Style::getColor(Style::StatusActive); // Color when active
-        currentColors.nameLbl = Style::getColor(Style::NameActive); // Color when active
-    } else {
-        currentColors.baseBackground = Style::getColor(Style::ThemeMedium); // Base background color
-        currentColors.statusLbl = Style::getColor(Style::GroundExtra); // Base color
-        currentColors.nameLbl = Style::getColor(Style::GroundBase); // Base color
-    }
 
-    changeStyle();
-}
-
-void GenericChatroomWidget::changeStyle()
-{
-    QString wgtStyle = QString("GenericChatroomWidget {"
-                               "    background-color: #%1;" // Base background color
-                               "}"
-                               "GenericChatroomWidget:hover {"
-                               "    background-color: #%2;" // On mouse over
-                               "}"
-                               "CroppingLabel#statusMessageLabelObj {"
-                               "    color: #%3;"
-                               "}"
-                               "CroppingLabel#nameLabelObj {"
-                               "    color: #%4;"
-                               "}")
-    .arg(currentColors.baseBackground.rgba(), 0, 16)
-    .arg(currentColors.mouseOver.rgba(), 0, 16)
-    .arg(currentColors.statusLbl.rgba(), 0, 16)
-    .arg(currentColors.nameLbl.rgba(), 0, 16);
-
-    setStyleSheet(wgtStyle);
+    setProperty("active", active);
+    nameLabel->setProperty("active", active);
+    statusMessageLabel->setProperty("active", active);
+    Style::repolish(this);
 }
 
 void GenericChatroomWidget::setName(const QString& name)
@@ -186,12 +158,7 @@ QString GenericChatroomWidget::getTitle() const
 
 void GenericChatroomWidget::reloadTheme()
 {
-    currentColors.baseBackground = Style::getColor(Style::ThemeMedium); // Base background color
-    currentColors.mouseOver = Style::getColor(Style::ThemeLight); // On mouse over
-    currentColors.statusLbl = Style::getColor(Style::GroundExtra); // statusMessageLabel base color
-    currentColors.nameLbl = Style::getColor(Style::GroundBase); // nameLabel base color
-
-    changeStyle();
+    setStyleSheet(Style::getStylesheet("genericChatRoomWidget/genericChatRoomWidget.css"));
 }
 
 void GenericChatroomWidget::activate()
