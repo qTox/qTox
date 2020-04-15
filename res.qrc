@@ -178,5 +178,7 @@
         <file>img/caps_lock.svg</file>
         <file>themes/default/contentDialog/contentDialog.css</file>
         <file>themes/default/tooliconsZone/tooliconsZone.css</file>
+        <file>themes/default/genericChatRoomWidget/genericChatRoomWidget.css</file>
+        <file>themes/dark/genericChatRoomWidget/genericChatRoomWidget.css</file>
     </qresource>
 </RCC>
