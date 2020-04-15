@@ -272,10 +272,10 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=12
-QT_PATCH=7
+QT_PATCH=8
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.12/5.12.7/single/qt-everywhere-src-5.12.7.tar.xz.mirrorlist
-QT_HASH="873783a0302129d98a8f63de9afe4520fb5f8d5316be8ad7b760c59875cd8a8d"
+# hash from https://download.qt.io/archive/qt/5.12/5.12.8/single/qt-everywhere-src-5.12.8.tar.xz.mirrorlist
+QT_HASH="9142300dfbd641ebdea853546511a352e4bd547c4c7f25d61a40cd997af1f0cf"
 QT_FILENAME="qt-everywhere-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
