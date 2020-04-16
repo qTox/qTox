@@ -87,6 +87,10 @@
 	<string>1.16.3</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs access to the camera for video calls.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs access to the microphone for audio calls.</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
