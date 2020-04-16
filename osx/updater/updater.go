@@ -9,7 +9,7 @@ import (
 	"os/user"
 	"syscall"
 
-	"bitbucket.org/kardianos/osext"
+	"github.com/kardianos/osext"
 )
 
 var custom_user string
