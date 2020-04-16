@@ -33,7 +33,7 @@ QVector<QPair<QString, QString> > avfoundation::getDeviceList()
     }
 
     uint32_t numScreens = 0;
-    CGGetActiveDisplayList(0, NULL, &numScreens);
+    CGGetActiveDisplayList(0, nullptr, &numScreens);
     if (numScreens > 0) {
         CGDirectDisplayID screens[numScreens];
         CGGetActiveDisplayList(numScreens, screens, &numScreens);

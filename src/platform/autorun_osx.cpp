@@ -24,7 +24,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 
-int state;
+static int state;
 
 bool Platform::setAutorun(bool on)
 {

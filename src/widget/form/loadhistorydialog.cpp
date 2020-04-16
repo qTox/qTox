@@ -89,7 +89,6 @@ void LoadHistoryDialog::enableSearchMode()
 
 void LoadHistoryDialog::highlightDates(int year, int month)
 {
-    History* history = Nexus::getProfile()->getHistory();
     QDate monthStart(year, month, 1);
     QDate monthEnd(year, month + 1, 1);
 

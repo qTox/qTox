@@ -20,6 +20,7 @@
 #ifndef DESKTOPNOTIFY_H
 #define DESKTOPNOTIFY_H
 
+#if DESKTOP_NOTIFICATIONS
 #include <libsnore/snore.h>
 
 #include <QObject>
@@ -52,5 +53,6 @@ private:
     Snore::Application snoreApp;
     Snore::Icon snoreIcon;
 };
+#endif // DESKTOP_NOTIFICATIONS
 
 #endif // DESKTOPNOTIFY_H

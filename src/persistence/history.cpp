@@ -300,9 +300,6 @@ MessageState getMessageState(bool isPending, bool isBroken)
  * Caches mappings to speed up message saving.
  */
 
-static constexpr int NUM_MESSAGES_DEFAULT =
-    100; // arbitrary number of messages loaded when not loading by date
-
 FileDbInsertionData::FileDbInsertionData()
 {
     static int id = qRegisterMetaType<FileDbInsertionData>();

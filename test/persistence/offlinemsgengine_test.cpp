@@ -29,7 +29,7 @@ struct MockFriendMessageSender : public QObject, public ICoreFriendMessageSender
     Q_OBJECT
 public:
     MockFriendMessageSender(Friend* f)
-        : f(f){};
+        : f(f){}
     bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) override
     {
         return false;

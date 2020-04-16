@@ -361,7 +361,7 @@ void Widget::init()
 
     fileMenu->menu()->addSeparator();
     logoutAction = fileMenu->menu()->addAction(QString());
-    connect(logoutAction, &QAction::triggered, [this]() { Nexus::getInstance().showLogin(); });
+    connect(logoutAction, &QAction::triggered, []() { Nexus::getInstance().showLogin(); });
 
     editMenu = globalMenu->insertMenu(viewMenu, new QMenu(this));
     editMenu->menu()->addSeparator();
@@ -1395,7 +1395,6 @@ void Widget::onReceiptReceived(int friendId, ReceiptNum receipt)
 
 void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 {
-    uint32_t friendId = frnd->getId();
     const ToxPk& friendPk = frnd->getPublicKey();
     ContentDialog* contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendPk);
     bool isSeparate = settings.getSeparateWindow();
@@ -1959,8 +1958,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
                                     bool isAction)
 {
     const GroupId& groupId = GroupList::id2Key(groupnumber);
-    Group* g = GroupList::findGroup(groupId);
-    assert(g);
+    assert(GroupList::findGroup(groupId));
 
     ToxPk author = core->getGroupPeerPk(groupnumber, peernumber);
 
@@ -2011,8 +2009,7 @@ void Widget::titleChangedByUser(const QString& title)
 void Widget::onGroupPeerAudioPlaying(int groupnumber, ToxPk peerPk)
 {
     const GroupId& groupId = GroupList::id2Key(groupnumber);
-    Group* g = GroupList::findGroup(groupId);
-    assert(g);
+    assert(GroupList::findGroup(groupId));
 
     auto form = groupChatForms[groupId].data();
     form->peerAudioPlaying(peerPk);
@@ -2313,8 +2310,7 @@ void Widget::setStatusBusy()
 void Widget::onGroupSendFailed(uint32_t groupnumber)
 {
     const auto& groupId = GroupList::id2Key(groupnumber);
-    Group* g = GroupList::findGroup(groupId);
-    assert(g);
+    assert(GroupList::findGroup(groupId));
 
     const auto message = tr("Message failed to send");
     const auto curTime = QDateTime::currentDateTime();

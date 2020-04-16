@@ -54,7 +54,7 @@ class QToolButton;
 class QVBoxLayout;
 
 class IMessageDispatcher;
-class Message;
+struct Message;
 
 namespace Ui {
 class MainWindow;

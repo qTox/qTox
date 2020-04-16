@@ -124,7 +124,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     connect(newGroupAction, &QAction::triggered, chatroom.get(), &FriendChatroom::inviteToNewGroup);
     inviteMenu->addSeparator();
 
-    for (const auto group : chatroom->getGroups()) {
+    for (const auto& group : chatroom->getGroups()) {
         const auto groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(group.name));
         connect(groupAction, &QAction::triggered, [=]() { chatroom->inviteFriend(group.group); });
     }
@@ -145,7 +145,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     circleMenu->addSeparator();
 
-    for (const auto circle : chatroom->getOtherCircles()) {
+    for (const auto& circle : chatroom->getOtherCircles()) {
         QAction* action = new QAction(tr("Move to circle \"%1\"").arg(circle.name), circleMenu);
         connect(action, &QAction::triggered, [=]() { moveToCircle(circle.circleId); });
         circleMenu->addAction(action);

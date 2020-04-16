@@ -99,7 +99,6 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
 
     eventsInit();
 
-    QDesktopWidget* desktop = QApplication::desktop();
     for (QScreen* qScreen : QGuiApplication::screens()) {
         connect(qScreen, &QScreen::geometryChanged, this, &AVForm::rescanDevices);
     }
@@ -308,7 +307,7 @@ void AVForm::fillCameraModesComboBox()
 
         QString str;
         std::string pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format).toStdString();
-        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height,
+        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height,
                mode.FPS, pixelFormat.c_str());
 
         if (mode.height && mode.width) {
