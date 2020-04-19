@@ -24,8 +24,10 @@
 
 #include <ctime>
 #include <random>
-#include <unistd.h>
 #include <stdlib.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 namespace
 {

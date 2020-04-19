@@ -1120,9 +1120,9 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
         if (onCompletion) {
             auto connection = std::make_shared<QMetaObject::Connection>();
             *connection = connect(chatWidget, &ChatLog::workerTimeoutFinished,
-                                  [onCompletion, connection] {
+                                  [this, onCompletion, connection] {
                                       onCompletion();
-                                      disconnect(*connection);
+                                      this->disconnect(*connection);
                                   });
         }
 

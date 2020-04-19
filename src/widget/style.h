@@ -96,11 +96,6 @@ signals:
 
 private:
     Style();
-
-private:
-    static QList<ThemeNameColor> themeNameColors;
-    static std::map<std::pair<const QString, const QFont>, const QString> stylesheetsCache;
-    static QMap<ColorPalette, QString> aliasColors;
 };
 
 #endif // STYLE_H

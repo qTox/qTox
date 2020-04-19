@@ -86,8 +86,6 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
         update();
     });
 
-    CoreFile* coreFile = Core::getInstance()->getCoreFile();
-
     connect(ui->leftButton, &QPushButton::clicked, this, &FileTransferWidget::onLeftButtonClicked);
     connect(ui->rightButton, &QPushButton::clicked, this, &FileTransferWidget::onRightButtonClicked);
     connect(ui->previewButton, &QPushButton::clicked, this,

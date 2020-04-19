@@ -38,8 +38,8 @@ public:
     qreal getAscent() const override;
 
 private:
-    QSize size;
     QPixmap pmap;
+    QSize size;
 };
 
 #endif // BROKEN_H

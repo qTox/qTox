@@ -39,7 +39,7 @@ class TestMessageProcessor : public QObject
     Q_OBJECT
 
 public:
-    TestMessageProcessor(){};
+    TestMessageProcessor(){}
 
 private slots:
     void testSelfMention();

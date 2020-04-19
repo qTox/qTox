@@ -34,13 +34,13 @@ static const int MAX_GROUP_TITLE_LENGTH = 128;
 
 Group::Group(int groupId, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat,
              const QString& selfName, ICoreGroupQuery& groupQuery, ICoreIdHandler& idHandler)
-    : selfName{selfName}
+    : groupQuery(groupQuery)
+    , idHandler(idHandler)
+    , selfName{selfName}
     , title{name}
     , toxGroupNum(groupId)
     , groupId{persistentGroupId}
     , avGroupchat{isAvGroupchat}
-    , groupQuery(groupQuery)
-    , idHandler(idHandler)
 {
     // in groupchats, we only notify on messages containing your name <-- dumb
     // sound notifications should be on all messages, but system popup notification

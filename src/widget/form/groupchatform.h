@@ -33,7 +33,7 @@ class FlowLayout;
 class QTimer;
 class GroupId;
 class IMessageDispatcher;
-class Message;
+struct Message;
 
 class GroupChatForm : public GenericChatForm
 {
