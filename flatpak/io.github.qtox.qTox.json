@@ -2,7 +2,7 @@
     "app-id": "io.github.qtox.qTox",
     "runtime": "org.kde.Platform",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "5.12",
+    "runtime-version": "5.14",
     "command": "qtox",
     "rename-icon": "qtox",
     "finish-args": [
@@ -24,10 +24,13 @@
     "add-extensions": {
         "org.freedesktop.Platform.ffmpeg-full": {
             "directory": "lib/ffmpeg",
-            "version": "18.08",
+            "version": "19.08",
             "add-ld-path": "."
         }
     },
+    "cleanup-commands": [
+        "mkdir -p /app/lib/ffmpeg"
+    ],
     "cleanup": [
         "/include",
         "/lib/pkgconfig",
@@ -98,23 +101,6 @@
                     "url": "https://github.com/jedisct1/libsodium",
                     "tag": "1.0.18",
                     "commit": "4f5e89fa84ce1d178a6765b8b46f2b6f91216677"
-                }
-            ]
-        },
-        {
-            /* Reminder: this is included in KDE 5.13 */
-            "name": "libqrencode",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DWITH_TOOLS=NO",
-                "-DBUILD_SHARED_LIBS=ON"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/fukuchi/libqrencode",
-                    "tag": "v4.0.2",
-                    "commit": "59ee597f913fcfda7a010a6e106fbee2595f68e4"
                 }
             ]
         },
