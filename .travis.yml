@@ -261,14 +261,6 @@ deploy:
       tags: true
     skip_cleanup: true
 
-  # branch for windows jenkins build
-  - provider: script
-    script: .travis/deploy-jenkins-branch.sh
-    on:
-      tags: true
-    skip_cleanup: true
-
-
 after_success:
   - >
     test "$TRAVIS_PULL_REQUEST" == "false"
