@@ -47,12 +47,12 @@ void Broken::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
 
 void Broken::setWidth(qreal width)
 {
-    Q_UNUSED(width);
+    Q_UNUSED(width)
 }
 
 void Broken::visibilityChanged(bool visible)
 {
-    Q_UNUSED(visible);
+    Q_UNUSED(visible)
 }
 
 qreal Broken::getAscent() const

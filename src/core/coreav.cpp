@@ -469,7 +469,7 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
      * See https://github.com/TokTok/c-toxcore/issues/1364 for details.
      */
 
-    Q_UNUSED(tox);
+    Q_UNUSED(tox)
     Core* c = static_cast<Core*>(core);
     CoreAV* cav = c->getAv();
 
@@ -746,7 +746,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
 
 void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, void* vSelf)
 {
-    Q_UNUSED(toxav);
+    Q_UNUSED(toxav)
     CoreAV* self = static_cast<CoreAV*>(vSelf);
 
     // we must unlock this lock before emitting any signals
@@ -807,8 +807,8 @@ void CoreAV::bitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t arate, u
                              void* vSelf)
 {
     CoreAV* self = static_cast<CoreAV*>(vSelf);
-    Q_UNUSED(self);
-    Q_UNUSED(toxav);
+    Q_UNUSED(self)
+    Q_UNUSED(toxav)
 
     qDebug() << "Recommended bitrate with" << friendNum << " is now " << arate << "/" << vrate
              << ", ignoring it";
@@ -818,8 +818,8 @@ void CoreAV::bitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t arate, u
 void CoreAV::audioBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rate, void* vSelf)
 {
     CoreAV* self = static_cast<CoreAV*>(vSelf);
-    Q_UNUSED(self);
-    Q_UNUSED(toxav);
+    Q_UNUSED(self)
+    Q_UNUSED(toxav)
 
     qDebug() << "Recommended audio bitrate with" << friendNum << " is now " << rate << ", ignoring it";
 }
@@ -828,8 +828,8 @@ void CoreAV::audioBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rat
 void CoreAV::videoBitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t rate, void* vSelf)
 {
     CoreAV* self = static_cast<CoreAV*>(vSelf);
-    Q_UNUSED(self);
-    Q_UNUSED(toxav);
+    Q_UNUSED(self)
+    Q_UNUSED(toxav)
 
     qDebug() << "Recommended video bitrate with" << friendNum << " is now " << rate << ", ignoring it";
 }

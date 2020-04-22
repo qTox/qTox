@@ -127,7 +127,7 @@ void PrivacyForm::on_nospamLineEdit_textChanged()
         str = QString("00000000").replace(0, str.length(), str);
         bodyUI->nospamLineEdit->setText(str);
         bodyUI->nospamLineEdit->setCursorPosition(curs);
-    };
+    }
 }
 
 void PrivacyForm::on_blackListTextEdit_textChanged()

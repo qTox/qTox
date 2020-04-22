@@ -1430,11 +1430,11 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
             [=](QContextMenuEvent* event) { emit widget->contextMenuCalled(event); });
 
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, [=](GenericChatroomWidget* w) {
-        Q_UNUSED(w);
+        Q_UNUSED(w)
         emit widget->chatroomWidgetClicked(widget);
     });
     connect(friendWidget, &FriendWidget::newWindowOpened, [=](GenericChatroomWidget* w) {
-        Q_UNUSED(w);
+        Q_UNUSED(w)
         emit widget->newWindowOpened(widget);
     });
     // FIXME: emit should be removed
@@ -1482,12 +1482,12 @@ void Widget::addGroupDialog(Group* group, ContentDialog* dialog)
     // ContentDialog) to the `widget` (which shown in main widget)
     // FIXME: emit should be removed
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, [=](GenericChatroomWidget* w) {
-        Q_UNUSED(w);
+        Q_UNUSED(w)
         emit widget->chatroomWidgetClicked(widget);
     });
 
     connect(groupWidget, &GroupWidget::newWindowOpened, [=](GenericChatroomWidget* w) {
-        Q_UNUSED(w);
+        Q_UNUSED(w)
         emit widget->newWindowOpened(widget);
     });
 
@@ -2351,8 +2351,8 @@ void Widget::saveSplitterGeometry()
 
 void Widget::onSplitterMoved(int pos, int index)
 {
-    Q_UNUSED(pos);
-    Q_UNUSED(index);
+    Q_UNUSED(pos)
+    Q_UNUSED(index)
     saveSplitterGeometry();
 }
 
