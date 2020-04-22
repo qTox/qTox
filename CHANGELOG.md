@@ -1,5 +1,15 @@
 <a name=""></a>
-##  (2020-04-19)
+## v1.17.1 (2020-04-22)
+
+
+#### Bug Fixes
+
+* **ci:**  remove jenkins deploy step ([48c688bf](https://github.com/qTox/qTox/commit/48c688bf1b1939f1afb239e19764791e4fc98b7a))
+
+
+
+<a name=""></a>
+## v1.17.0 (2020-04-19)
 
 Since this is the first release in more than a year the changelog is quite huge.
 The most notable user facing changes are group chats that stay intact after
@@ -7,6 +17,8 @@ disconnects or client shutdown as well as the very often requested dark theme.
 Advanced history search was added, as well as file transfers staying in chat
 history after client restart. There are of course also tons of fixes, namely
 much increased stability of audio and video calls as well as audio group calls.
+
+For v1.17.0 binaries, see v1.17.1.
 
 #### Performance
 
