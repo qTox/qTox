@@ -45,7 +45,7 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 for i in {1..5}
 do
     echo "Download try $i"
-    flatpak --system install flathub -y org.kde.Sdk/x86_64/5.12 || true
+    flatpak --system install flathub -y org.kde.Sdk/x86_64/5.14 || true
 done
 ## Workaround end
 
