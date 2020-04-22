@@ -1,4 +1,14 @@
 <a name=""></a>
+##  (2020-04-22)
+
+
+#### Bug Fixes
+
+* **ci:**  remove jenkins deploy step ([48c688bf](https://github.com/qTox/qTox/commit/48c688bf1b1939f1afb239e19764791e4fc98b7a))
+
+
+
+<a name=""></a>
 ##  (2020-04-19)
 
 Since this is the first release in more than a year the changelog is quite huge.
