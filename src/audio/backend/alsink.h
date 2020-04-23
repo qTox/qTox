@@ -49,8 +49,8 @@ public:
     uint getSourceId() const;
     void kill();
 
-    SIGNAL_IMPL(AlSink, finishedPlaying)
-    SIGNAL_IMPL(AlSink, invalidated)
+    SIGNAL_IMPL(AlSink, finishedPlaying, void)
+    SIGNAL_IMPL(AlSink, invalidated, void)
 
 private:
     OpenAL& audio;
