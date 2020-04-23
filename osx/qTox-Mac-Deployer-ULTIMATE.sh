@@ -262,7 +262,14 @@ build() {
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
     export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
-    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF
+
+    if [[ $TRAVIS = true ]]
+    then
+        STRICT_OPTIONS="ON"
+    else
+        STRICT_OPTIONS="OFF"
+    fi
+    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
     make -j$(sysctl -n hw.ncpu)
 }
 
