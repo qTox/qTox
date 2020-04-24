@@ -388,7 +388,7 @@ bool Settings::applyCommandLineOptions(const QCommandLineParser& parser)
 {
     if (!verifyProxySettings(parser)) {
         return false;
-    };
+    }
 
     QString IPv6Setting = parser.value("I").toUpper();
     QString LANSetting = parser.value("L").toUpper();
@@ -1005,7 +1005,7 @@ void Settings::setAutorun(bool newValue)
         emit autorunChanged(autorun);
     }
 #else
-    Q_UNUSED(newValue);
+    Q_UNUSED(newValue)
 #endif
 }
 
@@ -2145,7 +2145,7 @@ void Settings::setFriendActivity(const ToxPk& id, const QDateTime& activity)
 
 void Settings::saveFriendSettings(const ToxPk& id)
 {
-    Q_UNUSED(id);
+    Q_UNUSED(id)
     savePersonal();
 }
 

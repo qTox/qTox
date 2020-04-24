@@ -69,7 +69,7 @@ GroupWidget::~GroupWidget()
 
 void GroupWidget::updateTitle(const QString& author, const QString& newName)
 {
-    Q_UNUSED(author);
+    Q_UNUSED(author)
     nameLabel->setText(newName);
 }
 

@@ -295,7 +295,7 @@ void FriendListWidget::addGroupWidget(GroupWidget* widget)
     groupLayout.addSortedWidget(widget);
     Group* g = widget->getGroup();
     connect(g, &Group::titleChanged, [=](const QString& author, const QString& name) {
-        Q_UNUSED(author);
+        Q_UNUSED(author)
         renameGroupWidget(widget, name);
     });
 }
@@ -525,7 +525,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
             index = groupLayout.indexOfSortedWidget(groupWidget);
         } else {
             return;
-        };
+        }
     }
 
     index += forward ? 1 : -1;

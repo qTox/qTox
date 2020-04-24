@@ -251,7 +251,7 @@ void CategoryWidget::onCompactChanged(bool _compact)
     topLayout->setSpacing(0);
     topLayout->setMargin(0);
 
-    Q_UNUSED(_compact);
+    Q_UNUSED(_compact)
     setCompact(true);
 
     nameLabel->minimizeMaximumWidth();
