@@ -212,6 +212,7 @@ deploy:
       repo: qTox/qTox
       tags: true
     skip_cleanup: true
+    draft: true
 
   # Linux Flatpak
   - provider: releases
@@ -224,6 +225,7 @@ deploy:
       repo: qTox/qTox
       tags: true
     skip_cleanup: true
+    draft: true
 
   # osx binary
   - provider: releases
@@ -236,6 +238,7 @@ deploy:
       repo: qTox/qTox
       tags: true
     skip_cleanup: true
+    draft: true
 
   # Windows Installer 64Bit
   - provider: releases
@@ -248,6 +251,7 @@ deploy:
       repo: qTox/qTox
       tags: true
     skip_cleanup: true
+    draft: true
 
   # Windows Installer 32Bit
   - provider: releases
@@ -260,6 +264,7 @@ deploy:
       repo: qTox/qTox
       tags: true
     skip_cleanup: true
+    draft: true
 
   # branch for windows jenkins build
   - provider: script
