@@ -22,6 +22,10 @@ stages:
 env:
   global:
     - CIRP_GITHUB_REPO_SLUG="qTox/qTox-nightly-releases"
+    # This is the access token for pushing release builds on Tags
+    # Owner: sudden6
+    # See https://docs.travis-ci.com/user/deployment/releases/#authenticating-with-an-oauth-token
+    - GITHUB_DEPLOY_TOKEN="cP6Lftka34Elsj3m8RGo8WyArzXmMRhOi5H9+/YtX7EQ0ltiykTivNdjXED7HLuCzIp9L4Ztnl6oLlqh3+UbOXnibZ+vUevmbHMwm52DDfi7I6azTiUFikdBs8GDbwznvafeM0ETjU89pGVPFU4ITKzQxeDjupolOrHLTC3IRX8="
 
 jobs:
   include:
@@ -204,7 +208,7 @@ deploy:
   # Linux AppImage
   - provider: releases
     api_key:
-      secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+      secure: "$GITHUB_DEPLOY_TOKEN"
     file_glob: true
     file: ./output/*
     on:
@@ -217,7 +221,7 @@ deploy:
   # Linux Flatpak
   - provider: releases
     api_key:
-      secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+      secure: "$GITHUB_DEPLOY_TOKEN"
     file_glob: true
     file: ./output/*
     on:
@@ -230,7 +234,7 @@ deploy:
   # osx binary
   - provider: releases
     api_key:
-      secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+      secure: "$GITHUB_DEPLOY_TOKEN"
     file: "./qTox.dmg"
     file: "./qTox.dmg.sha256"
     on:
@@ -243,7 +247,7 @@ deploy:
   # Windows Installer 64Bit
   - provider: releases
     api_key:
-      secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+      secure: "$GITHUB_DEPLOY_TOKEN"
     file: "./workspace/x86_64/qtox/release/setup-qtox-x86_64-release.exe"
     file: "./workspace/x86_64/qtox/release/setup-qtox-x86_64-release.exe.sha256"
     on:
@@ -256,7 +260,7 @@ deploy:
   # Windows Installer 32Bit
   - provider: releases
     api_key:
-      secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+      secure: "$GITHUB_DEPLOY_TOKEN"
     file: "./workspace/i686/qtox/release/setup-qtox-i686-release.exe"
     file: "./workspace/i686/qtox/release/setup-qtox-i686-release.exe.sha256"
     on:
