@@ -20,6 +20,8 @@
 #ifndef RAWDATABASE_H
 #define RAWDATABASE_H
 
+#include "src/util/strongtype.h"
+
 #include <QByteArray>
 #include <QMutex>
 #include <QPair>
@@ -29,10 +31,11 @@
 #include <QVariant>
 #include <QVector>
 #include <QRegularExpression>
+
 #include <atomic>
+#include <cassert>
 #include <functional>
 #include <memory>
-#include "src/util/strongtype.h"
 
 /// The two following defines are required to use SQLCipher
 /// They are used by the sqlite3.h header
@@ -85,6 +88,16 @@ public:
     };
 
 public:
+    enum class SqlCipherParams {
+        // keep these sorted in upgrade order
+        p3_0, // SQLCipher 3.0 default encryption params
+        // SQLCipher 4.0 default params where SQLCipher 3.0 supports them, but 3.0 params where not possible.
+        // We accidentally got to this state when attemption to update all databases to 4.0 defaults even when using
+        // SQLCipher 3.x, but might as well keep using these for people with SQLCipher 3.x.
+        halfUpgradedTo4,
+        p4_0 // SQLCipher 4.0 default encryption params
+    };
+
     RawDatabase(const QString& path, const QString& password, const QByteArray& salt);
     ~RawDatabase();
     bool isOpen();
@@ -99,6 +112,21 @@ public:
 
     void sync();
 
+    static QString toString(SqlCipherParams params)
+    {
+        switch (params)
+        {
+        case SqlCipherParams::p3_0:
+            return "3.0 default";
+        case SqlCipherParams::halfUpgradedTo4:
+            return "3.x max compatible";
+        case SqlCipherParams::p4_0:
+            return "4.0 default";
+        }
+        assert(false);
+        return {};
+    }
+
 public slots:
     bool setPassword(const QString& password);
     bool rename(const QString& newPath);
@@ -111,9 +139,11 @@ protected slots:
 
 private:
     QString anonymizeQuery(const QByteArray& query);
-    bool openEncryptedDatabaseAtLatestVersion(const QString& hexKey);
-    bool updateSavedCipherParameters(const QString& hexKey);
-    bool setCipherParameters(int majorVersion, const QString& database = {});
+    bool openEncryptedDatabaseAtLatestSupportedVersion(const QString& hexKey);
+    bool updateSavedCipherParameters(const QString& hexKey, SqlCipherParams newParams);
+    bool setCipherParameters(SqlCipherParams params, const QString& database = {});
+    SqlCipherParams highestSupportedParams();
+    SqlCipherParams readSavedCipherParams(const QString& hexKey, SqlCipherParams newParams);
     bool setKey(const QString& hexKey);
     int getUserVersion();
     bool encryptDatabase(const QString& newHexKey);
