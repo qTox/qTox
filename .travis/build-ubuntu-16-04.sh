@@ -165,6 +165,7 @@ build_qtox() {
     echo '*** BUILDING "MINIMAL" VERSION ***'
     cmake -H. -B"$BUILDDIR" \
         -DSMILEYS=DISABLED \
+        -DSTRICT_OPTIONS=ON \
         -DSPELL_CHECK=OFF
 
     bdir
@@ -173,7 +174,9 @@ build_qtox() {
     rm -rf "$BUILDDIR"
 
     echo '*** BUILDING "FULL" VERSION ***'
-    cmake -H. -B"$BUILDDIR" -DUPDATE_CHECK=ON
+    cmake -H. -B"$BUILDDIR" \
+        -DUPDATE_CHECK=ON \
+        -DSTRICT_OPTIONS=ON
     bdir
 }
 

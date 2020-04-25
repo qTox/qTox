@@ -30,6 +30,7 @@ option(SPELL_CHECK "Enable spell cheching support" ON)
 option(SVGZ_ICON "Compress the SVG icon of qTox" ON)
 option(ASAN "Compile with AddressSanitizer" OFF)
 option(DESKTOP_NOTIFICATIONS "Use snorenotify for desktop notifications" OFF)
+option(STRICT_OPTIONS "Enable strict compile options, used by CI" OFF)
 
 # process generated files if cmake >= 3.10
 if(POLICY CMP0071)
@@ -87,12 +88,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-aliasing")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wold-style-cast")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wsign-compare")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wunknown-pragmas")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+
+# Extra-strict compile options that we don't want to subject all users to by default
+if (STRICT_OPTIONS)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+endif()
 
 # avoid timestamps in binary for reproducible builds, not added until GCC 4.9
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG(-Wdate-time COMPILER_SUPPORTS_WDATE_TIME)
-if(COMPILER_SUPPORTS_WDATE_TIME)
+if (COMPILER_SUPPORTS_WDATE_TIME)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdate-time")
 endif()
 
@@ -373,6 +378,7 @@ set(${PROJECT_NAME}_SOURCES
   src/model/sessionchatlog.cpp
   src/model/chathistory.h
   src/model/chathistory.cpp
+  src/model/toxclientstandards.h
   src/net/bootstrapnodeupdater.cpp
   src/net/bootstrapnodeupdater.h
   src/net/avatarbroadcaster.cpp
