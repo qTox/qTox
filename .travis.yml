@@ -206,7 +206,7 @@ deploy:
     # This is the access token for pushing release builds on Tags
     # Owner: sudden6
     # See https://docs.travis-ci.com/user/deployment/releases/#authenticating-with-an-oauth-token
-    api_key:
+    token:
         secure: "UAvVIUgfH8VGAzMsKk62yz26oqjNpUxEEyZ7OSjt09VoTMuepZd9wPmLCv0b+jFrk5BwQG9gpDzTD7vZ0Un1g1lGD23K801tvMRue/SO/KmOyeYrqd6o7MEFGb22qmmVoid/hqKLQFOxt/5HYj7fnCzG8EUuA9BvdWmsl4ir8Js="
     file_glob: true
     file: ./output/*
@@ -219,7 +219,7 @@ deploy:
 
   # Linux Flatpak
   - provider: releases
-    api_key:
+    token:
       secure: "UAvVIUgfH8VGAzMsKk62yz26oqjNpUxEEyZ7OSjt09VoTMuepZd9wPmLCv0b+jFrk5BwQG9gpDzTD7vZ0Un1g1lGD23K801tvMRue/SO/KmOyeYrqd6o7MEFGb22qmmVoid/hqKLQFOxt/5HYj7fnCzG8EUuA9BvdWmsl4ir8Js="
     file_glob: true
     file: ./output/*
@@ -232,10 +232,11 @@ deploy:
 
   # osx binary
   - provider: releases
-    api_key:
+    token:
       secure: "UAvVIUgfH8VGAzMsKk62yz26oqjNpUxEEyZ7OSjt09VoTMuepZd9wPmLCv0b+jFrk5BwQG9gpDzTD7vZ0Un1g1lGD23K801tvMRue/SO/KmOyeYrqd6o7MEFGb22qmmVoid/hqKLQFOxt/5HYj7fnCzG8EUuA9BvdWmsl4ir8Js="
-    file: "./qTox.dmg"
-    file: "./qTox.dmg.sha256"
+    file:
+      - "./qTox.dmg"
+      - "./qTox.dmg.sha256"
     on:
       condition: $TRAVIS_OS_NAME == osx
       repo: qTox/qTox
@@ -245,10 +246,11 @@ deploy:
 
   # Windows Installer 64Bit
   - provider: releases
-    api_key:
+    token:
       secure: "UAvVIUgfH8VGAzMsKk62yz26oqjNpUxEEyZ7OSjt09VoTMuepZd9wPmLCv0b+jFrk5BwQG9gpDzTD7vZ0Un1g1lGD23K801tvMRue/SO/KmOyeYrqd6o7MEFGb22qmmVoid/hqKLQFOxt/5HYj7fnCzG8EUuA9BvdWmsl4ir8Js="
-    file: "./workspace/x86_64/qtox/release/setup-qtox-x86_64-release.exe"
-    file: "./workspace/x86_64/qtox/release/setup-qtox-x86_64-release.exe.sha256"
+    file:
+      - "./workspace/x86_64/qtox/release/setup-qtox-x86_64-release.exe"
+      - "./workspace/x86_64/qtox/release/setup-qtox-x86_64-release.exe.sha256"
     on:
       condition: $WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE == x86_64 && -f /home/travis/build/qTox/qTox/stage3 && -f /home/travis/build/qTox/qTox/release
       repo: qTox/qTox
@@ -258,10 +260,11 @@ deploy:
 
   # Windows Installer 32Bit
   - provider: releases
-    api_key:
+    token:
       secure: "UAvVIUgfH8VGAzMsKk62yz26oqjNpUxEEyZ7OSjt09VoTMuepZd9wPmLCv0b+jFrk5BwQG9gpDzTD7vZ0Un1g1lGD23K801tvMRue/SO/KmOyeYrqd6o7MEFGb22qmmVoid/hqKLQFOxt/5HYj7fnCzG8EUuA9BvdWmsl4ir8Js="
-    file: "./workspace/i686/qtox/release/setup-qtox-i686-release.exe"
-    file: "./workspace/i686/qtox/release/setup-qtox-i686-release.exe.sha256"
+    file:
+      - "./workspace/i686/qtox/release/setup-qtox-i686-release.exe"
+      - "./workspace/i686/qtox/release/setup-qtox-i686-release.exe.sha256"
     on:
       condition: $WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE == i686 && -f /home/travis/build/qTox/qTox/stage3 && -f /home/travis/build/qTox/qTox/release
       repo: qTox/qTox
