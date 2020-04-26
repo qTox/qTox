@@ -117,7 +117,7 @@ void BootstrapNodeUpdater::jsonNodeToDhtServer(const QJsonObject& node, QList<Dh
     // first check if the node in question has all needed fields
     bool found = true;
     for (const auto& key : NodeFields::neededFields) {
-        found |= node.contains(key);
+        found &= node.contains(key);
     }
 
     if (!found) {
@@ -185,7 +185,7 @@ QList<DhtServer> BootstrapNodeUpdater::jsonToNodeList(const QJsonDocument& nodeL
         return result;
     }
     QJsonArray nodes = rootObj[jsonNodeArrayName].toArray();
-    for (const auto& node : nodes) {
+    for (const QJsonValueRef node : nodes) {
         if (node.isObject()) {
             jsonNodeToDhtServer(node.toObject(), result);
         }

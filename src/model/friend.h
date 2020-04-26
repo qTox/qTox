@@ -53,14 +53,13 @@ public:
 
     void setStatus(Status::Status s);
     Status::Status getStatus() const;
-    bool isOnline() const;
-
     bool useHistory() const final;
 
 signals:
     void nameChanged(const ToxPk& friendId, const QString& name);
     void aliasChanged(const ToxPk& friendId, QString alias);
     void statusChanged(const ToxPk& friendId, Status::Status status);
+    void onlineOfflineChanged(const ToxPk& friendId, bool isOnline);
     void statusMessageChanged(const ToxPk& friendId, const QString& message);
     void loadChatHistory();
 

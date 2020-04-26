@@ -21,9 +21,39 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QThread>
+
 #include <ctime>
 #include <random>
+#include <stdlib.h>
+#ifndef _MSC_VER
 #include <unistd.h>
+#endif
+
+namespace
+{
+#ifdef Q_OS_WIN
+    const char* getCurUsername()
+    {
+        return getenv("USERNAME");
+    }
+#else
+    const char* getCurUsername()
+    {
+        return getenv("USER");
+    }
+#endif
+
+    QString getIpcKey()
+    {
+        auto* user = getCurUsername();
+        if (!user)
+        {
+            qWarning() << "Failed to get current username. Will use a global IPC.";
+            user = "";
+        }
+        return QString("qtox-" IPC_PROTOCOL_VERSION "-") + user;
+    }
+} // namespace
 
 /**
  * @var time_t IPC::lastEvent
@@ -40,7 +70,7 @@
 
 IPC::IPC(uint32_t profileId)
     : profileId{profileId}
-    , globalMemory{"qtox-" IPC_PROTOCOL_VERSION}
+    , globalMemory{getIpcKey()}
 {
     qRegisterMetaType<IPCEventHandler>("IPCEventHandler");
 
@@ -103,11 +133,11 @@ IPC::~IPC()
 time_t IPC::postEvent(const QString& name, const QByteArray& data, uint32_t dest)
 {
     QByteArray binName = name.toUtf8();
-    if (binName.length() > (int32_t)sizeof(IPCEvent::name)) {
+    if (binName.length() > static_cast<int32_t>(sizeof(IPCEvent::name))) {
         return 0;
     }
 
-    if (data.length() > (int32_t)sizeof(IPCEvent::data)) {
+    if (data.length() > static_cast<int32_t>(sizeof(IPCEvent::data))) {
         return 0;
     }
 

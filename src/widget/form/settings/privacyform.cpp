@@ -23,6 +23,9 @@
 #include <QDebug>
 #include <QFile>
 #include <QMessageBox>
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+#include <QRandomGenerator>
+#endif
 
 #include "src/core/core.h"
 #include "src/nexus.h"
@@ -98,11 +101,19 @@ void PrivacyForm::showEvent(QShowEvent*)
 void PrivacyForm::on_randomNosapamButton_clicked()
 {
     QTime time = QTime::currentTime();
-    qsrand((uint)time.msec());
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    QRandomGenerator(static_cast<uint>(time.msec()));
+#else
+    qsrand(static_cast<uint>(time.msec()));
+#endif
 
     uint32_t newNospam{0};
     for (int i = 0; i < 4; ++i)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+        newNospam = (newNospam << 8) + (QRandomGenerator::global()->generate() % 256); // Generate byte by byte. For some reason.
+#else
         newNospam = (newNospam << 8) + (qrand() % 256); // Generate byte by byte. For some reason.
+#endif
 
     Core::getInstance()->setNospam(newNospam);
     bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().getNoSpamString());
@@ -116,7 +127,7 @@ void PrivacyForm::on_nospamLineEdit_textChanged()
         str = QString("00000000").replace(0, str.length(), str);
         bodyUI->nospamLineEdit->setText(str);
         bodyUI->nospamLineEdit->setCursorPosition(curs);
-    };
+    }
 }
 
 void PrivacyForm::on_blackListTextEdit_textChanged()

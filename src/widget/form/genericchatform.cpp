@@ -30,7 +30,6 @@
 #include "src/model/group.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
-#include "src/video/genericnetcamview.h"
 #include "src/widget/chatformheader.h"
 #include "src/widget/contentdialog.h"
 #include "src/widget/contentdialogmanager.h"
@@ -259,7 +258,7 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
     dateInfo = new QLabel(this);
-    chatWidget = new ChatLog(contact->useHistory(), this);
+    chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);
@@ -297,7 +296,6 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
     bodySplitter = new QSplitter(Qt::Vertical, this);
-    connect(bodySplitter, &QSplitter::splitterMoved, this, &GenericChatForm::onSplitterMoved);
     QWidget* contentWidget = new QWidget(this);
     bodySplitter->addWidget(contentWidget);
 
@@ -391,8 +389,6 @@ GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
     auto firstChatLogIdx = (chatLogIdxRange < DEF_NUM_MSG_TO_LOAD) ? chatLog.getFirstIdx() : chatLog.getNextIdx() - DEF_NUM_MSG_TO_LOAD;
 
     renderMessages(firstChatLogIdx, chatLog.getNextIdx());
-
-    netcam = nullptr;
 }
 
 GenericChatForm::~GenericChatForm()
@@ -524,17 +520,17 @@ void GenericChatForm::onSendTriggered()
 {
     auto msg = msgEdit->toPlainText();
 
+    bool isAction = msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive);
+    if (isAction) {
+        msg.remove(0, ChatForm::ACTION_PREFIX.length());
+    }
+
     if (msg.isEmpty()) {
         return;
     }
 
     msgEdit->setLastMessage(msg);
     msgEdit->clear();
-
-    bool isAction = msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive);
-    if (isAction) {
-        msg.remove(0, ChatForm::ACTION_PREFIX.length());
-    }
 
     messageDispatcher.sendMessage(isAction, msg);
 }
@@ -623,7 +619,6 @@ void GenericChatForm::setColorizedNames(bool enable)
 void GenericChatForm::addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                                            const QDateTime& datetime)
 {
-    previousId = ToxPk();
     insertChatMessage(ChatMessage::createChatInfoMessage(message, type, datetime));
 }
 
@@ -632,7 +627,6 @@ void GenericChatForm::addSystemDateMessage(const QDate& date)
     const Settings& s = Settings::getInstance();
     QString dateText = date.toString(s.getDateFormat());
 
-    previousId = ToxPk();
     insertChatMessage(ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime()));
 }
 
@@ -644,7 +638,7 @@ QDateTime GenericChatForm::getTime(const ChatLine::Ptr &chatLine) const
         if (timestamp) {
             return timestamp->getTime();
         } else {
-            return QDateTime::currentDateTime();
+            return QDateTime();
         }
     }
 
@@ -734,7 +728,7 @@ bool GenericChatForm::loadHistoryFrom(const QDateTime &time)
 
 void GenericChatForm::removeFirstsMessages(const int num)
 {
-    if (messages.size() > num) {
+    if (static_cast<int>(messages.size()) > num) {
         messages.erase(messages.begin(), std::next(messages.begin(), num));
     } else {
         messages.clear();
@@ -743,7 +737,7 @@ void GenericChatForm::removeFirstsMessages(const int num)
 
 void GenericChatForm::removeLastsMessages(const int num)
 {
-    if (messages.size() > num) {
+    if (static_cast<int>(messages.size()) > num) {
         messages.erase(std::next(messages.end(), -num), messages.end());
     } else {
         messages.clear();
@@ -788,7 +782,6 @@ void GenericChatForm::clearChatArea(bool confirm, bool inform)
     }
 
     chatWidget->clear();
-    previousId = ToxPk();
 
     if (inform)
         addSystemInfoMessage(tr("Cleared"), ChatMessage::INFO, QDateTime::currentDateTime());
@@ -864,24 +857,6 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
     }
 
     return false;
-}
-
-void GenericChatForm::onSplitterMoved(int, int)
-{
-    if (netcam)
-        netcam->setShowMessages(bodySplitter->sizes()[1] == 0);
-}
-
-void GenericChatForm::onShowMessagesClicked()
-{
-    if (netcam) {
-        if (bodySplitter->sizes()[1] == 0)
-            bodySplitter->setSizes({1, 1});
-        else
-            bodySplitter->setSizes({1, 0});
-
-        onSplitterMoved(0, 0);
-    }
 }
 
 void GenericChatForm::quoteSelectedText()
@@ -977,6 +952,10 @@ void GenericChatForm::searchInBegin(const QString& phrase, const ParameterSearch
     if (phrase.isEmpty()) {
         disableSearchText();
 
+        return;
+    }
+
+    if (messages.size() == 0) {
         return;
     }
 
@@ -1141,9 +1120,9 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
         if (onCompletion) {
             auto connection = std::make_shared<QMetaObject::Connection>();
             *connection = connect(chatWidget, &ChatLog::workerTimeoutFinished,
-                                  [onCompletion, connection, this] {
+                                  [this, onCompletion, connection] {
                                       onCompletion();
-                                      disconnect(*connection);
+                                      this->disconnect(*connection);
                                   });
         }
 
@@ -1190,9 +1169,14 @@ void GenericChatForm::loadHistoryUpper()
     }
 }
 
-void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& line)
+void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& topLine)
 {
-    const auto date = getTime(line);
+    // If the dateInfo is visible we need to pretend the top line is the one
+    // covered by the date to prevent oscillations
+    const auto effectiveTopLine = (dateInfo->isVisible() && prevLine)
+        ? prevLine : topLine;
+
+    const auto date = getTime(effectiveTopLine);
 
     if (date.isValid() && date.date() != QDate::currentDate()) {
         const auto dateText = QStringLiteral("<b>%1<\b>").arg(date.toString(Settings::getInstance().getDateFormat()));
@@ -1216,36 +1200,4 @@ void GenericChatForm::retranslateUi()
     goCurrentDateAction->setText(tr("Go to current date"));
     loadHistoryAction->setText(tr("Load chat history..."));
     exportChatAction->setText(tr("Export to file"));
-}
-
-void GenericChatForm::showNetcam()
-{
-    if (!netcam)
-        netcam = createNetcam();
-
-    connect(netcam, &GenericNetCamView::showMessageClicked, this,
-            &GenericChatForm::onShowMessagesClicked);
-
-    bodySplitter->insertWidget(0, netcam);
-    bodySplitter->setCollapsible(0, false);
-
-    QSize minSize = netcam->getSurfaceMinSize();
-    ContentDialog* current = ContentDialogManager::getInstance()->current();
-    if (current)
-        current->onVideoShow(minSize);
-}
-
-void GenericChatForm::hideNetcam()
-{
-    if (!netcam)
-        return;
-
-    ContentDialog* current = ContentDialogManager::getInstance()->current();
-    if (current)
-        current->onVideoHide();
-
-    netcam->close();
-    netcam->hide();
-    delete netcam;
-    netcam = nullptr;
 }

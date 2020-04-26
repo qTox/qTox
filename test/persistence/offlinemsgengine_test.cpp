@@ -19,6 +19,7 @@
 
 #include "src/core/core.h"
 #include "src/model/friend.h"
+#include "src/model/status.h"
 #include "src/persistence/offlinemsgengine.h"
 
 #include <QtTest/QtTest>
@@ -28,14 +29,14 @@ struct MockFriendMessageSender : public QObject, public ICoreFriendMessageSender
     Q_OBJECT
 public:
     MockFriendMessageSender(Friend* f)
-        : f(f){};
+        : f(f){}
     bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) override
     {
         return false;
     }
     bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) override
     {
-        if (f->isOnline()) {
+        if (Status::isOnline(f->getStatus())) {
             receipt.get() = receiptNum++;
             if (!dropReceipts) {
                 msgs.push_back(message);
@@ -45,7 +46,7 @@ public:
         } else {
             numMessagesFailed++;
         }
-        return f->isOnline();
+        return Status::isOnline(f->getStatus());
     }
 
 signals:

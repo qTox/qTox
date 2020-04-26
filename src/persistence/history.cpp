@@ -26,7 +26,7 @@
 #include "db/rawdatabase.h"
 
 namespace {
-static constexpr int SCHEMA_VERSION = 2;
+static constexpr int SCHEMA_VERSION = 4;
 
 bool createCurrentSchema(RawDatabase& db)
 {
@@ -63,6 +63,9 @@ bool createCurrentSchema(RawDatabase& db)
         "file_state INTEGER NOT NULL);"
         "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY);"
         "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY);"));
+    // sqlite doesn't support including the index as part of the CREATE TABLE statement, so add a second query
+    queries += RawDatabase::Query(
+        "CREATE INDEX chat_id_idx on history (chat_id);");
     queries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1;").arg(SCHEMA_VERSION));
     return db.execNow(queries);
 }
@@ -150,12 +153,53 @@ bool dbSchema1to2(RawDatabase& db)
     return db.execNow(upgradeQueries);
 }
 
+bool dbSchema2to3(RawDatabase& db)
+{
+    // Any faux_offline_pending message with the content "/me " are action
+    // messages that qTox previously let a user enter, but that will cause an
+    // action type message to be sent to toxcore, with 0 length, which will
+    // always fail. They must be be moved from faux_offline_pending to broken_messages
+    // to avoid qTox from erroring trying to send them on every connect
+
+    const QString emptyActionMessageString = "/me ";
+
+    QVector<RawDatabase::Query> upgradeQueries;
+    upgradeQueries += RawDatabase::Query{QString("INSERT INTO broken_messages "
+            "SELECT faux_offline_pending.id FROM "
+            "history JOIN faux_offline_pending "
+            "ON faux_offline_pending.id = history.id "
+            "WHERE history.message = ?;"),
+            {emptyActionMessageString.toUtf8()}};
+
+    upgradeQueries += QString(
+        "DELETE FROM faux_offline_pending "
+        "WHERE id in ("
+            "SELECT id FROM broken_messages);");
+
+    upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 3;"));
+
+    return db.execNow(upgradeQueries);
+}
+
+bool dbSchema3to4(RawDatabase& db)
+{
+    QVector<RawDatabase::Query> upgradeQueries;
+    upgradeQueries += RawDatabase::Query{QString(
+        "CREATE INDEX chat_id_idx on history (chat_id);")};
+
+    upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 4;"));
+
+    return db.execNow(upgradeQueries);
+}
+
+
 /**
 * @brief Upgrade the db schema
+* @return True if the schema upgrade succeded, false otherwise
 * @note On future alterations of the database all you have to do is bump the SCHEMA_VERSION
 * variable and add another case to the switch statement below. Make sure to fall through on each case.
 */
-void dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
+bool dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
 {
     int64_t databaseSchemaVersion;
 
@@ -163,18 +207,17 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
             databaseSchemaVersion = row[0].toLongLong();
         }))) {
         qCritical() << "History failed to read user_version";
-        db.reset();
-        return;
+        return false;
     }
 
     if (databaseSchemaVersion > SCHEMA_VERSION) {
-        qWarning() << "Database version is newer than we currently support. Please upgrade qTox";
+        qWarning().nospace() << "Database version (" << databaseSchemaVersion <<
+            ") is newer than we currently support (" << SCHEMA_VERSION << "). Please upgrade qTox";
         // We don't know what future versions have done, we have to disable db access until we re-upgrade
-        db.reset();
-        return;
+        return false;
     } else if (databaseSchemaVersion == SCHEMA_VERSION) {
         // No work to do
-        return;
+        return true;
     }
 
     switch (databaseSchemaVersion) {
@@ -187,22 +230,19 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
         const bool newDb = isNewDb(db, success);
         if (!success) {
             qCritical() << "Failed to create current db schema";
-            db.reset();
-            return;
+            return false;
         }
         if (newDb) {
             if (!createCurrentSchema(*db)) {
                 qCritical() << "Failed to create current db schema";
-                db.reset();
-                return;
+                return false;
             }
             qDebug() << "Database created at schema version" << SCHEMA_VERSION;
             break; // new db is the only case where we don't incrementally upgrade through each version
         } else {
             if (!dbSchema0to1(*db)) {
                 qCritical() << "Failed to upgrade db to schema version 1, aborting";
-                db.reset();
-                return;
+                return false;
             }
             qDebug() << "Database upgraded incrementally to schema version 1";
         }
@@ -211,16 +251,29 @@ void dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
     case 1:
        if (!dbSchema1to2(*db)) {
             qCritical() << "Failed to upgrade db to schema version 2, aborting";
-            db.reset();
-            return;
+            return false;
        }
        qDebug() << "Database upgraded incrementally to schema version 2";
        //fallthrough
+    case 2:
+       if (!dbSchema2to3(*db)) {
+            qCritical() << "Failed to upgrade db to schema version 3, aborting";
+            return false;
+       }
+       qDebug() << "Database upgraded incrementally to schema version 3";
+    case 3:
+       if (!dbSchema3to4(*db)) {
+            qCritical() << "Failed to upgrade db to schema version 4, aborting";
+            return false;
+       }
+       qDebug() << "Database upgraded incrementally to schema version 4";
     // etc.
     default:
         qInfo() << "Database upgrade finished (databaseSchemaVersion" << databaseSchemaVersion
                 << "->" << SCHEMA_VERSION << ")";
     }
+
+    return true;
 }
 
 MessageState getMessageState(bool isPending, bool isBroken)
@@ -247,9 +300,6 @@ MessageState getMessageState(bool isPending, bool isBroken)
  * Caches mappings to speed up message saving.
  */
 
-static constexpr int NUM_MESSAGES_DEFAULT =
-    100; // arbitrary number of messages loaded when not loading by date
-
 FileDbInsertionData::FileDbInsertionData()
 {
     static int id = qRegisterMetaType<FileDbInsertionData>();
@@ -260,18 +310,19 @@ FileDbInsertionData::FileDbInsertionData()
  * @brief Prepares the database to work with the history.
  * @param db This database will be prepared for use with the history.
  */
-History::History(std::shared_ptr<RawDatabase> db)
-    : db(db)
+History::History(std::shared_ptr<RawDatabase> db_)
+    : db(db_)
 {
     if (!isValid()) {
         qWarning() << "Database not open, init failed";
         return;
     }
 
-    dbSchemaUpgrade(db);
+    const auto upgradeSucceeded = dbSchemaUpgrade(db);
 
     // dbSchemaUpgrade may have put us in an invalid state
-    if (!isValid()) {
+    if (!upgradeSucceeded) {
+        db.reset();
         return;
     }
 
@@ -312,6 +363,10 @@ bool History::isValid()
  */
 bool History::historyExists(const ToxPk& friendPk)
 {
+    if (historyAccessBlocked()) {
+        return false;
+    }
+
     return !getMessagesForFriend(friendPk, 0, 1).empty();
 }
 
@@ -530,6 +585,10 @@ void History::addNewFileMessage(const QString& friendPk, const QString& fileId,
                                 const QString& fileName, const QString& filePath, int64_t size,
                                 const QString& sender, const QDateTime& time, QString const& dispName)
 {
+    if (historyAccessBlocked()) {
+        return;
+    }
+
     // This is an incredibly far from an optimal way of implementing this,
     // but given the frequency that people are going to be initiating a file
     // transfer we can probably live with it.
@@ -586,11 +645,7 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
                             const QDateTime& time, bool isDelivered, QString dispName,
                             const std::function<void(RowId)>& insertIdCallback)
 {
-    if (!Settings::getInstance().getEnableLogging()) {
-        qWarning() << "Blocked a message from being added to database while history is disabled";
-        return;
-    }
-    if (!isValid()) {
+    if (historyAccessBlocked()) {
         return;
     }
 
@@ -601,6 +656,10 @@ void History::addNewMessage(const QString& friendPk, const QString& message, con
 void History::setFileFinished(const QString& fileId, bool success, const QString& filePath,
                               const QByteArray& fileHash)
 {
+    if (historyAccessBlocked()) {
+        return;
+    }
+
     auto& fileInfo = fileInfos[fileId];
     if (fileInfo.fileId.get() == -1) {
         fileInfo.finished = true;
@@ -616,11 +675,19 @@ void History::setFileFinished(const QString& fileId, bool success, const QString
 
 size_t History::getNumMessagesForFriend(const ToxPk& friendPk)
 {
+    if (historyAccessBlocked()) {
+        return 0;
+    }
+
     return getNumMessagesForFriendBeforeDate(friendPk, QDateTime());
 }
 
 size_t History::getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date)
 {
+    if (historyAccessBlocked()) {
+        return 0;
+    }
+
     QString queryText = QString("SELECT COUNT(history.id) "
                                 "FROM history "
                                 "JOIN peers chat ON chat_id = chat.id "
@@ -646,6 +713,10 @@ size_t History::getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const Q
 QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk, size_t firstIdx,
                                                           size_t lastIdx)
 {
+    if (historyAccessBlocked()) {
+        return {};
+    }
+
     QList<HistMessage> messages;
 
     // Don't forget to update the rowCallback if you change the selected columns!
@@ -705,6 +776,10 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
 
 QList<History::HistMessage> History::getUndeliveredMessagesForFriend(const ToxPk& friendPk)
 {
+    if (historyAccessBlocked()) {
+        return {};
+    }
+
     auto queryText =
         QString("SELECT history.id, faux_offline_pending.id, timestamp, chat.public_key, "
                 "aliases.display_name, sender.public_key, message, broken_messages.id "
@@ -751,6 +826,10 @@ QList<History::HistMessage> History::getUndeliveredMessagesForFriend(const ToxPk
 QDateTime History::getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from,
                                           QString phrase, const ParameterSearch& parameter)
 {
+    if (historyAccessBlocked()) {
+        return QDateTime();
+    }
+
     QDateTime result;
     auto rowCallback = [&result](const QVector<QVariant>& row) {
         result = QDateTime::fromMSecsSinceEpoch(row[0].toLongLong());
@@ -845,6 +924,10 @@ QList<History::DateIdx> History::getNumMessagesForFriendBeforeDateBoundaries(con
                                                                              const QDate& from,
                                                                              size_t maxNum)
 {
+    if (historyAccessBlocked()) {
+        return {};
+    }
+
     auto friendPkString = friendPk.toString();
 
     // No guarantee that this is the most efficient way to do this...
@@ -871,7 +954,11 @@ QList<History::DateIdx> History::getNumMessagesForFriendBeforeDateBoundaries(con
                                "%4;")
                            .arg(countMessagesForFriend)
                            .arg(friendPkString)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+                           .arg(QDateTime(from.startOfDay()).toMSecsSinceEpoch())
+#else
                            .arg(QDateTime(from).toMSecsSinceEpoch())
+#endif
                            .arg(limitString);
 
     QList<DateIdx> dateIdxs;
@@ -896,9 +983,29 @@ QList<History::DateIdx> History::getNumMessagesForFriendBeforeDateBoundaries(con
  */
 void History::markAsDelivered(RowId messageId)
 {
-    if (!isValid()) {
+    if (historyAccessBlocked()) {
         return;
     }
 
     db->execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;").arg(messageId.get()));
+}
+
+/**
+* @brief Determines if history access should be blocked
+* @return True if history should not be accessed
+*/
+bool History::historyAccessBlocked()
+{
+    if (!Settings::getInstance().getEnableLogging()) {
+        assert(false);
+        qCritical() << "Blocked history access while history is disabled";
+        return true;
+    }
+
+    if (!isValid()) {
+        return true;
+    }
+
+    return false;
+
 }

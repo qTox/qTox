@@ -17,6 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#if DESKTOP_NOTIFICATIONS
 #include "desktopnotify.h"
 
 #include <src/persistence/settings.h>
@@ -75,3 +76,4 @@ void DesktopNotify::notifyMessageSimple(const MessageType type)
 
     createNotification(message, {}, snoreIcon);
 }
+#endif

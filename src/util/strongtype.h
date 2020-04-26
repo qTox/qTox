@@ -17,8 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef STORNGTYPE_H
-#define STORNGTYPE_H
+#ifndef STRONGTYPE_H
+#define STRONGTYPE_H
 
 #include <QHash>
 
@@ -106,7 +106,7 @@ struct Orderable : EqualityComparible<T, Underlying>
  * in signals/slots. For queued connections, registering the metatype is also
  * required before the type is used.
  *   using ReceiptNum = NamedType<uint32_t, struct ReceiptNumTag>;
- *   Q_DECLARE_METATYPE(ReceiptNum);
+ *   Q_DECLARE_METATYPE(ReceiptNum)
  *   qRegisterMetaType<ReceiptNum>();
  */
 
@@ -129,4 +129,4 @@ uint qHash(const NamedType<T, Tag, Properties...>& key, uint seed = 0)
 {
     return qHash(key.get(), seed);
 }
-#endif // STORNGTYPE_H
+#endif // STRONGTYPE_H

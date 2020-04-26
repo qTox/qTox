@@ -37,7 +37,7 @@
 
 using ChatLogIdx =
     NamedType<size_t, struct ChatLogIdxTag, Orderable, UnderlyingAddable, UnitlessDifferencable, Incrementable>;
-Q_DECLARE_METATYPE(ChatLogIdx);
+Q_DECLARE_METATYPE(ChatLogIdx)
 
 struct SearchPos
 {

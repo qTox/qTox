@@ -62,11 +62,6 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
     cbEnableTestSound->setChecked(audioSettings->getEnableTestSound());
     cbEnableTestSound->setToolTip(tr("Play a test sound while changing the output volume."));
 
-#ifndef USE_FILTERAUDIO
-    cbEnableBackend2->setVisible(false);
-#endif
-    cbEnableBackend2->setChecked(audioSettings->getEnableBackend2());
-
     connect(rescanButton, &QPushButton::clicked, this, &AVForm::rescanDevices);
 
     playbackSlider->setTracking(false);
@@ -104,7 +99,6 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
 
     eventsInit();
 
-    QDesktopWidget* desktop = QApplication::desktop();
     for (QScreen* qScreen : QGuiApplication::screens()) {
         connect(qScreen, &QScreen::geometryChanged, this, &AVForm::rescanDevices);
     }
@@ -177,11 +171,6 @@ void AVForm::rescanDevices()
 void AVForm::setVolume(float value)
 {
     volumeDisplay->setValue(getStepsFromValue(value, audio.minOutputVolume(), audio.maxOutputVolume()));
-}
-
-void AVForm::on_cbEnableBackend2_stateChanged()
-{
-    audioSettings->setEnableBackend2(cbEnableBackend2->isChecked());
 }
 
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
@@ -318,7 +307,7 @@ void AVForm::fillCameraModesComboBox()
 
         QString str;
         std::string pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format).toStdString();
-        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height,
+        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height,
                mode.FPS, pixelFormat.c_str());
 
         if (mode.height && mode.width) {

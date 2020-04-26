@@ -19,7 +19,6 @@
 
 #include "src/net/toxuri.h"
 #include "src/core/core.h"
-#include "src/net/toxme.h"
 #include "src/nexus.h"
 #include "src/widget/gui.h"
 #include "src/widget/tool/friendrequestdialog.h"
@@ -66,10 +65,7 @@ bool handleToxURI(const QString& toxURI)
     ToxId toxId(toxaddr);
     QString error = QString();
     if (!toxId.isValid()) {
-        toxId = Toxme::lookup(toxaddr);
-        if (!toxId.isValid()) {
-            error = QMessageBox::tr("%1 is not a valid ToxMe address.").arg(toxaddr);
-        }
+        error = QMessageBox::tr("%1 is not a valid Tox address.").arg(toxaddr);
     } else if (toxId == core->getSelfId()) {
         error = QMessageBox::tr("You can't add yourself as a friend!",
                                 "When trying to add your own Tox ID as friend");

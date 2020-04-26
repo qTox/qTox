@@ -1,5 +1,5 @@
 /*
-    Copyright © 2019 by The qTox Project Contributors
+    Copyright © 2020 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,32 +17,19 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef TOXCLIENTSTANDARDS_H
+#define TOXCLIENTSTANDARDS_H
 
-#include <QString>
+#include <cstdint>
 
-#ifdef Q_OS_WIN
-#include <windows.h>
-#endif
-
-class Settings
+namespace ToxClientStandards
 {
-public:
-    Settings();
-    ~Settings();
+    // From TCS 2.2.4, max valid avatar size is 64KiB
+    constexpr static uint64_t MaxAvatarSize = 64 * 1024;
+    constexpr bool IsValidAvatarSize(uint64_t fileSize)
+    {
+        return fileSize <= MaxAvatarSize;
+    }
+} // ToxClientStandards
 
-    QString getSettingsDirPath() const; ///< The returned path ends with a directory separator
-#ifdef Q_OS_WIN
-    HANDLE getPrimaryToken() const; ///< Used to impersonnate the unelevated user
-#endif
-
-private:
-    bool portable;
-    static constexpr const char* SETTINGS_FILE = "qtox.ini";
-#ifdef Q_OS_WIN
-    HANDLE hPrimaryToken;
-#endif
-};
-
-#endif // SETTINGS_H
+#endif // TOXCLIENTSTANDARDS_H

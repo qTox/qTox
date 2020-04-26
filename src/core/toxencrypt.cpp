@@ -26,10 +26,10 @@
 #include <memory>
 
 // functions for nice debug output
-static QString getKeyDerivationError(TOX_ERR_KEY_DERIVATION error);
-static QString getEncryptionError(TOX_ERR_ENCRYPTION error);
-static QString getDecryptionError(TOX_ERR_DECRYPTION error);
-static QString getSaltError(TOX_ERR_GET_SALT error);
+static QString getKeyDerivationError(Tox_Err_Key_Derivation error);
+static QString getEncryptionError(Tox_Err_Encryption error);
+static QString getDecryptionError(Tox_Err_Decryption error);
+static QString getSaltError(Tox_Err_Get_Salt error);
 
 /**
   * @class ToxEncrypt
@@ -95,7 +95,7 @@ QByteArray ToxEncrypt::encryptPass(const QString& password, const QByteArray& pl
 
     QByteArray pass = password.toUtf8();
     QByteArray ciphertext(plaintext.length() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH, 0x00);
-    TOX_ERR_ENCRYPTION error;
+    Tox_Err_Encryption error;
     tox_pass_encrypt(reinterpret_cast<const uint8_t*>(plaintext.constData()),
                      static_cast<size_t>(plaintext.size()),
                      reinterpret_cast<const uint8_t*>(pass.constData()),
@@ -130,7 +130,7 @@ QByteArray ToxEncrypt::decryptPass(const QString& password, const QByteArray& ci
 
     QByteArray pass = password.toUtf8();
     QByteArray plaintext(ciphertext.length() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH, 0x00);
-    TOX_ERR_DECRYPTION error;
+    Tox_Err_Decryption error;
     tox_pass_decrypt(reinterpret_cast<const uint8_t*>(ciphertext.constData()),
                      static_cast<size_t>(ciphertext.size()),
                      reinterpret_cast<const uint8_t*>(pass.constData()),
@@ -156,7 +156,7 @@ QByteArray ToxEncrypt::decryptPass(const QString& password, const QByteArray& ci
 std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password)
 {
     const QByteArray pass = password.toUtf8();
-    TOX_ERR_KEY_DERIVATION error;
+    Tox_Err_Key_Derivation error;
     Tox_Pass_Key* const passKey = tox_pass_key_derive(
         reinterpret_cast<const uint8_t*>(pass.constData()),
         static_cast<size_t>(pass.length()), &error);
@@ -186,7 +186,7 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, 
         return std::unique_ptr<ToxEncrypt>{};
     }
 
-    TOX_ERR_GET_SALT saltError;
+    Tox_Err_Get_Salt saltError;
     uint8_t salt[TOX_PASS_SALT_LENGTH];
     tox_get_salt(reinterpret_cast<const uint8_t*>(toxSave.constData()), salt, &saltError);
 
@@ -196,7 +196,7 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, 
     }
 
     QByteArray pass = password.toUtf8();
-    TOX_ERR_KEY_DERIVATION keyError;
+    Tox_Err_Key_Derivation keyError;
     Tox_Pass_Key* const passKey = tox_pass_key_derive_with_salt(
         reinterpret_cast<const uint8_t*>(pass.constData()),
         static_cast<size_t>(pass.length()), salt, &keyError);
@@ -223,7 +223,7 @@ QByteArray ToxEncrypt::encrypt(const QByteArray& plaintext) const
     }
 
     QByteArray ciphertext(plaintext.length() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH, 0x00);
-    TOX_ERR_ENCRYPTION error;
+    Tox_Err_Encryption error;
     tox_pass_key_encrypt(passKey, reinterpret_cast<const uint8_t*>(plaintext.constData()),
                          static_cast<size_t>(plaintext.size()),
                          reinterpret_cast<uint8_t*>(ciphertext.data()), &error);
@@ -250,7 +250,7 @@ QByteArray ToxEncrypt::decrypt(const QByteArray& ciphertext) const
     }
 
     QByteArray plaintext(ciphertext.length() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH, 0x00);
-    TOX_ERR_DECRYPTION error;
+    Tox_Err_Decryption error;
     tox_pass_key_decrypt(passKey, reinterpret_cast<const uint8_t*>(ciphertext.constData()),
                          static_cast<size_t>(ciphertext.size()),
                          reinterpret_cast<uint8_t*>(plaintext.data()), &error);
@@ -264,11 +264,11 @@ QByteArray ToxEncrypt::decrypt(const QByteArray& ciphertext) const
 }
 
 /**
- * @brief Gets the error string for TOX_ERR_KEY_DERIVATION errors.
+ * @brief Gets the error string for Tox_Err_Key_Derivation errors.
  * @param error The error number.
  * @return The verbose error message.
  */
-QString getKeyDerivationError(TOX_ERR_KEY_DERIVATION error)
+QString getKeyDerivationError(Tox_Err_Key_Derivation error)
 {
     switch (error) {
     case TOX_ERR_KEY_DERIVATION_OK:
@@ -285,11 +285,11 @@ QString getKeyDerivationError(TOX_ERR_KEY_DERIVATION error)
 }
 
 /**
- * @brief Gets the error string for TOX_ERR_ENCRYPTION errors.
+ * @brief Gets the error string for Tox_Err_Encryption errors.
  * @param error The error number.
  * @return The verbose error message.
  */
-QString getEncryptionError(TOX_ERR_ENCRYPTION error)
+QString getEncryptionError(Tox_Err_Encryption error)
 {
     switch (error) {
     case TOX_ERR_ENCRYPTION_OK:
@@ -308,11 +308,11 @@ QString getEncryptionError(TOX_ERR_ENCRYPTION error)
 }
 
 /**
- * @brief Gets the error string for TOX_ERR_DECRYPTION errors.
+ * @brief Gets the error string for Tox_Err_Decryption errors.
  * @param error The error number.
  * @return The verbose error message.
  */
-QString getDecryptionError(TOX_ERR_DECRYPTION error)
+QString getDecryptionError(Tox_Err_Decryption error)
 {
     switch (error) {
     case TOX_ERR_DECRYPTION_OK:
@@ -335,11 +335,11 @@ QString getDecryptionError(TOX_ERR_DECRYPTION error)
 }
 
 /**
- * @brief Gets the error string for TOX_ERR_GET_SALT errors.
+ * @brief Gets the error string for Tox_Err_Get_Salt errors.
  * @param error The error number.
  * @return The verbose error message.
  */
-QString getSaltError(TOX_ERR_GET_SALT error)
+QString getSaltError(Tox_Err_Get_Salt error)
 {
     switch (error) {
     case TOX_ERR_GET_SALT_OK:

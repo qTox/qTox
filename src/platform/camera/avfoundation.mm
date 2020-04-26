@@ -33,7 +33,7 @@ QVector<QPair<QString, QString> > avfoundation::getDeviceList()
     }
 
     uint32_t numScreens = 0;
-    CGGetActiveDisplayList(0, NULL, &numScreens);
+    CGGetActiveDisplayList(0, nullptr, &numScreens);
     if (numScreens > 0) {
         CGDirectDisplayID screens[numScreens];
         CGGetActiveDisplayList(numScreens, screens, &numScreens);
@@ -63,7 +63,7 @@ QVector<VideoMode> avfoundation::getDeviceModes(QString devName)
         for (AVCaptureDeviceFormat* format in [device formats]) {
             CMFormatDescriptionRef formatDescription;
             CMVideoDimensions dimensions;
-            formatDescription = (CMFormatDescriptionRef)[format performSelector:@selector(formatDescription)];
+            formatDescription = static_cast<CMFormatDescriptionRef>([format performSelector:@selector(formatDescription)]);
             dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription);
 
             for (AVFrameRateRange* range in format.videoSupportedFrameRateRanges) {

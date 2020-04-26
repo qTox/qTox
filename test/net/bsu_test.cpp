@@ -25,7 +25,7 @@
 #include <QtTest/QtTest>
 
 // Needed to make this type known to Qt
-Q_DECLARE_METATYPE(QList<DhtServer>);
+Q_DECLARE_METATYPE(QList<DhtServer>)
 
 class TestBootstrapNodesUpdater : public QObject
 {

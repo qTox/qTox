@@ -108,7 +108,7 @@ public:
     inline void disableMentions()
     {
         detectingMentions = false;
-    };
+    }
 
 private:
     bool detectingMentions = false;

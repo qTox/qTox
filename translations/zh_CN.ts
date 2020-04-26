@@ -62,9 +62,9 @@ Note though that with better video quality there is needed better internet conne
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>设置摄像头分辨率。
-此值越高，你的好友看到的视频质量就越好。
+此值越高，您的好友看到的视频质量就越好。
 请注意，更好的视频质量需要更好的网络连接来承载。
-有时你的网络连接并不足以承载如此高的视频质量，
+有时您的网络连接并不足以承载如此高的视频质量，
 从而导致视频通话问题。</translation>
     </message>
     <message>
@@ -97,19 +97,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation>高（64 kbps）</translation>
+        <translation>高 (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation>中（32kbps）</translation>
+        <translation>中 (32kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation>低（16 kbps）</translation>
+        <translation>低 (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation>极低（8 kbps）</translation>
+        <translation>极低 (8 kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
@@ -146,11 +146,11 @@ which may lead to problems with video calls.</source>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>所有已知问题的列表可以在 GitHub 上我们的 %1 里找到。如果你发现 qTox 的漏洞或者安全漏洞，请根据我们的维基文章 %2 提交报告。</translation>
+        <translation>所有已知问题的列表可以在 GitHub 上我们的 %1 里找到。如果您发现 qTox 的错误或者安全漏洞，请根据我们的维基文章 %2 提交报告。</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation>单击这里提交漏洞报告。</translation>
+        <translation>单击这里提交错误报告。</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
@@ -165,7 +165,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>编写有用的漏洞报告</translation>
+        <translation>编写有用的错误报告</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -233,11 +233,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation>自动接受群邀请</translation>
+        <translation>自动接受群组邀请</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation>删除历史记录（再也不能找回！）</translation>
+        <translation>删除历史记录（操作无法撤消！）</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -249,7 +249,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation>你可以在这里记录关于该联系人的各种信息。</translation>
+        <translation>您可以在这里记录关于该联系人的各种信息。</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -262,11 +262,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是您朋友的公开密钥，使用它通过其它渠道来验证朋友的身份。您不能将该密钥发送给其他人以使他们可以添加该朋友为联系人。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是您朋友的公钥，使用它通过其它渠道来验证朋友的身份。您不能将该密钥发送给其他人以使他们可以添加该朋友为联系人。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation>公开密钥（不是 ToxID）：</translation>
+        <translation>公钥（不是 ToxID）：</translation>
     </message>
     <message>
         <source>Confirmation</source>
@@ -370,7 +370,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation>你不能添加自己为好友！</translation>
+        <translation>您不能添加自己为好友！</translation>
     </message>
     <message>
         <source>Open contact list</source>
@@ -396,7 +396,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation>Tox 身份识别码</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -446,7 +446,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>除非你 %1 知道自己在做什么，否则请 %2 改变这里的任何设置。此处所做的更改可能导致 qTox 出现问题，甚至导致数据丢失，比如聊天历史记录丢失。</translation>
+        <translation>除非您 %1 知道自己在做什么，否则请 %2 改变这里的任何设置。此处所做的更改可能导致 qTox 出现问题，甚至导致数据丢失，比如聊天历史记录丢失。</translation>
     </message>
     <message>
         <source>really</source>
@@ -454,7 +454,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>not</source>
-        <translation>不</translation>
+        <translation>不要</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
@@ -466,7 +466,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation>所有的设置将被重置为默认值。确定吗？</translation>
+        <translation>所有的设置将被重置为默认值。您确定吗？</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -484,7 +484,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation>你不能在通话时关闭连接！</translation>
+        <translation>您不能在通话时关闭连接！</translation>
     </message>
     <message>
         <source>Save File</source>
@@ -492,7 +492,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation>日志（*.log）</translation>
+        <translation>日志 (*.log)</translation>
     </message>
 </context>
 <context>
@@ -521,12 +521,12 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>启用 IPv6 (推荐)</translation>
+        <translation>启用 IPv6 （推荐）</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>在必要时你应该禁用这个选项，例如正在 Tor 网络上使用 Tox 或者需要节省网络流量。</translation>
+        <translation>禁用此选项允许，例如，在 Tor 上使用 Tox 。但是这会曾加 Tox 网络负载，因此仅在必要时取消选中。</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -578,7 +578,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation>开启局域网发现</translation>
+        <translation>启用局域网发现</translation>
     </message>
 </context>
 <context>
@@ -630,11 +630,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation>不好的主意</translation>
+        <translation>这不是个好主意</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation>你尝试发送一个顺序文件，该操作无法完成！</translation>
+        <translation>您正在尝试发送顺序文件，这不起作用！</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
@@ -664,11 +664,11 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation>启动音频呼叫</translation>
+        <translation>开始语音通话</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation>结束音频呼叫</translation>
+        <translation>结束语音通话</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
@@ -742,7 +742,7 @@ so you can save the file on windows.</source>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>在这里输入将要发送的消息…</translation>
+        <translation>在这里输入将要发送的消息...</translation>
     </message>
 </context>
 <context>
@@ -776,7 +776,7 @@ so you can save the file on windows.</source>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation>你需要发一则消息说明你的请求</translation>
+        <translation>您需要随请求发送一条消息</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
@@ -790,30 +790,30 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>群聊 %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">新消息</translation>
+        <translation>新消息</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>传入文件传输</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>收到的好友请求</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>新群组消息</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>收到的群组邀请</translation>
     </message>
 </context>
 <context>
@@ -841,7 +841,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation>等待发送…</translation>
+        <translation>正在等待发送...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
@@ -851,7 +851,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>目录不可写</translation>
+        <translation>目录无法写入</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
@@ -866,7 +866,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
-        <translation>正在恢复…</translation>
+        <translation>正在恢复...</translation>
     </message>
     <message>
         <source>Open file</source>
@@ -939,7 +939,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation>6 个月以上</translation>
+        <translation>6 个月前</translation>
     </message>
     <message>
         <source>Never</source>
@@ -959,7 +959,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>用户ID：</translation>
+        <translation>用户 ID ：</translation>
     </message>
     <message>
         <source>Friend request message:</source>
@@ -989,7 +989,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Set alias...</source>
-        <translation>添加备注名…</translation>
+        <translation>添加备注名...</translation>
     </message>
     <message>
         <source>Auto accept files from this friend</source>
@@ -1028,7 +1028,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation>从这个窗口中删除该对话</translation>
+        <translation>从此窗口中移除聊天</translation>
     </message>
     <message>
         <source>To new group</source>
@@ -1036,12 +1036,12 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation>邀请进入群聊  &apos;%1&apos;</translation>
+        <translation>邀请进入群聊 &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation>移动到圈子…</translation>
+        <translation>移动到圈子...</translation>
     </message>
     <message>
         <source>To new circle</source>
@@ -1084,15 +1084,15 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Start in tray</source>
-        <translation>在状态栏启动</translation>
+        <translation>启动到托盘</translation>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation>关闭到状态栏</translation>
+        <translation>关闭到托盘</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
-        <translation>最小化到状态栏</translation>
+        <translation>最小化到托盘</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
@@ -1104,11 +1104,11 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation>自动在多久以后离开 (0为禁用):</translation>
+        <translation>超过此时间自动离开（0 为禁用）：</translation>
     </message>
     <message>
         <source>Set to 0 to disable</source>
-        <translation>设置0为禁用</translation>
+        <translation>设为 0 禁用</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -1148,7 +1148,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>你的状态将在给定的无活动分钟数后被修改为离开。</translation>
+        <translation>您的状态将在给定的无活动分钟数后被修改为离开。</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -1165,7 +1165,7 @@ instead of system taskbar.</source>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>你可以通过右键点击他们来设置。</translation>
+        <translation>您可以通过右键点击他们来设置。</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
@@ -1240,22 +1240,22 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>转到当前日期</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">加载聊天历史记录…</translation>
+        <translation>加载聊天历史记录...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">导出到文件</translation>
+        <translation>导出到文件</translation>
     </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
     <message>
         <source>Tox video</source>
-        <translation>Tox视频</translation>
+        <translation>Tox 视频</translation>
     </message>
     <message>
         <source>Show Messages</source>
@@ -1279,7 +1279,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation>使麦克风静音</translation>
+        <translation>静音麦克风</translation>
     </message>
     <message>
         <source>End video call</source>
@@ -1302,7 +1302,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation>%1更名为 %2</translation>
+        <translation>%1 更名为 %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
@@ -1317,11 +1317,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>mute</source>
-        <translation>免打扰</translation>
+        <translation>静音</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation>关闭免打扰</translation>
+        <translation>取消静音</translation>
     </message>
 </context>
 <context>
@@ -1362,7 +1362,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Set title...</source>
-        <translation>设置名称…</translation>
+        <translation>设置名称...</translation>
     </message>
     <message>
         <source>Quit group</source>
@@ -1399,12 +1399,12 @@ instead of system taskbar.</source>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>这组字符告诉其他Tox客户端如何与你联系。
-将它共享给你的朋友来互相通信。</translation>
+        <translation>这组字符告诉其他 Tox 客户端如何与您联系。
+将它共享给您的朋友以通信。</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation>你的 Tox ID (点击复制)</translation>
+        <translation>您的 Tox ID (点击复制)</translation>
     </message>
     <message>
         <source>Your password</source>
@@ -1441,8 +1441,8 @@ Share it with your friends to communicate.</source>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation>导出你的Tox配置文件到一个独立文件。
-配置文件不包含你的历史记录。</translation>
+        <translation>导出您的 Tox 配置文件到一个独立文件。
+配置文件不包含您的历史记录。</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1455,7 +1455,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>此二维码包含你的 Tox ID。你可以将它分享给朋友们。</translation>
+        <translation>此二维码包含您的 Tox ID 。您可以将它分享给朋友们。</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1503,17 +1503,17 @@ Profile does not contain your history.</source>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation>你在 ToxMe 服务上的名称。</translation>
+        <translation>您在 ToxMe 服务上的名称。</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation>可选。关于你的事情。或者与你的猫咪有关的也行。</translation>
+        <translation>可选。关于您的事情。或者与您的猫咪有关的也行。</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation>可选。关于你的事情。或者与你的猫咪有关的也行。</translation>
+        <translation>可选。关于您的事情。或者与您的猫咪有关的也行。</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
@@ -1522,12 +1522,12 @@ Profile does not contain your history.</source>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation>如果不选中，你在 ToxMe 上的条目将是公开的。</translation>
+        <translation>如果不选中，您在 ToxMe 上的条目将公开可见。</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation>移除密码，然后用你的个人档案信息来加密。</translation>
+        <translation>从您的配置文件移除您的密码和加密。</translation>
     </message>
     <message>
         <source>Name input</source>
@@ -1547,15 +1547,15 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation>你的 Tox ID</translation>
+        <translation>您的 Tox ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation>保存二维码图片</translation>
+        <translation>将二维码图片保存为文件</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation>复制二维码图片到剪切板</translation>
+        <translation>复制二维码图片到剪贴板</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
@@ -1583,15 +1583,15 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation>重命名档案。</translation>
+        <translation>重命名账户。</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation>删除档案。</translation>
+        <translation>删除账户。</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation>导出用户档案</translation>
+        <translation>导出账户</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
@@ -1626,31 +1626,31 @@ Profile does not contain your history.</source>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation>加载历史记录</translation>
+        <translation>加载历史记录对话框</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>加载历史记录</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>从</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>到</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>（加载了大约 100 条消息）</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished">选择日期对话框</translation>
+        <translation>选择日期对话框</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">选择日期</translation>
+        <translation>选择日期</translation>
     </message>
 </context>
 <context>
@@ -1710,7 +1710,7 @@ Profile does not contain your history.</source>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation>你输入的密码不相同。
+        <translation>您输入的密码不相同。
 请确认再次输入的密码相同。</translation>
     </message>
     <message>
@@ -1731,7 +1731,7 @@ Please make sure to enter same password twice.</source>
 You may want to create one.</source>
         <translation>没有选中的配置。
 
-你也许想要创建一个配置。</translation>
+您也许想要创建一个配置。</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
@@ -1755,7 +1755,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation>密码输入框，你可以留空（无密码），或者输入至少 6 位字符</translation>
+        <translation>密码输入框，您可以留空（无密码），或者输入至少 6 位字符</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
@@ -1802,15 +1802,15 @@ You may want to create one.</source>
     <name>MainWindow</name>
     <message>
         <source>Your name</source>
-        <translation>你的名字</translation>
+        <translation>您的名字</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation>你的状态</translation>
+        <translation>您的状态</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>…</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Add friends</source>
@@ -1846,7 +1846,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation>设置你要展示给他人的个人状态消息</translation>
+        <translation>设置您要展示给他人的个人状态消息</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1960,7 +1960,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation>你想要永久删除所有的聊天记录吗？</translation>
+        <translation>您想要永久删除所有的聊天记录吗？</translation>
     </message>
 </context>
 <context>
@@ -1968,7 +1968,7 @@ You may want to create one.</source>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation>你正在键入消息时好友会看到提示。</translation>
+        <translation>您正在输入消息时好友会看到提示。</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
@@ -1979,7 +1979,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation>发送键入通知</translation>
+        <translation>发送正在输入通知</translation>
     </message>
     <message>
         <source>Keep chat history</source>
@@ -1990,9 +1990,9 @@ Save format changes are possible, which may result in data loss.</source>
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>NoSpam 是你的 Tox ID 一部分。
-如果你被垃圾好友请求骚扰，你应该改变你的 NoSpam。
-他人将无法使用旧 ID 添加你，但会保留你当前已添加的好友。</translation>
+        <translation>NoSpam 是您的 Tox ID 一部分。
+如果您被垃圾好友请求骚扰，您应该改变您的 NoSpam。
+他人将无法使用旧 ID 添加您，但会保留您当前已添加的好友。</translation>
     </message>
     <message>
         <source>NoSpam</source>
@@ -2001,8 +2001,8 @@ People will be unable to add you with your old ID, but you will keep your curren
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>NoSpam 混淆码是你的 Tox ID 中可以随意改变的一部分。
-如果你收到骚扰的好友请求，那就改变你的 NoSpam 混淆码。</translation>
+        <translation>NoSpam 混淆码是您的 Tox ID 中可以随意改变的一部分。
+如果您收到骚扰的好友请求，那就改变您的 NoSpam 混淆码。</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
@@ -2055,7 +2055,7 @@ Please use another image.</source>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>你没有写入此目录的权限。请选择其它目录或取消保存。</translation>
+        <translation>您没有写入此目录的权限。请选择其它目录或取消保存。</translation>
     </message>
     <message>
         <source>Really delete profile?</source>
@@ -2065,7 +2065,7 @@ Please use another image.</source>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation>你确定要删除这个用户配置文件吗？</translation>
+        <translation>您确定要删除这个用户配置文件吗？</translation>
     </message>
     <message>
         <source>Save</source>
@@ -2075,7 +2075,7 @@ Please use another image.</source>
     <message>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
-        <translation>保存二维码图片（* .png）</translation>
+        <translation>保存二维码图片 (* .png)</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
@@ -2083,7 +2083,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
-        <translation>你的账户没有设置密码 ！</translation>
+        <translation>您的账户没有设置密码 ！</translation>
     </message>
     <message>
         <source>Really delete password?</source>
@@ -2096,11 +2096,11 @@ Please use another image.</source>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation>注册（处理中）</translation>
+        <translation>注册（正在处理）</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation>更新 （处理中）</translation>
+        <translation>更新（正在处理）</translation>
     </message>
     <message>
         <source>Done!</source>
@@ -2112,7 +2112,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>已成功添加 %1@%2 到数据库。请保存你的密码</translation>
+        <translation>已成功添加 %1@%2 到数据库。请保存您的密码</translation>
     </message>
     <message>
         <source>Toxme error</source>
@@ -2145,12 +2145,12 @@ Please use another image.</source>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>无法重命名该账户为&quot;%1&quot;</translation>
+        <translation>无法重命名该账户为“%1”</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>目录不可写</translation>
+        <translation>目录无法写入</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
@@ -2236,7 +2236,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation>Tox 存档文件（*.tox）</translation>
+        <translation>Tox 存档文件 (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
@@ -2251,12 +2251,12 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation>你确定要删除密码吗？</translation>
+        <translation>您确定要删除密码吗？</translation>
     </message>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation>图片（%1）</translation>
+        <translation>图片 (%1)</translation>
     </message>
 </context>
 <context>
@@ -2269,22 +2269,22 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>警告：你选择的文件不是 Tox 档案文件；忽略。</translation>
+        <translation>警告：您选择的文件不是 Tox 档案文件；忽略。</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>一个叫“%1”的用户配置文件已经存在，你想要擦除它吗？</translation>
+        <translation>一个叫“%1”的用户配置文件已经存在，您想要擦除它吗？</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation>Tox 存档文件（*.tox）</translation>
+        <translation>Tox 存档文件 (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation>忽略非Tox的文件</translation>
+        <translation>忽略非 Tox 的文件</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -2345,7 +2345,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>你不能加自己为好友！</translation>
+        <translation>您不能加自己为好友！</translation>
     </message>
 </context>
 <context>
@@ -2384,7 +2384,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation>来电…</translation>
+        <translation>来电...</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
@@ -2392,7 +2392,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation>你发送了太多请求。等待一个小时后重试</translation>
+        <translation>您发送了太多请求。等待一个小时后重试</translation>
     </message>
     <message>
         <source>This name is already in use</source>
@@ -2404,7 +2404,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
-        <translation>请不要在你的名字中使用空格符号</translation>
+        <translation>请不要在您的名字中使用空格符号</translation>
     </message>
     <message>
         <source>Password incorrect</source>
@@ -2412,7 +2412,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
-        <translation>你不能使用此名称</translation>
+        <translation>您不能使用此名称</translation>
     </message>
     <message>
         <source>Name not found</source>
@@ -2437,7 +2437,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox 无法打开你的聊天记录，将会禁用它们。</translation>
+        <translation>qTox 无法打开您的聊天记录，将会禁用它们。</translation>
     </message>
     <message>
         <source>None</source>
@@ -2487,32 +2487,32 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法自动加载配置文件。</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">在线</translation>
+        <translation>在线</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">离开</translation>
+        <translation>离开</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">忙碌</translation>
+        <translation>忙碌</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">离线</translation>
+        <translation>离线</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">被屏蔽</translation>
+        <translation>已屏蔽</translation>
     </message>
 </context>
 <context>
@@ -2531,7 +2531,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>你确定想要从联系人名单中删除 %1 吗？</translation>
+        <translation>您确定想要从联系人名单中删除 %1 吗？</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
@@ -2617,7 +2617,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation>使用正则表达</translation>
+        <translation>使用正则表达式</translation>
     </message>
 </context>
 <context>
@@ -2679,11 +2679,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
-        <translation>你想加 %1 为好友吗？</translation>
+        <translation>您想加 %1 为好友吗？</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>用户ID：</translation>
+        <translation>用户 ID：</translation>
     </message>
     <message>
         <source>Friend request message:</source>
@@ -2773,7 +2773,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>如果选中，「群组」将被置于好友列表的顶部，否则它们会被显示在在线好友列表的下方。</translation>
+        <translation>如果选中，群组将被置于好友列表的顶部，否则它们会被显示在在线好友列表的下方。</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
@@ -2782,11 +2782,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>你的联系人列表将以紧缩格式显示。</translation>
+        <translation>您的联系人列表将以紧缩格式显示。</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation>紧缩显示联系人列表</translation>
+        <translation>紧凑联系人列表</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
@@ -2882,7 +2882,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏消息发件人和内容</translation>
     </message>
 </context>
 <context>
@@ -2909,7 +2909,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>由于你的代理服务器设置，核心组件Toxcore启动失败，qTox无法运行。请修改你的设置后重启qTox。</translation>
+        <translation>由于您的代理服务器设置，toxcore 启动失败。qTox 无法运行。请修改您的设置后重启 qTox。</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2918,11 +2918,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation>你正在使用 qTox 打开一个可执行文件。可执行文件可能会破坏你的计算机。确定要打开此文件吗？</translation>
+        <translation>您正在使用 qTox 打开一个可执行文件。可执行文件可能会破坏您的计算机。确定要打开此文件吗？</translation>
     </message>
     <message>
         <source>Your name</source>
-        <translation>你的名字</translation>
+        <translation>您的名字</translation>
     </message>
     <message>
         <source>Offline</source>
@@ -2935,7 +2935,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation>注销</translation>
+        <translation>登出</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2944,7 +2944,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Log out</source>
-        <translation>注销</translation>
+        <translation>登出</translation>
     </message>
     <message>
         <source>Message failed to send</source>
@@ -2956,7 +2956,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>toxcore 启动失败，应用程序将在你关闭此消息后终止。</translation>
+        <translation>toxcore 启动失败，应用程序将在您关闭此消息后终止。</translation>
     </message>
     <message>
         <source>Executable file</source>
@@ -2965,7 +2965,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation>群聊 # %1</translation>
+        <translation>群聊 #%1</translation>
     </message>
     <message>
         <source>Create new group...</source>
@@ -2973,7 +2973,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Add new circle...</source>
-        <translation>添加新圈子…</translation>
+        <translation>添加新圈子...</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
@@ -3009,7 +3009,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Filter...</source>
-        <translation>筛选…</translation>
+        <translation>筛选...</translation>
     </message>
     <message>
         <source>File</source>
@@ -3033,7 +3033,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation>添加联系人…</translation>
+        <translation>添加联系人...</translation>
     </message>
     <message>
         <source>Next Conversation</source>
@@ -3075,19 +3075,19 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">文件“%1”传输失败</translation>
+        <translation>文件“%1”发送失败</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>文件已发送</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> 向您发送了好友请求。</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> 邀请您加入群组。</translation>
     </message>
 </context>
 </TS>

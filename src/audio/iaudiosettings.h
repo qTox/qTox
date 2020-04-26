@@ -26,6 +26,8 @@
 
 class IAudioSettings {
 public:
+    virtual ~IAudioSettings() = default;
+
     virtual QString getInDev() const = 0;
     virtual void setInDev(const QString& deviceSpecifier) = 0;
 
@@ -55,9 +57,6 @@ public:
     virtual bool getEnableTestSound() const = 0;
     virtual void setEnableTestSound(bool newValue) = 0;
 
-    virtual bool getEnableBackend2() const = 0;
-    virtual void setEnableBackend2(bool enabled) = 0;
-
     DECLARE_SIGNAL(inDevChanged, const QString& device);
     DECLARE_SIGNAL(audioInDevEnabledChanged, bool enabled);
 
@@ -69,7 +68,6 @@ public:
     DECLARE_SIGNAL(outVolumeChanged, int volume);
     DECLARE_SIGNAL(audioBitrateChanged, int bitrate);
     DECLARE_SIGNAL(enableTestSoundChanged, bool newValue);
-    DECLARE_SIGNAL(enableBackend2Changed, bool enabled);
 };
 
 #endif // I_AUDIO_SETTINGS_H

@@ -23,6 +23,8 @@
 
 #include "src/core/toxcall.h"
 #include <QObject>
+#include <QMutex>
+#include <QReadWriteLock>
 #include <atomic>
 #include <memory>
 #include <tox/toxav.h>
@@ -45,7 +47,7 @@ class CoreAV : public QObject
 
 public:
     using CoreAVPtr = std::unique_ptr<CoreAV>;
-    static CoreAVPtr makeCoreAV(Tox* core);
+    static CoreAVPtr makeCoreAV(Tox* core, QMutex& coreLock);
 
     void setAudio(IAudioControl& newAudio);
     IAudioControl* getAudio();
@@ -66,7 +68,7 @@ public:
     VideoSource* getVideoSourceFromCall(int callNumber) const;
     void sendNoVideo();
 
-    void joinGroupCall(int groupNum);
+    void joinGroupCall(const Group& group);
     void leaveGroupCall(int groupNum);
     void muteCallInput(const Group* g, bool mute);
     void muteCallOutput(const Group* g, bool mute);
@@ -111,7 +113,7 @@ private:
         }
     };
 
-    explicit CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox);
+    CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, QMutex &toxCoreLock);
     void connectCallbacks(ToxAV& toxav);
 
     void process();
@@ -132,10 +134,29 @@ private:
     std::unique_ptr<QThread> coreavThread;
     QTimer* iterateTimer = nullptr;
     using ToxFriendCallPtr = std::unique_ptr<ToxFriendCall>;
-    static std::map<uint32_t, ToxFriendCallPtr> calls;
+    /**
+     * @brief Maps friend IDs to ToxFriendCall.
+     * @note Need to use STL container here, because Qt containers need a copy constructor.
+     */
+    std::map<uint32_t, ToxFriendCallPtr> calls;
+
+
     using ToxGroupCallPtr = std::unique_ptr<ToxGroupCall>;
-    static std::map<int, ToxGroupCallPtr> groupCalls;
-    std::atomic_flag threadSwitchLock;
+    /**
+     * @brief Maps group IDs to ToxGroupCalls.
+     * @note Need to use STL container here, because Qt containers need a copy constructor.
+     */
+    std::map<int, ToxGroupCallPtr> groupCalls;
+
+    // protect 'calls' and 'groupCalls'
+    mutable QReadWriteLock callsLock{QReadWriteLock::Recursive};
+
+    /**
+     * @brief needed to synchronize with the Core thread, some toxav_* functions
+     *        must not execute at the same time as tox_iterate()
+     * @note This must be a recursive mutex as we're going to lock it in callbacks
+     */
+    QMutex& coreLock;
 };
 
 #endif // COREAV_H

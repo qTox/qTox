@@ -96,7 +96,11 @@ bool toxFileIsComplete(ToxFile::FileStatus status)
 std::map<ChatLogIdx, ChatLogItem>::const_iterator
 firstItemAfterDate(QDate date, const std::map<ChatLogIdx, ChatLogItem>& items)
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    return std::lower_bound(items.begin(), items.end(), QDateTime(date.startOfDay()),
+#else
     return std::lower_bound(items.begin(), items.end(), QDateTime(date),
+#endif
                             [](const MessageDateAdaptor& a, MessageDateAdaptor const& b) {
                                 return a.timestamp.date() < b.timestamp.date();
                             });
@@ -154,12 +158,12 @@ SearchResult SessionChatLog::searchForward(SearchPos startPos, const QString& ph
 
         auto numMatches = 0;
         QRegularExpressionMatch lastMatch;
-        while (match.isValid() && numMatches <= currentPos.numMatches && match.hasNext()) {
+        while (match.isValid() && numMatches <= static_cast<int>(currentPos.numMatches) && match.hasNext()) {
             lastMatch = match.next();
             numMatches++;
         }
 
-        if (numMatches > currentPos.numMatches) {
+        if (numMatches > static_cast<int>(currentPos.numMatches)) {
             SearchResult res;
             res.found = true;
             res.pos.logIdx = key;
@@ -219,13 +223,13 @@ SearchResult SessionChatLog::searchBackward(SearchPos startPos, const QString& p
         while (match.isValid() && match.hasNext()) {
             auto currentMatch = match.next();
             totalMatches++;
-            if (currentPos.numMatches == 0 || currentPos.numMatches > numMatchesBeforePos) {
+            if (currentPos.numMatches == 0 || static_cast<int>(currentPos.numMatches) > numMatchesBeforePos) {
                 lastMatch = currentMatch;
                 numMatchesBeforePos++;
             }
         }
 
-        if ((numMatchesBeforePos < currentPos.numMatches || currentPos.numMatches == 0)
+        if ((numMatchesBeforePos < static_cast<int>(currentPos.numMatches) || currentPos.numMatches == 0)
             && numMatchesBeforePos > 0) {
             SearchResult res;
             res.found = true;
@@ -281,7 +285,7 @@ std::vector<IChatLog::DateChatLogIdxPair> SessionChatLog::getDateIdxs(const QDat
         ret.push_back(std::move(pair));
 
         dateIt = dateIt.addDays(1);
-        if (startDate.daysTo(dateIt) > maxDates && maxDates != 0) {
+        if (startDate.daysTo(dateIt) > static_cast<long>(maxDates) && maxDates != 0) {
             break;
         }
     }

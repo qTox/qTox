@@ -109,7 +109,7 @@ float Identicon::bytesToColor(QByteArray bytes)
 
     // normalize to 0.0 ... 1.0
     return (static_cast<float>(hue))
-           / (((static_cast<uint64_t>(1)) << (8 * IDENTICON_COLOR_BYTES)) - 1);
+           / (static_cast<float>(((static_cast<uint64_t>(1)) << (8 * IDENTICON_COLOR_BYTES)) - 1));
 }
 
 /**

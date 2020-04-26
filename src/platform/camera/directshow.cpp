@@ -42,10 +42,10 @@
 
 static char* wcharToUtf8(wchar_t* w)
 {
-    int l = WideCharToMultiByte(CP_UTF8, 0, w, -1, 0, 0, 0, 0);
+    int l = WideCharToMultiByte(CP_UTF8, 0, w, -1, nullptr, 0, nullptr, nullptr);
     char* s = new char[l];
     if (s)
-        WideCharToMultiByte(CP_UTF8, 0, w, -1, s, l, 0, 0);
+        WideCharToMultiByte(CP_UTF8, 0, w, -1, s, l, nullptr, nullptr);
     return s;
 }
 
@@ -56,12 +56,12 @@ QVector<QPair<QString, QString>> DirectShow::getDeviceList()
 
     ICreateDevEnum* devenum = nullptr;
     if (CoCreateInstance(CLSID_SystemDeviceEnum, nullptr, CLSCTX_INPROC_SERVER, IID_ICreateDevEnum,
-                         (void**)&devenum)
+                         reinterpret_cast<void**>(&devenum))
         != S_OK)
         return devices;
 
     IEnumMoniker* classenum = nullptr;
-    if (devenum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory, (IEnumMoniker**)&classenum, 0)
+    if (devenum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory, reinterpret_cast<IEnumMoniker**>(&classenum), 0)
         != S_OK)
         return devices;
 
@@ -89,7 +89,7 @@ QVector<QPair<QString, QString>> DirectShow::getDeviceList()
                 devIdString[i] = '_';
 
         // Get a human friendly name/description
-        if (m->BindToStorage(nullptr, nullptr, IID_IPropertyBag, (void**)&bag) != S_OK)
+        if (m->BindToStorage(nullptr, nullptr, IID_IPropertyBag, reinterpret_cast<void**>(&bag)) != S_OK)
             goto fail;
 
         var.vt = VT_BSTR;
@@ -125,12 +125,12 @@ static IBaseFilter* getDevFilter(QString devName)
 
     ICreateDevEnum* devenum = nullptr;
     if (CoCreateInstance(CLSID_SystemDeviceEnum, nullptr, CLSCTX_INPROC_SERVER, IID_ICreateDevEnum,
-                         (void**)&devenum)
+                         reinterpret_cast<void**>(&devenum))
         != S_OK)
         return devFilter;
 
     IEnumMoniker* classenum = nullptr;
-    if (devenum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory, (IEnumMoniker**)&classenum, 0)
+    if (devenum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory, reinterpret_cast<IEnumMoniker**>(&classenum), 0)
         != S_OK)
         return devFilter;
 
@@ -157,7 +157,7 @@ static IBaseFilter* getDevFilter(QString devName)
         if (devName != devIdString)
             goto fail;
 
-        if (m->BindToObject(0, 0, IID_IBaseFilter, (void**)&devFilter) != S_OK)
+        if (m->BindToObject(nullptr, nullptr, IID_IBaseFilter, reinterpret_cast<void**>(&devFilter)) != S_OK)
             goto fail;
 
     fail:
@@ -200,7 +200,7 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
         info.pFilter->Release();
         if (info.dir != PINDIR_OUTPUT)
             goto next;
-        if (pin->QueryInterface(IID_IKsPropertySet, (void**)&p) != S_OK)
+        if (pin->QueryInterface(IID_IKsPropertySet, reinterpret_cast<void**>(&p)) != S_OK)
             goto next;
         if (p->Get(AMPROPSETID_Pin, AMPROPERTY_PIN_CATEGORY, nullptr, 0, &category, sizeof(GUID), &r2)
             != S_OK)
@@ -214,7 +214,7 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
             IAMStreamConfig* config = nullptr;
             VIDEO_STREAM_CONFIG_CAPS* vcaps = nullptr;
             int size, n;
-            if (pin->QueryInterface(IID_IAMStreamConfig, (void**)&config) != S_OK)
+            if (pin->QueryInterface(IID_IAMStreamConfig, reinterpret_cast<void**>(&config)) != S_OK)
                 goto next;
             if (config->GetNumberOfCapabilities(&n, &size) != S_OK)
                 goto pinend;
@@ -225,7 +225,7 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
             for (int i = 0; i < n; ++i) {
                 AM_MEDIA_TYPE* type = nullptr;
                 VideoMode mode;
-                if (config->GetStreamCaps(i, &type, (BYTE*)vcaps) != S_OK)
+                if (config->GetStreamCaps(i, &type, reinterpret_cast<BYTE*>(vcaps)) != S_OK)
                     goto nextformat;
 
                 if (!IsEqualGUID(type->formattype, FORMAT_VideoInfo)

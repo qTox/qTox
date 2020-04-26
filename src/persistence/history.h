@@ -103,7 +103,7 @@ struct FileDbInsertionData
     int64_t size;
     int direction;
 };
-Q_DECLARE_METATYPE(FileDbInsertionData);
+Q_DECLARE_METATYPE(FileDbInsertionData)
 
 enum class MessageState
 {
@@ -201,6 +201,7 @@ private slots:
     void onFileInserted(RowId dbId, QString fileId);
 
 private:
+    bool historyAccessBlocked();
     static RawDatabase::Query generateFileFinished(RowId fileId, bool success,
                                                    const QString& filePath, const QByteArray& fileHash);
     std::shared_ptr<RawDatabase> db;

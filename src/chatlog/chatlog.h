@@ -41,7 +41,7 @@ class ChatLog : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit ChatLog(const bool canRemove, QWidget* parent = nullptr);
+    explicit ChatLog(QWidget* parent = nullptr);
     virtual ~ChatLog();
 
     void insertChatlineAtBottom(ChatLine::Ptr l);
@@ -78,7 +78,7 @@ public:
 signals:
     void selectionChanged();
     void workerTimeoutFinished();
-    void firstVisibleLineChanged(const ChatLine::Ptr&);
+    void firstVisibleLineChanged(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& firstLine);
     void loadHistoryLower();
     void loadHistoryUpper();
 
@@ -105,7 +105,7 @@ protected:
     void updateSceneRect();
     void checkVisibility(bool causedWheelEvent = false);
     void scrollToBottom();
-    void startResizeWorker(ChatLine::Ptr anchorLine = nullptr);
+    void startResizeWorker(bool stick, ChatLine::Ptr anchorLine = nullptr);
 
     void mouseDoubleClickEvent(QMouseEvent* ev) final;
     void mousePressEvent(QMouseEvent* ev) final;
@@ -188,7 +188,6 @@ private:
 
     int numRemove{0};
     const int maxMessages{300};
-    bool canRemove;
 };
 
 #endif // CHATLOG_H

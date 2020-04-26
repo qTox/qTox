@@ -44,7 +44,7 @@ public:
     void onReceiptReceived(ReceiptNum receipt);
     void clearOutgoingMessages();
 private slots:
-    void onFriendStatusChange(const ToxPk& key, Status::Status status);
+    void onFriendOnlineOfflineChanged(const ToxPk& key, bool isOnline);
 
 private:
     Friend& f;

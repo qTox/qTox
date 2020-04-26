@@ -89,7 +89,7 @@ static QMap<QString, QString> dictColor;
 static QMap<QString, QString> dictFont;
 static QMap<QString, QString> dictTheme;
 
-QList<Style::ThemeNameColor> Style::themeNameColors = {
+static const QList<Style::ThemeNameColor> themeNameColors = {
     {Style::Light, QObject::tr("Default"), QColor()},
     {Style::Light, QObject::tr("Blue"), QColor("#004aa4")},
     {Style::Light, QObject::tr("Olive"), QColor("#97ba00")},
@@ -136,28 +136,30 @@ QString Style::getThemeFolder()
 }
 
 
-QMap<Style::ColorPalette, QString> Style::aliasColors = {{TransferGood, "transferGood"},
-                                                         {TransferWait, "transferWait"},
-                                                         {TransferBad, "transferBad"},
-                                                         {TransferMiddle, "transferMiddle"},
-                                                         {MainText,"mainText"},
-                                                         {NameActive, "nameActive"},
-                                                         {StatusActive,"statusActive"},
-                                                         {GroundExtra, "groundExtra"},
-                                                         {GroundBase, "groundBase"},
-                                                         {Orange, "orange"},
-                                                         {ThemeDark, "themeDark"},
-                                                         {ThemeMediumDark, "themeMediumDark"},
-                                                         {ThemeMedium, "themeMedium"},
-                                                         {ThemeLight, "themeLight"},
-                                                         {Action, "action"},
-                                                         {Link, "link"},
-                                                         {SearchHighlighted, "searchHighlighted"},
-                                                         {SelectText, "selectText"}};
+static const QMap<Style::ColorPalette, QString> aliasColors = {
+    {Style::TransferGood, "transferGood"},
+    {Style::TransferWait, "transferWait"},
+    {Style::TransferBad, "transferBad"},
+    {Style::TransferMiddle, "transferMiddle"},
+    {Style::MainText,"mainText"},
+    {Style::NameActive, "nameActive"},
+    {Style::StatusActive,"statusActive"},
+    {Style::GroundExtra, "groundExtra"},
+    {Style::GroundBase, "groundBase"},
+    {Style::Orange, "orange"},
+    {Style::ThemeDark, "themeDark"},
+    {Style::ThemeMediumDark, "themeMediumDark"},
+    {Style::ThemeMedium, "themeMedium"},
+    {Style::ThemeLight, "themeLight"},
+    {Style::Action, "action"},
+    {Style::Link, "link"},
+    {Style::SearchHighlighted, "searchHighlighted"},
+    {Style::SelectText, "selectText"},
+};
 
 // stylesheet filename, font -> stylesheet
 // QString implicit sharing deduplicates stylesheets rather than constructing a new one each time
-std::map<std::pair<const QString, const QFont>, const QString> Style::stylesheetsCache;
+static std::map<std::pair<const QString, const QFont>, const QString> stylesheetsCache;
 
 const QString Style::getStylesheet(const QString& filename, const QFont& baseFont)
 {

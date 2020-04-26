@@ -22,8 +22,11 @@
 #include <QDesktopWidget>
 #include <QScreen>
 extern "C" {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
 #include <libavdevice/avdevice.h>
 #include <libavformat/avformat.h>
+#pragma GCC diagnostic pop
 }
 #include "cameradevice.h"
 #include "src/persistence/settings.h"
@@ -226,7 +229,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
 #endif
     else if (mode) {
         qWarning().nospace() << "No known options for " << iformat->name << ", using defaults.";
-        Q_UNUSED(mode);
+        Q_UNUSED(mode)
     }
 
     CameraDevice* dev = open(devName, &options);
@@ -294,7 +297,7 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
             return devices;
         }
         if (s->iformat->priv_class) {
-            *(const AVClass**)s->priv_data = s->iformat->priv_class;
+            *static_cast<const AVClass**>(s->priv_data) = s->iformat->priv_class;
             av_opt_set_defaults(s->priv_data);
         }
     } else {
@@ -444,7 +447,7 @@ QVector<VideoMode> CameraDevice::getScreenModes()
  */
 QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
 {
-    Q_UNUSED(devName);
+    Q_UNUSED(devName)
 
     if (!iformat)
         ;

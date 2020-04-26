@@ -792,30 +792,30 @@ um sie in Windows speichern zu können.</translation>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppenchat %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Neue Nachricht</translation>
+        <translation>Neue Nachricht</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingehende Dateiübertragung</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Freundschaftsanfrage erhalten</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Gruppennachricht</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppeneinladung erhalten</translation>
     </message>
 </context>
 <context>
@@ -1246,15 +1246,15 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Zum aktuellen Datum gehen</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Gesprächsverlauf laden ...</translation>
+        <translation>Gesprächsverlauf laden...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Als Datei exportieren</translation>
+        <translation>In Datei exportieren</translation>
     </message>
 </context>
 <context>
@@ -1638,27 +1638,27 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Verlauf</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>von</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>zu</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(es werden ca. 100 Nachrichten geladen)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished">Datumsauswahl-Dialog</translation>
+        <translation>Datumsauswahl-Dialog</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Wählen Sie ein Datum</translation>
+        <translation>Wählen Sie ein Datum</translation>
     </message>
 </context>
 <context>
@@ -2499,32 +2499,32 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das automatische Laden des Profils ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Online</translation>
+        <translation>Online</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">abwesend</translation>
+        <translation>abwesend</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">beschäftigt</translation>
+        <translation>beschäftigt</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">offline</translation>
+        <translation>offline</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">blockiert</translation>
+        <translation>blockiert</translation>
     </message>
 </context>
 <context>
@@ -2894,7 +2894,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Absender und Nachrichteninhalte ausblenden</translation>
     </message>
 </context>
 <context>
@@ -3091,19 +3091,19 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Datei „%1“ konnte nicht gesendet werden</translation>
+        <translation>Datei „%1“ konnte nicht gesendet werden</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei gesendet</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> schickte Dir eine Freundschaftsanfrage.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> lädt Dich ein, einer Gruppe beizutreten.</translation>
     </message>
 </context>
 </TS>

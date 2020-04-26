@@ -41,7 +41,6 @@ QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
-FILTERAUIO_DIR="${MAIN_DIR}/filter_audio" # Change to Git location
 
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
@@ -146,7 +145,7 @@ install() {
         git pull
     else
         fcho "Cloning Toxcore git ... "
-        git clone --branch v0.2.10 --depth=1 https://github.com/toktok/c-toxcore "$TOXCORE_DIR"
+        git clone --branch v0.2.11 --depth=1 https://github.com/toktok/c-toxcore "$TOXCORE_DIR"
     fi
     # qTox
     if [[ $TRAVIS = true ]]
@@ -208,12 +207,6 @@ install() {
         kill $DOT_PID
     fi
 
-    fcho "Cloning filter_audio ... "
-    git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio "$FILTERAUIO_DIR"
-    cd "$FILTERAUIO_DIR"
-    fcho "Installing filter_audio ... "
-    make install PREFIX="$LIB_INSTALL_PREFIX"
-
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
     QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
@@ -269,7 +262,14 @@ build() {
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
     export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
-    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF
+
+    if [[ $TRAVIS = true ]]
+    then
+        STRICT_OPTIONS="ON"
+    else
+        STRICT_OPTIONS="OFF"
+    fi
+    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
     make -j$(sysctl -n hw.ncpu)
 }
 

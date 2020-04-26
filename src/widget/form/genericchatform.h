@@ -54,7 +54,7 @@ class QToolButton;
 class QVBoxLayout;
 
 class IMessageDispatcher;
-class Message;
+struct Message;
 
 namespace Ui {
 class MainWindow;
@@ -106,15 +106,13 @@ protected slots:
     void onSelectAllClicked();
     void showFileMenu();
     void hideFileMenu();
-    void onShowMessagesClicked();
-    void onSplitterMoved(int pos, int index);
     void quoteSelectedText();
     void copyLink();
     void onLoadHistory();
     void onExportChat();
     void searchFormShow();
     void onSearchTriggered();
-    void updateShowDateInfo(const ChatLine::Ptr& line);
+    void updateShowDateInfo(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& topLine);
 
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter);
     void onSearchUp(const QString& phrase, const ParameterSearch& parameter);
@@ -142,9 +140,6 @@ protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
                                    const QDateTime& datetime, bool isAction, bool isSent, bool colorizeName = false);
     bool needsToHideName(ChatLogIdx idx) const;
-    void showNetcam();
-    void hideNetcam();
-    virtual GenericNetCamView* createNetcam() = 0;
     virtual void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
     void hideEvent(QHideEvent* event) override;
@@ -170,8 +165,6 @@ protected:
     QAction* exportChatAction;
     QAction* goCurrentDateAction;
 
-    ToxPk previousId;
-
     QMenu menu;
 
     QPushButton* emoteButton;
@@ -191,7 +184,6 @@ protected:
     Sonnet::SpellCheckDecorator* decorator{nullptr};
 #endif
     FlyoutOverlayWidget* fileFlyout;
-    GenericNetCamView* netcam;
     Widget* parent;
 
     IChatLog& chatLog;

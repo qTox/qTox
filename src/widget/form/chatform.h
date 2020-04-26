@@ -32,6 +32,7 @@
 #include "src/model/status.h"
 #include "src/persistence/history.h"
 #include "src/widget/tool/screenshotgrabber.h"
+#include "src/video/netcamview.h"
 
 class CallConfirmWidget;
 class FileTransferInstance;
@@ -74,6 +75,8 @@ public slots:
     void onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
     void onFileNameChanged(const ToxPk& friendPk);
     void clearChatArea();
+    void onShowMessagesClicked();
+    void onSplitterMoved(int pos, int index);
 
 private slots:
     void updateFriendActivityForFile(const ToxFile& file);
@@ -107,9 +110,11 @@ private:
     void startCounter();
     void stopCounter(bool error = false);
     void updateCallButtons();
+    void showNetcam();
+    void hideNetcam();
 
 protected:
-    GenericNetCamView* createNetcam() final;
+    std::unique_ptr<NetCamView> createNetcam();
     void insertChatMessage(ChatMessage::Ptr msg) final;
     void dragEnterEvent(QDragEnterEvent* ev) final;
     void dropEvent(QDropEvent* ev) final;
@@ -127,6 +132,7 @@ private:
     QAction* copyStatusAction;
     bool isTyping;
     bool lastCallIsVideo;
+    std::unique_ptr<NetCamView> netcam;
 };
 
 #endif // CHATFORM_H

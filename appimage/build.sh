@@ -35,8 +35,6 @@ readonly QTOX_APP_DIR="$BUILD_DIR"/appdir
 readonly LDQT_BUILD_DIR="$BUILD_DIR"/ldqt
 # "appimagetool" becomes aitool
 readonly AITOOL_BUILD_DIR="$BUILD_DIR"/aitool
-# sqlcipher build directory
-readonly SQLCIPHER_BUILD_DIR="$BUILD_DIR"/sqlcipher
 # ldqt binary
 readonly LDQT_BIN="/usr/lib/x86_64-linux-gnu/qt5/bin/linuxdeployqt"
 # aitool binary
@@ -47,12 +45,6 @@ readonly APT_FLAGS="-y --no-install-recommends"
 readonly SNORE_GIT="https://github.com/KDE/snorenotify"
 # snorenotify build directory
 readonly SNORE_BUILD_DIR="$BUILD_DIR"/snorenotify
-# "appimage updater bridge" becomes aub
-readonly AUB_SRC_DIR="$BUILD_DIR"/aub
-# aub source
-readonly AUB_GIT="https://github.com/antony-jr/AppImageUpdaterBridge"
-# aub build dir
-readonly AUB_BUILD_DIR="$BUILD_DIR"/aub/build
 
 # update information to be embeded in AppImage
 if [ "cron" == "${TRAVIS_EVENT_TYPE:-}" ]
@@ -76,7 +68,7 @@ check checkinstall libavdevice-dev libexif-dev libgdk-pixbuf2.0-dev \
 libgtk2.0-dev libopenal-dev libopus-dev libqrencode-dev libqt5opengl5-dev \
 libqt5svg5-dev libsodium-dev libtool libvpx-dev libxss-dev \
 qt5-default qttools5-dev qttools5-dev-tools qtdeclarative5-dev \
-fcitx-frontend-qt5 uim-qt5
+fcitx-frontend-qt5 uim-qt5 libsqlcipher-dev
 
 # get version
 cd "$QTOX_SRC_DIR"
@@ -99,29 +91,6 @@ make install
 
 cd "$BUILD_DIR"
 
-# we need a custom built sqlcipher version because of a Debian bug
-# https://bugs.debian.org/850421
-git clone https://github.com/sqlcipher/sqlcipher.git "$SQLCIPHER_BUILD_DIR"
-cd "$SQLCIPHER_BUILD_DIR"
-git checkout tags/v3.4.2
-./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
-LDFLAGS="-lcrypto"
-
-make
-make install
-
-# build aub into a static library and later use it in
-# qTox
-git clone "$AUB_GIT" "$AUB_SRC_DIR"
-cd "$AUB_SRC_DIR" # we need to checkout first
-git checkout tags/v1.1.2
-mkdir $AUB_BUILD_DIR
-cd $AUB_BUILD_DIR
-cmake .. -DLOGGING_DISABLED=ON
-
-make
-make install
-
 # copy qtox source
 cp -r "$QTOX_SRC_DIR" "$QTOX_BUILD_DIR"
 cd "$QTOX_BUILD_DIR"
@@ -138,15 +107,15 @@ cd _build
 # need to build with -DDESKTOP_NOTIFICATIONS=True for snorenotify
 cmake -DDESKTOP_NOTIFICATIONS=True \
       -DUPDATE_CHECK=True \
-      -DAPPIMAGE_UPDATER_BRIDGE=True \
+      -DSTRICT_OPTIONS=True \
       ../
 
 make
 
 make DESTDIR="$QTOX_APP_DIR" install ; find "$QTOX_APP_DIR"
 
-# is master as of 2018-04-25
-LDQT_HASH="9c90a882ac744b5f704598e9588450ddfe487c67"
+# is release #6 as of 2019-10-23
+LDQT_HASH="37631e5640d8f7c31182fa72b31266bbdf6939fc"
 # build linuxdeployqt
 git clone https://github.com/probonopd/linuxdeployqt.git "$LDQT_BUILD_DIR"
 cd "$LDQT_BUILD_DIR"
@@ -155,8 +124,8 @@ qmake
 make
 make install
 
-# is master as of 2018-04-25
-AITOOL_HASH="5d93115f279d94a4d23dfd64fb8ccd109e98f039"
+# is release #12 as of 2019-10-23
+AITOOL_HASH="effcebc1d81c5e174a48b870cb420f490fb5fb4d"
 # build appimagetool
 git clone -b master --single-branch --recursive \
 https://github.com/AppImage/AppImageKit "$AITOOL_BUILD_DIR"

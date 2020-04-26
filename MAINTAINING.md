@@ -81,6 +81,12 @@ git config --global alias.logs 'log --show-signature'
 - if a PR requires changes but there has been no activity from the PR submitter
   for more than 2 months, close the PR.
 
+# Continous Integration
+
+qTox nightly builds can be found in [qTox-nightly-release]. Should one build
+fail, it is important to restart the whole Travis CI build and not just a
+single job. The tool managing the nightly builds deletes all build artifacts
+on any job failure, so all need to be rebuilt.
 
 # Issues
 
@@ -208,6 +214,7 @@ To get translations into qTox:
 - Update toxcore version number to the latest tag. Currently this needs to be
   done manually by `grep`ing for the current tag.
 - Update the bootstrap nodelist at `./res/nodes.json` from https://nodes.tox.chat/json.
+  This can be done by running [`./tools/update-nodes.sh`]
 - Generate changelog with `clog`.
   - In a `MAJOR`/`MINOR` release tag should include information that changelog
     is located in the `CHANGELOG.md` file, e.g. `For details see CHANGELOG.md`
@@ -254,8 +261,10 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`test-pr.sh`]: /test-pr.sh
 [`./tools/deweblate-translation-file.sh`]: /tools/deweblate-translation-file.sh
 [`./tools/create-tarball.sh`]: /tools/create-tarball.sh
+[`./tools/update-nodes.sh`]: /tools/update-nodes.sh
 [`./tools/update-versions.sh`]: /tools/update-versions.sh
 [`./tools/format-code.sh`]: /tools/format-code.sh
 [Flathub repository]: https://github.com/flathub/io.github.qtox.qTox
 [`./flatpak/io.github.qtox.qTox.json`]: flatpak/io.github.qtox.qTox.json
 [the Flathub build bot]: https://flathub.org/builds/#/
+[qTox-nightly-release]: https://github.com/qTox/qTox-nightly-releases

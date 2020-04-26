@@ -45,7 +45,6 @@
 | [qrencode]    | >= 3.0.3    |                                                          |
 | [sqlcipher]   | >= 3.2.0    |                                                          |
 | [pkg-config]  | >= 0.28     |                                                          |
-| [filteraudio] | >= 0.0.1    | optional dependency                                      |
 | [snorenotify] | >= 0.7.0    | optional dependency                                      |
 
 ## Optional dependencies
@@ -413,7 +412,7 @@ Provided that you have all required dependencies installed, you can simply run:
 ```bash
 git clone https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
-git checkout v0.2.10
+git checkout v0.2.11
 cmake . -DBOOTSTRAP_DAEMON=OFF
 make -j$(nproc)
 sudo make install
@@ -755,6 +754,5 @@ Switches:
 [qrencode]: https://fukuchi.org/works/qrencode/
 [Qt]: https://www.qt.io/
 [toxcore]: https://github.com/TokTok/c-toxcore/
-[filteraudio]: https://github.com/irungentoo/filter_audio
 [sonnet]: https://github.com/KDE/sonnet
 [snorenotify]: https://techbase.kde.org/Projects/Snorenotify

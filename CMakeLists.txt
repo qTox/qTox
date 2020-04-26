@@ -24,14 +24,13 @@ cmake_minimum_required(VERSION 2.8.11)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra dependencies" ON)
-option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 option(UPDATE_CHECK "Enable automatic update check" ON)
-option(APPIMAGE_UPDATER_BRIDGE "Use AppImageUpdaterBridge to do the update" OFF)
 option(USE_CCACHE "Use ccache when available" ON)
 option(SPELL_CHECK "Enable spell cheching support" ON)
 option(SVGZ_ICON "Compress the SVG icon of qTox" ON)
 option(ASAN "Compile with AddressSanitizer" OFF)
 option(DESKTOP_NOTIFICATIONS "Use snorenotify for desktop notifications" OFF)
+option(STRICT_OPTIONS "Enable strict compile options, used by CI" OFF)
 
 # process generated files if cmake >= 3.10
 if(POLICY CMP0071)
@@ -54,11 +53,6 @@ set(ENV{PKG_CONFIG_PATH}
 if(APPLE)
   set(ENV{PKG_CONFIG_PATH}
     /usr/local/opt/openal-soft/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
-endif()
-
-if(${APPIMAGE_UPDATER_BRIDGE})
-  set(ENV{PKG_CONFIG_PATH}
-    /usr/local/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
 endif()
 
 execute_process(
@@ -91,12 +85,19 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 set(POSITION_INDEPENDENT_CODE True)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-overflow")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-aliasing")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wold-style-cast")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wsign-compare")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wunknown-pragmas")
+
+# Extra-strict compile options that we don't want to subject all users to by default
+if (STRICT_OPTIONS)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+endif()
 
 # avoid timestamps in binary for reproducible builds, not added until GCC 4.9
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG(-Wdate-time COMPILER_SUPPORTS_WDATE_TIME)
-if(COMPILER_SUPPORTS_WDATE_TIME)
+if (COMPILER_SUPPORTS_WDATE_TIME)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdate-time")
 endif()
 
@@ -377,14 +378,11 @@ set(${PROJECT_NAME}_SOURCES
   src/model/sessionchatlog.cpp
   src/model/chathistory.h
   src/model/chathistory.cpp
+  src/model/toxclientstandards.h
   src/net/bootstrapnodeupdater.cpp
   src/net/bootstrapnodeupdater.h
   src/net/avatarbroadcaster.cpp
   src/net/avatarbroadcaster.h
-  src/net/toxme.cpp
-  src/net/toxme.h
-  src/net/toxmedata.cpp
-  src/net/toxmedata.h
   src/net/toxuri.cpp
   src/net/toxuri.h
   src/nexus.cpp
@@ -418,10 +416,6 @@ set(${PROJECT_NAME}_SOURCES
   src/video/camerasource.h
   src/video/corevideosource.cpp
   src/video/corevideosource.h
-  src/video/genericnetcamview.cpp
-  src/video/genericnetcamview.h
-  src/video/groupnetcamview.cpp
-  src/video/groupnetcamview.h
   src/video/ivideosettings.h
   src/video/netcamview.cpp
   src/video/netcamview.h
@@ -623,42 +617,14 @@ endif()
 
 add_definitions(-DQT_MESSAGELOGCONTEXT=1)
 
-if (NOT DEFINED ENABLE_STATUSNOTIFIER AND UNIX AND NOT APPLE)
-  set(ENABLE_STATUSNOTIFIER True)
-endif()
-
 if(AVFOUNDATION_FOUND)
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
     src/platform/camera/avfoundation.mm
     src/platform/camera/avfoundation.h)
 endif()
 
-if(${USE_FILTERAUDIO})
-    search_dependency(FILTERAUDIO LIBRARY filteraudio HEADER filter_audio.h OPTIONAL)
-    if(${FILTERAUDIO_FOUND})
-        set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-            src/audio/backend/openal2.cpp
-            src/audio/backend/openal2.h)
-        add_definitions(-DUSE_FILTERAUDIO=1)
-        message(STATUS "using filteraudio")
-    else()
-         message(STATUS "not using filteraudio, libfilteraudio not found")
-    endif()
-endif()
-
 if(${UPDATE_CHECK})
     add_definitions(-DUPDATE_CHECK_ENABLED=1)
-    if(${APPIMAGE_UPDATER_BRIDGE})
-        search_dependency(AIUB  PACKAGE AppImageUpdaterBridge)
-        if(AIUB_FOUND)
-		message(STATUS "using AppImageUpdaterBridge")
-                add_definitions(-DAPPIMAGE_UPDATER_BRIDGE_ENABLED=1)
-	else()
-                message(STATUS "cannot find AppImageUpdaterBridge , ignoring cmake flag")
-        endif()
-    else()
-        message(STATUS "not using AppImageUpdaterBridge")
-    endif()
     set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
         src/net/updatecheck.cpp
         src/net/updatecheck.h)
@@ -714,3 +680,12 @@ target_link_libraries(${PROJECT_NAME}
 
 include(Testing)
 include(Installation)
+
+if (DEFINED ENV{IN_NIX_SHELL})
+  # the qtox binary must be "wrapped" to find the Qt platform plugin
+  # and other dependencies at runtime
+  add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND nix-shell --run "wrapQtApp ${PROJECT_NAME}")
+endif()

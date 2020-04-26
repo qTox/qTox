@@ -53,18 +53,22 @@
  <screenshots>
   <screenshot type="default">
    <image>https://i.imgur.com/olb89CN.png</image>
-   <caption>A sample conversation taking place on qTox.</caption>
+   <caption>A sample conversation taking place on qTox</caption>
   </screenshot>
   <screenshot>
    <image>https://i.imgur.com/tmX8z9s.png</image>
-   <caption>A sample groupchat discussion taking place on qTox.</caption>
+   <caption>A sample groupchat discussion taking place on qTox</caption>
   </screenshot>
  </screenshots>
  <url type="homepage">https://qtox.github.io</url>
  <update_contact>barrdetwix@gmail.com</update_contact>
  <project_group>qTox</project_group>
+   <content_rating type="oars-1.0">
+    <content_attribute id="social-chat">intense</content_attribute>
+    <content_attribute id="social-audio">intense</content_attribute>
+  </content_rating>
  <releases>
-​  <release version="1.16.3" date="2018-07-21"/>
+​  <release version="1.17.0" date="2020-04-19"/>
  </releases>
 </component>
 

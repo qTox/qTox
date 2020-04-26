@@ -17,13 +17,14 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "src/model/interface.h"
+
 #include <QObject>
 
 class ToxId;
 
-class IProfileInfo : public QObject
+class IProfileInfo
 {
-    Q_OBJECT
 public:
     enum class RenameResult {
         OK, EmptyName, ProfileAlreadyExists, Error
@@ -36,6 +37,7 @@ public:
     enum class SetAvatarResult {
         OK, EmptyPath, CanNotOpen, CanNotRead, TooLarge
     };
+    virtual ~IProfileInfo() = default;
 
     virtual bool setPassword(const QString& password) = 0;
     virtual bool deletePassword() = 0;
@@ -58,8 +60,7 @@ public:
     virtual SetAvatarResult setAvatar(const QString& path) = 0;
     virtual void removeAvatar() = 0;
 
-signals:
-    void idChanged(const ToxId& id);
-    void usernameChanged(const QString& username);
-    void statusMessageChanged(const QString& message);
+    DECLARE_SIGNAL(idChanged, const ToxId&);
+    DECLARE_SIGNAL(usernameChanged, const QString&);
+    DECLARE_SIGNAL(statusMessageChanged, const QString&);
 };

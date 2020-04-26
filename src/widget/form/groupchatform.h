@@ -33,7 +33,7 @@ class FlowLayout;
 class QTimer;
 class GroupId;
 class IMessageDispatcher;
-class Message;
+struct Message;
 
 class GroupChatForm : public GenericChatForm
 {
@@ -57,7 +57,6 @@ private slots:
     void onLabelContextMenuRequested(const QPoint& localPos);
 
 protected:
-    GenericNetCamView* createNetcam() final;
     void keyPressEvent(QKeyEvent* ev) final;
     void keyReleaseEvent(QKeyEvent* ev) final;
     // drag & drop
@@ -68,6 +67,7 @@ private:
     void retranslateUi();
     void updateUserCount(int numPeers);
     void updateUserNames();
+    void joinGroupCall();
     void leaveGroupCall();
 
 private:

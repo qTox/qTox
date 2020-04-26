@@ -66,14 +66,14 @@ const QString VIDEO_TOOL_TIP[] = {
 
 const QString VOL_TOOL_TIP[] = {
     ChatFormHeader::tr("Sound can be disabled only during a call"),
-    ChatFormHeader::tr("Unmute call"),
     ChatFormHeader::tr("Mute call"),
+    ChatFormHeader::tr("Unmute call"),
 };
 
 const QString MIC_TOOL_TIP[] = {
     ChatFormHeader::tr("Microphone can be muted only during a call"),
-    ChatFormHeader::tr("Unmute microphone"),
     ChatFormHeader::tr("Mute microphone"),
+    ChatFormHeader::tr("Unmute microphone"),
 };
 
 template <class T, class Fun>

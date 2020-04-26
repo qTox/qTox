@@ -18,8 +18,11 @@
 */
 
 extern "C" {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
 #include <libavcodec/avcodec.h>
 #include <libavutil/imgutils.h>
+#pragma GCC diagnostic pop
 }
 
 #include "corevideosource.h"

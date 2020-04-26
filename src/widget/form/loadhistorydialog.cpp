@@ -56,7 +56,11 @@ LoadHistoryDialog::~LoadHistoryDialog()
 
 QDateTime LoadHistoryDialog::getFromDate()
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    QDateTime res(ui->fromDate->selectedDate().startOfDay());
+#else
     QDateTime res(ui->fromDate->selectedDate());
+#endif
     if (res.date().month() != ui->fromDate->monthShown()
         || res.date().year() != ui->fromDate->yearShown()) {
         QDate newDate(ui->fromDate->yearShown(), ui->fromDate->monthShown(), 1);
@@ -85,7 +89,6 @@ void LoadHistoryDialog::enableSearchMode()
 
 void LoadHistoryDialog::highlightDates(int year, int month)
 {
-    History* history = Nexus::getProfile()->getHistory();
     QDate monthStart(year, month, 1);
     QDate monthEnd(year, month + 1, 1);
 

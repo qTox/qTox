@@ -86,8 +86,6 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
         update();
     });
 
-    CoreFile* coreFile = Core::getInstance()->getCoreFile();
-
     connect(ui->leftButton, &QPushButton::clicked, this, &FileTransferWidget::onLeftButtonClicked);
     connect(ui->rightButton, &QPushButton::clicked, this, &FileTransferWidget::onRightButtonClicked);
     connect(ui->previewButton, &QPushButton::clicked, this,
@@ -237,7 +235,7 @@ QString FileTransferWidget::getHumanReadableSize(qint64 size)
     int exp = 0;
 
     if (size > 0) {
-        exp = std::min((int)(log(size) / log(1024)), (int)(sizeof(suffix) / sizeof(suffix[0]) - 1));
+        exp = std::min(static_cast<int>(log(size) / log(1024)), static_cast<int>(sizeof(suffix) / sizeof(suffix[0]) - 1));
     }
 
     return QString().setNum(size / pow(1024, exp), 'f', exp > 1 ? 2 : 0).append(suffix[exp]);

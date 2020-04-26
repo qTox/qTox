@@ -26,6 +26,6 @@
 #include <cstdint>
 
 using ReceiptNum = NamedType<uint32_t, struct ReceiptNumTag, Orderable>;
-Q_DECLARE_METATYPE(ReceiptNum);
+Q_DECLARE_METATYPE(ReceiptNum)
 
 #endif /* RECEIPT_NUM_H */

@@ -118,8 +118,6 @@ class Settings : public QObject,
                    audioOutDevEnabledChanged FINAL)
     Q_PROPERTY(int outVolume READ getOutVolume WRITE setOutVolume NOTIFY outVolumeChanged FINAL)
     Q_PROPERTY(int audioBitrate READ getAudioBitrate WRITE setAudioBitrate NOTIFY audioBitrateChanged FINAL)
-    Q_PROPERTY(bool enableBackend2 READ getEnableBackend2 WRITE setEnableBackend2 NOTIFY
-                   enableBackend2Changed FINAL)
 
     // Video
     Q_PROPERTY(QString videoDev READ getVideoDev WRITE setVideoDev NOTIFY videoDevChanged FINAL)
@@ -190,10 +188,6 @@ signals:
     void notifyHideChanged(bool enabled);
     void groupAlwaysNotifyChanged(bool enabled);
     void translationChanged(const QString& translation);
-    void toxmeInfoChanged(const QString& info);
-    void toxmeBioChanged(const QString& bio);
-    void toxmePrivChanged(bool priv);
-    void toxmePassChanged();
     void currentProfileIdChanged(quint32 id);
     void enableLoggingChanged(bool enabled);
     void autoAwayTimeChanged(int minutes);
@@ -275,21 +269,6 @@ public:
 
     QString getTranslation() const;
     void setTranslation(const QString& newValue);
-
-    // Toxme
-    void deleteToxme();
-    void setToxme(QString name, QString server, QString bio, bool priv, QString pass = "");
-    QString getToxmeInfo() const;
-    void setToxmeInfo(const QString& info);
-
-    QString getToxmeBio() const;
-    void setToxmeBio(const QString& bio);
-
-    bool getToxmePriv() const;
-    void setToxmePriv(bool priv);
-
-    QString getToxmePass() const;
-    void setToxmePass(const QString& pass);
 
     void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
@@ -390,9 +369,6 @@ public:
     bool getEnableTestSound() const override;
     void setEnableTestSound(bool newValue) override;
 
-    bool getEnableBackend2() const override;
-    void setEnableBackend2(bool enabled) override;
-
     SIGNAL_IMPL(Settings, inDevChanged, const QString& device)
     SIGNAL_IMPL(Settings, audioInDevEnabledChanged, bool enabled)
 
@@ -404,7 +380,6 @@ public:
     SIGNAL_IMPL(Settings, outVolumeChanged, int volume)
     SIGNAL_IMPL(Settings, audioBitrateChanged, int bitrate)
     SIGNAL_IMPL(Settings, enableTestSoundChanged, bool newValue)
-    SIGNAL_IMPL(Settings, enableBackend2Changed, bool enabled)
 
     QString getVideoDev() const override;
     void setVideoDev(const QString& deviceSpecifier) override;
@@ -642,12 +617,6 @@ private:
     QString currentProfile;
     uint32_t currentProfileId;
 
-    // Toxme Info
-    QString toxmeInfo;
-    QString toxmeBio;
-    bool toxmePriv;
-    QString toxmePass;
-
     bool enableLogging;
 
     int autoAwayTime;
@@ -698,7 +667,6 @@ private:
     int outVolume;
     int audioBitrate;
     bool enableTestSound;
-    bool enableBackend2;
 
     // Video
     QString videoDev;

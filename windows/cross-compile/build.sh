@@ -229,9 +229,9 @@ store_apt_cache()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.1.1d
+OPENSSL_VERSION=1.1.1f
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="1e3a91bc1f9dfce01af26026f856e064eab4c8ee0a8f457b5ae30b40b8b711f2"
+OPENSSL_HASH="186c6bfe6ecfba7a5b48c47f8a1673d0f3b0e5ba2e25602dd23b629975da3f35"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
@@ -272,10 +272,10 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=12
-QT_PATCH=5
+QT_PATCH=8
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.12/5.12.5/single/qt-everywhere-src-5.12.5.tar.xz.mirrorlist
-QT_HASH="a2299e21db7767caf98242767bffb18a2a88a42fee2d6a393bedd234f8c91298"
+# hash from https://download.qt.io/archive/qt/5.12/5.12.8/single/qt-everywhere-src-5.12.8.tar.xz.mirrorlist
+QT_HASH="9142300dfbd641ebdea853546511a352e4bd547c4c7f25d61a40cd997af1f0cf"
 QT_FILENAME="qt-everywhere-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
@@ -389,8 +389,8 @@ set -u
 # SQLCipher
 
 SQLCIPHER_PREFIX_DIR="$DEP_DIR/libsqlcipher"
-SQLCIPHER_VERSION=v4.2.0
-SQLCIPHER_HASH="105c1b813f848da038c03647a8bfc9d42fb46865e6aaf4edfd46ff3b18cdccfc"
+SQLCIPHER_VERSION=v4.3.0
+SQLCIPHER_HASH="fccb37e440ada898902b294d02cde7af9e8706b185d77ed9f6f4d5b18b4c305f"
 SQLCIPHER_FILENAME="$SQLCIPHER_VERSION.tar.gz"
 if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]
 then
@@ -450,8 +450,8 @@ fi
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
-FFMPEG_VERSION=4.2.1
-FFMPEG_HASH="cec7c87e9b60d174509e263ac4011b522385fd0775292e1670ecc1180c9bb6d4"
+FFMPEG_VERSION=4.2.2
+FFMPEG_HASH="cb754255ab0ee2ea5f66f8850e1bd6ad5cac1cd855d0a2f4990fb8c668b0d29c"
 FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
@@ -611,136 +611,6 @@ else
 fi
 
 
-# Filteraudio
-
-FILTERAUDIO_PREFIX_DIR="$DEP_DIR/libfilteraudio"
-FILTERAUDIO_VERSION=ada2f4fdc04940cdeee47caffe43add4fa017096
-FILTERAUDIO_HASH="cf481e87c860aaf28b50d125195d84556f36d0ebb529d7ebdac39f8cc497256a"
-if [ ! -f "$FILTERAUDIO_PREFIX_DIR/done" ]
-then
-  rm -rf "$FILTERAUDIO_PREFIX_DIR"
-  mkdir -p "$FILTERAUDIO_PREFIX_DIR"
-
-  git clone https://github.com/irungentoo/filter_audio filter_audio
-  cd filter*
-  git checkout $FILTERAUDIO_VERSION
-  check_sha256_git "$FILTERAUDIO_HASH"
-
-  $ARCH-w64-mingw32-gcc -O2 -g0 -c \
-               aec/aec_core.c \
-               aec/aec_core_sse2.c \
-               aec/aec_rdft.c \
-               aec/aec_rdft_sse2.c \
-               aec/aec_resampler.c \
-               aec/echo_cancellation.c \
-               agc/analog_agc.c \
-               agc/digital_agc.c \
-               ns/ns_core.c \
-               ns/nsx_core_c.c \
-               ns/nsx_core.c \
-               ns/noise_suppression_x.c \
-               ns/noise_suppression.c \
-               other/get_scaling_square.c \
-               other/resample_by_2.c \
-               other/spl_sqrt.c \
-               other/delay_estimator.c \
-               other/complex_bit_reverse.c \
-               other/dot_product_with_scale.c \
-               other/cross_correlation.c \
-               other/min_max_operations.c \
-               other/resample_48khz.c \
-               other/high_pass_filter.c \
-               other/energy.c \
-               other/randomization_functions.c \
-               other/speex_resampler.c \
-               other/copy_set_operations.c \
-               other/downsample_fast.c \
-               other/complex_fft.c \
-               other/vector_scaling_operations.c \
-               other/resample_by_2_internal.c \
-               other/delay_estimator_wrapper.c \
-               other/real_fft.c \
-               other/spl_sqrt_floor.c \
-               other/resample_fractional.c \
-               other/ring_buffer.c \
-               other/splitting_filter.c \
-               other/fft4g.c \
-               other/division_operations.c \
-               other/spl_init.c \
-               other/float_util.c \
-               zam/filters.c \
-               vad/vad_sp.c \
-               vad/vad_core.c \
-               vad/webrtc_vad.c \
-               vad/vad_gmm.c \
-               vad/vad_filterbank.c \
-               filter_audio.c \
-               -lpthread \
-               -lm
-
-  ar rcs libfilteraudio.a \
-    aec_core.o \
-    aec_core_sse2.o \
-    aec_rdft.o \
-    aec_rdft_sse2.o \
-    aec_resampler.o \
-    echo_cancellation.o \
-    analog_agc.o \
-    digital_agc.o \
-    ns_core.o \
-    nsx_core_c.o \
-    nsx_core.o \
-    noise_suppression_x.o \
-    noise_suppression.o \
-    get_scaling_square.o \
-    resample_by_2.o \
-    spl_sqrt.o \
-    delay_estimator.o \
-    complex_bit_reverse.o \
-    dot_product_with_scale.o \
-    cross_correlation.o \
-    min_max_operations.o \
-    resample_48khz.o \
-    high_pass_filter.o \
-    energy.o \
-    randomization_functions.o \
-    speex_resampler.o \
-    copy_set_operations.o \
-    downsample_fast.o \
-    complex_fft.o \
-    vector_scaling_operations.o \
-    resample_by_2_internal.o \
-    delay_estimator_wrapper.o \
-    real_fft.o \
-    spl_sqrt_floor.o \
-    resample_fractional.o \
-    ring_buffer.o \
-    splitting_filter.o \
-    fft4g.o \
-    division_operations.o \
-    spl_init.o \
-    float_util.o \
-    filters.o \
-    vad_sp.o \
-    vad_core.o \
-    webrtc_vad.o \
-    vad_gmm.o \
-    vad_filterbank.o \
-    filter_audio.o
-
-  mkdir $FILTERAUDIO_PREFIX_DIR/include
-  mkdir $FILTERAUDIO_PREFIX_DIR/lib
-  cp filter_audio.h $FILTERAUDIO_PREFIX_DIR/include
-  cp libfilteraudio.a $FILTERAUDIO_PREFIX_DIR/lib
-  echo -n $FILTERAUDIO_VERSION > $FILTERAUDIO_PREFIX_DIR/done
-
-  cd ..
-  rm -rf ./filter*
-else
-  echo "Using cached build of Filteraudio `cat $FILTERAUDIO_PREFIX_DIR/done`"
-fi
-
-
 # QREncode
 
 QRENCODE_PREFIX_DIR="$DEP_DIR/libqrencode"
@@ -881,8 +751,8 @@ fi
 # VPX
 
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
-VPX_VERSION=v1.8.1
-VPX_HASH="df19b8f24758e90640e1ab228ab4a4676ec3df19d23e4593375e6f3847dee03e"
+VPX_VERSION=v1.8.2
+VPX_HASH="8735d9fcd1a781ae6917f28f239a8aa358ce4864ba113ea18af4bb2dc8b474ac"
 VPX_FILENAME="libvpx-$VPX_VERSION.tar.gz"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
@@ -931,8 +801,8 @@ fi
 # Toxcore
 
 TOXCORE_PREFIX_DIR="$DEP_DIR/libtoxcore"
-TOXCORE_VERSION=0.2.10
-TOXCORE_HASH="5ccc4ecd79b95c367efe8341b06bf2a81f853032e6fcd7cb2bc0ad0ef7419d40"
+TOXCORE_VERSION=0.2.11
+TOXCORE_HASH="f111285b036d7746ce8d1321cf0b89ec93b4fad8ae90767a24e50230bbee27e1"
 TOXCORE_FILENAME="c-toxcore-$TOXCORE_VERSION.tar.gz"
 if [ ! -f "$TOXCORE_PREFIX_DIR/done" ]
 then
@@ -1107,6 +977,7 @@ then
         -DCMAKE_BUILD_TYPE=Release \
         -DSPELL_CHECK=OFF \
         -DUPDATE_CHECK=ON \
+        -DSTRICT_OPTIONS=ON \
         ..
 elif [[ "$BUILD_TYPE" == "debug" ]]
 then
@@ -1114,6 +985,7 @@ then
         -DCMAKE_BUILD_TYPE=Debug \
         -DSPELL_CHECK=OFF \
         -DUPDATE_CHECK=ON \
+        -DSTRICT_OPTIONS=ON \
         ..
 fi
 

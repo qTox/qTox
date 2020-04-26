@@ -35,6 +35,7 @@
 #include "src/persistence/settings.h"
 #include "src/video/netcamview.h"
 #include "src/widget/chatformheader.h"
+#include "src/widget/contentdialogmanager.h"
 #include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/searchform.h"
@@ -178,6 +179,8 @@ ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& me
             [this] { onAnswerCallTriggered(lastCallIsVideo); });
     connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
 
+    connect(bodySplitter, &QSplitter::splitterMoved, this, &ChatForm::onSplitterMoved);
+
     updateCallButtons();
 
     setAcceptDrops(true);
@@ -188,8 +191,6 @@ ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& me
 ChatForm::~ChatForm()
 {
     Translator::unregister(this);
-    delete netcam;
-    netcam = nullptr;
 }
 
 void ChatForm::setStatusMessage(const QString& newMessage)
@@ -404,7 +405,7 @@ void ChatForm::updateCallButtons()
     CoreAV* av = Core::getInstance()->getAv();
     const bool audio = av->isCallActive(f);
     const bool video = av->isCallVideoEnabled(f);
-    const bool online = f->isOnline();
+    const bool online = Status::isOnline(f->getStatus());
     headWidget->updateCallButtons(online, audio, video);
     updateMuteMicButton();
     updateMuteVolButton();
@@ -431,7 +432,7 @@ void ChatForm::onFriendStatusChanged(uint32_t friendId, Status::Status status)
         return;
     }
 
-    if (!f->isOnline()) {
+    if (!Status::isOnline(f->getStatus())) {
         // Hide the "is typing" message when a friend goes offline
         setFriendTyping(false);
     }
@@ -477,18 +478,17 @@ void ChatForm::onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic)
     headWidget->setAvatar(pic);
 }
 
-GenericNetCamView* ChatForm::createNetcam()
+std::unique_ptr<NetCamView> ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
     uint32_t friendId = f->getId();
-    NetCamView* view = new NetCamView(f->getPublicKey(), this);
+    std::unique_ptr<NetCamView> view = std::unique_ptr<NetCamView>(new NetCamView(f->getPublicKey(), this));
     CoreAV* av = Core::getInstance()->getAv();
     VideoSource* source = av->getVideoSourceFromCall(friendId);
     view->show(source, f->getDisplayedName());
-    connect(view, &GenericNetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
-    connect(view, &GenericNetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
-    connect(view, &GenericNetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
-    connect(view, &GenericNetCamView::videoPreviewToggle, view, &NetCamView::toggleVideoPreview);
+    connect(view.get(), &NetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
+    connect(view.get(), &NetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
+    connect(view.get(), &NetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
     return view;
 }
 
@@ -706,5 +706,61 @@ void ChatForm::retranslateUi()
 
     if (netcam) {
         netcam->setShowMessages(chatWidget->isVisible());
+    }
+}
+
+void ChatForm::showNetcam()
+{
+    if (!netcam) {
+        netcam = createNetcam();
+    }
+
+    connect(netcam.get(), &NetCamView::showMessageClicked, this,
+            &ChatForm::onShowMessagesClicked);
+
+    bodySplitter->insertWidget(0, netcam.get());
+    bodySplitter->setCollapsible(0, false);
+
+    QSize minSize = netcam->getSurfaceMinSize();
+    ContentDialog* current = ContentDialogManager::getInstance()->current();
+    if (current) {
+        current->onVideoShow(minSize);
+    }
+}
+
+void ChatForm::hideNetcam()
+{
+    if (!netcam) {
+        return;
+    }
+
+    ContentDialog* current = ContentDialogManager::getInstance()->current();
+    if (current) {
+        current->onVideoHide();
+    }
+
+    netcam->close();
+    netcam->hide();
+    netcam.reset();
+}
+
+void ChatForm::onSplitterMoved(int, int)
+{
+    if (netcam) {
+        netcam->setShowMessages(bodySplitter->sizes()[1] == 0);
+    }
+}
+
+void ChatForm::onShowMessagesClicked()
+{
+    if (netcam) {
+        if (bodySplitter->sizes()[1] == 0) {
+            bodySplitter->setSizes({1, 1});
+        }
+        else {
+            bodySplitter->setSizes({1, 0});
+        }
+
+        onSplitterMoved(0, 0);
     }
 }

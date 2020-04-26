@@ -52,8 +52,8 @@ T clamp(T x, T min, T max)
     return x;
 }
 
-ChatLog::ChatLog(const bool canRemove, QWidget* parent)
-    : QGraphicsView(parent), canRemove(canRemove)
+ChatLog::ChatLog(QWidget* parent)
+    : QGraphicsView(parent)
 {
     // Create the scene
     busyScene = new QGraphicsScene(this);
@@ -394,7 +394,7 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
     if (newLines.isEmpty())
         return;
 
-    if (canRemove && lines.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
+    if (lines.size() + static_cast<int>(DEF_NUM_MSG_TO_LOAD) >= maxMessages) {
         removeFirsts(DEF_NUM_MSG_TO_LOAD);
     }
 
@@ -407,10 +407,11 @@ void ChatLog::insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines)
 
     layout(lines.last()->getRow(), lines.size(), useableWidth());
 
-    if (visibleLines.size() > 1) {
-        startResizeWorker(visibleLines[1]);
+    // redo layout only when scrolled down
+    if(stickToBottom()) {
+        startResizeWorker(true);
     } else {
-        startResizeWorker();
+        updateSceneRect();
     }
 }
 
@@ -445,7 +446,7 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
         combLines.push_back(l);
     }
 
-    if (canRemove && lines.size() + DEF_NUM_MSG_TO_LOAD >= maxMessages) {
+    if (lines.size() + static_cast<int>(DEF_NUM_MSG_TO_LOAD) >= maxMessages) {
         removeLasts(DEF_NUM_MSG_TO_LOAD);
     }
 
@@ -463,9 +464,9 @@ void ChatLog::insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines)
 
     // redo layout
     if (visibleLines.size() > 1) {
-        startResizeWorker(visibleLines[1]);
+        startResizeWorker(stickToBottom(), visibleLines[1]);
     } else {
-        startResizeWorker();
+        startResizeWorker(stickToBottom());
     }
 
 }
@@ -481,7 +482,7 @@ void ChatLog::scrollToBottom()
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
 }
 
-void ChatLog::startResizeWorker(ChatLine::Ptr anchorLine)
+void ChatLog::startResizeWorker(bool stick, ChatLine::Ptr anchorLine)
 {
     if (lines.empty()) {
         isScroll = true;
@@ -491,11 +492,11 @@ void ChatLog::startResizeWorker(ChatLine::Ptr anchorLine)
     // (re)start the worker
     if (!workerTimer->isActive()) {
         // these values must not be reevaluated while the worker is running
-        if (anchorLine) {
-            workerAnchorLine = anchorLine;
-            workerStb = false;
+        workerStb = stick;
+        if (stick) {
+            workerAnchorLine = ChatLine::Ptr();
         } else {
-            workerStb = stickToBottom();
+            workerAnchorLine = anchorLine;
         }
     }
 
@@ -765,7 +766,7 @@ int ChatLog::getNumRemove() const
 
 void ChatLog::forceRelayout()
 {
-    startResizeWorker();
+    startResizeWorker(stickToBottom());
 }
 
 void ChatLog::checkVisibility(bool causedWheelEvent)
@@ -781,6 +782,10 @@ void ChatLog::checkVisibility(bool causedWheelEvent)
     // find last visible line
     auto upperBound = std::lower_bound(lowerBound, lines.cend(), getVisibleRect().bottom(),
                                        ChatLine::lessThanBSRectTop);
+
+    const ChatLine::Ptr lastLineBeforeVisible = lowerBound == lines.cbegin()
+        ? ChatLine::Ptr()
+        : *std::prev(lowerBound);
 
     // set visibilty
     QList<ChatLine::Ptr> newVisibleLines;
@@ -807,7 +812,7 @@ void ChatLog::checkVisibility(bool causedWheelEvent)
     //  visibleLines.last()->getRow() << " total " << visibleLines.size();
 
     if (!visibleLines.isEmpty()) {
-        emit firstVisibleLineChanged(visibleLines.at(0));
+        emit firstVisibleLineChanged(lastLineBeforeVisible, visibleLines.at(0));
     }
 
     if (causedWheelEvent) {
@@ -830,7 +835,7 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
     bool stb = stickToBottom();
 
     if (ev->size().width() != ev->oldSize().width()) {
-        startResizeWorker();
+        startResizeWorker(stb);
         stb = false; // let the resize worker handle it
     }
 
@@ -897,8 +902,9 @@ QRectF ChatLog::calculateSceneRect() const
 {
     qreal bottom = (lines.empty() ? 0.0 : lines.last()->sceneBoundingRect().bottom());
 
-    if (typingNotification.get() != nullptr)
+    if (typingNotification.get() != nullptr) {
         bottom += typingNotification->sceneBoundingRect().height() + lineSpacing;
+    }
 
     return QRectF(-margins.left(), -margins.top(), useableWidth(),
                   bottom + margins.bottom() + margins.top());

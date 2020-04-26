@@ -94,6 +94,7 @@ void Nexus::start()
     qRegisterMetaType<const int16_t*>("const int16_t*");
     qRegisterMetaType<int32_t>("int32_t");
     qRegisterMetaType<int64_t>("int64_t");
+    qRegisterMetaType<size_t>("size_t");
     qRegisterMetaType<QPixmap>("QPixmap");
     qRegisterMetaType<Profile*>("Profile*");
     qRegisterMetaType<ToxAV*>("ToxAV*");
@@ -112,7 +113,7 @@ void Nexus::start()
 
 #ifdef Q_OS_MAC
     // TODO: still needed?
-    globalMenuBar = new QMenuBar(0);
+    globalMenuBar = new QMenuBar();
     dockMenu = new QMenu(globalMenuBar);
 
     viewMenu = globalMenuBar->addMenu(QString());

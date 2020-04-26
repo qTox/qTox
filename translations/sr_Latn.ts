@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>podrazumevana rezolucija</translation>
+        <translation>Podrazumevana rezolucija</translation>
     </message>
     <message>
         <source>Disabled</source>

@@ -29,7 +29,7 @@
 #include <src/persistence/settings.h>
 #include <iostream>
 
-Q_DECLARE_METATYPE(QList<DhtServer>);
+Q_DECLARE_METATYPE(QList<DhtServer>)
 
 class MockSettings : public QObject, public ICoreSettings
 {
@@ -106,7 +106,7 @@ void TestCore::startup_without_proxy()
 
     test_core = Core::makeToxCore(savedata, settings, err);
 
-    if(test_core == nullptr) {
+    if (test_core == nullptr) {
         QFAIL("ToxCore initialisation failed");
     }
 
@@ -132,7 +132,7 @@ void TestCore::startup_with_invalid_proxy()
 
     test_core = Core::makeToxCore(savedata, settings, err);
 
-    if(test_core != nullptr) {
+    if (test_core != nullptr) {
         QFAIL("ToxCore initialisation passed with invalid SOCKS5 proxy address");
     }
 
@@ -144,7 +144,7 @@ void TestCore::startup_with_invalid_proxy()
 
     test_core = Core::makeToxCore(savedata, settings, err);
 
-    if(test_core != nullptr) {
+    if (test_core != nullptr) {
         QFAIL("ToxCore initialisation passed with invalid HTTP proxy address");
     }
 }

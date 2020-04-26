@@ -44,7 +44,7 @@ uint32_t Platform::getIdleTime()
     }
 
     property = IORegistryEntryCreateCFProperty(service, CFSTR("HIDIdleTime"), kCFAllocatorDefault, 0);
-    CFNumberGetValue((CFNumberRef)property, kCFNumberSInt64Type, &idleTime_ns);
+    CFNumberGetValue(static_cast<CFNumberRef>(property), kCFNumberSInt64Type, &idleTime_ns);
     CFRelease(property);
 
     return idleTime_ns / 1000000;

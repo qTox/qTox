@@ -73,7 +73,7 @@ enum class CreateToxDataError
 std::unique_ptr<ToxEncrypt> loadToxData(const QString& password, const QString& filePath,
                                         QByteArray& data, LoadToxDataError& error)
 {
-    std::unique_ptr<ToxEncrypt> tmpKey = nullptr;
+    std::unique_ptr<ToxEncrypt> tmpKey;
     qint64 fileSize = 0;
 
     QFile saveFile(filePath);
@@ -117,7 +117,7 @@ std::unique_ptr<ToxEncrypt> loadToxData(const QString& password, const QString& 
 
     saveFile.close();
     error = LoadToxDataError::OK;
-    return std::move(tmpKey);
+    return tmpKey;
 fail:
     saveFile.close();
     return nullptr;
@@ -133,7 +133,7 @@ fail:
 std::unique_ptr<ToxEncrypt> createToxData(const QString& name, const QString& password,
                                           const QString& filePath, CreateToxDataError& error)
 {
-    std::unique_ptr<ToxEncrypt> newKey{nullptr};
+    std::unique_ptr<ToxEncrypt> newKey;
     if (!password.isEmpty()) {
         newKey = ToxEncrypt::makeToxEncrypt(password);
         if (!newKey) {
@@ -523,8 +523,8 @@ QString Profile::avatarPath(const ToxPk& owner, bool forceUnencrypted)
                       && hashSize <= crypto_generichash_KEYBYTES_MAX,
                   "Key size not supported by libsodium");
     QByteArray hash(hashSize, 0);
-    crypto_generichash((uint8_t*)hash.data(), hashSize, (uint8_t*)idData.data(), idData.size(),
-                       (uint8_t*)pubkeyData.data(), pubkeyData.size());
+    crypto_generichash(reinterpret_cast<uint8_t*>(hash.data()), hashSize, reinterpret_cast<uint8_t*>(idData.data()), idData.size(),
+                       reinterpret_cast<uint8_t*>(pubkeyData.data()), pubkeyData.size());
     return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
 }
 
@@ -728,7 +728,7 @@ QByteArray Profile::getAvatarHash(const ToxPk& owner)
 {
     QByteArray pic = loadAvatarData(owner);
     QByteArray avatarHash(TOX_HASH_LENGTH, 0);
-    tox_hash((uint8_t*)avatarHash.data(), (uint8_t*)pic.data(), pic.size());
+    tox_hash(reinterpret_cast<uint8_t*>(avatarHash.data()), reinterpret_cast<uint8_t*>(pic.data()), pic.size());
     return avatarHash;
 }
 
@@ -812,7 +812,7 @@ bool Profile::isEncrypted(QString name)
         return false;
     }
 
-    saveFile.read((char*)data, TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
+    saveFile.read(reinterpret_cast<char*>(data), TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
     saveFile.close();
 
     return tox_is_data_encrypted(data);

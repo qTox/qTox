@@ -19,7 +19,6 @@
 
 #include "addfriendform.h"
 #include "src/core/core.h"
-#include "src/net/toxme.h"
 #include "src/nexus.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
@@ -53,8 +52,7 @@ namespace
 
     bool checkIsValidId(const QString& id)
     {
-        static const QRegularExpression dnsIdExpression("^\\S+@\\S+$");
-        return ToxId::isToxId(id) || id.contains(dnsIdExpression);
+        return ToxId::isToxId(id);
     }
 }
 
@@ -112,7 +110,7 @@ AddFriendForm::AddFriendForm()
 
     // accessibility stuff
     toxIdLabel.setAccessibleDescription(
-        tr("Tox ID, either 76 hexadecimal characters or name@example.com"));
+        tr("Tox ID, 76 hexadecimal characters"));
     toxId.setAccessibleDescription(tr("Type in Tox ID of your friend"));
     messageLabel.setAccessibleDescription(tr("Friend request message"));
     message.setAccessibleDescription(tr(
@@ -202,12 +200,9 @@ void AddFriendForm::addFriend(const QString& idText)
     ToxId friendId(idText);
 
     if (!friendId.isValid()) {
-        friendId = Toxme::lookup(idText); // Try Toxme
-        if (!friendId.isValid()) {
-            GUI::showWarning(tr("Couldn't add friend"),
-                             tr("%1 Tox ID is invalid or does not exist", "Toxme error").arg(idText));
-            return;
-        }
+        GUI::showWarning(tr("Couldn't add friend"),
+                         tr("%1 Tox ID is invalid", "Tox address error").arg(idText));
+        return;
     }
 
     deleteFriendRequest(friendId);
@@ -289,7 +284,7 @@ void AddFriendForm::onIdChanged(const QString& id)
     //: Tox ID of the person you're sending a friend request to
     const QString toxIdText(tr("Tox ID"));
     //: Tox ID format description
-    const QString toxIdComment(tr("either 76 hexadecimal characters or name@example.com"));
+    const QString toxIdComment(tr("76 hexadecimal characters"));
 
     const QString labelText =
         isValidId ? QStringLiteral("%1 (%2)") : QStringLiteral("%1 <font color='red'>(%2)</font>");

@@ -27,7 +27,10 @@
 #include <QSize>
 
 extern "C" {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
 #include <libavcodec/avcodec.h>
+#pragma GCC diagnostic pop
 }
 
 #include <atomic>

@@ -37,9 +37,12 @@ class QTimer;
 class AudioFilterer;
 class CoreVideoSource;
 class CoreAV;
+class Group;
 
-class ToxCall
+class ToxCall : public QObject
 {
+    Q_OBJECT
+
 protected:
     ToxCall() = delete;
     ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio);
@@ -74,7 +77,6 @@ protected:
     CoreAV* av{nullptr};
     // audio
     IAudioControl& audio;
-    QMetaObject::Connection audioInConn;
     bool muteMic{false};
     bool muteVol{false};
     // video
@@ -82,12 +84,12 @@ protected:
     QMetaObject::Connection videoInConn;
     bool videoEnabled{false};
     bool nullVideoBitrate{false};
-    std::unique_ptr<IAudioSource> audioSource = nullptr;
-    QMetaObject::Connection audioSrcInvalid;
+    std::unique_ptr<IAudioSource> audioSource;
 };
 
 class ToxFriendCall : public ToxCall
 {
+    Q_OBJECT
 public:
     ToxFriendCall() = delete;
     ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av, IAudioControl& audio);
@@ -95,34 +97,28 @@ public:
     ToxFriendCall& operator=(ToxFriendCall&& other) = delete;
     ~ToxFriendCall();
 
-    void startTimeout(uint32_t callId);
-    void stopTimeout();
-
     TOXAV_FRIEND_CALL_STATE getState() const;
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
     void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const;
 
-protected:
-    std::unique_ptr<QTimer> timeoutTimer;
-
-private:
-    QMetaObject::Connection audioSinkInvalid;
+private slots:
     void onAudioSourceInvalidated();
     void onAudioSinkInvalidated();
 
 private:
+    QMetaObject::Connection audioSinkInvalid;
     TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
-    static constexpr int CALL_TIMEOUT = 45000;
-    std::unique_ptr<IAudioSink> sink = nullptr;
+    std::unique_ptr<IAudioSink> sink;
     uint32_t friendId;
 };
 
 class ToxGroupCall : public ToxCall
 {
+    Q_OBJECT
 public:
     ToxGroupCall() = delete;
-    ToxGroupCall(int GroupNum, CoreAV& av, IAudioControl& audio);
+    ToxGroupCall(const Group& group, CoreAV& av, IAudioControl& audio);
     ToxGroupCall(ToxGroupCall&& other) = delete;
     ~ToxGroupCall();
 
@@ -139,8 +135,9 @@ private:
 
     std::map<ToxPk, std::unique_ptr<IAudioSink>> peers;
     std::map<ToxPk, QMetaObject::Connection> sinkInvalid;
-    int groupId;
+    const Group& group;
 
+private slots:
     void onAudioSourceInvalidated();
     void onAudioSinkInvalidated(ToxPk peerId);
 };

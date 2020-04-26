@@ -119,7 +119,7 @@ cd ../../
 # libsodium
 git clone git://github.com/jedisct1/libsodium.git
 cd libsodium
-git checkout tags/1.0.8
+git checkout tags/1.0.18
 ./autogen.sh
 CC="ccache $CC" CXX="ccache $CXX" ./configure
 CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc)
@@ -127,7 +127,7 @@ sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.8 --nodoc -y
 sudo ldconfig
 cd ..
 # toxcore
-git clone --branch v0.2.10 --depth=1 https://github.com/toktok/c-toxcore.git toxcore
+git clone --branch v0.2.11 --depth=1 https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
 autoreconf -if
 CC="ccache $CC" CXX="ccache $CXX" ./configure
@@ -165,8 +165,7 @@ build_qtox() {
     echo '*** BUILDING "MINIMAL" VERSION ***'
     cmake -H. -B"$BUILDDIR" \
         -DSMILEYS=DISABLED \
-        -DENABLE_STATUSNOTIFIER=False \
-        -DENABLE_GTK_SYSTRAY=False \
+        -DSTRICT_OPTIONS=ON \
         -DSPELL_CHECK=OFF
 
     bdir
@@ -175,7 +174,9 @@ build_qtox() {
     rm -rf "$BUILDDIR"
 
     echo '*** BUILDING "FULL" VERSION ***'
-    cmake -H. -B"$BUILDDIR" -DUPDATE_CHECK=ON
+    cmake -H. -B"$BUILDDIR" \
+        -DUPDATE_CHECK=ON \
+        -DSTRICT_OPTIONS=ON
     bdir
 }
 

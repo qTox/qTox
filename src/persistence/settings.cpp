@@ -53,9 +53,6 @@
  * @warning Don't use it to save every single thing you want to save, use it
  * for some general purpose widgets, such as MainWindows or Splitters,
  * which have widget->saveX() and widget->loadX() methods.
- *
- * @var QString Settings::toxmeInfo
- * @brief Toxme info like name@server
  */
 
 const QString Settings::globalSettingsFile = "qtox.ini";
@@ -246,10 +243,6 @@ void Settings::loadGlobal()
         outVolume = s.value("outVolume", 100).toInt();
         enableTestSound = s.value("enableTestSound", true).toBool();
         audioBitrate = s.value("audioBitrate", 64).toInt();
-        enableBackend2 = false;
-#ifdef USE_FILTERAUDIO
-        enableBackend2 = s.value("enableBackend2", false).toBool();
-#endif
     }
     s.endGroup();
 
@@ -395,7 +388,7 @@ bool Settings::applyCommandLineOptions(const QCommandLineParser& parser)
 {
     if (!verifyProxySettings(parser)) {
         return false;
-    };
+    }
 
     QString IPv6Setting = parser.value("I").toUpper();
     QString LANSetting = parser.value("L").toUpper();
@@ -581,15 +574,6 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
         ps.endArray();
     }
     ps.endGroup();
-
-    ps.beginGroup("Toxme");
-    {
-        toxmeInfo = ps.value("info", "").toString();
-        toxmeBio = ps.value("bio", "").toString();
-        toxmePriv = ps.value("priv", false).toBool();
-        toxmePass = ps.value("pass", "").toString();
-    }
-    ps.endGroup();
 }
 
 void Settings::resetToDefault()
@@ -726,7 +710,6 @@ void Settings::saveGlobal()
         s.setValue("outVolume", outVolume);
         s.setValue("enableTestSound", enableTestSound);
         s.setValue("audioBitrate", audioBitrate);
-        s.setValue("enableBackend2", enableBackend2);
     }
     s.endGroup();
 
@@ -851,16 +834,6 @@ void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
         ps.setValue("blackList", blackList.join('\n'));
     }
     ps.endGroup();
-
-    ps.beginGroup("Toxme");
-    {
-        ps.setValue("info", toxmeInfo);
-        ps.setValue("bio", toxmeBio);
-        ps.setValue("priv", toxmePriv);
-        ps.setValue("pass", toxmePass);
-    }
-    ps.endGroup();
-
     ps.save();
 }
 
@@ -1032,7 +1005,7 @@ void Settings::setAutorun(bool newValue)
         emit autorunChanged(autorun);
     }
 #else
-    Q_UNUSED(newValue);
+    Q_UNUSED(newValue)
 #endif
 }
 
@@ -1273,93 +1246,6 @@ void Settings::setTranslation(const QString& newValue)
     if (newValue != translation) {
         translation = newValue;
         emit translationChanged(translation);
-    }
-}
-
-void Settings::deleteToxme()
-{
-    setToxmeInfo("");
-    setToxmeBio("");
-    setToxmePriv(false);
-    setToxmePass("");
-}
-
-void Settings::setToxme(QString name, QString server, QString bio, bool priv, QString pass)
-{
-    setToxmeInfo(name + "@" + server);
-    setToxmeBio(bio);
-    setToxmePriv(priv);
-    if (!pass.isEmpty())
-        setToxmePass(pass);
-}
-
-QString Settings::getToxmeInfo() const
-{
-    QMutexLocker locker{&bigLock};
-    return toxmeInfo;
-}
-
-void Settings::setToxmeInfo(const QString& info)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (info != toxmeInfo) {
-        if (info.split("@").size() == 2) {
-            toxmeInfo = info;
-            emit toxmeInfoChanged(toxmeInfo);
-        } else {
-            qWarning() << info << "is not a valid toxme string -> value ignored.";
-        }
-    }
-}
-
-QString Settings::getToxmeBio() const
-{
-    QMutexLocker locker{&bigLock};
-    return toxmeBio;
-}
-
-void Settings::setToxmeBio(const QString& bio)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (bio != toxmeBio) {
-        toxmeBio = bio;
-        emit toxmeBioChanged(toxmeBio);
-    }
-}
-
-bool Settings::getToxmePriv() const
-{
-    QMutexLocker locker{&bigLock};
-    return toxmePriv;
-}
-
-void Settings::setToxmePriv(bool priv)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (priv != toxmePriv) {
-        toxmePriv = priv;
-        emit toxmePrivChanged(toxmePriv);
-    }
-}
-
-QString Settings::getToxmePass() const
-{
-    QMutexLocker locker{&bigLock};
-    return toxmePass;
-}
-
-void Settings::setToxmePass(const QString& pass)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (pass != toxmePass) {
-        toxmePass = pass;
-
-        // password is not exposed for security reasons
-        emit toxmePassChanged();
     }
 }
 
@@ -2121,22 +2007,6 @@ void Settings::setAudioBitrate(int bitrate)
     }
 }
 
-bool Settings::getEnableBackend2() const
-{
-    QMutexLocker locker{&bigLock};
-    return enableBackend2;
-}
-
-void Settings::setEnableBackend2(bool enabled)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (enabled != enableBackend2) {
-        enableBackend2 = enabled;
-        emit enableBackend2Changed(enabled);
-    }
-}
-
 QRect Settings::getScreenRegion() const
 {
     QMutexLocker locker(&bigLock);
@@ -2275,7 +2145,7 @@ void Settings::setFriendActivity(const ToxPk& id, const QDateTime& activity)
 
 void Settings::saveFriendSettings(const ToxPk& id)
 {
-    Q_UNUSED(id);
+    Q_UNUSED(id)
     savePersonal();
 }
 

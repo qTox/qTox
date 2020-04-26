@@ -95,7 +95,6 @@ workspace
 │   ├── dep-cache
 │   │   ├── libexif
 │   │   ├── libffmpeg
-│   │   ├── libfilteraudio
 │   │   ├── libopenal
 │   │   ├── libopenssl
 │   │   ├── libopus
@@ -114,7 +113,6 @@ workspace
     ├── dep-cache
     │   ├── libexif
     │   ├── libffmpeg
-    │   ├── libfilteraudio
     │   ├── libopenal
     │   ├── libopenssl
     │   ├── libopus

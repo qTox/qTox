@@ -264,163 +264,6 @@ Share it with your friends to begin chatting.</string>
          </layout>
         </widget>
        </item>
-       <item>
-        <widget class="QGroupBox" name="horizontalGroupBox">
-         <property name="title">
-          <string>Register on ToxMe</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <layout class="QFormLayout" name="formLayout">
-            <item row="0" column="0">
-             <widget class="QLabel" name="toxmeUsernameLabel">
-              <property name="text">
-               <string>My username</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="toxmeUsername">
-              <property name="toolTip">
-               <string comment="Tooltip for the `Username` ToxMe field.">Name for the ToxMe service.</string>
-              </property>
-              <property name="accessibleDescription">
-               <string>ToxMe username to be shown on ToxMe</string>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="toxmeBioLabel">
-              <property name="toolTip">
-               <string comment="Tooltip for the Biography text.">Optional. Something about you. Or your cat.</string>
-              </property>
-              <property name="text">
-               <string>My biography</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLineEdit" name="toxmeBio">
-              <property name="toolTip">
-               <string comment="Tooltip for the Biography field.">Optional. Something about you. Or your cat.</string>
-              </property>
-              <property name="accessibleDescription">
-               <string>Optional ToxMe biography to be shown on ToxMe</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="toxmeServerLabel">
-              <property name="toolTip">
-               <string>ToxMe service to register on.</string>
-              </property>
-              <property name="text">
-               <string>Server</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QComboBox" name="toxmeServersList">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="toolTip">
-               <string>ToxMe service to register on.</string>
-              </property>
-              <property name="accessibleDescription">
-               <string>ToxMe service address</string>
-              </property>
-              <property name="editable">
-               <bool>true</bool>
-              </property>
-              <property name="currentIndex">
-               <number>-1</number>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QCheckBox" name="toxmePrivacy">
-              <property name="toolTip">
-               <string comment="Tooltip for the `Hide my name from public list` ToxMe checkbox.">If not set, ToxMe entries are publicly visible.</string>
-              </property>
-              <property name="accessibleDescription">
-               <string>Visibility on the ToxMe service</string>
-              </property>
-              <property name="text">
-               <string>Hide my name from the public list</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QPushButton" name="toxmeRegisterButton">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="accessibleDescription">
-               <string>Register on ToxMe</string>
-              </property>
-              <property name="text">
-               <string>Register</string>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-              <property name="default">
-               <bool>false</bool>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="0">
-             <widget class="QLabel" name="toxmePasswordLabel">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string>Your password</string>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="1">
-             <widget class="QLineEdit" name="toxmePassword">
-              <property name="accessibleDescription">
-               <string>Password</string>
-              </property>
-              <property name="frame">
-               <bool>false</bool>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-              <property name="clearButtonEnabled">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
-               <widget class="QPushButton" name="toxmeUpdateButton">
-                <property name="accessibleDescription">
-                 <string>Update ToxMe entry</string>
-                </property>
-                <property name="text">
-                 <string>Update</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="profilesGroup">
          <property name="title">
@@ -598,6 +441,19 @@ Profile does not contain your history.</string>
          </layout>
         </widget>
        </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -618,13 +474,6 @@ Profile does not contain your history.</string>
   <tabstop>toxId</tabstop>
   <tabstop>saveQr</tabstop>
   <tabstop>copyQr</tabstop>
-  <tabstop>toxmeUsername</tabstop>
-  <tabstop>toxmeBio</tabstop>
-  <tabstop>toxmeServersList</tabstop>
-  <tabstop>toxmePrivacy</tabstop>
-  <tabstop>toxmeRegisterButton</tabstop>
-  <tabstop>toxmeUpdateButton</tabstop>
-  <tabstop>toxmePassword</tabstop>
   <tabstop>renameButton</tabstop>
   <tabstop>deleteButton</tabstop>
   <tabstop>exportButton</tabstop>
