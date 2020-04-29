@@ -30,5 +30,5 @@
  */
 std::unique_ptr<IAudioControl> Audio::makeAudio(IAudioSettings& settings)
 {
-    return std::unique_ptr<IAudioControl>(new OpenAL());
+    return std::unique_ptr<IAudioControl>(new OpenAL(settings));
 }

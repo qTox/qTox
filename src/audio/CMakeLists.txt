@@ -14,5 +14,27 @@
 #   You should have received a copy of the GNU General Public License
 #   along with qTox.  If not, see <http://www.gnu.org/licenses/>
 
-add_subdirectory(audio)
-add_subdirectory(util)
+set(FILE_LIST
+    "audio.h"
+    "audio.cpp"
+    "backend/alsink.cpp"
+    "backend/alsink.h"
+    "backend/alsource.cpp"
+    "backend/alsource.h"
+    "backend/openal.cpp"
+    "backend/openal.h"
+    "iaudiocontrol.h"
+    "iaudiosettings.h"
+    "iaudiosink.h"
+    "iaudiosource.h")
+    
+
+add_library(audio_library STATIC ${FILE_LIST})
+
+# We need this directory, and users of our library will need it too
+target_include_directories(audio_library PUBLIC ./)
+
+target_link_libraries(audio_library ${util_libary})
+target_link_libraries(audio_library Qt5::Core)
+target_link_libraries(audio_library ${OPENAL_LIBRARIES})
+
