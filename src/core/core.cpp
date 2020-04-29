@@ -31,7 +31,7 @@
 #include "src/net/bootstrapnodeupdater.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
-#include "src/util/strongtype.h"
+#include "util/strongtype.h"
 
 #include <QCoreApplication>
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))

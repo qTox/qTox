@@ -27,9 +27,9 @@
 #include <QScreen>
 #include <QShowEvent>
 
-#include "src/audio/audio.h"
-#include "src/audio/iaudiosettings.h"
-#include "src/audio/iaudiosource.h"
+#include "audio/audio.h"
+#include "audio/iaudiosettings.h"
+#include "audio/iaudiosource.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/video/cameradevice.h"

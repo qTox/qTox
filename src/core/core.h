@@ -30,7 +30,7 @@
 #include "toxid.h"
 #include "toxpk.h"
 
-#include "src/util/strongtype.h"
+#include "util/strongtype.h"
 #include "src/model/status.h"
 #include <tox/tox.h>
 

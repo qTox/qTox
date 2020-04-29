@@ -38,6 +38,7 @@
 #include <QWindow>
 #endif
 
+#include "audio/audio.h"
 #include "circlewidget.h"
 #include "contentdialog.h"
 #include "contentlayout.h"
@@ -47,7 +48,6 @@
 #include "maskablepixmapwidget.h"
 #include "splitterrestorer.h"
 #include "form/groupchatform.h"
-#include "src/audio/audio.h"
 #include "src/chatlog/content/filetransferwidget.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"

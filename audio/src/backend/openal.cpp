@@ -18,7 +18,8 @@
 */
 
 #include "openal.h"
-#include "src/persistence/settings.h"
+
+#include "audio/iaudiosettings.h"
 
 #include <QDebug>
 #include <QFile>
@@ -56,8 +57,9 @@ void applyGain(int16_t* buffer, uint32_t bufferSize, qreal gainFactor)
 static const unsigned int BUFFER_COUNT = 16;
 static const uint32_t AUDIO_CHANNELS = 2;
 
-OpenAL::OpenAL()
-    : audioThread{new QThread}
+OpenAL::OpenAL(IAudioSettings& _settings)
+    : settings{_settings}
+    , audioThread{new QThread}
 {
     // initialize OpenAL error stack
     alGetError();
@@ -370,7 +372,7 @@ void OpenAL::destroySource(AlSource& source)
  */
 bool OpenAL::autoInitInput()
 {
-    return alInDev ? true : initInput(Settings::getInstance().getInDev());
+    return alInDev ? true : initInput(settings.getInDev());
 }
 
 /**
@@ -380,7 +382,7 @@ bool OpenAL::autoInitInput()
  */
 bool OpenAL::autoInitOutput()
 {
-    return alOutDev ? true : initOutput(Settings::getInstance().getOutDev());
+    return alOutDev ? true : initOutput(settings.getOutDev());
 }
 
 bool OpenAL::initInput(const QString& deviceName)
@@ -390,7 +392,7 @@ bool OpenAL::initInput(const QString& deviceName)
 
 bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
 {
-    if (!Settings::getInstance().getAudioInDevEnabled()) {
+    if (!settings.getAudioInDevEnabled()) {
         return false;
     }
 
@@ -417,8 +419,8 @@ bool OpenAL::initInput(const QString& deviceName, uint32_t channels)
     }
 
     inputBuffer = new int16_t[AUDIO_FRAME_SAMPLE_COUNT_TOTAL];
-    setInputGain(Settings::getInstance().getAudioInGainDecibel());
-    setInputThreshold(Settings::getInstance().getAudioThreshold());
+    setInputGain(settings.getAudioInGainDecibel());
+    setInputThreshold(settings.getAudioThreshold());
 
     qDebug() << "Opened audio input" << deviceName;
     alcCaptureStart(alInDev);
@@ -435,7 +437,7 @@ bool OpenAL::initOutput(const QString& deviceName)
     assert(sinks.size() == 0);
 
     outputInitialized = false;
-    if (!Settings::getInstance().getAudioOutDevEnabled())
+    if (!settings.getAudioOutDevEnabled())
         return false;
 
     qDebug() << "Opening audio output" << deviceName;
@@ -460,7 +462,7 @@ bool OpenAL::initOutput(const QString& deviceName)
     }
 
     // init master volume
-    alListenerf(AL_GAIN, Settings::getInstance().getOutVolume() * 0.01f);
+    alListenerf(AL_GAIN, settings.getOutVolume() * 0.01f);
     checkAlError();
 
     outputInitialized = true;

@@ -19,9 +19,9 @@
 
 #include <memory>
 
-#include "src/audio/audio.h"
-#include "src/audio/iaudiosettings.h"
-#include "src/audio/backend/openal.h"
+#include "audio/audio.h"
+#include "audio/iaudiosettings.h"
+#include "backend/openal.h"
 
 /**
  * @brief Select the audio backend
@@ -30,5 +30,5 @@
  */
 std::unique_ptr<IAudioControl> Audio::makeAudio(IAudioSettings& settings)
 {
-    return std::unique_ptr<IAudioControl>(new OpenAL());
+    return std::unique_ptr<IAudioControl>(new OpenAL(settings));
 }

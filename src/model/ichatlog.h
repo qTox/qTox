@@ -29,7 +29,7 @@
 #include "src/model/friend.h"
 #include "src/model/group.h"
 #include "src/persistence/history.h"
-#include "src/util/strongtype.h"
+#include "util/strongtype.h"
 #include "src/widget/searchtypes.h"
 
 #include <cassert>

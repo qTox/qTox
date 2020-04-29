@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/util/strongtype.h"
+#include "util/strongtype.h"
 
 #include <QMetaType>
 #include <cstdint>

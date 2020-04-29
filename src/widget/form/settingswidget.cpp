@@ -19,7 +19,7 @@
 
 #include "settingswidget.h"
 
-#include "src/audio/audio.h"
+#include "audio/audio.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/net/updatecheck.h"
