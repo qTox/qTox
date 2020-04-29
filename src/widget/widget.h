@@ -28,8 +28,8 @@
 
 #include "genericchatitemwidget.h"
 
-#include "src/audio/iaudiocontrol.h"
-#include "src/audio/iaudiosink.h"
+#include "audio/iaudiocontrol.h"
+#include "audio/iaudiosink.h"
 #include "src/core/core.h"
 #include "src/core/groupid.h"
 #include "src/core/toxfile.h"

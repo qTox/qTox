@@ -20,9 +20,9 @@
 
 #pragma once
 
-#include "src/audio/iaudiocontrol.h"
-#include "src/audio/backend/alsink.h"
-#include "src/audio/backend/alsource.h"
+#include "audio/iaudiocontrol.h"
+#include "alsink.h"
+#include "alsource.h"
 
 #include <memory>
 #include <unordered_set>
@@ -44,12 +44,14 @@
 #include <AL/alext.h>
 #endif
 
+class IAudioSettings;
+
 class OpenAL : public IAudioControl
 {
     Q_OBJECT
 
 public:
-    OpenAL();
+    OpenAL(IAudioSettings& _settings);
     virtual ~OpenAL();
 
     qreal maxOutputVolume() const
@@ -131,6 +133,7 @@ private:
     float getVolume();
 
 protected:
+    IAudioSettings& settings;
     QThread* audioThread;
     mutable QMutex audioLock{QMutex::Recursive};
     QString inDev{};

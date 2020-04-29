@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/model/interface.h"
+#include "util/interface.h"
 
 #include <QString>
 #include <QRect>

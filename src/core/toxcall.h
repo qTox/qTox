@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "src/audio/iaudiocontrol.h"
-#include "src/audio/iaudiosink.h"
-#include "src/audio/iaudiosource.h"
+#include "audio/iaudiocontrol.h"
+#include "audio/iaudiosink.h"
+#include "audio/iaudiosource.h"
 #include <src/core/toxpk.h>
 #include <tox/toxav.h>
 

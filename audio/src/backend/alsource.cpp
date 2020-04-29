@@ -17,8 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/audio/backend/alsource.h"
-#include "src/audio/backend/openal.h"
+#include "audio/src/backend/alsource.h"
+#include "audio/src/backend/openal.h"
 
 /**
  * @brief Emits audio frames captured by an input device or other audio source.

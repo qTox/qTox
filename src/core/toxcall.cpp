@@ -18,7 +18,7 @@
 */
 
 #include "src/core/toxcall.h"
-#include "src/audio/audio.h"
+#include "audio/audio.h"
 #include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 #include "src/video/camerasource.h"

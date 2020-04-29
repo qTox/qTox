@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/audio/iaudiosource.h"
+#include "audio/iaudiosource.h"
 #include <QMutex>
 #include <QObject>
 

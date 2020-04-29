@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "src/audio/iaudiosettings.h"
+#include "audio/iaudiosettings.h"
 #include "src/core/icoresettings.h"
 #include "src/core/toxencrypt.h"
 #include "src/core/toxfile.h"

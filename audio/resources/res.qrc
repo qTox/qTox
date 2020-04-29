@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/audio">
+        <file>notification.s16le.pcm</file>
+        <file>ToxIncomingCall.s16le.pcm</file>
+        <file>ToxOutgoingCall.s16le.pcm</file>
+        <file>ToxEndCall.s16le.pcm</file>
+    </qresource>
+</RCC>
