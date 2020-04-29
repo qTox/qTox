@@ -20,7 +20,7 @@
 #ifndef I_FRIEND_SETTINGS_H
 #define I_FRIEND_SETTINGS_H
 
-#include "src/model/interface.h"
+#include "src/util/interface.h"
 
 #include <QObject>
 #include <QFlag>

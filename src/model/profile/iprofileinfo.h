@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/model/interface.h"
+#include "src/util/interface.h"
 
 #include <QObject>
 

@@ -20,7 +20,7 @@
 #ifndef I_AUDIO_SETTINGS_H
 #define I_AUDIO_SETTINGS_H
 
-#include "src/model/interface.h"
+#include "src/util/interface.h"
 
 #include <QString>
 

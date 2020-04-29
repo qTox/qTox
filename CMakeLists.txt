@@ -368,7 +368,6 @@ set(${PROJECT_NAME}_SOURCES
   src/model/group.h
   src/model/status.cpp
   src/model/status.h
-  src/model/interface.h
   src/model/profile/iprofileinfo.h
   src/model/profile/profileinfo.cpp
   src/model/profile/profileinfo.h
@@ -658,6 +657,8 @@ MESSAGE( STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS} )
 # the compiler flags for compiling C++ sources
 MESSAGE( STATUS "CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS} )
 
+add_subdirectory(src)
+
 add_library(${PROJECT_NAME}_static
   STATIC
   ${${PROJECT_NAME}_FORMS}
@@ -667,6 +668,8 @@ add_library(${PROJECT_NAME}_static
 target_link_libraries(${PROJECT_NAME}_static
   ${CMAKE_REQUIRED_LIBRARIES}
   ${ALL_LIBRARIES})
+
+target_link_libraries(${PROJECT_NAME}_static util_library)
 
 add_executable(${PROJECT_NAME}
   WIN32

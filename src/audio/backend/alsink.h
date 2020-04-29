@@ -23,7 +23,7 @@
 #include <QMutex>
 #include <QObject>
 
-#include "src/model/interface.h"
+#include "src/util/interface.h"
 #include "src/audio/iaudiosink.h"
 
 class OpenAL;
