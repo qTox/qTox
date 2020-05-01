@@ -39,9 +39,10 @@
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
-PrivacyForm::PrivacyForm()
+PrivacyForm::PrivacyForm(Core* _core)
     : GenericForm(QPixmap(":/img/settings/privacy.png"))
     , bodyUI(new Ui::PrivacySettings)
+    , core{_core}
 {
     bodyUI->setupUi(this);
 
@@ -85,14 +86,15 @@ void PrivacyForm::on_nospamLineEdit_editingFinished()
 
     bool ok;
     uint32_t nospam = newNospam.toLongLong(&ok, 16);
-    if (ok)
-        Core::getInstance()->setNospam(nospam);
+    if (ok) {
+        core->setNospam(nospam);
+    }
 }
 
 void PrivacyForm::showEvent(QShowEvent*)
 {
     const Settings& s = Settings::getInstance();
-    bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().getNoSpamString());
+    bodyUI->nospamLineEdit->setText(core->getSelfId().getNoSpamString());
     bodyUI->cbTypingNotification->setChecked(s.getTypingNotification());
     bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
     bodyUI->blackListTextEdit->setText(s.getBlackList().join('\n'));
@@ -115,8 +117,8 @@ void PrivacyForm::on_randomNosapamButton_clicked()
         newNospam = (newNospam << 8) + (qrand() % 256); // Generate byte by byte. For some reason.
 #endif
 
-    Core::getInstance()->setNospam(newNospam);
-    bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().getNoSpamString());
+    core->setNospam(newNospam);
+    bodyUI->nospamLineEdit->setText(core->getSelfId().getNoSpamString());
 }
 
 void PrivacyForm::on_nospamLineEdit_textChanged()
