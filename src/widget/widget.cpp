@@ -276,16 +276,18 @@ void Widget::init()
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
     groupInviteForm = new GroupInviteForm;
+
+    core = Nexus::getCore();
+
 #if UPDATE_CHECK_ENABLED
     updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(settings));
     connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
 #endif
-    settingsWidget = new SettingsWidget(updateCheck.get(), audio, this);
+    settingsWidget = new SettingsWidget(updateCheck.get(), audio, core, this);
 #if UPDATE_CHECK_ENABLED
     updateCheck->checkForUpdate();
 #endif
 
-    core = Nexus::getCore();
     CoreFile* coreFile = core->getCoreFile();
     Profile* profile = Nexus::getProfile();
     profileInfo = new ProfileInfo(core, profile);
