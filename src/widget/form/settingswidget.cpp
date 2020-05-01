@@ -41,10 +41,10 @@
 
 #include <memory>
 
-SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, Widget* parent)
+SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, Core* core, Widget* parent)
     : QWidget(parent, Qt::Window)
 {
-    CoreAV* coreAV = Core::getInstance()->getAv();
+    CoreAV* coreAV = core->getAv();
     IAudioSettings* audioSettings = &Settings::getInstance();
     IVideoSettings* videoSettings = &Settings::getInstance();
     CameraSource& camera = CameraSource::getInstance();
