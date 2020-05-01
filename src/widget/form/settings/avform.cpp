@@ -454,8 +454,7 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
 
     camera.setupDevice(dev, mode);
     if (dev == "none") {
-        // TODO: Use injected `coreAv` currently injected `nullptr`
-        Core::getInstance()->getAv()->sendNoVideo();
+        coreAV->sendNoVideo();
     }
 }
 
