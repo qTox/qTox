@@ -6,10 +6,6 @@
         <file alias="DejaVuSans.ttf">res/font/DejaVuSans.ttf</file>
     </qresource>
     <qresource prefix="/">
-        <file>audio/notification.s16le.pcm</file>
-        <file>audio/ToxIncomingCall.s16le.pcm</file>
-        <file>audio/ToxOutgoingCall.s16le.pcm</file>
-        <file>audio/ToxEndCall.s16le.pcm</file>
         <file>img/add.svg</file>
         <file>img/avatar_mask.svg</file>
         <file>img/contact.svg</file>

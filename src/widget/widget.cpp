@@ -47,7 +47,7 @@
 #include "maskablepixmapwidget.h"
 #include "splitterrestorer.h"
 #include "form/groupchatform.h"
-#include "src/audio/audio.h"
+#include "audio/src/audio.h"
 #include "src/chatlog/content/filetransferwidget.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"

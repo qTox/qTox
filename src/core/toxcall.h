@@ -20,9 +20,9 @@
 #ifndef TOXCALL_H
 #define TOXCALL_H
 
-#include "src/audio/iaudiocontrol.h"
-#include "src/audio/iaudiosink.h"
-#include "src/audio/iaudiosource.h"
+#include "audio/src/iaudiocontrol.h"
+#include "audio/src/iaudiosink.h"
+#include "audio/src/iaudiosource.h"
 #include <src/core/toxpk.h>
 #include <tox/toxav.h>
 

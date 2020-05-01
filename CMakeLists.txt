@@ -646,6 +646,7 @@ MESSAGE( STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS} )
 MESSAGE( STATUS "CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS} )
 
 add_subdirectory(src)
+add_subdirectory(audio)
 
 add_library(${PROJECT_NAME}_static
   STATIC

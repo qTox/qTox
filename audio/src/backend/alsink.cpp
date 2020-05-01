@@ -17,8 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/audio/backend/alsink.h"
-#include "src/audio/backend/openal.h"
+#include "audio/src/backend/alsink.h"
+#include "audio/src/backend/openal.h"
 
 #include <QDebug>
 #include <QMutexLocker>

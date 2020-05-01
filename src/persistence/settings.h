@@ -21,7 +21,7 @@
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
-#include "src/audio/iaudiosettings.h"
+#include "audio/src/iaudiosettings.h"
 #include "src/core/icoresettings.h"
 #include "src/core/toxencrypt.h"
 #include "src/core/toxfile.h"

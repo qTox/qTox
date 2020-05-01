@@ -19,9 +19,9 @@
 
 #include <memory>
 
-#include "src/audio/audio.h"
-#include "src/audio/iaudiosettings.h"
-#include "src/audio/backend/openal.h"
+#include "audio/src/audio.h"
+#include "audio/src/iaudiosettings.h"
+#include "audio/src/backend/openal.h"
 
 /**
  * @brief Select the audio backend

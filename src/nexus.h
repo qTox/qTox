@@ -23,7 +23,7 @@
 
 #include <QObject>
 
-#include "src/audio/iaudiocontrol.h"
+#include "audio/src/iaudiocontrol.h"
 
 class Widget;
 class Profile;

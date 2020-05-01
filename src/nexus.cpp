@@ -35,7 +35,7 @@
 #include <QDesktopWidget>
 #include <QThread>
 #include <cassert>
-#include <src/audio/audio.h>
+#include <audio/src/audio.h>
 #include <vpx/vpx_image.h>
 
 #ifdef Q_OS_MAC

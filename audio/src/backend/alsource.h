@@ -17,46 +17,33 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ALSINK_H
-#define ALSINK_H
+#ifndef ALSOURCE_H
+#define ALSOURCE_H
 
+#include "audio/src/iaudiosource.h"
 #include <QMutex>
 #include <QObject>
 
-#include "src/util/interface.h"
-#include "src/audio/iaudiosink.h"
-
 class OpenAL;
-class QMutex;
-class AlSink : public QObject, public IAudioSink
+class AlSource : public IAudioSource
 {
     Q_OBJECT
 public:
-    AlSink(OpenAL& al, uint sourceId);
-    AlSink(const AlSink& src) = delete;
-    AlSink& operator=(const AlSink&) = delete;
-    AlSink(AlSink&& other) = delete;
-    AlSink& operator=(AlSink&& other) = delete;
-    ~AlSink();
+    AlSource(OpenAL& al);
+    AlSource(AlSource& src) = delete;
+    AlSource& operator=(const AlSource&) = delete;
+    AlSource(AlSource&& other) = delete;
+    AlSource& operator=(AlSource&& other) = delete;
+    ~AlSource();
 
-    void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const override;
-    void playMono16Sound(const IAudioSink::Sound& sound) override;
-    void startLoop() override;
-    void stopLoop() override;
+    operator bool() const;
 
-    operator bool() const override;
-
-    uint getSourceId() const;
     void kill();
-
-    SIGNAL_IMPL(AlSink, finishedPlaying)
-    SIGNAL_IMPL(AlSink, invalidated)
 
 private:
     OpenAL& audio;
-    uint sourceId;
     bool killed = false;
     mutable QMutex killLock;
 };
 
-#endif // ALSINK_H
+#endif // ALSOURCE_H

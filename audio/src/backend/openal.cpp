@@ -19,7 +19,7 @@
 
 #include "openal.h"
 
-#include "src/audio/iaudiosettings.h"
+#include "audio/src/iaudiosettings.h"
 
 #include <QDebug>
 #include <QFile>

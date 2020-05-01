@@ -21,9 +21,9 @@
 #ifndef OPENAL_H
 #define OPENAL_H
 
-#include "src/audio/iaudiocontrol.h"
-#include "src/audio/backend/alsink.h"
-#include "src/audio/backend/alsource.h"
+#include "audio/src/iaudiocontrol.h"
+#include "audio/src/backend/alsink.h"
+#include "audio/src/backend/alsource.h"
 
 #include <memory>
 #include <unordered_set>
