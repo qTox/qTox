@@ -107,8 +107,9 @@ bool tryRemoveFile(const QString& filepath)
     tmp.remove();
     return writable;
 }
+} // namespace
 
-void acceptFileTransfer(const ToxFile& file, const QString& path)
+void Widget::acceptFileTransfer(const ToxFile& file, const QString& path)
 {
     QString filepath;
     int number = 0;
@@ -127,13 +128,12 @@ void acceptFileTransfer(const ToxFile& file, const QString& path)
     // Do not automatically accept the file-transfer if the path is not writable.
     // The user can still accept it manually.
     if (tryRemoveFile(filepath)) {
-        CoreFile* coreFile = Core::getInstance()->getCoreFile();
+        CoreFile* coreFile = core->getCoreFile();
         coreFile->acceptFileRecvRequest(file.friendId, file.fileNum, filepath);
     } else {
         qWarning() << "Cannot write to " << filepath;
     }
 }
-} // namespace
 
 Widget* Widget::instance{nullptr};
 
@@ -1077,7 +1077,7 @@ void Widget::dispatchFile(ToxFile file)
 
     if (file.status == ToxFile::INITIALIZING && file.direction == ToxFile::RECEIVING) {
         auto sender =
-            (file.direction == ToxFile::SENDING) ? Core::getInstance()->getSelfPublicKey() : pk;
+            (file.direction == ToxFile::SENDING) ? core->getSelfPublicKey() : pk;
 
         const Settings& settings = Settings::getInstance();
         QString autoAcceptDir = settings.getAutoAcceptDir(f->getPublicKey());
