@@ -22,6 +22,7 @@
 #include <QDebug>
 #include <QThread>
 
+#include <chrono>
 #include <ctime>
 #include <random>
 #include <stdlib.h>
@@ -85,9 +86,11 @@ IPC::IPC(uint32_t profileId)
     // If the owner exits normally, it can set the timestamp to 0 first to immediately give
     // ownership
 
-    std::default_random_engine randEngine((std::random_device())());
+    // use the clock rather than std::random_device because std::random_device may return constant values, and does
+    // under mingw on Windows. We don't actually need cryptographic guarantees, so using the clock in all cases.
+    static std::mt19937 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
     std::uniform_int_distribution<uint64_t> distribution;
-    globalId = distribution(randEngine);
+    globalId = distribution(rng);
     qDebug() << "Our global IPC ID is " << globalId;
     if (globalMemory.create(sizeof(IPCMemory))) {
         if (globalMemory.lock()) {
