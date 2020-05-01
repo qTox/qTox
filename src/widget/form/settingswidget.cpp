@@ -61,7 +61,7 @@ SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, C
     connect(gfrm.get(), &GeneralForm::updateIcons, parent, &Widget::updateIcons);
 
     std::unique_ptr<UserInterfaceForm> uifrm(new UserInterfaceForm(this));
-    std::unique_ptr<PrivacyForm> pfrm(new PrivacyForm());
+    std::unique_ptr<PrivacyForm> pfrm(new PrivacyForm(core));
     connect(pfrm.get(), &PrivacyForm::clearAllReceipts, parent, &Widget::clearAllReceipts);
 
     AVForm* rawAvfrm = new AVForm(audio, coreAV, camera, audioSettings, videoSettings);
