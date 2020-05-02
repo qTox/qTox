@@ -381,6 +381,7 @@ set(${PROJECT_NAME}_SOURCES
   src/model/toxclientstandards.h
   src/net/bootstrapnodeupdater.cpp
   src/net/bootstrapnodeupdater.h
+  src/net/ibootstraplistgenerator.h
   src/net/avatarbroadcaster.cpp
   src/net/avatarbroadcaster.h
   src/net/toxuri.cpp
