@@ -65,6 +65,7 @@ Settings::Settings()
     , useCustomDhtList{false}
     , makeToxPortable{false}
     , currentProfileId(0)
+    , paths(*Paths::makePaths(Paths::Portable::NonPortable))
 {
     settingsThread = new QThread();
     settingsThread->setObjectName("qTox Settings");
@@ -109,7 +110,7 @@ void Settings::loadGlobal()
 
     makeToxPortable = Settings::isToxPortable();
 
-    QDir dir(getSettingsDirPath());
+    QDir dir(paths.getSettingsDirPath());
     QString filePath = dir.filePath(globalSettingsFile);
 
     // If no settings file exist -- use the default one
@@ -476,7 +477,7 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
 {
     QMutexLocker locker{&bigLock};
 
-    QDir dir(getSettingsDirPath());
+    QDir dir(paths.getSettingsDirPath());
     QString filePath = dir.filePath(globalSettingsFile);
 
     // load from a profile specific friend data list if possible
@@ -582,7 +583,7 @@ void Settings::resetToDefault()
     loaded = false;
 
     // Remove file with profile settings
-    QDir dir(getSettingsDirPath());
+    QDir dir(paths.getSettingsDirPath());
     Profile* profile = Nexus::getProfile();
     QString localPath = dir.filePath(profile->getName() + ".ini");
     QFile local(localPath);
@@ -602,7 +603,7 @@ void Settings::saveGlobal()
     if (!loaded)
         return;
 
-    QString path = getSettingsDirPath() + globalSettingsFile;
+    QString path = paths.getSettingsDirPath() + globalSettingsFile;
     qDebug() << "Saving global settings at " + path;
 
     QSettings s(path, QSettings::IniFormat);
@@ -754,7 +755,7 @@ void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
     if (!loaded)
         return;
 
-    QString path = getSettingsDirPath() + profileName + ".ini";
+    QString path = paths.getSettingsDirPath() + profileName + ".ini";
 
     qDebug() << "Saving personal settings at " << path;
 
@@ -844,91 +845,9 @@ uint32_t Settings::makeProfileId(const QString& profile)
     return dwords[0] ^ dwords[1] ^ dwords[2] ^ dwords[3];
 }
 
-/**
- * @brief Get path to directory, where the settings files are stored.
- * @return Path to settings directory, ends with a directory separator.
- */
-QString Settings::getSettingsDirPath() const
+Paths& Settings::getPaths()
 {
-    QMutexLocker locker{&bigLock};
-    if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
-
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-#ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
-#else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#endif
-}
-
-/**
- * @brief Get path to directory, where the application data are stored.
- * @return Path to application data, ends with a directory separator.
- */
-QString Settings::getAppDataDirPath() const
-{
-    QMutexLocker locker{&bigLock};
-    if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
-
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-#ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
-#else
-    /*
-     * TODO: Change QStandardPaths::DataLocation to AppDataLocation when upgrate Qt to 5.4+
-     * For now we need support Qt 5.3, so we use deprecated DataLocation
-     * BTW, it's not a big deal since for linux AppDataLocation and DataLocation are equal
-     */
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation))
-           + QDir::separator();
-#endif
-}
-
-/**
- * @brief Get path to directory, where the application cache are stored.
- * @return Path to application cache, ends with a directory separator.
- */
-QString Settings::getAppCacheDirPath() const
-{
-    QMutexLocker locker{&bigLock};
-    if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
-
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-#ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
-#elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
-#else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation))
-           + QDir::separator();
-#endif
+    return paths;
 }
 
 bool Settings::getEnableTestSound() const
@@ -974,7 +893,7 @@ void Settings::setMakeToxPortable(bool newValue)
     QMutexLocker locker{&bigLock};
 
     if (newValue != makeToxPortable) {
-        QFile(getSettingsDirPath() + globalSettingsFile).remove();
+        QFile(paths.getSettingsDirPath() + globalSettingsFile).remove();
         makeToxPortable = newValue;
         saveGlobal();
 
@@ -2429,7 +2348,7 @@ void Settings::createPersonal(const QString& basename) const
 {
     QMutexLocker locker{&bigLock};
 
-    QString path = getSettingsDirPath() + QDir::separator() + basename + ".ini";
+    QString path = paths.getSettingsDirPath() + QDir::separator() + basename + ".ini";
     qDebug() << "Creating new profile settings in " << path;
 
     QSettings ps(path, QSettings::IniFormat);
@@ -2450,7 +2369,7 @@ void Settings::createSettingsDir()
 {
     QMutexLocker locker{&bigLock};
 
-    QString dir = Settings::getSettingsDirPath();
+    QString dir = paths.getSettingsDirPath();
     QDir directory(dir);
     if (!directory.exists() && !directory.mkpath(directory.absolutePath()))
         qCritical() << "Error while creating directory " << dir;

@@ -24,6 +24,7 @@
 #include "src/core/icoresettings.h"
 #include "src/core/toxencrypt.h"
 #include "src/core/toxfile.h"
+#include "src/persistence/paths.h"
 #include "src/persistence/ifriendsettings.h"
 #include "src/persistence/igroupsettings.h"
 #include "src/video/ivideosettings.h"
@@ -142,10 +143,8 @@ public:
 public:
     static Settings& getInstance();
     static void destroyInstance();
-    QString getSettingsDirPath() const;
-    QString getAppDataDirPath() const;
-    QString getAppCacheDirPath() const;
 
+    Paths& getPaths();
     void createSettingsDir();
     void createPersonal(const QString& basename) const;
 
@@ -706,4 +705,5 @@ private:
     static Settings* settings;
     static const QString globalSettingsFile;
     static QThread* settingsThread;
+    Paths paths;
 };

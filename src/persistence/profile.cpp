@@ -306,7 +306,7 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
 
     LoadToxDataError error;
     QByteArray toxsave = QByteArray();
-    QString path = settings.getSettingsDirPath() + name + ".tox";
+    QString path = settings.getPaths().getSettingsDirPath() + name + ".tox";
     std::unique_ptr<ToxEncrypt> tmpKey = loadToxData(password, path, toxsave, error);
     if (logLoadToxDataError(error, path)) {
         ProfileLocker::unlock();
@@ -336,7 +336,7 @@ Profile* Profile::createProfile(const QString& name, const QString& password, Se
                                 const QCommandLineParser* parser)
 {
     CreateToxDataError error;
-    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+    QString path = Settings::getInstance().getPaths().getSettingsDirPath() + name + ".tox";
     std::unique_ptr<ToxEncrypt> tmpKey = createToxData(name, password, path, error);
 
     if (logCreateToxDataError(error, name)) {
@@ -373,7 +373,7 @@ Profile::~Profile()
  */
 QStringList Profile::getFilesByExt(QString extension)
 {
-    QDir dir(Settings::getInstance().getSettingsDirPath());
+    QDir dir(Settings::getInstance().getPaths().getSettingsDirPath());
     QStringList out;
     dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
     dir.setNameFilters(QStringList("*." + extension));
@@ -470,7 +470,7 @@ bool Profile::saveToxSave(QByteArray data)
     ProfileLocker::assertLock();
     assert(ProfileLocker::getCurLockName() == name);
 
-    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+    QString path = Settings::getInstance().getPaths().getSettingsDirPath() + name + ".tox";
     qDebug() << "Saving tox save to " << path;
     QSaveFile saveFile(path);
     if (!saveFile.open(QIODevice::WriteOnly)) {
@@ -512,7 +512,7 @@ QString Profile::avatarPath(const ToxPk& owner, bool forceUnencrypted)
 {
     const QString ownerStr = owner.toString();
     if (!encrypted || forceUnencrypted) {
-        return Settings::getInstance().getSettingsDirPath() + "avatars/" + ownerStr + ".png";
+        return Settings::getInstance().getPaths().getSettingsDirPath() + "avatars/" + ownerStr + ".png";
     }
 
     QByteArray idData = ownerStr.toUtf8();
@@ -526,7 +526,7 @@ QString Profile::avatarPath(const ToxPk& owner, bool forceUnencrypted)
     QByteArray hash(hashSize, 0);
     crypto_generichash(reinterpret_cast<uint8_t*>(hash.data()), hashSize, reinterpret_cast<uint8_t*>(idData.data()), idData.size(),
                        reinterpret_cast<uint8_t*>(pubkeyData.data()), pubkeyData.size());
-    return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
+    return Settings::getInstance().getPaths().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
 }
 
 /**
@@ -705,7 +705,7 @@ void Profile::saveAvatar(const ToxPk& owner, const QByteArray& avatar)
     const QByteArray& pic = needEncrypt ? passkey->encrypt(avatar) : avatar;
 
     QString path = avatarPath(owner);
-    QDir(Settings::getInstance().getSettingsDirPath()).mkdir("avatars");
+    QDir(Settings::getInstance().getPaths().getSettingsDirPath()).mkdir("avatars");
     if (pic.isEmpty()) {
         QFile::remove(path);
     } else {
@@ -783,7 +783,7 @@ void Profile::removeAvatar(const ToxPk& owner)
 
 bool Profile::exists(QString name)
 {
-    QString path = Settings::getInstance().getSettingsDirPath() + name;
+    QString path = Settings::getInstance().getPaths().getSettingsDirPath() + name;
     return QFile::exists(path + ".tox");
 }
 
@@ -805,7 +805,7 @@ bool Profile::isEncrypted() const
 bool Profile::isEncrypted(QString name)
 {
     uint8_t data[TOX_PASS_ENCRYPTION_EXTRA_LENGTH] = {0};
-    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+    QString path = Settings::getInstance().getPaths().getSettingsDirPath() + name + ".tox";
     QFile saveFile(path);
     if (!saveFile.open(QIODevice::ReadOnly)) {
         qWarning() << "Couldn't open tox save " << path;
@@ -839,7 +839,7 @@ QStringList Profile::remove()
             i--;
         }
     }
-    QString path = Settings::getInstance().getSettingsDirPath() + name;
+    QString path = Settings::getInstance().getPaths().getSettingsDirPath() + name;
     ProfileLocker::unlock();
 
     QFile profileMain{path + ".tox"};
@@ -875,8 +875,8 @@ QStringList Profile::remove()
  */
 bool Profile::rename(QString newName)
 {
-    QString path = Settings::getInstance().getSettingsDirPath() + name,
-            newPath = Settings::getInstance().getSettingsDirPath() + newName;
+    QString path = Settings::getInstance().getPaths().getSettingsDirPath() + name,
+            newPath = Settings::getInstance().getPaths().getSettingsDirPath() + newName;
 
     if (!ProfileLocker::lock(newName)) {
         return false;
@@ -964,5 +964,5 @@ QString Profile::setPassword(const QString& newPassword)
  */
 QString Profile::getDbPath(const QString& profileName)
 {
-    return Settings::getInstance().getSettingsDirPath() + profileName + ".db";
+    return Settings::getInstance().getPaths().getSettingsDirPath() + profileName + ".db";
 }

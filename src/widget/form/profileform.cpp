@@ -211,7 +211,7 @@ void ProfileForm::show(ContentLayout* contentLayout)
     QWidget::show();
     prFileLabelUpdate();
     bool portable = Settings::getInstance().getMakeToxPortable();
-    QString defaultPath = QDir(Settings::getInstance().getSettingsDirPath()).path().trimmed();
+    QString defaultPath = QDir(Settings::getInstance().getPaths().getSettingsDirPath()).path().trimmed();
     QString appPath = QApplication::applicationDirPath();
     QString dirPath = portable ? appPath : defaultPath;
 

@@ -107,7 +107,7 @@ void AdvancedForm::on_btnExportLog_clicked()
         return;
     }
 
-    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
+    QString logFileDir = Settings::getInstance().getPaths().getAppCacheDirPath();
     QString logfile = logFileDir + "qtox.log";
 
     QFile file(logfile);
@@ -126,7 +126,7 @@ void AdvancedForm::on_btnExportLog_clicked()
 
 void AdvancedForm::on_btnCopyDebug_clicked()
 {
-    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
+    QString logFileDir = Settings::getInstance().getPaths().getAppCacheDirPath();
     QString logfile = logFileDir + "qtox.log";
 
     QFile file(logfile);

@@ -266,7 +266,7 @@ int main(int argc, char* argv[])
     }
 
 #ifdef LOG_TO_FILE
-    QString logFileDir = settings.getAppCacheDirPath();
+    QString logFileDir = settings.getPaths().getAppCacheDirPath();
     QDir(logFileDir).mkpath(".");
 
     QString logfile = logFileDir + "qtox.log";

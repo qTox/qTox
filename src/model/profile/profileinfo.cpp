@@ -204,7 +204,7 @@ IProfileInfo::SaveResult ProfileInfo::exportProfile(const QString& path) const
         return SaveResult::NoWritePermission;
     }
 
-    if (!QFile::copy(Settings::getInstance().getSettingsDirPath() + current, path)) {
+    if (!QFile::copy(Settings::getInstance().getPaths().getSettingsDirPath() + current, path)) {
         return SaveResult::Error;
     }
 

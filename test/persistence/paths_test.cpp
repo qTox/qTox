@@ -33,8 +33,10 @@ private slots:
     void constructAuto();
     void constructPortable();
     void constructNonPortable();
+#if PATHS_VERSION_TCS_COMPLIANT
     void checkPathsNonPortable();
     void checkPathsPortable();
+#endif
 private:
     static void verifyqToxPath(const QString& testPath, const QString& basePath, const QString& subPath);
 };
@@ -88,11 +90,12 @@ void TestPaths::constructNonPortable()
  * @brief Helper to verify qTox specific paths
  */
 void TestPaths::verifyqToxPath(const QString& testPath, const QString& basePath, const QString& subPath)
- {
+{
     const QString expectPath = basePath % sep % subPath;
     QVERIFY(testPath == expectPath);
 }
 
+#if PATHS_VERSION_TCS_COMPLIANT
 /**
  * @brief Check generated paths against expected values in non-portable mode
  */
@@ -162,7 +165,7 @@ void TestPaths::checkPathsPortable()
 
     QVERIFY(paths->getThemeDirs() == themeFolders);
 }
-
+#endif
 
 QTEST_GUILESS_MAIN(TestPaths)
 #include "paths_test.moc"

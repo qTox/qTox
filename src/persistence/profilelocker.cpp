@@ -38,7 +38,7 @@ QString ProfileLocker::curLockName;
 
 QString ProfileLocker::lockPathFromName(const QString& name)
 {
-    return Settings::getInstance().getSettingsDirPath() + '/' + name + ".lock";
+    return Settings::getInstance().getPaths().getSettingsDirPath() + '/' + name + ".lock";
 }
 
 /**

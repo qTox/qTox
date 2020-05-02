@@ -22,6 +22,8 @@
 #include <QString>
 #include <QStringList>
 
+#define PATHS_VERSION_TCS_COMPLIANT 0
+
 class Paths
 {
 public:
@@ -34,6 +36,7 @@ public:
     static Paths* makePaths(Portable mode = Portable::Auto);
 
     bool isPortable() const;
+#if PATHS_VERSION_TCS_COMPLIANT
     QString getGlobalSettingsPath() const;
     QString getProfilesDir() const;
     QString getToxSaveDir() const;
@@ -41,11 +44,18 @@ public:
     QString getTransfersDir() const;
     QStringList getThemeDirs() const;
     QString getScreenshotsDir() const;
+#else
+    // to be removed when paths migration is complete.
+    QString getSettingsDirPath() const;
+    QString getAppDataDirPath() const;
+    QString getAppCacheDirPath() const;
+#endif
+
 
 private:
     Paths(const QString &basePath, bool portable);
 
 private:
     QString basePath{};
-    bool portable = false;
+    const bool portable = false;
 };

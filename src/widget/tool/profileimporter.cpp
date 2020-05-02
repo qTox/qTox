@@ -105,7 +105,7 @@ bool ProfileImporter::importProfile(const QString& path)
         return false; // ingore importing non-tox file
     }
 
-    QString settingsPath = Settings::getInstance().getSettingsDirPath();
+    QString settingsPath = Settings::getInstance().getPaths().getSettingsDirPath();
     QString profilePath = QDir(settingsPath).filePath(profile + Core::TOX_EXT);
 
     if (QFileInfo(profilePath).exists()) {
