@@ -12,6 +12,7 @@
 * [Keyboard Shortcuts](#keyboard-shortcuts)
 * [Commandline Options](#commandline-options)
 * [Emoji Packs](#emoji-packs)
+* [Bootstrap nodes](#bootstrap-nodes)
 
 
 ## Profile corner
@@ -427,7 +428,7 @@ The following shortcuts are currently supported:
 
 ## Push to talk
 
-In audio group chat microphone mute state will be changed while `Ctrl` + 
+In audio group chat microphone mute state will be changed while `Ctrl` +
 `p` pressed and reverted on release.
 
 ## Commandline Options
@@ -457,6 +458,13 @@ for Linux. If these directories don't exist, you have to create them. The emoji
 files have to be in a subfolder also containing `emoticon.xml`, see the
 structure of https://github.com/qTox/qTox/tree/v1.5.2/smileys for further
 information.
+
+## Bootstrap Nodes
+
+qTox uses bootstrap nodes to find its way in to the DHT. The list of nodes is
+stored in `bootstrapNodes.json` and can be found and modified if wanted at
+`~/.config/tox/` on Linux, `%APPDATA%\Roaming\tox` on Windows, and
+`~/Library/Application Support/Tox` on macOS.
 
 
 [ToxMe service]: #register-on-toxme
