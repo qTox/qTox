@@ -82,8 +82,9 @@ QString editName(const QString& name)
  * @brief Timeout = peer stopped sending audio.
  */
 
-GroupChatForm::GroupChatForm(Group* chatGroup, IChatLog& chatLog, IMessageDispatcher& messageDispatcher)
-    : GenericChatForm(chatGroup, chatLog, messageDispatcher)
+GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, IMessageDispatcher& messageDispatcher)
+    : GenericChatForm(_core, chatGroup, chatLog, messageDispatcher)
+    , core{_core}
     , group(chatGroup)
     , inCall(false)
 {
@@ -185,7 +186,7 @@ void GroupChatForm::updateUserNames()
     /* we store the peer labels by their ToxPk, but the namelist layout
      * needs it in alphabetical order, so we first create and store the labels
      * and then sort them by their text and add them to the layout in that order */
-    const auto selfPk = Core::getInstance()->getSelfPublicKey();
+    const auto selfPk = core.getSelfPublicKey();
     for (const auto& peerPk : peers.keys()) {
         const QString peerName = peers.value(peerPk);
         const QString editedName = editName(peerName);
@@ -296,14 +297,14 @@ void GroupChatForm::dropEvent(QDropEvent* ev)
     int friendId = frnd->getId();
     int groupId = group->getId();
     if (Status::isOnline(frnd->getStatus())) {
-        Core::getInstance()->groupInviteFriend(friendId, groupId);
+        core.groupInviteFriend(friendId, groupId);
     }
 }
 
 void GroupChatForm::onMicMuteToggle()
 {
     if (audioInputFlag) {
-        CoreAV* av = Core::getInstance()->getAv();
+        CoreAV* av = core.getAv();
         const bool oldMuteState = av->isGroupCallInputMuted(group);
         const bool newMute = !oldMuteState;
         av->muteCallInput(group, newMute);
@@ -314,7 +315,7 @@ void GroupChatForm::onMicMuteToggle()
 void GroupChatForm::onVolMuteToggle()
 {
     if (audioOutputFlag) {
-        CoreAV* av = Core::getInstance()->getAv();
+        CoreAV* av = core.getAv();
         const bool oldMuteState = av->isGroupCallOutputMuted(group);
         const bool newMute = !oldMuteState;
         av->muteCallOutput(group, newMute);
@@ -324,7 +325,7 @@ void GroupChatForm::onVolMuteToggle()
 
 void GroupChatForm::onCallClicked()
 {
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* av = core.getAv();
 
     if (!inCall) {
         joinGroupCall();
@@ -391,7 +392,7 @@ void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)
     Settings& s = Settings::getInstance();
     QStringList blackList = s.getBlackList();
     QMenu* const contextMenu = new QMenu(this);
-    const ToxPk selfPk = Core::getInstance()->getSelfPublicKey();
+    const ToxPk selfPk = core.getSelfPublicKey();
     ToxPk peerPk;
 
     // delete menu after it stops being used
@@ -436,7 +437,7 @@ void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)
 
 void GroupChatForm::joinGroupCall()
 {
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* av = core.getAv();
     av->joinGroupCall(*group);
     audioInputFlag = true;
     audioOutputFlag = true;
@@ -445,7 +446,7 @@ void GroupChatForm::joinGroupCall()
 
 void GroupChatForm::leaveGroupCall()
 {
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* av = core.getAv();
     av->leaveGroupCall(group->getId());
     audioInputFlag = false;
     audioOutputFlag = false;

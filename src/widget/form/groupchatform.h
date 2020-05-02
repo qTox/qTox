@@ -39,7 +39,7 @@ class GroupChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    explicit GroupChatForm(Group* chatGroup, IChatLog& chatLog, IMessageDispatcher& messageDispatcher);
+    explicit GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, IMessageDispatcher& messageDispatcher);
     ~GroupChatForm();
 
     void peerAudioPlaying(ToxPk peerPk);
@@ -71,6 +71,7 @@ private:
     void leaveGroupCall();
 
 private:
+    Core& core;
     Group* group;
     QMap<ToxPk, QLabel*> peerLabels;
     QMap<ToxPk, QTimer*> peerAudioTimers;

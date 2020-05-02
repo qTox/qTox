@@ -184,7 +184,7 @@ void Nexus::bootstrapWithProfile(Profile* p)
     if (profile) {
         audioControl = std::unique_ptr<IAudioControl>(Audio::makeAudio(*settings));
         assert(audioControl != nullptr);
-        profile->getCore()->getAv()->setAudio(*audioControl);
+        profile->getCore().getAv()->setAudio(*audioControl);
         start();
     }
 }
@@ -224,7 +224,7 @@ void Nexus::showMainGUI()
     assert(profile);
 
     // Create GUI
-    widget = new Widget(*audioControl);
+    widget = new Widget(*profile, *audioControl);
 
     // Start GUI
     widget->init();
@@ -278,7 +278,7 @@ Core* Nexus::getCore()
     if (!nexus.profile)
         return nullptr;
 
-    return nexus.profile->getCore();
+    return &nexus.profile->getCore();
 }
 
 /**

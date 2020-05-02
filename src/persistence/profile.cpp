@@ -404,10 +404,11 @@ const QStringList Profile::getAllProfileNames()
     return profiles;
 }
 
-Core* Profile::getCore()
+Core& Profile::getCore() const
 {
-    // TODO(sudden6): this is evil
-    return core.get();
+    Core* c = core.get();
+    assert(c != nullptr);
+    return *c;
 }
 
 QString Profile::getName() const

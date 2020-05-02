@@ -48,7 +48,7 @@ public:
                                   const QCommandLineParser* parser);
     ~Profile();
 
-    Core* getCore();
+    Core& getCore() const;
     QString getName() const;
 
     void startCore();

@@ -137,8 +137,9 @@ void Widget::acceptFileTransfer(const ToxFile& file, const QString& path)
 
 Widget* Widget::instance{nullptr};
 
-Widget::Widget(IAudioControl& audio, QWidget* parent)
+Widget::Widget(Profile &_profile, IAudioControl& audio, QWidget* parent)
     : QMainWindow(parent)
+    , profile{_profile}
     , trayMenu{nullptr}
     , ui(new Ui::MainWindow)
     , activeChatroomWidget{nullptr}
@@ -277,7 +278,7 @@ void Widget::init()
     addFriendForm = new AddFriendForm;
     groupInviteForm = new GroupInviteForm;
 
-    core = Nexus::getCore();
+    core = &profile.getCore();
 
 #if UPDATE_CHECK_ENABLED
     updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(settings));
@@ -1146,7 +1147,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     auto chatHistory =
         std::make_shared<ChatHistory>(*newfriend, history, *core, Settings::getInstance(),
                                       *friendMessageDispatcher);
-    auto friendForm = new ChatForm(newfriend, *chatHistory, *friendMessageDispatcher);
+    auto friendForm = new ChatForm(profile, newfriend, *chatHistory, *friendMessageDispatcher);
     connect(friendForm, &ChatForm::updateFriendActivity, this, &Widget::updateFriendActivity);
 
     friendMessageDispatchers[friendPk] = friendMessageDispatcher;
@@ -2110,7 +2111,8 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
         connect(messageDispatcher.get(), &IMessageDispatcher::messageReceived, notifyReceivedCallback);
     groupAlertConnections.insert(groupId, notifyReceivedConnection);
 
-    auto form = new GroupChatForm(newgroup, *groupChatLog, *messageDispatcher);
+    assert(core != nullptr);
+    auto form = new GroupChatForm(*core, newgroup, *groupChatLog, *messageDispatcher);
     connect(&settings, &Settings::nameColorsChanged, form, &GenericChatForm::setColorizedNames);
     form->setColorizedNames(settings.getEnableGroupChatsColor());
     groupMessageDispatchers[groupId] = messageDispatcher;

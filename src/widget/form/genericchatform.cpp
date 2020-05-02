@@ -182,7 +182,7 @@ ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool col
                                           isSelf, chatLogMessage.state, timestamp, colorizeNames);
 }
 
-void renderMessage(const QString& displayName, bool isSelf, bool colorizeNames,
+void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeNames,
                    const ChatLogMessage& chatLogMessage, ChatMessage::Ptr& chatMessage)
 {
 
@@ -208,33 +208,6 @@ void renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timest
     }
 }
 
-void renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatMessage::Ptr& chatMessage)
-{
-    const auto& sender = item.getSender();
-
-    const Core* core = Core::getInstance();
-    bool isSelf = sender == core->getSelfId().getPublicKey();
-
-    switch (item.getContentType()) {
-    case ChatLogItem::ContentType::message: {
-        const auto& chatLogMessage = item.getContentAsMessage();
-
-        renderMessage(item.getDisplayName(), isSelf, colorizeNames, chatLogMessage, chatMessage);
-
-        break;
-    }
-    case ChatLogItem::ContentType::fileTransfer: {
-        const auto& file = item.getContentAsFile();
-        renderFile(item.getDisplayName(), file.file, isSelf, item.getTimestamp(), chatMessage);
-        break;
-    }
-    }
-
-    if (hideName) {
-        chatMessage->hideSender();
-    }
-}
-
 ChatLogIdx firstItemAfterDate(QDate date, const IChatLog& chatLog)
 {
     auto idxs = chatLog.getDateIdxs(date, 1);
@@ -246,9 +219,10 @@ ChatLogIdx firstItemAfterDate(QDate date, const IChatLog& chatLog)
 }
 } // namespace
 
-GenericChatForm::GenericChatForm(const Contact* contact, IChatLog& chatLog,
+GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, IChatLog& chatLog,
                                  IMessageDispatcher& messageDispatcher, QWidget* parent)
     : QWidget(parent, Qt::Window)
+    , core{_core}
     , audioInputFlag(false)
     , audioOutputFlag(false)
     , chatLog(chatLog)
@@ -1074,6 +1048,32 @@ void GenericChatForm::handleSearchResult(SearchResult result, SearchDirection di
     }
 
     renderMessages(endRenderedIdx, firstRenderedIdx, [this]{enableSearchText();});
+}
+
+void GenericChatForm::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatMessage::Ptr& chatMessage)
+{
+    const auto& sender = item.getSender();
+
+    bool isSelf = sender == core.getSelfId().getPublicKey();
+
+    switch (item.getContentType()) {
+    case ChatLogItem::ContentType::message: {
+        const auto& chatLogMessage = item.getContentAsMessage();
+
+        renderMessageRaw(item.getDisplayName(), isSelf, colorizeNames, chatLogMessage, chatMessage);
+
+        break;
+    }
+    case ChatLogItem::ContentType::fileTransfer: {
+        const auto& file = item.getContentAsFile();
+        renderFile(item.getDisplayName(), file.file, isSelf, item.getTimestamp(), chatMessage);
+        break;
+    }
+    }
+
+    if (hideName) {
+        chatMessage->hideSender();
+    }
 }
 
 void GenericChatForm::renderMessage(ChatLogIdx idx)

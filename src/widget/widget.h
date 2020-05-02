@@ -117,7 +117,7 @@ private:
     };
 
 public:
-    explicit Widget(IAudioControl& audio, QWidget* parent = nullptr);
+    explicit Widget(Profile& _profile, IAudioControl& audio, QWidget* parent = nullptr);
     ~Widget() override;
     void init();
     void setCentralWidget(QWidget* widget, const QString& widgetName);
@@ -278,6 +278,7 @@ private:
     void acceptFileTransfer(const ToxFile &file, const QString &path);
 
 private:
+    Profile& profile;
     std::unique_ptr<QSystemTrayIcon> icon;
     QMenu* trayMenu;
     QAction* statusOnline;

@@ -47,8 +47,8 @@ class ChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& messageDispatcher);
-    ~ChatForm();
+    ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& messageDispatcher);
+    ~ChatForm() override;
     void setStatusMessage(const QString& newMessage);
 
     void setFriendTyping(bool isTyping);
@@ -122,6 +122,7 @@ protected:
     void showEvent(QShowEvent* event) final;
 
 private:
+    Core& core;
     Friend* f;
     CroppingLabel* statusMessageLabel;
     QMenu statusMessageMenu;

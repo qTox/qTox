@@ -70,7 +70,7 @@ class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    GenericChatForm(const Contact* contact, IChatLog& chatLog,
+    GenericChatForm(const Core& _core, const Contact* contact, IChatLog& chatLog,
                     IMessageDispatcher& messageDispatcher, QWidget* parent = nullptr);
     ~GenericChatForm() override;
 
@@ -136,6 +136,7 @@ private:
     void removeFirstsMessages(const int num);
     void removeLastsMessages(const int num);
 
+    void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames, ChatMessage::Ptr &chatMessage);
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
                                    const QDateTime& datetime, bool isAction, bool isSent, bool colorizeName = false);
@@ -153,6 +154,7 @@ protected:
     std::pair<int, int> indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
 
 protected:
+    const Core& core;
     bool audioInputFlag;
     bool audioOutputFlag;
     int curRow;

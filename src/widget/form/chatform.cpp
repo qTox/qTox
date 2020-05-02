@@ -104,8 +104,9 @@ QString secondsToDHMS(quint32 duration)
 }
 } // namespace
 
-ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& messageDispatcher)
-    : GenericChatForm(chatFriend, chatLog, messageDispatcher)
+ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& messageDispatcher)
+    : GenericChatForm(profile.getCore(), chatFriend, chatLog, messageDispatcher)
+    , core{profile.getCore()}
     , f(chatFriend)
     , isTyping{false}
     , lastCallIsVideo{false}
@@ -136,17 +137,15 @@ ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& me
 
     copyStatusAction = statusMessageMenu.addAction(QString(), this, SLOT(onCopyStatusMessage()));
 
-    const Core* core = Core::getInstance();
-    const Profile* profile = Nexus::getProfile();
-    const CoreFile* coreFile = core->getCoreFile();
-    connect(profile, &Profile::friendAvatarChanged, this, &ChatForm::onAvatarChanged);
+    const CoreFile* coreFile = core.getCoreFile();
+    connect(&profile, &Profile::friendAvatarChanged, this, &ChatForm::onAvatarChanged);
     connect(coreFile, &CoreFile::fileReceiveRequested, this, &ChatForm::updateFriendActivityForFile);
     connect(coreFile, &CoreFile::fileSendStarted, this, &ChatForm::updateFriendActivityForFile);
-    connect(core, &Core::friendTypingChanged, this, &ChatForm::onFriendTypingChanged);
-    connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
+    connect(&core, &Core::friendTypingChanged, this, &ChatForm::onFriendTypingChanged);
+    connect(&core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
     connect(coreFile, &CoreFile::fileNameChanged, this, &ChatForm::onFileNameChanged);
 
-    const CoreAV* av = core->getAv();
+    const CoreAV* av = core.getAv();
     connect(av, &CoreAV::avInvite, this, &ChatForm::onAvInvite);
     connect(av, &CoreAV::avStart, this, &ChatForm::onAvStart);
     connect(av, &CoreAV::avEnd, this, &ChatForm::onAvEnd);
@@ -167,8 +166,8 @@ ChatForm::ChatForm(Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& me
                 }
             });
 
-    connect(&typingTimer, &QTimer::timeout, this, [=] {
-        Core::getInstance()->sendTyping(f->getId(), false);
+    connect(&typingTimer, &QTimer::timeout, this, [&] {
+        core.sendTyping(f->getId(), false);
         isTyping = false;
     });
 
@@ -229,14 +228,14 @@ void ChatForm::onTextEditChanged()
     if (!Settings::getInstance().getTypingNotification()) {
         if (isTyping) {
             isTyping = false;
-            Core::getInstance()->sendTyping(f->getId(), false);
+            core.sendTyping(f->getId(), false);
         }
 
         return;
     }
     bool isTypingNow = !msgEdit->toPlainText().isEmpty();
     if (isTyping != isTypingNow) {
-        Core::getInstance()->sendTyping(f->getId(), isTypingNow);
+        core.sendTyping(f->getId(), isTypingNow);
         if (isTypingNow) {
             typingTimer.start(TYPING_NOTIFICATION_DURATION);
         }
@@ -254,7 +253,6 @@ void ChatForm::onAttachClicked()
         return;
     }
 
-    Core* core = Core::getInstance();
     for (QString path : paths) {
         QFile file(path);
         QString fileName = QFileInfo(path).fileName();
@@ -273,7 +271,7 @@ void ChatForm::onAttachClicked()
         }
 
         qint64 filesize = file.size();
-        core->getCoreFile()->sendFile(f->getId(), fileName, path, filesize);
+        core.getCoreFile()->sendFile(f->getId(), fileName, path, filesize);
     }
 }
 
@@ -293,7 +291,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
     if (Settings::getInstance().getAutoAcceptCall(f->getPublicKey()).testFlag(testedFlag)) {
         uint32_t friendId = f->getId();
         qDebug() << "automatic call answer";
-        CoreAV* coreav = Core::getInstance()->getAv();
+        CoreAV* coreav = core.getAv();
         QMetaObject::invokeMethod(coreav, "answerCall", Qt::QueuedConnection,
                                   Q_ARG(uint32_t, friendId), Q_ARG(bool, video));
         onAvStart(friendId, video);
@@ -358,7 +356,7 @@ void ChatForm::onAnswerCallTriggered(bool video)
     emit acceptCall(friendId);
 
     updateCallButtons();
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* av = core.getAv();
     if (!av->answerCall(friendId, video)) {
         updateCallButtons();
         stopCounter();
@@ -377,7 +375,7 @@ void ChatForm::onRejectCallTriggered()
 
 void ChatForm::onCallTriggered()
 {
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* av = core.getAv();
     uint32_t friendId = f->getId();
     if (av->isCallStarted(f)) {
         av->cancelCall(friendId);
@@ -388,7 +386,7 @@ void ChatForm::onCallTriggered()
 
 void ChatForm::onVideoCallTriggered()
 {
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* av = core.getAv();
     uint32_t friendId = f->getId();
     if (av->isCallStarted(f)) {
         // TODO: We want to activate video on the active call.
@@ -402,7 +400,7 @@ void ChatForm::onVideoCallTriggered()
 
 void ChatForm::updateCallButtons()
 {
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* av = core.getAv();
     const bool audio = av->isCallActive(f);
     const bool video = av->isCallVideoEnabled(f);
     const bool online = Status::isOnline(f->getStatus());
@@ -413,14 +411,14 @@ void ChatForm::updateCallButtons()
 
 void ChatForm::onMicMuteToggle()
 {
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* av = core.getAv();
     av->toggleMuteCallInput(f);
     updateMuteMicButton();
 }
 
 void ChatForm::onVolMuteToggle()
 {
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* av = core.getAv();
     av->toggleMuteCallOutput(f);
     updateMuteVolButton();
 }
@@ -483,7 +481,7 @@ std::unique_ptr<NetCamView> ChatForm::createNetcam()
     qDebug() << "creating netcam";
     uint32_t friendId = f->getId();
     std::unique_ptr<NetCamView> view = std::unique_ptr<NetCamView>(new NetCamView(f->getPublicKey(), this));
-    CoreAV* av = Core::getInstance()->getAv();
+    CoreAV* av = core.getAv();
     VideoSource* source = av->getVideoSourceFromCall(friendId);
     view->show(source, f->getDisplayedName());
     connect(view.get(), &NetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
@@ -505,7 +503,6 @@ void ChatForm::dropEvent(QDropEvent* ev)
         return;
     }
 
-    Core* core = Core::getInstance();
     for (const QUrl& url : ev->mimeData()->urls()) {
         QFileInfo info(url.path());
         QFile file(info.absoluteFilePath());
@@ -538,7 +535,7 @@ void ChatForm::dropEvent(QDropEvent* ev)
         }
 
         if (info.exists()) {
-            core->getCoreFile()->sendFile(f->getId(), fileName, info.absoluteFilePath(), info.size());
+            core.getCoreFile()->sendFile(f->getId(), fileName, info.absoluteFilePath(), info.size());
         }
     }
 }
@@ -582,7 +579,7 @@ void ChatForm::sendImage(const QPixmap& pixmap)
         qint64 filesize = file.size();
         file.close();
         QFileInfo fi(file);
-        CoreFile* coreFile = Core::getInstance()->getCoreFile();
+        CoreFile* coreFile = core.getCoreFile();
         coreFile->sendFile(f->getId(), fi.fileName(), fi.filePath(), filesize);
     } else {
         QMessageBox::warning(this,
@@ -611,7 +608,7 @@ void ChatForm::onCopyStatusMessage()
 
 void ChatForm::updateMuteMicButton()
 {
-    const CoreAV* av = Core::getInstance()->getAv();
+    const CoreAV* av = core.getAv();
     bool active = av->isCallActive(f);
     bool inputMuted = av->isCallInputMuted(f);
     headWidget->updateMuteMicButton(active, inputMuted);
@@ -622,7 +619,7 @@ void ChatForm::updateMuteMicButton()
 
 void ChatForm::updateMuteVolButton()
 {
-    const CoreAV* av = Core::getInstance()->getAv();
+    const CoreAV* av = core.getAv();
     bool active = av->isCallActive(f);
     bool outputMuted = av->isCallOutputMuted(f);
     headWidget->updateMuteVolButton(active, outputMuted);
