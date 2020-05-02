@@ -42,13 +42,18 @@ public:
     QString getTransfersDir() const;
     QStringList getThemeDirs() const;
     QString getScreenshotsDir() const;
+    // to be removed when paths migration is complete.
+    QString getLegacySettingsDirPath() const;
+    QString getLegacyAppDataDirPath() const;
+    QString getLegacyAppCacheDirPath() const;
+
 
 private:
     Paths(const QString &basePath, bool portable);
 
 private:
     QString basePath{};
-    bool portable = false;
+    const bool portable = false;
 };
 
 #endif // PATHS_H

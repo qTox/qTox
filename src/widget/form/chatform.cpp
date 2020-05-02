@@ -562,14 +562,14 @@ void ChatForm::doScreenshot()
 
 void ChatForm::sendImage(const QPixmap& pixmap)
 {
-    QDir(Settings::getInstance().getAppDataDirPath()).mkpath("images");
+    QDir(Settings::getInstance().getPaths().getLegacyAppDataDirPath()).mkpath("images");
 
     // use ~ISO 8601 for screenshot timestamp, considering FS limitations
     // https://en.wikipedia.org/wiki/ISO_8601
     // Windows has to be supported, thus filename can't have `:` in it :/
     // Format should be: `qTox_Screenshot_yyyy-MM-dd HH-mm-ss.zzz.png`
     QString filepath = QString("%1images%2qTox_Image_%3.png")
-                           .arg(Settings::getInstance().getAppDataDirPath())
+                           .arg(Settings::getInstance().getPaths().getLegacyAppDataDirPath())
                            .arg(QDir::separator())
                            .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd HH-mm-ss.zzz"));
     QFile file(filepath);
