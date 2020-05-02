@@ -46,8 +46,6 @@ private slots:
     void onRequestComplete(QNetworkReply* reply);
 
 private:
-    static QList<DhtServer> jsonToNodeList(const QJsonDocument& nodeList);
-    static void jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList);
     QList<DhtServer> loadUserBootrapNodes();
 
 private:

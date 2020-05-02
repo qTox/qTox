@@ -23,9 +23,12 @@
 
 struct DhtServer
 {
-    QString name;
+    bool statusUdp;
+    bool statusTcp;
+    QString ipv4;
+    QString ipv6;
+    QString maintainer;
     QString userId;
-    QString address;
     quint16 port;
 
     bool operator==(const DhtServer& other) const;

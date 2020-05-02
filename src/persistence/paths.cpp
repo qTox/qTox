@@ -344,4 +344,11 @@ QString Paths::getAppCacheDirPath() const
 #endif
 }
 
+QString Paths::getUserNodesFilePath() const
+{
+    QDir dir(getSettingsDirPath());
+    constexpr static char nodesFileName[] = "bootstrapNodes.json";
+    return dir.filePath(nodesFileName);
+}
+
 #endif // PATHS_VERSION_TCS_COMPLIANT
