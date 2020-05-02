@@ -25,14 +25,16 @@
 #include <QObject>
 
 #include "src/core/dhtserver.h"
+#include "src/model/ibootstraplistgenerator.h"
 
 class QNetworkReply;
 
-class BootstrapNodeUpdater : public QObject
+class BootstrapNodeUpdater : public QObject, public IBootstrapListGenerator
 {
     Q_OBJECT
 public:
     explicit BootstrapNodeUpdater(const QNetworkProxy& proxy, QObject* parent = nullptr);
+    QList<DhtServer> getBootstrapnodes() override;
     void requestBootstrapNodes();
     static QList<DhtServer> loadDefaultBootstrapNodes();
 

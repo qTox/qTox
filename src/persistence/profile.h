@@ -25,6 +25,7 @@
 #include "src/core/toxid.h"
 
 #include "src/persistence/history.h"
+#include "src/net/bootstrapnodeupdater.h"
 
 #include <QByteArray>
 #include <QObject>
@@ -116,4 +117,5 @@ private:
     bool isRemoved;
     bool encrypted = false;
     static QStringList profiles;
+    BootstrapNodeUpdater bootstrapNodes;
 };

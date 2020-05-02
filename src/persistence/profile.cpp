@@ -35,6 +35,7 @@
 #include "src/core/coreav.h"
 #include "src/core/corefile.h"
 #include "src/net/avatarbroadcaster.h"
+#include "src/net/bootstrapnodeupdater.h"
 #include "src/nexus.h"
 #include "src/widget/gui.h"
 #include "src/widget/tool/identicon.h"
@@ -244,7 +245,7 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
     }
 
     Core::ToxCoreErrors err;
-    core = Core::makeToxCore(toxsave, &s, &err);
+    core = Core::makeToxCore(toxsave, &s, bootstrapNodes, &err);
     if (!core) {
         switch (err) {
         case Core::ToxCoreErrors::BAD_PROXY:
@@ -281,6 +282,7 @@ Profile::Profile(const QString& name, const QString& password, std::unique_ptr<T
     , passkey{std::move(passkey)}
     , isRemoved{false}
     , encrypted{this->passkey != nullptr}
+    , bootstrapNodes(Settings::getInstance().getProxy())
 {}
 
 /**
