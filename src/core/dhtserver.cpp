@@ -26,8 +26,14 @@
  */
 bool DhtServer::operator==(const DhtServer& other) const
 {
-    return this == &other || (port == other.port && address == other.address
-                              && userId == other.userId && name == other.name);
+    return this == &other ||
+        (statusUdp == other.statusUdp
+        && statusTcp == other.statusTcp
+        && ipv4 == other.ipv4
+        && ipv6 == other.ipv6
+        && maintainer == other.maintainer
+        && userId == other.userId
+        && port == other.port);
 }
 
 /**
