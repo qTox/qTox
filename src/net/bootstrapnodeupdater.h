@@ -10,12 +10,13 @@
 #include "src/net/ibootstraplistgenerator.h"
 
 class QNetworkReply;
+class Paths;
 
 class BootstrapNodeUpdater : public QObject, public IBootstrapListGenerator
 {
     Q_OBJECT
 public:
-    explicit BootstrapNodeUpdater(const QNetworkProxy& proxy, QObject* parent = nullptr);
+    explicit BootstrapNodeUpdater(const QNetworkProxy& proxy, Paths& _paths, QObject* parent = nullptr);
     QList<DhtServer> getBootstrapnodes() override;
     void requestBootstrapNodes();
     static QList<DhtServer> loadDefaultBootstrapNodes();
@@ -29,10 +30,12 @@ private slots:
 private:
     static QList<DhtServer> jsonToNodeList(const QJsonDocument& nodeList);
     static void jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList);
+    QList<DhtServer> loadUserBootrapNodes();
 
 private:
     QNetworkProxy proxy;
     QNetworkAccessManager nam;
+    Paths& paths;
 };
 
 #endif // BOOTSTRAPNODEUPDATER_H

@@ -19,6 +19,8 @@
 
 #include "bootstrapnodeupdater.h"
 
+#include "src/persistence/paths.h"
+
 #include <QDirIterator>
 #include <QFile>
 #include <QJsonArray>
@@ -53,9 +55,10 @@ const QStringList neededFields{status_udp, status_tcp, ipv4, ipv6, public_key, p
  * @brief Fetches a list of currently online bootstrap nodes from node.tox.chat
  * @param proxy Proxy to use for the lookup, must outlive this object
  */
-BootstrapNodeUpdater::BootstrapNodeUpdater(const QNetworkProxy& proxy, QObject* parent)
-    : QObject{parent}
-    , proxy{proxy}
+BootstrapNodeUpdater::BootstrapNodeUpdater(const QNetworkProxy& proxy, Paths& _paths, QObject* parent)
+    : proxy{proxy}
+    , paths{_paths}
+    , QObject{parent}
 {}
 
 QList<DhtServer> BootstrapNodeUpdater::getBootstrapnodes()
@@ -79,6 +82,25 @@ void BootstrapNodeUpdater::requestBootstrapNodes()
  * @return List of bootstrap nodes on success, empty list on error
  */
 QList<DhtServer> BootstrapNodeUpdater::loadDefaultBootstrapNodes()
+{
+    QFile nodesFile{builtinNodesFile};
+    if (!nodesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't read bootstrap nodes";
+        return {};
+    }
+
+    QString nodesJson = nodesFile.readAll();
+    nodesFile.close();
+    QJsonDocument d = QJsonDocument::fromJson(nodesJson.toUtf8());
+    if (d.isNull()) {
+        qWarning() << "Failed to parse JSON document";
+        return {};
+    }
+
+    return jsonToNodeList(d);
+}
+
+QList<DhtServer> BootstrapNodeUpdater::loadUserBootrapNodes()
 {
     QFile nodesFile{builtinNodesFile};
     if (!nodesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
