@@ -803,22 +803,29 @@ void Core::bootstrapDht()
     // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
     while (i < 2) {
         const DhtServer& dhtServer = bootstrapNodesList[j % listSize];
-        QString dhtServerAddress = dhtServer.address.toLatin1();
         QString port = QString::number(dhtServer.port);
-        QString name = dhtServer.name;
         qDebug("Connecting to bootstrap node %d", j % listSize);
-        QByteArray address = dhtServer.address.toLatin1();
+
+        QByteArray address;
+        if (dhtServer.ipv4.isEmpty() && !dhtServer.ipv6.isEmpty()) {
+            address = dhtServer.ipv6.toLatin1();
+        } else {
+            address = dhtServer.ipv4.toLatin1();
+        }
+
         // TODO: constucting the pk via ToxId is a workaround
         ToxPk pk = ToxId{dhtServer.userId}.getPublicKey();
-
         const uint8_t* pkPtr = pk.getData();
 
         Tox_Err_Bootstrap error;
-        tox_bootstrap(tox.get(), address.constData(), dhtServer.port, pkPtr, &error);
-        PARSE_ERR(error);
-
-        tox_add_tcp_relay(tox.get(), address.constData(), dhtServer.port, pkPtr, &error);
-        PARSE_ERR(error);
+        if (dhtServer.statusUdp) {
+            tox_bootstrap(tox.get(), address.constData(), dhtServer.port, pkPtr, &error);
+            PARSE_ERR(error);
+        }
+        if (dhtServer.statusTcp) {
+            tox_add_tcp_relay(tox.get(), address.constData(), dhtServer.port, pkPtr, &error);
+            PARSE_ERR(error);
+        }
 
         ++j;
         ++i;

@@ -30,14 +30,6 @@
 #include <QNetworkReply>
 #include <QRegularExpression>
 
-namespace {
-const QUrl NodeListAddress{"https://nodes.tox.chat/json"};
-const QLatin1String jsonNodeArrayName{"nodes"};
-const QLatin1String emptyAddress{"-"};
-const QRegularExpression ToxPkRegEx(QString("(^|\\s)[A-Fa-f0-9]{%1}($|\\s)").arg(64));
-const QLatin1String builtinNodesFile{":/conf/nodes.json"};
-} // namespace
-
 namespace NodeFields {
 const QLatin1String status_udp{"status_udp"};
 const QLatin1String status_tcp{"status_tcp"};
@@ -51,6 +43,133 @@ const QLatin1String tcp_ports{"tcp_ports"};
 const QStringList neededFields{status_udp, status_tcp, ipv4, ipv6, public_key, port, maintainer};
 } // namespace NodeFields
 
+namespace {
+const QUrl NodeListAddress{"https://nodes.tox.chat/json"};
+const QLatin1String jsonNodeArrayName{"nodes"};
+const QLatin1String emptyAddress{"-"};
+const QRegularExpression ToxPkRegEx(QString("(^|\\s)[A-Fa-f0-9]{%1}($|\\s)").arg(64));
+const QLatin1String builtinNodesFile{":/conf/nodes.json"};
+
+void jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList)
+{
+    // first check if the node in question has all needed fields
+    bool found = true;
+    for (const auto& key : NodeFields::neededFields) {
+        found &= node.contains(key);
+    }
+
+    if (!found) {
+        qDebug() << "Node is missing required fields.";
+        return;
+    }
+
+    // only use nodes that provide at least UDP connection
+    if (!node[NodeFields::status_udp].toBool(false)) {
+        return;
+    }
+
+    const QString public_key = node[NodeFields::public_key].toString({});
+    const int port = node[NodeFields::port].toInt(-1);
+
+    // nodes.tox.chat doesn't use empty strings for empty addresses
+    QString ipv6_address = node[NodeFields::ipv6].toString({});
+    if (ipv6_address == emptyAddress) {
+        ipv6_address = QString{};
+    }
+
+    QString ipv4_address = node[NodeFields::ipv4].toString({});
+    if (ipv4_address == emptyAddress) {
+        ipv4_address = QString{};
+    }
+
+    const QString maintainer = node[NodeFields::maintainer].toString({});
+
+    if (port < 1 || port > std::numeric_limits<uint16_t>::max()) {
+        qDebug() << "Invalid port in nodes list:" << port;
+        return;
+    }
+    const quint16 port_u16 = static_cast<quint16>(port);
+
+    if (!public_key.contains(ToxPkRegEx)) {
+        qDebug() << "Invalid public key in nodes list" << public_key;
+        return;
+    }
+
+    DhtServer server;
+    server.statusUdp = true;
+    server.statusTcp = node[NodeFields::status_udp].toBool(false);
+    server.userId = public_key;
+    server.port = port_u16;
+    server.maintainer = maintainer;
+    server.ipv4 = ipv4_address;
+    server.ipv6 = ipv6_address;
+    outList.append(server);
+    return;
+}
+
+QList<DhtServer> jsonToNodeList(const QJsonDocument& nodeList)
+{
+    QList<DhtServer> result;
+
+    if (!nodeList.isObject()) {
+        return result;
+    }
+
+    QJsonObject rootObj = nodeList.object();
+    if (!(rootObj.contains(jsonNodeArrayName) && rootObj[jsonNodeArrayName].isArray())) {
+        return result;
+    }
+    QJsonArray nodes = rootObj[jsonNodeArrayName].toArray();
+    for (const QJsonValueRef node : nodes) {
+        if (node.isObject()) {
+            jsonNodeToDhtServer(node.toObject(), result);
+        }
+    }
+
+    return result;
+}
+
+QList<DhtServer> loadNodesFile(QString file)
+{
+    QFile nodesFile{builtinNodesFile};
+    if (!nodesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Couldn't read bootstrap nodes";
+        return {};
+    }
+
+    QString nodesJson = nodesFile.readAll();
+    nodesFile.close();
+    QJsonDocument d = QJsonDocument::fromJson(nodesJson.toUtf8());
+    if (d.isNull()) {
+        qWarning() << "Failed to parse JSON document";
+        return {};
+    }
+
+    return jsonToNodeList(d);
+}
+
+QByteArray serialize(QList<DhtServer> nodes)
+{
+    QJsonArray jsonNodes;
+    for (auto& node : nodes) {
+        QJsonObject nodeJson;
+        nodeJson.insert(NodeFields::status_udp, node.statusUdp);
+        nodeJson.insert(NodeFields::status_tcp, node.statusTcp);
+        nodeJson.insert(NodeFields::ipv4, node.ipv4);
+        nodeJson.insert(NodeFields::ipv6, node.ipv6);
+        nodeJson.insert(NodeFields::public_key, node.userId);
+        nodeJson.insert(NodeFields::port, node.port);
+        nodeJson.insert(NodeFields::maintainer, node.maintainer);
+        jsonNodes.append(nodeJson);
+    }
+    QJsonObject rootObj;
+    rootObj.insert("nodes", jsonNodes);
+
+    QJsonDocument doc{rootObj};
+    return doc.toJson(QJsonDocument::Indented);
+}
+} // namespace
+
 /**
  * @brief Fetches a list of currently online bootstrap nodes from node.tox.chat
  * @param proxy Proxy to use for the lookup, must outlive this object
@@ -63,7 +182,21 @@ BootstrapNodeUpdater::BootstrapNodeUpdater(const QNetworkProxy& proxy, Paths& _p
 
 QList<DhtServer> BootstrapNodeUpdater::getBootstrapnodes()
 {
-    return loadDefaultBootstrapNodes();
+    auto userFilePath = getUserNodesFilePath();
+    if (!QFile(userFilePath).exists()) {
+        qInfo() << "Bootstrap node list not found, creating one with default nodes.";
+        // deserialize and reserialize instead of just copying to strip out any unnecessary json, making it easier for
+        // users to edit
+        auto buildInNodes = loadNodesFile(builtinNodesFile);
+        auto serializedNodes = serialize(buildInNodes);
+
+        QFile outFile(userFilePath);
+        outFile.open(QIODevice::WriteOnly | QIODevice::Text);
+        outFile.write(serializedNodes.data(), serializedNodes.size());
+        outFile.close();
+    }
+
+    return loadNodesFile(userFilePath);
 }
 
 void BootstrapNodeUpdater::requestBootstrapNodes()
@@ -83,21 +216,7 @@ void BootstrapNodeUpdater::requestBootstrapNodes()
  */
 QList<DhtServer> BootstrapNodeUpdater::loadDefaultBootstrapNodes()
 {
-    QFile nodesFile{builtinNodesFile};
-    if (!nodesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Couldn't read bootstrap nodes";
-        return {};
-    }
-
-    QString nodesJson = nodesFile.readAll();
-    nodesFile.close();
-    QJsonDocument d = QJsonDocument::fromJson(nodesJson.toUtf8());
-    if (d.isNull()) {
-        qWarning() << "Failed to parse JSON document";
-        return {};
-    }
-
-    return jsonToNodeList(d);
+    return loadNodesFile(builtinNodesFile);
 }
 
 QList<DhtServer> BootstrapNodeUpdater::loadUserBootrapNodes()
@@ -139,84 +258,9 @@ void BootstrapNodeUpdater::onRequestComplete(QNetworkReply* reply)
     emit availableBootstrapNodes(result);
 }
 
-void BootstrapNodeUpdater::jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList)
+QString BootstrapNodeUpdater::getUserNodesFilePath()
 {
-    // first check if the node in question has all needed fields
-    bool found = true;
-    for (const auto& key : NodeFields::neededFields) {
-        found &= node.contains(key);
-    }
-
-    if (!found) {
-        return;
-    }
-
-    // only use nodes that provide at least UDP connection
-    if (!node[NodeFields::status_udp].toBool(false)) {
-        return;
-    }
-
-    const QString public_key = node[NodeFields::public_key].toString({});
-    const int port = node[NodeFields::port].toInt(-1);
-
-    // nodes.tox.chat doesn't use empty strings for empty addresses
-    QString ipv6_address = node[NodeFields::ipv6].toString({});
-    if (ipv6_address == emptyAddress) {
-        ipv6_address = QString{};
-    }
-
-    QString ipv4_address = node[NodeFields::ipv4].toString({});
-    if (ipv4_address == emptyAddress) {
-        ipv4_address = QString{};
-    }
-
-    const QString maintainer = node[NodeFields::maintainer].toString({});
-
-    if (port < 1 || port > std::numeric_limits<uint16_t>::max()) {
-        return;
-    }
-    const quint16 port_u16 = static_cast<quint16>(port);
-
-    if (!public_key.contains(ToxPkRegEx)) {
-        return;
-    }
-
-    DhtServer server;
-    server.userId = public_key;
-    server.port = port_u16;
-    server.name = maintainer;
-
-    if (!ipv4_address.isEmpty()) {
-        server.address = ipv4_address;
-        outList.append(server);
-    }
-    // avoid adding the same server twice in case they use the same dns name for v6 and v4
-    if (!ipv6_address.isEmpty() && ipv4_address != ipv6_address) {
-        server.address = ipv6_address;
-        outList.append(server);
-    }
-
-    return;
-}
-
-QList<DhtServer> BootstrapNodeUpdater::jsonToNodeList(const QJsonDocument& nodeList)
-{
-    QList<DhtServer> result;
-
-    if (!nodeList.isObject()) {
-        return result;
-    }
-
-    QJsonObject rootObj = nodeList.object();
-    if (!(rootObj.contains(jsonNodeArrayName) && rootObj[jsonNodeArrayName].isArray())) {
-        return result;
-    }
-    QJsonArray nodes = rootObj[jsonNodeArrayName].toArray();
-    for (const QJsonValueRef node : nodes) {
-        if (node.isObject()) {
-            jsonNodeToDhtServer(node.toObject(), result);
-        }
-    }
-
-    return result;
+    QDir dir(paths.getLegacySettingsDirPath());
+    constexpr static char nodesFileName[] = "bootstrapNodes.json";
+    return dir.filePath(nodesFileName);
 }
