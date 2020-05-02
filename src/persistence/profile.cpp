@@ -277,12 +277,12 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
             Qt::ConnectionType::QueuedConnection);
 }
 
-Profile::Profile(const QString& name, const QString& password, std::unique_ptr<ToxEncrypt> passkey)
+Profile::Profile(const QString& name, const QString& password, std::unique_ptr<ToxEncrypt> passkey, Paths& paths)
     : name{name}
     , passkey{std::move(passkey)}
     , isRemoved{false}
     , encrypted{this->passkey != nullptr}
-    , bootstrapNodes(Settings::getInstance().getProxy())
+    , bootstrapNodes(Settings::getInstance().getProxy(), paths)
 {}
 
 /**
@@ -315,7 +315,7 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
         return nullptr;
     }
 
-    Profile* p = new Profile(name, password, std::move(tmpKey));
+    Profile* p = new Profile(name, password, std::move(tmpKey), settings.getPaths());
 
     // Core settings are saved per profile, need to load them before starting Core
     settings.updateProfileData(p, parser);
@@ -346,7 +346,7 @@ Profile* Profile::createProfile(const QString& name, const QString& password, Se
     }
 
     settings.createPersonal(name);
-    Profile* p = new Profile(name, password, std::move(tmpKey));
+    Profile* p = new Profile(name, password, std::move(tmpKey), settings.getPaths());
     settings.updateProfileData(p, parser);
 
     p->initCore(QByteArray(), settings, /*isNewProfile*/ true);
