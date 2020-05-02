@@ -21,6 +21,7 @@
 #include "src/core/toxoptions.h"
 #include "src/core/icoresettings.h"
 #include "src/net/bootstrapnodeupdater.h"
+#include "src/model/ibootstraplistgenerator.h"
 
 #include <QtTest/QtTest>
 #include <QtGlobal>
@@ -74,6 +75,12 @@ private:
     quint16 port;
 };
 
+class MockNodeListGenerator : public IBootstrapListGenerator
+{
+    QList<DhtServer> getBootstrapnodes() {
+        return BootstrapNodeUpdater::loadDefaultBootstrapNodes();
+    }
+};
 
 class TestCore : public QObject
 {
@@ -104,7 +111,9 @@ void TestCore::startup_without_proxy()
     settings->setProxyPort(0);
     settings->setProxyType(MockSettings::ProxyType::ptNone);
 
-    test_core = Core::makeToxCore(savedata, settings, err);
+    MockNodeListGenerator nodesGenerator{};
+
+    test_core = Core::makeToxCore(savedata, settings, nodesGenerator, err);
 
     if (test_core == nullptr) {
         QFAIL("ToxCore initialisation failed");
@@ -130,7 +139,9 @@ void TestCore::startup_with_invalid_proxy()
     settings->setProxyPort(9985);
     settings->setProxyType(MockSettings::ProxyType::ptSOCKS5);
 
-    test_core = Core::makeToxCore(savedata, settings, err);
+    MockNodeListGenerator nodesGenerator{};
+
+    test_core = Core::makeToxCore(savedata, settings, nodesGenerator, err);
 
     if (test_core != nullptr) {
         QFAIL("ToxCore initialisation passed with invalid SOCKS5 proxy address");
@@ -142,7 +153,7 @@ void TestCore::startup_with_invalid_proxy()
     settings->setProxyPort(9985);
     settings->setProxyType(MockSettings::ProxyType::ptHTTP);
 
-    test_core = Core::makeToxCore(savedata, settings, err);
+    test_core = Core::makeToxCore(savedata, settings, nodesGenerator, err);
 
     if (test_core != nullptr) {
         QFAIL("ToxCore initialisation passed with invalid HTTP proxy address");

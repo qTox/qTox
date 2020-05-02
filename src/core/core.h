@@ -50,6 +50,7 @@ class ICoreSettings;
 class GroupInvite;
 class Profile;
 class Core;
+class IBootstrapListGenerator;
 
 using ToxCorePtr = std::unique_ptr<Core>;
 
@@ -70,7 +71,7 @@ public:
     };
 
     static ToxCorePtr makeToxCore(const QByteArray& savedata, const ICoreSettings* const settings,
-                                  ToxCoreErrors* err = nullptr);
+                                  IBootstrapListGenerator& bootstrapNodes, ToxCoreErrors* err = nullptr);
     static Core* getInstance();
     const CoreAV* getAv() const;
     CoreAV* getAv();
@@ -189,7 +190,7 @@ signals:
     void failedToRemoveFriend(uint32_t friendId);
 
 private:
-    Core(QThread* coreThread);
+    Core(QThread* coreThread, IBootstrapListGenerator& _bootstrapNodes);
 
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
                                 size_t cMessageSize, void* core);
@@ -252,6 +253,7 @@ private:
     mutable QMutex coreLoopLock{QMutex::Recursive};
 
     std::unique_ptr<QThread> coreThread;
+    IBootstrapListGenerator& bootstrapNodes;
 };
 
 #endif // CORE_HPP

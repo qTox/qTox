@@ -379,6 +379,7 @@ set(${PROJECT_NAME}_SOURCES
   src/model/chathistory.h
   src/model/chathistory.cpp
   src/model/toxclientstandards.h
+  src/model/ibootstraplistgenerator.h
   src/net/bootstrapnodeupdater.cpp
   src/net/bootstrapnodeupdater.h
   src/net/avatarbroadcaster.cpp

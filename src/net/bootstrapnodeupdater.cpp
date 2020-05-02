@@ -58,6 +58,11 @@ BootstrapNodeUpdater::BootstrapNodeUpdater(const QNetworkProxy& proxy, QObject* 
     , proxy{proxy}
 {}
 
+QList<DhtServer> BootstrapNodeUpdater::getBootstrapnodes()
+{
+    return loadDefaultBootstrapNodes();
+}
+
 void BootstrapNodeUpdater::requestBootstrapNodes()
 {
     nam.setProxy(proxy);
@@ -71,7 +76,7 @@ void BootstrapNodeUpdater::requestBootstrapNodes()
 
 /**
  * @brief Loads the list of built in boostrap nodes
- * @return List of bootstrapnodes on success, empty list on error
+ * @return List of bootstrap nodes on success, empty list on error
  */
 QList<DhtServer> BootstrapNodeUpdater::loadDefaultBootstrapNodes()
 {

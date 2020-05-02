@@ -18,6 +18,7 @@
 */
 
 #include "src/net/bootstrapnodeupdater.h"
+#include "src/persistence/paths.h"
 
 #include <QNetworkProxy>
 #include <QSignalSpy>
