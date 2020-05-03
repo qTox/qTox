@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ACTIVATEDIALOG_H
-#define ACTIVATEDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -36,5 +35,3 @@ public:
 signals:
     void windowStateChanged(Qt::WindowStates state);
 };
-
-#endif // ACTIVATEDIALOG_H

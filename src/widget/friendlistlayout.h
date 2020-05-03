@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FRIENDLISTLAYOUT_H
-#define FRIENDLISTLAYOUT_H
+#pragma once
 
 #include "genericchatitemlayout.h"
 #include "src/model/status.h"
@@ -56,5 +55,3 @@ private:
     GenericChatItemLayout friendOnlineLayout;
     GenericChatItemLayout friendOfflineLayout;
 };
-
-#endif // FRIENDLISTLAYOUT_H

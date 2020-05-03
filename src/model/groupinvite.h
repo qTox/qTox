@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GROUPINVITE_H
-#define GROUPINVITE_H
+#pragma once
 
 #include <QByteArray>
 #include <QDateTime>
@@ -42,5 +41,3 @@ private:
     QByteArray invite;
     QDateTime date;
 };
-
-#endif // GROUPINVITE_H

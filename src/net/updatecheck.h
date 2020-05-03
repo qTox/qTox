@@ -16,6 +16,9 @@
     You should have received a copy of the GNU General Public License
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+#pragma once
+
 #include <QNetworkAccessManager>
 #include <QObject>
 #include <QTimer>

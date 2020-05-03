@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ICONCACHE_H
-#define ICONCACHE_H
+#pragma once
 
 #include <QHash>
 #include <QIcon>
@@ -40,5 +39,3 @@ protected:
 private:
     QHash<QString, QIcon> cache;
 };
-
-#endif // ICONCACHE_H

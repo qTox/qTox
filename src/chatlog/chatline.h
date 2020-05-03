@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHATLINE_H
-#define CHATLINE_H
+#pragma once
 
 #include <QPointF>
 #include <QRectF>
@@ -116,5 +115,3 @@ private:
     QRectF bbox;
     bool isVisible = false;
 };
-
-#endif // CHATLINE_H

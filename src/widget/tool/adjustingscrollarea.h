@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ADJUSTINGSCROLLAREA_H
-#define ADJUSTINGSCROLLAREA_H
+#pragma once
 
 #include <QScrollArea>
 
@@ -33,5 +32,3 @@ protected:
     void resizeEvent(QResizeEvent* ev) override;
     QSize sizeHint() const final;
 };
-
-#endif // ADJUSTINGSCROLLAREA_H

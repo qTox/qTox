@@ -18,8 +18,7 @@
 */
 
 
-#ifndef AVATARBROADCASTER_H
-#define AVATARBROADCASTER_H
+#pragma once
 
 #include <QByteArray>
 #include <QMap>
@@ -38,5 +37,3 @@ private:
     static QByteArray avatarData;
     static QMap<uint32_t, bool> friendsSentTo;
 };
-
-#endif // AVATARBROADCASTER_H

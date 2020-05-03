@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GROUPINVITEWIDGET_H
-#define GROUPINVITEWIDGET_H
+#pragma once
 
 #include "src/model/groupinvite.h"
 
@@ -48,5 +47,3 @@ private:
     QHBoxLayout* widgetLayout;
     GroupInvite inviteInfo;
 };
-
-#endif // GROUPINVITEWIDGET_H

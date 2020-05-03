@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CATEGORYWIDGET_H
-#define CATEGORYWIDGET_H
+#pragma once
 
 #include "genericchatitemwidget.h"
 #include "src/core/core.h"
@@ -85,5 +84,3 @@ private:
     QFrame* lineFrame;
     bool expanded = false;
 };
-
-#endif // CATEGORYWIDGET_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GROUP_H
-#define GROUP_H
+#pragma once
 
 #include "contact.h"
 
@@ -86,5 +85,3 @@ private:
     const GroupId groupId;
     bool avGroupchat;
 };
-
-#endif // GROUP_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHATTEXTEDIT_H
-#define CHATTEXTEDIT_H
+#pragma once
 
 #include <QTextEdit>
 
@@ -47,5 +46,3 @@ private:
 private:
     QString lastMessage;
 };
-
-#endif // CHATTEXTEDIT_H

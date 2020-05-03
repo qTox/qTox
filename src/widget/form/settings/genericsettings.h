@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GENERICFORM_H
-#define GENERICFORM_H
+#pragma once
 
 #include <QWidget>
 
@@ -41,5 +40,3 @@ protected:
 protected:
     QPixmap formIcon;
 };
-
-#endif

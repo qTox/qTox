@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SESSION_CHAT_LOG_H
-#define SESSION_CHAT_LOG_H
+#pragma once
 
 #include "ichatlog.h"
 #include "imessagedispatcher.h"
@@ -89,5 +88,3 @@ private:
      */
     QMap<DispatchedMessageId, ChatLogIdx> outgoingMessages;
 };
-
-#endif /*SESSION_CHAT_LOG_H*/

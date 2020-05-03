@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DESKTOPNOTIFY_H
-#define DESKTOPNOTIFY_H
+#pragma once
 
 #if DESKTOP_NOTIFICATIONS
 #include <libsnore/snore.h>
@@ -54,5 +53,3 @@ private:
     Snore::Icon snoreIcon;
 };
 #endif // DESKTOP_NOTIFICATIONS
-
-#endif // DESKTOPNOTIFY_H

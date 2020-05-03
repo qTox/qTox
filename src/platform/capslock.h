@@ -17,16 +17,13 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifdef QTOX_PLATFORM_EXT
+#pragma once
 
-#ifndef PLATFORM_CAPSLOCK_H
-#define PLATFORM_CAPSLOCK_H
+#ifdef QTOX_PLATFORM_EXT
 
 
 namespace Platform {
 bool capsLockEnabled();
 }
-
-#endif // PLATFORM_CAPSLOCK_H
 
 #endif // QTOX_PLATFORM_EXT

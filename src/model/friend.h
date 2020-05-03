@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FRIEND_H
-#define FRIEND_H
+#pragma once
 
 #include "contact.h"
 #include "src/core/core.h"
@@ -74,5 +73,3 @@ private:
     bool hasNewEvents;
     Status::Status friendStatus;
 };
-
-#endif // FRIEND_H

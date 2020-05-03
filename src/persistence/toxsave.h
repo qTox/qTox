@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOXSAVE_H
-#define TOXSAVE_H
+#pragma once
 
 class QString;
 class QByteArray;
@@ -27,5 +26,3 @@ bool handleToxSave(const QString& path);
 
 // Internals
 bool toxSaveEventHandler(const QByteArray& eventData);
-
-#endif

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GROUPID_H
-#define GROUPID_H
+#pragma once
 
 #include "src/core/contactid.h"
 #include <QByteArray>
@@ -33,5 +32,3 @@ public:
     explicit GroupId(const uint8_t* rawId);
     int getSize() const override;
 };
-
-#endif // GROUPID_H

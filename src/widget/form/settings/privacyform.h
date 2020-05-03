@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PRIVACYFORM_H
-#define PRIVACYFORM_H
+#pragma once
 
 #include "genericsettings.h"
 
@@ -58,5 +57,3 @@ private:
     Ui::PrivacySettings* bodyUI;
     Core* core;
 };
-
-#endif

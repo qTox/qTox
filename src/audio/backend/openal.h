@@ -18,8 +18,7 @@
 */
 
 
-#ifndef OPENAL_H
-#define OPENAL_H
+#pragma once
 
 #include "src/audio/iaudiocontrol.h"
 #include "src/audio/backend/alsink.h"
@@ -164,5 +163,3 @@ protected:
     const qreal maxInThreshold = 0.4;
     int16_t* inputBuffer = nullptr;
 };
-
-#endif // OPENAL_H

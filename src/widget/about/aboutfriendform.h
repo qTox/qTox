@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ABOUT_USER_FORM_H
-#define ABOUT_USER_FORM_H
+#pragma once
 
 #include "src/model/about/iaboutfriend.h"
 
@@ -55,5 +54,3 @@ private slots:
     void onSelectDirClicked();
     void onRemoveHistoryClicked();
 };
-
-#endif // ABOUT_USER_FORM_H

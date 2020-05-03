@@ -17,10 +17,9 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifdef QTOX_PLATFORM_EXT
+#pragma once
 
-#ifndef PLATFORM_TIMER_H
-#define PLATFORM_TIMER_H
+#ifdef QTOX_PLATFORM_EXT
 
 #include <cstdint>
 
@@ -30,5 +29,3 @@ uint32_t getIdleTime();
 }
 
 #endif // PLATFORM_TIMER_H
-
-#endif // QTOX_PLATFORM_EXT

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ICORE_GROUP_MESSAGE_SENDER_H
-#define ICORE_GROUP_MESSAGE_SENDER_H
+#pragma once
 
 #include <QString>
 
@@ -29,5 +28,3 @@ public:
     virtual void sendGroupAction(int groupId, const QString& message) = 0;
     virtual void sendGroupMessage(int groupId, const QString& message) = 0;
 };
-
-#endif /*ICORE_GROUP_MESSAGE_SENDER_H*/

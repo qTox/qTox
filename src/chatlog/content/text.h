@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TEXT_H
-#define TEXT_H
+#pragma once
 
 #include "../chatlinecontent.h"
 #include "src/widget/style.h"
@@ -115,5 +114,3 @@ private:
     QTextCursor selectCursor;
     std::pair<int, int> selectPoint{0, 0};
 };
-
-#endif // TEXT_H

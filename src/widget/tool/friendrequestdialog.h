@@ -18,8 +18,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FRIENDREQUESTDIALOG_HPP
-#define FRIENDREQUESTDIALOG_HPP
+#pragma once
 
 #include <QDialog>
 
@@ -29,5 +28,3 @@ class FriendRequestDialog : public QDialog
 public:
     explicit FriendRequestDialog(QWidget* parent, const QString& userId, const QString& message);
 };
-
-#endif // FRIENDREQUESTDIALOG_HPP

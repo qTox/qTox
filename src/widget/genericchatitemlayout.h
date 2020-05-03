@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GENERICCHATITEMLAYOUT_H
-#define GENERICCHATITEMLAYOUT_H
+#pragma once
 
 #include <Qt>
 
@@ -49,5 +48,3 @@ private:
     int indexOfClosestSortedWidget(GenericChatItemWidget* widget) const;
     QVBoxLayout* layout;
 };
-
-#endif // GENERICCHATITEMLAYOUT_H

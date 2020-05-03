@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SCREENGRABBEROVERLAYITEM_HPP
-#define SCREENGRABBEROVERLAYITEM_HPP
+#pragma once
 
 #include <QGraphicsRectItem>
 
@@ -43,5 +42,3 @@ private:
 
     QRect chosenRect;
 };
-
-#endif // SCREENGRABBEROVERLAYITEM_HPP

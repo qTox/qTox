@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SELFCAMVIEW_H
-#define SELFCAMVIEW_H
+#pragma once
 
 #include "src/video/videosource.h"
 #include <QWidget>
@@ -71,5 +70,3 @@ private:
     float ratio;
     bool expanding;
 };
-
-#endif // SELFCAMVIEW_H

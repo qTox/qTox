@@ -20,8 +20,7 @@
  * statusnotifier. If not, see http://www.gnu.org/licenses/
  */
 
-#ifndef __STATUS_NOTIFIER_H__
-#define __STATUS_NOTIFIER_H__
+#pragma once
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gio/gio.h>
@@ -246,5 +245,3 @@ void status_notifier_register(StatusNotifier* sn);
 StatusNotifierState status_notifier_get_state(StatusNotifier* sn);
 
 G_END_DECLS
-
-#endif /* __STATUS_NOTIFIER_H__ */

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FRIENDLIST_H
-#define FRIENDLIST_H
+#pragma once
 
 #include <cstdint>
 
@@ -46,5 +45,3 @@ private:
     static QHash<ToxPk, Friend*> friendList;
     static QHash<uint32_t, ToxPk> id2key;
 };
-
-#endif // FRIENDLIST_H

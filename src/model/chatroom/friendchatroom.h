@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FRIEND_CHATROOM_H
-#define FRIEND_CHATROOM_H
+#pragma once
 
 #include "chatroom.h"
 
@@ -87,5 +86,3 @@ private:
     Friend* frnd{nullptr};
     IDialogsManager* dialogsManager{nullptr};
 };
-
-#endif // FRIEND_H

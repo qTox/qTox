@@ -18,8 +18,7 @@
 */
 
 
-#ifndef TOXURI_H
-#define TOXURI_H
+#pragma once
 
 #include <QDialog>
 
@@ -39,5 +38,3 @@ public:
 private:
     QPlainTextEdit* messageEdit;
 };
-
-#endif // TOXURI_H

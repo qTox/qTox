@@ -16,8 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef V4L2_H
-#define V4L2_H
+#pragma once
 
 #include "src/video/videomode.h"
 #include <QPair>
@@ -34,5 +33,3 @@ QVector<QPair<QString, QString>> getDeviceList();
 QString getPixelFormatString(uint32_t pixel_format);
 bool betterPixelFormat(uint32_t a, uint32_t b);
 }
-
-#endif // V4L2_H

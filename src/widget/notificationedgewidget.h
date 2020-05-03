@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef NOTIFICATIONEDGEWIDGET_H
-#define NOTIFICATIONEDGEWIDGET_H
+#pragma once
 
 #include <QWidget>
 
@@ -46,5 +45,3 @@ protected:
 private:
     QLabel* textLabel;
 };
-
-#endif // NOTIFICATIONEDGEWIDGET_H

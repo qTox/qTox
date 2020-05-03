@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SEARCHSETTINGSFORM_H
-#define SEARCHSETTINGSFORM_H
+#pragma once
 
 #include <QWidget>
 #include "src/widget/searchtypes.h"
@@ -56,5 +55,3 @@ private slots:
 signals:
     void updateSettings(const bool isUpdate);
 };
-
-#endif // SEARCHSETTINGSFORM_H

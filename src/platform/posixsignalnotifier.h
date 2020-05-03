@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef POSIXSIGNALNOTIFIER_H
-#define POSIXSIGNALNOTIFIER_H
+#pragma once
 
 #include <QObject>
 
@@ -49,5 +48,3 @@ private:
 private:
     QSocketNotifier* notifier{nullptr};
 };
-
-#endif // POSIXSIGNALNOTIFIER_H

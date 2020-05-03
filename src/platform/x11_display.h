@@ -17,10 +17,9 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifdef QTOX_PLATFORM_EXT
+#pragma once
 
-#ifndef PLATFORM_X11_DISPLAY_H
-#define PLATFORM_X11_DISPLAY_H
+#ifdef QTOX_PLATFORM_EXT
 
 typedef struct _XDisplay Display;
 
@@ -32,7 +31,5 @@ void unlock();
 }
 
 }
-
-#endif // PLATFORM_X11_DISPLAY_H
 
 #endif // QTOX_PLATFORM_EXT

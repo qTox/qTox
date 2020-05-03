@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ALSOURCE_H
-#define ALSOURCE_H
+#pragma once
 
 #include "src/audio/iaudiosource.h"
 #include <QMutex>
@@ -45,5 +44,3 @@ private:
     bool killed = false;
     mutable QMutex killLock;
 };
-
-#endif // ALSOURCE_H

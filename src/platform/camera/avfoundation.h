@@ -16,8 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef AVFOUNDATION_H
-#define AVFOUNDATION_H
+#pragma once
 
 #include "src/video/videomode.h"
 #include <QPair>
@@ -34,5 +33,3 @@ const QString CAPTURE_SCREEN{"Capture screen"};
 QVector<VideoMode> getDeviceModes(QString devName);
 QVector<QPair<QString, QString>> getDeviceList();
 }
-
-#endif // AVFOUNDATION_H

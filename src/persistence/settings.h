@@ -18,8 +18,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SETTINGS_HPP
-#define SETTINGS_HPP
+#pragma once
 
 #include "src/audio/iaudiosettings.h"
 #include "src/core/icoresettings.h"
@@ -708,5 +707,3 @@ private:
     static const QString globalSettingsFile;
     static QThread* settingsThread;
 };
-
-#endif // SETTINGS_HPP

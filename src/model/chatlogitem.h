@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHAT_LOG_ITEM_H
-#define CHAT_LOG_ITEM_H
+#pragma once
 
 #include "src/core/toxfile.h"
 #include "src/core/toxpk.h"
@@ -72,5 +71,3 @@ private:
 
     ContentPtr content;
 };
-
-#endif /*CHAT_LOG_ITEM_H*/

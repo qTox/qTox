@@ -20,8 +20,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TABCOMPLETER_H
-#define TABCOMPLETER_H
+#pragma once
 
 #include "src/model/group.h"
 #include "src/widget/tool/chattextedit.h"
@@ -60,6 +59,3 @@ private:
 
     void buildCompletionList();
 };
-
-
-#endif

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOXLOGGER_H
-#define TOXLOGGER_H
+#pragma once
 
 #include <tox/tox.h>
 
@@ -28,5 +27,3 @@ namespace ToxLogger {
     void onLogMessage(Tox *tox, Tox_Log_Level level, const char *file, uint32_t line,
                       const char *func, const char *message, void *user_data);
 }
-
-#endif // TOXLOGGER_H

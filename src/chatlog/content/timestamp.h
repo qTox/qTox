@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TIMESTAMP_H
-#define TIMESTAMP_H
+#pragma once
 
 #include "text.h"
 #include <QDateTime>
@@ -39,5 +38,3 @@ protected:
 private:
     QDateTime time;
 };
-
-#endif // TIMESTAMP_H

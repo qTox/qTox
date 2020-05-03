@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef STYLE_H
-#define STYLE_H
+#pragma once
 
 #include <QColor>
 #include <QFont>
@@ -97,5 +96,3 @@ signals:
 private:
     Style();
 };
-
-#endif // STYLE_H

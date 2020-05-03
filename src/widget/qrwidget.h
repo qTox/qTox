@@ -18,8 +18,7 @@
 */
 
 
-#ifndef QRWIDGET_H
-#define QRWIDGET_H
+#pragma once
 
 #include <QWidget>
 
@@ -40,5 +39,3 @@ private:
     QImage* image;
     QSize size;
 };
-
-#endif // QRWIDGET_H

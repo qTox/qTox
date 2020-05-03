@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MODEL_CHATROOM_H
-#define MODEL_CHATROOM_H
+#pragma once
 
 #include "src/model/contact.h"
 
@@ -27,5 +26,3 @@ class Chatroom
 public:
     virtual Contact* getContact() = 0;
 };
-
-#endif /* MODEL_CHATROOM_H */

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SCREENGRABBERCHOOSERRECTITEM_HPP
-#define SCREENGRABBERCHOOSERRECTITEM_HPP
+#pragma once
 
 #include <QGraphicsItemGroup>
 
@@ -86,6 +85,3 @@ private:
     QGraphicsRectItem* bottomLeft;
     QGraphicsRectItem* leftCenter;
 };
-
-
-#endif // SCREENGRABBERCHOOSERRECTITEM_HPP

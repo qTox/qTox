@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CONTENTLAYOUT_H
-#define CONTENTLAYOUT_H
+#pragma once
 
 #include <QBoxLayout>
 #include <QFrame>
@@ -41,5 +40,3 @@ public:
 private:
     void init();
 };
-
-#endif // CONTENTLAYOUT_H

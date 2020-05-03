@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FRIEND_MESSAGE_DISPATCHER_H
-#define FRIEND_MESSAGE_DISPATCHER_H
+#pragma once
 
 #include "src/core/icorefriendmessagesender.h"
 #include "src/model/friend.h"
@@ -54,6 +53,3 @@ private:
     OfflineMsgEngine offlineMsgEngine;
     MessageProcessor processor;
 };
-
-
-#endif /* IMESSAGE_DISPATCHER_H */

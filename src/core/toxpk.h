@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOXPK_H
-#define TOXPK_H
+#pragma once
 
 #include "src/core/contactid.h"
 #include <QByteArray>
@@ -33,5 +32,3 @@ public:
     explicit ToxPk(const uint8_t* rawId);
     int getSize() const override;
 };
-
-#endif // TOXPK_H

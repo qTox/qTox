@@ -18,8 +18,7 @@
 */
 
 
-#ifndef TOXID_H
-#define TOXID_H
+#pragma once
 
 #include "toxpk.h"
 
@@ -60,5 +59,3 @@ public:
 private:
     QByteArray toxId;
 };
-
-#endif // TOXID_H

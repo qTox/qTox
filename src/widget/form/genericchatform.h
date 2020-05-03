@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GENERICCHATFORM_H
-#define GENERICCHATFORM_H
+#pragma once
 
 #include "src/chatlog/chatmessage.h"
 #include "src/core/toxpk.h"
@@ -194,5 +193,3 @@ protected:
     std::map<ChatLogIdx, ChatMessage::Ptr> messages;
     bool colorizeNames = false;
 };
-
-#endif // GENERICCHATFORM_H

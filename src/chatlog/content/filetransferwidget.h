@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FILETRANSFERWIDGET_H
-#define FILETRANSFERWIDGET_H
+#pragma once
 
 #include <QTime>
 #include <QWidget>
@@ -109,5 +108,3 @@ private:
         LeftBottom = 8
     };
 };
-
-#endif // FILETRANSFERWIDGET_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _CONTENT_DIALOG_MANAGER_H_
-#define _CONTENT_DIALOG_MANAGER_H_
+#pragma once
 
 #include "contentdialog.h"
 #include "src/core/contactid.h"
@@ -70,5 +69,3 @@ private:
 
     static ContentDialogManager* instance;
 };
-
-#endif // _CONTENT_DIALOG_MANAGER_H_

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MASKABLEPIXMAPWIDGET_H
-#define MASKABLEPIXMAPWIDGET_H
+#pragma once
 
 #include <QLabel>
 
@@ -49,5 +48,3 @@ private:
     QString maskName;
     bool clickable;
 };
-
-#endif // MASKABLEPIXMAPWIDGET_H

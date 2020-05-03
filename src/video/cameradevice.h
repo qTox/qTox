@@ -18,8 +18,7 @@
 */
 
 
-#ifndef CAMERADEVICE_H
-#define CAMERADEVICE_H
+#pragma once
 
 #include "videomode.h"
 #include <QHash>
@@ -67,5 +66,3 @@ private:
     static QMutex openDeviceLock, iformatLock;
     static AVInputFormat *iformat, *idesktopFormat;
 };
-
-#endif // CAMERADEVICE_H

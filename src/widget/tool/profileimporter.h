@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PROFILEIMPORTER_H
-#define PROFILEIMPORTER_H
+#pragma once
 
 #include <QWidget>
 
@@ -34,5 +33,3 @@ public:
 private:
     bool askQuestion(QString title, QString message);
 };
-
-#endif // PROFILEIMPORTER_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOXENCRYPT_H
-#define TOXENCRYPT_H
+#pragma once
 
 #include <QByteArray>
 #include <QString>
@@ -51,5 +50,3 @@ private:
 private:
     Tox_Pass_Key* passKey = nullptr;
 };
-
-#endif // TOXENCRYPT_H

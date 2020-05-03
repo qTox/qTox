@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef AVFORM_H
-#define AVFORM_H
+#pragma once
 
 #include <QList>
 #include <QObject>
@@ -111,5 +110,3 @@ private:
     uint alSource;
     const uint totalSliderSteps = 100; // arbitrary number of steps to give slider a good "feel"
 };
-
-#endif

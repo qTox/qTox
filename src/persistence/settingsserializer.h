@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SETTINGSSERIALIZER_H
-#define SETTINGSSERIALIZER_H
+#pragma once
 
 #include "src/core/toxencrypt.h"
 
@@ -111,5 +110,3 @@ private:
     QVector<Value> values;
     static const char magic[];
 };
-
-#endif // SETTINGSSERIALIZER_H

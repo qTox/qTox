@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef I_AUDIO_SETTINGS_H
-#define I_AUDIO_SETTINGS_H
+#pragma once
 
 #include "src/model/interface.h"
 
@@ -69,5 +68,3 @@ public:
     DECLARE_SIGNAL(audioBitrateChanged, int bitrate);
     DECLARE_SIGNAL(enableTestSoundChanged, bool newValue);
 };
-
-#endif // I_AUDIO_SETTINGS_H

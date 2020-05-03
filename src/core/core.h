@@ -18,8 +18,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CORE_HPP
-#define CORE_HPP
+#pragma once
 
 #include "groupid.h"
 #include "icorefriendmessagesender.h"
@@ -253,5 +252,3 @@ private:
 
     std::unique_ptr<QThread> coreThread;
 };
-
-#endif // CORE_HPP

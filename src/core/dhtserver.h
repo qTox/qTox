@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DHT_SERVER_H
-#define DHT_SERVER_H
+#pragma once
 
 #include <QString>
 
@@ -32,5 +31,3 @@ struct DhtServer
     bool operator==(const DhtServer& other) const;
     bool operator!=(const DhtServer& other) const;
 };
-
-#endif // DHT_SERVER_H

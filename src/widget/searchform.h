@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SEARCHFORM_H
-#define SEARCHFORM_H
+#pragma once
 
 #include <QWidget>
 #include <QLineEdit>
@@ -108,5 +107,3 @@ signals:
     void clickShiftEnter();
     void clickEsc();
 };
-
-#endif // SEARCHFORM_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHATLINECONTENT_H
-#define CHATLINECONTENT_H
+#pragma once
 
 #include <QGraphicsItem>
 
@@ -69,5 +68,3 @@ private:
     int row = -1;
     int col = -1;
 };
-
-#endif // CHATLINECONTENT_H

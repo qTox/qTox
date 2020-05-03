@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FRIENDLISTWIDGET_H
-#define FRIENDLISTWIDGET_H
+#pragma once
 
 #include "genericchatitemlayout.h"
 #include "src/core/core.h"
@@ -97,5 +96,3 @@ private:
     QVBoxLayout* activityLayout = nullptr;
     QTimer* dayTimer;
 };
-
-#endif // FRIENDLISTWIDGET_H

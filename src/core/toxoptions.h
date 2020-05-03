@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOXOPTIONS_H
-#define TOXOPTIONS_H
+#pragma once
 
 #include <QByteArray>
 
@@ -46,5 +45,3 @@ private:
     Tox_Options* options = nullptr;
     QByteArray proxyAddrData;
 };
-
-#endif // TOXOPTIONS_H

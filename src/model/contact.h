@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CONTACT_H
-#define CONTACT_H
+#pragma once
 
 #include "src/core/contactid.h"
 #include <QObject>
@@ -42,5 +41,3 @@ public:
 signals:
     void displayedNameChanged(const QString& newName);
 };
-
-#endif // CONTACT_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IDENTITYFORM_H
-#define IDENTITYFORM_H
+#pragma once
 
 #include "src/widget/qrwidget.h"
 #include <QLabel>
@@ -94,5 +93,3 @@ private:
     ClickableTE* toxId;
     IProfileInfo* profileInfo;
 };
-
-#endif

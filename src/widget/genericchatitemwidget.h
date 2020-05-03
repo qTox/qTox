@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GENERICCHATITEMWIDGET_H
-#define GENERICCHATITEMWIDGET_H
+#pragma once
 
 #include <QFrame>
 #include <QLabel>
@@ -54,5 +53,3 @@ protected:
 private:
     bool compact;
 };
-
-#endif // GENERICCHATITEMWIDGET_H

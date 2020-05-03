@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ADVANCEDFORM_H
-#define ADVANCEDFORM_H
+#pragma once
 
 #include "genericsettings.h"
 
@@ -60,5 +59,3 @@ private:
 private:
     Ui::AdvancedSettings* bodyUI;
 };
-
-#endif // ADVANCEDFORM_H

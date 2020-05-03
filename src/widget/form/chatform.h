@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHATFORM_H
-#define CHATFORM_H
+#pragma once
 
 #include <QElapsedTimer>
 #include <QLabel>
@@ -135,5 +134,3 @@ private:
     bool lastCallIsVideo;
     std::unique_ptr<NetCamView> netcam;
 };
-
-#endif // CHATFORM_H

@@ -18,8 +18,7 @@
 */
 
 
-#ifndef CALLCONFIRMWIDGET_H
-#define CALLCONFIRMWIDGET_H
+#pragma once
 
 #include <QBrush>
 #include <QPolygon>
@@ -60,5 +59,3 @@ private:
     const int roundedFactor;
     const qreal rectRatio;
 };
-
-#endif // CALLCONFIRMWIDGET_H

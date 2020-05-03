@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef VIDEOFRAME_H
-#define VIDEOFRAME_H
+#pragma once
 
 #include <QImage>
 #include <QMutex>
@@ -163,5 +162,3 @@ private:
     QReadWriteLock frameLock{};
     static QReadWriteLock refsLock;
 };
-
-#endif // VIDEOFRAME_H

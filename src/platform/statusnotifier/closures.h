@@ -20,8 +20,7 @@
  * statusnotifier. If not, see http://www.gnu.org/licenses/
  */
 
-#ifndef __g_cclosure_user_marshal_MARSHAL_H__
-#define __g_cclosure_user_marshal_MARSHAL_H__
+#pragma once
 
 #include <glib-object.h>
 
@@ -33,5 +32,3 @@ extern void g_cclosure_user_marshal_BOOLEAN__INT_INT(GClosure* closure, GValue* 
                                                      gpointer invocation_hint, gpointer marshal_data);
 
 G_END_DECLS
-
-#endif /* __g_cclosure_user_marshal_MARSHAL_H__ */

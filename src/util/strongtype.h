@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef STRONGTYPE_H
-#define STRONGTYPE_H
+#pragma once
 
 #include <QHash>
 
@@ -129,4 +128,3 @@ uint qHash(const NamedType<T, Tag, Properties...>& key, uint seed = 0)
 {
     return qHash(key.get(), seed);
 }
-#endif // STRONGTYPE_H

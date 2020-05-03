@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IAUDIOSOURCE_H
-#define IAUDIOSOURCE_H
+#pragma once
 
 #include <QObject>
 
@@ -44,5 +43,3 @@ signals:
     void volumeAvailable(float value);
     void invalidated();
 };
-
-#endif // IAUDIOSOURCE_H

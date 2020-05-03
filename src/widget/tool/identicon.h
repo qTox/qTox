@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IDENTICON_H
-#define IDENTICON_H
+#pragma once
 
 #include <QColor>
 #include <QImage>
@@ -45,5 +44,3 @@ private:
     uint8_t identiconColors[IDENTICON_ROWS][ACTIVE_COLS];
     QColor colors[COLORS];
 };
-
-#endif // IDENTICON_H

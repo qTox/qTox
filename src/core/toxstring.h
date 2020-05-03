@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOXSTRING_H
-#define TOXSTRING_H
+#pragma once
 
 #include <QByteArray>
 #include <QString>
@@ -40,4 +39,3 @@ public:
 private:
     QByteArray string;
 };
-#endif // TOXSTRING_H

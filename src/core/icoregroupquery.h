@@ -18,8 +18,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ICORE_GROUP_QUERY_H
-#define ICORE_GROUP_QUERY_H
+#pragma once
 
 #include "groupid.h"
 #include "toxpk.h"
@@ -40,5 +39,3 @@ public:
     virtual QStringList getGroupPeerNames(int groupId) const = 0;
     virtual bool getGroupAvEnabled(int groupId) const = 0;
 };
-
-#endif /*ICORE_GROUP_QUERY_H*/

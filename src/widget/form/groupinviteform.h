@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GROUPINVITEFORM_H
-#define GROUPINVITEFORM_H
+#pragma once
 
 #include "src/widget/gui.h"
 
@@ -69,5 +68,3 @@ private:
     QList<GroupInviteWidget*> invites;
     QScrollArea* scroll;
 };
-
-#endif // GROUPINVITEFORM_H

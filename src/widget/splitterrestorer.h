@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SPLITTERRESTORER_H
-#define SPLITTERRESTORER_H
+#pragma once
 
 class QSize;
 class QSplitter;
@@ -33,5 +32,3 @@ public:
 private:
     QSplitter* splitter;
 };
-
-#endif // SPLITTERRESTORER_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GROUP_CHATROOM_H
-#define GROUP_CHATROOM_H
+#pragma once
 
 #include "chatroom.h"
 
@@ -52,5 +51,3 @@ private:
     Group* group{nullptr};
     IDialogsManager* dialogsManager{nullptr};
 };
-
-#endif /* GROUP_CHATROOM_H */

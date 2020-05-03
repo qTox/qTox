@@ -18,8 +18,7 @@
 */
 
 
-#ifndef NEXUS_H
-#define NEXUS_H
+#pragma once
 
 #include <QObject>
 
@@ -106,5 +105,3 @@ private:
     std::unique_ptr<IAudioControl> audioControl;
     QCommandLineParser* parser = nullptr;
 };
-
-#endif // NEXUS_H

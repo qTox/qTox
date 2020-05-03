@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef VIDEOMODE_H
-#define VIDEOMODE_H
+#pragma once
 
 #include <QRect>
 #include <cstdint>
@@ -41,5 +40,3 @@ struct VideoMode
     uint32_t norm(const VideoMode& other) const;
     uint32_t tolerance() const;
 };
-
-#endif // VIDEOMODE_H

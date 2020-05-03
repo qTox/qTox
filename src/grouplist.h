@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GROUPLIST_H
-#define GROUPLIST_H
+#pragma once
 
 #include "src/core/groupid.h"
 
@@ -43,5 +42,3 @@ private:
     static QHash<const GroupId, Group*> groupList;
     static QHash<uint32_t, GroupId> id2key;
 };
-
-#endif // GROUPLIST_H

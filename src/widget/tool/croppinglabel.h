@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CROPPINGLABEL_H
-#define CROPPINGLABEL_H
+#pragma once
 
 #include <QLabel>
 
@@ -67,5 +66,3 @@ private:
     bool editable;
     Qt::TextElideMode elideMode;
 };
-
-#endif // CROPPINGLABEL_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef I_VIDEO_SETTINGS_H
-#define I_VIDEO_SETTINGS_H
+#pragma once
 
 #include "src/model/interface.h"
 
@@ -50,5 +49,3 @@ public:
     DECLARE_SIGNAL(camVideoResChanged, const QRect& region);
     DECLARE_SIGNAL(camVideoFPSChanged, unsigned short fps);
 };
-
-#endif // I_VIDEO_SETTINGS_H

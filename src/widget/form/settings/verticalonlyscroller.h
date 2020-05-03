@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef VERTICALONLYSCROLLER_H
-#define VERTICALONLYSCROLLER_H
+#pragma once
 
 #include <QScrollArea>
 
@@ -35,5 +34,3 @@ protected:
     void resizeEvent(QResizeEvent* event) final;
     void showEvent(QShowEvent* event) final;
 };
-
-#endif // VERTICALONLYSCROLLER_H

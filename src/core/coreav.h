@@ -18,8 +18,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef COREAV_H
-#define COREAV_H
+#pragma once
 
 #include "src/core/toxcall.h"
 #include <QObject>
@@ -158,5 +157,3 @@ private:
      */
     QMutex& coreLock;
 };
-
-#endif // COREAV_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SETTINGSWIDGET_H
-#define SETTINGSWIDGET_H
+#pragma once
 
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -68,5 +67,3 @@ private:
     std::array<std::unique_ptr<GenericForm>, 6> cfgForms;
     int currentIndex;
 };
-
-#endif // SETTINGSWIDGET_H

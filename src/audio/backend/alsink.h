@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ALSINK_H
-#define ALSINK_H
+#pragma once
 
 #include <QMutex>
 #include <QObject>
@@ -58,5 +57,3 @@ private:
     bool killed = false;
     mutable QMutex killLock;
 };
-
-#endif // ALSINK_H

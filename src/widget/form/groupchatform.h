@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GROUPCHATFORM_H
-#define GROUPCHATFORM_H
+#pragma once
 
 #include "genericchatform.h"
 #include "src/core/toxpk.h"
@@ -80,5 +79,3 @@ private:
     TabCompleter* tabber;
     bool inCall;
 };
-
-#endif // GROUPCHATFORM_H

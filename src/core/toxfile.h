@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CORESTRUCTS_H
-#define CORESTRUCTS_H
+#pragma once
 
 #include "src/core/toxfilepause.h"
 
@@ -76,5 +75,3 @@ struct ToxFile
     std::shared_ptr<QCryptographicHash> hashGenerator = std::make_shared<QCryptographicHash>(QCryptographicHash::Sha256);
     ToxFilePause pauseStatus;
 };
-
-#endif // CORESTRUCTS_H

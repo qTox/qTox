@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ABOUTFORM_H
-#define ABOUTFORM_H
+#pragma once
 
 #include "genericsettings.h"
 
@@ -60,5 +59,3 @@ private:
     UpdateCheck* updateCheck;
     QMetaObject::Connection linkConnection;
 };
-
-#endif // ABOUTFORM_H

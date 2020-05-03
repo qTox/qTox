@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LOADHISTORYDIALOG_H
-#define LOADHISTORYDIALOG_H
+#pragma once
 
 #include "src/core/toxpk.h"
 #include <QDateTime>
@@ -60,5 +59,3 @@ private:
     Ui::LoadHistoryDialog* ui;
     const IChatLog* chatLog;
 };
-
-#endif // LOADHISTORYDIALOG_H

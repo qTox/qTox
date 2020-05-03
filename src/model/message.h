@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MESSAGE_H
-#define MESSAGE_H
+#pragma once
 
 #include <QDateTime>
 #include <QRegularExpression>
@@ -114,5 +113,3 @@ private:
     bool detectingMentions = false;
     const SharedParams& sharedParams;
 };
-
-#endif /*MESSAGE_H*/

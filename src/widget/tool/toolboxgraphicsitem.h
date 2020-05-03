@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOOLBOXGRAPHICSITEM_HPP
-#define TOOLBOXGRAPHICSITEM_HPP
+#pragma once
 
 #include <QGraphicsItemGroup>
 #include <QObject>
@@ -47,5 +46,3 @@ private:
     qreal activeOpacity = 1.0f;
     int fadeTimeMs = 300;
 };
-
-#endif // TOOLBOXGRAPHICSITEM_HPP

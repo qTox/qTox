@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CONTACTID_H
-#define CONTACTID_H
+#pragma once
 
 #include <QByteArray>
 #include <QString>
@@ -53,5 +52,3 @@ inline uint qHash(const ContactId& id)
 }
 
 using ContactIdPtr = std::shared_ptr<const ContactId>;
-
-#endif // CONTACTID_H

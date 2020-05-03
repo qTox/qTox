@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHATMESSAGE_H
-#define CHATMESSAGE_H
+#pragma once
 
 #include "chatline.h"
 #include "src/core/toxfile.h"
@@ -73,5 +72,3 @@ protected:
 private:
     bool action = false;
 };
-
-#endif // CHATMESSAGE_H

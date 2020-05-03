@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FILESFORM_H
-#define FILESFORM_H
+#pragma once
 
 #include <QLabel>
 #include <QListWidgetItem>
@@ -58,5 +57,3 @@ private:
     QTabWidget main;
     QListWidget *sent, *recvd;
 };
-
-#endif // FILESFORM_H

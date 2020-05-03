@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SCREENSHOTGRABBER_H
-#define SCREENSHOTGRABBER_H
+#pragma once
 
 #include <QPixmap>
 #include <QPointer>
@@ -90,6 +89,3 @@ private:
     bool mQToxVisible;
     QVector<QPointer<QWidget>> mHiddenWindows;
 };
-
-
-#endif // SCREENSHOTGRABBER_H

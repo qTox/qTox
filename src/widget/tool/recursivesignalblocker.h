@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef QTOX_RECURSIVESIGNALBLOCKER_H
-#define QTOX_RECURSIVESIGNALBLOCKER_H
+#pragma once
 
 #include <QVector>
 
@@ -36,5 +35,3 @@ public:
 private:
     QVector<const QSignalBlocker*> mBlockers;
 };
-
-#endif

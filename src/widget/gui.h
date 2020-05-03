@@ -18,8 +18,7 @@
 */
 
 
-#ifndef GUI_H
-#define GUI_H
+#pragma once
 
 #include <QObject>
 
@@ -60,5 +59,3 @@ private slots:
     bool _askQuestion(const QString& title, const QString& msg, const QString& button1,
                       const QString& button2, bool defaultAns = false, bool warning = true);
 };
-
-#endif // GUI_H

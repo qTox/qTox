@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef I_ABOUT_FRIEND_H
-#define I_ABOUT_FRIEND_H
+#pragma once
 
 #include "src/model/interface.h"
 #include "src/persistence/ifriendsettings.h"
@@ -62,5 +61,3 @@ public:
     DECLARE_SIGNAL(autoAcceptCallChanged, IFriendSettings::AutoAcceptCallFlags);
     DECLARE_SIGNAL(autoGroupInviteChanged, bool);
 };
-
-#endif // I_ABOUT_FRIEND_H

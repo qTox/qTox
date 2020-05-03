@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CAMERA_H
-#define CAMERA_H
+#pragma once
 
 #include "src/video/videomode.h"
 #include "src/video/videosource.h"
@@ -82,5 +81,3 @@ private:
 
     static CameraSource* instance;
 };
-
-#endif // CAMERA_H

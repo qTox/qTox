@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SPINNER_H
-#define SPINNER_H
+#pragma once
 
 #include "../chatlinecontent.h"
 
@@ -52,5 +51,3 @@ private:
     qreal alpha = 0.0;
     QVariantAnimation* blendAnimation;
 };
-
-#endif // SPINNER_H

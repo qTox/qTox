@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ICHAT_LOG_H
-#define ICHAT_LOG_H
+#pragma once
 
 #include "message.h"
 #include "src/core/core.h"
@@ -141,5 +140,3 @@ public:
 signals:
     void itemUpdated(ChatLogIdx idx);
 };
-
-#endif /*ICHAT_LOG_H*/

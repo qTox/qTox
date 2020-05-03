@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOXFILEPROGRESS_H
-#define TOXFILEPROGRESS_H
+#pragma once
 
 #include <QTime>
 
@@ -48,6 +47,3 @@ private:
     double timeLeftSeconds;
     double progress;
 };
-
-
-#endif // TOXFILEPROGRESS_H

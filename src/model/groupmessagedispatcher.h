@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GROUP_MESSAGE_DISPATCHER_H
-#define GROUP_MESSAGE_DISPATCHER_H
+#pragma once
 
 #include "src/core/icoregroupmessagesender.h"
 #include "src/core/icoreidhandler.h"
@@ -53,6 +52,3 @@ private:
     const IGroupSettings& groupSettings;
     DispatchedMessageId nextMessageId{0};
 };
-
-
-#endif /* IMESSAGE_DISPATCHER_H */

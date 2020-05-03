@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef NOTIFICATIONSCROLLAREA_H
-#define NOTIFICATIONSCROLLAREA_H
+#pragma once
 
 #include "tool/adjustingscrollarea.h"
 #include <QHash>
@@ -60,5 +59,3 @@ private:
     size_t referencesAbove = 0;
     size_t referencesBelow = 0;
 };
-
-#endif // NOTIFICATIONSCROLLAREA_H

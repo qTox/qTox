@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ADDFRIENDFORM_H
-#define ADDFRIENDFORM_H
+#pragma once
 
 #include "src/core/toxid.h"
 
@@ -113,5 +112,3 @@ private:
     QList<QPushButton*> rejectButtons;
     QList<QString> contactsToImport;
 };
-
-#endif // ADDFRIENDFORM_H

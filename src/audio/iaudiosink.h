@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IAUDIOSINK_H
-#define IAUDIOSINK_H
+#pragma once
 
 #include <cassert>
 
@@ -110,5 +109,3 @@ signals:
     DECLARE_SIGNAL(finishedPlaying);
     DECLARE_SIGNAL(invalidated);
 };
-
-#endif // IAUDIOSINK_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef HISTORY_H
-#define HISTORY_H
+#pragma once
 
 #include <QDateTime>
 #include <QHash>
@@ -220,5 +219,3 @@ private:
     // This needs to be a shared pointer to avoid callback lifetime issues
     QHash<QString, FileInfo> fileInfos;
 };
-
-#endif // HISTORY_H

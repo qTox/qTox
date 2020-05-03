@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef I_DIALOGS_H
-#define I_DIALOGS_H
+#pragma once
 
 class ContactId;
 class GroupId;
@@ -36,5 +35,3 @@ public:
 
     virtual int chatroomCount() const = 0;
 };
-
-#endif // I_DIALOGS_H

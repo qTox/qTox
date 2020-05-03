@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef NOTIFICATIONICON_H
-#define NOTIFICATIONICON_H
+#pragma once
 
 #include "../chatlinecontent.h"
 
@@ -51,5 +50,3 @@ private:
     qreal dotWidth = 0.2;
     qreal alpha = 0.0;
 };
-
-#endif // NOTIFICATIONICON_H

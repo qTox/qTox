@@ -18,8 +18,7 @@
 */
 
 
-#ifndef IPC_H
-#define IPC_H
+#pragma once
 
 #include <QMap>
 #include <QObject>
@@ -91,5 +90,3 @@ private:
     QSharedMemory globalMemory;
     QMap<QString, IPCEventHandler> eventHandlers;
 };
-
-#endif // IPC_H

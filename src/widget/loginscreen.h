@@ -18,8 +18,7 @@
 */
 
 
-#ifndef LOGINSCREEN_H
-#define LOGINSCREEN_H
+#pragma once
 
 #include <QDialog>
 #include <QShortcut>
@@ -75,5 +74,3 @@ private:
     Ui::LoginScreen* ui;
     QShortcut quitShortcut;
 };
-
-#endif // LOGINSCREEN_H

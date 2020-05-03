@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SMILEYPACK_H
-#define SMILEYPACK_H
+#pragma once
 
 #include <QIcon>
 #include <QMap>
@@ -63,5 +62,3 @@ private:
     QRegularExpression smilify;
     mutable QMutex loadingMutex;
 };
-
-#endif // SMILEYPACK_H

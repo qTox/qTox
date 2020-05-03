@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef I_CORE_SETTINGS_H
-#define I_CORE_SETTINGS_H
+#pragma once
 
 #include "src/model/interface.h"
 
@@ -64,5 +63,3 @@ public:
     DECLARE_SIGNAL(proxyAddressChanged, const QString& address);
     DECLARE_SIGNAL(proxyPortChanged, quint16 port);
 };
-
-#endif // I_CORE_SETTINGS_H

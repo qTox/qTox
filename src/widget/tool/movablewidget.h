@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MOVABLEWIDGET_H
-#define MOVABLEWIDGET_H
+#pragma once
 
 #include <QWidget>
 
@@ -60,5 +59,3 @@ private:
     QPointF actualPos;
     float ratio;
 };
-
-#endif // MOVABLEWIDGET_H

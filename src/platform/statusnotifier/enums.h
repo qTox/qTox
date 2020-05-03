@@ -20,8 +20,7 @@
  * statusnotifier. If not, see http://www.gnu.org/licenses/
  */
 
-#ifndef __STATUS_NOTIFIER_ENUMS_H__
-#define __STATUS_NOTIFIER_ENUMS_H__
+#pragma once
 #include "statusnotifier.h"
 
 
@@ -38,5 +37,3 @@ GType status_notifier_status_get_type(void);
 GType status_notifier_scroll_orientation_get_type(void);
 #define TYPE_STATUS_NOTIFIER_SCROLL_ORIENTATION (status_notifier_scroll_orientation_get_type())
 G_END_DECLS
-
-#endif /* __STATUS_NOTIFIER_ENUMS_H__ */

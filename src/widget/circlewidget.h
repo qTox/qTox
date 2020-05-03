@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CIRCLEWIDGET_H
-#define CIRCLEWIDGET_H
+#pragma once
 
 #include "categorywidget.h"
 
@@ -54,5 +53,3 @@ private:
     static QHash<int, CircleWidget*> circleList;
     int id;
 };
-
-#endif // CIRCLEWIDGET_H

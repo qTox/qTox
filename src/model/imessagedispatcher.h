@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IMESSAGE_DISPATCHER_H
-#define IMESSAGE_DISPATCHER_H
+#pragma once
 
 #include "src/model/friend.h"
 #include "src/model/message.h"
@@ -64,5 +63,3 @@ signals:
      */
     void messageComplete(DispatchedMessageId id);
 };
-
-#endif /* IMESSAGE_DISPATCHER_H */

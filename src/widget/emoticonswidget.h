@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef EMOTICONSWIDGET_H
-#define EMOTICONSWIDGET_H
+#pragma once
 
 #include <QMenu>
 #include <QStackedWidget>
@@ -57,5 +56,3 @@ private:
 public:
     QSize sizeHint() const override;
 };
-
-#endif // EMOTICONSWIDGET_H

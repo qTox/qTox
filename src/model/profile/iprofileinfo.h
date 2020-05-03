@@ -17,6 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#pragma once
+
 #include "src/model/interface.h"
 
 #include <QObject>

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHATLINECONTENTPROXY_H
-#define CHATLINECONTENTPROXY_H
+#pragma once
 
 #include "chatlinecontent.h"
 #include <QGraphicsProxyWidget>
@@ -58,5 +57,3 @@ private:
     int widthMin;
     const ChatLineContentProxyType widgetType;
 };
-
-#endif // CHATLINECONTENTPROXY_H

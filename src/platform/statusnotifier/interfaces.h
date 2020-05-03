@@ -20,8 +20,7 @@
  * statusnotifier. If not, see http://www.gnu.org/licenses/
  */
 
-#ifndef __INTERFACES_H__
-#define __INTERFACES_H__
+#pragma once
 
 G_BEGIN_DECLS
 
@@ -90,5 +89,3 @@ static const gchar item_xml[] =
     "</node>";
 
 G_END_DECLS
-
-#endif /* __INTERFACES_H__ */

@@ -18,8 +18,7 @@
 */
 
 
-#ifndef DIRECTSHOW_H
-#define DIRECTSHOW_H
+#pragma once
 
 #include "src/video/videomode.h"
 #include <QPair>
@@ -34,5 +33,3 @@ namespace DirectShow {
 QVector<QPair<QString, QString>> getDeviceList();
 QVector<VideoMode> getDeviceModes(QString devName);
 }
-
-#endif // DIRECTSHOW_H

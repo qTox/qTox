@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOXCALL_H
-#define TOXCALL_H
+#pragma once
 
 #include "src/audio/iaudiocontrol.h"
 #include "src/audio/iaudiosink.h"
@@ -141,5 +140,3 @@ private slots:
     void onAudioSourceInvalidated();
     void onAudioSinkInvalidated(ToxPk peerId);
 };
-
-#endif // TOXCALL_H

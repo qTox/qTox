@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CONTENTDIALOG_H
-#define CONTENTDIALOG_H
+#pragma once
 
 #include "src/core/groupid.h"
 #include "src/core/toxpk.h"
@@ -133,5 +132,3 @@ private:
 
     QString username;
 };
-
-#endif // CONTENTDIALOG_H

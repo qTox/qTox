@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PASSWORDEDIT_H
-#define PASSWORDEDIT_H
+#pragma once
 
 #include <QAction>
 #include <QLineEdit>
@@ -54,4 +53,3 @@ private:
 
     static EventHandler* eventHandler;
 };
-#endif // PASSWORDEDIT_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DELETEFRIENDDIALOG_H
-#define DELETEFRIENDDIALOG_H
+#pragma once
 
 
 #include "ui_removefrienddialog.h"
@@ -49,5 +48,3 @@ protected:
     Ui_RemoveFriendDialog ui;
     bool _accepted = false;
 };
-
-#endif // DELETEFRIENDDIALOG_H

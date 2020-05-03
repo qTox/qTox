@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOX_FILE_PAUSE_H
-#define TOX_FILE_PAUSE_H
+#pragma once
 
 class ToxFilePause
 {
@@ -72,5 +71,3 @@ private:
     bool localPauseState = false;
     bool remotePauseState = false;
 };
-
-#endif // TOX_FILE_PAUSE_H

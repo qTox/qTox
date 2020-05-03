@@ -16,8 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef INSTALLOSX_H
-#define INSTALLOSX_H
+#pragma once
 
 #include <QtCore/qsystemdetection.h>
 
@@ -33,5 +32,3 @@ static constexpr int EXIT_UPDATE_MACX_FAIL = 216;
 void moveToAppFolder();
 void migrateProfiles();
 }
-
-#endif // INSTALLOSX_H

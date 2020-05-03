@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef INTERFACE_H
-#define INTERFACE_H
+#pragma once
 
 #include <QMetaObject>
 
@@ -70,5 +69,3 @@
     QMetaObject::Connection connectTo_##name(QObject *receiver, Slot_##name slot) const override { \
         return connect(this, &classname::name, receiver, slot); \
     }
-
-#endif // INTERFACE_H

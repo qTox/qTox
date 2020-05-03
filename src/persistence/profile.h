@@ -18,8 +18,7 @@
 */
 
 
-#ifndef PROFILE_H
-#define PROFILE_H
+#pragma once
 
 #include "src/core/core.h"
 #include "src/core/toxencrypt.h"
@@ -118,5 +117,3 @@ private:
     bool encrypted = false;
     static QStringList profiles;
 };
-
-#endif // PROFILE_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHAT_HISTORY_H
-#define CHAT_HISTORY_H
+#pragma once
 
 #include "ichatlog.h"
 #include "sessionchatlog.h"
@@ -76,5 +75,3 @@ private:
     // callback it will end up in this map
     QMap<DispatchedMessageId, RowId> dispatchedMessageRowIdMap;
 };
-
-#endif /*CHAT_HISTORY_H*/

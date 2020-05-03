@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef VIDEOSOURCE_H
-#define VIDEOSOURCE_H
+#pragma once
 
 #include <QObject>
 
@@ -71,5 +70,3 @@ private:
     // Used to manage a global ID for all VideoSources
     static AtomicIDType sourceIDs;
 };
-
-#endif // VIDEOSOURCE_H

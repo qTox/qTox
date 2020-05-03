@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GENERICCHATROOMWIDGET_H
-#define GENERICCHATROOMWIDGET_H
+#pragma once
 
 #include "genericchatitemwidget.h"
 
@@ -86,5 +85,3 @@ protected:
     CroppingLabel* statusMessageLabel;
     bool active;
 };
-
-#endif // GENERICCHATROOMWIDGET_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef WIDGET_H
-#define WIDGET_H
+#pragma once
 
 #include "ui_mainwindow.h"
 
@@ -378,5 +377,3 @@ private:
 };
 
 bool toxActivateEventHandler(const QByteArray& data);
-
-#endif // WIDGET_H

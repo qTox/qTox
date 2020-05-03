@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IMAGE_H
-#define IMAGE_H
+#pragma once
 
 #include "../chatlinecontent.h"
 
@@ -39,5 +38,3 @@ private:
     QSize size;
     QPixmap pmap;
 };
-
-#endif // IMAGE_H

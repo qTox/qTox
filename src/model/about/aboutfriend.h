@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ABOUT_FRIEND_H
-#define ABOUT_FRIEND_H
+#pragma once
 
 #include "iaboutfriend.h"
 #include "src/model/interface.h"
@@ -72,5 +71,3 @@ private:
     const Friend* const f;
     IFriendSettings* const settings;
 };
-
-#endif // ABOUT_FRIEND_H

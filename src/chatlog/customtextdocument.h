@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CUSTOMTEXTDOCUMENT_H
-#define CUSTOMTEXTDOCUMENT_H
+#pragma once
 
 #include <QTextDocument>
 #include <QList>
@@ -39,5 +38,3 @@ protected:
 private:
     QList<std::shared_ptr<QIcon>> emoticonIcons;
 };
-
-#endif // CUSTOMTEXTDOCUMENT_H

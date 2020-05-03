@@ -18,8 +18,7 @@
 */
 
 
-#ifndef SERIALIZE_H
-#define SERIALIZE_H
+#pragma once
 
 #include <QByteArray>
 #include <QString>
@@ -32,5 +31,3 @@ size_t dataToVUint(const QByteArray& data);
 unsigned getVUint32Size(QByteArray data);
 QByteArray vintToData(int num);
 QByteArray vuintToData(size_t num);
-
-#endif // SERIALIZE_H

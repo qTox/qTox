@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOXCLIENTSTANDARDS_H
-#define TOXCLIENTSTANDARDS_H
+#pragma once
 
 #include <cstdint>
 
@@ -31,5 +30,3 @@ namespace ToxClientStandards
         return fileSize <= MaxAvatarSize;
     }
 } // ToxClientStandards
-
-#endif // TOXCLIENTSTANDARDS_H

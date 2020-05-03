@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GROUPWIDGET_H
-#define GROUPWIDGET_H
+#pragma once
 
 #include "genericchatroomwidget.h"
 
@@ -66,5 +65,3 @@ public:
 private:
     std::shared_ptr<GroupChatroom> chatroom;
 };
-
-#endif // GROUPWIDGET_H

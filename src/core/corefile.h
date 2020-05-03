@@ -18,8 +18,7 @@
 */
 
 
-#ifndef COREFILE_H
-#define COREFILE_H
+#pragma once
 
 #include <tox/tox.h>
 
@@ -109,5 +108,3 @@ private:
     Tox* tox;
     QMutex* coreLoopLock = nullptr;
 };
-
-#endif // COREFILE_H

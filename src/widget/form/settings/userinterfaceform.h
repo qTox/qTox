@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef USERINTERFACEFORM_H
-#define USERINTERFACEFORM_H
+#pragma once
 
 #include "genericsettings.h"
 #include "src/widget/form/settingswidget.h"
@@ -76,5 +75,3 @@ private:
     Ui::UserInterfaceSettings* bodyUI;
     const int MAX_FORMAT_LENGTH = 128;
 };
-
-#endif

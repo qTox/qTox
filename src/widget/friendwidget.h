@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FRIENDWIDGET_H
-#define FRIENDWIDGET_H
+#pragma once
 
 #include "genericchatroomwidget.h"
 #include "src/core/toxpk.h"
@@ -80,5 +79,3 @@ public:
     std::shared_ptr<FriendChatroom> chatroom;
     bool isDefaultAvatar;
 };
-
-#endif // FRIENDWIDGET_H

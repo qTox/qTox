@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHAT_FORM_HEADER
-#define CHAT_FORM_HEADER
+#pragma once
 
 #include <QWidget>
 
@@ -112,5 +111,3 @@ private:
 
     std::unique_ptr<CallConfirmWidget> callConfirm;
 };
-
-#endif // CHAT_FORM_HEADER

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BROKEN_H
-#define BROKEN_H
+#pragma once
 
 #include "../chatlinecontent.h"
 
@@ -41,5 +40,3 @@ private:
     QPixmap pmap;
     QSize size;
 };
-
-#endif // BROKEN_H

@@ -18,8 +18,7 @@
 */
 
 
-#ifndef AUDIO_H
-#define AUDIO_H
+#pragma once
 
 #include <memory>
 
@@ -30,5 +29,3 @@ class Audio
 public:
     static std::unique_ptr<IAudioControl> makeAudio(IAudioSettings& settings);
 };
-
-#endif // AUDIO_H

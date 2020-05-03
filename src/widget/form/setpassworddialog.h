@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SETPASSWORDDIALOG_H
-#define SETPASSWORDDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -50,5 +49,3 @@ private:
     QString body;
     static const double reasonablePasswordLength;
 };
-
-#endif // SETPASSWORDDIALOG_H

@@ -18,8 +18,7 @@
 */
 
 
-#ifndef COREVIDEOSOURCE_H
-#define COREVIDEOSOURCE_H
+#pragma once
 
 #include "videosource.h"
 #include <QMutex>
@@ -52,5 +51,3 @@ private:
     friend class CoreAV;
     friend class ToxFriendCall;
 };
-
-#endif // COREVIDEOSOURCE_H

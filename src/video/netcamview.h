@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef NETCAMVIEW_H
-#define NETCAMVIEW_H
+#pragma once
 
 #include "src/core/toxpk.h"
 #include <QVector>
@@ -97,5 +96,3 @@ private:
     QPushButton* endVideoButton = nullptr;
     QPushButton* exitFullScreenButton = nullptr;
 };
-
-#endif // NETCAMVIEW_H

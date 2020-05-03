@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef OFFLINEMSGENGINE_H
-#define OFFLINEMSGENGINE_H
+#pragma once
 
 #include "src/chatlog/chatmessage.h"
 #include "src/core/core.h"
@@ -70,5 +69,3 @@ private:
     QMap<ReceiptNum, OfflineMessage> sentMessages;
     QVector<OfflineMessage> unsentMessages;
 };
-
-#endif // OFFLINEMSGENGINE_H

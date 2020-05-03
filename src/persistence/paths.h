@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PATHS_H
-#define PATHS_H
+#pragma once
 
 #include <QString>
 #include <QStringList>
@@ -50,5 +49,3 @@ private:
     QString basePath{};
     bool portable = false;
 };
-
-#endif // PATHS_H

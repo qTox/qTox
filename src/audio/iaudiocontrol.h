@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef IAUDIOCONTROL_H
-#define IAUDIOCONTROL_H
+#pragma once
 
 #include <QObject>
 #include <QStringList>
@@ -146,6 +145,3 @@ protected:
         AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
     uint32_t AUDIO_FRAME_SAMPLE_COUNT_TOTAL = 0;
 };
-
-
-#endif // IAUDIOCONTROL_H

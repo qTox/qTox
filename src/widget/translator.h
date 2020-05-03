@@ -18,8 +18,7 @@
 */
 
 
-#ifndef TRANSLATOR_H
-#define TRANSLATOR_H
+#pragma once
 
 #include <QMutex>
 #include <QPair>
@@ -41,5 +40,3 @@ private:
     static QMutex lock;
     static QTranslator* translator;
 };
-
-#endif // TRANSLATOR_H

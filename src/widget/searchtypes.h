@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SEARCHTYPES_H
-#define SEARCHTYPES_H
+#pragma once
 
 #include <QDate>
 #include <QRegularExpression>
@@ -93,5 +92,3 @@ public:
         return filter;
     }
 };
-
-#endif //SEARCHTYPES_H

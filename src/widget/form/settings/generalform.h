@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GENERALFORM_H
-#define GENERALFORM_H
+#pragma once
 
 #include "genericsettings.h"
 
@@ -64,5 +63,3 @@ private:
     Ui::GeneralSettings* bodyUI;
     SettingsWidget* parent;
 };
-
-#endif

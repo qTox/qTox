@@ -18,8 +18,7 @@
 */
 
 
-#ifndef PROFILELOCKER_H
-#define PROFILELOCKER_H
+#pragma once
 
 #include <QLockFile>
 #include <memory>
@@ -45,5 +44,3 @@ private:
     static std::unique_ptr<QLockFile> lockfile;
     static QString curLockName;
 };
-
-#endif // PROFILELOCKER_H

@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CHATLOG_H
-#define CHATLOG_H
+#pragma once
 
 #include <QDateTime>
 #include <QGraphicsView>
@@ -189,5 +188,3 @@ private:
     int numRemove{0};
     const int maxMessages{300};
 };
-
-#endif // CHATLOG_H
