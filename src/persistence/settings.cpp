@@ -776,6 +776,32 @@ void Settings::savePersonal(Profile* profile)
     savePersonal(profile->getName(), profile->getPasskey());
 }
 
+void Settings::updateChatTextStyle()
+{
+    chatTextStyle->setFonts(chatMessageFont);
+
+    if (enableColorsForMessages) {
+        chatTextStyle->setColor(ChatTextStyle::User, ChatTextStyle::Nickname, colorNicknameForUser);
+        chatTextStyle->setColor(ChatTextStyle::User, ChatTextStyle::Msg, colorMsgForUser);
+        chatTextStyle->setColor(ChatTextStyle::Friend, ChatTextStyle::Nickname, colorNicknameForFriends);
+        chatTextStyle->setColor(ChatTextStyle::Friend, ChatTextStyle::Msg, colorMsgForFriends);
+
+        chatTextStyle->setFontBold(ChatTextStyle::User, ChatTextStyle::Nickname, boldNicknameForUser);
+        chatTextStyle->setFontBold(ChatTextStyle::User, ChatTextStyle::Msg, boldMsgForUser);
+        chatTextStyle->setFontBold(ChatTextStyle::Friend, ChatTextStyle::Nickname, boldNicknameForFriends);
+        chatTextStyle->setFontBold(ChatTextStyle::Friend, ChatTextStyle::Msg, boldMsgForFriends);
+
+        chatTextStyle->setFontItalic(ChatTextStyle::User, ChatTextStyle::Nickname, italicNicknameForUser);
+        chatTextStyle->setFontItalic(ChatTextStyle::User, ChatTextStyle::Msg, italicMsgForUser);
+        chatTextStyle->setFontItalic(ChatTextStyle::Friend, ChatTextStyle::Nickname, italicNicknameForFriends);
+        chatTextStyle->setFontItalic(ChatTextStyle::Friend, ChatTextStyle::Msg, italicMsgForFriends);
+    } else {
+        chatTextStyle->setDefaultData();
+    }
+
+    emit chatTextStyleChanged();
+}
+
 void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
 {
     QMutexLocker locker{&bigLock};
@@ -2332,7 +2358,7 @@ void Settings::setEnableColorsForMessages(bool state)
     QMutexLocker locker{&bigLock};
     if (state != enableColorsForMessages) {
         enableColorsForMessages = state;
-        emit enableColorsForMessagesChanged(enableColorsForMessages);
+        updateChatTextStyle();
     }
 }
 
@@ -2353,7 +2379,7 @@ void Settings::setColorNicknameForUser(const QString& color)
 
     if (color != colorNicknameForUser) {
         colorNicknameForUser = color;
-        emit colorNicknameForUserChanged(colorNicknameForUser);
+        updateChatTextStyle();
     }
 }
 
@@ -2369,7 +2395,7 @@ void Settings::setEnableBoldNicknameForUser(bool state)
 
     if (state != boldNicknameForUser) {
         boldNicknameForUser = state;
-        emit boldNicknameForUserChanged(boldNicknameForUser);
+        updateChatTextStyle();
     }
 }
 
@@ -2385,7 +2411,7 @@ void Settings::setEnableItalicNicknameForUser(bool state)
 
     if (state != italicNicknameForUser) {
         italicNicknameForUser = state;
-        emit italicNicknameForUserChanged(italicNicknameForUser);
+        updateChatTextStyle();
     }
 }
 
@@ -2401,7 +2427,7 @@ void Settings::setColorMsgForUser(const QString& color)
 
     if (color != colorMsgForUser) {
         colorMsgForUser = color;
-        emit colorMsgForUserChanged(colorMsgForUser);
+        updateChatTextStyle();
     }
 }
 
@@ -2417,7 +2443,7 @@ void Settings::setEnableBoldMsgForUser(bool state)
 
     if (state != boldMsgForUser) {
         boldMsgForUser = state;
-        emit boldMsgForUserChanged(boldMsgForUser);
+        updateChatTextStyle();
     }
 }
 
@@ -2433,7 +2459,7 @@ void Settings::setEnableItalicMsgForUser(bool state)
 
     if (state != italicMsgForUser) {
         italicMsgForUser = state;
-        emit italicMsgForUserChanged(italicMsgForUser);
+        updateChatTextStyle();
     }
 }
 
@@ -2449,7 +2475,7 @@ void Settings::setColorNicknameForFriends(const QString& color)
 
     if (color != colorNicknameForFriends) {
         colorNicknameForFriends = color;
-        emit colorNicknameForFriendsChanged(colorNicknameForFriends);
+        updateChatTextStyle();
     }
 }
 
@@ -2465,7 +2491,7 @@ void Settings::setEnableBoldNicknameForFriends(bool state)
 
     if (state != boldNicknameForFriends) {
         boldNicknameForFriends = state;
-        emit boldNicknameForFriendsChanged(boldNicknameForFriends);
+        updateChatTextStyle();
     }
 }
 
@@ -2481,23 +2507,23 @@ void Settings::setEnableItalicNicknameForFriends(bool state)
 
     if (state != italicNicknameForFriends) {
         italicNicknameForFriends = state;
-        emit italicNicknameForFriendsChanged(italicNicknameForFriends);
+        updateChatTextStyle();
     }
 }
 
 QString Settings::getColorMsgForFriends() const
 {
     QMutexLocker locker{&bigLock};
-    return colorMsgForUser;
+    return colorMsgForFriends;
 }
 
 void Settings::setColorMsgForFriends(const QString& color)
 {
     QMutexLocker locker{&bigLock};
 
-    if (color != colorMsgForUser) {
-        colorMsgForUser = color;
-        emit colorMsgForUserChanged(colorMsgForUser);
+    if (color != colorMsgForFriends) {
+        colorMsgForFriends = color;
+        updateChatTextStyle();
     }
 }
 
@@ -2513,7 +2539,7 @@ void Settings::setEnableBoldMsgForFriends(bool state)
 
     if (state != boldMsgForFriends) {
         boldMsgForFriends = state;
-        emit boldMsgForFriendsChanged(boldMsgForFriends);
+        updateChatTextStyle();
     }
 }
 
@@ -2529,8 +2555,18 @@ void Settings::setEnableItalicMsgForFriends(bool state)
 
     if (state != italicMsgForFriends) {
         italicMsgForFriends = state;
-        emit italicMsgForFriendsChanged(italicMsgForFriends);
+        updateChatTextStyle();
     }
+}
+
+ChatTextStyle* Settings::getChatTextStyle()
+{
+    if (chatTextStyle == nullptr) {
+        chatTextStyle = new ChatTextStyle();
+        updateChatTextStyle();
+    }
+
+    return chatTextStyle;
 }
 
 bool Settings::addFriendRequest(const QString& friendAddress, const QString& message)

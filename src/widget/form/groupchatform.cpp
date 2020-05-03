@@ -88,6 +88,8 @@ GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, I
     , group(chatGroup)
     , inCall(false)
 {
+    isGroup = true;
+
     nusersLabel = new QLabel();
 
     tabber = new TabCompleter(msgEdit, group);

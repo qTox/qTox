@@ -48,7 +48,6 @@ public:
     virtual void selectionFocusChanged(bool focusIn);
     virtual bool isOverSelection(QPointF scenePos) const;
     virtual QString getSelectedText() const;
-    virtual void fontChanged(const QFont& font);
 
     virtual QString getText() const;
 

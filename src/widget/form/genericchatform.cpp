@@ -161,7 +161,7 @@ ChatMessage::Ptr dateMessageForItem(const ChatLogItem& item)
     return ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime());
 }
 
-ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool colorizeNames,
+ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool isGroup,
                                const ChatLogMessage& chatLogMessage)
 {
     auto messageType = chatLogMessage.message.isAction ? ChatMessage::MessageType::ACTION
@@ -179,10 +179,10 @@ ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool col
 
     const auto timestamp = chatLogMessage.message.timestamp;
     return ChatMessage::createChatMessage(displayName, chatLogMessage.message.content, messageType,
-                                          isSelf, chatLogMessage.state, timestamp, colorizeNames);
+                                          isSelf, chatLogMessage.state, timestamp, isGroup);
 }
 
-void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeNames,
+void renderMessageRaw(const QString& displayName, bool isSelf, bool isGroup,
                    const ChatLogMessage& chatLogMessage, ChatMessage::Ptr& chatMessage)
 {
 
@@ -191,7 +191,7 @@ void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeName
             chatMessage->markAsDelivered(chatLogMessage.message.timestamp);
         }
     } else {
-        chatMessage = createMessage(displayName, isSelf, colorizeNames, chatLogMessage);
+        chatMessage = createMessage(displayName, isSelf, isGroup, chatLogMessage);
     }
 }
 
@@ -242,6 +242,7 @@ GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, ICha
     const Settings& s = Settings::getInstance();
     connect(&s, &Settings::emojiFontPointSizeChanged, chatWidget, &ChatLog::forceRelayout);
     connect(&s, &Settings::chatMessageFontChanged, this, &GenericChatForm::onChatMessageFontChanged);
+    connect(&s, &Settings::chatTextStyleChanged, this, &GenericChatForm::onChatTextStyleChanged);
 
     msgEdit = new ChatTextEdit();
 #ifdef SPELL_CHECKING
@@ -577,17 +578,19 @@ void GenericChatForm::focusInput()
 
 void GenericChatForm::onChatMessageFontChanged(const QFont& font)
 {
-    // chat log
-    chatWidget->fontChanged(font);
-    chatWidget->forceRelayout();
     // message editor
     msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
                            + fontToCss(font, "QTextEdit"));
 }
 
+void GenericChatForm::onChatTextStyleChanged()
+{
+    chatWidget->forceRelayout();
+}
+
 void GenericChatForm::setColorizedNames(bool enable)
 {
-    colorizeNames = enable;
+//    colorizeNames = enable;
 }
 
 void GenericChatForm::addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
@@ -1050,7 +1053,7 @@ void GenericChatForm::handleSearchResult(SearchResult result, SearchDirection di
     renderMessages(endRenderedIdx, firstRenderedIdx, [this]{enableSearchText();});
 }
 
-void GenericChatForm::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatMessage::Ptr& chatMessage)
+void GenericChatForm::renderItem(const ChatLogItem& item, bool hideName, bool isGroup, ChatMessage::Ptr& chatMessage)
 {
     const auto& sender = item.getSender();
 
@@ -1060,7 +1063,7 @@ void GenericChatForm::renderItem(const ChatLogItem& item, bool hideName, bool co
     case ChatLogItem::ContentType::message: {
         const auto& chatLogMessage = item.getContentAsMessage();
 
-        renderMessageRaw(item.getDisplayName(), isSelf, colorizeNames, chatLogMessage, chatMessage);
+        renderMessageRaw(item.getDisplayName(), isSelf, isGroup, chatLogMessage, chatMessage);
 
         break;
     }
@@ -1089,7 +1092,7 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
 
     for (auto i = begin; i < end; ++i) {
         auto chatMessage = getChatMessageForIdx(i, messages);
-        renderItem(chatLog.at(i), needsToHideName(i), colorizeNames, chatMessage);
+        renderItem(chatLog.at(i), needsToHideName(i), isGroup, chatMessage);
 
         if (messages.find(i) == messages.end()) {
             QList<ChatLine::Ptr>* lines =
@@ -1120,9 +1123,9 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
         if (onCompletion) {
             auto connection = std::make_shared<QMetaObject::Connection>();
             *connection = connect(chatWidget, &ChatLog::workerTimeoutFinished,
-                                  [this, onCompletion, connection] {
+                                  [onCompletion, connection] {
                                       onCompletion();
-                                      this->disconnect(*connection);
+                                      disconnect(*connection);
                                   });
         }
 

@@ -433,6 +433,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/categorywidget.h
   src/widget/chatformheader.cpp
   src/widget/chatformheader.h
+  src/widget/chattextstyle.cpp
+  src/widget/chattextstyle.h
   src/widget/circlewidget.cpp
   src/widget/circlewidget.h
   src/widget/contentdialog.cpp

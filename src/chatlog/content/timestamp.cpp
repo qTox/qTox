@@ -19,7 +19,7 @@
 
 #include "timestamp.h"
 
-Timestamp::Timestamp(const QDateTime& time, const QString& format, const QFont& font)
+Timestamp::Timestamp(const QDateTime& time, const QString& format, std::shared_ptr<QFont> font)
     : Text(time.toString(format), font, false, time.toString(format))
 {
     this->time = time;

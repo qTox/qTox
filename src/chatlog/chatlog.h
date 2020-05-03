@@ -55,7 +55,6 @@ public:
     void setTypingNotificationVisible(bool visible);
     void scrollToLine(ChatLine::Ptr line);
     void selectAll();
-    void fontChanged(const QFont& font);
     void reloadTheme();
     void removeFirsts(const int num);
     void removeLasts(const int num);

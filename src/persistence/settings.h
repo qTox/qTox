@@ -27,6 +27,7 @@
 #include "src/persistence/ifriendsettings.h"
 #include "src/persistence/igroupsettings.h"
 #include "src/video/ivideosettings.h"
+#include "src/widget/chattextstyle.h"
 
 #include <QDateTime>
 #include <QFlags>
@@ -225,19 +226,8 @@ signals:
     void dateFormatChanged(const QString& format);
     void statusChangeNotificationEnabledChanged(bool enabled);
     void spellCheckingEnabledChanged(bool enabled);
-    void enableColorsForMessagesChanged(bool state);
-    void colorNicknameForUserChanged(const QString& color);
-    void boldNicknameForUserChanged(bool state);
-    void italicNicknameForUserChanged(bool state);
-    void colorMsgForUserChanged(const QString& color);
-    void boldMsgForUserChanged(bool state);
-    void italicMsgForUserChanged(bool state);
-    void colorNicknameForFriendsChanged(const QString& color);
-    void boldNicknameForFriendsChanged(bool state);
-    void italicNicknameForFriendsChanged(bool state);
-    void colorMsgForFriendsChanged(const QString& color);
-    void boldMsgForFriendsChanged(bool state);
-    void italicMsgForFriendsChanged(bool state);
+
+    void chatTextStyleChanged();
 
     // Privacy
     void typingNotificationChanged(bool enabled);
@@ -584,6 +574,8 @@ public:
     bool getEnableItalicMsgForFriends() const;
     void setEnableItalicMsgForFriends(bool state);
 
+    ChatTextStyle* getChatTextStyle();
+
     bool addFriendRequest(const QString& friendAddress, const QString& message);
     unsigned int getUnreadFriendRequests() const;
     Request getFriendRequest(int index) const;
@@ -627,6 +619,8 @@ public slots:
     void savePersonal(Profile* profile);
 
 private:
+    void updateChatTextStyle();
+
     bool loaded;
 
     bool useCustomDhtList;
@@ -675,6 +669,7 @@ private:
     QString colorMsgForFriends;
     bool boldMsgForFriends;
     bool italicMsgForFriends;
+    ChatTextStyle *chatTextStyle{nullptr};
 
     bool forceTCP;
     bool enableLanDiscovery;
