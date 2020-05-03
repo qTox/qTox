@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>664</width>
-        <height>1419</height>
+        <width>662</width>
+        <height>1417</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -511,9 +511,23 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QCheckBox" name="useNameColors">
+           <widget class="QCheckBox" name="useNickenameColorsInGroup">
             <property name="text">
              <string>Use colored nicknames in group chats</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QCheckBox" name="useColorsForUserInGroup">
+            <property name="text">
+             <string>Use custom colors for me in group chats</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QCheckBox" name="useMsgColorsInGroup">
+            <property name="text">
+             <string>Use colored messages in group chats</string>
             </property>
            </widget>
           </item>
@@ -592,16 +606,16 @@
        <item row="1" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
-          <string>Colors for messages</string>
+          <string>Custom settings for messages</string>
          </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QCheckBox" name="useColorsForMessages">
+           <widget class="QCheckBox" name="useSettingsForMessages">
             <property name="text">
-             <string>Use colors for messages</string>
+             <string>Use settings for messages</string>
             </property>
            </widget>
           </item>

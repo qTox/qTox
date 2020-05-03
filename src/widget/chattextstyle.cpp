@@ -17,8 +17,10 @@ ChatTextStyle::ChatTextStyle()
     colors[key(Friend, Nickname)] = std::make_shared<QColor>();
     colors[key(Friend, Msg)] = std::make_shared<QColor>();
 
-    actionColor = std::make_shared<QColor>();
-    actionColor->setRgb(Style::getColor(Style::Action).rgb());
+    actionColor = std::make_shared<QColor>(Style::getColor(Style::Action));
+
+    nicknameUserColor = std::make_shared<QColor>(Style::getColor(Style::MainText));
+    msgUserColor = std::make_shared<QColor>(Style::getColor(Style::MainText));
 }
 
 void ChatTextStyle::setDefaultData()
@@ -61,13 +63,59 @@ void ChatTextStyle::setFontItalic(const Owner owner, const Type type, const bool
     fonts[key(owner, type)]->setItalic(italic);
 }
 
+void ChatTextStyle::setSettingsForGroup(bool isNickname, bool isMsg, bool isUser)
+{
+    if (isGroupNicknameColors != isNickname) {
+        isGroupNicknameColors = isNickname;
+        auto keys = groupsNicknameColors.keys();
+        for (auto k : keys) {
+            if (isGroupNicknameColors) {
+                *groupsNicknameColors[k] = genColor(k);
+            } else {
+                *groupsNicknameColors[k] = Style::getColor(Style::MainText);
+            }
+        }
+    }
+
+    if (isGroupMsgColors != isMsg) {
+        isGroupMsgColors = isMsg;
+        auto keys = groupsMsgColors.keys();
+        for (auto k : keys) {
+            if (isGroupMsgColors) {
+                *groupsMsgColors[k] = genColorForMsg(k);
+            } else {
+                *groupsMsgColors[k] = Style::getColor(Style::MainText);
+            }
+        }
+    }
+
+    if (isGroupColorsForUser != isUser) {
+        isGroupColorsForUser = isUser;
+        if (isGroupColorsForUser) {
+            *nicknameUserColor = *colors[key(User, Nickname)];
+            *msgUserColor = *colors[key(User, Msg)];
+        } else {
+            *nicknameUserColor = Style::getColor(Style::MainText);
+            *msgUserColor = Style::getColor(Style::MainText);
+        }
+    }
+}
+
 std::shared_ptr<QColor> ChatTextStyle::getColor(const Owner owner, const Type type, const QString& sender, bool isGroup)
 {
-    if (isGroup && owner == Friend) {
-        if (type == Nickname) {
-            return getGroupFriendNicknameColor(sender);
+    if (isGroup) {
+        if (owner == Friend) {
+            if (type == Nickname) {
+                return getGroupFriendNicknameColor(sender);
+            } else {
+                return getGroupFriendMsgColor(sender);
+            }
         } else {
-            return getGroupFriendMsgColor(sender);
+            if (type == Nickname) {
+                return nicknameUserColor;
+            } else {
+                return msgUserColor;
+            }
         }
     }
 
@@ -97,7 +145,11 @@ std::shared_ptr<QFont> ChatTextStyle::getBusyFont() const
 std::shared_ptr<QColor> ChatTextStyle::getGroupFriendNicknameColor(const QString &key)
 {
     if (!groupsNicknameColors.contains(key)) {
-        groupsNicknameColors[key] = std::make_shared<QColor>(genColor(key));
+        if (isGroupNicknameColors) {
+            groupsNicknameColors[key] = std::make_shared<QColor>(genColor(key));
+        } else {
+            groupsNicknameColors[key] = std::make_shared<QColor>(Style::getColor(Style::MainText));
+        }
     }
 
     return groupsNicknameColors[key];
@@ -106,7 +158,11 @@ std::shared_ptr<QColor> ChatTextStyle::getGroupFriendNicknameColor(const QString
 std::shared_ptr<QColor> ChatTextStyle::getGroupFriendMsgColor(const QString &key)
 {
     if (!groupsMsgColors.contains(key)) {
-        groupsMsgColors[key] = std::make_shared<QColor>(genColor(key).lighter(120));
+        if (isGroupMsgColors) {
+            groupsMsgColors[key] = std::make_shared<QColor>(genColorForMsg(key));
+        } else {
+            groupsMsgColors[key] = std::make_shared<QColor>(Style::getColor(Style::MainText));
+        }
     }
 
     return groupsMsgColors[key];
@@ -118,6 +174,15 @@ QColor ChatTextStyle::genColor(const QString &key) const
     QByteArray hash = QCryptographicHash::hash((key.toUtf8()), QCryptographicHash::Sha256);
     const auto* data = hash.data();
     return QColor(data[0], 255, 196);
+}
+
+QColor ChatTextStyle::genColorForMsg(const QString &key) const
+{
+    if (Style::Dark == Style::typeTheme()) {
+        return genColor(key).lighter(130);
+    }
+
+    return genColor(key).darker(130);
 }
 
 int ChatTextStyle::key(const Owner owner, const Type type) const

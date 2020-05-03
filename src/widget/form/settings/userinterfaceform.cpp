@@ -71,10 +71,12 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
     bodyUI->txtChatFont->setCurrentFont(chatBaseFont);
     int index = static_cast<int>(s.getStylePreference());
     bodyUI->textStyleComboBox->setCurrentIndex(index);
-    bodyUI->useNameColors->setChecked(s.getEnableGroupChatsColor());
+    bodyUI->useNickenameColorsInGroup->setChecked(s.getEnableGroupNicknameColor());
+    bodyUI->useMsgColorsInGroup->setChecked(s.getEnableGroupMsgColor());
+    bodyUI->useColorsForUserInGroup->setChecked(s.getEnableGroupColorForUser());
 
-    bodyUI->useColorsForMessages->setChecked(s.getEnableColorsForMessages());
-    if (!s.getEnableColorsForMessages()) {
+    bodyUI->useSettingsForMessages->setChecked(s.getEnableSettingsForMessages());
+    if (!s.getEnableSettingsForMessages()) {
         bodyUI->groupSettingsForUserColors->setEnabled(false);
         bodyUI->groupSettingsForFriendsColors->setEnabled(false);
     }
@@ -407,14 +409,24 @@ void UserInterfaceForm::on_txtChatFontSize_valueChanged(int px)
     }
 }
 
-void UserInterfaceForm::on_useNameColors_stateChanged(int value)
+void UserInterfaceForm::on_useNickenameColorsInGroup_stateChanged(int value)
 {
-    Settings::getInstance().setEnableGroupChatsColor(value);
+    Settings::getInstance().setEnableGroupNicknameColor(value);
 }
 
-void UserInterfaceForm::on_useColorsForMessages_stateChanged(int value)
+void UserInterfaceForm::on_useMsgColorsInGroup_stateChanged(int value)
 {
-    Settings::getInstance().setEnableColorsForMessages(value);
+    Settings::getInstance().setEnableGroupMsgColor(value);
+}
+
+void UserInterfaceForm::on_useColorsForUserInGroup_stateChanged(int value)
+{
+    Settings::getInstance().setEnableGroupColorForUser(value);
+}
+
+void UserInterfaceForm::on_useSettingsForMessages_stateChanged(int value)
+{
+    Settings::getInstance().setEnableSettingsForMessages(value);
     bodyUI->groupSettingsForUserColors->setEnabled(value);
     bodyUI->groupSettingsForFriendsColors->setEnabled(value);
 }

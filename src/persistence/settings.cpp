@@ -211,7 +211,9 @@ void Settings::loadGlobal()
             else
                 style = "None";
         }
-        nameColors = s.value("nameColors", false).toBool();
+        groupNicknameColors = s.value("groupNicknameColors", false).toBool();
+        groupMsgColors = s.value("groupMsgColors", false).toBool();
+        groupColorsForUser = s.value("groupColorsForUser", false).toBool();
 
         enableColorsForMessages = s.value("enableColorsForMessages", false).toBool();
         colorNicknameForUser = s.value("colorNicknameForUser", "").toString();
@@ -690,7 +692,9 @@ void Settings::saveGlobal()
         s.setValue("useEmoticons", useEmoticons);
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
-        s.setValue("nameColors", nameColors);
+        s.setValue("groupNicknameColors", groupNicknameColors);
+        s.setValue("groupMsgColors", groupMsgColors);
+        s.setValue("groupColorsForUser", groupColorsForUser);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
         s.setValue("spellCheckingEnabled", spellCheckingEnabled);
 
@@ -779,6 +783,7 @@ void Settings::savePersonal(Profile* profile)
 void Settings::updateChatTextStyle()
 {
     chatTextStyle->setFonts(chatMessageFont);
+    chatTextStyle->setSettingsForGroup(groupNicknameColors, groupMsgColors, groupColorsForUser);
 
     if (enableColorsForMessages) {
         chatTextStyle->setColor(ChatTextStyle::User, ChatTextStyle::Nickname, colorNicknameForUser);
@@ -2353,7 +2358,7 @@ void Settings::setCircleExpanded(int id, bool expanded)
     circleLst[id].expanded = expanded;
 }
 
-void Settings::setEnableColorsForMessages(bool state)
+void Settings::setEnableSettingsForMessages(bool state)
 {
     QMutexLocker locker{&bigLock};
     if (state != enableColorsForMessages) {
@@ -2362,7 +2367,7 @@ void Settings::setEnableColorsForMessages(bool state)
     }
 }
 
-bool Settings::getEnableColorsForMessages() const
+bool Settings::getEnableSettingsForMessages() const
 {
     return enableColorsForMessages;
 }
@@ -2675,18 +2680,46 @@ void Settings::setAutoLogin(bool state)
     }
 }
 
-void Settings::setEnableGroupChatsColor(bool state)
+void Settings::setEnableGroupNicknameColor(bool state)
 {
     QMutexLocker locker{&bigLock};
-    if (state != nameColors) {
-        nameColors = state;
-        emit nameColorsChanged(nameColors);
+    if (state != groupNicknameColors) {
+        groupNicknameColors = state;
+        updateChatTextStyle();
     }
 }
 
-bool Settings::getEnableGroupChatsColor() const
+bool Settings::getEnableGroupNicknameColor() const
 {
-    return nameColors;
+    return groupNicknameColors;
+}
+
+void Settings::setEnableGroupMsgColor(bool state)
+{
+    QMutexLocker locker{&bigLock};
+    if (state != groupMsgColors) {
+        groupMsgColors = state;
+        updateChatTextStyle();
+    }
+}
+
+bool Settings::getEnableGroupMsgColor() const
+{
+    return groupMsgColors;
+}
+
+void Settings::setEnableGroupColorForUser(bool state)
+{
+    QMutexLocker locker{&bigLock};
+    if (state != groupColorsForUser) {
+        groupColorsForUser = state;
+        updateChatTextStyle();
+    }
+}
+
+bool Settings::getEnableGroupColorForUser() const
+{
+    return groupColorsForUser;
 }
 
 /**

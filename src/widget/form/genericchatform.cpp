@@ -588,11 +588,6 @@ void GenericChatForm::onChatTextStyleChanged()
     chatWidget->forceRelayout();
 }
 
-void GenericChatForm::setColorizedNames(bool enable)
-{
-//    colorizeNames = enable;
-}
-
 void GenericChatForm::addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                                            const QDateTime& datetime)
 {

@@ -198,7 +198,6 @@ signals:
 
     // GUI
     void autoLoginChanged(bool enabled);
-    void nameColorsChanged(bool enabled);
     void separateWindowChanged(bool enabled);
     void showSystemTrayChanged(bool enabled);
     bool minimizeOnCloseChanged(bool enabled);
@@ -524,8 +523,14 @@ public:
     void setShowIdenticons(bool value);
 
     bool getAutoLogin() const;
-    void setEnableGroupChatsColor(bool state);
-    bool getEnableGroupChatsColor() const;
+    void setEnableGroupNicknameColor(bool state);
+    bool getEnableGroupNicknameColor() const;
+
+    void setEnableGroupMsgColor(bool state);
+    bool getEnableGroupMsgColor() const;
+
+    void setEnableGroupColorForUser(bool state);
+    bool getEnableGroupColorForUser() const;
 
     int getCircleCount() const;
     int addCircle(const QString& name = QString());
@@ -535,8 +540,8 @@ public:
     bool getCircleExpanded(int id) const;
     void setCircleExpanded(int id, bool expanded);
 
-    void setEnableColorsForMessages(bool state);
-    bool getEnableColorsForMessages() const;
+    void setEnableSettingsForMessages(bool state);
+    bool getEnableSettingsForMessages() const;
 
     QString getColorNicknameForUser() const;
     void setColorNicknameForUser(const QString& color);
@@ -650,7 +655,9 @@ private:
     bool notifyHide;
     bool busySound;
     bool groupAlwaysNotify;
-    bool nameColors;
+    bool groupNicknameColors;
+    bool groupMsgColors;
+    bool groupColorsForUser;
 
     bool enableColorsForMessages;
 

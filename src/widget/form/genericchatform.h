@@ -93,7 +93,6 @@ public slots:
     void focusInput();
     void onChatMessageFontChanged(const QFont& font);
     void onChatTextStyleChanged();
-    void setColorizedNames(bool enable);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
