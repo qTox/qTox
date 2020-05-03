@@ -1713,7 +1713,7 @@ void Widget::removeFriend(Friend* f, bool fake)
         }
 
         if (ask.removeHistory()) {
-            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getPublicKey().toString());
+            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getPublicKey());
         }
     }
 

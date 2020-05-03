@@ -123,7 +123,7 @@ bool AboutFriend::clearHistory()
     const ToxPk pk = f->getPublicKey();
     History* const history = Nexus::getProfile()->getHistory();
     if (history) {
-        history->removeFriendHistory(pk.toString());
+        history->removeFriendHistory(pk);
         return true;
     }
 

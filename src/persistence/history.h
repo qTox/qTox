@@ -95,7 +95,7 @@ struct FileDbInsertionData
     FileDbInsertionData();
 
     RowId historyId;
-    QString friendPk;
+    ToxPk friendPk;
     QString fileId;
     QString fileName;
     QString filePath;
@@ -164,21 +164,21 @@ public:
     bool historyExists(const ToxPk& friendPk);
 
     void eraseHistory();
-    void removeFriendHistory(const QString& friendPk);
-    void addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
+    void removeFriendHistory(const ToxPk& friendPk);
+    void addNewMessage(const ToxPk& friendPk, const QString& message, const ToxPk& sender,
                        const QDateTime& time, bool isDelivered, QString dispName,
                        const std::function<void(RowId)>& insertIdCallback = {});
 
-    void addNewFileMessage(const QString& friendPk, const QString& fileId,
+    void addNewFileMessage(const ToxPk& friendPk, const QString& fileId,
                            const QString& fileName, const QString& filePath, int64_t size,
-                           const QString& sender, const QDateTime& time, QString const& dispName);
+                           const ToxPk& sender, const QDateTime& time, QString const& dispName);
 
     void setFileFinished(const QString& fileId, bool success, const QString& filePath, const QByteArray& fileHash);
     size_t getNumMessagesForFriend(const ToxPk& friendPk);
     size_t getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date);
     QList<HistMessage> getMessagesForFriend(const ToxPk& friendPk, size_t firstIdx, size_t lastIdx);
     QList<HistMessage> getUndeliveredMessagesForFriend(const ToxPk& friendPk);
-    QDateTime getDateWhereFindPhrase(const QString& friendPk, const QDateTime& from, QString phrase,
+    QDateTime getDateWhereFindPhrase(const ToxPk& friendPk, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);
     QList<DateIdx> getNumMessagesForFriendBeforeDateBoundaries(const ToxPk& friendPk,
                                                                const QDate& from, size_t maxNum);
@@ -187,8 +187,8 @@ public:
 
 protected:
     QVector<RawDatabase::Query>
-    generateNewMessageQueries(const QString& friendPk, const QString& message,
-                              const QString& sender, const QDateTime& time, bool isDelivered,
+    generateNewMessageQueries(const ToxPk& friendPk, const QString& message,
+                              const ToxPk& sender, const QDateTime& time, bool isDelivered,
                               QString dispName, std::function<void(RowId)> insertIdCallback = {});
 
 signals:
@@ -206,7 +206,7 @@ private:
     std::shared_ptr<RawDatabase> db;
 
 
-    QHash<QString, int64_t> peers;
+    QHash<ToxPk, int64_t> peers;
     struct FileInfo
     {
         bool finished = false;
