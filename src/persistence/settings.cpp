@@ -76,6 +76,11 @@ Settings::Settings()
 Settings::~Settings()
 {
     sync();
+
+    if (chatTextStyle != nullptr) {
+        delete chatTextStyle;
+    }
+
     settingsThread->exit(0);
     settingsThread->wait();
     delete settingsThread;

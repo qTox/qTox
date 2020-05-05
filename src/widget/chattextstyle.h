@@ -5,6 +5,7 @@
 #include <QColor>
 #include <QFont>
 #include <QMap>
+#include <memory>
 
 class ChatTextStyle {
 public:

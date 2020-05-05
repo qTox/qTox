@@ -24,6 +24,7 @@
 
 #include <QFont>
 #include <QTextCursor>
+#include <memory>
 
 class QTextDocument;
 
