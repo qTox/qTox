@@ -25,17 +25,15 @@
 
 QHash<const GroupId, Group*> GroupList::groupList;
 QHash<uint32_t, GroupId> GroupList::id2key;
-Group* GroupList::addGroup(int groupNum, const GroupId& groupId, const QString& name, bool isAvGroupchat,
+Group* GroupList::addGroup(Core& core, int groupNum, const GroupId& groupId, const QString& name, bool isAvGroupchat,
                            const QString& selfName)
 {
     auto checker = groupList.find(groupId);
-    if (checker != groupList.end())
+    if (checker != groupList.end()) {
         qWarning() << "addGroup: groupId already taken";
+    }
 
-    // TODO: Core instance is bad but grouplist is also an instance so we can
-    // deal with this later
-    auto core = Core::getInstance();
-    Group* newGroup = new Group(groupNum, groupId, name, isAvGroupchat, selfName, *core, *core);
+    Group* newGroup = new Group(groupNum, groupId, name, isAvGroupchat, selfName, core, core);
     groupList[groupId] = newGroup;
     id2key[groupNum] = groupId;
     return newGroup;
