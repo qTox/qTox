@@ -22,18 +22,21 @@
 
 #include <QByteArray>
 #include <QMap>
+#include <QObject>
 
-class AvatarBroadcaster
+class Core;
+class AvatarBroadcaster : public QObject
 {
-private:
-    AvatarBroadcaster() = delete;
-
+    Q_OBJECT
 public:
-    static void setAvatar(QByteArray data);
-    static void sendAvatarTo(uint32_t friendId);
-    static void enableAutoBroadcast(bool state = true);
+    AvatarBroadcaster(Core& _core);
+
+    void setAvatar(QByteArray data);
+    void sendAvatarTo(uint32_t friendId);
+    void enableAutoBroadcast(bool state = true);
 
 private:
-    static QByteArray avatarData;
-    static QMap<uint32_t, bool> friendsSentTo;
+    Core& core;
+    QByteArray avatarData;
+    QMap<uint32_t, bool> friendsSentTo;
 };

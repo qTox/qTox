@@ -275,6 +275,8 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
     connect(core.get(), &Core::friendAvatarChanged, this, &Profile::setFriendAvatar);
     connect(core.get(), &Core::fileAvatarOfferReceived, this, &Profile::onAvatarOfferReceived,
             Qt::ConnectionType::QueuedConnection);
+    // broadcast our own avatar
+    avatarBroadcaster = std::unique_ptr<AvatarBroadcaster>(new AvatarBroadcaster(*core));
 }
 
 Profile::Profile(const QString& name, const QString& password, std::unique_ptr<ToxEncrypt> passkey, Paths& paths)
@@ -648,8 +650,8 @@ void Profile::setAvatar(QByteArray pic)
     saveAvatar(selfPk, avatarData);
 
     emit selfAvatarChanged(pixmap);
-    AvatarBroadcaster::setAvatar(avatarData);
-    AvatarBroadcaster::enableAutoBroadcast();
+    avatarBroadcaster->setAvatar(avatarData);
+    avatarBroadcaster->enableAutoBroadcast();
 }
 
 

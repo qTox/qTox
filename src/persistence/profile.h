@@ -24,6 +24,8 @@
 #include "src/core/toxencrypt.h"
 #include "src/core/toxid.h"
 
+#include "src/net/avatarbroadcaster.h"
+
 #include "src/persistence/history.h"
 #include "src/net/bootstrapnodeupdater.h"
 
@@ -109,6 +111,7 @@ private:
     void initCore(const QByteArray& toxsave, const ICoreSettings& s, bool isNewProfile);
 
 private:
+    std::unique_ptr<AvatarBroadcaster> avatarBroadcaster;
     std::unique_ptr<Core> core;
     QString name;
     std::unique_ptr<ToxEncrypt> passkey;
