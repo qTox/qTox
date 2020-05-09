@@ -2078,7 +2078,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     const auto groupName = tr("Groupchat #%1").arg(groupnumber);
     const bool enabled = core->getGroupAvEnabled(groupnumber);
     Group* newgroup =
-        GroupList::addGroup(groupnumber, groupId, groupName, enabled, core->getUsername());
+        GroupList::addGroup(*core, groupnumber, groupId, groupName, enabled, core->getUsername());
     auto dialogManager = ContentDialogManager::getInstance();
     auto rawChatroom = new GroupChatroom(newgroup, dialogManager);
     std::shared_ptr<GroupChatroom> chatroom(rawChatroom);
