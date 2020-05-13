@@ -106,6 +106,6 @@ public:
     virtual operator bool() const = 0;
 
 signals:
-    DECLARE_SIGNAL(finishedPlaying);
-    DECLARE_SIGNAL(invalidated);
+    DECLARE_SIGNAL(finishedPlaying, void);
+    DECLARE_SIGNAL(invalidated, void);
 };
