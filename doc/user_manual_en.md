@@ -12,7 +12,8 @@
 * [Keyboard Shortcuts](#keyboard-shortcuts)
 * [Commandline Options](#commandline-options)
 * [Emoji Packs](#emoji-packs)
-* [Bootstrap nodes](#bootstrap-nodes)
+* [Bootstrap Nodes](#bootstrap-nodes)
+* [Avoiding Censorship](#avoiding-censorship)
 
 
 ## Profile corner
@@ -466,6 +467,24 @@ stored in `bootstrapNodes.json` and can be found and modified if wanted at
 `~/.config/tox/` on Linux, `%APPDATA%\Roaming\tox` on Windows, and
 `~/Library/Application Support/Tox` on macOS.
 
+## Avoiding Censorship
+
+Although Tox is distributed, to initially connect to the network
+[public bootstrap nodes](https://nodes.tox.chat) are used. After first run,
+other nodes will also be saved and reused on next start. We have seen multiple
+reports of Tox bootstrap nodes being blocked in China. We haven't seen reports
+of Tox connections in general being blocked, though Tox makes no effort to
+disguise its connections. There are multiple options available to help avoid
+blocking of bootstrap nodes:
+
+* Tox can be used with a VPN.
+* Tox can be used with a proxy, including with Tor
+  * This can be done at [startup](#commandline-proxy-options) or
+  * By setting [connection settings](#connection-settings).
+* [Custom bootstrap nodes](#bootstrap-nodes) can be set. Note that these
+require the DHT key of the node, which is different from the longterm Tox
+public key, and which changes on every start of a client, so it's best to use a
+[bootstrap daemon](https://github.com/TokTok/c-toxcore/tree/master/other/bootstrap_daemon).
 
 [ToxMe service]: #register-on-toxme
 [user profile]: #user-profile
