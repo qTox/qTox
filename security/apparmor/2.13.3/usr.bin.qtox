@@ -282,12 +282,15 @@ profile qtox /usr{,/local}/bin/qtox {
   /sys/devices/system/node/ r,  # for ld-linux-x86-64.so -> libnuma1.so
   /sys/devices/system/node/node[0-9]*/meminfo r, # for ld-linux-x86-64.so -> libnuma1.so
   /usr/share/emoticons/{,**} r,
+  /usr/share/hspell/* r, # for spellchecking
   /usr/share/hwdata/pnp.ids r, # For OpenSUSE only?
   /usr/share/icu/[0-9]*.[0-9]*/icudt[0-9]*.dat r, # For OpenSUSE only?
+  /usr/share/kf5/sonnet/* r, # for spellchecking
   /usr/share/kservices5/{,**} r, # file dialog
   /usr/share/mime/ r, # file dialog
   /usr/share/plasma/look-and-feel/*/contents/defaults r, # TODO: move to kde abstraction?
   /usr/share/sounds/ r, # file dialog (alert)
+  /var/lib/aspell/* r, # for spellchecking
   /{,var/}run/udev/data/* r, # file dialog
 
   # User files
