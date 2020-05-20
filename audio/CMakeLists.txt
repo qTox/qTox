@@ -28,13 +28,7 @@ set(SOURCE_FILES
     "src/backend/openal.cpp"
     "src/backend/openal.h")
 
-add_library(audio_library STATIC ${SOURCE_FILES})
-
-qt5_add_resources(
-    audio_library
-    res.qrc
-    OPTIONS ${RCC_OPTIONS}
-)
+add_library(audio_library STATIC ${SOURCE_FILES} resources/audio_res.qrc)
 
 # We need this directory, and users of our library will need it too
 target_include_directories(audio_library PUBLIC include/)
@@ -42,4 +36,3 @@ target_include_directories(audio_library PUBLIC include/)
 target_link_libraries(audio_library util_library)
 target_link_libraries(audio_library Qt5::Core)
 target_link_libraries(audio_library ${OPENAL_LIBRARIES})
-
