@@ -48,7 +48,6 @@ add_dependency(
   Qt5::Xml)
 
 include(CMakeParseArguments)
-include(Qt5CorePatches)
 
 function(search_dependency pkg)
   set(options OPTIONAL STATIC_PACKAGE)

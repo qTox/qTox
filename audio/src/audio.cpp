@@ -30,5 +30,6 @@
  */
 std::unique_ptr<IAudioControl> Audio::makeAudio(IAudioSettings& settings)
 {
+    Q_INIT_RESOURCE(audio_res);
     return std::unique_ptr<IAudioControl>(new OpenAL(settings));
 }

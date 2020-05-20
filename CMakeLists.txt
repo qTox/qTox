@@ -73,8 +73,20 @@ project(qtox)
 
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
+# Run resource compilation automatically
+set(CMAKE_AUTORCC ON)
+# Enable maximum compression
+set(AUTORCC_OPTIONS -compress 9 -threshold 0)
 
-set(RCC_OPTIONS -compress 9 -threshold 0)
+
+if(NOT Qt5Widgets_VERSION VERSION_LESS "5.9")
+  # Drop the file modification time of source files from generated files
+  # to help with reproducible builds. We do not use QFileInfo.lastModified
+  # so this has no unwanted side effects. This mtime started appearing in
+  # Qt 5.8. The option to force the old file format without mtime was
+  # added in Qt 5.9. See https://bugreports.qt.io/browse/QTBUG-58769
+  set(AUTORCC_OPTIONS ${AUTORCC_OPTIONS} -format-version 1)
+endif()
 
 # Use C++11.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -133,14 +145,6 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 include(Dependencies)
 
-if(NOT Qt5Widgets_VERSION VERSION_LESS "5.9")
-  # Drop the file modification time of source files from generated files
-  # to help with reproducible builds. We do not use QFileInfo.lastModified
-  # so this has no unwanted side effects. This mtime started appearing in
-  # Qt 5.8. The option to force the old file format without mtime was
-  # added in Qt 5.9. See https://bugreports.qt.io/browse/QTBUG-58769
-  set(RCC_OPTIONS ${RCC_OPTIONS} -format-version 1)
-endif()
 
 ################################################################################
 #
@@ -210,12 +214,9 @@ qt5_add_translation(${PROJECT_NAME}_QM_FILES
   translations/zh_TW.ts
 )
 
-qt5_add_resources(
-  ${PROJECT_NAME}_RESOURCES
-  res.qrc
-  ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc
-  DEPENDS ${${PROJECT_NAME}_QM_FILES}
-  OPTIONS ${RCC_OPTIONS}
+set(${PROJECT_NAME}_RESOURCES
+    res.qrc
+    ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc
 )
 
 if(NOT SMILEYS)
@@ -223,16 +224,14 @@ if(NOT SMILEYS)
 endif()
 
 if(NOT "${SMILEYS}" STREQUAL "DISABLED")
-  qt5_add_resources(
-          ${PROJECT_NAME}_RESOURCES
-          smileys/emojione.qrc
-          OPTIONS ${RCC_OPTIONS})
+  set(${PROJECT_NAME}_RESOURCES
+        ${${PROJECT_NAME}_RESOURCES}
+        smileys/emojione.qrc)
 
   if(NOT "${SMILEYS}" STREQUAL "MIN")
-    qt5_add_resources(
-            ${PROJECT_NAME}_RESOURCES
-            smileys/smileys.qrc
-            OPTIONS ${RCC_OPTIONS})
+      set(${PROJECT_NAME}_RESOURCES
+            ${${PROJECT_NAME}_RESOURCES}
+            smileys/smileys.qrc)
   endif()
 
 endif()
@@ -555,6 +554,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     src/platform/camera/directshow.cpp
     src/platform/camera/directshow.h
   )
+
   set(${PROJECT_NAME}_RESOURCES ${${PROJECT_NAME}_RESOURCES}
     windows/qtox.rc
   )
@@ -655,8 +655,7 @@ add_library(${PROJECT_NAME}_static
   STATIC
   ${${PROJECT_NAME}_FORMS}
   ${${PROJECT_NAME}_SOURCES}
-  ${${PROJECT_NAME}_QM_FILES}
-  ${${PROJECT_NAME}_RESOURCES})
+  ${${PROJECT_NAME}_QM_FILES})
 target_link_libraries(${PROJECT_NAME}_static
   ${CMAKE_REQUIRED_LIBRARIES}
   ${ALL_LIBRARIES})

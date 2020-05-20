@@ -22,9 +22,9 @@
 
 enable_testing()
 
-function(auto_test subsystem module)
+function(auto_test subsystem module extra_deps)
   add_executable(test_${module}
-    test/${subsystem}/${module}_test.cpp)
+    test/${subsystem}/${module}_test.cpp ${extra_deps})
   target_link_libraries(test_${module}
     ${PROJECT_NAME}_static
     ${CHECK_LIBRARIES}
@@ -34,21 +34,21 @@ function(auto_test subsystem module)
     COMMAND ${TEST_CROSSCOMPILING_EMULATOR} test_${module})
 endfunction()
 
-auto_test(core core)
-auto_test(core contactid)
-auto_test(core toxid)
-auto_test(core toxstring)
-auto_test(chatlog textformatter)
-auto_test(net bsu)
-auto_test(persistence paths)
-auto_test(persistence dbschema)
-auto_test(persistence offlinemsgengine)
-auto_test(model friendmessagedispatcher)
-auto_test(model groupmessagedispatcher)
-auto_test(model messageprocessor)
-auto_test(model sessionchatlog)
-auto_test(model exiftransform)
+auto_test(core core ${${PROJECT_NAME}_RESOURCES})
+auto_test(core contactid "")
+auto_test(core toxid "")
+auto_test(core toxstring "")
+auto_test(chatlog textformatter "")
+auto_test(net bsu ${${PROJECT_NAME}_RESOURCES}) # needs nodes list
+auto_test(persistence paths "")
+auto_test(persistence dbschema "")
+auto_test(persistence offlinemsgengine "")
+auto_test(model friendmessagedispatcher "")
+auto_test(model groupmessagedispatcher "")
+auto_test(model messageprocessor "")
+auto_test(model sessionchatlog "")
+auto_test(model exiftransform "")
 
 if (UNIX)
-  auto_test(platform posixsignalnotifier)
+  auto_test(platform posixsignalnotifier "")
 endif()
