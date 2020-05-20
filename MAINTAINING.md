@@ -171,7 +171,7 @@ To get translations into qTox:
 3. To update translated strings from Weblate, in the root of the qTox
    repository execute the script `tools/update-weblate.sh`
 4. If a new translation language has been added, update the following files:
-    - `CMakeLists.txt`
+    - `translations/CMakeLists.txt`
     - `src/widget/form/settings/generalform.cpp`
     - `translations/README.md`
     - `translations/i18n.pri`

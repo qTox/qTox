@@ -214,6 +214,9 @@ int main(int argc, char* argv[])
 #endif
     Settings& settings = Settings::getInstance();
     QString locale = settings.getTranslation();
+    // We need to init the resources in the translations_library explicitely.
+    // See https://doc.qt.io/qt-5/resources.html#using-resources-in-a-library
+    Q_INIT_RESOURCE(translations);
     Translator::translate(locale);
 
     // Process arguments
