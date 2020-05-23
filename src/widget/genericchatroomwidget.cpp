@@ -42,8 +42,10 @@ GenericChatroomWidget::GenericChatroomWidget(bool compact, QWidget* parent)
     statusMessageLabel = new CroppingLabel(this);
     statusMessageLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setForegroundRole(QPalette::WindowText);
+    statusMessageLabel->setObjectName("statusMessageLabelObj");
 
     nameLabel->setForegroundRole(QPalette::WindowText);
+    nameLabel->setObjectName("nameLabelObj");
 
     Settings& s = Settings::getInstance();
     connect(&s, &Settings::compactLayoutChanged, this, &GenericChatroomWidget::compactChange);
@@ -122,15 +124,11 @@ bool GenericChatroomWidget::isActive()
 void GenericChatroomWidget::setActive(bool _active)
 {
     active = _active;
-    if (active) {
-        setBackgroundRole(QPalette::Light);
-        statusMessageLabel->setForegroundRole(QPalette::HighlightedText);
-        nameLabel->setForegroundRole(QPalette::HighlightedText);
-    } else {
-        setBackgroundRole(QPalette::Window);
-        statusMessageLabel->setForegroundRole(QPalette::WindowText);
-        nameLabel->setForegroundRole(QPalette::WindowText);
-    }
+
+    setProperty("active", active);
+    nameLabel->setProperty("active", active);
+    statusMessageLabel->setProperty("active", active);
+    Style::repolish(this);
 }
 
 void GenericChatroomWidget::setName(const QString& name)
@@ -160,23 +158,7 @@ QString GenericChatroomWidget::getTitle() const
 
 void GenericChatroomWidget::reloadTheme()
 {
-    QPalette p;
-
-    p = statusMessageLabel->palette();
-    p.setColor(QPalette::WindowText, Style::getColor(Style::GroundExtra));       // Base color
-    p.setColor(QPalette::HighlightedText, Style::getColor(Style::StatusActive)); // Color when active
-    statusMessageLabel->setPalette(p);
-
-    p = nameLabel->palette();
-    p.setColor(QPalette::WindowText, Style::getColor(Style::GroundBase));           // Base color
-    p.setColor(QPalette::HighlightedText, Style::getColor(Style::NameActive)); // Color when active
-    nameLabel->setPalette(p);
-
-    p = palette();
-    p.setColor(QPalette::Window, Style::getColor(Style::ThemeMedium));   // Base background color
-    p.setColor(QPalette::Highlight, Style::getColor(Style::ThemeLight)); // On mouse over
-    p.setColor(QPalette::Light, Style::getColor(Style::GroundBase));          // When active
-    setPalette(p);
+    setStyleSheet(Style::getStylesheet("genericChatRoomWidget/genericChatRoomWidget.css"));
 }
 
 void GenericChatroomWidget::activate()
