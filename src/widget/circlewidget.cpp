@@ -40,9 +40,10 @@
 
 QHash<int, CircleWidget*> CircleWidget::circleList;
 
-CircleWidget::CircleWidget(FriendListWidget* parent, int id)
+CircleWidget::CircleWidget(const Core &_core, FriendListWidget* parent, int id)
     : CategoryWidget(parent)
     , id(id)
+    , core{_core}
 {
     setName(Settings::getInstance().getCircleName(id), false);
     circleList[id] = this;
@@ -113,7 +114,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
             circleList.remove(replacedCircle);
         } else if (selectedItem == openAction) {
-            ContentDialog* dialog = new ContentDialog();
+            ContentDialog* dialog = new ContentDialog(core);
             emit newContentDialog(*dialog);
             for (int i = 0; i < friendOnlineLayout()->count(); ++i) {
                 QWidget* const widget = friendOnlineLayout()->itemAt(i)->widget();

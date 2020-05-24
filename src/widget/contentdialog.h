@@ -32,6 +32,7 @@ template <typename K, typename V>
 class QHash;
 
 class ContentLayout;
+class Core;
 class Friend;
 class FriendChatroom;
 class FriendListLayout;
@@ -48,7 +49,7 @@ class ContentDialog : public ActivateDialog, public IDialogs
 {
     Q_OBJECT
 public:
-    explicit ContentDialog(QWidget* parent = nullptr);
+    explicit ContentDialog(const Core& core, QWidget* parent = nullptr);
     ~ContentDialog() override;
 
     FriendWidget* addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form);

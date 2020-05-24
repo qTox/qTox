@@ -42,7 +42,7 @@ class FriendListWidget : public QWidget
     Q_OBJECT
 public:
     using SortingMode = Settings::FriendListSortingMode;
-    explicit FriendListWidget(Widget* parent, bool groupsOnTop = true);
+    explicit FriendListWidget(const Core& _core, Widget* parent, bool groupsOnTop = true);
     ~FriendListWidget();
     void setMode(SortingMode mode);
     SortingMode getMode() const;
@@ -95,4 +95,6 @@ private:
     GenericChatItemLayout groupLayout;
     QVBoxLayout* activityLayout = nullptr;
     QTimer* dayTimer;
+
+    const Core& core;
 };

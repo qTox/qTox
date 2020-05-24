@@ -22,12 +22,13 @@
 #include "categorywidget.h"
 
 class ContentDialog;
+class Core;
 
 class CircleWidget final : public CategoryWidget
 {
     Q_OBJECT
 public:
-    explicit CircleWidget(FriendListWidget* parent, int id);
+    explicit CircleWidget(const Core& _core, FriendListWidget* parent, int id);
     ~CircleWidget();
 
     void editName();
@@ -52,4 +53,6 @@ private:
 
     static QHash<int, CircleWidget*> circleList;
     int id;
+
+    const Core& core;
 };
