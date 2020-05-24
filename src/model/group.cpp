@@ -20,14 +20,12 @@
 #include "group.h"
 #include "friend.h"
 #include "src/core/contactid.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
 #include "src/core/groupid.h"
 #include "src/core/toxpk.h"
 #include "src/friendlist.h"
-#include "src/persistence/settings.h"
-#include "src/widget/form/groupchatform.h"
-#include "src/widget/groupwidget.h"
+
+#include <cassert>
+
 #include <QDebug>
 
 static const int MAX_GROUP_TITLE_LENGTH = 128;
@@ -105,7 +103,6 @@ void Group::regeneratePeerList()
     for (const auto& pk : oldPeerNames.keys()) {
         if (!peerDisplayNames.contains(pk)) {
             emit userLeft(pk, oldPeerNames.value(pk));
-            stopAudioOfDepartedPeers(pk);
         }
     }
     for (const auto& pk : peerDisplayNames.keys()) {
@@ -208,12 +205,4 @@ QString Group::getSelfName() const
 bool Group::useHistory() const
 {
     return false;
-}
-
-void Group::stopAudioOfDepartedPeers(const ToxPk& peerPk)
-{
-    if (avGroupchat) {
-        Core* core = Core::getInstance();
-        core->getAv()->invalidateGroupCallPeerSource(toxGroupNum, peerPk);
-    }
 }
