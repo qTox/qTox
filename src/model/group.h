@@ -71,9 +71,6 @@ signals:
     void peerNameChanged(const ToxPk& peer, const QString& oldName, const QString& newName);
 
 private:
-    void stopAudioOfDepartedPeers(const ToxPk& peerPk);
-
-private:
     ICoreGroupQuery& groupQuery;
     ICoreIdHandler& idHandler;
     QString selfName;
