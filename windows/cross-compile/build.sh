@@ -516,6 +516,8 @@ fi
 
 
 # Openal-soft (irungentoo's fork)
+# We can stop using the fork once OpenAL-Soft gets loopback capture implemented:
+# https://github.com/kcat/openal-soft/pull/421
 
 OPENAL_PREFIX_DIR="$DEP_DIR/libopenal"
 OPENAL_VERSION=b80570bed017de60b67c6452264c634085c3b148
