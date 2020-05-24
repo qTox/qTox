@@ -45,7 +45,7 @@ public:
         FriendRequest = 2
     };
 
-    AddFriendForm();
+    AddFriendForm(ToxId _ownId);
     AddFriendForm(const AddFriendForm&) = delete;
     AddFriendForm& operator=(const AddFriendForm&) = delete;
     ~AddFriendForm();
@@ -111,4 +111,6 @@ private:
     QList<QPushButton*> acceptButtons;
     QList<QPushButton*> rejectButtons;
     QList<QString> contactsToImport;
+
+    ToxId ownId;
 };

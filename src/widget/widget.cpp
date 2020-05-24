@@ -275,7 +275,7 @@ void Widget::init()
     Style::setThemeColor(settings.getThemeColor());
 
     filesForm = new FilesForm();
-    addFriendForm = new AddFriendForm;
+    addFriendForm = new AddFriendForm(core->getSelfId());
     groupInviteForm = new GroupInviteForm;
 
     core = &profile.getCore();

@@ -61,10 +61,12 @@ namespace
  * @brief Cached username so we can retranslate the invite message
  */
 
-AddFriendForm::AddFriendForm()
+AddFriendForm::AddFriendForm(ToxId _ownId)
+    : ownId{_ownId}
 {
     tabWidget = new QTabWidget();
-    main = new QWidget(tabWidget), head = new QWidget();
+    main = new QWidget(tabWidget);
+    head = new QWidget();
     QFont bold;
     bold.setBold(true);
     headLabel.setFont(bold);
@@ -206,7 +208,7 @@ void AddFriendForm::addFriend(const QString& idText)
     }
 
     deleteFriendRequest(friendId);
-    if (friendId == Core::getInstance()->getSelfId()) {
+    if (friendId == ownId) {
         GUI::showWarning(tr("Couldn't add friend"),
                          //: When trying to add your own Tox ID as friend
                          tr("You can't add yourself as a friend!"));
@@ -301,8 +303,7 @@ void AddFriendForm::setIdFromClipboard()
     const QClipboard* clipboard = QApplication::clipboard();
     const QString trimmedId = clipboard->text().trimmed();
     const QString strippedId = getToxId(trimmedId);
-    const Core* core = Core::getInstance();
-    const bool isSelf = ToxId::isToxId(strippedId) && ToxId(strippedId) != core->getSelfId();
+    const bool isSelf = ToxId::isToxId(strippedId) && ToxId(strippedId) != ownId;
     if (!strippedId.isEmpty() && ToxId::isToxId(strippedId) && isSelf) {
         toxId.setText(trimmedId);
     }
