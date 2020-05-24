@@ -97,9 +97,10 @@ qint64 timeUntilTomorrow()
     return now.msecsTo(tomorrow);
 }
 
-FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
+FriendListWidget::FriendListWidget(const Core &_core, Widget* parent, bool groupsOnTop)
     : QWidget(parent)
     , groupsOnTop(groupsOnTop)
+    , core{_core}
 {
     listLayout = new FriendListLayout();
     setLayout(listLayout);
@@ -671,7 +672,7 @@ CircleWidget* FriendListWidget::createCircleWidget(int id)
 
     assert(circleLayout != nullptr);
 
-    CircleWidget* circleWidget = new CircleWidget(this, id);
+    CircleWidget* circleWidget = new CircleWidget(core, this, id);
     emit connectCircleWidget(*circleWidget);
     circleLayout->addSortedWidget(circleWidget);
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);

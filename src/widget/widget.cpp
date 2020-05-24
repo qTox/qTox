@@ -247,7 +247,9 @@ void Widget::init()
 
     ui->searchContactFilterBox->setMenu(filterMenu);
 
-    contactListWidget = new FriendListWidget(this, settings.getGroupchatPosition());
+    core = &profile.getCore();
+
+    contactListWidget = new FriendListWidget(*core, this, settings.getGroupchatPosition());
     connect(contactListWidget, &FriendListWidget::searchCircle, this, &Widget::searchCircle);
     connect(contactListWidget, &FriendListWidget::connectCircleWidget, this,
             &Widget::connectCircleWidget);
@@ -277,8 +279,6 @@ void Widget::init()
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm(core->getSelfId());
     groupInviteForm = new GroupInviteForm;
-
-    core = &profile.getCore();
 
 #if UPDATE_CHECK_ENABLED
     updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(settings));
@@ -1803,7 +1803,7 @@ void Widget::onUpdateAvailable()
 
 ContentDialog* Widget::createContentDialog() const
 {
-    ContentDialog* contentDialog = new ContentDialog();
+    ContentDialog* contentDialog = new ContentDialog(*core);
 
     registerContentDialog(*contentDialog);
     return contentDialog;

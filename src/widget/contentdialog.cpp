@@ -51,7 +51,7 @@ static const int minHeight = 220;
 static const QSize minSize(minHeight, minWidget);
 static const QSize defaultSize(720, 400);
 
-ContentDialog::ContentDialog(QWidget* parent)
+ContentDialog::ContentDialog(const Core &core, QWidget* parent)
     : ActivateDialog(parent, Qt::Window)
     , splitter{new QSplitter(this)}
     , friendLayout{new FriendListLayout(this)}
@@ -124,7 +124,7 @@ ContentDialog::ContentDialog(QWidget* parent)
     SplitterRestorer restorer(splitter);
     restorer.restore(s.getDialogSplitterState(), size());
 
-    username = Core::getInstance()->getUsername();
+    username = core.getUsername();
 
     setAcceptDrops(true);
 
