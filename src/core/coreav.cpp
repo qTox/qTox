@@ -503,11 +503,11 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
  * @param group Group Index
  * @param peer Peer Index
  */
-void CoreAV::invalidateGroupCallPeerSource(int group, ToxPk peerPk)
+void CoreAV::invalidateGroupCallPeerSource(const Group& group, ToxPk peerPk)
 {
     QWriteLocker locker{&callsLock};
 
-    auto it = groupCalls.find(group);
+    auto it = groupCalls.find(group.getId());
     if (it == groupCalls.end()) {
         return;
     }
