@@ -215,13 +215,16 @@ void ChatHistory::onFileUpdated(const ToxPk& sender, const ToxFile& file)
     if (canUseHistory()) {
         switch (file.status) {
         case ToxFile::INITIALIZING: {
+            auto selfPk = coreIdHandler.getSelfPublicKey();
+            QString username(selfPk == sender ? coreIdHandler.getUsername() : f.getDisplayedName());
+
             // Note: There is some implcit coupling between history and the current
             // chat log. Both rely on generating a new id based on the state of
             // initializing. If this is changed in the session chat log we'll end up
             // with a different order when loading from history
             history->addNewFileMessage(f.getPublicKey(), file.resumeFileId, file.fileName,
                                        file.filePath, file.filesize, sender,
-                                       QDateTime::currentDateTime(), f.getDisplayedName());
+                                       QDateTime::currentDateTime(), username);
             break;
         }
         case ToxFile::CANCELED:
