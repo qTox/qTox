@@ -45,6 +45,11 @@ namespace ExifTransform
         exif_data_free(exifData);
 
         switch (orientation){
+        case 0:
+            // Exif spec defines 1-8 only, but when the orientation field isn't explcitly defined, we read 0 from
+            // libexif. It seems like exif_data_get_entry should return null in that case rather than saying the entry
+            // is present but with a value of zero.
+            return Orientation::TopLeft;
         case 1:
             return Orientation::TopLeft;
         case 2:
