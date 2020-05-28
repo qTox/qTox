@@ -229,9 +229,9 @@ store_apt_cache()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.1.1f
+OPENSSL_VERSION=1.1.1g
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="186c6bfe6ecfba7a5b48c47f8a1673d0f3b0e5ba2e25602dd23b629975da3f35"
+OPENSSL_HASH="ddb04774f1e32f0c49751e21b67216ac87852ceb056b75209af2443400636d46"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
@@ -389,8 +389,8 @@ set -u
 # SQLCipher
 
 SQLCIPHER_PREFIX_DIR="$DEP_DIR/libsqlcipher"
-SQLCIPHER_VERSION=v4.3.0
-SQLCIPHER_HASH="fccb37e440ada898902b294d02cde7af9e8706b185d77ed9f6f4d5b18b4c305f"
+SQLCIPHER_VERSION=v4.4.0
+SQLCIPHER_HASH="0924b2ae1079717954498bda78a30de20ce2a6083076b16214a711567821d148"
 SQLCIPHER_FILENAME="$SQLCIPHER_VERSION.tar.gz"
 if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]
 then
@@ -403,36 +403,16 @@ then
   rm $SQLCIPHER_FILENAME
   cd sqlcipher*
 
-  sed -i s/'LIBS="-lcrypto  $LIBS"'/'LIBS="-lcrypto -lgdi32 -lws2_32  $LIBS"'/g configure
-  sed -i s/'LIBS="-lcrypto $LIBS"'/'LIBS="-lcrypto -lgdi32 -lws2_32 $LIBS"'/g configure
   sed -i s/'if test "$TARGET_EXEEXT" = ".exe"'/'if test ".exe" = ".exe"'/g configure
   sed -i 's|exec $PWD/mksourceid manifest|exec $PWD/mksourceid.exe manifest|g' tool/mksqlite3h.tcl
-
-# Do not remove trailing whitespace and dont replace tabs with spaces in the patch below,
-#  otherwise the patch will fail to apply
-> Makefile.in-patch cat << "EOF"
---- Makefile.in	2017-07-24 04:33:46.944080013 +0000
-+++ Makefile.in-patch	2017-07-24 04:50:47.340596990 +0000
-@@ -1074,7 +1074,7 @@
-    $(TOP)/ext/fts5/fts5_varint.c \
-    $(TOP)/ext/fts5/fts5_vocab.c  \
-
--fts5parse.c:	$(TOP)/ext/fts5/fts5parse.y lemon
-+fts5parse.c:	$(TOP)/ext/fts5/fts5parse.y lemon$(BEXE)
- 	cp $(TOP)/ext/fts5/fts5parse.y .
- 	rm -f fts5parse.h
- 	./lemon$(BEXE) $(OPTS) fts5parse.y
-
-EOF
-
-  patch -l < Makefile.in-patch
 
   ./configure --host="$ARCH-w64-mingw32" \
               --prefix="$SQLCIPHER_PREFIX_DIR" \
               --disable-shared \
               --enable-tempstore=yes \
               CFLAGS="-O2 -g0 -DSQLITE_HAS_CODEC -I$OPENSSL_PREFIX_DIR/include/" \
-              LDFLAGS="$OPENSSL_PREFIX_DIR/lib/libcrypto.a -lcrypto -lgdi32 -L$OPENSSL_PREFIX_DIR/lib/"
+              LDFLAGS="$OPENSSL_PREFIX_DIR/lib/libcrypto.a -lcrypto -lgdi32 -L$OPENSSL_PREFIX_DIR/lib/" \
+              LIBS="-lgdi32 -lws2_32"
 
   sed -i s/"TEXE = $"/"TEXE = .exe"/ Makefile
 
@@ -450,8 +430,8 @@ fi
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
-FFMPEG_VERSION=4.2.2
-FFMPEG_HASH="cb754255ab0ee2ea5f66f8850e1bd6ad5cac1cd855d0a2f4990fb8c668b0d29c"
+FFMPEG_VERSION=4.2.3
+FFMPEG_HASH="9df6c90aed1337634c1fb026fb01c154c29c82a64ea71291ff2da9aacb9aad31"
 FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
@@ -536,6 +516,8 @@ fi
 
 
 # Openal-soft (irungentoo's fork)
+# We can stop using the fork once OpenAL-Soft gets loopback capture implemented:
+# https://github.com/kcat/openal-soft/pull/421
 
 OPENAL_PREFIX_DIR="$DEP_DIR/libopenal"
 OPENAL_VERSION=b80570bed017de60b67c6452264c634085c3b148
@@ -649,15 +631,15 @@ fi
 # Exif
 
 EXIF_PREFIX_DIR="$DEP_DIR/libexif"
-EXIF_VERSION=0.6.21
-EXIF_HASH="16cdaeb62eb3e6dfab2435f7d7bccd2f37438d21c5218ec4e58efa9157d4d41a"
-EXIF_FILENAME=libexif-$EXIF_VERSION.tar.bz2
+EXIF_VERSION=0.6.22
+EXIF_HASH="5048f1c8fc509cc636c2f97f4b40c293338b6041a5652082d5ee2cf54b530c56"
+EXIF_FILENAME="libexif-$EXIF_VERSION.tar.xz"
 if [ ! -f "$EXIF_PREFIX_DIR/done" ]
 then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  wget $WGET_OPTIONS https://sourceforge.net/projects/libexif/files/libexif/$EXIF_VERSION/$EXIF_FILENAME
+  wget $WGET_OPTIONS "https://github.com/libexif/libexif/releases/download/libexif-${EXIF_VERSION//./_}-release/${EXIF_FILENAME}"
   check_sha256 "$EXIF_HASH" "$EXIF_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $EXIF_FILENAME
   rm $EXIF_FILENAME
