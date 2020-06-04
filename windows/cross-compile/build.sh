@@ -138,6 +138,7 @@ apt-get install -y --no-install-recommends \
                    libtool \
                    nsis \
                    pkg-config \
+                   python3-pefile \
                    tclsh \
                    unzip \
                    wget \
@@ -159,7 +160,7 @@ fi
 
 # Install wine to run qTox tests in
 set +u
-if [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
+if [ -z "$TRAVIS_CI_STAGE" ] || [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
 then
   dpkg --add-architecture i386
   apt-get update
@@ -1026,6 +1027,34 @@ fi
 cp "$NSISSHELLEXECASUSER_PREFIX_DIR/bin/ShellExecAsUser.dll" /usr/share/nsis/Plugins/x86-ansi/
 
 
+# mingw-ldd
+
+MINGW_LDD_PREFIX_DIR="$DEP_DIR/mingw-ldd"
+MINGW_LDD_VERSION=v0.2.0
+MINGW_LDD_HASH="d4cf712da18fa822b4934144d44cd254e18c9c0ca987363503bb3b6aeb3134db"
+MINGW_LDD_FILENAME="$MINGW_LDD_VERSION.tar.gz"
+if [ ! -f "$MINGW_LDD_PREFIX_DIR/done" ]
+then
+  rm -rf "$MINGW_LDD_PREFIX_DIR"
+  mkdir -p "$MINGW_LDD_PREFIX_DIR"
+
+  wget $WGET_OPTIONS "https://github.com/nurupo/mingw-ldd/archive/$MINGW_LDD_FILENAME" -O "$MINGW_LDD_FILENAME"
+  check_sha256 "$MINGW_LDD_HASH" "$MINGW_LDD_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$MINGW_LDD_FILENAME"
+  rm "$MINGW_LDD_FILENAME"
+  cd mingw-ldd*
+
+  mkdir "$MINGW_LDD_PREFIX_DIR/bin"
+  cp -a "mingw_ldd/mingw_ldd.py" "$MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py"
+  echo -n $MINGW_LDD_VERSION > $MINGW_LDD_PREFIX_DIR/done
+
+  cd ..
+  rm -rf ./mingw-ldd*
+else
+  echo "Using cached build of mingw-ldd `cat $MINGW_LDD_PREFIX_DIR/done`"
+fi
+
+
 # Stop here if running the second stage on Travis CI
 set +u
 if [[ "$TRAVIS_CI_STAGE" == "stage2" ]]
@@ -1126,18 +1155,61 @@ cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
 cp /usr/$ARCH-w64-mingw32/lib/libwinpthread-1.dll $QTOX_PREFIX_DIR
 
+# Setup wine
+if [[ "$ARCH" == "i686" ]]
+then
+  export WINEARCH=win32
+elif [[ "$ARCH" == "x86_64" ]]
+then
+  export WINEARCH=win64
+fi
+winecfg
+
+# dll checks
+python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/qtox.exe --dll-lookup-dirs $QTOX_PREFIX_DIR ~/.wine/drive_c/windows/system32 > /tmp/$ARCH-qtox-ldd
+find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-qtox-dll-find
+# dlls loded at run time that don't showup as a link time dependency
+echo "$QTOX_PREFIX_DIR/libssl-1_1.dll
+$QTOX_PREFIX_DIR/libssl-1_1-x64.dll
+$QTOX_PREFIX_DIR/iconengines/qsvgicon.dll
+$QTOX_PREFIX_DIR/imageformats/qgif.dll
+$QTOX_PREFIX_DIR/imageformats/qico.dll
+$QTOX_PREFIX_DIR/imageformats/qjpeg.dll
+$QTOX_PREFIX_DIR/imageformats/qsvg.dll
+$QTOX_PREFIX_DIR/platforms/qdirect2d.dll
+$QTOX_PREFIX_DIR/platforms/qminimal.dll
+$QTOX_PREFIX_DIR/platforms/qoffscreen.dll
+$QTOX_PREFIX_DIR/platforms/qwindows.dll" > /tmp/$ARCH-qtox-dll-whitelist
+
+
+# Check that all dlls are in place
+if grep 'not found' /tmp/$ARCH-qtox-ldd
+then
+  cat /tmp/$ARCH-qtox-ldd
+  echo "Error: Missing some dlls."
+  exit 1
+fi
+
+# Check that no extra dlls get bundled
+while IFS= read -r line
+do
+  # skip over whitelisted dlls
+  if grep "$line" /tmp/$ARCH-qtox-dll-whitelist
+  then
+    continue
+  fi
+  if ! grep "$line" /tmp/$ARCH-qtox-ldd
+  then
+    echo "Error: extra dll included: $line. If this is a mistake and the dll is actually needed (e.g. it's loaded at run-time), please add it to the whitelist."
+    exit 1
+  fi
+done < /tmp/$ARCH-qtox-dll-find
+
+
+# Run tests
 set +u
 if [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
 then
-  # Setup wine
-  if [[ "$ARCH" == "i686" ]]
-  then
-    export WINEARCH=win32
-  elif [[ "$ARCH" == "x86_64" ]]
-  then
-    export WINEARCH=win64
-  fi
-  winecfg
   # Add libgcc_s_*.dll, libwinpthread-1.dll, QtTest.dll, etc. into PATH env var of wine
   export WINEPATH=`cd $QTOX_PREFIX_DIR ; winepath -w $(pwd)`\;`winepath -w $QT_PREFIX_DIR/bin/`
   export CTEST_OUTPUT_ON_FAILURE=1
