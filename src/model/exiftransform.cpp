@@ -36,20 +36,18 @@ namespace ExifTransform
             return Orientation::TopLeft;
         }
 
-        int orientation = 0;
         const ExifByteOrder byteOrder = exif_data_get_byte_order(exifData);
         const ExifEntry* const exifEntry = exif_data_get_entry(exifData, EXIF_TAG_ORIENTATION);
-        if (exifEntry) {
-            orientation = exif_get_short(exifEntry->data, byteOrder);
+
+        if (!exifEntry) {
+            exif_data_free(exifData);
+            return Orientation::TopLeft;
         }
+
+        const int orientation = exif_get_short(exifEntry->data, byteOrder);
         exif_data_free(exifData);
 
         switch (orientation){
-        case 0:
-            // Exif spec defines 1-8 only, but when the orientation field isn't explcitly defined, we read 0 from
-            // libexif. It seems like exif_data_get_entry should return null in that case rather than saying the entry
-            // is present but with a value of zero.
-            return Orientation::TopLeft;
         case 1:
             return Orientation::TopLeft;
         case 2:
