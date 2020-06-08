@@ -34,8 +34,10 @@
 #include "util/strongtype.h"
 
 #include <QCoreApplication>
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
 #include <QRandomGenerator>
+#else
+#include <QDateTime>
 #endif
 #include <QRegularExpression>
 #include <QString>
@@ -667,6 +669,10 @@ void Core::onStarted()
 {
     ASSERT_CORE_THREAD;
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 10, 0))
+    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
+#endif
+
     // One time initialization stuff
     QString name = getUsername();
     if (!name.isEmpty()) {
@@ -795,10 +801,10 @@ void Core::bootstrapDht()
     }
 
     int i = 0;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
-    static int j = QRandomGenerator::global()->generate() % listSize;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+    static int j = QRandomGenerator::global()->bounded(listSize);
 #else
-    static int j = qrand() % listSize;
+    static int j = static_cast<int>((static_cast<double>(qrand()) / static_cast<double>(RAND_MAX+1l)) * listSize);
 #endif
     // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
     while (i < 2) {
@@ -827,7 +833,8 @@ void Core::bootstrapDht()
             PARSE_ERR(error);
         }
 
-        ++j;
+        // bootstrap off every 5th node (+ a special case to avoid cycles when listSize % 5 == 0)
+        j += 5 + !(listSize % 5);
         ++i;
     }
 }
