@@ -267,6 +267,17 @@ Section "Install"
 	File /nonfatal "qtox\platforms\*.*"
 	${SetOutPath} "$INSTDIR\bin"
 
+	${CreateDirectory} "$INSTDIR\bin\hunspell"
+	${SetOutPath} "$INSTDIR\bin\hunspell"
+	File /nonfatal "qtox\hunspell\*.*"
+	${SetOutPath} "$INSTDIR\bin"
+
+	${CreateDirectory} "$INSTDIR\bin\kf5"
+	${CreateDirectory} "$INSTDIR\bin\kf5\sonnet"
+	${SetOutPath} "$INSTDIR\bin\kf5\sonnet"
+	File /nonfatal "qtox\bin\kf5\sonnet\*.*"
+	${SetOutPath} "$INSTDIR\bin"
+
 	# Create shortcuts
 	${CreateDirectory} "$SMPROGRAMS\qTox"
 	${CreateShortCut} "$SMPROGRAMS\qTox\qTox.lnk" "$INSTDIR\${MAIN_APP_EXE}" "" "" ""
