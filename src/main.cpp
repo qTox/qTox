@@ -43,10 +43,6 @@
 #include <sodium.h>
 #include <stdio.h>
 
-#if defined(Q_OS_OSX)
-#include "platform/install_osx.h"
-#endif
-
 #if defined(Q_OS_UNIX)
 #include "platform/posixsignalnotifier.h"
 #endif
@@ -201,13 +197,6 @@ int main(int argc, char* argv[])
     if (QFontDatabase::addApplicationFont("://font/DejaVuSans.ttf") == -1) {
         qWarning() << "Couldn't load font";
     }
-
-
-#if defined(Q_OS_OSX)
-    // TODO: Add setting to enable this feature.
-    // osx::moveToAppFolder();
-    osx::migrateProfiles();
-#endif
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 15, 0))
     qsrand(time(nullptr));
