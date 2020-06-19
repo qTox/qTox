@@ -161,6 +161,22 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 #endif
 }
 
+static std::unique_ptr<ToxURIDialog> uriDialog;
+
+static bool toxURIEventHandler(const QByteArray& eventData)
+{
+    if (!eventData.startsWith("tox:")) {
+        return false;
+    }
+
+    if (!uriDialog) {
+        return false;
+    }
+
+    uriDialog->handleToxURI(eventData);
+    return true;
+}
+
 int main(int argc, char* argv[])
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
@@ -387,7 +403,10 @@ int main(int argc, char* argv[])
         if (returnval == QDialog::Rejected) {
             return -1;
         }
+        profile = nexus.getProfile();
     }
+
+    uriDialog = std::unique_ptr<ToxURIDialog>(new ToxURIDialog(nullptr, profile->getCore()));
 
     if (ipc.isAttached()) {
         // Start to accept Inter-process communication
@@ -397,10 +416,11 @@ int main(int argc, char* argv[])
     }
 
     // Event was not handled by already running instance therefore we handle it ourselves
-    if (eventType == "uri")
-        handleToxURI(firstParam.toUtf8());
-    else if (eventType == "save")
+    if (eventType == "uri") {
+        uriDialog->handleToxURI(firstParam.toUtf8());
+    } else if (eventType == "save") {
         handleToxSave(firstParam.toUtf8());
+    }
 
     QObject::connect(a.get(), &QApplication::aboutToQuit, cleanup);
 

@@ -22,19 +22,26 @@
 
 #include <QDialog>
 
-bool handleToxURI(const QString& toxURI);
-
+class Core;
 // Internals
 class QByteArray;
+class QLabel;
+class QLineEdit;
 class QPlainTextEdit;
-bool toxURIEventHandler(const QByteArray& eventData);
 class ToxURIDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ToxURIDialog(QWidget* parent, const QString& userId, const QString& message);
+    explicit ToxURIDialog(QWidget* parent, Core& _core);
     QString getRequestMessage();
+    bool handleToxURI(const QString& toxURI);
+
+private:
+    void setUserId(const QString& userId);
 
 private:
     QPlainTextEdit* messageEdit;
+    QLabel* friendsLabel;
+    QLineEdit* userIdEdit;
+    Core& core;
 };
