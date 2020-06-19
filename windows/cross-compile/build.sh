@@ -138,6 +138,7 @@ apt-get install -y --no-install-recommends \
                    libtool \
                    nsis \
                    pkg-config \
+                   python3-pefile \
                    tclsh \
                    unzip \
                    wget \
@@ -159,7 +160,7 @@ fi
 
 # Install wine to run qTox tests in
 set +u
-if [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
+if [ -z "$TRAVIS_CI_STAGE" ] || [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
 then
   dpkg --add-architecture i386
   apt-get update
@@ -408,10 +409,11 @@ then
 
   ./configure --host="$ARCH-w64-mingw32" \
               --prefix="$SQLCIPHER_PREFIX_DIR" \
-              --disable-shared \
+              --enable-shared \
+              --disable-static \
               --enable-tempstore=yes \
               CFLAGS="-O2 -g0 -DSQLITE_HAS_CODEC -I$OPENSSL_PREFIX_DIR/include/" \
-              LDFLAGS="$OPENSSL_PREFIX_DIR/lib/libcrypto.a -lcrypto -lgdi32 -L$OPENSSL_PREFIX_DIR/lib/" \
+              LDFLAGS="-lcrypto -lgdi32 -L$OPENSSL_PREFIX_DIR/lib/" \
               LIBS="-lgdi32 -lws2_32"
 
   sed -i s/"TEXE = $"/"TEXE = .exe"/ Makefile
@@ -454,15 +456,14 @@ then
 
   ./configure $CONFIGURE_OPTIONS \
               --enable-gpl \
+              --enable-shared \
+              --disable-static \
               --prefix="$FFMPEG_PREFIX_DIR" \
               --target-os="mingw32" \
               --cross-prefix="$ARCH-w64-mingw32-" \
               --pkg-config="pkg-config" \
-              --extra-cflags="-static -O2 -g0" \
-              --extra-ldflags="-lm -static" \
-              --pkg-config-flags="--static" \
+              --extra-cflags="-O2 -g0" \
               --disable-debug \
-              --disable-shared \
               --disable-programs \
               --disable-protocols \
               --disable-doc \
@@ -612,8 +613,8 @@ then
 
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
                                --prefix="$QRENCODE_PREFIX_DIR" \
-                               --disable-shared \
-                               --enable-static \
+                               --enable-shared \
+                               --disable-static \
                                --disable-sdltest \
                                --without-tools \
                                --without-debug
@@ -647,8 +648,8 @@ then
 
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
                                --prefix="$EXIF_PREFIX_DIR" \
-                               --disable-shared \
-                               --enable-static \
+                               --enable-shared \
+                               --disable-static \
                                --disable-docs \
                                --disable-nls
   make
@@ -682,8 +683,8 @@ then
 
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
                                --prefix="$OPUS_PREFIX_DIR" \
-                               --disable-shared \
-                               --enable-static \
+                               --enable-shared \
+                               --disable-static \
                                --disable-extra-programs \
                                --disable-doc
   make
@@ -716,9 +717,8 @@ then
 
   ./configure --host="$ARCH-w64-mingw32" \
               --prefix="$SODIUM_PREFIX_DIR" \
-              --disable-shared \
-              --enable-static \
-              --with-pic
+              --enable-shared \
+              --disable-static
   make
   make install
   echo -n $SODIUM_VERSION > $SODIUM_PREFIX_DIR/done
@@ -760,17 +760,153 @@ then
     VPX_CFLAGS=""
   fi
 
+  cd ..
+
+# Fix VPX not supporting creation of dll
+# Modified version of https://aur.archlinux.org/cgit/aur.git/tree/configure.patch?h=mingw-w64-libvpx&id=6d658aa0f4d8409fcbd0f20be2c0adcf1e81a297
+> configure.patch cat << "EOF"
+diff -ruN libvpx/build/make/configure.sh patched/build/make/configure.sh
+--- libvpx/build/make/configure.sh	2019-02-13 16:56:48.972857636 +0100
++++ patched/build/make/configure.sh	2019-02-13 16:50:37.995967583 +0100
+@@ -1426,11 +1426,13 @@
+         win32)
+           add_asflags -f win32
+           enabled debug && add_asflags -g cv8
++          add_ldflags "-Wl,-no-undefined"
+           EXE_SFX=.exe
+           ;;
+         win64)
+           add_asflags -f win64
+           enabled debug && add_asflags -g cv8
++          add_ldflags "-Wl,-no-undefined"
+           EXE_SFX=.exe
+           ;;
+         linux*|solaris*|android*)
+diff -ruN libvpx/build/make/Makefile patched/build/make/Makefile
+--- libvpx/build/make/Makefile	2019-02-13 16:56:48.972857636 +0100
++++ patched/build/make/Makefile	2019-02-13 16:50:37.995967583 +0100
+@@ -304,6 +304,7 @@
+ 	$(if $(quiet),@echo "    [LD] $$@")
+ 	$(qexec)$$(LD) -shared $$(LDFLAGS) \
+             -Wl,--no-undefined -Wl,-soname,$$(SONAME) \
++            -Wl,-out-implib,libvpx.dll.a \
+             -Wl,--version-script,$$(EXPORTS_FILE) -o $$@ \
+             $$(filter %.o,$$^) $$(extralibs)
+ endef
+@@ -388,7 +389,7 @@
+ .libs: $(LIBS)
+ 	@touch $@
+ $(foreach lib,$(filter %_g.a,$(LIBS)),$(eval $(call archive_template,$(lib))))
+-$(foreach lib,$(filter %so.$(SO_VERSION_MAJOR).$(SO_VERSION_MINOR).$(SO_VERSION_PATCH),$(LIBS)),$(eval $(call so_template,$(lib))))
++$(foreach lib,$(filter %dll,$(LIBS)),$(eval $(call so_template,$(lib))))
+ $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dylib,$(LIBS)),$(eval $(call dl_template,$(lib))))
+ $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dll,$(LIBS)),$(eval $(call dll_template,$(lib))))
+ 
+diff -ruN libvpx/configure patched/configure
+--- libvpx/configure	2019-02-13 16:56:49.162860897 +0100
++++ patched/configure	2019-02-13 16:53:03.328719607 +0100
+@@ -513,23 +513,23 @@
+ }
+ 
+ process_detect() {
+-    if enabled shared; then
++    #if enabled shared; then
+         # Can only build shared libs on a subset of platforms. Doing this check
+         # here rather than at option parse time because the target auto-detect
+         # magic happens after the command line has been parsed.
+-        case "${tgt_os}" in
+-        linux|os2|solaris|darwin*|iphonesimulator*)
++    #    case "${tgt_os}" in
++    #    linux|os2|solaris|darwin*|iphonesimulator*)
+             # Supported platforms
+-            ;;
+-        *)
+-            if enabled gnu; then
+-                echo "--enable-shared is only supported on ELF; assuming this is OK"
+-            else
+-                die "--enable-shared only supported on ELF, OS/2, and Darwin for now"
+-            fi
+-            ;;
+-        esac
+-    fi
++    #        ;;
++    #    *)
++    #        if enabled gnu; then
++    #            echo "--enable-shared is only supported on ELF; assuming this is OK"
++    #        else
++    #            die "--enable-shared only supported on ELF, OS/2, and Darwin for now"
++    #        fi
++    #        ;;
++    #    esac
++    #fi
+     if [ -z "$CC" ] || enabled external_build; then
+         echo "Bypassing toolchain for environment detection."
+         enable_feature external_build
+diff -ruN libvpx/examples.mk patched/examples.mk
+--- libvpx/examples.mk	2019-02-13 16:56:49.162860897 +0100
++++ patched/examples.mk	2019-02-13 16:50:37.995967583 +0100
+@@ -315,7 +315,7 @@
+ ifneq ($(filter os2%,$(TGT_OS)),)
+ SHARED_LIB_SUF=_dll.a
+ else
+-SHARED_LIB_SUF=.so
++SHARED_LIB_SUF=.dll.a
+ endif
+ endif
+ CODEC_LIB_SUF=$(if $(CONFIG_SHARED),$(SHARED_LIB_SUF),.a)
+diff -ruN libvpx/libs.mk patched/libs.mk
+--- libvpx/libs.mk	2019-02-13 16:56:48.972857636 +0100
++++ patched/libs.mk	2019-02-13 16:50:37.995967583 +0100
+@@ -256,12 +256,12 @@
+ LIBVPX_SO_SYMLINKS      :=
+ LIBVPX_SO_IMPLIB        := libvpx_dll.a
+ else
+-LIBVPX_SO               := libvpx.so.$(SO_VERSION_MAJOR).$(SO_VERSION_MINOR).$(SO_VERSION_PATCH)
+-SHARED_LIB_SUF          := .so
++LIBVPX_SO               := libvpx.dll
++SHARED_LIB_SUF          := .dll
+ EXPORT_FILE             := libvpx.ver
+-LIBVPX_SO_SYMLINKS      := $(addprefix $(LIBSUBDIR)/, \
+-                             libvpx.so libvpx.so.$(SO_VERSION_MAJOR) \
+-                             libvpx.so.$(SO_VERSION_MAJOR).$(SO_VERSION_MINOR))
++LIBVPX_SO_SYMLINKS      :=
++
++
+ endif
+ endif
+ endif
+@@ -271,7 +271,7 @@
+                            $(if $(LIBVPX_SO_IMPLIB), $(BUILD_PFX)$(LIBVPX_SO_IMPLIB))
+ $(BUILD_PFX)$(LIBVPX_SO): $(LIBVPX_OBJS) $(EXPORT_FILE)
+ $(BUILD_PFX)$(LIBVPX_SO): extralibs += -lm
+-$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.so.$(SO_VERSION_MAJOR)
++$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.dll
+ $(BUILD_PFX)$(LIBVPX_SO): EXPORTS_FILE = $(EXPORT_FILE)
+ 
+ libvpx.def: $(call enabled,CODEC_EXPORTS)
+EOF
+
+  cd -
+  patch -Np1 < ../configure.patch
+  rm ../configure.patch
+
   CFLAGS="$VPX_CFLAGS" \
   CROSS="$ARCH-w64-mingw32-" ./configure --target="$VPX_TARGET" \
                                          --prefix="$VPX_PREFIX_DIR" \
-                                         --disable-shared \
-                                         --enable-static \
+                                         --enable-shared \
+                                         --disable-static \
+                                         --enable-runtime-cpu-detect \
                                          --disable-examples \
                                          --disable-tools \
                                          --disable-docs \
                                          --disable-unit-tests
   make
   make install
+
+  mkdir -p "$VPX_PREFIX_DIR/bin"
+  mv "$VPX_PREFIX_DIR/lib/"*.dll "$VPX_PREFIX_DIR/bin/"
+  mv ./libvpx*.dll.a "$VPX_PREFIX_DIR/lib/"
+
   echo -n $VPX_VERSION > $VPX_PREFIX_DIR/done
 
   cd ..
@@ -816,8 +952,8 @@ then
   cmake -DCMAKE_INSTALL_PREFIX=$TOXCORE_PREFIX_DIR \
         -DBOOTSTRAP_DAEMON=OFF \
         -DCMAKE_BUILD_TYPE=Release \
-        -DENABLE_STATIC=ON \
-        -DENABLE_SHARED=OFF \
+        -DENABLE_STATIC=OFF \
+        -DENABLE_SHARED=ON \
         -DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
         ..
 
@@ -889,6 +1025,34 @@ else
 fi
 # Install ShellExecAsUser plugin
 cp "$NSISSHELLEXECASUSER_PREFIX_DIR/bin/ShellExecAsUser.dll" /usr/share/nsis/Plugins/x86-ansi/
+
+
+# mingw-ldd
+
+MINGW_LDD_PREFIX_DIR="$DEP_DIR/mingw-ldd"
+MINGW_LDD_VERSION=v0.2.0
+MINGW_LDD_HASH="d4cf712da18fa822b4934144d44cd254e18c9c0ca987363503bb3b6aeb3134db"
+MINGW_LDD_FILENAME="$MINGW_LDD_VERSION.tar.gz"
+if [ ! -f "$MINGW_LDD_PREFIX_DIR/done" ]
+then
+  rm -rf "$MINGW_LDD_PREFIX_DIR"
+  mkdir -p "$MINGW_LDD_PREFIX_DIR"
+
+  wget $WGET_OPTIONS "https://github.com/nurupo/mingw-ldd/archive/$MINGW_LDD_FILENAME" -O "$MINGW_LDD_FILENAME"
+  check_sha256 "$MINGW_LDD_HASH" "$MINGW_LDD_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$MINGW_LDD_FILENAME"
+  rm "$MINGW_LDD_FILENAME"
+  cd mingw-ldd*
+
+  mkdir "$MINGW_LDD_PREFIX_DIR/bin"
+  cp -a "mingw_ldd/mingw_ldd.py" "$MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py"
+  echo -n $MINGW_LDD_VERSION > $MINGW_LDD_PREFIX_DIR/done
+
+  cd ..
+  rm -rf ./mingw-ldd*
+else
+  echo "Using cached build of mingw-ldd `cat $MINGW_LDD_PREFIX_DIR/done`"
+fi
 
 
 # Stop here if running the second stage on Travis CI
@@ -985,26 +1149,67 @@ cp -r $QT_PREFIX_DIR/plugins/imageformats \
       $QT_PREFIX_DIR/plugins/platforms \
       $QT_PREFIX_DIR/plugins/iconengines \
       $QTOX_PREFIX_DIR
-cp $OPENAL_PREFIX_DIR/bin/OpenAL32.dll $QTOX_PREFIX_DIR
-cp $OPENSSL_PREFIX_DIR/bin/libssl-*.dll \
-   $OPENSSL_PREFIX_DIR/bin/libcrypto-*.dll \
-   $QTOX_PREFIX_DIR
+cp {$OPENSSL_PREFIX_DIR,$SQLCIPHER_PREFIX_DIR,$FFMPEG_PREFIX_DIR,$OPENAL_PREFIX_DIR,$QRENCODE_PREFIX_DIR,$EXIF_PREFIX_DIR,$OPUS_PREFIX_DIR,$SODIUM_PREFIX_DIR,$VPX_PREFIX_DIR,$TOXCORE_PREFIX_DIR}/bin/*.dll $QTOX_PREFIX_DIR
+
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
 cp /usr/$ARCH-w64-mingw32/lib/libwinpthread-1.dll $QTOX_PREFIX_DIR
 
+# Setup wine
+if [[ "$ARCH" == "i686" ]]
+then
+  export WINEARCH=win32
+elif [[ "$ARCH" == "x86_64" ]]
+then
+  export WINEARCH=win64
+fi
+winecfg
+
+# dll checks
+python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/qtox.exe --dll-lookup-dirs $QTOX_PREFIX_DIR ~/.wine/drive_c/windows/system32 > /tmp/$ARCH-qtox-ldd
+find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-qtox-dll-find
+# dlls loded at run time that don't showup as a link time dependency
+echo "$QTOX_PREFIX_DIR/libssl-1_1.dll
+$QTOX_PREFIX_DIR/libssl-1_1-x64.dll
+$QTOX_PREFIX_DIR/iconengines/qsvgicon.dll
+$QTOX_PREFIX_DIR/imageformats/qgif.dll
+$QTOX_PREFIX_DIR/imageformats/qico.dll
+$QTOX_PREFIX_DIR/imageformats/qjpeg.dll
+$QTOX_PREFIX_DIR/imageformats/qsvg.dll
+$QTOX_PREFIX_DIR/platforms/qdirect2d.dll
+$QTOX_PREFIX_DIR/platforms/qminimal.dll
+$QTOX_PREFIX_DIR/platforms/qoffscreen.dll
+$QTOX_PREFIX_DIR/platforms/qwindows.dll" > /tmp/$ARCH-qtox-dll-whitelist
+
+
+# Check that all dlls are in place
+if grep 'not found' /tmp/$ARCH-qtox-ldd
+then
+  cat /tmp/$ARCH-qtox-ldd
+  echo "Error: Missing some dlls."
+  exit 1
+fi
+
+# Check that no extra dlls get bundled
+while IFS= read -r line
+do
+  # skip over whitelisted dlls
+  if grep "$line" /tmp/$ARCH-qtox-dll-whitelist
+  then
+    continue
+  fi
+  if ! grep "$line" /tmp/$ARCH-qtox-ldd
+  then
+    echo "Error: extra dll included: $line. If this is a mistake and the dll is actually needed (e.g. it's loaded at run-time), please add it to the whitelist."
+    exit 1
+  fi
+done < /tmp/$ARCH-qtox-dll-find
+
+
+# Run tests
 set +u
 if [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
 then
-  # Setup wine
-  if [[ "$ARCH" == "i686" ]]
-  then
-    export WINEARCH=win32
-  elif [[ "$ARCH" == "x86_64" ]]
-  then
-    export WINEARCH=win64
-  fi
-  winecfg
   # Add libgcc_s_*.dll, libwinpthread-1.dll, QtTest.dll, etc. into PATH env var of wine
   export WINEPATH=`cd $QTOX_PREFIX_DIR ; winepath -w $(pwd)`\;`winepath -w $QT_PREFIX_DIR/bin/`
   export CTEST_OUTPUT_ON_FAILURE=1
