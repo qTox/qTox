@@ -2,7 +2,7 @@
 
 # MIT License
 #
-# Copyright (c) 2017-2018 Maxim Biro <nurupo.contributions@gmail.com>
+# Copyright (c) 2017-2020 Maxim Biro <nurupo.contributions@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -140,6 +140,7 @@ apt-get install -y --no-install-recommends \
                    pkg-config \
                    python3-pefile \
                    tclsh \
+                   texinfo \
                    unzip \
                    wget \
                    yasm \
@@ -202,8 +203,8 @@ check_sha256_git()
     exit 1
   fi
   # Create a file listing hashes of all the files except .git/*
-  find . -type f | grep -v "^./.git" | LC_COLLATE=C sort --stable --ignore-case | xargs sha256sum > /tmp/hashes.sha
-  check_sha256 "$1" "/tmp/hashes.sha"
+  find . -type f | grep -v "^./.git" | LC_COLLATE=C sort --stable --ignore-case | xargs sha256sum > "/tmp/hashes-$1.sha"
+  check_sha256 "$1" "/tmp/hashes-$1.sha"
 }
 
 # Strip binaries to reduce file size, we don't need this information anyway
@@ -973,31 +974,103 @@ else
 fi
 
 
-# mingw-w64-debug-scripts
-
-MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR="$DEP_DIR/mingw-w64-debug-scripts"
-MINGW_W64_DEBUG_SCRIPTS_VERSION=7341e1ffdea352e5557f3fcae51569f13e1ef270
-MINGW_W64_DEBUG_SCRIPTS_HASH="a92883ddfe83780818347fda4ac07bce61df9226818df2f52fe4398fe733e204"
-if [ ! -f "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done" ]
+if [[ "$BUILD_TYPE" == "debug" ]]
 then
-  rm -rf "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR"
-  mkdir -p "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR"
 
-  # Get dbg executable and the debug scripts
-  git clone https://github.com/nurupo/mingw-w64-debug-scripts mingw-w64-debug-scripts
-  cd mingw-w64-debug-scripts
-  git checkout $MINGW_W64_DEBUG_SCRIPTS_VERSION
-  check_sha256_git "$MINGW_W64_DEBUG_SCRIPTS_HASH"
+  # mingw-w64-debug-scripts
 
-  make $ARCH EXE_NAME=qtox.exe
-  mkdir -p "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/bin"
-  mv output/$ARCH/* "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/bin/"
-  echo -n $MINGW_W64_DEBUG_SCRIPTS_VERSION > $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done
+  MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR="$DEP_DIR/mingw-w64-debug-scripts"
+  MINGW_W64_DEBUG_SCRIPTS_VERSION="c6ae689137844d1a6fd9c1b9a071d3f82a44c593"
+  MINGW_W64_DEBUG_SCRIPTS_HASH="1343bee72f3d9fad01ac7101d6e9cffee1e76db82f2ef9a69f7c7e988ec4b301"
+  if [ ! -f "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done" ]
+  then
+    rm -rf "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR"
+    mkdir -p "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR"
 
-  cd ..
-  rm -rf ./mingw-w64-debug-scripts
-else
-  echo "Using cached build of mingw-w64-debug-scripts `cat $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done`"
+    git clone https://github.com/nurupo/mingw-w64-debug-scripts mingw-w64-debug-scripts
+    cd mingw-w64-debug-scripts
+    git checkout $MINGW_W64_DEBUG_SCRIPTS_VERSION
+    check_sha256_git "$MINGW_W64_DEBUG_SCRIPTS_HASH"
+
+    sed -i "s|your-app-name.exe|qtox.exe|g" debug-*.bat
+    mkdir -p "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/bin"
+    cp -a debug-*.bat "$MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/bin/"
+    echo -n $MINGW_W64_DEBUG_SCRIPTS_VERSION > $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done
+
+    cd ..
+    rm -rf ./mingw-w64-debug-scripts
+  else
+    echo "Using cached build of mingw-w64-debug-scripts `cat $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/done`"
+  fi
+
+
+  # Expat
+
+  EXPAT_PREFIX_DIR="$DEP_DIR/libexpat"
+  EXPAT_VERSION="2.2.9"
+  EXPAT_HASH="1ea6965b15c2106b6bbe883397271c80dfa0331cdf821b2c319591b55eadc0a4"
+  EXPAT_FILENAME="expat-$EXPAT_VERSION.tar.xz"
+  if [ ! -f "$EXPAT_PREFIX_DIR/done" ]
+  then
+    rm -rf "$EXPAT_PREFIX_DIR"
+    mkdir -p "$EXPAT_PREFIX_DIR"
+
+    wget $WGET_OPTIONS "https://github.com/libexpat/libexpat/releases/download/R_${EXPAT_VERSION//./_}/$EXPAT_FILENAME"
+    check_sha256 "$EXPAT_HASH" "$EXPAT_FILENAME"
+    bsdtar --no-same-owner --no-same-permissions -xf $EXPAT_FILENAME
+    rm $EXPAT_FILENAME
+    cd expat*
+
+    CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
+                                 --prefix="$EXPAT_PREFIX_DIR" \
+                                 --enable-static \
+                                 --disable-shared
+    make
+    make install
+    echo -n $EXPAT_VERSION > $EXPAT_PREFIX_DIR/done
+
+    cd ..
+    rm -rf ./expat*
+  else
+    echo "Using cached build of Expat `cat $EXPAT_PREFIX_DIR/done`"
+  fi
+
+
+  # GDB
+
+  GDB_PREFIX_DIR="$DEP_DIR/gdb"
+  GDB_VERSION="9.2"
+  GDB_HASH="360cd7ae79b776988e89d8f9a01c985d0b1fa21c767a4295e5f88cb49175c555"
+  GDB_FILENAME="gdb-$GDB_VERSION.tar.xz"
+  if [ ! -f "$GDB_PREFIX_DIR/done" ]
+  then
+    rm -rf "$GDB_PREFIX_DIR"
+    mkdir -p "$GDB_PREFIX_DIR"
+
+    wget $WGET_OPTIONS "http://ftp.gnu.org/gnu/gdb/$GDB_FILENAME"
+    check_sha256 "$GDB_HASH" "$GDB_FILENAME"
+    bsdtar --no-same-owner --no-same-permissions -xf $GDB_FILENAME
+    rm $GDB_FILENAME
+    cd gdb*
+
+    mkdir build
+    cd build
+    CFLAGS="-O2 -g0" ../configure --host="$ARCH-w64-mingw32" \
+                                  --prefix="$GDB_PREFIX_DIR" \
+                                  --enable-static \
+                                  --disable-shared \
+                                  --with-libexpat-prefix="$EXPAT_PREFIX_DIR"
+    make
+    make install
+    cd ..
+    echo -n $GDB_VERSION > $GDB_PREFIX_DIR/done
+
+    cd ..
+    rm -rf ./gdb*
+  else
+    echo "Using cached build of GDB `cat $GDB_PREFIX_DIR/done`"
+  fi
+
 fi
 
 
@@ -1226,8 +1299,18 @@ then
   mkdir -p "$QTOX_PREFIX_DIR/$PWD/src"
   cp -r "$PWD/src" "$QTOX_PREFIX_DIR/$PWD"
 
-  # Get dbg executable and the debug scripts
+  # Get debug scripts
   cp -r $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/bin/* "$QTOX_PREFIX_DIR/"
+  cp -r $GDB_PREFIX_DIR/bin/gdb.exe "$QTOX_PREFIX_DIR/"
+
+  # Check that all dlls are in place
+  python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/gdb.exe --dll-lookup-dirs $QTOX_PREFIX_DIR ~/.wine/drive_c/windows/system32 > /tmp/$ARCH-gdb-ldd
+  if grep 'not found' /tmp/$ARCH-gdb-ldd
+  then
+    cat /tmp/$ARCH-gdb-ldd
+    echo "Error: Missing some dlls."
+    exit 1
+  fi
 fi
 
 # Strip
