@@ -974,8 +974,10 @@ else
 fi
 
 
-if [[ "$BUILD_TYPE" == "debug" ]]
+set +u
+if [[ -n "$TRAVIS_CI_STAGE" ]] || [[ "$BUILD_TYPE" == "debug" ]]
 then
+set -u
 
   # mingw-w64-debug-scripts
 
@@ -1071,7 +1073,9 @@ then
     echo "Using cached build of GDB `cat $GDB_PREFIX_DIR/done`"
   fi
 
+set +u
 fi
+set -u
 
 
 # NSIS ShellExecAsUser plugin
