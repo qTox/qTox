@@ -297,7 +297,7 @@ then
   # which happens when building Qt
   CONFIGURE_EXTRA=""
   set +u
-  if [[ "$TRAVIS_CI_STAGE" == "stage1" ]]
+  if [[ -n "$TRAVIS_CI_STAGE" ]]
   then
     CONFIGURE_EXTRA="-silent"
   fi
@@ -1186,8 +1186,9 @@ echo "
     SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $CMAKE_FIND_ROOT_PATH)
 " > toolchain.cmake
 
+# Run tests using Wine
 set +u
-if [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
+if [[ -n "$TRAVIS_CI_STAGE" ]]
 then
   echo "SET(TEST_CROSSCOMPILING_EMULATOR /usr/bin/wine)" >> toolchain.cmake
 fi
@@ -1283,9 +1284,9 @@ do
 done < /tmp/$ARCH-qtox-dll-find
 
 
-# Run tests
+# Run tests (only on Travis)
 set +u
-if [[ "$TRAVIS_CI_STAGE" == "stage3" ]]
+if [[ -n "$TRAVIS_CI_STAGE" ]]
 then
   # Add libgcc_s_*.dll, libwinpthread-1.dll, QtTest.dll, etc. into PATH env var of wine
   export WINEPATH=`cd $QTOX_PREFIX_DIR ; winepath -w $(pwd)`\;`winepath -w $QT_PREFIX_DIR/bin/`
