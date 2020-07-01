@@ -244,8 +244,11 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
         emit failedToStart();
     }
 
+    bootstrapNodes = std::unique_ptr<BootstrapNodeUpdater>(
+        new BootstrapNodeUpdater(Settings::getInstance().getProxy(), paths));
+
     Core::ToxCoreErrors err;
-    core = Core::makeToxCore(toxsave, &s, bootstrapNodes, &err);
+    core = Core::makeToxCore(toxsave, &s, *bootstrapNodes, &err);
     if (!core) {
         switch (err) {
         case Core::ToxCoreErrors::BAD_PROXY:
@@ -279,12 +282,12 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
     avatarBroadcaster = std::unique_ptr<AvatarBroadcaster>(new AvatarBroadcaster(*core));
 }
 
-Profile::Profile(const QString& name, const QString& password, std::unique_ptr<ToxEncrypt> passkey, Paths& paths)
+Profile::Profile(const QString& name, const QString& password, std::unique_ptr<ToxEncrypt> passkey, Paths& paths_)
     : name{name}
     , passkey{std::move(passkey)}
     , isRemoved{false}
     , encrypted{this->passkey != nullptr}
-    , bootstrapNodes(Settings::getInstance().getProxy(), paths)
+    , paths{paths_}
 {}
 
 /**
