@@ -120,5 +120,6 @@ private:
     bool isRemoved;
     bool encrypted = false;
     static QStringList profiles;
-    BootstrapNodeUpdater bootstrapNodes;
+    std::unique_ptr<BootstrapNodeUpdater> bootstrapNodes;
+    Paths& paths;
 };
