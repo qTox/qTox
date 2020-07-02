@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2019 by The qTox Project Contributors
+    Copyright © 2020 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -19,12 +19,12 @@
 
 #pragma once
 
-#include <QStringList>
+#include <QString>
+#include <QPixmap>
 
-class IGroupSettings
+struct NotificationData
 {
-public:
-    virtual ~IGroupSettings() = default;
-    virtual QStringList getBlackList() const = 0;
-    virtual void setBlackList(const QStringList& blist) = 0;
+    QString title;
+    QString message;
+    QPixmap pixmap;
 };

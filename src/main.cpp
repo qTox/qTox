@@ -94,6 +94,16 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
         && msg == QString("QFSFileEngine::open: No file name specified"))
         return;
 
+    QRegExp snoreFilter{QStringLiteral("Snore::Notification.*was already closed")};
+    if (type == QtWarningMsg
+        && msg.contains(snoreFilter))
+    {
+        // snorenotify logs this when we call requestCloseNotification correctly. The behaviour still works, so we'll
+        // just mask the warning for now. The issue has been reported upstream:
+        // https://github.com/qTox/qTox/pull/6073#pullrequestreview-420748519
+        return;
+    }
+
     QString file = ctxt.file;
     // We're not using QT_MESSAGELOG_FILE here, because that can be 0, NULL, or
     // nullptr in release builds.

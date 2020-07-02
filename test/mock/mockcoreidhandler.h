@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2019 by The qTox Project Contributors
+    Copyright © 2020 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -19,12 +19,27 @@
 
 #pragma once
 
-#include <QStringList>
+#include "src/core/icoreidhandler.h"
 
-class IGroupSettings
+#include <tox/tox.h>
+
+class MockCoreIdHandler : public ICoreIdHandler
 {
 public:
-    virtual ~IGroupSettings() = default;
-    virtual QStringList getBlackList() const = 0;
-    virtual void setBlackList(const QStringList& blist) = 0;
+    ToxId getSelfId() const override
+    {
+        std::terminate();
+        return ToxId();
+    }
+
+    ToxPk getSelfPublicKey() const override
+    {
+        static uint8_t id[TOX_PUBLIC_KEY_SIZE] = {0};
+        return ToxPk(id);
+    }
+
+    QString getUsername() const override
+    {
+        return "me";
+    }
 };
