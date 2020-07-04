@@ -526,8 +526,6 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/tool/croppinglabel.h
   src/widget/tool/flyoutoverlaywidget.cpp
   src/widget/tool/flyoutoverlaywidget.h
-  src/widget/tool/friendrequestdialog.cpp
-  src/widget/tool/friendrequestdialog.h
   src/widget/tool/identicon.cpp
   src/widget/tool/identicon.h
   src/widget/tool/movablewidget.cpp
