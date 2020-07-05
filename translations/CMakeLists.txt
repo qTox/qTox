@@ -81,7 +81,7 @@ endfunction()
 generate_translation_resource()
 configure_file(${CMAKE_CURRENT_BINARY_DIR}/translations.qrc.in ./translations.qrc COPYONLY)
 
-add_library(translations_library ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
+add_library(translations_library STATIC ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
 
 # An explicit dependency is needed or AUTORCC will run before the translation files are created
 set_target_properties(translations_library PROPERTIES AUTOGEN_TARGET_DEPENDS "${translations_FILES}")
