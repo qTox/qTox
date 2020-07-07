@@ -20,7 +20,6 @@
 #include "filetransferwidget.h"
 #include "ui_filetransferwidget.h"
 
-#include "src/core/core.h"
 #include "src/core/corefile.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
@@ -48,8 +47,9 @@
 // The rightButton is used to cancel a file transfer, or to open the directory a file was
 // downloaded to.
 
-FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
+FileTransferWidget::FileTransferWidget(QWidget* parent, CoreFile& _coreFile, ToxFile file)
     : QWidget(parent)
+    , coreFile{_coreFile}
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)
     , backgroundColor(Style::getColor(Style::TransferMiddle))
@@ -142,8 +142,7 @@ void FileTransferWidget::acceptTransfer(const QString& filepath)
     }
 
     // everything ok!
-    CoreFile* coreFile = Core::getInstance()->getCoreFile();
-    coreFile->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
+    coreFile.acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
 }
 
 void FileTransferWidget::setBackgroundColor(const QColor& c, bool whiteFont)
@@ -385,7 +384,7 @@ void FileTransferWidget::updateSignals(ToxFile const& file)
     case ToxFile::BROKEN:
     case ToxFile::FINISHED:
         active = false;
-        disconnect(Core::getInstance()->getCoreFile(), nullptr, this, nullptr);
+        disconnect(&coreFile, nullptr, this, nullptr);
         break;
     case ToxFile::INITIALIZING:
     case ToxFile::PAUSED:
@@ -474,23 +473,22 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
 
 void FileTransferWidget::handleButton(QPushButton* btn)
 {
-    CoreFile* coreFile = Core::getInstance()->getCoreFile();
     if (fileInfo.direction == ToxFile::SENDING) {
         if (btn->objectName() == "cancel") {
-            coreFile->cancelFileSend(fileInfo.friendId, fileInfo.fileNum);
+            coreFile.cancelFileSend(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "pause") {
-            coreFile->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
+            coreFile.pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "resume") {
-            coreFile->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
+            coreFile.pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         }
     } else // receiving or paused
     {
         if (btn->objectName() == "cancel") {
-            coreFile->cancelFileRecv(fileInfo.friendId, fileInfo.fileNum);
+            coreFile.cancelFileRecv(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "pause") {
-            coreFile->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
+            coreFile.pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "resume") {
-            coreFile->pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
+            coreFile.pauseResumeFile(fileInfo.friendId, fileInfo.fileNum);
         } else if (btn->objectName() == "accept") {
             QString path =
                 QFileDialog::getSaveFileName(Q_NULLPTR,

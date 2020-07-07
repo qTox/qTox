@@ -26,6 +26,7 @@
 #include "src/chatlog/toxfileprogress.h"
 #include "src/core/toxfile.h"
 
+class CoreFile;
 
 namespace Ui {
 class FileTransferWidget;
@@ -39,7 +40,7 @@ class FileTransferWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit FileTransferWidget(QWidget* parent, ToxFile file);
+    explicit FileTransferWidget(QWidget* parent, CoreFile& _coreFile, ToxFile file);
     virtual ~FileTransferWidget();
     bool isActive() const;
     static QString getHumanReadableSize(qint64 size);
@@ -77,6 +78,7 @@ private:
     void updateWidget(ToxFile const& file);
 
 private:
+    CoreFile& coreFile;
     Ui::FileTransferWidget* ui;
     ToxFileProgress fileProgress;
     ToxFile fileInfo;
