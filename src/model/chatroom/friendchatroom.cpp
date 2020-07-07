@@ -42,9 +42,10 @@ QString getShortName(const QString& name)
 
 }
 
-FriendChatroom::FriendChatroom(Friend* frnd, IDialogsManager* dialogsManager)
+FriendChatroom::FriendChatroom(Friend* frnd, IDialogsManager* dialogsManager, Core& _core)
     : frnd{frnd}
     , dialogsManager{dialogsManager}
+    , core{_core}
 {
 }
 
@@ -84,10 +85,9 @@ QString FriendChatroom::getCircleName() const
 
 void FriendChatroom::inviteToNewGroup()
 {
-    auto core = Core::getInstance();
     const auto friendId = frnd->getId();
-    const auto groupId = core->createGroup();
-    core->groupInviteFriend(friendId, groupId);
+    const auto groupId = core.createGroup();
+    core.groupInviteFriend(friendId, groupId);
 }
 
 QString FriendChatroom::getAutoAcceptDir() const
@@ -116,7 +116,7 @@ void FriendChatroom::inviteFriend(const Group* group)
 {
     const auto friendId = frnd->getId();
     const auto groupId = group->getId();
-    Core::getInstance()->groupInviteFriend(friendId, groupId);
+    core.groupInviteFriend(friendId, groupId);
 }
 
 QVector<GroupToDisplay> FriendChatroom::getGroups() const
