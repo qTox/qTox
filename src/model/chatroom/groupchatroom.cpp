@@ -28,9 +28,10 @@
 #include "src/model/status.h"
 #include "src/persistence/settings.h"
 
-GroupChatroom::GroupChatroom(Group* group, IDialogsManager* dialogsManager)
+GroupChatroom::GroupChatroom(Group* group, IDialogsManager* dialogsManager, Core& _core)
     : group{group}
     , dialogsManager{dialogsManager}
+    , core{_core}
 {
 }
 
@@ -68,7 +69,7 @@ void GroupChatroom::inviteFriend(const ToxPk& pk)
     const auto canInvite = Status::isOnline(frnd->getStatus());
 
     if (canInvite) {
-        Core::getInstance()->groupInviteFriend(friendId, groupId);
+        core.groupInviteFriend(friendId, groupId);
     }
 }
 

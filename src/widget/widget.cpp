@@ -2068,7 +2068,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
         });
     }
     auto dialogManager = ContentDialogManager::getInstance();
-    auto rawChatroom = new GroupChatroom(newgroup, dialogManager);
+    auto rawChatroom = new GroupChatroom(newgroup, dialogManager, *core);
     std::shared_ptr<GroupChatroom> chatroom(rawChatroom);
 
     const auto compact = settings.getCompactLayout();
