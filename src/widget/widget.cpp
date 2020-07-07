@@ -1132,11 +1132,12 @@ void Widget::onRejectCall(uint32_t friendId)
 
 void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 {
+    assert(core != nullptr);
     settings.updateFriendAddress(friendPk.toString());
 
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
     auto dialogManager = ContentDialogManager::getInstance();
-    auto rawChatroom = new FriendChatroom(newfriend, dialogManager);
+    auto rawChatroom = new FriendChatroom(newfriend, dialogManager, *core);
     std::shared_ptr<FriendChatroom> chatroom(rawChatroom);
     const auto compact = settings.getCompactLayout();
     auto widget = new FriendWidget(chatroom, compact);
@@ -2048,6 +2049,8 @@ void Widget::removeGroup(const GroupId& groupId)
 
 Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
 {
+    assert(core != nullptr);
+
     Group* g = GroupList::findGroup(groupId);
     if (g) {
         qWarning() << "Group already exists";
@@ -2099,7 +2102,6 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
         connect(messageDispatcher.get(), &IMessageDispatcher::messageReceived, notifyReceivedCallback);
     groupAlertConnections.insert(groupId, notifyReceivedConnection);
 
-    assert(core != nullptr);
     auto form = new GroupChatForm(*core, newgroup, *groupChatLog, *messageDispatcher);
     connect(&settings, &Settings::nameColorsChanged, form, &GenericChatForm::setColorizedNames);
     form->setColorizedNames(settings.getEnableGroupChatsColor());

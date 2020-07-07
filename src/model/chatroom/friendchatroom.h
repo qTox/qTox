@@ -25,6 +25,7 @@
 #include <QString>
 #include <QVector>
 
+class Core;
 class IDialogsManager;
 class Friend;
 class Group;
@@ -45,7 +46,7 @@ class FriendChatroom : public QObject, public Chatroom
 {
     Q_OBJECT
 public:
-    FriendChatroom(Friend* frnd, IDialogsManager* dialogsManager);
+    FriendChatroom(Friend* frnd, IDialogsManager* dialogsManager, Core& _core);
 
     Contact* getContact() override;
 
@@ -85,4 +86,5 @@ private:
     bool active{false};
     Friend* frnd{nullptr};
     IDialogsManager* dialogsManager{nullptr};
+    Core& core;
 };
