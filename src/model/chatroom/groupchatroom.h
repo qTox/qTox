@@ -23,6 +23,7 @@
 
 #include <QObject>
 
+class Core;
 class IDialogsManager;
 class Group;
 class ToxPk;
@@ -31,7 +32,7 @@ class GroupChatroom : public QObject, public Chatroom
 {
     Q_OBJECT
 public:
-    GroupChatroom(Group* group, IDialogsManager* dialogsManager);
+    GroupChatroom(Group* group, IDialogsManager* dialogsManager, Core& _core);
 
     Contact* getContact() override;
 
@@ -50,4 +51,5 @@ public:
 private:
     Group* group{nullptr};
     IDialogsManager* dialogsManager{nullptr};
+    Core& core;
 };
