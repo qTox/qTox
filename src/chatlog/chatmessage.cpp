@@ -157,19 +157,20 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString& rawMessage,
     return msg;
 }
 
-ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, ToxFile file,
-                                                        bool isMe, const QDateTime& date)
+ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, CoreFile& coreFile,
+                                                        ToxFile file, bool isMe, const QDateTime& date)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
     QFont baseFont = Settings::getInstance().getChatMessageFont();
     QFont authorFont = baseFont;
-    if (isMe)
+    if (isMe) {
         authorFont.setBold(true);
+    }
 
     msg->addColumn(new Text(sender, authorFont, true),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(nullptr, file), 320, 0.6f),
+    msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(nullptr, coreFile, file), 320, 0.6f),
                    ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), baseFont),
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));

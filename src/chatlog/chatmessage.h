@@ -25,6 +25,7 @@
 
 #include <QDateTime>
 
+class CoreFile;
 class QGraphicsScene;
 
 class ChatMessage : public ChatLine
@@ -53,8 +54,8 @@ public:
                                               const QDateTime& date, bool colorizeName = false);
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type,
                                                   const QDateTime& date);
-    static ChatMessage::Ptr createFileTransferMessage(const QString& sender, ToxFile file,
-                                                      bool isMe, const QDateTime& date);
+    static ChatMessage::Ptr createFileTransferMessage(const QString& sender, CoreFile& coreFile,
+                                                      ToxFile file, bool isMe, const QDateTime& date);
     static ChatMessage::Ptr createTypingNotification();
     static ChatMessage::Ptr createBusyNotification();
 

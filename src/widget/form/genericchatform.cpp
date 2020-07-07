@@ -195,18 +195,7 @@ void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeName
     }
 }
 
-void renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp,
-                ChatMessage::Ptr& chatMessage)
-{
-    if (!chatMessage) {
-        chatMessage = ChatMessage::createFileTransferMessage(displayName, file, isSelf, timestamp);
-    } else {
-        auto proxy = static_cast<ChatLineContentProxy*>(chatMessage->getContent(1));
-        assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
-        auto ftWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
-        ftWidget->onFileTransferUpdate(file);
-    }
-}
+
 
 ChatLogIdx firstItemAfterDate(QDate date, const IChatLog& chatLog)
 {
@@ -369,6 +358,21 @@ GenericChatForm::~GenericChatForm()
 {
     Translator::unregister(this);
     delete searchForm;
+}
+
+void GenericChatForm::renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp,
+                ChatMessage::Ptr& chatMessage)
+{
+    if (!chatMessage) {
+        CoreFile* coreFile = core.getCoreFile();
+        assert(coreFile);
+        chatMessage = ChatMessage::createFileTransferMessage(displayName, *coreFile, file, isSelf, timestamp);
+    } else {
+        auto proxy = static_cast<ChatLineContentProxy*>(chatMessage->getContent(1));
+        assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
+        auto ftWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
+        ftWidget->onFileTransferUpdate(file);
+    }
 }
 
 void GenericChatForm::adjustFileMenuPosition()
