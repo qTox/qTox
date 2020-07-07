@@ -290,19 +290,18 @@ void Widget::init()
 #endif
 
     CoreFile* coreFile = core->getCoreFile();
-    Profile* profile = Nexus::getProfile();
-    profileInfo = new ProfileInfo(core, profile);
+    profileInfo = new ProfileInfo(core, &profile);
     profileForm = new ProfileForm(profileInfo);
 
 #if DESKTOP_NOTIFICATIONS
-    notificationGenerator.reset(new NotificationGenerator(settings, profile));
+    notificationGenerator.reset(new NotificationGenerator(settings, &profile));
     connect(&notifier, &DesktopNotify::notificationClosed, notificationGenerator.get(), &NotificationGenerator::onNotificationActivated);
 #endif
 
     // connect logout tray menu action
     connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
-    connect(profile, &Profile::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
+    connect(&profile, &Profile::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
 
     connect(coreFile, &CoreFile::fileReceiveRequested, this, &Widget::onFileReceiveRequested);
     connect(coreFile, &CoreFile::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
@@ -1087,7 +1086,6 @@ void Widget::dispatchFile(ToxFile file)
         auto sender =
             (file.direction == ToxFile::SENDING) ? core->getSelfPublicKey() : pk;
 
-        const Settings& settings = Settings::getInstance();
         QString autoAcceptDir = settings.getAutoAcceptDir(f->getPublicKey());
 
         if (autoAcceptDir.isEmpty() && settings.getAutoSaveEnabled()) {
@@ -1142,7 +1140,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     const auto compact = settings.getCompactLayout();
     auto widget = new FriendWidget(chatroom, compact);
     connectFriendWidget(*widget);
-    auto history = Nexus::getProfile()->getHistory();
+    auto history = profile.getHistory();
 
     auto messageProcessor = MessageProcessor(sharedMessageProcessorParams);
     auto friendMessageDispatcher =
@@ -1151,7 +1149,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     // Note: We do not have to connect the message dispatcher signals since
     // ChatHistory hooks them up in a very specific order
     auto chatHistory =
-        std::make_shared<ChatHistory>(*newfriend, history, *core, Settings::getInstance(),
+        std::make_shared<ChatHistory>(*newfriend, history, *core, settings,
                                       *friendMessageDispatcher);
     auto friendForm = new ChatForm(profile, newfriend, *chatHistory, *friendMessageDispatcher);
     connect(friendForm, &ChatForm::updateFriendActivity, this, &Widget::updateFriendActivity);
@@ -1198,12 +1196,11 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
     connect(widget, SIGNAL(removeFriend(const ToxPk&)), this, SLOT(removeFriend(const ToxPk&)));
 
-    Profile* profile = Nexus::getProfile();
-    connect(profile, &Profile::friendAvatarSet, widget, &FriendWidget::onAvatarSet);
-    connect(profile, &Profile::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
+    connect(&profile, &Profile::friendAvatarSet, widget, &FriendWidget::onAvatarSet);
+    connect(&profile, &Profile::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(friendPk);
+    QPixmap avatar = profile.loadAvatar(friendPk);
     if (!avatar.isNull()) {
         friendForm->onAvatarChanged(friendPk, avatar);
         widget->onAvatarSet(friendPk, avatar);
@@ -1449,11 +1446,10 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
     // FIXME: emit should be removed
     emit widget->chatroomWidgetClicked(widget);
 
-    Profile* profile = Nexus::getProfile();
-    connect(profile, &Profile::friendAvatarSet, friendWidget, &FriendWidget::onAvatarSet);
-    connect(profile, &Profile::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
+    connect(&profile, &Profile::friendAvatarSet, friendWidget, &FriendWidget::onAvatarSet);
+    connect(&profile, &Profile::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
 
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getPublicKey());
+    QPixmap avatar = profile.loadAvatar(frnd->getPublicKey());
     if (!avatar.isNull()) {
         friendWidget->onAvatarSet(frnd->getPublicKey(), avatar);
     }
@@ -1697,7 +1693,7 @@ void Widget::removeFriend(Friend* f, bool fake)
         }
 
         if (ask.removeHistory()) {
-            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getPublicKey());
+            profile.getHistory()->removeFriendHistory(f->getPublicKey());
         }
     }
 
@@ -2079,7 +2075,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     auto messageProcessor = MessageProcessor(sharedMessageProcessorParams);
     auto messageDispatcher =
         std::make_shared<GroupMessageDispatcher>(*newgroup, std::move(messageProcessor), *core,
-                                                 *core, Settings::getInstance());
+                                                 *core, settings);
     auto groupChatLog = std::make_shared<SessionChatLog>(*core);
 
     connect(messageDispatcher.get(), &IMessageDispatcher::messageReceived, groupChatLog.get(),
