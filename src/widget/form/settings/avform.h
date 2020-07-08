@@ -60,7 +60,6 @@ private:
     void fillCameraModesComboBox();
     void fillScreenModesComboBox();
     void fillCaptureModeComboBox();
-    void showPttShortcutKeys();
     void fillAudioQualityComboBox();
     void updateCaptureModeUI(IAudioSettings::AudioCaptureMode mode);
     int searchPreferredIndex();

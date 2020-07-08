@@ -28,6 +28,47 @@ namespace
 {
     static const QString noKeyString = QObject::tr("<no key>");
     static const QString pressAnyKeyString = QObject::tr("Press any key or Esc to cancel");
+
+    int healUnprintableKeys(int key)
+    {
+        switch (key)
+        {
+        case Qt::Key_Meta:
+            return Qt::MetaModifier;
+        case Qt::Key_Shift:
+            return Qt::ShiftModifier;
+        case Qt::Key_Control:
+            return Qt::ControlModifier;
+        case Qt::Key_Alt:
+            return Qt::AltModifier;
+        }
+        return key;
+    }
+
+    QString stripTrailingPlus(QString keyName)
+    {
+        // for some reason Qt's name of modifier keys end in a plus, even by themselves
+        if (keyName.size() > 1 && keyName.endsWith('+'))
+        {
+            return keyName.left(keyName.size() - 1);
+        }
+        return keyName;
+    }
+
+    QString keysToLabel(QList<int> keyNames)
+    {
+        QString presentedKeyName;
+        const auto numKeys = keyNames.length();
+        for (auto idx = 0; idx < numKeys; ++idx)
+        {
+            const auto keyName = stripTrailingPlus(QKeySequence(keyNames[idx]).toString());
+            presentedKeyName += keyName;
+            if (idx != numKeys-1) {
+                presentedKeyName += "+";
+            }
+        }
+        return presentedKeyName;
+    }
 }
 
 HotkeyInput::HotkeyInput(QWidget* parent)
@@ -40,18 +81,8 @@ HotkeyInput::HotkeyInput(QWidget* parent)
 void HotkeyInput::Initialize(IAudioSettings& _settings)
 {
     settings = &_settings;
-}
-
-QString keyListToString(QList<int> keys)
-{
-    // TODO: get key names from GlobalHotkey instead of displaying key numbers
-    QString keyString = "";
-    for (int i = 0; i < keys.length(); i++) {
-        keyString += QString::number(keys[i]) + "+";
-    }
-
-    keyString.replace(QRegExp("[+]+$"), "");
-    return keyString;
+    const QList<int> keyNames = settings->getPttShortcutNames();
+    this->setText(keysToLabel(keyNames));
 }
 
 void HotkeyInput::keyPressEvent(QKeyEvent* event)
@@ -61,28 +92,35 @@ void HotkeyInput::keyPressEvent(QKeyEvent* event)
         return;
     }
 
-    QList<int> keys;
+    QList<int> keyVals;
+    QList<int> keyNames;
 
     if (event->key() == Qt::Key_Escape) {
         this->clear();
         wasCleared = true;
-        settings->setPttShortcutKeys(keys);
+        settings->setPttShortcutKeys(keyVals);
+        settings->setPttShortcutNames(keyNames);
         this->clearFocus();
         return;
     }
 
     int nativeKey = event->nativeScanCode();
     if (!isReadyToOverwrite) {
-        keys = settings->getPttShortcutKeys();
+        keyVals = settings->getPttShortcutKeys();
+        keyNames = settings->getPttShortcutNames();
     }
 
-    if (keys.indexOf(nativeKey) == -1) {
-        keys.append(nativeKey);
-        settings->setPttShortcutKeys(keys);
+    int healedKey;
+    if (keyVals.indexOf(nativeKey) == -1) {
+        keyVals.append(nativeKey);
+        settings->setPttShortcutKeys(keyVals);
+        healedKey = healUnprintableKeys(event->key());
+        keyNames.append(healedKey);
+        settings->setPttShortcutNames(keyNames);
     }
 
     isReadyToOverwrite = false;
-    this->setText(keyListToString(keys));
+    this->setText(keysToLabel(keyNames));
 }
 
 void HotkeyInput::keyReleaseEvent(QKeyEvent* event)
@@ -94,7 +132,6 @@ void HotkeyInput::keyReleaseEvent(QKeyEvent* event)
 
 void HotkeyInput::focusInEvent(QFocusEvent* event)
 {
-    const QList<int> keys = settings->getPttShortcutKeys();
     this->clear();
     setPlaceholderText(pressAnyKeyString);
     isReadyToOverwrite = true;
@@ -104,8 +141,8 @@ void HotkeyInput::focusOutEvent(QFocusEvent* event)
 {
     const QString text = this->text();
     if (text == "" && !wasCleared) {
-        const QList<int> keys = settings->getPttShortcutKeys();
-        this->setText(keyListToString(keys));
+        const QList<int> keyNames = settings->getPttShortcutNames();
+        this->setText(keysToLabel(keyNames));
     }
 
     wasCleared = false;
