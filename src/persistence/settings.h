@@ -370,6 +370,9 @@ public:
     
     QList<int> getPttShortcutKeys() const override;
     void setPttShortcutKeys(QList<int> keys) override;    
+
+    QList<int> getPttShortcutNames() const override;
+    void setPttShortcutNames(QList<int> keys) override;   
     
     int getAudioBitrate() const override;
     void setAudioBitrate(int bitrate) override;
@@ -388,6 +391,7 @@ public:
     SIGNAL_IMPL(Settings, outVolumeChanged, int volume)
     SIGNAL_IMPL(Settings, audioCaptureModeChanged, AudioCaptureMode mode)
     SIGNAL_IMPL(Settings, pttShortcutKeysChanged, QList<int> keys)
+    SIGNAL_IMPL(Settings, pttShortcutNamesChanged, QList<int> names)
     SIGNAL_IMPL(Settings, audioBitrateChanged, int bitrate)
     SIGNAL_IMPL(Settings, enableTestSoundChanged, bool newValue)
 
@@ -680,6 +684,7 @@ private:
     int outVolume;
     AudioCaptureMode audioCaptureMode;
     QList<int> pttShortcutKeys;
+    QList<int> pttShortcutNames;
     int audioBitrate;
     bool enableTestSound;
 

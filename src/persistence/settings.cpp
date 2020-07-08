@@ -253,6 +253,14 @@ void Settings::loadGlobal()
         }
         s.endArray();
 
+        int pttShortcutNamesSize = s.beginReadArray("pttShortcutNames");
+        for (int i = 0; i < pttShortcutNamesSize; i++) {
+            s.setArrayIndex(i);
+            const int key = s.value("pttName" + QString::number(i), 0).toInt();
+            pttShortcutNames << key;
+        }
+        s.endArray();
+
         audioBitrate = s.value("audioBitrate", 64).toInt();
     }
     s.endGroup();
@@ -725,6 +733,12 @@ void Settings::saveGlobal()
             for (int i = 0; i < pttShortcutKeys.size(); i++) {
                 s.setArrayIndex(i);
                 s.setValue("pttKey" + QString::number(i), pttShortcutKeys[i]);
+            }
+            s.endArray();
+        s.beginWriteArray("pttShortcutNames", pttShortcutNames.size());
+            for (int i = 0; i < pttShortcutNames.size(); i++) {
+                s.setArrayIndex(i);
+                s.setValue("pttName" + QString::number(i), pttShortcutNames[i]);
             }
             s.endArray();
         s.setValue("audioBitrate", audioBitrate);
@@ -1841,6 +1855,22 @@ void Settings::setPttShortcutKeys(QList<int> keys)
     if (keys != pttShortcutKeys) {
         pttShortcutKeys = keys;
         emit pttShortcutKeysChanged(pttShortcutKeys);
+    }
+}
+
+QList<int> Settings::getPttShortcutNames() const
+{
+   const QMutexLocker locker{&bigLock};
+   return pttShortcutNames; 
+}
+
+void Settings::setPttShortcutNames(QList<int> names)
+{
+    const QMutexLocker locker{&bigLock};
+
+    if (names != pttShortcutNames) {
+        pttShortcutNames = names;
+        emit pttShortcutNamesChanged(pttShortcutNames);
     }
 }
 
