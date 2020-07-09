@@ -22,11 +22,14 @@
 
 #include <QLineEdit>
 
+class IAudioSettings;
+
 class HotkeyInput : public QLineEdit
 {
     Q_OBJECT
 public:
     explicit HotkeyInput(QWidget* parent = 0);
+    void Initialize(IAudioSettings& _settings);
 
 protected:
     virtual void keyPressEvent(QKeyEvent* event) final override;
@@ -35,6 +38,7 @@ protected:
     virtual void focusOutEvent(QFocusEvent* event) final override;
 
 private:
+    IAudioSettings* settings = nullptr;
     bool wasCleared = false;
     bool isReadyToOverwrite = false;
 };

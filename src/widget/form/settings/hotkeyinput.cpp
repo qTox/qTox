@@ -37,6 +37,11 @@ HotkeyInput::HotkeyInput(QWidget* parent)
     setReadOnly(true); // hides the caret
 }
 
+void HotkeyInput::Initialize(IAudioSettings& _settings)
+{
+    settings = &_settings;
+}
+
 QString keyListToString(QList<int> keys)
 {
     // TODO: get key names from GlobalHotkey instead of displaying key numbers
@@ -61,19 +66,19 @@ void HotkeyInput::keyPressEvent(QKeyEvent* event)
     if (event->key() == Qt::Key_Escape) {
         this->clear();
         wasCleared = true;
-        Settings::getInstance().setPttShortcutKeys(keys);
+        settings->setPttShortcutKeys(keys);
         this->clearFocus();
         return;
     }
 
     int nativeKey = event->nativeScanCode();
     if (!isReadyToOverwrite) {
-        keys = Settings::getInstance().getPttShortcutKeys();
+        keys = settings->getPttShortcutKeys();
     }
 
     if (keys.indexOf(nativeKey) == -1) {
         keys.append(nativeKey);
-        Settings::getInstance().setPttShortcutKeys(keys);
+        settings->setPttShortcutKeys(keys);
     }
 
     isReadyToOverwrite = false;
@@ -89,7 +94,7 @@ void HotkeyInput::keyReleaseEvent(QKeyEvent* event)
 
 void HotkeyInput::focusInEvent(QFocusEvent* event)
 {
-    const QList<int> keys = Settings::getInstance().getPttShortcutKeys();
+    const QList<int> keys = settings->getPttShortcutKeys();
     this->clear();
     setPlaceholderText(pressAnyKeyString);
     isReadyToOverwrite = true;
@@ -99,7 +104,7 @@ void HotkeyInput::focusOutEvent(QFocusEvent* event)
 {
     const QString text = this->text();
     if (text == "" && !wasCleared) {
-        const QList<int> keys = Settings::getInstance().getPttShortcutKeys();
+        const QList<int> keys = settings->getPttShortcutKeys();
         this->setText(keyListToString(keys));
     }
 
