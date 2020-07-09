@@ -663,6 +663,37 @@ else
   echo "Using cached build of Exif `cat $EXIF_PREFIX_DIR/done`"
 fi
 
+# Hook
+
+HOOK_PREFIX_DIR="$DEP_DIR/libuiohook"
+HOOK_VERSION=1.0.3
+HOOK_HASH="891f186cc43c04bfe1d3c192841682a709a256dc03871628980483b1a0f32dec"
+HOOK_FILENAME="libuiohook-$HOOK_VERSION.tar.gz"
+if [ ! -f "$HOOK_PREFIX_DIR/done" ]
+then
+  rm -rf "$HOOK_PREFIX_DIR"
+  mkdir -p "$HOOK_PREFIX_DIR"
+
+  curl $CURL_OPTIONS https://github.com/kwhat/libuiohook/archive/$HOOK_VERSION.tar.gz -o $HOOK_FILENAME
+  check_sha256 "$HOOK_HASH" "$HOOK_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$HOOK_FILENAME"
+  rm $HOOK_FILENAME
+  cd libuiohook*
+
+  ./bootstrap.sh
+  CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
+                               --prefix="$HOOK_PREFIX_DIR" \
+                               --enable-shared \
+                               --disable-static
+  make
+  make install
+  echo -n $HOOK_VERSION > $HOOK_PREFIX_DIR/done
+
+  cd ..
+  rm -rf ./libuiohook*
+else
+  echo "Using cached build of Hook `cat $HOOK_PREFIX_DIR/done`"
+fi
 
 # Opus
 
@@ -1227,7 +1258,18 @@ cp -r $QT_PREFIX_DIR/plugins/imageformats \
       $QT_PREFIX_DIR/plugins/platforms \
       $QT_PREFIX_DIR/plugins/iconengines \
       $QTOX_PREFIX_DIR
-cp {$OPENSSL_PREFIX_DIR,$SQLCIPHER_PREFIX_DIR,$FFMPEG_PREFIX_DIR,$OPENAL_PREFIX_DIR,$QRENCODE_PREFIX_DIR,$EXIF_PREFIX_DIR,$OPUS_PREFIX_DIR,$SODIUM_PREFIX_DIR,$VPX_PREFIX_DIR,$TOXCORE_PREFIX_DIR}/bin/*.dll $QTOX_PREFIX_DIR
+# no nice spacing due to bash variable expansion
+cp {$OPENSSL_PREFIX_DIR,\
+$SQLCIPHER_PREFIX_DIR,\
+$FFMPEG_PREFIX_DIR,\
+$OPENAL_PREFIX_DIR,\
+$QRENCODE_PREFIX_DIR,\
+$EXIF_PREFIX_DIR,\
+$HOOK_PREFIX_DIR,\
+$OPUS_PREFIX_DIR,\
+$SODIUM_PREFIX_DIR,\
+$VPX_PREFIX_DIR,\
+$TOXCORE_PREFIX_DIR}/bin/*.dll $QTOX_PREFIX_DIR
 
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
@@ -1249,6 +1291,7 @@ find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-qtox-dll-find
 # dlls loded at run time that don't showup as a link time dependency
 echo "$QTOX_PREFIX_DIR/libssl-1_1.dll
 $QTOX_PREFIX_DIR/libssl-1_1-x64.dll
+$QTOX_PREFIX_DIR/libuiohook-0.dll
 $QTOX_PREFIX_DIR/iconengines/qsvgicon.dll
 $QTOX_PREFIX_DIR/imageformats/qgif.dll
 $QTOX_PREFIX_DIR/imageformats/qico.dll

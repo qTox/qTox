@@ -47,6 +47,7 @@ copy_libs() {
         /usr/local/lib/libav*
         /usr/local/lib/libswscale*
         /usr/local/lib/libqrencode*
+        /usr/local/lib/libuiohook*
         /usr/local/lib/libsqlcipher*
     )
     echo Copying libraries…
@@ -63,6 +64,7 @@ copy_includes() {
         /usr/local/include/vpx*
         /usr/local/include/sodium*
         /usr/local/include/qrencode*
+        /usr/local/include/uiohook*
         /usr/local/include/libav*
         /usr/local/include/libswscale*
         /usr/local/include/sqlcipher*

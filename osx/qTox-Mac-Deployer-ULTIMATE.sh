@@ -41,6 +41,7 @@ QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
+HOOK_DIR="${MAIN_DIR}/hook"
 
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
@@ -77,6 +78,38 @@ build_toxcore() {
     fcho "Compiling toxcore."
     make > /dev/null || exit 1
     fcho "Installing toxcore."
+    make install > /dev/null || exit 1
+}
+
+download_hook() {
+    HOOK_VERSION=1.0.3
+    if [[ -e $HOOK_DIR/.git/index ]]
+    then
+        fcho "Libuiohook git repo already in place!"
+        cd $HOOK_DIR
+        git fetch --tags origin ${HOOK_VERSION} --depth=1
+        git reset --hard ${HOOK_VERSION}
+    else
+        fcho "Cloning Libuiohook git ..."
+        git clone --branch ${HOOK_VERSION} --depth=1 https://github.com/kwhat/libuiohook "$HOOK_DIR"
+    fi
+}
+
+build_hook() {
+    echo "Starting Hook build and install"
+    cd $HOOK_DIR
+    echo "Now working in: ${PWD}"
+
+    [[ $TRAVIS != true ]] \
+    && sleep 3
+
+    fcho "Configuring..."
+    ./bootstrap.sh
+    CFLAGS="-O2 -g0" ./configure --enable-shared --disable-static
+    make clean &> /dev/null
+    fcho "Compiling hook."
+    make > /dev/null || exit 1
+    fcho "Installing hook."
     make install > /dev/null || exit 1
 }
 
@@ -134,6 +167,8 @@ install() {
     fi
     brew install check libvpx opus libsodium
 
+    download_hook
+
     fcho "Starting git repo checks ..."
 
     #cd $MAIN_DIR # just in case
@@ -163,16 +198,34 @@ install() {
         fi
     fi
 
+    if [[ $TRAVIS != true ]]
+    then
+        fcho "If all went well you should now have all the tools needed to compile qTox!"
+    fi
+
     # toxcore build
     if [[ $TRAVIS = true ]]
     then
         build_toxcore
     else
-        fcho "If all went well you should now have all the tools needed to compile qTox!"
         read -r -p "Would you like to install toxcore now? [y/N] " response
         if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
         then
             build_toxcore
+        else
+            fcho "You can simply use the -u command and say [Yes/n] when prompted"
+        fi
+    fi
+
+    # hook build
+    if [[ $TRAVIS = true ]]
+    then
+        build_hook
+    else
+        read -r -p "Would you like to install libuiohook now? [y/N] " response
+        if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+        then
+            build_hook
         else
             fcho "You can simply use the -u command and say [Yes/n] when prompted"
         fi
