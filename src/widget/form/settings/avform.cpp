@@ -54,6 +54,7 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
     , camVideoSurface(nullptr)
     , camera(camera)
 {
+    assert(audioSettings);
     setupUi(this);
 
     // block all child signals during initialization
@@ -568,6 +569,7 @@ void AVForm::fillCaptureModeComboBox()
 
 void AVForm::showPttShortcutKeys()
 {
+    pushToTalkShortcutInput->Initialize(*audioSettings);
     const bool previouslyBlocked = pushToTalkShortcutInput->blockSignals(true);
     const QList<int> keys = audioSettings->getPttShortcutKeys();
 
