@@ -24,10 +24,11 @@
 #include "audio/iaudiosettings.h"
 #include "src/persistence/settings.h"
 
-bool wasCleared = false;
-bool isReadyToOverwrite = false;
-QString noKeyString = QObject::tr("<no key>");
-QString pressAnyKeyString = QObject::tr("Press any key or Esc to cancel");
+namespace
+{
+    static const QString noKeyString = QObject::tr("<no key>");
+    static const QString pressAnyKeyString = QObject::tr("Press any key or Esc to cancel");
+}
 
 HotkeyInput::HotkeyInput(QWidget* parent)
     : QLineEdit(parent)
