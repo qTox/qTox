@@ -174,6 +174,12 @@ namespace {
     }
 }
 
+bool HookManager::isPttSupported()
+{
+    QLibrary lib{hookLibName};
+    return lib.load();
+}
+
 HookManager::HookManager(GlobalShortcut* _globalShortcut, QObject* parent)
     : QObject(parent)
 {
