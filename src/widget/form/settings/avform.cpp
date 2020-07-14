@@ -554,12 +554,12 @@ void AVForm::fillCaptureModeComboBox()
 {
     const bool previouslyBlocked = inModeComboBox->blockSignals(true);
 
-    inModeComboBox->addItem(tr("Continuous transmission"), 0);
-    inModeComboBox->addItem(tr("Voice activation"), 1);
-    inModeComboBox->addItem(tr("Push to talk"), 2);
+    inModeComboBox->addItem(tr("Continuous transmission"), static_cast<int>(IAudioSettings::AudioCaptureMode::Continuous));
+    inModeComboBox->addItem(tr("Voice activation"), static_cast<int>(IAudioSettings::AudioCaptureMode::VoiceActivation));
+    inModeComboBox->addItem(tr("Push to talk"), static_cast<int>(IAudioSettings::AudioCaptureMode::PushToTalk));
 
-    const int mode = audioSettings->getAudioCaptureMode();
-    const int index = inModeComboBox->findData(mode);
+    const IAudioSettings::AudioCaptureMode mode = audioSettings->getAudioCaptureMode();
+    const int index = inModeComboBox->findData(static_cast<int>(mode));
 
     updateCaptureModeUI(mode);
     inModeComboBox->setCurrentIndex(index);
@@ -581,7 +581,7 @@ void AVForm::showPttShortcutKeys()
     pushToTalkShortcutInput->blockSignals(previouslyBlocked);
 }
 
-void AVForm::updateCaptureModeUI(int mode)
+void AVForm::updateCaptureModeUI(IAudioSettings::AudioCaptureMode mode)
 {
     audioThresholdLabel->hide();
     audioThresholdSlider->hide();
@@ -589,24 +589,22 @@ void AVForm::updateCaptureModeUI(int mode)
     pushToTalkShortcutInput->hide();
     
     switch (mode) {
-        case 0:
+        case IAudioSettings::AudioCaptureMode::Continuous:
             break;
-        case 1:
+        case IAudioSettings::AudioCaptureMode::VoiceActivation:
             audioThresholdLabel->show();
             audioThresholdSlider->show();
             break;
-        case 2:
+        case IAudioSettings::AudioCaptureMode::PushToTalk:
             pushToTalkShortcutLabel->show();
             pushToTalkShortcutInput->show();
-            break;
-        default:
             break;
     }
 }
 
 void AVForm::on_inModeComboBox_currentIndexChanged(int index)
 {
-    const int mode = inModeComboBox->currentData().toInt(); 
+    const IAudioSettings::AudioCaptureMode mode = static_cast<IAudioSettings::AudioCaptureMode>(inModeComboBox->currentData().toInt()); 
     audioSettings->setAudioCaptureMode(mode);
     updateCaptureModeUI(mode);
 }
