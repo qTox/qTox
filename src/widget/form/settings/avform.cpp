@@ -39,6 +39,7 @@
 #include "src/widget/tool/recursivesignalblocker.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/translator.h"
+#include "src/hookmanager.h"
 
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
@@ -557,7 +558,9 @@ void AVForm::fillCaptureModeComboBox()
 
     inModeComboBox->addItem(tr("Continuous transmission"), static_cast<int>(IAudioSettings::AudioCaptureMode::Continuous));
     inModeComboBox->addItem(tr("Voice activation"), static_cast<int>(IAudioSettings::AudioCaptureMode::VoiceActivation));
-    inModeComboBox->addItem(tr("Push to talk"), static_cast<int>(IAudioSettings::AudioCaptureMode::PushToTalk));
+    if (HookManager::isPttSupported()) {
+        inModeComboBox->addItem(tr("Push to talk"), static_cast<int>(IAudioSettings::AudioCaptureMode::PushToTalk));
+    }
 
     const IAudioSettings::AudioCaptureMode mode = audioSettings->getAudioCaptureMode();
     const int index = inModeComboBox->findData(static_cast<int>(mode));
