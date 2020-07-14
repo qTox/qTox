@@ -104,7 +104,7 @@ void HotkeyInput::keyPressEvent(QKeyEvent* event)
         return;
     }
 
-    int nativeKey = event->nativeScanCode();
+    int nativeKey = event->nativeVirtualKey();
     if (!isReadyToOverwrite) {
         keyVals = settings->getPttShortcutKeys();
         keyNames = settings->getPttShortcutNames();

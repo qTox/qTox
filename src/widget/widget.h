@@ -30,6 +30,7 @@
 
 #include "audio/iaudiocontrol.h"
 #include "audio/iaudiosink.h"
+#include "audio/iaudiosettings.h"
 #include "src/core/core.h"
 #include "src/core/groupid.h"
 #include "src/core/toxfile.h"
@@ -37,6 +38,7 @@
 #include "src/core/toxpk.h"
 #include "src/model/friendmessagedispatcher.h"
 #include "src/model/groupmessagedispatcher.h"
+#include "src/globalshortcut.h"
 #if DESKTOP_NOTIFICATIONS
 #include "src/model/notificationgenerator.h"
 #include "src/platform/desktop_notifications/desktopnotify.h"
@@ -205,6 +207,7 @@ signals:
     void statusMessageChanged(const QString& statusMessage);
     void resized();
     void windowStateChanged(Qt::WindowStates states);
+    void pttMute();
 
 private slots:
     void onAddClicked();
@@ -357,7 +360,7 @@ private:
     QMap<GroupId, std::shared_ptr<GroupChatroom>> groupChatrooms;
     QMap<GroupId, QSharedPointer<GroupChatForm>> groupChatForms;
     Core* core = nullptr;
-
+    GlobalShortcut globalshortcut;
 
     MessageProcessor::SharedParams sharedMessageProcessorParams;
 #if DESKTOP_NOTIFICATIONS

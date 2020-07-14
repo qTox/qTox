@@ -261,6 +261,10 @@ set(${PROJECT_NAME}_SOURCES
   src/grouplist.h
   src/ipc.cpp
   src/ipc.h
+  src/globalshortcut.cpp
+  src/globalshortcut.h
+  src/hookmanager.cpp
+  src/hookmanager.h
   src/model/about/aboutfriend.cpp
   src/model/about/aboutfriend.h
   src/model/about/iaboutfriend.h
