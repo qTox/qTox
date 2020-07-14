@@ -26,6 +26,7 @@
 #include "genericsettings.h"
 #include "ui_avform.h"
 #include "src/video/videomode.h"
+#include "audio/iaudiosettings.h"
 
 #include <memory>
 
@@ -61,7 +62,7 @@ private:
     void fillCaptureModeComboBox();
     void showPttShortcutKeys();
     void fillAudioQualityComboBox();
-    void updateCaptureModeUI(int mode);
+    void updateCaptureModeUI(IAudioSettings::AudioCaptureMode mode);
     int searchPreferredIndex();
 
     void createVideoSurface();

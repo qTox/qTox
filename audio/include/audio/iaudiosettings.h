@@ -26,6 +26,12 @@
 
 class IAudioSettings {
 public:
+    enum class AudioCaptureMode {
+        Continuous = 0,
+        VoiceActivation = 1,
+        PushToTalk = 2
+    };
+
     virtual ~IAudioSettings() = default;
 
     virtual QString getInDev() const = 0;
@@ -51,9 +57,9 @@ public:
     virtual int getOutVolumeMax() const = 0;
     virtual void setOutVolume(int volume) = 0;
 
-    virtual int getAudioCaptureMode() const = 0;
-    virtual void setAudioCaptureMode(int mode) = 0;
-    
+    virtual AudioCaptureMode getAudioCaptureMode() const = 0;
+    virtual void setAudioCaptureMode(AudioCaptureMode mode) = 0;
+
     virtual QList<int> getPttShortcutKeys() const = 0;
     virtual void setPttShortcutKeys(QList<int> keys) = 0;
     
@@ -72,7 +78,7 @@ public:
     DECLARE_SIGNAL(audioInGainDecibelChanged, qreal dB);
     DECLARE_SIGNAL(audioThresholdChanged, qreal dB);
     DECLARE_SIGNAL(outVolumeChanged, int volume);
-    DECLARE_SIGNAL(audioCaptureModeChanged, int mode);
+    DECLARE_SIGNAL(audioCaptureModeChanged, AudioCaptureMode mode);
     DECLARE_SIGNAL(pttShortcutKeysChanged, QList<int> keys);
     DECLARE_SIGNAL(audioBitrateChanged, int bitrate);
     DECLARE_SIGNAL(enableTestSoundChanged, bool newValue);

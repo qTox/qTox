@@ -39,6 +39,7 @@
 #endif
 
 #include "audio/audio.h"
+#include "audio/iaudiosettings.h"
 #include "circlewidget.h"
 #include "contentdialog.h"
 #include "contentlayout.h"
