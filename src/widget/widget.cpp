@@ -80,6 +80,7 @@
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
 #include "tool/removefrienddialog.h"
+#include "src/globalshortcut.h"
 
 bool toxActivateEventHandler(const QByteArray&)
 {
@@ -148,6 +149,7 @@ Widget::Widget(Profile &_profile, IAudioControl& audio, QWidget* parent)
     , eventIcon(false)
     , audio(audio)
     , settings(Settings::getInstance())
+    , globalshortcut{this}
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -349,6 +351,9 @@ void Widget::init()
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
     new QShortcut(Qt::Key_F11, this, SLOT(toggleFullscreen()));
+
+    connect(&settings, &Settings::pttShortcutKeysChanged,
+            &globalshortcut, &GlobalShortcut::onPttShortcutKeysChanged);
 
 #ifdef Q_OS_MAC
     QMenuBar* globalMenu = Nexus::getInstance().globalMenuBar;
@@ -1197,6 +1202,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
     connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
     connect(widget, SIGNAL(removeFriend(const ToxPk&)), this, SLOT(removeFriend(const ToxPk&)));
+    connect(&globalshortcut, &GlobalShortcut::toggled, friendForm, &ChatForm::onMicMuteToggle);
 
     Profile* profile = Nexus::getProfile();
     connect(profile, &Profile::friendAvatarSet, widget, &FriendWidget::onAvatarSet);
