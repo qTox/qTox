@@ -54,6 +54,8 @@ make_hash() {
 }
 
 main() {
+    # automatic updating can increase build time
+    export HOMEBREW_NO_AUTO_UPDATE=1
     install_ccache
     build
     check
