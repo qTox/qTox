@@ -201,7 +201,8 @@ install() {
         done &
         DOT_PID=$!
     fi
-    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft #kf5-sonnet
+    #HACK: if brew fails with something important we'll notice later anyway...
+    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft || true #kf5-sonnet
     if [[ $TRAVIS = true ]]
     then
         kill $DOT_PID
