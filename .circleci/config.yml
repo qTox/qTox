@@ -1,8 +1,12 @@
 ---
 version: 2.1
+executors:
+  default:
+    machine:
+      image: ubuntu-1604:202007-01
 jobs:
   deps64:
-    machine: true
+    executor: default
     steps:
       - checkout
       - run:
@@ -35,7 +39,7 @@ jobs:
           paths:
             - cache
   release64:
-    machine: true
+    executor: default
     steps:
       - checkout
       - restore_cache:
@@ -66,7 +70,7 @@ jobs:
       - store_artifacts:
           path: "/home/circleci/project/workspace/x86_64/qtox/release/setup-qtox-x86_64-release.exe"
   debug64:
-    machine: true
+    executor: default
     steps:
       - checkout
       - restore_cache:
@@ -95,7 +99,7 @@ jobs:
       - store_artifacts:
           path: "/home/circleci/project/workspace/x86_64/qtox/debug/qtox-x86_64-debug.zip"
   deps32:
-    machine: true
+    executor: default
     steps:
       - checkout
       - run:
@@ -128,7 +132,7 @@ jobs:
           paths:
             - cache
   release32:
-    machine: true
+    executor: default
     steps:
       - checkout
       - restore_cache:
@@ -159,7 +163,7 @@ jobs:
       - store_artifacts:
           path: "/home/circleci/project/workspace/i686/qtox/release/setup-qtox-i686-release.exe"
   debug32:
-    machine: true
+    executor: default
     steps:
       - checkout
       - restore_cache:
