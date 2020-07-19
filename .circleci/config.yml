@@ -3,7 +3,7 @@ version: 2.1
 executors:
   default:
     machine:
-      image: circleci/classic:latest
+      image: ubuntu-1604:202007-01
 jobs:
   deps64:
     executor: default

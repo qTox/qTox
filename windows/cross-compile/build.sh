@@ -711,7 +711,7 @@ then
   mkdir -p "$SODIUM_PREFIX_DIR"
 
   wget --version
-  wget $WGET_OPTIONS "https://download.libsodium.org/libsodium/releases/$SODIUM_FILENAME"
+  wget $WGET_OPTIONS "https://download.libsodium.org/libsodium/releases/$SODIUM_FILENAME" --debug
   check_sha256 "$SODIUM_HASH" "$SODIUM_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$SODIUM_FILENAME"
   rm "$SODIUM_FILENAME"
