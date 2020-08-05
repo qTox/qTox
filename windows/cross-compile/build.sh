@@ -122,7 +122,7 @@ cp -r "$APT_CACHE_DIR"/* /var/cache/
 # remove docker specific config file, this file prevents usage of the package cache
 rm -f /etc/apt/apt.conf.d/docker-clean
 
-readonly WGET_OPTIONS="--timeout=10"
+readonly CURL_OPTIONS="-L --connect-timeout 10"
 
 # Get packages
 
@@ -142,7 +142,7 @@ apt-get install -y --no-install-recommends \
                    tclsh \
                    texinfo \
                    unzip \
-                   wget \
+                   curl \
                    yasm \
                    zip
 
@@ -240,7 +240,7 @@ then
   rm -rf "$OPENSSL_PREFIX_DIR"
   mkdir -p "$OPENSSL_PREFIX_DIR"
 
-  wget $WGET_OPTIONS "https://www.openssl.org/source/$OPENSSL_FILENAME"
+  curl $CURL_OPTIONS -O "https://www.openssl.org/source/$OPENSSL_FILENAME"
   check_sha256 "$OPENSSL_HASH" "$OPENSSL_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$OPENSSL_FILENAME"
   rm $OPENSSL_FILENAME
@@ -284,7 +284,7 @@ then
   rm -rf "$QT_PREFIX_DIR"
   mkdir -p "$QT_PREFIX_DIR"
 
-  wget $WGET_OPTIONS "https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/$QT_FILENAME"
+  curl $CURL_OPTIONS -O "https://download.qt.io/official_releases/qt/$QT_MAJOR.$QT_MINOR/$QT_VERSION/single/$QT_FILENAME"
   check_sha256 "$QT_HASH" "$QT_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $QT_FILENAME
   rm $QT_FILENAME
@@ -399,7 +399,7 @@ then
   rm -rf "$SQLCIPHER_PREFIX_DIR"
   mkdir -p "$SQLCIPHER_PREFIX_DIR"
 
-  wget $WGET_OPTIONS "https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_FILENAME"
+  curl $CURL_OPTIONS -O "https://github.com/sqlcipher/sqlcipher/archive/$SQLCIPHER_FILENAME"
   check_sha256 "$SQLCIPHER_HASH" "$SQLCIPHER_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$SQLCIPHER_FILENAME"
   rm $SQLCIPHER_FILENAME
@@ -441,7 +441,7 @@ then
   rm -rf "$FFMPEG_PREFIX_DIR"
   mkdir -p "$FFMPEG_PREFIX_DIR"
 
-  wget $WGET_OPTIONS "https://www.ffmpeg.org/releases/$FFMPEG_FILENAME"
+  curl $CURL_OPTIONS -O "https://www.ffmpeg.org/releases/$FFMPEG_FILENAME"
   check_sha256 "$FFMPEG_HASH" "$FFMPEG_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $FFMPEG_FILENAME
   rm $FFMPEG_FILENAME
@@ -606,7 +606,7 @@ then
   rm -rf "$QRENCODE_PREFIX_DIR"
   mkdir -p "$QRENCODE_PREFIX_DIR"
 
-  wget $WGET_OPTIONS https://fukuchi.org/works/qrencode/$QRENCODE_FILENAME
+  curl $CURL_OPTIONS -O https://fukuchi.org/works/qrencode/$QRENCODE_FILENAME
   check_sha256 "$QRENCODE_HASH" "$QRENCODE_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$QRENCODE_FILENAME"
   rm $QRENCODE_FILENAME
@@ -641,7 +641,7 @@ then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  wget $WGET_OPTIONS "https://github.com/libexif/libexif/releases/download/libexif-${EXIF_VERSION//./_}-release/${EXIF_FILENAME}"
+  curl $CURL_OPTIONS -O "https://github.com/libexif/libexif/releases/download/libexif-${EXIF_VERSION//./_}-release/${EXIF_FILENAME}"
   check_sha256 "$EXIF_HASH" "$EXIF_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $EXIF_FILENAME
   rm $EXIF_FILENAME
@@ -676,7 +676,7 @@ then
   rm -rf "$OPUS_PREFIX_DIR"
   mkdir -p "$OPUS_PREFIX_DIR"
 
-  wget $WGET_OPTIONS "https://archive.mozilla.org/pub/opus/$OPUS_FILENAME"
+  curl $CURL_OPTIONS -O "https://archive.mozilla.org/pub/opus/$OPUS_FILENAME"
   check_sha256 "$OPUS_HASH" "$OPUS_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$OPUS_FILENAME"
   rm $OPUS_FILENAME
@@ -710,7 +710,7 @@ then
   rm -rf "$SODIUM_PREFIX_DIR"
   mkdir -p "$SODIUM_PREFIX_DIR"
 
-  wget $WGET_OPTIONS "https://download.libsodium.org/libsodium/releases/$SODIUM_FILENAME"
+  curl $CURL_OPTIONS -O "https://download.libsodium.org/libsodium/releases/$SODIUM_FILENAME"
   check_sha256 "$SODIUM_HASH" "$SODIUM_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$SODIUM_FILENAME"
   rm "$SODIUM_FILENAME"
@@ -742,7 +742,7 @@ then
   rm -rf "$VPX_PREFIX_DIR"
   mkdir -p "$VPX_PREFIX_DIR"
 
-  wget $WGET_OPTIONS https://github.com/webmproject/libvpx/archive/$VPX_VERSION.tar.gz -O $VPX_FILENAME
+  curl $CURL_OPTIONS https://github.com/webmproject/libvpx/archive/$VPX_VERSION.tar.gz -o $VPX_FILENAME
   check_sha256 "$VPX_HASH" "$VPX_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$VPX_FILENAME"
   rm $VPX_FILENAME
@@ -928,7 +928,7 @@ then
   rm -rf "$TOXCORE_PREFIX_DIR"
   mkdir -p "$TOXCORE_PREFIX_DIR"
 
-  wget $WGET_OPTIONS https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz -O $TOXCORE_FILENAME
+  curl $CURL_OPTIONS https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz -o $TOXCORE_FILENAME
   check_sha256 "$TOXCORE_HASH" "$TOXCORE_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$TOXCORE_FILENAME"
   rm "$TOXCORE_FILENAME"
@@ -1017,7 +1017,7 @@ set -u
     rm -rf "$EXPAT_PREFIX_DIR"
     mkdir -p "$EXPAT_PREFIX_DIR"
 
-    wget $WGET_OPTIONS "https://github.com/libexpat/libexpat/releases/download/R_${EXPAT_VERSION//./_}/$EXPAT_FILENAME"
+    curl $CURL_OPTIONS -O "https://github.com/libexpat/libexpat/releases/download/R_${EXPAT_VERSION//./_}/$EXPAT_FILENAME"
     check_sha256 "$EXPAT_HASH" "$EXPAT_FILENAME"
     bsdtar --no-same-owner --no-same-permissions -xf $EXPAT_FILENAME
     rm $EXPAT_FILENAME
@@ -1049,7 +1049,7 @@ set -u
     rm -rf "$GDB_PREFIX_DIR"
     mkdir -p "$GDB_PREFIX_DIR"
 
-    wget $WGET_OPTIONS "http://ftp.gnu.org/gnu/gdb/$GDB_FILENAME"
+    curl $CURL_OPTIONS -O "http://ftp.gnu.org/gnu/gdb/$GDB_FILENAME"
     check_sha256 "$GDB_HASH" "$GDB_FILENAME"
     bsdtar --no-same-owner --no-same-permissions -xf $GDB_FILENAME
     rm $GDB_FILENAME
@@ -1089,7 +1089,7 @@ then
   mkdir -p "$NSISSHELLEXECASUSER_PREFIX_DIR"
 
   # Backup: https://web.archive.org/web/20171008011417/http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
-  wget $WGET_OPTIONS http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
+  curl $CURL_OPTIONS -O http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
   check_sha256 "$NSISSHELLEXECASUSER_HASH" "ShellExecAsUser.zip"
   unzip ShellExecAsUser.zip 'ShellExecAsUser.dll'
 
@@ -1115,7 +1115,7 @@ then
   rm -rf "$MINGW_LDD_PREFIX_DIR"
   mkdir -p "$MINGW_LDD_PREFIX_DIR"
 
-  wget $WGET_OPTIONS "https://github.com/nurupo/mingw-ldd/archive/$MINGW_LDD_FILENAME" -O "$MINGW_LDD_FILENAME"
+  curl $CURL_OPTIONS "https://github.com/nurupo/mingw-ldd/archive/$MINGW_LDD_FILENAME" -o "$MINGW_LDD_FILENAME"
   check_sha256 "$MINGW_LDD_HASH" "$MINGW_LDD_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf "$MINGW_LDD_FILENAME"
   rm "$MINGW_LDD_FILENAME"
