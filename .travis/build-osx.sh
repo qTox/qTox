@@ -27,6 +27,8 @@ install_ccache() {
         # Rerun your command, everything is up-to-date and fine now.
     echo "Updating brew..."
     brew update
+    echo "Removing numpy numpy@1.16 in case of conclict with numpy..."
+    brew remove numpy@1.16
     echo "Installing ccache..."
     brew install ccache
     brew --cache
