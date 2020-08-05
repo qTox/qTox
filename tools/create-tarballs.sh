@@ -36,7 +36,7 @@ set -eu -o pipefail
 
 
 archive() {
-    git archive --format=tar "${@%%.tar.*}" \
+    git archive --format=tar --prefix=qTox/ "${@%%.tar.*}" \
     | "${@##*.tar.}"ip --best \
     > "$@"
     echo "$@ archive has been created."
