@@ -62,7 +62,22 @@ private slots:
     void on_cbShowIdenticons_stateChanged();
     void on_txtChatFont_currentFontChanged(const QFont& f);
     void on_txtChatFontSize_valueChanged(int arg1);
-    void on_useNameColors_stateChanged(int value);
+    void on_useNickenameColorsInGroup_stateChanged(int value);
+    void on_useMsgColorsInGroup_stateChanged(int value);
+    void on_useColorsForUserInGroup_stateChanged(int value);
+    void on_useSettingsForMessages_stateChanged(int value);
+    void on_colorNicknameForUser_selectedColor(const QString& color);
+    void on_colorNicknameForUser_checkBold(bool state);
+    void on_colorNicknameForUser_checkItalic(bool state);
+    void on_colorMsgForUser_selectedColor(const QString& color);
+    void on_colorMsgForUser_checkBold(bool state);
+    void on_colorMsgForUser_checkItalic(bool state);
+    void on_colorNicknameForFriends_selectedColor(const QString& color);
+    void on_colorNicknameForFriends_checkBold(bool state);
+    void on_colorNicknameForFriends_checkItalic(bool state);
+    void on_colorMsgForFriends_selectedColor(const QString& color);
+    void on_colorMsgForFriends_checkBold(bool state);
+    void on_colorMsgForFriends_checkItalic(bool state);
 
 private:
     void retranslateUi();

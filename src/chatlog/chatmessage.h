@@ -22,8 +22,10 @@
 #include "chatline.h"
 #include "src/core/toxfile.h"
 #include "src/persistence/history.h"
+#include "src/widget/chattextstyle.h"
 
 #include <QDateTime>
+#include <QColor>
 
 class QGraphicsScene;
 
@@ -50,7 +52,7 @@ public:
 
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage,
                                               MessageType type, bool isMe, MessageState state,
-                                              const QDateTime& date, bool colorizeName = false);
+                                              const QDateTime& date, bool isGroup = false);
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type,
                                                   const QDateTime& date);
     static ChatMessage::Ptr createFileTransferMessage(const QString& sender, ToxFile file,

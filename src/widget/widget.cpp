@@ -2101,8 +2101,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
 
     assert(core != nullptr);
     auto form = new GroupChatForm(*core, newgroup, *groupChatLog, *messageDispatcher);
-    connect(&settings, &Settings::nameColorsChanged, form, &GenericChatForm::setColorizedNames);
-    form->setColorizedNames(settings.getEnableGroupChatsColor());
+
     groupMessageDispatchers[groupId] = messageDispatcher;
     groupChatLogs[groupId] = groupChatLog;
     groupWidgets[groupId] = widget;

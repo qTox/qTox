@@ -80,7 +80,6 @@ public:
     void setVisible(bool visible);
     void selectionCleared();
     void selectionFocusChanged(bool focusIn);
-    void fontChanged(const QFont& font);
     void reloadTheme();
 
     int getColumnCount();

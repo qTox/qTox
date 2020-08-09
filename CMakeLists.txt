@@ -359,6 +359,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/categorywidget.h
   src/widget/chatformheader.cpp
   src/widget/chatformheader.h
+  src/widget/chattextstyle.cpp
+  src/widget/chattextstyle.h
   src/widget/circlewidget.cpp
   src/widget/circlewidget.h
   src/widget/contentdialog.cpp
@@ -408,6 +410,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/form/settings/genericsettings.h
   src/widget/form/settings/privacyform.cpp
   src/widget/form/settings/privacyform.h
+  src/widget/form/settings/settingscolormsgwidget.cpp
+  src/widget/form/settings/settingscolormsgwidget.h
   src/widget/form/settings/userinterfaceform.h
   src/widget/form/settings/userinterfaceform.cpp
   src/widget/form/settings/verticalonlyscroller.cpp

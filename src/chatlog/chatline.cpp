@@ -113,12 +113,6 @@ void ChatLine::selectionFocusChanged(bool focusIn)
         c->selectionFocusChanged(focusIn);
 }
 
-void ChatLine::fontChanged(const QFont& font)
-{
-    for (ChatLineContent* c : content)
-        c->fontChanged(font);
-}
-
 void ChatLine::reloadTheme()
 {
     for (ChatLineContent* c : content) {

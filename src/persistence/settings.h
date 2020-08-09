@@ -29,6 +29,7 @@
 #include "src/persistence/igroupsettings.h"
 #include "src/persistence/inotificationsettings.h"
 #include "src/video/ivideosettings.h"
+#include "src/widget/chattextstyle.h"
 
 #include <QDateTime>
 #include <QFlags>
@@ -198,7 +199,6 @@ signals:
 
     // GUI
     void autoLoginChanged(bool enabled);
-    void nameColorsChanged(bool enabled);
     void separateWindowChanged(bool enabled);
     void showSystemTrayChanged(bool enabled);
     bool minimizeOnCloseChanged(bool enabled);
@@ -226,6 +226,8 @@ signals:
     void dateFormatChanged(const QString& format);
     void statusChangeNotificationEnabledChanged(bool enabled);
     void spellCheckingEnabledChanged(bool enabled);
+
+    void chatTextStyleChanged();
 
     // Privacy
     void typingNotificationChanged(bool enabled);
@@ -522,8 +524,14 @@ public:
     void setShowIdenticons(bool value);
 
     bool getAutoLogin() const;
-    void setEnableGroupChatsColor(bool state);
-    bool getEnableGroupChatsColor() const;
+    void setEnableGroupNicknameColor(bool state);
+    bool getEnableGroupNicknameColor() const;
+
+    void setEnableGroupMsgColor(bool state);
+    bool getEnableGroupMsgColor() const;
+
+    void setEnableGroupColorForUser(bool state);
+    bool getEnableGroupColorForUser() const;
 
     int getCircleCount() const;
     int addCircle(const QString& name = QString());
@@ -532,6 +540,47 @@ public:
     void setCircleName(int id, const QString& name);
     bool getCircleExpanded(int id) const;
     void setCircleExpanded(int id, bool expanded);
+
+    void setEnableSettingsForMessages(bool state);
+    bool getEnableSettingsForMessages() const;
+
+    QString getColorNicknameForUser() const;
+    void setColorNicknameForUser(const QString& color);
+
+    bool getEnableBoldNicknameForUser() const;
+    void setEnableBoldNicknameForUser(bool state);
+
+    bool getEnableItalicNicknameForUser() const;
+    void setEnableItalicNicknameForUser(bool state);
+
+    QString getColorMsgForUser() const;
+    void setColorMsgForUser(const QString& color);
+
+    bool getEnableBoldMsgForUser() const;
+    void setEnableBoldMsgForUser(bool state);
+
+    bool getEnableItalicMsgForUser() const;
+    void setEnableItalicMsgForUser(bool state);
+
+    QString getColorNicknameForFriends() const;
+    void setColorNicknameForFriends(const QString& color);
+
+    bool getEnableBoldNicknameForFriends() const;
+    void setEnableBoldNicknameForFriends(bool state);
+
+    bool getEnableItalicNicknameForFriends() const;
+    void setEnableItalicNicknameForFriends(bool state);
+
+    QString getColorMsgForFriends() const;
+    void setColorMsgForFriends(const QString& color);
+
+    bool getEnableBoldMsgForFriends() const;
+    void setEnableBoldMsgForFriends(bool state);
+
+    bool getEnableItalicMsgForFriends() const;
+    void setEnableItalicMsgForFriends(bool state);
+
+    ChatTextStyle* getChatTextStyle();
 
     bool addFriendRequest(const QString& friendAddress, const QString& message);
     unsigned int getUnreadFriendRequests() const;
@@ -576,6 +625,8 @@ public slots:
     void savePersonal(Profile* profile);
 
 private:
+    void updateChatTextStyle();
+
     bool loaded;
 
     bool useCustomDhtList;
@@ -605,7 +656,28 @@ private:
     bool notifyHide;
     bool busySound;
     bool groupAlwaysNotify;
-    bool nameColors;
+    bool groupNicknameColors;
+    bool groupMsgColors;
+    bool groupColorsForUser;
+
+    bool enableColorsForMessages;
+
+    QString colorNicknameForUser;
+    bool boldNicknameForUser;
+    bool italicNicknameForUser;
+
+    QString colorMsgForUser;
+    bool boldMsgForUser;
+    bool italicMsgForUser;
+
+    QString colorNicknameForFriends;
+    bool boldNicknameForFriends;
+    bool italicNicknameForFriends;
+
+    QString colorMsgForFriends;
+    bool boldMsgForFriends;
+    bool italicMsgForFriends;
+    ChatTextStyle *chatTextStyle{nullptr};
 
     bool forceTCP;
     bool enableLanDiscovery;

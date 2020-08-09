@@ -71,7 +71,28 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
     bodyUI->txtChatFont->setCurrentFont(chatBaseFont);
     int index = static_cast<int>(s.getStylePreference());
     bodyUI->textStyleComboBox->setCurrentIndex(index);
-    bodyUI->useNameColors->setChecked(s.getEnableGroupChatsColor());
+    bodyUI->useNickenameColorsInGroup->setChecked(s.getEnableGroupNicknameColor());
+    bodyUI->useMsgColorsInGroup->setChecked(s.getEnableGroupMsgColor());
+    bodyUI->useColorsForUserInGroup->setChecked(s.getEnableGroupColorForUser());
+
+    bodyUI->useSettingsForMessages->setChecked(s.getEnableSettingsForMessages());
+    if (!s.getEnableSettingsForMessages()) {
+        bodyUI->groupSettingsForUserColors->setEnabled(false);
+        bodyUI->groupSettingsForFriendsColors->setEnabled(false);
+    }
+
+    bodyUI->colorNicknameForUser->setColor(s.getColorNicknameForUser());
+    bodyUI->colorNicknameForUser->setCheckedBold(s.getEnableBoldNicknameForUser());
+    bodyUI->colorNicknameForUser->setCheckedItalic(s.getEnableItalicNicknameForUser());
+    bodyUI->colorMsgForUser->setColor(s.getColorMsgForUser());
+    bodyUI->colorMsgForUser->setCheckedBold(s.getEnableBoldMsgForUser());
+    bodyUI->colorMsgForUser->setCheckedItalic(s.getEnableItalicMsgForUser());
+    bodyUI->colorNicknameForFriends->setColor(s.getColorNicknameForFriends());
+    bodyUI->colorNicknameForFriends->setCheckedBold(s.getEnableBoldNicknameForFriends());
+    bodyUI->colorNicknameForFriends->setCheckedItalic(s.getEnableItalicNicknameForFriends());
+    bodyUI->colorMsgForFriends->setColor(s.getColorMsgForFriends());
+    bodyUI->colorMsgForFriends->setCheckedBold(s.getEnableBoldMsgForFriends());
+    bodyUI->colorMsgForFriends->setCheckedItalic(s.getEnableItalicMsgForFriends());
 
     bodyUI->notify->setChecked(s.getNotify());
     // Note: UI is boolean inversed from settings to maintain setting file backwards compatibility
@@ -388,9 +409,86 @@ void UserInterfaceForm::on_txtChatFontSize_valueChanged(int px)
     }
 }
 
-void UserInterfaceForm::on_useNameColors_stateChanged(int value)
+void UserInterfaceForm::on_useNickenameColorsInGroup_stateChanged(int value)
 {
-    Settings::getInstance().setEnableGroupChatsColor(value);
+    Settings::getInstance().setEnableGroupNicknameColor(value);
+}
+
+void UserInterfaceForm::on_useMsgColorsInGroup_stateChanged(int value)
+{
+    Settings::getInstance().setEnableGroupMsgColor(value);
+}
+
+void UserInterfaceForm::on_useColorsForUserInGroup_stateChanged(int value)
+{
+    Settings::getInstance().setEnableGroupColorForUser(value);
+}
+
+void UserInterfaceForm::on_useSettingsForMessages_stateChanged(int value)
+{
+    Settings::getInstance().setEnableSettingsForMessages(value);
+    bodyUI->groupSettingsForUserColors->setEnabled(value);
+    bodyUI->groupSettingsForFriendsColors->setEnabled(value);
+}
+
+void UserInterfaceForm::on_colorNicknameForUser_selectedColor(const QString& color)
+{
+    Settings::getInstance().setColorNicknameForUser(color);
+}
+
+void UserInterfaceForm::on_colorNicknameForUser_checkBold(bool state)
+{
+    Settings::getInstance().setEnableBoldNicknameForUser(state);
+}
+
+void UserInterfaceForm::on_colorNicknameForUser_checkItalic(bool state)
+{
+    Settings::getInstance().setEnableItalicNicknameForUser(state);
+}
+
+void UserInterfaceForm::on_colorMsgForUser_selectedColor(const QString& color)
+{
+    Settings::getInstance().setColorMsgForUser(color);
+}
+
+void UserInterfaceForm::on_colorMsgForUser_checkBold(bool state)
+{
+    Settings::getInstance().setEnableBoldMsgForUser(state);
+}
+
+void UserInterfaceForm::on_colorMsgForUser_checkItalic(bool state)
+{
+    Settings::getInstance().setEnableItalicMsgForUser(state);
+}
+
+void UserInterfaceForm::on_colorNicknameForFriends_selectedColor(const QString& color)
+{
+    Settings::getInstance().setColorNicknameForFriends(color);
+}
+
+void UserInterfaceForm::on_colorNicknameForFriends_checkBold(bool state)
+{
+    Settings::getInstance().setEnableBoldNicknameForFriends(state);
+}
+
+void UserInterfaceForm::on_colorNicknameForFriends_checkItalic(bool state)
+{
+    Settings::getInstance().setEnableItalicNicknameForFriends(state);
+}
+
+void UserInterfaceForm::on_colorMsgForFriends_selectedColor(const QString& color)
+{
+    Settings::getInstance().setColorMsgForFriends(color);
+}
+
+void UserInterfaceForm::on_colorMsgForFriends_checkBold(bool state)
+{
+    Settings::getInstance().setEnableBoldMsgForFriends(state);
+}
+
+void UserInterfaceForm::on_colorMsgForFriends_checkItalic(bool state)
+{
+    Settings::getInstance().setEnableItalicMsgForFriends(state);
 }
 
 void UserInterfaceForm::on_notifyHide_stateChanged(int value)

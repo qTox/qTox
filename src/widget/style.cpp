@@ -432,3 +432,9 @@ QString Style::getThemePath()
 
     return BuiltinThemeDefaultPath;
 }
+
+Style::MainTheme Style::typeTheme()
+{
+    const int num = Settings::getInstance().getThemeColor();
+    return themeNameColors[num].type;
+}

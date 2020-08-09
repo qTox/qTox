@@ -46,14 +46,13 @@ ChatMessage::ChatMessage()
 
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
                                                 MessageType type, bool isMe, MessageState state,
-                                                const QDateTime& date, bool colorizeName)
+                                                const QDateTime& date, bool isGroup)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
     QString text = rawMessage.toHtmlEscaped();
     QString senderText = sender;
 
-    auto textType = Text::NORMAL;
     // smileys
     if (Settings::getInstance().getUseEmoticons())
         text = SmileyPack::getInstance().smileyfied(text);
@@ -68,14 +67,20 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
         text = applyMarkdown(text, styleType == Settings::StyleType::WITH_CHARS);
     }
 
+    auto textStyle = Settings::getInstance().getChatTextStyle();
+    ChatTextStyle::Owner own = isMe ? ChatTextStyle::Owner::User : ChatTextStyle::Owner::Friend;
+    auto fontNickName = textStyle->getFont(own, ChatTextStyle::Type::Nickname);
+    auto fontMsg = textStyle->getFont(own, ChatTextStyle::Type::Msg);
+    auto colorNickname = textStyle->getColor(own, ChatTextStyle::Type::Nickname, sender, isGroup);
+    auto colorMsg = textStyle->getColor(own, ChatTextStyle::Type::Msg, sender, isGroup);
 
     switch (type) {
     case NORMAL:
         text = wrapDiv(text, "msg");
         break;
     case ACTION:
-        textType = Text::ACTION;
         senderText = "*";
+        colorNickname = textStyle->getActionColor();
         text = wrapDiv(QString("%1 %2").arg(sender.toHtmlEscaped(), text), "action");
         msg->setAsAction();
         break;
@@ -84,34 +89,16 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
         break;
     }
 
-    // Note: Eliding cannot be enabled for RichText items. (QTBUG-17207)
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
-    QFont authorFont = baseFont;
-    if (isMe)
-        authorFont.setBold(true);
-
-    QColor color = Style::getColor(Style::MainText);
-    if (colorizeName) {
-        QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Sha256);
-        const auto* data = hash.data();
-
-        color.setHsv(data[0], 255, 196);
-
-        if (!isMe && textType == Text::NORMAL) {
-                textType = Text::CUSTOM;
-        }
-    }
-
-    msg->addColumn(new Text(senderText, authorFont, true, sender, textType, color),
+    msg->addColumn(new Text(senderText, fontNickName, true, sender, colorNickname),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(text, baseFont, false, ((type == ACTION) && isMe)
+    msg->addColumn(new Text(text, fontMsg, false, ((type == ACTION) && isMe)
                                                        ? QString("%1 %2").arg(sender, rawMessage)
-                                                       : rawMessage),
+                                                       : rawMessage, colorMsg),
                    ColumnFormat(1.0, ColumnFormat::VariableSize));
 
     switch (state) {
         case MessageState::complete:
-            msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), baseFont),
+            msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), textStyle->getDefFont()),
                         ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
             break;
         case MessageState::pending:
@@ -145,13 +132,13 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString& rawMessage,
         break;
     }
 
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    auto textStyle = Settings::getInstance().getChatTextStyle();
 
     msg->addColumn(new Image(QSize(18, 18), img),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text("<b>" + text + "</b>", baseFont, false, text),
+    msg->addColumn(new Text("<b>" + text + "</b>", textStyle->getDefFont(), false, text),
                    ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), baseFont),
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), textStyle->getDefFont()),
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     return msg;
@@ -162,16 +149,16 @@ ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, T
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
-    QFont authorFont = baseFont;
-    if (isMe)
-        authorFont.setBold(true);
+    auto textStyle = Settings::getInstance().getChatTextStyle();
+    ChatTextStyle::Owner own = isMe ? ChatTextStyle::Owner::User : ChatTextStyle::Owner::Friend;
+    auto fontNickName = textStyle->getFont(own, ChatTextStyle::Type::Nickname);
+    auto colorNickname = textStyle->getColor(own, ChatTextStyle::Type::Nickname);
 
-    msg->addColumn(new Text(sender, authorFont, true),
+    msg->addColumn(new Text(sender, fontNickName, true, "", colorNickname),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(nullptr, file), 320, 0.6f),
                    ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), baseFont),
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), textStyle->getDefFont()),
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     return msg;
@@ -180,8 +167,7 @@ ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, T
 ChatMessage::Ptr ChatMessage::createTypingNotification()
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
-
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    auto textStyle = Settings::getInstance().getChatTextStyle();
 
     // Note: "[user]..." is just a placeholder. The actual text is set in
     // ChatForm::setFriendTyping()
@@ -190,9 +176,10 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
     // user received typing notifications constantly since contact came online.
     // This causes "[user]..." to be displayed in place of user nick, as long
     // as user will keep typing. Issue #1280
+
     msg->addColumn(new NotificationIcon(QSize(18, 18)),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text("[user]...", baseFont, false, ""),
+    msg->addColumn(new Text("[user]...", textStyle->getDefFont(), false, ""),
                    ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
 
     return msg;
@@ -209,11 +196,9 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
 ChatMessage::Ptr ChatMessage::createBusyNotification()
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
-    baseFont.setPixelSize(baseFont.pixelSize() + 2);
-    baseFont.setBold(true);
+    auto textStyle = Settings::getInstance().getChatTextStyle();
 
-    msg->addColumn(new Text(QObject::tr("Reformatting text...", "Waiting for text to be reformatted"), baseFont, false, ""),
+    msg->addColumn(new Text(QObject::tr("Reformatting text...", "Waiting for text to be reformatted"), textStyle->getBusyFont(), false, ""),
                    ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
 
     return msg;
@@ -221,10 +206,10 @@ ChatMessage::Ptr ChatMessage::createBusyNotification()
 
 void ChatMessage::markAsDelivered(const QDateTime& time)
 {
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    auto textStyle = Settings::getInstance().getChatTextStyle();
 
     // remove the spinner and replace it by $time
-    replaceContent(2, new Timestamp(time, Settings::getInstance().getTimestampFormat(), baseFont));
+    replaceContent(2, new Timestamp(time, Settings::getInstance().getTimestampFormat(), textStyle->getDefFont()));
 }
 
 QString ChatMessage::toString() const

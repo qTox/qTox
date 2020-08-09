@@ -89,6 +89,7 @@ public:
     static void initPalette();
     static void initDictColor();
     static QString getThemePath();
+    static MainTheme typeTheme();
 
 signals:
     void themeChanged();

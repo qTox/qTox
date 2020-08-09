@@ -22,6 +22,7 @@
 #include "src/chatlog/chatmessage.h"
 #include "src/core/toxpk.h"
 #include "src/model/ichatlog.h"
+#include "src/widget/chattextstyle.h"
 #include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/searchtypes.h"
 
@@ -83,6 +84,7 @@ public:
     QDateTime getLatestTime() const;
     QDateTime getFirstTime() const;
 
+
 signals:
     void messageInserted();
     void messageNotFoundShow(SearchDirection direction);
@@ -90,7 +92,7 @@ signals:
 public slots:
     void focusInput();
     void onChatMessageFontChanged(const QFont& font);
-    void setColorizedNames(bool enable);
+    void onChatTextStyleChanged();
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
@@ -135,7 +137,7 @@ private:
     void removeFirstsMessages(const int num);
     void removeLastsMessages(const int num);
 
-    void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames, ChatMessage::Ptr &chatMessage);
+    void renderItem(const ChatLogItem &item, bool hideName, bool isGroup, ChatMessage::Ptr &chatMessage);
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
                                    const QDateTime& datetime, bool isAction, bool isSent, bool colorizeName = false);
@@ -191,5 +193,5 @@ protected:
     IMessageDispatcher& messageDispatcher;
     SearchResult searchResult;
     std::map<ChatLogIdx, ChatMessage::Ptr> messages;
-    bool colorizeNames = false;
+    bool isGroup{false};
 };

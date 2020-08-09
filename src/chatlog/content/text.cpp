@@ -31,16 +31,13 @@
 #include <QTextBlock>
 #include <QTextFragment>
 
-Text::Text(const QString& txt, const QFont& font, bool enableElide, const QString& rwText,
-           const TextType& type, const QColor& custom)
-    : rawText(rwText)
+Text::Text(const QString& txt, std::shared_ptr<QFont> font, bool enableElide, const QString& rawText, std::shared_ptr<QColor> custom)
+    : rawText(rawText)
     , elide(enableElide)
     , defFont(font)
-    , defStyleSheet(Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), font))
-    , textType(type)
-    , customColor(custom)
+    , defStyleSheet(Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), *font))
+    , color(custom)
 {
-    color = textColor();
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton);
     setAcceptHoverEvents(true);
@@ -206,11 +203,6 @@ QString Text::getSelectedText() const
     return selectedText;
 }
 
-void Text::fontChanged(const QFont& font)
-{
-    defFont = font;
-}
-
 QRectF Text::boundingRect() const
 {
     return QRectF(QPointF(0, 0), size);
@@ -241,7 +233,7 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
     sel.format.setForeground(selectionHasFocus ? Qt::white : Qt::black);
 
     ctx.selections.append(sel);
-    ctx.palette.setColor(QPalette::Text, color);
+    ctx.palette.setColor(QPalette::Text, *color);
 
     // draw text
     doc->documentLayout()->draw(painter, ctx);
@@ -257,8 +249,7 @@ void Text::visibilityChanged(bool visible)
 
 void Text::reloadTheme()
 {
-    defStyleSheet = Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), defFont);
-    color = textColor();
+    defStyleSheet = Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), *defFont);
     dirty = true;
     regenerate();
     update();
@@ -328,10 +319,10 @@ void Text::regenerate()
     }
 
     if (dirty) {
-        doc->setDefaultFont(defFont);
+        doc->setDefaultFont(*defFont);
 
         if (elide) {
-            QFontMetrics metrics = QFontMetrics(defFont);
+            QFontMetrics metrics = QFontMetrics(*defFont);
             QString elidedText = metrics.elidedText(text, Qt::ElideRight, qRound(width));
 
             doc->setPlainText(elidedText);
@@ -475,16 +466,4 @@ void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
         format.setBackground(QBrush(Style::getColor(Style::SearchHighlighted)));
         cursor.mergeCharFormat(format);
     }
-}
-
-QColor Text::textColor() const
-{
-    QColor c = Style::getColor(Style::MainText);
-    if (textType == ACTION) {
-        c = Style::getColor(Style::Action);
-    } else if (textType == CUSTOM) {
-        c = customColor;
-    }
-
-    return c;
 }

@@ -24,6 +24,7 @@
 
 #include <QFont>
 #include <QTextCursor>
+#include <memory>
 
 class QTextDocument;
 
@@ -32,15 +33,10 @@ class Text : public ChatLineContent
     Q_OBJECT
 
 public:
-    enum TextType
-    {
-        NORMAL,
-        ACTION,
-        CUSTOM
-    };
+    Text(const QString& txt = "", std::shared_ptr<QFont> = std::make_shared<QFont>(), bool enableElide = false,
+         const QString& rawText = QString(),
+         std::shared_ptr<QColor> custom = std::make_shared<QColor>(Style::getColor(Style::MainText)));
 
-    Text(const QString& txt = "", const QFont& font = QFont(), bool enableElide = false,
-         const QString& rawText = QString(), const TextType& type = NORMAL, const QColor& custom = Style::getColor(Style::MainText));
     virtual ~Text();
 
     void setText(const QString& txt);
@@ -58,7 +54,6 @@ public:
     void selectionFocusChanged(bool focusIn) final;
     bool isOverSelection(QPointF scenePos) const final;
     QString getSelectedText() const final;
-    void fontChanged(const QFont& font) final;
 
     QRectF boundingRect() const final;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final;
@@ -93,7 +88,6 @@ protected:
 
 private:
     void selectText(QTextCursor& cursor, const std::pair<int, int>& point);
-    QColor textColor() const;
 
     QString text;
     QString rawText;
@@ -105,11 +99,9 @@ private:
     int selectionEnd = -1;
     int selectionAnchor = -1;
     qreal ascent = 0.0;
-    QFont defFont;
+    std::shared_ptr<QFont> defFont;
     QString defStyleSheet;
-    TextType textType;
-    QColor color;
-    QColor customColor;
+    std::shared_ptr<QColor> color;
 
     QTextCursor selectCursor;
     std::pair<int, int> selectPoint{0, 0};
