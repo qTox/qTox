@@ -146,7 +146,6 @@ jobs:
           - /opt/build-windows/x86_64
     - stage: "macOS, AppImage and Flatpak"
       os: osx
-      osx_image: xcode9.3
       env: JOB=build-osx
       cache:
         timeout: 300 # seconds
