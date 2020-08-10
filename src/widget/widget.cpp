@@ -149,7 +149,6 @@ Widget::Widget(Profile &_profile, IAudioControl& audio, QWidget* parent)
     , eventIcon(false)
     , audio(audio)
     , settings(Settings::getInstance())
-    , globalshortcut{this}
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -351,8 +350,8 @@ void Widget::init()
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
     new QShortcut(Qt::Key_F11, this, SLOT(toggleFullscreen()));
 
-    connect(&settings, &Settings::pttShortcutKeysChanged,
-            &globalshortcut, &GlobalShortcut::onPttShortcutKeysChanged);
+    onAudioCaptureModeChanged(settings.getAudioCaptureMode());
+    connect(&settings, &Settings::audioCaptureModeChanged, this, &Widget::onAudioCaptureModeChanged);
 
 #ifdef Q_OS_MAC
     QMenuBar* globalMenu = Nexus::getInstance().globalMenuBar;
@@ -1203,7 +1202,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
     connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
     connect(widget, SIGNAL(removeFriend(const ToxPk&)), this, SLOT(removeFriend(const ToxPk&)));
-    connect(&globalshortcut, &GlobalShortcut::toggled, friendForm, &ChatForm::onMicMuteToggle);
+    connect(this, &Widget::pttToggled, friendForm, &ChatForm::onMicMuteToggle);
 
     connect(&profile, &Profile::friendAvatarSet, widget, &FriendWidget::onAvatarSet);
     connect(&profile, &Profile::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
@@ -2679,4 +2678,16 @@ void Widget::connectFriendWidget(FriendWidget& friendWidget)
 {
     connect(&friendWidget, &FriendWidget::searchCircle, this, &Widget::searchCircle);
     connect(&friendWidget, &FriendWidget::updateFriendActivity, this, &Widget::updateFriendActivity);
+}
+
+void Widget::onAudioCaptureModeChanged(IAudioSettings::AudioCaptureMode mode)
+{
+    // avoid capturing system keys when PTT is not enabled, for privacy concerns
+    if (mode == IAudioSettings::AudioCaptureMode::PushToTalk) {
+        globalshortcut = std::unique_ptr<GlobalShortcut>{new GlobalShortcut{this}};
+        connect(&settings, &Settings::pttShortcutKeysChanged, globalshortcut.get(), &GlobalShortcut::onPttShortcutKeysChanged);
+        connect(globalshortcut.get(), &GlobalShortcut::toggled, this, &Widget::pttToggled);
+    } else {
+        globalshortcut.reset();
+    }
 }
