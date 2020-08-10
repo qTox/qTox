@@ -207,7 +207,7 @@ signals:
     void statusMessageChanged(const QString& statusMessage);
     void resized();
     void windowStateChanged(Qt::WindowStates states);
-    void pttMute();
+    void pttToggled() const;
 
 private slots:
     void onAddClicked();
@@ -279,6 +279,7 @@ private:
     void playNotificationSound(IAudioSink::Sound sound, bool loop = false);
     void cleanupNotificationSound();
     void acceptFileTransfer(const ToxFile &file, const QString &path);
+    void onAudioCaptureModeChanged(IAudioSettings::AudioCaptureMode mode);
 
 private:
     Profile& profile;
@@ -360,7 +361,7 @@ private:
     QMap<GroupId, std::shared_ptr<GroupChatroom>> groupChatrooms;
     QMap<GroupId, QSharedPointer<GroupChatForm>> groupChatForms;
     Core* core = nullptr;
-    GlobalShortcut globalshortcut;
+    std::unique_ptr<GlobalShortcut> globalshortcut;
 
     MessageProcessor::SharedParams sharedMessageProcessorParams;
 #if DESKTOP_NOTIFICATIONS
