@@ -99,6 +99,8 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
 
     fillCaptureModeComboBox();
     pushToTalkShortcutInput->Initialize(*audioSettings);
+    connect(pushToTalkShortcutInput, &HotkeyInput::pauseKeyBlocking, this, &AVForm::pauseKeyBlocking);
+    connect(pushToTalkShortcutInput, &HotkeyInput::resumeKeyBlocking, this, &AVForm::resumeKeyBlocking);
     fillAudioQualityComboBox();
 
     eventsInit();

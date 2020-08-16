@@ -66,6 +66,9 @@ SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, C
 
     AVForm* rawAvfrm = new AVForm(audio, coreAV, camera, audioSettings, videoSettings);
     std::unique_ptr<AVForm> avfrm(rawAvfrm);
+    connect(rawAvfrm, &AVForm::pauseKeyBlocking, this, &SettingsWidget::pauseKeyBlocking);
+    connect(rawAvfrm, &AVForm::resumeKeyBlocking, this, &SettingsWidget::resumeKeyBlocking);
+
     std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm());
     std::unique_ptr<AboutForm> abtfrm(new AboutForm(updateCheck));
 

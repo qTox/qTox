@@ -44,7 +44,19 @@ void GlobalShortcut::onPttShortcutKeysChanged(QList<int> keys)
     shortcutKeys = std::vector<int>(keys.begin(), keys.end());
 }
 
-std::unique_ptr<std::vector<int>> GlobalShortcut::getShortcutKeys()
+void GlobalShortcut::onPauseKeyBlocking()
+{
+    QMutexLocker lock(&keysMutex);
+    blockKeys = false;
+}
+
+void GlobalShortcut::onResumeKeyBlocking()
+{
+    QMutexLocker lock(&keysMutex);
+    blockKeys = true; 
+}
+
+GlobalShortcut::ShortcutKeys GlobalShortcut::getShortcutKeys()
 {
     if (!keysMutex.tryLock()) {
         // we don't want to block the hook thread and cause system-wide stuttering.
@@ -54,7 +66,9 @@ std::unique_ptr<std::vector<int>> GlobalShortcut::getShortcutKeys()
         return {};
     }
 
-    auto ret = std::unique_ptr<std::vector<int>>{new std::vector<int>{shortcutKeys}};
+    ShortcutKeys ret;
+    ret.keyCombo = std::unique_ptr<std::vector<int>>{new std::vector<int>{shortcutKeys}};
+    ret.blockKeys = blockKeys;
     // Qt doesn't have a nice RAII wrapper like std::unique_lock, but std::mutex isn't working under mingw
     keysMutex.unlock();
     return ret;

@@ -32,12 +32,19 @@ class GlobalShortcut : public QObject
 {
 Q_OBJECT
 public:
+    struct ShortcutKeys {
+        std::unique_ptr<std::vector<int>> keyCombo;
+        bool blockKeys = false;
+    };
+
     GlobalShortcut(QObject *parent = 0);
     ~GlobalShortcut();
-    std::unique_ptr<std::vector<int>> getShortcutKeys();
+    ShortcutKeys getShortcutKeys();
 
 public slots:
     void onPttShortcutKeysChanged(QList<int> keys);
+    void onPauseKeyBlocking();
+    void onResumeKeyBlocking();
 
 signals:
     void toggled();
@@ -47,4 +54,5 @@ private:
     QThread* thread;
     std::vector<int> shortcutKeys;
     QMutex keysMutex;
+    bool blockKeys = false;
 };

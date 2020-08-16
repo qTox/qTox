@@ -50,6 +50,10 @@ public:
         return tr("Audio/Video");
     }
 
+signals:
+    void pauseKeyBlocking() const;
+    void resumeKeyBlocking() const;
+
 private:
     void getAudioInDevices();
     void getAudioOutDevices();

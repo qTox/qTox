@@ -290,6 +290,8 @@ void Widget::init()
 #if UPDATE_CHECK_ENABLED
     updateCheck->checkForUpdate();
 #endif
+    connect(settingsWidget, &SettingsWidget::pauseKeyBlocking, this, &Widget::pauseKeyBlocking);
+    connect(settingsWidget, &SettingsWidget::resumeKeyBlocking, this, &Widget::resumeKeyBlocking);
 
     CoreFile* coreFile = core->getCoreFile();
     profileInfo = new ProfileInfo(core, &profile);
@@ -2687,6 +2689,8 @@ void Widget::onAudioCaptureModeChanged(IAudioSettings::AudioCaptureMode mode)
         globalshortcut = std::unique_ptr<GlobalShortcut>{new GlobalShortcut{this}};
         connect(&settings, &Settings::pttShortcutKeysChanged, globalshortcut.get(), &GlobalShortcut::onPttShortcutKeysChanged);
         connect(globalshortcut.get(), &GlobalShortcut::toggled, this, &Widget::pttToggled);
+        connect(this, &Widget::pauseKeyBlocking, globalshortcut.get(), &GlobalShortcut::onPauseKeyBlocking);
+        connect(this, &Widget::resumeKeyBlocking, globalshortcut.get(), &GlobalShortcut::onResumeKeyBlocking);
     } else {
         globalshortcut.reset();
     }
