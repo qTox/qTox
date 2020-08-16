@@ -69,7 +69,7 @@ build_toxcore() {
     [[ $TRAVIS != true ]] \
     && sleep 3
 
-    mkdir _build && cd _build
+    mkdir -p _build && cd _build
     fcho "Starting cmake ..."
     #Make sure the correct version of libsodium is used
     cmake -DBOOTSTRAP_DAEMON=OFF -DLIBSODIUM_CFLAGS="-I${LS_DIR_VER}/include/" -DLIBSODIUM_LDFLAGS="L${LS_DIR_VER}/lib/" -DCMAKE_INSTALL_PREFIX="${LIB_INSTALL_PREFIX}" ..
