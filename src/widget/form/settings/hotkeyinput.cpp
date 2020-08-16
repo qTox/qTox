@@ -132,6 +132,7 @@ void HotkeyInput::keyReleaseEvent(QKeyEvent* event)
 
 void HotkeyInput::focusInEvent(QFocusEvent* event)
 {
+    emit pauseKeyBlocking(); // so that the old shortcut doesn't block the new shortcut from being set
     this->clear();
     setPlaceholderText(pressAnyKeyString);
     isReadyToOverwrite = true;
@@ -139,6 +140,7 @@ void HotkeyInput::focusInEvent(QFocusEvent* event)
 
 void HotkeyInput::focusOutEvent(QFocusEvent* event)
 {
+    emit resumeKeyBlocking();
     const QString text = this->text();
     if (text == "" && !wasCleared) {
         const QList<int> keyNames = settings->getPttShortcutNames();

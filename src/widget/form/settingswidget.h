@@ -55,6 +55,10 @@ public:
 public slots:
     void onUpdateAvailable(void);
 
+signals:
+    void pauseKeyBlocking() const;
+    void resumeKeyBlocking() const;
+
 private slots:
     void onTabChanged(int);
 

@@ -208,6 +208,8 @@ signals:
     void resized();
     void windowStateChanged(Qt::WindowStates states);
     void pttToggled() const;
+    void pauseKeyBlocking() const;
+    void resumeKeyBlocking() const;
 
 private slots:
     void onAddClicked();

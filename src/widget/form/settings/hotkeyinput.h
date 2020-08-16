@@ -31,6 +31,10 @@ public:
     explicit HotkeyInput(QWidget* parent = 0);
     void Initialize(IAudioSettings& _settings);
 
+signals:
+    void pauseKeyBlocking() const;
+    void resumeKeyBlocking() const;
+
 protected:
     virtual void keyPressEvent(QKeyEvent* event) final override;
     virtual void keyReleaseEvent(QKeyEvent* event) final override;

@@ -124,18 +124,14 @@ namespace {
         return false;
     }
 
-    void getNewKeys(std::vector<int>& keys, std::vector<bool>& pressed)
+    bool getNewKeys(std::vector<int>& keys, std::vector<bool>& pressed)
     {
         const auto newKeys = globalShortcut->getShortcutKeys();
-        if (!newKeys) {
-            return;
+        if (newKeys.keyCombo && *newKeys.keyCombo != keys) {
+            keys = *newKeys.keyCombo;
+            pressed = std::vector<bool>(keys.size(), false);
         }
-        if (*newKeys == keys) {
-            return;
-        }
-        
-        keys = *newKeys;
-        pressed = std::vector<bool>(keys.size(), false);
+        return newKeys.blockKeys;
     }
 
     bool setKeyPressed(std::vector<int>& keys, std::vector<bool>& pressed, int rawcode, bool newState)
@@ -162,12 +158,15 @@ namespace {
         static std::vector<int> keys;
         static std::vector<bool> pressed;
 
-        getNewKeys(keys, pressed);
+        const auto blockKeys = getNewKeys(keys, pressed);
         if (!setKeyPressed(keys, pressed, event->data.keyboard.rawcode, keyState)) {
             return;
         }
 
-        blockKeyPropagation(event);
+        if (blockKeys) {
+            blockKeyPropagation(event);
+        }
+
         bool newActive = std::all_of(pressed.begin(), pressed.end(), [](bool val){return val == true;});
         if (active != newActive) {
             active = newActive;
