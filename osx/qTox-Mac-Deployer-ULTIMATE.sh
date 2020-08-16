@@ -138,10 +138,10 @@ install() {
 
     #cd $MAIN_DIR # just in case
     # Toxcore
-    if [[ -e $TOX_DIR/.git/index ]]
+    if [[ -e $TOXCORE_DIR/.git/index ]]
     then
         fcho "Toxcore git repo already in place !"
-        cd $TOX_DIR
+        cd $TOXCORE_DIR
         git pull
     else
         fcho "Cloning Toxcore git ... "
@@ -295,7 +295,7 @@ bootstrap() {
     build_toxcore
 
     #Boot Strap
-    fcho "Running: sudo ${QTOX_DIR_VER}/bootstrap-osx.sh"
+    fcho "Running: sudo ${QTOX_DIR}/bootstrap-osx.sh"
     cd $QTOX_DIR
     sudo ./bootstrap-osx.sh
 }
