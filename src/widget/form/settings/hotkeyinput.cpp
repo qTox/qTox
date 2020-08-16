@@ -27,7 +27,7 @@
 namespace
 {
     static const QString noKeyString = QObject::tr("<no key>");
-    static const QString pressAnyKeyString = QObject::tr("Press any key or Esc to cancel");
+    static const QString pressAnyKeyString = QObject::tr("Press any key combo");
 
     int healUnprintableKeys(int key)
     {
@@ -95,15 +95,6 @@ void HotkeyInput::keyPressEvent(QKeyEvent* event)
     QList<int> keyVals;
     QList<int> keyNames;
 
-    if (event->key() == Qt::Key_Escape) {
-        this->clear();
-        wasCleared = true;
-        settings->setPttShortcutKeys(keyVals);
-        settings->setPttShortcutNames(keyNames);
-        this->clearFocus();
-        return;
-    }
-
     int nativeKey = event->nativeVirtualKey();
     if (!isReadyToOverwrite) {
         keyVals = settings->getPttShortcutKeys();
@@ -142,11 +133,10 @@ void HotkeyInput::focusOutEvent(QFocusEvent* event)
 {
     emit resumeKeyBlocking();
     const QString text = this->text();
-    if (text == "" && !wasCleared) {
+    if (text == "") {
         const QList<int> keyNames = settings->getPttShortcutNames();
         this->setText(keysToLabel(keyNames));
     }
 
-    wasCleared = false;
     setPlaceholderText(noKeyString);
 }

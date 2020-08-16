@@ -43,7 +43,6 @@ protected:
 
 private:
     IAudioSettings* settings = nullptr;
-    bool wasCleared = false;
     bool isReadyToOverwrite = false;
 };
 
