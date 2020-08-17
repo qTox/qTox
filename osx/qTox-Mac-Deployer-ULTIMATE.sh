@@ -213,6 +213,7 @@ install() {
     git clone https://github.com/KDE/snorenotify "$SNORE_DIR"
     cd "$SNORE_DIR"
     git checkout tags/v0.7.0
+    export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
     cmake -DCMAKE_INSTALL_PREFIX="$LIB_INSTALL_PREFIX" -DDESKTOP_NOTIFICATIONS=True .
     make
     make install
@@ -281,7 +282,7 @@ build() {
     else
         STRICT_OPTIONS="OFF"
     fi
-    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
+    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=ON -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
     make -j$(sysctl -n hw.ncpu)
 }
 
