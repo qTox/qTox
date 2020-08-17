@@ -71,6 +71,13 @@ update_docker() {
     cd ..
 }
 
+update_windows() {
+    cd windows/cross-compile
+    perl -i -0pe "s|(TOXCORE_VERSION=)$VERSION_PATTERN|\${1}$@|gms" build.sh
+    echo "Manually update the Windows toxcore hash in windows/cross-compile/build.sh"
+    cd ../..
+}
+
 # exit if supplied arg is not a version
 is_version() {
     if [[ ! $@ =~ $VERSION_PATTERN ]]
@@ -89,5 +96,6 @@ main() {
     update_flatpak "$@"
     update_travis "$@"
     update_docker "$@"
+    update_windows "$@"
 }
 main "$@"
