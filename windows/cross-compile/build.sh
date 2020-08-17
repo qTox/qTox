@@ -144,7 +144,8 @@ apt-get install -y --no-install-recommends \
                    unzip \
                    curl \
                    yasm \
-                   zip
+                   zip \
+                   extra-cmake-modules
 
 if [[ "$ARCH" == "i686" ]]
 then
@@ -663,6 +664,47 @@ else
   echo "Using cached build of Exif `cat $EXIF_PREFIX_DIR/done`"
 fi
 
+# Snorenotify
+
+SNORE_PREFIX_DIR="$DEP_DIR/snorenotify"
+SNORE_VERSION=0.7.0
+SNORE_HASH="2e3f5fbb80ab993f6149136cd9a14c2de66f48cabce550dead167a9448f5bed9"
+SNORE_FILENAME="v$SNORE_VERSION.tar.xz"
+if [ ! -f "$SNORE_PREFIX_DIR/done" ]
+then
+  rm -rf "$SNORE_PREFIX_DIR"
+  mkdir -p "$SNORE_PREFIX_DIR"
+
+  curl $CURL_OPTIONS -O "https://github.com/KDE/snorenotify/archive/${SNORE_VERSION}.tar.gz"
+  check_sha256 "$SNORE_HASH" "$SNORE_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf $SNORE_FILENAME
+  rm $SNORE_FILENAME
+  cd snorenotify*
+  mkdir _build && cd _build
+
+  echo "
+      SET(CMAKE_SYSTEM_NAME Windows)
+      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $CMAKE_FIND_ROOT_PATH)
+  " > toolchain.cmake
+
+  cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
+        -DCMAKE_INSTALL_PREFIX="$SNORE_PREFIX_DIR"
+        -DBUILD_daemon=OFF \
+        -DBUILD_settings=OFF \
+        -DBUILD_snoresend=OFF \
+        ..
+  make
+  make install
+  cd ..
+  echo -n $SNORE_VERSION > $SNORE_PREFIX_DIR/done
+  cd ..
+  rm -rf ./snorenotify*
+else
+  echo "Using cached build of snorenotify `cat $SNORE_PREFIX_DIR/done`"
+fi
 
 # Opus
 
@@ -802,13 +844,13 @@ diff -ruN libvpx/build/make/Makefile patched/build/make/Makefile
 +$(foreach lib,$(filter %dll,$(LIBS)),$(eval $(call so_template,$(lib))))
  $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dylib,$(LIBS)),$(eval $(call dl_template,$(lib))))
  $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dll,$(LIBS)),$(eval $(call dll_template,$(lib))))
- 
+
 diff -ruN libvpx/configure patched/configure
 --- libvpx/configure	2019-02-13 16:56:49.162860897 +0100
 +++ patched/configure	2019-02-13 16:53:03.328719607 +0100
 @@ -513,23 +513,23 @@
  }
- 
+
  process_detect() {
 -    if enabled shared; then
 +    #if enabled shared; then
@@ -883,7 +925,7 @@ diff -ruN libvpx/libs.mk patched/libs.mk
 -$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.so.$(SO_VERSION_MAJOR)
 +$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.dll
  $(BUILD_PFX)$(LIBVPX_SO): EXPORTS_FILE = $(EXPORT_FILE)
- 
+
  libvpx.def: $(call enabled,CODEC_EXPORTS)
 EOF
 
