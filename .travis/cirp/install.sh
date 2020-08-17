@@ -11,6 +11,7 @@ then
   export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
   brew upgrade python || true
+  pip3 install virtualenv || true
 
   python --version || true
   python3 --version || true
