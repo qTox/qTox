@@ -199,10 +199,10 @@ install() {
         done &
         DOT_PID=$!
     fi
-    # needed for kf5-sonnet and kf5-extra-cmake-modules
+    # needed for kf5-sonnet
     brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git --force-auto-update
 
-    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet kf5-extra-cmake-modules
+    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft kf5-sonnet
     if [[ $TRAVIS = true ]]
     then
         kill $DOT_PID
