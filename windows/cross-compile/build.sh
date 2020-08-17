@@ -675,7 +675,7 @@ then
   rm -rf "$SNORE_PREFIX_DIR"
   mkdir -p "$SNORE_PREFIX_DIR"
 
-  curl $CURL_OPTIONS -O "https://github.com/KDE/snorenotify/archive/${SNORE_VERSION}.tar.gz"
+  curl $CURL_OPTIONS -O "https://github.com/KDE/snorenotify/archive/${SNORE_FILENAME}"
   check_sha256 "$SNORE_HASH" "$SNORE_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $SNORE_FILENAME
   rm $SNORE_FILENAME
