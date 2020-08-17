@@ -144,7 +144,8 @@ apt-get install -y --no-install-recommends \
                    unzip \
                    curl \
                    yasm \
-                   zip
+                   zip \
+                   extra-cmake-modules
 
 if [[ "$ARCH" == "i686" ]]
 then
@@ -663,6 +664,60 @@ else
   echo "Using cached build of Exif `cat $EXIF_PREFIX_DIR/done`"
 fi
 
+# Snorenotify
+
+SNORE_PREFIX_DIR="$DEP_DIR/snorenotify"
+SNORE_VERSION=0.7.0
+SNORE_HASH="2e3f5fbb80ab993f6149136cd9a14c2de66f48cabce550dead167a9448f5bed9"
+SNORE_FILENAME="v$SNORE_VERSION.tar.gz"
+if [ ! -f "$SNORE_PREFIX_DIR/done" ]
+then
+  rm -rf "$SNORE_PREFIX_DIR"
+  mkdir -p "$SNORE_PREFIX_DIR"
+
+  curl $CURL_OPTIONS -O "https://github.com/KDE/snorenotify/archive/${SNORE_FILENAME}"
+  check_sha256 "$SNORE_HASH" "$SNORE_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf $SNORE_FILENAME
+  rm $SNORE_FILENAME
+  cd snorenotify*
+  mkdir _build && cd _build
+
+  PKG_CONFIG_PATH=""
+  PKG_CONFIG_LIBDIR=""
+  CMAKE_FIND_ROOT_PATH=""
+  for PREFIX_DIR in $DEP_DIR/*; do
+    if [ -d $PREFIX_DIR/lib/pkgconfig ]
+    then
+      export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$PREFIX_DIR/lib/pkgconfig"
+      export PKG_CONFIG_LIBDIR="$PKG_CONFIG_LIBDIR:$PREFIX_DIR/lib/pkgconfig"
+    fi
+    CMAKE_FIND_ROOT_PATH="$CMAKE_FIND_ROOT_PATH $PREFIX_DIR"
+  done
+
+echo "
+    SET(CMAKE_SYSTEM_NAME Windows)
+    SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+    SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+    SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+    SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $CMAKE_FIND_ROOT_PATH)
+" > toolchain.cmake
+
+  cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
+        -DCMAKE_BUILD_TYPE=Relase \
+        -DCMAKE_INSTALL_PREFIX="$SNORE_PREFIX_DIR" \
+        -DBUILD_daemon=OFF \
+        -DBUILD_settings=OFF \
+        -DBUILD_snoresend=OFF \
+        ..
+  make
+  make install
+  cd ..
+  echo -n $SNORE_VERSION > $SNORE_PREFIX_DIR/done
+  cd ..
+  rm -rf ./snorenotify*
+else
+  echo "Using cached build of snorenotify `cat $SNORE_PREFIX_DIR/done`"
+fi
 
 # Opus
 
@@ -1200,6 +1255,7 @@ then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DSPELL_CHECK=OFF \
+        -DDESKTOP_NOTIFICATIONS=ON \
         -DUPDATE_CHECK=ON \
         -DSTRICT_OPTIONS=ON \
         ..
@@ -1208,6 +1264,7 @@ then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Debug \
         -DSPELL_CHECK=OFF \
+        -DDESKTOP_NOTIFICATIONS=ON \
         -DUPDATE_CHECK=ON \
         -DSTRICT_OPTIONS=ON \
         ..
@@ -1228,6 +1285,10 @@ cp -r $QT_PREFIX_DIR/plugins/imageformats \
       $QT_PREFIX_DIR/plugins/iconengines \
       $QTOX_PREFIX_DIR
 cp {$OPENSSL_PREFIX_DIR,$SQLCIPHER_PREFIX_DIR,$FFMPEG_PREFIX_DIR,$OPENAL_PREFIX_DIR,$QRENCODE_PREFIX_DIR,$EXIF_PREFIX_DIR,$OPUS_PREFIX_DIR,$SODIUM_PREFIX_DIR,$VPX_PREFIX_DIR,$TOXCORE_PREFIX_DIR}/bin/*.dll $QTOX_PREFIX_DIR
+cp "$SNORE_PREFIX_DIR/bin/libsnore-qt5.dll" $QTOX_PREFIX_DIR
+mkdir -p "$QTOX_PREFIX_DIR/libsnore-qt5"
+cp "$SNORE_PREFIX_DIR/lib/plugins/libsnore-qt5/libsnore_backend_windowstoast.dll" "$QTOX_PREFIX_DIR/libsnore-qt5"
+cp "$SNORE_PREFIX_DIR/bin/SnoreToast.exe" $QTOX_PREFIX_DIR
 
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
@@ -1249,6 +1310,7 @@ find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-qtox-dll-find
 # dlls loded at run time that don't showup as a link time dependency
 echo "$QTOX_PREFIX_DIR/libssl-1_1.dll
 $QTOX_PREFIX_DIR/libssl-1_1-x64.dll
+$QTOX_PREFIX_DIR/libsnore-qt5/libsnore_backend_windowstoast.dll
 $QTOX_PREFIX_DIR/iconengines/qsvgicon.dll
 $QTOX_PREFIX_DIR/imageformats/qgif.dll
 $QTOX_PREFIX_DIR/imageformats/qico.dll
