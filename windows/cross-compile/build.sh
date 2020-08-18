@@ -682,13 +682,25 @@ then
   cd snorenotify*
   mkdir _build && cd _build
 
-  echo "
-      SET(CMAKE_SYSTEM_NAME Windows)
-      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
-      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
-      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
-      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $CMAKE_FIND_ROOT_PATH)
-  " > toolchain.cmake
+  PKG_CONFIG_PATH=""
+  PKG_CONFIG_LIBDIR=""
+  CMAKE_FIND_ROOT_PATH=""
+  for PREFIX_DIR in $DEP_DIR/*; do
+    if [ -d $PREFIX_DIR/lib/pkgconfig ]
+    then
+      export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$PREFIX_DIR/lib/pkgconfig"
+      export PKG_CONFIG_LIBDIR="$PKG_CONFIG_LIBDIR:$PREFIX_DIR/lib/pkgconfig"
+    fi
+    CMAKE_FIND_ROOT_PATH="$CMAKE_FIND_ROOT_PATH $PREFIX_DIR"
+  done
+
+echo "
+    SET(CMAKE_SYSTEM_NAME Windows)
+    SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+    SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+    SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+    SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $CMAKE_FIND_ROOT_PATH)
+" > toolchain.cmake
 
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_INSTALL_PREFIX="$SNORE_PREFIX_DIR"
