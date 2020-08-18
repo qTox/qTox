@@ -112,8 +112,8 @@ install() {
         fi
     fi
 
-    #fcho "Installing x-code Command line tools ..."
-    #xcode-select --install
+    fcho "Installing x-code Command line tools ..."
+    xcode-select --install
 
     if [[ -e /usr/local/bin/brew ]]
     then
@@ -216,6 +216,7 @@ install() {
     mkdir _build && cd _build
     export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
     cmake -DCMAKE_INSTALL_PREFIX="$LIB_INSTALL_PREFIX" \
+          -DCMAKE_BUILD_TYPE=Release \
           -DBUILD_daemon=OFF \
           -DBUILD_settings=OFF \
           -DBUILD_snoresend=OFF \
@@ -288,7 +289,12 @@ build() {
     else
         STRICT_OPTIONS="OFF"
     fi
-    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=ON -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
+    cmake -H$QTOX_DIR -B. \
+        -DUPDATE_CHECK=ON \
+        -DSPELL_CHECK=ON \
+        -DSTRICT_OPTIONS="${STRICT_OPTIONS}" \
+        -DDESKTOP_NOTIFICATIONS=ON
+
     make -j$(sysctl -n hw.ncpu)
 }
 
