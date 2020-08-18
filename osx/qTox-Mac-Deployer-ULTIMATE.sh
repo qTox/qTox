@@ -213,6 +213,8 @@ install() {
     git clone https://github.com/KDE/snorenotify "$SNORE_DIR"
     cd "$SNORE_DIR"
     git checkout tags/v0.7.0
+    # apple clang fix needed to compile on newer versions, but not yet released
+    git cherry-pick ad9ca8c0c6a6a8de982b842c639d3c6f276d8d21
     mkdir _build && cd _build
     export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
     cmake -DCMAKE_INSTALL_PREFIX="$LIB_INSTALL_PREFIX" \
@@ -289,7 +291,11 @@ build() {
     else
         STRICT_OPTIONS="OFF"
     fi
-    cmake -H$QTOX_DIR -B. -DUPDATE_CHECK=ON -DSPELL_CHECK=ON -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
+    cmake -H$QTOX_DIR -B. \
+        -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF \
+        -DDESKTOP_NOTIFICATIONS=ON \
+        -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
+
     make -j$(sysctl -n hw.ncpu)
 }
 
