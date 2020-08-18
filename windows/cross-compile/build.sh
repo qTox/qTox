@@ -703,7 +703,7 @@ echo "
 " > toolchain.cmake
 
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
-        -DCMAKE_INSTALL_PREFIX="$SNORE_PREFIX_DIR"
+        -DCMAKE_INSTALL_PREFIX="$SNORE_PREFIX_DIR" \
         -DBUILD_daemon=OFF \
         -DBUILD_settings=OFF \
         -DBUILD_snoresend=OFF \
