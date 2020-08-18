@@ -1254,6 +1254,7 @@ then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DSPELL_CHECK=OFF \
+        -DDESKTOP_NOTIFICATIONS=ON \
         -DUPDATE_CHECK=ON \
         -DSTRICT_OPTIONS=ON \
         ..
@@ -1262,6 +1263,7 @@ then
   cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         -DCMAKE_BUILD_TYPE=Debug \
         -DSPELL_CHECK=OFF \
+        -DDESKTOP_NOTIFICATIONS=ON \
         -DUPDATE_CHECK=ON \
         -DSTRICT_OPTIONS=ON \
         ..
