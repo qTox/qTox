@@ -213,10 +213,16 @@ install() {
     git clone https://github.com/KDE/snorenotify "$SNORE_DIR"
     cd "$SNORE_DIR"
     git checkout tags/v0.7.0
+    mkdir _build && cd _build
     export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
-    cmake -DCMAKE_INSTALL_PREFIX="$LIB_INSTALL_PREFIX" -DDESKTOP_NOTIFICATIONS=True .
+    cmake -DCMAKE_INSTALL_PREFIX="$LIB_INSTALL_PREFIX" \
+          -DBUILD_daemon=OFF \
+          -DBUILD_settings=OFF \
+          -DBUILD_snoresend=OFF \
+          ..
     make
     make install
+    cd ../..
 
     fcho "Installing snorenotify ..."
 
