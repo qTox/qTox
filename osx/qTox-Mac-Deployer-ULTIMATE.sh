@@ -224,10 +224,9 @@ install() {
           -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
           ..
     make
+    fcho "Installing snorenotify ..."
     make install
     cd ../..
-
-    fcho "Installing snorenotify ..."
 
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
     QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
@@ -283,7 +282,7 @@ build() {
     cd $BUILD_DIR
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
-    export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
+    export CMAKE_PREFIX_PATH="$(brew --prefix qt5);${LIB_INSTALL_PREFIX}"
 
     if [[ $TRAVIS = true ]]
     then
@@ -291,8 +290,10 @@ build() {
     else
         STRICT_OPTIONS="OFF"
     fi
+
     cmake -H$QTOX_DIR -B. \
-        -DUPDATE_CHECK=ON -DSPELL_CHECK=OFF \
+        -DUPDATE_CHECK=ON \
+        -DSPELL_CHECK=OFF \
         -DDESKTOP_NOTIFICATIONS=ON \
         -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
 
