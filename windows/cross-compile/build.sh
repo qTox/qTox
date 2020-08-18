@@ -1286,6 +1286,9 @@ cp -r $QT_PREFIX_DIR/plugins/imageformats \
       $QTOX_PREFIX_DIR
 cp {$OPENSSL_PREFIX_DIR,$SQLCIPHER_PREFIX_DIR,$FFMPEG_PREFIX_DIR,$OPENAL_PREFIX_DIR,$QRENCODE_PREFIX_DIR,$EXIF_PREFIX_DIR,$OPUS_PREFIX_DIR,$SODIUM_PREFIX_DIR,$VPX_PREFIX_DIR,$TOXCORE_PREFIX_DIR}/bin/*.dll $QTOX_PREFIX_DIR
 cp "$SNORE_PREFIX_DIR/bin/libsnore-qt5.dll" $QTOX_PREFIX_DIR
+mkdir -p "$QTOX_PREFIX_DIR/libsnore-qt5"
+cp "$SNORE_PREFIX_DIR/lib/plugins/libsnore-qt5/libsnore_backend_windowstoast.dll" "$QTOX_PREFIX_DIR/libsnore-qt5"
+cp "$SNORE_PREFIX_DIR/bin/SnoreToast.exe" $QTOX_PREFIX_DIR
 
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
@@ -1307,6 +1310,7 @@ find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-qtox-dll-find
 # dlls loded at run time that don't showup as a link time dependency
 echo "$QTOX_PREFIX_DIR/libssl-1_1.dll
 $QTOX_PREFIX_DIR/libssl-1_1-x64.dll
+$QTOX_PREFIX_DIR/libsnore-qt5/libsnore_backend_windowstoast.dll
 $QTOX_PREFIX_DIR/iconengines/qsvgicon.dll
 $QTOX_PREFIX_DIR/imageformats/qgif.dll
 $QTOX_PREFIX_DIR/imageformats/qico.dll
