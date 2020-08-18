@@ -220,6 +220,7 @@ install() {
           -DBUILD_daemon=OFF \
           -DBUILD_settings=OFF \
           -DBUILD_snoresend=OFF \
+          -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
           ..
     make
     make install
