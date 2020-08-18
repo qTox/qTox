@@ -189,23 +189,7 @@ install() {
     # needed for kf5-sonnet
     brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git
 
-    # brew install qt5 might take a long time to build Qt. Travis kills us if
-    # we don't output for 10 minutes. Travis also kills us if we output too much,
-    # so verbose isn't an option. So just output some dots...
-    if [[ $TRAVIS = true ]]
-    then
-        echo "outputting dots to keep travis from killing us..."
-        while true; do
-            echo -n "."
-            sleep 10
-        done &
-        DOT_PID=$!
-    fi
     brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft #kf5-sonnet
-    if [[ $TRAVIS = true ]]
-    then
-        kill $DOT_PID
-    fi
 
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
     QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
