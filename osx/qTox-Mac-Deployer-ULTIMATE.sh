@@ -200,8 +200,8 @@ install() {
     # apple clang fix needed to compile on newer versions, but not yet released
     git cherry-pick ad9ca8c0c6a6a8de982b842c639d3c6f276d8d21
     mkdir _build && cd _build
-    export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
     cmake -DCMAKE_INSTALL_PREFIX="$LIB_INSTALL_PREFIX" \
+          -DCMAKE_PREFIX_PATH="$(brew --prefix qt5)" \
           -DBUILD_daemon=OFF \
           -DBUILD_settings=OFF \
           -DBUILD_snoresend=OFF \
@@ -265,7 +265,6 @@ build() {
     cd $BUILD_DIR
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
-    export CMAKE_MODULE_PATH="$(brew --prefix qt5);${LIB_INSTALL_PREFIX}"
 
     if [[ $TRAVIS = true ]]
     then
@@ -275,6 +274,7 @@ build() {
     fi
 
     cmake -H$QTOX_DIR -B. \
+        -DCMAKE_PREFIX_PATH="$(brew --prefix qt5);${LIB_INSTALL_PREFIX}" \
         -DUPDATE_CHECK=ON \
         -DSPELL_CHECK=OFF \
         -DDESKTOP_NOTIFICATIONS=ON \
