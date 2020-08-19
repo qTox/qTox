@@ -205,7 +205,6 @@ install() {
           -DBUILD_daemon=OFF \
           -DBUILD_settings=OFF \
           -DBUILD_snoresend=OFF \
-          -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
           ..
     make
     fcho "Installing snorenotify ..."
@@ -279,6 +278,7 @@ build() {
         -DUPDATE_CHECK=ON \
         -DSPELL_CHECK=OFF \
         -DDESKTOP_NOTIFICATIONS=ON \
+        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
         -DSTRICT_OPTIONS="${STRICT_OPTIONS}"
 
     make -j$(sysctl -n hw.ncpu)
