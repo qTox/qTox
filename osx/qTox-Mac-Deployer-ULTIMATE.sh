@@ -265,7 +265,7 @@ build() {
     cd $BUILD_DIR
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ..."
-    export CMAKE_PREFIX_PATH="$(brew --prefix qt5);${LIB_INSTALL_PREFIX}"
+    export CMAKE_MODULE_PATH="$(brew --prefix qt5);${LIB_INSTALL_PREFIX}"
 
     if [[ $TRAVIS = true ]]
     then
