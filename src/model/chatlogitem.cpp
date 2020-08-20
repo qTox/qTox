@@ -18,9 +18,6 @@
 */
 
 #include "chatlogitem.h"
-#include "src/core/core.h"
-#include "src/friendlist.h"
-#include "src/grouplist.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
 
@@ -39,56 +36,23 @@ struct ChatLogItemDeleter
         delete static_cast<T*>(ptr);
     }
 };
-
-QString resolveToxPk(const ToxPk& pk)
-{
-    Friend* f = FriendList::findFriend(pk);
-    if (f) {
-        return f->getDisplayedName();
-    }
-
-    for (Group* it : GroupList::getAllGroups()) {
-        QString res = it->resolveToxId(pk);
-        if (!res.isEmpty()) {
-            return res;
-        }
-    }
-
-    return pk.toString();
-}
-
-QString resolveSenderNameFromSender(const ToxPk& sender)
-{
-    // TODO: Remove core instance
-    const Core* core = Core::getInstance();
-
-    // In unit tests we don't have a core instance so we just stringize the key
-    if (!core) {
-        return sender.toString();
-    }
-
-    bool isSelf = sender == core->getSelfId().getPublicKey();
-    QString myNickName = core->getUsername().isEmpty() ? sender.toString() : core->getUsername();
-
-    return isSelf ? myNickName : resolveToxPk(sender);
-}
 } // namespace
 
-ChatLogItem::ChatLogItem(ToxPk sender_, ChatLogFile file_)
-    : ChatLogItem(std::move(sender_), ContentType::fileTransfer,
+ChatLogItem::ChatLogItem(ToxPk sender_, const QString& displayName, ChatLogFile file_)
+    : ChatLogItem(std::move(sender_), displayName, ContentType::fileTransfer,
                   ContentPtr(new ChatLogFile(std::move(file_)),
                              ChatLogItemDeleter<ChatLogFile>::doDelete))
 {}
 
-ChatLogItem::ChatLogItem(ToxPk sender_, ChatLogMessage message_)
-    : ChatLogItem(sender_, ContentType::message,
+ChatLogItem::ChatLogItem(ToxPk sender_, const QString& displayName, ChatLogMessage message_)
+    : ChatLogItem(sender_, displayName, ContentType::message,
                   ContentPtr(new ChatLogMessage(std::move(message_)),
                              ChatLogItemDeleter<ChatLogMessage>::doDelete))
 {}
 
-ChatLogItem::ChatLogItem(ToxPk sender_, ContentType contentType_, ContentPtr content_)
+ChatLogItem::ChatLogItem(ToxPk sender_, const QString& displayName_, ContentType contentType_, ContentPtr content_)
     : sender(std::move(sender_))
-    , displayName(resolveSenderNameFromSender(sender))
+    , displayName(displayName_)
     , contentType(contentType_)
     , content(std::move(content_))
 {}

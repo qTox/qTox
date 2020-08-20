@@ -50,8 +50,8 @@ public:
         fileTransfer,
     };
 
-    ChatLogItem(ToxPk sender, ChatLogFile file);
-    ChatLogItem(ToxPk sender, ChatLogMessage message);
+    ChatLogItem(ToxPk sender, const QString& displayName, ChatLogFile file);
+    ChatLogItem(ToxPk sender, const QString& displayName, ChatLogMessage message);
     const ToxPk& getSender() const;
     ContentType getContentType() const;
     ChatLogFile& getContentAsFile();
@@ -63,7 +63,7 @@ public:
     const QString& getDisplayName() const;
 
 private:
-    ChatLogItem(ToxPk sender, ContentType contentType, ContentPtr content);
+    ChatLogItem(ToxPk sender, const QString &displayName_, ContentType contentType, ContentPtr content);
 
     ToxPk sender;
     QString displayName;
