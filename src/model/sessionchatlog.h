@@ -63,6 +63,10 @@ public slots:
     void onFileTransferBrokenUnbroken(const ToxPk& sender, const ToxFile& file, bool broken);
 
 private:
+    QString resolveSenderNameFromSender(const ToxPk &sender);
+
+
+private:
     const ICoreIdHandler& coreIdHandler;
 
     ChatLogIdx nextIdx = ChatLogIdx(0);
