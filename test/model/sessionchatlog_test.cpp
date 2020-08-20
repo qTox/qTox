@@ -24,6 +24,8 @@
 #include <QtTest/QtTest>
 
 namespace {
+static const QString TEST_USERNAME = "qTox Tester #1";
+
 Message createMessage(const QString& content)
 {
     Message message;
@@ -50,8 +52,7 @@ public:
 
     QString getUsername() const override
     {
-        std::terminate();
-        return QString();
+        return TEST_USERNAME;
     }
 };
 } // namespace
