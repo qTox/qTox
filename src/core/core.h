@@ -71,7 +71,6 @@ public:
 
     static ToxCorePtr makeToxCore(const QByteArray& savedata, const ICoreSettings* const settings,
                                   IBootstrapListGenerator& bootstrapNodes, ToxCoreErrors* err = nullptr);
-    static Core* getInstance();
     const CoreAV* getAv() const;
     CoreAV* getAv();
     CoreFile* getCoreFile() const;
