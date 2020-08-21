@@ -29,7 +29,6 @@
 #include "src/model/groupinvite.h"
 #include "src/model/status.h"
 #include "src/model/ibootstraplistgenerator.h"
-#include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "util/strongtype.h"
 
@@ -703,15 +702,6 @@ void Core::onStarted()
 void Core::start()
 {
     coreThread->start();
-}
-
-
-/**
- * @brief Returns the global widget's Core instance
- */
-Core* Core::getInstance()
-{
-    return Nexus::getCore();
 }
 
 const CoreAV* Core::getAv() const
