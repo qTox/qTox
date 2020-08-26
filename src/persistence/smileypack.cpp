@@ -111,7 +111,7 @@ SmileyPack::SmileyPack()
     loadingMutex.lock();
     QtConcurrent::run(this, &SmileyPack::load, Settings::getInstance().getSmileyPack());
     connect(&Settings::getInstance(), &Settings::smileyPackChanged, this,
-            &SmileyPack::onSmileyPackChanged);
+            &SmileyPack::onSmileyPackChanged, Qt::QueuedConnection);
     connect(cleanupTimer, &QTimer::timeout, this, &SmileyPack::cleanupIconsCache);
     cleanupTimer->start(CLEANUP_TIMEOUT);
 }

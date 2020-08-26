@@ -48,7 +48,7 @@ GenericChatroomWidget::GenericChatroomWidget(bool compact, QWidget* parent)
     nameLabel->setObjectName("nameLabelObj");
 
     Settings& s = Settings::getInstance();
-    connect(&s, &Settings::compactLayoutChanged, this, &GenericChatroomWidget::compactChange);
+    connect(&s, &Settings::compactLayoutChanged, this, &GenericChatroomWidget::compactChange, Qt::QueuedConnection);
 
     setAutoFillBackground(true);
     reloadTheme();

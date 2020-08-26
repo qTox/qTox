@@ -215,7 +215,7 @@ void Nexus::connectLoginScreen(const LoginScreen& loginScreen)
     QObject::connect(&loginScreen, &LoginScreen::autoLoginChanged, settings, &Settings::saveGlobal);
     // Settings -> LoginScreen
     QObject::connect(settings, &Settings::autoLoginChanged, &loginScreen,
-                     &LoginScreen::onAutoLoginChanged);
+                     &LoginScreen::onAutoLoginChanged, Qt::QueuedConnection);
 }
 
 void Nexus::showMainGUI()

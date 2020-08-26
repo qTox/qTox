@@ -134,7 +134,8 @@ ContentDialog::ContentDialog(const Core &core, QWidget* parent)
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
 
-    connect(&s, &Settings::groupchatPositionChanged, this, &ContentDialog::onGroupchatPositionChanged);
+    connect(&s, &Settings::groupchatPositionChanged, this, &ContentDialog::onGroupchatPositionChanged,
+        Qt::QueuedConnection);
     connect(splitter, &QSplitter::splitterMoved, this, &ContentDialog::saveSplitterState);
 
     Translator::registerHandler(std::bind(&ContentDialog::retranslateUi, this), this);

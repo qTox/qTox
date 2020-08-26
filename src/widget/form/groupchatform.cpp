@@ -130,7 +130,8 @@ GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, I
     connect(group, &Group::userLeft, this, &GroupChatForm::onUserLeft);
     connect(group, &Group::peerNameChanged, this, &GroupChatForm::onPeerNameChanged);
     connect(group, &Group::numPeersChanged, this, &GroupChatForm::updateUserCount);
-    connect(&Settings::getInstance(), &Settings::blackListChanged, this, &GroupChatForm::updateUserNames);
+    connect(&Settings::getInstance(), &Settings::blackListChanged, this,
+        &GroupChatForm::updateUserNames, Qt::QueuedConnection);
 
     updateUserNames();
     setAcceptDrops(true);

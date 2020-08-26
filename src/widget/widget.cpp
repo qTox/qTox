@@ -456,12 +456,12 @@ void Widget::init()
             &Widget::onGroupInviteAccepted);
 
     // settings
-    connect(&settings, &Settings::showSystemTrayChanged, this, &Widget::onSetShowSystemTray);
-    connect(&settings, &Settings::separateWindowChanged, this, &Widget::onSeparateWindowClicked);
+    connect(&settings, &Settings::showSystemTrayChanged, this, &Widget::onSetShowSystemTray, Qt::QueuedConnection);
+    connect(&settings, &Settings::separateWindowChanged, this, &Widget::onSeparateWindowClicked, Qt::QueuedConnection);
     connect(&settings, &Settings::compactLayoutChanged, contactListWidget,
-            &FriendListWidget::onCompactChanged);
+            &FriendListWidget::onCompactChanged, Qt::QueuedConnection);
     connect(&settings, &Settings::groupchatPositionChanged, contactListWidget,
-            &FriendListWidget::onGroupchatPositionChanged);
+            &FriendListWidget::onGroupchatPositionChanged, Qt::QueuedConnection);
 
     reloadTheme();
     updateIcons();
@@ -1796,7 +1796,7 @@ void Widget::registerContentDialog(ContentDialog& contentDialog) const
     connect(&contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
     connect(core, &Core::usernameSet, &contentDialog, &ContentDialog::setUsername);
     connect(&settings, &Settings::groupchatPositionChanged, &contentDialog,
-            &ContentDialog::reorderLayouts);
+            &ContentDialog::reorderLayouts, Qt::QueuedConnection);
     connect(&contentDialog, &ContentDialog::addFriendDialog, this, &Widget::addFriendDialog);
     connect(&contentDialog, &ContentDialog::addGroupDialog, this, &Widget::addGroupDialog);
     connect(&contentDialog, &ContentDialog::connectFriendWidget, this, &Widget::connectFriendWidget);
@@ -2099,7 +2099,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     groupAlertConnections.insert(groupId, notifyReceivedConnection);
 
     auto form = new GroupChatForm(*core, newgroup, *groupChatLog, *messageDispatcher);
-    connect(&settings, &Settings::nameColorsChanged, form, &GenericChatForm::setColorizedNames);
+    connect(&settings, &Settings::nameColorsChanged, form, &GenericChatForm::setColorizedNames, Qt::QueuedConnection);
     form->setColorizedNames(settings.getEnableGroupChatsColor());
     groupMessageDispatchers[groupId] = messageDispatcher;
     groupChatLogs[groupId] = groupChatLog;

@@ -229,8 +229,9 @@ GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, ICha
 
     // settings
     const Settings& s = Settings::getInstance();
-    connect(&s, &Settings::emojiFontPointSizeChanged, chatWidget, &ChatLog::forceRelayout);
-    connect(&s, &Settings::chatMessageFontChanged, this, &GenericChatForm::onChatMessageFontChanged);
+    connect(&s, &Settings::emojiFontPointSizeChanged, chatWidget, &ChatLog::forceRelayout, Qt::QueuedConnection);
+    connect(&s, &Settings::chatMessageFontChanged, this, &GenericChatForm::onChatMessageFontChanged,
+        Qt::QueuedConnection);
 
     msgEdit = new ChatTextEdit();
 #ifdef SPELL_CHECKING

@@ -272,7 +272,8 @@ int main(int argc, char* argv[])
     uint32_t profileId = settings.getCurrentProfileId();
     IPC ipc(profileId);
     if (ipc.isAttached()) {
-        QObject::connect(&settings, &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId);
+        QObject::connect(&settings, &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId,
+            Qt::QueuedConnection);
     } else {
         qWarning() << "Can't init IPC, maybe we're in a jail? Continuing with reduced multi-client functionality.";
     }
