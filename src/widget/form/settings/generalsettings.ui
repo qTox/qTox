@@ -310,7 +310,7 @@ instead of closing entirely.</string>
             <item row="4" column="0">
              <widget class="QLabel" name="maxAutoAcceptSizeLabel">
               <property name="text">
-               <string>Max auto-accept file size (0 to disable):</string>
+               <string>Max auto-accept file size (0 for unlimited):</string>
               </property>
              </widget>
             </item>
