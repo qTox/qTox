@@ -73,7 +73,12 @@ public:
                                   IBootstrapListGenerator& bootstrapNodes, ToxCoreErrors* err = nullptr);
     const CoreAV* getAv() const;
     CoreAV* getAv();
+    void setAv(CoreAV* coreAv);
+
     CoreFile* getCoreFile() const;
+    Tox* getTox() const;
+    QMutex& getCoreLoopLock() const;
+
     ~Core();
 
     static const QString TOX_EXT;
@@ -149,8 +154,6 @@ signals:
     void failedToSetStatusMessage(const QString& message);
     void failedToSetStatus(Status::Status status);
     void failedToSetTyping(bool typing);
-
-    void avReady();
 
     void saveRequest();
 
@@ -245,7 +248,7 @@ private:
     ToxPtr tox;
 
     std::unique_ptr<CoreFile> file;
-    std::unique_ptr<CoreAV> av;
+    CoreAV* av;
     QTimer* toxTimer = nullptr;
     // recursive, since we might call our own functions
     mutable QMutex coreLoopLock{QMutex::Recursive};
