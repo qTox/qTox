@@ -1084,7 +1084,7 @@ void Settings::setSpellCheckingEnabled(bool newValue)
 
     if (newValue != spellCheckingEnabled) {
         spellCheckingEnabled = newValue;
-        emit statusChangeNotificationEnabledChanged(statusChangeNotificationEnabled);
+        emit spellCheckingEnabledChanged(spellCheckingEnabled);
     }
 }
 
