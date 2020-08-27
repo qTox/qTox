@@ -19,8 +19,8 @@
 */
 
 #include "core.h"
+#include "coreav.h"
 #include "corefile.h"
-#include "src/core/coreav.h"
 #include "src/core/dhtserver.h"
 #include "src/core/icoresettings.h"
 #include "src/core/toxlogger.h"
@@ -495,7 +495,6 @@ Core::~Core()
     coreThread->exit(0);
     coreThread->wait();
 
-    av.reset();
     tox.reset();
 }
 
@@ -632,17 +631,6 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
     // tox should be valid by now
     assert(core->tox != nullptr);
 
-    // toxcore is successfully created, create toxav
-    // TODO(sudden6): don't create CoreAv here, Core should be usable without CoreAV
-    core->av = CoreAV::makeCoreAV(core->tox.get(), core->coreLoopLock);
-    if (!core->av) {
-        qCritical() << "Toxav failed to start";
-        if (err) {
-            *err = ToxCoreErrors::FAILED_TO_START;
-        }
-        return {};
-    }
-
     // create CoreFile
     core->file = CoreFile::makeCoreFile(core.get(), core->tox.get(), core->coreLoopLock);
     if (!core->file) {
@@ -692,8 +680,6 @@ void Core::onStarted()
     loadGroups();
 
     process(); // starts its own timer
-    av->start();
-    emit avReady();
 }
 
 /**
@@ -706,17 +692,32 @@ void Core::start()
 
 const CoreAV* Core::getAv() const
 {
-    return av.get();
+    return av;
 }
 
 CoreAV* Core::getAv()
 {
-    return av.get();
+    return av;
+}
+
+void Core::setAv(CoreAV *coreAv)
+{
+    av = coreAv;
 }
 
 CoreFile* Core::getCoreFile() const
 {
     return file.get();
+}
+
+Tox* Core::getTox() const
+{
+    return tox.get();
+}
+
+QMutex &Core::getCoreLoopLock() const
+{
+    return coreLoopLock;
 }
 
 /* Using the now commented out statements in checkConnection(), I watched how
@@ -1151,7 +1152,15 @@ void Core::removeGroup(int groupId)
     tox_conference_delete(tox.get(), groupId, &error);
     if (PARSE_ERR(error)) {
         emit saveRequest();
-        av->leaveGroupCall(groupId);
+
+        /*
+         * TODO(sudden6): this is probably not (thread-)safe, but can be ignored for now since
+         * we don't change av at runtime.
+         */
+
+        if (av) {
+            av->leaveGroupCall(groupId);
+        }
     }
 }
 
