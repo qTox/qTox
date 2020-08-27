@@ -19,10 +19,11 @@
 */
 
 #include "coreav.h"
+#include "audio/iaudiosettings.h"
 #include "core.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
-#include "src/persistence/settings.h"
+#include "src/persistence/igroupsettings.h"
 #include "src/video/corevideosource.h"
 #include "src/video/videoframe.h"
 #include <QCoreApplication>
@@ -68,12 +69,15 @@
  * deadlock.
  */
 
-CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav, QMutex& toxCoreLock)
+CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav, QMutex& toxCoreLock,
+               IAudioSettings& _audioSettings, IGroupSettings& _groupSettings)
     : audio{nullptr}
     , toxav{std::move(toxav)}
     , coreavThread{new QThread{this}}
     , iterateTimer{new QTimer{this}}
     , coreLock{toxCoreLock}
+    , audioSettings{_audioSettings}
+    , groupSettings{_groupSettings}
 {
     assert(coreavThread);
     assert(iterateTimer);
@@ -105,7 +109,8 @@ void CoreAV::connectCallbacks(ToxAV& toxav)
  * @param core pointer to the Tox instance
  * @return CoreAV instance on success, {} on failure
  */
-CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core, QMutex &toxCoreLock)
+CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core, QMutex& toxCoreLock,
+                                     IAudioSettings& audioSettings, IGroupSettings& groupSettings)
 {
     Toxav_Err_New err;
     std::unique_ptr<ToxAV, ToxAVDeleter> toxav{toxav_new(core, &err)};
@@ -125,7 +130,7 @@ CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core, QMutex &toxCoreLock)
 
     assert(toxav != nullptr);
 
-    return CoreAVPtr{new CoreAV{std::move(toxav), toxCoreLock}};
+    return CoreAVPtr{new CoreAV{std::move(toxav), toxCoreLock, audioSettings, groupSettings}};
 }
 
 /**
@@ -251,7 +256,7 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
     Toxav_Err_Answer err;
 
     const uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (toxav_answer(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(),
+    if (toxav_answer(toxav.get(), friendNum, audioSettings.getAudioBitrate(),
                      videoBitrate, &err)) {
         it->second->setActive(true);
         return true;
@@ -276,7 +281,7 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     }
 
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (!toxav_call(toxav.get(), friendNum, Settings::getInstance().getAudioBitrate(), videoBitrate,
+    if (!toxav_call(toxav.get(), friendNum, audioSettings.getAudioBitrate(), videoBitrate,
                     nullptr))
         return false;
 
@@ -476,9 +481,8 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
     QReadLocker locker{&cav->callsLock};
 
     const ToxPk peerPk = c->getGroupPeerPk(group, peer);
-    const Settings& s = Settings::getInstance();
     // don't play the audio if it comes from a muted peer
-    if (s.getBlackList().contains(peerPk.toString())) {
+    if (cav->groupSettings.getBlackList().contains(peerPk.toString())) {
         return;
     }
 

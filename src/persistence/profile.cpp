@@ -232,7 +232,7 @@ bool logCreateToxDataError(const CreateToxDataError& error, const QString& userN
 
 QStringList Profile::profiles;
 
-void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool isNewProfile)
+void Profile::initCore(const QByteArray& toxsave, Settings& s, bool isNewProfile)
 {
     if (toxsave.isEmpty() && !isNewProfile) {
         qCritical() << "Existing toxsave is empty";
@@ -245,7 +245,7 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
     }
 
     bootstrapNodes = std::unique_ptr<BootstrapNodeUpdater>(
-        new BootstrapNodeUpdater(Settings::getInstance().getProxy(), paths));
+        new BootstrapNodeUpdater(s.getProxy(), paths));
 
     Core::ToxCoreErrors err;
     core = Core::makeToxCore(toxsave, &s, *bootstrapNodes, &err);
@@ -265,6 +265,17 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
         return;
     }
 
+    coreAv = CoreAV::makeCoreAV(core->getTox(), core->getCoreLoopLock(), s, s);
+    if (!coreAv) {
+        qDebug() << "Failed to start ToxAV";
+        emit failedToStart();
+        return;
+    }
+
+    // Tell Core that we run with AV before doing anything else
+    core->setAv(coreAv.get());
+    coreAv->start();
+
     if (isNewProfile) {
         core->setStatusMessage(tr("Toxing on qTox"));
         core->setUsername(name);
@@ -282,7 +293,7 @@ void Profile::initCore(const QByteArray& toxsave, const ICoreSettings& s, bool i
     avatarBroadcaster = std::unique_ptr<AvatarBroadcaster>(new AvatarBroadcaster(*core));
 }
 
-Profile::Profile(const QString& name, const QString& password, std::unique_ptr<ToxEncrypt> passkey, Paths& paths_)
+Profile::Profile(const QString& name, std::unique_ptr<ToxEncrypt> passkey, Paths& paths_)
     : name{name}
     , passkey{std::move(passkey)}
     , isRemoved{false}
@@ -320,7 +331,7 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
         return nullptr;
     }
 
-    Profile* p = new Profile(name, password, std::move(tmpKey), settings.getPaths());
+    Profile* p = new Profile(name, std::move(tmpKey), settings.getPaths());
 
     // Core settings are saved per profile, need to load them before starting Core
     settings.updateProfileData(p, parser);
@@ -351,7 +362,7 @@ Profile* Profile::createProfile(const QString& name, const QString& password, Se
     }
 
     settings.createPersonal(name);
-    Profile* p = new Profile(name, password, std::move(tmpKey), settings.getPaths());
+    Profile* p = new Profile(name, std::move(tmpKey), settings.getPaths());
     settings.updateProfileData(p, parser);
 
     p->initCore(QByteArray(), settings, /*isNewProfile*/ true);
