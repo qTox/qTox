@@ -18,7 +18,7 @@
 */
 
 #include "profileinfo.h"
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"

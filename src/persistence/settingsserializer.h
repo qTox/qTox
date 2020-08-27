@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/core/toxencrypt.h"
+#include "core/toxencrypt.h"
 
 #include <QDataStream>
 #include <QSettings>

@@ -22,7 +22,7 @@
 #include "audio/iaudiocontrol.h"
 #include "audio/iaudiosink.h"
 #include "audio/iaudiosource.h"
-#include <src/core/toxpk.h>
+#include "core/toxpk.h"
 #include <tox/toxav.h>
 
 #include <QMap>

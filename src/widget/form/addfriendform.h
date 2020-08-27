@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/core/toxid.h"
+#include "core/toxid.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>

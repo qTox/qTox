@@ -18,9 +18,9 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "coreav.h"
+#include "core/coreav.h"
 #include "audio/iaudiosettings.h"
-#include "core.h"
+#include "core/core.h"
 #include "src/model/friend.h"
 #include "src/model/group.h"
 #include "src/persistence/igroupsettings.h"

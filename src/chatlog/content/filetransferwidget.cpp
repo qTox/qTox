@@ -20,7 +20,7 @@
 #include "filetransferwidget.h"
 #include "ui_filetransferwidget.h"
 
-#include "src/core/corefile.h"
+#include "core/corefile.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 #include "src/widget/style.h"

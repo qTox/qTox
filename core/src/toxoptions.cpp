@@ -19,8 +19,8 @@
 
 #include "toxoptions.h"
 
-#include "src/core/icoresettings.h"
-#include "src/core/toxlogger.h"
+#include "core/icoresettings.h"
+#include "core/toxlogger.h"
 
 #include <tox/tox.h>
 

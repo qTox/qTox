@@ -20,7 +20,7 @@
 #pragma once
 
 #include "src/chatlog/chatmessage.h"
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/model/message.h"
 #include "src/persistence/db/rawdatabase.h"
 #include <QDateTime>

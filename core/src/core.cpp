@@ -18,14 +18,14 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "core.h"
-#include "coreav.h"
-#include "corefile.h"
-#include "src/core/dhtserver.h"
-#include "src/core/icoresettings.h"
-#include "src/core/toxlogger.h"
-#include "src/core/toxoptions.h"
-#include "src/core/toxstring.h"
+#include "core/core.h"
+#include "core/corefile.h"
+#include "core/coreav.h"
+#include "core/dhtserver.h"
+#include "core/icoresettings.h"
+#include "core/toxlogger.h"
+#include "core/toxoptions.h"
+#include "toxstring.h"
 #include "src/model/groupinvite.h"
 #include "src/model/status.h"
 #include "src/model/ibootstraplistgenerator.h"

@@ -19,8 +19,8 @@
 
 
 #include "avatarbroadcaster.h"
-#include "src/core/core.h"
-#include "src/core/corefile.h"
+#include "core/core.h"
+#include "core/corefile.h"
 #include "src/model/status.h"
 #include <QDebug>
 #include <QObject>

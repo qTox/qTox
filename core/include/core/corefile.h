@@ -23,8 +23,8 @@
 #include <tox/tox.h>
 
 #include "toxfile.h"
-#include "src/core/core.h"
-#include "src/core/toxpk.h"
+#include "core/core.h"
+#include "core/toxpk.h"
 #include "src/model/status.h"
 
 #include <QHash>

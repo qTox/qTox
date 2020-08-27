@@ -19,8 +19,8 @@
 
 #include "groupchatroom.h"
 
-#include "src/core/core.h"
-#include "src/core/toxpk.h"
+#include "core/core.h"
+#include "core/toxpk.h"
 #include "src/friendlist.h"
 #include "src/model/dialogs/idialogsmanager.h"
 #include "src/model/friend.h"

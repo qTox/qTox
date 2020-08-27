@@ -20,8 +20,8 @@
 
 #include "nexus.h"
 #include "persistence/settings.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
+#include "core/core.h"
+#include "core/coreav.h"
 #include "src/model/groupinvite.h"
 #include "src/model/status.h"
 #include "src/persistence/profile.h"

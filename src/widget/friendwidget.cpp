@@ -24,7 +24,7 @@
 #include "groupwidget.h"
 #include "maskablepixmapwidget.h"
 
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/friendlist.h"
 #include "src/model/about/aboutfriend.h"
 #include "src/model/chatroom/friendchatroom.h"

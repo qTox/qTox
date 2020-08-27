@@ -20,14 +20,14 @@
 
 #pragma once
 
-#include "src/core/toxcall.h"
-
 #include <QObject>
 #include <QMutex>
 #include <QReadWriteLock>
 #include <atomic>
 #include <memory>
 #include <tox/toxav.h>
+
+#include "core/toxcall.h"
 
 class Friend;
 class Group;

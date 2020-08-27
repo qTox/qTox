@@ -24,7 +24,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/persistence/settings.h"
 
 /**

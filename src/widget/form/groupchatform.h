@@ -20,9 +20,8 @@
 #pragma once
 
 #include "genericchatform.h"
-#include "src/core/toxpk.h"
-#include "src/core/toxcall.h"
-#include "src/core/toxpk.h"
+#include "core/toxcall.h"
+#include "core/toxpk.h"
 #include <QMap>
 
 namespace Ui {

@@ -20,7 +20,7 @@
 #include "settingsserializer.h"
 #include "serialize.h"
 
-#include "src/core/toxencrypt.h"
+#include "core/toxencrypt.h"
 #include "src/persistence/profile.h"
 
 #include <QDebug>

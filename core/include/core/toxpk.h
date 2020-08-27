@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/core/contactid.h"
+#include "core/contactid.h"
 #include <QByteArray>
 #include <cstdint>
 

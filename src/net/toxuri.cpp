@@ -18,7 +18,7 @@
 */
 
 #include "src/net/toxuri.h"
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/widget/gui.h"
 #include <QByteArray>
 #include <QCoreApplication>

@@ -20,7 +20,7 @@
 #include "aboutfriendform.h"
 #include "src/widget/gui.h"
 #include "ui_aboutfriendform.h"
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/widget/style.h"
 
 #include <QFileDialog>

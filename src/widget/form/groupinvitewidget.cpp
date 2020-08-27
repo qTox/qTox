@@ -19,7 +19,7 @@
 
 #include "groupinvitewidget.h"
 
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/nexus.h"
 #include "src/persistence/settings.h"
 #include "src/widget/tool/croppinglabel.h"

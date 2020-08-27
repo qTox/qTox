@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/core/icoreidhandler.h"
+#include "core/icoreidhandler.h"
 
 #include <tox/tox.h>
 

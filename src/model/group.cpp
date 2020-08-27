@@ -19,9 +19,9 @@
 
 #include "group.h"
 #include "friend.h"
-#include "src/core/contactid.h"
-#include "src/core/groupid.h"
-#include "src/core/toxpk.h"
+#include "core/contactid.h"
+#include "core/groupid.h"
+#include "core/toxpk.h"
 #include "src/friendlist.h"
 
 #include <cassert>

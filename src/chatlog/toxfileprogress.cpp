@@ -19,7 +19,7 @@
 
 #include "toxfileprogress.h"
 
-#include "src/core/toxfile.h"
+#include "core/toxfile.h"
 
 bool ToxFileProgress::needsUpdate() const
 {

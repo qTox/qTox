@@ -19,7 +19,7 @@
 
 #include "profileform.h"
 #include "ui_profileform.h"
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/model/profile/iprofileinfo.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"

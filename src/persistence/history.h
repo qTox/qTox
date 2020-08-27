@@ -28,8 +28,8 @@
 #include <cstdint>
 #include <tox/toxencryptsave.h>
 
-#include "src/core/toxfile.h"
-#include "src/core/toxpk.h"
+#include "core/toxfile.h"
+#include "core/toxpk.h"
 #include "src/persistence/db/rawdatabase.h"
 #include "src/widget/searchtypes.h"
 

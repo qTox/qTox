@@ -17,9 +17,9 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/toxcall.h"
+#include "core/toxcall.h"
 #include "audio/audio.h"
-#include "src/core/coreav.h"
+#include "core/coreav.h"
 #include "src/persistence/settings.h"
 #include "src/video/camerasource.h"
 #include "src/video/corevideosource.h"

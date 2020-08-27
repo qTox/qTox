@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/icoregroupmessagesender.h"
+#include "core/icoregroupmessagesender.h"
 #include "src/model/group.h"
 #include "src/model/groupmessagedispatcher.h"
 #include "src/model/message.h"

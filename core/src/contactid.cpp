@@ -21,7 +21,7 @@
 #include <QString>
 #include <cstdint>
 #include <QHash>
-#include "src/core/contactid.h"
+#include "core/contactid.h"
 
 /**
  * @brief The default constructor. Creates an empty id.

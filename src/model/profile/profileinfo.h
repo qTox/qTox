@@ -21,7 +21,7 @@
 
 #include <QObject>
 #include "util/interface.h"
-#include "src/core/toxpk.h"
+#include "core/toxpk.h"
 #include "iprofileinfo.h"
 
 class Core;

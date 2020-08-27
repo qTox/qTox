@@ -24,7 +24,7 @@
 
 #include "src/chatlog/chatlinecontent.h"
 #include "src/chatlog/toxfileprogress.h"
-#include "src/core/toxfile.h"
+#include "core/toxfile.h"
 
 class CoreFile;
 

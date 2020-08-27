@@ -24,7 +24,7 @@
 #include <QNetworkProxy>
 #include <QObject>
 
-#include "src/core/dhtserver.h"
+#include "core/dhtserver.h"
 #include "src/model/ibootstraplistgenerator.h"
 
 class QNetworkReply;

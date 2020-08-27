@@ -19,8 +19,8 @@
 */
 
 #include "settings.h"
-#include "src/core/core.h"
-#include "src/core/corefile.h"
+#include "core/core.h"
+#include "core/corefile.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"

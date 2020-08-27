@@ -18,7 +18,6 @@
 */
 
 #include <QString>
-#include <QPixmap>
 
 #pragma once
 

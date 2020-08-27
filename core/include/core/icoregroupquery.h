@@ -1,5 +1,6 @@
 /*
-    Copyright © 2019 by The qTox Project Contributors
+    Copyright © 2013 by Maxim Biro <nurupo.contributions@gmail.com>
+    Copyright © 2014-2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -19,15 +20,22 @@
 
 #pragma once
 
-#include "toxid.h"
-#include "toxpk.h"
+#include "core/groupid.h"
+#include "core/toxpk.h"
 
-class ICoreIdHandler
+#include <QString>
+#include <QStringList>
+
+#include <cstdint>
+
+class ICoreGroupQuery
 {
-
 public:
-    virtual ~ICoreIdHandler() = default;
-    virtual ToxId getSelfId() const = 0;
-    virtual ToxPk getSelfPublicKey() const = 0;
-    virtual QString getUsername() const = 0;
+    virtual ~ICoreGroupQuery() = default;
+    virtual GroupId getGroupPersistentId(uint32_t groupNumber) const = 0;
+    virtual uint32_t getGroupNumberPeers(int groupId) const = 0;
+    virtual QString getGroupPeerName(int groupId, int peerId) const = 0;
+    virtual ToxPk getGroupPeerPk(int groupId, int peerId) const = 0;
+    virtual QStringList getGroupPeerNames(int groupId) const = 0;
+    virtual bool getGroupAvEnabled(int groupId) const = 0;
 };

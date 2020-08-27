@@ -30,8 +30,8 @@
 #include <QTime>
 #include <QVector>
 
-#include "src/core/core.h"
-#include "src/core/coreav.h"
+#include "core/core.h"
+#include "core/coreav.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"

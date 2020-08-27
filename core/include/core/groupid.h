@@ -19,15 +19,16 @@
 
 #pragma once
 
-#include "receiptnum.h"
-
-#include <QString>
+#include "core/contactid.h"
+#include <QByteArray>
 #include <cstdint>
 
-class ICoreFriendMessageSender
+class GroupId : public ContactId
 {
 public:
-    virtual ~ICoreFriendMessageSender() = default;
-    virtual bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) = 0;
-    virtual bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) = 0;
+    GroupId();
+    GroupId(const GroupId& other);
+    explicit GroupId(const QByteArray& rawId);
+    explicit GroupId(const uint8_t* rawId);
+    int getSize() const override;
 };

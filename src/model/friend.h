@@ -20,9 +20,9 @@
 #pragma once
 
 #include "contact.h"
-#include "src/core/core.h"
-#include "src/core/toxid.h"
-#include "src/core/contactid.h"
+#include "core/core.h"
+#include "core/toxid.h"
+#include "core/contactid.h"
 #include "src/model/status.h"
 #include <QObject>
 #include <QString>

@@ -17,10 +17,10 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/contactid.h"
-#include "src/core/toxpk.h"
-#include "src/core/toxid.h"
-#include "src/core/groupid.h"
+#include "core/contactid.h"
+#include "core/toxpk.h"
+#include "core/toxid.h"
+#include "core/groupid.h"
 
 #include <tox/tox.h>
 

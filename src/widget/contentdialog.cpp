@@ -28,7 +28,7 @@
 #include <QShortcut>
 #include <QSplitter>
 
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/friendlist.h"
 #include "src/grouplist.h"
 #include "src/model/chatroom/friendchatroom.h"

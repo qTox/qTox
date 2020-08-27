@@ -20,15 +20,14 @@
 
 #pragma once
 
-#include "groupid.h"
-#include "icorefriendmessagesender.h"
-#include "icoregroupmessagesender.h"
-#include "icoregroupquery.h"
-#include "icoreidhandler.h"
-#include "receiptnum.h"
-#include "toxfile.h"
-#include "toxid.h"
-#include "toxpk.h"
+#include "core/groupid.h"
+#include "core/icorefriendmessagesender.h"
+#include "core/icoregroupmessagesender.h"
+#include "core/icoregroupquery.h"
+#include "core/icoreidhandler.h"
+#include "core/receiptnum.h"
+#include "core/toxid.h"
+#include "core/toxpk.h"
 
 #include "util/strongtype.h"
 #include "src/model/status.h"

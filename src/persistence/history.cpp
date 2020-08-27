@@ -24,7 +24,7 @@
 #include "profile.h"
 #include "settings.h"
 #include "db/rawdatabase.h"
-#include "src/core/toxpk.h"
+#include "core/toxpk.h"
 
 namespace {
 static constexpr int SCHEMA_VERSION = 5;

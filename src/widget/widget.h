@@ -30,11 +30,11 @@
 
 #include "audio/iaudiocontrol.h"
 #include "audio/iaudiosink.h"
-#include "src/core/core.h"
-#include "src/core/groupid.h"
-#include "src/core/toxfile.h"
-#include "src/core/toxid.h"
-#include "src/core/toxpk.h"
+#include "core/core.h"
+#include "core/groupid.h"
+#include "core/toxfile.h"
+#include "core/toxid.h"
+#include "core/toxpk.h"
 #include "src/model/friendmessagedispatcher.h"
 #include "src/model/groupmessagedispatcher.h"
 #if DESKTOP_NOTIFICATIONS

@@ -20,9 +20,9 @@
 #include "groupchatform.h"
 
 #include "tabcompleter.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
-#include "src/core/groupid.h"
+#include "core/core.h"
+#include "core/coreav.h"
+#include "core/groupid.h"
 #include "src/chatlog/chatlog.h"
 #include "src/chatlog/content/text.h"
 #include "src/model/friend.h"
