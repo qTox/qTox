@@ -230,7 +230,7 @@ signals:
     // Privacy
     void typingNotificationChanged(bool enabled);
     void dbSyncTypeChanged(Db::syncType type);
-    void blackListChanged(QStringList& blist);
+    void blackListChanged(QStringList const& blist);
 
 public:
     bool applyCommandLineOptions(const QCommandLineParser& parser);
@@ -571,6 +571,16 @@ private:
     void savePersonal(QString profileName, const ToxEncrypt* passkey);
     friendProp& getOrInsertFriendPropRef(const ToxPk& id);
     ICoreSettings::ProxyType fixInvalidProxyType(ICoreSettings::ProxyType proxyType);
+
+    template <class ValType>
+    bool setVal(ValType& savedVal, ValType newVal) {
+        QMutexLocker locker{&bigLock};
+        if (savedVal != newVal) {
+            savedVal = newVal;
+            return true;
+        }
+        return false;
+    }
 
 public slots:
     void savePersonal(Profile* profile);
