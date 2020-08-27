@@ -21,6 +21,7 @@
 #pragma once
 
 #include "src/core/toxcall.h"
+
 #include <QObject>
 #include <QMutex>
 #include <QReadWriteLock>
@@ -31,6 +32,8 @@
 class Friend;
 class Group;
 class IAudioControl;
+class IAudioSettings;
+class IGroupSettings;
 class QThread;
 class QTimer;
 class CoreVideoSource;
@@ -46,7 +49,8 @@ class CoreAV : public QObject
 
 public:
     using CoreAVPtr = std::unique_ptr<CoreAV>;
-    static CoreAVPtr makeCoreAV(Tox* core, QMutex& coreLock);
+    static CoreAVPtr makeCoreAV(Tox* core, QMutex& toxCoreLock,
+                                IAudioSettings& audioSettings, IGroupSettings& groupSettings);
 
     void setAudio(IAudioControl& newAudio);
     IAudioControl* getAudio();
@@ -112,7 +116,8 @@ private:
         }
     };
 
-    CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, QMutex &toxCoreLock);
+    CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, QMutex &toxCoreLock,
+           IAudioSettings& _audioSettings, IGroupSettings& _groupSettings);
     void connectCallbacks(ToxAV& toxav);
 
     void process();
@@ -156,4 +161,7 @@ private:
      * @note This must be a recursive mutex as we're going to lock it in callbacks
      */
     QMutex& coreLock;
+
+    IAudioSettings& audioSettings;
+    IGroupSettings& groupSettings;
 };
