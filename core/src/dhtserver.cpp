@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "dhtserver.h"
+#include "core/dhtserver.h"
 
 /**
  * @brief   Compare equal operator

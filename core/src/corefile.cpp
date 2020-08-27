@@ -18,9 +18,9 @@
 */
 
 
-#include "corefile.h"
-#include "core.h"
-#include "toxfile.h"
+#include "core/corefile.h"
+#include "core/core.h"
+#include "core/toxfile.h"
 #include "toxstring.h"
 #include "src/persistence/settings.h"
 #include "src/model/status.h"

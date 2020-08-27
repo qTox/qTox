@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "toxlogger.h"
+#include "core/toxlogger.h"
 
 #include <tox/tox.h>
 

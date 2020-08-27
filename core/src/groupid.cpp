@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "groupid.h"
+#include "core/groupid.h"
 #include <tox/tox.h>
 
 #include <QByteArray>

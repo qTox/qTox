@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "toxoptions.h"
+#include "core/toxoptions.h"
 
 #include "core/icoresettings.h"
 #include "core/toxlogger.h"

@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "toxpk.h"
+#include "core/toxpk.h"
 
 #include <tox/tox.h>
 

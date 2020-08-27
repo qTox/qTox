@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "toxencrypt.h"
+#include "core/toxencrypt.h"
 #include <tox/toxencryptsave.h>
 
 #include <QByteArray>

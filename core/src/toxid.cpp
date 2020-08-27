@@ -18,8 +18,8 @@
 */
 
 
-#include "toxid.h"
-#include "toxpk.h"
+#include "core/toxid.h"
+#include "core/toxpk.h"
 
 #include <tox/tox.h>
 
