@@ -235,11 +235,11 @@ main() {
         then
             INSTALL_TOX=false
             shift
-        elif [ ${1} = "--with-sqlcipher" ]
+        elif [ ${1} = "--with-toxext" ]
         then
             INSTALL_TOXEXT=true
             shift
-        elif [ ${1} = "--without-sqlcipher" ]
+        elif [ ${1} = "--without-toxext" ]
         then
             INSTALL_TOXEXT=false
             shift

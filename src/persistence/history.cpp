@@ -341,6 +341,8 @@ bool dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
                                                  dbSchema3to4, dbSchema4to5, dbSchema5to6};
 
     assert(databaseSchemaVersion < static_cast<int>(upgradeFns.size()));
+    assert(SCHEMA_VERSION == upgradeFns.size());
+
     for (int64_t i = databaseSchemaVersion; i < static_cast<int>(upgradeFns.size()); ++i) {
         auto const newDbVersion = i + 1;
         if (!upgradeFns[i](*db)) {
@@ -817,7 +819,8 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
                 "message, file_transfers.file_restart_id, "
                 "file_transfers.file_path, file_transfers.file_name, "
                 "file_transfers.file_size, file_transfers.direction, "
-                "file_transfers.file_state, broken_messages.id FROM history "
+                "file_transfers.file_state, broken_messages.id, "
+                "faux_offline_pending.required_extensions FROM history "
                 "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                 "JOIN peers chat ON history.chat_id = chat.id "
                 "JOIN aliases ON sender_alias = aliases.id "
@@ -840,11 +843,12 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
         auto display_name = QString::fromUtf8(row[4].toByteArray().replace('\0', ""));
         auto sender_key = row[5].toString();
         auto isBroken = !row[13].isNull();
+        auto requiredExtensions = ExtensionSet(row[14].toLongLong());
 
         MessageState messageState = getMessageState(isPending, isBroken);
 
         if (row[7].isNull()) {
-            messages += {id,           messageState, ExtensionSet(), timestamp,        friend_key,
+            messages += {id,           messageState, requiredExtensions, timestamp,        friend_key,
                          display_name, sender_key,   row[6].toString()};
         } else {
             ToxFile file;

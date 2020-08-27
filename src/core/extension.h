@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef EXTENSION_H
-#define EXTENSION_H
+#pragma once
 
 #include <bitset>
 
@@ -31,5 +30,3 @@ struct ExtensionType
     };
 };
 using ExtensionSet = std::bitset<ExtensionType::max>;
-
-#endif /* EXTENSION_H */

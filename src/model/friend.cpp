@@ -159,8 +159,9 @@ void Friend::setStatus(Status::Status s)
     assert(s != Status::Status::Negotiating);
 
     const bool wasOnline = Status::isOnline(getStatus());
-    if (friendStatus == s)
+    if (friendStatus == s) {
         return;
+    }
 
     // When a friend goes online we want to give them some time to negotiate
     // extension support

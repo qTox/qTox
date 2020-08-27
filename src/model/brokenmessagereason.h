@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BROKEN_MESSAGE_REASON_H
-#define BROKEN_MESSAGE_REASON_H
+#pragma once
 
 // NOTE: Numbers are important here as this is cast to an int and persisted in the DB
 enum class BrokenMessageReason : int
@@ -26,5 +25,3 @@ enum class BrokenMessageReason : int
     unknown = 0,
     unsupportedExtensions = 1
 };
-
-#endif /* BROKEN_MESSAGE_REASON_H */

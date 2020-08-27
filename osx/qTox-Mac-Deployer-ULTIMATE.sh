@@ -222,12 +222,16 @@ install() {
         fi
     fi
 
+    if [[ $TRAVIS != true ]]
+    then
+        fcho "If all went well you should now have all the tools needed to compile qTox!"
+    fi
+
     # toxcore build
     if [[ $TRAVIS = true ]]
     then
         build_toxcore
     else
-        fcho "If all went well you should now have all the tools needed to compile qTox!"
         read -r -p "Would you like to install toxcore now? [y/N] " response
         if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
         then
@@ -250,7 +254,6 @@ install() {
     then
         build_toxext
     else
-        fcho "If all went well you should now have all the tools needed to compile qTox!"
         read -r -p "Would you like to install toxext now? [y/N] " response
         if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
         then
@@ -265,7 +268,6 @@ install() {
     then
         build_tox_extension_messages
     else
-        fcho "If all went well you should now have all the tools needed to compile qTox!"
         read -r -p "Would you like to install tox_extension_messages now? [y/N] " response
         if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
         then

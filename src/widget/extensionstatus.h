@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015-2019 by The qTox Project Contributors
+    Copyright © 2019-2020 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef EXTENSION_STATUS_H
-#define EXTENSION_STATUS_H
+#pragma once
 
 #include "src/core/extension.h"
 
@@ -33,4 +32,3 @@ public:
 public slots:
     void onExtensionSetUpdate(ExtensionSet extensionSet);
 };
-#endif /*EXTENSION_STATUS_H*/

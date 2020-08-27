@@ -17,8 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ICORE_EXT_PACKET_H
-#define ICORE_EXT_PACKET_H
+#pragma once
 
 #include <QDateTime>
 
@@ -67,5 +66,3 @@ public:
      */
     virtual std::unique_ptr<ICoreExtPacket> getPacket(uint32_t friendId) = 0;
 };
-
-#endif /*ICORE_EXT_PACKET_H*/

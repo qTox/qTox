@@ -857,13 +857,13 @@ diff -ruN libvpx/build/make/Makefile patched/build/make/Makefile
 +$(foreach lib,$(filter %dll,$(LIBS)),$(eval $(call so_template,$(lib))))
  $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dylib,$(LIBS)),$(eval $(call dl_template,$(lib))))
  $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dll,$(LIBS)),$(eval $(call dll_template,$(lib))))
- 
+
 diff -ruN libvpx/configure patched/configure
 --- libvpx/configure	2019-02-13 16:56:49.162860897 +0100
 +++ patched/configure	2019-02-13 16:53:03.328719607 +0100
 @@ -513,23 +513,23 @@
  }
- 
+
  process_detect() {
 -    if enabled shared; then
 +    #if enabled shared; then
@@ -938,7 +938,7 @@ diff -ruN libvpx/libs.mk patched/libs.mk
 -$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.so.$(SO_VERSION_MAJOR)
 +$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.dll
  $(BUILD_PFX)$(LIBVPX_SO): EXPORTS_FILE = $(EXPORT_FILE)
- 
+
  libvpx.def: $(call enabled,CODEC_EXPORTS)
 EOF
 
@@ -1077,7 +1077,7 @@ then
   cd ..
   rm -rf ./toxext*
 else
-  echo "Using cached build of Toxcore `cat $TOXEXT_PREFIX_DIR/done`"
+  echo "Using cached build of ToxExt `cat $TOXEXT_PREFIX_DIR/done`"
 fi
 
 # tox_extension_messages
@@ -1129,7 +1129,7 @@ then
   cd ..
   rm -rf ./tox_extension_messages*
 else
-  echo "Using cached build of Toxcore `cat $TOX_EXTENSION_MESSAGES_PREFIX_DIR/done`"
+  echo "Using cached build of tox_extension_messages `cat $TOX_EXTENSION_MESSAGES_PREFIX_DIR/done`"
 fi
 
 set +u
