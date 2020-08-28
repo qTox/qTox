@@ -19,6 +19,7 @@
 
 #include "searchform.h"
 #include "form/searchsettingsform.h"
+#include "src/widget/gui.h"
 #include "src/widget/style.h"
 
 #include <QVBoxLayout>
@@ -91,6 +92,8 @@ SearchForm::SearchForm(QWidget* parent) : QWidget(parent)
     connect(settingsButton, &QPushButton::clicked, this, &SearchForm::clickedSearch);
 
     connect(settings, &SearchSettingsForm::updateSettings, this, &SearchForm::changedState);
+
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &SearchForm::reloadTheme);
 }
 
 void SearchForm::removeSearchPhrase()

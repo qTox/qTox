@@ -36,6 +36,7 @@
 #include "src/widget/contentlayout.h"
 #include "src/widget/emoticonswidget.h"
 #include "src/widget/form/chatform.h"
+#include "src/widget/gui.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/searchform.h"
 #include "src/widget/style.h"
@@ -335,6 +336,8 @@ GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, ICha
 
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &GenericChatForm::onSendTriggered);
 
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &GenericChatForm::reloadTheme);
+
     reloadTheme();
 
     fileFlyout->setFixedSize(FILE_FLYOUT_SIZE);
@@ -413,12 +416,6 @@ void GenericChatForm::reloadTheme()
     setStyleSheet(Style::getStylesheet("genericChatForm/genericChatForm.css"));
     msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
                            + fontToCss(s.getChatMessageFont(), "QTextEdit"));
-
-    chatWidget->setStyleSheet(Style::getStylesheet("chatArea/chatArea.css"));
-    headWidget->setStyleSheet(Style::getStylesheet("chatArea/chatHead.css"));
-    chatWidget->reloadTheme();
-    headWidget->reloadTheme();
-    searchForm->reloadTheme();
 
     emoteButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
     fileButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));

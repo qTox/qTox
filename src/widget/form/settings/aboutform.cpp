@@ -182,6 +182,11 @@ void AboutForm::onUpdateCheckFailed()
     bodyUI->updateStack->setCurrentIndex(static_cast<int>(updateIndex::failed));
 }
 
+void AboutForm::reloadTheme()
+{
+    replaceVersions();
+}
+
 /**
  * @brief Creates hyperlink with specific style.
  * @param path The URL of the page the link goes to.

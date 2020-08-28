@@ -19,6 +19,7 @@
 
 #include "chatformheader.h"
 
+#include "src/widget/gui.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/callconfirmwidget.h"
@@ -154,6 +155,8 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
 
     updateButtonsView();
     Translator::registerHandler(std::bind(&ChatFormHeader::retranslateUi, this), this);
+
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &ChatFormHeader::reloadTheme);
 }
 
 ChatFormHeader::~ChatFormHeader() = default;
@@ -283,6 +286,7 @@ QSize ChatFormHeader::getAvatarSize() const
 
 void ChatFormHeader::reloadTheme()
 {
+    setStyleSheet(Style::getStylesheet("chatArea/chatHead.css"));
     callButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
     videoButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
     volButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));

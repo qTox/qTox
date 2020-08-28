@@ -50,7 +50,6 @@ private slots:
     // Private implementation, those must be called from the GUI thread
     void _setEnabled(bool state);
     void _setWindowTitle(const QString& title);
-    void _reloadTheme();
     void _showInfo(const QString& title, const QString& msg);
     void _showWarning(const QString& title, const QString& msg);
     void _showError(const QString& title, const QString& msg);
@@ -58,4 +57,7 @@ private slots:
                       bool warning = true, bool yesno = true);
     bool _askQuestion(const QString& title, const QString& msg, const QString& button1,
                       const QString& button2, bool defaultAns = false, bool warning = true);
+
+signals:
+    void themeReload();
 };

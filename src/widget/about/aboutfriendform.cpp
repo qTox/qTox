@@ -67,7 +67,9 @@ AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* 
     ui->statusMessage->setText(about->getStatusMessage());
     ui->avatar->setPixmap(about->getAvatar());
 
-    setStyleSheet(Style::getStylesheet("window/general.css"));
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &AboutFriendForm::reloadTheme);
+
+    reloadTheme();
 }
 
 static QString getAutoAcceptDir(const QString& dir)
@@ -88,6 +90,11 @@ void AboutFriendForm::onAutoAcceptDirClicked()
     }();
 
     about->setAutoAcceptDir(dir);
+}
+
+void AboutFriendForm::reloadTheme()
+{
+    setStyleSheet(Style::getStylesheet("window/general.css"));
 }
 
 void AboutFriendForm::onAutoAcceptDirChanged(const QString& path)

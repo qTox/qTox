@@ -46,6 +46,9 @@ public:
 
     Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
 
+public slots:
+    virtual void reloadTheme() {}
+
 protected:
     CroppingLabel* nameLabel;
     QLabel statusPic;

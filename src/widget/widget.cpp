@@ -463,6 +463,8 @@ void Widget::init()
     connect(&settings, &Settings::groupchatPositionChanged, contactListWidget,
             &FriendListWidget::onGroupchatPositionChanged);
 
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &Widget::reloadTheme);
+
     reloadTheme();
     updateIcons();
     retranslateUi();
@@ -1825,7 +1827,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
             Translator::registerHandler(std::bind(&Dialog::retranslateUi, this), this);
             retranslateUi();
             setWindowIcon(QIcon(":/img/icons/qtox.svg"));
-            setStyleSheet(Style::getStylesheet("window/general.css"));
+            reloadTheme();
 
             connect(core, &Core::usernameSet, this, &Dialog::retranslateUi);
         }
@@ -1840,6 +1842,11 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
         void retranslateUi()
         {
             setWindowTitle(core->getUsername() + QStringLiteral(" - ") + Widget::fromDialogType(type));
+        }
+
+        void reloadTheme() final
+        {
+            setStyleSheet(Style::getStylesheet("window/general.css"));
         }
 
     protected:
@@ -2394,6 +2401,12 @@ void Widget::clearAllReceipts()
 
 void Widget::reloadTheme()
 {
+    setStyleSheet("");
+    QWidgetList wgts = findChildren<QWidget*>();
+    for (auto x : wgts) {
+        x->setStyleSheet("");
+    }
+
     this->setStyleSheet(Style::getStylesheet("window/general.css"));
     QString statusPanelStyle = Style::getStylesheet("window/statusPanel.css");
     ui->tooliconsZone->setStyleSheet(Style::getStylesheet("tooliconsZone/tooliconsZone.css"));
@@ -2404,27 +2417,6 @@ void Widget::reloadTheme()
     contactListWidget->reDraw();
 
     profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css"));
-
-    if (contentLayout != nullptr) {
-        contentLayout->reloadTheme();
-    }
-
-    for (Friend* f : FriendList::getAllFriends()) {
-        friendWidgets[f->getPublicKey()]->reloadTheme();
-    }
-
-    for (Group* g : GroupList::getAllGroups()) {
-        groupWidgets[g->getPersistentId()]->reloadTheme();
-    }
-
-
-    for (auto f : FriendList::getAllFriends()) {
-        chatForms[f->getPublicKey()]->reloadTheme();
-    }
-
-    for (auto g : GroupList::getAllGroups()) {
-        groupChatForms[g->getPersistentId()]->reloadTheme();
-    }
 }
 
 void Widget::nextContact()

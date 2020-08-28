@@ -45,6 +45,9 @@ private:
 signals:
     void histroyRemoved();
 
+public slots:
+    void reloadTheme();
+
 private slots:
     void onAutoAcceptDirChanged(const QString& path);
     void onAcceptedClicked();

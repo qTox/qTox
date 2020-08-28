@@ -32,6 +32,9 @@ public:
 #endif
     bool event(QEvent* event) override;
 
+public slots:
+    virtual void reloadTheme() {}
+
 signals:
     void windowStateChanged(Qt::WindowStates state);
 };

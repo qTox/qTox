@@ -75,7 +75,6 @@ public:
 
     void setName(const QString& newName);
     virtual void show(ContentLayout* contentLayout);
-    virtual void reloadTheme();
 
     void addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                               const QDateTime& datetime);
@@ -91,6 +90,7 @@ public slots:
     void focusInput();
     void onChatMessageFontChanged(const QFont& font);
     void setColorizedNames(bool enable);
+    virtual void reloadTheme();
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);

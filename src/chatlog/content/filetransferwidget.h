@@ -64,6 +64,9 @@ protected:
 
     void paintEvent(QPaintEvent*) final;
 
+public slots:
+    void reloadTheme();
+
 private slots:
     void onLeftButtonClicked();
     void onRightButtonClicked();
@@ -76,6 +79,7 @@ private:
     static bool tryRemoveFile(const QString &filepath);
 
     void updateWidget(ToxFile const& file);
+    void updateBackgroundColor(const ToxFile::FileStatus status);
 
 private:
     CoreFile& coreFile;

@@ -44,7 +44,6 @@ public:
     ParameterSearch getParameterSearch();
     void setFocusEditor();
     void insertEditor(const QString &text);
-    void reloadTheme();
 
 protected:
     void showEvent(QShowEvent* event) final;
@@ -84,6 +83,7 @@ private slots:
 
 public slots:
     void showMessageNotFound(SearchDirection direction);
+    void reloadTheme();
 
 signals:
     void searchInBegin(const QString& phrase, const ParameterSearch& parameter);

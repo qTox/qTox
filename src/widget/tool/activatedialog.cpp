@@ -19,11 +19,13 @@
 
 
 #include "activatedialog.h"
+#include "src/widget/gui.h"
 #include <QEvent>
 
 ActivateDialog::ActivateDialog(QWidget* parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &ActivateDialog::reloadTheme);
 }
 
 bool ActivateDialog::event(QEvent* event)

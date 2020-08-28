@@ -44,6 +44,7 @@ class GroupChatroom;
 class GroupWidget;
 class QCloseEvent;
 class QSplitter;
+class QScrollArea;
 
 class ContentDialog : public ActivateDialog, public IDialogs
 {
@@ -90,6 +91,7 @@ public slots:
     void previousContact();
     void nextContact();
     void setUsername(const QString& newName);
+    void reloadTheme() override;
 
 protected:
     bool event(QEvent* event) final;
@@ -121,6 +123,7 @@ private:
 private:
     QList<QLayout*> layouts;
     QSplitter* splitter;
+    QScrollArea* friendScroll;
     FriendListLayout* friendLayout;
     GenericChatItemLayout groupLayout;
     ContentLayout* contentLayout;

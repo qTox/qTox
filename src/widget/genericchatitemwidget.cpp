@@ -19,8 +19,8 @@
 
 #include "genericchatitemwidget.h"
 #include "src/persistence/settings.h"
-#include "src/widget/style.h"
 #include "src/widget/tool/croppinglabel.h"
+#include "src/widget/gui.h"
 #include <QVariant>
 
 GenericChatItemWidget::GenericChatItemWidget(bool compact, QWidget* parent)
@@ -32,6 +32,8 @@ GenericChatItemWidget::GenericChatItemWidget(bool compact, QWidget* parent)
     nameLabel = new CroppingLabel(this);
     nameLabel->setObjectName("name");
     nameLabel->setTextFormat(Qt::PlainText);
+
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &GenericChatItemWidget::reloadTheme);
 }
 
 bool GenericChatItemWidget::isCompact() const
