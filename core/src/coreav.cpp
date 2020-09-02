@@ -26,7 +26,6 @@
 #include "src/persistence/igroupsettings.h"
 #include "src/video/corevideosource.h"
 #include "src/video/videoframe.h"
-#include <QCoreApplication>
 #include <QDebug>
 #include <QThread>
 #include <QTimer>

@@ -20,7 +20,6 @@
 #include "core/toxcall.h"
 #include "audio/audio.h"
 #include "core/coreav.h"
-#include "src/persistence/settings.h"
 #include "src/video/camerasource.h"
 #include "src/video/corevideosource.h"
 #include "src/model/group.h"

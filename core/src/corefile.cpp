@@ -22,12 +22,12 @@
 #include "core/core.h"
 #include "core/toxfile.h"
 #include "toxstring.h"
-#include "src/persistence/settings.h"
 #include "src/model/status.h"
 #include "src/model/toxclientstandards.h"
 #include <QDebug>
 #include <QDir>
 #include <QFile>
+#include <QPixmap>
 #include <QRegularExpression>
 #include <QThread>
 #include <cassert>

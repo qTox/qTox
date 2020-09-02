@@ -29,10 +29,8 @@
 #include "toxstring.h"
 #include "src/model/status.h"
 #include "src/model/ibootstraplistgenerator.h"
-#include "src/persistence/profile.h"
 #include "util/strongtype.h"
 
-#include <QCoreApplication>
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
 #include <QRandomGenerator>
 #else
