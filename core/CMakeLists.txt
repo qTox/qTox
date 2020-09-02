@@ -21,6 +21,7 @@ set(SOURCE_FILES
     "include/core/corefile.h"
     "include/core/dhtserver.h"
     "include/core/groupid.h"
+    "include/core/groupinvite.h"
     "include/core/icorefriendmessagesender.h"
     "include/core/icoregroupmessagesender.h"
     "include/core/icoregroupquery.h"
@@ -41,6 +42,7 @@ set(SOURCE_FILES
     "src/corefile.cpp"
     "src/dhtserver.cpp"
     "src/groupid.cpp"
+    "src/groupinvite.cpp"
     "src/toxcall.cpp"
     "src/toxencrypt.cpp"
     "src/toxfile.cpp"
@@ -55,6 +57,17 @@ add_library(core_library STATIC ${SOURCE_FILES})
 
 # We need this directory, and users of our library will need it too
 target_include_directories(core_library PUBLIC include/)
+
+# The variables are set by Dependencies.cmake
+target_link_libraries(core_library ${TOXCORE_LIBRARIES})
+include_directories(core_library PRIVATE ${TOXCORE_INCLUDE_DIRS})
+target_link_libraries(core_library ${TOXAV_LIBRARIES})
+include_directories(core_library PRIVATE ${TOXAV_INCLUDE_DIRS})
+# in case toxencryptsave is a separate library
+if (TOXENCRYPTSAVE_FOUND)
+    target_link_libraries(core_library ${TOXENCRYPTSAVE_LIBRARIES})
+    include_directories(core_library PRIVATE ${TOXENCRYPTSAVE_INCLUDE_DIRS})
+endif()
 
 target_link_libraries(core_library util_library)
 target_link_libraries(core_library audio_library)

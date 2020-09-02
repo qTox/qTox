@@ -256,8 +256,6 @@ set(${PROJECT_NAME}_SOURCES
   src/model/groupmessagedispatcher.cpp
   src/model/message.h
   src/model/message.cpp
-  src/model/groupinvite.cpp
-  src/model/groupinvite.h
   src/model/group.cpp
   src/model/group.h
   src/model/status.cpp

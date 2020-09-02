@@ -22,7 +22,7 @@
 #include "persistence/settings.h"
 #include "core/core.h"
 #include "core/coreav.h"
-#include "src/model/groupinvite.h"
+#include "core/groupinvite.h"
 #include "src/model/status.h"
 #include "src/persistence/profile.h"
 #include "src/widget/widget.h"

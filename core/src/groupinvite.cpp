@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "groupinvite.h"
+#include "core/groupinvite.h"
 
 /**
  * @class GroupInvite

@@ -22,11 +22,11 @@
 #include "core/corefile.h"
 #include "core/coreav.h"
 #include "core/dhtserver.h"
+#include "core/groupinvite.h"
 #include "core/icoresettings.h"
 #include "core/toxlogger.h"
 #include "core/toxoptions.h"
 #include "toxstring.h"
-#include "src/model/groupinvite.h"
 #include "src/model/status.h"
 #include "src/model/ibootstraplistgenerator.h"
 #include "src/persistence/profile.h"
@@ -903,6 +903,7 @@ void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection sta
 void Core::onGroupInvite(Tox* tox, uint32_t friendId, Tox_Conference_Type type,
                          const uint8_t* cookie, size_t length, void* vCore)
 {
+    Q_UNUSED(tox);
     Core* core = static_cast<Core*>(vCore);
     const QByteArray data(reinterpret_cast<const char*>(cookie), length);
     const GroupInvite inviteInfo(friendId, type, data);

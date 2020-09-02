@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/model/groupinvite.h"
+#include "core/groupinvite.h"
 
 #include <QWidget>
 

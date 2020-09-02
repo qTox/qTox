@@ -21,7 +21,7 @@
 
 #include "ui_mainwindow.h"
 #include "core/core.h"
-#include "src/model/groupinvite.h"
+#include "core/groupinvite.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
 #include "src/widget/form/groupinvitewidget.h"
