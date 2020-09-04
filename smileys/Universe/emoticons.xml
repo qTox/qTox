@@ -51,9 +51,11 @@
     <emoticon file="1f609.svg">
         <string>😉</string>
         <string>:wink:</string>
+        <string>;)</string>
+        <string>;-)</string>
     </emoticon>
     <emoticon file="1f60a.svg">
-        <string>😊:</string>
+        <string>😊</string>
         <string>:smiling_face_with_smiling_eyes</string>
     </emoticon>
     <emoticon file="1f607.svg">
@@ -61,6 +63,8 @@
         <string>:innocent:</string>
         <string>:halo:</string>
         <string>:smiling_face_with_halo:</string>
+        <string>O:)</string>
+        <string>O:-)</string>
     </emoticon>
     <emoticon file="1f970.svg">
         <string>🥰</string>
@@ -78,6 +82,8 @@
         <string>😘</string>
         <string>:kissing_heart:</string>
         <string>:blowing_a_kiss:</string>
+        <string>:*</string>
+        <string>:-*</string>
     </emoticon>
     <emoticon file="1f617.svg">
         <string>😗</string>
@@ -112,10 +118,16 @@
         <string>😛</string>
         <string>:stuck_out_tongue:</string>
         <string>:face_with_tongue:</string>
+        <string>:P</string>
+        <string>:-P</string>
+        <string>:p</string>
+        <string>:-p</string>
     </emoticon>
     <emoticon file="1f61c.svg">
         <string>😜</string>
         <string>:winking_face_with_tongue:</string>
+        <string>;P</string>
+        <string>;-P</string>
     </emoticon>
     <emoticon file="1f92a.svg">
         <string>🤪</string>
@@ -164,6 +176,7 @@
     <emoticon file="1f611.svg">
         <string>😑</string>
         <string>:expressionless:</string>
+        <string>-_-</string>
     </emoticon>
     <emoticon file="1f636.svg">
         <string>😶</string>
@@ -196,45 +209,45 @@
     </emoticon>
     <emoticon file="1f60c.svg">
         <string>😌</string>
-        <string>:relieved:</string>        
+        <string>:relieved:</string>
     </emoticon>
     <emoticon file="1f614.svg">
         <string>😔</string>
-        <string>:pensive:</string>        
+        <string>:pensive:</string>
     </emoticon>
     <emoticon file="1f62a.svg">
         <string>😪</string>
-        <string>:sleepy:</string>        
+        <string>:sleepy:</string>
     </emoticon>
     <emoticon file="1f924.svg">
         <string>🤤</string>
         <string>:drooling:</string>
         <string>:drooling_face:</string>
-        <string>:drool:</string>        
+        <string>:drool:</string>
     </emoticon>
     <emoticon file="1f634.svg">
         <string>😴</string>
-        <string>:sleeping:</string>        
+        <string>:sleeping:</string>
     </emoticon>
     <emoticon file="1f637.svg">
         <string>😷</string>
         <string>:mask:</string>
-        <string>:face_with_medical_mask:</string>        
+        <string>:face_with_medical_mask:</string>
     </emoticon>
     <emoticon file="1f912.svg">
         <string>🤒</string>
         <string>:thermometer_face:</string>
-        <string>:face_with_thermometer:</string>        
+        <string>:face_with_thermometer:</string>
     </emoticon>
     <emoticon file="1f922.svg">
         <string>🤢</string>
         <string>:sick:</string>
-        <string>:nauseated_face:</string>        
+        <string>:nauseated_face:</string>
     </emoticon>
     <emoticon file="1f92e.svg">
         <string>🤮</string>
         <string>:vomiting:</string>
-        <string>:vomiting_face:</string>        
+        <string>:vomiting_face:</string>
     </emoticon>
     <emoticon file="1f927.svg">
         <string>🤧</string>
@@ -243,209 +256,220 @@
     </emoticon>
     <emoticon file="1f975.svg">
         <string>🥵</string>
-        <string>:hot_face:</string>        
+        <string>:hot_face:</string>
     </emoticon>
     <emoticon file="1f976.svg">
         <string>🥶</string>
-        <string>:cold_face:</string>        
+        <string>:cold_face:</string>
     </emoticon>
     <emoticon file="1f974.svg">
         <string>🥴</string>
-        <string>:woozy_face:</string>        
+        <string>:woozy_face:</string>
     </emoticon>
     <emoticon file="1f635.svg">
         <string>😵</string>
-        <string>:dizzy_face:</string>        
+        <string>:dizzy_face:</string>
     </emoticon>
     <emoticon file="1f92f.svg">
         <string>🤯</string>
-        <string>:exploding_head:</string>        
+        <string>:exploding_head:</string>
     </emoticon>
     <emoticon file="1f920.svg">
         <string>🤠</string>
         <string>:cowboy:</string>
-        <string>:cowboy_hat_face:</string>        
+        <string>:cowboy_hat_face:</string>
     </emoticon>
     <emoticon file="1f973.svg">
         <string>🥳</string>
-        <string>:partying_face:</string>        
+        <string>:partying_face:</string>
     </emoticon>
     <emoticon file="1f978.svg">
         <string>🥸</string>
-        <string>:disguised_face:</string>        
+        <string>:disguised_face:</string>
     </emoticon>
     <emoticon file="1f60e.svg">
         <string>😎</string>
-        <string>:smiling_face_with_sunglasses:</string>        
+        <string>:smiling_face_with_sunglasses:</string>
+        <string>8)</string>
+        <string>8-)</string>
     </emoticon>
     <emoticon file="1f913.svg">
         <string>🤓</string>
         <string>:nerd:</string>
-        <string>:nerd_face:</string>        
+        <string>:nerd_face:</string>
     </emoticon>
     <emoticon file="1f9d0.svg">
         <string>🧐</string>
         <string>:monocle_face:</string>
-        <string>:face_with_monocle:</string>        
+        <string>:face_with_monocle:</string>
     </emoticon>
     <emoticon file="1f615.svg">
         <string>😕</string>
         <string>:confused:</string>
-        <string>:confused_face:</string>        
+        <string>:confused_face:</string>
+        <string>:/</string>
+        <string>:-/</string>
+        <string>:\</string>
+        <string>:-\</string>
     </emoticon>
     <emoticon file="1f61f.svg">
         <string>😟</string>
         <string>:worried:</string>
-        <string>:worried_face:</string>        
+        <string>:worried_face:</string>
     </emoticon>
     <emoticon file="1f641.svg">
         <string>🙁</string>
         <string>:slight_frown:</string>
-        <string>:slightly_frowning_face:</string>        
+        <string>:slightly_frowning_face:</string>
     </emoticon>
     <emoticon file="2639.svg">
         <string>☹</string>
-        <string>:frowning2:</string>        
+        <string>:frowning2:</string>
     </emoticon>
     <emoticon file="1f62e.svg">
         <string>😮</string>
         <string>:open_mouth:</string>
         <string>:face_with_open_mouth:</string>
-        <string>:O</string>        
+        <string>:O</string>
     </emoticon>
     <emoticon file="1f62f.svg">
         <string>😯</string>
         <string>:hushed:</string>
-        <string>:hushed_face:</string>        
+        <string>:hushed_face:</string>
     </emoticon>
     <emoticon file="1f632.svg">
         <string>😲</string>
         <string>:astonished:</string>
-        <string>:astonished_face:</string>        
+        <string>:astonished_face:</string>
     </emoticon>
     <emoticon file="1f633.svg">
         <string>😳</string>
         <string>:flushed:</string>
-        <string>:flushed_face:</string>        
+        <string>:flushed_face:</string>
     </emoticon>
     <emoticon file="1f97a.svg">
         <string>🥺</string>
         <string>:pleading:</string>
-        <string>:pleading_face:</string>        
+        <string>:pleading_face:</string>
     </emoticon>
     <emoticon file="1f626.svg">
         <string>😦</string>
         <string>:(</string>
         <string>:-(</string>
         <string>:frowning:</string>
-        <string>:frowning_face:</string>        
+        <string>:frowning_face:</string>
     </emoticon>
     <emoticon file="1f627.svg">
         <string>😧</string>
         <string>:anguished:</string>
-        <string>:anguished_face:</string>        
+        <string>:anguished_face:</string>
     </emoticon>
     <emoticon file="1f628.svg">
         <string>😨</string>
         <string>:fearful:</string>
-        <string>:fearful_face:</string>        
+        <string>:fearful_face:</string>
     </emoticon>
     <emoticon file="1f630.svg">
         <string>😰</string>
         <string>:cold_sweat:</string>
-        <string>:anxious_face_with_sweat:</string>        
+        <string>:anxious_face_with_sweat:</string>
     </emoticon>
     <emoticon file="1f625.svg">
         <string>😥</string>
         <string>:sad_but_relieved:</string>
-        <string>:sad_but_relieved_face:</string>        
+        <string>:sad_but_relieved_face:</string>
     </emoticon>
     <emoticon file="1f622.svg">
         <string>😢</string>
         <string>:crying:</string>
-        <string>:crying_face:</string>        
+        <string>:crying_face:</string>
+        <string>:'(</string>
+        <string>:,(</string>
     </emoticon>
     <emoticon file="1f62d.svg">
         <string>😭</string>
         <string>:sob:</string>
-        <string>:loudly_crying:</string>        
+        <string>:loudly_crying:</string>
     </emoticon>
     <emoticon file="1f631.svg">
         <string>😱</string>
         <string>:scream:</string>
-        <string>:face_screaming_in_fear:</string>        
+        <string>:face_screaming_in_fear:</string>
     </emoticon>
     <emoticon file="1f616.svg">
         <string>😖</string>
         <string>:confounded:</string>
-        <string>:confounded_face:</string>        
+        <string>:confounded_face:</string>
+        <string>:s</string>
+        <string>:-s</string>
     </emoticon>
     <emoticon file="1f61e.svg">
         <string>😞</string>
         <string>:disappointed:</string>
-        <string>:disappointed_face:</string>        
+        <string>:disappointed_face:</string>
     </emoticon>
     <emoticon file="1f613.svg">
         <string>😓</string>
         <string>:sweat:</string>
-        <string>:downcast_face_with_sweat:</string>        
+        <string>:downcast_face_with_sweat:</string>
     </emoticon>
     <emoticon file="1f629.svg">
         <string>😩</string>
         <string>:weary:</string>
-        <string>:weary_face:</string>        
+        <string>:weary_face:</string>
     </emoticon>
     <emoticon file="1f62b.svg">
         <string>😫</string>
         <string>:tired:</string>
-        <string>:tired_face:</string>        
+        <string>:tired_face:</string>
     </emoticon>
     <emoticon file="1f971.svg">
         <string>🥱</string>
         <string>:yawning:</string>
-        <string>:yawning_face:</string>        
+        <string>:yawning_face:</string>
     </emoticon>
     <emoticon file="1f624.svg">
         <string>😤</string>
         <string>:steaming:</string>
         <string>:steam_from_nose_face:</string>
-        <string>:face_with_steam_from_nose:</string>        
+        <string>:face_with_steam_from_nose:</string>
     </emoticon>
     <emoticon file="1f621.svg">
         <string>😡</string>
-        <string>:rage:</string>        
+        <string>:rage:</string>
     </emoticon>
     <emoticon file="1f620.svg">
         <string>😠</string>
         <string>:angry:</string>
         <string>:angry_face:</string>
-        <string>>:(</string>        
+        <string>>:(</string>
+        <string>>:-(</string>
     </emoticon>
     <emoticon file="1f92c.svg">
         <string>🤬</string>
         <string>:swearing:</string>
-        <string>:face_with_symbols_over_mouth:</string>        
+        <string>:face_with_symbols_over_mouth:</string>
     </emoticon>
     <emoticon file="1f608.svg">
         <string>😈</string>
         <string>:smiling_devil:</string>
         <string>:smiling_imp:</string>
-        <string>:smiling_face_with_horns:</string>        
+        <string>:smiling_face_with_horns:</string>
     </emoticon>
     <emoticon file="1f47f.svg">
         <string>👿</string>
         <string>:devil:</string>
         <string>:imp:</string>
-        <string>:angry_face_with_horns:</string>        
+        <string>:angry_face_with_horns:</string>
     </emoticon>
     <emoticon file="1f480.svg">
         <string>💀</string>
-        <string>:skull:</string>        
+        <string>:skull:</string>
     </emoticon>
     <emoticon file="2620.svg">
         <string>☠</string>
         <string>:skull_crossbones:</string>
-        <string>:skull_and_crossbones:</string>        
+        <string>:skull_and_crossbones:</string>
     </emoticon>
     <emoticon file="1f4a9.svg">
         <string>💩</string>
@@ -453,126 +477,126 @@
     <emoticon file="1f921.svg">
         <string>🤡</string>
         <string>:clown:</string>
-        <string>:clown_face:</string>        
+        <string>:clown_face:</string>
     </emoticon>
     <emoticon file="1f479.svg">
         <string>👹</string>
         <string>:ogre:</string>
-        <string>:japanese_ogre:</string>        
+        <string>:japanese_ogre:</string>
     </emoticon>
     <emoticon file="1f47a.svg">
         <string>👺</string>
         <string>:goblin:</string>
-        <string>:japanese_goblin:</string>        
+        <string>:japanese_goblin:</string>
     </emoticon>
     <emoticon file="1f47b.svg">
         <string>👻</string>
-        <string>:ghost:</string>        
+        <string>:ghost:</string>
     </emoticon>
     <emoticon file="1f47d.svg">
         <string>👽</string>
-        <string>:alien:</string>        
+        <string>:alien:</string>
     </emoticon>
     <emoticon file="1f47e.svg">
         <string>👾</string>
-        <string>:space_invader:</string>        
+        <string>:space_invader:</string>
     </emoticon>
     <emoticon file="1f916.svg">
         <string>🤖</string>
         <string>:robot:</string>
-        <string>:robot_face:</string>        
+        <string>:robot_face:</string>
     </emoticon>
     <emoticon file="1f63a.svg">
         <string>😺</string>
         <string>:smiling_cat:</string>
-        <string>:smile_cat:</string>        
+        <string>:smile_cat:</string>
     </emoticon>
     <emoticon file="1f63b.svg">
         <string>😻</string>
-        <string>:smiling_cat_with_smiling_eyes:</string>        
+        <string>:smiling_cat_with_smiling_eyes:</string>
     </emoticon>
     <emoticon file="1f639.svg">
         <string>😹</string>
         <string>:joy_cat:</string>
-        <string>:cat_with_tears_of_joy:</string>        
+        <string>:cat_with_tears_of_joy:</string>
     </emoticon>
     <emoticon file="1f63b.svg">
         <string>😻</string>
         <string>:heart_eyes_cat:</string>
-        <string>:smiling_cat_with_heart_eyes:</string>        
+        <string>:smiling_cat_with_heart_eyes:</string>
     </emoticon>
     <emoticon file="1f63c.svg">
         <string>😼</string>
-        <string>:cat_with_wry_smile:</string>        
+        <string>:cat_with_wry_smile:</string>
     </emoticon>
     <emoticon file="1f63d.svg">
         <string>😽</string>
-        <string>:kissing_cat:</string>        
+        <string>:kissing_cat:</string>
     </emoticon>
     <emoticon file="1f640.svg">
         <string>🙀</string>
-        <string>:scream_cat:</string>        
+        <string>:scream_cat:</string>
     </emoticon>
     <emoticon file="1f63f.svg">
         <string>😿</string>
-        <string>:crying_cat:</string>        
+        <string>:crying_cat:</string>
     </emoticon>
     <emoticon file="1f63e.svg">
         <string>😾</string>
-        <string>:pouting_cat:</string>        
+        <string>:pouting_cat:</string>
     </emoticon>
     <emoticon file="1f648.svg">
         <string>🙈</string>
-        <string>:see_no_evil:</string>        
+        <string>:see_no_evil:</string>
     </emoticon>
     <emoticon file="1f649.svg">
         <string>🙉</string>
-        <string>:hear_no_evil:</string>        
+        <string>:hear_no_evil:</string>
     </emoticon>
     <emoticon file="1f64a.svg">
         <string>🙊</string>
-        <string>:speak_no_evil:</string>        
+        <string>:speak_no_evil:</string>
     </emoticon>
     <emoticon file="1f48b.svg">
         <string>💋</string>
-        <string>:kiss_mark:</string>        
+        <string>:kiss_mark:</string>
     </emoticon>
     <emoticon file="1f48c.svg">
         <string>💌</string>
-        <string>:love_letter:</string>        
+        <string>:love_letter:</string>
     </emoticon>
     <emoticon file="1f498.svg">
         <string>💘</string>
-        <string>:heart_with_arrow:</string>        
+        <string>:heart_with_arrow:</string>
     </emoticon>
     <emoticon file="1f49d.svg">
         <string>💝</string>
-        <string>:heart_with_ribbon:</string>        
+        <string>:heart_with_ribbon:</string>
     </emoticon>
     <emoticon file="1f496.svg">
         <string>💝</string>
-        <string>:sparkling_heart:</string>        
+        <string>:sparkling_heart:</string>
     </emoticon>
     <emoticon file="1f497.svg">
         <string>💗</string>
         <string>:growing_heart:</string>
-        <string>:heart_pulse:</string>        
+        <string>:heart_pulse:</string>
     </emoticon>
     <emoticon file="1f49e.svg">
         <string>💞</string>
-        <string>:revolving_hearts:</string>        
+        <string>:revolving_hearts:</string>
     </emoticon>
     <emoticon file="1f495.svg">
         <string>💕</string>
-        <string>:two_hearts:</string>        
+        <string>:two_hearts:</string>
     </emoticon>
     <emoticon file="1f49f.svg">
         <string>💟</string>
-        <string>:heart_decoration:</string>        
+        <string>:heart_decoration:</string>
     </emoticon>
     <emoticon file="2763.svg">
         <string>❣</string>
-        <string>:heart_exclamation:</string>        
+        <string>:heart_exclamation:</string>
     </emoticon>
     <emoticon file="1f494.svg">
         <string>💔</string>
@@ -580,218 +604,218 @@
     <emoticon file="2764.svg">
         <string>❤</string>
         <string>:heart:</string>
-        <string>:red_heart:</string>        
+        <string>:red_heart:</string>
     </emoticon>
     <emoticon file="1f9e1.svg">
         <string>🧡</string>
-        <string>:orange_heart:</string>        
+        <string>:orange_heart:</string>
     </emoticon>
     <emoticon file="1f49b.svg">
         <string>💛</string>
-        <string>:yellow_heart:</string>        
+        <string>:yellow_heart:</string>
     </emoticon>
     <emoticon file="1f49a.svg">
         <string>💚</string>
-        <string>:green_heart:</string>        
+        <string>:green_heart:</string>
     </emoticon>
     <emoticon file="1f499.svg">
         <string>💙</string>
-        <string>:blue_heart:</string>        
+        <string>:blue_heart:</string>
     </emoticon>
     <emoticon file="1f49c.svg">
         <string>💜</string>
-        <string>:purple_heart:</string>        
+        <string>:purple_heart:</string>
     </emoticon>
     <emoticon file="1f90e.svg">
         <string>🤎</string>
-        <string>:brown_heart:</string>        
+        <string>:brown_heart:</string>
     </emoticon>
     <emoticon file="1f5a4.svg">
         <string>🖤</string>
-        <string>:black_heart:</string>        
+        <string>:black_heart:</string>
     </emoticon>
     <emoticon file="1f90d.svg">
         <string>🤍</string>
-        <string>:white_heart:</string>        
+        <string>:white_heart:</string>
     </emoticon>
     <emoticon file="1f4af.svg">
         <string>💯</string>
         <string>:100:</string>
-        <string>:hundred_points:</string>        
+        <string>:hundred_points:</string>
     </emoticon>
     <emoticon file="1f4a2.svg">
         <string>💢</string>
         <string>:anger_symbol:</string>
-        <string>:anger:</string>        
+        <string>:anger:</string>
     </emoticon>
     <emoticon file="1f4a5.svg">
         <string>💥</string>
         <string>:explosion:</string>
-        <string>:boom:</string>        
+        <string>:boom:</string>
     </emoticon>
     <emoticon file="1f4ab.svg">
         <string>💫</string>
-        <string>:dizzy:</string>        
+        <string>:dizzy:</string>
     </emoticon>
     <emoticon file="1f4a6.svg">
         <string>💦</string>
         <string>:droplets:</string>
-        <string>:sweat_droplets:</string>        
+        <string>:sweat_droplets:</string>
     </emoticon>
     <emoticon file="1f4ab.svg">
         <string>💫</string>
         <string>:dash:</string>
-        <string>:dashing_away:</string>        
+        <string>:dashing_away:</string>
     </emoticon>
     <emoticon file="1f573.svg">
         <string>🕳</string>
-        <string>:hole:</string>        
+        <string>:hole:</string>
     </emoticon>
     <emoticon file="1f4a3.svg">
         <string>💣</string>
-        <string>:bomb:</string>        
+        <string>:bomb:</string>
     </emoticon>
     <emoticon file="1f4ac.svg">
         <string>💬</string>
         <string>:speech_bubble:</string>
-        <string>:speech_balloon:</string>        
+        <string>:speech_balloon:</string>
     </emoticon>
     <emoticon file="1f5e8.svg">
         <string>🗨</string>
         <string>:left_speech_bubble:</string>
-        <string>:empty_speech_bubble:</string>        
+        <string>:empty_speech_bubble:</string>
     </emoticon>
     <emoticon file="1f5ef.svg">
         <string>🗯</string>
         <string>:anger_bubble:</string>
-        <string>:right_anger_bubble:</string>        
+        <string>:right_anger_bubble:</string>
     </emoticon>
     <emoticon file="1f4ad.svg">
         <string>💭</string>
         <string>:thought_bubble:</string>
-        <string>:thought_balloon:</string>        
+        <string>:thought_balloon:</string>
     </emoticon>
     <emoticon file="1f4a4.svg">
         <string>💤</string>
-        <string>:zzz:</string>        
+        <string>:zzz:</string>
     </emoticon>
     <emoticon file="1f44b.svg">
         <string>👋</string>
-        <string>:waving_hand:</string>        
+        <string>:waving_hand:</string>
     </emoticon>
     <emoticon file="1f91a.svg">
         <string>🤚</string>
         <string>:raised_back_of_hand:</string>
-        <string>:back_of_hand:</string>        
+        <string>:back_of_hand:</string>
     </emoticon>
     <emoticon file="1f590.svg">
         <string>🖐</string>
         <string>:hand_splayed:</string>
-        <string>:hand_with_fingers_splayed:</string>        
+        <string>:hand_with_fingers_splayed:</string>
     </emoticon>
     <emoticon file="270b.svg">
         <string>✋</string>
-        <string>:raised_hand:</string>        
+        <string>:raised_hand:</string>
     </emoticon>
     <emoticon file="1f596.svg">
         <string>🖖</string>
-        <string>:vulcan_salute:</string>        
+        <string>:vulcan_salute:</string>
     </emoticon>
     <emoticon file="1f44c.svg">
         <string>👌</string>
-        <string>:ok_hand:</string>        
+        <string>:ok_hand:</string>
     </emoticon>
     <emoticon file="1f90c.svg">
         <string>🤌</string>
-        <string>:pinched_fingers:</string>        
+        <string>:pinched_fingers:</string>
     </emoticon>
     <emoticon file="1f90f.svg">
         <string>🤏</string>
-        <string>:pinching_hand:</string>        
+        <string>:pinching_hand:</string>
     </emoticon>
     <emoticon file="270c.svg">
         <string>✌</string>
-        <string>:victory_hand:</string>        
+        <string>:victory_hand:</string>
     </emoticon>
     <emoticon file="1f91e.svg">
         <string>🤞</string>
-        <string>:crossed_fingers:</string>        
+        <string>:crossed_fingers:</string>
     </emoticon>
     <emoticon file="1f91f.svg">
         <string>🤟</string>
-        <string>:love_you_gesture:</string>        
+        <string>:love_you_gesture:</string>
     </emoticon>
     <emoticon file="1f918.svg">
         <string>🤘</string>
-        <string>:sign_of_the_horns:</string>        
+        <string>:sign_of_the_horns:</string>
     </emoticon>
     <emoticon file="1f919.svg">
         <string>🤙</string>
-        <string>:call_me_hand:</string>        
+        <string>:call_me_hand:</string>
     </emoticon>
     <emoticon file="1f448.svg">
         <string>👈</string>
-        <string>:point_left:</string>        
+        <string>:point_left:</string>
     </emoticon>
     <emoticon file="1f449.svg">
         <string>👉</string>
-        <string>:point_right:</string>        
+        <string>:point_right:</string>
     </emoticon>
     <emoticon file="1f446.svg">
         <string>👆</string>
-        <string>:point_up2:</string>        
+        <string>:point_up2:</string>
     </emoticon>
     <emoticon file="1f595.svg">
         <string>🖕</string>
-        <string>:middle_finger:</string>        
+        <string>:middle_finger:</string>
     </emoticon>
     <emoticon file="1f447.svg">
         <string>👇</string>
-        <string>:point_down:</string>        
+        <string>:point_down:</string>
     </emoticon>
     <emoticon file="261d.svg">
         <string>☝</string>
-        <string>:point_up:</string>        
+        <string>:point_up:</string>
     </emoticon>
     <emoticon file="1f44d.svg">
         <string>👍</string>
-        <string>:thumbs_up:</string>        
+        <string>:thumbs_up:</string>
     </emoticon>
     <emoticon file="1f44e.svg">
         <string>👎</string>
-        <string>:thumbs_down:</string>        
+        <string>:thumbs_down:</string>
     </emoticon>
     <emoticon file="270a.svg">
         <string>✊</string>
-        <string>:raised_fist:</string>        
+        <string>:raised_fist:</string>
     </emoticon>
     <emoticon file="1f44a.svg">
         <string>👊</string>
         <string>:oncoming_fist:</string>
-        <string>:punch:</string>        
+        <string>:punch:</string>
     </emoticon>
     <emoticon file="1f91b.svg">
         <string>🤛</string>
         <string>:left_facing_fist:</string>
-        <string>:left_fist:</string>        
+        <string>:left_fist:</string>
     </emoticon>
     <emoticon file="1f91c.svg">
         <string>🤜</string>
         <string>:right_facing_fist:</string>
-        <string>:right_fist:</string>        
+        <string>:right_fist:</string>
     </emoticon>
     <emoticon file="1f44f.svg">
         <string>👏</string>
         <string>:clap:</string>
-        <string>:clapping_hands:</string>        
+        <string>:clapping_hands:</string>
     </emoticon>
     <emoticon file="1f64c.svg">
         <string>🙌</string>
-        <string>:raised_hands:</string>        
+        <string>:raised_hands:</string>
     </emoticon>
     <emoticon file="1f450.svg">
         <string>👐</string>
-        <string>:open_hands_</string>        
+        <string>:open_hands_</string>
     </emoticon>
     <emoticon file="1f932.svg">
         <string>:palms_up_together:</string>
@@ -799,415 +823,415 @@
     </emoticon>
     <emoticon file="1f91d.svg">
         <string>🤝</string>
-        <string>:handshake:</string>        
+        <string>:handshake:</string>
     </emoticon>
     <emoticon file="1f64f.svg">
         <string>🙏</string>
         <string>:folded_hands:</string>
-        <string>:pray:</string>        
+        <string>:pray:</string>
     </emoticon>
     <emoticon file="270d.svg">
         <string>✍</string>
-        <string>:writing_hands:</string>        
+        <string>:writing_hands:</string>
     </emoticon>
     <emoticon file="1f485.svg">
         <string>💅</string>
-        <string>:nail_polish:</string>        
+        <string>:nail_polish:</string>
     </emoticon>
     <emoticon file="1f933.svg">
         <string>🤳</string>
         <string>:hand_with_phone:</string>
-        <string>:selfie:</string>        
+        <string>:selfie:</string>
     </emoticon>
     <emoticon file="1f4aa.svg">
         <string>💪</string>
         <string>:muscle:</string>
-        <string>:flexed_biceps:</string>        
+        <string>:flexed_biceps:</string>
     </emoticon>
     <emoticon file="1f9be.svg">
         <string>🦾</string>
-        <string>:mechanical_arm:</string>        
+        <string>:mechanical_arm:</string>
     </emoticon>
     <emoticon file="1f9bf.svg">
         <string>🦿</string>
-        <string>:mechanical_leg:</string>        
+        <string>:mechanical_leg:</string>
     </emoticon>
     <emoticon file="1f9b5.svg">
         <string>🦵</string>
-        <string>:leg:</string>        
+        <string>:leg:</string>
     </emoticon>
     <emoticon file="1f9b6.svg">
         <string>🦶</string>
-        <string>:foot:</string>        
+        <string>:foot:</string>
     </emoticon>
     <emoticon file="1f442.svg">
         <string>👂</string>
-        <string>:ear:</string>        
+        <string>:ear:</string>
     </emoticon>
     <emoticon file="1f9bb.svg">
         <string>🦻</string>
         <string>:hearing_aid:</string>
-        <string>:ear_with_hearing_aid:</string>        
+        <string>:ear_with_hearing_aid:</string>
     </emoticon>
     <emoticon file="1f443.svg">
         <string>👃</string>
-        <string>:nose:</string>        
+        <string>:nose:</string>
     </emoticon>
     <emoticon file="1f9e0.svg">
         <string>🧠</string>
-        <string>:brain:</string>        
+        <string>:brain:</string>
     </emoticon>
     <emoticon file="1fac0.svg">
         <string>🫀</string>
-        <string>:anatomical_heart:</string>        
+        <string>:anatomical_heart:</string>
     </emoticon>
     <emoticon file="1fac1.svg">
         <string>🫁</string>
-        <string>:lungs:</string>        
+        <string>:lungs:</string>
     </emoticon>
     <emoticon file="1f9b7.svg">
         <string>🦷</string>
-        <string>:tooth:</string>        
+        <string>:tooth:</string>
     </emoticon>
     <emoticon file="1f9b4.svg">
         <string>🦴</string>
-        <string>:bone:</string>        
+        <string>:bone:</string>
     </emoticon>
     <emoticon file="1f441.svg">
         <string>👁</string>
-        <string>:eye:</string>        
+        <string>:eye:</string>
     </emoticon>
     <emoticon file="1f445.svg">
         <string>👅</string>
-        <string>:tongue:</string>        
+        <string>:tongue:</string>
     </emoticon>
     <emoticon file="1f444.svg">
         <string>👄</string>
-        <string>:mouth:</string>        
+        <string>:mouth:</string>
     </emoticon>
     <emoticon file="1f476.svg">
         <string>👶</string>
-        <string>:baby:</string>        
+        <string>:baby:</string>
     </emoticon>
     <emoticon file="1f9d2.svg">
         <string>🧒</string>
-        <string>:child:</string>        
+        <string>:child:</string>
     </emoticon>
     <emoticon file="1f466.svg">
         <string>👦</string>
-        <string>:boy:</string>        
+        <string>:boy:</string>
     </emoticon>
     <emoticon file="1f467.svg">
         <string>👧</string>
-        <string>:girl:</string>        
+        <string>:girl:</string>
     </emoticon>
     <emoticon file="1f9d1.svg">
         <string>🧑</string>
-        <string>:person:</string>        
+        <string>:person:</string>
     </emoticon>
     <emoticon file="1f471.svg">
         <string>👱</string>
-        <string>:person_with_blond_hair:</string>        
+        <string>:person_with_blond_hair:</string>
     </emoticon>
     <emoticon file="1f468.svg">
         <string>👨</string>
-        <string>:man:</string>        
+        <string>:man:</string>
     </emoticon>
     <emoticon file="1f9d4.svg">
         <string>🧔</string>
-        <string>:man_with_beard:</string>        
+        <string>:man_with_beard:</string>
     </emoticon>
     <emoticon file="1f469.svg">
         <string>💖</string>
-        <string>:woman:</string>        
+        <string>:woman:</string>
     </emoticon>
     <emoticon file="1f9d3.svg">
         <string>🧓</string>
-        <string>:older_person:</string>        
+        <string>:older_person:</string>
     </emoticon>
     <emoticon file="1f474.svg">
         <string>👴</string>
-        <string>:old_man:</string>        
+        <string>:old_man:</string>
     </emoticon>
     <emoticon file="1f475.svg">
         <string>👵</string>
-        <string>:old_woman:</string>        
+        <string>:old_woman:</string>
     </emoticon>
     <emoticon file="1f64d.svg">
         <string>🙍</string>
-        <string>:person_frowning:</string>        
+        <string>:person_frowning:</string>
     </emoticon>
     <emoticon file="1f64e.svg">
         <string>🙎</string>
-        <string>:person_pouting:</string>        
+        <string>:person_pouting:</string>
     </emoticon>
     <emoticon file="1f645.svg">
         <string>🙅</string>
-        <string>:person_gesturing_no:</string>        
+        <string>:person_gesturing_no:</string>
     </emoticon>
     <emoticon file="1f646.svg">
         <string>🙆</string>
-        <string>:person_gesturing_ok:</string>        
+        <string>:person_gesturing_ok:</string>
     </emoticon>
     <emoticon file="1f481.svg">
         <string>💁</string>
-        <string>:person_tipping_hand:</string>        
+        <string>:person_tipping_hand:</string>
     </emoticon>
     <emoticon file="1f64b.svg">
         <string>🙋</string>
-        <string>:person_raising_hand:</string>        
+        <string>:person_raising_hand:</string>
     </emoticon>
     <emoticon file="1f9cf.svg">
         <string>🧏</string>
-        <string>:deaf_person:</string>        
+        <string>:deaf_person:</string>
     </emoticon>
     <emoticon file="1f647.svg">
         <string>🙇</string>
-        <string>:person_bowing:</string>        
+        <string>:person_bowing:</string>
     </emoticon>
     <emoticon file="1f926.svg">
         <string>🤦</string>
-        <string>:person_facepalming:</string>        
+        <string>:person_facepalming:</string>
     </emoticon>
     <emoticon file="1f937.svg">
         <string>🤷</string>
-        <string>:person_shrugging:</string>        
+        <string>:person_shrugging:</string>
     </emoticon>
     <emoticon file="1f46e.svg">
         <string>👮</string>
-        <string>:police_officer:</string>        
+        <string>:police_officer:</string>
     </emoticon>
     <emoticon file="1f575.svg">
         <string>🕵</string>
-        <string>:detective:</string>        
+        <string>:detective:</string>
     </emoticon>
     <emoticon file="1f482.svg">
         <string>💂</string>
         <string>:guard:</string>
-        <string>:royal_guard:</string>        
+        <string>:royal_guard:</string>
     </emoticon>
     <emoticon file="1f977.svg">
         <string>🥷</string>
-        <string>:ninja:</string>        
+        <string>:ninja:</string>
     </emoticon>
     <emoticon file="1f477.svg">
         <string>👷</string>
-        <string>:construction_worker:</string>        
+        <string>:construction_worker:</string>
     </emoticon>
     <emoticon file="1f934.svg">
         <string>🤴</string>
-        <string>:prince:</string>        
+        <string>:prince:</string>
     </emoticon>
     <emoticon file="1f478.svg">
         <string>👸</string>
-        <string>:princess:</string>        
+        <string>:princess:</string>
     </emoticon>
     <emoticon file="1f473.svg">
         <string>👳</string>
-        <string>:person_wearing_turban:</string>        
+        <string>:person_wearing_turban:</string>
     </emoticon>
     <emoticon file="1f472.svg">
         <string>👲</string>
-        <string>:person_with_skullcap:</string>        
+        <string>:person_with_skullcap:</string>
     </emoticon>
     <emoticon file="1f9d5.svg">
         <string>🧕</string>
-        <string>:woman_with_headscarf:</string>        
+        <string>:woman_with_headscarf:</string>
     </emoticon>
     <emoticon file="1f935.svg">
         <string>🤵</string>
-        <string>:person_in_tuxedo:</string>        
+        <string>:person_in_tuxedo:</string>
     </emoticon>
     <emoticon file="1f470.svg">
         <string>👰</string>
-        <string>:woman_with_veil:</string>        
+        <string>:woman_with_veil:</string>
     </emoticon>
     <emoticon file="1f930.svg">
         <string>🤰</string>
-        <string>:pregnant_woman:</string>        
+        <string>:pregnant_woman:</string>
     </emoticon>
     <emoticon file="1f931.svg">
         <string>🤱</string>
-        <string>:breastfeeding:</string>        
+        <string>:breastfeeding:</string>
     </emoticon>
     <emoticon file="1f47c.svg">
         <string>👼</string>
-        <string>:angel:</string>        
+        <string>:angel:</string>
     </emoticon>
     <emoticon file="1f385.svg">
         <string>🎅</string>
         <string>:santa:</string>
-        <string>:santa_claus:</string>        
+        <string>:santa_claus:</string>
     </emoticon>
     <emoticon file="1f936.svg">
         <string>🤶</string>
-        <string>:mrs_claus:</string>        
+        <string>:mrs_claus:</string>
     </emoticon>
     <emoticon file="1f9b8.svg">
         <string>🦸</string>
-        <string>:superhero:</string>        
+        <string>:superhero:</string>
     </emoticon>
     <emoticon file="1f9b9.svg">
         <string>🦹</string>
-        <string>:supervillain:</string>        
+        <string>:supervillain:</string>
     </emoticon>
     <emoticon file="1f9d9.svg">
         <string>🧙</string>
         <string>:mage:</string>
-        <string>:wizard:</string>        
+        <string>:wizard:</string>
     </emoticon>
     <emoticon file="1f9da.svg">
         <string>🧚</string>
-        <string>:fairy:</string>        
+        <string>:fairy:</string>
     </emoticon>
     <emoticon file="1f9db.svg">
         <string>🧛</string>
-        <string>:vampire:</string>        
+        <string>:vampire:</string>
     </emoticon>
     <emoticon file="1f9dc.svg">
         <string>🧜</string>
-        <string>:mermaid:</string>        
+        <string>:mermaid:</string>
     </emoticon>
     <emoticon file="1f9dd.svg">
         <string>🧝</string>
-        <string>:elf:</string>        
+        <string>:elf:</string>
     </emoticon>
     <emoticon file="1f9de.svg">
         <string>🧞</string>
-        <string>:genie:</string>        
+        <string>:genie:</string>
     </emoticon>
     <emoticon file="1f9df.svg">
         <string>🧟</string>
-        <string>:zombie:</string>        
+        <string>:zombie:</string>
     </emoticon>
     <emoticon file="1f486.svg">
         <string>💆</string>
-        <string>:person_getting_massage:</string>        
+        <string>:person_getting_massage:</string>
     </emoticon>
     <emoticon file="1f487.svg">
         <string>💇</string>
-        <string>:person_getting_haircut:</string>        
+        <string>:person_getting_haircut:</string>
     </emoticon>
     <emoticon file="1f6b6.svg">
         <string>🚶</string>
-        <string>:person_walking:</string>        
+        <string>:person_walking:</string>
     </emoticon>
     <emoticon file="1f9cd.svg">
         <string>🧍</string>
-        <string>:person_standing:</string>        
+        <string>:person_standing:</string>
     </emoticon>
     <emoticon file="1f9ce.svg">
         <string>🧎</string>
-        <string>:person_kneeling:</string>        
+        <string>:person_kneeling:</string>
     </emoticon>
     <emoticon file="1f3c3.svg">
         <string>🏃</string>
-        <string>:person_running:</string>        
+        <string>:person_running:</string>
     </emoticon>
     <emoticon file="1f483.svg">
         <string>💃</string>
-        <string>:woman_dancing:</string>        
+        <string>:woman_dancing:</string>
     </emoticon>
     <emoticon file="1f57a.svg">
         <string>🕺</string>
-        <string>:man_dancing:</string>        
+        <string>:man_dancing:</string>
     </emoticon>
     <emoticon file="1f574.svg">
         <string>🕴</string>
         <string>:levitating:</string>
-        <string>:person_in_suit_levitating:</string>        
+        <string>:person_in_suit_levitating:</string>
     </emoticon>
     <emoticon file="1f46f.svg">
         <string>👯</string>
-        <string>:people_with_bunny_ears:</string>        
+        <string>:people_with_bunny_ears:</string>
     </emoticon>
     <emoticon file="1f9d6.svg">
         <string>🧖</string>
-        <string>:person_in_steamy_room:</string>        
+        <string>:person_in_steamy_room:</string>
     </emoticon>
     <emoticon file="1f9d7.svg">
         <string>🧗</string>
-        <string>:person_climbing:</string>        
+        <string>:person_climbing:</string>
     </emoticon>
     <emoticon file="1f93a.svg">
         <string>🤺</string>
-        <string>:person_fencing:</string>        
+        <string>:person_fencing:</string>
     </emoticon>
     <emoticon file="1f3c7.svg">
         <string>🏇</string>
-        <string>:horse_racing:</string>        
+        <string>:horse_racing:</string>
     </emoticon>
     <emoticon file="26f7.svg">
         <string>⛷</string>
-        <string>:skier:</string>        
+        <string>:skier:</string>
     </emoticon>
     <emoticon file="1f3c2.svg">
         <string>🏂</string>
-        <string>:snowboarder:</string>        
+        <string>:snowboarder:</string>
     </emoticon>
     <emoticon file="1f3cc.svg">
         <string>🏌</string>
-        <string>:person_golfing:</string>        
+        <string>:person_golfing:</string>
     </emoticon>
     <emoticon file="1f3c4.svg">
         <string>🏄</string>
-        <string>:person_surfing:</string>        
+        <string>:person_surfing:</string>
     </emoticon>
     <emoticon file="1f6a3.svg">
         <string>🚣</string>
-        <string>:person_rowing_boat:</string>        
+        <string>:person_rowing_boat:</string>
     </emoticon>
     <emoticon file="1f3ca.svg">
         <string>🏊</string>
-        <string>:person_swimming:</string>        
+        <string>:person_swimming:</string>
     </emoticon>
     <emoticon file="26f9.svg">
         <string>⛹</string>
-        <string>:person_bouncing_ball:</string>        
+        <string>:person_bouncing_ball:</string>
     </emoticon>
     <emoticon file="1f3cb.svg">
         <string>🏋</string>
-        <string>:person_lifting_weights:</string>        
+        <string>:person_lifting_weights:</string>
     </emoticon>
     <emoticon file="1f6b4.svg">
         <string>🚴</string>
-        <string>:person_biking:</string>        
+        <string>:person_biking:</string>
     </emoticon>
     <emoticon file="1f6b5.svg">
         <string>🚵</string>
-        <string>:person_mountain_biking:</string>        
+        <string>:person_mountain_biking:</string>
     </emoticon>
     <emoticon file="1f938.svg">
         <string>🤸</string>
-        <string>:person_cartwheeling:</string>        
+        <string>:person_cartwheeling:</string>
     </emoticon>
     <emoticon file="1f93c.svg">
         <string>🤼</string>
-        <string>:people_wrestling:</string>        
+        <string>:people_wrestling:</string>
     </emoticon>
     <emoticon file="1f93d.svg">
         <string>🤽</string>
-        <string>:person_playing_water_polo:</string>        
+        <string>:person_playing_water_polo:</string>
     </emoticon>
     <emoticon file="1f93e.svg">
         <string>🤾</string>
-        <string>:person_playing_handball:</string>        
+        <string>:person_playing_handball:</string>
     </emoticon>
     <emoticon file="1f939.svg">
         <string>🤹</string>
-        <string>:person_juggling:</string>        
+        <string>:person_juggling:</string>
     </emoticon>
     <emoticon file="1f9d8.svg">
         <string>🧘</string>
-        <string>:person_in_lotus_position:</string>        
+        <string>:person_in_lotus_position:</string>
     </emoticon>
     <emoticon file="1f6c0.svg">
         <string>🛀</string>
-        <string>:person_taking_bath:</string>        
+        <string>:person_taking_bath:</string>
     </emoticon>
     <emoticon file="1f6cc.svg">
         <string>🛌</string>
-        <string>:person_in_bed:</string>        
+        <string>:person_in_bed:</string>
     </emoticon>
     <emoticon file="1f46d.svg">
         <string>👭</string>
@@ -1215,754 +1239,754 @@
     </emoticon>
     <emoticon file="1f46b.svg">
         <string>👫</string>
-        <string>:woman_and_man_holding_hands:</string>        
+        <string>:woman_and_man_holding_hands:</string>
     </emoticon>
     <emoticon file="1f46c.svg">
         <string>👬</string>
-        <string>:men_holding_hands:</string>        
+        <string>:men_holding_hands:</string>
     </emoticon>
     <emoticon file="1f48f.svg">
         <string>💏</string>
-        <string>:couple_kiss:</string>        
+        <string>:couple_kiss:</string>
     </emoticon>
     <emoticon file="1f491.svg">
         <string>💑</string>
-        <string>:couple_with_heart:</string>        
+        <string>:couple_with_heart:</string>
     </emoticon>
     <emoticon file="1f46a.svg">
         <string>👪</string>
-        <string>:family:</string>        
+        <string>:family:</string>
     </emoticon>
     <emoticon file="1f5e3.svg">
         <string>🗣</string>
         <string>:speaking_head:</string>
-        <string>:speaking_head_silhouette:</string>        
+        <string>:speaking_head_silhouette:</string>
     </emoticon>
     <emoticon file="1f464.svg">
         <string>👤</string>
-        <string>:bust_in_silhouette:</string>        
+        <string>:bust_in_silhouette:</string>
     </emoticon>
     <emoticon file="1f465.svg">
         <string>👥</string>
-        <string>:busts_in_silhouette:</string>        
+        <string>:busts_in_silhouette:</string>
     </emoticon>
     <emoticon file="1f463.svg">
         <string>👣</string>
-        <string>:footprints:</string>        
+        <string>:footprints:</string>
     </emoticon>
     <emoticon file="1f435.svg">
         <string>🐵</string>
-        <string>:monkey_face:</string>        
+        <string>:monkey_face:</string>
     </emoticon>
     <emoticon file="1f412.svg">
         <string>🐒</string>
-        <string>:monkey:</string>        
+        <string>:monkey:</string>
     </emoticon>
     <emoticon file="1f98d.svg">
         <string>🦍</string>
-        <string>:gorilla:</string>        
+        <string>:gorilla:</string>
     </emoticon>
     <emoticon file="1f9a7.svg">
         <string>🦧</string>
-        <string>:orangutan:</string>        
+        <string>:orangutan:</string>
     </emoticon>
     <emoticon file="1f436.svg">
         <string>🐶</string>
-        <string>:dog_face:</string>        
+        <string>:dog_face:</string>
     </emoticon>
     <emoticon file="1f415.svg">
         <string>🐕</string>
-        <string>:dog:</string>        
+        <string>:dog:</string>
     </emoticon>
     <emoticon file="1f9ae.svg">
         <string>🦮</string>
-        <string>:guide_dog:</string>        
+        <string>:guide_dog:</string>
     </emoticon>
     <emoticon file="1f429.svg">
         <string>🐩</string>
-        <string>:poodle:</string>        
+        <string>:poodle:</string>
     </emoticon>
     <emoticon file="1f43a.svg">
         <string>🐺</string>
-        <string>:wolf:</string>        
+        <string>:wolf:</string>
     </emoticon>
     <emoticon file="1f98a.svg">
         <string>🦊</string>
-        <string>:fox:</string>        
+        <string>:fox:</string>
     </emoticon>
     <emoticon file="1f99d.svg">
         <string>🦝</string>
-        <string>:raccoon:</string>        
+        <string>:raccoon:</string>
     </emoticon>
     <emoticon file="1f431.svg">
         <string>🐱</string>
-        <string>:cat_face:</string>        
+        <string>:cat_face:</string>
     </emoticon>
     <emoticon file="1f408.svg">
         <string>🐈</string>
-        <string>:cat:</string>        
+        <string>:cat:</string>
     </emoticon>
     <emoticon file="1f981.svg">
         <string>🦁</string>
-        <string>:lion:</string>        
+        <string>:lion:</string>
     </emoticon>
     <emoticon file="1f42f.svg">
         <string>🐯</string>
-        <string>:tiger_face:</string>        
+        <string>:tiger_face:</string>
     </emoticon>
     <emoticon file="1f405.svg">
         <string>🐅</string>
-        <string>:tiger:</string>        
+        <string>:tiger:</string>
     </emoticon>
     <emoticon file="1f406.svg">
         <string>🐆</string>
-        <string>:leopard:</string>        
+        <string>:leopard:</string>
     </emoticon>
     <emoticon file="1f434.svg">
         <string>🐴</string>
-        <string>:horse_face:</string>        
+        <string>:horse_face:</string>
     </emoticon>
     <emoticon file="1f40e.svg">
         <string>🐎</string>
-        <string>:horse:</string>        
+        <string>:horse:</string>
     </emoticon>
     <emoticon file="1f984.svg">
         <string>🦄</string>
-        <string>:unicorn:</string>        
+        <string>:unicorn:</string>
     </emoticon>
     <emoticon file="1f993.svg">
         <string>🦓</string>
-        <string>:zebra:</string>        
+        <string>:zebra:</string>
     </emoticon>
     <emoticon file="1f98c.svg">
         <string>🦌</string>
-        <string>:deer:</string>        
+        <string>:deer:</string>
     </emoticon>
     <emoticon file="1f9ac.svg">
         <string>🦬</string>
-        <string>:bison:</string>        
+        <string>:bison:</string>
     </emoticon>
     <emoticon file="1f42e.svg">
         <string>🐮</string>
-        <string>:cow_face:</string>        
+        <string>:cow_face:</string>
     </emoticon>
     <emoticon file="1f402.svg">
         <string>🐂</string>
-        <string>:ox:</string>        
+        <string>:ox:</string>
     </emoticon>
     <emoticon file="1f403.svg">
         <string>🐃</string>
-        <string>:water_buffalo:</string>        
+        <string>:water_buffalo:</string>
     </emoticon>
     <emoticon file="1f404.svg">
         <string>🐄</string>
-        <string>:cow:</string>        
+        <string>:cow:</string>
     </emoticon>
     <emoticon file="1f437.svg">
         <string>🐷</string>
-        <string>:pig_face:</string>        
+        <string>:pig_face:</string>
     </emoticon>
     <emoticon file="1f416.svg">
         <string>🐖</string>
-        <string>:pig:</string>        
+        <string>:pig:</string>
     </emoticon>
     <emoticon file="1f417.svg">
         <string>🐗</string>
-        <string>:boar:</string>        
+        <string>:boar:</string>
     </emoticon>
     <emoticon file="1f43d.svg">
         <string>🐽</string>
-        <string>:pig_nose:</string>        
+        <string>:pig_nose:</string>
     </emoticon>
     <emoticon file="1f40f.svg">
         <string>🐏</string>
-        <string>:ram:</string>        
+        <string>:ram:</string>
     </emoticon>
     <emoticon file="1f411.svg">
         <string>🐑</string>
-        <string>:ewe:</string>        
+        <string>:ewe:</string>
     </emoticon>
     <emoticon file="1f410.svg">
         <string>🐐</string>
-        <string>:goat:</string>        
+        <string>:goat:</string>
     </emoticon>
     <emoticon file="1f42a.svg">
         <string>🐪</string>
-        <string>:camel:</string>        
+        <string>:camel:</string>
     </emoticon>
     <emoticon file="1f42b.svg">
         <string>🐫</string>
-        <string>:two_hump_camel:</string>        
+        <string>:two_hump_camel:</string>
     </emoticon>
     <emoticon file="1f999.svg">
         <string>🦙</string>
-        <string>:llama:</string>        
+        <string>:llama:</string>
     </emoticon>
     <emoticon file="1f992.svg">
         <string>🦒</string>
-        <string>:giraffe:</string>        
+        <string>:giraffe:</string>
     </emoticon>
     <emoticon file="1f418.svg">
         <string>🐘</string>
-        <string>:elephant:</string>        
+        <string>:elephant:</string>
     </emoticon>
     <emoticon file="1f9a3.svg">
         <string>🦣</string>
-        <string>:mammoth:</string>        
+        <string>:mammoth:</string>
     </emoticon>
     <emoticon file="1f98f.svg">
         <string>🦏</string>
-        <string>:rhinoceros:</string>        
+        <string>:rhinoceros:</string>
     </emoticon>
     <emoticon file="1f99b.svg">
         <string>🦛</string>
-        <string>:hippopotamus:</string>        
+        <string>:hippopotamus:</string>
     </emoticon>
     <emoticon file="1f42d.svg">
         <string>🐭</string>
-        <string>:mouse_face:</string>        
+        <string>:mouse_face:</string>
     </emoticon>
     <emoticon file="1f401.svg">
         <string>🐁</string>
-        <string>:mouse:</string>        
+        <string>:mouse:</string>
     </emoticon>
     <emoticon file="1f400.svg">
         <string>🐀</string>
-        <string>:rat:</string>        
+        <string>:rat:</string>
     </emoticon>
     <emoticon file="1f439.svg">
         <string>🐹</string>
-        <string>:hamster:</string>        
+        <string>:hamster:</string>
     </emoticon>
     <emoticon file="1f430.svg">
         <string>🐰</string>
-        <string>:rabbit_face:</string>        
+        <string>:rabbit_face:</string>
     </emoticon>
     <emoticon file="1f407.svg">
         <string>🐇</string>
-        <string>:rabbit:</string>        
+        <string>:rabbit:</string>
     </emoticon>
     <emoticon file="1f43f.svg">
         <string>🐿</string>
-        <string>:chipmunk:</string>        
+        <string>:chipmunk:</string>
     </emoticon>
     <emoticon file="1f9ab.svg">
         <string>🦫</string>
-        <string>:beaver:</string>        
+        <string>:beaver:</string>
     </emoticon>
     <emoticon file="1f994.svg">
         <string>🦔</string>
-        <string>:hedgehog:</string>        
+        <string>:hedgehog:</string>
     </emoticon>
     <emoticon file="1f987.svg">
         <string>🦇</string>
-        <string>:bat:</string>        
+        <string>:bat:</string>
     </emoticon>
     <emoticon file="1f43b.svg">
         <string>🐻</string>
-        <string>:bear:</string>        
+        <string>:bear:</string>
     </emoticon>
     <emoticon file="1f428.svg">
         <string>🐨</string>
-        <string>:koala:</string>        
+        <string>:koala:</string>
     </emoticon>
     <emoticon file="1f43c.svg">
         <string>🐼</string>
-        <string>:panda:</string>        
+        <string>:panda:</string>
     </emoticon>
     <emoticon file="1f9a5.svg">
         <string>🦥</string>
-        <string>:sloth:</string>        
+        <string>:sloth:</string>
     </emoticon>
     <emoticon file="1f9a6.svg">
         <string>🦦</string>
-        <string>:otter:</string>        
+        <string>:otter:</string>
     </emoticon>
     <emoticon file="1f9a8.svg">
         <string>🦨</string>
-        <string>:skunk:</string>        
+        <string>:skunk:</string>
     </emoticon>
     <emoticon file="1f998.svg">
         <string>🦘</string>
-        <string>:kangaroo:</string>        
+        <string>:kangaroo:</string>
     </emoticon>
     <emoticon file="1f9a1.svg">
         <string>🦡</string>
-        <string>:badger:</string>        
+        <string>:badger:</string>
     </emoticon>
     <emoticon file="1f43e.svg">
         <string>🐾</string>
-        <string>:paw_prints:</string>        
+        <string>:paw_prints:</string>
     </emoticon>
     <emoticon file="1f983.svg">
         <string>🦃</string>
-        <string>:turkey:</string>        
+        <string>:turkey:</string>
     </emoticon>
     <emoticon file="1f414.svg">
         <string>🐔</string>
-        <string>:chicken:</string>        
+        <string>:chicken:</string>
     </emoticon>
     <emoticon file="1f413.svg">
         <string>🐓</string>
-        <string>:rooster:</string>        
+        <string>:rooster:</string>
     </emoticon>
     <emoticon file="1f423.svg">
         <string>🐣</string>
-        <string>:hatching_chick:</string>        
+        <string>:hatching_chick:</string>
     </emoticon>
     <emoticon file="1f424.svg">
         <string>🐤</string>
-        <string>:baby_chick:</string>        
+        <string>:baby_chick:</string>
     </emoticon>
     <emoticon file="1f425.svg">
         <string>🐥</string>
-        <string>:front_facing_baby_chick:</string>        
+        <string>:front_facing_baby_chick:</string>
     </emoticon>
     <emoticon file="1f426.svg">
         <string>🐦</string>
-        <string>:bird:</string>        
+        <string>:bird:</string>
     </emoticon>
     <emoticon file="1f427.svg">
         <string>🐧</string>
-        <string>:penguin:</string>        
+        <string>:penguin:</string>
     </emoticon>
     <emoticon file="1f54a.svg">
         <string>🕊</string>
-        <string>:dove:</string>        
+        <string>:dove:</string>
     </emoticon>
     <emoticon file="1f985.svg">
         <string>🦅</string>
-        <string>:eagle:</string>        
+        <string>:eagle:</string>
     </emoticon>
     <emoticon file="1f986.svg">
         <string>🦆</string>
-        <string>:duck:</string>        
+        <string>:duck:</string>
     </emoticon>
     <emoticon file="1f9a2.svg">
         <string>🦢</string>
-        <string>:swan:</string>        
+        <string>:swan:</string>
     </emoticon>
     <emoticon file="1f989.svg">
         <string>🦉</string>
-        <string>:owl:</string>        
+        <string>:owl:</string>
     </emoticon>
     <emoticon file="1f9a4.svg">
         <string>🦤</string>
-        <string>:dodo:</string>        
+        <string>:dodo:</string>
     </emoticon>
     <emoticon file="1fab6.svg">
         <string>🪶</string>
-        <string>:feather:</string>        
+        <string>:feather:</string>
     </emoticon>
     <emoticon file="1f9a9.svg">
         <string>🦩</string>
-        <string>:flamingo:</string>        
+        <string>:flamingo:</string>
     </emoticon>
     <emoticon file="1f99a.svg">
         <string>🦚</string>
-        <string>:peacock:</string>        
+        <string>:peacock:</string>
     </emoticon>
     <emoticon file="1f99c.svg">
         <string>🦜</string>
-        <string>:parrot:</string>        
+        <string>:parrot:</string>
     </emoticon>
     <emoticon file="1f438.svg">
         <string>🐸</string>
-        <string>:frog:</string>        
+        <string>:frog:</string>
     </emoticon>
     <emoticon file="1f40a.svg">
         <string>🐊</string>
-        <string>:crocodile:</string>        
+        <string>:crocodile:</string>
     </emoticon>
     <emoticon file="1f422.svg">
         <string>🐢</string>
-        <string>:turtle:</string>        
+        <string>:turtle:</string>
     </emoticon>
     <emoticon file="1f98e.svg">
         <string>🦎</string>
-        <string>:lizard:</string>        
+        <string>:lizard:</string>
     </emoticon>
     <emoticon file="1f40d.svg">
         <string>🐍</string>
-        <string>:snake:</string>        
+        <string>:snake:</string>
     </emoticon>
     <emoticon file="1f432.svg">
         <string>🐲</string>
-        <string>:dragon_face:</string>        
+        <string>:dragon_face:</string>
     </emoticon>
     <emoticon file="1f995.svg">
         <string>🦕</string>
-        <string>:sauropod:</string>        
+        <string>:sauropod:</string>
     </emoticon>
     <emoticon file="1f996.svg">
         <string>🦖</string>
         <string>:t_rex:</string>
-        <string>:tyrannosaurus_rex:</string>        
+        <string>:tyrannosaurus_rex:</string>
     </emoticon>
     <emoticon file="1f433.svg">
         <string>🐳</string>
-        <string>:spouting_whale:</string>        
+        <string>:spouting_whale:</string>
     </emoticon>
     <emoticon file="1f40b.svg">
         <string>🐋</string>
-        <string>:whale:</string>        
+        <string>:whale:</string>
     </emoticon>
     <emoticon file="1f42c.svg">
         <string>🐬</string>
-        <string>:dolphin:</string>        
+        <string>:dolphin:</string>
     </emoticon>
     <emoticon file="1f9ad.svg">
         <string>🦭</string>
-        <string>:seal:</string>        
+        <string>:seal:</string>
     </emoticon>
     <emoticon file="1f41f.svg">
         <string>🐟</string>
-        <string>:fish:</string>        
+        <string>:fish:</string>
     </emoticon>
     <emoticon file="1f420.svg">
         <string>🐠</string>
-        <string>:tropical_fish:</string>        
+        <string>:tropical_fish:</string>
     </emoticon>
     <emoticon file="1f988.svg">
         <string>🦈</string>
-        <string>:shark:</string>        
+        <string>:shark:</string>
     </emoticon>
     <emoticon file="1f419.svg">
         <string>🐙</string>
-        <string>:octopus:</string>        
+        <string>:octopus:</string>
     </emoticon>
     <emoticon file="1f41a.svg">
         <string>🐚</string>
-        <string>:spiral_shell:</string>        
+        <string>:spiral_shell:</string>
     </emoticon>
     <emoticon file="1f40c.svg">
         <string>🐌</string>
-        <string>:snail:</string>        
+        <string>:snail:</string>
     </emoticon>
     <emoticon file="1f98b.svg">
         <string>🦋</string>
-        <string>:butterfly:</string>        
+        <string>:butterfly:</string>
     </emoticon>
     <emoticon file="1f41b.svg">
         <string>🐛</string>
-        <string>:bug:</string>        
+        <string>:bug:</string>
     </emoticon>
     <emoticon file="1f41c.svg">
         <string>🐜</string>
-        <string>:ant:</string>        
+        <string>:ant:</string>
     </emoticon>
     <emoticon file="1f41d.svg">
         <string>🐝</string>
         <string>:bee:</string>
-        <string>:honeybee:</string>        
+        <string>:honeybee:</string>
     </emoticon>
     <emoticon file="1fab2.svg">
         <string>🪲</string>
-        <string>:beetle:</string>        
+        <string>:beetle:</string>
     </emoticon>
     <emoticon file="1f41e.svg">
         <string>🐞</string>
         <string>:ladybug:</string>
-        <string>:lady_beetle:</string>        
+        <string>:lady_beetle:</string>
     </emoticon>
     <emoticon file="1f997.svg">
         <string>🦗</string>
-        <string>:cricket:</string>        
+        <string>:cricket:</string>
     </emoticon>
     <emoticon file="1fab3.svg">
         <string>🪳</string>
-        <string>:cockroach:</string>        
+        <string>:cockroach:</string>
     </emoticon>
     <emoticon file="1f577.svg">
         <string>🕷</string>
-        <string>:spider:</string>        
+        <string>:spider:</string>
     </emoticon>
     <emoticon file="1f578.svg">
         <string>🕸</string>
-        <string>:spider_web:</string>        
+        <string>:spider_web:</string>
     </emoticon>
     <emoticon file="1f982.svg">
         <string>🦂</string>
-        <string>:scorpion:</string>        
+        <string>:scorpion:</string>
     </emoticon>
     <emoticon file="1f99f.svg">
         <string>🦟</string>
-        <string>:mosquito:</string>        
+        <string>:mosquito:</string>
     </emoticon>
     <emoticon file="1fab0.svg">
         <string>🪰</string>
-        <string>:fly:</string>        
+        <string>:fly:</string>
     </emoticon>
     <emoticon file="1fab1.svg">
         <string>🪱</string>
-        <string>:worm:</string>        
+        <string>:worm:</string>
     </emoticon>
     <emoticon file="1f9a0.svg">
         <string>🦠</string>
-        <string>:microbe:</string>        
+        <string>:microbe:</string>
     </emoticon>
     <emoticon file="1f490.svg">
         <string>💐</string>
-        <string>:bouquet:</string>        
+        <string>:bouquet:</string>
     </emoticon>
     <emoticon file="1f338.svg">
         <string>🌸</string>
-        <string>:cherry_blossom:</string>        
+        <string>:cherry_blossom:</string>
     </emoticon>
     <emoticon file="1f4ae.svg">
         <string>💮</string>
-        <string>:white_flower:</string>        
+        <string>:white_flower:</string>
     </emoticon>
     <emoticon file="1f3f5.svg">
         <string>🏵</string>
-        <string>:rosette:</string>        
+        <string>:rosette:</string>
     </emoticon>
     <emoticon file="1f339.svg">
         <string>🌹</string>
-        <string>:rose:</string>        
+        <string>:rose:</string>
     </emoticon>
     <emoticon file="1f940.svg">
         <string>🥀</string>
-        <string>:wilted_flower:</string>        
+        <string>:wilted_flower:</string>
     </emoticon>
     <emoticon file="1f33a.svg">
         <string>🌺</string>
-        <string>:hibiscus:</string>        
+        <string>:hibiscus:</string>
     </emoticon>
     <emoticon file="1f33b.svg">
         <string>🌻</string>
-        <string>:sunflower:</string>        
+        <string>:sunflower:</string>
     </emoticon>
     <emoticon file="1f33c.svg">
         <string>🌼</string>
-        <string>:blossom:</string>        
+        <string>:blossom:</string>
     </emoticon>
     <emoticon file="1f337.svg">
         <string>🌷</string>
-        <string>:tulip:</string>        
+        <string>:tulip:</string>
     </emoticon>
     <emoticon file="1f331.svg">
         <string>🌱</string>
-        <string>:seedling:</string>        
+        <string>:seedling:</string>
     </emoticon>
     <emoticon file="1fab4.svg">
         <string>🪴</string>
-        <string>:potted_plant:</string>        
+        <string>:potted_plant:</string>
     </emoticon>
     <emoticon file="1f332.svg">
         <string>🌲</string>
-        <string>:evergreen_tree:</string>        
+        <string>:evergreen_tree:</string>
     </emoticon>
     <emoticon file="1f333.svg">
         <string>🌳</string>
-        <string>:deciduous_tree:</string>        
+        <string>:deciduous_tree:</string>
     </emoticon>
     <emoticon file="1f334.svg">
         <string>🌴</string>
-        <string>:palm_tree:</string>        
+        <string>:palm_tree:</string>
     </emoticon>
     <emoticon file="1f335.svg">
         <string>🌵</string>
-        <string>:cactus:</string>        
+        <string>:cactus:</string>
     </emoticon>
     <emoticon file="1f33e.svg">
         <string>🌾</string>
-        <string>:sheaf_of_rice:</string>        
+        <string>:sheaf_of_rice:</string>
     </emoticon>
     <emoticon file="1f33f.svg">
         <string>🌿</string>
-        <string>:herb:</string>        
+        <string>:herb:</string>
     </emoticon>
     <emoticon file="2618.svg">
         <string>☘</string>
-        <string>:shamrock:</string>        
+        <string>:shamrock:</string>
     </emoticon>
     <emoticon file="1f340.svg">
         <string>🍀</string>
-        <string>:four_leaf_clover:</string>        
+        <string>:four_leaf_clover:</string>
     </emoticon>
     <emoticon file="1f341.svg">
         <string>🍁</string>
-        <string>:maple_leaf:</string>        
+        <string>:maple_leaf:</string>
     </emoticon>
     <emoticon file="1f342.svg">
         <string>🍂</string>
-        <string>:fallen_leaf:</string>        
+        <string>:fallen_leaf:</string>
     </emoticon>
     <emoticon file="1f343.svg">
         <string>🍃</string>
         <string>:leaf:</string>
-        <string>:leaf_fluttering_in_the_wind:</string>        
+        <string>:leaf_fluttering_in_the_wind:</string>
     </emoticon>
     <emoticon file="1f347.svg">
         <string>🍇</string>
-        <string>:grapes:</string>        
+        <string>:grapes:</string>
     </emoticon>
     <emoticon file="1f348.svg">
         <string>🍈</string>
-        <string>:melon:</string>        
+        <string>:melon:</string>
     </emoticon>
     <emoticon file="1f349.svg">
         <string>🍉</string>
         <string>:watermelon:</string>
-        <string>:watermelon_slice:</string>        
+        <string>:watermelon_slice:</string>
     </emoticon>
     <emoticon file="1f34a.svg">
         <string>🍊</string>
-        <string>:tangerine:</string>        
+        <string>:tangerine:</string>
     </emoticon>
     <emoticon file="1f34b.svg">
         <string>🍋</string>
-        <string>:lemon:</string>        
+        <string>:lemon:</string>
     </emoticon>
     <emoticon file="1f34c.svg">
         <string>🍌</string>
-        <string>:banana:</string>        
+        <string>:banana:</string>
     </emoticon>
     <emoticon file="1f34d.svg">
         <string>🍍</string>
-        <string>:pineapple:</string>        
+        <string>:pineapple:</string>
     </emoticon>
     <emoticon file="1f96d.svg">
         <string>🥭</string>
-        <string>:mango:</string>        
+        <string>:mango:</string>
     </emoticon>
     <emoticon file="1f34e.svg">
         <string>🍎</string>
         <string>:apple:</string>
-        <string>:red_apple:</string>        
+        <string>:red_apple:</string>
     </emoticon>
     <emoticon file="1f34f.svg">
         <string>🍏</string>
-        <string>:green_apple:</string>        
+        <string>:green_apple:</string>
     </emoticon>
     <emoticon file="1f350.svg">
         <string>🍐</string>
-        <string>:pear:</string>        
+        <string>:pear:</string>
     </emoticon>
     <emoticon file="1f351.svg">
         <string>🍑</string>
-        <string>:peach:</string>        
+        <string>:peach:</string>
     </emoticon>
     <emoticon file="1f352.svg">
         <string>🍒</string>
-        <string>:cherries:</string>        
+        <string>:cherries:</string>
     </emoticon>
     <emoticon file="1f353.svg">
         <string>🍓</string>
-        <string>:strawberry:</string>        
+        <string>:strawberry:</string>
     </emoticon>
     <emoticon file="1fad0.svg">
         <string>🫐</string>
-        <string>:blueberries:</string>        
+        <string>:blueberries:</string>
     </emoticon>
     <emoticon file="1f95d.svg">
         <string>🥝</string>
-        <string>:kiwi_fruit:</string>        
+        <string>:kiwi_fruit:</string>
     </emoticon>
     <emoticon file="1f345.svg">
         <string>🍅</string>
-        <string>:tomato:</string>        
+        <string>:tomato:</string>
     </emoticon>
     <emoticon file="1fad2.svg">
         <string>🫒</string>
-        <string>:olive:</string>        
+        <string>:olive:</string>
     </emoticon>
     <emoticon file="1f965.svg">
         <string>🥥</string>
-        <string>:coconut:</string>        
+        <string>:coconut:</string>
     </emoticon>
     <emoticon file="1f951.svg">
         <string>🥑</string>
-        <string>:avocado:</string>        
+        <string>:avocado:</string>
     </emoticon>
     <emoticon file="1f346.svg">
         <string>🍆</string>
-        <string>:eggplant:</string>        
+        <string>:eggplant:</string>
     </emoticon>
     <emoticon file="1f954.svg">
         <string>🥔</string>
-        <string>:potato:</string>        
+        <string>:potato:</string>
     </emoticon>
     <emoticon file="1f955.svg">
         <string>🥕</string>
-        <string>:carrot:</string>        
+        <string>:carrot:</string>
     </emoticon>
     <emoticon file="1f33d.svg">
         <string>🌽</string>
-        <string>:ear_of_corn:</string>        
+        <string>:ear_of_corn:</string>
     </emoticon>
     <emoticon file="1f336.svg">
         <string>🌶</string>
-        <string>:hot_pepper:</string>        
+        <string>:hot_pepper:</string>
     </emoticon>
     <emoticon file="1fad1.svg">
         <string>🫑</string>
-        <string>:bell_pepper:</string>        
+        <string>:bell_pepper:</string>
     </emoticon>
     <emoticon file="1f96c.svg">
         <string>🥬</string>
-        <string>:leafy_green:</string>        
+        <string>:leafy_green:</string>
     </emoticon>
     <emoticon file="1f966.svg">
         <string>🥦</string>
-        <string>:broccoli:</string>        
+        <string>:broccoli:</string>
     </emoticon>
     <emoticon file="1f9c4.svg">
         <string>🧄</string>
-        <string>:garlic:</string>        
+        <string>:garlic:</string>
     </emoticon>
     <emoticon file="1f9c5.svg">
         <string>🧅</string>
-        <string>:onion:</string>        
+        <string>:onion:</string>
     </emoticon>
     <emoticon file="1f344.svg">
         <string>🍄</string>
-        <string>:mushroom:</string>        
+        <string>:mushroom:</string>
     </emoticon>
     <emoticon file="1f95c.svg">
         <string>🥜</string>
-        <string>:peanuts:</string>        
+        <string>:peanuts:</string>
     </emoticon>
     <emoticon file="1f330.svg">
         <string>🌰</string>
-        <string>:chestnut:</string>        
+        <string>:chestnut:</string>
     </emoticon>
     <emoticon file="1f35e.svg">
         <string>🍞</string>
-        <string>:bread:</string>        
+        <string>:bread:</string>
     </emoticon>
     <emoticon file="1f950.svg">
         <string>🥐</string>
-        <string>:croissant:</string>        
+        <string>:croissant:</string>
     </emoticon>
     <emoticon file="1f956.svg">
         <string>🥖</string>
-        <string>:baguette:</string>        
+        <string>:baguette:</string>
     </emoticon>
     <emoticon file="1fad3.svg">
         <string>🫓</string>
-        <string>:flatbread:</string>        
+        <string>:flatbread:</string>
     </emoticon>
     <emoticon file="1f968.svg">
         <string>🥨</string>
-        <string>:pretzel:</string>        
+        <string>:pretzel:</string>
     </emoticon>
     <emoticon file="1f96f.svg">
         <string>🥯</string>
-        <string>:bagel:</string>        
+        <string>:bagel:</string>
     </emoticon>
     <emoticon file="1f95e.svg">
         <string>🥞</string>
-        <string>:pancakes:</string>        
+        <string>:pancakes:</string>
     </emoticon>
     <emoticon file="1f9c7.svg">
         <string>🧇</string>
-        <string>:waffle:</string>        
+        <string>:waffle:</string>
     </emoticon>
     <emoticon file="1f356.svg">
         <string>🍖</string>
-        <string>:meat_on_bone:</string>        
+        <string>:meat_on_bone:</string>
     </emoticon>
     <emoticon file="1f357.svg">
         <string>🍗</string>
