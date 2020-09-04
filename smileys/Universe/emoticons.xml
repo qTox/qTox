@@ -172,6 +172,8 @@
     <emoticon file="1f610.svg">
         <string>😐</string>
         <string>:neutral_face:</string>
+        <string>:|</string>
+        <string>:-|</string>
     </emoticon>
     <emoticon file="1f611.svg">
         <string>😑</string>
@@ -228,6 +230,8 @@
     <emoticon file="1f634.svg">
         <string>😴</string>
         <string>:sleeping:</string>
+        <string>|-)</string>
+        <string>#)</string>
     </emoticon>
     <emoticon file="1f637.svg">
         <string>😷</string>
@@ -331,6 +335,9 @@
         <string>:open_mouth:</string>
         <string>:face_with_open_mouth:</string>
         <string>:O</string>
+        <string>:-O</string>
+        <string>:o</string>
+        <string>:-o</string>
     </emoticon>
     <emoticon file="1f62f.svg">
         <string>😯</string>
@@ -455,6 +462,8 @@
         <string>:smiling_devil:</string>
         <string>:smiling_imp:</string>
         <string>:smiling_face_with_horns:</string>
+        <string>3>:)</string>
+        <string>3>:-)</string>
     </emoticon>
     <emoticon file="1f47f.svg">
         <string>👿</string>
@@ -556,6 +565,10 @@
     <emoticon file="1f64a.svg">
         <string>🙊</string>
         <string>:speak_no_evil:</string>
+        <string>:x</string>
+        <string>:-x</string>
+        <string>:X</string>
+        <string>:-X</string>
     </emoticon>
     <emoticon file="1f48b.svg">
         <string>💋</string>
