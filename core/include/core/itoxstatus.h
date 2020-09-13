@@ -1,5 +1,5 @@
 /*
-    Copyright © 2019 by The qTox Project Contributors
+    Copyright © 2020 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,29 +17,16 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QString>
-
-#include "core/itoxstatus.h"
-
 #pragma once
 
-namespace Status
-{
-    // Status::Status is weird, but Status is a fitting name for both the namespace and enum class..
-    enum class Status
+class IToxStatus {
+public:
+    enum class ToxStatus
     {
         Online = 0,
         Away,
         Busy,
         Offline,
-        Blocked
     };
+};
 
-    bool toToxStatus(IToxStatus::ToxStatus& toxStatus, Status status);
-    bool fromToxStatus(Status& status, IToxStatus::ToxStatus toxStatus);
-
-    QString getIconPath(Status status, bool event = false);
-    QString getTitle(Status status);
-    QString getAssetSuffix(Status status);
-    bool isOnline(Status status);
-}

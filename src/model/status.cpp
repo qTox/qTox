@@ -26,8 +26,7 @@
 
 #include <cassert>
 
-namespace Status
-{
+namespace Status {
     QString getTitle(Status status)
     {
         switch (status) {
@@ -79,5 +78,61 @@ namespace Status
     bool isOnline(Status status)
     {
         return status != Status::Offline && status != Status::Blocked;
+    }
+
+    bool toToxStatus(IToxStatus::ToxStatus &toxStatus, Status status)
+    {
+        switch (status) {
+        case Status::Online:
+            toxStatus = IToxStatus::ToxStatus::Online;
+            return true;
+            break;
+
+        case Status::Away:
+            toxStatus = IToxStatus::ToxStatus::Away;
+            return true;
+            break;
+
+        case Status::Busy:
+            toxStatus = IToxStatus::ToxStatus::Busy;
+            return true;
+            break;
+        case Status::Offline:
+            toxStatus = IToxStatus::ToxStatus::Offline;
+            return true;
+            break;
+
+        default:
+            return false;
+            break;
+        }
+    }
+
+    bool fromToxStatus(Status &status, IToxStatus::ToxStatus toxStatus)
+    {
+        switch (toxStatus) {
+        case IToxStatus::ToxStatus::Online:
+            status = Status::Online;
+            return true;
+            break;
+        case IToxStatus::ToxStatus::Offline:
+            status = Status::Offline;
+            return true;
+            break;
+
+        case IToxStatus::ToxStatus::Busy:
+            status = Status::Busy;
+            return true;
+            break;
+
+        case IToxStatus::ToxStatus::Away:
+            status = Status::Away;
+            return true;
+            break;
+
+        default:
+            return false;
+            break;
+        }
     }
 } // namespace Status

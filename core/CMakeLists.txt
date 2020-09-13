@@ -27,6 +27,7 @@ set(SOURCE_FILES
     "include/core/icoregroupquery.h"
     "include/core/icoreidhandler.h"
     "include/core/icoresettings.h"
+    "include/core/itoxstatus.h"
     "include/core/receiptnum.h"
     "include/core/toxcall.h"
     "include/core/toxencrypt.h"

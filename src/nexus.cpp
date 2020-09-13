@@ -23,7 +23,7 @@
 #include "core/core.h"
 #include "core/coreav.h"
 #include "core/groupinvite.h"
-#include "src/model/status.h"
+#include "core/itoxstatus.h"
 #include "src/persistence/profile.h"
 #include "src/widget/widget.h"
 #include "video/camerasource.h"
@@ -86,6 +86,7 @@ void Nexus::start()
     qDebug() << "Starting up";
 
     // Setup the environment
+    qRegisterMetaType<IToxStatus::ToxStatus>("IToxStatus::ToxStatus");
     qRegisterMetaType<Status::Status>("Status::Status");
     qRegisterMetaType<vpx_image>("vpx_image");
     qRegisterMetaType<uint8_t>("uint8_t");

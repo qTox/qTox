@@ -84,6 +84,6 @@ void AvatarBroadcaster::enableAutoBroadcast(bool state)
     this->disconnect(&core, nullptr, this, nullptr);
     if (state) {
         connect(&core, &Core::friendStatusChanged,
-                [=](uint32_t friendId, Status::Status) { this->sendAvatarTo(friendId); });
+                [=](uint32_t friendId, IToxStatus::ToxStatus) { this->sendAvatarTo(friendId); });
     }
 }

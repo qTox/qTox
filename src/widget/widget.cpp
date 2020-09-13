@@ -269,7 +269,7 @@ void Widget::init()
     ui->mainSplitter->setStretchFactor(0, 0);
     ui->mainSplitter->setStretchFactor(1, 1);
 
-    onStatusSet(Status::Status::Offline);
+    onStatusSet(IToxStatus::ToxStatus::Offline);
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -633,7 +633,7 @@ void Widget::closeEvent(QCloseEvent* event)
         QWidget::closeEvent(event);
     } else {
         if (autoAwayActive) {
-            emit statusSet(Status::Status::Online);
+            emit statusSet(IToxStatus::ToxStatus::Online);
             autoAwayActive = false;
         }
         saveWindowGeometry();
@@ -712,7 +712,7 @@ void Widget::onConnected()
 void Widget::onDisconnected()
 {
     ui->statusButton->setEnabled(false);
-    emit core->statusSet(Status::Status::Offline);
+    emit core->statusSet(IToxStatus::ToxStatus::Offline);
 }
 
 void Widget::onFailedToStartCore()
@@ -738,10 +738,13 @@ void Widget::onBadProxyCore()
     onShowSettings();
 }
 
-void Widget::onStatusSet(Status::Status status)
+void Widget::onStatusSet(IToxStatus::ToxStatus status)
 {
+    Status::Status newStatus = Status::Status::Offline;
+    // Can ignore return value here, since we just go with default Offline
+    Status::fromToxStatus(newStatus, status);
     ui->statusButton->setProperty("status", static_cast<int>(status));
-    ui->statusButton->setIcon(prepareIcon(getIconPath(status), icon_size, icon_size));
+    ui->statusButton->setIcon(prepareIcon(getIconPath(newStatus), icon_size, icon_size));
     updateIcons();
 }
 
@@ -1215,7 +1218,7 @@ void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
     QMessageBox::critical(nullptr, "Error", info);
 }
 
-void Widget::onFriendStatusChanged(int friendId, Status::Status status)
+void Widget::onFriendStatusChanged(int friendId, IToxStatus::ToxStatus status)
 {
     const auto& friendPk = FriendList::id2Key(friendId);
     Friend* f = FriendList::findFriend(friendPk);
@@ -1223,18 +1226,23 @@ void Widget::onFriendStatusChanged(int friendId, Status::Status status)
         return;
     }
 
-    bool isActualChange = f->getStatus() != status;
+    Status::Status newStatus = Status::Status::Offline;
+    if(!Status::fromToxStatus(newStatus, status)) {
+        qDebug() << "Failed to convert status from Core, default: Offline";
+    }
+
+    bool isActualChange = f->getStatus() != newStatus;
 
     FriendWidget* widget = friendWidgets[f->getPublicKey()];
     if (isActualChange) {
         if (!Status::isOnline(f->getStatus())) {
             contactListWidget->moveWidget(widget, Status::Status::Online);
-        } else if (status == Status::Status::Offline) {
+        } else if (newStatus == Status::Status::Offline) {
             contactListWidget->moveWidget(widget, Status::Status::Offline);
         }
     }
 
-    f->setStatus(status);
+    f->setStatus(newStatus);
     widget->updateStatusLight();
     if (widget->isActive()) {
         setWindowTitle(widget->getTitle());
@@ -1633,7 +1641,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 #endif
                 eventFlag = true;
             }
-            bool isBusy = core->getStatus() == Status::Status::Busy;
+            bool isBusy = core->getStatus() == IToxStatus::ToxStatus::Busy;
             bool busySound = settings.getBusySound();
             bool notifySound = settings.getNotifySound();
 
@@ -2201,11 +2209,11 @@ void Widget::onUserAwayCheck()
 
     if (online && away) {
         qDebug() << "auto away activated at" << QTime::currentTime().toString();
-        emit statusSet(Status::Status::Away);
+        emit statusSet(IToxStatus::ToxStatus::Away);
         autoAwayActive = true;
     } else if (autoAwayActive && !away) {
         qDebug() << "auto away deactivated at" << QTime::currentTime().toString();
-        emit statusSet(Status::Status::Online);
+        emit statusSet(IToxStatus::ToxStatus::Online);
         autoAwayActive = false;
     }
 #endif
@@ -2269,7 +2277,7 @@ void Widget::setStatusOnline()
         return;
     }
 
-    core->setStatus(Status::Status::Online);
+    core->setStatus(IToxStatus::ToxStatus::Online);
 }
 
 void Widget::setStatusAway()
@@ -2278,7 +2286,7 @@ void Widget::setStatusAway()
         return;
     }
 
-    core->setStatus(Status::Status::Away);
+    core->setStatus(IToxStatus::ToxStatus::Away);
 }
 
 void Widget::setStatusBusy()
@@ -2287,7 +2295,7 @@ void Widget::setStatusBusy()
         return;
     }
 
-    core->setStatus(Status::Status::Busy);
+    core->setStatus(IToxStatus::ToxStatus::Busy);
 }
 
 void Widget::onGroupSendFailed(uint32_t groupnumber)

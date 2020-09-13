@@ -101,7 +101,7 @@ private:
     static QString getCleanFileName(QString filename);
 
 private slots:
-    void onConnectionStatusChanged(uint32_t friendId, Status::Status state);
+    void onConnectionStatusChanged(uint32_t friendId, IToxStatus::ToxStatus state);
 
 private:
     QHash<uint64_t, ToxFile> fileMap;

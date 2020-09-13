@@ -157,7 +157,7 @@ public slots:
     void forceShow();
     void onConnected();
     void onDisconnected();
-    void onStatusSet(Status::Status status);
+    void onStatusSet(IToxStatus::ToxStatus status);
     void onFailedToStartCore();
     void onBadProxyCore();
     void onSelfAvatarLoaded(const QPixmap& pic);
@@ -165,7 +165,7 @@ public slots:
     void setStatusMessage(const QString& statusMessage);
     void addFriend(uint32_t friendId, const ToxPk& friendPk);
     void addFriendFailed(const ToxPk& userId, const QString& errorInfo = QString());
-    void onFriendStatusChanged(int friendId, Status::Status status);
+    void onFriendStatusChanged(int friendId, IToxStatus::ToxStatus status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendDisplayedNameChanged(const QString& displayed);
     void onFriendUsernameChanged(int friendId, const QString& username);
@@ -198,7 +198,7 @@ public slots:
 signals:
     void friendRequestAccepted(const ToxPk& friendPk);
     void friendRequested(const ToxId& friendAddress, const QString& message);
-    void statusSet(Status::Status status);
+    void statusSet(IToxStatus::ToxStatus status);
     void statusSelected(Status::Status status);
     void usernameChanged(const QString& username);
     void changeGroupTitle(uint32_t groupnumber, const QString& title);

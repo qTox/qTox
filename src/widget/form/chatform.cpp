@@ -143,7 +143,15 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMes
     connect(coreFile, &CoreFile::fileReceiveRequested, this, &ChatForm::updateFriendActivityForFile);
     connect(coreFile, &CoreFile::fileSendStarted, this, &ChatForm::updateFriendActivityForFile);
     connect(&core, &Core::friendTypingChanged, this, &ChatForm::onFriendTypingChanged);
-    connect(&core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
+    connect(&core, &Core::friendStatusChanged, this,
+            [&](uint32_t friendId, IToxStatus::ToxStatus status) {
+                Status::Status newStatus;
+                if (Status::fromToxStatus(newStatus, status)) {
+                    this->onFriendStatusChanged(friendId, newStatus);
+                } else {
+                    qDebug() << "Failed to convert status";
+                }
+            });
     connect(coreFile, &CoreFile::fileNameChanged, this, &ChatForm::onFileNameChanged);
 
     const CoreAV* av = core.getAv();

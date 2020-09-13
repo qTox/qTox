@@ -540,9 +540,9 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
     }
 }
 
-void CoreFile::onConnectionStatusChanged(uint32_t friendId, Status::Status state)
+void CoreFile::onConnectionStatusChanged(uint32_t friendId, IToxStatus::ToxStatus state)
 {
-    bool isOffline = state == Status::Status::Offline;
+    bool isOffline = state == IToxStatus::ToxStatus::Offline;
     // TODO: Actually resume broken file transfers
     // We need to:
     // - Start a new file transfer with the same 32byte file ID with toxcore
