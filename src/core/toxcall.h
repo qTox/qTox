@@ -29,6 +29,7 @@
 #include <QMetaObject>
 #include <QtGlobal>
 
+#include <atomic>
 #include <cstdint>
 #include <memory>
 
@@ -70,20 +71,22 @@ public:
     bool getNullVideoBitrate() const;
     void setNullVideoBitrate(bool value);
 
+    virtual void endCall() = 0;
+
     CoreVideoSource* getVideoSource() const;
 
 protected:
-    bool active{false};
-    CoreAV* av{nullptr};
+    std::atomic<bool> active{false};
+    CoreAV& av;
     // audio
     IAudioControl& audio;
-    bool muteMic{false};
-    bool muteVol{false};
+    std::atomic<bool> muteMic{false};
+    std::atomic<bool> muteVol{false};
     // video
     CoreVideoSource* videoSource{nullptr};
     QMetaObject::Connection videoInConn;
-    bool videoEnabled{false};
-    bool nullVideoBitrate{false};
+    std::atomic<bool> videoEnabled{false};
+    std::atomic<bool> nullVideoBitrate{false};
     std::unique_ptr<IAudioSource> audioSource;
 };
 
@@ -101,6 +104,10 @@ public:
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
     void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const;
+
+    // ToxCall interface
+public:
+    void endCall() override;
 
 private slots:
     void onAudioSourceInvalidated();
@@ -128,6 +135,10 @@ public:
 
     void playAudioBuffer(const ToxPk& peer, const int16_t* data, int samples, unsigned channels,
                          int sampleRate);
+
+    // ToxCall interface
+public:
+    void endCall() override;
 
 private:
     void addPeer(ToxPk peerId);

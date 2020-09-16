@@ -49,7 +49,7 @@
  */
 
 ToxCall::ToxCall(bool VideoEnabled_, CoreAV& av_, IAudioControl& audio_)
-    : av{&av_}
+    : av{av_}
     , audio(audio_)
     , videoEnabled{VideoEnabled_}
     , audioSource(audio_.makeSource())
@@ -126,7 +126,7 @@ ToxFriendCall::ToxFriendCall(uint32_t friendNum, bool VideoEnabled, CoreAV& av_,
 {
     connect(audioSource.get(), &IAudioSource::frameAvailable, this,
                          [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
-                             av->sendCallAudio(friendId, pcm, samples, chans, rate);
+                             av.sendCallAudio(friendId, pcm, samples, chans, rate);
                          });
 
     connect(audioSource.get(), &IAudioSource::invalidated, this, &ToxFriendCall::onAudioSourceInvalidated);
@@ -166,7 +166,7 @@ void ToxFriendCall::onAudioSourceInvalidated()
     auto newSrc = audio.makeSource();
     connect(newSrc.get(), &IAudioSource::frameAvailable, this,
                          [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
-                             av->sendCallAudio(friendId, pcm, samples, chans, rate);
+                             av.sendCallAudio(friendId, pcm, samples, chans, rate);
                          });
     audioSource = std::move(newSrc);
 
@@ -202,6 +202,11 @@ void ToxFriendCall::playAudioBuffer(const int16_t* data, int samples, unsigned c
     }
 }
 
+void ToxFriendCall::endCall()
+{
+    av.cancelCall(friendId);
+}
+
 ToxGroupCall::ToxGroupCall(const Group& group_, CoreAV& av_, IAudioControl& audio_)
     : ToxCall(false, av_, audio_)
     , group{group_}
@@ -213,7 +218,7 @@ ToxGroupCall::ToxGroupCall(const Group& group_, CoreAV& av_, IAudioControl& audi
                    return;
                 }
 
-                av->sendGroupCallAudio(group.getId(), pcm, samples, chans, rate);
+                av.sendGroupCallAudio(group.getId(), pcm, samples, chans, rate);
             });
 
     connect(audioSource.get(), &IAudioSource::invalidated, this, &ToxGroupCall::onAudioSourceInvalidated);
@@ -234,7 +239,7 @@ void ToxGroupCall::onAudioSourceInvalidated()
                    return;
                 }
 
-                av->sendGroupCallAudio(group.getId(), pcm, samples, chans, rate);
+                av.sendGroupCallAudio(group.getId(), pcm, samples, chans, rate);
             });
 
     audioSource = std::move(newSrc);
@@ -302,4 +307,9 @@ void ToxGroupCall::playAudioBuffer(const ToxPk& peer, const int16_t* data, int s
     if (source->second) {
         source->second->playAudioBuffer(data, samples, channels, sampleRate);
     }
+}
+
+void ToxGroupCall::endCall()
+{
+    av.leaveGroupCall(group.getId());
 }
