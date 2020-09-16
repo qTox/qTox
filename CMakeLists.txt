@@ -261,6 +261,10 @@ set(${PROJECT_NAME}_SOURCES
   src/grouplist.h
   src/ipc.cpp
   src/ipc.h
+  src/globalshortcut.cpp
+  src/globalshortcut.h
+  src/hookmanager.cpp
+  src/hookmanager.h
   src/model/about/aboutfriend.cpp
   src/model/about/aboutfriend.h
   src/model/about/iaboutfriend.h
@@ -406,6 +410,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/form/settings/generalform.h
   src/widget/form/settings/genericsettings.cpp
   src/widget/form/settings/genericsettings.h
+  src/widget/form/settings/hotkeyinput.cpp
+  src/widget/form/settings/hotkeyinput.h
   src/widget/form/settings/privacyform.cpp
   src/widget/form/settings/privacyform.h
   src/widget/form/settings/userinterfaceform.h

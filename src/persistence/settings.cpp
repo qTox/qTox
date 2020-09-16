@@ -243,6 +243,24 @@ void Settings::loadGlobal()
         audioThreshold = s.value("audioThreshold", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
         enableTestSound = s.value("enableTestSound", true).toBool();
+        audioCaptureMode = static_cast<AudioCaptureMode>(s.value("audioCaptureMode", 0).toInt());
+
+        int pttShortcutKeysSize = s.beginReadArray("pttShortcutKeys");
+        for (int i = 0; i < pttShortcutKeysSize; i++) {
+            s.setArrayIndex(i);
+            const int key = s.value("pttKey" + QString::number(i), 0).toInt();
+            pttShortcutKeys << key;
+        }
+        s.endArray();
+
+        int pttShortcutNamesSize = s.beginReadArray("pttShortcutNames");
+        for (int i = 0; i < pttShortcutNamesSize; i++) {
+            s.setArrayIndex(i);
+            const int key = s.value("pttName" + QString::number(i), 0).toInt();
+            pttShortcutNames << key;
+        }
+        s.endArray();
+
         audioBitrate = s.value("audioBitrate", 64).toInt();
     }
     s.endGroup();
@@ -710,6 +728,19 @@ void Settings::saveGlobal()
         s.setValue("audioThreshold", audioThreshold);
         s.setValue("outVolume", outVolume);
         s.setValue("enableTestSound", enableTestSound);
+        s.setValue("audioCaptureMode", static_cast<int>(audioCaptureMode));
+        s.beginWriteArray("pttShortcutKeys", pttShortcutKeys.size());
+            for (int i = 0; i < pttShortcutKeys.size(); i++) {
+                s.setArrayIndex(i);
+                s.setValue("pttKey" + QString::number(i), pttShortcutKeys[i]);
+            }
+            s.endArray();
+        s.beginWriteArray("pttShortcutNames", pttShortcutNames.size());
+            for (int i = 0; i < pttShortcutNames.size(); i++) {
+                s.setArrayIndex(i);
+                s.setValue("pttName" + QString::number(i), pttShortcutNames[i]);
+            }
+            s.endArray();
         s.setValue("audioBitrate", audioBitrate);
     }
     s.endGroup();
@@ -1792,6 +1823,54 @@ void Settings::setOutVolume(int volume)
 {
     if (setVal(outVolume, volume)) {
         emit outVolumeChanged(volume);
+    }
+}
+
+IAudioSettings::AudioCaptureMode Settings::getAudioCaptureMode() const
+{
+    const QMutexLocker locker{&bigLock};
+    return audioCaptureMode;
+}
+
+void Settings::setAudioCaptureMode(AudioCaptureMode mode)
+{
+    const QMutexLocker locker{&bigLock};
+
+    if (mode != audioCaptureMode) {
+        audioCaptureMode = mode;
+        emit audioCaptureModeChanged(mode);
+    }
+}
+
+QList<int> Settings::getPttShortcutKeys() const
+{
+    const QMutexLocker locker{&bigLock};
+    return pttShortcutKeys;
+}
+
+void Settings::setPttShortcutKeys(QList<int> keys)
+{
+    const QMutexLocker locker{&bigLock};
+
+    if (keys != pttShortcutKeys) {
+        pttShortcutKeys = keys;
+        emit pttShortcutKeysChanged(pttShortcutKeys);
+    }
+}
+
+QList<int> Settings::getPttShortcutNames() const
+{
+   const QMutexLocker locker{&bigLock};
+   return pttShortcutNames; 
+}
+
+void Settings::setPttShortcutNames(QList<int> names)
+{
+    const QMutexLocker locker{&bigLock};
+
+    if (names != pttShortcutNames) {
+        pttShortcutNames = names;
+        emit pttShortcutNamesChanged(pttShortcutNames);
     }
 }
 

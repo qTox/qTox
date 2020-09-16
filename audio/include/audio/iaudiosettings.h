@@ -22,9 +22,16 @@
 #include "util/interface.h"
 
 #include <QString>
+#include <QList>
 
 class IAudioSettings {
 public:
+    enum class AudioCaptureMode {
+        Continuous = 0,
+        VoiceActivation = 1,
+        PushToTalk = 2
+    };
+
     virtual ~IAudioSettings() = default;
 
     virtual QString getInDev() const = 0;
@@ -50,6 +57,15 @@ public:
     virtual int getOutVolumeMax() const = 0;
     virtual void setOutVolume(int volume) = 0;
 
+    virtual AudioCaptureMode getAudioCaptureMode() const = 0;
+    virtual void setAudioCaptureMode(AudioCaptureMode mode) = 0;
+
+    virtual QList<int> getPttShortcutKeys() const = 0;
+    virtual void setPttShortcutKeys(QList<int> keys) = 0;
+
+    virtual QList<int> getPttShortcutNames() const = 0;
+    virtual void setPttShortcutNames(QList<int> keys) = 0;   
+
     virtual int getAudioBitrate() const = 0;
     virtual void setAudioBitrate(int bitrate) = 0;
 
@@ -65,6 +81,9 @@ public:
     DECLARE_SIGNAL(audioInGainDecibelChanged, qreal dB);
     DECLARE_SIGNAL(audioThresholdChanged, qreal dB);
     DECLARE_SIGNAL(outVolumeChanged, int volume);
+    DECLARE_SIGNAL(audioCaptureModeChanged, AudioCaptureMode mode);
+    DECLARE_SIGNAL(pttShortcutKeysChanged, QList<int> keys);
+    DECLARE_SIGNAL(pttShortcutNamesChanged, QList<int> names);
     DECLARE_SIGNAL(audioBitrateChanged, int bitrate);
     DECLARE_SIGNAL(enableTestSoundChanged, bool newValue);
 };

@@ -30,6 +30,7 @@
 
 #include "audio/iaudiocontrol.h"
 #include "audio/iaudiosink.h"
+#include "audio/iaudiosettings.h"
 #include "src/core/core.h"
 #include "src/core/groupid.h"
 #include "src/core/toxfile.h"
@@ -37,6 +38,7 @@
 #include "src/core/toxpk.h"
 #include "src/model/friendmessagedispatcher.h"
 #include "src/model/groupmessagedispatcher.h"
+#include "src/globalshortcut.h"
 #if DESKTOP_NOTIFICATIONS
 #include "src/model/notificationgenerator.h"
 #include "src/platform/desktop_notifications/desktopnotify.h"
@@ -205,6 +207,9 @@ signals:
     void statusMessageChanged(const QString& statusMessage);
     void resized();
     void windowStateChanged(Qt::WindowStates states);
+    void pttToggled() const;
+    void pauseKeyBlocking() const;
+    void resumeKeyBlocking() const;
 
 private slots:
     void onAddClicked();
@@ -276,6 +281,7 @@ private:
     void playNotificationSound(IAudioSink::Sound sound, bool loop = false);
     void cleanupNotificationSound();
     void acceptFileTransfer(const ToxFile &file, const QString &path);
+    void onAudioCaptureModeChanged(IAudioSettings::AudioCaptureMode mode);
 
 private:
     Profile& profile;
@@ -357,7 +363,7 @@ private:
     QMap<GroupId, std::shared_ptr<GroupChatroom>> groupChatrooms;
     QMap<GroupId, QSharedPointer<GroupChatForm>> groupChatForms;
     Core* core = nullptr;
-
+    std::unique_ptr<GlobalShortcut> globalshortcut;
 
     MessageProcessor::SharedParams sharedMessageProcessorParams;
 #if DESKTOP_NOTIFICATIONS

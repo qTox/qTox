@@ -76,6 +76,7 @@ public slots:
     void onShowMessagesClicked();
     void onSplitterMoved(int pos, int index);
     void reloadTheme() final;
+    void onMicMuteToggle();
 
 private slots:
     void updateFriendActivityForFile(const ToxFile& file);
@@ -87,7 +88,7 @@ private slots:
     void onVideoCallTriggered();
     void onAnswerCallTriggered(bool video);
     void onRejectCallTriggered();
-    void onMicMuteToggle();
+
     void onVolMuteToggle();
 
     void onFriendStatusChanged(quint32 friendId, Status::Status status);

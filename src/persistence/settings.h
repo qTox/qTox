@@ -119,6 +119,8 @@ class Settings : public QObject,
     Q_PROPERTY(bool audioOutDevEnabled READ getAudioOutDevEnabled WRITE setAudioOutDevEnabled NOTIFY
                    audioOutDevEnabledChanged FINAL)
     Q_PROPERTY(int outVolume READ getOutVolume WRITE setOutVolume NOTIFY outVolumeChanged FINAL)
+    Q_PROPERTY(AudioCaptureMode audioCaptureMode READ getAudioCaptureMode WRITE setAudioCaptureMode NOTIFY audioCaptureModeChanged FINAL)
+    Q_PROPERTY(QList<int> pttShortcutKeys READ getPttShortcutKeys WRITE setPttShortcutKeys NOTIFY pttShortcutKeysChanged FINAL)
     Q_PROPERTY(int audioBitrate READ getAudioBitrate WRITE setAudioBitrate NOTIFY audioBitrateChanged FINAL)
 
     // Video
@@ -362,7 +364,16 @@ public:
         return 100;
     }
     void setOutVolume(int volume) override;
+    
+    AudioCaptureMode getAudioCaptureMode() const override;
+    void setAudioCaptureMode(AudioCaptureMode mode) override;
+    
+    QList<int> getPttShortcutKeys() const override;
+    void setPttShortcutKeys(QList<int> keys) override;    
 
+    QList<int> getPttShortcutNames() const override;
+    void setPttShortcutNames(QList<int> keys) override;   
+    
     int getAudioBitrate() const override;
     void setAudioBitrate(int bitrate) override;
 
@@ -378,6 +389,9 @@ public:
     SIGNAL_IMPL(Settings, audioInGainDecibelChanged, qreal dB)
     SIGNAL_IMPL(Settings, audioThresholdChanged, qreal percent)
     SIGNAL_IMPL(Settings, outVolumeChanged, int volume)
+    SIGNAL_IMPL(Settings, audioCaptureModeChanged, AudioCaptureMode mode)
+    SIGNAL_IMPL(Settings, pttShortcutKeysChanged, QList<int> keys)
+    SIGNAL_IMPL(Settings, pttShortcutNamesChanged, QList<int> names)
     SIGNAL_IMPL(Settings, audioBitrateChanged, int bitrate)
     SIGNAL_IMPL(Settings, enableTestSoundChanged, bool newValue)
 
@@ -668,6 +682,9 @@ private:
     QString outDev;
     bool audioOutDevEnabled;
     int outVolume;
+    AudioCaptureMode audioCaptureMode;
+    QList<int> pttShortcutKeys;
+    QList<int> pttShortcutNames;
     int audioBitrate;
     bool enableTestSound;
 

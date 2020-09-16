@@ -39,6 +39,7 @@
 #endif
 
 #include "audio/audio.h"
+#include "audio/iaudiosettings.h"
 #include "circlewidget.h"
 #include "contentdialog.h"
 #include "contentlayout.h"
@@ -79,6 +80,7 @@
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
 #include "tool/removefrienddialog.h"
+#include "src/globalshortcut.h"
 
 bool toxActivateEventHandler(const QByteArray&)
 {
@@ -288,6 +290,8 @@ void Widget::init()
 #if UPDATE_CHECK_ENABLED
     updateCheck->checkForUpdate();
 #endif
+    connect(settingsWidget, &SettingsWidget::pauseKeyBlocking, this, &Widget::pauseKeyBlocking);
+    connect(settingsWidget, &SettingsWidget::resumeKeyBlocking, this, &Widget::resumeKeyBlocking);
 
     CoreFile* coreFile = core->getCoreFile();
     profileInfo = new ProfileInfo(core, &profile);
@@ -347,6 +351,9 @@ void Widget::init()
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
     new QShortcut(Qt::Key_F11, this, SLOT(toggleFullscreen()));
+
+    onAudioCaptureModeChanged(settings.getAudioCaptureMode());
+    connect(&settings, &Settings::audioCaptureModeChanged, this, &Widget::onAudioCaptureModeChanged);
 
 #ifdef Q_OS_MAC
     QMenuBar* globalMenu = Nexus::getInstance().globalMenuBar;
@@ -1197,6 +1204,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
     connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
     connect(widget, SIGNAL(removeFriend(const ToxPk&)), this, SLOT(removeFriend(const ToxPk&)));
+    connect(this, &Widget::pttToggled, friendForm, &ChatForm::onMicMuteToggle);
 
     connect(&profile, &Profile::friendAvatarSet, widget, &FriendWidget::onAvatarSet);
     connect(&profile, &Profile::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
@@ -2672,4 +2680,18 @@ void Widget::connectFriendWidget(FriendWidget& friendWidget)
 {
     connect(&friendWidget, &FriendWidget::searchCircle, this, &Widget::searchCircle);
     connect(&friendWidget, &FriendWidget::updateFriendActivity, this, &Widget::updateFriendActivity);
+}
+
+void Widget::onAudioCaptureModeChanged(IAudioSettings::AudioCaptureMode mode)
+{
+    // avoid capturing system keys when PTT is not enabled, for privacy concerns
+    if (mode == IAudioSettings::AudioCaptureMode::PushToTalk) {
+        globalshortcut = std::unique_ptr<GlobalShortcut>{new GlobalShortcut{this}};
+        connect(&settings, &Settings::pttShortcutKeysChanged, globalshortcut.get(), &GlobalShortcut::onPttShortcutKeysChanged);
+        connect(globalshortcut.get(), &GlobalShortcut::toggled, this, &Widget::pttToggled);
+        connect(this, &Widget::pauseKeyBlocking, globalshortcut.get(), &GlobalShortcut::onPauseKeyBlocking);
+        connect(this, &Widget::resumeKeyBlocking, globalshortcut.get(), &GlobalShortcut::onResumeKeyBlocking);
+    } else {
+        globalshortcut.reset();
+    }
 }

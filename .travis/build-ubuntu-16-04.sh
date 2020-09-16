@@ -46,6 +46,7 @@ sudo apt-get install -y --force-yes \
     qttools5-dev \
     libqt5opengl5-dev \
     libqt5svg5-dev \
+    libxtst-dev \
     pkg-config || yes
 
 # ffmpeg
@@ -124,6 +125,16 @@ git checkout tags/1.0.18
 CC="ccache $CC" CXX="ccache $CXX" ./configure
 CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc)
 sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.8 --nodoc -y
+sudo ldconfig
+cd ..
+# libuiohook
+git clone https://github.com/kwhat/libuiohook.git
+cd libuiohook
+git checkout tags/1.0.3
+./bootstrap.sh
+CC="ccache $CC" CXX="ccache $CXX" ./configure
+CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc)
+sudo make install
 sudo ldconfig
 cd ..
 # toxcore
