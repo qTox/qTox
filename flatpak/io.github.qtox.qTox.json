@@ -2,7 +2,7 @@
     "app-id": "io.github.qtox.qTox",
     "runtime": "org.kde.Platform",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "5.14",
+    "runtime-version": "5.15",
     "command": "qtox",
     "rename-icon": "qtox",
     "finish-args": [
@@ -24,7 +24,7 @@
     "add-extensions": {
         "org.freedesktop.Platform.ffmpeg-full": {
             "directory": "lib/ffmpeg",
-            "version": "19.08",
+            "version": "20.08",
             "add-ld-path": "."
         }
     },
@@ -75,8 +75,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/sqlcipher/sqlcipher",
-                    "tag": "v4.3.0",
-                    "commit": "ece66fdcbb6b43876d25e8e6308991a097fa8661",
+                    "tag": "v4.4.0",
+                    "commit": "4a81bea61e1da6fec222d713852830f1fd01aed2",
                     "disable-fsckobjects" : true
                 }
             ]
