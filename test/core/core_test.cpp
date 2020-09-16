@@ -19,9 +19,9 @@
 
 #include "core/core.h"
 #include "core/toxoptions.h"
+#include "core/ibootstraplistgenerator.h"
 #include "core/icoresettings.h"
 #include "src/net/bootstrapnodeupdater.h"
-#include "src/model/ibootstraplistgenerator.h"
 
 #include <QtTest/QtTest>
 #include <QtGlobal>

@@ -18,7 +18,7 @@
 */
 
 #include "groupmessagedispatcher.h"
-#include "src/persistence/igroupsettings.h"
+#include "core/igroupsettings.h"
 
 #include <QtCore>
 

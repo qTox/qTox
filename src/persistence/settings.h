@@ -22,11 +22,11 @@
 
 #include "audio/iaudiosettings.h"
 #include "core/icoresettings.h"
+#include "core/igroupsettings.h"
 #include "core/toxencrypt.h"
 #include "core/toxfile.h"
 #include "src/persistence/paths.h"
 #include "src/persistence/ifriendsettings.h"
-#include "src/persistence/igroupsettings.h"
 #include "src/persistence/inotificationsettings.h"
 #include "src/video/ivideosettings.h"
 

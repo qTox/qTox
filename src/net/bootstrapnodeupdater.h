@@ -25,7 +25,7 @@
 #include <QObject>
 
 #include "core/dhtserver.h"
-#include "src/model/ibootstraplistgenerator.h"
+#include "core/ibootstraplistgenerator.h"
 
 class QNetworkReply;
 class Paths;

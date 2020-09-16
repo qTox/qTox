@@ -25,7 +25,6 @@
 #include "toxfile.h"
 #include "core/core.h"
 #include "core/toxpk.h"
-#include "src/model/status.h"
 
 #include <QHash>
 #include <QMutex>

@@ -23,13 +23,11 @@
 #include "core/coreav.h"
 #include "core/dhtserver.h"
 #include "core/groupinvite.h"
+#include "core/ibootstraplistgenerator.h"
 #include "core/icoresettings.h"
 #include "core/toxlogger.h"
 #include "core/toxoptions.h"
 #include "toxstring.h"
-#include "src/model/status.h"
-#include "src/model/ibootstraplistgenerator.h"
-#include "util/strongtype.h"
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
 #include <QRandomGenerator>

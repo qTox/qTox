@@ -30,7 +30,6 @@
 #include "core/toxid.h"
 #include "core/toxpk.h"
 
-#include "util/strongtype.h"
 #include <tox/tox.h>
 
 #include <QMutex>

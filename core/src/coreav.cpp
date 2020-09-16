@@ -18,12 +18,13 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "core/coreav.h"
 #include "audio/iaudiosettings.h"
 #include "core/core.h"
+#include "core/coreav.h"
+#include "core/igroupsettings.h"
+
 #include "src/model/friend.h"
 #include "src/model/group.h"
-#include "src/persistence/igroupsettings.h"
 #include "src/video/corevideosource.h"
 #include "src/video/videoframe.h"
 #include <QDebug>
