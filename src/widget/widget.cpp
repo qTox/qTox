@@ -1124,12 +1124,6 @@ void Widget::dispatchFileSendFailed(uint32_t friendId, const QString& fileName)
                                            ChatMessage::ERROR, QDateTime::currentDateTime());
 }
 
-void Widget::onRejectCall(uint32_t friendId)
-{
-    CoreAV* const av = core->getAv();
-    av->cancelCall(friendId);
-}
-
 void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 {
     assert(core != nullptr);
@@ -1188,7 +1182,6 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
     connect(friendForm, &ChatForm::stopNotification, this, &Widget::onStopNotification);
     connect(friendForm, &ChatForm::endCallNotification, this, &Widget::onCallEnd);
-    connect(friendForm, &ChatForm::rejectCall, this, &Widget::onRejectCall);
 
     connect(widget, &FriendWidget::newWindowOpened, this, &Widget::openNewDialog);
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
