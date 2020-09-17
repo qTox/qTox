@@ -23,8 +23,6 @@
 #include "core/coreav.h"
 #include "core/igroupsettings.h"
 
-#include "src/model/friend.h"
-#include "src/model/group.h"
 #include "src/video/corevideosource.h"
 #include "src/video/videoframe.h"
 #include <QDebug>
@@ -184,21 +182,6 @@ void CoreAV::process()
     assert(QThread::currentThread() == coreavThread.get());
     toxav_iterate(toxav.get());
     iterateTimer->start(toxav_iteration_interval(toxav.get()));
-}
-
-/**
- * @brief Checks the call status for a Tox group.
- * @param g the group to check
- * @return true, if the call is active for the group, false otherwise
- */
-bool CoreAV::isCallActive(const Group* g) const
-{
-    QReadLocker locker{&callsLock};
-    auto it = groupCalls.find(g->getId());
-    if (it == groupCalls.end()) {
-        return false;
-    }
-    return it->second->isActive();
 }
 
 CoreAV::ToxFriendCallPtr CoreAV::answerCall(uint32_t friendNum, bool video)
@@ -431,20 +414,20 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
  * @note Call from the GUI thread.
  * @param groupId Id of group to join
  */
-CoreAV::ToxGroupCallPtr CoreAV::joinGroupCall(const Group& group)
+CoreAV::ToxGroupCallPtr CoreAV::joinGroupCall(uint32_t groupNum)
 {
     QWriteLocker locker{&callsLock};
 
-    qDebug() << QString("Joining group call %1").arg(group.getId());
+    qDebug() << QString("Joining group call %1").arg(groupNum);
 
     // Audio backend must be set before starting a call
     assert(audio != nullptr);
 
-    ToxGroupCallPtr groupcall = ToxGroupCallPtr(new ToxGroupCall{group, *this, *audio});
+    ToxGroupCallPtr groupcall = ToxGroupCallPtr(new ToxGroupCall{groupNum, *this, *audio});
     // Call Objects must be owned by CoreAV or there will be locking problems with Audio
     groupcall->moveToThread(this->thread());
     assert(groupcall != nullptr);
-    auto ret = groupCalls.emplace(group.getId(), groupcall);
+    auto ret = groupCalls.emplace(groupNum, groupcall);
     if (ret.second == false) {
         qWarning() << "This group call already exists, not joining!";
         return {};
@@ -481,9 +464,10 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
         return true;
     }
 
-    if (toxav_group_send_audio(toxav_get_tox(toxav.get()), groupId, pcm, samples, chans, rate) != 0)
-        qDebug() << "toxav_group_send_audio error";
-
+    /* We explicitely ignore failures here, because c-toxcore does not provide a specific error
+     * code and sending audio to an empty group is considered an error.
+     */
+    toxav_group_send_audio(toxav_get_tox(toxav.get()), groupId, pcm, samples, chans, rate);
     return true;
 }
 

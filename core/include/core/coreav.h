@@ -29,8 +29,6 @@
 
 #include "core/toxcall.h"
 
-class Friend;
-class Group;
 class IAudioControl;
 class IAudioSettings;
 class IGroupSettings;
@@ -60,7 +58,6 @@ public:
 
     ~CoreAV();
 
-    bool isCallActive(const Group* g) const;
     bool sendCallAudio(uint32_t friendNum, const int16_t* pcm, size_t samples, uint8_t chans,
                        uint32_t rate) const;
     void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
@@ -69,7 +66,7 @@ public:
 
     void sendNoVideo();
 
-    ToxGroupCallPtr joinGroupCall(const Group& group);
+    ToxGroupCallPtr joinGroupCall(uint32_t groupNum);
     void leaveGroupCall(int groupNum);
 
     static void groupCallCallback(void* tox, uint32_t group, uint32_t peer, const int16_t* data,

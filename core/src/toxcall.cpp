@@ -22,7 +22,6 @@
 #include "core/coreav.h"
 #include "src/video/camerasource.h"
 #include "src/video/corevideosource.h"
-#include "src/model/group.h"
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
 
@@ -203,18 +202,14 @@ void ToxFriendCall::endCall()
     av.cancelCall(friendId);
 }
 
-ToxGroupCall::ToxGroupCall(const Group& group, CoreAV& av, IAudioControl& audio)
+ToxGroupCall::ToxGroupCall(uint32_t _groupNum, CoreAV& av, IAudioControl& audio)
     : ToxCall(false, av, audio)
-    , group{group}
+    , groupNum{_groupNum}
 {
     // register audio
     connect(audioSource.get(), &IAudioSource::frameAvailable, this,
             [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
-                if (this->group.getPeersCount() <= 1) {
-                   return;
-                }
-
-                this->av.sendGroupCallAudio(this->group.getId(), pcm, samples, chans, rate);
+                this->av.sendGroupCallAudio(this->groupNum, pcm, samples, chans, rate);
             });
 
     connect(audioSource.get(), &IAudioSource::invalidated, this, &ToxGroupCall::onAudioSourceInvalidated);
@@ -231,11 +226,7 @@ void ToxGroupCall::onAudioSourceInvalidated()
     auto newSrc = audio.makeSource();
     connect(audioSource.get(), &IAudioSource::frameAvailable,
             [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
-                if (this->group.getPeersCount() <= 1) {
-                   return;
-                }
-
-                this->av.sendGroupCallAudio(this->group.getId(), pcm, samples, chans, rate);
+                this->av.sendGroupCallAudio(this->groupNum, pcm, samples, chans, rate);
             });
 
     audioSource = std::move(newSrc);
@@ -307,5 +298,5 @@ void ToxGroupCall::playAudioBuffer(const ToxPk& peer, const int16_t* data, int s
 
 void ToxGroupCall::endCall()
 {
-    av.leaveGroupCall(group.getId());
+    av.leaveGroupCall(groupNum);
 }

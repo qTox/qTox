@@ -231,6 +231,7 @@ void GroupChatForm::updateUserNames()
 
 void GroupChatForm::onUserJoined(const ToxPk& user, const QString& name)
 {
+    Q_UNUSED(user);
     addSystemInfoMessage(tr("%1 has joined the group").arg(name), ChatMessage::INFO, QDateTime::currentDateTime());
     updateUserNames();
 }
@@ -246,6 +247,7 @@ void GroupChatForm::onUserLeft(const ToxPk& user, const QString& name)
 
 void GroupChatForm::onPeerNameChanged(const ToxPk& peer, const QString& oldName, const QString& newName)
 {
+    Q_UNUSED(peer);
     addSystemInfoMessage(tr("%1 is now known as %2").arg(oldName, newName), ChatMessage::INFO, QDateTime::currentDateTime());
     updateUserNames();
 }
@@ -430,7 +432,7 @@ void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)
 void GroupChatForm::joinGroupCall()
 {
     CoreAV* av = core.getAv();
-    call = av->joinGroupCall(*group);
+    call = av->joinGroupCall(group->getId());
     if (!call) {
         qDebug() << "Failed to join group call";
         return;

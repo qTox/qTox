@@ -37,7 +37,6 @@ class QTimer;
 class AudioFilterer;
 class CoreVideoSource;
 class CoreAV;
-class Group;
 
 class ToxCall : public QObject
 {
@@ -124,7 +123,7 @@ class ToxGroupCall : public ToxCall
     Q_OBJECT
 public:
     ToxGroupCall() = delete;
-    ToxGroupCall(const Group& group, CoreAV& av, IAudioControl& audio);
+    ToxGroupCall(uint32_t _groupNum, CoreAV& av, IAudioControl& audio);
     ToxGroupCall(ToxGroupCall&& other) = delete;
     ~ToxGroupCall();
 
@@ -145,7 +144,7 @@ private:
 
     std::map<ToxPk, std::unique_ptr<IAudioSink>> peers;
     std::map<ToxPk, QMetaObject::Connection> sinkInvalid;
-    const Group& group;
+    uint32_t groupNum;
 
 private slots:
     void onAudioSourceInvalidated();
