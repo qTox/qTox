@@ -38,6 +38,7 @@
 #include "src/widget/translator.h"
 #include "src/persistence/igroupsettings.h"
 
+#include <QDebug>
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QRegularExpression>
@@ -86,7 +87,6 @@ GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, I
     : GenericChatForm(_core, chatGroup, chatLog, messageDispatcher)
     , core{_core}
     , group(chatGroup)
-    , inCall(false)
     , settings(_settings)
 {
     nusersLabel = new QLabel();
@@ -243,6 +243,9 @@ void GroupChatForm::onUserLeft(const ToxPk& user, const QString& name)
         addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::userLeftGroup, {name});
     }
     updateUserNames();
+    if (call) {
+        call->removePeer(user);
+    }
 }
 
 void GroupChatForm::onPeerNameChanged(const ToxPk& peer, const QString& oldName, const QString& newName)
@@ -308,48 +311,38 @@ void GroupChatForm::dropEvent(QDropEvent* ev)
 void GroupChatForm::onMicMuteToggle()
 {
     if (audioInputFlag) {
-        CoreAV* av = core.getAv();
-        const bool oldMuteState = av->isGroupCallInputMuted(group);
-        const bool newMute = !oldMuteState;
-        av->muteCallInput(group, newMute);
-        headWidget->updateMuteMicButton(inCall, newMute);
+        const bool muteState = call->getMuteMic();
+        call->setMuteMic(!muteState);
+        headWidget->updateMuteMicButton(true, !muteState);
     }
 }
 
 void GroupChatForm::onVolMuteToggle()
 {
     if (audioOutputFlag) {
-        CoreAV* av = core.getAv();
-        const bool oldMuteState = av->isGroupCallOutputMuted(group);
-        const bool newMute = !oldMuteState;
-        av->muteCallOutput(group, newMute);
-        headWidget->updateMuteVolButton(inCall, newMute);
+        const bool muteState = call->getMuteVol();
+        call->setMuteVol(!muteState);
+        headWidget->updateMuteVolButton(true, !muteState);
     }
 }
 
 void GroupChatForm::onCallClicked()
 {
-    CoreAV* av = core.getAv();
-
-    if (!inCall) {
-        joinGroupCall();
-    } else {
+    if (call) {
         leaveGroupCall();
+    } else {
+        joinGroupCall();
     }
 
-    headWidget->updateCallButtons(true, inCall);
-
-    const bool inMute = av->isGroupCallInputMuted(group);
-    headWidget->updateMuteMicButton(inCall, inMute);
-
-    const bool outMute = av->isGroupCallOutputMuted(group);
-    headWidget->updateMuteVolButton(inCall, outMute);
+    headWidget->updateCallButtons(true, call != nullptr);
+    headWidget->updateMuteMicButton(call != nullptr, call->getMuteMic());
+    headWidget->updateMuteVolButton(call != nullptr, call->getMuteVol());
 }
 
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)
 {
     // Push to talk (CTRL+P)
-    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall) {
+    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && (call != nullptr)) {
         onMicMuteToggle();
     }
 
@@ -360,7 +353,7 @@ void GroupChatForm::keyPressEvent(QKeyEvent* ev)
 void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 {
     // Push to talk (CTRL+P)
-    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall) {
+    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && (call != nullptr)) {
         onMicMuteToggle();
     }
 
@@ -374,7 +367,7 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 void GroupChatForm::updateUserCount(int numPeers)
 {
     nusersLabel->setText(tr("%n user(s) in chat", "Number of users in chat", numPeers));
-    headWidget->updateCallButtons(true, inCall);
+    headWidget->updateCallButtons(true, call != nullptr);
 }
 
 void GroupChatForm::retranslateUi()
@@ -441,17 +434,20 @@ void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)
 void GroupChatForm::joinGroupCall()
 {
     CoreAV* av = core.getAv();
-    av->joinGroupCall(*group);
+    call = av->joinGroupCall(*group);
+    if (!call) {
+        qDebug() << "Failed to join group call";
+        return;
+    }
+
     audioInputFlag = true;
     audioOutputFlag = true;
-    inCall = true;
 }
 
 void GroupChatForm::leaveGroupCall()
 {
-    CoreAV* av = core.getAv();
-    av->leaveGroupCall(group->getId());
+    call->endCall();
+    call.reset();
     audioInputFlag = false;
     audioOutputFlag = false;
-    inCall = false;
 }
