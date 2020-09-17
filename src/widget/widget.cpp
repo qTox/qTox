@@ -2111,13 +2111,6 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
             *friendList);
     assert(newgroup);
 
-    if (enabled) {
-        connect(newgroup, &Group::userLeft, [=](const ToxPk& user){
-            CoreAV *av = core->getAv();
-            assert(av);
-            av->invalidateGroupCallPeerSource(*newgroup, user);
-        });
-    }
     auto rawChatroom = new GroupChatroom(newgroup, contentDialogManager.get(), *core,
         *friendList);
     std::shared_ptr<GroupChatroom> chatroom(rawChatroom);

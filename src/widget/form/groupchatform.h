@@ -22,6 +22,8 @@
 #include "genericchatform.h"
 #include "src/core/toxpk.h"
 #include "src/persistence/igroupsettings.h"
+#include "src/core/toxcall.h"
+#include "src/core/toxpk.h"
 #include <QMap>
 
 namespace Ui {
@@ -87,8 +89,8 @@ private:
     FlowLayout* namesListLayout;
     QLabel* nusersLabel;
     TabCompleter* tabber;
-    bool inCall;
     Settings& settings;
     Style& style;
     FriendList& friendList;
+    std::shared_ptr<ToxGroupCall> call;
 };

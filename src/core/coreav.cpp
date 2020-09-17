@@ -447,27 +447,11 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
 }
 
 /**
- * @brief Called from core to make sure the source for that peer is invalidated when they leave.
- * @param group Group Index
- * @param peer Peer Index
- */
-void CoreAV::invalidateGroupCallPeerSource(const Group& group, ToxPk peerPk)
-{
-    QWriteLocker locker{&callsLock};
-
-    auto it = groupCalls.find(group.getId());
-    if (it == groupCalls.end()) {
-        return;
-    }
-    it->second->removePeer(peerPk);
-}
-
-/**
  * @brief Starts a call in an existing AV groupchat.
  * @note Call from the GUI thread.
  * @param groupId Id of group to join
  */
-void CoreAV::joinGroupCall(const Group& group)
+CoreAV::ToxGroupCallPtr CoreAV::joinGroupCall(const Group& group)
 {
     QWriteLocker locker{&callsLock};
 
@@ -480,12 +464,13 @@ void CoreAV::joinGroupCall(const Group& group)
     // Call Objects must be owned by CoreAV or there will be locking problems with Audio
     groupcall->moveToThread(thread());
     assert(groupcall != nullptr);
-    auto ret = groupCalls.emplace(group.getId(), std::move(groupcall));
+    auto ret = groupCalls.emplace(group.getId(), groupcall);
     if (ret.second == false) {
         qWarning() << "This group call already exists, not joining!";
-        return;
+        return {};
     }
     ret.first->second->setActive(true);
+    return groupcall;
 }
 
 /**
@@ -520,72 +505,6 @@ bool CoreAV::sendGroupCallAudio(int groupNum, const int16_t* pcm, size_t samples
         qDebug() << "toxav_group_send_audio error";
 
     return true;
-}
-
-/**
- * @brief Mutes or unmutes the group call's input (microphone).
- * @param g The group
- * @param mute True to mute, false to unmute
- */
-void CoreAV::muteCallInput(const Group* g, bool mute)
-{
-    QWriteLocker locker{&callsLock};
-
-    auto it = groupCalls.find(g->getId());
-    if (g && (it != groupCalls.end())) {
-        it->second->setMuteMic(mute);
-    }
-}
-
-/**
- * @brief Mutes or unmutes the group call's output (speaker).
- * @param g The group
- * @param mute True to mute, false to unmute
- */
-void CoreAV::muteCallOutput(const Group* g, bool mute)
-{
-    QWriteLocker locker{&callsLock};
-
-    auto it = groupCalls.find(g->getId());
-    if (g && (it != groupCalls.end())) {
-        it->second->setMuteVol(mute);
-    }
-}
-
-/**
- * @brief Returns the group calls input (microphone) state.
- * @param groupId The group id to check
- * @return true when muted, false otherwise
- */
-bool CoreAV::isGroupCallInputMuted(const Group* g) const
-{
-    QReadLocker locker{&callsLock};
-
-    if (!g) {
-        return false;
-    }
-
-    const uint32_t groupId = g->getId();
-    auto it = groupCalls.find(groupId);
-    return (it != groupCalls.end()) && it->second->getMuteMic();
-}
-
-/**
- * @brief Returns the group calls output (speaker) state.
- * @param groupId The group id to check
- * @return true when muted, false otherwise
- */
-bool CoreAV::isGroupCallOutputMuted(const Group* g) const
-{
-    QReadLocker locker{&callsLock};
-
-    if (!g) {
-        return false;
-    }
-
-    const uint32_t groupId = g->getId();
-    auto it = groupCalls.find(groupId);
-    return (it != groupCalls.end()) && it->second->getMuteVol();
 }
 
 /**
