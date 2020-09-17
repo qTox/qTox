@@ -21,11 +21,12 @@
 #pragma once
 
 #include "videosource.h"
+#include "core/icorevideo.h"
+
 #include <QMutex>
 #include <atomic>
-#include <vpx/vpx_image.h>
 
-class CoreVideoSource : public VideoSource
+class CoreVideoSource : public VideoSource, public ICoreVideo
 {
     Q_OBJECT
 public:
@@ -33,12 +34,10 @@ public:
     void subscribe() override;
     void unsubscribe() override;
 
-private:
     CoreVideoSource();
     ~CoreVideoSource();
 
-    void pushFrame(const vpx_image_t* frame);
-
+private:
     void stopSource();
     void restartSource();
 
@@ -47,6 +46,7 @@ private:
     QMutex biglock;
     std::atomic_bool stopped;
 
-    friend class CoreAV;
-    friend class ToxFriendCall;
+    // ICoreVideo interface
+public:
+    void pushFrame(const ToxStridedYUVFrame &frame) override;
 };

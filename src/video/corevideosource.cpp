@@ -42,8 +42,6 @@ extern "C" {
 
 /**
  * @brief CoreVideoSource constructor.
- * @note Only CoreAV should create a CoreVideoSource since
- * only CoreAV can push images to it.
  */
 CoreVideoSource::CoreVideoSource()
     : subscribers{0}
@@ -59,10 +57,10 @@ CoreVideoSource::~CoreVideoSource()
 }
 
 /**
- * @brief Makes a copy of the vpx_image_t and emits it as a new VideoFrame.
- * @param vpxframe Frame to copy.
+ * @brief Makes a copy of the ToxStridedYUVFrame and emits it as a new VideoFrame.
+ * @param frame Frame to copy.
  */
-void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
+void CoreVideoSource::pushFrame(const ToxStridedYUVFrame &frame)
 {
     if (stopped)
         return;
@@ -70,8 +68,8 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
     QMutexLocker locker(&biglock);
 
     std::shared_ptr<VideoFrame> vframe;
-    int width = vpxframe->d_w;
-    int height = vpxframe->d_h;
+    int width = frame.width;
+    int height = frame.height;
 
     if (subscribers <= 0)
         return;
@@ -93,15 +91,19 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
         return;
     }
 
+    // TODO(sudden6): there's probably a ffmpeg function that does this copy more efficiently
+    const int strides[3] = {frame.y_stride, frame.u_stride, frame.v_stride};
+    const uint8_t* planes[3] = {frame.y_plane, frame.u_plane, frame.v_plane};
+
     for (int i = 0; i < 3; ++i) {
         int dstStride = avframe->linesize[i];
-        int srcStride = vpxframe->stride[i];
+        int srcStride = strides[i];
         int minStride = std::min(dstStride, srcStride);
         int size = (i == 0) ? height : height / 2;
 
         for (int j = 0; j < size; ++j) {
             uint8_t* dst = avframe->data[i] + dstStride * j;
-            uint8_t* src = vpxframe->planes[i] + srcStride * j;
+            const uint8_t* src = planes[i] + srcStride * j;
             memcpy(dst, src, minStride);
         }
     }

@@ -34,12 +34,7 @@ class IAudioSettings;
 class IGroupSettings;
 class QThread;
 class QTimer;
-class CoreVideoSource;
-class CameraSource;
-class VideoSource;
-class VideoFrame;
 class Core;
-struct vpx_image;
 
 class CoreAV : public QObject
 {
@@ -60,7 +55,7 @@ public:
 
     bool sendCallAudio(uint32_t friendNum, const int16_t* pcm, size_t samples, uint8_t chans,
                        uint32_t rate) const;
-    void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
+    void sendCallVideo(uint32_t friendNum, const ToxYUVFrame& frame);
     bool sendGroupCallAudio(int groupNum, const int16_t* pcm, size_t samples, uint8_t chans,
                             uint32_t rate) const;
 
@@ -74,8 +69,8 @@ public:
                                   void* core);
 
 public slots:
-    ToxFriendCallPtr startCall(uint32_t friendNum, bool video);
-    ToxFriendCallPtr answerCall(uint32_t friendNum, bool video);
+    ToxFriendCallPtr startCall(uint32_t friendNum, bool videoEnabled, ICoreVideo* video);
+    ToxFriendCallPtr answerCall(uint32_t friendNum, bool videoEnabled, ICoreVideo* video);
     bool cancelCall(uint32_t friendNum);
     void start();
 

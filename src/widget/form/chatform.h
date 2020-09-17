@@ -33,8 +33,10 @@
 #include "src/persistence/history.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/video/netcamview.h"
+#include "src/video/camerasource.h"
 
 class CallConfirmWidget;
+class CoreVideoSource;
 class FileTransferInstance;
 class Friend;
 class History;
@@ -112,6 +114,8 @@ private:
     void updateCallButtons();
     void showNetcam();
     void hideNetcam();
+    void startCamera();
+    void stopCamera();
 
 protected:
     std::unique_ptr<NetCamView> createNetcam();
@@ -135,4 +139,7 @@ private:
     bool lastCallIsVideo;
     std::unique_ptr<NetCamView> netcam;
     CoreAV::ToxFriendCallPtr call;
+    std::unique_ptr<CoreVideoSource> coreVideo;
+    // dont't delete this, we don't own it
+    CameraSource* cameraVideo = nullptr;
 };

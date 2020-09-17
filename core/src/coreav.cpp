@@ -23,8 +23,6 @@
 #include "core/coreav.h"
 #include "core/igroupsettings.h"
 
-#include "src/video/corevideosource.h"
-#include "src/video/videoframe.h"
 #include <QDebug>
 #include <QThread>
 #include <QTimer>
@@ -184,7 +182,7 @@ void CoreAV::process()
     iterateTimer->start(toxav_iteration_interval(toxav.get()));
 }
 
-CoreAV::ToxFriendCallPtr CoreAV::answerCall(uint32_t friendNum, bool video)
+CoreAV::ToxFriendCallPtr CoreAV::answerCall(uint32_t friendNum, bool videoEnabled, ICoreVideo *video)
 {
     QWriteLocker locker{&callsLock};
     QMutexLocker coreLocker{&coreLock};
@@ -192,12 +190,13 @@ CoreAV::ToxFriendCallPtr CoreAV::answerCall(uint32_t friendNum, bool video)
     qDebug() << QString("Answering call %1").arg(friendNum);
     auto it = calls.find(friendNum);
     assert(it != calls.end());
-    Toxav_Err_Answer err;
 
-    const uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
+    Toxav_Err_Answer err;
+    const uint32_t videoBitrate = videoEnabled ? VIDEO_DEFAULT_BITRATE : 0;
     if (toxav_answer(toxav.get(), friendNum, audioSettings.getAudioBitrate(),
                      videoBitrate, &err)) {
         it->second->setActive(true);
+        it->second->setVideoSource(video);
         return it->second;
     } else {
         qWarning() << "Failed to answer call with error" << err;
@@ -207,7 +206,7 @@ CoreAV::ToxFriendCallPtr CoreAV::answerCall(uint32_t friendNum, bool video)
     }
 }
 
-CoreAV::ToxFriendCallPtr CoreAV::startCall(uint32_t friendNum, bool video)
+CoreAV::ToxFriendCallPtr CoreAV::startCall(uint32_t friendNum, bool videoEnabled, ICoreVideo *video)
 {
     QWriteLocker locker{&callsLock};
     QMutexLocker coreLocker{&coreLock};
@@ -219,14 +218,14 @@ CoreAV::ToxFriendCallPtr CoreAV::startCall(uint32_t friendNum, bool video)
         return {};
     }
 
-    uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
+    uint32_t videoBitrate = videoEnabled ? VIDEO_DEFAULT_BITRATE : 0;
     if (!toxav_call(toxav.get(), friendNum, audioSettings.getAudioBitrate(), videoBitrate,
                     nullptr))
         return {};
 
     // Audio backend must be set before making a call
     assert(audio != nullptr);
-    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall(friendNum, video, *this, *audio));
+    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall(friendNum, videoEnabled, *this, *audio, video));
     // Call object must be owned by this thread or there will be locking problems with Audio
     call->moveToThread(this->thread());
     assert(call != nullptr);
@@ -307,8 +306,13 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, 
     return true;
 }
 
-void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
+void CoreAV::sendCallVideo(uint32_t callId, const ToxYUVFrame& frame)
 {
+    if (!frame) {
+        qDebug() << "Tried to send invalid video frame to c-toxcore";
+        return;
+    }
+
     QWriteLocker locker{&callsLock};
 
     // We might be running in the FFmpeg thread and holding the CameraSource lock
@@ -332,19 +336,13 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
         call.setNullVideoBitrate(false);
     }
 
-    ToxYUVFrame frame = vframe->toToxYUVFrame();
-
-    if (!frame) {
-        return;
-    }
-
     // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
     // We don't want to be dropping iframes because of some lock held by toxav_iterate
     Toxav_Err_Send_Frame err;
     int retries = 0;
     do {
-        if (!toxav_video_send_frame(toxav.get(), callId, frame.width, frame.height, frame.y,
-                                    frame.u, frame.v, &err)) {
+        if (!toxav_video_send_frame(toxav.get(), callId, frame.width, frame.height, frame.y_plane,
+                                    frame.u_plane, frame.v_plane, &err)) {
             if (err == TOXAV_ERR_SEND_FRAME_SYNC) {
                 ++retries;
                 QThread::usleep(500);
@@ -496,7 +494,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
 
     // Audio backend must be set before receiving a call
     assert(self->audio != nullptr);
-    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall{friendNum, video, *self, *self->audio});
+    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall{friendNum, video, *self, *self->audio, nullptr});
     // Call object must be owned by CoreAV thread or there will be locking problems with Audio
     call->moveToThread(self->thread());
     assert(call != nullptr);
@@ -565,7 +563,8 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
                    && !(state & TOXAV_FRIEND_CALL_STATE_SENDING_V)) {
             qDebug() << "Friend" << friendNum << "stopped sending video";
             if (call.getVideoSource()) {
-                call.getVideoSource()->stopSource();
+                // TODO(sudden6): re-implement this
+                // call.getVideoSource()->stopSource();
             }
 
             call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
@@ -577,7 +576,8 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
             // We simply stop the videoSource from emitting anything while the other end says it's
             // not sending
             if (call.getVideoSource()) {
-                call.getVideoSource()->restartSource();
+                // TODO(sudden6): re-implement this
+                // call.getVideoSource()->restartSource();
             }
 
             call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
@@ -653,20 +653,16 @@ void CoreAV::videoFrameCallback(ToxAV*, uint32_t friendNum, uint16_t w, uint16_t
         return;
     }
 
-    CoreVideoSource* videoSource = it->second->getVideoSource();
-    if (!videoSource) {
-        return;
-    }
+    ToxStridedYUVFrame frame = {
+        .y_plane = y,
+        .u_plane = u,
+        .v_plane = v,
+        .y_stride = ystride,
+        .u_stride = ustride,
+        .v_stride = vstride,
+        .width = w,
+        .height = h,
+    };
 
-    vpx_image frame;
-    frame.d_h = h;
-    frame.d_w = w;
-    frame.planes[0] = const_cast<uint8_t*>(y);
-    frame.planes[1] = const_cast<uint8_t*>(u);
-    frame.planes[2] = const_cast<uint8_t*>(v);
-    frame.stride[0] = ystride;
-    frame.stride[1] = ustride;
-    frame.stride[2] = vstride;
-
-    videoSource->pushFrame(&frame);
+    it->second->getVideoSource()->pushFrame(frame);
 }

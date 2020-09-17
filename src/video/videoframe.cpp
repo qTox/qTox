@@ -25,17 +25,6 @@ extern "C" {
 }
 
 /**
- * @struct ToxYUVFrame
- * @brief A simple structure to represent a ToxYUV video frame (corresponds to a frame encoded
- * under format: AV_PIX_FMT_YUV420P [FFmpeg] or VPX_IMG_FMT_I420 [WebM]).
- *
- * This structure exists for convenience and code clarity when ferrying YUV420 frames from one
- * source to another. The buffers pointed to by the struct should not be owned by the struct nor
- * should they be freed from the struct, instead this struct functions only as a simple alias to a
- * more complicated frame container like AVFrame.
- *
- * The creation of this structure was done to replace existing code which mis-used vpx_image
- * structs when passing frame data to toxcore.
  *
  *
  * @class VideoFrame
@@ -357,15 +346,23 @@ ToxYUVFrame VideoFrame::toToxYUVFrame(QSize frameSize)
 
     // Converter function (constructs ToxAVFrame out of AVFrame*)
     const std::function<ToxYUVFrame(AVFrame * const)> converter = [&](AVFrame* const frame) {
-        ToxYUVFrame ret{static_cast<std::uint16_t>(frameSize.width()),
-                        static_cast<std::uint16_t>(frameSize.height()), frame->data[0],
-                        frame->data[1], frame->data[2]};
+        ToxYUVFrame ret {
+            .y_plane = frame->data[0],
+            .u_plane = frame->data[1],
+            .v_plane = frame->data[2],
+            .width = static_cast<uint16_t>(frameSize.width()),
+            .height = static_cast<uint16_t>(frameSize.height())
+        };
 
         return ret;
     };
 
     return toGenericObject(frameSize, AV_PIX_FMT_YUV420P, true, converter,
-                           ToxYUVFrame{0, 0, nullptr, nullptr, nullptr});
+                           ToxYUVFrame{.y_plane = nullptr,
+                                       .u_plane = nullptr,
+                                       .v_plane = nullptr,
+                                       .width = 0,
+                                       .height = 0});
 }
 
 /**
@@ -768,23 +765,3 @@ template QImage VideoFrame::toGenericObject<QImage>(
 template ToxYUVFrame VideoFrame::toGenericObject<ToxYUVFrame>(
     const QSize& dimensions, const int pixelFormat, const bool requireAligned,
     const std::function<ToxYUVFrame(AVFrame* const)> &objectConstructor, const ToxYUVFrame& nullObject);
-
-/**
- * @brief Returns whether the given ToxYUVFrame represents a valid frame or not.
- *
- * Valid frames are frames in which both width and height are greater than zero.
- *
- * @return true if the frame is valid, false otherwise.
- */
-bool ToxYUVFrame::isValid() const
-{
-    return width > 0 && height > 0;
-}
-
-/**
- * @brief Checks if the given ToxYUVFrame is valid or not, delegates to isValid().
- */
-ToxYUVFrame::operator bool() const
-{
-    return isValid();
-}

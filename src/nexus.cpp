@@ -36,7 +36,6 @@
 #include <QThread>
 #include <cassert>
 #include "audio/audio.h"
-#include <vpx/vpx_image.h>
 
 #ifdef Q_OS_MAC
 #include <QActionGroup>
@@ -88,7 +87,6 @@ void Nexus::start()
     // Setup the environment
     qRegisterMetaType<IToxStatus::ToxStatus>("IToxStatus::ToxStatus");
     qRegisterMetaType<Status::Status>("Status::Status");
-    qRegisterMetaType<vpx_image>("vpx_image");
     qRegisterMetaType<uint8_t>("uint8_t");
     qRegisterMetaType<uint16_t>("uint16_t");
     qRegisterMetaType<uint32_t>("uint32_t");

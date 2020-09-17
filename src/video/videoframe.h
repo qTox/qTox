@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "core/icorevideo.h"
+
 #include <QImage>
 #include <QMutex>
 #include <QReadWriteLock>
@@ -37,20 +39,6 @@ extern "C" {
 #include <functional>
 #include <memory>
 #include <unordered_map>
-
-struct ToxYUVFrame
-{
-public:
-    bool isValid() const;
-    explicit operator bool() const;
-
-    const std::uint16_t width;
-    const std::uint16_t height;
-
-    const uint8_t* y;
-    const uint8_t* u;
-    const uint8_t* v;
-};
 
 class VideoFrame
 {

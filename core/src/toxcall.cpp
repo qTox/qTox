@@ -20,8 +20,6 @@
 #include "core/toxcall.h"
 #include "audio/audio.h"
 #include "core/coreav.h"
-#include "src/video/camerasource.h"
-#include "src/video/corevideosource.h"
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
 
@@ -46,9 +44,10 @@
  * @brief Keeps sources for users in group calls.
  */
 
-ToxCall::ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio)
+ToxCall::ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio, ICoreVideo* video)
     : av{av}
     , audio(audio)
+    , videoSource{video}
     , videoEnabled{VideoEnabled}
     , audioSource(audio.makeSource())
 {}
@@ -56,8 +55,6 @@ ToxCall::ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio)
 ToxCall::~ToxCall()
 {
     if (videoEnabled) {
-        QObject::disconnect(videoInConn);
-        CameraSource::getInstance().unsubscribe();
     }
 }
 
@@ -111,13 +108,18 @@ void ToxCall::setNullVideoBitrate(bool value)
     nullVideoBitrate = value;
 }
 
-CoreVideoSource* ToxCall::getVideoSource() const
+ICoreVideo *ToxCall::getVideoSource() const
 {
     return videoSource;
 }
 
-ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av, IAudioControl& audio)
-    : ToxCall(VideoEnabled, av, audio)
+void ToxCall::setVideoSource(ICoreVideo *video)
+{
+    videoSource = video;
+}
+
+ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av, IAudioControl& audio, ICoreVideo *video)
+    : ToxCall(VideoEnabled, av, audio, video)
     , sink(audio.makeSink())
     , friendId{FriendNum}
 {
@@ -130,24 +132,6 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av, 
 
     if (sink) {
         audioSinkInvalid = sink->connectTo_invalidated(this, [this]() { this->onAudioSinkInvalidated(); });
-    }
-
-    // register video
-    if (videoEnabled) {
-        videoSource = new CoreVideoSource();
-        CameraSource& source = CameraSource::getInstance();
-
-        if (source.isNone()) {
-            source.setupDefault();
-        }
-        source.subscribe();
-        videoInConn = QObject::connect(&source, &VideoSource::frameAvailable,
-                                       [&av, FriendNum](std::shared_ptr<VideoFrame> frame) {
-                                           av.sendCallVideo(FriendNum, frame);
-                                       });
-        if (!videoInConn) {
-            qDebug() << "Video connection not working";
-        }
     }
 }
 
@@ -195,6 +179,11 @@ void ToxFriendCall::playAudioBuffer(const int16_t* data, int samples, unsigned c
     if (sink) {
         sink->playAudioBuffer(data, samples, channels, sampleRate);
     }
+}
+
+void ToxFriendCall::sendVideoFrame(const ToxYUVFrame &frame)
+{
+    av.sendCallVideo(friendId, frame);
 }
 
 void ToxFriendCall::endCall()

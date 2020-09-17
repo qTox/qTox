@@ -35,6 +35,7 @@
 #include "src/persistence/settings.h"
 #include "src/video/netcamview.h"
 #include "src/video/corevideosource.h"
+#include "src/video/videoframe.h"
 #include "src/widget/chatformheader.h"
 #include "src/widget/contentdialogmanager.h"
 #include "src/widget/form/loadhistorydialog.h"
@@ -111,6 +112,7 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMes
     , f(chatFriend)
     , isTyping{false}
     , lastCallIsVideo{false}
+    , coreVideo{new CoreVideoSource()}
 {
     setName(f->getDisplayedName());
 
@@ -199,6 +201,10 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMes
 ChatForm::~ChatForm()
 {
     Translator::unregister(this);
+    if(call) {
+        // avoid resource leak because of CameraSource singleton
+        stopCamera();
+    }
 }
 
 void ChatForm::setStatusMessage(const QString& newMessage)
@@ -367,7 +373,7 @@ void ChatForm::onAnswerCallTriggered(bool video)
     }
 
     CoreAV* av = core.getAv();
-    call = av->answerCall(friendId, video);
+    call = av->answerCall(friendId, video, coreVideo.get());
     if (!call) {
         qDebug() << "Failed to answer call";
         updateCallButtons();
@@ -399,8 +405,9 @@ void ChatForm::onCallTriggered()
     if (call) {
         call->endCall();
         call.reset();
+        stopCamera();
     } else {
-        call = av->startCall(friendId, false);
+        call = av->startCall(friendId, false, coreVideo.get());
         if (call) {
             showOutgoingCall(false);
         } else {
@@ -417,10 +424,12 @@ void ChatForm::onVideoCallTriggered()
     if (call) {
         call->endCall();
         call.reset();
+        stopCamera();
     } else {
-        call = av->startCall(friendId, true);
+        call = av->startCall(friendId, true, coreVideo.get());
         if (call) {
             showOutgoingCall(true);
+            startCamera();
         } else {
             qDebug() << "Failed to start Video call";
         }
@@ -506,8 +515,7 @@ std::unique_ptr<NetCamView> ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
     std::unique_ptr<NetCamView> view = std::unique_ptr<NetCamView>(new NetCamView(f->getPublicKey(), this));
-    VideoSource* source = call->getVideoSource();
-    view->show(source, f->getDisplayedName());
+    view->show(coreVideo.get(), f->getDisplayedName());
     connect(view.get(), &NetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
     connect(view.get(), &NetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
     connect(view.get(), &NetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
@@ -761,6 +769,26 @@ void ChatForm::hideNetcam()
     netcam->close();
     netcam->hide();
     netcam.reset();
+}
+
+void ChatForm::startCamera()
+{
+    cameraVideo = &CameraSource::getInstance();
+
+    if (cameraVideo->isNone()) {
+        cameraVideo->setupDefault();
+    }
+    cameraVideo->subscribe();
+    connect(cameraVideo, &VideoSource::frameAvailable, call.get(),
+                                   [this](std::shared_ptr<VideoFrame> frame) {
+                                        this->call->sendVideoFrame(frame->toToxYUVFrame());
+                                   });
+}
+
+void ChatForm::stopCamera()
+{
+    cameraVideo->unsubscribe();
+    cameraVideo = nullptr;
 }
 
 void ChatForm::onSplitterMoved(int, int)

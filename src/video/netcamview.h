@@ -24,7 +24,6 @@
 #include <QWidget>
 
 class QHBoxLayout;
-struct vpx_image;
 class VideoSource;
 class QFrame;
 class MovableWidget;

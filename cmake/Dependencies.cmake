@@ -125,7 +125,6 @@ search_dependency(LIBQRENCODE         PACKAGE libqrencode)
 search_dependency(LIBSODIUM           PACKAGE libsodium)
 search_dependency(LIBSWSCALE          PACKAGE libswscale)
 search_dependency(SQLCIPHER           PACKAGE sqlcipher)
-search_dependency(VPX                 PACKAGE vpx)
 
 if(${SPELL_CHECK})
     find_package(KF5Sonnet)

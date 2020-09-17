@@ -28,6 +28,7 @@ set(SOURCE_FILES
     "include/core/icoregroupquery.h"
     "include/core/icoreidhandler.h"
     "include/core/icoresettings.h"
+    "include/core/icorevideo.h"
     "include/core/itoxstatus.h"
     "include/core/igroupsettings.h"
     "include/core/receiptnum.h"

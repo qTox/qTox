@@ -23,6 +23,7 @@
 #include "audio/iaudiosink.h"
 #include "audio/iaudiosource.h"
 #include "core/toxpk.h"
+#include "core/icorevideo.h"
 #include <tox/toxav.h>
 
 #include <QMap>
@@ -34,8 +35,6 @@
 #include <memory>
 
 class QTimer;
-class AudioFilterer;
-class CoreVideoSource;
 class CoreAV;
 
 class ToxCall : public QObject
@@ -44,7 +43,7 @@ class ToxCall : public QObject
 
 protected:
     ToxCall() = delete;
-    ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio);
+    ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio, ICoreVideo* video = nullptr);
     ~ToxCall();
 
 public:
@@ -71,7 +70,8 @@ public:
 
     virtual void endCall() = 0;
 
-    CoreVideoSource* getVideoSource() const;
+    ICoreVideo* getVideoSource() const;
+    void setVideoSource(ICoreVideo* video);
 
 protected:
     std::atomic<bool> active{false};
@@ -81,8 +81,7 @@ protected:
     std::atomic<bool> muteMic{false};
     std::atomic<bool> muteVol{false};
     // video
-    CoreVideoSource* videoSource{nullptr};
-    QMetaObject::Connection videoInConn;
+    ICoreVideo* videoSource{nullptr};
     std::atomic<bool> videoEnabled{false};
     std::atomic<bool> nullVideoBitrate{false};
     std::unique_ptr<IAudioSource> audioSource;
@@ -93,7 +92,7 @@ class ToxFriendCall : public ToxCall
     Q_OBJECT
 public:
     ToxFriendCall() = delete;
-    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av, IAudioControl& audio);
+    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av, IAudioControl& audio, ICoreVideo* video);
     ToxFriendCall(ToxFriendCall&& other) = delete;
     ToxFriendCall& operator=(ToxFriendCall&& other) = delete;
     ~ToxFriendCall();
@@ -102,6 +101,7 @@ public:
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
     void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const;
+    void sendVideoFrame(const ToxYUVFrame& frame);
 
     // ToxCall interface
 public:
