@@ -50,6 +50,7 @@ class CoreAV : public QObject
 public:
     using CoreAVPtr = std::unique_ptr<CoreAV>;
     using ToxFriendCallPtr = std::shared_ptr<ToxFriendCall>;
+    using ToxGroupCallPtr = std::shared_ptr<ToxGroupCall>;
 
     static CoreAVPtr makeCoreAV(Tox* core, QMutex& toxCoreLock,
                                 IAudioSettings& audioSettings, IGroupSettings& groupSettings);
@@ -68,17 +69,12 @@ public:
 
     void sendNoVideo();
 
-    void joinGroupCall(const Group& group);
+    ToxGroupCallPtr joinGroupCall(const Group& group);
     void leaveGroupCall(int groupNum);
-    void muteCallInput(const Group* g, bool mute);
-    void muteCallOutput(const Group* g, bool mute);
-    bool isGroupCallInputMuted(const Group* g) const;
-    bool isGroupCallOutputMuted(const Group* g) const;
 
     static void groupCallCallback(void* tox, uint32_t group, uint32_t peer, const int16_t* data,
                                   unsigned samples, uint8_t channels, uint32_t sample_rate,
                                   void* core);
-    void invalidateGroupCallPeerSource(const Group& group, ToxPk peerPk);
 
 public slots:
     ToxFriendCallPtr startCall(uint32_t friendNum, bool video);
@@ -135,8 +131,6 @@ private:
      */
     std::map<uint32_t, ToxFriendCallPtr> calls;
 
-
-    using ToxGroupCallPtr = std::shared_ptr<ToxGroupCall>;
     /**
      * @brief Maps group IDs to ToxGroupCalls.
      * @note Need to use STL container here, because Qt containers need a copy constructor.

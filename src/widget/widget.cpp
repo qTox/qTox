@@ -2110,13 +2110,6 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
         GroupList::addGroup(*core, groupnumber, groupId, groupName, enabled, core->getUsername());
     assert(newgroup);
 
-    if (enabled) {
-        connect(newgroup, &Group::userLeft, [=](const ToxPk& user){
-            CoreAV *av = core->getAv();
-            assert(av);
-            av->invalidateGroupCallPeerSource(*newgroup, user);
-        });
-    }
     auto dialogManager = ContentDialogManager::getInstance();
     auto rawChatroom = new GroupChatroom(newgroup, dialogManager, *core);
     std::shared_ptr<GroupChatroom> chatroom(rawChatroom);
