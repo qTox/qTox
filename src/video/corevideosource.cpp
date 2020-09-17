@@ -28,6 +28,8 @@ extern "C" {
 #include "corevideosource.h"
 #include "videoframe.h"
 
+#include <QDebug>
+
 /**
  * @class CoreVideoSource
  * @brief A VideoSource that emits frames received by Core.
@@ -36,9 +38,6 @@ extern "C" {
 /**
  * @var std::atomic_int subscribers
  * @brief Number of suscribers
- *
- * @var std::atomic_bool deleteOnClose
- * @brief If true, self-delete after the last suscriber is gone
  */
 
 /**
@@ -48,9 +47,15 @@ extern "C" {
  */
 CoreVideoSource::CoreVideoSource()
     : subscribers{0}
-    , deleteOnClose{false}
     , stopped{false}
 {
+}
+
+CoreVideoSource::~CoreVideoSource()
+{
+    if(subscribers != 0) {
+        qDebug() << "Unbalanced subscribe/unsubscribe count";
+    }
 }
 
 /**
@@ -113,26 +118,10 @@ void CoreVideoSource::subscribe()
 
 void CoreVideoSource::unsubscribe()
 {
-    biglock.lock();
-    if (--subscribers == 0) {
-        if (deleteOnClose) {
-            biglock.unlock();
-            // DANGEROUS: No member access after this point, that's why we manually unlock
-            delete this;
-            return;
-        }
+    --subscribers;
+    if (subscribers == 0) {
+        qDebug() << "No subcriptions left";
     }
-    biglock.unlock();
-}
-
-/**
- * @brief Setup delete on close
- * @param If true, self-delete after the last suscriber is gone
- */
-void CoreVideoSource::setDeleteOnClose(bool newstate)
-{
-    QMutexLocker locker(&biglock);
-    deleteOnClose = newstate;
 }
 
 /**
@@ -143,13 +132,11 @@ void CoreVideoSource::setDeleteOnClose(bool newstate)
  */
 void CoreVideoSource::stopSource()
 {
-    QMutexLocker locker(&biglock);
     stopped = true;
     emit sourceStopped();
 }
 
 void CoreVideoSource::restartSource()
 {
-    QMutexLocker locker(&biglock);
     stopped = false;
 }
