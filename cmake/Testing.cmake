@@ -36,7 +36,8 @@ endfunction()
 
 auto_test(core core "core_library;${PROJECT_NAME}_static" ${${PROJECT_NAME}_RESOURCES})
 auto_test(core contactid "core_library" "")
-auto_test(core toxid core_library "")
+auto_test(core toxid "core_library" "")
+auto_test(core toxstring "core_library" "")
 auto_test(chatlog textformatter "${PROJECT_NAME}_static" "")
 auto_test(net bsu "Qt5::Network;core_library;${PROJECT_NAME}_static" ${${PROJECT_NAME}_RESOURCES}) # needs nodes list
 auto_test(persistence paths "${PROJECT_NAME}_static" "")
@@ -47,12 +48,7 @@ auto_test(model groupmessagedispatcher "core_library;${PROJECT_NAME}_static" "")
 auto_test(model sessionchatlog "core_library;${PROJECT_NAME}_static" "")
 auto_test(model exiftransform "Qt5::Gui;${PROJECT_NAME}_static" "")
 auto_test(model notificationgenerator "Qt5::Gui;core_library;${PROJECT_NAME}_static" "")
-
-# uses internal header file
-#auto_test(core toxstring core_libary "")
-
-# possible circular dependency?
-#auto_test(model messageprocessor "" "")
+auto_test(model messageprocessor "${PROJECT_NAME}_static" "")
 
 
 if (UNIX)
