@@ -112,6 +112,14 @@ void CoreVideoSource::pushFrame(const ToxStridedYUVFrame &frame)
     emit frameAvailable(vframe);
 }
 
+void CoreVideoSource::setStopped(bool state)
+{
+    stopped = state;
+    if (stopped) {
+        emit sourceStopped();
+    }
+}
+
 void CoreVideoSource::subscribe()
 {
     QMutexLocker locker(&biglock);
@@ -124,21 +132,4 @@ void CoreVideoSource::unsubscribe()
     if (subscribers == 0) {
         qDebug() << "No subcriptions left";
     }
-}
-
-/**
- * @brief Stopping the source.
- * @see The callers in CoreAV for the rationale
- *
- * Stopping the source will block any pushFrame calls from doing anything
- */
-void CoreVideoSource::stopSource()
-{
-    stopped = true;
-    emit sourceStopped();
-}
-
-void CoreVideoSource::restartSource()
-{
-    stopped = false;
 }

@@ -344,6 +344,9 @@ void ChatForm::onAvEnd(uint32_t friendId, bool error)
         netcam->showNormal();
     }
 
+    call.reset();
+    stopCamera();
+
     emit stopNotification();
     emit endCallNotification();
     updateCallButtons();
@@ -787,8 +790,10 @@ void ChatForm::startCamera()
 
 void ChatForm::stopCamera()
 {
-    cameraVideo->unsubscribe();
-    cameraVideo = nullptr;
+    if (cameraVideo) {
+        cameraVideo->unsubscribe();
+        cameraVideo = nullptr;
+    }
 }
 
 void ChatForm::onSplitterMoved(int, int)

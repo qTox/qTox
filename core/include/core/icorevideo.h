@@ -76,4 +76,10 @@ public:
      *       ToxStridedYUV frame if it is used.
      */
     virtual void pushFrame(const ToxStridedYUVFrame& frame) = 0;
+
+    /**
+     * @brief Tell others when CoreAV stopps sending frames
+     * @param state True when stopped, false when restarting
+     */
+    virtual void setStopped(bool state) = 0;
 };

@@ -563,8 +563,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
                    && !(state & TOXAV_FRIEND_CALL_STATE_SENDING_V)) {
             qDebug() << "Friend" << friendNum << "stopped sending video";
             if (call.getVideoSource()) {
-                // TODO(sudden6): re-implement this
-                // call.getVideoSource()->stopSource();
+                call.getVideoSource()->setStopped(true);
             }
 
             call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
@@ -576,8 +575,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
             // We simply stop the videoSource from emitting anything while the other end says it's
             // not sending
             if (call.getVideoSource()) {
-                // TODO(sudden6): re-implement this
-                // call.getVideoSource()->restartSource();
+                call.getVideoSource()->setStopped(false);
             }
 
             call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));

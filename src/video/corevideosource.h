@@ -38,10 +38,6 @@ public:
     ~CoreVideoSource();
 
 private:
-    void stopSource();
-    void restartSource();
-
-private:
     std::atomic_int subscribers;
     QMutex biglock;
     std::atomic_bool stopped;
@@ -49,4 +45,5 @@ private:
     // ICoreVideo interface
 public:
     void pushFrame(const ToxStridedYUVFrame &frame) override;
+    void setStopped(bool state) override;
 };
