@@ -244,6 +244,9 @@ private slots:
     void searchCircle(CircleWidget& circleWidget);
     void updateFriendActivity(const Friend& frnd);
     void registerContentDialog(ContentDialog& contentDialog) const;
+    void themeColorChanged(int color);
+    void extraColorChanged(const QString& color);
+    void stateExtraColorChanged(int state);
 
 private:
     // QMainWindow overrides
@@ -276,6 +279,7 @@ private:
     void playNotificationSound(IAudioSink::Sound sound, bool loop = false);
     void cleanupNotificationSound();
     void acceptFileTransfer(const ToxFile &file, const QString &path);
+    void changeColorStyle(int state);
 
 private:
     Profile& profile;

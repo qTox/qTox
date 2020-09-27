@@ -274,7 +274,7 @@ void Widget::init()
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
 
-    Style::setThemeColor(settings.getThemeColor());
+    changeColorStyle(settings.getStateExtraColors());
 
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm(core->getSelfId());
@@ -458,6 +458,9 @@ void Widget::init()
     // settings
     connect(&settings, &Settings::showSystemTrayChanged, this, &Widget::onSetShowSystemTray);
     connect(&settings, &Settings::separateWindowChanged, this, &Widget::onSeparateWindowClicked);
+    connect(&settings, &Settings::themeColorChanged, this, &Widget::themeColorChanged);
+    connect(&settings, &Settings::extraColorChanged, this, &Widget::extraColorChanged);
+    connect(&settings, &Settings::StateExtraColorsChanged, this, &Widget::stateExtraColorChanged);
     connect(&settings, &Settings::compactLayoutChanged, contactListWidget,
             &FriendListWidget::onCompactChanged);
     connect(&settings, &Settings::groupchatPositionChanged, contactListWidget,
@@ -1041,6 +1044,15 @@ void Widget::playNotificationSound(IAudioSink::Sound sound, bool loop)
 void Widget::cleanupNotificationSound()
 {
     audioNotification.reset();
+}
+
+void Widget::changeColorStyle(int state)
+{
+    if (state == Qt::Checked) {
+        Style::setExtraThemeColor(settings.getExtraColor());
+    } else {
+        Style::setThemeColor();
+    }
 }
 
 void Widget::incomingNotification(uint32_t friendnumber)
@@ -1810,6 +1822,26 @@ void Widget::registerContentDialog(ContentDialog& contentDialog) const
     connect(contentDialog.windowHandle(), &QWindow::windowTitleChanged, &n, &Nexus::updateWindows);
     n.updateWindows();
 #endif
+}
+
+void Widget::themeColorChanged(int)
+{
+    changeColorStyle(settings.getStateExtraColors());
+
+    Style::applyTheme();
+}
+
+void Widget::extraColorChanged(const QString& color)
+{
+    Style::setExtraThemeColor(QColor(color));
+    Style::applyTheme();
+}
+
+void Widget::stateExtraColorChanged(int state)
+{
+    changeColorStyle(state);
+
+    Style::applyTheme();
 }
 
 ContentLayout* Widget::createContentDialog(DialogType type) const

@@ -213,6 +213,8 @@ void Settings::loadGlobal()
                 style = "None";
         }
         nameColors = s.value("nameColors", false).toBool();
+        extraColor = s.value("extraColor", "#484848").toString();
+        stateExtraColors = s.value("stateExtraColors", 0).toInt();
     }
     s.endGroup();
 
@@ -678,6 +680,8 @@ void Settings::saveGlobal()
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
         s.setValue("nameColors", nameColors);
+        s.setValue("extraColor", extraColor);
+        s.setValue("stateExtraColors", stateExtraColors);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
         s.setValue("spellCheckingEnabled", spellCheckingEnabled);
     }
@@ -2180,6 +2184,34 @@ void Settings::setEnableGroupChatsColor(bool state)
 bool Settings::getEnableGroupChatsColor() const
 {
     return nameColors;
+}
+
+void Settings::setExtraColor(const QString& color)
+{
+    QMutexLocker locker{&bigLock};
+    if (color != extraColor) {
+        extraColor = color;
+        emit extraColorChanged(color);
+    }
+}
+
+QString Settings::getExtraColor() const
+{
+    return extraColor;
+}
+
+void Settings::setStateExtraColors(int state)
+{
+    QMutexLocker locker{&bigLock};
+    if (state != stateExtraColors) {
+        stateExtraColors = state;
+        emit StateExtraColorsChanged(state);
+    }
+}
+
+int Settings::getStateExtraColors() const
+{
+    return stateExtraColors;
 }
 
 /**
