@@ -261,6 +261,11 @@ Section "Install"
   File /nonfatal "qtox\imageformats\*.*"
   ${SetOutPath} "$INSTDIR\bin"
 
+  ${CreateDirectory} "$INSTDIR\bin\iconengines"
+  ${SetOutPath} "$INSTDIR\bin\iconengines"
+  File /nonfatal "qtox\iconengines\*.*"
+  ${SetOutPath} "$INSTDIR\bin"
+
   ${CreateDirectory} "$INSTDIR\bin\platforms"
   ${SetOutPath} "$INSTDIR\bin\platforms"
   File /nonfatal "qtox\platforms\*.*"
