@@ -95,7 +95,6 @@ VIAddVersionKey "FileVersion" "${VERSION}"
      WriteRegStr "${RegRoot}" "${UnInstallPath}" "${Key}" "${Value}"
   !macroend
 
-
 ;WriteRegDWORD macro
   !macro WriteRegDWORD RegRoot UnInstallPath Key Value
      FileWrite $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
@@ -207,12 +206,12 @@ VIAddVersionKey "FileVersion" "${VERSION}"
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY
 !ifdef REG_START_MENU
-	!define MUI_STARTMENUPAGE_NODISABLE
-	!define MUI_STARTMENUPAGE_DEFAULTFOLDER "qTox"
-	!define MUI_STARTMENUPAGE_REGISTRY_ROOT "${REG_ROOT}"
-	!define MUI_STARTMENUPAGE_REGISTRY_KEY "${UNINSTALL_PATH}"
-	!define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${REG_START_MENU}"
-	!insertmacro MUI_PAGE_STARTMENU Application $SM_Folder
+  !define MUI_STARTMENUPAGE_NODISABLE
+  !define MUI_STARTMENUPAGE_DEFAULTFOLDER "qTox"
+  !define MUI_STARTMENUPAGE_REGISTRY_ROOT "${REG_ROOT}"
+  !define MUI_STARTMENUPAGE_REGISTRY_KEY "${UNINSTALL_PATH}"
+  !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${REG_START_MENU}"
+  !insertmacro MUI_PAGE_STARTMENU Application $SM_Folder
 !endif
 !insertmacro MUI_PAGE_INSTFILES
 
@@ -248,56 +247,56 @@ FunctionEnd
 #INSTALL
 #################
 Section "Install"
-        SetShellVarContext all
-	# Install files
-	${SetOutPath} "$INSTDIR"
-	${WriteUninstaller} "uninstall.exe"
+  SetShellVarContext all
+  # Install files
+  ${SetOutPath} "$INSTDIR"
+  ${WriteUninstaller} "uninstall.exe"
 
-	${CreateDirectory} "$INSTDIR\bin"
-	${SetOutPath} "$INSTDIR\bin"
-	${File} "qtox\*.*"
+  ${CreateDirectory} "$INSTDIR\bin"
+  ${SetOutPath} "$INSTDIR\bin"
+  ${File} "qtox\*.*"
 
-	${CreateDirectory} "$INSTDIR\bin\imageformats"
-	${SetOutPath} "$INSTDIR\bin\imageformats"
-	File /nonfatal "qtox\imageformats\*.*"
-	${SetOutPath} "$INSTDIR\bin"
+  ${CreateDirectory} "$INSTDIR\bin\imageformats"
+  ${SetOutPath} "$INSTDIR\bin\imageformats"
+  File /nonfatal "qtox\imageformats\*.*"
+  ${SetOutPath} "$INSTDIR\bin"
 
-	${CreateDirectory} "$INSTDIR\bin\platforms"
-	${SetOutPath} "$INSTDIR\bin\platforms"
-	File /nonfatal "qtox\platforms\*.*"
-	${SetOutPath} "$INSTDIR\bin"
+  ${CreateDirectory} "$INSTDIR\bin\platforms"
+  ${SetOutPath} "$INSTDIR\bin\platforms"
+  File /nonfatal "qtox\platforms\*.*"
+  ${SetOutPath} "$INSTDIR\bin"
 
-	${CreateDirectory} "$INSTDIR\bin\libsnore-qt5"
-	${SetOutPath} "$INSTDIR\bin\libsnore-qt5"
-	File /nonfatal "qtox\libsnore-qt5\*.*"
-	${SetOutPath} "$INSTDIR\bin"
+  ${CreateDirectory} "$INSTDIR\bin\libsnore-qt5"
+  ${SetOutPath} "$INSTDIR\bin\libsnore-qt5"
+  File /nonfatal "qtox\libsnore-qt5\*.*"
+  ${SetOutPath} "$INSTDIR\bin"
 
-	# Create shortcuts
-	${CreateDirectory} "$SMPROGRAMS\qTox"
-	${CreateShortCut} "$SMPROGRAMS\qTox\qTox.lnk" "$INSTDIR\${MAIN_APP_EXE}" "" "" ""
-	${CreateShortCut} "$SMPROGRAMS\qTox\Uninstall qTox.lnk" "$INSTDIR\uninstall.exe" "" "" ""
+  # Create shortcuts
+  ${CreateDirectory} "$SMPROGRAMS\qTox"
+  ${CreateShortCut} "$SMPROGRAMS\qTox\qTox.lnk" "$INSTDIR\${MAIN_APP_EXE}" "" "" ""
+  ${CreateShortCut} "$SMPROGRAMS\qTox\Uninstall qTox.lnk" "$INSTDIR\uninstall.exe" "" "" ""
 
-	# Write setup/app info into the registry
-	SetRegView 64
-	${WriteRegStr} "${REG_ROOT}" "${REG_APP_PATH}" "" "$INSTDIR\${MAIN_APP_EXE}"
-	${WriteRegStr} "${REG_ROOT}" "${REG_APP_PATH}" "Path" "$INSTDIR\bin\"
-	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayName" "qTox"
-	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayVersion" "1.17.2"
-	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "Publisher" "The qTox Project"
-	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "UninstallString" "$INSTDIR\uninstall.exe"
-	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "URLInfoAbout" "https://qtox.github.io"
+  # Write setup/app info into the registry
+  SetRegView 64
+  ${WriteRegStr} "${REG_ROOT}" "${REG_APP_PATH}" "" "$INSTDIR\${MAIN_APP_EXE}"
+  ${WriteRegStr} "${REG_ROOT}" "${REG_APP_PATH}" "Path" "$INSTDIR\bin\"
+  ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayName" "qTox"
+  ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayVersion" "1.17.2"
+  ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "Publisher" "The qTox Project"
+  ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "UninstallString" "$INSTDIR\uninstall.exe"
+  ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "URLInfoAbout" "https://qtox.github.io"
 
-	# Register the tox: protocol
-	${WriteRegStr} HKCR "tox" "" "URL:tox Protocol"
-	${WriteRegStr} HKCR "tox" "URL Protocol" ""
-	${WriteRegStr} HKCR "tox\shell\open\command" "" "$INSTDIR\${MAIN_APP_EXE} %1"
+  # Register the tox: protocol
+  ${WriteRegStr} HKCR "tox" "" "URL:tox Protocol"
+  ${WriteRegStr} HKCR "tox" "URL Protocol" ""
+  ${WriteRegStr} HKCR "tox\shell\open\command" "" "$INSTDIR\${MAIN_APP_EXE} %1"
 
-	# Register the .tox file associations
-	${WriteRegStr} "HKCR" "Applications\qtox.exe\SupportedTypes" ".tox" ""
-	${WriteRegStr} HKCR ".tox" "" "toxsave"
-	${WriteRegStr} HKCR "toxsave" "" "Tox save file"
-	${WriteRegStr} HKCR "toxsave\DefaultIcon" "" "$INSTDIR\${MAIN_APP_EXE}"
-	${WriteRegStr} HKCR "toxsave\shell\open\command" "" "$INSTDIR\${MAIN_APP_EXE} %1"
+  # Register the .tox file associations
+  ${WriteRegStr} "HKCR" "Applications\qtox.exe\SupportedTypes" ".tox" ""
+  ${WriteRegStr} HKCR ".tox" "" "toxsave"
+  ${WriteRegStr} HKCR "toxsave" "" "Tox save file"
+  ${WriteRegStr} HKCR "toxsave\DefaultIcon" "" "$INSTDIR\${MAIN_APP_EXE}"
+  ${WriteRegStr} HKCR "toxsave\shell\open\command" "" "$INSTDIR\${MAIN_APP_EXE} %1"
 SectionEnd
 
 
