@@ -266,6 +266,11 @@ Section "Install"
 	${SetOutPath} "$INSTDIR\bin\platforms"
 	File /nonfatal "qtox\platforms\*.*"
 	${SetOutPath} "$INSTDIR\bin"
+	
+	${CreateDirectory} "$INSTDIR\bin\libsnore-qt5"
+	${SetOutPath} "$INSTDIR\bin\libsnore-qt5"
+	File /nonfatal "qtox\libsnore-qt5\*.*"
+	${SetOutPath} "$INSTDIR\bin"
 
 	# Create shortcuts
 	${CreateDirectory} "$SMPROGRAMS\qTox"
