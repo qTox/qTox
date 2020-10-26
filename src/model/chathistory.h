@@ -26,6 +26,7 @@
 #include <QSet>
 
 class Settings;
+struct Message;
 
 class ChatHistory : public IChatLog
 {
