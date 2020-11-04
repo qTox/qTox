@@ -130,10 +130,12 @@ apt-get update
 apt-get install -y --no-install-recommends \
                    autoconf \
                    automake \
-                   build-essential \
                    bsdtar \
+                   build-essential \
                    ca-certificates \
                    cmake \
+                   curl \
+                   extra-cmake-modules \
                    git \
                    libtool \
                    nsis \
@@ -142,10 +144,8 @@ apt-get install -y --no-install-recommends \
                    tclsh \
                    texinfo \
                    unzip \
-                   curl \
                    yasm \
-                   zip \
-                   extra-cmake-modules
+                   zip
 
 if [[ "$ARCH" == "i686" ]]
 then
@@ -232,9 +232,9 @@ store_apt_cache()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.1.1g
+OPENSSL_VERSION=1.1.1h
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="ddb04774f1e32f0c49751e21b67216ac87852ceb056b75209af2443400636d46"
+OPENSSL_HASH="5c9ca8774bd7b03e5784f26ae9e9e6d749c9da2438545077e6b3d755a06595d9"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
@@ -275,10 +275,10 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=12
-QT_PATCH=8
+QT_PATCH=9
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.12/5.12.8/single/qt-everywhere-src-5.12.8.tar.xz.mirrorlist
-QT_HASH="9142300dfbd641ebdea853546511a352e4bd547c4c7f25d61a40cd997af1f0cf"
+# hash from https://download.qt.io/archive/qt/5.12/5.12.9/single/qt-everywhere-src-5.12.9.tar.xz.mirrorlist
+QT_HASH="a628186814b73e93594ee8e72f975116599f946919ae6bd86611981b739acff0"
 QT_FILENAME="qt-everywhere-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
@@ -434,8 +434,8 @@ fi
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
-FFMPEG_VERSION=4.2.3
-FFMPEG_HASH="9df6c90aed1337634c1fb026fb01c154c29c82a64ea71291ff2da9aacb9aad31"
+FFMPEG_VERSION=4.3.1
+FFMPEG_HASH="ad009240d46e307b4e03a213a0f49c11b650e445b1f8be0dda2a9212b34d2ffb"
 FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
@@ -599,8 +599,8 @@ fi
 # QREncode
 
 QRENCODE_PREFIX_DIR="$DEP_DIR/libqrencode"
-QRENCODE_VERSION=4.0.2
-QRENCODE_HASH="c9cb278d3b28dcc36b8d09e8cad51c0eca754eb004cb0247d4703cb4472b58b4"
+QRENCODE_VERSION=4.1.1
+QRENCODE_HASH="e455d9732f8041cf5b9c388e345a641fd15707860f928e94507b1961256a6923"
 QRENCODE_FILENAME="qrencode-$QRENCODE_VERSION.tar.bz2"
 if [ ! -f "$QRENCODE_PREFIX_DIR/done" ]
 then
@@ -664,6 +664,7 @@ else
   echo "Using cached build of Exif `cat $EXIF_PREFIX_DIR/done`"
 fi
 
+
 # Snorenotify
 
 SNORE_PREFIX_DIR="$DEP_DIR/snorenotify"
@@ -680,44 +681,45 @@ then
   bsdtar --no-same-owner --no-same-permissions -xf $SNORE_FILENAME
   rm $SNORE_FILENAME
   cd snorenotify*
+
   mkdir _build && cd _build
 
-  PKG_CONFIG_PATH=""
-  PKG_CONFIG_LIBDIR=""
-  CMAKE_FIND_ROOT_PATH=""
-  for PREFIX_DIR in $DEP_DIR/*; do
-    if [ -d $PREFIX_DIR/lib/pkgconfig ]
-    then
-      export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$PREFIX_DIR/lib/pkgconfig"
-      export PKG_CONFIG_LIBDIR="$PKG_CONFIG_LIBDIR:$PREFIX_DIR/lib/pkgconfig"
-    fi
-    CMAKE_FIND_ROOT_PATH="$CMAKE_FIND_ROOT_PATH $PREFIX_DIR"
-  done
+  export PKG_CONFIG_PATH="$QT_PREFIX_DIR/lib/pkgconfig"
+  export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
 
-echo "
-    SET(CMAKE_SYSTEM_NAME Windows)
-    SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
-    SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
-    SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
-    SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $CMAKE_FIND_ROOT_PATH)
-" > toolchain.cmake
+  echo "
+      SET(CMAKE_SYSTEM_NAME Windows)
 
-  cmake -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
+      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $QT_PREFIX_DIR)
+  " > toolchain.cmake
+
+  cmake -DCMAKE_INSTALL_PREFIX="$SNORE_PREFIX_DIR" \
         -DCMAKE_BUILD_TYPE=Relase \
-        -DCMAKE_INSTALL_PREFIX="$SNORE_PREFIX_DIR" \
         -DBUILD_daemon=OFF \
         -DBUILD_settings=OFF \
         -DBUILD_snoresend=OFF \
+        -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         ..
+
   make
   make install
-  cd ..
   echo -n $SNORE_VERSION > $SNORE_PREFIX_DIR/done
+
+  unset PKG_CONFIG_PATH
+  unset PKG_CONFIG_LIBDIR
+
+  cd ..
+
   cd ..
   rm -rf ./snorenotify*
 else
   echo "Using cached build of snorenotify `cat $SNORE_PREFIX_DIR/done`"
 fi
+
 
 # Opus
 
@@ -789,8 +791,8 @@ fi
 # VPX
 
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
-VPX_VERSION=v1.8.2
-VPX_HASH="8735d9fcd1a781ae6917f28f239a8aa358ce4864ba113ea18af4bb2dc8b474ac"
+VPX_VERSION=v1.9.0
+VPX_HASH="d279c10e4b9316bf11a570ba16c3d55791e1ad6faa4404c67422eb631782c80a"
 VPX_FILENAME="libvpx-$VPX_VERSION.tar.gz"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
@@ -1064,8 +1066,8 @@ set -u
   # Expat
 
   EXPAT_PREFIX_DIR="$DEP_DIR/libexpat"
-  EXPAT_VERSION="2.2.9"
-  EXPAT_HASH="1ea6965b15c2106b6bbe883397271c80dfa0331cdf821b2c319591b55eadc0a4"
+  EXPAT_VERSION="2.2.10"
+  EXPAT_HASH="5dfe538f8b5b63f03e98edac520d7d9a6a4d22e482e5c96d4d06fcc5485c25f2"
   EXPAT_FILENAME="expat-$EXPAT_VERSION.tar.xz"
   if [ ! -f "$EXPAT_PREFIX_DIR/done" ]
   then
@@ -1285,6 +1287,7 @@ cp -r $QT_PREFIX_DIR/plugins/imageformats \
       $QT_PREFIX_DIR/plugins/iconengines \
       $QTOX_PREFIX_DIR
 cp {$OPENSSL_PREFIX_DIR,$SQLCIPHER_PREFIX_DIR,$FFMPEG_PREFIX_DIR,$OPENAL_PREFIX_DIR,$QRENCODE_PREFIX_DIR,$EXIF_PREFIX_DIR,$OPUS_PREFIX_DIR,$SODIUM_PREFIX_DIR,$VPX_PREFIX_DIR,$TOXCORE_PREFIX_DIR}/bin/*.dll $QTOX_PREFIX_DIR
+
 cp "$SNORE_PREFIX_DIR/bin/libsnore-qt5.dll" $QTOX_PREFIX_DIR
 mkdir -p "$QTOX_PREFIX_DIR/libsnore-qt5"
 cp "$SNORE_PREFIX_DIR/lib/plugins/libsnore-qt5/libsnore_backend_windowstoast.dll" "$QTOX_PREFIX_DIR/libsnore-qt5"
@@ -1304,7 +1307,7 @@ then
 fi
 winecfg
 
-# dll checks
+# qtox.exe dll checks (32-bit on i686, 64-bit on x86_64)
 python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/qtox.exe --dll-lookup-dirs $QTOX_PREFIX_DIR ~/.wine/drive_c/windows/system32 > /tmp/$ARCH-qtox-ldd
 find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-qtox-dll-find
 # dlls loded at run time that don't showup as a link time dependency
@@ -1344,6 +1347,26 @@ do
     exit 1
   fi
 done < /tmp/$ARCH-qtox-dll-find
+
+
+# SnoreToast.exe dll checks (always 32-bit)
+if [[ "$ARCH" == "i686" ]]
+then
+  SNORETOAST_WINE_DLLS=/root/.wine/drive_c/windows/system32
+elif [[ "$ARCH" == "x86_64" ]]
+then
+  SNORETOAST_WINE_DLLS=/root/.wine/drive_c/windows/syswow64
+fi
+
+python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/SnoreToast.exe --dll-lookup-dirs $SNORETOAST_WINE_DLLS > /tmp/$ARCH-SnoreToast-ldd
+
+# Check that all dlls are in place
+if grep 'not found' /tmp/$ARCH-SnoreToast-ldd
+then
+  cat /tmp/$ARCH-SnoreToast-ldd
+  echo "Error: Missing some dlls."
+  exit 1
+fi
 
 
 # Run tests (only on Travis)
