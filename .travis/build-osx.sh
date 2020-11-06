@@ -20,18 +20,6 @@ set -eu -o pipefail
 
 readonly BIN_NAME="qTox.dmg"
 
-# accelerate builds with ccache
-install_ccache() {
-    # manually update even though `install` will already update, due to bug:
-        # Please don't worry, you likely hit a bug auto-updating from an old version.
-        # Rerun your command, everything is up-to-date and fine now.
-    echo "Updating brew..."
-    brew update
-    echo "Installing ccache..."
-    brew install ccache
-    brew --cache
-}
-
 # Build OSX
 build() {
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i
@@ -54,7 +42,6 @@ make_hash() {
 }
 
 main() {
-    install_ccache
     build
     check
     make_hash

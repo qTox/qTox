@@ -152,6 +152,10 @@ jobs:
         ccache: true
         directories:
           - $HOME/Library/Caches/Homebrew
+      addons:
+        homebrew:
+          brewfile: ./osx/Brewfile
+          update: true
       before_cache:
         - brew cleanup
       script:

@@ -129,10 +129,8 @@ install() {
     fcho "Getting home brew formulas ..."
     if [[ $TRAVIS != true ]]
     then
-        sleep 3
-        brew install git wget libtool cmake pkgconfig
+        brew bundle install -f ./osx/Brewfile
     fi
-    brew install check libvpx opus libsodium
 
     fcho "Starting git repo checks ..."
 
@@ -177,19 +175,6 @@ install() {
             fcho "You can simply use the -u command and say [Yes/n] when prompted"
         fi
     fi
-
-    if [[ $TRAVIS = true ]]
-    then
-        fcho "Updating brew formulas ..."
-        brew update > /dev/null
-    else
-        brew install cmake
-    fi
-
-    # needed for kf5-sonnet
-    brew tap kde-mac/kde https://invent.kde.org/packaging/homebrew-kde.git
-
-    brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft #kf5-sonnet
 
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
     QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
