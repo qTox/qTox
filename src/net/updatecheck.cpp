@@ -29,10 +29,9 @@
 #include <QTimer>
 #include <cassert>
 
-#define VERSION_REGEX_STRING   "v([0-9]+)\\.([0-9]+)\\.([0-9]+)"
-
 namespace {
 const QString versionUrl{QStringLiteral("https://api.github.com/repos/qTox/qTox/releases/latest")};
+const QString versionRegexString{QStringLiteral("v([0-9]+)\\.([0-9]+)\\.([0-9]+)")};
 
 struct Version {
     int major;
@@ -43,7 +42,7 @@ struct Version {
 Version tagToVersion(QString tagName)
 {
     // capture tag name to avoid showing update available on dev builds which include hash as part of describe
-    QRegularExpression versionFormat{QStringLiteral(VERSION_REGEX_STRING)};
+    QRegularExpression versionFormat(versionRegexString);
     auto matches = versionFormat.match(tagName);
     assert(matches.lastCapturedIndex() == 3);
 
@@ -89,7 +88,7 @@ bool isUpdateAvailable(Version current, Version available)
 
 bool isCurrentVersionStable()
 {
-  QRegularExpression versionRegex{QStringLiteral(VERSION_REGEX_STRING)};
+  QRegularExpression versionRegex(versionRegexString);
   auto currentVer = versionRegex.match(GIT_DESCRIBE_EXACT);
   if (currentVer.hasMatch()){
     return true;
