@@ -121,6 +121,10 @@ void UpdateCheck::checkForUpdate()
 
 void UpdateCheck::handleResponse(QNetworkReply* reply)
 {
+    if (isCurrentVersionStable() == false) {
+      qWarning() << "qTox is running an unstable version";
+    }
+
     assert(reply != nullptr);
     if (reply == nullptr) {
         qWarning() << "Update check returned null reply, ignoring";
@@ -155,10 +159,6 @@ void UpdateCheck::handleResponse(QNetworkReply* reply)
     } else {
         qInfo() << "qTox is up to date";
         emit upToDate();
-    }
-
-    if (isCurrentVersionStable() == false) {
-      qWarning() << "qTox is running an unstable version";
     }
 
     reply->deleteLater();
