@@ -107,7 +107,7 @@ void AboutForm::replaceVersions()
     bodyUI->gitVersion->setText(
         tr("Commit hash: %1").arg(createLink(commitLink, QString(GIT_VERSION))));
 
-    bodyUI->toxCoreVersion->setText(tr("Toxcore version: %1").arg(TOXCORE_VERSION));
+    bodyUI->toxCoreVersion->setText(tr("toxcore version: %1").arg(TOXCORE_VERSION));
     bodyUI->qtVersion->setText(tr("Qt version: %1").arg(QT_VERSION_STR));
 
     QString issueBody = QString("##### Brief Description\n\n"

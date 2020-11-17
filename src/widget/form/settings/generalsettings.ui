@@ -104,7 +104,7 @@
                <string>Start qTox on operating system startup (current profile).</string>
               </property>
               <property name="text">
-               <string>Auto-start</string>
+               <string>Autostart</string>
               </property>
              </widget>
             </item>
@@ -235,7 +235,7 @@ instead of closing entirely.</string>
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Auto-away after (0 to disable):</string>
+               <string>Auto away after (0 to disable):</string>
               </property>
              </widget>
             </item>
@@ -303,14 +303,14 @@ instead of closing entirely.</string>
                <string comment="autoaccept cb tooltip">You can set this on a per-friend basis by right clicking individual friends.</string>
               </property>
               <property name="text">
-               <string>Auto-accept files</string>
+               <string>Autoaccept files</string>
               </property>
              </widget>
             </item>
             <item row="4" column="0">
              <widget class="QLabel" name="maxAutoAcceptSizeLabel">
               <property name="text">
-               <string>Max auto-accept file size (0 for unlimited):</string>
+               <string>Max autoaccept file size (0 to disable):</string>
               </property>
              </widget>
             </item>

@@ -36,7 +36,7 @@ public:
     ~UserInterfaceForm();
     QString getFormName() final
     {
-        return tr("User interface");
+        return tr("User Interface");
     }
 
 private slots:

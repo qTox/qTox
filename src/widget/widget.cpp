@@ -2602,7 +2602,7 @@ void Widget::retranslateUi()
     setStatusMessage(core->getStatusMessage());
 
     filterDisplayName->setText(tr("By Name"));
-    filterDisplayActivity->setText(tr("By activity"));
+    filterDisplayActivity->setText(tr("By Activity"));
     filterAllAction->setText(tr("All"));
     filterOnlineAction->setText(tr("Online"));
     filterOfflineAction->setText(tr("Offline"));

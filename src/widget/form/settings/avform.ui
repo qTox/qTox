@@ -38,7 +38,7 @@
        <item>
         <widget class="QGroupBox" name="audioGroup">
          <property name="title">
-          <string>Audio settings</string>
+          <string>Audio Settings</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
           <property name="bottomMargin">
@@ -165,7 +165,7 @@
        <item>
         <widget class="QGroupBox" name="videoGroup">
          <property name="title">
-          <string>Video settings</string>
+          <string>Video Settings</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>

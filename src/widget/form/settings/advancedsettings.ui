@@ -83,7 +83,7 @@
           <item>
            <widget class="QPushButton" name="btnCopyDebug">
             <property name="text">
-             <string>Copy debug log</string>
+             <string>Copy Debug Log</string>
             </property>
            </widget>
           </item>
