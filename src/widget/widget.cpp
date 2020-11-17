@@ -2601,17 +2601,16 @@ void Widget::retranslateUi()
     setUsername(core->getUsername());
     setStatusMessage(core->getStatusMessage());
 
-    filterDisplayName->setText(tr("By name"));
+    filterDisplayName->setText(tr("By Name"));
     filterDisplayActivity->setText(tr("By activity"));
     filterAllAction->setText(tr("All"));
     filterOnlineAction->setText(tr("Online"));
     filterOfflineAction->setText(tr("Offline"));
     filterFriendsAction->setText(tr("Friends"));
     filterGroupsAction->setText(tr("Groups"));
-    ui->searchContactText->setPlaceholderText(tr("Search contacts"));
+    ui->searchContactText->setPlaceholderText(tr("Search Contacts"));
     updateFilterText();
 
-    ui->searchContactText->setPlaceholderText(tr("Search contacts"));
     statusOnline->setText(tr("Online", "Button to set your status to 'Online'"));
     statusAway->setText(tr("Away", "Button to set your status to 'Away'"));
     statusBusy->setText(tr("Busy", "Button to set your status to 'Busy'"));
