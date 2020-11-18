@@ -214,6 +214,24 @@ add_definitions(
   -DGIT_VERSION="${GIT_VERSION}"
 )
 
+if (NOT GIT_DESCRIBE_EXACT)
+  execute_process(
+    COMMAND git describe --exact-match --tags HEAD
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_DESCRIBE_EXACT
+    ERROR_QUIET
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+
+  if(NOT GIT_DESCRIBE_EXACT)
+    set(GIT_DESCRIBE_EXACT "Nightly")
+  endif()
+endif()
+
+add_definitions(
+  -DGIT_DESCRIBE_EXACT="${GIT_DESCRIBE_EXACT}"
+)
+
 set(APPLE_EXT False)
 if (FOUNDATION_FOUND AND IOKIT_FOUND)
   set(APPLE_EXT True)

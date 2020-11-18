@@ -31,6 +31,7 @@
 
 namespace {
 const QString versionUrl{QStringLiteral("https://api.github.com/repos/qTox/qTox/releases/latest")};
+const QString versionRegexString{QStringLiteral("v([0-9]+)\\.([0-9]+)\\.([0-9]+)")};
 
 struct Version {
     int major;
@@ -41,7 +42,7 @@ struct Version {
 Version tagToVersion(QString tagName)
 {
     // capture tag name to avoid showing update available on dev builds which include hash as part of describe
-    QRegularExpression versionFormat{QStringLiteral("v([0-9]+)\\.([0-9]+)\\.([0-9]+)")};
+    QRegularExpression versionFormat(versionRegexString);
     auto matches = versionFormat.match(tagName);
     assert(matches.lastCapturedIndex() == 3);
 
@@ -85,6 +86,17 @@ bool isUpdateAvailable(Version current, Version available)
     return false;
 }
 
+bool isCurrentVersionStable()
+{
+  QRegularExpression versionRegex(versionRegexString);
+  auto currentVer = versionRegex.match(GIT_DESCRIBE_EXACT);
+  if (currentVer.hasMatch()){
+    return true;
+  } else {
+    return false;
+  }
+}
+
 } // namespace
 
 UpdateCheck::UpdateCheck(const Settings& settings)
@@ -108,6 +120,10 @@ void UpdateCheck::checkForUpdate()
 
 void UpdateCheck::handleResponse(QNetworkReply* reply)
 {
+    if (isCurrentVersionStable() == false) {
+      qWarning() << "qTox is running an unstable version";
+    }
+
     assert(reply != nullptr);
     if (reply == nullptr) {
         qWarning() << "Update check returned null reply, ignoring";
@@ -143,5 +159,6 @@ void UpdateCheck::handleResponse(QNetworkReply* reply)
         qInfo() << "qTox is up to date";
         emit upToDate();
     }
+
     reply->deleteLater();
 }
