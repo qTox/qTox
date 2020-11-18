@@ -111,7 +111,7 @@
              <string>New text styling preference may not load until qTox restarts.</string>
             </property>
             <property name="text">
-             <string>Text style format:</string>
+             <string>Text Style format:</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

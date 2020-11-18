@@ -138,7 +138,7 @@
        <item>
         <widget class="QGroupBox" name="publicGroup">
          <property name="title">
-          <string>Public information</string>
+          <string>Public Information</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
