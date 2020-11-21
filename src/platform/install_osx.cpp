@@ -52,8 +52,6 @@ void osx::moveToAppFolder()
             QString bindir = qApp->applicationDirPath();
             QString appdir = bindir;
             appdir.chop(15);
-            QString sudo = bindir + "/qtox_sudo rsync -avzhpltK " + appdir + " /Applications";
-            QString qtox = "open /Applications/qtox.app";
 
             QString appdir_noqtox = appdir;
             appdir_noqtox.chop(8);
@@ -66,7 +64,9 @@ void osx::moveToAppFolder()
 
             QDir old_app(appdir);
 
-            sudoprocess->start(sudo); // Where the magic actually happens, safety checks ^
+            const QString sudoProgram = bindir + "/qtox_sudo";
+            const QStringList sudoArguments = {"rsync", "-avzhpltK", appdir, "/Applications"};
+            sudoprocess->start(sudoProgram, sudoArguments); // Where the magic actually happens, safety checks ^
             sudoprocess->waitForFinished();
 
             if (old_app.removeRecursively()) // We've just deleted the running program
@@ -77,7 +77,9 @@ void osx::moveToAppFolder()
             if (fork() != 0) // Forking is required otherwise it won't actually cleanly launch
                 exit(EXIT_UPDATE_MACX);
 
-            qtoxprocess->start(qtox);
+            const QString qtoxProgram = "open";
+            const QStringList qtoxArguments = {"/Applications/qtox.app"};
+            qtoxprocess->start(qtoxProgram, qtoxArguments);
 
             exit(0); // Actually kills it
         }
@@ -107,7 +109,7 @@ void osx::migrateProfiles()
         qDebug() << "OS X: Profile migration failed. ~/Library/Application Support/Tox already "
                     "exists. Using alternate migration method.";
         QString OSXMigrater = "../Resources/OSX-Migrater.sh";
-        QProcess::execute(OSXMigrater);
+        QProcess::execute(OSXMigrater, {});
         QMessageBox MigrateProfile;
         MigrateProfile.setIcon(QMessageBox::Information);
         MigrateProfile.setWindowModality(Qt::ApplicationModal);
