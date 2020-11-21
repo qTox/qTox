@@ -146,7 +146,7 @@ jobs:
           - /opt/build-windows/x86_64
     - stage: "macOS, AppImage and Flatpak"
       os: osx
-      osx_image: xcode9.3
+      osx_image: xcode10.2 # macOS 10.14, oldest supported SDK according to https://developer.apple.com/support/xcode/
       env: JOB=build-osx
       cache:
         timeout: 300 # seconds
