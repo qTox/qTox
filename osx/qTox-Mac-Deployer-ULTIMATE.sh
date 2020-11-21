@@ -187,7 +187,7 @@ install() {
     fi
 
     # needed for kf5-sonnet
-    brew tap kde-mac/kde
+    # brew tap kde-mac/kde
 
     brew install ffmpeg libexif qrencode qt5 sqlcipher openal-soft #kf5-sonnet
 
