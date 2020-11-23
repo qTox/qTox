@@ -144,6 +144,7 @@ apt-get install -y --no-install-recommends \
                    tclsh \
                    texinfo \
                    unzip \
+                   curl \
                    yasm \
                    zip
 
