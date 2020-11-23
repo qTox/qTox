@@ -134,7 +134,6 @@ apt-get install -y --no-install-recommends \
                    build-essential \
                    ca-certificates \
                    cmake \
-                   curl \
                    extra-cmake-modules \
                    git \
                    libtool \
@@ -144,6 +143,7 @@ apt-get install -y --no-install-recommends \
                    tclsh \
                    texinfo \
                    unzip \
+                   curl \
                    yasm \
                    zip
 

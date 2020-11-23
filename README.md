@@ -158,20 +158,20 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 ```
 
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
-[64 bit release]: https://github.com/qTox/qTox/releases/download/v1.17.2/setup-qtox-x86_64-release.exe
-[32 bit release]: https://github.com/qTox/qTox/releases/download/v1.17.2/setup-qtox-i686-release.exe
+[64 bit release]: https://github.com/qTox/qTox/releases/download/v1.17.3/setup-qtox-x86_64-release.exe
+[32 bit release]: https://github.com/qTox/qTox/releases/download/v1.17.3/setup-qtox-i686-release.exe
 [32nightly]: https://github.com/qTox/qTox-nightly-releases/releases/download/ci-master-latest/setup-qtox-i686-release.exe
 [64nightly]: https://github.com/qTox/qTox-nightly-releases/releases/download/ci-master-latest/setup-qtox-x86_64-release.exe
-[Flatpak]: https://github.com/qTox/qTox/releases/download/v1.17.2/qTox-v1.17.2.x86_64.flatpak
+[Flatpak]: https://github.com/qTox/qTox/releases/download/v1.17.3/qTox-v1.17.3.x86_64.flatpak
 [Flatpak nightly]: https://github.com/qTox/qTox-nightly-releases/releases/download/ci-master-latest/qtox.flatpak
-[AppImage]: https://github.com/qTox/qTox/releases/download/v1.17.2/qTox-v1.17.2.x86_64.AppImage
+[AppImage]: https://github.com/qTox/qTox/releases/download/v1.17.3/qTox-v1.17.3.x86_64.AppImage
 [AppImage nightly]: https://github.com/qTox/qTox-nightly-releases/releases/tag/ci-master-latest
 [Arch]: /INSTALL.md#arch
 [Building instructions]: /INSTALL.md#os-x
 [Contributing]: /CONTRIBUTING.md#how-to-start-contributing
 [Debian]: https://packages.debian.org/search?keywords=qtox
 [easy issues]: https://github.com/qTox/qTox/labels/E-easy
-[Latest release]: https://github.com/qTox/qTox/releases/download/v1.17.2/qTox.dmg
+[Latest release]: https://github.com/qTox/qTox/releases/download/v1.17.3/qTox.dmg
 [Latest nightly]: https://github.com/qTox/qTox-nightly-releases/releases/download/ci-master-latest/qTox.dmg
 [Fedora]: /INSTALL.md#fedora
 [Gentoo]: /INSTALL.md#gentoo

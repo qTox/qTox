@@ -60,15 +60,6 @@ execute_process(
   OUTPUT_VARIABLE QT_PREFIX_PATH
   OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-execute_process(
-  COMMAND xcode-select -p
-  OUTPUT_VARIABLE CMAKE_OSX_SYSROOT
-  OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-set(CMAKE_OSX_DEPLOYMENT_TARGET 10.12)
-set(CMAKE_OSX_SYSROOT
-  ${CMAKE_OSX_SYSROOT}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk)
-
 project(qtox)
 
 # Instruct CMake to run moc automatically when needed.
