@@ -28,7 +28,8 @@
 #include <QTranslator>
 #include <algorithm>
 
-QTranslator* Translator::translator{nullptr};
+QTranslator* Translator::core_translator{nullptr};
+QTranslator* Translator::app_translator{nullptr};
 QVector<Translator::Callback> Translator::callbacks;
 QMutex Translator::lock;
 
@@ -39,31 +40,38 @@ void Translator::translate(const QString& localeName)
 {
     QMutexLocker locker{&lock};
 
-    if (!translator)
-        translator = new QTranslator();
+    if (!core_translator)
+        core_translator = new QTranslator();
+
+    if (!app_translator)
+        app_translator = new QTranslator();
+
+    // Remove old translations
+    QCoreApplication::removeTranslator(core_translator);
+    QApplication::removeTranslator(app_translator);
 
     // Load translations
-    QCoreApplication::removeTranslator(translator);
     QString locale = localeName.isEmpty() ? QLocale::system().name().section('_', 0, 0) : localeName;
 
     if (locale != "en") {
-        if (translator->load(locale, ":translations/")) {
+        if (core_translator->load(locale, ":translations/")) {
             qDebug() << "Loaded translation" << locale;
 
-            // system menu translation
-            QTranslator* qtTranslator = new QTranslator();
+            // System menu translation
             QString s_locale = "qt_" + locale;
             QString location = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
-            if (qtTranslator->load(s_locale, location)) {
-                QApplication::installTranslator(qtTranslator);
+            if (app_translator->load(s_locale, location)) {
+                QApplication::installTranslator(app_translator);
                 qDebug() << "System translation loaded" << locale;
             } else {
                 qDebug() << "System translation not loaded" << locale;
             }
+
+            // Application translation
+            QCoreApplication::installTranslator(core_translator);
         } else {
             qDebug() << "Error loading translation" << locale;
         }
-        QCoreApplication::installTranslator(translator);
     }
 
     // After the language is changed from RTL to LTR, the layout direction isn't

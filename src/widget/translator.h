@@ -38,5 +38,6 @@ private:
     using Callback = QPair<void*, std::function<void()>>;
     static QVector<Callback> callbacks;
     static QMutex lock;
-    static QTranslator* translator;
+    static QTranslator* core_translator;
+    static QTranslator* app_translator;
 };
