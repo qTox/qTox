@@ -45,11 +45,7 @@
             "build-options": {
                 "no-debuginfo": true
             },
-            "cleanup": [
-                "/bin",
-                "/lib",
-                "/man"
-            ],
+            "cleanup": [ '*' ],
             "sources": [
                 {
                     "type": "archive",
@@ -107,7 +103,11 @@
         {
             "name": "c-toxcore",
             "buildsystem": "cmake-ninja",
-            "config-opts": ["-DBOOTSTRAP_DAEMON=OFF"],
+            "config-opts": [
+                "-DDHT_BOOTSTRAP=OFF",
+                "-DBOOTSTRAP_DAEMON=OFF",
+                "-DENABLE_STATIC=OFF"
+            ],
             "sources": [
                 {
                     "type": "git",
@@ -126,8 +126,9 @@
             ],
             "sources": [
                 {
-                    "type": "dir",
-                    "path": "/build/qtox/"
+                    "type": "git",
+                    "path": "/build/qtox/",
+                    "branch": "master"
                 }
             ]
         }
