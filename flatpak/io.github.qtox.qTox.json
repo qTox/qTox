@@ -116,8 +116,7 @@
                 {
                     "type": "git",
                     "path": "/build/qtox/",
-                    "tag": "v1.17.3",
-                    "commit": "c0e9a3b79609681e5b9f6bbf8f9a36cb1993dc5f"
+                    "branch": "v1.17-dev"
                 }
             ]
         }
