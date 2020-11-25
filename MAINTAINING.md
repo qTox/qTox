@@ -208,11 +208,14 @@ To get translations into qTox:
 ### Before tagging
 
 - Format all code using the [`./tools/format-code.sh`] script
+- Merge the Flatpak manifest of our [Flathub repository] into
+  [`./flatpak/io.github.qtox.qTox.json`]. Keep
+  [`./flatpak/io.github.qtox.qTox.json`]'s version of "sources" for qTox.
 - Update version number for windows/osx packages using the
   [`./tools/update-versions.sh`] script, e.g. `./tools/update-versions.sh
   1.11.0`
-- Update toxcore version number to the latest tag. Currently this needs to be
-  done manually by `grep`ing for the current tag.
+- Update toxcore version number to the latest tag using
+  [`./tools/update-toxcore-version.sh]
 - Update the bootstrap nodelist at `./res/nodes.json` from https://nodes.tox.chat/json.
   This can be done by running [`./tools/update-nodes.sh`]
 - Generate changelog with `clog`.
@@ -232,16 +235,19 @@ To get translations into qTox:
   [`./tools/create-tarballs.sh`] script, and upload both archives plus both
   signature files to the github release that was created by a Travis OSX
   release job.
+- Download the binaries that are part of the draft release, sign them in
+  in detached and ascii armored mode, e.g. `gpg -a -b <artifact>`, and upload
+  the signatures to the draft release.
+- Add a title and description to the draft release, then publish the release.
 - Update download links on https://tox.chat to point to the new release.
 - Write a short blog post for https://github.com/qTox/blog/ and advertise the
   post on Tox IRC channels, popular Tox groups, reddit, or whatever other platforms.
-- Open a PR to update the Flatpak manifest of our [Flathub repository] with the
-  changes from [`./flatpak/io.github.qtox.qTox.json`].
-- Comment to the PR with `bot, build` to execute a test build
+- Merge [`./flatpak/io.github.qtox.qTox.json`] into the manifest of our
+  [Flathub repository]. Keep the [Flathub repository]'s version of "sources" for
+  qTox.
 - After the build passed for qTox on all architectures on
   [the Flathub build bot], merge the PR into the master branch of our
   [Flathub repository].
-
 
 # How to become a maintainer?
 
