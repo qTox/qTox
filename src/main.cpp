@@ -196,11 +196,6 @@ int main(int argc, char* argv[])
 
     qInstallMessageHandler(logMessageHandler);
 
-    // initialize random number generator
-#if (QT_VERSION < QT_VERSION_CHECK(5, 15, 0))
-    qsrand(time(nullptr));
-#endif
-
     std::unique_ptr<QApplication> a(new QApplication(argc, argv));
 
 #if defined(Q_OS_UNIX)
@@ -224,9 +219,6 @@ int main(int argc, char* argv[])
         qWarning() << "Couldn't load font";
     }
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 15, 0))
-    qsrand(time(nullptr));
-#endif
     Settings& settings = Settings::getInstance();
     QString locale = settings.getTranslation();
     // We need to init the resources in the translations_library explicitely.

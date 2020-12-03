@@ -23,11 +23,6 @@
 #include <QDebug>
 #include <QFile>
 #include <QMessageBox>
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
-#include <QRandomGenerator>
-#else
-#include <QDateTime>
-#endif
 
 #include "src/core/core.h"
 #include "src/nexus.h"
@@ -40,6 +35,9 @@
 #include "src/widget/tool/recursivesignalblocker.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
+
+#include <chrono>
+#include <random>
 
 PrivacyForm::PrivacyForm(Core* _core)
     : GenericForm(QPixmap(":/img/settings/privacy.png"))
@@ -106,15 +104,8 @@ void PrivacyForm::on_randomNosapamButton_clicked()
 {
     uint32_t newNospam{0};
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
-    // guarantees to give a random 32-bit unsigned integer
-    newNospam = QRandomGenerator::global()->generate();
-#else
-    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
-    for (int i = 0; i < 4; ++i)
-        // Generate byte by byte, as qrand() is guaranteed to have only 15 bits of randomness (RAND_MAX is guaranteed to be 2^15)
-        newNospam = (newNospam << 8) + (static_cast<int>((static_cast<double>(qrand()) / static_cast<double>(RAND_MAX+1l)) * 256));
-#endif
+    static std::mt19937 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+    newNospam = rng();
 
     core->setNospam(newNospam);
     bodyUI->nospamLineEdit->setText(core->getSelfId().getNoSpamString());
