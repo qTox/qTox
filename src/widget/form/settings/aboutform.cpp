@@ -62,6 +62,9 @@ AboutForm::AboutForm(UpdateCheck* updateCheck)
 {
     bodyUI->setupUi(this);
 
+    bodyUI->unstableVersion->setVisible(false);
+    connect(updateCheck, &UpdateCheck::versionIsUnstable, this, &AboutForm::onUnstableVersion);
+
     // block all child signals during initialization
     const RecursiveSignalBlocker signalBlocker(this);
 
@@ -185,6 +188,11 @@ void AboutForm::onUpdateCheckFailed()
 void AboutForm::reloadTheme()
 {
     replaceVersions();
+}
+
+void AboutForm::onUnstableVersion()
+{
+    bodyUI->unstableVersion->setVisible(true);
 }
 
 /**

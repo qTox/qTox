@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>506</width>
-        <height>550</height>
+        <width>496</width>
+        <height>599</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0,0">
@@ -53,7 +53,7 @@
           <string>Version</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="1" column="0" colspan="2">
+          <item row="2" column="0" colspan="2">
            <widget class="QLabel" name="youAreUsing">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -83,7 +83,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="4" column="1">
            <widget class="QLabel" name="qtVersion">
             <property name="font">
              <font>
@@ -98,7 +98,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="toxCoreVersion">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -122,7 +122,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0" colspan="2">
+          <item row="3" column="0" colspan="2">
            <widget class="QLabel" name="gitVersion">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -149,7 +149,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0" colspan="2">
+          <item row="1" column="0" colspan="2">
            <widget class="QStackedWidget" name="updateStack">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -197,7 +197,10 @@
                    </sizepolicy>
                   </property>
                   <property name="autoFillBackground">
-                   <bool>true</bool>
+                   <bool>false</bool>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
                   </property>
                   <property name="text">
                    <string>qTox is up to date ✓</string>
@@ -228,6 +231,22 @@
               </item>
              </layout>
             </widget>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="unstableVersion">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="text">
+             <string>Warning! Currently running qTox is unstable.</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
          </layout>

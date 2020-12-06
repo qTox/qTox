@@ -120,8 +120,11 @@ void UpdateCheck::checkForUpdate()
 
 void UpdateCheck::handleResponse(QNetworkReply* reply)
 {
+    qInfo() << "qTox is running version:" << GIT_DESCRIBE;
+
     if (isCurrentVersionStable() == false) {
-      qWarning() << "qTox is running an unstable version";
+        qWarning() << "qTox is running an unstable version";
+        emit versionIsUnstable();
     }
 
     assert(reply != nullptr);
