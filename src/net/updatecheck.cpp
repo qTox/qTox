@@ -123,7 +123,7 @@ void UpdateCheck::handleResponse(QNetworkReply* reply)
     qInfo() << "qTox is running version:" << GIT_DESCRIBE;
 
     if (isCurrentVersionStable() == false) {
-        qWarning() << "qTox is running an unstable version";
+        qWarning() << "Currently running an untested/unstable version of qTox";
         emit versionIsUnstable();
     }
 
