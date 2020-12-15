@@ -242,7 +242,7 @@
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="text">
-             <string>Warning! Currently running qTox is unstable.</string>
+             <string>Currently running an untested/unstable version of qTox</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
