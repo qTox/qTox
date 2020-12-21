@@ -442,7 +442,6 @@ void GroupChatForm::joinGroupCall()
 
 void GroupChatForm::leaveGroupCall()
 {
-    call->endCall();
     call.reset();
     audioInputFlag = false;
     audioOutputFlag = false;

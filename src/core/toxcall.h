@@ -70,8 +70,6 @@ public:
     bool getNullVideoBitrate() const;
     void setNullVideoBitrate(bool value);
 
-    virtual void endCall() = 0;
-
     CoreVideoSource* getVideoSource() const;
 
 protected:
@@ -104,10 +102,6 @@ public:
 
     void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const;
 
-    // ToxCall interface
-public:
-    void endCall() override;
-
 private slots:
     void onAudioSourceInvalidated();
     void onAudioSinkInvalidated();
@@ -133,10 +127,6 @@ public:
 
     void playAudioBuffer(const ToxPk& peer, const int16_t* data, int samples, unsigned channels,
                          int sampleRate);
-
-    // ToxCall interface
-public:
-    void endCall() override;
 
 private:
     void addPeer(ToxPk peerId);

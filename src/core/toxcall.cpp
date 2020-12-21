@@ -155,6 +155,7 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av, 
 
 ToxFriendCall::~ToxFriendCall()
 {
+    av.cancelCall(friendId);
     QObject::disconnect(audioSinkInvalid);
 }
 
@@ -199,11 +200,6 @@ void ToxFriendCall::playAudioBuffer(const int16_t* data, int samples, unsigned c
     }
 }
 
-void ToxFriendCall::endCall()
-{
-    av.cancelCall(friendId);
-}
-
 ToxGroupCall::ToxGroupCall(const Group& group, CoreAV& av, IAudioControl& audio)
     : ToxCall(false, av, audio)
     , group{group}
@@ -223,6 +219,7 @@ ToxGroupCall::ToxGroupCall(const Group& group, CoreAV& av, IAudioControl& audio)
 
 ToxGroupCall::~ToxGroupCall()
 {
+    av.leaveGroupCall(group.getId());
     // disconnect all Qt connections
     clearPeers();
 }
@@ -304,9 +301,4 @@ void ToxGroupCall::playAudioBuffer(const ToxPk& peer, const int16_t* data, int s
     if (source->second) {
         source->second->playAudioBuffer(data, samples, channels, sampleRate);
     }
-}
-
-void ToxGroupCall::endCall()
-{
-    av.leaveGroupCall(group.getId());
 }
