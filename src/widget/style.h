@@ -40,6 +40,7 @@ public:
         GroundExtra,
         GroundBase,
         Orange,
+        Yellow,
         ThemeDark,
         ThemeMediumDark,
         ThemeMedium,

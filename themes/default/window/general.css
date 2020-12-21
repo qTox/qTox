@@ -21,13 +21,13 @@ QTabWidget
     background-color: white;
 }
 
-QTabBar::tab:selected 
+QTabBar::tab:selected
 {
     background: #2d3136;
     color: #f1f1f1;
 }
 
-QTabBar::tab:!selected 
+QTabBar::tab:!selected
 {
     background: #d0d1d1;
     color: #5e5e5e;
@@ -276,4 +276,10 @@ QSplitter:handle
 {
     color: white;
     background-color: white;
+}
+
+QLabel#unstableVersion
+{
+    color: @mainText;
+    background-color: @yellow;
 }

@@ -41,6 +41,7 @@ signals:
     void updateAvailable(QString latestVersion, QUrl link);
     void upToDate();
     void updateCheckFailed();
+    void versionIsUnstable();
 
 private slots:
     void handleResponse(QNetworkReply* reply);

@@ -48,6 +48,7 @@ public slots:
     void onUpToDate();
     void onUpdateCheckFailed();
     void reloadTheme() override;
+    void onUnstableVersion();
 
 private:
     void retranslateUi();
