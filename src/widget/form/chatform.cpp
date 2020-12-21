@@ -383,11 +383,7 @@ void ChatForm::onAnswerCallTriggered(bool video)
 void ChatForm::onRejectCallTriggered()
 {
     headWidget->removeCallConfirm();
-    if (call) {
-        call->endCall();
-        call.reset();
-    }
-
+    call.reset();
     emit rejectCall(f->getId());
 }
 
@@ -397,7 +393,6 @@ void ChatForm::onCallTriggered()
     uint32_t friendId = f->getId();
 
     if (call) {
-        call->endCall();
         call.reset();
     } else {
         call = av->startCall(friendId, false);
@@ -415,7 +410,6 @@ void ChatForm::onVideoCallTriggered()
     uint32_t friendId = f->getId();
 
     if (call) {
-        call->endCall();
         call.reset();
     } else {
         call = av->startCall(friendId, true);
@@ -439,6 +433,7 @@ void ChatForm::updateCallButtons()
 
 void ChatForm::onMicMuteToggle()
 {
+    // Technically this is not atomic, but the probability of hitting the non-atomic case is negible
     call->setMuteMic(!call->getMuteMic());
     updateMuteMicButton();
 }
