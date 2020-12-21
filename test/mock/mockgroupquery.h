@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/core/icoregroupquery.h"
+#include "core/icoregroupquery.h"
 
 #include <tox/tox.h>
 

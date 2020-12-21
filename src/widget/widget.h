@@ -30,11 +30,11 @@
 
 #include "audio/iaudiocontrol.h"
 #include "audio/iaudiosink.h"
-#include "src/core/core.h"
-#include "src/core/groupid.h"
-#include "src/core/toxfile.h"
-#include "src/core/toxid.h"
-#include "src/core/toxpk.h"
+#include "core/core.h"
+#include "core/groupid.h"
+#include "core/toxfile.h"
+#include "core/toxid.h"
+#include "core/toxpk.h"
 #include "src/model/friendmessagedispatcher.h"
 #include "src/model/groupmessagedispatcher.h"
 #if DESKTOP_NOTIFICATIONS
@@ -157,7 +157,7 @@ public slots:
     void forceShow();
     void onConnected();
     void onDisconnected();
-    void onStatusSet(Status::Status status);
+    void onStatusSet(IToxStatus::ToxStatus status);
     void onFailedToStartCore();
     void onBadProxyCore();
     void onSelfAvatarLoaded(const QPixmap& pic);
@@ -165,7 +165,7 @@ public slots:
     void setStatusMessage(const QString& statusMessage);
     void addFriend(uint32_t friendId, const ToxPk& friendPk);
     void addFriendFailed(const ToxPk& userId, const QString& errorInfo = QString());
-    void onFriendStatusChanged(int friendId, Status::Status status);
+    void onFriendStatusChanged(int friendId, IToxStatus::ToxStatus status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendDisplayedNameChanged(const QString& displayed);
     void onFriendUsernameChanged(int friendId, const QString& username);
@@ -198,7 +198,7 @@ public slots:
 signals:
     void friendRequestAccepted(const ToxPk& friendPk);
     void friendRequested(const ToxId& friendAddress, const QString& message);
-    void statusSet(Status::Status status);
+    void statusSet(IToxStatus::ToxStatus status);
     void statusSelected(Status::Status status);
     void usernameChanged(const QString& username);
     void changeGroupTitle(uint32_t groupnumber, const QString& title);
@@ -234,7 +234,6 @@ private slots:
     void outgoingNotification();
     void onCallEnd();
     void incomingNotification(uint32_t friendId);
-    void onRejectCall(uint32_t friendId);
     void onStopNotification();
     void dispatchFile(ToxFile file);
     void dispatchFileWithBool(ToxFile file, bool);

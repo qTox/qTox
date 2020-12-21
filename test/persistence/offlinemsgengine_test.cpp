@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/model/friend.h"
 #include "src/model/status.h"
 #include "src/persistence/offlinemsgengine.h"

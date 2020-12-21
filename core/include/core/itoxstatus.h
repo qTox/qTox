@@ -1,5 +1,5 @@
 /*
-    Copyright © 2019 by The qTox Project Contributors
+    Copyright © 2020 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -19,16 +19,14 @@
 
 #pragma once
 
-#include "src/core/contactid.h"
-#include <QByteArray>
-#include <cstdint>
-
-class GroupId : public ContactId
-{
+class IToxStatus {
 public:
-    GroupId();
-    GroupId(const GroupId& other);
-    explicit GroupId(const QByteArray& rawId);
-    explicit GroupId(const uint8_t* rawId);
-    int getSize() const override;
+    enum class ToxStatus
+    {
+        Online = 0,
+        Away,
+        Busy,
+        Offline,
+    };
 };
+

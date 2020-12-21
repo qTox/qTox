@@ -19,8 +19,8 @@
 
 
 #include "avatarbroadcaster.h"
-#include "src/core/core.h"
-#include "src/core/corefile.h"
+#include "core/core.h"
+#include "core/corefile.h"
 #include "src/model/status.h"
 #include <QDebug>
 #include <QObject>
@@ -84,6 +84,6 @@ void AvatarBroadcaster::enableAutoBroadcast(bool state)
     this->disconnect(&core, nullptr, this, nullptr);
     if (state) {
         connect(&core, &Core::friendStatusChanged,
-                [=](uint32_t friendId, Status::Status) { this->sendAvatarTo(friendId); });
+                [=](uint32_t friendId, IToxStatus::ToxStatus) { this->sendAvatarTo(friendId); });
     }
 }

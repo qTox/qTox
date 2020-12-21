@@ -17,7 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "groupid.h"
+#include "core/toxpk.h"
+
 #include <tox/tox.h>
 
 #include <QByteArray>
@@ -26,54 +27,54 @@
 #include <cassert>
 
 /**
- * @class GroupId
- * @brief This class represents a long term persistent group identifier.
+ * @class ToxPk
+ * @brief This class represents a Tox Public Key, which is a part of Tox ID.
  */
 
 /**
- * @brief The default constructor. Creates an empty Tox group ID.
+ * @brief The default constructor. Creates an empty Tox key.
  */
-GroupId::GroupId()
+ToxPk::ToxPk()
     : ContactId()
 {
 }
 
 /**
  * @brief The copy constructor.
- * @param other GroupId to copy
+ * @param other ToxPk to copy
  */
-GroupId::GroupId(const GroupId& other)
+ToxPk::ToxPk(const ToxPk& other)
     : ContactId(other.id)
 {
 }
 
 /**
- * @brief Constructs a GroupId from bytes.
- * @param rawId The bytes to construct the GroupId from. The lenght must be exactly
- *              TOX_CONFERENCE_UID_SIZE, else the GroupId will be empty.
+ * @brief Constructs a ToxPk from bytes.
+ * @param rawId The bytes to construct the ToxPk from. The lenght must be exactly
+ *              TOX_PUBLIC_KEY_SIZE, else the ToxPk will be empty.
  */
-GroupId::GroupId(const QByteArray& rawId)
+ToxPk::ToxPk(const QByteArray& rawId)
     : ContactId([rawId](){
-        assert(rawId.length() == TOX_CONFERENCE_UID_SIZE);
+        assert(rawId.length() == TOX_PUBLIC_KEY_SIZE);
         return rawId;}())
 {
 }
 
 /**
- * @brief Constructs a GroupId from bytes.
- * @param rawId The bytes to construct the GroupId from, will read exactly
- * TOX_CONFERENCE_UID_SIZE from the specified buffer.
+ * @brief Constructs a ToxPk from bytes.
+ * @param rawId The bytes to construct the ToxPk from, will read exactly
+ * TOX_PUBLIC_KEY_SIZE from the specified buffer.
  */
-GroupId::GroupId(const uint8_t* rawId)
-    : ContactId(QByteArray(reinterpret_cast<const char*>(rawId), TOX_CONFERENCE_UID_SIZE))
+ToxPk::ToxPk(const uint8_t* rawId)
+    : ContactId(QByteArray(reinterpret_cast<const char*>(rawId), TOX_PUBLIC_KEY_SIZE))
 {
 }
 
 /**
- * @brief Get size of public id in bytes.
- * @return Size of public id in bytes.
+ * @brief Get size of public key in bytes.
+ * @return Size of public key in bytes.
  */
-int GroupId::getSize() const
+int ToxPk::getSize() const
 {
-    return TOX_CONFERENCE_UID_SIZE;
+    return TOX_PUBLIC_KEY_SIZE;
 }

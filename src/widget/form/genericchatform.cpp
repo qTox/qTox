@@ -23,7 +23,7 @@
 #include "src/chatlog/chatlog.h"
 #include "src/chatlog/content/filetransferwidget.h"
 #include "src/chatlog/content/timestamp.h"
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/friendlist.h"
 #include "src/grouplist.h"
 #include "src/model/friend.h"

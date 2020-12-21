@@ -28,6 +28,8 @@ extern "C" {
 #include "corevideosource.h"
 #include "videoframe.h"
 
+#include <QDebug>
+
 /**
  * @class CoreVideoSource
  * @brief A VideoSource that emits frames received by Core.
@@ -36,28 +38,29 @@ extern "C" {
 /**
  * @var std::atomic_int subscribers
  * @brief Number of suscribers
- *
- * @var std::atomic_bool deleteOnClose
- * @brief If true, self-delete after the last suscriber is gone
  */
 
 /**
  * @brief CoreVideoSource constructor.
- * @note Only CoreAV should create a CoreVideoSource since
- * only CoreAV can push images to it.
  */
 CoreVideoSource::CoreVideoSource()
     : subscribers{0}
-    , deleteOnClose{false}
     , stopped{false}
 {
 }
 
+CoreVideoSource::~CoreVideoSource()
+{
+    if(subscribers != 0) {
+        qDebug() << "Unbalanced subscribe/unsubscribe count";
+    }
+}
+
 /**
- * @brief Makes a copy of the vpx_image_t and emits it as a new VideoFrame.
- * @param vpxframe Frame to copy.
+ * @brief Makes a copy of the ToxStridedYUVFrame and emits it as a new VideoFrame.
+ * @param frame Frame to copy.
  */
-void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
+void CoreVideoSource::pushFrame(const ToxStridedYUVFrame &frame)
 {
     if (stopped)
         return;
@@ -65,8 +68,8 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
     QMutexLocker locker(&biglock);
 
     std::shared_ptr<VideoFrame> vframe;
-    int width = vpxframe->d_w;
-    int height = vpxframe->d_h;
+    int width = frame.width;
+    int height = frame.height;
 
     if (subscribers <= 0)
         return;
@@ -88,21 +91,33 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
         return;
     }
 
+    // TODO(sudden6): there's probably a ffmpeg function that does this copy more efficiently
+    const int strides[3] = {frame.y_stride, frame.u_stride, frame.v_stride};
+    const uint8_t* planes[3] = {frame.y_plane, frame.u_plane, frame.v_plane};
+
     for (int i = 0; i < 3; ++i) {
         int dstStride = avframe->linesize[i];
-        int srcStride = vpxframe->stride[i];
+        int srcStride = strides[i];
         int minStride = std::min(dstStride, srcStride);
         int size = (i == 0) ? height : height / 2;
 
         for (int j = 0; j < size; ++j) {
             uint8_t* dst = avframe->data[i] + dstStride * j;
-            uint8_t* src = vpxframe->planes[i] + srcStride * j;
+            const uint8_t* src = planes[i] + srcStride * j;
             memcpy(dst, src, minStride);
         }
     }
 
     vframe = std::make_shared<VideoFrame>(id, avframe, true);
     emit frameAvailable(vframe);
+}
+
+void CoreVideoSource::setStopped(bool state)
+{
+    stopped = state;
+    if (stopped) {
+        emit sourceStopped();
+    }
 }
 
 void CoreVideoSource::subscribe()
@@ -113,43 +128,8 @@ void CoreVideoSource::subscribe()
 
 void CoreVideoSource::unsubscribe()
 {
-    biglock.lock();
-    if (--subscribers == 0) {
-        if (deleteOnClose) {
-            biglock.unlock();
-            // DANGEROUS: No member access after this point, that's why we manually unlock
-            delete this;
-            return;
-        }
+    --subscribers;
+    if (subscribers == 0) {
+        qDebug() << "No subcriptions left";
     }
-    biglock.unlock();
-}
-
-/**
- * @brief Setup delete on close
- * @param If true, self-delete after the last suscriber is gone
- */
-void CoreVideoSource::setDeleteOnClose(bool newstate)
-{
-    QMutexLocker locker(&biglock);
-    deleteOnClose = newstate;
-}
-
-/**
- * @brief Stopping the source.
- * @see The callers in CoreAV for the rationale
- *
- * Stopping the source will block any pushFrame calls from doing anything
- */
-void CoreVideoSource::stopSource()
-{
-    QMutexLocker locker(&biglock);
-    stopped = true;
-    emit sourceStopped();
-}
-
-void CoreVideoSource::restartSource()
-{
-    QMutexLocker locker(&biglock);
-    stopped = false;
 }

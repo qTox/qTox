@@ -20,18 +20,16 @@
 
 #pragma once
 
-#include "groupid.h"
-#include "icorefriendmessagesender.h"
-#include "icoregroupmessagesender.h"
-#include "icoregroupquery.h"
-#include "icoreidhandler.h"
-#include "receiptnum.h"
-#include "toxfile.h"
-#include "toxid.h"
-#include "toxpk.h"
+#include "core/groupid.h"
+#include "core/icorefriendmessagesender.h"
+#include "core/icoregroupmessagesender.h"
+#include "core/icoregroupquery.h"
+#include "core/icoreidhandler.h"
+#include "core/itoxstatus.h"
+#include "core/receiptnum.h"
+#include "core/toxid.h"
+#include "core/toxpk.h"
 
-#include "util/strongtype.h"
-#include "src/model/status.h"
 #include <tox/tox.h>
 
 #include <QMutex>
@@ -100,7 +98,7 @@ public:
     void quitGroupChat(int groupId) const;
 
     QString getUsername() const override;
-    Status::Status getStatus() const;
+    IToxStatus::ToxStatus getStatus() const;
     QString getStatusMessage() const;
     ToxId getSelfId() const override;
     ToxPk getSelfPublicKey() const override;
@@ -121,7 +119,7 @@ public slots:
     void removeFriend(uint32_t friendId);
     void removeGroup(int groupId);
 
-    void setStatus(Status::Status status);
+    void setStatus(IToxStatus::ToxStatus status);
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
 
@@ -147,12 +145,12 @@ signals:
 
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
-    void statusSet(Status::Status status);
+    void statusSet(IToxStatus::ToxStatus status);
     void idSet(const ToxId& id);
 
     void failedToSetUsername(const QString& username);
     void failedToSetStatusMessage(const QString& message);
-    void failedToSetStatus(Status::Status status);
+    void failedToSetStatus(IToxStatus status);
     void failedToSetTyping(bool typing);
 
     void saveRequest();
@@ -166,7 +164,7 @@ signals:
     void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
     void friendAdded(uint32_t friendId, const ToxPk& friendPk);
 
-    void friendStatusChanged(uint32_t friendId, Status::Status status);
+    void friendStatusChanged(uint32_t friendId, IToxStatus::ToxStatus status);
     void friendStatusMessageChanged(uint32_t friendId, const QString& message);
     void friendUsernameChanged(uint32_t friendId, const QString& username);
     void friendTypingChanged(uint32_t friendId, bool isTyping);

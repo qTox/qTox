@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/toxid.h"
+#include "core/toxid.h"
 
 #include <QtTest/QtTest>
 #include <QString>

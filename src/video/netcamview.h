@@ -19,12 +19,11 @@
 
 #pragma once
 
-#include "src/core/toxpk.h"
+#include "core/toxpk.h"
 #include <QVector>
 #include <QWidget>
 
 class QHBoxLayout;
-struct vpx_image;
 class VideoSource;
 class QFrame;
 class MovableWidget;

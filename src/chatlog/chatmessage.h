@@ -20,7 +20,7 @@
 #pragma once
 
 #include "chatline.h"
-#include "src/core/toxfile.h"
+#include "core/toxfile.h"
 #include "src/persistence/history.h"
 
 #include <QDateTime>

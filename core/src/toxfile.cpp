@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/toxfile.h"
+#include "core/toxfile.h"
 #include <QFile>
 #include <QRegularExpression>
 #include <tox/tox.h>

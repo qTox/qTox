@@ -22,11 +22,11 @@
 
 enable_testing()
 
-function(auto_test subsystem module extra_deps)
+function(auto_test subsystem module extra_libs extra_deps)
   add_executable(test_${module}
     test/${subsystem}/${module}_test.cpp ${extra_deps})
   target_link_libraries(test_${module}
-    ${PROJECT_NAME}_static
+    ${extra_libs}
     ${CHECK_LIBRARIES}
     Qt5::Test)
   add_test(
@@ -34,22 +34,23 @@ function(auto_test subsystem module extra_deps)
     COMMAND ${TEST_CROSSCOMPILING_EMULATOR} test_${module})
 endfunction()
 
-auto_test(core core ${${PROJECT_NAME}_RESOURCES})
-auto_test(core contactid "")
-auto_test(core toxid "")
-auto_test(core toxstring "")
-auto_test(chatlog textformatter "")
-auto_test(net bsu ${${PROJECT_NAME}_RESOURCES}) # needs nodes list
-auto_test(persistence paths "")
-auto_test(persistence dbschema "")
-auto_test(persistence offlinemsgengine "")
-auto_test(model friendmessagedispatcher "")
-auto_test(model groupmessagedispatcher "")
-auto_test(model messageprocessor "")
-auto_test(model sessionchatlog "")
-auto_test(model exiftransform "")
-auto_test(model notificationgenerator "")
+auto_test(core core "core_library;${PROJECT_NAME}_static" ${${PROJECT_NAME}_RESOURCES})
+auto_test(core contactid "core_library" "")
+auto_test(core toxid "core_library" "")
+auto_test(core toxstring "core_library" "")
+auto_test(chatlog textformatter "${PROJECT_NAME}_static" "")
+auto_test(net bsu "Qt5::Network;core_library;${PROJECT_NAME}_static" ${${PROJECT_NAME}_RESOURCES}) # needs nodes list
+auto_test(persistence paths "${PROJECT_NAME}_static" "")
+auto_test(persistence dbschema "util_library;core_library;${PROJECT_NAME}_static" "")
+auto_test(persistence offlinemsgengine "core_library;${PROJECT_NAME}_static" "")
+auto_test(model friendmessagedispatcher "core_library;${PROJECT_NAME}_static" "")
+auto_test(model groupmessagedispatcher "core_library;${PROJECT_NAME}_static" "")
+auto_test(model sessionchatlog "core_library;${PROJECT_NAME}_static" "")
+auto_test(model exiftransform "Qt5::Gui;${PROJECT_NAME}_static" "")
+auto_test(model notificationgenerator "Qt5::Gui;core_library;${PROJECT_NAME}_static" "")
+auto_test(model messageprocessor "${PROJECT_NAME}_static" "")
+
 
 if (UNIX)
-  auto_test(platform posixsignalnotifier "")
+  auto_test(platform posixsignalnotifier "${PROJECT_NAME}_static" "")
 endif()

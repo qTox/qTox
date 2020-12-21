@@ -18,15 +18,11 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "coreav.h"
 #include "audio/iaudiosettings.h"
-#include "core.h"
-#include "src/model/friend.h"
-#include "src/model/group.h"
-#include "src/persistence/igroupsettings.h"
-#include "src/video/corevideosource.h"
-#include "src/video/videoframe.h"
-#include <QCoreApplication>
+#include "core/core.h"
+#include "core/coreav.h"
+#include "core/igroupsettings.h"
+
 #include <QDebug>
 #include <QThread>
 #include <QTimer>
@@ -186,66 +182,7 @@ void CoreAV::process()
     iterateTimer->start(toxav_iteration_interval(toxav.get()));
 }
 
-/**
- * @brief Checks the call status for a Tox friend.
- * @param f the friend to check
- * @return true, if call is started for the friend, false otherwise
- */
-bool CoreAV::isCallStarted(const Friend* f) const
-{
-    QReadLocker locker{&callsLock};
-    return f && (calls.find(f->getId()) != calls.end());
-}
-
-/**
- * @brief Checks the call status for a Tox group.
- * @param g the group to check
- * @return true, if call is started for the group, false otherwise
- */
-bool CoreAV::isCallStarted(const Group* g) const
-{
-    QReadLocker locker{&callsLock};
-    return g && (groupCalls.find(g->getId()) != groupCalls.end());
-}
-
-/**
- * @brief Checks the call status for a Tox friend.
- * @param f the friend to check
- * @return true, if call is active for the friend, false otherwise
- */
-bool CoreAV::isCallActive(const Friend* f) const
-{
-    QReadLocker locker{&callsLock};
-    auto it = calls.find(f->getId());
-    if (it == calls.end()) {
-        return false;
-    }
-    return isCallStarted(f) && it->second->isActive();
-}
-
-/**
- * @brief Checks the call status for a Tox group.
- * @param g the group to check
- * @return true, if the call is active for the group, false otherwise
- */
-bool CoreAV::isCallActive(const Group* g) const
-{
-    QReadLocker locker{&callsLock};
-    auto it = groupCalls.find(g->getId());
-    if (it == groupCalls.end()) {
-        return false;
-    }
-    return isCallStarted(g) && it->second->isActive();
-}
-
-bool CoreAV::isCallVideoEnabled(const Friend* f) const
-{
-    QReadLocker locker{&callsLock};
-    auto it = calls.find(f->getId());
-    return isCallStarted(f) && it->second->getVideoEnabled();
-}
-
-bool CoreAV::answerCall(uint32_t friendNum, bool video)
+CoreAV::ToxFriendCallPtr CoreAV::answerCall(uint32_t friendNum, bool videoEnabled, ICoreVideo *video)
 {
     QWriteLocker locker{&callsLock};
     QMutexLocker coreLocker{&coreLock};
@@ -253,22 +190,23 @@ bool CoreAV::answerCall(uint32_t friendNum, bool video)
     qDebug() << QString("Answering call %1").arg(friendNum);
     auto it = calls.find(friendNum);
     assert(it != calls.end());
-    Toxav_Err_Answer err;
 
-    const uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
+    Toxav_Err_Answer err;
+    const uint32_t videoBitrate = videoEnabled ? VIDEO_DEFAULT_BITRATE : 0;
     if (toxav_answer(toxav.get(), friendNum, audioSettings.getAudioBitrate(),
                      videoBitrate, &err)) {
         it->second->setActive(true);
-        return true;
+        it->second->setVideoSource(video);
+        return it->second;
     } else {
         qWarning() << "Failed to answer call with error" << err;
         toxav_call_control(toxav.get(), friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
         calls.erase(it);
-        return false;
+        return {};
     }
 }
 
-bool CoreAV::startCall(uint32_t friendNum, bool video)
+CoreAV::ToxFriendCallPtr CoreAV::startCall(uint32_t friendNum, bool videoEnabled, ICoreVideo *video)
 {
     QWriteLocker locker{&callsLock};
     QMutexLocker coreLocker{&coreLock};
@@ -277,22 +215,22 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     auto it = calls.find(friendNum);
     if (it != calls.end()) {
         qWarning() << QString("Can't start call with %1, we're already in this call!").arg(friendNum);
-        return false;
+        return {};
     }
 
-    uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
+    uint32_t videoBitrate = videoEnabled ? VIDEO_DEFAULT_BITRATE : 0;
     if (!toxav_call(toxav.get(), friendNum, audioSettings.getAudioBitrate(), videoBitrate,
                     nullptr))
-        return false;
+        return {};
 
     // Audio backend must be set before making a call
     assert(audio != nullptr);
-    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall(friendNum, video, *this, *audio));
+    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall(friendNum, videoEnabled, *this, *audio, video));
     // Call object must be owned by this thread or there will be locking problems with Audio
     call->moveToThread(this->thread());
     assert(call != nullptr);
-    calls.emplace(friendNum, std::move(call));
-    return true;
+    calls.emplace(friendNum, call);
+    return call;
 }
 
 bool CoreAV::cancelCall(uint32_t friendNum)
@@ -300,28 +238,26 @@ bool CoreAV::cancelCall(uint32_t friendNum)
     QWriteLocker locker{&callsLock};
     QMutexLocker coreLocker{&coreLock};
 
+    auto it = calls.find(friendNum);
+    if (it == calls.end()) {
+        qWarning() << QString("Can't cancel call with %1, it doesn't exist!").arg(friendNum);
+        return false;
+    }
+
     qDebug() << QString("Cancelling call with %1").arg(friendNum);
     if (!toxav_call_control(toxav.get(), friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr)) {
         qWarning() << QString("Failed to cancel call with %1").arg(friendNum);
         return false;
     }
 
+    // Set inactive for others
+    it->second->setActive(false);
+
     calls.erase(friendNum);
     locker.unlock();
 
     emit avEnd(friendNum);
     return true;
-}
-
-void CoreAV::timeoutCall(uint32_t friendNum)
-{
-    QWriteLocker locker{&callsLock};
-
-    if (!cancelCall(friendNum)) {
-        qWarning() << QString("Failed to timeout call with %1").arg(friendNum);
-        return;
-    }
-    qDebug() << "Call with friend" << friendNum << "timed out";
 }
 
 /**
@@ -370,8 +306,13 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, 
     return true;
 }
 
-void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
+void CoreAV::sendCallVideo(uint32_t callId, const ToxYUVFrame& frame)
 {
+    if (!frame) {
+        qDebug() << "Tried to send invalid video frame to c-toxcore";
+        return;
+    }
+
     QWriteLocker locker{&callsLock};
 
     // We might be running in the FFmpeg thread and holding the CameraSource lock
@@ -395,19 +336,13 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
         call.setNullVideoBitrate(false);
     }
 
-    ToxYUVFrame frame = vframe->toToxYUVFrame();
-
-    if (!frame) {
-        return;
-    }
-
     // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
     // We don't want to be dropping iframes because of some lock held by toxav_iterate
     Toxav_Err_Send_Frame err;
     int retries = 0;
     do {
-        if (!toxav_video_send_frame(toxav.get(), callId, frame.width, frame.height, frame.y,
-                                    frame.u, frame.v, &err)) {
+        if (!toxav_video_send_frame(toxav.get(), callId, frame.width, frame.height, frame.y_plane,
+                                    frame.u_plane, frame.v_plane, &err)) {
             if (err == TOXAV_ERR_SEND_FRAME_SYNC) {
                 ++retries;
                 QThread::usleep(500);
@@ -418,36 +353,6 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
     } while (err == TOXAV_ERR_SEND_FRAME_SYNC && retries < 5);
     if (err == TOXAV_ERR_SEND_FRAME_SYNC) {
         qDebug() << "toxav_video_send_frame error: Lock busy, dropping frame";
-    }
-}
-
-/**
- * @brief Toggles the mute state of the call's input (microphone).
- * @param f The friend assigned to the call
- */
-void CoreAV::toggleMuteCallInput(const Friend* f)
-{
-    QWriteLocker locker{&callsLock};
-
-    auto it = calls.find(f->getId());
-    if (f && (it != calls.end())) {
-        ToxCall& call = *it->second;
-        call.setMuteMic(!call.getMuteMic());
-    }
-}
-
-/**
- * @brief Toggles the mute state of the call's output (speaker).
- * @param f The friend assigned to the call
- */
-void CoreAV::toggleMuteCallOutput(const Friend* f)
-{
-    QWriteLocker locker{&callsLock};
-
-    auto it = calls.find(f->getId());
-    if (f && (it != calls.end())) {
-        ToxCall& call = *it->second;
-        call.setMuteVol(!call.getMuteVol());
     }
 }
 
@@ -503,63 +408,30 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
 }
 
 /**
- * @brief Called from core to make sure the source for that peer is invalidated when they leave.
- * @param group Group Index
- * @param peer Peer Index
- */
-void CoreAV::invalidateGroupCallPeerSource(const Group& group, ToxPk peerPk)
-{
-    QWriteLocker locker{&callsLock};
-
-    auto it = groupCalls.find(group.getId());
-    if (it == groupCalls.end()) {
-        return;
-    }
-    it->second->removePeer(peerPk);
-}
-
-/**
- * @brief Get a call's video source.
- * @param friendNum Id of friend in call list.
- * @return Video surface to show
- */
-VideoSource* CoreAV::getVideoSourceFromCall(int friendNum) const
-{
-    QReadLocker locker{&callsLock};
-
-    auto it = calls.find(friendNum);
-    if (it == calls.end()) {
-        qWarning() << "CoreAV::getVideoSourceFromCall: No such call, possibly cancelled";
-        return nullptr;
-    }
-
-    return it->second->getVideoSource();
-}
-
-/**
  * @brief Starts a call in an existing AV groupchat.
  * @note Call from the GUI thread.
  * @param groupId Id of group to join
  */
-void CoreAV::joinGroupCall(const Group& group)
+CoreAV::ToxGroupCallPtr CoreAV::joinGroupCall(uint32_t groupNum)
 {
     QWriteLocker locker{&callsLock};
 
-    qDebug() << QString("Joining group call %1").arg(group.getId());
+    qDebug() << QString("Joining group call %1").arg(groupNum);
 
     // Audio backend must be set before starting a call
     assert(audio != nullptr);
 
-    ToxGroupCallPtr groupcall = ToxGroupCallPtr(new ToxGroupCall{group, *this, *audio});
+    ToxGroupCallPtr groupcall = ToxGroupCallPtr(new ToxGroupCall{groupNum, *this, *audio});
     // Call Objects must be owned by CoreAV or there will be locking problems with Audio
     groupcall->moveToThread(this->thread());
     assert(groupcall != nullptr);
-    auto ret = groupCalls.emplace(group.getId(), std::move(groupcall));
+    auto ret = groupCalls.emplace(groupNum, groupcall);
     if (ret.second == false) {
         qWarning() << "This group call already exists, not joining!";
-        return;
+        return {};
     }
     ret.first->second->setActive(true);
+    return groupcall;
 }
 
 /**
@@ -590,110 +462,11 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
         return true;
     }
 
-    if (toxav_group_send_audio(toxav_get_tox(toxav.get()), groupId, pcm, samples, chans, rate) != 0)
-        qDebug() << "toxav_group_send_audio error";
-
+    /* We explicitely ignore failures here, because c-toxcore does not provide a specific error
+     * code and sending audio to an empty group is considered an error.
+     */
+    toxav_group_send_audio(toxav_get_tox(toxav.get()), groupId, pcm, samples, chans, rate);
     return true;
-}
-
-/**
- * @brief Mutes or unmutes the group call's input (microphone).
- * @param g The group
- * @param mute True to mute, false to unmute
- */
-void CoreAV::muteCallInput(const Group* g, bool mute)
-{
-    QWriteLocker locker{&callsLock};
-
-    auto it = groupCalls.find(g->getId());
-    if (g && (it != groupCalls.end())) {
-        it->second->setMuteMic(mute);
-    }
-}
-
-/**
- * @brief Mutes or unmutes the group call's output (speaker).
- * @param g The group
- * @param mute True to mute, false to unmute
- */
-void CoreAV::muteCallOutput(const Group* g, bool mute)
-{
-    QWriteLocker locker{&callsLock};
-
-    auto it = groupCalls.find(g->getId());
-    if (g && (it != groupCalls.end())) {
-        it->second->setMuteVol(mute);
-    }
-}
-
-/**
- * @brief Returns the group calls input (microphone) state.
- * @param groupId The group id to check
- * @return true when muted, false otherwise
- */
-bool CoreAV::isGroupCallInputMuted(const Group* g) const
-{
-    QReadLocker locker{&callsLock};
-
-    if (!g) {
-        return false;
-    }
-
-    const uint32_t groupId = g->getId();
-    auto it = groupCalls.find(groupId);
-    return (it != groupCalls.end()) && it->second->getMuteMic();
-}
-
-/**
- * @brief Returns the group calls output (speaker) state.
- * @param groupId The group id to check
- * @return true when muted, false otherwise
- */
-bool CoreAV::isGroupCallOutputMuted(const Group* g) const
-{
-    QReadLocker locker{&callsLock};
-
-    if (!g) {
-        return false;
-    }
-
-    const uint32_t groupId = g->getId();
-    auto it = groupCalls.find(groupId);
-    return (it != groupCalls.end()) && it->second->getMuteVol();
-}
-
-/**
- * @brief Returns the calls input (microphone) mute state.
- * @param f The friend to check
- * @return true when muted, false otherwise
- */
-bool CoreAV::isCallInputMuted(const Friend* f) const
-{
-    QReadLocker locker{&callsLock};
-
-    if (!f) {
-        return false;
-    }
-    const uint32_t friendId = f->getId();
-    auto it = calls.find(friendId);
-    return (it != calls.end()) && it->second->getMuteMic();
-}
-
-/**
- * @brief Returns the calls output (speaker) mute state.
- * @param friendId The friend to check
- * @return true when muted, false otherwise
- */
-bool CoreAV::isCallOutputMuted(const Friend* f) const
-{
-    QReadLocker locker{&callsLock};
-
-    if (!f) {
-        return false;
-    }
-    const uint32_t friendId = f->getId();
-    auto it = calls.find(friendId);
-    return (it != calls.end()) && it->second->getMuteVol();
 }
 
 /**
@@ -721,7 +494,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
 
     // Audio backend must be set before receiving a call
     assert(self->audio != nullptr);
-    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall{friendNum, video, *self, *self->audio});
+    ToxFriendCallPtr call = ToxFriendCallPtr(new ToxFriendCall{friendNum, video, *self, *self->audio, nullptr});
     // Call object must be owned by CoreAV thread or there will be locking problems with Audio
     call->moveToThread(self->thread());
     assert(call != nullptr);
@@ -766,11 +539,15 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
 
     if (state & TOXAV_FRIEND_CALL_STATE_ERROR) {
         qWarning() << "Call with friend" << friendNum << "died of unnatural causes!";
+        // Set inactive for others
+        it->second->setActive(false);
         self->calls.erase(friendNum);
         locker.unlock();
         emit self->avEnd(friendNum, true);
     } else if (state & TOXAV_FRIEND_CALL_STATE_FINISHED) {
         qDebug() << "Call with friend" << friendNum << "finished quietly";
+        // Set inactive for others
+        it->second->setActive(false);
         self->calls.erase(friendNum);
         locker.unlock();
         emit self->avEnd(friendNum);
@@ -786,7 +563,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
                    && !(state & TOXAV_FRIEND_CALL_STATE_SENDING_V)) {
             qDebug() << "Friend" << friendNum << "stopped sending video";
             if (call.getVideoSource()) {
-                call.getVideoSource()->stopSource();
+                call.getVideoSource()->setStopped(true);
             }
 
             call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
@@ -798,7 +575,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
             // We simply stop the videoSource from emitting anything while the other end says it's
             // not sending
             if (call.getVideoSource()) {
-                call.getVideoSource()->restartSource();
+                call.getVideoSource()->setStopped(false);
             }
 
             call.setState(static_cast<TOXAV_FRIEND_CALL_STATE>(state));
@@ -874,20 +651,16 @@ void CoreAV::videoFrameCallback(ToxAV*, uint32_t friendNum, uint16_t w, uint16_t
         return;
     }
 
-    CoreVideoSource* videoSource = it->second->getVideoSource();
-    if (!videoSource) {
-        return;
-    }
+    ToxStridedYUVFrame frame = {
+        .y_plane = y,
+        .u_plane = u,
+        .v_plane = v,
+        .y_stride = ystride,
+        .u_stride = ustride,
+        .v_stride = vstride,
+        .width = w,
+        .height = h,
+    };
 
-    vpx_image frame;
-    frame.d_h = h;
-    frame.d_w = w;
-    frame.planes[0] = const_cast<uint8_t*>(y);
-    frame.planes[1] = const_cast<uint8_t*>(u);
-    frame.planes[2] = const_cast<uint8_t*>(v);
-    frame.stride[0] = ystride;
-    frame.stride[1] = ustride;
-    frame.stride[2] = vstride;
-
-    videoSource->pushFrame(&frame);
+    it->second->getVideoSource()->pushFrame(frame);
 }

@@ -17,13 +17,9 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/toxcall.h"
+#include "core/toxcall.h"
 #include "audio/audio.h"
-#include "src/core/coreav.h"
-#include "src/persistence/settings.h"
-#include "src/video/camerasource.h"
-#include "src/video/corevideosource.h"
-#include "src/model/group.h"
+#include "core/coreav.h"
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
 
@@ -48,9 +44,10 @@
  * @brief Keeps sources for users in group calls.
  */
 
-ToxCall::ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio)
-    : av{&av}
+ToxCall::ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio, ICoreVideo* video)
+    : av{av}
     , audio(audio)
+    , videoSource{video}
     , videoEnabled{VideoEnabled}
     , audioSource(audio.makeSource())
 {}
@@ -58,8 +55,6 @@ ToxCall::ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio)
 ToxCall::~ToxCall()
 {
     if (videoEnabled) {
-        QObject::disconnect(videoInConn);
-        CameraSource::getInstance().unsubscribe();
     }
 }
 
@@ -113,43 +108,30 @@ void ToxCall::setNullVideoBitrate(bool value)
     nullVideoBitrate = value;
 }
 
-CoreVideoSource* ToxCall::getVideoSource() const
+ICoreVideo *ToxCall::getVideoSource() const
 {
     return videoSource;
 }
 
-ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av, IAudioControl& audio)
-    : ToxCall(VideoEnabled, av, audio)
+void ToxCall::setVideoSource(ICoreVideo *video)
+{
+    videoSource = video;
+}
+
+ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av, IAudioControl& audio, ICoreVideo *video)
+    : ToxCall(VideoEnabled, av, audio, video)
     , sink(audio.makeSink())
     , friendId{FriendNum}
 {
     connect(audioSource.get(), &IAudioSource::frameAvailable, this,
                          [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
-                             this->av->sendCallAudio(this->friendId, pcm, samples, chans, rate);
+                             this->av.sendCallAudio(this->friendId, pcm, samples, chans, rate);
                          });
 
     connect(audioSource.get(), &IAudioSource::invalidated, this, &ToxFriendCall::onAudioSourceInvalidated);
 
     if (sink) {
         audioSinkInvalid = sink->connectTo_invalidated(this, [this]() { this->onAudioSinkInvalidated(); });
-    }
-
-    // register video
-    if (videoEnabled) {
-        videoSource = new CoreVideoSource();
-        CameraSource& source = CameraSource::getInstance();
-
-        if (source.isNone()) {
-            source.setupDefault();
-        }
-        source.subscribe();
-        videoInConn = QObject::connect(&source, &VideoSource::frameAvailable,
-                                       [&av, FriendNum](std::shared_ptr<VideoFrame> frame) {
-                                           av.sendCallVideo(FriendNum, frame);
-                                       });
-        if (!videoInConn) {
-            qDebug() << "Video connection not working";
-        }
     }
 }
 
@@ -163,7 +145,7 @@ void ToxFriendCall::onAudioSourceInvalidated()
     auto newSrc = audio.makeSource();
     connect(newSrc.get(), &IAudioSource::frameAvailable, this,
                          [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
-                             this->av->sendCallAudio(this->friendId, pcm, samples, chans, rate);
+                             this->av.sendCallAudio(this->friendId, pcm, samples, chans, rate);
                          });
     audioSource = std::move(newSrc);
 
@@ -199,18 +181,24 @@ void ToxFriendCall::playAudioBuffer(const int16_t* data, int samples, unsigned c
     }
 }
 
-ToxGroupCall::ToxGroupCall(const Group& group, CoreAV& av, IAudioControl& audio)
+void ToxFriendCall::sendVideoFrame(const ToxYUVFrame &frame)
+{
+    av.sendCallVideo(friendId, frame);
+}
+
+void ToxFriendCall::endCall()
+{
+    av.cancelCall(friendId);
+}
+
+ToxGroupCall::ToxGroupCall(uint32_t _groupNum, CoreAV& av, IAudioControl& audio)
     : ToxCall(false, av, audio)
-    , group{group}
+    , groupNum{_groupNum}
 {
     // register audio
     connect(audioSource.get(), &IAudioSource::frameAvailable, this,
             [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
-                if (this->group.getPeersCount() <= 1) {
-                   return;
-                }
-
-                this->av->sendGroupCallAudio(this->group.getId(), pcm, samples, chans, rate);
+                this->av.sendGroupCallAudio(this->groupNum, pcm, samples, chans, rate);
             });
 
     connect(audioSource.get(), &IAudioSource::invalidated, this, &ToxGroupCall::onAudioSourceInvalidated);
@@ -227,11 +215,7 @@ void ToxGroupCall::onAudioSourceInvalidated()
     auto newSrc = audio.makeSource();
     connect(audioSource.get(), &IAudioSource::frameAvailable,
             [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
-                if (this->group.getPeersCount() <= 1) {
-                   return;
-                }
-
-                this->av->sendGroupCallAudio(this->group.getId(), pcm, samples, chans, rate);
+                this->av.sendGroupCallAudio(this->groupNum, pcm, samples, chans, rate);
             });
 
     audioSource = std::move(newSrc);
@@ -299,4 +283,9 @@ void ToxGroupCall::playAudioBuffer(const ToxPk& peer, const int16_t* data, int s
     if (source->second) {
         source->second->playAudioBuffer(data, samples, channels, sampleRate);
     }
+}
+
+void ToxGroupCall::endCall()
+{
+    av.leaveGroupCall(groupNum);
 }

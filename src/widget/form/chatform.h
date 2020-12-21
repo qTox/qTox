@@ -25,15 +25,18 @@
 #include <QTimer>
 
 #include "genericchatform.h"
-#include "src/core/core.h"
+#include "core/core.h"
+#include "core/coreav.h"
 #include "src/model/ichatlog.h"
 #include "src/model/imessagedispatcher.h"
 #include "src/model/status.h"
 #include "src/persistence/history.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/video/netcamview.h"
+#include "src/video/camerasource.h"
 
 class CallConfirmWidget;
+class CoreVideoSource;
 class FileTransferInstance;
 class Friend;
 class History;
@@ -111,6 +114,8 @@ private:
     void updateCallButtons();
     void showNetcam();
     void hideNetcam();
+    void startCamera();
+    void stopCamera();
 
 protected:
     std::unique_ptr<NetCamView> createNetcam();
@@ -133,4 +138,8 @@ private:
     bool isTyping;
     bool lastCallIsVideo;
     std::unique_ptr<NetCamView> netcam;
+    CoreAV::ToxFriendCallPtr call;
+    std::unique_ptr<CoreVideoSource> coreVideo;
+    // dont't delete this, we don't own it
+    CameraSource* cameraVideo = nullptr;
 };

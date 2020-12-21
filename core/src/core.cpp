@@ -18,21 +18,17 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "core.h"
-#include "coreav.h"
-#include "corefile.h"
-#include "src/core/dhtserver.h"
-#include "src/core/icoresettings.h"
-#include "src/core/toxlogger.h"
-#include "src/core/toxoptions.h"
-#include "src/core/toxstring.h"
-#include "src/model/groupinvite.h"
-#include "src/model/status.h"
-#include "src/model/ibootstraplistgenerator.h"
-#include "src/persistence/profile.h"
-#include "util/strongtype.h"
+#include "core/core.h"
+#include "core/corefile.h"
+#include "core/coreav.h"
+#include "core/dhtserver.h"
+#include "core/groupinvite.h"
+#include "core/ibootstraplistgenerator.h"
+#include "core/icoresettings.h"
+#include "core/toxlogger.h"
+#include "core/toxoptions.h"
+#include "toxstring.h"
 
-#include <QCoreApplication>
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
 #include <QRandomGenerator>
 #else
@@ -472,6 +468,53 @@ bool parseErr(Tox_Err_Conference_Delete error, int line)
     }
 }
 
+IToxStatus::ToxStatus fromToxUserStatus(Tox_User_Status status) {
+    switch (status) {
+    case TOX_USER_STATUS_AWAY:
+        return IToxStatus::ToxStatus::Away;
+        break;
+
+    case TOX_USER_STATUS_BUSY:
+        return IToxStatus::ToxStatus::Busy;
+        break;
+    case TOX_USER_STATUS_NONE:
+        return IToxStatus::ToxStatus::Online;
+        break;
+    default:
+        qDebug() << "Unexpected status, setting to Online";
+        return IToxStatus::ToxStatus::Online;
+    }
+}
+
+/**
+ * @brief Convert ToxStatus to Tox_User_Status
+ * @param _status Value to store the resulting Tox_User_Status
+ * @return True if conversion was successfull, false otherwise
+ */
+bool getUserStatus(IToxStatus::ToxStatus status, Tox_User_Status *userstatus)
+{
+    switch (status) {
+    case IToxStatus::ToxStatus::Online:
+        *userstatus = TOX_USER_STATUS_NONE;
+        return true;
+        break;
+
+    case IToxStatus::ToxStatus::Away:
+        *userstatus = TOX_USER_STATUS_AWAY;
+        return true;
+        break;
+
+    case IToxStatus::ToxStatus::Busy:
+        *userstatus = TOX_USER_STATUS_BUSY;
+        return true;
+        break;
+
+    default:
+        return false;
+        break;
+    }
+}
+
 } // namespace
 
 Core::Core(QThread* coreThread, IBootstrapListGenerator& _bootstrapNodes)
@@ -868,34 +911,16 @@ void Core::onStatusMessageChanged(Tox*, uint32_t friendId, const uint8_t* cMessa
 
 void Core::onUserStatusChanged(Tox*, uint32_t friendId, Tox_User_Status userstatus, void* core)
 {
-    Status::Status status;
-    switch (userstatus) {
-    case TOX_USER_STATUS_AWAY:
-        status = Status::Status::Away;
-        break;
-
-    case TOX_USER_STATUS_BUSY:
-        status = Status::Status::Busy;
-        break;
-
-    default:
-        status = Status::Status::Online;
-        break;
-    }
-
     // no saveRequest, this callback is called on every connection, not just on name change
-    emit static_cast<Core*>(core)->friendStatusChanged(friendId, status);
+    emit static_cast<Core*>(core)->friendStatusChanged(friendId, fromToxUserStatus(userstatus));
 }
 
 void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection status, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
-    Status::Status friendStatus =
-        status != TOX_CONNECTION_NONE ? Status::Status::Online : Status::Status::Offline;
     // Ignore Online because it will be emited from onUserStatusChanged
-    bool isOffline = friendStatus == Status::Status::Offline;
-    if (isOffline) {
-        emit core->friendStatusChanged(friendId, friendStatus);
+    if (status == TOX_CONNECTION_NONE) {
+        emit core->friendStatusChanged(friendId, IToxStatus::ToxStatus::Offline);
         core->checkLastOnline(friendId);
     }
 }
@@ -903,6 +928,7 @@ void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection sta
 void Core::onGroupInvite(Tox* tox, uint32_t friendId, Tox_Conference_Type type,
                          const uint8_t* cookie, size_t length, void* vCore)
 {
+    Q_UNUSED(tox);
     Core* core = static_cast<Core*>(vCore);
     const QByteArray data(reinterpret_cast<const char*>(cookie), length);
     const GroupInvite inviteInfo(friendId, type, data);
@@ -1270,11 +1296,11 @@ QString Core::getStatusMessage() const
 /**
  * @brief Returns our user status
  */
-Status::Status Core::getStatus() const
+IToxStatus::ToxStatus Core::getStatus() const
 {
     QMutexLocker ml{&coreLoopLock};
 
-    return static_cast<Status::Status>(tox_self_get_status(tox.get()));
+    return fromToxUserStatus(tox_self_get_status(tox.get()));
 }
 
 void Core::setStatusMessage(const QString& message)
@@ -1297,27 +1323,13 @@ void Core::setStatusMessage(const QString& message)
     emit statusMessageSet(message);
 }
 
-void Core::setStatus(Status::Status status)
+void Core::setStatus(IToxStatus::ToxStatus status)
 {
     QMutexLocker ml{&coreLoopLock};
 
     Tox_User_Status userstatus;
-    switch (status) {
-    case Status::Status::Online:
-        userstatus = TOX_USER_STATUS_NONE;
-        break;
-
-    case Status::Status::Away:
-        userstatus = TOX_USER_STATUS_AWAY;
-        break;
-
-    case Status::Status::Busy:
-        userstatus = TOX_USER_STATUS_BUSY;
-        break;
-
-    default:
+    if(!getUserStatus(status, &userstatus)) {
         return;
-        break;
     }
 
     tox_self_set_status(tox.get(), userstatus);

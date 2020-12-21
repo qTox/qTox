@@ -17,11 +17,11 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/core.h"
-#include "src/core/toxoptions.h"
-#include "src/core/icoresettings.h"
+#include "core/core.h"
+#include "core/toxoptions.h"
+#include "core/ibootstraplistgenerator.h"
+#include "core/icoresettings.h"
 #include "src/net/bootstrapnodeupdater.h"
-#include "src/model/ibootstraplistgenerator.h"
 
 #include <QtTest/QtTest>
 #include <QtGlobal>

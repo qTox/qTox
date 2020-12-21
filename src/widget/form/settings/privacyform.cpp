@@ -29,7 +29,7 @@
 #include <QDateTime>
 #endif
 
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/nexus.h"
 #include "src/persistence/history.h"
 #include "src/persistence/profile.h"

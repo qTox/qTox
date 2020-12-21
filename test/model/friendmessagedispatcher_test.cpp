@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/icorefriendmessagesender.h"
+#include "core/icorefriendmessagesender.h"
 #include "src/model/friend.h"
 #include "src/model/friendmessagedispatcher.h"
 #include "src/model/message.h"

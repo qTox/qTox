@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "src/core/groupid.h"
-#include "src/core/toxpk.h"
+#include "core/groupid.h"
+#include "core/toxpk.h"
 #include "src/model/dialogs/idialogs.h"
 #include "src/model/status.h"
 #include "src/widget/genericchatitemlayout.h"

@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "src/core/icoregroupmessagesender.h"
-#include "src/core/icoreidhandler.h"
+#include "core/icoregroupmessagesender.h"
+#include "core/icoreidhandler.h"
 #include "src/model/group.h"
 #include "src/model/imessagedispatcher.h"
 #include "src/model/message.h"

@@ -20,7 +20,8 @@
 #pragma once
 
 #include "genericchatform.h"
-#include "src/core/toxpk.h"
+#include "core/toxcall.h"
+#include "core/toxpk.h"
 #include <QMap>
 
 namespace Ui {
@@ -77,5 +78,5 @@ private:
     FlowLayout* namesListLayout;
     QLabel* nusersLabel;
     TabCompleter* tabber;
-    bool inCall;
+    std::shared_ptr<ToxGroupCall> call;
 };

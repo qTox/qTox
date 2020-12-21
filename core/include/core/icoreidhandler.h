@@ -19,15 +19,15 @@
 
 #pragma once
 
-#include "receiptnum.h"
+#include "core/toxid.h"
+#include "core/toxpk.h"
 
-#include <QString>
-#include <cstdint>
-
-class ICoreFriendMessageSender
+class ICoreIdHandler
 {
+
 public:
-    virtual ~ICoreFriendMessageSender() = default;
-    virtual bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) = 0;
-    virtual bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) = 0;
+    virtual ~ICoreIdHandler() = default;
+    virtual ToxId getSelfId() const = 0;
+    virtual ToxPk getSelfPublicKey() const = 0;
+    virtual QString getUsername() const = 0;
 };

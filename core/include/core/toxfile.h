@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/core/toxfilepause.h"
+#include "toxfilepause.h"
 
 #include <QString>
 #include <memory>

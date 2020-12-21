@@ -21,11 +21,11 @@
 
 #include "contact.h"
 
-#include "src/core/contactid.h"
-#include "src/core/groupid.h"
-#include "src/core/icoregroupquery.h"
-#include "src/core/icoreidhandler.h"
-#include "src/core/toxpk.h"
+#include "core/contactid.h"
+#include "core/groupid.h"
+#include "core/icoregroupquery.h"
+#include "core/icoreidhandler.h"
+#include "core/toxpk.h"
 
 #include <QMap>
 #include <QObject>

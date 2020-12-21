@@ -20,8 +20,8 @@
 #include "settingswidget.h"
 
 #include "audio/audio.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
+#include "core/core.h"
+#include "core/coreav.h"
 #include "src/net/updatecheck.h"
 #include "src/persistence/settings.h"
 #include "src/video/camerasource.h"

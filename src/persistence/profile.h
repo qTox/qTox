@@ -20,9 +20,9 @@
 
 #pragma once
 
-#include "src/core/core.h"
-#include "src/core/toxencrypt.h"
-#include "src/core/toxid.h"
+#include "core/core.h"
+#include "core/toxencrypt.h"
+#include "core/toxid.h"
 
 #include "src/net/avatarbroadcaster.h"
 

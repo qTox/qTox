@@ -1,5 +1,6 @@
 /*
-    Copyright © 2020 by The qTox Project Contributors
+    Copyright © 2013 by Maxim Biro <nurupo.contributions@gmail.com>
+    Copyright © 2014-2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -19,27 +20,22 @@
 
 #pragma once
 
-#include "core/icoreidhandler.h"
+#include "core/groupid.h"
+#include "core/toxpk.h"
 
-#include <tox/tox.h>
+#include <QString>
+#include <QStringList>
 
-class MockCoreIdHandler : public ICoreIdHandler
+#include <cstdint>
+
+class ICoreGroupQuery
 {
 public:
-    ToxId getSelfId() const override
-    {
-        std::terminate();
-        return ToxId();
-    }
-
-    ToxPk getSelfPublicKey() const override
-    {
-        static uint8_t id[TOX_PUBLIC_KEY_SIZE] = {0};
-        return ToxPk(id);
-    }
-
-    QString getUsername() const override
-    {
-        return "me";
-    }
+    virtual ~ICoreGroupQuery() = default;
+    virtual GroupId getGroupPersistentId(uint32_t groupNumber) const = 0;
+    virtual uint32_t getGroupNumberPeers(int groupId) const = 0;
+    virtual QString getGroupPeerName(int groupId, int peerId) const = 0;
+    virtual ToxPk getGroupPeerPk(int groupId, int peerId) const = 0;
+    virtual QStringList getGroupPeerNames(int groupId) const = 0;
+    virtual bool getGroupAvEnabled(int groupId) const = 0;
 };

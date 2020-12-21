@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "src/core/toxfile.h"
-#include "src/core/toxpk.h"
+#include "core/toxfile.h"
+#include "core/toxpk.h"
 #include "src/model/message.h"
 #include "src/persistence/history.h"
 

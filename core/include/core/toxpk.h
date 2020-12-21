@@ -19,15 +19,16 @@
 
 #pragma once
 
-#include "toxid.h"
-#include "toxpk.h"
+#include "core/contactid.h"
+#include <QByteArray>
+#include <cstdint>
 
-class ICoreIdHandler
+class ToxPk : public ContactId
 {
-
 public:
-    virtual ~ICoreIdHandler() = default;
-    virtual ToxId getSelfId() const = 0;
-    virtual ToxPk getSelfPublicKey() const = 0;
-    virtual QString getUsername() const = 0;
+    ToxPk();
+    ToxPk(const ToxPk& other);
+    explicit ToxPk(const QByteArray& rawId);
+    explicit ToxPk(const uint8_t* rawId);
+    int getSize() const override;
 };

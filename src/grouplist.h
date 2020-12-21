@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/core/groupid.h"
+#include "core/groupid.h"
 
 class Core;
 template <class A, class B>

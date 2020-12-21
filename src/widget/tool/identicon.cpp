@@ -18,7 +18,7 @@
 */
 
 #include "identicon.h"
-#include "src/core/toxpk.h"
+#include "core/toxpk.h"
 
 #include <cassert>
 

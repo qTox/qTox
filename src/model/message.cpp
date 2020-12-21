@@ -19,7 +19,7 @@
 
 #include "message.h"
 #include "friend.h"
-#include "src/core/core.h"
+#include "core/core.h"
 
 void MessageProcessor::SharedParams::onUserNameSet(const QString& username)
 {

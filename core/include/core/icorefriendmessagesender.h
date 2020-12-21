@@ -1,6 +1,5 @@
 /*
-    Copyright © 2013 by Maxim Biro <nurupo.contributions@gmail.com>
-    Copyright © 2014-2019 by The qTox Project Contributors
+    Copyright © 2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -20,22 +19,15 @@
 
 #pragma once
 
-#include "groupid.h"
-#include "toxpk.h"
+#include "core/receiptnum.h"
 
 #include <QString>
-#include <QStringList>
-
 #include <cstdint>
 
-class ICoreGroupQuery
+class ICoreFriendMessageSender
 {
 public:
-    virtual ~ICoreGroupQuery() = default;
-    virtual GroupId getGroupPersistentId(uint32_t groupNumber) const = 0;
-    virtual uint32_t getGroupNumberPeers(int groupId) const = 0;
-    virtual QString getGroupPeerName(int groupId, int peerId) const = 0;
-    virtual ToxPk getGroupPeerPk(int groupId, int peerId) const = 0;
-    virtual QStringList getGroupPeerNames(int groupId) const = 0;
-    virtual bool getGroupAvEnabled(int groupId) const = 0;
+    virtual ~ICoreFriendMessageSender() = default;
+    virtual bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) = 0;
+    virtual bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) = 0;
 };

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/core/toxpk.h"
+#include "core/toxpk.h"
 #include <QDateTime>
 #include <QDialog>
 

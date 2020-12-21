@@ -18,7 +18,7 @@
 */
 
 #include "offlinemsgengine.h"
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/model/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"

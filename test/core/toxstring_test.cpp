@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/toxstring.h"
+#include "core/src/toxstring.h"
 
 #include <QtTest/QtTest>
 #include <QByteArray>

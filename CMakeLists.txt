@@ -216,36 +216,6 @@ set(${PROJECT_NAME}_SOURCES
   src/chatlog/toxfileprogress.h
   src/chatlog/textformatter.cpp
   src/chatlog/textformatter.h
-  src/core/coreav.cpp
-  src/core/coreav.h
-  src/core/core.cpp
-  src/core/corefile.cpp
-  src/core/corefile.h
-  src/core/core.h
-  src/core/dhtserver.cpp
-  src/core/dhtserver.h
-  src/core/icoresettings.h
-  src/core/toxcall.cpp
-  src/core/toxcall.h
-  src/core/toxencrypt.cpp
-  src/core/toxencrypt.h
-  src/core/toxfile.cpp
-  src/core/toxfile.h
-  src/core/toxfilepause.h
-  src/core/toxid.cpp
-  src/core/toxid.h
-  src/core/groupid.cpp
-  src/core/groupid.h
-  src/core/toxlogger.cpp
-  src/core/toxlogger.h
-  src/core/toxoptions.cpp
-  src/core/toxoptions.h
-  src/core/toxpk.cpp
-  src/core/toxpk.h
-  src/core/contactid.cpp
-  src/core/contactid.h
-  src/core/toxstring.cpp
-  src/core/toxstring.h
   src/friendlist.cpp
   src/friendlist.h
   src/grouplist.cpp
@@ -277,8 +247,6 @@ set(${PROJECT_NAME}_SOURCES
   src/model/groupmessagedispatcher.cpp
   src/model/message.h
   src/model/message.cpp
-  src/model/groupinvite.cpp
-  src/model/groupinvite.h
   src/model/group.cpp
   src/model/group.h
   src/model/status.cpp
@@ -293,7 +261,6 @@ set(${PROJECT_NAME}_SOURCES
   src/model/chathistory.h
   src/model/chathistory.cpp
   src/model/toxclientstandards.h
-  src/model/ibootstraplistgenerator.h
   src/model/notificationgenerator.h
   src/model/notificationgenerator.cpp
   src/net/bootstrapnodeupdater.cpp
@@ -571,6 +538,7 @@ MESSAGE( STATUS "CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS} )
 
 add_subdirectory(util)
 add_subdirectory(audio)
+add_subdirectory(core)
 add_subdirectory(translations)
 
 add_library(${PROJECT_NAME}_static
@@ -583,6 +551,7 @@ target_link_libraries(${PROJECT_NAME}_static
 
 target_link_libraries(${PROJECT_NAME}_static util_library)
 target_link_libraries(${PROJECT_NAME}_static audio_library)
+target_link_libraries(${PROJECT_NAME}_static core_library)
 target_link_libraries(${PROJECT_NAME}_static translations_library)
 
 add_executable(${PROJECT_NAME}

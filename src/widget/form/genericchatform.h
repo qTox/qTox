@@ -20,7 +20,7 @@
 #pragma once
 
 #include "src/chatlog/chatmessage.h"
-#include "src/core/toxpk.h"
+#include "core/toxpk.h"
 #include "src/model/ichatlog.h"
 #include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/searchtypes.h"

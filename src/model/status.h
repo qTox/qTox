@@ -18,7 +18,8 @@
 */
 
 #include <QString>
-#include <QPixmap>
+
+#include "core/itoxstatus.h"
 
 #pragma once
 
@@ -33,6 +34,9 @@ namespace Status
         Offline,
         Blocked
     };
+
+    bool toToxStatus(IToxStatus::ToxStatus& toxStatus, Status status);
+    bool fromToxStatus(Status& status, IToxStatus::ToxStatus toxStatus);
 
     QString getIconPath(Status status, bool event = false);
     QString getTitle(Status status);

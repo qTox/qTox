@@ -23,9 +23,9 @@
 #include "src/chatlog/chatmessage.h"
 #include "src/chatlog/content/filetransferwidget.h"
 #include "src/chatlog/content/text.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
-#include "src/core/corefile.h"
+#include "core/core.h"
+#include "core/coreav.h"
+#include "core/corefile.h"
 #include "src/model/friend.h"
 #include "src/model/status.h"
 #include "src/nexus.h"
@@ -34,6 +34,8 @@
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/video/netcamview.h"
+#include "src/video/corevideosource.h"
+#include "src/video/videoframe.h"
 #include "src/widget/chatformheader.h"
 #include "src/widget/contentdialogmanager.h"
 #include "src/widget/form/loadhistorydialog.h"
@@ -110,6 +112,7 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMes
     , f(chatFriend)
     , isTyping{false}
     , lastCallIsVideo{false}
+    , coreVideo{new CoreVideoSource()}
 {
     setName(f->getDisplayedName());
 
@@ -142,7 +145,15 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMes
     connect(coreFile, &CoreFile::fileReceiveRequested, this, &ChatForm::updateFriendActivityForFile);
     connect(coreFile, &CoreFile::fileSendStarted, this, &ChatForm::updateFriendActivityForFile);
     connect(&core, &Core::friendTypingChanged, this, &ChatForm::onFriendTypingChanged);
-    connect(&core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
+    connect(&core, &Core::friendStatusChanged, this,
+            [&](uint32_t friendId, IToxStatus::ToxStatus status) {
+                Status::Status newStatus;
+                if (Status::fromToxStatus(newStatus, status)) {
+                    this->onFriendStatusChanged(friendId, newStatus);
+                } else {
+                    qDebug() << "Failed to convert status";
+                }
+            });
     connect(coreFile, &CoreFile::fileNameChanged, this, &ChatForm::onFileNameChanged);
 
     const CoreAV* av = core.getAv();
@@ -190,6 +201,10 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMes
 ChatForm::~ChatForm()
 {
     Translator::unregister(this);
+    if(call) {
+        // avoid resource leak because of CameraSource singleton
+        stopCamera();
+    }
 }
 
 void ChatForm::setStatusMessage(const QString& newMessage)
@@ -289,11 +304,8 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
     auto testedFlag = video ? Settings::AutoAcceptCall::Video : Settings::AutoAcceptCall::Audio;
     // AutoAcceptCall is set for this friend
     if (Settings::getInstance().getAutoAcceptCall(f->getPublicKey()).testFlag(testedFlag)) {
-        uint32_t friendId = f->getId();
-        qDebug() << "automatic call answer";
-        CoreAV* coreav = core.getAv();
-        QMetaObject::invokeMethod(coreav, "answerCall", Qt::QueuedConnection,
-                                  Q_ARG(uint32_t, friendId), Q_ARG(bool, video));
+        onAnswerCallTriggered(video);
+        // CoreAV doesn't send a signal when we answer the call
         onAvStart(friendId, video);
     } else {
         headWidget->createCallConfirm(video);
@@ -332,6 +344,9 @@ void ChatForm::onAvEnd(uint32_t friendId, bool error)
         netcam->showNormal();
     }
 
+    call.reset();
+    stopCamera();
+
     emit stopNotification();
     emit endCallNotification();
     updateCallButtons();
@@ -356,20 +371,32 @@ void ChatForm::onAnswerCallTriggered(bool video)
     emit acceptCall(friendId);
 
     updateCallButtons();
+    if(call) {
+        qDebug() << "Stale call detected";
+    }
+
     CoreAV* av = core.getAv();
-    if (!av->answerCall(friendId, video)) {
+    call = av->answerCall(friendId, video, coreVideo.get());
+    if (!call) {
+        qDebug() << "Failed to answer call";
         updateCallButtons();
         stopCounter();
         hideNetcam();
         return;
     }
 
-    onAvStart(friendId, av->isCallVideoEnabled(f));
+    // CoreAV doesn't send the avStart() signal when we answer
+    onAvStart(friendId, call->getVideoEnabled());
 }
 
 void ChatForm::onRejectCallTriggered()
 {
     headWidget->removeCallConfirm();
+    if(call) {
+        call->endCall();
+        call.reset();
+    }
+
     emit rejectCall(f->getId());
 }
 
@@ -377,10 +404,18 @@ void ChatForm::onCallTriggered()
 {
     CoreAV* av = core.getAv();
     uint32_t friendId = f->getId();
-    if (av->isCallStarted(f)) {
-        av->cancelCall(friendId);
-    } else if (av->startCall(friendId, false)) {
-        showOutgoingCall(false);
+
+    if (call) {
+        call->endCall();
+        call.reset();
+        stopCamera();
+    } else {
+        call = av->startCall(friendId, false, coreVideo.get());
+        if (call) {
+            showOutgoingCall(false);
+        } else {
+            qDebug() << "Failed to start Audio call";
+        }
     }
 }
 
@@ -388,21 +423,26 @@ void ChatForm::onVideoCallTriggered()
 {
     CoreAV* av = core.getAv();
     uint32_t friendId = f->getId();
-    if (av->isCallStarted(f)) {
-        // TODO: We want to activate video on the active call.
-        if (av->isCallVideoEnabled(f)) {
-            av->cancelCall(friendId);
+
+    if (call) {
+        call->endCall();
+        call.reset();
+        stopCamera();
+    } else {
+        call = av->startCall(friendId, true, coreVideo.get());
+        if (call) {
+            showOutgoingCall(true);
+            startCamera();
+        } else {
+            qDebug() << "Failed to start Video call";
         }
-    } else if (av->startCall(friendId, true)) {
-        showOutgoingCall(true);
     }
 }
 
 void ChatForm::updateCallButtons()
 {
-    CoreAV* av = core.getAv();
-    const bool audio = av->isCallActive(f);
-    const bool video = av->isCallVideoEnabled(f);
+    const bool audio = call ? call->isActive() : false;
+    const bool video = call ? call->getVideoEnabled() : false;
     const bool online = Status::isOnline(f->getStatus());
     headWidget->updateCallButtons(online, audio, video);
     updateMuteMicButton();
@@ -411,15 +451,13 @@ void ChatForm::updateCallButtons()
 
 void ChatForm::onMicMuteToggle()
 {
-    CoreAV* av = core.getAv();
-    av->toggleMuteCallInput(f);
+    call->setMuteMic(!call->getMuteMic());
     updateMuteMicButton();
 }
 
 void ChatForm::onVolMuteToggle()
 {
-    CoreAV* av = core.getAv();
-    av->toggleMuteCallOutput(f);
+    call->setMuteVol(!call->getMuteVol());
     updateMuteVolButton();
 }
 
@@ -479,11 +517,8 @@ void ChatForm::onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic)
 std::unique_ptr<NetCamView> ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
-    uint32_t friendId = f->getId();
     std::unique_ptr<NetCamView> view = std::unique_ptr<NetCamView>(new NetCamView(f->getPublicKey(), this));
-    CoreAV* av = core.getAv();
-    VideoSource* source = av->getVideoSourceFromCall(friendId);
-    view->show(source, f->getDisplayedName());
+    view->show(coreVideo.get(), f->getDisplayedName());
     connect(view.get(), &NetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
     connect(view.get(), &NetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
     connect(view.get(), &NetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
@@ -608,9 +643,8 @@ void ChatForm::onCopyStatusMessage()
 
 void ChatForm::updateMuteMicButton()
 {
-    const CoreAV* av = core.getAv();
-    bool active = av->isCallActive(f);
-    bool inputMuted = av->isCallInputMuted(f);
+    const bool active = call ? call->isActive() : false;
+    const bool inputMuted = call ? call->getMuteMic() : false;
     headWidget->updateMuteMicButton(active, inputMuted);
     if (netcam) {
         netcam->updateMuteMicButton(inputMuted);
@@ -619,9 +653,8 @@ void ChatForm::updateMuteMicButton()
 
 void ChatForm::updateMuteVolButton()
 {
-    const CoreAV* av = core.getAv();
-    bool active = av->isCallActive(f);
-    bool outputMuted = av->isCallOutputMuted(f);
+    const bool active = call ? call->isActive() : false;
+    const bool outputMuted = call ? call->getMuteVol() : false;
     headWidget->updateMuteVolButton(active, outputMuted);
     if (netcam) {
         netcam->updateMuteVolButton(outputMuted);
@@ -739,6 +772,28 @@ void ChatForm::hideNetcam()
     netcam->close();
     netcam->hide();
     netcam.reset();
+}
+
+void ChatForm::startCamera()
+{
+    cameraVideo = &CameraSource::getInstance();
+
+    if (cameraVideo->isNone()) {
+        cameraVideo->setupDefault();
+    }
+    cameraVideo->subscribe();
+    connect(cameraVideo, &VideoSource::frameAvailable, call.get(),
+                                   [this](std::shared_ptr<VideoFrame> frame) {
+                                        this->call->sendVideoFrame(frame->toToxYUVFrame());
+                                   });
+}
+
+void ChatForm::stopCamera()
+{
+    if (cameraVideo) {
+        cameraVideo->unsubscribe();
+        cameraVideo = nullptr;
+    }
 }
 
 void ChatForm::onSplitterMoved(int, int)

@@ -18,7 +18,7 @@
 */
 
 #include "videosurface.h"
-#include "src/core/core.h"
+#include "core/core.h"
 #include "src/model/friend.h"
 #include "src/friendlist.h"
 #include "src/persistence/settings.h"

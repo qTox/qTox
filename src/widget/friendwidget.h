@@ -20,7 +20,7 @@
 #pragma once
 
 #include "genericchatroomwidget.h"
-#include "src/core/toxpk.h"
+#include "core/toxpk.h"
 
 #include <memory>
 

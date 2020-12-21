@@ -22,21 +22,20 @@
 #include "audio/iaudiocontrol.h"
 #include "audio/iaudiosink.h"
 #include "audio/iaudiosource.h"
-#include <src/core/toxpk.h>
+#include "core/toxpk.h"
+#include "core/icorevideo.h"
 #include <tox/toxav.h>
 
 #include <QMap>
 #include <QMetaObject>
 #include <QtGlobal>
 
+#include <atomic>
 #include <cstdint>
 #include <memory>
 
 class QTimer;
-class AudioFilterer;
-class CoreVideoSource;
 class CoreAV;
-class Group;
 
 class ToxCall : public QObject
 {
@@ -44,7 +43,7 @@ class ToxCall : public QObject
 
 protected:
     ToxCall() = delete;
-    ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio);
+    ToxCall(bool VideoEnabled, CoreAV& av, IAudioControl& audio, ICoreVideo* video = nullptr);
     ~ToxCall();
 
 public:
@@ -69,20 +68,22 @@ public:
     bool getNullVideoBitrate() const;
     void setNullVideoBitrate(bool value);
 
-    CoreVideoSource* getVideoSource() const;
+    virtual void endCall() = 0;
+
+    ICoreVideo* getVideoSource() const;
+    void setVideoSource(ICoreVideo* video);
 
 protected:
-    bool active{false};
-    CoreAV* av{nullptr};
+    std::atomic<bool> active{false};
+    CoreAV& av;
     // audio
     IAudioControl& audio;
-    bool muteMic{false};
-    bool muteVol{false};
+    std::atomic<bool> muteMic{false};
+    std::atomic<bool> muteVol{false};
     // video
-    CoreVideoSource* videoSource{nullptr};
-    QMetaObject::Connection videoInConn;
-    bool videoEnabled{false};
-    bool nullVideoBitrate{false};
+    ICoreVideo* videoSource{nullptr};
+    std::atomic<bool> videoEnabled{false};
+    std::atomic<bool> nullVideoBitrate{false};
     std::unique_ptr<IAudioSource> audioSource;
 };
 
@@ -91,7 +92,7 @@ class ToxFriendCall : public ToxCall
     Q_OBJECT
 public:
     ToxFriendCall() = delete;
-    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av, IAudioControl& audio);
+    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av, IAudioControl& audio, ICoreVideo* video);
     ToxFriendCall(ToxFriendCall&& other) = delete;
     ToxFriendCall& operator=(ToxFriendCall&& other) = delete;
     ~ToxFriendCall();
@@ -100,6 +101,11 @@ public:
     void setState(const TOXAV_FRIEND_CALL_STATE& value);
 
     void playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const;
+    void sendVideoFrame(const ToxYUVFrame& frame);
+
+    // ToxCall interface
+public:
+    void endCall() override;
 
 private slots:
     void onAudioSourceInvalidated();
@@ -117,7 +123,7 @@ class ToxGroupCall : public ToxCall
     Q_OBJECT
 public:
     ToxGroupCall() = delete;
-    ToxGroupCall(const Group& group, CoreAV& av, IAudioControl& audio);
+    ToxGroupCall(uint32_t _groupNum, CoreAV& av, IAudioControl& audio);
     ToxGroupCall(ToxGroupCall&& other) = delete;
     ~ToxGroupCall();
 
@@ -127,6 +133,10 @@ public:
     void playAudioBuffer(const ToxPk& peer, const int16_t* data, int samples, unsigned channels,
                          int sampleRate);
 
+    // ToxCall interface
+public:
+    void endCall() override;
+
 private:
     void addPeer(ToxPk peerId);
     bool havePeer(ToxPk peerId);
@@ -134,7 +144,7 @@ private:
 
     std::map<ToxPk, std::unique_ptr<IAudioSink>> peers;
     std::map<ToxPk, QMetaObject::Connection> sinkInvalid;
-    const Group& group;
+    uint32_t groupNum;
 
 private slots:
     void onAudioSourceInvalidated();
