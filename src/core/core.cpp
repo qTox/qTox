@@ -33,18 +33,16 @@
 #include "util/strongtype.h"
 
 #include <QCoreApplication>
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
-#include <QRandomGenerator>
-#else
 #include <QDateTime>
-#endif
 #include <QRegularExpression>
 #include <QString>
 #include <QStringBuilder>
 #include <QTimer>
 
 #include <cassert>
+#include <chrono>
 #include <memory>
+#include <random>
 
 const QString Core::TOX_EXT = ".tox";
 
@@ -656,10 +654,6 @@ void Core::onStarted()
 {
     ASSERT_CORE_THREAD;
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 10, 0))
-    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
-#endif
-
     // One time initialization stuff
     QString name = getUsername();
     if (!name.isEmpty()) {
@@ -792,11 +786,9 @@ void Core::bootstrapDht()
     }
 
     int i = 0;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
-    static int j = QRandomGenerator::global()->bounded(listSize);
-#else
-    static int j = static_cast<int>((static_cast<double>(qrand()) / static_cast<double>(RAND_MAX+1l)) * listSize);
-#endif
+    std::mt19937 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+    std::uniform_int_distribution<int> distribution(0, listSize - 1);
+    static int j = distribution(rng);
     // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
     while (i < 2) {
         const DhtServer& dhtServer = bootstrapNodesList[j % listSize];
