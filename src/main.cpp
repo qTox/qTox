@@ -238,6 +238,10 @@ int main(int argc, char* argv[])
                            QObject::tr("Starts new instance and loads specified profile."),
                            QObject::tr("profile")));
     parser.addOption(
+        QCommandLineOption(QStringList() << "password",
+                           QObject::tr("Password for encrypted profile."),
+                           QObject::tr("password")));
+    parser.addOption(
         QCommandLineOption(QStringList() << "l"
                                          << "login",
                            QObject::tr("Starts new instance and opens the login screen.")));
@@ -321,7 +325,7 @@ int main(int argc, char* argv[])
 
     qDebug() << "commit: " << GIT_VERSION;
 
-    QString profileName;
+    QString profileName, profilePassword;
     bool autoLogin = settings.getAutoLogin();
 
     uint32_t ipcDest = 0;
@@ -337,6 +341,9 @@ int main(int argc, char* argv[])
         } else {
             ipcDest = Settings::makeProfileId(profileName);
             autoLogin = true;
+            if (parser.isSet("password")) {
+                profilePassword = parser.value("password");
+            }
         }
     } else if (parser.isSet("l")) {
         doIpc = false;
@@ -393,8 +400,8 @@ int main(int argc, char* argv[])
     // TODO (kriby): Shift responsibility of linking views to model objects from nexus
     // Further: generate view instances separately (loginScreen, mainGUI, audio)
     Profile* profile = nullptr;
-    if (autoLogin && Profile::exists(profileName) && !Profile::isEncrypted(profileName)) {
-        profile = Profile::loadProfile(profileName, QString(), settings, &parser);
+    if (autoLogin && Profile::exists(profileName)) {
+        profile = Profile::loadProfile(profileName, profilePassword, settings, &parser);
         if (!profile) {
             QMessageBox::information(nullptr, QObject::tr("Error"),
                                      QObject::tr("Failed to load profile automatically."));
