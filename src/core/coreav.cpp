@@ -489,7 +489,7 @@ bool CoreAV::sendGroupCallAudio(int groupNum, const int16_t* pcm, size_t samples
 {
     QReadLocker locker{&callsLock};
 
-    auto it = groupCalls.find(groupId);
+    auto it = groupCalls.find(groupNum);
     if (it == groupCalls.end()) {
         return false;
     }

@@ -352,8 +352,8 @@ void GroupChatForm::onCallClicked()
     }
 
     headWidget->updateCallButtons(true, call != nullptr);
-    headWidget->updateMuteMicButton(call != nullptr, call->getMuteMic());
-    headWidget->updateMuteVolButton(call != nullptr, call->getMuteVol());
+    headWidget->updateMuteMicButton(call != nullptr, call && call->getMuteMic());
+    headWidget->updateMuteVolButton(call != nullptr, call && call->getMuteVol());
 }
 
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)
