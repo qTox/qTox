@@ -269,9 +269,6 @@ bool CoreAV::cancelCall(uint32_t friendNum)
         return false;
     }
 
-    // Set inactive for others
-    it->second->setActive(false);
-
     calls.erase(friendNum);
     locker.unlock();
 
@@ -418,7 +415,7 @@ void CoreAV::groupCallCallback(void* tox, uint32_t group, uint32_t peer, const i
         return;
     }
 
-    ToxGroupCall& call = *it->second;
+    auto& call = *it->second;
 
     if (call.getMuteVol() || !call.isActive()) {
         return;
@@ -443,14 +440,14 @@ CoreAV::ToxGroupCallPtr CoreAV::joinGroupCall(const Group& group)
 
     ToxGroupCallPtr groupcall = ToxGroupCallPtr(new ToxGroupCall{group, *this, *audio});
     // Call Objects must be owned by CoreAV or there will be locking problems with Audio
-    groupcall->moveToThread(this->thread());
     assert(groupcall != nullptr);
-    auto ret = groupCalls.emplace(group.getId(), groupcall);
+    groupcall->moveToThread(this->thread());
+    auto ret = groupCalls.emplace(group.getId(), groupcall.get());
     if (ret.second == false) {
         qWarning() << "This group call already exists, not joining!";
         return {};
     }
-    ret.first->second->setActive(true);
+    groupcall->setActive(true);
     return groupcall;
 }
 
@@ -473,7 +470,7 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
 {
     QReadLocker locker{&callsLock};
 
-    std::map<int, ToxGroupCallPtr>::const_iterator it = groupCalls.find(groupId);
+    auto it = groupCalls.find(groupId);
     if (it == groupCalls.end()) {
         return false;
     }
@@ -558,15 +555,11 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
 
     if (state & TOXAV_FRIEND_CALL_STATE_ERROR) {
         qWarning() << "Call with friend" << friendNum << "died of unnatural causes!";
-        // Set inactive for others
-        it->second->setActive(false);
         self->calls.erase(friendNum);
         locker.unlock();
         emit self->avEnd(friendNum, true);
     } else if (state & TOXAV_FRIEND_CALL_STATE_FINISHED) {
         qDebug() << "Call with friend" << friendNum << "finished quietly";
-        // Set inactive for others
-        it->second->setActive(false);
         self->calls.erase(friendNum);
         locker.unlock();
         emit self->avEnd(friendNum);
