@@ -304,11 +304,15 @@ void ChatForm::onAttachClicked()
     }
 }
 
-void ChatForm::onAvInvite(uint32_t friendId, bool video)
+void ChatForm::onAvInvite(uint32_t friendId, bool video, std::shared_ptr<ToxFriendCall> call)
 {
     if (friendId != f->getId()) {
         return;
     }
+
+    assert(!this->call);
+
+    this->call = call;
 
     QString displayedName = f->getDisplayedName();
 
@@ -354,6 +358,7 @@ void ChatForm::onAvEnd(uint32_t friendId, bool error)
         return;
     }
 
+    call.reset();
     headWidget->removeCallConfirm();
     // Fixes an OS X bug with ending a call while in full screen
     if (netcam && netcam->isFullScreen()) {
@@ -384,14 +389,15 @@ void ChatForm::onAnswerCallTriggered(bool video)
     emit acceptCall(friendId);
 
     updateCallButtons();
-    if (call) {
-        qDebug() << "Stale call detected";
+    if (!call) {
+        qWarning() << "Trying to answer call without receiving an invite";
     }
 
     CoreAV* av = core.getAv();
-    call = av->answerCall(friendId, video);
-    if (!call) {
+    bool answered = av->answerCall(friendId, video);
+    if (!answered) {
         qDebug() << "Failed to answer call";
+        call.reset();
         updateCallButtons();
         stopCounter();
         hideNetcam();

@@ -82,5 +82,5 @@ private:
     QLabel* nusersLabel;
     TabCompleter* tabber;
     IGroupSettings& settings;
-    std::shared_ptr<ToxGroupCall> call;
+    std::unique_ptr<ToxGroupCall> call;
 };
