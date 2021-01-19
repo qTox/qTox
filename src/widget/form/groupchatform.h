@@ -92,5 +92,5 @@ private:
     Settings& settings;
     Style& style;
     FriendList& friendList;
-    std::shared_ptr<ToxGroupCall> call;
+    std::unique_ptr<ToxGroupCall> call;
 };
