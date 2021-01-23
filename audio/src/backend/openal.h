@@ -66,10 +66,7 @@ public:
     void setOutputVolume(qreal volume);
 
     qreal minInputGain() const;
-    void setMinInputGain(qreal dB);
-
     qreal maxInputGain() const;
-    void setMaxInputGain(qreal dB);
 
     qreal inputGain() const;
     void setInputGain(qreal dB);
@@ -156,8 +153,8 @@ protected:
     int channels = 0;
     qreal gain = 0;
     qreal gainFactor = 1;
-    qreal minInGain = -30;
-    qreal maxInGain = 30;
+    static constexpr qreal minInGain = -30;
+    static constexpr qreal maxInGain = 30;
     qreal inputThreshold = 0;
     qreal voiceHold = 250;
     bool isActive = false;
