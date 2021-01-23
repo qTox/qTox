@@ -82,7 +82,9 @@ AVForm::AVForm(IAudioControl& audio, CoreAV* coreAV, CameraSource& camera,
     microphoneSlider->setTracking(false);
     microphoneSlider->installEventFilter(this);
     microphoneSlider->setValue(
-        getStepsFromValue(audio.inputGain(), audio.minInputGain(), audio.maxInputGain()));
+        getStepsFromValue(audioSettings->getAudioInGainDecibel(),
+            audio.minInputGain(),
+            audio.maxInputGain()));
 
     audioThresholdSlider->setToolTip(tr("Use slider to set the activation volume for your"
                                         " input device."));
