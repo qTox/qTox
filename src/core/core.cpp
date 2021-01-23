@@ -757,9 +757,27 @@ bool Core::checkConnection()
 {
     ASSERT_CORE_THREAD;
     static bool isConnected = false;
-    bool toxConnected = tox_self_get_connection_status(tox.get()) != TOX_CONNECTION_NONE;
+    auto selfConnection = tox_self_get_connection_status(tox.get());
+    QString connectionName;
+    bool toxConnected = false;
+    switch (selfConnection)
+    {
+        case TOX_CONNECTION_NONE:
+            toxConnected = false;
+            break;
+        case TOX_CONNECTION_TCP:
+            toxConnected = true;
+            connectionName = "a TCP relay";
+            break;
+        case TOX_CONNECTION_UDP:
+            toxConnected = true;
+            connectionName = "the UDP DHT";
+            break;
+        qWarning() << "tox_self_get_connection_status returned unknown enum!";
+    }
+
     if (toxConnected && !isConnected) {
-        qDebug() << "Connected to the DHT";
+        qDebug().noquote() << "Connected to" << connectionName;
         emit connected();
     } else if (!toxConnected && isConnected) {
         qDebug() << "Disconnected from the DHT";
@@ -882,8 +900,24 @@ void Core::onUserStatusChanged(Tox*, uint32_t friendId, Tox_User_Status userstat
 void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection status, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
-    Status::Status friendStatus =
-        status != TOX_CONNECTION_NONE ? Status::Status::Online : Status::Status::Offline;
+    Status::Status friendStatus;
+    switch (status)
+    {
+        case TOX_CONNECTION_NONE:
+            friendStatus = Status::Status::Offline;
+            qDebug() << "Disconnected from friend" << friendId;
+            break;
+        case TOX_CONNECTION_TCP:
+            friendStatus = Status::Status::Online;
+            qDebug() << "Connected to friend" << friendId << "through a TCP relay";
+            break;
+        case TOX_CONNECTION_UDP:
+            friendStatus = Status::Status::Online;
+            qDebug() << "Connected to friend" << friendId << "directly with UDP";
+            break;
+        qWarning() << "tox_callback_friend_connection_status returned unknown enum!";
+    }
+
     // Ignore Online because it will be emited from onUserStatusChanged
     bool isOffline = friendStatus == Status::Status::Offline;
     if (isOffline) {
