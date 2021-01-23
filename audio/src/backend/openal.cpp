@@ -56,6 +56,8 @@ void applyGain(int16_t* buffer, uint32_t bufferSize, qreal gainFactor)
 
 static const unsigned int BUFFER_COUNT = 16;
 static const uint32_t AUDIO_CHANNELS = 2;
+constexpr qreal OpenAL::minInGain;
+constexpr qreal OpenAL::maxInGain;
 
 OpenAL::OpenAL(IAudioSettings& _settings)
     : settings{_settings}
@@ -162,17 +164,6 @@ qreal OpenAL::minInputGain() const
 }
 
 /**
- * @brief Set the minimum allowed gain value in dB.
- *
- * @note Default is -30dB; usually you don't need to alter this value;
- */
-void OpenAL::setMinInputGain(qreal dB)
-{
-    QMutexLocker locker(&audioLock);
-    minInGain = dB;
-}
-
-/**
  * @brief The maximum gain value for an input device.
  *
  * @return maximum gain value in dB
@@ -181,17 +172,6 @@ qreal OpenAL::maxInputGain() const
 {
     QMutexLocker locker(&audioLock);
     return maxInGain;
-}
-
-/**
- * @brief Set the maximum allowed gain value in dB.
- *
- * @note Default is 30dB; usually you don't need to alter this value.
- */
-void OpenAL::setMaxInputGain(qreal dB)
-{
-    QMutexLocker locker(&audioLock);
-    maxInGain = dB;
 }
 
 /**

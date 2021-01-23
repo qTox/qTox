@@ -111,10 +111,7 @@ public:
     virtual qreal minOutputVolume() const = 0;
 
     virtual qreal minInputGain() const = 0;
-    virtual void setMinInputGain(qreal dB) = 0;
-
     virtual qreal maxInputGain() const = 0;
-    virtual void setMaxInputGain(qreal dB) = 0;
 
     virtual qreal inputGain() const = 0;
     virtual void setInputGain(qreal dB) = 0;
