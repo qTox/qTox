@@ -25,7 +25,7 @@
 #include <QPainter>
 #include <qrencode.h>
 
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_WIN32) || defined(Q_OS_HAIKU)
 #include <errno.h>
 #else
 #include <sys/errno.h>

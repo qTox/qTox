@@ -104,7 +104,7 @@ if (COMPILER_SUPPORTS_WDATE_TIME)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdate-time")
 endif()
 
-if (NOT WIN32)
+if (NOT WIN32 AND NOT HAIKU)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstack-protector")
 endif()
