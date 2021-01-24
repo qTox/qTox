@@ -98,16 +98,34 @@ uint64_t CoreExt::Packet::addExtendedMessage(QString message)
         return UINT64_MAX;
     }
 
-    ToxString toxString(message);
-    Tox_Extension_Messages_Error err;
+    int size = message.toUtf8().size();
+    enum Tox_Extension_Messages_Error err;
+    auto maxSize = static_cast<int>(tox_extension_messages_get_max_sending_size(
+        toxExtMessages,
+        friendId,
+        &err));
 
-    return tox_extension_messages_append(
+    if (size > maxSize) {
+        assert(false);
+        qCritical() << "addExtendedMessage called with message of size:" << size
+                    << "when max is:" << maxSize << ". Ignoring.";
+        return false;
+    }
+
+    ToxString toxString(message);
+    const auto receipt = tox_extension_messages_append(
         toxExtMessages,
         packetList,
         toxString.data(),
         toxString.size(),
         friendId,
         &err);
+
+    if (err != TOX_EXTENSION_MESSAGES_SUCCESS) {
+        qWarning() << "Error sending extension message";
+    }
+
+    return receipt;
 }
 
 bool CoreExt::Packet::send()
@@ -120,6 +138,11 @@ bool CoreExt::Packet::send()
     // be invalid no matter what
     hasBeenSent = true;
     return ret == TOXEXT_SUCCESS;
+}
+
+uint64_t CoreExt::getMaxExtendedMessageSize()
+{
+    return TOX_EXTENSION_MESSAGES_DEFAULT_MAX_RECEIVING_MESSAGE_SIZE;
 }
 
 void CoreExt::onFriendStatusChanged(uint32_t friendId, Status::Status status)
@@ -154,6 +177,15 @@ void CoreExt::onExtendedMessageReceipt(uint32_t friendId, uint64_t receiptId, vo
 void CoreExt::onExtendedMessageNegotiation(uint32_t friendId, bool compatible, uint64_t maxMessageSize, void* userData)
 {
     auto coreExt = static_cast<CoreExt*>(userData);
+
+    // HACK: handling configurable max message size per-friend is not trivial.
+    // For now the upper layers just assume that the max size for extended
+    // messages is the same for all friends. If a friend has a max message size
+    // lower than this value we just pretend they do not have the extension since
+    // we will not split correctly for this friend.
+    if (maxMessageSize < coreExt->getMaxExtendedMessageSize())
+        compatible = false;
+
     emit coreExt->extendedMessageSupport(friendId, compatible);
 }
 

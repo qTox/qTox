@@ -55,19 +55,22 @@ FriendMessageDispatcher::sendMessage(bool isAction, const QString& content)
 /**
  * @see IMessageDispatcher::sendExtendedMessage
  */
-DispatchedMessageId FriendMessageDispatcher::sendExtendedMessage(const QString& content, ExtensionSet extensions)
+std::pair<DispatchedMessageId, DispatchedMessageId>
+FriendMessageDispatcher::sendExtendedMessage(const QString& content, ExtensionSet extensions)
 {
-    auto messageId = nextMessageId++;
+    const auto firstId = nextMessageId;
+    auto lastId = nextMessageId;
 
-    auto messages = processor.processOutgoingMessage(false, content, extensions);
-    assert(messages.size() == 1);
+    for (const auto& message : processor.processOutgoingMessage(false, content, extensions)) {
+        auto messageId = nextMessageId++;
+        lastId = messageId;
 
-    auto onOfflineMsgComplete = getCompletionFn(messageId);
-    sendProcessedMessage(messages[0], onOfflineMsgComplete);
+        auto onOfflineMsgComplete = getCompletionFn(messageId);
+        sendProcessedMessage(message, onOfflineMsgComplete);
 
-    emit this->messageSent(messageId, messages[0]);
-
-    return messageId;
+        emit this->messageSent(messageId, message);
+    }
+    return std::make_pair(firstId, lastId);
 }
 
 /**
@@ -150,7 +153,8 @@ void FriendMessageDispatcher::sendExtendedProcessedMessage(Message const& messag
 
     auto receipt = ExtendedReceiptNum();
 
-    auto packet = coreExtPacketAllocator.getPacket(f.getId());
+    const auto friendId = f.getId();
+    auto packet = coreExtPacketAllocator.getPacket(friendId);
 
     if (message.extensionSet[ExtensionType::messages]) {
         receipt.get() = packet->addExtendedMessage(message.content);
