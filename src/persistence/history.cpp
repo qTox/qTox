@@ -380,6 +380,25 @@ MessageState getMessageState(bool isPending, bool isBroken)
     }
     return messageState;
 }
+
+QString generatePeerIdString(ToxPk const& pk)
+{
+    return QString("(SELECT id FROM peers WHERE public_key = '%1')").arg(pk.toString());
+
+}
+
+RawDatabase::Query generateEnsurePkInPeers(ToxPk const& pk)
+{
+    return RawDatabase::Query{QStringLiteral("INSERT OR IGNORE INTO peers (public_key) "
+                                "VALUES ('%1')").arg(pk.toString())};
+}
+
+RawDatabase::Query generateUpdateAlias(ToxPk const& pk, QString const& dispName)
+{
+    return RawDatabase::Query(
+            QString("INSERT OR IGNORE INTO aliases (owner, display_name) VALUES (%1, ?);").arg(generatePeerIdString(pk)),
+            {dispName.toUtf8()});
+}
 } // namespace
 
 /**
@@ -424,15 +443,6 @@ History::History(std::shared_ptr<RawDatabase> db_)
 
     connect(this, &History::fileInsertionReady, this, &History::onFileInsertionReady);
     connect(this, &History::fileInserted, this, &History::onFileInserted);
-
-    // Cache our current peers
-    db->execLater(RawDatabase::Query{"SELECT public_key, id FROM peers;",
-                                     [this](const QVector<QVariant>& row) {
-                                         // HACK: we previously accidentally put Tox IDs in the db. So instead of
-                                         // constructing as a ToxPk which will enforce the correct length, construct
-                                         // as ToxId which will allow either length, and then convert to ToxPk.
-                                         peers[ToxId{QByteArray::fromHex(row[0].toByteArray())}.getPublicKey()] = row[1].toInt();
-                                     }});
 }
 
 History::~History()
@@ -497,12 +507,6 @@ void History::removeFriendHistory(const ToxPk& friendPk)
         return;
     }
 
-    if (!peers.contains(friendPk)) {
-        return;
-    }
-
-    int64_t id = peers[friendPk];
-
     QString queryText = QString("DELETE FROM faux_offline_pending "
                                 "WHERE faux_offline_pending.id IN ( "
                                 "    SELECT faux_offline_pending.id FROM faux_offline_pending "
@@ -520,11 +524,9 @@ void History::removeFriendHistory(const ToxPk& friendPk)
                                 "DELETE FROM peers WHERE id=%1; "
                                 "DELETE FROM file_transfers WHERE chat_id=%1;"
                                 "VACUUM;")
-                            .arg(id);
+                            .arg(generatePeerIdString(friendPk));
 
-    if (db->execNow(queryText)) {
-        peers.remove(friendPk);
-    } else {
+    if (!db->execNow(queryText)) {
         qWarning() << "Failed to remove friend's history";
     }
 }
@@ -546,60 +548,20 @@ History::generateNewMessageQueries(const ToxPk& friendPk, const QString& message
 {
     QVector<RawDatabase::Query> queries;
 
-    // Get the db id of the peer we're chatting with
-    int64_t peerId;
-    if (peers.contains(friendPk)) {
-        peerId = (peers)[friendPk];
-    } else {
-        if (peers.isEmpty()) {
-            peerId = 0;
-        } else {
-            peerId = *std::max_element(peers.begin(), peers.end()) + 1;
-        }
 
-        (peers)[friendPk] = peerId;
-        queries += RawDatabase::Query(("INSERT INTO peers (id, public_key) "
-                                       "VALUES (%1, '"
-                                       + friendPk.toString() + "');")
-                                          .arg(peerId));
-    }
+    queries += generateEnsurePkInPeers(friendPk);
+    queries += generateEnsurePkInPeers(sender);
+    queries += generateUpdateAlias(sender, dispName);
 
-    // Get the db id of the sender of the message
-    int64_t senderId;
-    if (peers.contains(sender)) {
-        senderId = (peers)[sender];
-    } else {
-        if (peers.isEmpty()) {
-            senderId = 0;
-        } else {
-            senderId = *std::max_element(peers.begin(), peers.end()) + 1;
-        }
-
-        (peers)[sender] = senderId;
-        queries += RawDatabase::Query{("INSERT INTO peers (id, public_key) "
-                                       "VALUES (%1, '"
-                                       + sender.toString() + "');")
-                                          .arg(senderId)};
-    }
-
-    queries += RawDatabase::Query(
-        QString("INSERT OR IGNORE INTO aliases (owner, display_name) VALUES (%1, ?);").arg(senderId),
-        {dispName.toUtf8()});
-
-    // If the alias already existed, the insert will ignore the conflict and last_insert_rowid()
-    // will return garbage,
-    // so we have to check changes() and manually fetch the row ID in this case
     queries +=
         RawDatabase::Query(QString(
                                "INSERT INTO history (timestamp, chat_id, message, sender_alias) "
                                "VALUES (%1, %2, ?, ("
-                               "  CASE WHEN changes() IS 0 THEN ("
                                "    SELECT id FROM aliases WHERE owner=%3 AND display_name=?)"
-                               "  ELSE last_insert_rowid() END"
-                               "));")
+                               ");")
                                .arg(time.toMSecsSinceEpoch())
-                               .arg(peerId)
-                               .arg(senderId),
+                               .arg(generatePeerIdString(friendPk))
+                               .arg(generatePeerIdString(sender)),
                            {message.toUtf8(), dispName.toUtf8()}, insertIdCallback);
 
     if (!isDelivered) {
@@ -617,8 +579,6 @@ void History::onFileInsertionReady(FileDbInsertionData data)
     QVector<RawDatabase::Query> queries;
     std::weak_ptr<History> weakThis = shared_from_this();
 
-    // peerId is guaranteed to be inserted since we just used it in addNewMessage
-    auto peerId = peers[data.friendPk];
     // Copy to pass into labmda for later
     auto fileId = data.fileId;
     queries +=
@@ -626,7 +586,7 @@ void History::onFileInsertionReady(FileDbInsertionData data)
                                "INSERT INTO file_transfers (chat_id, file_restart_id, "
                                "file_path, file_name, file_hash, file_size, direction, file_state) "
                                "VALUES (%1, ?, ?, ?, ?, %2, %3, %4);")
-                               .arg(peerId)
+                               .arg(generatePeerIdString(data.friendPk))
                                .arg(data.size)
                                .arg(static_cast<int>(data.direction))
                                .arg(ToxFile::CANCELED),
