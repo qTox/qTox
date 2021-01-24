@@ -1094,7 +1094,7 @@ bool Core::sendMessageWithType(uint32_t friendId, const QString& message, Tox_Me
                                ReceiptNum& receipt)
 {
     int size = message.toUtf8().size();
-    auto maxSize = static_cast<int>(tox_max_message_length());
+    auto maxSize = static_cast<int>(getMaxMessageSize());
     if (size > maxSize) {
         assert(false);
         qCritical() << "Core::sendMessageWithType called with message of size:" << size
@@ -1140,7 +1140,7 @@ void Core::sendGroupMessageWithType(int groupId, const QString& message, Tox_Mes
     QMutexLocker ml{&coreLoopLock};
 
     int size = message.toUtf8().size();
-    auto maxSize = static_cast<int>(tox_max_message_length());
+    auto maxSize = static_cast<int>(getMaxMessageSize());
     if (size > maxSize) {
         qCritical() << "Core::sendMessageWithType called with message of size:" << size
                     << "when max is:" << maxSize << ". Ignoring.";
@@ -1762,11 +1762,8 @@ QString Core::getFriendUsername(uint32_t friendnumber) const
     return ToxString(nameBuf.data(), nameSize).getQString();
 }
 
-QStringList Core::splitMessage(const QString& message)
+uint64_t Core::getMaxMessageSize() const
 {
-    QStringList splittedMsgs;
-    QByteArray ba_message{message.toUtf8()};
-
     /*
      * TODO: Remove this hack; the reported max message length we receive from c-toxcore
      * as of 08-02-2019 is inaccurate, causing us to generate too large messages when splitting
@@ -1777,33 +1774,7 @@ QStringList Core::splitMessage(const QString& message)
      *
      * (uint32_t tox_max_message_length(void); declared in tox.h, unable to see explicit definition)
      */
-    const auto maxLen = static_cast<int>(tox_max_message_length()) - 50;
-
-    while (ba_message.size() > maxLen) {
-        int splitPos = ba_message.lastIndexOf('\n', maxLen - 1);
-
-        if (splitPos <= 0) {
-            splitPos = ba_message.lastIndexOf(' ', maxLen - 1);
-        }
-
-        if (splitPos <= 0) {
-            constexpr uint8_t firstOfMultiByteMask = 0xC0;
-            constexpr uint8_t multiByteMask = 0x80;
-            splitPos = maxLen;
-            // don't split a utf8 character
-            if ((ba_message[splitPos] & multiByteMask) == multiByteMask) {
-                while ((ba_message[splitPos] & firstOfMultiByteMask) != firstOfMultiByteMask) {
-                    --splitPos;
-                }
-            }
-            --splitPos;
-        }
-        splittedMsgs.append(QString{ba_message.left(splitPos + 1)});
-        ba_message = ba_message.mid(splitPos + 1);
-    }
-
-    splittedMsgs.append(QString{ba_message});
-    return splittedMsgs;
+    return tox_max_message_length() - 50;
 }
 
 QString Core::getPeerName(const ToxPk& id) const

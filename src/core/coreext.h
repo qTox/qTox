@@ -117,6 +117,8 @@ public:
 
     std::unique_ptr<ICoreExtPacket> getPacket(uint32_t friendId) override;
 
+    uint64_t getMaxExtendedMessageSize();
+
 signals:
     void extendedMessageReceived(uint32_t friendId, const QString& message);
     void extendedReceiptReceived(uint32_t friendId, uint64_t receiptId);

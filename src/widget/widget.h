@@ -364,7 +364,7 @@ private:
     Core* core = nullptr;
 
 
-    MessageProcessor::SharedParams sharedMessageProcessorParams;
+    std::unique_ptr<MessageProcessor::SharedParams> sharedMessageProcessorParams;
 #if DESKTOP_NOTIFICATIONS
     std::unique_ptr<NotificationGenerator> notificationGenerator;
     DesktopNotify notifier;

@@ -28,6 +28,8 @@
 #include <set>
 #include <deque>
 
+static constexpr uint64_t testMaxExtendedMessageSize = 10 * 1024 * 1024;
+
 
 class MockCoreExtPacket : public ICoreExtPacket
 {
@@ -165,7 +167,8 @@ void TestFriendMessageDispatcher::init()
     messageSender = std::unique_ptr<MockFriendMessageSender>(new MockFriendMessageSender());
     coreExtPacketAllocator = std::unique_ptr<MockCoreExtPacketAllocator>(new MockCoreExtPacketAllocator());
     sharedProcessorParams =
-        std::unique_ptr<MessageProcessor::SharedParams>(new MessageProcessor::SharedParams());
+        std::unique_ptr<MessageProcessor::SharedParams>(new MessageProcessor::SharedParams(tox_max_message_length(), testMaxExtendedMessageSize));
+
     messageProcessor = std::unique_ptr<MessageProcessor>(new MessageProcessor(*sharedProcessorParams));
     friendMessageDispatcher = std::unique_ptr<FriendMessageDispatcher>(
         new FriendMessageDispatcher(*f, *messageProcessor, *messageSender, *coreExtPacketAllocator));
@@ -377,7 +380,7 @@ void TestFriendMessageDispatcher::testActionMessagesSplitWithExtensions()
 
     auto reallyLongMessage = QString("a");
 
-    for (int i = 0; i < 9999; ++i) {
+    for (uint64_t i = 0; i < testMaxExtendedMessageSize + 50; ++i) {
         reallyLongMessage += i;
     }
 
