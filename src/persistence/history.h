@@ -206,7 +206,6 @@ private:
     std::shared_ptr<RawDatabase> db;
 
 
-    QHash<ToxPk, int64_t> peers;
     struct FileInfo
     {
         bool finished = false;
