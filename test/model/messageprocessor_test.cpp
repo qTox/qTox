@@ -53,7 +53,7 @@ private slots:
  */
 void TestMessageProcessor::testSelfMention()
 {
-    MessageProcessor::SharedParams sharedParams;
+    MessageProcessor::SharedParams sharedParams(tox_max_message_length(), 10 * 1024 * 1024);;
     const QLatin1String testUserName{"MyUserName"};
     const QLatin1String testToxPk{
         "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"};
@@ -124,7 +124,7 @@ void TestMessageProcessor::testSelfMention()
  */
 void TestMessageProcessor::testOutgoingMessage()
 {
-    auto sharedParams = MessageProcessor::SharedParams();
+    auto sharedParams = MessageProcessor::SharedParams(tox_max_message_length(), 10 * 1024 * 1024);
     auto messageProcessor = MessageProcessor(sharedParams);
 
     QString testStr;
@@ -152,7 +152,7 @@ void TestMessageProcessor::testOutgoingMessage()
 void TestMessageProcessor::testIncomingMessage()
 {
     // Nothing too special happening on the incoming side if we aren't looking for self mentions
-    auto sharedParams = MessageProcessor::SharedParams();
+    auto sharedParams = MessageProcessor::SharedParams(tox_max_message_length(), 10 * 1024 * 1024);
     auto messageProcessor = MessageProcessor(sharedParams);
     auto message = messageProcessor.processIncomingCoreMessage(false, "test");
 
