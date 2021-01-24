@@ -71,22 +71,39 @@ public:
     {
 
     public:
-        QRegularExpression GetNameMention() const
+        SharedParams(uint64_t maxCoreMessageSize_, uint64_t maxExtendedMessageSize_)
+            : maxCoreMessageSize(maxCoreMessageSize_)
+            , maxExtendedMessageSize(maxExtendedMessageSize_)
+        {}
+
+        QRegularExpression getNameMention() const
         {
             return nameMention;
         }
-        QRegularExpression GetSanitizedNameMention() const
+        QRegularExpression getSanitizedNameMention() const
         {
             return sanitizedNameMention;
         }
-        QRegularExpression GetPublicKeyMention() const
+        QRegularExpression getPublicKeyMention() const
         {
             return pubKeyMention;
         }
         void onUserNameSet(const QString& username);
         void setPublicKey(const QString& pk);
 
+        uint64_t getMaxCoreMessageSize() const
+        {
+            return maxCoreMessageSize;
+        }
+
+        uint64_t getMaxExtendedMessageSize() const
+        {
+            return maxExtendedMessageSize;
+        }
+
     private:
+        uint64_t maxCoreMessageSize;
+        uint64_t maxExtendedMessageSize;
         QRegularExpression nameMention;
         QRegularExpression sanitizedNameMention;
         QRegularExpression pubKeyMention;

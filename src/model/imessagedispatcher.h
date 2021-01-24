@@ -54,7 +54,7 @@ public:
      * @note If the provided extensions are not supported the message will be flagged
      *       as broken
      */
-    virtual DispatchedMessageId
+    virtual std::pair<DispatchedMessageId, DispatchedMessageId>
     sendExtendedMessage(const QString& content, ExtensionSet extensions) = 0;
 
 signals:

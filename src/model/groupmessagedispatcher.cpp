@@ -65,14 +65,15 @@ GroupMessageDispatcher::sendMessage(bool isAction, QString const& content)
     return std::make_pair(firstMessageId, lastMessageId);
 }
 
-DispatchedMessageId GroupMessageDispatcher::sendExtendedMessage(const QString& content, ExtensionSet extensions)
+std::pair<DispatchedMessageId, DispatchedMessageId>
+GroupMessageDispatcher::sendExtendedMessage(const QString& content, ExtensionSet extensions)
 {
     // Stub this api to immediately fail
     auto messageId = nextMessageId++;
     auto messages = processor.processOutgoingMessage(false, content, ExtensionSet());
     emit this->messageSent(messageId, messages[0]);
     emit this->messageBroken(messageId, BrokenMessageReason::unsupportedExtensions);
-    return messageId;
+    return {messageId, messageId};
 }
 
 /**
