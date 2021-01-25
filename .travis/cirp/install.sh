@@ -5,8 +5,6 @@
 # Get Python >=3.5
 if [ "$TRAVIS_OS_NAME" == "osx" ]
 then
-  brew update
-
   # make sha256sum available
   export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
