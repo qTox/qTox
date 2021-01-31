@@ -80,7 +80,6 @@ public:
                               const QDateTime& datetime);
     static QString resolveToxPk(const ToxPk& pk);
     QDateTime getLatestTime() const;
-    QDateTime getFirstTime() const;
 
 signals:
     void messageInserted();
