@@ -54,7 +54,6 @@ public:
     void finishNegotiation();
     void setStatus(Status::Status s);
     Status::Status getStatus() const;
-    bool useHistory() const final;
 
     void setExtendedMessageSupport(bool supported);
     ExtensionSet getSupportedExtensions() const;
