@@ -912,6 +912,12 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
     }
 }
 
+void ChatLog::wheelEvent(QWheelEvent *event)
+{
+    QGraphicsView::wheelEvent(event);
+    checkVisibility(true);
+}
+
 void ChatLog::retranslateUi()
 {
     copyAction->setText(tr("Copy"));

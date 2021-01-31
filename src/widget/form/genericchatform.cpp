@@ -44,6 +44,7 @@
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
+#include "src/widget/gui.h"
 
 #include <QClipboard>
 #include <QFileDialog>
