@@ -404,12 +404,10 @@ void GenericChatForm::hideFileMenu()
 
 QDateTime GenericChatForm::getLatestTime() const
 {
-    return getTime(chatWidget->getLatestLine());
-}
+    if (chatLog.getFirstIdx() == chatLog.getNextIdx())
+        return QDateTime();
 
-QDateTime GenericChatForm::getFirstTime() const
-{
-    return getTime(chatWidget->getFirstLine());
+    return chatLog.at(chatLog.getNextIdx() - 1).getTimestamp();
 }
 
 void GenericChatForm::reloadTheme()
