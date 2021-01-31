@@ -201,5 +201,3 @@ QString Group::getSelfName() const
 {
     return selfName;
 }
-
-}

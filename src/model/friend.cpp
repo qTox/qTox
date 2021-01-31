@@ -192,8 +192,6 @@ Status::Status Friend::getStatus() const
     return isNegotiating ? Status::Status::Negotiating : friendStatus;
 }
 
-}
-
 void Friend::setExtendedMessageSupport(bool supported)
 {
     supportedExtensions[ExtensionType::messages] = supported;
@@ -223,3 +221,4 @@ void Friend::onNegotiationComplete() {
     if (Status::isOnline(getStatus())) {
         emit onlineOfflineChanged(friendPk, true);
     }
+}
