@@ -72,6 +72,7 @@ public slots:
     void onAvEnd(uint32_t friendId, bool error);
     void onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
     void onFileNameChanged(const ToxPk& friendPk);
+    void onExtensionSupportChanged(ExtensionSet extensions);
     void clearChatArea();
     void onShowMessagesClicked();
     void onSplitterMoved(int pos, int index);
@@ -90,7 +91,7 @@ private slots:
     void onMicMuteToggle();
     void onVolMuteToggle();
 
-    void onFriendStatusChanged(quint32 friendId, Status::Status status);
+    void onFriendStatusChanged(const ToxPk& friendPk, Status::Status status);
     void onFriendTypingChanged(quint32 friendId, bool isTyping);
     void onFriendNameChanged(const QString& name);
     void onStatusMessage(const QString& message);

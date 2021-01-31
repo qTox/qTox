@@ -53,7 +53,7 @@ private slots:
  */
 void TestMessageProcessor::testSelfMention()
 {
-    MessageProcessor::SharedParams sharedParams;
+    MessageProcessor::SharedParams sharedParams(tox_max_message_length(), 10 * 1024 * 1024);;
     const QLatin1String testUserName{"MyUserName"};
     const QLatin1String testToxPk{
         "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"};
@@ -66,55 +66,55 @@ void TestMessageProcessor::testSelfMention()
     for (const auto& str : {testUserName, testToxPk}) {
 
         // Using my name or public key should match
-        auto processedMessage = messageProcessor.processIncomingMessage(false, str % " hi");
+        auto processedMessage = messageProcessor.processIncomingCoreMessage(false, str % " hi");
         QVERIFY(messageHasSelfMention(processedMessage));
 
         // Action messages should match too
-        processedMessage = messageProcessor.processIncomingMessage(true, str % " hi");
+        processedMessage = messageProcessor.processIncomingCoreMessage(true, str % " hi");
         QVERIFY(messageHasSelfMention(processedMessage));
 
         // Too much text shouldn't match
-        processedMessage = messageProcessor.processIncomingMessage(false, str % "2");
+        processedMessage = messageProcessor.processIncomingCoreMessage(false, str % "2");
         QVERIFY(!messageHasSelfMention(processedMessage));
 
         // Unless it's a colon
-        processedMessage = messageProcessor.processIncomingMessage(false, str % ": test");
+        processedMessage = messageProcessor.processIncomingCoreMessage(false, str % ": test");
         QVERIFY(messageHasSelfMention(processedMessage));
 
         // remove last character
         QString chopped = str;
         chopped.chop(1);
         // Too little text shouldn't match
-        processedMessage = messageProcessor.processIncomingMessage(false, chopped);
+        processedMessage = messageProcessor.processIncomingCoreMessage(false, chopped);
         QVERIFY(!messageHasSelfMention(processedMessage));
 
         // make lower case
         QString lower = QString(str).toLower();
 
         // The regex should be case insensitive
-        processedMessage = messageProcessor.processIncomingMessage(false, lower % " hi");
+        processedMessage = messageProcessor.processIncomingCoreMessage(false, lower % " hi");
         QVERIFY(messageHasSelfMention(processedMessage));
     }
 
     // New user name changes should be detected
     sharedParams.onUserNameSet("NewUserName");
-    auto processedMessage = messageProcessor.processIncomingMessage(false, "NewUserName: hi");
+    auto processedMessage = messageProcessor.processIncomingCoreMessage(false, "NewUserName: hi");
     QVERIFY(messageHasSelfMention(processedMessage));
 
     // Special characters should be removed
     sharedParams.onUserNameSet("New\nUserName");
-    processedMessage = messageProcessor.processIncomingMessage(false, "NewUserName: hi");
+    processedMessage = messageProcessor.processIncomingCoreMessage(false, "NewUserName: hi");
     QVERIFY(messageHasSelfMention(processedMessage));
 
     // Regression tests for: https://github.com/qTox/qTox/issues/2119
     {
         // Empty usernames should not match
         sharedParams.onUserNameSet("");
-        processedMessage = messageProcessor.processIncomingMessage(false, "");
+        processedMessage = messageProcessor.processIncomingCoreMessage(false, "");
         QVERIFY(!messageHasSelfMention(processedMessage));
 
         // Empty usernames matched on everything, ensure this is not the case
-        processedMessage = messageProcessor.processIncomingMessage(false, "a");
+        processedMessage = messageProcessor.processIncomingCoreMessage(false, "a");
         QVERIFY(!messageHasSelfMention(processedMessage));
     }
 }
@@ -124,7 +124,7 @@ void TestMessageProcessor::testSelfMention()
  */
 void TestMessageProcessor::testOutgoingMessage()
 {
-    auto sharedParams = MessageProcessor::SharedParams();
+    auto sharedParams = MessageProcessor::SharedParams(tox_max_message_length(), 10 * 1024 * 1024);
     auto messageProcessor = MessageProcessor(sharedParams);
 
     QString testStr;
@@ -133,10 +133,17 @@ void TestMessageProcessor::testOutgoingMessage()
         testStr += "a";
     }
 
-    auto messages = messageProcessor.processOutgoingMessage(false, testStr);
+    auto messages = messageProcessor.processOutgoingMessage(false, testStr, ExtensionSet());
 
     // The message processor should split our messages
     QVERIFY(messages.size() == 2);
+
+    auto extensionSet = ExtensionSet();
+    extensionSet[ExtensionType::messages] = true;
+    messages = messageProcessor.processOutgoingMessage(false, testStr, extensionSet);
+
+    // If we have multipart messages we shouldn't split our messages
+    QVERIFY(messages.size() == 1);
 }
 
 /**
@@ -145,9 +152,9 @@ void TestMessageProcessor::testOutgoingMessage()
 void TestMessageProcessor::testIncomingMessage()
 {
     // Nothing too special happening on the incoming side if we aren't looking for self mentions
-    auto sharedParams = MessageProcessor::SharedParams();
+    auto sharedParams = MessageProcessor::SharedParams(tox_max_message_length(), 10 * 1024 * 1024);
     auto messageProcessor = MessageProcessor(sharedParams);
-    auto message = messageProcessor.processIncomingMessage(false, "test");
+    auto message = messageProcessor.processIncomingCoreMessage(false, "test");
 
     QVERIFY(message.isAction == false);
     QVERIFY(message.content == "test");

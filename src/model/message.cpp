@@ -21,6 +21,40 @@
 #include "friend.h"
 #include "src/core/core.h"
 
+#include <cassert>
+
+namespace {
+    QStringList splitMessage(const QString& message, uint64_t maxLength)
+    {
+        QStringList splittedMsgs;
+        QByteArray ba_message{message.toUtf8()};
+        while (static_cast<uint64_t>(ba_message.size()) > maxLength) {
+            int splitPos = ba_message.lastIndexOf('\n', maxLength - 1);
+
+            if (splitPos <= 0) {
+                splitPos = ba_message.lastIndexOf(' ', maxLength - 1);
+            }
+
+            if (splitPos <= 0) {
+                constexpr uint8_t firstOfMultiByteMask = 0xC0;
+                constexpr uint8_t multiByteMask = 0x80;
+                splitPos = maxLength;
+                // don't split a utf8 character
+                if ((ba_message[splitPos] & multiByteMask) == multiByteMask) {
+                    while ((ba_message[splitPos] & firstOfMultiByteMask) != firstOfMultiByteMask) {
+                        --splitPos;
+                    }
+                }
+                --splitPos;
+            }
+            splittedMsgs.append(QString{ba_message.left(splitPos + 1)});
+            ba_message = ba_message.mid(splitPos + 1);
+        }
+
+        splittedMsgs.append(QString{ba_message});
+        return splittedMsgs;
+    }
+}
 void MessageProcessor::SharedParams::onUserNameSet(const QString& username)
 {
     QString sanename = username;
@@ -49,11 +83,16 @@ MessageProcessor::MessageProcessor(const MessageProcessor::SharedParams& sharedP
 /**
  * @brief Converts an outgoing message into one (or many) sanitized Message(s)
  */
-std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QString const& content)
+std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QString const& content, ExtensionSet extensions)
 {
     std::vector<Message> ret;
 
-    QStringList splitMsgs = Core::splitMessage(content);
+    const auto maxSendingSize = extensions[ExtensionType::messages]
+        ? sharedParams.getMaxExtendedMessageSize()
+        : sharedParams.getMaxCoreMessageSize();
+
+    const auto splitMsgs = splitMessage(content, maxSendingSize);
+
     ret.reserve(splitMsgs.size());
 
     QDateTime timestamp = QDateTime::currentDateTime();
@@ -63,17 +102,20 @@ std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QSt
                        message.isAction = isAction;
                        message.content = part;
                        message.timestamp = timestamp;
+                       // In theory we could limit this only to the extensions
+                       // required but since Core owns the splitting logic it
+                       // isn't trivial to do that now
+                       message.extensionSet = extensions;
                        return message;
                    });
 
     return ret;
 }
 
-
 /**
  * @brief Converts an incoming message into a sanitized Message
  */
-Message MessageProcessor::processIncomingMessage(bool isAction, QString const& message)
+Message MessageProcessor::processIncomingCoreMessage(bool isAction, QString const& message)
 {
     QDateTime timestamp = QDateTime::currentDateTime();
     auto ret = Message{};
@@ -82,9 +124,9 @@ Message MessageProcessor::processIncomingMessage(bool isAction, QString const& m
     ret.timestamp = timestamp;
 
     if (detectingMentions) {
-        auto nameMention = sharedParams.GetNameMention();
-        auto sanitizedNameMention = sharedParams.GetSanitizedNameMention();
-        auto pubKeyMention = sharedParams.GetPublicKeyMention();
+        auto nameMention = sharedParams.getNameMention();
+        auto sanitizedNameMention = sharedParams.getSanitizedNameMention();
+        auto pubKeyMention = sharedParams.getPublicKeyMention();
 
         for (auto const& mention : {nameMention, sanitizedNameMention, pubKeyMention}) {
             auto matchIt = mention.globalMatch(ret.content);
@@ -108,4 +150,19 @@ Message MessageProcessor::processIncomingMessage(bool isAction, QString const& m
     }
 
     return ret;
+}
+
+Message MessageProcessor::processIncomingExtMessage(const QString& content)
+{
+    // Note: detectingMentions not implemented here since mentions are only
+    // currently useful in group messages which do not support extensions. If we
+    // were to support mentions we would probably want to do something more
+    // intelligent anyways
+    assert(detectingMentions == false);
+    auto message = Message();
+    message.timestamp = QDateTime::currentDateTime();
+    message.content = content;
+    message.extensionSet |= ExtensionType::messages;
+
+    return message;
 }

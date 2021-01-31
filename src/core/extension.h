@@ -17,26 +17,16 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QString>
-#include <QPixmap>
-
 #pragma once
 
-namespace Status
-{
-    // Status::Status is weird, but Status is a fitting name for both the namespace and enum class..
-    enum class Status
-    {
-        Online = 0,
-        Away,
-        Busy,
-        Offline,
-        Blocked,
-        Negotiating,
-    };
+#include <bitset>
 
-    QString getIconPath(Status status, bool event = false);
-    QString getTitle(Status status);
-    QString getAssetSuffix(Status status);
-    bool isOnline(Status status);
-}
+// Do not use enum class because we use these as indexes frequently (see ExtensionSet)
+struct ExtensionType
+{
+    enum {
+        messages,
+        max
+    };
+};
+using ExtensionSet = std::bitset<ExtensionType::max>;

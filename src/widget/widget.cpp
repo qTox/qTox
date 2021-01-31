@@ -248,6 +248,9 @@ void Widget::init()
     ui->searchContactFilterBox->setMenu(filterMenu);
 
     core = &profile.getCore();
+    auto coreExt = core->getExt();
+
+    sharedMessageProcessorParams.reset(new MessageProcessor::SharedParams(core->getMaxMessageSize(), coreExt->getMaxExtendedMessageSize()));
 
     contactListWidget = new FriendListWidget(*core, this, settings.getGroupchatPosition());
     connect(contactListWidget, &FriendListWidget::searchCircle, this, &Widget::searchCircle);
@@ -679,7 +682,7 @@ void Widget::onCoreChanged(Core& core)
     connect(&core, &Core::friendAdded, this, &Widget::addFriend);
     connect(&core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
     connect(&core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
-    connect(&core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
+    connect(&core, &Core::friendStatusChanged, this, &Widget::onCoreFriendStatusChanged);
     connect(&core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
     connect(&core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
     connect(&core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
@@ -695,12 +698,19 @@ void Widget::onCoreChanged(Core& core)
     connect(&core, &Core::friendTypingChanged, this, &Widget::onFriendTypingChanged);
     connect(&core, &Core::groupSentFailed, this, &Widget::onGroupSendFailed);
     connect(&core, &Core::usernameSet, this, &Widget::refreshPeerListsLocal);
+
+    auto coreExt = core.getExt();
+
+    connect(coreExt, &CoreExt::extendedMessageReceived, this, &Widget::onFriendExtMessageReceived);
+    connect(coreExt, &CoreExt::extendedReceiptReceived, this, &Widget::onExtReceiptReceived);
+    connect(coreExt, &CoreExt::extendedMessageSupport, this, &Widget::onExtendedMessageSupport);
+
     connect(this, &Widget::statusSet, &core, &Core::setStatus);
     connect(this, &Widget::friendRequested, &core, &Core::requestFriendship);
     connect(this, &Widget::friendRequestAccepted, &core, &Core::acceptFriendRequest);
     connect(this, &Widget::changeGroupTitle, &core, &Core::changeGroupTitle);
 
-    sharedMessageProcessorParams.setPublicKey(core.getSelfPublicKey().toString());
+    sharedMessageProcessorParams->setPublicKey(core.getSelfPublicKey().toString());
 }
 
 void Widget::onConnected()
@@ -992,7 +1002,7 @@ void Widget::setUsername(const QString& username)
             Qt::convertFromPlainText(username, Qt::WhiteSpaceNormal)); // for overlength names
     }
 
-    sharedMessageProcessorParams.onUserNameSet(username);
+    sharedMessageProcessorParams->onUserNameSet(username);
 }
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage)
@@ -1144,9 +1154,9 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connectFriendWidget(*widget);
     auto history = profile.getHistory();
 
-    auto messageProcessor = MessageProcessor(sharedMessageProcessorParams);
+    auto messageProcessor = MessageProcessor(*sharedMessageProcessorParams);
     auto friendMessageDispatcher =
-        std::make_shared<FriendMessageDispatcher>(*newfriend, std::move(messageProcessor), *core);
+        std::make_shared<FriendMessageDispatcher>(*newfriend, std::move(messageProcessor), *core, *core->getExt());
 
     // Note: We do not have to connect the message dispatcher signals since
     // ChatHistory hooks them up in a very specific order
@@ -1183,6 +1193,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     friendAlertConnections.insert(friendPk, notifyReceivedConnection);
     connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayedNameChanged);
+    connect(newfriend, &Friend::statusChanged, this, &Widget::onFriendStatusChanged);
 
     connect(friendForm, &ChatForm::incomingNotification, this, &Widget::incomingNotification);
     connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
@@ -1222,7 +1233,7 @@ void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
     QMessageBox::critical(nullptr, "Error", info);
 }
 
-void Widget::onFriendStatusChanged(int friendId, Status::Status status)
+void Widget::onCoreFriendStatusChanged(int friendId, Status::Status status)
 {
     const auto& friendPk = FriendList::id2Key(friendId);
     Friend* f = FriendList::findFriend(friendPk);
@@ -1230,18 +1241,35 @@ void Widget::onFriendStatusChanged(int friendId, Status::Status status)
         return;
     }
 
-    bool isActualChange = f->getStatus() != status;
+    auto const oldStatus = f->getStatus();
+    f->setStatus(status);
+    auto const newStatus = f->getStatus();
 
-    FriendWidget* widget = friendWidgets[f->getPublicKey()];
-    if (isActualChange) {
-        if (!Status::isOnline(f->getStatus())) {
-            contactListWidget->moveWidget(widget, Status::Status::Online);
-        } else if (status == Status::Status::Offline) {
-            contactListWidget->moveWidget(widget, Status::Status::Offline);
-        }
+    auto const startedNegotiating = (newStatus == Status::Status::Negotiating && oldStatus != newStatus);
+    if (startedNegotiating) {
+        constexpr auto negotiationTimeoutMs = 1000;
+        auto timer = std::unique_ptr<QTimer>(new QTimer);
+        timer->setSingleShot(true);
+        timer->setInterval(negotiationTimeoutMs);
+        connect(timer.get(), &QTimer::timeout, f, &Friend::onNegotiationComplete);
+        timer->start();
+        negotiateTimers[friendPk] = std::move(timer);
     }
 
-    f->setStatus(status);
+    // Any widget behavior will be triggered based off of the status
+    // transformations done by the Friend class
+}
+
+void Widget::onFriendStatusChanged(const ToxPk& friendPk, Status::Status status)
+{
+    FriendWidget* widget = friendWidgets[friendPk];
+
+    if (Status::isOnline(status)) {
+        contactListWidget->moveWidget(widget, Status::Status::Online);
+    } else {
+        contactListWidget->moveWidget(widget, Status::Status::Offline);
+    }
+
     widget->updateStatusLight();
     if (widget->isActive()) {
         setWindowTitle(widget->getTitle());
@@ -1399,6 +1427,29 @@ void Widget::onReceiptReceived(int friendId, ReceiptNum receipt)
     }
 
     friendMessageDispatchers[f->getPublicKey()]->onReceiptReceived(receipt);
+}
+
+void Widget::onExtendedMessageSupport(uint32_t friendNumber, bool compatible)
+{
+    const auto& friendKey = FriendList::id2Key(friendNumber);
+    Friend* f = FriendList::findFriend(friendKey);
+    if (!f) {
+        return;
+    }
+
+    f->setExtendedMessageSupport(compatible);
+}
+
+void Widget::onFriendExtMessageReceived(uint32_t friendNumber, const QString& message)
+{
+    const auto& friendKey = FriendList::id2Key(friendNumber);
+    friendMessageDispatchers[friendKey]->onExtMessageReceived(message);
+}
+
+void Widget::onExtReceiptReceived(uint32_t friendNumber, uint64_t receiptId)
+{
+    const auto& friendKey = FriendList::id2Key(friendNumber);
+    friendMessageDispatchers[friendKey]->onExtReceiptReceived(receiptId);
 }
 
 void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
@@ -2079,7 +2130,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
 
     const auto compact = settings.getCompactLayout();
     auto widget = new GroupWidget(chatroom, compact);
-    auto messageProcessor = MessageProcessor(sharedMessageProcessorParams);
+    auto messageProcessor = MessageProcessor(*sharedMessageProcessorParams);
     auto messageDispatcher =
         std::make_shared<GroupMessageDispatcher>(*newgroup, std::move(messageProcessor), *core,
                                                  *core, settings);
@@ -2091,6 +2142,8 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
             &SessionChatLog::onMessageSent);
     connect(messageDispatcher.get(), &IMessageDispatcher::messageComplete, groupChatLog.get(),
             &SessionChatLog::onMessageComplete);
+    connect(messageDispatcher.get(), &IMessageDispatcher::messageBroken, groupChatLog.get(),
+            &SessionChatLog::onMessageBroken);
 
     auto notifyReceivedCallback = [this, groupId](const ToxPk& author, const Message& message) {
         auto isTargeted = std::any_of(message.metadata.begin(), message.metadata.end(),

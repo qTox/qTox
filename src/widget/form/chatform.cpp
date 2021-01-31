@@ -142,8 +142,9 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMes
     connect(coreFile, &CoreFile::fileReceiveRequested, this, &ChatForm::updateFriendActivityForFile);
     connect(coreFile, &CoreFile::fileSendStarted, this, &ChatForm::updateFriendActivityForFile);
     connect(&core, &Core::friendTypingChanged, this, &ChatForm::onFriendTypingChanged);
-    connect(&core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
     connect(coreFile, &CoreFile::fileNameChanged, this, &ChatForm::onFileNameChanged);
+
+    connect(chatFriend, &Friend::statusChanged, this, &ChatForm::onFriendStatusChanged);
 
     const CoreAV* av = core.getAv();
     connect(av, &CoreAV::avInvite, this, &ChatForm::onAvInvite);
@@ -179,6 +180,8 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMes
     connect(headWidget, &ChatFormHeader::callRejected, this, &ChatForm::onRejectCallTriggered);
 
     connect(bodySplitter, &QSplitter::splitterMoved, this, &ChatForm::onSplitterMoved);
+
+    connect(f, &Friend::extensionSupportChanged, this, &ChatForm::onExtensionSupportChanged);
 
     updateCallButtons();
 
@@ -221,6 +224,11 @@ void ChatForm::onFileNameChanged(const ToxPk& friendPk)
     QMessageBox::warning(this, tr("Filename contained illegal characters"),
                          tr("Illegal characters have been changed to _ \n"
                             "so you can save the file on Windows."));
+}
+
+void ChatForm::onExtensionSupportChanged(ExtensionSet extensions)
+{
+    headWidget->updateExtensionSupport(extensions);
 }
 
 void ChatForm::onTextEditChanged()
@@ -423,12 +431,10 @@ void ChatForm::onVolMuteToggle()
     updateMuteVolButton();
 }
 
-void ChatForm::onFriendStatusChanged(uint32_t friendId, Status::Status status)
+void ChatForm::onFriendStatusChanged(const ToxPk& friendPk, Status::Status status)
 {
     // Disable call buttons if friend is offline
-    if (friendId != f->getId()) {
-        return;
-    }
+    assert(friendPk == f->getPublicKey());
 
     if (!Status::isOnline(f->getStatus())) {
         // Hide the "is typing" message when a friend goes offline

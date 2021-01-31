@@ -21,6 +21,8 @@
 #include "core.h"
 #include "coreav.h"
 #include "corefile.h"
+
+#include "src/core/coreext.h"
 #include "src/core/dhtserver.h"
 #include "src/core/icoresettings.h"
 #include "src/core/toxlogger.h"
@@ -515,6 +517,7 @@ void Core::registerCallbacks(Tox* tox)
     tox_callback_conference_peer_list_changed(tox, onGroupPeerListChange);
     tox_callback_conference_peer_name(tox, onGroupPeerNameChange);
     tox_callback_conference_title(tox, onGroupTitleChange);
+    tox_callback_friend_lossless_packet(tox, onLosslessPacket);
 }
 
 /**
@@ -639,6 +642,9 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
         return {};
     }
 
+    core->ext = CoreExt::makeCoreExt(core->tox.get());
+    connect(core.get(), &Core::friendStatusChanged, core->ext.get(), &CoreExt::onFriendStatusChanged);
+
     registerCallbacks(core->tox.get());
 
     // connect the thread with the Core
@@ -714,6 +720,16 @@ QMutex &Core::getCoreLoopLock() const
     return coreLoopLock;
 }
 
+const CoreExt* Core::getExt() const
+{
+    return ext.get();
+}
+
+CoreExt* Core::getExt()
+{
+    return ext.get();
+}
+
 /* Using the now commented out statements in checkConnection(), I watched how
  * many ticks disconnects-after-initial-connect lasted. Out of roughly 15 trials,
  * 5 disconnected; 4 were DCd for less than 20 ticks, while the 5th was ~50 ticks.
@@ -734,6 +750,7 @@ void Core::process()
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
     tox_iterate(tox.get(), this);
+    ext->process();
 
 #ifdef DEBUG
     // we want to see the debug messages immediately
@@ -988,6 +1005,16 @@ void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uin
     emit core->groupTitleChanged(groupId, author, ToxString(cTitle, length).getQString());
 }
 
+/**
+ * @brief Handling of custom lossless packets received by toxcore. Currently only used to forward toxext packets to CoreExt
+ */
+void Core::onLosslessPacket(Tox*, uint32_t friendId,
+                            const uint8_t* data, size_t length, void* vCore)
+{
+    Core* core = static_cast<Core*>(vCore);
+    core->ext->onLosslessPacket(friendId, data, length);
+}
+
 void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void* core)
 {
     emit static_cast<Core*>(core)->receiptRecieved(friendId, ReceiptNum{receipt});
@@ -1067,8 +1094,9 @@ bool Core::sendMessageWithType(uint32_t friendId, const QString& message, Tox_Me
                                ReceiptNum& receipt)
 {
     int size = message.toUtf8().size();
-    auto maxSize = static_cast<int>(tox_max_message_length());
+    auto maxSize = static_cast<int>(getMaxMessageSize());
     if (size > maxSize) {
+        assert(false);
         qCritical() << "Core::sendMessageWithType called with message of size:" << size
                     << "when max is:" << maxSize << ". Ignoring.";
         return false;
@@ -1112,7 +1140,7 @@ void Core::sendGroupMessageWithType(int groupId, const QString& message, Tox_Mes
     QMutexLocker ml{&coreLoopLock};
 
     int size = message.toUtf8().size();
-    auto maxSize = static_cast<int>(tox_max_message_length());
+    auto maxSize = static_cast<int>(getMaxMessageSize());
     if (size > maxSize) {
         qCritical() << "Core::sendMessageWithType called with message of size:" << size
                     << "when max is:" << maxSize << ". Ignoring.";
@@ -1734,11 +1762,8 @@ QString Core::getFriendUsername(uint32_t friendnumber) const
     return ToxString(nameBuf.data(), nameSize).getQString();
 }
 
-QStringList Core::splitMessage(const QString& message)
+uint64_t Core::getMaxMessageSize() const
 {
-    QStringList splittedMsgs;
-    QByteArray ba_message{message.toUtf8()};
-
     /*
      * TODO: Remove this hack; the reported max message length we receive from c-toxcore
      * as of 08-02-2019 is inaccurate, causing us to generate too large messages when splitting
@@ -1749,33 +1774,7 @@ QStringList Core::splitMessage(const QString& message)
      *
      * (uint32_t tox_max_message_length(void); declared in tox.h, unable to see explicit definition)
      */
-    const auto maxLen = static_cast<int>(tox_max_message_length()) - 50;
-
-    while (ba_message.size() > maxLen) {
-        int splitPos = ba_message.lastIndexOf('\n', maxLen - 1);
-
-        if (splitPos <= 0) {
-            splitPos = ba_message.lastIndexOf(' ', maxLen - 1);
-        }
-
-        if (splitPos <= 0) {
-            constexpr uint8_t firstOfMultiByteMask = 0xC0;
-            constexpr uint8_t multiByteMask = 0x80;
-            splitPos = maxLen;
-            // don't split a utf8 character
-            if ((ba_message[splitPos] & multiByteMask) == multiByteMask) {
-                while ((ba_message[splitPos] & firstOfMultiByteMask) != firstOfMultiByteMask) {
-                    --splitPos;
-                }
-            }
-            --splitPos;
-        }
-        splittedMsgs.append(QString{ba_message.left(splitPos + 1)});
-        ba_message = ba_message.mid(splitPos + 1);
-    }
-
-    splittedMsgs.append(QString{ba_message});
-    return splittedMsgs;
+    return tox_max_message_length() - 50;
 }
 
 QString Core::getPeerName(const ToxPk& id) const

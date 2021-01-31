@@ -19,6 +19,9 @@
 
 #pragma once
 
+#include "src/core/coreext.h"
+#include "src/core/extension.h"
+
 #include <QDateTime>
 #include <QRegularExpression>
 #include <QString>
@@ -26,6 +29,7 @@
 #include <vector>
 
 class Friend;
+class CoreExt;
 
 // NOTE: This could be extended in the future to handle all text processing (see
 // ChatMessage::createChatMessage)
@@ -50,6 +54,7 @@ struct Message
     bool isAction;
     QString content;
     QDateTime timestamp;
+    ExtensionSet extensionSet;
     std::vector<MessageMetadata> metadata;
 };
 
@@ -66,22 +71,39 @@ public:
     {
 
     public:
-        QRegularExpression GetNameMention() const
+        SharedParams(uint64_t maxCoreMessageSize_, uint64_t maxExtendedMessageSize_)
+            : maxCoreMessageSize(maxCoreMessageSize_)
+            , maxExtendedMessageSize(maxExtendedMessageSize_)
+        {}
+
+        QRegularExpression getNameMention() const
         {
             return nameMention;
         }
-        QRegularExpression GetSanitizedNameMention() const
+        QRegularExpression getSanitizedNameMention() const
         {
             return sanitizedNameMention;
         }
-        QRegularExpression GetPublicKeyMention() const
+        QRegularExpression getPublicKeyMention() const
         {
             return pubKeyMention;
         }
         void onUserNameSet(const QString& username);
         void setPublicKey(const QString& pk);
 
+        uint64_t getMaxCoreMessageSize() const
+        {
+            return maxCoreMessageSize;
+        }
+
+        uint64_t getMaxExtendedMessageSize() const
+        {
+            return maxExtendedMessageSize;
+        }
+
     private:
+        uint64_t maxCoreMessageSize;
+        uint64_t maxExtendedMessageSize;
         QRegularExpression nameMention;
         QRegularExpression sanitizedNameMention;
         QRegularExpression pubKeyMention;
@@ -89,9 +111,9 @@ public:
 
     MessageProcessor(const SharedParams& sharedParams);
 
-    std::vector<Message> processOutgoingMessage(bool isAction, QString const& content);
-
-    Message processIncomingMessage(bool isAction, QString const& message);
+    std::vector<Message> processOutgoingMessage(bool isAction, const QString& content, ExtensionSet extensions);
+    Message processIncomingCoreMessage(bool isAction, const QString& content);
+    Message processIncomingExtMessage(const QString& content);
 
     /**
      * @brief Enables mention detection in the processor

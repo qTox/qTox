@@ -165,13 +165,17 @@ public slots:
     void setStatusMessage(const QString& statusMessage);
     void addFriend(uint32_t friendId, const ToxPk& friendPk);
     void addFriendFailed(const ToxPk& userId, const QString& errorInfo = QString());
-    void onFriendStatusChanged(int friendId, Status::Status status);
+    void onCoreFriendStatusChanged(int friendId, Status::Status status);
+    void onFriendStatusChanged(const ToxPk& friendPk, Status::Status status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendDisplayedNameChanged(const QString& displayed);
     void onFriendUsernameChanged(int friendId, const QString& username);
     void onFriendAliasChanged(const ToxPk& friendId, const QString& alias);
     void onFriendMessageReceived(uint32_t friendnumber, const QString& message, bool isAction);
     void onReceiptReceived(int friendId, ReceiptNum receipt);
+    void onExtendedMessageSupport(uint32_t friendNumber, bool supported);
+    void onFriendExtMessageReceived(uint32_t friendNumber, const QString& message);
+    void onExtReceiptReceived(uint32_t friendNumber, uint64_t receiptId);
     void onFriendRequestReceived(const ToxPk& friendPk, const QString& message);
     void onFileReceiveRequested(const ToxFile& file);
     void onEmptyGroupCreated(uint32_t groupnumber, const GroupId& groupId, const QString& title);
@@ -344,6 +348,7 @@ private:
     QMap<ToxPk, std::shared_ptr<ChatHistory>> friendChatLogs;
     QMap<ToxPk, std::shared_ptr<FriendChatroom>> friendChatrooms;
     QMap<ToxPk, ChatForm*> chatForms;
+    std::map<ToxPk, std::unique_ptr<QTimer>> negotiateTimers;
 
     QMap<GroupId, GroupWidget*> groupWidgets;
     QMap<GroupId, std::shared_ptr<GroupMessageDispatcher>> groupMessageDispatchers;
@@ -359,7 +364,7 @@ private:
     Core* core = nullptr;
 
 
-    MessageProcessor::SharedParams sharedMessageProcessorParams;
+    std::unique_ptr<MessageProcessor::SharedParams> sharedMessageProcessorParams;
 #if DESKTOP_NOTIFICATIONS
     std::unique_ptr<NotificationGenerator> notificationGenerator;
     DesktopNotify notifier;
