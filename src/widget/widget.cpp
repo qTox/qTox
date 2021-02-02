@@ -147,6 +147,9 @@ Widget::Widget(Profile &_profile, IAudioControl& audio, QWidget* parent)
     , eventIcon(false)
     , audio(audio)
     , settings(Settings::getInstance())
+#if DESKTOP_NOTIFICATIONS
+    , notifier(this)
+#endif
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -299,7 +302,12 @@ void Widget::init()
 #if DESKTOP_NOTIFICATIONS
     notificationGenerator.reset(new NotificationGenerator(settings, &profile));
     connect(&notifier, &DesktopNotify::notificationClosed, notificationGenerator.get(), &NotificationGenerator::onNotificationActivated);
+    connect(&notifier, &DesktopNotify::notificationActivated, notificationGenerator.get(), &NotificationGenerator::onNotificationActivated);
+
+    connect(&notifier, &DesktopNotify::notificationActivated, this, &Widget::onNotificationActivated);
+    connect(qobject_cast<QApplication*>(QCoreApplication::instance()), &QApplication::focusChanged, this, &Widget::onFocusChanged);
 #endif
+
 
     // connect logout tray menu action
     connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
@@ -711,6 +719,26 @@ void Widget::onCoreChanged(Core& core)
     connect(this, &Widget::changeGroupTitle, &core, &Core::changeGroupTitle);
 
     sharedMessageProcessorParams->setPublicKey(core.getSelfPublicKey().toString());
+}
+
+void Widget::onNotificationActivated()
+{
+    raise();
+    activateWindow();
+}
+
+void Widget::onFocusChanged(QWidget* old, QWidget* now)
+{
+#if DESKTOP_NOTIFICATIONS
+    // Using the focusChanged signal seems to be the only way to detect if our
+    // application was brought to the foreground. Assume that if old == nullptr
+    // we were focused on a different application
+    if (old == nullptr)
+    {
+
+        notificationGenerator->onNotificationActivated();
+    }
+#endif
 }
 
 void Widget::onConnected()

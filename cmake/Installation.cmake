@@ -38,7 +38,7 @@ if(APPLE)
   execute_process(COMMAND ${CMAKE_SOURCE_DIR}/osx/macfixrpath ${BUNDLE_PATH})
   " COMPONENT Runtime
   )
-  
+
   install(FILES img/icons/qtox.icns DESTINATION ${BUNDLE_PATH}/Contents/Resources/)
   install(FILES img/icons/qtox_profile.icns DESTINATION ${BUNDLE_PATH}/Contents/Resources/)
 
@@ -75,4 +75,9 @@ else()
   endif()
   install(FILES "${SVG_DEST}" DESTINATION "share/icons/hicolor/scalable/apps")
 
+endif()
+
+
+if (${KF5Notifications_FOUND})
+  install(FILES ${CMAKE_SOURCE_DIR}/res/qTox.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR})
 endif()

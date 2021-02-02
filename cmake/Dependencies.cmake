@@ -262,9 +262,14 @@ if (PLATFORM_EXTENSIONS)
 endif()
 
 if (${DESKTOP_NOTIFICATIONS})
-    # snorenotify does only provide a cmake find module
-    find_package(LibsnoreQt5 0.7.0 REQUIRED)
-    set(ALL_LIBRARIES ${ALL_LIBRARIES} Snore::Libsnore)
+    # knotifications does only provide a cmake find module
+    find_package(KF5Notifications 5.18.0 REQUIRED)
+    set(ALL_LIBRARIES ${ALL_LIBRARIES} KF5::Notifications)
+
+    # ECM required to find KNOTIFYRC_INSTALL_DIR
+    find_package(ECM REQUIRED NO_MODULE)
+    list(APPEND CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+    include(KDEInstallDirs)
 endif()
 
 add_definitions(

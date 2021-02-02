@@ -1,0 +1,7 @@
+[Global]
+IconName=qtox
+DesktopEntry=io.github.qtox.qTox
+
+[Event/generic]
+Name=Generic
+Action=Popup

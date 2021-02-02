@@ -665,22 +665,22 @@ else
 fi
 
 
-# Snorenotify
+# KNotifications
 
-SNORE_PREFIX_DIR="$DEP_DIR/snorenotify"
-SNORE_VERSION=0.7.0
-SNORE_HASH="2e3f5fbb80ab993f6149136cd9a14c2de66f48cabce550dead167a9448f5bed9"
-SNORE_FILENAME="v$SNORE_VERSION.tar.gz"
-if [ ! -f "$SNORE_PREFIX_DIR/done" ]
+KNOTIFICATIONS_PREFIX_DIR="$DEP_DIR/knotifications"
+KNOTIFICATIONS_VERSION=5.78.0
+KNOTIFICATIONS_HASH="6cbf922f27e8558301b0475bb9d774e68406e9df1baa821d9c26effbe4ae81bc"
+KNOTIFICATIONS_FILENAME="v$KNOTIFICATIONS_VERSION.tar.gz"
+if [ ! -f "$KNOTIFICATIONS_PREFIX_DIR/done" ]
 then
-  rm -rf "$SNORE_PREFIX_DIR"
-  mkdir -p "$SNORE_PREFIX_DIR"
+  rm -rf "$KNOTIFICATIONS_PREFIX_DIR"
+  mkdir -p "$KNOTIFICATIONS_PREFIX_DIR"
 
-  curl $CURL_OPTIONS -O "https://github.com/KDE/snorenotify/archive/${SNORE_FILENAME}"
-  check_sha256 "$SNORE_HASH" "$SNORE_FILENAME"
-  bsdtar --no-same-owner --no-same-permissions -xf $SNORE_FILENAME
-  rm $SNORE_FILENAME
-  cd snorenotify*
+  curl $CURL_OPTIONS -O "https://github.com/KDE/knotifications/archive/${KNOTIFICATIONS_FILENAME}"
+  check_sha256 "$KNOTIFICATIONS_HASH" "$KNOTIFICATIONS_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf $KNOTIFICATIONS_FILENAME
+  rm $KNOTIFICATIONS_FILENAME
+  cd knotifications*
 
   mkdir _build && cd _build
 
@@ -697,17 +697,14 @@ then
       SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $QT_PREFIX_DIR)
   " > toolchain.cmake
 
-  cmake -DCMAKE_INSTALL_PREFIX="$SNORE_PREFIX_DIR" \
+  cmake -DCMAKE_INSTALL_PREFIX="$KNOTIFICATIONS_PREFIX_DIR" \
         -DCMAKE_BUILD_TYPE=Relase \
-        -DBUILD_daemon=OFF \
-        -DBUILD_settings=OFF \
-        -DBUILD_snoresend=OFF \
         -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         ..
 
   make
   make install
-  echo -n $SNORE_VERSION > $SNORE_PREFIX_DIR/done
+  echo -n $KNOTIFICATIONS_VERSION > $KNOTIFICATIONS_PREFIX_DIR/done
 
   unset PKG_CONFIG_PATH
   unset PKG_CONFIG_LIBDIR
@@ -715,9 +712,9 @@ then
   cd ..
 
   cd ..
-  rm -rf ./snorenotify*
+  rm -rf ./knotifications*
 else
-  echo "Using cached build of snorenotify `cat $SNORE_PREFIX_DIR/done`"
+  echo "Using cached build of knotifications `cat $KNOTIFICATIONS_PREFIX_DIR/done`"
 fi
 
 
@@ -859,13 +856,13 @@ diff -ruN libvpx/build/make/Makefile patched/build/make/Makefile
 +$(foreach lib,$(filter %dll,$(LIBS)),$(eval $(call so_template,$(lib))))
  $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dylib,$(LIBS)),$(eval $(call dl_template,$(lib))))
  $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dll,$(LIBS)),$(eval $(call dll_template,$(lib))))
- 
+
 diff -ruN libvpx/configure patched/configure
 --- libvpx/configure	2019-02-13 16:56:49.162860897 +0100
 +++ patched/configure	2019-02-13 16:53:03.328719607 +0100
 @@ -513,23 +513,23 @@
  }
- 
+
  process_detect() {
 -    if enabled shared; then
 +    #if enabled shared; then
@@ -940,7 +937,7 @@ diff -ruN libvpx/libs.mk patched/libs.mk
 -$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.so.$(SO_VERSION_MAJOR)
 +$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.dll
  $(BUILD_PFX)$(LIBVPX_SO): EXPORTS_FILE = $(EXPORT_FILE)
- 
+
  libvpx.def: $(call enabled,CODEC_EXPORTS)
 EOF
 
@@ -1391,10 +1388,7 @@ cp -r $QT_PREFIX_DIR/plugins/imageformats \
       $QTOX_PREFIX_DIR
 cp {$OPENSSL_PREFIX_DIR,$SQLCIPHER_PREFIX_DIR,$FFMPEG_PREFIX_DIR,$OPENAL_PREFIX_DIR,$QRENCODE_PREFIX_DIR,$EXIF_PREFIX_DIR,$OPUS_PREFIX_DIR,$SODIUM_PREFIX_DIR,$VPX_PREFIX_DIR,$TOXCORE_PREFIX_DIR}/bin/*.dll $QTOX_PREFIX_DIR
 
-cp "$SNORE_PREFIX_DIR/bin/libsnore-qt5.dll" $QTOX_PREFIX_DIR
-mkdir -p "$QTOX_PREFIX_DIR/libsnore-qt5"
-cp "$SNORE_PREFIX_DIR/lib/plugins/libsnore-qt5/libsnore_backend_windowstoast.dll" "$QTOX_PREFIX_DIR/libsnore-qt5"
-cp "$SNORE_PREFIX_DIR/bin/SnoreToast.exe" $QTOX_PREFIX_DIR
+# FIXME: we probably need to install knotifications somewhere
 
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
@@ -1414,9 +1408,9 @@ winecfg
 python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/qtox.exe --dll-lookup-dirs $QTOX_PREFIX_DIR ~/.wine/drive_c/windows/system32 > /tmp/$ARCH-qtox-ldd
 find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-qtox-dll-find
 # dlls loded at run time that don't showup as a link time dependency
+# FIXME: does knotifications have to be in here?
 echo "$QTOX_PREFIX_DIR/libssl-1_1.dll
 $QTOX_PREFIX_DIR/libssl-1_1-x64.dll
-$QTOX_PREFIX_DIR/libsnore-qt5/libsnore_backend_windowstoast.dll
 $QTOX_PREFIX_DIR/iconengines/qsvgicon.dll
 $QTOX_PREFIX_DIR/imageformats/qgif.dll
 $QTOX_PREFIX_DIR/imageformats/qico.dll
@@ -1450,27 +1444,6 @@ do
     exit 1
   fi
 done < /tmp/$ARCH-qtox-dll-find
-
-
-# SnoreToast.exe dll checks (always 32-bit)
-if [[ "$ARCH" == "i686" ]]
-then
-  SNORETOAST_WINE_DLLS=/root/.wine/drive_c/windows/system32
-elif [[ "$ARCH" == "x86_64" ]]
-then
-  SNORETOAST_WINE_DLLS=/root/.wine/drive_c/windows/syswow64
-fi
-
-python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/SnoreToast.exe --dll-lookup-dirs $SNORETOAST_WINE_DLLS > /tmp/$ARCH-SnoreToast-ldd
-
-# Check that all dlls are in place
-if grep 'not found' /tmp/$ARCH-SnoreToast-ldd
-then
-  cat /tmp/$ARCH-SnoreToast-ldd
-  echo "Error: Missing some dlls."
-  exit 1
-fi
-
 
 # Run tests (only on Travis)
 set +u
