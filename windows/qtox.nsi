@@ -271,8 +271,6 @@ Section "Install"
   File /nonfatal "qtox\platforms\*.*"
   ${SetOutPath} "$INSTDIR\bin"
 
-  # FIXME: do we need to install KNotifications here?
-
   # Create shortcuts
   ${CreateDirectory} "$SMPROGRAMS\qTox"
   ${CreateShortCut} "$SMPROGRAMS\qTox\qTox.lnk" "$INSTDIR\${MAIN_APP_EXE}" "" "" ""

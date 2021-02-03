@@ -271,8 +271,6 @@ Section "Install"
   File /nonfatal "qtox\platforms\*.*"
   ${SetOutPath} "$INSTDIR\bin"
 
-  #FIXME: Do we need to install knotifications?
-
   # Create shortcuts
   ${CreateDirectory} "$SMPROGRAMS\qTox"
   ${CreateShortCut} "$SMPROGRAMS\qTox\qTox.lnk" "$INSTDIR\${MAIN_APP_EXE}" "" "" ""

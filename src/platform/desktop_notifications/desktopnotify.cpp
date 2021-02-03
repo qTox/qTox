@@ -23,7 +23,7 @@
 #include <src/persistence/settings.h>
 
 #include <KNotifications/KNotification>
-#include <KF5/knotifications_version.h>
+#include <knotifications_version.h>
 
 #include <QDebug>
 #include <QThread>
