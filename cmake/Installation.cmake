@@ -76,8 +76,3 @@ else()
   install(FILES "${SVG_DEST}" DESTINATION "share/icons/hicolor/scalable/apps")
 
 endif()
-
-
-if (${KF5Notifications_FOUND})
-  install(FILES ${CMAKE_SOURCE_DIR}/res/qTox.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR})
-endif()

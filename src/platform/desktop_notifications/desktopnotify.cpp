@@ -29,10 +29,51 @@
 #include <QThread>
 #include <QStandardPaths>
 #include <QWidget>
+#include <QFile>
+#include <QDir>
+
+#include <fstream>
+
+namespace
+{
+    void installNotificationConfig()
+    {
+        constexpr auto filename = "qTox.notifyrc";
+        constexpr auto knotificationsDirName = "knotifications5";
+        const auto genericDataPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+        const auto configDirPath =  genericDataPath + "/" + knotificationsDirName;
+        const auto configFilePath = configDirPath + "/" + filename;
+
+        QFile configFile(configFilePath);
+
+        // If we update this later we'll have to do something more intelligent
+        // like hash both files and overwrite if our hash doesn't match the one
+        // on disk
+        if (configFile.exists())
+            return;
+
+        QDir genericDataDir(genericDataPath);
+
+        genericDataDir.mkdir(knotificationsDirName);
+
+        QFile inputFile(":qTox.notifyrc");
+        inputFile.copy(configFilePath);
+    }
+} // namespace
 
 DesktopNotify::DesktopNotify(QWidget* parent)
     : parent(parent)
-{}
+{
+    // Our mac OS installer is a dmg which as far as I can tell cannot install
+    // our config to the required location. This is because GenericDataLocation
+    // is not within the Application folder we extract to. Short of switching to
+    // a real installer I am unsure of how to get our config file to the right
+    // spot at install time.
+    //
+    // Since we have this code anyways on all platforms we just install the
+    // config file at runtime on all platforms
+    installNotificationConfig();
+}
 
 void DesktopNotify::notifyMessage(const NotificationData& notificationData)
 {
