@@ -105,6 +105,13 @@ QString getAsRichText(const QString& key)
     return RICH_TEXT_PATTERN.arg(key);
 }
 
+bool isAscii(const QString& string)
+{
+    constexpr auto asciiExtMask = 0x80;
+
+    return (string.toUtf8()[0] & asciiExtMask) == 0;
+}
+
 SmileyPack::SmileyPack()
     : cleanupTimer{new QTimer(this)}
 {
@@ -257,19 +264,30 @@ bool SmileyPack::load(const QString& filename)
 void SmileyPack::constructRegex()
 {
     QString allPattern = QStringLiteral("(");
+    QString regularPatterns;
+    QString multibyteEmojiPatterns;
 
     // construct one big regex that matches on every emoticon
     for (const QString& emote : emoticonToPath.keys()) {
-        if (emote.toUcs4().length() == 1) {
-            // UTF-8 emoji
-            allPattern = allPattern % emote;
+        if (!isAscii(emote)) {
+            if (emote.toUcs4().length() == 1) {
+                regularPatterns.append(emote);
+                regularPatterns.append(QStringLiteral("|"));
+            }
+            else {
+                multibyteEmojiPatterns.append(emote);
+                multibyteEmojiPatterns.append(QStringLiteral("|"));
+            }
         } else {
             // patterns like ":)" or ":smile:", don't match inside a word or else will hit punctuation and html tags
-            allPattern = allPattern % QStringLiteral(R"((?<=^|\s))") % QRegularExpression::escape(emote) % QStringLiteral(R"((?=$|\s))");
+            regularPatterns.append(QStringLiteral(R"((?<=^|\s))") % QRegularExpression::escape(emote) % QStringLiteral(R"((?=$|\s))"));
+            regularPatterns.append(QStringLiteral("|"));
         }
-        allPattern = allPattern % QStringLiteral("|");
     }
 
+    // Regexps are evaluated from left to right, insert multibyte emojis first so they are evaluated first
+    allPattern.append(multibyteEmojiPatterns);
+    allPattern.append(regularPatterns);
     allPattern[allPattern.size() - 1] = QChar(')');
 
     // compile and optimize regex
@@ -297,6 +315,7 @@ QString SmileyPack::smileyfied(const QString& msg)
         result.replace(startPos + replaceDiff, keyLength, imgRichText);
         replaceDiff += imgRichText.length() - keyLength;
     }
+
     return result;
 }
 
