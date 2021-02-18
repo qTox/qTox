@@ -119,8 +119,6 @@ protected slots:
     void renderMessages(ChatLogIdx begin, ChatLogIdx end,
                         std::function<void(void)> onCompletion = std::function<void(void)>());
 
-    void loadHistoryLower();
-
 private:
     void retranslateUi();
     void addSystemDateMessage(const QDate& date);

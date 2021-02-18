@@ -668,7 +668,7 @@ void ChatLog::forceRelayout()
     startResizeWorker();
 }
 
-void ChatLog::checkVisibility(bool causedByScroll)
+void ChatLog::checkVisibility()
 {
     if (lines.empty())
         return;
@@ -712,16 +712,12 @@ void ChatLog::checkVisibility(bool causedByScroll)
     if (!visibleLines.isEmpty()) {
         emit firstVisibleLineChanged(lastLineBeforeVisible, visibleLines.at(0));
     }
-
-    if (causedByScroll && lowerBound != lines.cend() && lowerBound->get()->row == 0) {
-        emit loadHistoryLower();
-    }
 }
 
 void ChatLog::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
-    checkVisibility(true);
+    checkVisibility();
 }
 
 void ChatLog::resizeEvent(QResizeEvent* ev)
