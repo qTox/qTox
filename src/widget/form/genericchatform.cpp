@@ -342,7 +342,6 @@ GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, ICha
     connect(chatWidget, &ChatLog::customContextMenuRequested, this,
             &GenericChatForm::onChatContextMenuRequested);
     connect(chatWidget, &ChatLog::firstVisibleLineChanged, this, &GenericChatForm::updateShowDateInfo);
-    connect(chatWidget, &ChatLog::loadHistoryLower, this, &GenericChatForm::loadHistoryLower);
 
     connect(searchForm, &SearchForm::searchInBegin, this, &GenericChatForm::searchInBegin);
     connect(searchForm, &SearchForm::searchUp, this, &GenericChatForm::onSearchUp);
@@ -990,19 +989,6 @@ void GenericChatForm::renderMessages(ChatLogIdx begin, ChatLogIdx end,
     } else if (onCompletion) {
         onCompletion();
     }
-}
-
-void GenericChatForm::loadHistoryLower()
-{
-    auto begin = messages.begin()->first;
-
-    if (begin.get() > 100) {
-        begin = ChatLogIdx(begin.get() - 100);
-    } else {
-        begin = ChatLogIdx(0);
-    }
-
-    renderMessages(begin, chatLog.getNextIdx());
 }
 
 void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& topLine)
