@@ -26,6 +26,7 @@
 #include "chatline.h"
 #include "chatmessage.h"
 #include "src/widget/style.h"
+#include "src/model/ichatlog.h"
 
 class QGraphicsScene;
 class QGraphicsRectItem;
@@ -39,7 +40,7 @@ class ChatLog : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit ChatLog(QWidget* parent = nullptr);
+    explicit ChatLog(IChatLog& chatLog, const Core& core, QWidget* parent = nullptr);
     virtual ~ChatLog();
 
     void insertChatlineAtBottom(ChatLine::Ptr l);
@@ -48,7 +49,6 @@ public:
     void clearSelection();
     void clear();
     void copySelectedText(bool toSelectionBuffer = false) const;
-    void setBusyNotification(ChatLine::Ptr notification);
     void setTypingNotificationVisible(bool visible);
     void setTypingNotificationName(const QString& displayName);
     void scrollToLine(ChatLine::Ptr line);
@@ -62,19 +62,35 @@ public:
     ChatLineContent* getContentFromGlobalPos(QPoint pos) const;
     const uint repNameAfter = 5 * 60;
 
+    void setColorizedNames(bool enable) { colorizeNames = enable; };
+    void jumpToDate(QDate date);
+    void jumpToIdx(ChatLogIdx idx);
+
 signals:
     void selectionChanged();
     void workerTimeoutFinished();
     void firstVisibleLineChanged(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& firstLine);
 
+    void messageNotFoundShow(SearchDirection direction);
 public slots:
     void forceRelayout();
     void reloadTheme();
+
+    void startSearch(const QString& phrase, const ParameterSearch& parameter);
+    void onSearchUp(const QString& phrase, const ParameterSearch& parameter);
+    void onSearchDown(const QString& phrase, const ParameterSearch& parameter);
+    void handleSearchResult(SearchResult result, SearchDirection direction);
+    void removeSearchPhrase();
 
 private slots:
     void onSelectionTimerTimeout();
     void onWorkerTimeout();
     void onMultiClickTimeout();
+
+    void renderMessage(ChatLogIdx idx);
+    void renderMessages(ChatLogIdx begin, ChatLogIdx end,
+                        std::function<void(void)> onCompletion = std::function<void(void)>());
+
 
 protected:
     QRectF calculateSceneRect() const;
@@ -122,6 +138,10 @@ private:
     void moveMultiSelectionDown(int offset);
     void setTypingNotification();
 
+    void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames, ChatMessage::Ptr &chatMessage);
+    void renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp, ChatMessage::Ptr &chatMessage);
+    bool needsToHideName(ChatLogIdx idx) const;
+    void disableSearchText();
 private:
     enum class SelectionMode
     {
@@ -171,4 +191,10 @@ private:
     // layout
     QMargins margins = QMargins(10, 10, 10, 10);
     qreal lineSpacing = 5.0f;
+
+    IChatLog& chatLog;
+    std::map<ChatLogIdx, ChatMessage::Ptr> messages;
+    bool colorizeNames = false;
+    SearchPos searchPos;
+    const Core& core;
 };
