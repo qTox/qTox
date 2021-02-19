@@ -82,7 +82,6 @@ public:
 
 signals:
     void messageInserted();
-    void messageNotFoundShow(SearchDirection direction);
 
 public slots:
     void focusInput();
@@ -108,28 +107,16 @@ protected slots:
     void onLoadHistory();
     void onExportChat();
     void searchFormShow();
-    void onSearchTriggered();
     void updateShowDateInfo(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& topLine);
-
-    void searchInBegin(const QString& phrase, const ParameterSearch& parameter);
-    void onSearchUp(const QString& phrase, const ParameterSearch& parameter);
-    void onSearchDown(const QString& phrase, const ParameterSearch& parameter);
-    void handleSearchResult(SearchResult result, SearchDirection direction);
-    void renderMessage(ChatLogIdx idx);
-    void renderMessages(ChatLogIdx begin, ChatLogIdx end,
-                        std::function<void(void)> onCompletion = std::function<void(void)>());
 
 private:
     void retranslateUi();
     void addSystemDateMessage(const QDate& date);
     QDateTime getTime(const ChatLine::Ptr& chatLine) const;
 
-    void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames, ChatMessage::Ptr &chatMessage);
-    void renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp, ChatMessage::Ptr &chatMessage);
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
                                    const QDateTime& datetime, bool isAction, bool isSent, bool colorizeName = false);
-    bool needsToHideName(ChatLogIdx idx) const;
     virtual void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
     void hideEvent(QHideEvent* event) override;
@@ -137,7 +124,6 @@ protected:
     bool event(QEvent*) final;
     void resizeEvent(QResizeEvent* event) final;
     bool eventFilter(QObject* object, QEvent* event) final;
-    void disableSearchText();
     bool searchInText(const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
     std::pair<int, int> indexForSearchInLine(const QString& txt, const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);
 
@@ -177,7 +163,4 @@ protected:
 
     IChatLog& chatLog;
     IMessageDispatcher& messageDispatcher;
-    SearchPos searchPos;
-    std::map<ChatLogIdx, ChatMessage::Ptr> messages;
-    bool colorizeNames = false;
 };

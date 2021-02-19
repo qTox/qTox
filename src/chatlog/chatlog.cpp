@@ -26,6 +26,7 @@
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
 #include "src/widget/style.h"
+#include "src/persistence/settings.h"
 
 #include <QAction>
 #include <QApplication>
@@ -39,11 +40,9 @@
 #include <algorithm>
 #include <cassert>
 
-/**
- * @var ChatLog::repNameAfter
- * @brief repetition interval sender name (sec)
- */
 
+namespace
+{
 template <class T>
 T clamp(T x, T min, T max)
 {
@@ -54,14 +53,125 @@ T clamp(T x, T min, T max)
     return x;
 }
 
-ChatLog::ChatLog(QWidget* parent)
+ChatMessage::Ptr getChatMessageForIdx(ChatLogIdx idx,
+                                      const std::map<ChatLogIdx, ChatMessage::Ptr>& messages)
+{
+    auto existingMessageIt = messages.find(idx);
+
+    if (existingMessageIt == messages.end()) {
+        return ChatMessage::Ptr();
+    }
+
+    return existingMessageIt->second;
+}
+
+bool shouldRenderDate(ChatLogIdx idxToRender, const IChatLog& chatLog)
+{
+    if (idxToRender == chatLog.getFirstIdx())
+        return true;
+
+    return chatLog.at(idxToRender - 1).getTimestamp().date()
+           != chatLog.at(idxToRender).getTimestamp().date();
+}
+
+ChatMessage::Ptr dateMessageForItem(const ChatLogItem& item)
+{
+    const auto& s = Settings::getInstance();
+    const auto date = item.getTimestamp().date();
+    auto dateText = date.toString(s.getDateFormat());
+    return ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime());
+}
+
+ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool colorizeNames,
+                               const ChatLogMessage& chatLogMessage)
+{
+    auto messageType = chatLogMessage.message.isAction ? ChatMessage::MessageType::ACTION
+                                                       : ChatMessage::MessageType::NORMAL;
+
+    const bool bSelfMentioned =
+        std::any_of(chatLogMessage.message.metadata.begin(), chatLogMessage.message.metadata.end(),
+                    [](const MessageMetadata& metadata) {
+                        return metadata.type == MessageMetadataType::selfMention;
+                    });
+
+    if (bSelfMentioned) {
+        messageType = ChatMessage::MessageType::ALERT;
+    }
+
+    const auto timestamp = chatLogMessage.message.timestamp;
+    return ChatMessage::createChatMessage(displayName, chatLogMessage.message.content, messageType,
+                                          isSelf, chatLogMessage.state, timestamp, colorizeNames);
+}
+
+void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeNames,
+                   const ChatLogMessage& chatLogMessage, ChatMessage::Ptr& chatMessage)
+{
+
+    if (chatMessage) {
+        if (chatLogMessage.state == MessageState::complete) {
+            chatMessage->markAsDelivered(chatLogMessage.message.timestamp);
+        } else if (chatLogMessage.state == MessageState::broken) {
+            chatMessage->markAsBroken();
+        }
+    } else {
+        chatMessage = createMessage(displayName, isSelf, colorizeNames, chatLogMessage);
+    }
+}
+
+/**
+ * @return Chat message message type (info/warning) for the given system message
+ * @param[in] systemMessage
+ */
+ChatMessage::SystemMessageType getChatMessageType(const SystemMessage& systemMessage)
+{
+    switch (systemMessage.messageType)
+    {
+    case SystemMessageType::fileSendFailed:
+    case SystemMessageType::messageSendFailed:
+    case SystemMessageType::unexpectedCallEnd:
+        return ChatMessage::ERROR;
+    case SystemMessageType::userJoinedGroup:
+    case SystemMessageType::userLeftGroup:
+    case SystemMessageType::peerNameChanged:
+    case SystemMessageType::peerStateChange:
+    case SystemMessageType::titleChanged:
+    case SystemMessageType::cleared:
+    case SystemMessageType::outgoingCall:
+    case SystemMessageType::incomingCall:
+    case SystemMessageType::callEnd:
+        return ChatMessage::INFO;
+    }
+
+    return ChatMessage::INFO;
+}
+
+ChatLogIdx firstItemAfterDate(QDate date, const IChatLog& chatLog)
+{
+    auto idxs = chatLog.getDateIdxs(date, 1);
+    if (idxs.size()) {
+        return idxs[0].idx;
+    } else {
+        return chatLog.getNextIdx();
+    }
+}
+
+} // namespace
+
+
+ChatLog::ChatLog(IChatLog& chatLog, const Core& core, QWidget* parent)
     : QGraphicsView(parent)
+    , chatLog(chatLog)
+    , core(core)
 {
     // Create the scene
     busyScene = new QGraphicsScene(this);
     scene = new QGraphicsScene(this);
     scene->setItemIndexMethod(QGraphicsScene::BspTreeIndex);
     setScene(scene);
+
+    busyNotification = ChatMessage::createBusyNotification();
+    busyNotification->addToScene(busyScene);
+    busyNotification->visibilityChanged(true);
 
     // Cfg.
     setInteractive(true);
@@ -128,6 +238,11 @@ ChatLog::ChatLog(QWidget* parent)
     reloadTheme();
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
+
+    auto chatLogIdxRange = chatLog.getNextIdx() - chatLog.getFirstIdx();
+    auto firstChatLogIdx = (chatLogIdxRange < 100) ? chatLog.getFirstIdx() : chatLog.getNextIdx() - 100;
+
+    renderMessages(firstChatLogIdx, chatLog.getNextIdx());
 }
 
 ChatLog::~ChatLog()
@@ -575,6 +690,8 @@ void ChatLog::clear()
         insertChatlineAtBottom(l);
 
     updateSceneRect();
+
+    messages.clear();
 }
 
 void ChatLog::copySelectedText(bool toSelectionBuffer) const
@@ -584,16 +701,6 @@ void ChatLog::copySelectedText(bool toSelectionBuffer) const
 
     if (clipboard && !text.isNull())
         clipboard->setText(text, toSelectionBuffer ? QClipboard::Selection : QClipboard::Clipboard);
-}
-
-void ChatLog::setBusyNotification(ChatLine::Ptr notification)
-{
-    if (!notification.get())
-        return;
-
-    busyNotification = notification;
-    busyNotification->addToScene(busyScene);
-    busyNotification->visibilityChanged(true);
 }
 
 void ChatLog::setTypingNotificationVisible(bool visible)
@@ -660,6 +767,80 @@ void ChatLog::reloadTheme()
     for (ChatLine::Ptr l : lines) {
         l->reloadTheme();
     }
+}
+
+void ChatLog::startSearch(const QString& phrase, const ParameterSearch& parameter)
+{
+    disableSearchText();
+
+    bool bForwardSearch = false;
+    switch (parameter.period) {
+    case PeriodSearch::WithTheFirst: {
+        bForwardSearch = true;
+        searchPos.logIdx = chatLog.getFirstIdx();
+        searchPos.numMatches = 0;
+        break;
+    }
+    case PeriodSearch::WithTheEnd:
+    case PeriodSearch::None: {
+        bForwardSearch = false;
+        searchPos.logIdx = chatLog.getNextIdx();
+        searchPos.numMatches = 0;
+        break;
+    }
+    case PeriodSearch::AfterDate: {
+        bForwardSearch = true;
+        searchPos.logIdx = firstItemAfterDate(parameter.date, chatLog);
+        searchPos.numMatches = 0;
+        break;
+    }
+    case PeriodSearch::BeforeDate: {
+        bForwardSearch = false;
+        searchPos.logIdx = firstItemAfterDate(parameter.date, chatLog);
+        searchPos.numMatches = 0;
+        break;
+    }
+    }
+
+    if (bForwardSearch) {
+        onSearchDown(phrase, parameter);
+    } else {
+        onSearchUp(phrase, parameter);
+    }
+}
+
+void ChatLog::onSearchUp(const QString& phrase, const ParameterSearch& parameter)
+{
+    auto result = chatLog.searchBackward(searchPos, phrase, parameter);
+    handleSearchResult(result, SearchDirection::Up);
+}
+
+void ChatLog::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
+{
+    auto result = chatLog.searchForward(searchPos, phrase, parameter);
+    handleSearchResult(result, SearchDirection::Down);
+}
+
+void ChatLog::handleSearchResult(SearchResult result, SearchDirection direction)
+{
+    if (!result.found) {
+        emit messageNotFoundShow(direction);
+        return;
+    }
+
+    disableSearchText();
+
+    searchPos = result.pos;
+
+    auto const firstRenderedIdx = (messages.empty()) ? chatLog.getNextIdx() : messages.begin()->first;
+
+    renderMessages(searchPos.logIdx, firstRenderedIdx, [this, result] {
+        auto msg = messages.at(searchPos.logIdx);
+        scrollToLine(msg);
+
+        auto text = qobject_cast<Text*>(msg->getContent(1));
+        text->selectText(result.exp, std::make_pair(result.start, result.len));
+    });
 }
 
 void ChatLog::forceRelayout()
@@ -769,11 +950,9 @@ void ChatLog::updateTypingNotification()
 
 void ChatLog::updateBusyNotification()
 {
-    if (busyNotification.get()) {
-        // repoisition the busy notification (centered)
-        busyNotification->layout(useableWidth(), getVisibleRect().topLeft()
-                                                     + QPointF(0, getVisibleRect().height() / 2.0));
-    }
+    // repoisition the busy notification (centered)
+    busyNotification->layout(useableWidth(), getVisibleRect().topLeft()
+                                                    + QPointF(0, getVisibleRect().height() / 2.0));
 }
 
 ChatLine::Ptr ChatLog::findLineByPosY(qreal yPos) const
@@ -856,6 +1035,58 @@ void ChatLog::onMultiClickTimeout()
     clickCount = 0;
 }
 
+void ChatLog::renderMessage(ChatLogIdx idx)
+{
+    renderMessages(idx, idx + 1);
+}
+
+void ChatLog::renderMessages(ChatLogIdx begin, ChatLogIdx end,
+                                     std::function<void(void)> onCompletion)
+{
+    QList<ChatLine::Ptr> beforeLines;
+    QList<ChatLine::Ptr> afterLines;
+
+    for (auto i = begin; i < end; ++i) {
+        auto chatMessage = getChatMessageForIdx(i, messages);
+        renderItem(chatLog.at(i), needsToHideName(i), colorizeNames, chatMessage);
+
+        if (messages.find(i) == messages.end()) {
+            QList<ChatLine::Ptr>* lines =
+                (messages.empty() || i > messages.rbegin()->first) ? &afterLines : &beforeLines;
+
+            messages.insert({i, chatMessage});
+
+            if (shouldRenderDate(i, chatLog)) {
+                lines->push_back(dateMessageForItem(chatLog.at(i)));
+            }
+            lines->push_back(chatMessage);
+        }
+    }
+
+    for (auto const& line : afterLines) {
+        insertChatlineAtBottom(line);
+    }
+
+    if (!beforeLines.empty()) {
+        // Rendering upwards is expensive and has async behavior for chatWidget.
+        // Once rendering completes we call our completion callback once and
+        // then disconnect the signal
+        if (onCompletion) {
+            auto connection = std::make_shared<QMetaObject::Connection>();
+            *connection = connect(this, &ChatLog::workerTimeoutFinished,
+                                  [this, onCompletion, connection] {
+                                      onCompletion();
+                                      this->disconnect(*connection);
+                                  });
+        }
+
+        insertChatlinesOnTop(beforeLines);
+    } else if (onCompletion) {
+        onCompletion();
+    }
+}
+
+
 void ChatLog::handleMultiClickEvent()
 {
     // Ignore single or double clicks
@@ -915,7 +1146,7 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
 void ChatLog::wheelEvent(QWheelEvent *event)
 {
     QGraphicsView::wheelEvent(event);
-    checkVisibility(true);
+    checkVisibility();
 }
 
 void ChatLog::retranslateUi()
@@ -1045,4 +1276,110 @@ void ChatLog::setTypingNotification()
     typingNotification->setVisible(false);
     typingNotification->addToScene(scene);
     updateTypingNotification();
+}
+
+void ChatLog::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatMessage::Ptr& chatMessage)
+{
+    const auto& sender = item.getSender();
+
+    bool isSelf = sender == core.getSelfId().getPublicKey();
+
+    switch (item.getContentType()) {
+    case ChatLogItem::ContentType::message: {
+        const auto& chatLogMessage = item.getContentAsMessage();
+
+        renderMessageRaw(item.getDisplayName(), isSelf, colorizeNames, chatLogMessage, chatMessage);
+
+        break;
+    }
+    case ChatLogItem::ContentType::fileTransfer: {
+        const auto& file = item.getContentAsFile();
+        renderFile(item.getDisplayName(), file.file, isSelf, item.getTimestamp(), chatMessage);
+        break;
+    }
+    case ChatLogItem::ContentType::systemMessage: {
+        const auto& systemMessage = item.getContentAsSystemMessage();
+
+        auto chatMessageType = getChatMessageType(systemMessage);
+        chatMessage = ChatMessage::createChatInfoMessage(systemMessage.toString(), chatMessageType, QDateTime::currentDateTime());
+        // Ignore caller's decision to hide the name. We show the icon in the
+        // slot of the sender's name so we always want it visible
+        hideName = false;
+        break;
+    }
+    }
+
+    if (hideName) {
+        chatMessage->hideSender();
+    }
+}
+
+void ChatLog::renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp,
+                ChatMessage::Ptr& chatMessage)
+{
+    if (!chatMessage) {
+        CoreFile* coreFile = core.getCoreFile();
+        assert(coreFile);
+        chatMessage = ChatMessage::createFileTransferMessage(displayName, *coreFile, file, isSelf, timestamp);
+    } else {
+        auto proxy = static_cast<ChatLineContentProxy*>(chatMessage->getContent(1));
+        assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
+        auto ftWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
+        ftWidget->onFileTransferUpdate(file);
+    }
+}
+
+/**
+ * @brief Show, is it needed to hide message author name or not
+ * @param idx ChatLogIdx of the message
+ * @return True if the name should be hidden, false otherwise
+ */
+bool ChatLog::needsToHideName(ChatLogIdx idx) const
+{
+    // If the previous message is not rendered we should show the name
+    // regardless of other constraints
+    auto itemBefore = messages.find(idx - 1);
+    if (itemBefore == messages.end()) {
+        return false;
+    }
+
+    const auto& prevItem = chatLog.at(idx - 1);
+    const auto& currentItem = chatLog.at(idx);
+
+    // Always show the * in the name field for action messages
+    if (currentItem.getContentType() == ChatLogItem::ContentType::message
+        && currentItem.getContentAsMessage().message.isAction) {
+        return false;
+    }
+
+    qint64 messagesTimeDiff = prevItem.getTimestamp().secsTo(currentItem.getTimestamp());
+    return currentItem.getSender() == prevItem.getSender()
+           && messagesTimeDiff < repNameAfter;
+}
+
+void ChatLog::disableSearchText()
+{
+    auto msgIt = messages.find(searchPos.logIdx);
+    if (msgIt != messages.end()) {
+        auto text = qobject_cast<Text*>(msgIt->second->getContent(1));
+        text->deselectText();
+    }
+}
+
+void ChatLog::removeSearchPhrase()
+{
+    disableSearchText();
+}
+
+void ChatLog::jumpToDate(QDate date) {
+    auto idx = firstItemAfterDate(date, chatLog);
+    jumpToIdx(idx);
+}
+
+void ChatLog::jumpToIdx(ChatLogIdx idx) {
+    if (messages.find(idx) == messages.end()) {
+        renderMessages(idx, chatLog.getNextIdx());
+    }
+
+    scrollToLine(messages[idx]);
 }
