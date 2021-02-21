@@ -34,15 +34,16 @@ function(auto_test subsystem module extra_deps)
     COMMAND ${TEST_CROSSCOMPILING_EMULATOR} test_${module})
 endfunction()
 
-auto_test(core core ${${PROJECT_NAME}_RESOURCES})
+auto_test(core core "${${PROJECT_NAME}_RESOURCES}")
 auto_test(core contactid "")
 auto_test(core toxid "")
 auto_test(core toxstring "")
 auto_test(chatlog textformatter "")
-auto_test(net bsu ${${PROJECT_NAME}_RESOURCES}) # needs nodes list
+auto_test(net bsu "${${PROJECT_NAME}_RESOURCES}") # needs nodes list
 auto_test(persistence paths "")
 auto_test(persistence dbschema "")
 auto_test(persistence offlinemsgengine "")
+auto_test(persistence smileypack "${${PROJECT_NAME}_RESOURCES}") # needs emojione
 auto_test(model friendmessagedispatcher "")
 auto_test(model groupmessagedispatcher "")
 auto_test(model messageprocessor "")
