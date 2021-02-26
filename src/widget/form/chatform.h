@@ -115,7 +115,6 @@ private:
 
 protected:
     std::unique_ptr<NetCamView> createNetcam();
-    void insertChatMessage(ChatMessage::Ptr msg) final;
     void dragEnterEvent(QDragEnterEvent* ev) final;
     void dropEvent(QDropEvent* ev) final;
     void hideEvent(QHideEvent* event) final;

@@ -216,6 +216,12 @@ GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, ICha
     addAction(quoteAction);
     menu.addSeparator();
 
+    goToCurrentDateAction = menu.addAction(QIcon(), QString(), this, SLOT(goToCurrentDate()),
+                                  QKeySequence(Qt::CTRL + Qt::Key_G));
+    addAction(goToCurrentDateAction);
+
+    menu.addSeparator();
+
     searchAction = menu.addAction(QIcon(), QString(), this, SLOT(searchFormShow()),
                                   QKeySequence(Qt::CTRL + Qt::Key_F));
     addAction(searchAction);
@@ -465,14 +471,6 @@ void GenericChatForm::addSystemInfoMessage(const QDateTime& datetime, SystemMess
     chatLog.addSystemMessage(systemMessage);
 }
 
-void GenericChatForm::addSystemDateMessage(const QDate& date)
-{
-    const Settings& s = Settings::getInstance();
-    QString dateText = date.toString(s.getDateFormat());
-
-    insertChatMessage(ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime()));
-}
-
 QDateTime GenericChatForm::getTime(const ChatLine::Ptr &chatLine) const
 {
     if (chatLine) {
@@ -515,12 +513,6 @@ void GenericChatForm::clearChatArea(bool confirm, bool inform)
 void GenericChatForm::onSelectAllClicked()
 {
     chatWidget->selectAll();
-}
-
-void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
-{
-    chatWidget->insertChatlineAtBottom(std::static_pointer_cast<ChatLine>(msg));
-    emit messageInserted();
 }
 
 void GenericChatForm::hideEvent(QHideEvent* event)
@@ -658,6 +650,11 @@ void GenericChatForm::onExportChat()
     file.close();
 }
 
+void GenericChatForm::goToCurrentDate()
+{
+    chatWidget->jumpToIdx(chatLog.getNextIdx());
+}
+
 void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& topLine)
 {
     // If the dateInfo is visible we need to pretend the top line is the one
@@ -686,6 +683,7 @@ void GenericChatForm::retranslateUi()
     quoteAction->setText(tr("Quote selected text"));
     copyLinkAction->setText(tr("Copy link address"));
     searchAction->setText(tr("Search in text"));
+    goToCurrentDateAction->setText(tr("Go to current date"));
     loadHistoryAction->setText(tr("Load chat history..."));
     exportChatAction->setText(tr("Export to file"));
 }

@@ -35,6 +35,8 @@ class QTimer;
 class ChatLineContent;
 struct ToxFile;
 
+class ChatLineStorage;
+
 static const size_t DEF_NUM_MSG_TO_LOAD = 100;
 class ChatLog : public QGraphicsView
 {
@@ -43,9 +45,7 @@ public:
     explicit ChatLog(IChatLog& chatLog, const Core& core, QWidget* parent = nullptr);
     virtual ~ChatLog();
 
-    void insertChatlineAtBottom(ChatLine::Ptr l);
-    void insertChatlineOnTop(ChatLine::Ptr l);
-    void insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines);
+    void insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines);
     void clearSelection();
     void clear();
     void copySelectedText(bool toSelectionBuffer = false) const;
@@ -68,10 +68,10 @@ public:
 
 signals:
     void selectionChanged();
-    void workerTimeoutFinished();
     void firstVisibleLineChanged(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& firstLine);
 
     void messageNotFoundShow(SearchDirection direction);
+    void renderFinished();
 public slots:
     void forceRelayout();
     void reloadTheme();
@@ -87,11 +87,15 @@ private slots:
     void onWorkerTimeout();
     void onMultiClickTimeout();
 
+    void onMessageUpdated(ChatLogIdx idx);
     void renderMessage(ChatLogIdx idx);
-    void renderMessages(ChatLogIdx begin, ChatLogIdx end,
-                        std::function<void(void)> onCompletion = std::function<void(void)>());
+    void renderMessages(ChatLogIdx begin, ChatLogIdx end);
 
+    void setRenderedWindowStart(ChatLogIdx start);
+    void setRenderedWindowEnd(ChatLogIdx end);
 
+    void onRenderFinished();
+    void onScrollValueChanged(int value);
 protected:
     QRectF calculateSceneRect() const;
     QRect getVisibleRect() const;
@@ -103,7 +107,6 @@ protected:
 
     qreal useableWidth() const;
 
-    void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
     void checkVisibility();
     void scrollToBottom();
@@ -126,6 +129,8 @@ protected:
 
     ChatLine::Ptr findLineByPosY(qreal yPos) const;
 
+    void removeLines(ChatLogIdx being, ChatLogIdx end);
+
 private:
     void retranslateUi();
     bool isActiveFileTransfer(ChatLine::Ptr l);
@@ -140,7 +145,8 @@ private:
 
     void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames, ChatLine::Ptr &chatMessage);
     void renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp, ChatLine::Ptr &chatMessage);
-    bool needsToHideName(ChatLogIdx idx) const;
+    bool needsToHideName(ChatLogIdx idx, bool prevIdxRendered) const;
+    bool shouldRenderMessage(ChatLogIdx idx) const;
     void disableSearchText();
 private:
     enum class SelectionMode
@@ -161,16 +167,22 @@ private:
     QAction* selectAllAction = nullptr;
     QGraphicsScene* scene = nullptr;
     QGraphicsScene* busyScene = nullptr;
-    QVector<ChatLine::Ptr> lines;
     QList<ChatLine::Ptr> visibleLines;
     ChatLine::Ptr typingNotification;
     ChatLine::Ptr busyNotification;
 
     // selection
-    int selClickedRow = -1; // These 4 are only valid while selectionMode != None
+
+    // For the time being we store these selection indexes as ChatLine::Ptrs. In
+    // order to do multi-selection we do an O(n) search in the chatline storage
+    // to determine the index. This is inefficient but correct with the moving
+    // window of storage. If this proves to cause performance issues we can move
+    // this responsibility into ChatlineStorage and have it coordinate the
+    // shifting of indexes
+    ChatLine::Ptr selClickedRow; // These 4 are only valid while selectionMode != None
     int selClickedCol = -1;
-    int selFirstRow = -1;
-    int selLastRow = -1;
+    ChatLine::Ptr selFirstRow;
+    ChatLine::Ptr selLastRow;
     QColor selectionRectColor = Style::getColor(Style::SelectText);
     SelectionMode selectionMode = SelectionMode::None;
     QPointF clickPos;
@@ -184,7 +196,7 @@ private:
     Qt::MouseButton lastClickButton;
 
     // worker vars
-    int workerLastIndex = 0;
+    size_t workerLastIndex = 0;
     bool workerStb = false;
     ChatLine::Ptr workerAnchorLine;
 
@@ -193,8 +205,12 @@ private:
     qreal lineSpacing = 5.0f;
 
     IChatLog& chatLog;
-    std::map<ChatLogIdx, ChatLine::Ptr> messages;
     bool colorizeNames = false;
     SearchPos searchPos;
     const Core& core;
+    bool scrollMonitoringEnabled = true;
+
+    std::unique_ptr<ChatLineStorage> chatLineStorage;
+
+    std::vector<std::function<void(void)>> renderCompletionFns;
 };
