@@ -40,6 +40,7 @@ auto_test(core toxid "")
 auto_test(core toxstring "")
 auto_test(chatlog textformatter "")
 auto_test(net bsu "${${PROJECT_NAME}_RESOURCES}") # needs nodes list
+auto_test(chatlog chatlinestorage "")
 auto_test(persistence paths "")
 auto_test(persistence dbschema "")
 auto_test(persistence offlinemsgengine "")
