@@ -108,6 +108,7 @@ protected slots:
     void onExportChat();
     void searchFormShow();
     void updateShowDateInfo(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& topLine);
+    void goToCurrentDate();
 
 private:
     void retranslateUi();
@@ -117,7 +118,6 @@ private:
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
                                    const QDateTime& datetime, bool isAction, bool isSent, bool colorizeName = false);
-    virtual void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
     void hideEvent(QHideEvent* event) override;
     void showEvent(QShowEvent*) override;
@@ -137,6 +137,7 @@ protected:
     QAction* quoteAction;
     QAction* copyLinkAction;
     QAction* searchAction;
+    QAction* goToCurrentDateAction;
     QAction* loadHistoryAction;
     QAction* exportChatAction;
 

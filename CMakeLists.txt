@@ -201,6 +201,8 @@ set(${PROJECT_NAME}_SOURCES
   src/chatlog/chatlinecontentproxy.h
   src/chatlog/chatline.cpp
   src/chatlog/chatline.h
+  src/chatlog/chatlinestorage.cpp
+  src/chatlog/chatlinestorage.h
   src/chatlog/chatlog.cpp
   src/chatlog/chatlog.h
   src/chatlog/chatmessage.cpp

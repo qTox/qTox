@@ -633,14 +633,6 @@ void ChatForm::sendImageFromPreview()
     }
 }
 
-void ChatForm::insertChatMessage(ChatMessage::Ptr msg)
-{
-    GenericChatForm::insertChatMessage(msg);
-    if (netcam && bodySplitter->sizes()[1] == 0) {
-        netcam->setShowMessages(true, true);
-    }
-}
-
 void ChatForm::onCopyStatusMessage()
 {
     // make sure to copy not truncated text directly from the friend
