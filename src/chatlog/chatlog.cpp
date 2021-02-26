@@ -53,8 +53,8 @@ T clamp(T x, T min, T max)
     return x;
 }
 
-ChatMessage::Ptr getChatMessageForIdx(ChatLogIdx idx,
-                                      const std::map<ChatLogIdx, ChatMessage::Ptr>& messages)
+ChatLine::Ptr getChatMessageForIdx(ChatLogIdx idx,
+                                      const std::map<ChatLogIdx, ChatLine::Ptr>& messages)
 {
     auto existingMessageIt = messages.find(idx);
 
@@ -104,8 +104,14 @@ ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool col
 }
 
 void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeNames,
-                   const ChatLogMessage& chatLogMessage, ChatMessage::Ptr& chatMessage)
+                   const ChatLogMessage& chatLogMessage, ChatLine::Ptr& chatLine)
 {
+    // HACK: This is kind of gross, but there's not an easy way to fit this into
+    // the existing architecture. This shouldn't ever fail since we should only
+    // correlate ChatMessages created here, however a logic bug could turn into
+    // a crash due to this dangerous cast. The alternative would be to make
+    // ChatLine a QObject which I didn't think was worth it.
+    auto chatMessage = static_cast<ChatMessage*>(chatLine.get());
 
     if (chatMessage) {
         if (chatLogMessage.state == MessageState::complete) {
@@ -114,7 +120,7 @@ void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeName
             chatMessage->markAsBroken();
         }
     } else {
-        chatMessage = createMessage(displayName, isSelf, colorizeNames, chatLogMessage);
+        chatLine = createMessage(displayName, isSelf, colorizeNames, chatLogMessage);
     }
 }
 
@@ -239,10 +245,13 @@ ChatLog::ChatLog(IChatLog& chatLog, const Core& core, QWidget* parent)
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
 
+    connect(&chatLog, &IChatLog::itemUpdated, this, &ChatLog::renderMessage);
+
     auto chatLogIdxRange = chatLog.getNextIdx() - chatLog.getFirstIdx();
     auto firstChatLogIdx = (chatLogIdxRange < 100) ? chatLog.getFirstIdx() : chatLog.getNextIdx() - 100;
 
     renderMessages(firstChatLogIdx, chatLog.getNextIdx());
+
 }
 
 ChatLog::~ChatLog()
@@ -1278,7 +1287,7 @@ void ChatLog::setTypingNotification()
     updateTypingNotification();
 }
 
-void ChatLog::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatMessage::Ptr& chatMessage)
+void ChatLog::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatLine::Ptr& chatMessage)
 {
     const auto& sender = item.getSender();
 
@@ -1310,12 +1319,12 @@ void ChatLog::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNa
     }
 
     if (hideName) {
-        chatMessage->hideSender();
+        chatMessage->getContent(0)->hide();
     }
 }
 
 void ChatLog::renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp,
-                ChatMessage::Ptr& chatMessage)
+                ChatLine::Ptr& chatMessage)
 {
     if (!chatMessage) {
         CoreFile* coreFile = core.getCoreFile();
