@@ -138,8 +138,8 @@ private:
     void moveMultiSelectionDown(int offset);
     void setTypingNotification();
 
-    void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames, ChatMessage::Ptr &chatMessage);
-    void renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp, ChatMessage::Ptr &chatMessage);
+    void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames, ChatLine::Ptr &chatMessage);
+    void renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp, ChatLine::Ptr &chatMessage);
     bool needsToHideName(ChatLogIdx idx) const;
     void disableSearchText();
 private:
@@ -193,7 +193,7 @@ private:
     qreal lineSpacing = 5.0f;
 
     IChatLog& chatLog;
-    std::map<ChatLogIdx, ChatMessage::Ptr> messages;
+    std::map<ChatLogIdx, ChatLine::Ptr> messages;
     bool colorizeNames = false;
     SearchPos searchPos;
     const Core& core;
