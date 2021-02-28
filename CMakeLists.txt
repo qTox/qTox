@@ -196,8 +196,8 @@ set(${PROJECT_NAME}_SOURCES
   src/chatlog/chatline.h
   src/chatlog/chatlinestorage.cpp
   src/chatlog/chatlinestorage.h
-  src/chatlog/chatlog.cpp
-  src/chatlog/chatlog.h
+  src/chatlog/chatwidget.cpp
+  src/chatlog/chatwidget.h
   src/chatlog/chatmessage.cpp
   src/chatlog/chatmessage.h
   src/chatlog/content/filetransferwidget.cpp

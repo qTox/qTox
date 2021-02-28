@@ -24,7 +24,7 @@
 #include <QVector>
 #include <memory>
 
-class ChatLog;
+class ChatWidget;
 class ChatLineContent;
 class QGraphicsScene;
 class QStyleOptionGraphicsItem;
@@ -95,7 +95,7 @@ public:
     static bool lessThanBSRectBottom(const ChatLine::Ptr& lhs, const qreal& rhs);
 
 protected:
-    friend class ChatLog;
+    friend class ChatWidget;
 
     QPointF mapToContent(ChatLineContent* c, QPointF pos);
 

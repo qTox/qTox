@@ -38,12 +38,12 @@ struct ToxFile;
 class ChatLineStorage;
 
 static const size_t DEF_NUM_MSG_TO_LOAD = 100;
-class ChatLog : public QGraphicsView
+class ChatWidget : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit ChatLog(IChatLog& chatLog, const Core& core, QWidget* parent = nullptr);
-    virtual ~ChatLog();
+    explicit ChatWidget(IChatLog& chatLog, const Core& core, QWidget* parent = nullptr);
+    virtual ~ChatWidget();
 
     void insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines);
     void clearSelection();
