@@ -20,7 +20,7 @@
 #include "genericchatform.h"
 
 #include "src/chatlog/chatlinecontentproxy.h"
-#include "src/chatlog/chatlog.h"
+#include "src/chatlog/chatwidget.h"
 #include "src/chatlog/content/filetransferwidget.h"
 #include "src/chatlog/content/timestamp.h"
 #include "src/core/core.h"
@@ -147,14 +147,14 @@ GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, ICha
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
     dateInfo = new QLabel(this);
-    chatWidget = new ChatLog(chatLog, core, this);
+    chatWidget = new ChatWidget(chatLog, core, this);
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);
     dateInfo->setVisible(false);
 
     // settings
     const Settings& s = Settings::getInstance();
-    connect(&s, &Settings::emojiFontPointSizeChanged, chatWidget, &ChatLog::forceRelayout);
+    connect(&s, &Settings::emojiFontPointSizeChanged, chatWidget, &ChatWidget::forceRelayout);
     connect(&s, &Settings::chatMessageFontChanged, this, &GenericChatForm::onChatMessageFontChanged);
 
     msgEdit = new ChatTextEdit();
@@ -243,15 +243,15 @@ GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, ICha
     exportChatAction =
         menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onExportChat()));
 
-    connect(chatWidget, &ChatLog::customContextMenuRequested, this,
+    connect(chatWidget, &ChatWidget::customContextMenuRequested, this,
             &GenericChatForm::onChatContextMenuRequested);
-    connect(chatWidget, &ChatLog::firstVisibleLineChanged, this, &GenericChatForm::updateShowDateInfo);
+    connect(chatWidget, &ChatWidget::firstVisibleLineChanged, this, &GenericChatForm::updateShowDateInfo);
 
-    connect(searchForm, &SearchForm::searchInBegin, chatWidget, &ChatLog::startSearch);
-    connect(searchForm, &SearchForm::searchUp, chatWidget, &ChatLog::onSearchUp);
-    connect(searchForm, &SearchForm::searchDown, chatWidget, &ChatLog::onSearchDown);
-    connect(searchForm, &SearchForm::visibleChanged, chatWidget, &ChatLog::removeSearchPhrase);
-    connect(chatWidget, &ChatLog::messageNotFoundShow, searchForm, &SearchForm::showMessageNotFound);
+    connect(searchForm, &SearchForm::searchInBegin, chatWidget, &ChatWidget::startSearch);
+    connect(searchForm, &SearchForm::searchUp, chatWidget, &ChatWidget::onSearchUp);
+    connect(searchForm, &SearchForm::searchDown, chatWidget, &ChatWidget::onSearchDown);
+    connect(searchForm, &SearchForm::visibleChanged, chatWidget, &ChatWidget::removeSearchPhrase);
+    connect(chatWidget, &ChatWidget::messageNotFoundShow, searchForm, &SearchForm::showMessageNotFound);
 
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &GenericChatForm::onSendTriggered);
 

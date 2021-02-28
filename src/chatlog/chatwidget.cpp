@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "chatlog.h"
+#include "chatwidget.h"
 #include "chatlinecontent.h"
 #include "chatlinecontentproxy.h"
 #include "chatmessage.h"
@@ -202,7 +202,7 @@ ChatLogIdx clampedAdd(ChatLogIdx idx, int val, IChatLog& chatLog)
 } // namespace
 
 
-ChatLog::ChatLog(IChatLog& chatLog, const Core& core, QWidget* parent)
+ChatWidget::ChatWidget(IChatLog& chatLog, const Core& core, QWidget* parent)
     : QGraphicsView(parent)
     , chatLog(chatLog)
     , core(core)
@@ -257,42 +257,42 @@ ChatLog::ChatLog(IChatLog& chatLog, const Core& core, QWidget* parent)
     selectionTimer->setInterval(1000 / 30);
     selectionTimer->setSingleShot(false);
     selectionTimer->start();
-    connect(selectionTimer, &QTimer::timeout, this, &ChatLog::onSelectionTimerTimeout);
+    connect(selectionTimer, &QTimer::timeout, this, &ChatWidget::onSelectionTimerTimeout);
 
     // Background worker
     // Updates the layout of all chat-lines after a resize
     workerTimer = new QTimer(this);
     workerTimer->setSingleShot(false);
     workerTimer->setInterval(5);
-    connect(workerTimer, &QTimer::timeout, this, &ChatLog::onWorkerTimeout);
+    connect(workerTimer, &QTimer::timeout, this, &ChatWidget::onWorkerTimeout);
 
     // This timer is used to detect multiple clicks
     multiClickTimer = new QTimer(this);
     multiClickTimer->setSingleShot(true);
     multiClickTimer->setInterval(QApplication::doubleClickInterval());
-    connect(multiClickTimer, &QTimer::timeout, this, &ChatLog::onMultiClickTimeout);
+    connect(multiClickTimer, &QTimer::timeout, this, &ChatWidget::onMultiClickTimeout);
 
     // selection
-    connect(this, &ChatLog::selectionChanged, this, [this]() {
+    connect(this, &ChatWidget::selectionChanged, this, [this]() {
         copyAction->setEnabled(hasTextToBeCopied());
         copySelectedText(true);
     });
 
-    connect(&GUI::getInstance(), &GUI::themeReload, this, &ChatLog::reloadTheme);
+    connect(&GUI::getInstance(), &GUI::themeReload, this, &ChatWidget::reloadTheme);
 
     reloadTheme();
     retranslateUi();
-    Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
+    Translator::registerHandler(std::bind(&ChatWidget::retranslateUi, this), this);
 
-    connect(this, &ChatLog::renderFinished, this, &ChatLog::onRenderFinished);
-    connect(&chatLog, &IChatLog::itemUpdated, this, &ChatLog::onMessageUpdated);
-    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollValueChanged);
+    connect(this, &ChatWidget::renderFinished, this, &ChatWidget::onRenderFinished);
+    connect(&chatLog, &IChatLog::itemUpdated, this, &ChatWidget::onMessageUpdated);
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatWidget::onScrollValueChanged);
 
     auto firstChatLogIdx = clampedAdd(chatLog.getNextIdx(), -100, chatLog);
     renderMessages(firstChatLogIdx, chatLog.getNextIdx());
 }
 
-ChatLog::~ChatLog()
+ChatWidget::~ChatWidget()
 {
     Translator::unregister(this);
 
@@ -307,7 +307,7 @@ ChatLog::~ChatLog()
         typingNotification->removeFromScene();
 }
 
-void ChatLog::clearSelection()
+void ChatWidget::clearSelection()
 {
     if (selectionMode == SelectionMode::None)
         return;
@@ -327,17 +327,17 @@ void ChatLog::clearSelection()
     updateMultiSelectionRect();
 }
 
-QRect ChatLog::getVisibleRect() const
+QRect ChatWidget::getVisibleRect() const
 {
     return mapToScene(viewport()->rect()).boundingRect().toRect();
 }
 
-void ChatLog::updateSceneRect()
+void ChatWidget::updateSceneRect()
 {
     setSceneRect(calculateSceneRect());
 }
 
-void ChatLog::layout(int start, int end, qreal width)
+void ChatWidget::layout(int start, int end, qreal width)
 {
     if (chatLineStorage->empty())
         return;
@@ -360,7 +360,7 @@ void ChatLog::layout(int start, int end, qreal width)
     }
 }
 
-void ChatLog::mousePressEvent(QMouseEvent* ev)
+void ChatWidget::mousePressEvent(QMouseEvent* ev)
 {
     QGraphicsView::mousePressEvent(ev);
 
@@ -383,7 +383,7 @@ void ChatLog::mousePressEvent(QMouseEvent* ev)
     handleMultiClickEvent();
 }
 
-void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
+void ChatWidget::mouseReleaseEvent(QMouseEvent* ev)
 {
     QGraphicsView::mouseReleaseEvent(ev);
 
@@ -392,7 +392,7 @@ void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
     multiClickTimer->start();
 }
 
-void ChatLog::mouseMoveEvent(QMouseEvent* ev)
+void ChatWidget::mouseMoveEvent(QMouseEvent* ev)
 {
     QGraphicsView::mouseMoveEvent(ev);
 
@@ -478,7 +478,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 }
 
 // Much faster than QGraphicsScene::itemAt()!
-ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
+ChatLineContent* ChatWidget::getContentFromPos(QPointF scenePos) const
 {
     if (chatLineStorage->empty())
         return nullptr;
@@ -493,7 +493,7 @@ ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
     return nullptr;
 }
 
-bool ChatLog::isOverSelection(QPointF scenePos) const
+bool ChatWidget::isOverSelection(QPointF scenePos) const
 {
     if (selectionMode == SelectionMode::Precise) {
         ChatLineContent* content = getContentFromPos(scenePos);
@@ -508,12 +508,12 @@ bool ChatLog::isOverSelection(QPointF scenePos) const
     return false;
 }
 
-qreal ChatLog::useableWidth() const
+qreal ChatWidget::useableWidth() const
 {
     return width() - verticalScrollBar()->sizeHint().width() - margins.right() - margins.left();
 }
 
-void ChatLog::insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines)
+void ChatWidget::insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines)
 {
     if (chatLines.empty())
         return;
@@ -584,18 +584,18 @@ void ChatLog::insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines)
     }
 }
 
-bool ChatLog::stickToBottom() const
+bool ChatWidget::stickToBottom() const
 {
     return verticalScrollBar()->value() == verticalScrollBar()->maximum();
 }
 
-void ChatLog::scrollToBottom()
+void ChatWidget::scrollToBottom()
 {
     updateSceneRect();
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
 }
 
-void ChatLog::startResizeWorker()
+void ChatWidget::startResizeWorker()
 {
     if (chatLineStorage->empty())
         return;
@@ -627,7 +627,7 @@ void ChatLog::startResizeWorker()
     verticalScrollBar()->hide();
 }
 
-void ChatLog::mouseDoubleClickEvent(QMouseEvent* ev)
+void ChatWidget::mouseDoubleClickEvent(QMouseEvent* ev)
 {
     QPointF scenePos = mapToScene(ev->pos());
     ChatLineContent* content = getContentFromPos(scenePos);
@@ -658,7 +658,7 @@ void ChatLog::mouseDoubleClickEvent(QMouseEvent* ev)
     handleMultiClickEvent();
 }
 
-QString ChatLog::getSelectedText() const
+QString ChatWidget::getSelectedText() const
 {
     if (selectionMode == SelectionMode::Precise) {
         return selClickedRow->content[selClickedCol]->getSelectedText();
@@ -686,12 +686,12 @@ QString ChatLog::getSelectedText() const
     return QString();
 }
 
-bool ChatLog::isEmpty() const
+bool ChatWidget::isEmpty() const
 {
     return chatLineStorage->empty();
 }
 
-bool ChatLog::hasTextToBeCopied() const
+bool ChatWidget::hasTextToBeCopied() const
 {
     return selectionMode != SelectionMode::None;
 }
@@ -701,12 +701,12 @@ bool ChatLog::hasTextToBeCopied() const
  * @param pos Position on screen in global coordinates
  * @sa getContentFromPos()
  */
-ChatLineContent* ChatLog::getContentFromGlobalPos(QPoint pos) const
+ChatLineContent* ChatWidget::getContentFromGlobalPos(QPoint pos) const
 {
     return getContentFromPos(mapToScene(mapFromGlobal(pos)));
 }
 
-void ChatLog::clear()
+void ChatWidget::clear()
 {
     clearSelection();
 
@@ -727,7 +727,7 @@ void ChatLog::clear()
     updateSceneRect();
 }
 
-void ChatLog::copySelectedText(bool toSelectionBuffer) const
+void ChatWidget::copySelectedText(bool toSelectionBuffer) const
 {
     QString text = getSelectedText();
     QClipboard* clipboard = QApplication::clipboard();
@@ -736,7 +736,7 @@ void ChatLog::copySelectedText(bool toSelectionBuffer) const
         clipboard->setText(text, toSelectionBuffer ? QClipboard::Selection : QClipboard::Clipboard);
 }
 
-void ChatLog::setTypingNotificationVisible(bool visible)
+void ChatWidget::setTypingNotificationVisible(bool visible)
 {
     if (typingNotification.get()) {
         typingNotification->setVisible(visible);
@@ -744,7 +744,7 @@ void ChatLog::setTypingNotificationVisible(bool visible)
     }
 }
 
-void ChatLog::setTypingNotificationName(const QString& displayName)
+void ChatWidget::setTypingNotificationName(const QString& displayName)
 {
     if (!typingNotification.get()) {
         setTypingNotification();
@@ -757,7 +757,7 @@ void ChatLog::setTypingNotificationName(const QString& displayName)
     updateTypingNotification();
 }
 
-void ChatLog::scrollToLine(ChatLine::Ptr line)
+void ChatWidget::scrollToLine(ChatLine::Ptr line)
 {
     if (!line.get())
         return;
@@ -766,7 +766,7 @@ void ChatLog::scrollToLine(ChatLine::Ptr line)
     verticalScrollBar()->setValue(line->sceneBoundingRect().top());
 }
 
-void ChatLog::selectAll()
+void ChatWidget::selectAll()
 {
     if (chatLineStorage->empty())
         return;
@@ -781,14 +781,14 @@ void ChatLog::selectAll()
     updateMultiSelectionRect();
 }
 
-void ChatLog::fontChanged(const QFont& font)
+void ChatWidget::fontChanged(const QFont& font)
 {
     for (ChatLine::Ptr l : *chatLineStorage) {
         l->fontChanged(font);
     }
 }
 
-void ChatLog::reloadTheme()
+void ChatWidget::reloadTheme()
 {
     setStyleSheet(Style::getStylesheet("chatArea/chatArea.css"));
     setBackgroundBrush(QBrush(Style::getColor(Style::GroundBase), Qt::SolidPattern));
@@ -802,7 +802,7 @@ void ChatLog::reloadTheme()
     }
 }
 
-void ChatLog::startSearch(const QString& phrase, const ParameterSearch& parameter)
+void ChatWidget::startSearch(const QString& phrase, const ParameterSearch& parameter)
 {
     disableSearchText();
 
@@ -842,19 +842,19 @@ void ChatLog::startSearch(const QString& phrase, const ParameterSearch& paramete
     }
 }
 
-void ChatLog::onSearchUp(const QString& phrase, const ParameterSearch& parameter)
+void ChatWidget::onSearchUp(const QString& phrase, const ParameterSearch& parameter)
 {
     auto result = chatLog.searchBackward(searchPos, phrase, parameter);
     handleSearchResult(result, SearchDirection::Up);
 }
 
-void ChatLog::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
+void ChatWidget::onSearchDown(const QString& phrase, const ParameterSearch& parameter)
 {
     auto result = chatLog.searchForward(searchPos, phrase, parameter);
     handleSearchResult(result, SearchDirection::Down);
 }
 
-void ChatLog::handleSearchResult(SearchResult result, SearchDirection direction)
+void ChatWidget::handleSearchResult(SearchResult result, SearchDirection direction)
 {
     if (!result.found) {
         emit messageNotFoundShow(direction);
@@ -893,12 +893,12 @@ void ChatLog::handleSearchResult(SearchResult result, SearchDirection direction)
 
 }
 
-void ChatLog::forceRelayout()
+void ChatWidget::forceRelayout()
 {
     startResizeWorker();
 }
 
-void ChatLog::checkVisibility()
+void ChatWidget::checkVisibility()
 {
     if (chatLineStorage->empty())
         return;
@@ -937,13 +937,13 @@ void ChatLog::checkVisibility()
     }
 }
 
-void ChatLog::scrollContentsBy(int dx, int dy)
+void ChatWidget::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
     checkVisibility();
 }
 
-void ChatLog::resizeEvent(QResizeEvent* ev)
+void ChatWidget::resizeEvent(QResizeEvent* ev)
 {
     bool stb = stickToBottom();
 
@@ -960,7 +960,7 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
     updateBusyNotification();
 }
 
-void ChatLog::updateMultiSelectionRect()
+void ChatWidget::updateMultiSelectionRect()
 {
     if (selectionMode == SelectionMode::Multi && selFirstRow && selLastRow) {
         QRectF selBBox;
@@ -977,7 +977,7 @@ void ChatLog::updateMultiSelectionRect()
     }
 }
 
-void ChatLog::updateTypingNotification()
+void ChatWidget::updateTypingNotification()
 {
     ChatLine* notification = typingNotification.get();
     if (!notification)
@@ -991,14 +991,14 @@ void ChatLog::updateTypingNotification()
     notification->layout(useableWidth(), QPointF(0.0, posY));
 }
 
-void ChatLog::updateBusyNotification()
+void ChatWidget::updateBusyNotification()
 {
     // repoisition the busy notification (centered)
     busyNotification->layout(useableWidth(), getVisibleRect().topLeft()
                                                     + QPointF(0, getVisibleRect().height() / 2.0));
 }
 
-ChatLine::Ptr ChatLog::findLineByPosY(qreal yPos) const
+ChatLine::Ptr ChatWidget::findLineByPosY(qreal yPos) const
 {
     auto itr = std::lower_bound(chatLineStorage->begin(), chatLineStorage->end(), yPos, ChatLine::lessThanBSRectBottom);
 
@@ -1008,7 +1008,7 @@ ChatLine::Ptr ChatLog::findLineByPosY(qreal yPos) const
     return ChatLine::Ptr();
 }
 
-void ChatLog::removeLines(ChatLogIdx begin, ChatLogIdx end)
+void ChatWidget::removeLines(ChatLogIdx begin, ChatLogIdx end)
 {
     if (!chatLineStorage->hasIndexedMessage()) {
         // No indexed lines to remove
@@ -1033,7 +1033,7 @@ void ChatLog::removeLines(ChatLogIdx begin, ChatLogIdx end)
     }
 }
 
-QRectF ChatLog::calculateSceneRect() const
+QRectF ChatWidget::calculateSceneRect() const
 {
     qreal bottom = (chatLineStorage->empty() ? 0.0 : chatLineStorage->back()->sceneBoundingRect().bottom());
 
@@ -1044,7 +1044,7 @@ QRectF ChatLog::calculateSceneRect() const
                   bottom + margins.bottom() + margins.top());
 }
 
-void ChatLog::onSelectionTimerTimeout()
+void ChatWidget::onSelectionTimerTimeout()
 {
     const int scrollSpeed = 10;
 
@@ -1060,7 +1060,7 @@ void ChatLog::onSelectionTimerTimeout()
     }
 }
 
-void ChatLog::onWorkerTimeout()
+void ChatWidget::onWorkerTimeout()
 {
     // Fairly arbitrary but
     // large values will make the UI unresponsive
@@ -1098,12 +1098,12 @@ void ChatLog::onWorkerTimeout()
     }
 }
 
-void ChatLog::onMultiClickTimeout()
+void ChatWidget::onMultiClickTimeout()
 {
     clickCount = 0;
 }
 
-void ChatLog::onMessageUpdated(ChatLogIdx idx)
+void ChatWidget::onMessageUpdated(ChatLogIdx idx)
 {
     if (shouldRenderMessage(idx)) {
         renderMessage(idx);
@@ -1124,12 +1124,12 @@ void ChatLog::onMessageUpdated(ChatLogIdx idx)
     }
 }
 
-void ChatLog::renderMessage(ChatLogIdx idx)
+void ChatWidget::renderMessage(ChatLogIdx idx)
 {
     renderMessages(idx, idx + 1);
 }
 
-void ChatLog::renderMessages(ChatLogIdx begin, ChatLogIdx end)
+void ChatWidget::renderMessages(ChatLogIdx begin, ChatLogIdx end)
 {
     auto linesToRender = std::map<ChatLogIdx, ChatLine::Ptr>();
 
@@ -1148,7 +1148,7 @@ void ChatLog::renderMessages(ChatLogIdx begin, ChatLogIdx end)
     insertChatlines(linesToRender);
 }
 
-void ChatLog::setRenderedWindowStart(ChatLogIdx begin)
+void ChatWidget::setRenderedWindowStart(ChatLogIdx begin)
 {
     // End of the window is pre-determined as a hardcoded window size relative
     // to the start
@@ -1191,7 +1191,7 @@ void ChatLog::setRenderedWindowStart(ChatLogIdx begin)
     }
 }
 
-void ChatLog::setRenderedWindowEnd(ChatLogIdx end)
+void ChatWidget::setRenderedWindowEnd(ChatLogIdx end)
 {
     // Off by 1 since the maxWindowSize is not inclusive
     auto start = clampedAdd(end, -maxWindowSize + 1, chatLog);
@@ -1199,7 +1199,7 @@ void ChatLog::setRenderedWindowEnd(ChatLogIdx end)
     setRenderedWindowStart(start);
 }
 
-void ChatLog::onRenderFinished()
+void ChatWidget::onRenderFinished()
 {
     // We have to back these up before we run them, because people might queue
     // on _more_ items on top of the ones we want. If they do this while we're
@@ -1227,7 +1227,7 @@ void ChatLog::onRenderFinished()
     }
 }
 
-void ChatLog::onScrollValueChanged(int value)
+void ChatWidget::onScrollValueChanged(int value)
 {
     if (!chatLineStorage->hasIndexedMessage()) {
         // This could be a little better. On a cleared screen we should probably
@@ -1287,7 +1287,7 @@ void ChatLog::onScrollValueChanged(int value)
     }
 }
 
-void ChatLog::handleMultiClickEvent()
+void ChatWidget::handleMultiClickEvent()
 {
     // Ignore single or double clicks
     if (clickCount < 2)
@@ -1313,14 +1313,14 @@ void ChatLog::handleMultiClickEvent()
     }
 }
 
-void ChatLog::showEvent(QShowEvent*)
+void ChatWidget::showEvent(QShowEvent*)
 {
     // Empty.
     // The default implementation calls centerOn - for some reason - causing
     // the scrollbar to move.
 }
 
-void ChatLog::focusInEvent(QFocusEvent* ev)
+void ChatWidget::focusInEvent(QFocusEvent* ev)
 {
     QGraphicsView::focusInEvent(ev);
 
@@ -1339,7 +1339,7 @@ void ChatLog::focusInEvent(QFocusEvent* ev)
     }
 }
 
-void ChatLog::focusOutEvent(QFocusEvent* ev)
+void ChatWidget::focusOutEvent(QFocusEvent* ev)
 {
     QGraphicsView::focusOutEvent(ev);
 
@@ -1358,19 +1358,19 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
     }
 }
 
-void ChatLog::wheelEvent(QWheelEvent *event)
+void ChatWidget::wheelEvent(QWheelEvent *event)
 {
     QGraphicsView::wheelEvent(event);
     checkVisibility();
 }
 
-void ChatLog::retranslateUi()
+void ChatWidget::retranslateUi()
 {
     copyAction->setText(tr("Copy"));
     selectAllAction->setText(tr("Select all"));
 }
 
-bool ChatLog::isActiveFileTransfer(ChatLine::Ptr l)
+bool ChatWidget::isActiveFileTransfer(ChatLine::Ptr l)
 {
     int count = l->getColumnCount();
     for (int i = 0; i < count; ++i) {
@@ -1388,7 +1388,7 @@ bool ChatLog::isActiveFileTransfer(ChatLine::Ptr l)
     return false;
 }
 
-void ChatLog::setTypingNotification()
+void ChatWidget::setTypingNotification()
 {
     typingNotification = ChatMessage::createTypingNotification();
     typingNotification->visibilityChanged(true);
@@ -1398,7 +1398,7 @@ void ChatLog::setTypingNotification()
 }
 
 
-void ChatLog::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatLine::Ptr& chatMessage)
+void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatLine::Ptr& chatMessage)
 {
     const auto& sender = item.getSender();
 
@@ -1434,7 +1434,7 @@ void ChatLog::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNa
     }
 }
 
-void ChatLog::renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp,
+void ChatWidget::renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp,
                 ChatLine::Ptr& chatMessage)
 {
     if (!chatMessage) {
@@ -1456,7 +1456,7 @@ void ChatLog::renderFile(QString displayName, ToxFile file, bool isSelf, QDateTi
  * all. If the previous line is not rendered we always show the name
  * @return True if the name should be hidden, false otherwise
  */
-bool ChatLog::needsToHideName(ChatLogIdx idx, bool prevIdxRendered) const
+bool ChatWidget::needsToHideName(ChatLogIdx idx, bool prevIdxRendered) const
 {
     // If the previous message is not rendered we should show the name
     // regardless of other constraints
@@ -1481,7 +1481,7 @@ bool ChatLog::needsToHideName(ChatLogIdx idx, bool prevIdxRendered) const
     return false;
 }
 
-bool ChatLog::shouldRenderMessage(ChatLogIdx idx) const
+bool ChatWidget::shouldRenderMessage(ChatLogIdx idx) const
 {
     return chatLineStorage->contains(idx) ||
         (
@@ -1489,7 +1489,7 @@ bool ChatLog::shouldRenderMessage(ChatLogIdx idx) const
         ) || chatLineStorage->empty();
 }
 
-void ChatLog::disableSearchText()
+void ChatWidget::disableSearchText()
 {
     if (!chatLineStorage->contains(searchPos.logIdx)) {
         return;
@@ -1500,17 +1500,17 @@ void ChatLog::disableSearchText()
     text->deselectText();
 }
 
-void ChatLog::removeSearchPhrase()
+void ChatWidget::removeSearchPhrase()
 {
     disableSearchText();
 }
 
-void ChatLog::jumpToDate(QDate date) {
+void ChatWidget::jumpToDate(QDate date) {
     auto idx = firstItemAfterDate(date, chatLog);
     jumpToIdx(idx);
 }
 
-void ChatLog::jumpToIdx(ChatLogIdx idx)
+void ChatWidget::jumpToIdx(ChatLogIdx idx)
 {
     if (idx == chatLog.getNextIdx()) {
         idx = chatLog.getNextIdx() - 1;

@@ -34,7 +34,7 @@
  */
 
 class ChatFormHeader;
-class ChatLog;
+class ChatWidget;
 class ChatTextEdit;
 class Contact;
 class ContentLayout;
@@ -154,7 +154,7 @@ protected:
 
     SearchForm *searchForm;
     QLabel *dateInfo;
-    ChatLog* chatWidget;
+    ChatWidget* chatWidget;
     ChatTextEdit* msgEdit;
 #ifdef SPELL_CHECKING
     Sonnet::SpellCheckDecorator* decorator{nullptr};
