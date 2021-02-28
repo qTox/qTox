@@ -30,11 +30,6 @@ int ChatLineContent::getColumn() const
     return col;
 }
 
-int ChatLineContent::getRow() const
-{
-    return row;
-}
-
 int ChatLineContent::type() const
 {
     return GraphicsItemType::ChatLineContentType;

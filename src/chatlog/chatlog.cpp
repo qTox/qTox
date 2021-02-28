@@ -932,13 +932,6 @@ void ChatLog::checkVisibility()
 
     visibleLines = newVisibleLines;
 
-    // enforce order
-    std::sort(visibleLines.begin(), visibleLines.end(), ChatLine::lessThanRowIndex);
-
-    // if (!visibleLines.empty())
-    //  qDebug() << "visible from " << visibleLines.first()->getRow() << "to " <<
-    //  visibleLines.last()->getRow() << " total " << visibleLines.size();
-
     if (!visibleLines.isEmpty()) {
         emit firstVisibleLineChanged(lastLineBeforeVisible, visibleLines.at(0));
     }
