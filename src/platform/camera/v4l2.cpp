@@ -206,7 +206,8 @@ QVector<QPair<QString, QString>> v4l2::getDeviceList()
         ioctl(fd, VIDIOC_QUERYCAP, &caps);
         close(fd);
 
-        devices += {file, reinterpret_cast<const char*>(caps.card)};
+        if (caps.device_caps & V4L2_CAP_VIDEO_CAPTURE)
+            devices += {file, reinterpret_cast<const char*>(caps.card)};
     }
     return devices;
 }
