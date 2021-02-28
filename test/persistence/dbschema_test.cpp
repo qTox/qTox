@@ -53,6 +53,8 @@ private slots:
     void test4to5();
     void test5to6();
     void test6to7();
+    // test7to8 omitted, version only upgrade, versions are not verified in this
+    // test suite
     void cleanupTestCase() const;
 
 private:
