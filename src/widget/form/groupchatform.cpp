@@ -23,7 +23,7 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/core/groupid.h"
-#include "src/chatlog/chatlog.h"
+#include "src/chatlog/chatwidget.h"
 #include "src/chatlog/content/text.h"
 #include "src/model/friend.h"
 #include "src/friendlist.h"

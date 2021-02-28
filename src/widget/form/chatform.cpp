@@ -19,7 +19,7 @@
 
 #include "chatform.h"
 #include "src/chatlog/chatlinecontentproxy.h"
-#include "src/chatlog/chatlog.h"
+#include "src/chatlog/chatwidget.h"
 #include "src/chatlog/chatmessage.h"
 #include "src/chatlog/content/filetransferwidget.h"
 #include "src/chatlog/content/text.h"
