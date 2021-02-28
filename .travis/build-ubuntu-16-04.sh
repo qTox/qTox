@@ -203,9 +203,15 @@ build_qtox() {
 }
 
 test_qtox() {
-    local BUILDDIR=_build
+    local BUILDDIR=_debug
+
+    cmake -H. -B"$BUILDDIR" \
+        -DUPDATE_CHECK=ON \
+        -DSTRICT_OPTIONS=ON \
+        -DCODE_COVERAGE=ON
 
     cd $BUILDDIR
+    make -j$(nproc)
     make test
     cd -
 }

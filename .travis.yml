@@ -45,7 +45,18 @@ jobs:
     - stage: Linux
       os: linux
       env: JOB=build-ubuntu-16-04
+      addons:
+        apt:
+          packages: 
+            - lcov
       script: "./.travis/$JOB.sh"
+      after_success:
+        # Create lcov report
+        - lcov --directory _debug --capture --output-file coverage.info
+        # Filter out system headers and test sources
+        - lcov --remove coverage.info '/usr/*' '*/test/*' '*/*_autogen/*' --output-file coverage.info
+        # Upload report to codecov.io 
+        - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
     - stage: "Windows Stage 1: Dependencies (OpenSSL, Qt)"
       os: linux
       # Makes the cache this job creates avaiable only to jobs with WINDOWS_BUILD_ARCH_CACHE_TRICK_VARIABLE=i686,
