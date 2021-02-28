@@ -115,8 +115,10 @@ FriendListWidget::FriendListWidget(const Core &_core, Widget* parent, bool group
 
     mode = Settings::getInstance().getFriendSortingMode();
     sortByMode(mode);
+    if (mode != SortingMode::Name) {
+        listLayout->insertLayout(0, groupLayout.getLayout());
+    }
 
-    onGroupchatPositionChanged(groupsOnTop);
     dayTimer = new QTimer(this);
     dayTimer->setTimerType(Qt::VeryCoarseTimer);
     connect(dayTimer, &QTimer::timeout, this, &FriendListWidget::dayTimeout);

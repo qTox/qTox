@@ -57,6 +57,20 @@ RUN git checkout v0.2.12 && \
         echo '/usr/local/lib/' >> /etc/ld.so.conf.d/locallib.conf && \
         ldconfig
 
+RUN git clone https://github.com/toxext/toxext.git /toxext
+WORKDIR /toxext
+RUN git checkout v0.0.2 && \
+        cmake . && \
+        cmake --build . -- -j $(nproc) && \
+        cmake --build . --target install
+
+RUN git clone https://github.com/toxext/tox_extension_messages.git /tox_extension_messages
+WORKDIR /tox_extension_messages
+RUN git checkout v0.0.2 && \
+        cmake . && \
+        cmake --build . -- -j $(nproc) && \
+        cmake --build . --target install
+
 COPY . /qtox
 WORKDIR /qtox
 RUN cmake . && cmake --build .
