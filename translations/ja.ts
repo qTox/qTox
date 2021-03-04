@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ja_JP">
+<TS version="2.1" language="ja_JP">
 <context>
     <name>AVForm</name>
     <message>
@@ -34,10 +34,6 @@
     <message>
         <source>Playback device</source>
         <translation>出力デバイス</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>スライダーを使用して、スピーカーの音量を調節してください。</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -80,20 +76,8 @@ which may lead to problems with video calls.</source>
         <translation>サウンドをテスト</translation>
     </message>
     <message>
-        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>エコー除去をサポートする、実験的な音声バックエンドを有効にします。変更を反映するには qTox の再起動が必要です。</translation>
-    </message>
-    <message>
-        <source>Enable experimental audio backend</source>
-        <translation>実験的な音声バックエンドを有効にする</translation>
-    </message>
-    <message>
         <source>Audio quality</source>
         <translation>音質</translation>
-    </message>
-    <message>
-        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>転送される音声の音質です。帯域幅が十分に広くない場合や、インターネット使用料を抑えたい場合は、これを低く設定してください。</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -114,6 +98,34 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Threshold</source>
         <translation>しきい値</translation>
+    </message>
+    <message>
+        <source>Use slider to set the volume of your speakers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set resolution of your camera.
+The higher values, the better video quality your friends may get.
+Note that with better video quality, you use more bandwidth.
+Sometimes your connection may not be good enough to handle higher video quality,
+which may lead to problems with video calls.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the activation volume for your input device.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -159,18 +171,18 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>バグトラッカー</translation>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">バグトラッカー</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>分かりやすいバグ報告の書き方</translation>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">分かりやすいバグ報告の書き方</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>貢献者</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">貢献者</translation>
     </message>
 </context>
 <context>
@@ -200,20 +212,8 @@ which may lead to problems with video calls.</source>
         <translation>設定した場合、連絡先からのファイルを自動的に承認します</translation>
     </message>
     <message>
-        <source>Auto accept files</source>
-        <translation>ファイルを自動承認</translation>
-    </message>
-    <message>
         <source>Default directory to save files:</source>
         <translation>ファイルを保存するデフォルトの場所:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>この連絡先からの自動承認は無効になっています</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>自動承認通話:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -232,10 +232,6 @@ which may lead to problems with video calls.</source>
         <translation>設定した場合、この連絡先からのグループチャットの招待を自動的に承認します。</translation>
     </message>
     <message>
-        <source>Auto accept group invites</source>
-        <translation>グループ招待を自動承認</translation>
-    </message>
-    <message>
         <source>Remove history (operation can not be undone!)</source>
         <translation>履歴を削除 (元に戻せません！)</translation>
     </message>
@@ -248,17 +244,8 @@ which may lead to problems with video calls.</source>
         <translation>この連絡先についてのメモの入力欄</translation>
     </message>
     <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>この連絡先についてのコメントを保存できます。</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>履歴を削除しました</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <extracomment>popup title</extracomment>
-        <translation>自動承認したファイルの保存場所を選択</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -278,6 +265,31 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept for this contact is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept call:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can save comments about this contact here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose an auto-accept directory</source>
+        <extracomment>popup title</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -307,8 +319,12 @@ which may lead to problems with video calls.</source>
         <source>Update available</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>qTox is up to date ✓</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Currently running an untested/unstable version of qTox</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -347,10 +363,6 @@ which may lead to problems with video calls.</source>
         <translation>拒否</translation>
     </message>
     <message>
-        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>Tox ID (76 進数の文字列またはメールアドレス)</translation>
-    </message>
-    <message>
         <source>Type in Tox ID of your friend</source>
         <translation>友達の Tox ID を入力してください</translation>
     </message>
@@ -361,11 +373,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
         <translation>友達リクエストの際に送信するメッセージを入力してください。デフォルトのメッセージを送信する場合は、空欄のままにしてください</translation>
-    </message>
-    <message>
-        <source>%1 Tox ID is invalid or does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>%1 Tox ID は無効であるか、存在しません</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -399,11 +406,6 @@ which may lead to problems with video calls.</source>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <extracomment>Tox ID format description</extracomment>
-        <translation>76 進数の文字列またはメールアドレス</translation>
-    </message>
-    <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
         <translation>メッセージ</translation>
@@ -428,7 +430,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>%n 件の連絡先をインポートする準備が整いました。確認するには送信を押してください</numerusform>
         </translation>
@@ -437,16 +438,26 @@ which may lead to problems with video calls.</source>
         <source>Import contacts</source>
         <translation>連絡先をインポート</translation>
     </message>
+    <message>
+        <source>Tox ID, 76 hexadecimal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 Tox ID is invalid</source>
+        <comment>Tox address error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>76 hexadecimal characters</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
         <translation>高度な設定</translation>
-    </message>
-    <message>
-        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>really</source>
@@ -477,22 +488,20 @@ which may lead to problems with video calls.</source>
         <translation>いいえ</translation>
     </message>
     <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>通話中です</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>通話中は切断できません！</translation>
-    </message>
-    <message>
-        <source>Save File</source>
-        <translation>ファイルを保存</translation>
-    </message>
-    <message>
         <source>Logs (*.log)</source>
         <translation>ログ (*.log)</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changes here are applied only after restarting qTox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -515,18 +524,9 @@ which may lead to problems with video calls.</source>
         <translation>ポータブル</translation>
     </message>
     <message>
-        <source>Connection Settings</source>
-        <translation>接続設定</translation>
-    </message>
-    <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>IPv6 を有効にする (推奨)</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">無効にすると、Torを使うことができます。ただ、無効にするとToxネットワークに負荷がかかるので、必要なときのみ使ってください。</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -560,11 +560,6 @@ which may lead to problems with video calls.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>再接続</translation>
-    </message>
-    <message>
         <source>Debug</source>
         <translation>デバッグ</translation>
     </message>
@@ -578,6 +573,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enable LAN discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., Tox over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -625,10 +629,6 @@ which may lead to problems with video calls.</source>
         <translation>通話時間: </translation>
     </message>
     <message>
-        <source>%1 is typing</source>
-        <translation>%1 が入力しています</translation>
-    </message>
-    <message>
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
@@ -651,7 +651,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
-so you can save the file on windows.</source>
+so you can save the file on Windows.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -736,6 +736,10 @@ so you can save the file on windows.</source>
         <source>Select all</source>
         <translation>すべて選択</translation>
     </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 が入力しています</translation>
+    </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
@@ -768,50 +772,46 @@ so you can save the file on windows.</source>
         <translation type="unfinished">/me 友達にならないか、&quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Invalid Tox ID</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>無効な Tox ID</translation>
-    </message>
-    <message>
-        <source>You need to write a message with your request</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>リクエストにメッセージを書く必要があります</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>メッセージが長すぎます！</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>友達はすでに追加されています</translation>
-    </message>
-    <message>
         <source>Groupchat %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">無効な Tox ID</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">リクエストにメッセージを書く必要があります</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">メッセージが長すぎます！</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">友達はすでに追加されています</translation>
+    </message>
 </context>
 <context>
-    <name>DesktopNotify</name>
+    <name>ExtensionStatus</name>
     <message>
-        <source>New message</source>
-        <translation type="unfinished">新しいメッセージ</translation>
-    </message>
-    <message>
-        <source>Incoming file transfer</source>
+        <source>All extensions supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Friend request received</source>
+        <source>No extensions supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group message</source>
+        <source>Not all extensions supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Group invite received</source>
+        <source>Multipart Messages: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -897,7 +897,7 @@ so you can save the file on windows.</source>
         <translation>ファイルを保存</translation>
     </message>
     <message>
-        <source>Remote Paused</source>
+        <source>Remote paused</source>
         <comment>file transfer widget</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -905,17 +905,17 @@ so you can save the file on windows.</source>
 <context>
     <name>FilesForm</name>
     <message>
-        <source>Transferred Files</source>
-        <comment>&quot;Headline&quot; of the window</comment>
-        <translation>転送したファイル</translation>
-    </message>
-    <message>
         <source>Downloads</source>
         <translation>ダウンロード</translation>
     </message>
     <message>
         <source>Uploads</source>
         <translation>アップロード</translation>
+    </message>
+    <message>
+        <source>Transferred files</source>
+        <comment>&quot;Headline&quot; of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -937,42 +937,12 @@ so you can save the file on windows.</source>
         <translation>今月</translation>
     </message>
     <message>
-        <source>Older than 6 Months</source>
-        <translation>半年以上前</translation>
-    </message>
-    <message>
         <source>Never</source>
         <translation>しない</translation>
     </message>
-</context>
-<context>
-    <name>FriendRequestDialog</name>
     <message>
-        <source>Friend request</source>
-        <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>友達リクエスト</translation>
-    </message>
-    <message>
-        <source>Someone wants to make friends with you</source>
-        <translation>誰かが友達になりたいようです</translation>
-    </message>
-    <message>
-        <source>User ID:</source>
-        <translation>ユーザー ID:</translation>
-    </message>
-    <message>
-        <source>Friend request message:</source>
-        <translation>友達リクエストメッセージ:</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <comment>Accept a friend request</comment>
-        <translation>承認</translation>
-    </message>
-    <message>
-        <source>Reject</source>
-        <comment>Reject a friend request</comment>
-        <translation>拒否</translation>
+        <source>Older than 6 months</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1012,10 +982,6 @@ so you can save the file on windows.</source>
         <translation>サークル &apos;%1&apos; から削除</translation>
     </message>
     <message>
-        <source>Move  to circle &quot;%1&quot;</source>
-        <translation>サークル &quot;%1&quot; に移動</translation>
-    </message>
-    <message>
         <source>Set alias...</source>
         <translation>エイリアスを設定…</translation>
     </message>
@@ -1023,11 +989,6 @@ so you can save the file on windows.</source>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
         <translation>この友達からのファイルを自動承認</translation>
-    </message>
-    <message>
-        <source>Remove friend</source>
-        <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>友達を削除</translation>
     </message>
     <message>
         <source>Show details</source>
@@ -1057,6 +1018,23 @@ so you can save the file on windows.</source>
     <message>
         <source>Offline</source>
         <translation>オフライン</translation>
+    </message>
+    <message>
+        <source>Move to circle &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove friend</source>
+        <comment>Menu to remove the friend from the friend list</comment>
+        <translation type="unfinished">友達を削除</translation>
+    </message>
+    <message>
+        <source>Blocked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Negotiating</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1116,20 +1094,8 @@ so you can save the file on windows.</source>
         <translation>起動時、最小化しておく</translation>
     </message>
     <message>
-        <source>After pressing minimize (_) qTox will minimize itself to tray,
-instead of system taskbar.</source>
-        <comment>toolTip for minimize to tray setting</comment>
-        <translation>最小化ボタンをクリックすると、タスクバーではなく、トレイに最小化します。</translation>
-    </message>
-    <message>
         <source>Minimize to tray</source>
         <translation>トレイに最小化</translation>
-    </message>
-    <message>
-        <source>After pressing close (X) qTox will minimize to tray,
-instead of closing itself.</source>
-        <comment>toolTip for close to tray setting</comment>
-        <translation>閉じるボタンをクリックすると、終了せずにトレイに最小化します。</translation>
     </message>
     <message>
         <source>Close to tray</source>
@@ -1156,11 +1122,6 @@ instead of closing itself.</source>
         <translation>ファイルを保存するデフォルトの場所:</translation>
     </message>
     <message>
-        <source>You can set this on a per-friend basis by right clicking them.</source>
-        <comment>autoaccept cb tooltip</comment>
-        <translation>友達ごとに、右クリックすることで設定できます。</translation>
-    </message>
-    <message>
         <source>Autoaccept files</source>
         <translation>ファイルを自動承認</translation>
     </message>
@@ -1182,6 +1143,23 @@ instead of closing itself.</source>
     </message>
     <message>
         <source> MB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After pressing minimize (_) qTox will minimize to tray,
+instead of system taskbar.</source>
+        <comment>toolTip for minimize to tray setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After pressing close (X) qTox will close to tray,
+instead of closing entirely.</source>
+        <comment>toolTip for close to tray setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can set this on a per-friend basis by right clicking individual friends.</source>
+        <comment>autoaccept cb tooltip</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1228,10 +1206,6 @@ instead of closing itself.</source>
         <translation>確認</translation>
     </message>
     <message>
-        <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search in text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1247,43 +1221,8 @@ instead of closing itself.</source>
         <source>Export to file</source>
         <translation type="unfinished">ファイルにエクスポート</translation>
     </message>
-</context>
-<context>
-    <name>GenericNetCamView</name>
     <message>
-        <source>Tox video</source>
-        <translation>Tox ビデオ</translation>
-    </message>
-    <message>
-        <source>Show Messages</source>
-        <translation>メッセージを表示</translation>
-    </message>
-    <message>
-        <source>Hide Messages</source>
-        <translation>メッセージを非表示</translation>
-    </message>
-    <message>
-        <source>Full Screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute audio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>マイクをミュート</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>ビデオ通話を終了</translation>
-    </message>
-    <message>
-        <source>Exit full screen</source>
+        <source>Are you sure that you want to clear all displayed messages?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1397,13 +1336,6 @@ instead of closing itself.</source>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <comment>Tox ID tooltip</comment>
-        <translation>この文字列には、他の Tox クライアントからあなたへ連絡する際の方法が記載されています。
-友達と会話するには、これを共有してください。</translation>
-    </message>
-    <message>
         <source>Your Tox ID (click to copy)</source>
         <translation>自分の Tox ID (クリックするとコピーできます)</translation>
     </message>
@@ -1418,26 +1350,6 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Copy image</source>
         <translation>画像をコピー</translation>
-    </message>
-    <message>
-        <source>Server</source>
-        <translation>サーバー</translation>
-    </message>
-    <message>
-        <source>Hide my name from the public list</source>
-        <translation>ユーザー名を公開リストに表示しない</translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation>登録</translation>
-    </message>
-    <message>
-        <source>Your password</source>
-        <translation>パスワード</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>更新</translation>
     </message>
     <message>
         <source>Profile</source>
@@ -1493,34 +1405,6 @@ Profile does not contain your history.</source>
         <translation>パスワードを変更</translation>
     </message>
     <message>
-        <source>Register on ToxMe</source>
-        <translation>ToxMe で登録</translation>
-    </message>
-    <message>
-        <source>Name for the ToxMe service.</source>
-        <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation>ToxMe サービスの名前です。</translation>
-    </message>
-    <message>
-        <source>Optional. Something about you. Or your cat.</source>
-        <comment>Tooltip for the Biography text.</comment>
-        <translation>省略可能です。ご自身についての文章です。あるいは飼い猫について。</translation>
-    </message>
-    <message>
-        <source>Optional. Something about you. Or your cat.</source>
-        <comment>Tooltip for the Biography field.</comment>
-        <translation>省略可能です。ご自身についての文章です。あるいは飼い猫について。</translation>
-    </message>
-    <message>
-        <source>ToxMe service to register on.</source>
-        <translation>登録用の ToxMe サービス。</translation>
-    </message>
-    <message>
-        <source>If not set, ToxMe entries are publicly visible.</source>
-        <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation>設定していない場合、ToxMe エントリーを誰でも見ることができます。</translation>
-    </message>
-    <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
         <translation>プロファイルのパスワードを削除し、暗号化を解除してください。</translation>
@@ -1554,30 +1438,6 @@ Profile does not contain your history.</source>
         <translation>クリップボードに QR コードをコピー</translation>
     </message>
     <message>
-        <source>ToxMe username to be shown on ToxMe</source>
-        <translation>ToxMe で表示される ToxMe ユーザー名</translation>
-    </message>
-    <message>
-        <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>ToxMe で表示される ToxMe の自己紹介 (省略可)</translation>
-    </message>
-    <message>
-        <source>ToxMe service address</source>
-        <translation>ToxMe サービスのアドレス</translation>
-    </message>
-    <message>
-        <source>Visibility on the ToxMe service</source>
-        <translation>ToxMe サービスの表示・非表示の状態</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>パスワード</translation>
-    </message>
-    <message>
-        <source>Update ToxMe entry</source>
-        <translation>ToxMe エントリーを更新</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <translation>プロファイルの名前を変更します。</translation>
     </message>
@@ -1606,24 +1466,18 @@ Profile does not contain your history.</source>
         <translation>ステータス:</translation>
     </message>
     <message>
-        <source>My username</source>
-        <translation>ユーザー名</translation>
-    </message>
-    <message>
-        <source>My biography</source>
-        <translation>自己紹介</translation>
-    </message>
-    <message>
         <source>My profile</source>
         <translation>プロファイル</translation>
+    </message>
+    <message>
+        <source>This ID allows other Tox users to add and contact you.
+Share it with your friends to begin chatting.</source>
+        <comment>Tox ID tooltip</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
-    <message>
-        <source>Load History Dialog</source>
-        <translation>履歴の読み込みダイアログ</translation>
-    </message>
     <message>
         <source>Load history</source>
         <translation type="unfinished"></translation>
@@ -1641,11 +1495,15 @@ Profile does not contain your history.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select Date Dialog</source>
+        <source>Select a date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select a date</source>
+        <source>Load history dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select date dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1706,12 +1564,6 @@ Profile does not contain your history.</source>
     <message>
         <source>The password must be at least 6 characters long.</source>
         <translation>パスワードは最低 6 文字である必要があります。</translation>
-    </message>
-    <message>
-        <source>The passwords you&apos;ve entered are different.
-Please make sure to enter same password twice.</source>
-        <translation>入力したパスワードが異なっています。
-同じパスワードを二度確実に入力してください。</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
@@ -1792,6 +1644,11 @@ You may want to create one.</source>
     <message>
         <source>Loading existing profile page</source>
         <translation>既存のプロファイルを読み込み中ページ</translation>
+    </message>
+    <message>
+        <source>The passwords you&apos;ve entered are different.
+Please make sure to enter the same password twice.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1898,6 +1755,45 @@ You may want to create one.</source>
     </message>
 </context>
 <context>
+    <name>NetCamView</name>
+    <message>
+        <source>Tox video</source>
+        <translation type="unfinished">Tox ビデオ</translation>
+    </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">マイクをミュート</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">ビデオ通話を終了</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Nexus</name>
     <message>
         <source>View</source>
@@ -1935,6 +1831,42 @@ You may want to create one.</source>
         <translation>
             <numerusform>未読メッセージ</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>NotificationGenerator</name>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">新しいメッセージ</translation>
+    </message>
+    <message>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 - file transfer</source>
+        <extracomment>e.g. Bob - file transfer</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 invites you to join a group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request received from %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2013,8 +1945,8 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <translation>ブラックリスト</translation>
     </message>
     <message>
-        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation>グループメンバーの公開鍵でグループメッセージをフィルターします。公開鍵を一行ごとに 1 つづつ、ここに入力してください。</translation>
+        <source>Filter group messages by group members&apos; public keys. Put public keys here, one per line.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2024,12 +1956,12 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <translation>パスワードからキーを作成できませんでした。プロファイルは新しいパスワードを使用しません。</translation>
     </message>
     <message>
-        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>データベースでパスワードを変更できませんでした。パスワードの形式が間違っているか、古いものを使用しています。</translation>
-    </message>
-    <message>
         <source>Toxing on qTox</source>
         <translation>qTox で tox しています</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2079,24 +2011,6 @@ Please use another image.</source>
         <translation>場所が書き込み可能ではありません</translation>
     </message>
     <message>
-        <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
-        <comment>text of permissions popup</comment>
-        <translation>この場所に書き込む権限がありません。他の場所を選ぶか、保存ダイアログをキャンセルしてください。</translation>
-    </message>
-    <message>
-        <source>Failed to copy file</source>
-        <translation>ファイルのコピーに失敗</translation>
-    </message>
-    <message>
-        <source>The file you chose could not be written to.</source>
-        <translation>選択されたファイルに書き込めませんでした。</translation>
-    </message>
-    <message>
-        <source>Really delete profile?</source>
-        <comment>deletion confirmation title</comment>
-        <translation>本当にプロファイルを削除しますか？</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>このプロファイルを削除してもよろしいですか？</translation>
@@ -2120,45 +2034,8 @@ Please use another image.</source>
         <translation>プロファイルにパスワードがありません！</translation>
     </message>
     <message>
-        <source>Really delete password?</source>
-        <comment>deletion confirmation title</comment>
-        <translation>本当にパスワードを削除しますか？</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>新しいパスワードを入力してください。</translation>
-    </message>
-    <message>
-        <source>Register (processing)</source>
-        <translation>登録 (処理しています)</translation>
-    </message>
-    <message>
-        <source>Update (processing)</source>
-        <translation>更新 (処理しています)</translation>
-    </message>
-    <message>
-        <source>Done!</source>
-        <translation>完了しました！</translation>
-    </message>
-    <message>
-        <source>Account %1@%2 updated successfully</source>
-        <translation>アカウント %1@%2 の更新に成功しました</translation>
-    </message>
-    <message>
-        <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>%1@%2 をデータベースに正しく追加しました。パスワードを保存を保存してください</translation>
-    </message>
-    <message>
-        <source>Toxme error</source>
-        <translation>Toxme エラー</translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation>登録</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>更新</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -2182,13 +2059,6 @@ Please use another image.</source>
     <message>
         <source>Couldn&apos;t change password</source>
         <translation>パスワードを変更できませんでした</translation>
-    </message>
-    <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.
-
-This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
@@ -2219,10 +2089,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>空のパス</translation>
     </message>
     <message>
-        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>データベースでパスワードを変更できませんでした。パスワードの形式が間違っているか、古いものを使用しています。</translation>
-    </message>
-    <message>
         <source>Export profile</source>
         <translation>プロファイルをエクスポート</translation>
     </message>
@@ -2242,14 +2108,56 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>手動で削除してください。</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <extracomment>deletion confirmation text</extracomment>
-        <translation>パスワードを削除してもよろしいですか？</translation>
-    </message>
-    <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation>画像 (%1)</translation>
+    </message>
+    <message>
+        <source>You do not have permission to write to that location. Choose another, or cancel the save dialog.</source>
+        <comment>text of permissions popup</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file you chose could not be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete profile</source>
+        <comment>deletion confirmation title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove password</source>
+        <comment>deletion confirmation title</comment>
+        <translation type="unfinished">パスワードを削除</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This ID allows other Tox users to add and contact you.
+Share it with your friends to begin chatting.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2332,13 +2240,13 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>友達を追加できませんでした</translation>
     </message>
     <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 有効な ToxMe アドレスではありません。</translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>自分を友達として追加することはできません！</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Tox address.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2354,46 +2262,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>profile</source>
         <translation>プロファイル</translation>
-    </message>
-    <message>
-        <source>Server doesn&apos;t support Toxme</source>
-        <translation>サーバーが Toxme に対応していません</translation>
-    </message>
-    <message>
-        <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation>リクエストを送信しすぎています。1 時間待ってから、もう一度お試しください</translation>
-    </message>
-    <message>
-        <source>This name is already in use</source>
-        <translation>この名前はすでに使用されています</translation>
-    </message>
-    <message>
-        <source>This Tox ID is already registered under another name</source>
-        <translation>この Tox ID はすでに別の名前で登録されています</translation>
-    </message>
-    <message>
-        <source>Please don&apos;t use a space in your name</source>
-        <translation>名前にスペースを入れないでください</translation>
-    </message>
-    <message>
-        <source>Password incorrect</source>
-        <translation>パスワードが違います</translation>
-    </message>
-    <message>
-        <source>You can&apos;t use this name</source>
-        <translation>この名前は使えません</translation>
-    </message>
-    <message>
-        <source>Name not found</source>
-        <translation>名前が見つかりません</translation>
-    </message>
-    <message>
-        <source>Tox ID not sent</source>
-        <translation>Tox ID が送信されていません</translation>
-    </message>
-    <message>
-        <source>That user does not exist</source>
-        <translation>ユーザーが存在しません</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -2441,18 +2309,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Incoming call...</source>
         <translation>お電話です…</translation>
-    </message>
-    <message>
-        <source>Problem with HTTPS connection</source>
-        <translation>HTTPS 接続に関する問題</translation>
-    </message>
-    <message>
-        <source>Internal ToxMe error</source>
-        <translation>ToxMe 内部エラー</translation>
-    </message>
-    <message>
-        <source>Reformatting text in progress..</source>
-        <translation>テキストの再書式設定が進行中です。</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
@@ -2504,6 +2360,50 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reformatting text...</source>
+        <comment>Waiting for text to be reformatted</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 message(s) from %2 chats</source>
+        <extracomment>e.g. 3 messages from 2 chats</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 message(s) from %2</source>
+        <extracomment>e.g. 2 messages from Bob</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>negotitating</source>
         <comment>contact status</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -2632,10 +2532,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>パスワードの強度: %p%</translation>
     </message>
     <message>
-        <source>The password is too short</source>
-        <translation>パスワードが短すぎます</translation>
-    </message>
-    <message>
         <source>The password doesn&apos;t match.</source>
         <translation>パスワードが一致しません。</translation>
     </message>
@@ -2654,6 +2550,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Password input field, minimum 6 characters long</source>
         <translation>パスワードの入力欄、最低でも 6 文字</translation>
+    </message>
+    <message>
+        <source>The password is too short.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2764,11 +2664,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>連絡先リスト</translation>
     </message>
     <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation>チェックすると、グループチャットは友達リストの一番上に移動します。チェックを外すと、下のオンライン友達の位置に移動します。</translation>
-    </message>
-    <message>
         <source>Place groupchats at top of friend list</source>
         <translation>友達リストの一番上にグループチャットを表示</translation>
     </message>
@@ -2796,11 +2691,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Use emoticons</source>
         <translation>顔文字を使う</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>スマイリーパック:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
@@ -2831,17 +2721,8 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>日付の書式:</translation>
     </message>
     <message>
-        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
-        <comment>toolTip for show identicons</comment>
-        <translation>有効な場合、アバターが設定されていない連絡先には、デフォルトの画像の代わりに、Tox ID から生成されたアバターが設定されます。適用するには再起動が必要です。</translation>
-    </message>
-    <message>
         <source>Use identicons instead of empty avatars</source>
         <translation>空のアバターの代わりに自動的に生成されたアバターを使う</translation>
-    </message>
-    <message>
-        <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
@@ -2850,11 +2731,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Onlys notify about new messages in groupchats when mentioned.</source>
-        <comment>toolTip for Group chats only notify when mentioned</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2877,21 +2753,36 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Hide message sender and contents</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Use colored nicknames in group chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only notify about new messages in group chats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, group chats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If enabled, every contact without an avatar will have a generated icon based on their Tox ID instead of the default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smiley pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
         <source>Status</source>
         <translation>ステータス</translation>
-    </message>
-    <message>
-        <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>toxcore の開始に失敗しました。このウィンドウを閉じるとプログラムは強制終了します。</translation>
-    </message>
-    <message>
-        <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
-        <comment>popup text</comment>
-        <translation>toxcore は現在のプロキシ設定では開始できません。qTox を実行できません。設定を変更して再起動してください。</translation>
     </message>
     <message>
         <source>Executable file</source>
@@ -2908,10 +2799,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>名前</translation>
     </message>
     <message>
-        <source>Couldn&apos;t request friendship</source>
-        <translation>友達をリクエストできません</translation>
-    </message>
-    <message>
         <source>Groupchat #%1</source>
         <translation>グループチャット #%1</translation>
     </message>
@@ -2926,18 +2813,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Add new circle...</source>
         <translation>新しいサークルを追加…</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Friend Request(s)</source>
-        <translation>
-            <numerusform>%n 件の新しい友達リクエスト</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Group Invite(s)</source>
-        <translation>
-            <numerusform>%n 件の新しいグループチャット招待</numerusform>
-        </translation>
     </message>
     <message>
         <source>By Name</source>
@@ -2992,11 +2867,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>ログアウト</translation>
     </message>
     <message>
-        <source>Exit</source>
-        <comment>Tray action menu to exit tox</comment>
-        <translation>終了</translation>
-    </message>
-    <message>
         <source>Filter...</source>
         <translation>フィルター…</translation>
     </message>
@@ -3011,30 +2881,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Contacts</source>
         <translation>連絡先</translation>
-    </message>
-    <message>
-        <source>Change Status</source>
-        <translation>ステータスを変更</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation>プロフィールを編集</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translation>ログアウト</translation>
-    </message>
-    <message>
-        <source>Add Contact...</source>
-        <translation>連絡先を追加…</translation>
-    </message>
-    <message>
-        <source>Next Conversation</source>
-        <translation>次の会話</translation>
-    </message>
-    <message>
-        <source>Previous Conversation</source>
-        <translation>前の会話</translation>
     </message>
     <message>
         <source>Show</source>
@@ -3071,15 +2917,57 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished">ファイル &quot;%1&quot; の送信に失敗しました</translation>
     </message>
     <message>
-        <source>File sent</source>
+        <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> sent you a friend request.</source>
+        <source>Toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
+        <comment>popup text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> invites you to join a group.</source>
+        <source>Couldn&apos;t send friend request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new friend request(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new group invite(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <comment>Tray action menu to exit Tox</comment>
+        <translation type="unfinished">終了</translation>
+    </message>
+    <message>
+        <source>Change status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished">ログアウト</translation>
+    </message>
+    <message>
+        <source>Add contact...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next conversation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous conversation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

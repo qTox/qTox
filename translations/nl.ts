@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="nl_NL">
+<TS version="2.1" language="nl_NL">
 <context>
     <name>AVForm</name>
     <message>
@@ -34,10 +34,6 @@
     <message>
         <source>Playback device</source>
         <translation>Afspeelapparaat</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Gebruik de schuifbalk om het volume van je speakers in te stellen.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -80,20 +76,8 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Testgeluid</translation>
     </message>
     <message>
-        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>Schakelt de experimentele audioback-end met ondersteuning voor echo-onderdrukking in. qTox moet opnieuw worden opgestart om de wijziging van kracht te laten gaan.</translation>
-    </message>
-    <message>
-        <source>Enable experimental audio backend</source>
-        <translation>Experimentele audioback-end inschakelen</translation>
-    </message>
-    <message>
         <source>Audio quality</source>
         <translation>Audiokwaliteit</translation>
-    </message>
-    <message>
-        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Kwaliteit van verstuurde audio. Verlaag deze instelling als je te weinig bandbreedte hebt, of als je je internetverbruik wilt beperken.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -114,6 +98,34 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>Threshold</source>
         <translation>Drempelwaarde</translation>
+    </message>
+    <message>
+        <source>Use slider to set the volume of your speakers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set resolution of your camera.
+The higher values, the better video quality your friends may get.
+Note that with better video quality, you use more bandwidth.
+Sometimes your connection may not be good enough to handle higher video quality,
+which may lead to problems with video calls.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the activation volume for your input device.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -159,18 +171,18 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>bugtracker</translation>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">bugtracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Nuttige probleemmeldingen schrijven</translation>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Nuttige probleemmeldingen schrijven</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>bijdragers</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">bijdragers</translation>
     </message>
 </context>
 <context>
@@ -200,20 +212,8 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Indien ingesteld automatisch bestanden van dit contact aanvaarden</translation>
     </message>
     <message>
-        <source>Auto accept files</source>
-        <translation>Bestanden automatisch aanvaarden</translation>
-    </message>
-    <message>
         <source>Default directory to save files:</source>
         <translation>Standaardlocatie om bestanden op te slaan:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Automatisch aanvaarden is uitgeschakeld voor dit contact</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Oproep automatisch aanvaarden:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -232,10 +232,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Indien ingesteld groepsgespreksuitnodigingen van dit contact automatisch aanvaarden.</translation>
     </message>
     <message>
-        <source>Auto accept group invites</source>
-        <translation>Groepsuitnodigingen automatisch aanvaarden</translation>
-    </message>
-    <message>
         <source>Remove history (operation can not be undone!)</source>
         <translation>Geschiedenis verwijderen (kan niet ongedaan gemaakt worden!)</translation>
     </message>
@@ -248,17 +244,8 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Invoerveld voor notities over het contact</translation>
     </message>
     <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Hier kun je commentaren over dit contact opslaan.</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>Geschiedenis verwijderd</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <extracomment>popup title</extracomment>
-        <translation>Kies een map om automatisch aanvaarde bestanden op te slaan</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -279,6 +266,31 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>Failed to remove chat history with %1!</source>
         <translation>Kon chatgeschiedenis met %1 niet verwijderen!</translation>
+    </message>
+    <message>
+        <source>Auto-accept files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept for this contact is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept call:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can save comments about this contact here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose an auto-accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -307,9 +319,13 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>Update available</source>
         <translation>Nieuwe versie beschikbaar</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>qTox is up to date ✓</source>
         <translation type="unfinished">deze qTox versie is actueel ✓</translation>
+    </message>
+    <message>
+        <source>Currently running an untested/unstable version of qTox</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -347,10 +363,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Weigeren</translation>
     </message>
     <message>
-        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>Tox-ID, ofwel 76 hexadecimale tekens, ofwel naam@voorbeeld.be</translation>
-    </message>
-    <message>
         <source>Type in Tox ID of your friend</source>
         <translation>Voer de Tox-ID van je vriend in</translation>
     </message>
@@ -361,11 +373,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
         <translation>Voer een bericht in om samen met het vriendschapsverzoek te sturen, of laat leeg om een standaardbericht te sturen</translation>
-    </message>
-    <message>
-        <source>%1 Tox ID is invalid or does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>%1 Tox-ID is ongeldig of bestaat niet</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -399,11 +406,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Tox-ID</translation>
     </message>
     <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <extracomment>Tox ID format description</extracomment>
-        <translation>ofwel 76 hexadecimale tekens, ofwel naam@voorbeeld.be</translation>
-    </message>
-    <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
         <translation>Bericht</translation>
@@ -428,7 +430,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Klaar om %n contact te importeren, klik om te bevestigen</numerusform>
             <numerusform>Klaar om %n contacten te importeren, klik om te bevestigen</numerusform>
@@ -438,16 +439,26 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>Import contacts</source>
         <translation>Contacten importeren</translation>
     </message>
+    <message>
+        <source>Tox ID, 76 hexadecimal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 Tox ID is invalid</source>
+        <comment>Tox address error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>76 hexadecimal characters</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
         <translation>Geavanceerd</translation>
-    </message>
-    <message>
-        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Tenzij je %1 weet wat je doet, wijzig je hier best %2. Wijzigingen die je hier doorvoert kunnen tot problemen met qTox leiden, en zelfs tot verlies van je gegevens, bijvoorbeeld je geschiedenis.</translation>
     </message>
     <message>
         <source>really</source>
@@ -478,22 +489,20 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Nee</translation>
     </message>
     <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>In gesprek</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Je kan niet offline gaan terwijl je in een gesprek zit!</translation>
-    </message>
-    <message>
-        <source>Save File</source>
-        <translation>Bestand opslaan</translation>
-    </message>
-    <message>
         <source>Logs (*.log)</source>
         <translation>Logboeken (*.log)</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changes here are applied only after restarting qTox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -516,18 +525,9 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Portabel</translation>
     </message>
     <message>
-        <source>Connection Settings</source>
-        <translation>Verbindingsinstellingen</translation>
-    </message>
-    <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Gebruik IPv6 (aanbevolen)</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Door dit uit te schakelen kun je bijvoorbeeld Tox via Tor gebruiken. Het is wel zwaarder voor het Tox-netwerk, dus schakel dit alleen uit indien noodzakelijk.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -561,11 +561,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Opnieuw verbinden</translation>
-    </message>
-    <message>
         <source>Debug</source>
         <translation>Debug</translation>
     </message>
@@ -580,6 +575,15 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>Enable LAN discovery</source>
         <translation>LAN-herkenning aanzetten</translation>
+    </message>
+    <message>
+        <source>Connection settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., Tox over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -626,10 +630,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>%1 bellen</translation>
     </message>
     <message>
-        <source>%1 is typing</source>
-        <translation>%1 is aan het typen</translation>
-    </message>
-    <message>
         <source>Copy</source>
         <translation>Kopiëren</translation>
     </message>
@@ -652,9 +652,8 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
-so you can save the file on windows.</source>
-        <translation>Niet-toegestane tekens zijn vervangen door _
-zodat je het bestand op kunt slaan in windows.</translation>
+so you can save the file on Windows.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -738,6 +737,10 @@ zodat je het bestand op kunt slaan in windows.</translation>
         <source>pending</source>
         <translation>wachtend</translation>
     </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 is aan het typen</translation>
+    </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
@@ -770,51 +773,47 @@ zodat je het bestand op kunt slaan in windows.</translation>
         <translation>/me biedt vriendschap aan, ‘%1’</translation>
     </message>
     <message>
-        <source>Invalid Tox ID</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Ongeldige Tox-ID</translation>
-    </message>
-    <message>
-        <source>You need to write a message with your request</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Je vriendschapsverzoek moet een bericht bevatten</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Je bericht is te lang!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Vriend is al toegevoegd</translation>
-    </message>
-    <message>
         <source>Groupchat %1</source>
         <translation>Groepschat %1</translation>
     </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Ongeldige Tox-ID</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Je vriendschapsverzoek moet een bericht bevatten</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Je bericht is te lang!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Vriend is al toegevoegd</translation>
+    </message>
 </context>
 <context>
-    <name>DesktopNotify</name>
+    <name>ExtensionStatus</name>
     <message>
-        <source>New message</source>
-        <translation>Nieuw bericht</translation>
+        <source>All extensions supported</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Incoming file transfer</source>
-        <translation>Inkomende bestandsoverdracht</translation>
+        <source>No extensions supported</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Friend request received</source>
-        <translation>Vriendschapsverzoek ontvangen</translation>
+        <source>Not all extensions supported</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group message</source>
-        <translation>Nieuw groepsbericht</translation>
-    </message>
-    <message>
-        <source>Group invite received</source>
-        <translation>Groepsuitnodiging ontvangen</translation>
+        <source>Multipart Messages: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -899,18 +898,13 @@ zodat je het bestand op kunt slaan in windows.</translation>
         <translation>Bestand opslaan</translation>
     </message>
     <message>
-        <source>Remote Paused</source>
+        <source>Remote paused</source>
         <comment>file transfer widget</comment>
-        <translation>Extern onderbroken</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FilesForm</name>
-    <message>
-        <source>Transferred Files</source>
-        <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Overgedragen bestanden</translation>
-    </message>
     <message>
         <source>Downloads</source>
         <translation>Downloads</translation>
@@ -918,6 +912,11 @@ zodat je het bestand op kunt slaan in windows.</translation>
     <message>
         <source>Uploads</source>
         <translation>Uploads</translation>
+    </message>
+    <message>
+        <source>Transferred files</source>
+        <comment>&quot;Headline&quot; of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -939,42 +938,12 @@ zodat je het bestand op kunt slaan in windows.</translation>
         <translation>Deze maand</translation>
     </message>
     <message>
-        <source>Older than 6 Months</source>
-        <translation>Ouder dan 6 maanden</translation>
-    </message>
-    <message>
         <source>Never</source>
         <translation>Nooit</translation>
     </message>
-</context>
-<context>
-    <name>FriendRequestDialog</name>
     <message>
-        <source>Friend request</source>
-        <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Vriendschapsverzoek</translation>
-    </message>
-    <message>
-        <source>Someone wants to make friends with you</source>
-        <translation>Iemand wil vriendschap met je sluiten</translation>
-    </message>
-    <message>
-        <source>User ID:</source>
-        <translation>Gebruikers-ID:</translation>
-    </message>
-    <message>
-        <source>Friend request message:</source>
-        <translation>Bericht voor vriendschapsverzoek:</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <comment>Accept a friend request</comment>
-        <translation>Aanvaarden</translation>
-    </message>
-    <message>
-        <source>Reject</source>
-        <comment>Reject a friend request</comment>
-        <translation>Weigeren</translation>
+        <source>Older than 6 months</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -998,10 +967,6 @@ zodat je het bestand op kunt slaan in windows.</translation>
         <translation>Verwijderen uit cirkel ‘%1’</translation>
     </message>
     <message>
-        <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Verplaatsen naar cirkel ‘%1’</translation>
-    </message>
-    <message>
         <source>Set alias...</source>
         <translation>Alias instellen…</translation>
     </message>
@@ -1009,11 +974,6 @@ zodat je het bestand op kunt slaan in windows.</translation>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
         <translation>Bestanden van deze vriend automatisch aanvaarden</translation>
-    </message>
-    <message>
-        <source>Remove friend</source>
-        <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Vriend verwijderen</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1059,6 +1019,23 @@ zodat je het bestand op kunt slaan in windows.</translation>
     <message>
         <source>Show details</source>
         <translation>Details tonen</translation>
+    </message>
+    <message>
+        <source>Move to circle &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove friend</source>
+        <comment>Menu to remove the friend from the friend list</comment>
+        <translation type="unfinished">Vriend verwijderen</translation>
+    </message>
+    <message>
+        <source>Blocked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Negotiating</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1110,22 +1087,8 @@ zodat je het bestand op kunt slaan in windows.</translation>
         <translation>In systeemvak starten</translation>
     </message>
     <message>
-        <source>After pressing close (X) qTox will minimize to tray,
-instead of closing itself.</source>
-        <comment>toolTip for close to tray setting</comment>
-        <translation>Indien je op sluiten (X) klikt, zal qTox naar het systeemvak minimaliseren,
-in plaats van af te sluiten.</translation>
-    </message>
-    <message>
         <source>Close to tray</source>
         <translation>Naar systeemvak sluiten</translation>
-    </message>
-    <message>
-        <source>After pressing minimize (_) qTox will minimize itself to tray,
-instead of system taskbar.</source>
-        <comment>toolTip for minimize to tray setting</comment>
-        <translation>Indien je op minimaliseren (_) klikt, zal qTox naar het systeemvak minimaliseren,
-in plaats van naar de taakbalk.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
@@ -1134,11 +1097,6 @@ in plaats van naar de taakbalk.</translation>
     <message>
         <source>Set where files will be saved.</source>
         <translation>Stel in waar bestanden opgeslagen worden.</translation>
-    </message>
-    <message>
-        <source>You can set this on a per-friend basis by right clicking them.</source>
-        <comment>autoaccept cb tooltip</comment>
-        <translation>Je kan dit per vriend instellen door met de rechtermuisknop op een vriend te klikken.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
@@ -1188,6 +1146,23 @@ in plaats van naar de taakbalk.</translation>
         <source> MB</source>
         <translation> MB</translation>
     </message>
+    <message>
+        <source>After pressing minimize (_) qTox will minimize to tray,
+instead of system taskbar.</source>
+        <comment>toolTip for minimize to tray setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After pressing close (X) qTox will close to tray,
+instead of closing entirely.</source>
+        <comment>toolTip for close to tray setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can set this on a per-friend basis by right clicking individual friends.</source>
+        <comment>autoaccept cb tooltip</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1233,10 +1208,6 @@ in plaats van naar de taakbalk.</translation>
         <translation>Bevestiging</translation>
     </message>
     <message>
-        <source>You are sure that you want to clear all displayed messages?</source>
-        <translation>Weet je zeker dat je alle weergegeven berichten wilt wissen?</translation>
-    </message>
-    <message>
         <source>Search in text</source>
         <translation>Tekst doorzoeken</translation>
     </message>
@@ -1252,44 +1223,9 @@ in plaats van naar de taakbalk.</translation>
         <source>Export to file</source>
         <translation>Naar bestand exporteren</translation>
     </message>
-</context>
-<context>
-    <name>GenericNetCamView</name>
     <message>
-        <source>Tox video</source>
-        <translation>Tox-video</translation>
-    </message>
-    <message>
-        <source>Show Messages</source>
-        <translation>Berichten tonen</translation>
-    </message>
-    <message>
-        <source>Hide Messages</source>
-        <translation>Berichten verbergen</translation>
-    </message>
-    <message>
-        <source>Full Screen</source>
-        <translation>Volledig scherm</translation>
-    </message>
-    <message>
-        <source>Toggle video preview</source>
-        <translation>Videovoorbeeld wisselen</translation>
-    </message>
-    <message>
-        <source>Mute audio</source>
-        <translation>Audio dempen</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Microfoon dempen</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Videogesprek beëindigen</translation>
-    </message>
-    <message>
-        <source>Exit full screen</source>
-        <translation>Volledig scherm afsluiten</translation>
+        <source>Are you sure that you want to clear all displayed messages?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1404,13 +1340,6 @@ in plaats van naar de taakbalk.</translation>
         <translation>Tox-ID</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <comment>Tox ID tooltip</comment>
-        <translation>Deze combinatie van tekens vertelt andere Tox-cliënten hoe ze contact met je op moeten nemen.
-Deel dit met je vrienden om te communiceren.</translation>
-    </message>
-    <message>
         <source>Your Tox ID (click to copy)</source>
         <translation>Jouw Tox-ID (klik om te kopiëren)</translation>
     </message>
@@ -1481,54 +1410,6 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <source>Server</source>
-        <translation>Server</translation>
-    </message>
-    <message>
-        <source>Hide my name from the public list</source>
-        <translation>Mijn naam niet in de openbare lijst opnemen</translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation>Registreren</translation>
-    </message>
-    <message>
-        <source>Your password</source>
-        <translation>Je wachtwoord</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Bijwerken</translation>
-    </message>
-    <message>
-        <source>Register on ToxMe</source>
-        <translation>Registreren op ToxMe</translation>
-    </message>
-    <message>
-        <source>Name for the ToxMe service.</source>
-        <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation>Naam van de ToxMe-dienst.</translation>
-    </message>
-    <message>
-        <source>Optional. Something about you. Or your cat.</source>
-        <comment>Tooltip for the Biography text.</comment>
-        <translation>Optioneel. Iets over jezelf, of over je kat.</translation>
-    </message>
-    <message>
-        <source>Optional. Something about you. Or your cat.</source>
-        <comment>Tooltip for the Biography field.</comment>
-        <translation>Optioneel. Iets over jezelf, of over je kat.</translation>
-    </message>
-    <message>
-        <source>ToxMe service to register on.</source>
-        <translation>ToxMe-dienst om bij te registreren.</translation>
-    </message>
-    <message>
-        <source>If not set, ToxMe entries are publicly visible.</source>
-        <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation>Indien niet ingesteld is je naam openbaar zichtbaar op ToxMe.</translation>
-    </message>
-    <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
         <translation>Verwijder je wachtwoord en versleuteling van je profiel.</translation>
@@ -1562,30 +1443,6 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
         <translation>QR-afbeelding kopiëren naar klembord</translation>
     </message>
     <message>
-        <source>ToxMe username to be shown on ToxMe</source>
-        <translation>ToxMe-gebruikersnaam om te tonen op ToxMe</translation>
-    </message>
-    <message>
-        <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>Optionele ToxMe-biografie om te tonen op ToxMe</translation>
-    </message>
-    <message>
-        <source>ToxMe service address</source>
-        <translation>ToxMe-dienstadres</translation>
-    </message>
-    <message>
-        <source>Visibility on the ToxMe service</source>
-        <translation>Zichtbaarheid op de ToxMe-dienst</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Wachtwoord</translation>
-    </message>
-    <message>
-        <source>Update ToxMe entry</source>
-        <translation>ToxMe-invoer bijwerken</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <translation>Profiel hernoemen.</translation>
     </message>
@@ -1614,24 +1471,18 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
         <translation>Mijn status:</translation>
     </message>
     <message>
-        <source>My username</source>
-        <translation>Mijn gebruikersnaam</translation>
-    </message>
-    <message>
-        <source>My biography</source>
-        <translation>Mijn biografie</translation>
-    </message>
-    <message>
         <source>My profile</source>
         <translation>Mijn profiel</translation>
+    </message>
+    <message>
+        <source>This ID allows other Tox users to add and contact you.
+Share it with your friends to begin chatting.</source>
+        <comment>Tox ID tooltip</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
-    <message>
-        <source>Load History Dialog</source>
-        <translation>Geschiedenis laden</translation>
-    </message>
     <message>
         <source>Load history</source>
         <translation>Geschiedenis laden</translation>
@@ -1649,12 +1500,16 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
         <translation>(er zijn ongeveer 100 berichten geladen)</translation>
     </message>
     <message>
-        <source>Select Date Dialog</source>
-        <translation>Dialoogvenster datum selecteren</translation>
-    </message>
-    <message>
         <source>Select a date</source>
         <translation>Selecteer een datum</translation>
+    </message>
+    <message>
+        <source>Load history dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select date dialog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1698,12 +1553,6 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
     <message>
         <source>The password must be at least 6 characters long.</source>
         <translation>Het wachtwoord moet minstens 6 tekens lang zijn.</translation>
-    </message>
-    <message>
-        <source>The passwords you&apos;ve entered are different.
-Please make sure to enter same password twice.</source>
-        <translation>De wachtwoorden die je hebt ingevoerd komen niet overeen.
-Voer tweemaal hetzelfde wachtwoord in.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
@@ -1800,6 +1649,11 @@ Misschien wil je er een maken.</translation>
     <message>
         <source>Loading existing profile page</source>
         <translation>Pagina voor laden van bestaand profiel</translation>
+    </message>
+    <message>
+        <source>The passwords you&apos;ve entered are different.
+Please make sure to enter the same password twice.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1906,6 +1760,45 @@ Misschien wil je er een maken.</translation>
     </message>
 </context>
 <context>
+    <name>NetCamView</name>
+    <message>
+        <source>Tox video</source>
+        <translation type="unfinished">Tox-video</translation>
+    </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished">Volledig scherm</translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished">Videovoorbeeld wisselen</translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished">Audio dempen</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Microfoon dempen</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Videogesprek beëindigen</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished">Volledig scherm afsluiten</translation>
+    </message>
+    <message>
+        <source>Hide messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Nexus</name>
     <message>
         <source>View</source>
@@ -1944,6 +1837,42 @@ Misschien wil je er een maken.</translation>
             <numerusform>Ongelezen bericht</numerusform>
             <numerusform>Ongelezen berichten</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>NotificationGenerator</name>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">Nieuw bericht</translation>
+    </message>
+    <message>
+        <source>New group message</source>
+        <translation type="unfinished">Nieuw groepsbericht</translation>
+    </message>
+    <message>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished">Inkomende bestandsoverdracht</translation>
+    </message>
+    <message>
+        <source>%1 - file transfer</source>
+        <extracomment>e.g. Bob - file transfer</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished">Groepsuitnodiging ontvangen</translation>
+    </message>
+    <message>
+        <source>%1 invites you to join a group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request received</source>
+        <translation type="unfinished">Vriendschapsverzoek ontvangen</translation>
+    </message>
+    <message>
+        <source>Friend request received from %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2022,8 +1951,8 @@ Het is mogelijk dat er zich veranderingen in het formaat voordoen, wat kan leide
         <translation>Zwarte lijst</translation>
     </message>
     <message>
-        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation>Groepsberichten op basis van publieke sleutel van groepslid filteren. Plaats hier één publieke sleutel per regel.</translation>
+        <source>Filter group messages by group members&apos; public keys. Put public keys here, one per line.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2033,12 +1962,12 @@ Het is mogelijk dat er zich veranderingen in het formaat voordoen, wat kan leide
         <translation>Sleutel ophalen van wachtwoord mislukt, het profiel zal het nieuwe wachtwoord niet gebruiken.</translation>
     </message>
     <message>
-        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Kon wachtwoord van database niet wijzigen, het is mogelijk beschadigd of gebruikt het oude wachtwoord.</translation>
-    </message>
-    <message>
         <source>Toxing on qTox</source>
         <translation>Toxt op qTox</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2084,24 +2013,6 @@ Gebruik een andere afbeelding.</translation>
         <translation>Locatie niet schrijfbaar</translation>
     </message>
     <message>
-        <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
-        <comment>text of permissions popup</comment>
-        <translation>Je hebt geen toegang om een bestand op deze locatie op te slaan. Kies een andere locatie of annuleer het opslaan.</translation>
-    </message>
-    <message>
-        <source>Failed to copy file</source>
-        <translation>Kopiëren van bestand mislukt</translation>
-    </message>
-    <message>
-        <source>The file you chose could not be written to.</source>
-        <translation>Het bestand dat je hebt gekozen kan niet geschreven worden.</translation>
-    </message>
-    <message>
-        <source>Really delete profile?</source>
-        <comment>deletion confirmation title</comment>
-        <translation>Het profiel echt verwijderen?</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Weet je zeker dat je dit profiel wilt verwijderen?</translation>
@@ -2125,11 +2036,6 @@ Gebruik een andere afbeelding.</translation>
         <translation>Je profiel heeft geen wachtwoord!</translation>
     </message>
     <message>
-        <source>Really delete password?</source>
-        <comment>deletion confirmation title</comment>
-        <translation>Het wachtwoord echt verwijderen?</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>Voer een nieuw wachtwoord in.</translation>
     </message>
@@ -2141,38 +2047,6 @@ Gebruik een andere afbeelding.</translation>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation>Bestanden konden niet verwijderd worden!</translation>
-    </message>
-    <message>
-        <source>Register (processing)</source>
-        <translation>Registreren (in verwerking)</translation>
-    </message>
-    <message>
-        <source>Update (processing)</source>
-        <translation>Bijwerken (in verwerking)</translation>
-    </message>
-    <message>
-        <source>Done!</source>
-        <translation>Klaar!</translation>
-    </message>
-    <message>
-        <source>Account %1@%2 updated successfully</source>
-        <translation>Account %1@%2 met succes bijgewerkt</translation>
-    </message>
-    <message>
-        <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>%1@%2 is met success toegevoegd aan de database. Sla je wachtwoord op</translation>
-    </message>
-    <message>
-        <source>Toxme error</source>
-        <translation>ToxMe-fout</translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation>Registreren</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Bijwerken</translation>
     </message>
     <message>
         <source>Change password</source>
@@ -2191,16 +2065,6 @@ Gebruik een andere afbeelding.</translation>
     <message>
         <source>Couldn&apos;t change password</source>
         <translation>Kon wachtwoord niet wijzigen</translation>
-    </message>
-    <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.
-
-This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation>Deze hoop tekens vertelt andere Tox-cliënten hoe ze je moeten contacteren.
-Deel hem met je vrienden om te communiceren.
-
-Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
@@ -2231,10 +2095,6 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <translation>Leeg pad</translation>
     </message>
     <message>
-        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Kon wachtwoord van database niet wijzigen, het is mogelijk beschadigd of gebruikt het oude wachtwoord.</translation>
-    </message>
-    <message>
         <source>Export profile</source>
         <translation>Profiel exporteren</translation>
     </message>
@@ -2254,14 +2114,56 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <translation>Verwijder ze handmatig.</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <extracomment>deletion confirmation text</extracomment>
-        <translation>Weet je zeker dat je je wachtwoord wilt verwijderen?</translation>
-    </message>
-    <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation>Afbeeldingen (%1)</translation>
+    </message>
+    <message>
+        <source>You do not have permission to write to that location. Choose another, or cancel the save dialog.</source>
+        <comment>text of permissions popup</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file you chose could not be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete profile</source>
+        <comment>deletion confirmation title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove password</source>
+        <comment>deletion confirmation title</comment>
+        <translation type="unfinished">Wachtwoord verwijderen</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This ID allows other Tox users to add and contact you.
+Share it with your friends to begin chatting.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2344,13 +2246,13 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <translation>Kon vriend niet toevoegen</translation>
     </message>
     <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 is geen geldig ToxMe-adres.</translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Je kunt jezelf niet als vriend toevoegen!</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Tox address.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2397,46 +2299,6 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <translation>%1 hier! Tox met me!</translation>
     </message>
     <message>
-        <source>Server doesn&apos;t support Toxme</source>
-        <translation>Server biedt geen ondersteuning voor ToxMe</translation>
-    </message>
-    <message>
-        <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation>Je doet te veel verzoeken. Wacht een uur en probeer het opnieuw</translation>
-    </message>
-    <message>
-        <source>This name is already in use</source>
-        <translation>Deze naam is al in gebruik</translation>
-    </message>
-    <message>
-        <source>This Tox ID is already registered under another name</source>
-        <translation>Deze Tox-ID is al geregistreerd onder een andere naam</translation>
-    </message>
-    <message>
-        <source>Please don&apos;t use a space in your name</source>
-        <translation>Je naam mag geen spaties bevatten</translation>
-    </message>
-    <message>
-        <source>Password incorrect</source>
-        <translation>Wachtwoord onjuist</translation>
-    </message>
-    <message>
-        <source>You can&apos;t use this name</source>
-        <translation>Deze naam kun je niet gebruiken</translation>
-    </message>
-    <message>
-        <source>Name not found</source>
-        <translation>Naam niet gevonden</translation>
-    </message>
-    <message>
-        <source>Tox ID not sent</source>
-        <translation>Tox-ID niet verstuurd</translation>
-    </message>
-    <message>
-        <source>That user does not exist</source>
-        <translation>Die gebruiker bestaat niet</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
@@ -2453,18 +2315,6 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
         <translation>Bureaublad</translation>
-    </message>
-    <message>
-        <source>Problem with HTTPS connection</source>
-        <translation>Probleem met HTTPS-verbinding</translation>
-    </message>
-    <message>
-        <source>Internal ToxMe error</source>
-        <translation>Interne ToxMe-fout</translation>
-    </message>
-    <message>
-        <source>Reformatting text in progress..</source>
-        <translation>Tekst wordt opnieuw geformatteerd…</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
@@ -2518,6 +2368,50 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <source>blocked</source>
         <comment>contact status</comment>
         <translation>geblokkeerd</translation>
+    </message>
+    <message>
+        <source>Reformatting text...</source>
+        <comment>Waiting for text to be reformatted</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 message(s) from %2 chats</source>
+        <extracomment>e.g. 3 messages from 2 chats</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 message(s) from %2</source>
+        <extracomment>e.g. 2 messages from Bob</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>negotitating</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2632,10 +2526,6 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <translation>Je wachtwoord instellen</translation>
     </message>
     <message>
-        <source>The password is too short</source>
-        <translation>Het wachtwoord is te kort</translation>
-    </message>
-    <message>
         <source>The password doesn&apos;t match.</source>
         <translation>Het wachtwoord komt niet overeen.</translation>
     </message>
@@ -2666,6 +2556,10 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>Password input field, minimum 6 characters long</source>
         <translation>Wachtwoordinvoerveld, minimaal 6 tekens</translation>
+    </message>
+    <message>
+        <source>The password is too short.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2776,11 +2670,6 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <translation>Contactlijst</translation>
     </message>
     <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation>Indien geselecteerd zullen groepsgesprekken bovenaan de vriendenlijst gezet worden, anders komen ze onder online vrienden.</translation>
-    </message>
-    <message>
         <source>Place groupchats at top of friend list</source>
         <translation>Groepsgesprekken bovenaan vriendenlijst plaatsen</translation>
     </message>
@@ -2808,11 +2697,6 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>Use emoticons</source>
         <translation>Emoticons gebruiken</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Smileypakket:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
@@ -2843,17 +2727,8 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <translation>Datumformaat:</translation>
     </message>
     <message>
-        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
-        <comment>toolTip for show identicons</comment>
-        <translation>Indien ingeschakeld krijgt elk contact zonder profielfoto een automatisch gegenereerde afbeelding gebaseerd op zijn/haar Tox-ID, in plaats van een standaardfoto. Toepassen vereist een herstart.</translation>
-    </message>
-    <message>
         <source>Use identicons instead of empty avatars</source>
         <translation>Identicons gebruiken in plaats van lege avatars</translation>
-    </message>
-    <message>
-        <source>Use colored nicknames in chats</source>
-        <translation>Gekleurde bijnamen in chats gebruiken</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
@@ -2863,11 +2738,6 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
     <message>
         <source>Notify</source>
         <translation>Melden</translation>
-    </message>
-    <message>
-        <source>Onlys notify about new messages in groupchats when mentioned.</source>
-        <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation>Nieuwe berichten in groepschats alleen melden als je genoemd wordt.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
@@ -2889,6 +2759,30 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <source>Hide message sender and contents</source>
         <translation>Afzender en berichtinhoud verbergen</translation>
     </message>
+    <message>
+        <source>Use colored nicknames in group chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only notify about new messages in group chats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, group chats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If enabled, every contact without an avatar will have a generated icon based on their Tox ID instead of the default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smiley pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2908,25 +2802,8 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <translation>Bezet</translation>
     </message>
     <message>
-        <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
-        <comment>popup text</comment>
-        <translation>Toxcore kon niet opstarten met deze proxyinstellingen. Hierdoor kan qTox niet starten. Verander je instellingen en herstart.</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Bestand</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation>Profiel bewerken</translation>
-    </message>
-    <message>
-        <source>Change Status</source>
-        <translation>Status wijzigen</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translation>Uitloggen</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -2941,22 +2818,6 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <translation>Contacten</translation>
     </message>
     <message>
-        <source>Add Contact...</source>
-        <translation>Contact toevoegen…</translation>
-    </message>
-    <message>
-        <source>Next Conversation</source>
-        <translation>Volgend gesprek</translation>
-    </message>
-    <message>
-        <source>Previous Conversation</source>
-        <translation>Vorig gesprek</translation>
-    </message>
-    <message>
-        <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>toxcore kon niet opstarten, de toepassing zal afsluiten nadat je dit bericht gesloten hebt.</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Uitvoerbaar bestand</translation>
@@ -2965,10 +2826,6 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Je hebt qTox gevraagd een uitvoerbaar bestand te openen. Uitvoerbare bestanden kunnen schade toebrengen aan je computer. Weet je zeker dat je dit bestand wilt openen?</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t request friendship</source>
-        <translation>Kon geen vriendschapsverzoek sturen</translation>
     </message>
     <message>
         <source>Status</source>
@@ -3026,29 +2883,10 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <source>Create new group...</source>
         <translation>Nieuwe groep aanmaken…</translation>
     </message>
-    <message numerus="yes">
-        <source>%n New Friend Request(s)</source>
-        <translation>
-            <numerusform>%n nieuw vriendschapsverzoek</numerusform>
-            <numerusform>%n nieuwe vriendschapsverzoeken</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Group Invite(s)</source>
-        <translation>
-            <numerusform>%n nieuwe groepsuitnodiging</numerusform>
-            <numerusform>%n nieuwe groepsuitnodigingen</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
         <translation>Uitloggen</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <comment>Tray action menu to exit tox</comment>
-        <translation>Afsluiten</translation>
     </message>
     <message>
         <source>Show</source>
@@ -3085,16 +2923,60 @@ Deze ID bevat de NoSpam-code (in het blauw) en de controlesom (in het grijs).</t
         <translation>Kon bestand ‘%1’ niet verzenden</translation>
     </message>
     <message>
-        <source>File sent</source>
-        <translation>Bestand verzonden</translation>
+        <source>Toxcore failed to start, the application will terminate after you close this message.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> sent you a friend request.</source>
-        <translation> heeft je een vriendschapsverzoek gestuurd.</translation>
+        <source>Toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
+        <comment>popup text</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> invites you to join a group.</source>
-        <translation> nodigt je uit om aan een groep deel te nemen.</translation>
+        <source>Couldn&apos;t send friend request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new friend request(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new group invite(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <comment>Tray action menu to exit Tox</comment>
+        <translation type="unfinished">Afsluiten</translation>
+    </message>
+    <message>
+        <source>Change status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished">Uitloggen</translation>
+    </message>
+    <message>
+        <source>Add contact...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next conversation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous conversation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

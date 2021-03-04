@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fi_FI">
+<TS version="2.1" language="fi_FI">
 <context>
     <name>AVForm</name>
     <message>
@@ -34,10 +34,6 @@
     <message>
         <source>Playback device</source>
         <translation>Toistolaite</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Aseta kaiuttimien äänenvoimakkuus liukusäätimellä.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -80,20 +76,8 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>Testiääni</translation>
     </message>
     <message>
-        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Audio quality</source>
         <translation>Äänenlaatu</translation>
-    </message>
-    <message>
-        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Välitetty äänenlaatu. Alenna tätä asetusta jos sinun siirtonopeus ei ole tarpeeksi nopea tai jos haluat vähentää internetin käyttöä.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -114,6 +98,34 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     <message>
         <source>Threshold</source>
         <translation>Alaraja</translation>
+    </message>
+    <message>
+        <source>Use slider to set the volume of your speakers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set resolution of your camera.
+The higher values, the better video quality your friends may get.
+Note that with better video quality, you use more bandwidth.
+Sometimes your connection may not be good enough to handle higher video quality,
+which may lead to problems with video calls.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the activation volume for your input device.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -159,18 +171,18 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Hyödyllisten virheilmoitusten kirjoittaminen</translation>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Hyödyllisten virheilmoitusten kirjoittaminen</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>osallistujat</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">osallistujat</translation>
     </message>
 </context>
 <context>
@@ -200,20 +212,8 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto accept files</source>
-        <translation>Hyväksy tiedostot automaattisesti</translation>
-    </message>
-    <message>
         <source>Default directory to save files:</source>
         <translation>Oletushakemisto tiedostojen tallentamiseen:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Automaattinen hyväksyntä on pois käytöstä tälle yhteystiedolle</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Automaattisesti hyväksy puhelu:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -232,10 +232,6 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>Hyväksy ryhmäkutsut tältä käyttäjältä automaattisesti jos valittu.</translation>
     </message>
     <message>
-        <source>Auto accept group invites</source>
-        <translation>Automaattisesti hyväksy ryhmäkutsut</translation>
-    </message>
-    <message>
         <source>Remove history (operation can not be undone!)</source>
         <translation>Tyhjennä historia (toimintoa ei voi perua!)</translation>
     </message>
@@ -248,17 +244,8 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You can save comment about this contact here.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation type="unfinished">Historia poistettu</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <extracomment>popup title</extracomment>
-        <translation type="unfinished">Valitse hakemisto automaattisesti hyväksyttäville tiedostoille</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -278,6 +265,31 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept for this contact is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept call:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can save comments about this contact here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose an auto-accept directory</source>
+        <extracomment>popup title</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -307,9 +319,13 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <source>Update available</source>
         <translation>Päivitys saatavilla</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>qTox is up to date ✓</source>
         <translation>qTox on ajan tasalla ✓</translation>
+    </message>
+    <message>
+        <source>Currently running an untested/unstable version of qTox</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -347,10 +363,6 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>Hylkää</translation>
     </message>
     <message>
-        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>Tox ID, joko 76 heksadesimaalimerkkiä tai nimi@esimerkki.fi</translation>
-    </message>
-    <message>
         <source>Type in Tox ID of your friend</source>
         <translation>Kirjoita kaverisi Tox ID</translation>
     </message>
@@ -360,11 +372,6 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 Tox ID is invalid or does not exist</source>
-        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -399,11 +406,6 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished">joko 76 heksadesimaalimerkkiä tai nimi@esimerkki.com</translation>
-    </message>
-    <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
         <translation>Viesti</translation>
@@ -428,7 +430,6 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -438,16 +439,26 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <source>Import contacts</source>
         <translation>Tuo yhteystiedot</translation>
     </message>
+    <message>
+        <source>Tox ID, 76 hexadecimal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 Tox ID is invalid</source>
+        <comment>Tox address error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>76 hexadecimal characters</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
         <translation>Edistynyt</translation>
-    </message>
-    <message>
-        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Ellet %1 tiedä mitä teet, %2 tee mitään täällä. Tässä tehdyt muutokset voivat johtaa ongelmiin qToxin kanssa ja jopa tiedon katoamiseen, esimerkiksi historian.</translation>
     </message>
     <message>
         <source>really</source>
@@ -478,22 +489,20 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>Ei</translation>
     </message>
     <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Puhelu aktiivinen</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Et voi katkaista yhteyttäsi puhelun aikana!</translation>
-    </message>
-    <message>
-        <source>Save File</source>
-        <translation>Tallenna tiedosto</translation>
-    </message>
-    <message>
         <source>Logs (*.log)</source>
         <translation>Lokit (*.log)</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changes here are applied only after restarting qTox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -516,18 +525,9 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>Siirrettävä</translation>
     </message>
     <message>
-        <source>Connection Settings</source>
-        <translation>Yhteysasetukset</translation>
-    </message>
-    <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Ota käyttöön IPv6 (suositus)</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -561,11 +561,6 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Yhdistä uudelleen</translation>
-    </message>
-    <message>
         <source>Debug</source>
         <translation type="unfinished"></translation>
     </message>
@@ -579,6 +574,15 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., Tox over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -626,10 +630,6 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>Puhelun kesto: </translation>
     </message>
     <message>
-        <source>%1 is typing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copy</source>
         <translation>Kopioi</translation>
     </message>
@@ -652,7 +652,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
-so you can save the file on windows.</source>
+so you can save the file on Windows.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -737,6 +737,10 @@ so you can save the file on windows.</source>
         <source>pending</source>
         <translation>vireillä oleva</translation>
     </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
@@ -769,50 +773,46 @@ so you can save the file on windows.</source>
         <translation>/me tarjoaa kaveruutta, &quot;%1&quot;</translation>
     </message>
     <message>
+        <source>Groupchat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Invalid Tox ID</source>
-        <comment>Error while sending friendship request</comment>
+        <comment>Error while sending friend request</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Sinun täytyy kirjoittaa pyynnön mukaan viesti</translation>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Sinun täytyy kirjoittaa pyynnön mukaan viesti</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Viestisi on liian pitkä!</translation>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Viestisi on liian pitkä!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Kontakti on jo lisätty</translation>
-    </message>
-    <message>
-        <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Kontakti on jo lisätty</translation>
     </message>
 </context>
 <context>
-    <name>DesktopNotify</name>
+    <name>ExtensionStatus</name>
     <message>
-        <source>New message</source>
-        <translation type="unfinished">Uusi viesti</translation>
-    </message>
-    <message>
-        <source>Incoming file transfer</source>
+        <source>All extensions supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Friend request received</source>
+        <source>No extensions supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group message</source>
+        <source>Not all extensions supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Group invite received</source>
+        <source>Multipart Messages: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -898,7 +898,7 @@ so you can save the file on windows.</source>
         <translation>Tallenna tiedosto</translation>
     </message>
     <message>
-        <source>Remote Paused</source>
+        <source>Remote paused</source>
         <comment>file transfer widget</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -906,17 +906,17 @@ so you can save the file on windows.</source>
 <context>
     <name>FilesForm</name>
     <message>
-        <source>Transferred Files</source>
-        <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Siirretyt tiedostot</translation>
-    </message>
-    <message>
         <source>Downloads</source>
         <translation>Ladatut</translation>
     </message>
     <message>
         <source>Uploads</source>
         <translation>Lähetetyt</translation>
+    </message>
+    <message>
+        <source>Transferred files</source>
+        <comment>&quot;Headline&quot; of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -938,42 +938,12 @@ so you can save the file on windows.</source>
         <translation>Tässä kuussa</translation>
     </message>
     <message>
-        <source>Older than 6 Months</source>
-        <translation>Yli 6 kuukautta vanhat</translation>
-    </message>
-    <message>
         <source>Never</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>FriendRequestDialog</name>
     <message>
-        <source>Friend request</source>
-        <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Kontaktipyyntö</translation>
-    </message>
-    <message>
-        <source>Someone wants to make friends with you</source>
-        <translation>Sinulle on lähetetty kontaktipyyntö</translation>
-    </message>
-    <message>
-        <source>User ID:</source>
-        <translation>Käyttäjän ID:</translation>
-    </message>
-    <message>
-        <source>Friend request message:</source>
-        <translation>Kontaktipyynnön viesti:</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <comment>Accept a friend request</comment>
-        <translation>Hyväksy</translation>
-    </message>
-    <message>
-        <source>Reject</source>
-        <comment>Reject a friend request</comment>
-        <translation>Hylkää</translation>
+        <source>Older than 6 months</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1003,10 +973,6 @@ so you can save the file on windows.</source>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
         <translation>Poista piiristä &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Siirrä piiriin &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Set alias...</source>
@@ -1043,11 +1009,6 @@ so you can save the file on windows.</source>
         <translation>Yhteydetön</translation>
     </message>
     <message>
-        <source>Remove friend</source>
-        <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Poista kontakti</translation>
-    </message>
-    <message>
         <source>Show details</source>
         <translation>Näytä yksityiskohdat</translation>
     </message>
@@ -1057,6 +1018,23 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to circle &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove friend</source>
+        <comment>Menu to remove the friend from the friend list</comment>
+        <translation type="unfinished">Poista kontakti</translation>
+    </message>
+    <message>
+        <source>Blocked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Negotiating</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1117,20 +1095,8 @@ so you can save the file on windows.</source>
         <translation>qTox käynnistyy pienennettynä ilmoitusalueelle.</translation>
     </message>
     <message>
-        <source>After pressing close (X) qTox will minimize to tray,
-instead of closing itself.</source>
-        <comment>toolTip for close to tray setting</comment>
-        <translation>Kun painaa sulje-nappia (X), qTox pienentyy järjestelmän ilmoitusalueelle eikä sulkeudu.</translation>
-    </message>
-    <message>
         <source>Close to tray</source>
         <translation>Sulje järjestelmän ilmoitusalueelle</translation>
-    </message>
-    <message>
-        <source>After pressing minimize (_) qTox will minimize itself to tray,
-instead of system taskbar.</source>
-        <comment>toolTip for minimize to tray setting</comment>
-        <translation>Kun painaa pienennä-nappia (_), qTox pienentyy järjestelmän ilmoitusalueelle eikä tehtäväpalkkiin.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
@@ -1143,11 +1109,6 @@ instead of system taskbar.</source>
     <message>
         <source>Set where files will be saved.</source>
         <translation>Valitse minne tiedoostot tallennetaan.</translation>
-    </message>
-    <message>
-        <source>You can set this on a per-friend basis by right clicking them.</source>
-        <comment>autoaccept cb tooltip</comment>
-        <translation>Voit asettaa tämän kontakteillesi erikseen hiiren oikealla napilla.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
@@ -1184,6 +1145,23 @@ instead of system taskbar.</source>
     <message>
         <source> MB</source>
         <translation> Mt</translation>
+    </message>
+    <message>
+        <source>After pressing minimize (_) qTox will minimize to tray,
+instead of system taskbar.</source>
+        <comment>toolTip for minimize to tray setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After pressing close (X) qTox will close to tray,
+instead of closing entirely.</source>
+        <comment>toolTip for close to tray setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can set this on a per-friend basis by right clicking individual friends.</source>
+        <comment>autoaccept cb tooltip</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1229,10 +1207,6 @@ instead of system taskbar.</source>
         <translation type="unfinished">Vahvistus</translation>
     </message>
     <message>
-        <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search in text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1248,43 +1222,8 @@ instead of system taskbar.</source>
         <source>Export to file</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>GenericNetCamView</name>
     <message>
-        <source>Tox video</source>
-        <translation>Tox video</translation>
-    </message>
-    <message>
-        <source>Show Messages</source>
-        <translation>Näytä viestit</translation>
-    </message>
-    <message>
-        <source>Hide Messages</source>
-        <translation>Piilota viestit</translation>
-    </message>
-    <message>
-        <source>Full Screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute audio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation type="unfinished">Mykistä mikrofoni</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation type="unfinished">Lopeta videopuhelu</translation>
-    </message>
-    <message>
-        <source>Exit full screen</source>
+        <source>Are you sure that you want to clear all displayed messages?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1327,7 +1266,7 @@ instead of system taskbar.</source>
     <name>GroupInviteForm</name>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ryhmät</translation>
     </message>
     <message>
         <source>Create new group</source>
@@ -1400,12 +1339,6 @@ instead of system taskbar.</source>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <comment>Tox ID tooltip</comment>
-        <translation>Tämän merkkijonon avulla toiset Tox käyttäjät voivat ottaa yhteyttä sinuun. Jaa merkkijono ystävillesi.</translation>
-    </message>
-    <message>
         <source>Your Tox ID (click to copy)</source>
         <translation>Sinun Tox ID (klikkaa kopioidaksesi)</translation>
     </message>
@@ -1475,54 +1408,6 @@ Profile does not contain your history.</source>
         <translation>Poista</translation>
     </message>
     <message>
-        <source>Server</source>
-        <translation>Palvelin</translation>
-    </message>
-    <message>
-        <source>Hide my name from the public list</source>
-        <translation>Piilota nimeni julkisesta listasta</translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your password</source>
-        <translation>Salasanasi</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Päivitys</translation>
-    </message>
-    <message>
-        <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name for the ToxMe service.</source>
-        <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Optional. Something about you. Or your cat.</source>
-        <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Optional. Something about you. Or your cat.</source>
-        <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If not set, ToxMe entries are publicly visible.</source>
-        <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
         <translation type="unfinished"></translation>
@@ -1556,30 +1441,6 @@ Profile does not contain your history.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <translation>Nimeä profiili uudelleen.</translation>
     </message>
@@ -1608,24 +1469,18 @@ Profile does not contain your history.</source>
         <translation>Tilani:</translation>
     </message>
     <message>
-        <source>My username</source>
-        <translation>Käyttäjätunnukseni</translation>
-    </message>
-    <message>
-        <source>My biography</source>
-        <translation>Elämäkertani</translation>
-    </message>
-    <message>
         <source>My profile</source>
         <translation>Profiilini</translation>
+    </message>
+    <message>
+        <source>This ID allows other Tox users to add and contact you.
+Share it with your friends to begin chatting.</source>
+        <comment>Tox ID tooltip</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
-    <message>
-        <source>Load History Dialog</source>
-        <translation>Lataa historia -dialogi</translation>
-    </message>
     <message>
         <source>Load history</source>
         <translation>Lataa historia</translation>
@@ -1643,12 +1498,16 @@ Profile does not contain your history.</source>
         <translation>(noin sata viestiä ladataan)</translation>
     </message>
     <message>
-        <source>Select Date Dialog</source>
-        <translation>Valitse päivämäärä -kysely</translation>
-    </message>
-    <message>
         <source>Select a date</source>
         <translation>Valitse päivämäärä</translation>
+    </message>
+    <message>
+        <source>Load history dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select date dialog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1704,11 +1563,6 @@ Profile does not contain your history.</source>
     <message>
         <source>The password must be at least 6 characters long.</source>
         <translation>Salasanan täytyy olla vähintään 6 merkkiä.</translation>
-    </message>
-    <message>
-        <source>The passwords you&apos;ve entered are different.
-Please make sure to enter same password twice.</source>
-        <translation>Syöttämäsi salasanat eroavat toisistaan. Varmista, että salasanat täsmäävät.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
@@ -1794,6 +1648,11 @@ Haluat ehkä luoda sellaisen.</translation>
         <source>Loading existing profile page</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The passwords you&apos;ve entered are different.
+Please make sure to enter the same password twice.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -1847,7 +1706,7 @@ Haluat ehkä luoda sellaisen.</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tila</translation>
     </message>
     <message>
         <source>Set availability status</source>
@@ -1891,10 +1750,49 @@ Haluat ehkä luoda sellaisen.</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Asetukset</translation>
     </message>
     <message>
         <source>Open Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NetCamView</name>
+    <message>
+        <source>Tox video</source>
+        <translation type="unfinished">Tox video</translation>
+    </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Mykistä mikrofoni</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Lopeta videopuhelu</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show messages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1937,6 +1835,42 @@ Haluat ehkä luoda sellaisen.</translation>
             <numerusform>Lukematon viesti</numerusform>
             <numerusform>Lukemattomat viestit</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>NotificationGenerator</name>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">Uusi viesti</translation>
+    </message>
+    <message>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 - file transfer</source>
+        <extracomment>e.g. Bob - file transfer</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 invites you to join a group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request received from %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2014,7 +1948,7 @@ Save format changes are possible, which may result in data loss.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
+        <source>Filter group messages by group members&apos; public keys. Put public keys here, one per line.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2025,12 +1959,12 @@ Save format changes are possible, which may result in data loss.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Toxing on qTox</source>
         <translation type="unfinished">Toxaa qToxilla</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2079,24 +2013,6 @@ Please use another image.</source>
         <translation>Kohteeseen ei voi kirjoittaa</translation>
     </message>
     <message>
-        <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
-        <comment>text of permissions popup</comment>
-        <translation>Käyttöoikeudet eivät riitä kohteeseen kirjoittamiseen. Valitse toinen kohde tai peru.</translation>
-    </message>
-    <message>
-        <source>Failed to copy file</source>
-        <translation>Tiedoston kopioiminen epäonnistui</translation>
-    </message>
-    <message>
-        <source>The file you chose could not be written to.</source>
-        <translation>Valitsemaasi tiedostoon ei voitu kirjoittaa.</translation>
-    </message>
-    <message>
-        <source>Really delete profile?</source>
-        <comment>deletion confirmation title</comment>
-        <translation>Haluatko varmasti poistaa profiilin?</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Haluatko varmasti poistaa tämän profiilin?</translation>
@@ -2120,11 +2036,6 @@ Please use another image.</source>
         <translation>Profiilillasi ei ole salasanaa!</translation>
     </message>
     <message>
-        <source>Really delete password?</source>
-        <comment>deletion confirmation title</comment>
-        <translation>Haluatko varmasti poistaa salasanan?</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>Syötä uusi salasana.</translation>
     </message>
@@ -2132,38 +2043,6 @@ Please use another image.</source>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Register (processing)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update (processing)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Done!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Account %1@%2 updated successfully</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toxme error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Päivitys</translation>
     </message>
     <message>
         <source>Change password</source>
@@ -2181,13 +2060,6 @@ Please use another image.</source>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.
-
-This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2219,10 +2091,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export profile</source>
         <translation>Vie profiili</translation>
     </message>
@@ -2242,14 +2110,56 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished">Haluatko varmasti poistaa salasanasi?</translation>
-    </message>
-    <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation type="unfinished">Kuvat (%1)</translation>
+    </message>
+    <message>
+        <source>You do not have permission to write to that location. Choose another, or cancel the save dialog.</source>
+        <comment>text of permissions popup</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file you chose could not be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete profile</source>
+        <comment>deletion confirmation title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove password</source>
+        <comment>deletion confirmation title</comment>
+        <translation type="unfinished">Poista salasana</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This ID allows other Tox users to add and contact you.
+Share it with your friends to begin chatting.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2332,13 +2242,13 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Kontaktin lisääminen epäonnistui</translation>
     </message>
     <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Et voi lisätä itseäsi kaveriksesi!</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Tox address.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2395,63 +2305,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Työpöytä</translation>
     </message>
     <message>
-        <source>Server doesn&apos;t support Toxme</source>
-        <translation>Palvelin ei tue Toxme:tä</translation>
-    </message>
-    <message>
-        <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This name is already in use</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This Tox ID is already registered under another name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please don&apos;t use a space in your name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password incorrect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t use this name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tox ID not sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Problem with HTTPS connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal ToxMe error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reformatting text in progress..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2506,6 +2364,50 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>blocked</source>
         <comment>contact status</comment>
         <translation>estetty</translation>
+    </message>
+    <message>
+        <source>Reformatting text...</source>
+        <comment>Waiting for text to be reformatted</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 message(s) from %2 chats</source>
+        <extracomment>e.g. 3 messages from 2 chats</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 message(s) from %2</source>
+        <extracomment>e.g. 2 messages from Bob</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>negotitating</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2632,10 +2534,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Salasanan vahvuus: %p%</translation>
     </message>
     <message>
-        <source>The password is too short</source>
-        <translation>Salasana on liian lyhyt</translation>
-    </message>
-    <message>
         <source>The password doesn&apos;t match.</source>
         <translation>Salasanat eivät täsmää.</translation>
     </message>
@@ -2655,6 +2553,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Password input field, minimum 6 characters long</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The password is too short.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -2668,7 +2570,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lisää kaveri</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
@@ -2764,11 +2666,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Place groupchats at top of friend list</source>
         <translation>Näytä ryhmäkeskustelut kontaktilistan yläpäässä</translation>
     </message>
@@ -2796,11 +2693,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Use emoticons</source>
         <translation>Käytä hymiöitä</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Hymiöpaketti:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
@@ -2831,17 +2723,8 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Päivämäärän muoto:</translation>
     </message>
     <message>
-        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
-        <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Use identicons instead of empty avatars</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use colored nicknames in chats</source>
-        <translation>Käytä värillisiä nimimerkkejä kerskusteluissa</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
@@ -2851,11 +2734,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Notify</source>
         <translation>Ilmoita</translation>
-    </message>
-    <message>
-        <source>Onlys notify about new messages in groupchats when mentioned.</source>
-        <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
@@ -2876,6 +2754,30 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Hide message sender and contents</source>
         <translation>Piilota lähettäjä ja sisältö</translation>
+    </message>
+    <message>
+        <source>Use colored nicknames in group chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only notify about new messages in group chats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, group chats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If enabled, every contact without an avatar will have a generated icon based on their Tox ID instead of the default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smiley pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2900,21 +2802,8 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Kiireinen</translation>
     </message>
     <message>
-        <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
-        <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t request friendship</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Status</source>
         <translation>Tila</translation>
-    </message>
-    <message>
-        <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>toxcoren käynnistäminen epäonnistui, sovellus suljetaan kun suljet tämän ilmoituksen.</translation>
     </message>
     <message>
         <source>Executable file</source>
@@ -2972,11 +2861,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Kirjaudu ulos</translation>
     </message>
     <message>
-        <source>Exit</source>
-        <comment>Tray action menu to exit tox</comment>
-        <translation>Poistu</translation>
-    </message>
-    <message>
         <source>Filter...</source>
         <translation>Suodata...</translation>
     </message>
@@ -2993,50 +2877,12 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Yhteystiedot</translation>
     </message>
     <message>
-        <source>Change Status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation>Muokkaa profiilia</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translation>Kirjaudu ulos</translation>
-    </message>
-    <message>
-        <source>Add Contact...</source>
-        <translation>Lisää yhteystieto...</translation>
-    </message>
-    <message>
-        <source>Next Conversation</source>
-        <translation>Seuraava keskustelu</translation>
-    </message>
-    <message>
-        <source>Previous Conversation</source>
-        <translation>Edellinen keskustelu</translation>
-    </message>
-    <message>
         <source>Groupchat #%1</source>
         <translation>Ryhmäkeskustelu #%1</translation>
     </message>
     <message>
         <source>Create new group...</source>
         <translation>Luo uusi ryhmä...</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
     </message>
     <message>
         <source>Show</source>
@@ -3073,16 +2919,60 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished">Tiedoston %1 lähettäminen epäonnistui</translation>
     </message>
     <message>
-        <source>File sent</source>
-        <translation>Tiedosto lähetetty</translation>
+        <source>Toxcore failed to start, the application will terminate after you close this message.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> sent you a friend request.</source>
-        <translation> lähetti kaveripyynnön sinulle.</translation>
+        <source>Toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
+        <comment>popup text</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> invites you to join a group.</source>
-        <translation> kutsui liittymään ryhmään.</translation>
+        <source>Couldn&apos;t send friend request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new friend request(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new group invite(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <comment>Tray action menu to exit Tox</comment>
+        <translation type="unfinished">Poistu</translation>
+    </message>
+    <message>
+        <source>Change status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished">Kirjaudu ulos</translation>
+    </message>
+    <message>
+        <source>Add contact...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next conversation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous conversation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

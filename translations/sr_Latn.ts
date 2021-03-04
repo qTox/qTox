@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="sr_Latn" sourcelanguage="en_US">
+<TS version="2.1" language="sr_Latn" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -34,10 +34,6 @@
     <message>
         <source>Playback device</source>
         <translation>Uređaj za reprodukciju</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Pomoću klizača podesite začinu zvučnika.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -80,20 +76,8 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Proba zvuka</translation>
     </message>
     <message>
-        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>Omogućava eksperimentalno zvučno pročelje sa potiskivanjem eha, zahteva da ponovo pokrenete qTox.</translation>
-    </message>
-    <message>
-        <source>Enable experimental audio backend</source>
-        <translation>Omogući eksperimentalno zvučno pročelje</translation>
-    </message>
-    <message>
         <source>Audio quality</source>
         <translation>Kvalitet zvuka</translation>
-    </message>
-    <message>
-        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Emitovani kvalitet zvuka. Umanjite postavke ukoliko vaša veza nije dovoljno jaka ili želite da smanjite upotrebu interneta.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -113,6 +97,34 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     </message>
     <message>
         <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the volume of your speakers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set resolution of your camera.
+The higher values, the better video quality your friends may get.
+Note that with better video quality, you use more bandwidth.
+Sometimes your connection may not be good enough to handle higher video quality,
+which may lead to problems with video calls.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the activation volume for your input device.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -159,17 +171,17 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
         <translation type="unfinished">bubolovcu</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
         <translation type="unfinished">„Pisanje korisnih prijava grešaka“</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
         <translation type="unfinished">doprinosioca</translation>
     </message>
 </context>
@@ -200,20 +212,8 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Ukoliko je postavljeno automatski prihvata fajlove od kontakata</translation>
     </message>
     <message>
-        <source>Auto accept files</source>
-        <translation>Automatski primaj fajlove</translation>
-    </message>
-    <message>
         <source>Default directory to save files:</source>
         <translation>Podrazumevana fascikla za čuvanje fajlova:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Automatsko prihvatanje fajlova od ovog kontakta je onemogućeno</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Automatsski prihvati poziv:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -232,10 +232,6 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Ukoliko je zadano, automatski prihavti pozive za grupno ćaskanje od ovog kontakta.</translation>
     </message>
     <message>
-        <source>Auto accept group invites</source>
-        <translation>Automatski prihvati pozive u grupu</translation>
-    </message>
-    <message>
         <source>Remove history (operation can not be undone!)</source>
         <translation>Ukloni istorijat (tadnja ne može biti opozvana!)</translation>
     </message>
@@ -248,17 +244,8 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Polje unosa za beleške o kontaktu</translation>
     </message>
     <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Ovde možete sačuvati komentare o kontaktu.</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>Istorijat je uklonjen</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <extracomment>popup title</extracomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -278,6 +265,31 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept for this contact is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept call:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can save comments about this contact here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose an auto-accept directory</source>
+        <extracomment>popup title</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -307,8 +319,12 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <source>Update available</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>qTox is up to date ✓</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Currently running an untested/unstable version of qTox</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -347,10 +363,6 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Ne mogu da nađem prijatelja</translation>
     </message>
     <message>
-        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>ToxID, ili 76 heksadecimalnih znakova, ili ime@example.com</translation>
-    </message>
-    <message>
         <source>Type in Tox ID of your friend</source>
         <translation>Unesite ToxID vašeg prijatelja</translation>
     </message>
@@ -361,11 +373,6 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
         <translation>Unesite poruku za poslati uz zahtev za prijateljstvo ili ostavite prazno kako bi poslali osnovnu poruku</translation>
-    </message>
-    <message>
-        <source>%1 Tox ID is invalid or does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>%1 ToxID ne postoji</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -399,11 +406,6 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>ToxID</translation>
     </message>
     <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <extracomment>Tox ID format description</extracomment>
-        <translation>ili 76 heksadecimalnih znakova, ili ime@example.com</translation>
-    </message>
-    <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
         <translation>Poruka</translation>
@@ -428,7 +430,6 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
             <numerusform>Spreman da uvezem %n kontakt, kliknite na slanje za potvrdu</numerusform>
             <numerusform>Spreman da uvezem %n kontakta, kliknite na slanje za potvrdu</numerusform>
@@ -439,16 +440,26 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <source>Import contacts</source>
         <translation>Uvoz kontakata</translation>
     </message>
+    <message>
+        <source>Tox ID, 76 hexadecimal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 Tox ID is invalid</source>
+        <comment>Tox address error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>76 hexadecimal characters</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
         <translation>Napredno</translation>
-    </message>
-    <message>
-        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Ukoliko %1 šta radite, molimo %2 menjajte ništa ovde. Načinjene izmene mogu dovesti do problema u qTox-u, čak i do gubitka podataka poput istorijata.</translation>
     </message>
     <message>
         <source>really</source>
@@ -479,22 +490,20 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Ne</translation>
     </message>
     <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Poziv u toku</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Ne možete se razvezati tokom trajanja poziva!</translation>
-    </message>
-    <message>
-        <source>Save File</source>
-        <translation>Snimi fajl</translation>
-    </message>
-    <message>
         <source>Logs (*.log)</source>
         <translation>Dnevnici (*.log)</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changes here are applied only after restarting qTox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -517,18 +526,9 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Prenosivost</translation>
     </message>
     <message>
-        <source>Connection Settings</source>
-        <translation>Podešavanje veze</translation>
-    </message>
-    <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Omogući IPv6 (preporučeno)</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Onemogućavanje ovoga dozvoljava da , npr., tox-ujete preko Tora. Međutim, ovo opterećuje Tox mrežu, tako da onemogućite samo kad je neophodno.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -562,11 +562,6 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Ponovo se poveži</translation>
-    </message>
-    <message>
         <source>Debug</source>
         <translation>Ispravljanje grešaka</translation>
     </message>
@@ -580,6 +575,15 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     </message>
     <message>
         <source>Enable LAN discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., Tox over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -628,10 +632,6 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
         <translation>Trajanje poziva: </translation>
     </message>
     <message>
-        <source>%1 is typing</source>
-        <translation>%1 kuca</translation>
-    </message>
-    <message>
         <source>Copy</source>
         <translation>Umoži</translation>
     </message>
@@ -654,7 +654,7 @@ Nekad vaša veza može biti nedovoljna da podrži veći kvalitet videa,
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
-so you can save the file on windows.</source>
+so you can save the file on Windows.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -739,6 +739,10 @@ so you can save the file on windows.</source>
         <source>pending</source>
         <translation>na čekanju</translation>
     </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 kuca</translation>
+    </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
@@ -771,50 +775,46 @@ so you can save the file on windows.</source>
         <translation>/me nudi prijateljstvo, „%1“</translation>
     </message>
     <message>
-        <source>Invalid Tox ID</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Neispravan Tox ID</translation>
-    </message>
-    <message>
-        <source>You need to write a message with your request</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Morate napisati poruku uz vaš zahtev za prijateljstvo</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Vaša poruka je predugačka!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Prijatelj je već dodat</translation>
-    </message>
-    <message>
         <source>Groupchat %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Neispravan Tox ID</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Morate napisati poruku uz vaš zahtev za prijateljstvo</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Vaša poruka je predugačka!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Prijatelj je već dodat</translation>
+    </message>
 </context>
 <context>
-    <name>DesktopNotify</name>
+    <name>ExtensionStatus</name>
     <message>
-        <source>New message</source>
-        <translation type="unfinished">Nova poruka</translation>
-    </message>
-    <message>
-        <source>Incoming file transfer</source>
+        <source>All extensions supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Friend request received</source>
+        <source>No extensions supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group message</source>
+        <source>Not all extensions supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Group invite received</source>
+        <source>Multipart Messages: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -905,7 +905,7 @@ so you can save the file on windows.</source>
         <translation>Sačuvaj fajl</translation>
     </message>
     <message>
-        <source>Remote Paused</source>
+        <source>Remote paused</source>
         <comment>file transfer widget</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -913,17 +913,17 @@ so you can save the file on windows.</source>
 <context>
     <name>FilesForm</name>
     <message>
-        <source>Transferred Files</source>
-        <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Prebačeni fajlovi</translation>
-    </message>
-    <message>
         <source>Downloads</source>
         <translation>Prijemi</translation>
     </message>
     <message>
         <source>Uploads</source>
         <translation>Slanja</translation>
+    </message>
+    <message>
+        <source>Transferred files</source>
+        <comment>&quot;Headline&quot; of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -945,42 +945,12 @@ so you can save the file on windows.</source>
         <translation>Ovog meseca</translation>
     </message>
     <message>
-        <source>Older than 6 Months</source>
-        <translation>Starije od 6 meseci</translation>
-    </message>
-    <message>
         <source>Never</source>
         <translation>Nikada</translation>
     </message>
-</context>
-<context>
-    <name>FriendRequestDialog</name>
     <message>
-        <source>Friend request</source>
-        <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Zahtev za prijateljstvo</translation>
-    </message>
-    <message>
-        <source>Someone wants to make friends with you</source>
-        <translation>Neko želi da vam bude prijatelj</translation>
-    </message>
-    <message>
-        <source>User ID:</source>
-        <translation>Korisnički ID:</translation>
-    </message>
-    <message>
-        <source>Friend request message:</source>
-        <translation>Poruka zahteva za prijateljstvo:</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <comment>Accept a friend request</comment>
-        <translation>Prihvati</translation>
-    </message>
-    <message>
-        <source>Reject</source>
-        <comment>Reject a friend request</comment>
-        <translation>Odbij</translation>
+        <source>Older than 6 months</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1003,10 +973,6 @@ so you can save the file on windows.</source>
         <source>Remove from circle &apos;%1&apos;</source>
         <translation>Ukloni iz kruga „%1
 “</translation>
-    </message>
-    <message>
-        <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Pomeri u krug „%1“</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
@@ -1032,11 +998,6 @@ so you can save the file on windows.</source>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
         <translation>Automatski prihvati fajlove od ovog prijatelja</translation>
-    </message>
-    <message>
-        <source>Remove friend</source>
-        <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Ukloni prijatelja</translation>
     </message>
     <message>
         <source>Show details</source>
@@ -1067,6 +1028,23 @@ so you can save the file on windows.</source>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
         <translation>Van veze</translation>
+    </message>
+    <message>
+        <source>Move to circle &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove friend</source>
+        <comment>Menu to remove the friend from the friend list</comment>
+        <translation type="unfinished">Ukloni prijatelja</translation>
+    </message>
+    <message>
+        <source>Blocked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Negotiating</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1118,22 +1096,8 @@ so you can save the file on windows.</source>
         <translation>Pokreni u kaseti</translation>
     </message>
     <message>
-        <source>After pressing close (X) qTox will minimize to tray,
-instead of closing itself.</source>
-        <comment>toolTip for close to tray setting</comment>
-        <translation>Po kliku na zatvori (X) qTox će se minimizovati u kasetu
-umesto da se zatvori.</translation>
-    </message>
-    <message>
         <source>Close to tray</source>
         <translation>Zatvori u kasetu</translation>
-    </message>
-    <message>
-        <source>After pressing minimize (_) qTox will minimize itself to tray,
-instead of system taskbar.</source>
-        <comment>toolTip for minimize to tray setting</comment>
-        <translation>Po kliku na minimizuj (_) qTox će se minimizovati u kasetu
-umesto sistemske trake zadataka.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
@@ -1146,11 +1110,6 @@ umesto sistemske trake zadataka.</translation>
     <message>
         <source>Set where files will be saved.</source>
         <translation>Izaberite gde čuvati fajlove.</translation>
-    </message>
-    <message>
-        <source>You can set this on a per-friend basis by right clicking them.</source>
-        <comment>autoaccept cb tooltip</comment>
-        <translation>Ovo možete podesiti posebno za svakog prijatelja desnim klikom.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
@@ -1194,6 +1153,23 @@ umesto sistemske trake zadataka.</translation>
     </message>
     <message>
         <source> MB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After pressing minimize (_) qTox will minimize to tray,
+instead of system taskbar.</source>
+        <comment>toolTip for minimize to tray setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After pressing close (X) qTox will close to tray,
+instead of closing entirely.</source>
+        <comment>toolTip for close to tray setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can set this on a per-friend basis by right clicking individual friends.</source>
+        <comment>autoaccept cb tooltip</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1240,10 +1216,6 @@ umesto sistemske trake zadataka.</translation>
         <translation type="unfinished">Potvrda</translation>
     </message>
     <message>
-        <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search in text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1259,43 +1231,8 @@ umesto sistemske trake zadataka.</translation>
         <source>Export to file</source>
         <translation type="unfinished">Izvezi u fajl</translation>
     </message>
-</context>
-<context>
-    <name>GenericNetCamView</name>
     <message>
-        <source>Tox video</source>
-        <translation>Toks video</translation>
-    </message>
-    <message>
-        <source>Show Messages</source>
-        <translation>Prikaži poruke</translation>
-    </message>
-    <message>
-        <source>Hide Messages</source>
-        <translation>Sakrij poruke</translation>
-    </message>
-    <message>
-        <source>Full Screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute audio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation type="unfinished">Utišaj mikrofon</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exit full screen</source>
+        <source>Are you sure that you want to clear all displayed messages?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1413,13 +1350,6 @@ umesto sistemske trake zadataka.</translation>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <comment>Tox ID tooltip</comment>
-        <translation>Ova hrpa znakova govori drugim Tox klijentima kako da vas kontaktiraju.
-Podelite je sa prijateljima da bi komunicirali.</translation>
-    </message>
-    <message>
         <source>Your Tox ID (click to copy)</source>
         <translation>Vaš Tox ID (kliknite da kopirate)</translation>
     </message>
@@ -1490,54 +1420,6 @@ Profil ne sadrži vaš istorijat.</translation>
         <translation>Obriši</translation>
     </message>
     <message>
-        <source>Server</source>
-        <translation>Server</translation>
-    </message>
-    <message>
-        <source>Hide my name from the public list</source>
-        <translation>Sakrij moje ime sa javne liste</translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation>Registruj se</translation>
-    </message>
-    <message>
-        <source>Your password</source>
-        <translation>Vaša lozinka</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Ažuriraj</translation>
-    </message>
-    <message>
-        <source>Register on ToxMe</source>
-        <translation>Registruj se na ToxMe</translation>
-    </message>
-    <message>
-        <source>Name for the ToxMe service.</source>
-        <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation>Ime na servisu ToxMe.</translation>
-    </message>
-    <message>
-        <source>Optional. Something about you. Or your cat.</source>
-        <comment>Tooltip for the Biography text.</comment>
-        <translation>Opciono. Nešto o vama. Ili vašoj mački.</translation>
-    </message>
-    <message>
-        <source>Optional. Something about you. Or your cat.</source>
-        <comment>Tooltip for the Biography field.</comment>
-        <translation>Opciono. Nešto o vama. Ili vašoj mački.</translation>
-    </message>
-    <message>
-        <source>ToxMe service to register on.</source>
-        <translation>ToxMe servis na koji se treba registrovati.</translation>
-    </message>
-    <message>
-        <source>If not set, ToxMe entries are publicly visible.</source>
-        <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation>Ako nije označeno, ToxMe unosi su javni.</translation>
-    </message>
-    <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
         <translation>Uklanja lozinku i šifrovanje iz vašeg profila.</translation>
@@ -1571,30 +1453,6 @@ Profil ne sadrži vaš istorijat.</translation>
         <translation>Umnoži QR sliku u ostavu</translation>
     </message>
     <message>
-        <source>ToxMe username to be shown on ToxMe</source>
-        <translation>ToxMe korisničko ime koje se prikazuje na ToxMe</translation>
-    </message>
-    <message>
-        <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>Opciona ToxMe biografija koja se prikazuje na ToxMe</translation>
-    </message>
-    <message>
-        <source>ToxMe service address</source>
-        <translation>Adresa ToxMe servisa</translation>
-    </message>
-    <message>
-        <source>Visibility on the ToxMe service</source>
-        <translation>Vidljivost na ToxMe servisu</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Lozinka</translation>
-    </message>
-    <message>
-        <source>Update ToxMe entry</source>
-        <translation>Ažuriraj ToxMe unos</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <translation>Preimenuj profil.</translation>
     </message>
@@ -1623,24 +1481,18 @@ Profil ne sadrži vaš istorijat.</translation>
         <translation>Moj status:</translation>
     </message>
     <message>
-        <source>My username</source>
-        <translation>Moje korisničko ime</translation>
-    </message>
-    <message>
-        <source>My biography</source>
-        <translation>Moja biografija</translation>
-    </message>
-    <message>
         <source>My profile</source>
         <translation>Moj profil</translation>
+    </message>
+    <message>
+        <source>This ID allows other Tox users to add and contact you.
+Share it with your friends to begin chatting.</source>
+        <comment>Tox ID tooltip</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
-    <message>
-        <source>Load History Dialog</source>
-        <translation>Dijalog učitavanja istorijata</translation>
-    </message>
     <message>
         <source>Load history</source>
         <translation type="unfinished"></translation>
@@ -1658,11 +1510,15 @@ Profil ne sadrži vaš istorijat.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select Date Dialog</source>
+        <source>Select a date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select a date</source>
+        <source>Load history dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select date dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1719,12 +1575,6 @@ Profil ne sadrži vaš istorijat.</translation>
     <message>
         <source>The password must be at least 6 characters long.</source>
         <translation>Lozinka mora imati najmanje 6 znakova.</translation>
-    </message>
-    <message>
-        <source>The passwords you&apos;ve entered are different.
-Please make sure to enter same password twice.</source>
-        <translation>Lozinke koje ste uneli se razlikuju.
-Postarajte se da unesete istu lozinku dvaput.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
@@ -1809,6 +1659,11 @@ Verovatno želite da napravite jedan.</translation>
     <message>
         <source>Loading existing profile page</source>
         <translation>Stranica učitavanja postojećeg profila</translation>
+    </message>
+    <message>
+        <source>The passwords you&apos;ve entered are different.
+Please make sure to enter the same password twice.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1916,6 +1771,45 @@ Verovatno želite da napravite jedan.</translation>
     </message>
 </context>
 <context>
+    <name>NetCamView</name>
+    <message>
+        <source>Tox video</source>
+        <translation type="unfinished">Toks video</translation>
+    </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Utišaj mikrofon</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Nexus</name>
     <message>
         <source>View</source>
@@ -1955,6 +1849,42 @@ Verovatno želite da napravite jedan.</translation>
             <numerusform>%n nepročitane poruke</numerusform>
             <numerusform>%n nepročitane poruke</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>NotificationGenerator</name>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">Nova poruka</translation>
+    </message>
+    <message>
+        <source>New group message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 - file transfer</source>
+        <extracomment>e.g. Bob - file transfer</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 invites you to join a group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request received from %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2033,8 +1963,8 @@ Promene u formatu snimanja su moguće, što može dovesti do gubitka podataka.</
         <translation>Crna lista</translation>
     </message>
     <message>
-        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation>Filter grupnih poruka prema javnom ključu članova grupe. Javne ključeve unesite ovde, jedan po liniji.</translation>
+        <source>Filter group messages by group members&apos; public keys. Put public keys here, one per line.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2044,12 +1974,12 @@ Promene u formatu snimanja su moguće, što može dovesti do gubitka podataka.</
         <translation>Neuspelo izvođenje ključa iz lozinke, profil neće koristiti novu lozinku.</translation>
     </message>
     <message>
-        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Ne mogu da promenim lozinku baze, možda je oštećena ili koristite staru lozinku.</translation>
-    </message>
-    <message>
         <source>Toxing on qTox</source>
         <translation type="unfinished">Tox-uje putem qTox-a</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2099,35 +2029,12 @@ Molimo koristite drugu.</translation>
         <translation>Lokacija nije upisiva</translation>
     </message>
     <message>
-        <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
-        <comment>text of permissions popup</comment>
-        <translation>Nemate dozvolu upisa na ovoj lokaciji. Izaberite drugu, ili otkažite snimanje u dijalogu.</translation>
-    </message>
-    <message>
-        <source>Failed to copy file</source>
-        <translation>Neuspelo kopiranje fajla</translation>
-    </message>
-    <message>
-        <source>The file you chose could not be written to.</source>
-        <translation>Ne može se pisati u izabrani fajl.</translation>
-    </message>
-    <message>
-        <source>Really delete profile?</source>
-        <comment>deletion confirmation title</comment>
-        <translation>Zaista obrisati profil?</translation>
-    </message>
-    <message>
         <source>Nothing to remove</source>
         <translation>Nema se šta ukloniti</translation>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
         <translation>Vaš profil nema lozinku!</translation>
-    </message>
-    <message>
-        <source>Really delete password?</source>
-        <comment>deletion confirmation title</comment>
-        <translation>Zaista obrisati lozinku?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
@@ -2154,38 +2061,6 @@ Molimo koristite drugu.</translation>
         <translation>Fajlovi se ne mogu obrisati!</translation>
     </message>
     <message>
-        <source>Register (processing)</source>
-        <translation>Registracija (u toku)</translation>
-    </message>
-    <message>
-        <source>Update (processing)</source>
-        <translation>Ažuriranje (u toku)</translation>
-    </message>
-    <message>
-        <source>Done!</source>
-        <translation>Gotovo!</translation>
-    </message>
-    <message>
-        <source>Account %1@%2 updated successfully</source>
-        <translation>Nalog %1@%2 je uspešno ažuriran</translation>
-    </message>
-    <message>
-        <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>Uspešno dodah %1@%2 u bazu. Saačuvajte vašu lozinku</translation>
-    </message>
-    <message>
-        <source>Toxme error</source>
-        <translation>Greška na ToxMe</translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation>Registruj se</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Ažuriraj</translation>
-    </message>
-    <message>
         <source>Change password</source>
         <comment>button text</comment>
         <translation>Izmeni lozinku</translation>
@@ -2202,16 +2077,6 @@ Molimo koristite drugu.</translation>
     <message>
         <source>Couldn&apos;t change password</source>
         <translation>Ne mogu da promenim lozinku</translation>
-    </message>
-    <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.
-
-This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation>Ova hrpa znakova govori drugim Tox klijentima kako da vas kontaktiraju.
-Podelite je sa prijateljima da bi komunicirali.
-
-Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
@@ -2242,10 +2107,6 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <translation>Prazna putanja</translation>
     </message>
     <message>
-        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Ne mogu da promenim lozinku baze, možda je oštećena ili koristite staru lozinku.</translation>
-    </message>
-    <message>
         <source>Export profile</source>
         <translation>Izvezi profil</translation>
     </message>
@@ -2265,14 +2126,56 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <translation>Molimo da ih ručno uklonite.</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <extracomment>deletion confirmation text</extracomment>
-        <translation>Stvarno ste sigurni da želite da uklonite lozinku?</translation>
-    </message>
-    <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation type="unfinished">Slike (%1)</translation>
+    </message>
+    <message>
+        <source>You do not have permission to write to that location. Choose another, or cancel the save dialog.</source>
+        <comment>text of permissions popup</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file you chose could not be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete profile</source>
+        <comment>deletion confirmation title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove password</source>
+        <comment>deletion confirmation title</comment>
+        <translation type="unfinished">Ukloni lozinku</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This ID allows other Tox users to add and contact you.
+Share it with your friends to begin chatting.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2355,13 +2258,13 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <translation>Ne mogu da dodam prijatelja</translation>
     </message>
     <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 nije ispravna ToxMe adresa.</translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Ne možete dodati sebe kao prijatelja!</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Tox address.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2418,64 +2321,12 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <translation>desktop</translation>
     </message>
     <message>
-        <source>Server doesn&apos;t support Toxme</source>
-        <translation>Server ne podržava ToxMe</translation>
-    </message>
-    <message>
-        <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation>Pravite isuviše zahteva. Sačekajte čas i probajte ponovo</translation>
-    </message>
-    <message>
-        <source>This name is already in use</source>
-        <translation>Ovo ime se već koristi</translation>
-    </message>
-    <message>
-        <source>This Tox ID is already registered under another name</source>
-        <translation>Ovaj Tox ID je već registrovan pod drugim imenom</translation>
-    </message>
-    <message>
-        <source>Please don&apos;t use a space in your name</source>
-        <translation>Molimo ne stavljajte razmake u vaše ime</translation>
-    </message>
-    <message>
-        <source>Password incorrect</source>
-        <translation>Pogrešna lozinka</translation>
-    </message>
-    <message>
-        <source>You can&apos;t use this name</source>
-        <translation>Ne možete koristiti ovo ime</translation>
-    </message>
-    <message>
-        <source>Name not found</source>
-        <translation>Ime nije nađeno</translation>
-    </message>
-    <message>
-        <source>Tox ID not sent</source>
-        <translation>Tox ID nije poslat</translation>
-    </message>
-    <message>
-        <source>That user does not exist</source>
-        <translation>Taj korisnik ne postoji</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Greška</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>qTox ne može da otvori vaše dnevnike ćaskanja, biće onemogućeni.</translation>
-    </message>
-    <message>
-        <source>Problem with HTTPS connection</source>
-        <translation>Problem sa HTTPS vezom</translation>
-    </message>
-    <message>
-        <source>Internal ToxMe error</source>
-        <translation>Unutrašnja greška na ToxMe</translation>
-    </message>
-    <message>
-        <source>Reformatting text in progress..</source>
-        <translation>U toku je ponovno formatiranje teksta..</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
@@ -2527,6 +2378,50 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
     </message>
     <message>
         <source>blocked</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reformatting text...</source>
+        <comment>Waiting for text to be reformatted</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 message(s) from %2 chats</source>
+        <extracomment>e.g. 3 messages from 2 chats</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 message(s) from %2</source>
+        <extracomment>e.g. 2 messages from Bob</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>negotitating</source>
         <comment>contact status</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -2655,10 +2550,6 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <translation>Jačina lozinke: %p%</translation>
     </message>
     <message>
-        <source>The password is too short</source>
-        <translation>Lozinka je prekratka</translation>
-    </message>
-    <message>
         <source>The password doesn&apos;t match.</source>
         <translation>Lozinke se ne poklapaju.</translation>
     </message>
@@ -2677,6 +2568,10 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
     <message>
         <source>Password input field, minimum 6 characters long</source>
         <translation>Polje unosa lozinke, minimalna dužina je 6 znakova</translation>
+    </message>
+    <message>
+        <source>The password is too short.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2787,11 +2682,6 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <translation>Spisak kontakata</translation>
     </message>
     <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation>Ukoliko je označeno, grupna ćaskanja će biti postavljena na vrh spiska prijatelja, u suprotnom će biti postavljena ispod prijatelja na vezi.</translation>
-    </message>
-    <message>
         <source>Place groupchats at top of friend list</source>
         <translation>Postavi grupna ćaskanja na vrh spiska prijatelja</translation>
     </message>
@@ -2819,11 +2709,6 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
     <message>
         <source>Use emoticons</source>
         <translation>Koristi emotikone</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Tema emotikona:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
@@ -2854,16 +2739,7 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <translation>Format datuma:</translation>
     </message>
     <message>
-        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
-        <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use colored nicknames in chats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2873,11 +2749,6 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Onlys notify about new messages in groupchats when mentioned.</source>
-        <comment>toolTip for Group chats only notify when mentioned</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2900,6 +2771,30 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <source>Hide message sender and contents</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Use colored nicknames in group chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only notify about new messages in group chats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, group chats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If enabled, every contact without an avatar will have a generated icon based on their Tox ID instead of the default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smiley pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -2919,29 +2814,8 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <translation>Zauzet</translation>
     </message>
     <message>
-        <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>Neuspelo pokretanje toxcore, program će se ugasiti po zatvaranju ove poruke.</translation>
-    </message>
-    <message>
-        <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
-        <comment>popup text</comment>
-        <translation>Neuspelo pokretanje toxcore sa vašim postavkama proksija. qTox ne može da se pokrene; izmenite postavke i ponovo ga pokrenite.</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Fajl</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation>Uredi profil</translation>
-    </message>
-    <message>
-        <source>Change Status</source>
-        <translation>Promeni status</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translation>Odjava</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -2953,29 +2827,12 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <translation>Odjavi se</translation>
     </message>
     <message>
-        <source>Exit</source>
-        <comment>Tray action menu to exit tox</comment>
-        <translation>Napusti</translation>
-    </message>
-    <message>
         <source>Filter...</source>
         <translation>Filter...</translation>
     </message>
     <message>
         <source>Contacts</source>
         <translation>Kontakti</translation>
-    </message>
-    <message>
-        <source>Add Contact...</source>
-        <translation>Dodaj kontakt...</translation>
-    </message>
-    <message>
-        <source>Next Conversation</source>
-        <translation>Sledeći razgovor</translation>
-    </message>
-    <message>
-        <source>Previous Conversation</source>
-        <translation>Prethodni razgovor</translation>
     </message>
     <message>
         <source>Executable file</source>
@@ -2986,10 +2843,6 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Tražili ste qTox-u da otvori izvršni fajl. Izvršni fajlovi mogu potencijalno naneti štetu vašem računaru. Da li ste sigurni da želite da otvorite ovaj fajl?</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t request friendship</source>
-        <translation>Ne mogu da zahtevam prijateljstvo</translation>
     </message>
     <message>
         <source>Status</source>
@@ -3010,22 +2863,6 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
     <message>
         <source>Add new circle...</source>
         <translation>Dodaj novi krug...</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Friend Request(s)</source>
-        <translation>
-            <numerusform>%n novi zahtev za prijateljstvom</numerusform>
-            <numerusform>%n nova zahteva za prijateljstvom</numerusform>
-            <numerusform>%n novih zahteva za prijateljstvom</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Group Invite(s)</source>
-        <translation>
-            <numerusform>%n novi poziv u grupu</numerusform>
-            <numerusform>%n nova poziva u grupu</numerusform>
-            <numerusform>%n novih poziva u grupu</numerusform>
-        </translation>
     </message>
     <message>
         <source>By Name</source>
@@ -3099,15 +2936,61 @@ Ovaj ID sarži NoSpam kod (plav) i sume za proveru (sive).</translation>
         <translation type="unfinished">Neuspelo slanje fajla „%1“</translation>
     </message>
     <message>
-        <source>File sent</source>
+        <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> sent you a friend request.</source>
+        <source>Toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
+        <comment>popup text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> invites you to join a group.</source>
+        <source>Couldn&apos;t send friend request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new friend request(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new group invite(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <comment>Tray action menu to exit Tox</comment>
+        <translation type="unfinished">Napusti</translation>
+    </message>
+    <message>
+        <source>Change status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add contact...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next conversation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous conversation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

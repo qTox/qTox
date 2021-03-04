@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="tr_TR">
+<TS version="2.1" language="tr_TR">
 <context>
     <name>AVForm</name>
     <message>
@@ -35,10 +35,6 @@
     <message>
         <source>Playback device</source>
         <translation>Oynatma aygıtı</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Hoparlörlerinizin ses düzeyini ayarlamak için kaydırıcıyı kullanın.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -81,20 +77,8 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Sesi Sına</translation>
     </message>
     <message>
-        <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>Yankı giderici destekli deneysel ses arka ucunu etkinleştirir, etkili olması için qTox yeniden başlamalı.</translation>
-    </message>
-    <message>
-        <source>Enable experimental audio backend</source>
-        <translation>Deneysel ses arka ucunu etkinleştir</translation>
-    </message>
-    <message>
         <source>Audio quality</source>
         <translation>Ses kalitesi</translation>
-    </message>
-    <message>
-        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>İletilen ses kalitesi. Bant genişliğiniz yeterince yüksek değilse veya daha az internet kullanımı istiyorsanız bu ayarı azaltın.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -115,6 +99,34 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     <message>
         <source>Threshold</source>
         <translation>Eşik</translation>
+    </message>
+    <message>
+        <source>Use slider to set the volume of your speakers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set resolution of your camera.
+The higher values, the better video quality your friends may get.
+Note that with better video quality, you use more bandwidth.
+Sometimes your connection may not be good enough to handle higher video quality,
+which may lead to problems with video calls.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the activation volume for your input device.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -160,18 +172,18 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>hata-izleyici</translation>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">hata-izleyici</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Yararlı Hata Bildirimleri Yazma</translation>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Yararlı Hata Bildirimleri Yazma</translation>
     </message>
     <message>
         <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>katkıda bulunanlar</translation>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">katkıda bulunanlar</translation>
     </message>
 </context>
 <context>
@@ -201,20 +213,8 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Ayarlıysa kişiden gelen dosyaları sormadan kabul et</translation>
     </message>
     <message>
-        <source>Auto accept files</source>
-        <translation>Dosyaları sormadan kabul et</translation>
-    </message>
-    <message>
         <source>Default directory to save files:</source>
         <translation>Dosyaların kaydedileceği öntanımlı dizin:</translation>
-    </message>
-    <message>
-        <source>Auto accept for this contact is disabled</source>
-        <translation>Bu kişi için sormadan kabul etme kapalı</translation>
-    </message>
-    <message>
-        <source>Auto accept call:</source>
-        <translation>Aramayı sormadan kabul et:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -233,10 +233,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Ayarlıysa bu kişiden gelen grup sohbeti davetlerini sormadan kabul et.</translation>
     </message>
     <message>
-        <source>Auto accept group invites</source>
-        <translation>Grup davetlerini sormadan kabul et</translation>
-    </message>
-    <message>
         <source>Remove history (operation can not be undone!)</source>
         <translation>Geçmişi kaldır (İşlem geri alınamaz!)</translation>
     </message>
@@ -249,17 +245,8 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Kişiyle ilgili notlar için giriş alanı</translation>
     </message>
     <message>
-        <source>You can save comment about this contact here.</source>
-        <translation>Burada bu kişiyle ilgili yorum kaydedebilirsiniz.</translation>
-    </message>
-    <message>
         <source>History removed</source>
         <translation>Geçmiş kaldırıldı</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <extracomment>popup title</extracomment>
-        <translation>Sormadan kabul etme dizini seç</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -280,6 +267,31 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     <message>
         <source>Failed to remove chat history with %1!</source>
         <translation>Sohbet geçmişi kaldırma başarısız oldu %1!</translation>
+    </message>
+    <message>
+        <source>Auto-accept files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept for this contact is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept call:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can save comments about this contact here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose an auto-accept directory</source>
+        <extracomment>popup title</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -309,9 +321,13 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <source>Update available</source>
         <translation>Güncelleme var</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>qTox is up to date ✓</source>
         <translation>qTox güncel</translation>
+    </message>
+    <message>
+        <source>Currently running an untested/unstable version of qTox</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -349,10 +365,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Reddet</translation>
     </message>
     <message>
-        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>Tox Kimliği, 76 onaltılık karakter ya da ad@ornek.com</translation>
-    </message>
-    <message>
         <source>Type in Tox ID of your friend</source>
         <translation>Arkadaşınızın Tox Kimliğini yazın</translation>
     </message>
@@ -363,11 +375,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
         <translation>Arkadaşlık isteği ile gönderilecek iletinizi yazın veya öntanımlı iletiyle göndermek için boş bırakın</translation>
-    </message>
-    <message>
-        <source>%1 Tox ID is invalid or does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>%1 Tox Kimliği geçersiz veya yok</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -401,11 +408,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Tox Kimliği</translation>
     </message>
     <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <extracomment>Tox ID format description</extracomment>
-        <translation>76 onaltılık karakter ya da ad@ornek.com</translation>
-    </message>
-    <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
         <translation>İleti</translation>
@@ -430,15 +432,27 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
-        <extracomment>Shows the number of contacts we&apos;re about to import from a file (at least one)</extracomment>
         <translation>
-            <numerusform>%n kişi içe aktarılmaya hazır, onay için göndere tıklayın</numerusform>
             <numerusform>%n kişi içe aktarılmaya hazır, onay için göndere tıklayın</numerusform>
         </translation>
     </message>
     <message>
         <source>Import contacts</source>
         <translation>Kişileri içe aktar</translation>
+    </message>
+    <message>
+        <source>Tox ID, 76 hexadecimal characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 Tox ID is invalid</source>
+        <comment>Tox address error</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>76 hexadecimal characters</source>
+        <extracomment>Tox ID format description</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -447,10 +461,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <source>Advanced</source>
         <translatorcomment>Ya da basitçe gelişmiş, ileri seviye denilebilir, alışılageldiği üzere</translatorcomment>
         <translation>Gelişmiş</translation>
-    </message>
-    <message>
-        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Ne yaptığınızı %1 bilmiyorsanız, lütfen buradaki hiçbir şeyi %2 değiştirmeyin. Burada yapılan değişiklikler qTox&apos;la sorunlara ve veri kaybına (örneğin geçmiş) bile neden olabilir.</translation>
     </message>
     <message>
         <source>really</source>
@@ -481,22 +491,20 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Hayır</translation>
     </message>
     <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Arama etkin</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Bir arama etkinken bağlantıyı kesemezsiniz!</translation>
-    </message>
-    <message>
-        <source>Save File</source>
-        <translation>Dosyayı Kaydet</translation>
-    </message>
-    <message>
         <source>Logs (*.log)</source>
         <translation>Günlükler (* .log)</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changes here are applied only after restarting qTox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -519,18 +527,9 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Taşınabilir</translation>
     </message>
     <message>
-        <source>Connection Settings</source>
-        <translation>Bağlantı Ayarları</translation>
-    </message>
-    <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>IPv6&apos;yı etkinleştir (önerilen)</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Bunu devre dışı bırakmak, örneğin, Tor&apos;da toxlamayı sağlar. Fakat Tox ağına yük bindirir, bu yüzden yalnızca gerektiğinde işareti kaldırın.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -564,11 +563,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Yeniden bağlan</translation>
-    </message>
-    <message>
         <source>Debug</source>
         <translation>Hata Ayıklama</translation>
     </message>
@@ -583,6 +577,15 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     <message>
         <source>Enable LAN discovery</source>
         <translation>Yerel Ağ keşfini etkinleştir</translation>
+    </message>
+    <message>
+        <source>Connection settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., Tox over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -629,10 +632,6 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
         <translation>Arama süresi: </translation>
     </message>
     <message>
-        <source>%1 is typing</source>
-        <translation>%1 yazıyor</translation>
-    </message>
-    <message>
         <source>Copy</source>
         <translation>Kopyala</translation>
     </message>
@@ -655,9 +654,8 @@ bu da görüntülü aramalarda sorunlara neden olabilir.</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
-so you can save the file on windows.</source>
-        <translation>Yasaklanmış karakterler _ ile değiştirildi,
-böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
+so you can save the file on Windows.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -741,6 +739,10 @@ böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
         <source>Select all</source>
         <translation>Tümünü seç</translation>
     </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 yazıyor</translation>
+    </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
@@ -773,51 +775,47 @@ böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
         <translation>/me arkadaşlık öneriyor, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Invalid Tox ID</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Geçersiz Tox Kimliği</translation>
-    </message>
-    <message>
-        <source>You need to write a message with your request</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>İsteğinizle birlikte bir ileti yazmalısınız</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>İletiniz çok uzun!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <comment>Error while sending friendship request</comment>
-        <translation>Arkadaş zaten eklendi</translation>
-    </message>
-    <message>
         <source>Groupchat %1</source>
         <translation>Grup sohbeti %1</translation>
     </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Geçersiz Tox Kimliği</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">İsteğinizle birlikte bir ileti yazmalısınız</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">İletiniz çok uzun!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friend request</comment>
+        <translation type="unfinished">Arkadaş zaten eklendi</translation>
+    </message>
 </context>
 <context>
-    <name>DesktopNotify</name>
+    <name>ExtensionStatus</name>
     <message>
-        <source>New message</source>
-        <translation>Yeni mesaj</translation>
+        <source>All extensions supported</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Incoming file transfer</source>
-        <translation>Gelen dosya aktarımı</translation>
+        <source>No extensions supported</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Friend request received</source>
-        <translation>Arkadaşlık isteği alındı</translation>
+        <source>Not all extensions supported</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New group message</source>
-        <translation>Yeni grup mesajı</translation>
-    </message>
-    <message>
-        <source>Group invite received</source>
-        <translation>Grup daveti alındı</translation>
+        <source>Multipart Messages: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -902,18 +900,13 @@ böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
         <translation>Bir dosya kaydet</translation>
     </message>
     <message>
-        <source>Remote Paused</source>
+        <source>Remote paused</source>
         <comment>file transfer widget</comment>
-        <translation>Uzaktan Duraklatıldı</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FilesForm</name>
-    <message>
-        <source>Transferred Files</source>
-        <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Aktarılan Dosyalar</translation>
-    </message>
     <message>
         <source>Downloads</source>
         <translation>İndirilenler</translation>
@@ -921,6 +914,11 @@ böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
     <message>
         <source>Uploads</source>
         <translation>Yüklenenler</translation>
+    </message>
+    <message>
+        <source>Transferred files</source>
+        <comment>&quot;Headline&quot; of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -942,42 +940,12 @@ böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
         <translation>Bu ay</translation>
     </message>
     <message>
-        <source>Older than 6 Months</source>
-        <translation>6 Aydan Eski</translation>
-    </message>
-    <message>
         <source>Never</source>
         <translation>Asla</translation>
     </message>
-</context>
-<context>
-    <name>FriendRequestDialog</name>
     <message>
-        <source>Friend request</source>
-        <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Arkadaş isteği</translation>
-    </message>
-    <message>
-        <source>Someone wants to make friends with you</source>
-        <translation>Biri sizinle arkadaş olmak istiyor</translation>
-    </message>
-    <message>
-        <source>User ID:</source>
-        <translation>Kullanıcı Kimliği:</translation>
-    </message>
-    <message>
-        <source>Friend request message:</source>
-        <translation>Arkadaşlık isteği iletisi:</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <comment>Accept a friend request</comment>
-        <translation>Kabul et</translation>
-    </message>
-    <message>
-        <source>Reject</source>
-        <comment>Reject a friend request</comment>
-        <translation>Reddet</translation>
+        <source>Older than 6 months</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1010,10 +978,6 @@ böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
         <translation>&apos;%1&apos; çevresinden kaldır</translation>
     </message>
     <message>
-        <source>Move  to circle &quot;%1&quot;</source>
-        <translation>&quot;%1&quot; çevresine taşı</translation>
-    </message>
-    <message>
         <source>Set alias...</source>
         <translation>Rumuz ayarla...</translation>
     </message>
@@ -1021,11 +985,6 @@ böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
         <translation>Bu arkadaştan gelen dosyaları sormadan kabul et</translation>
-    </message>
-    <message>
-        <source>Remove friend</source>
-        <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Arkadaşı kaldır</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1063,6 +1022,23 @@ böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
     <message>
         <source>Show details</source>
         <translation>Ayrıntıları göster</translation>
+    </message>
+    <message>
+        <source>Move to circle &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove friend</source>
+        <comment>Menu to remove the friend from the friend list</comment>
+        <translation type="unfinished">Arkadaşı kaldır</translation>
+    </message>
+    <message>
+        <source>Blocked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Negotiating</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1122,22 +1098,8 @@ böylece dosyayı Windows&apos;da kaydedebilirsiniz.</translation>
         <translation>Tepside başlat</translation>
     </message>
     <message>
-        <source>After pressing minimize (_) qTox will minimize itself to tray,
-instead of system taskbar.</source>
-        <comment>toolTip for minimize to tray setting</comment>
-        <translation>Küçült&apos;e (_) bastıktan sonra, qTox kendini görev çubuğu yerine
-sistem tepsisine küçültecek.</translation>
-    </message>
-    <message>
         <source>Minimize to tray</source>
         <translation>Tepsiye küçült</translation>
-    </message>
-    <message>
-        <source>After pressing close (X) qTox will minimize to tray,
-instead of closing itself.</source>
-        <comment>toolTip for close to tray setting</comment>
-        <translation>Kapat&apos;a (X) bastıktan sonra, qTox kendini kapatmak
-yerine, sistem tepsisine küçültecek.</translation>
     </message>
     <message>
         <source>Close to tray</source>
@@ -1164,11 +1126,6 @@ yerine, sistem tepsisine küçültecek.</translation>
         <translation>Dosyaların kaydedileceği öntanımlı dizin:</translation>
     </message>
     <message>
-        <source>You can set this on a per-friend basis by right clicking them.</source>
-        <comment>autoaccept cb tooltip</comment>
-        <translation>Bunu, her bir arkadaş için, üstlerine sağ-tıklayarak ayarlayabilirsiniz.</translation>
-    </message>
-    <message>
         <source>Autoaccept files</source>
         <translation>Dosyaları sormadan kabul et</translation>
     </message>
@@ -1191,6 +1148,23 @@ yerine, sistem tepsisine küçültecek.</translation>
     <message>
         <source> MB</source>
         <translation> MB</translation>
+    </message>
+    <message>
+        <source>After pressing minimize (_) qTox will minimize to tray,
+instead of system taskbar.</source>
+        <comment>toolTip for minimize to tray setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After pressing close (X) qTox will close to tray,
+instead of closing entirely.</source>
+        <comment>toolTip for close to tray setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can set this on a per-friend basis by right clicking individual friends.</source>
+        <comment>autoaccept cb tooltip</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1236,10 +1210,6 @@ yerine, sistem tepsisine küçültecek.</translation>
         <translation>Onay</translation>
     </message>
     <message>
-        <source>You are sure that you want to clear all displayed messages?</source>
-        <translation>Görüntülenen tüm mesajları silmek istediğinize emin misiniz?</translation>
-    </message>
-    <message>
         <source>Search in text</source>
         <translation>Metinde ara</translation>
     </message>
@@ -1255,44 +1225,9 @@ yerine, sistem tepsisine küçültecek.</translation>
         <source>Export to file</source>
         <translation>Dosyaya dışa aktar</translation>
     </message>
-</context>
-<context>
-    <name>GenericNetCamView</name>
     <message>
-        <source>Tox video</source>
-        <translation>Tox görüntü</translation>
-    </message>
-    <message>
-        <source>Show Messages</source>
-        <translation>İletileri Göster</translation>
-    </message>
-    <message>
-        <source>Hide Messages</source>
-        <translation>İletileri Gizle</translation>
-    </message>
-    <message>
-        <source>Full Screen</source>
-        <translation>Tam Ekran</translation>
-    </message>
-    <message>
-        <source>Toggle video preview</source>
-        <translation>Video önizlemesini değiştir</translation>
-    </message>
-    <message>
-        <source>Mute audio</source>
-        <translation>Sesi kapat</translation>
-    </message>
-    <message>
-        <source>Mute microphone</source>
-        <translation>Mikrofonun sesini kapat</translation>
-    </message>
-    <message>
-        <source>End video call</source>
-        <translation>Görüntülü aramayı bitir</translation>
-    </message>
-    <message>
-        <source>Exit full screen</source>
-        <translation>Tam ekrandan çık</translation>
+        <source>Are you sure that you want to clear all displayed messages?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1317,7 +1252,6 @@ yerine, sistem tepsisine küçültecek.</translation>
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation>
-            <numerusform>%n kullanıcı sohbette</numerusform>
             <numerusform>%n kullanıcı sohbette</numerusform>
         </translation>
     </message>
@@ -1384,7 +1318,6 @@ yerine, sistem tepsisine küçültecek.</translation>
         <comment>Number of users in chat</comment>
         <translation>
             <numerusform>%n kullanıcı sohbette</numerusform>
-            <numerusform>%n kullanıcı sohbette</numerusform>
         </translation>
     </message>
     <message>
@@ -1405,13 +1338,6 @@ yerine, sistem tepsisine küçültecek.</translation>
     <message>
         <source>Tox ID</source>
         <translation>Tox Kimliği</translation>
-    </message>
-    <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <comment>Tox ID tooltip</comment>
-        <translation>Bu karakterler diğer Tox istemcilerine size nasıl ulaşacaklarını anlatır.
-İletişim kurmak için bunu arkadaşlarınızla paylaşın.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
@@ -1484,54 +1410,6 @@ Profil geçmişinizi içermez.</translation>
         <translation>Parolayı değiştir</translation>
     </message>
     <message>
-        <source>Server</source>
-        <translation>Sunucu</translation>
-    </message>
-    <message>
-        <source>Hide my name from the public list</source>
-        <translation>Adımı genel listeden gizle</translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation>Kaydol</translation>
-    </message>
-    <message>
-        <source>Your password</source>
-        <translation>Parolanız</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Güncelle</translation>
-    </message>
-    <message>
-        <source>Register on ToxMe</source>
-        <translation>ToxMe&apos;de kaydol</translation>
-    </message>
-    <message>
-        <source>Name for the ToxMe service.</source>
-        <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation>ToxMe hizmetinin adı.</translation>
-    </message>
-    <message>
-        <source>Optional. Something about you. Or your cat.</source>
-        <comment>Tooltip for the Biography text.</comment>
-        <translation>İsteğe bağlı. Sizinle ilgili bir şey. Ya da kedinizle.</translation>
-    </message>
-    <message>
-        <source>Optional. Something about you. Or your cat.</source>
-        <comment>Tooltip for the Biography field.</comment>
-        <translation>İsteğe bağlı. Sizinle ilgili bir şey. Ya da kedinizle.</translation>
-    </message>
-    <message>
-        <source>ToxMe service to register on.</source>
-        <translation>Kaydolunacak ToxMe hizmeti.</translation>
-    </message>
-    <message>
-        <source>If not set, ToxMe entries are publicly visible.</source>
-        <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation>Ayarlı değilse, ToxMe girdilerini herkes görebilir.</translation>
-    </message>
-    <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
         <translation>Profilinizden parolanızı ve şifrelemeyi kaldırın.</translation>
@@ -1565,30 +1443,6 @@ Profil geçmişinizi içermez.</translation>
         <translation>QR resmini panoya kopyala</translation>
     </message>
     <message>
-        <source>ToxMe username to be shown on ToxMe</source>
-        <translation>ToxMe&apos;de gösterilecek ToxMe kullanıcı adı</translation>
-    </message>
-    <message>
-        <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>ToxMe&apos;de gösterilecek isteğe bağlı ToxMe özgeçmişi</translation>
-    </message>
-    <message>
-        <source>ToxMe service address</source>
-        <translation>ToxMe hizmet adresi</translation>
-    </message>
-    <message>
-        <source>Visibility on the ToxMe service</source>
-        <translation>ToxMe hizmetinde görünürlük</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Parola</translation>
-    </message>
-    <message>
-        <source>Update ToxMe entry</source>
-        <translation>ToxMe girdisi güncelle</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <translation>Profili yeniden adlandır.</translation>
     </message>
@@ -1617,24 +1471,18 @@ Profil geçmişinizi içermez.</translation>
         <translation>Durumum:</translation>
     </message>
     <message>
-        <source>My username</source>
-        <translation>Kullanıcı adım</translation>
-    </message>
-    <message>
-        <source>My biography</source>
-        <translation>Özgeçmişim</translation>
-    </message>
-    <message>
         <source>My profile</source>
         <translation>Profilim</translation>
+    </message>
+    <message>
+        <source>This ID allows other Tox users to add and contact you.
+Share it with your friends to begin chatting.</source>
+        <comment>Tox ID tooltip</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
-    <message>
-        <source>Load History Dialog</source>
-        <translation>Geçmiş İletişim Kutusunu Yükle</translation>
-    </message>
     <message>
         <source>Load history</source>
         <translation>Geçmişi yükle</translation>
@@ -1652,12 +1500,16 @@ Profil geçmişinizi içermez.</translation>
         <translation>(yaklaşık 100 mesaj yüklendi)</translation>
     </message>
     <message>
-        <source>Select Date Dialog</source>
-        <translation>Tarih Seçme Diyaloğu</translation>
-    </message>
-    <message>
         <source>Select a date</source>
         <translation>Bir tarih seçin</translation>
+    </message>
+    <message>
+        <source>Load history dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select date dialog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1713,12 +1565,6 @@ Profil geçmişinizi içermez.</translation>
     <message>
         <source>The password must be at least 6 characters long.</source>
         <translation>Parola en az 6 karakter uzunluğunda olmalı.</translation>
-    </message>
-    <message>
-        <source>The passwords you&apos;ve entered are different.
-Please make sure to enter same password twice.</source>
-        <translation>Girdiğiniz parolalar farklı.
-Lütfen aynı parolayı iki kez girdiğinizden emin olun.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
@@ -1803,6 +1649,11 @@ Yeni birini oluşturmak isteyebilirsiniz.</translation>
     <message>
         <source>Loading existing profile page</source>
         <translation>Olan profili yükleme sayfası</translation>
+    </message>
+    <message>
+        <source>The passwords you&apos;ve entered are different.
+Please make sure to enter the same password twice.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1909,6 +1760,45 @@ Yeni birini oluşturmak isteyebilirsiniz.</translation>
     </message>
 </context>
 <context>
+    <name>NetCamView</name>
+    <message>
+        <source>Tox video</source>
+        <translation type="unfinished">Tox görüntü</translation>
+    </message>
+    <message>
+        <source>Full Screen</source>
+        <translation type="unfinished">Tam Ekran</translation>
+    </message>
+    <message>
+        <source>Toggle video preview</source>
+        <translation type="unfinished">Video önizlemesini değiştir</translation>
+    </message>
+    <message>
+        <source>Mute audio</source>
+        <translation type="unfinished">Sesi kapat</translation>
+    </message>
+    <message>
+        <source>Mute microphone</source>
+        <translation type="unfinished">Mikrofonun sesini kapat</translation>
+    </message>
+    <message>
+        <source>End video call</source>
+        <translation type="unfinished">Görüntülü aramayı bitir</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation type="unfinished">Tam ekrandan çık</translation>
+    </message>
+    <message>
+        <source>Hide messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Nexus</name>
     <message>
         <source>View</source>
@@ -1945,8 +1835,43 @@ Yeni birini oluşturmak isteyebilirsiniz.</translation>
         <source>Unread message(s)</source>
         <translation>
             <numerusform>Okunmamış mesaj</numerusform>
-            <numerusform>Okunmamış mesajlar</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>NotificationGenerator</name>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New group message</source>
+        <translation type="unfinished">Yeni grup mesajı</translation>
+    </message>
+    <message>
+        <source>Incoming file transfer</source>
+        <translation type="unfinished">Gelen dosya aktarımı</translation>
+    </message>
+    <message>
+        <source>%1 - file transfer</source>
+        <extracomment>e.g. Bob - file transfer</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invite received</source>
+        <translation type="unfinished">Grup daveti alındı</translation>
+    </message>
+    <message>
+        <source>%1 invites you to join a group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request received</source>
+        <translation type="unfinished">Arkadaşlık isteği alındı</translation>
+    </message>
+    <message>
+        <source>Friend request received from %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2025,8 +1950,8 @@ Arkadaşlık istemleriyle rahatsız ediliyorsanız, NoSpam&apos;ı değiştirin.
         <translation>KaraListe</translation>
     </message>
     <message>
-        <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation>Grup iletisini grup üyesinin açık anahtarıyla süz. Açık anahtarı buraya koyun, her satırda bir girdi.</translation>
+        <source>Filter group messages by group members&apos; public keys. Put public keys here, one per line.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2036,12 +1961,12 @@ Arkadaşlık istemleriyle rahatsız ediliyorsanız, NoSpam&apos;ı değiştirin.
         <translation>Paroladan anahtar türetilemedi, profil yeni parolayı kullanmayacak.</translation>
     </message>
     <message>
-        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Veritabanındaki parola değiştirilemedi, bozulmuş olabilir veya eski parolayı kullanın.</translation>
-    </message>
-    <message>
         <source>Toxing on qTox</source>
         <translation>qTox&apos;da tox&apos;lanıyor</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2091,24 +2016,6 @@ lütfen başka bir resim kullanın.</translation>
         <translation>Konum, yazılabilir değil</translation>
     </message>
     <message>
-        <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
-        <comment>text of permissions popup</comment>
-        <translation>Bu konuma yazmaya yetkiniz yok. Başka seçin, ya da kaydetmeyi iptal edin.</translation>
-    </message>
-    <message>
-        <source>Failed to copy file</source>
-        <translation>Dosya kopyalanamadı</translation>
-    </message>
-    <message>
-        <source>The file you chose could not be written to.</source>
-        <translation>Seçtiğiniz dosyaya yazılamadı.</translation>
-    </message>
-    <message>
-        <source>Really delete profile?</source>
-        <comment>deletion confirmation title</comment>
-        <translation>Profil gerçekten silinsin mi?</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Bu profili silmek istediğinize emin misiniz?</translation>
@@ -2132,11 +2039,6 @@ lütfen başka bir resim kullanın.</translation>
         <translation>Profilinizin bir parolası yok!</translation>
     </message>
     <message>
-        <source>Really delete password?</source>
-        <comment>deletion confirmation title</comment>
-        <translation>Parola gerçekten silinsin mi?</translation>
-    </message>
-    <message>
         <source>Please enter a new password.</source>
         <translation>Lütfen yeni bir parola girin.</translation>
     </message>
@@ -2144,38 +2046,6 @@ lütfen başka bir resim kullanın.</translation>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation>Dosyalar silinemedi!</translation>
-    </message>
-    <message>
-        <source>Register (processing)</source>
-        <translation>Kayıt (işleniyor)</translation>
-    </message>
-    <message>
-        <source>Update (processing)</source>
-        <translation>Güncelleme (işleniyor)</translation>
-    </message>
-    <message>
-        <source>Done!</source>
-        <translation>Bitti!</translation>
-    </message>
-    <message>
-        <source>Account %1@%2 updated successfully</source>
-        <translation>%1@%2 hesabı başarıyla güncellendi</translation>
-    </message>
-    <message>
-        <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>%1@%2 başarıyla veritabanına eklendi. Parolanızı kaydedin</translation>
-    </message>
-    <message>
-        <source>Toxme error</source>
-        <translation>Toxme hatası</translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation>Kaydol</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Güncelle</translation>
     </message>
     <message>
         <source>Change password</source>
@@ -2194,16 +2064,6 @@ lütfen başka bir resim kullanın.</translation>
     <message>
         <source>Couldn&apos;t change password</source>
         <translation>Parola değiştirilemedi</translation>
-    </message>
-    <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.
-
-This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation>Bu karakterler diğer Tox istemcilerine size nasıl ulaşacaklarını anlatır.
-İletişim kurmak için bunu arkadaşlarınızla paylaşın.
-
-Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
@@ -2234,10 +2094,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Boş konum</translation>
     </message>
     <message>
-        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Veritabanındaki parola değiştirilemedi, bozulmuş olabilir veya eski parolayı kullanın.</translation>
-    </message>
-    <message>
         <source>Export profile</source>
         <translation>Profili dışa aktar</translation>
     </message>
@@ -2257,14 +2113,56 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Lütfen elle kaldırın.</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete your password?</source>
-        <extracomment>deletion confirmation text</extracomment>
-        <translation>Parolanızı silmek istediğinize emin misiniz?</translation>
-    </message>
-    <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation>Resimler (%1)</translation>
+    </message>
+    <message>
+        <source>You do not have permission to write to that location. Choose another, or cancel the save dialog.</source>
+        <comment>text of permissions popup</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file you chose could not be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty path is unavaliable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox user names cannot exceed %1 characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete profile</source>
+        <comment>deletion confirmation title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove password</source>
+        <comment>deletion confirmation title</comment>
+        <translation type="unfinished">Parolayı kaldır</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove your password?</source>
+        <extracomment>deletion confirmation text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This ID allows other Tox users to add and contact you.
+Share it with your friends to begin chatting.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2347,13 +2245,13 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Arkadaş eklenemedi</translation>
     </message>
     <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 geçerli bir Toxme adresi değil.</translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Kendinizi, bir arkadaş olarak ekleyemezsiniz!</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Tox address.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2410,64 +2308,12 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Gelen arama...</translation>
     </message>
     <message>
-        <source>Server doesn&apos;t support Toxme</source>
-        <translation>Sunucu Toxme desteklemiyor</translation>
-    </message>
-    <message>
-        <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation>Çok fazla istek yapıyorsunuz. Bir saat bekleyin ve yeniden deneyin</translation>
-    </message>
-    <message>
-        <source>This name is already in use</source>
-        <translation>Bu isim zaten kullanımda</translation>
-    </message>
-    <message>
-        <source>This Tox ID is already registered under another name</source>
-        <translation>Bu Tox Kimliği zaten başka bir ad altında kayıtlı</translation>
-    </message>
-    <message>
-        <source>Please don&apos;t use a space in your name</source>
-        <translation>Lütfen adınızda boşluk kullanmayın</translation>
-    </message>
-    <message>
-        <source>Password incorrect</source>
-        <translation>Parola yanlış</translation>
-    </message>
-    <message>
-        <source>You can&apos;t use this name</source>
-        <translation>Bu adı kullanamazsınız</translation>
-    </message>
-    <message>
-        <source>Name not found</source>
-        <translation>Ad bulunamadı</translation>
-    </message>
-    <message>
-        <source>Tox ID not sent</source>
-        <translation>Tox Kimliği gönderilmedi</translation>
-    </message>
-    <message>
-        <source>That user does not exist</source>
-        <translation>Bu kullanıcı yok</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Hata</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>qTox sohbet günlüklerinizi açamadı, devre dışı bırakılacaklar.</translation>
-    </message>
-    <message>
-        <source>Problem with HTTPS connection</source>
-        <translation>HTTPS bağlantısı ile sorun</translation>
-    </message>
-    <message>
-        <source>Internal ToxMe error</source>
-        <translation>İç ToxMe hatası</translation>
-    </message>
-    <message>
-        <source>Reformatting text in progress..</source>
-        <translation>Metin yeniden biçimlendiriliyor...</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
@@ -2521,6 +2367,50 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <source>blocked</source>
         <comment>contact status</comment>
         <translation>engellendi</translation>
+    </message>
+    <message>
+        <source>Reformatting text...</source>
+        <comment>Waiting for text to be reformatted</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 message(s) from %2 chats</source>
+        <extracomment>e.g. 3 messages from 2 chats</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 message(s) from %2</source>
+        <extracomment>e.g. 2 messages from Bob</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>negotitating</source>
+        <comment>contact status</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2647,10 +2537,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Parola gücü: %p%</translation>
     </message>
     <message>
-        <source>The password is too short</source>
-        <translation>Parola çok kısa</translation>
-    </message>
-    <message>
         <source>The password doesn&apos;t match.</source>
         <translation>Parola eşleşmiyor.</translation>
     </message>
@@ -2669,6 +2555,10 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
     <message>
         <source>Password input field, minimum 6 characters long</source>
         <translation>Parola giriş alanı, en az 6 karakter uzunluğunda</translation>
+    </message>
+    <message>
+        <source>The password is too short.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2779,11 +2669,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Kişi listesi</translation>
     </message>
     <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation>İşaretlendiğinde, grup sohbetleri, arkadaşlar listesinin en üstüne, işaretlenmediğinde çevrimiçi arkadaşların altına yerleştirilecektir.</translation>
-    </message>
-    <message>
         <source>Place groupchats at top of friend list</source>
         <translation>Grup sohbetlerini arkadaş listesinin en üstüne yerleştir</translation>
     </message>
@@ -2811,11 +2696,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
     <message>
         <source>Use emoticons</source>
         <translation>Yüz İfadeleri kullan</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Yüz ifadesi Paketi:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
@@ -2846,17 +2726,8 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Tarih biçimi:</translation>
     </message>
     <message>
-        <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
-        <comment>toolTip for show identicons</comment>
-        <translation>Etkinleştirilirse avatarı ayarlı olmayan her kişinin, öntanımlı bir resim yerine, Tox Kimliklerine göre üretilmiş bir avatarı olacak. Uygulanması için yeniden başlatma gerektirir.</translation>
-    </message>
-    <message>
         <source>Use identicons instead of empty avatars</source>
         <translation>Boş avatarlar yerine identicon kullan</translation>
-    </message>
-    <message>
-        <source>Use colored nicknames in chats</source>
-        <translation>Sohbetlerde renkli takma ad kullan</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
@@ -2866,11 +2737,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
     <message>
         <source>Notify</source>
         <translation>Bildir</translation>
-    </message>
-    <message>
-        <source>Onlys notify about new messages in groupchats when mentioned.</source>
-        <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation>Yalnızca grup sohbetlerindeki yeni mesajlarda söz edildiğinde haber verilir.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
@@ -2892,21 +2758,36 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <source>Hide message sender and contents</source>
         <translation>Mesaj göndereni ve içeriğini gizle</translation>
     </message>
+    <message>
+        <source>Use colored nicknames in group chats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only notify about new messages in group chats when mentioned.</source>
+        <comment>toolTip for Group chats only notify when mentioned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, group chats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If enabled, every contact without an avatar will have a generated icon based on their Tox ID instead of the default picture. Requires restart to apply.</source>
+        <comment>toolTip for show identicons</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smiley pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
         <source>Status</source>
         <translation>Durum</translation>
-    </message>
-    <message>
-        <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>toxcore başlatılamadı, bu ileti penceresini kapattığınızda uygulama sonlandırılacak.</translation>
-    </message>
-    <message>
-        <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
-        <comment>popup text</comment>
-        <translation>toxcore vekil sunucu ayarlarınızla başlatılamadı. qTox çalışamaz; lütfen ayarlarınızı değiştirip yeniden başlatın.</translation>
     </message>
     <message>
         <source>Executable file</source>
@@ -2921,10 +2802,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
     <message>
         <source>Your name</source>
         <translation>Adınız</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t request friendship</source>
-        <translation>Arkadaşlık istenemedi</translation>
     </message>
     <message>
         <source>Message failed to send</source>
@@ -2987,11 +2864,6 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Oturumu kapat</translation>
     </message>
     <message>
-        <source>Exit</source>
-        <comment>Tray action menu to exit tox</comment>
-        <translation>Çık</translation>
-    </message>
-    <message>
         <source>Filter...</source>
         <translation>Süz...</translation>
     </message>
@@ -3008,50 +2880,12 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>Kişiler</translation>
     </message>
     <message>
-        <source>Change Status</source>
-        <translation>Durumu Değiştir</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation>Profili Düzenle</translation>
-    </message>
-    <message>
-        <source>Log out</source>
-        <translation>Oturumu kapat</translation>
-    </message>
-    <message>
-        <source>Add Contact...</source>
-        <translation>Kişi Ekle...</translation>
-    </message>
-    <message>
-        <source>Next Conversation</source>
-        <translation>Sonraki Konuşma</translation>
-    </message>
-    <message>
-        <source>Previous Conversation</source>
-        <translation>Önceki Konuşma</translation>
-    </message>
-    <message>
         <source>Groupchat #%1</source>
         <translation>Grup sohbeti #%1</translation>
     </message>
     <message>
         <source>Create new group...</source>
         <translation>Yeni grup oluştur...</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Friend Request(s)</source>
-        <translation>
-            <numerusform>%n Yeni Arkadaşlık İsteği</numerusform>
-            <numerusform>%n Yeni Arkadaşlık İsteği</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Group Invite(s)</source>
-        <translation>
-            <numerusform>%n Yeni Grup Daveti</numerusform>
-            <numerusform>%n Yeni Grup Daveti</numerusform>
-        </translation>
     </message>
     <message>
         <source>Show</source>
@@ -3088,16 +2922,58 @@ Bu kimlik NoSpam kodu (mavi), ve sağlama toplamı (gri) içerir.</translation>
         <translation>&quot;%1&quot; dosyası gönderilemedi</translation>
     </message>
     <message>
-        <source>File sent</source>
-        <translation>Dosya gönderildi</translation>
+        <source>Toxcore failed to start, the application will terminate after you close this message.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> sent you a friend request.</source>
-        <translation> size bir arkadaşlık isteği gönderdi.</translation>
+        <source>Toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
+        <comment>popup text</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> invites you to join a group.</source>
-        <translation> sizi bir gruba katılmaya davet ediyor.</translation>
+        <source>Couldn&apos;t send friend request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new friend request(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new group invite(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <comment>Tray action menu to exit Tox</comment>
+        <translation type="unfinished">Çık</translation>
+    </message>
+    <message>
+        <source>Change status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished">Oturumu kapat</translation>
+    </message>
+    <message>
+        <source>Add contact...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next conversation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous conversation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
