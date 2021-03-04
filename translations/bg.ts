@@ -150,12 +150,12 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation>Щракнете тук, за да докладвате за грешка.</translation>
+        <translation>Щракнете тук, за да докладвате за бъг.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation>Вижте пълен лист със %1 при Github</translation>
+        <translation>Вижте пълен списък със %1 при Github</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -262,23 +262,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Това е публичният ключ на вашия приятел. Използвайте го за да потвърдите тяхната идентичност чрез друг канал. Не можете да го изпратите на други хора, за да добавят в контакти.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Публичен ключ (не е ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Потвърждение</translation>
+        <translation>Потвърждение</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Сигурни ли сте, че искате да изтриете историята на чата с %1?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Грешка при премахване на историята на чата с %1!</translation>
     </message>
 </context>
 <context>
@@ -301,15 +301,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Отвори линка за изтегляне на актуализация</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Налична актуализация</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox е актуален</translation>
     </message>
 </context>
 <context>
@@ -580,7 +580,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Разрешете LAN откриване</translation>
     </message>
 </context>
 <context>
@@ -649,12 +649,13 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Името на файла съдържа неправилни символи</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неправилните символи са променени на _
+за да могат да бъдат записани на Windows.</translation>
     </message>
 </context>
 <context>
@@ -791,30 +792,30 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Групов чат %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Ново съобщение</translation>
+        <translation>Ново съобщение</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Входящ трансфер на файлове</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Поканата за приятелство е приета</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Ново групово съобщение</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Поганата за група е приета</translation>
     </message>
 </context>
 <context>
@@ -1176,15 +1177,15 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверка за актуализация</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверка за правопис</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимален размер за автоматично приемане на файл (0 за забрана):</translation>
     </message>
     <message>
         <source> MB</source>
@@ -1231,27 +1232,27 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Потвърждение</translation>
+        <translation>Потвърждение</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Сигурни ли сте, че искате да изчистите всички видими съобщения?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Търсене в текста</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Отидете на днешна дата</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Зареди чат история...</translation>
+        <translation>Зареди история на чата...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Изнасяне към файл</translation>
+        <translation>Изнасяне към файл</translation>
     </message>
 </context>
 <context>
@@ -1270,7 +1271,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Пълен екран</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
@@ -1278,19 +1279,19 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Заглуши аудио</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Заглуши микрофон</translation>
+        <translation>Заглуши микрофон</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Приключи видео обаждане</translation>
+        <translation>Приключи видео обаждане</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Излез от пълен екран</translation>
     </message>
 </context>
 <context>
@@ -1301,15 +1302,15 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 се присъедини към групата</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 се преименува като %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 напусна групата</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
@@ -1321,11 +1322,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>заглуши</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>отглуши</translation>
     </message>
 </context>
 <context>
@@ -1387,11 +1388,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Ново съобщение</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">На линия</translation>
+        <translation>На линия</translation>
     </message>
 </context>
 <context>
@@ -1635,27 +1636,27 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареди история</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>от</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>към</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(към 100 съобщения са заредени)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Избери прозореца за дата</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Избери дата</translation>
     </message>
 </context>
 <context>
@@ -2002,7 +2003,7 @@ People will be unable to add you with your old ID, but you will keep your curren
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>ПъленТашак</translation>
+        <translation>Без спам</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
@@ -2039,7 +2040,7 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Tox-ва в qTox</translation>
+        <translation>Tox-ва в qTox</translation>
     </message>
 </context>
 <context>
@@ -2262,7 +2263,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Изображения (%1)</translation>
+        <translation>Изображения (%1)</translation>
     </message>
 </context>
 <context>
@@ -2473,52 +2474,52 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Тъмен</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Тъмно син</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Тъмно маслинено</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Тъмно червено</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Тъмно виолетово</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Грешка при автоматично зареждане на профил.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">На линия</translation>
+        <translation>На линия</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">отсъстващ</translation>
+        <translation>отсъстващ</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">зает</translation>
+        <translation>зает</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Извън линия</translation>
+        <translation>Извън линия</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>блокиран</translation>
     </message>
 </context>
 <context>
@@ -2576,18 +2577,18 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстът не може да бъде открит.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Начало</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Формуляр</translation>
+        <translation>Формуляр</translation>
     </message>
     <message>
         <source>Start search:</source>
@@ -2595,23 +2596,23 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>от края</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>от начало</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>след дата</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>преди дата</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
@@ -2619,7 +2620,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Само цели думи</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
@@ -2854,41 +2855,41 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Използвай цветни никнеймове в чатовете</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Покажи нотификация, при получено съобщение, когато прозорецът не е маркиран.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Нотифицирай</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Нотифицирай за съобщения в групов чат, само когато си споменат.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Груповите чатове нотифицират, само когато сте споменат</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Възпроизвеждане на звук</translation>
+        <translation>Възпроизвеждане на звук</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Възпроизвеждане на звук докато зададен Зает</translation>
+        <translation>Възпроизвеждане на звук докато сте зает</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Нотифицирай чрез десктоп нотификации</translation>
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрий съобщител и стойности</translation>
     </message>
 </context>
 <context>
@@ -3084,19 +3085,19 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Неуспешно изпратен файл &quot;%1&quot;</translation>
+        <translation>Неуспешно изпратен файл &quot;%1&quot;</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлът е изпратен</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> ви изпрати покана за приятелство.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> ви кани да се присъедините в група.</translation>
     </message>
 </context>
 </TS>

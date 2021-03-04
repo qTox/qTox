@@ -81,11 +81,11 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapne experimentálny zvukový backend vyhladzujúci ozvenu, pre žiadaný účinok je ale potrebné reštartovať qTox.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapnúť experimentálny zvukový backend</translation>
     </message>
     <message>
         <source>Audio quality</source>
@@ -170,7 +170,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">prispievateľov</translation>
+        <translation>prispievatelia</translation>
     </message>
 </context>
 <context>
@@ -181,11 +181,11 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished">užívateľské meno</translation>
+        <translation>prezývka</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished"></translation>
+        <translation>Správa o stave</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -197,7 +197,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Automaticky prijímať súbory od tohto kontaktu</translation>
+        <translation>Ak zaškrtnuté, automaticky prímať súbory od tohto kontaktu</translation>
     </message>
     <message>
         <source>Auto accept files</source>
@@ -209,11 +209,11 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">Automatické prijímanie zakázené</translation>
+        <translation>Automatické prijímanie od tohto kontaktu je zakázené</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished">Automatické prijímanie hovorov:</translation>
+        <translation>Hovor prijímať automaticky:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -221,11 +221,11 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Audio hovory</translation>
+        <translation>Zvuk</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">Audio + Video hovory</translation>
+        <translation>Zvuk + Video</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>

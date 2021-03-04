@@ -909,15 +909,15 @@ in modo da poter salvare il file su windows.</translation>
     <message>
         <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>File Trasferiti</translation>
+        <translation>File trasferiti</translation>
     </message>
     <message>
         <source>Downloads</source>
-        <translation>File Ricevuti</translation>
+        <translation>File ricevuti</translation>
     </message>
     <message>
         <source>Uploads</source>
-        <translation>File Inviati</translation>
+        <translation>File inviati</translation>
     </message>
 </context>
 <context>
@@ -1415,8 +1415,7 @@ Condividilo con chi vuoi comunicare.</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Questo codice QR contiene il tuo Tox ID.
-Puoi condividere questo codice QR al posto del tuo Tox ID.</translation>
+        <translation>Questo codice QR contiene il tuo Tox ID. Puoi condividere questo codice QR al posto del tuo Tox ID.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1603,7 +1602,7 @@ I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation>Cambia la  password del profilo</translation>
+        <translation>Cambia la password del profilo</translation>
     </message>
     <message>
         <source>My name:</source>
@@ -2034,7 +2033,7 @@ Se ricevi molte richieste di amicizia indesiderate cambia questo valore.</transl
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Impossiblie cambiare la password nel database, potrebbe essere corrotto o usare una vecchia password.</translation>
+        <translation>Impossiblie cambiare la password nella base di dati, potrebbe essere corrotto o usare una vecchia password.</translation>
     </message>
     <message>
         <source>Toxing on qTox</source>
@@ -2160,7 +2159,7 @@ Per favore scegli un&apos;immagine più piccola.</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>Aggiunto con successo %1@% 2 al database. Salva la tua password</translation>
+        <translation>Aggiunto con successo %1@% 2 alla base di dati. Salva la tua password</translation>
     </message>
     <message>
         <source>Toxme error</source>
@@ -2232,7 +2231,7 @@ Questo ID include il codice NoSpam (in blu), e il checksum (in grigio).</transla
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Impossibile cambiare la password nel database, potrebbe essere corrotto o usare una password vecchia.</translation>
+        <translation>Impossibile cambiare la password nella base di dati, potrebbe essere corrotto o usare una password vecchia.</translation>
     </message>
     <message>
         <source>Export profile</source>

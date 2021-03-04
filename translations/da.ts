@@ -132,11 +132,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>toxcore version: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt version: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
@@ -146,7 +146,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klik her for at rapportere en fejl.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>

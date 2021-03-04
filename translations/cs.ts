@@ -93,7 +93,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Kvalita přenosu zvuku. Snižte toto nastavení pokud máte pomalé připojení nebo pokud chcete šetřit data.</translation>
+        <translation>Kvalita přenášeného zvuku. Snižte tuto hodnotu, pokud není vaše připojení dostatečně rychlé nebo pokud chcete snížit množství přenášených dat.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -278,7 +278,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation>Historie chatu s  %1 se nepodařilo odstranit!</translation>
+        <translation>Historie chatu s %1 se nepodařilo odstranit!</translation>
     </message>
 </context>
 <context>
@@ -383,7 +383,7 @@ může způsobovat problémy během videohovorů.</translation>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation>Nepodařilo se otevřít  soubor s kontakty</translation>
+        <translation>Nepodařilo se otevřít soubor s kontakty</translation>
     </message>
     <message>
         <source>Invalid file</source>
@@ -391,7 +391,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>V souboru jsme nenašli žádné kontakty pro import!</translation>
+        <translation>V souboru nebyly nalezeny žádné kontakty pro import!</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -424,7 +424,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation>Importovat seznam kontaktů, jedno Tox  ID na řádek</translation>
+        <translation>Importovat seznam kontaktů, jedno Tox ID na řádek</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
@@ -448,7 +448,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Pokud %1 nevíte, co zde dělat, prosím  tady nic %2měňte. Změny provedené zde mohou vést k problémům s qTox a dokonce ke ztrátě dat, např. historie.</translation>
+        <translation>Pokud %1 nevíte, co zde dělat, prosím tady nic %2měňte. Změny provedené zde mohou vést k problémům s qTox a dokonce ke ztrátě dat, např. historie.</translation>
     </message>
     <message>
         <source>really</source>
@@ -792,30 +792,30 @@ takže můžete soubor uložit do systému Windows.</translation>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Skupinová konverzace %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Nová zpráva</translation>
+        <translation>Nová zpráva</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Příchozí přenos souboru</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Přijata žádost o přátelství</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nová skupinová zpráva</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Přijata pozvánka do skupiny</translation>
     </message>
 </context>
 <context>
@@ -1242,15 +1242,15 @@ místo panelu úloh.</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Přejít na aktuální datum</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Nahrát historii zpráv...</translation>
+        <translation>Načíst historii konverzace...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Export do souboru</translation>
+        <translation>Export do souboru</translation>
     </message>
 </context>
 <context>
@@ -1636,27 +1636,27 @@ Při exportu nebude nahrána vaše historie.</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst historii</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>z</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>na</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(je načteno asi 100 zpráv)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished">Vyberte dialogové okno Datum</translation>
+        <translation>Dialogové okno pro výběr data</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Vyberte datum</translation>
+        <translation>Vyberte datum</translation>
     </message>
 </context>
 <context>
@@ -1852,7 +1852,7 @@ Možná budete chtít vytvořit.</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation>Nastavte svůj status,  který se zobrazí ostatním</translation>
+        <translation>Nastavte svůj status, který se zobrazí ostatním</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1999,7 +1999,7 @@ If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
         <translation>NoSpam je součástí vašeho Tox ID.
-Pokud jste obtěžován žádostni o přátelství měli byste si změnit vaše NoSpam.
+Pokud jste obtěžováni žádostmi o přátelství, měli byste si změnit vaše NoSpam.
 Lidé si vás nebudou moci přidat s vaším starým Tox ID, ale budete moci komunikovat se starými přáteli.</translation>
     </message>
     <message>
@@ -2009,8 +2009,8 @@ Lidé si vás nebudou moci přidat s vaším starým Tox ID, ale budete moci kom
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>NoSpam je součástí vašeho Tox ID.
-Pokud jste obtěžován žádostni o přátelství měli byste si změnit vaše NoSpam.</translation>
+        <translation>NoSpam je částí vašeho Tox ID, kterou lze libovolně měnit.
+Pokud jste obtěžováni žádostmi o přátelství, měli byste si změnit vaše NoSpam.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
@@ -2495,32 +2495,32 @@ Toto ID zahrnuje kód NoSpam (modrý) a kontrolní součet (šedý).</translatio
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se automaticky načíst profil.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">online</translation>
+        <translation>online</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">pryč</translation>
+        <translation>pryč</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">zaneprázdněn</translation>
+        <translation>zaneprázdněn</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">offline</translation>
+        <translation>offline</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">blokovaný</translation>
+        <translation>blokovaný</translation>
     </message>
 </context>
 <context>
@@ -2890,7 +2890,7 @@ Toto ID zahrnuje kód NoSpam (modrý) a kontrolní součet (šedý).</translatio
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrýt odesílatele a obsah zprávy</translation>
     </message>
 </context>
 <context>
@@ -3087,19 +3087,19 @@ Toto ID zahrnuje kód NoSpam (modrý) a kontrolní součet (šedý).</translatio
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Nepodařilo se poslat soubor &quot;%1&quot;</translation>
+        <translation>Nepodařilo se poslat soubor &quot;%1&quot;</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor odeslán</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> vám poslal(a) žádost o přátelství.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> vás zve k připojení ke skupině.</translation>
     </message>
 </context>
 </TS>

@@ -81,7 +81,7 @@ o que pode levar a problemas nas chamadas de vídeo.</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>Ativa o painel de áudio experimental com suporte a cancelamento de eco, tem de reiniciar o qTox para para que esta alteração surta efeito.</translation>
+        <translation>Ativa o painel de áudio experimental com suporte a cancelamento de eco, tem de reiniciar o qTox para que esta alteração surta efeito.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
@@ -793,30 +793,30 @@ para que posa aguardar o ficheiro no Windows.</translation>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Conversa no grupo %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Nova mensagem</translation>
+        <translation>Nova mensagem</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Recebendo transferência de ficheiro</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Pedido de amizade recebido</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova mensagem de grupo</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Convite para grupo recebido</translation>
     </message>
 </context>
 <context>
@@ -1243,15 +1243,15 @@ em vez da barra de tarefas do sistema.</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir para a data atual</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Carregar histórico de conversas...</translation>
+        <translation>Carregar histórico de conversas...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Exportar para ficheiro</translation>
+        <translation>Exportar para ficheiro</translation>
     </message>
 </context>
 <context>
@@ -1635,27 +1635,27 @@ O perfil não contém o seu histórico.</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Carregar histórico</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>de</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>para</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(aproximadamente 100 mensagens estão carregadas)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished">Janela de selecionar data</translation>
+        <translation>Janela de selecionar data</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Selecione uma data</translation>
+        <translation>Selecione uma data</translation>
     </message>
 </context>
 <context>
@@ -2493,32 +2493,32 @@ Esta referência inclui o código NoSpam (a azul) e a soma de verificação/chec
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao carregar o perfil automaticamente.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">conectado</translation>
+        <translation>conectado</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">ausente</translation>
+        <translation>ausente</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">ocupado</translation>
+        <translation>ocupado</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">desconectado</translation>
+        <translation>desconectado</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">bloqueado</translation>
+        <translation>bloqueado</translation>
     </message>
 </context>
 <context>
@@ -2888,7 +2888,7 @@ Esta referência inclui o código NoSpam (a azul) e a soma de verificação/chec
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar remetente e conteúdo da mensagem</translation>
     </message>
 </context>
 <context>
@@ -3083,19 +3083,19 @@ Esta referência inclui o código NoSpam (a azul) e a soma de verificação/chec
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Falha ao enviar o ficheiro &quot;%1&quot;</translation>
+        <translation>Falha ao enviar o ficheiro &quot;%1&quot;</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiro enviado</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> enviou-lhe um pedido de amizade.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> convida-o para participar mum grupo.</translation>
     </message>
 </context>
 </TS>

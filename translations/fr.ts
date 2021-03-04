@@ -5,7 +5,7 @@
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>Audio / Vidéo</translation>
+        <translation>Audio/Vidéo</translation>
     </message>
     <message>
         <source>Default resolution</source>
@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Paramètres sonores</translation>
+        <translation>Paramètres audio</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Volume</source>
-        <translation>Niveau de volume</translation>
+        <translation>Volume</translation>
     </message>
     <message>
         <source>Video Settings</source>
@@ -160,7 +160,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>Suivi de bogue</translation>
+        <translation>suivi des bogues</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
@@ -274,7 +274,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation>Etes-vous sûr de supprimer l&apos;historique des conversations avec %1 ?</translation>
+        <translation>Êtes-vous sûr(e) de supprimer l&apos;historique des conversations avec %1 ?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
@@ -467,7 +467,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation>Attention : tous les paramètres vont être réinitialisés ! Êtes-vous certain(e) ?</translation>
+        <translation>Attention : tous les paramètres vont être réinitialisés ! Êtes-vous sûr(e) ?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -493,7 +493,7 @@ ce qui peut entraîner des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation>Journaux  (*.log)</translation>
+        <translation>Journaux (*.log)</translation>
     </message>
 </context>
 <context>
@@ -767,7 +767,7 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     <name>Core</name>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation>/me souhaiterait vous ajouter à sa liste de contacts, &quot;%1&quot;</translation>
+        <translation>/me souhaiterait vous ajouter à sa liste de contacts, « %1 »</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -917,7 +917,7 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     </message>
     <message>
         <source>Uploads</source>
-        <translation>Envois</translation>
+        <translation>Téléversements</translation>
     </message>
 </context>
 <context>
@@ -995,11 +995,11 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Retirer du cercle &apos;%1&apos;</translation>
+        <translation>Retirer du cercle « %1 »</translation>
     </message>
     <message>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Déplacer vers le cercle &quot;%1&quot;</translation>
+        <translation>Déplacer vers le cercle « %1 »</translation>
     </message>
     <message>
         <source>Set alias...</source>
@@ -1149,7 +1149,7 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Votre statut sera modifié en &quot;Absent(e)&quot; après la période d&apos;inactivité que vous avez définie.</translation>
+        <translation>Votre statut sera modifié en « Absent(e) » après la période d&apos;inactivité que vous avez définie.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -1166,7 +1166,7 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Vous pouvez définir cela pour chaque contact en faisant un un clic-droit sur leur nom.</translation>
+        <translation>Vous pouvez définir cela pour chaque contact en faisant un clic-droit sur leur nom.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
@@ -1182,7 +1182,7 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation>Taille maximale du fichier pour autoaccepter (0 pour désactiver):</translation>
+        <translation>Taille maximale du fichier pour autoaccepter (0 pour désactiver) :</translation>
     </message>
     <message>
         <source> MB</source>
@@ -1233,7 +1233,7 @@ au lieu de se minimiser dans la barre des tâches du système.</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation>Vous êtes sûr de vouloir effacer tous les messages affichés ?</translation>
+        <translation>Vous êtes sûr(e) de vouloir effacer tous les messages affichés ?</translation>
     </message>
     <message>
         <source>Search in text</source>
@@ -1415,8 +1415,7 @@ Partagez-la avec vos contacts afin de pouvoir communiquer avec eux.</translation
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Cette image est un QR code qui contient votre identifiant Tox.
-Vous pouvez aussi bien la partager avec vos contacts.</translation>
+        <translation>Cette image est un QR code qui contient votre identifiant Tox. Vous pouvez aussi bien la partager avec vos contacts.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1965,7 +1964,7 @@ Vous voudrez peut-être en créer un.</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation>Êtes-vous certain(e) de vouloir supprimer définitivement l&apos;intégralité de l&apos;historique de discussions ?</translation>
+        <translation>Êtes-vous sûr(e) de vouloir supprimer définitivement l&apos;intégralité de l&apos;historique de discussions ?</translation>
     </message>
 </context>
 <context>
@@ -2076,11 +2075,11 @@ Veuillez utiliser une autre image.</translation>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation>Renommer &quot;%1&quot;</translation>
+        <translation>Renommer « %1 »</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>Impossible de renommer le profil en &quot;%1&quot;</translation>
+        <translation>Impossible de renommer le profil en « %1 »</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2103,12 +2102,12 @@ Veuillez utiliser une autre image.</translation>
     <message>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
-        <translation>Êtes-vous certain(e) de vouloir supprimer le profil ?</translation>
+        <translation>Voulez-vous vraiment supprimer le profil ?</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Êtes-vous certain(e) de vouloir supprimer ce profil ?</translation>
+        <translation>Êtes-vous sûr(e) de vouloir supprimer ce profil ?</translation>
     </message>
     <message>
         <source>Save</source>
@@ -2131,7 +2130,7 @@ Veuillez utiliser une autre image.</translation>
     <message>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation>Êtes-vous certain(e) de vouloir supprimer le mot de passe ?</translation>
+        <translation>Voulez-vous vraiment supprimer le mot de passe ?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
@@ -2216,7 +2215,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation>Un profil nommé &quot;%1&quot; existe déjà.</translation>
+        <translation>Un profil nommé « %1 » existe déjà.</translation>
     </message>
     <message>
         <source>Empty name</source>
@@ -2224,7 +2223,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation>Le nom ne peut être vide</translation>
+        <translation>Impossible d&apos;utiliser un nom vide</translation>
     </message>
     <message>
         <source>Empty path</source>
@@ -2232,7 +2231,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Impossible de modifier le mot de passe dans la base de données, elle peut être endommagée, ou utilisez l&apos;ancien mot de passe.</translation>
+        <translation>Impossible de modifier le mot de passe dans la base de données, elle peut être endommagée ou utiliser l&apos;ancien mot de passe.</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -2256,7 +2255,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation>Êtes-vous certain(e) de vouloir supprimer votre mot de passe ?</translation>
+        <translation>Êtes-vous sûr(e) de vouloir supprimer votre mot de passe ?</translation>
     </message>
     <message>
         <source>Images (%1)</source>
@@ -2284,7 +2283,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attention : vous avez choisi un fichier de sauvegarde non-Tox; ignoré.</translation>
+        <translation>Attention : vous avez choisi un fichier de sauvegarde non-Tox ; ignoré.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -2294,7 +2293,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Un profil nommé &quot;%1&quot; existe déjà. Voulez-vous le supprimer ?</translation>
+        <translation>Un profil nommé « %1 » existe déjà. Voulez-vous le supprimer ?</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
@@ -2536,7 +2535,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Êtes-vous certain(e) de vouloir supprimer %1 de votre liste de contacts ?</translation>
+        <translation>Êtes-vous sûr(e) de vouloir supprimer %1 de votre liste de contacts ?</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
@@ -2879,7 +2878,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Jouer un son lorsque vous êtes &quot;Occupé(e)&quot;</translation>
+        <translation>Jouer un son quand vous êtes Occupé(e)</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
@@ -2964,7 +2963,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation>Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous certain(e) de vouloir ouvrir ce fichier ?</translation>
+        <translation>Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous sûr(e) de vouloir ouvrir ce fichier ?</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -3082,7 +3081,7 @@ Cet identifiant inclue le code anti-spam (en bleu) et la somme de contrôle (en 
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Impossible d&apos;envoyer le fichier &quot;%1&quot;</translation>
+        <translation>Impossible d&apos;envoyer le fichier « %1 »</translation>
     </message>
     <message>
         <source>File sent</source>

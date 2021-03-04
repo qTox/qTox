@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Gain</source>
-        <translation>Aufnahmelautstärke</translation>
+        <translation>Aufnahmelautstärke:</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -41,11 +41,11 @@
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Aufnahmegerät</translation>
+        <translation>Aufnahmegerät:</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Wiedergabelautstärke</translation>
+        <translation>Wiedergabelautstärke:</translation>
     </message>
     <message>
         <source>Video Settings</source>
@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Video device</source>
-        <translation>Kamera</translation>
+        <translation>Kamera:</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -62,12 +62,14 @@ Note though that with better video quality there is needed better internet conne
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Wähle deine Kameraauflösung.
-Höhere Werte führen zu einem schärferen Bild für deine Freunde, allerdings wird eine bessere Internetverbindung benötigt.
-Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn die Verbindung nicht schnell und stabil genug ist.</translation>
+Höhere Werte führen zu einem schärferen Bild für deine Freunde, allerdings wird eine bessere 
+Internetverbindung benötigt.
+Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn die Verbindung nicht 
+schnell und stabil genug ist.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>Kameraauflösung</translation>
+        <translation>Kameraauflösung:</translation>
     </message>
     <message>
         <source>Rescan devices</source>
@@ -83,15 +85,15 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation>Aktiviere den experimentellen Audio Back-End</translation>
+        <translation>Aktiviere das experimentelle Audio-Backend</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation>Tonqualität</translation>
+        <translation>Tonqualität:</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Übertragene Tonqualität. Verringern Sie diese Einstellung, wenn Ihre Bandbreite nicht ausreichend ist oder wenn Sie die Internetauslastung verringern möchten.</translation>
+        <translation>Übertragene Tonqualität. Verringere diese Einstellung, wenn deine Bandbreite nicht ausreichend ist oder wenn du die Internetauslastung verringern möchtest.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
@@ -111,7 +113,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Schwellenwert</translation>
+        <translation>Schwellenwert:</translation>
     </message>
 </context>
 <context>
@@ -144,7 +146,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>Eine Liste von bekannten Problemen kann in unserem %1 angesehen werden. Wenn Du einen Bug oder eine Sicherheitslücke findest, melde ihn bitte entsprechend unseren Richtlinien, die Du in unserem Wiki-Artikel %2 findest.</translation>
+        <translation>Eine Liste von bekannten Problemen kann in unserem %1 angesehen werden. Wenn du einen Bug oder eine Sicherheitslücke findest, melde dies bitte entsprechend unseren Richtlinien, die du in unserem Wiki-Artikel %2 findest.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
@@ -153,7 +155,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation>Eine vollkommene Liste von %1 findest du auf Github</translation>
+        <translation>Eine vollständige Liste von %1 findest du auf Github</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -203,7 +205,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Standartordner für das Speichern von Dateien:</translation>
+        <translation>Standardordner für das Speichern von Dateien:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -223,11 +225,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation>Audio + Video</translation>
+        <translation>Audio und Video</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation>Akzeptieren Sie automatisch Gruppenchat-Einladungen von diesem Kontakt, falls festgelegt.</translation>
+        <translation>Akzeptiere automatisch Gruppenchat-Einladungen von diesem Kontakt, falls festgelegt.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
@@ -247,7 +249,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation>Hier können Sie Notizen über diesen Kontakt eintragen.</translation>
+        <translation>Hier kannst du Notizen über diesen Kontakt eintragen.</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -256,11 +258,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation>Wählen Sie einen Ordner aus, in dem die automatisch-akzeptierten Dateien gespeichert werden sollen</translation>
+        <translation>Wähle einen Ordner aus, in dem die automatisch akzeptierten Dateien gespeichert werden sollen</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dies ist der öffentliche Schlüssel Ihres Freundes, verwenden Sie es, um seine Identität über einen anderen Kanal zu überprüfen. Das kann man nicht an andere Personen schicken, damit sie diesen Kontakt hinzufügen können.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dies ist der öffentliche Schlüssel deines Freundes; verwende diesen, um seine Identität über einen anderen Kanal zu überprüfen. Diesen Schlüssel kann man nicht an andere Personen schicken, damit sie diesen Kontakt hinzufügen können.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
@@ -318,7 +320,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation>Ungültige Tox ID</translation>
+        <translation>Ungültige Tox-ID</translation>
     </message>
     <message>
         <source>Send friend request</source>
@@ -346,11 +348,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>Tox ID, entweder 76 hexadezimale Zeichen oder name@beispiel.de</translation>
+        <translation>Tox-ID, entweder 76 hexadezimale Zeichen oder name@beispiel.de</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation>Tox ID deines Freundes eingeben</translation>
+        <translation>Tox-ID deines Freundes eingeben</translation>
     </message>
     <message>
         <source>Friend request message</source>
@@ -363,7 +365,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>%1 Tox ID ist ungültig oder existiert nicht</translation>
+        <translation>%1 Tox-ID ist ungültig oder existiert nicht</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -422,7 +424,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation>Importiere Kontaktliste, eine Tox ID pro Zeile</translation>
+        <translation>Importiere Kontaktliste, eine Tox-ID pro Zeile</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
@@ -445,7 +447,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Wenn du nicht %1 weißt, was du tust, solltest du hier %2 ändern. Änderungen, die du hier machst, könnten zu Problemen mit qTox und sogar dem Verlust deiner Daten, z.B. dem Verlauf, führen.</translation>
+        <translation>Wenn du nicht %1 weißt, was du tust, solltest du hier %2 ändern. Änderungen, die du hier machst, könnten zu Problemen mit qTox und sogar zum Verlust deiner Daten, z.B. des Verlaufs, führen.</translation>
     </message>
     <message>
         <source>really</source>
@@ -465,7 +467,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation>Alle Einstellungen werden zurückgesetzt. Bist Du dir sicher?</translation>
+        <translation>Alle Einstellungen werden zurückgesetzt. Bist du dir sicher?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -530,7 +532,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>UDP aktivieren (Empfohlen)</translation>
+        <translation>UDP aktivieren (empfohlen)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
@@ -596,7 +598,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Bad idea</source>
-        <translation>Datei nicht gesendet</translation>
+        <translation>Schlechte Idee</translation>
     </message>
     <message>
         <source>%1 calling</source>
@@ -604,7 +606,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     </message>
     <message>
         <source>Calling %1</source>
-        <translation>Anruf %1</translation>
+        <translation>%1 anrufen</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -652,7 +654,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation>Nicht unterstützte Satzzeichen wurden zu  _  geändert, 
+        <translation>Nicht unterstützte Satzzeichen wurden zu _ geändert, 
 um sie in Windows speichern zu können.</translation>
     </message>
 </context>
@@ -742,7 +744,7 @@ um sie in Windows speichern zu können.</translation>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>Hier eine Nachricht eingeben ...</translation>
+        <translation>Hier eine Nachricht eingeben...</translation>
     </message>
 </context>
 <context>
@@ -750,12 +752,12 @@ um sie in Windows speichern zu können.</translation>
     <message>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation>Kreis umbenennen</translation>
+        <translation>Gruppe umbenennen</translation>
     </message>
     <message>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation>Kreis entfernen</translation>
+        <translation>Gruppe entfernen</translation>
     </message>
     <message>
         <source>Open all in new window</source>
@@ -766,14 +768,12 @@ um sie in Windows speichern zu können.</translation>
     <name>Core</name>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation>/me macht eine Freundschaftsanfrage:
-
-„%1“</translation>
+        <translation>/me macht eine Freundschaftsanfrage: „%1“</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Ungültige Tox ID</translation>
+        <translation>Ungültige Tox-ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -848,7 +848,7 @@ um sie in Windows speichern zu können.</translation>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation>Dateitransfer läuft ...</translation>
+        <translation>Dateitransfer läuft...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
@@ -868,7 +868,7 @@ um sie in Windows speichern zu können.</translation>
     <message>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
-        <translation>Fortsetzen ...</translation>
+        <translation>Fortsetzen...</translation>
     </message>
     <message>
         <source>Cancel transfer</source>
@@ -938,7 +938,7 @@ um sie in Windows speichern zu können.</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation>letzte Woche</translation>
+        <translation>7-Tage-Verlauf</translation>
     </message>
     <message>
         <source>This month</source>
@@ -993,19 +993,19 @@ um sie in Windows speichern zu können.</translation>
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation>Verschieben in Kreis...</translation>
+        <translation>Verschieben in Freundeskreis...</translation>
     </message>
     <message>
         <source>To new circle</source>
-        <translation>Zu neuem Kreis</translation>
+        <translation>Zu neuem Freundeskreis</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Aus Kreis &quot;%1&quot; entfernen</translation>
+        <translation>Aus Freundeskreis „%1“ entfernen</translation>
     </message>
     <message>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation>In Kreis &quot;%1&quot; verschieben</translation>
+        <translation>In Freundeskreis „%1“ verschieben</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
@@ -1120,7 +1120,8 @@ um sie in Windows speichern zu können.</translation>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Durch das Klicken auf „Schließen“ (X) wird qTox nicht beendet, sondern in die Systemleiste minimiert.</translation>
+        <translation>Durch das Klicken auf „Schließen“ (X) wird qTox nicht beendet,
+sondern in die Systemleiste minimiert.</translation>
     </message>
     <message>
         <source>Close to tray</source>
@@ -1130,7 +1131,8 @@ instead of closing itself.</source>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Durch Klicken auf „Minimieren“ (_) wird qTox in den Systemabschnitt minimiert und verschwindet von der Startleiste.</translation>
+        <translation>Durch Klicken auf „Minimieren“ (_) wird qTox in den Systemabschnitt
+minimiert und verschwindet von der Startleiste.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
@@ -1416,7 +1418,7 @@ Teile sie mit deinen Freunden, um mit ihnen zu chatten.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation>Deine Tox ID (Klicken zum Kopieren)</translation>
+        <translation>Deine Tox-ID (Klicken zum Kopieren)</translation>
     </message>
     <message>
         <source>Profile</source>
@@ -1447,7 +1449,7 @@ Teile sie mit deinen Freunden, um mit ihnen zu chatten.</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Dieser QR-Code enthält deine Tox ID. So kannst du sie auch mit deinen Freunden teilen.</translation>
+        <translation>Dieser QR-Code enthält deine Tox-ID. So kannst du sie auch mit deinen Freunden teilen.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1511,7 +1513,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation>Name für den ToxMe Service.</translation>
+        <translation>Name für den ToxMe-Service.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
@@ -1525,7 +1527,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation>ToxMe Dienst bei dem du dich registrieren willst.</translation>
+        <translation>ToxMe-Dienst bei dem du dich registrieren willst.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
@@ -1555,7 +1557,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation>Deine Tox ID</translation>
+        <translation>Deine Tox-ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
@@ -1619,15 +1621,15 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation>Mein Benutzername</translation>
+        <translation>Mein Benutzername:</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation>Meine Biografie</translation>
+        <translation>Meine Biografie:</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation>Mein Profil</translation>
+        <translation>Mein Profil:</translation>
     </message>
 </context>
 <context>
@@ -1658,7 +1660,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation>Wählen Sie ein Datum</translation>
+        <translation>Wähle ein Datum</translation>
     </message>
 </context>
 <context>
@@ -1993,9 +1995,9 @@ Du kannst aber eins erstellen.</translation>
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>NoSpam ist ein Teil deiner Tox ID.
+        <translation>NoSpam ist ein Teil deiner Tox-ID.
 Wenn du mit Freundesanfragen überhäuft wirst, solltest du den NoSpam-Wert ändern.
-Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich dann niemand mehr hinzufügen.</translation>
+Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox-ID kann dich dann niemand mehr hinzufügen.</translation>
     </message>
     <message>
         <source>NoSpam</source>
@@ -2004,9 +2006,9 @@ Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich 
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>NoSpam ist ein Teil deiner Tox ID.
-Wenn du mit Freundesanfragen überhäuft wirst, solltest du den NoSpam-Wert ändern.
-Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich dann niemand mehr hinzufügen.</translation>
+        <translation>NoSpam ist ein Teil deiner Tox-ID. Wenn du mit Freundesanfragen überhäuft wirst, solltest du den
+NoSpam-Wert ändern. Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox-ID kann
+dich dann niemand mehr hinzufügen.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
@@ -2017,8 +2019,7 @@ Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich 
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
         <translation>Wenn aktiviert, wird der Gesprächsverlauf dauerhaft gesichert.
-Die Sicherung des Verlaufs ist noch in Entwicklung.
-Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führen können.</translation>
+Die Sicherung des Verlaufs ist noch in Entwicklung. Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führen können.</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -2030,7 +2031,7 @@ Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führ
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation>Gruppennachricht nach öffentlichen Schlüssel des Gruppenmitglieds filtern.  Füge öffentlichen Schlüssel hier ein, ein Schlüssel pro Zeile.</translation>
+        <translation>Filtere Gruppennachricht nach öffentlichem Schlüssel des Gruppenmitglieds. Füge öffentlichen Schlüssel hier ein, einen pro Zeile.</translation>
     </message>
 </context>
 <context>
@@ -2061,7 +2062,7 @@ Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führ
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation>Profil &apos;%1&apos; umbenennen</translation>
+        <translation>Profil „%1“ umbenennen</translation>
     </message>
     <message>
         <source>Unable to open this file.</source>
@@ -2077,7 +2078,7 @@ Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führ
     </message>
     <message>
         <source>Unable to read this image.</source>
-        <translation>Bild kann nicht gelesen  werden.</translation>
+        <translation>Bild kann nicht gelesen werden.</translation>
     </message>
     <message>
         <source>The supplied image is too large.
@@ -2204,10 +2205,10 @@ Bitte verwende ein anderes.</translation>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation>Diese Zeichenkette teilt anderen Tox-Clients mit, wie sie dich kontaktieren können.
-Teile sie mit deinen Freunden um zu kommunizieren.
+        <translation>Diese Zeichenkette vermittelt anderen Tox-Clients, wie sie dich kontaktieren können.
+Teile diese Zeichenkette mit deinen Freunden, um mit ihnen zu kommunizieren.
 
-Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</translation>
+Diese ID beeinhaltet deinen NoSpam-Code (in blau) und die Prüfsumme (in grau).</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
@@ -2396,7 +2397,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation>Eingehender Anruf ...</translation>
+        <translation>Eingehender Anruf...</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -2427,7 +2428,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     </message>
     <message>
         <source>This Tox ID is already registered under another name</source>
-        <translation>Diese Tox ID ist bereits unter einem anderen Namen registriert.</translation>
+        <translation>Diese Tox-ID ist bereits unter einem anderen Namen registriert.</translation>
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
@@ -2447,7 +2448,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation>Tox ID wurde nicht gesendet</translation>
+        <translation>Tox-ID wurde nicht gesendet</translation>
     </message>
     <message>
         <source>That user does not exist</source>
@@ -2743,7 +2744,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Änderungen am Aussehen des Textes werden eventuell erst nach einem Neustart von qTox angezeigt.</translation>
+        <translation>Änderungen am Aussehen des Textes werden eventuell erst nach einem Neustart von qTox wirksam.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -2751,7 +2752,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation>Wählen Sie die Textstil Einstellung.</translation>
+        <translation>Lege den Textstil fest.</translation>
     </message>
     <message>
         <source>Plaintext</source>
@@ -2819,7 +2820,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Smileyart:</translation>
+        <translation>Emoticonset:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
@@ -2852,7 +2853,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation>Wenn diese Option aktiviert ist, erhält jeder Kontakt ohne festgelegtem Avatar einen generierten Avatar basierend auf seiner Tox-ID anstelle eines Standardbildes. Neustart erforderlich.</translation>
+        <translation>Wenn diese Option aktiviert ist, wird für jeden Kontakt ohne Avatar ein Avatar anhand seiner Tox-ID erzeugt. Neustart erforderlich.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
@@ -2865,7 +2866,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation>Zeigt eine Benachrichtigung an, wenn Sie eine neue Nachricht erhalten und das Fenster nicht ausgewählt ist.</translation>
+        <translation>Zeigt eine Benachrichtigung an, wenn du eine neue Nachricht erhältst und das qTox-Fenster nicht den Fokus hat.</translation>
     </message>
     <message>
         <source>Notify</source>
@@ -2874,11 +2875,11 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation>Nur über neue Nachrichten in Gruppenchats benachrichtigen , wenn sie erwähnt werden.</translation>
+        <translation>Nur über neue Nachrichten in Gruppenchats benachrichtigen, wenn du darin erwähnt wirst.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation>Gruppen-Chats benachrichtigen nur, wenn sie erwähnt werden</translation>
+        <translation>Gruppenchats benachrichtigen nur, wenn du darin erwähnt wirst</translation>
     </message>
     <message>
         <source>Play sound</source>
@@ -2886,7 +2887,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Ton abspielen wenn „Beschäftigt”</translation>
+        <translation>Ton abspielen wenn „beschäftigt”</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
@@ -2921,8 +2922,7 @@ Diese ID beinhaltet den NoSpam-Code (in blau), und die Prüfsumme (in grau).</tr
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>Es ist ein Fehler aufgetreten, und die Anwendung kann nicht gestartet werden.
-Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einstellungen und versuch es erneut.</translation>
+        <translation>Es ist ein Fehler aufgetreten, und die Anwendung kann nicht gestartet werden. Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einstellungen und versuche es erneut.</translation>
     </message>
     <message>
         <source>File</source>
@@ -2956,7 +2956,7 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     </message>
     <message>
         <source>Filter...</source>
-        <translation>Filter ...</translation>
+        <translation>Filter...</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -2964,7 +2964,7 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation>Kontakt hinzufügen ...</translation>
+        <translation>Kontakt hinzufügen...</translation>
     </message>
     <message>
         <source>Next Conversation</source>
@@ -3002,11 +3002,11 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     </message>
     <message>
         <source>Create new group...</source>
-        <translation>Neue Gruppe erstellen ...</translation>
+        <translation>Neue Gruppe erstellen...</translation>
     </message>
     <message>
         <source>Add new circle...</source>
-        <translation>Neuen Kreis hinzufügen ...</translation>
+        <translation>Neuen Kreis hinzufügen...</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
@@ -3099,11 +3099,11 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation> schickte Dir eine Freundschaftsanfrage.</translation>
+        <translation> schickte dir eine Freundschaftsanfrage.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation> lädt Dich ein, einer Gruppe beizutreten.</translation>
+        <translation> lädt dich ein, einer Gruppe beizutreten.</translation>
     </message>
 </context>
 </TS>

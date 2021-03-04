@@ -64,7 +64,8 @@ which may lead to problems with video calls.</source>
         <translation>Sett oppløsningen for ditt kamera.
 Høyere verdier øker sjansen for at dine venner får bedre videokvalitet.
 NB! Høyere videokvalitet krever raskere internett-tilkobling.
-Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokvalitet enn hva din internett-tilkoblingen klarer å levere.</translation>
+Det kan oppstå problemer med videosamtalene hvis du har valgt høyere
+videokvalitet enn det din internett-tilkobling klarer å levere.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -261,15 +262,15 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dette er den offentlige nøkkelen tilhørende din venn, bruk den til å bekrefte identiteten via en annen kanal. Du kan ikke sende dette til andre folk slik at de kan legge til denne kontakten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dette er den offentlige nøkkelen til din venn, bruk den til å bekrefte identiteten deres via en annen kanal. Du kan ikke sende dette til andre folk slik at de kan legge til denne kontakten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished">Offentlig nøkel (ikke Tox ID):</translation>
+        <translation>Offentlig nøkkel (ikke Tox-ID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Bekreftelse</translation>
+        <translation>Bekreftelse</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
@@ -277,7 +278,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished">Klarte ikke å fjerne sludrehistorikk med %1.</translation>
+        <translation>Klarte ikke fjerne sludrehistorikk med %1!</translation>
     </message>
 </context>
 <context>
@@ -300,15 +301,15 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished">Åpne oppdateringsnedlastingslenke</translation>
+        <translation>Åpne nedlastingslenke for oppdatering</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished">Oppgradering tilgjengelig</translation>
+        <translation>Oppdatering tilgjengelig</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished">qTox er av nyeste dato ✓</translation>
+        <translation>qTox er oppdatert ✓</translation>
     </message>
 </context>
 <context>
@@ -501,7 +502,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
         <translatorcomment>beskriver gjørToxBærbar avkrysningsboks</translatorcomment>
-        <translation>Lagre instillinger til arbeidsmappen i stedet for den vanlige konfigurasjonsmappen</translation>
+        <translation>Lagre innstillinger til arbeidsmappen istedenfor den vanlige oppsettsmappen</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
@@ -509,7 +510,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation>Reset til standardinstillinger</translation>
+        <translation>Tilbakestill til forvalgte innstillinger</translation>
     </message>
     <message>
         <source>Portable</source>
@@ -579,7 +580,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished">Skru på LAN-oppdagelse</translation>
+        <translation>Skru på LAN-oppdagelse</translation>
     </message>
 </context>
 <context>
@@ -799,7 +800,7 @@ slik at du kan lagre filen på Windows.</translation>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Ny melding</translation>
+        <translation>Ny melding</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
@@ -902,7 +903,7 @@ slik at du kan lagre filen på Windows.</translation>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished">Annensteds fra pauset</translation>
+        <translation>Satt på pause annensteds fra</translation>
     </message>
 </context>
 <context>
@@ -1078,7 +1079,7 @@ slik at du kan lagre filen på Windows.</translation>
     <name>GeneralSettings</name>
     <message>
         <source>General Settings</source>
-        <translation>Generelle Instillinger</translation>
+        <translation>Generelle innstillinger</translation>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
@@ -1125,7 +1126,8 @@ i stedet for å lukke seg selv.</translation>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Etter å ha valg å minimere (_) vil qTox minimere seg til statusfeltet i stedet for til oppgavelinjen.</translation>
+        <translation>Etter å ha valg å minimere (_) vil qTox minimere seg til
+statusfeltet i stedet for til oppgavelinjen.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
@@ -1174,15 +1176,15 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished">Se etter nye versjoner</translation>
+        <translation>Se etter oppdateringer</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished">Stavekontroll</translation>
+        <translation>Stavekontroll</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished">Maksimal automatisk godkjente filstørrelse (0 for å skru av):</translation>
+        <translation>Maksimal automatisk akseptert filstørrelse (0 for å skru av):</translation>
     </message>
     <message>
         <source> MB</source>
@@ -1229,7 +1231,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Bekreftelse</translation>
+        <translation>Bekreftelse</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
@@ -1245,11 +1247,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Last inn samtalehistorikk…</translation>
+        <translation>Last inn samtalehistorikk…</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Eksporter til fil</translation>
+        <translation>Eksporter til fil</translation>
     </message>
 </context>
 <context>
@@ -1280,11 +1282,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Demp mikrofon</translation>
+        <translation>Demp mikrofon</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Avslutt videosamtale</translation>
+        <translation>Avslutt videosamtale</translation>
     </message>
     <message>
         <source>Exit full screen</source>
@@ -1389,7 +1391,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">Pålogget</translation>
+        <translation>Pålogget</translation>
     </message>
 </context>
 <context>
@@ -1466,7 +1468,8 @@ Del den med venner du vil kommunisere med.</translation>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation>Lar deg eksportere Tox-profilen din til en fil.</translation>
+        <translation>Lar deg eksportere Tox-profilen din til en fil.
+Profilen inneholder ikke historikken din.</translation>
     </message>
     <message>
         <source>Export</source>
@@ -1648,11 +1651,11 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished">Velg datodialog</translation>
+        <translation>Velg Dato-dialog</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Velg en dato</translation>
+        <translation>Velg en dato</translation>
     </message>
 </context>
 <context>
@@ -2036,7 +2039,7 @@ Endringer av lagringsformat er mulig, som kan forårsake data tap.</translation>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Toxer på qTox</translation>
+        <translation>Toxer på qTox</translation>
     </message>
 </context>
 <context>
@@ -2259,7 +2262,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Bilder (%1)</translation>
+        <translation>Bilder (%1)</translation>
     </message>
 </context>
 <context>
@@ -2462,7 +2465,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished">Endring av tekstformatering pågår…</translation>
+        <translation>Omformatering av tekst pågår..</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
@@ -2495,27 +2498,27 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">pålogget</translation>
+        <translation>pålogget</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">borte</translation>
+        <translation>borte</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">opptatt</translation>
+        <translation>opptatt</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">avlogget</translation>
+        <translation>avlogget</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">blokkert</translation>
+        <translation>blokkert</translation>
     </message>
 </context>
 <context>
@@ -2573,7 +2576,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation>Fant ikke teksten</translation>
+        <translation>Teksten ble ikke funnet.</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2584,7 +2587,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Skjema</translation>
+        <translation>Skjema</translation>
     </message>
     <message>
         <source>Start search:</source>
@@ -2608,7 +2611,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished">00.00.0000</translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
@@ -2856,7 +2859,7 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished">Vis en merknad når du mottar en ny melding, og vinduet ikke er i fokus.</translation>
+        <translation>Vis en merknad når du mottar en ny melding da vinduet ikke er i fokus.</translation>
     </message>
     <message>
         <source>Notify</source>
@@ -2873,11 +2876,11 @@ Denne ID-en inkluderer NoSpam-koden (i blått) og sjekksummen (i grått).</trans
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Spill av lyd</translation>
+        <translation>Spill av lyd</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Spill lyd mens opptatt</translation>
+        <translation>Spill av lyd mens du er opptatt</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>

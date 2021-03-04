@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Video device</source>
-        <translation>Video-enhet</translation>
+        <translation>Videoenhet</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -205,7 +205,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Standardkatalog för att spara filer:</translation>
+        <translation>Standardmapp för att spara filer:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -278,7 +278,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation>Kunde inte ta bort chatthistoriken med %1!</translation>
+        <translation>Det gick inte att ta bort chatthistoriken med %1!</translation>
     </message>
 </context>
 <context>
@@ -324,7 +324,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation>Kunde inte lägga till vän</translation>
+        <translation>Det gick inte att lägga till vän</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -378,12 +378,12 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation>Kunde inte öppna filen</translation>
+        <translation>Det gick inte att öppna filen</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation>Kunde inte öppna filen med kontakter</translation>
+        <translation>Det gick inte att öppna filen med kontakter</translation>
     </message>
     <message>
         <source>Invalid file</source>
@@ -391,7 +391,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>Kunde inte hitta några kontakter att importera från denna fil!</translation>
+        <translation>Det gick inte att hitta några kontakter att importera i denna fil!</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -420,7 +420,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation>%1 här! Toxa mig kanske?</translation>
+        <translation>%1 här! Vill du toxa mig?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
@@ -447,7 +447,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Om du inte verkligen vet vad du gör, gör inga ändringar här. Ändringar som görs här kan leda till problem med qTox, och även till förlust av data, t.ex. historik.</translation>
+        <translation>Om du inte %1 vet vad du gör, vänligen gör %2 ändring här. Ändringar som görs här kan leda till problem med qTox och med till förlust av dina data, t.ex. historik.</translation>
     </message>
     <message>
         <source>really</source>
@@ -901,14 +901,14 @@ så att du kan spara filen på Windows.</translation>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished">Fjärröverföring pausad</translation>
+        <translation>Fjärröverföring pausad</translation>
     </message>
 </context>
 <context>
     <name>FilesForm</name>
     <message>
         <source>Downloads</source>
-        <translation>Nedladdningar</translation>
+        <translation>Hämtningar</translation>
     </message>
     <message>
         <source>Uploads</source>
@@ -1096,11 +1096,11 @@ så att du kan spara filen på Windows.</translation>
     <message>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation>Aktivera Ljus-ikon i aktivitetsfältet.</translation>
+        <translation>Aktivera Ljusikon i aktivitetsfältet.</translation>
     </message>
     <message>
         <source>Light icon</source>
-        <translation>Ljus-ikon</translation>
+        <translation>Ljusikon</translation>
     </message>
     <message>
         <source>qTox will start minimized in tray.</source>
@@ -1109,7 +1109,7 @@ så att du kan spara filen på Windows.</translation>
     </message>
     <message>
         <source>Start in tray</source>
-        <translation>Starta i bakgrunden</translation>
+        <translation>Starta i verktygsfältet</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will minimize to tray,
@@ -1120,7 +1120,7 @@ istället för att stängas.</translation>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation>Stäng till bakgrund</translation>
+        <translation>Stäng till verktygsfältet</translation>
     </message>
     <message>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
@@ -1131,7 +1131,7 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
-        <translation>Minimera till bakgrund</translation>
+        <translation>Minimera till verktygsfältet</translation>
     </message>
     <message>
         <source>Autostart</source>
@@ -1152,7 +1152,7 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation>Automatisk borta efter (0 för att avaktivera):</translation>
+        <translation>Automatisk borta efter (0 för att inaktivera):</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
@@ -1160,7 +1160,7 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Set to 0 to disable</source>
-        <translation>Sätt 0 för att avaktivera</translation>
+        <translation>Sätt 0 för att inaktivera</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
@@ -1172,7 +1172,7 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Standardkatalog för att spara filer:</translation>
+        <translation>Standardmapp för att spara filer:</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -1314,9 +1314,9 @@ istället för aktivitetsfältet för systemet.</translation>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n användare i chatten</numerusform>
+            <numerusform>%n användare i chatten</numerusform>
         </translation>
     </message>
     <message>
@@ -1325,7 +1325,7 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished">slå på ljud</translation>
+        <translation>slå på ljud</translation>
     </message>
 </context>
 <context>
@@ -1380,9 +1380,9 @@ istället för aktivitetsfältet för systemet.</translation>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n användare i chatten</numerusform>
+            <numerusform>%n användare i chatten</numerusform>
         </translation>
     </message>
     <message>
@@ -1706,7 +1706,7 @@ Profilen innehåller inte din historik.</translation>
     </message>
     <message>
         <source>Couldn&apos;t create a new profile</source>
-        <translation>Kunde inte skapa en ny profil</translation>
+        <translation>Det gick inte att skapa en ny profil</translation>
     </message>
     <message>
         <source>The username must not be empty.</source>
@@ -1728,11 +1728,11 @@ Var noga med att ange samma lösenord två gånger.</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation>Lösenordsskyddade profiler kan inte laddas automatiskt.</translation>
+        <translation>Lösenordsskyddade profiler kan inte läsas in automatiskt.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
-        <translation>Kunde inte läsa in profil</translation>
+        <translation>Det gick inte att läsa in profilen</translation>
     </message>
     <message>
         <source>There is no selected profile.
@@ -1744,7 +1744,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
-        <translation>Kunde inte läsa in denna profil</translation>
+        <translation>Det gick inte att läsa in denna profil</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
@@ -1800,7 +1800,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation>Laddar befintlig profilsida</translation>
+        <translation>Läser in befintlig profilsida</translation>
     </message>
 </context>
 <context>
@@ -2036,7 +2036,7 @@ Om du blir spammad med vänförfrågningar, ändra NoSpam.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Kunde inte byta lösenord på databasen, den kan vara trasig eller använda det gamla lösenordet.</translation>
+        <translation>Det gick inte att byta lösenord på databasen, den kan vara trasig eller använda det gamla lösenordet.</translation>
     </message>
     <message>
         <source>Toxing on qTox</source>
@@ -2082,7 +2082,7 @@ Använd en annan bild.</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>Kunde inte byta namn på profilen till &quot;%1&quot;</translation>
+        <translation>Det gick inte att byta namn på profilen till &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2192,7 +2192,7 @@ Använd en annan bild.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation>Kunde inte ändra lösenord</translation>
+        <translation>Det gick inte att ändra lösenordet</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2222,7 +2222,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>Empty name</source>
-        <translation>Inget namn</translation>
+        <translation>Tomt namn</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
@@ -2343,7 +2343,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation>Kunde inte lägga till vän</translation>
+        <translation>Det gick inte att lägga till vän</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
@@ -2363,7 +2363,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation>Startar ny instans och laddar angiven profil.</translation>
+        <translation>Startar ny instans och läser in angiven profil.</translation>
     </message>
     <message>
         <source>profile</source>
@@ -2436,7 +2436,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>%1 här! Toxa mig kanske?</translation>
+        <translation>%1 här! Vill du toxa med mig?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2444,7 +2444,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox kunde inte öppna dina chattloggar, de kommer att avaktiveras.</translation>
+        <translation>qTox kunde inte öppna dina chattloggar, de kommer att inaktiveras.</translation>
     </message>
     <message>
         <source>None</source>
@@ -2494,7 +2494,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation>Kunde inte läsa in profil automatiskt.</translation>
+        <translation>Det gick inte att läsa in profilen automatiskt.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2726,7 +2726,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>Base font:</source>
-        <translation>Bas-typsnitt:</translation>
+        <translation>Grundtypsnitt:</translation>
     </message>
     <message>
         <source>px</source>
@@ -2738,7 +2738,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Ny textstilsinställning kanske inte läses in förrän qTox startas om.</translation>
+        <translation>Ny textstilinställning kanske inte läses in förrän qTox startas om.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -2814,7 +2814,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Humörsymbol-paket:</translation>
+        <translation>Humörsymbolpaket:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
@@ -2916,7 +2916,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
-        <translation>Kunde inte begära vänskap</translation>
+        <translation>Det gick inte att begära vänskap</translation>
     </message>
     <message>
         <source>Message failed to send</source>
@@ -3084,7 +3084,7 @@ Detta ID inkluderar NoSpam-koden (i blått) och checksum (i grått).</translatio
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Kunde inte skicka filen &quot;%1&quot;</translation>
+        <translation>Det gick inte att skicka filen &quot;%1&quot;</translation>
     </message>
     <message>
         <source>File sent</source>

@@ -264,11 +264,11 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; To jest klucz publiczny twojego znajomego, użyj go do zweryfikowania jego tożsamości innym sposobem komunikacji. Nie możesz wysłać tego innym osobom dla dodania kontaktu. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Klucz publiczny (nie ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
@@ -276,11 +276,11 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy na pewno chcesz usunąć historię czatu z %1?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się usunąć historii czatu z %1!</translation>
     </message>
 </context>
 <context>
@@ -303,15 +303,15 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz link do pobrania aktualizacji</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Dostępna jest aktualizacja</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox jest aktualny ✓</translation>
     </message>
 </context>
 <context>
@@ -586,7 +586,7 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Włącz wykrywanie w sieci LAN</translation>
     </message>
 </context>
 <context>
@@ -656,12 +656,13 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazwa pliku zawiera niedozwolone znaki</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Niedozwolone znaki zostały zmienione na _ 
+dzięki temu można zapisać plik w systemie Windows.</translation>
     </message>
 </context>
 <context>
@@ -799,7 +800,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Czat grupowy %1</translation>
     </message>
 </context>
 <context>
@@ -810,19 +811,19 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Przychodzący transfer plików</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Otrzymano zaproszenie do grona znajomych</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowa wiadomość grupowa</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Otrzymano zaproszenie do grupy</translation>
     </message>
 </context>
 <context>
@@ -1189,19 +1190,19 @@ zamiast do paska zadań.</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprawdź aktualizacje</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprawdzanie pisowni</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Maksymalny automatycznie akceptowany rozmiar pliku (0 — wyłączone):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
@@ -1249,15 +1250,15 @@ zamiast do paska zadań.</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Jesteś pewien, że chcesz wyczyścić wszystkie wyświetlane wiadomości?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szukaj w tekście</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Przejdź do bieżącej daty</translation>
     </message>
     <message>
         <source>Load chat history...</source>
@@ -1284,7 +1285,7 @@ zamiast do paska zadań.</translation>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Pełny ekran</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
@@ -1292,7 +1293,7 @@ zamiast do paska zadań.</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Wycisz dźwięk</translation>
     </message>
     <message>
         <source>Mute microphone</source>
@@ -1304,7 +1305,7 @@ zamiast do paska zadań.</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyjdź z pełnego ekranu</translation>
     </message>
 </context>
 <context>
@@ -1315,15 +1316,15 @@ zamiast do paska zadań.</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 dołączył do grupy</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 zmienił nazwę na %2</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 opuścił grupę</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
@@ -1336,11 +1337,11 @@ zamiast do paska zadań.</translation>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">wycisz</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">odcisz</translation>
     </message>
 </context>
 <context>
@@ -2611,11 +2612,11 @@ Ten identyfikator zawiera kod NoSpam (na niebiesko) i sumę kontrolną (na szaro
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można odnaleźć tekstu.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
 </context>
 <context>
@@ -2626,7 +2627,7 @@ Ten identyfikator zawiera kod NoSpam (na niebiesko) i sumę kontrolną (na szaro
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozpocznij wyszukiwanie:</translation>
     </message>
     <message>
         <source>from the end</source>

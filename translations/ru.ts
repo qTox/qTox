@@ -1293,7 +1293,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation>Выход из полноэкранного режима</translation>
+        <translation>Выйти из полноэкранного режима</translation>
     </message>
 </context>
 <context>
@@ -1462,7 +1462,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation>Сменить пароль</translation>
+        <translation>Изменить пароль</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -2184,7 +2184,7 @@ Please use another image.</source>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation>Сменить пароль</translation>
+        <translation>Изменить пароль</translation>
     </message>
     <message>
         <source>Set profile password</source>

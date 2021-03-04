@@ -37,7 +37,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>使用滑桿調整音量。</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -61,7 +61,11 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>設定相機畫質。
+畫質設定越高，影像品質越佳。
+請注意，越高畫質的影像會要求更快的網路連線。
+若有時候您的網路連線不足以應付高畫質的影像，
+將會影響視訊品質。</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -77,35 +81,35 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>啟用實驗性去回音功能，須重啟 qTox 以啟用效果。</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation type="unfinished"></translation>
+        <translation>啟用實驗性音訊後台</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>音質</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>傳輸音質。若網路頻寬過低或想節省網路流量，請調低此設定。</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>高 (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>中 (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>低 (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>極低 (8 kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
@@ -142,7 +146,7 @@ which may lead to problems with video calls.</source>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>已知錯誤清單可在我們 Github 的 %1 找到。如果你發現 qTox 中的錯誤或是安全性漏洞，請依照我們維基文章 %2 中的提交方針回報。</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>

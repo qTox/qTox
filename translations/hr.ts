@@ -146,11 +146,11 @@ Ponekad tvoja internetska veza nije dovoljno dobra, da bi podržala visoku video
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>Popis poznatih problema nalazi se na stranici %1 na Githubu. Ako otkriješ pogrešku ili sigurnosni problem u qToxu, prijavi ih prema uputama u wiki članku %2.</translation>
+        <translation>Popis poznatih problema nalazi se na stranici %1 na Githubu. Ako otkriješ grešku ili sigurnosni problem u qToxu, prijavi ih prema uputama u wiki članku %2.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation>Pritisni ovdje za prijavljivanje pogreške.</translation>
+        <translation>Pritisni ovdje za prijavljivanje greške.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
@@ -301,7 +301,7 @@ Ponekad tvoja internetska veza nije dovoljno dobra, da bi podržala visoku video
     </message>
     <message>
         <source>Open update download link</source>
-        <translation>Otvori poveznicu za preuzimenje nadogradnje</translation>
+        <translation>Otvori poveznicu za preuzimanje nadogradnje</translation>
     </message>
     <message>
         <source>Update available</source>
@@ -320,7 +320,7 @@ Ponekad tvoja internetska veza nije dovoljno dobra, da bi podržala visoku video
     </message>
     <message>
         <source>Send friend request</source>
-        <translation>Pošalji zahtjev za prijateljlstvo</translation>
+        <translation>Pošalji zahtjev za prijateljstvo</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
@@ -415,7 +415,7 @@ Ponekad tvoja internetska veza nije dovoljno dobra, da bi podržala visoku video
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation>Pošalji zahtjev za prijateljstvo</translation>
+        <translation>Pošalji zahtjeve za prijateljstvo</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -448,7 +448,7 @@ Ponekad tvoja internetska veza nije dovoljno dobra, da bi podržala visoku video
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Ako %1 znaš što radiš, %1 mijenjaj ove postavke. Promjene ovih postavki mogu poremetiti rad qToxa i/ili prouzročiti gubitak podataka, npr. povijesti.</translation>
+        <translation>Osim ako %1 znaš što radiš, %2 mijenjaj ove postavke. Promjene ovih postavki mogu poremetiti rad qToxa i/ili prouzročiti gubitak podataka, npr. povijesti.</translation>
     </message>
     <message>
         <source>really</source>
@@ -464,7 +464,7 @@ Ponekad tvoja internetska veza nije dovoljno dobra, da bi podržala visoku video
     </message>
     <message>
         <source>Reset settings</source>
-        <translation>Poništi postavke</translation>
+        <translation>Vrati izvorne postavke</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
@@ -486,7 +486,7 @@ Ponekad tvoja internetska veza nije dovoljno dobra, da bi podržala visoku video
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Ne možeš se isključiti dok je poziv aktivan!</translation>
+        <translation>Ne možeš se odspojiti dok je poziv aktivan!</translation>
     </message>
     <message>
         <source>Save File</source>
@@ -547,7 +547,7 @@ Ponekad tvoja internetska veza nije dovoljno dobra, da bi podržala visoku video
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Port:</translation>
+        <translation>Priključak:</translation>
     </message>
     <message>
         <source>None</source>
@@ -568,15 +568,15 @@ Ponekad tvoja internetska veza nije dovoljno dobra, da bi podržala visoku video
     </message>
     <message>
         <source>Debug</source>
-        <translation>Traženje pogrešaka</translation>
+        <translation>Ispravljanje grešaka</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation>Izvezi dnevnik traženja pogrešaka</translation>
+        <translation>Izvezi dnevnik ispravljanja grešaka</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation>Kopiraj dnevnik traženja pogrešaka</translation>
+        <translation>Kopiraj dnevnik ispravljanja grešaka</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
@@ -645,7 +645,7 @@ Ponekad tvoja internetska veza nije dovoljno dobra, da bi podržala visoku video
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Poziv s %1 je neočekivano završen. %2</translation>
+        <translation>Poziv s %1 je neočekivano prekinut. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -1347,7 +1347,7 @@ u programsku traku, umjesto u traku sustava.</translation>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation>Pozivač(ica): %1 (%2 %3).</translation>
+        <translation>Pozivač(ica): %1 (%2 u %3).</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1533,7 +1533,7 @@ Profil ne sadrži tvoju povijest.</translation>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation>Uklonite lozinku i šifriranje iz svog profila.</translation>
+        <translation>Ukloni lozinku i šifriranje iz svog profila.</translation>
     </message>
     <message>
         <source>Name input</source>

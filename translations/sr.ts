@@ -5,15 +5,15 @@
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>Звук/Видео</translation>
+        <translation>Звук/Слика</translation>
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>подразумевана резолуција</translation>
+        <translation>Основна резолуција</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Онемогућено</translation>
+        <translation>Искључено</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Подешавање звука</translation>
+        <translation>Поставке звука</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -33,15 +33,15 @@
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Уређај за репродукцију</translation>
+        <translation>Уређај за пуштање</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Помоћу клизача подесите зачину звучника.</translation>
+        <translation>Помоћу клизача подесите јачину у звучницима.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Уређај за хватање</translation>
+        <translation>Уређај за снимање</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -49,11 +49,11 @@
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Подешавање видеа</translation>
+        <translation>Поставке слике</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Видео уређај</translation>
+        <translation>Уређај слике</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -62,10 +62,10 @@ Note though that with better video quality there is needed better internet conne
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Подесите резолуцију камере.
-Што је вредност већа, бољи је квалитет видеа који ваши пријатељи примају.
+Што је вредност већа, бољи је квалитет слике коју ваши пријатељи примају.
 Имајте у виду да већи квалитет захтева и бољу везу са интернетом.
-Некад ваша веза може бити недовољна да подржи већи квалитет видеа,
-што може узроковати проблеме са видео позивима.</translation>
+Некад ваша веза може бити недовољна да подржи бољи квалитет слике,
+што може довести до проблема са видео позивима.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -77,15 +77,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation>Проба звука</translation>
+        <translation>Испробај звук</translation>
     </message>
     <message>
         <source>Enables the experimental audio backend with echo cancelling support, needs qTox restart to take effect.</source>
-        <translation>Омогућава експериментално звучно прочеље са потискивањем еха, захтева да поново покренете qTox.</translation>
+        <translation>Укључите експерименталног позадинца звука са подршком брисања еха, захтева поновно покрентање програма.</translation>
     </message>
     <message>
         <source>Enable experimental audio backend</source>
-        <translation>Омогући експериментално звучно прочеље</translation>
+        <translation>Укључи експерименталног позадинца звука</translation>
     </message>
     <message>
         <source>Audio quality</source>
@@ -93,27 +93,27 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to lower the internet usage.</source>
-        <translation>Емитовани квалитет звука. Умањите поставке уколико ваша веза није довољно јака или желите да смањите употребу интернета.</translation>
+        <translation>Квалитет одасланог звука. Смањите ову поставку ако ваша веза нема довољан пропусни опсег или желите да смањите употребу интернета.</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation>висок (64 kbps)</translation>
+        <translation>висок (64 kb/s)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation>средњи (32 kbps)</translation>
+        <translation>средњи (32 kb/s)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation>низак (16 kbps)</translation>
+        <translation>низак (16 kb/s)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation>врло низак (8 kbps)</translation>
+        <translation>врло низак (8 kb/s)</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Осетљивост</translation>
     </message>
 </context>
 <context>
@@ -124,11 +124,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation>Изворни аутор: %1</translation>
+        <translation>Првобитни аутор: %1</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation>Користите qTox верзије %1.</translation>
+        <translation>Користите q-Токс издање %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
@@ -136,26 +136,26 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation>верзија toxcore-а: %1</translation>
+        <translation>Издање језгра токса: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation>верзија Qt-а: %1</translation>
+        <translation>Издање Кут-а: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>Листа ознатих проблема се може наћи на нашем Github %1. Уколико откријете грешку или безбеносну рањивост у qTox-у, молимо пријавите је у складу са смерницама на нашем вики чланку %2 .</translation>
+        <translation>Списак свих познатих проблема можете наћи на нашем Гитхаб %1. Ако откријете грешку или безбедносни пропуст у q-Токсу, јавите нам у складу са смерницама на нашем вики чланку „%2“.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation>Кликните овде за пријаву грешке.</translation>
+        <translation>Кликните овде да пријавите грешку.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation>Погледајте целокупан списак %1 на Гитхабу</translation>
+        <translation>Погледајте читав списак %1 на Гитхабу</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -165,7 +165,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>„Писање корисних пријава грешака“</translation>
+        <translation>Писање корисних пријава грешака</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -177,15 +177,15 @@ which may lead to problems with video calls.</source>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation>Дијалог</translation>
+        <translation>Прозорче</translation>
     </message>
     <message>
         <source>username</source>
-        <translation>орисничко име</translation>
+        <translation>корисничко име</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation>статусна порука</translation>
+        <translation>порука стања</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -197,23 +197,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation>Уколико је постављено аутоматски прихвата фајлове од контаката</translation>
+        <translation>Ако је постављено аутоматски прихвата датотеке од контаката</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation>Аутоматски примај фајлове</translation>
+        <translation>Сам примај датотеке</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Подразумевана фасцикла за чување фајлова:</translation>
+        <translation>Основна фасцикла за чување датотека:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation>Аутоматско прихватање фајлова од овог контакта је онемогућено</translation>
+        <translation>Самостално примање датотека од овог контакта је онемогућено</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation>Аутоматсски прихвати позив:</translation>
+        <translation>Сам прихвати позив:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -225,23 +225,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation>Звук и видео</translation>
+        <translation>Звук и слика</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation>Уколико је задано, аутоматски прихавти позиве за групно ћаскање од овог контакта.</translation>
+        <translation>Ако је постављено, сам ће прихватати позиве за групно ћаскање од овог контакта.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation>Аутоматски прихвати позиве у групу</translation>
+        <translation>Сам прихвати позиве у групу</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation>Уклони историјат (тадња не може бити опозвана!)</translation>
+        <translation>Уклони историјат (радња не може бити опозвана!)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Забелешке</translation>
+        <translation>Белешке</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
@@ -249,7 +249,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation>Овде можете сачувати коментаре о контакту.</translation>
+        <translation>Овде можете сачувати напомене о контакту.</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -262,30 +262,30 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ово је јавни кључ вашег пријатеља, користите га да потврдите њихов идентитет преко другог канала. Не можете ово да пошаљете другим особама да би и они могли додати овај контакт.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Јавни кључ (није ТоксИБ):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Потврда</translation>
+        <translation>Потврда</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Да ли сигурно да уклоним %1 историјат разговора?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Нисам успео да уклоним историјат разговора са %1!</translation>
     </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
-        <translation>Верзија</translation>
+        <translation>Издање</translation>
     </message>
     <message>
         <source>License</source>
@@ -301,26 +301,26 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Отвори везу преузимања освежења</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Освежење је доступно</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>q-Токс је ажуриран ✓</translation>
     </message>
 </context>
 <context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
-        <translation>Додај пријатеље</translation>
+        <translation>Додајте пријатеље</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation>Неисправан формат ToxID</translation>
+        <translation>Неисправан формат Токс ИБ-а</translation>
     </message>
     <message>
         <source>Send friend request</source>
@@ -332,7 +332,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation>Захтеви за пријатељство</translation>
+        <translation>Захтеви пријатељства</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -344,28 +344,28 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation>Не могу да нађем пријатеља</translation>
+        <translation>Не могу да додам пријатеља</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>ToxID, или 76 хексадецималних знакова, или име@example.com</translation>
+        <translation>Токс ИБ, или 76 хексадецималних знакова, или ime@example.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation>Унесите ToxID вашег пријатеља</translation>
+        <translation>Упишите Токс ИБ вашег пријатеља</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation>Порука уз захтев за прјатељство</translation>
+        <translation>Порука захтева за прјатељство</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation>Унесите поруку за послати уз захтев за пријатељство или оставите празно како би послали основну поруку</translation>
+        <translation>Упишите поруку за слање уз захтев за пријатељство или оставите празно за слање основне поруке</translation>
     </message>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>%1 ToxID не постоји</translation>
+        <translation>„%1“ Токс ИБ је неисправан или не постоји</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -378,30 +378,30 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation>Не могу да отворим фајл</translation>
+        <translation>Не могу да отворим датотеку</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation>Не могу да отворим фајл са контактима</translation>
+        <translation>Не могу да отворим датотеку са контактима</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation>Неиспрраван фајл</translation>
+        <translation>Неиспрравна датотека</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>Не нађох нијеан контакт за увести у овом фајлу!</translation>
+        <translation>Не могу да нађем ниједан контакт за увоз у ову датотеку!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation>ToxID</translation>
+        <translation>Токс ИБ</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation>или 76 хексадецималних знакова, или име@example.com</translation>
+        <translation>или 76 хексадецималних знакова, или ime@example.com</translation>
     </message>
     <message>
         <source>Message</source>
@@ -415,16 +415,16 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation>Пошаљи захтеве за пријатељство</translation>
+        <translation>Пошаљи захтев за пријатељство</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation>%1 овде! Tox-уј са мном?</translation>
+        <translation>„%1“ овде! Хајде да Токсирамо заједно?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation>Увезите списак контаката, један Tox ID по линији</translation>
+        <translation>Увезите списак контаката, један Токс ИБ у једном реду</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
@@ -448,15 +448,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Уколико %1 шта радите, молимо %2 мењајте ништа овде. Начињене измене могу довести до проблема у qTox-у, чак и до губитка података попут историјата.</translation>
+        <translation>Осим ако %1 знате шта радите, %2 овде ништа да мењате. Овде начињене измене могу довести до проблема у q-Токсу, чак и до губитка података, попут историјата.</translation>
     </message>
     <message>
         <source>really</source>
-        <translation>нисте сигурни</translation>
+        <translation>стварно</translation>
     </message>
     <message>
         <source>not</source>
-        <translation>не</translation>
+        <translation>немојте</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
@@ -464,11 +464,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation>Ресетуј поставке</translation>
+        <translation>Врати поставке</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation>Све поставке ће бити враћене на подразумеване. Да ли сте сигурни?</translation>
+        <translation>Све поставке ће бити враћене на основне. Да ли сте сигурни?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -481,16 +481,16 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation>Позив у току</translation>
+        <translation>Позив је у току</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Не можете се развезати током трајања позива!</translation>
+        <translation>Не можете прекинути везу док је позив у току!</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation>Сними фајл</translation>
+        <translation>Сачувај датотеку</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
@@ -502,11 +502,11 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Сачувај поставке у радну фасциклу уместо уобичајене фасцикле поставки</translation>
+        <translation>Сачувај поставке у радни директоријум уместо у уобичајени директоријум подешавања</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
-        <translation>Учини Tox преносивим</translation>
+        <translation>Учини Токс преносивим</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
@@ -518,26 +518,26 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation>Подешавање везе</translation>
+        <translation>Поставке везе</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Омогући IPv6 (препоручено)</translation>
+        <translation>Омогући ИПв6 (препоручено)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Онемогућавање овога дозвољава да , нпр., tox-ујете преко Тора. Међутим, ово оптерећује Tox мрежу, тако да онемогућите само кад је неопходно.</translation>
+        <translation>Ако ово искључите биће вам омогућено да, на пример, токсујете преко Тора. Међутим, ово оптерећује Токс мрежу, зато га искључите само кад је неопходно.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Омогући UДP (препоручено)</translation>
+        <translation>Омогући УДП (препоручено)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation>Врста проксија:</translation>
+        <translation>Врста посредника:</translation>
     </message>
     <message>
         <source>Address:</source>
@@ -547,11 +547,11 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Порт:</translation>
+        <translation>Прикључник:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>ниједан</translation>
+        <translation>Ништа</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -568,30 +568,30 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Debug</source>
-        <translation>Исправљање грешака</translation>
+        <translation>Прочишћавање</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation>Извези дневник исправљања грешака</translation>
+        <translation>Извези дневник прочишћавања</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation>Уможи дневник исправљања грешака</translation>
+        <translation>Уможи дневник прочишћавања</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Укључи ЛАН откривање</translation>
     </message>
 </context>
 <context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
-        <translation>Пошаљи фајл</translation>
+        <translation>Пошаљите датотеку</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation>qTox не може да отвори %1</translation>
+        <translation>q-Токс није могао да отвори „%1“</translation>
     </message>
     <message>
         <source>Unable to open</source>
@@ -599,29 +599,29 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation>Лоша идеја</translation>
+        <translation>Лоша замисао</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation>%1 зове</translation>
+        <translation>„%1“ зове</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation>Позивам %1</translation>
+        <translation>Позивам „%1“</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation>Неуспело отварање привременог фајла</translation>
+        <translation>Нисам успео да отворим привремену датотеку</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
-        <translation>qTox не успе да сачува снимак</translation>
+        <translation>q-Токс није успео да сачува снимак</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation>Звање %1 заврши. %2</translation>
+        <translation>Позив за „%1“ је завршен. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
@@ -629,7 +629,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation>%1 куца</translation>
+        <translation>„%1“ пише</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -637,48 +637,49 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation>Покушавате да пошаљете фајл у деловима што неће радити!</translation>
+        <translation>Покушавате да пошаљете датотеку у деловима, а то неће успети!</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 је сад %2</translation>
+        <translation>„%1“ је сада %2</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Звање %1  неочекивано заврши. %2</translation>
+        <translation>Позив за „%1“ се неочекивано завршио. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Назив датотеке садржи неисправне знакове</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неисправни знаци су измењени у _ 
+тако да можете да сачувате датотеку на прозору.</translation>
     </message>
 </context>
 <context>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation>Не могу да започнем аудио позив</translation>
+        <translation>Не могу да почнем звучни позив</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation>Започни аудио позив</translation>
+        <translation>Започни звучни позив</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation>Заврши аудио позив</translation>
+        <translation>Заврши звучни позив</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation>Откажи аудио позив</translation>
+        <translation>Откажи звучни позив</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation>Прихвати аудио позив</translation>
+        <translation>Прихвати звучни позив</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
@@ -706,7 +707,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished"></translation>
+        <translation>Укључи звук позива</translation>
     </message>
     <message>
         <source>Mute call</source>
@@ -718,7 +719,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Укључи звук микрофона</translation>
     </message>
     <message>
         <source>Mute microphone</source>
@@ -744,7 +745,7 @@ so you can save the file on windows.</source>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>Овде унесите вашу поруку...</translation>
+        <translation>Овде упишите вашу поруку...</translation>
     </message>
 </context>
 <context>
@@ -757,11 +758,11 @@ so you can save the file on windows.</source>
     <message>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation>Укони круг</translation>
+        <translation>Уклони круг</translation>
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation>Отвори ссве у новом прозору</translation>
+        <translation>Отвори све у новом прозору</translation>
     </message>
 </context>
 <context>
@@ -773,7 +774,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Неиsправан Tox ID</translation>
+        <translation>Неиsправан Токс ИБ</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -783,7 +784,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Ваша порука је предугачка!</translation>
+        <translation>Ваша порука је превише дуга!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
@@ -792,30 +793,30 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Групни разговор %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Нова порука</translation>
+        <translation>Нова порука</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Долазни пренос датотеке</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Примљен је захтев пријатеља</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Нова порука групе</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Примљен је позив за групу</translation>
     </message>
 </context>
 <context>
@@ -843,7 +844,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Filename</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation>Име фајла</translation>
+        <translation>Име датотеке</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
@@ -853,17 +854,17 @@ so you can save the file on windows.</source>
     <message>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation>Прихати пријем овог фајла</translation>
+        <translation>Прихатите пријем ове датотеке</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Локација није уписива</translation>
+        <translation>Место није уписиво</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Немате дозволе за писање на овој локацији. Изаберите другу, или откажите у дијалогу снимања.</translation>
+        <translation>Немате дозволу за писање на овом месту. Изаберите друго, или откажите прозорче чувања.</translation>
     </message>
     <message>
         <source>Resuming...</source>
@@ -885,11 +886,11 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Open file</source>
-        <translation>Отвори фајл</translation>
+        <translation>Отвори датотеку</translation>
     </message>
     <message>
         <source>Open file directory</source>
-        <translation>Отвори фасциклу фајла</translation>
+        <translation>Отвори фасциклу датотеке</translation>
     </message>
     <message>
         <source>Resume transfer</source>
@@ -902,12 +903,12 @@ so you can save the file on windows.</source>
     <message>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation>Сачувај фајл</translation>
+        <translation>Сачувај датотеку</translation>
     </message>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Удаљени је заустављен</translation>
     </message>
 </context>
 <context>
@@ -915,7 +916,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Пребачени фајлови</translation>
+        <translation>Пребачене датотеке</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -966,7 +967,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>Кориснички ID:</translation>
+        <translation>ИБ корисника:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
@@ -993,7 +994,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation>Помери у круг...</translation>
+        <translation>Премести у круг...</translation>
     </message>
     <message>
         <source>To new circle</source>
@@ -1001,16 +1002,15 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Уклони из круга „%1
-“</translation>
+        <translation>Уклони из круга „%1“</translation>
     </message>
     <message>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Помери у круг „%1“</translation>
+        <translation>Премести у круг „%1“</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation>Отвори ћакање у новом прозору</translation>
+        <translation>Отвори ћаскање у новом прозору</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
@@ -1031,7 +1031,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Аутоматски прихвати фајлове од овог пријатеља</translation>
+        <translation>Сам прихвати датотеке од овог пријатеља</translation>
     </message>
     <message>
         <source>Remove friend</source>
@@ -1053,7 +1053,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Online</source>
-        <translation>На вези</translation>
+        <translation>На мрежи</translation>
     </message>
     <message>
         <source>Away</source>
@@ -1066,7 +1066,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation>Ван везе</translation>
+        <translation>Ван мреже</translation>
     </message>
 </context>
 <context>
@@ -1078,7 +1078,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Изаберите фасциклу за аутоматски пријем</translation>
+        <translation>Изаберите фасциклу за самостални пријем</translation>
     </message>
 </context>
 <context>
@@ -1089,7 +1089,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>Превод се можда неће учитати пре поновног покретања qTox-а.</translation>
+        <translation>Превод се можда неће учитати пре поновног покретања q-Токса.</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -1097,55 +1097,55 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Show system tray icon</source>
-        <translation>Приказуј икону системске касете</translation>
+        <translation>Прикажи иконицу фиоке система</translation>
     </message>
     <message>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation>Светла икона касете.</translation>
+        <translation>Укључите светлу иконицу фиоке.</translation>
     </message>
     <message>
         <source>Light icon</source>
-        <translation>Светла икона</translation>
+        <translation>Светла иконица</translation>
     </message>
     <message>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>qTox ће се покретати смањен у касету.</translation>
+        <translation>q-Токс ће се покретати смањен у фиоку.</translation>
     </message>
     <message>
         <source>Start in tray</source>
-        <translation>Покрени у касети</translation>
+        <translation>Покрени у фиоци</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>По клику на затвори (X) qTox ће се минимизовати у касету
+        <translation>Након што кликнете на затварање (X) q-Токс ће се повући у фиоку
 уместо да се затвори.</translation>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation>Затвори у касету</translation>
+        <translation>Затвори у фиоку</translation>
     </message>
     <message>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>По клику на минимизуј (_) qTox ће се минимизовати у касету
-уместо системске траке задатака.</translation>
+        <translation>Након што кликнете на умањивање (_) q-Токс ће се повући у фиоку
+уместо на системску траку задатака.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
-        <translation>Минимизуј у касету</translation>
+        <translation>Умањи у фиоку</translation>
     </message>
     <message>
         <source>Autostart</source>
-        <translation>Аутоматско покретање</translation>
+        <translation>Самопокретање</translation>
     </message>
     <message>
         <source>Set where files will be saved.</source>
-        <translation>Изаберите где чувати фајлове.</translation>
+        <translation>Изаберите где ће се чувати датотеке.</translation>
     </message>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
@@ -1154,47 +1154,47 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Autoaccept files</source>
-        <translation>Аутоматски пријем фајлова</translation>
+        <translation>Сам прихвати датотеке</translation>
     </message>
     <message>
         <source>Set to 0 to disable</source>
-        <translation>Поставите на 0 да онемогућите</translation>
+        <translation>На 0 да онемогућите</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Ваш статус се мења на Одсутан након задатог периода неактивности.</translation>
+        <translation>Ваше стање ће се променити на „Одсутан“ након задатог периода неактивности.</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation>Аутоматска одсутност након (0 да онемогућите):</translation>
+        <translation>Постаје одсутан након (0 да онемогућите):</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation>Прикажи промене сатуса контаката</translation>
+        <translation>Прикажи промене стања контаката</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation>Покрени qTox са оперативним системом (текући профил).</translation>
+        <translation>Покрени q-Токс са оперативним системом (текући профил).</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Позразумевана фасцикла за чување фајлова:</translation>
+        <translation>Основна фасцикла за чување датотека:</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Провера ажурирања</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Провера правописа</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Највећа величина самоприхватне датотеке (0 за искључено):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
@@ -1205,11 +1205,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Smileys</source>
-        <translation>Емотикони</translation>
+        <translation>Смешкићи</translation>
     </message>
     <message>
         <source>Send file(s)</source>
-        <translation>Пошаљи фајл(ове)</translation>
+        <translation>Пошаљи датотеку</translation>
     </message>
     <message>
         <source>Send a screenshot</source>
@@ -1233,31 +1233,31 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation>Копирај адресу везе</translation>
+        <translation>Умножи адресу везе</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Потврда</translation>
+        <translation>Потврда</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Да ли сигурно желите да очистите све приказане поруке?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Тражи у тексту</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Иди на тренутни датум</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Учитај историјат ћаскања...</translation>
+        <translation>Учитај историјат ћаскања...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Извези у фајл</translation>
+        <translation>Извези у датотеку</translation>
     </message>
 </context>
 <context>
@@ -1276,46 +1276,46 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Пун екран</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Пребаци на видео преглед</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Искључи звук</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Утишај микрофон</translation>
+        <translation>Утишај микрофон</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Заврши видео позив</translation>
+        <translation>Заврши видео позив</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Напусти пун екран</translation>
     </message>
 </context>
 <context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation>%1 постави наслов на %2</translation>
+        <translation>„%1“ је поставио наслов на „%2“</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>„%1д се придружио групи</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>„%1“ је сада познат као „%2“</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>„%1“ је напустио групу</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
@@ -1328,11 +1328,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>утишај</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>појачај</translation>
     </message>
 </context>
 <context>
@@ -1354,7 +1354,7 @@ instead of system taskbar.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation>Позва %1 %2 у %3.</translation>
+        <translation>Позвао је %1 %2 у %3.</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1395,11 +1395,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Нова порука</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">На вези</translation>
+        <translation>На вези</translation>
     </message>
 </context>
 <context>
@@ -1410,18 +1410,18 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation>Tox ID</translation>
+        <translation>Токс ИБ</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Ова хрпа знакова говори другим Tox клијентима како да вас контактирају.
-Поделите је са пријатељима да би комуницирали.</translation>
+        <translation>Ова хрпа знакова говори другим Токс клијентима како да вас контактирају.
+Поделите је са пријатељима да бисте комуницирали.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation>Ваш Tox ID (кликните да копирате)</translation>
+        <translation>Ваш Токс ИБ (кликните да умножите)</translation>
     </message>
     <message>
         <source>Profile</source>
@@ -1430,7 +1430,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation>Преименуј профил.</translation>
+        <translation>Преименујте профил.</translation>
     </message>
     <message>
         <source>Go back to the login screen</source>
@@ -1452,7 +1452,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Овај QR код садржи ваш Tox ID. Можете га делити и вашим пријатељима.</translation>
+        <translation>Овај QR код садржи ваш Токс ИБ. Можете га делити и са вашим пријатељима.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1460,7 +1460,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Copy image</source>
-        <translation>Копирај слику</translation>
+        <translation>Умножи слику</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -1470,13 +1470,13 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Delete profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation>Обриши профил.</translation>
+        <translation>Обришите профил.</translation>
     </message>
     <message>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation>Омогућава вам да извезете ваш Tox профил у фајл.
+        <translation>Омогућава вам да извезете ваш Токс профил у датотеку.
 Профил не садржи ваш историјат.</translation>
     </message>
     <message>
@@ -1495,7 +1495,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation>Сакриј моје име са јавне листе</translation>
+        <translation>Сакриј моје име са јавног списка</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1511,36 +1511,36 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation>Региструј се на ToxMe</translation>
+        <translation>Региструј се на „ToxMe“</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation>Име на сервису ToxMe.</translation>
+        <translation>Име за „ToxMe“ услугу.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation>Опционо. Нешто о вама. Или вашој мачки.</translation>
+        <translation>Изборно. Нешто о вама. Или о вашој мачки.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation>Опционо. Нешто о вама. Или вашој мачки.</translation>
+        <translation>Изборно. Нешто о вама. Или о вашој мачки.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation>ToxMe сервис на који се треба регистровати.</translation>
+        <translation>„ToxMe“ услуга на коју ћете се регистровати.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation>Ако није означено, ToxMe уноси су јавни.</translation>
+        <translation>Ако није постављено, „ToxMe“ уноси се виде јавно.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation>Уклања лозинку и шифровање из вашег профила.</translation>
+        <translation>Уклоните лозинку и шифровање са вашег профила.</translation>
     </message>
     <message>
         <source>Name input</source>
@@ -1552,19 +1552,19 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Унос статусне поруке</translation>
+        <translation>Унос поруке стања</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation>Статусна порука је видљива контактима</translation>
+        <translation>Порука стања је видљива контактима</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation>Ваш Tox ID</translation>
+        <translation>Ваш Токс ИБ</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation>Сачувај QR слику као фајл</translation>
+        <translation>Сачувај QR слику као датотеку</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
@@ -1572,19 +1572,19 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation>ToxMe корисничко име које се приказује на ToxMe</translation>
+        <translation>„ToxMe“ корисничко име за приказ на „ToxMe“</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>Опциона ToxMe биографија која се приказује на ToxMe</translation>
+        <translation>Изборна „ToxMe“ биографија за приказ на „ToxMe“</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation>Адреса ToxMe сервиса</translation>
+        <translation>Адреса „ToxMe“ услуге</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation>Видљивост на ToxMe сервису</translation>
+        <translation>Видљивост на „ToxMe“ услузи</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1592,15 +1592,15 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation>Ажурирај ToxMe унос</translation>
+        <translation>Ажурирај „ToxMe“ унос</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation>Преименуј профил.</translation>
+        <translation>Преименујте профил.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation>Обриши профил.</translation>
+        <translation>Обришите профил.</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -1620,7 +1620,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My status:</source>
-        <translation>Мој статус:</translation>
+        <translation>Моје стање:</translation>
     </message>
     <message>
         <source>My username</source>
@@ -1639,31 +1639,31 @@ Profile does not contain your history.</source>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation>Дијалог учитавања историјата</translation>
+        <translation>Прозорче учитавања историјата</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Учитај историјат</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>од</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>до</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(око 100 порука је учитано)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Изабери прозорче датума</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Изаберите датум</translation>
     </message>
 </context>
 <context>
@@ -1678,7 +1678,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>Потврда:</translation>
+        <translation>Потврди:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
@@ -1686,15 +1686,15 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Create Profile</source>
-        <translation>Направи профил</translation>
+        <translation>Направите профил</translation>
     </message>
     <message>
         <source>If the profile does not have a password, qTox can skip the login screen</source>
-        <translation>Уколико профил нема лозинку, qTox ће прескочити екран за пријаву</translation>
+        <translation>Ако профил нема лозинку, q-Токс може прескочити екран за пријаву</translation>
     </message>
     <message>
         <source>Load automatically</source>
-        <translation>Аутоматски учитај</translation>
+        <translation>Сам учитај</translation>
     </message>
     <message>
         <source>Load</source>
@@ -1724,7 +1724,7 @@ Profile does not contain your history.</source>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
         <translation>Лозинке које сте унели се разликују.
-Постарајте се да унесете исту лозинку двапут.</translation>
+Постарајте се да унесете исту лозинку два пута.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
@@ -1732,7 +1732,7 @@ Please make sure to enter same password twice.</source>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation>Профили заштићени лозинком се не могу учитати аутоматски.</translation>
+        <translation>Профили заштићени лозинком се не могу самостално учитати.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
@@ -1744,7 +1744,7 @@ Please make sure to enter same password twice.</source>
 You may want to create one.</source>
         <translation>Нема изабраног профила.
 
-Вероватно желите да направите један.</translation>
+Можете да направите један.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
@@ -1780,11 +1780,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Profile list</source>
-        <translation>Листа профила</translation>
+        <translation>Списак профила</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation>Листа профила</translation>
+        <translation>Списак профила</translation>
     </message>
     <message>
         <source>Password input</source>
@@ -1836,7 +1836,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation>Прикажи завршене преносе фајлова</translation>
+        <translation>Прикажи завршене преносе датотека</translation>
     </message>
     <message>
         <source>Change your settings</source>
@@ -1852,23 +1852,23 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation>Отвори профил по клику</translation>
+        <translation>Отвори профил на клик</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Унос статусне поруке</translation>
+        <translation>Унос поруке стања</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation>Поставите статусну поруку видљиву другима</translation>
+        <translation>Поставите поруку стања која ће се приказивати другима</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>статус</translation>
+        <translation>Стање</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation>Поставите доступност</translation>
+        <translation>Поставите стање доступности</translation>
     </message>
     <message>
         <source>Contact search</source>
@@ -1884,11 +1884,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation>Постави ређање пријатеља и видљивост</translation>
+        <translation>Поставите ређање пријатеља и видљивост</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation>Отвори страницу Додај пријатеље</translation>
+        <translation>Отвори страницу додавања пријатеља</translation>
     </message>
     <message>
         <source>Groupchat</source>
@@ -1896,23 +1896,23 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation>Отвори страницу управљања групним ћаскањем</translation>
+        <translation>Отворите страницу управљања групним ћаскањем</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation>Историјат преноса фајлова</translation>
+        <translation>Историјат преноса датотека</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation>Отвара историјат преноса фајлова</translation>
+        <translation>Отворите историјат преноса датотека</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Подешавање</translation>
+        <translation>Поставке</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation>Отвори поставке</translation>
+        <translation>Отворите поставке</translation>
     </message>
 </context>
 <context>
@@ -1920,7 +1920,7 @@ You may want to create one.</source>
     <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
-        <translation>Приказ</translation>
+        <translation>Преглед</translation>
     </message>
     <message>
         <source>Window</source>
@@ -1930,12 +1930,12 @@ You may want to create one.</source>
     <message>
         <source>Minimize</source>
         <comment>OS X Menu bar</comment>
-        <translation>Минимизуј</translation>
+        <translation>Умањи</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation>Стави све испред</translation>
+        <translation>Све у први план</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
@@ -1961,7 +1961,7 @@ You may want to create one.</source>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation>УКЉУЧЕН CAPS-LOCK</translation>
+        <translation>УКЉУЧЕНА СУ ВЕЛИКА СЛОВА</translation>
     </message>
 </context>
 <context>
@@ -1976,7 +1976,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation>Желите ли да трајно обришете историјат ћаскања?</translation>
+        <translation>Да ли желите трајно да обришете историјат ћаскања?</translation>
     </message>
 </context>
 <context>
@@ -1992,16 +1992,16 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Keep chat history</source>
-        <translation>Задржи историју ћаскања</translation>
+        <translation>Задржи историјат ћаскања</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>NoSpam је део вашег Tox ID.
-Уколико вас спамују захтевима за пријатељство, требало би да измените ваш NoSpam.
-Други неће моћи да вас додају путем старог ID, али ћете задржати све тренутне пријатеље.</translation>
+        <translation>„NoSpam“ је део вашег Токс ИБ-а.
+Ако вас претрпавају захтевима за пријатељство, требало би да измените ваш „NoSpam“.
+Други неће моћи да вас додају са старим ИБ-ом, али ћете задржати све тренутне пријатеље.</translation>
     </message>
     <message>
         <source>NoSpam</source>
@@ -2010,19 +2010,19 @@ People will be unable to add you with your old ID, but you will keep your curren
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>NoSpam је део вашег Tox ID.
-Уколико вас спамују захтевима за пријатељство, измените ваш NoSpam.</translation>
+        <translation>„NoSpam“ је део вашег Токс ИБ-а.
+Ако вас претрпавају захтевима за пријатељство, измените ваш „NoSpam“.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation>Направи произвољан NoSpam</translation>
+        <translation>Направи произвољан „NoSpam“</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
         <translation>Задржавање историјата ћаскања је још у развоју.
-Промене у формату снимања су могуће, што може довести до губитка података.</translation>
+Промене у формату чувања су могуће, што може довести до губитка података.</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -2034,22 +2034,22 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation>Филтер групних порука према јавном кључу чланова групе. Јавне кључеве унесите овде, један по линији.</translation>
+        <translation>Филтер групних порука према јавном кључу чланова групе. Јавне кључеве унесите овде, један у једном реду.</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation>Неуспело извођење кључа из лозинке, профил неће користити нову лозинку.</translation>
+        <translation>Нисам успео да изведем кључ из лозинке, профил неће користити нову лозинку.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Не могу да променим лозинку базе, можда је оштећена или користите стару лозинку.</translation>
+        <translation>Не могу да променим лозинку базе података, можда је оштећена или користите стару лозинку.</translation>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">Tox-ује путем qTox-а</translation>
+        <translation>Токсује путем q-Токса</translation>
     </message>
 </context>
 <context>
@@ -2065,11 +2065,11 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation>Преименовање „%1“</translation>
+        <translation>Преименујем „%1“</translation>
     </message>
     <message>
         <source>Unable to open this file.</source>
-        <translation>Не могу да отворим овај фајл.</translation>
+        <translation>Не могу да отворим ову датотеку.</translation>
     </message>
     <message>
         <source>Current profile: </source>
@@ -2087,7 +2087,7 @@ Save format changes are possible, which may result in data loss.</source>
         <source>The supplied image is too large.
 Please use another image.</source>
         <translation>Достављена слика је превелика.
-Молимо користите другу.</translation>
+Користите неку другу слику.</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
@@ -2096,29 +2096,29 @@ Please use another image.</source>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Локација није уписива</translation>
+        <translation>Место није уписиво</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Немате дозволу уписа на овој локацији. Изаберите другу, или откажите снимање у дијалогу.</translation>
+        <translation>Немате дозволу уписа на овом месту. Изаберите друго, или откажите прозорче чувања.</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation>Неуспело копирање фајла</translation>
+        <translation>Нисам успео да умножим датотеку</translation>
     </message>
     <message>
         <source>The file you chose could not be written to.</source>
-        <translation>Не може се писати у изабрани фајл.</translation>
+        <translation>Не могу да пишем у датотеку коју сте изабрали.</translation>
     </message>
     <message>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
-        <translation>Заиста обрисати профил?</translation>
+        <translation>Да обришем профил?</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
-        <translation>Нема се шта уклонити</translation>
+        <translation>Нема ничега за уклањање</translation>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
@@ -2127,31 +2127,31 @@ Please use another image.</source>
     <message>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation>Заиста обрисати лозинку?</translation>
+        <translation>Да заиста обришем лозинку?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
-        <translation>Унесите нову лозинку.</translation>
+        <translation>Упишите нову лозинку.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Стварно сте сигурни да желите да уклоните овај профил?</translation>
+        <translation>Да ли сигурно желите да уклоните овај профил?</translation>
     </message>
     <message>
         <source>Save</source>
         <comment>save qr image</comment>
-        <translation>Чување</translation>
+        <translation>Сачувај</translation>
     </message>
     <message>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
-        <translation>Чување QrCode-a (*.png)</translation>
+        <translation>Сачувај „QrCode“ (*.png)</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation>Фајлови се не могу обрисати!</translation>
+        <translation>Не могу обрисати датотеке!</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -2167,15 +2167,15 @@ Please use another image.</source>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation>Налог %1@%2 је успешно ажуриран</translation>
+        <translation>Налог „%1@%2“ је успешно ажуриран</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>Успешно додах %1@%2 у базу. Саачувајте вашу лозинку</translation>
+        <translation>Успешно додах „%1@%2“ у базу. Сачувајте вашу лозинку</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation>Грешка на ToxMe</translation>
+        <translation>„ToxMe“ грешка</translation>
     </message>
     <message>
         <source>Register</source>
@@ -2197,7 +2197,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation>Локација текућег профила: %1</translation>
+        <translation>Место текућег профила: %1</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
@@ -2208,10 +2208,10 @@ Please use another image.</source>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation>Ова хрпа знакова говори другим Tox клијентима како да вас контактирају.
-Поделите је са пријатељима да би комуницирали.
+        <translation>Ова хрпа знакова говори другим Токс клијентима како да вас контактирају.
+Поделите је са пријатељима да бисте комуницирали.
 
-Овај ID саржи NoSpam код (плав) и суме за проверу (сиве).</translation>
+Овај ИБ саржи „NoSpam“ код (плави) и суме за проверу (сиве).</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
@@ -2219,7 +2219,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation>Неуспело преименовање</translation>
+        <translation>Нисам успео да преименујем</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -2227,7 +2227,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation>Профил имена „%1“ већ постоји.</translation>
+        <translation>Профил са именом „%1“ већ постоји.</translation>
     </message>
     <message>
         <source>Empty name</source>
@@ -2243,7 +2243,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Не могу да променим лозинку базе, можда је оштећена или користите стару лозинку.</translation>
+        <translation>Не могу да променим лозинку базе података, можда је оштећена или користите стару лозинку.</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -2252,27 +2252,27 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation>Tox-ов фајл снимка (*.tox)</translation>
+        <translation>Токс датотека чувања (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation>Следећи фајлови се не могу обрисати:</translation>
+        <translation>Следеће датотеке се не могу обрисати:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation>Молимо да их ручно уклоните.</translation>
+        <translation>Ручно их уклоните.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation>Стварно сте сигурни да желите да уклоните лозинку?</translation>
+        <translation>Да ли сигурно желите да уклоните лозинку?</translation>
     </message>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Слике (%1)</translation>
+        <translation>Слике (%1)</translation>
     </message>
 </context>
 <context>
@@ -2285,17 +2285,17 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation>Tox-ов фајл снимка (*.tox)</translation>
+        <translation>Токс датотека чувања (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation>Игоришем не-Tox фајл</translation>
+        <translation>Занемарујем не-Токс датотеку</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Упозорење: изабрали сте фајл који није Tox-ов фајл снимка; игноришем.</translation>
+        <translation>Упозорење: Изабрали сте датотеку која није Tox датотека чувања; занемарујем.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -2305,11 +2305,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Профил имена „%1“ већ постоји. Желите ли да га обришете?</translation>
+        <translation>Профил са именом „%1“ већ постоји. Желите ли да га обришете?</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation>Фајл не постоји</translation>
+        <translation>Датотека не постоји</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
@@ -2321,7 +2321,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation>%1.tox је успешно увезен</translation>
+        <translation>„%1.tox“ је успешно увезена</translation>
     </message>
 </context>
 <context>
@@ -2356,23 +2356,23 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 није исправна ToxMe адреса.</translation>
+        <translation>„%1“ није исправна „ToxMe“ адреса.</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Не можете додати себе као пријатеља!</translation>
+        <translation>Свашта, не можете додати себе као пријатеља!</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation>Tox URI за рашчланити</translation>
+        <translation>Токс путања заобраду</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation>Покреће нови примерак и учитава наведени профил.</translation>
+        <translation>Покрените нови примерак и учитајте наведени профил.</translation>
     </message>
     <message>
         <source>profile</source>
@@ -2380,7 +2380,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Default</source>
-        <translation>подразумевана</translation>
+        <translation>основна</translation>
     </message>
     <message>
         <source>Blue</source>
@@ -2405,25 +2405,25 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>%1 овде! Tox-уј са мном?</translation>
+        <translation>„%1“ овде! Хођеш да Токсујеш са мном?</translation>
     </message>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation>ниједан</translation>
+        <translation>Ништа</translation>
     </message>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
-        <translation>десктоп</translation>
+        <translation>Радна површ</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation>Сервер не подржава ToxMe</translation>
+        <translation>Сервер не подржава „ToxMe“</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation>Правите исувише захтева. Сачекајте час и пробајте поново</translation>
+        <translation>Направили сте исувише захтева. Сачекајте сат времена и пробајте поново</translation>
     </message>
     <message>
         <source>This name is already in use</source>
@@ -2431,11 +2431,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>This Tox ID is already registered under another name</source>
-        <translation>Овај Tox ID је већ регистрован под другим именом</translation>
+        <translation>Овај Токс ИБ је већ регистрован под другим именом</translation>
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
-        <translation>Молимо не стављајте размаке у ваше име</translation>
+        <translation>Немојте користити размаке у вашем имену</translation>
     </message>
     <message>
         <source>Password incorrect</source>
@@ -2447,11 +2447,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Name not found</source>
-        <translation>Име није нађено</translation>
+        <translation>Нема таквог имена</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation>Tox ID није послат</translation>
+        <translation>Токс ИБ није послат</translation>
     </message>
     <message>
         <source>That user does not exist</source>
@@ -2463,15 +2463,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox не може да отвори ваше дневнике ћаскања, биће онемогућени.</translation>
+        <translation>q-Токс не може да отвори ваше дневнике ћаскања, биће искључени.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation>Проблем са HTTPS везом</translation>
+        <translation>Проблем са ХТТПС везом</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation>Унутрашња грешка на ToxMe</translation>
+        <translation>Унутрашња „ToxMe“ грешка</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
@@ -2479,56 +2479,56 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation>Покреће нови примерак и отвара екран за пријаву.</translation>
+        <translation>Покрените нови примерак и отворите екран за пријаву.</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Тамна</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Тамно плава</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Тамно маслинаста</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Тамно црвена</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Тамно љубичаста</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нисам успео да сам учитам профил.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">на вези</translation>
+        <translation>на вези</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">одсутан</translation>
+        <translation>одсутан</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">зазузет</translation>
+        <translation>зазузет</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">ван везе</translation>
+        <translation>ван везе</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>блокиран</translation>
     </message>
 </context>
 <context>
@@ -2547,11 +2547,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Сигурно желите а уклоните „%1“ из списка контаката?</translation>
+        <translation>Да ли сигурно желите да уклоните „%1“ са списка контаката?</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Ако је задато, уклања цео историјат ћаскања заједно са пријатељем</translation>
+        <translation>Уклониће цео историјат ћаскања заједно са пријатељем ако је постављено</translation>
     </message>
 </context>
 <context>
@@ -2559,7 +2559,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Кликните и вуците да би изабрали област. Притисните %1 да сакријете или прикажете прозор qTox-а, или %2 да откажете.</translation>
+        <translation>Кликните и превуците да изаберете област. Притисните „%1“ да сакријете или прикажете прозор q-Токса, или „%2“ да откажете.</translation>
     </message>
     <message>
         <source>Space</source>
@@ -2569,71 +2569,71 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation>Ескејп</translation>
+        <translation>Esc</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Притисните %1 да пошаљете снимак избора, %2 да сакријете или прикажете прозор qTox-а, или %3 да откажете.</translation>
+        <translation>Притисните „%1“ да пошаљете снимак избора, „%2“ да сакријете или прикажете прозор q-Токса, или „%3“ да откажете.</translation>
     </message>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
-        <translation>Ентер</translation>
+        <translation>Унеси</translation>
     </message>
 </context>
 <context>
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу да пронађем текст.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Почетак</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Образац</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Почетак претраге:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>од краја</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>од почетка</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>после датума</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>пре датума</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Осетљиво на величину слова</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Само целе речи</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Користи регуларне изразе</translation>
     </message>
 </context>
 <context>
@@ -2676,7 +2676,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation>Поље уноса лозинке, минимална дужина је 6 знакова</translation>
+        <translation>Поље уноса лозинке, најмања дужина је 6 знакова</translation>
     </message>
 </context>
 <context>
@@ -2695,11 +2695,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
-        <translation>Желите ли да додате %1 у пријатеље?</translation>
+        <translation>Желите ли да додате „%1“ у пријатеље?</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>ID корисника:</translation>
+        <translation>ИБ корисника:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
@@ -2724,7 +2724,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>User Interface</source>
-        <translation>Корисничко сучеље</translation>
+        <translation>Сучеље</translation>
     </message>
 </context>
 <context>
@@ -2735,11 +2735,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Base font:</source>
-        <translation>Основни фонт:</translation>
+        <translation>Основна слова:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation>тач</translation>
+        <translation>тч</translation>
     </message>
     <message>
         <source>Size: </source>
@@ -2747,7 +2747,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Нова поставка стилизовања текста се можда неће учитати пре поновног покретања qTox-а.</translation>
+        <translation>Нова поставка стилизовања текста се можда неће учитати пре поновног покретања q-Токса.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -2776,7 +2776,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Отвори прозор qTox-а по пријему нове поруке ако није већ отворен.</translation>
+        <translation>Отвориће прозор q-Токса по пријему нове поруке ако није већ отворен.</translation>
     </message>
     <message>
         <source>Open window</source>
@@ -2789,7 +2789,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>Уколико је означено, групна ћаскања ће бити постављена на врх списка пријатеља, у супротном ће бити постављена испод пријатеља на вези.</translation>
+        <translation>Ако је означено, групна ћаскања ће бити постављена на врх списка пријатеља, у супротном биће постављена испод пријатеља на вези.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
@@ -2798,15 +2798,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>Ваш списак контаката се приказује у компактном режиму.</translation>
+        <translation>Ваш списак контаката биће приказан у збијеном режиму.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation>Компактна листа контаката</translation>
+        <translation>Сузбиј списак контаката</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation>Режим вишеструких прозора</translation>
+        <translation>Режим више прозора</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
@@ -2814,7 +2814,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation>Емотикони</translation>
+        <translation>Емотиконии</translation>
     </message>
     <message>
         <source>Use emoticons</source>
@@ -2831,7 +2831,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source> px</source>
-        <translation> тач</translation>
+        <translation> тачкица</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -2847,7 +2847,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation>Формат временске ознаке:</translation>
+        <translation>Формат времена:</translation>
     </message>
     <message>
         <source>Date format:</source>
@@ -2856,49 +2856,49 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ако је укључено сваки контакт без постављеног аватара имаће створени аватар на основу свог Токс ИБ-а уместо основне слике. Потребно је поновно покретање.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation>Користи идентиконе уместо празних аватара</translation>
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Користи обојене надимке у разговорима</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Приказаће обавештење када примите нову поруку а када прозор није изабран.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Обавештење</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Само ће вас обавестити и новим порукама у групним ћаскањима када вас помену.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Групни разговор обавештава само када је поменут</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Пусти звук</translation>
+        <translation>Пусти звук</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Пусти звук током зузећа</translation>
+        <translation>Пусти звук када је заузет</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Обавести путем обавештења радне површи</translation>
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Сакриј пошиљаоца и садржај</translation>
     </message>
 </context>
 <context>
@@ -2920,16 +2920,16 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>Неуспело покретање toxcore, програм ће се угасити по затварању ове поруке.</translation>
+        <translation>токс језгро није успело да се покрене, програм ће окончати након затварања ове поруке.</translation>
     </message>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>Неуспело покретање toxcore са вашим поставкама проксија. qTox не може да се покрене; измените поставке и поново га покрените.</translation>
+        <translation>токс језгро није успело да се покрене са вашим поставкама посредника. q-Токс не може да се покрене; измените поставке и поново га покрените.</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Фајл</translation>
+        <translation>Датотека</translation>
     </message>
     <message>
         <source>Edit Profile</source>
@@ -2937,7 +2937,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Change Status</source>
-        <translation>Промени статус</translation>
+        <translation>Промени стање</translation>
     </message>
     <message>
         <source>Log out</source>
@@ -2950,7 +2950,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation>Одјави се</translation>
+        <translation>Одјави ме</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2980,12 +2980,12 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation>Извршни фајл</translation>
+        <translation>Извршна датотека</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation>Тражили сте qTox-у да отвори извршни фајл. Извршни фајлови могу потенцијално нанети штету вашем рачунару. Да ли сте сигурни да желите да отворите овај фајл?</translation>
+        <translation>Тражили сте да q-Токс отвори извршну датотеку. Извршне датотеке могу потенцијално да оштете ваш рачунар. Да ли сигурно желите да отворите ову датотеку?</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2993,7 +2993,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Status</source>
-        <translation>Статус</translation>
+        <translation>Стање</translation>
     </message>
     <message>
         <source>Your name</source>
@@ -3001,7 +3001,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation>Неуспело слање поруке</translation>
+        <translation>Није успело слање поруке</translation>
     </message>
     <message>
         <source>Create new group...</source>
@@ -3082,12 +3082,12 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation>Преноси фајлова</translation>
+        <translation>Преноси датотека</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation>Подешвање</translation>
+        <translation>Поставке</translation>
     </message>
     <message>
         <source>My profile</source>
@@ -3096,19 +3096,19 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Неуспело слање фајла „%1“</translation>
+        <translation>Нисам успео да пошаљем датотеку „%1“</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Датотека је послата</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> вам је послао захтев за пријатељство.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> вас позива да се придружите групи.</translation>
     </message>
 </context>
 </TS>

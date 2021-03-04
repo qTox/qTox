@@ -1995,8 +1995,7 @@ People will be unable to add you with your old ID, but you will keep your curren
         <comment>toolTip for nospam</comment>
         <translation>„Nospam“ yra jūsų Tox ID dalis.
 Jį pakeitus nebegausite nepageidaujamų kontaktinių užklausų.
-Priimti kontaktai vis dar galės su jumis bendrauti, bet nauji kontaktai,
-nežinantys jūsų naujojo Tox ID, nebegalės atsiųsti jums užklausų.</translation>
+Nauji kontaktai,nežinantys jūsų naujojo Tox ID, nebegalės atsiųsti jums užklausų.</translation>
     </message>
     <message>
         <source>NoSpam</source>

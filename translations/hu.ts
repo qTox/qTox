@@ -249,7 +249,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation>Itt elmenthetsz egy privát (számára nem látható) megjegyzést erről az ismerősről.</translation>
+        <translation>Itt elmenthet egy privát (számára nem látható) megjegyzést erről az ismerősről.</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -258,27 +258,27 @@ ami a videóhívások problémáihoz vezethet.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation>Válassz egy könyvtárat az automatikusan fogadott fájloknak</translation>
+        <translation>Válasszon egy könyvtárat az automatikusan fogadott fájloknak</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ez az ismerősének a nyilvános kulcsa, ezzel ellenőrizheti személyazonosságát egy másik csatornán keresztül. Ezt nem tudja elküldeni másoknak, így ők hozzáadhatják ezt a személyt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Publikus kulcs (nem ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Megerősítés</translation>
+        <translation>Megerősítés</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztosan eltávolítja a(z) %1 chat előzményt?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 chat előzményének eltávolítása sikertelen!</translation>
     </message>
 </context>
 <context>
@@ -297,19 +297,19 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Known Issues</source>
-        <translation>Ismert problémák</translation>
+        <translation>Ismert hibák</translation>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation type="unfinished"></translation>
+        <translation>Frissítés letöltési linkjének megnyitása</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Frissítés elérhető</translation>
     </message>
     <message utf8="true">
         <source>qTox is up to date ✓</source>
-        <translation type="unfinished"></translation>
+        <translation>A qTox naprakész ✓</translation>
     </message>
 </context>
 <context>
@@ -328,7 +328,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation>Érvénytelen Tox ID formátum</translation>
+        <translation>Érvénytelen ToxID formátum</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -336,7 +336,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation>Partner kérelmek</translation>
+        <translation>Partnerkérelmek</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -348,7 +348,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>Tox azonosító, 76 hexadecimális karakter, vagy nev@pelda.com</translation>
+        <translation>Tox azonosító (ToxID), akár 76 hexadecimális karakter, vagy nev@pelda.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
@@ -365,12 +365,12 @@ ami a videóhívások problémáihoz vezethet.</translation>
     <message>
         <source>%1 Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation>A(z) %1 Tox ID érvénytelen, vagy nem létezik</translation>
+        <translation>A(z) %1 ToxID érvénytelen, vagy nem létezik</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation>Nem tudod hozzáadni önmagad partnerként!</translation>
+        <translation>Nem tudja önmagát hozzáadni partnerként!</translation>
     </message>
     <message>
         <source>Open contact list</source>
@@ -391,7 +391,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>Nem található importálható ismerős ebben a fájlban!</translation>
+        <translation>Nem található importálható partner ebben a fájlban!</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -401,12 +401,12 @@ ami a videóhívások problémáihoz vezethet.</translation>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation>76 hexadecimális karakter, vagy nev@pelda.com</translation>
+        <translation>akár 76 hexadecimális karakter, vagy nev@pelda.com</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation>Meghívóüzenet</translation>
+        <translation>Üzenet</translation>
     </message>
     <message>
         <source>Open</source>
@@ -415,7 +415,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation>Barátkérelmek küldése</translation>
+        <translation>Partnerkérelmek küldése</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -424,7 +424,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation>Ismerősök listájának importálása, minden egyes sorban egy Tox azonosító (Tox ID)</translation>
+        <translation>Partnerek listájának importálása, soronként egy Tox azonosító (Tox ID)</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
@@ -435,7 +435,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation>Ismerőslista importálása</translation>
+        <translation>Partnerek importálása</translation>
     </message>
 </context>
 <context>
@@ -446,7 +446,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Ha nem %1 biztos abban, mit csinál, kérem %2 változtasson meg itt semmit. Az itt lévő változások problémákhoz vezethetnek a qTox-ban, és adatvesztést (pl. előzmények) is okozhat.</translation>
+        <translation>Ha nem %1 biztos abban, mit csinál, kérem %2 változtasson meg itt semmit! Az itt lévő változások problémákhoz vezethetnek a qTox-ban, és adatvesztést (pl. előzmények) is okozhat.</translation>
     </message>
     <message>
         <source>really</source>
@@ -578,7 +578,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>LAN felfedezés engedélyezése</translation>
     </message>
 </context>
 <context>
@@ -647,19 +647,20 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlnév illegális karaktereket tartalmaz</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Illegális karakterek megváltoztatva erre: _ 
+így már lementheti a fájlt Windowson.</translation>
     </message>
 </context>
 <context>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation>Nem kezdeményezhető audio hívás</translation>
+        <translation>Nem kezdeményezhető hanghívás</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -703,7 +704,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation>Hang bekapcsolása</translation>
+        <translation>Hívásnémítás kikapcsolása</translation>
     </message>
     <message>
         <source>Mute call</source>
@@ -715,11 +716,11 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation>Mikrofon bekapcsolása</translation>
+        <translation>Mikrofonnémítás kikapcsolása</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation>Mikrofon kikapcsolása</translation>
+        <translation>Mikrofon némítása</translation>
     </message>
 </context>
 <context>
@@ -741,7 +742,7 @@ so you can save the file on windows.</source>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>Írd ide az üzenetet...</translation>
+        <translation>Ide írja az üzenetet...</translation>
     </message>
 </context>
 <context>
@@ -775,7 +776,7 @@ so you can save the file on windows.</source>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation>Írj egy üzenetet a kérelemhez</translation>
+        <translation>Írnia kell egy üzenetet a kérelemhez</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
@@ -789,30 +790,30 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Csoportos chat %1</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Új üzenet</translation>
+        <translation>Új üzenet</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bejövő fájlátvitel</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Barátkérelem érkezett</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Új csoportüzenet</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Csoportmeghívás érkezett</translation>
     </message>
 </context>
 <context>
@@ -840,7 +841,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation>Küldésre várakozás...</translation>
+        <translation>Várakozás elküldésre...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
@@ -899,7 +900,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Távoli fél szüneteltet</translation>
     </message>
 </context>
 <context>
@@ -950,7 +951,7 @@ so you can save the file on windows.</source>
     <message>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Partnerkérelmek</translation>
+        <translation>Partnerkérelem</translation>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
@@ -1015,7 +1016,7 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation>Meghívás a &apos;%1&apos; csoportba</translation>
+        <translation>Meghívás a(z) &apos;%1&apos; csoportba</translation>
     </message>
     <message>
         <source>Move to circle...</source>
@@ -1028,11 +1029,11 @@ so you can save the file on windows.</source>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Eltávolítás &apos;%1&apos; körből</translation>
+        <translation>Eltávolítás a(z) &apos;%1&apos; körből</translation>
     </message>
     <message>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Mozgatás &quot;%1&quot; körbe</translation>
+        <translation>Mozgatás a(z) &quot;%1&quot; körbe</translation>
     </message>
     <message>
         <source>Show details</source>
@@ -1172,19 +1173,19 @@ a rendszertálca helyett.</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Frissítés keresése</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Helyesírás</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Max. fájlméret automatikus elfogadáskor (0 a letiltáshoz):</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"></translation>
+        <translation> MB</translation>
     </message>
 </context>
 <context>
@@ -1227,27 +1228,27 @@ a rendszertálca helyett.</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Megerősítés</translation>
+        <translation>Megerősítés</translation>
     </message>
     <message>
         <source>You are sure that you want to clear all displayed messages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztosan törölni szeretné az összes kijelzett üzenetet?</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresés a szövegben</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugrás a mai napra</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Chat előzmények betöltése...</translation>
+        <translation>Chat előzmények betöltése...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Exportálás fájlba</translation>
+        <translation>Exportálás fájlba</translation>
     </message>
 </context>
 <context>
@@ -1258,35 +1259,35 @@ a rendszertálca helyett.</translation>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation>Üzenetek Mutatása</translation>
+        <translation>Üzenetek megjelenítése</translation>
     </message>
     <message>
         <source>Hide Messages</source>
-        <translation>Üzenetek Elrejtése</translation>
+        <translation>Üzenetek elrejtése</translation>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Teljes képernyő</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Videó előnézet váltása</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Hang némítása</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished">Mikrofon kikapcsolása</translation>
+        <translation>Mikrofon némítása</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Videohívás befejezése</translation>
+        <translation>Videohívás befejezése</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilépés a teljes képernyőből</translation>
     </message>
 </context>
 <context>
@@ -1297,15 +1298,15 @@ a rendszertálca helyett.</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 belépett a csoportba</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ezentúl %2-ként ismert</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 kilépett a csoportból</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
@@ -1316,11 +1317,11 @@ a rendszertálca helyett.</translation>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>némítás</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>némítás kikapcsolása</translation>
     </message>
 </context>
 <context>
@@ -1342,7 +1343,7 @@ a rendszertálca helyett.</translation>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 meghívta őt ekkor: %2, %3.</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1381,11 +1382,11 @@ a rendszertálca helyett.</translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Új üzenet</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">Elérhető</translation>
+        <translation>Elérhető</translation>
     </message>
 </context>
 <context>
@@ -1402,7 +1403,7 @@ a rendszertálca helyett.</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Ez a csomó karakter megmondja más Tox kliensnek, hogyan csatlakozzon.
+        <translation>Ez a sok karakter megmondja más Tox kliensnek, hogyan lépjen Önnel kapcsolatba.
 Ossza ezt meg a partnerével a kommunikációhoz.</translation>
     </message>
     <message>
@@ -1606,7 +1607,7 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation>Állapotüzenet:</translation>
+        <translation>Állapotüzenetem:</translation>
     </message>
     <message>
         <source>My username</source>
@@ -1629,27 +1630,27 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Előzmény betöltése</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>mettől</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>meddig</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(kb. 100 üzenet betöltve)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dátumválasztó párbeszédablak</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon dátumot</translation>
     </message>
 </context>
 <context>
@@ -1734,11 +1735,11 @@ Győződjön meg róla, hogy ugyanazt a jelszót írta be kétszer.</translation
 You may want to create one.</source>
         <translation>Nincs kiválasztott profil.
 
-Lehet, hogy új profilt szükséges létrehozni.</translation>
+Lehet, hogy új profilt kell létrehoznia.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
-        <translation>A profil betöltése nem sikerült</translation>
+        <translation>A profil betöltése sikertelen</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
@@ -1849,7 +1850,7 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>Leírás</translation>
+        <translation>Állapot</translation>
     </message>
     <message>
         <source>Set availability status</source>
@@ -1959,7 +1960,7 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation>Összes chat előzmény végleges törlése?</translation>
+        <translation>Szeretné véglegesen törölni az összes chat előzményt?</translation>
     </message>
 </context>
 <context>
@@ -1989,7 +1990,7 @@ Mentési formátum változások lehetségesek, melyek adatvesztést eredményezh
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>A NoSpam része a Tox azonosítójának.
+        <translation>A NoSpam a Tox azonosítójának (ToxID) a része.
 Ha kéretlen partnerfelkérésekkel bombázzák, változtassa meg a NoSpam értékét.
 A felhasználók nem fogják tudni felvenni a régi azonosítójával, de a jelenlegi ismerősei megmaradnak.</translation>
     </message>
@@ -2000,7 +2001,7 @@ A felhasználók nem fogják tudni felvenni a régi azonosítójával, de a jele
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>A NoSpam része az azonosítójának és bármikor megváltoztatható.
+        <translation>A NoSpam az azonosító (ID) része, és bármikor megváltoztatható.
 Ha kéretlen partnerfelkérésekkel bombázzák, változtassa meg a NoSpam-ot.</translation>
     </message>
     <message>
@@ -2017,22 +2018,22 @@ Ha kéretlen partnerfelkérésekkel bombázzák, változtassa meg a NoSpam-ot.</
     </message>
     <message>
         <source>Filter group message by group member&apos;s public key. Put public key here, one per line.</source>
-        <translation>Csoport üzenet szűrése a tagok publikus kulcsa alapján. Illeszd be ide a publikus kulcsokat, minden sorba egyet.</translation>
+        <translation>Csoportüzenet szűrése a tagok publikus kulcsa alapján. Illessze be ide a publikus kulcsokat, soronként egyet.</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>A kulcs kinyerése a jelszóból sikertelen, a profil nem fogja használni az új jelszót.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation>Nem sikerült az adatbázis jelszavának megváltoztatása. Valószínűleg sérült, vagy a régi jelszót kell használni.</translation>
+        <translation>Az adatbázis jelszavának változtatása sikertelen. Valószínűleg megsérült. Használja a régi jelszót.</translation>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished">A qTox klienst használom</translation>
+        <translation>A qTox klienst használom</translation>
     </message>
 </context>
 <context>
@@ -2074,7 +2075,7 @@ Válasszon egy másik képet.</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>A profilt nem sikerült &quot;%1&quot;-ra/-re átnevezni</translation>
+        <translation>A profilt nem sikerült átnevezni erre: &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2117,7 +2118,7 @@ Válasszon egy másik képet.</translation>
     <message>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
-        <translation>QrCode mentése (*.png)</translation>
+        <translation>QR-kód mentése (*.png)</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
@@ -2191,10 +2192,10 @@ Válasszon egy másik képet.</translation>
 Share it with your friends to communicate.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation>Ez a karaktersorozat mutatja meg a többi Tox kliensnek, hogyan léphetnek kapcsolatba veled.
-Küldd el az ismerőseidnek, hogy felvehessenek az ismerőslistájukra.
+        <translation>Ez a karaktersorozat mondja meg a többi Tox-kliensnek, hogyan léphetnek Önnel kapcsolatba.
+Ossza ezt meg a barátaival a kommunikációhoz.
 
-Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszeget (szürke).</translation>
+Ez az azonosító tartalmazza a NoSpam-kódot (kék), és az ellenőrzőösszeget (szürke).</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
@@ -2240,22 +2241,22 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation>Nem sikerült törölni a ezeket a fájlokat:</translation>
+        <translation>Nem sikerült törölni ezeket a fájlokat:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation>Kérlek, kézileg távolitsd el őket.</translation>
+        <translation>Kérem, távolítsa el ezeket manuálisan.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation>Biztosan törlöd a jelszavad?</translation>
+        <translation>Biztosan törölni szeretné a jelszavát?</translation>
     </message>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished">Képek (%1)</translation>
+        <translation>Képek (%1)</translation>
     </message>
 </context>
 <context>
@@ -2278,7 +2279,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Figyelem: A kiválasztott fájl nem egy Tox mentés, ezért nem kerül feldolgozásra.</translation>
+        <translation>Figyelem: A kiválasztott fájl nem egy Tox mentés; nem kerül feldolgozásra.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -2311,7 +2312,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation>Rendben</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2344,7 +2345,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Nem tudod hozzáadni önmagad partnerként!</translation>
+        <translation>Nem tudja önmagát hozzáadni partnerként!</translation>
     </message>
 </context>
 <context>
@@ -2408,7 +2409,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
-        <translation>Kérjük ne használjon szóközt a nevében</translation>
+        <translation>Kérjük, ne használjon szóközt a névben</translation>
     </message>
     <message>
         <source>Password incorrect</source>
@@ -2466,52 +2467,52 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Sötét</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Sötétkék</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Sötétzöld</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Sötétpiros</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Sötétlila</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil automatikus betöltése sikertelen.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">elérhető</translation>
+        <translation>elérhető</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">távol</translation>
+        <translation>távol</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">elfoglalt</translation>
+        <translation>elfoglalt</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">nem elérhető</translation>
+        <translation>nem elérhető</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>letiltva</translation>
     </message>
 </context>
 <context>
@@ -2530,7 +2531,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Biztos eltávolítja %1 partnert a partnerlistájáról?</translation>
+        <translation>Biztosan eltávolítja %1 partnert a partnerlistájáról?</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
@@ -2569,54 +2570,54 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>A szöveg nem található.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Indítás</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Űrlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresés indítása:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>a végéről</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>az elejéről</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>dátum utáni</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>dátum előtti</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Kis/nagybetű érzékeny</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Csak teljes szavak</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontos kifejezések használata</translation>
     </message>
 </context>
 <context>
@@ -2714,7 +2715,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation>Chat</translation>
+        <translation>Csevegés (chat)</translation>
     </message>
     <message>
         <source>Base font:</source>
@@ -2722,7 +2723,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     </message>
     <message>
         <source>px</source>
-        <translation>px</translation>
+        <translation>pixel</translation>
     </message>
     <message>
         <source>Size: </source>
@@ -2730,7 +2731,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>A szövegbeállítások változtatásához a qToxot újra kell indítani.</translation>
+        <translation>Az új szövegstílus-beállítások változtatásához a qToxot újra kell indítani.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -2776,7 +2777,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation>Csoportos beszélgetések a partnerlista tetejére</translation>
+        <translation>Csoportos beszélgetések elhelyezése a partnerlista tetejére</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
@@ -2814,7 +2815,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     </message>
     <message>
         <source> px</source>
-        <translation> px</translation>
+        <translation> pixel</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -2839,8 +2840,7 @@ Ez az azonosító tartalmazza a NoSpam kódot (kék), és az ellenőrzőösszege
     <message>
         <source>If enabled every contact without an avatar set will have a generated avatar based on their Tox ID instead of a default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation>Ha be van kapcsolva, a profilkép nélküli ismerősöknek az alapértelmezett kép helyett egy kép lesz generálva a Tox azonosítójuk (Tox ID) alapján.
-Az új beállítás a qTox legközelebbi indításakor lép életbe.</translation>
+        <translation>Ha be van kapcsolva, a profilkép nélküli ismerősöknek az alapértelmezett kép helyett egy kép lesz generálva a Tox azonosítójuk (ToxID) alapján. Ehhez újraindítás szükséges.</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
@@ -2848,41 +2848,41 @@ Az új beállítás a qTox legközelebbi indításakor lép életbe.</translatio
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Színes nevek használata a chatben</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Értesítés mutatása, ha új üzenetet kap, és az ablak nincs kiválasztva.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Értesítés</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Csak akkor értesítsen a csoportbeszélgetések új üzeneteiről, ha Önt megemlítik.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>A csoportbeszélgetésekről csak akkor értesít, ha Önt megemlítik</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished">Hang lejátszása</translation>
+        <translation>Hang lejátszása</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished">Hangjelzés míg Elfoglalt</translation>
+        <translation>Hangjelzés, amíg Elfoglalt</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelzés asztali értesítéseken keresztül</translation>
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Az üzenet küldőjének és tartalmának elrejtése</translation>
     </message>
 </context>
 <context>
@@ -2983,7 +2983,7 @@ Az új beállítás a qTox legközelebbi indításakor lép életbe.</translatio
     </message>
     <message>
         <source>Friends</source>
-        <translation>Barátok</translation>
+        <translation>Partnerek</translation>
     </message>
     <message>
         <source>Groups</source>
@@ -3033,11 +3033,11 @@ Az új beállítás a qTox legközelebbi indításakor lép életbe.</translatio
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation>Partner Hozzáadása...</translation>
+        <translation>Partner hozzáadása...</translation>
     </message>
     <message>
         <source>Next Conversation</source>
-        <translation>Következő Beszélgetés</translation>
+        <translation>Következő beszélgetés</translation>
     </message>
     <message>
         <source>Previous Conversation</source>
@@ -3051,12 +3051,12 @@ Az új beállítás a qTox legközelebbi indításakor lép életbe.</translatio
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation>Ismerős hozzáadása</translation>
+        <translation>Partner hozzáadása</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation>Csoport meghívások</translation>
+        <translation>Csoportmeghívások</translation>
     </message>
     <message>
         <source>File transfers</source>
@@ -3075,19 +3075,19 @@ Az új beállítás a qTox legközelebbi indításakor lép életbe.</translatio
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">A(z) %1 fájl küldése nem sikerült</translation>
+        <translation>A(z) &quot;%1&quot; fájl küldése sikertelen</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl elküldve</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> küldött egy partnerkérelmet.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> meghívta Önt egy csoportba.</translation>
     </message>
 </context>
 </TS>

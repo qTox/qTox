@@ -793,30 +793,30 @@ astfel încât să puteți salva fișierul pe Windows.</translation>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Discuții de grup</translation>
     </message>
 </context>
 <context>
     <name>DesktopNotify</name>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Mesaj nou</translation>
+        <translation>Mesaj nou</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Transfer de fișiere primite</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerere de prietenie primită</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesaj de grup nou</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation type="unfinished"></translation>
+        <translation>Invitație de grup primită</translation>
     </message>
 </context>
 <context>
@@ -1249,15 +1249,15 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation type="unfinished"></translation>
+        <translation>Accesați data curentă</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Încărcați istoricul discuțiilor...</translation>
+        <translation>Încărcați istoricul discuțiilor...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Exportați în fișier</translation>
+        <translation>Exportați în fișier</translation>
     </message>
 </context>
 <context>
@@ -1643,27 +1643,27 @@ Profilul nu conține istoricul dvs.</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Încărcați istoric</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>din</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(aproximativ 100 de mesaje sunt încărcate)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished">Selectare dialog dată</translation>
+        <translation>Selectare dialog dată</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Selectați o dată</translation>
+        <translation>Selectați o dată</translation>
     </message>
 </context>
 <context>
@@ -2503,32 +2503,32 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu s-a putut încărca automat profilul.</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">conectat</translation>
+        <translation>conectat</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">departe</translation>
+        <translation>departe</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">ocupat</translation>
+        <translation>ocupat</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">deconectat</translation>
+        <translation>deconectat</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished">blocat</translation>
+        <translation>blocat</translation>
     </message>
 </context>
 <context>
@@ -2898,7 +2898,7 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Ascundeți expeditor de mesaj și conținut</translation>
     </message>
 </context>
 <context>
@@ -3096,19 +3096,19 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Eșec la trimiterea fișierului &quot;%1&quot;</translation>
+        <translation>Eșec la trimiterea fișierului &quot;%1&quot;</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fișier trimis</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> v-a trimis o cerere de prietenie.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> vă invită să vă alăturați unui grup.</translation>
     </message>
 </context>
 </TS>

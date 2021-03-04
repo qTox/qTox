@@ -64,7 +64,8 @@ which may lead to problems with video calls.</source>
         <translation>Define a resolução da sua câmera.
 Valores mais altos fornecem uma qualidade melhor.
 Observe no entanto que uma qualidade de vídeo maior exige uma conexão melhor com a internet.
-Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo maior, que pode acarretar em problemas nas chamadas de vídeo.</translation>
+Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo maior,
+o que pode acarretar problemas nas chamadas de vídeo.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -1119,7 +1120,8 @@ para que você possa salvar o arquivo no windows.</translation>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Após clicar em fechar (X), o qTox será minimizado para a bandeja ao em vez de fechar.</translation>
+        <translation>Após clicar em fechar (X), o qTox será minimizado para a bandeja,
+ao invés de fechar.</translation>
     </message>
     <message>
         <source>Close to tray</source>
@@ -1129,7 +1131,8 @@ instead of closing itself.</source>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Após clicar em minimizar (_) o qTox será minimizado para a bandeja, ao invés da barra de tarefas.</translation>
+        <translation>Após clicar em minimizar (_) o qTox será minimizado para a bandeja,
+ao invés da barra de tarefas.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>

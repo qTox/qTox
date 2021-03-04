@@ -258,7 +258,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation>Vali automaatselt vastuvõetavate failide salvestuskaust</translation>
+        <translation>Vali kataloog, millesse talletada automaatselt vastu võetavad failid</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -902,7 +902,7 @@ et saaksid faili Windowsis salvestada.</translation>
     <message>
         <source>Remote Paused</source>
         <comment>file transfer widget</comment>
-        <translation>Partner peatatud</translation>
+        <translation>Saatja peatas faili ülekandmise</translation>
     </message>
 </context>
 <context>
@@ -1133,7 +1133,8 @@ vaid süsteemisalve.</translation>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Pärast sulgemisnupu (X) vajutamist taandub qTox süsteemisalve, mitte ei sulgu.</translation>
+        <translation>Pärast sulgemisnupu (X) vajutamist taandub qTox süsteemisalve,
+aga mitte ei sulgu.</translation>
     </message>
     <message>
         <source>Close to tray</source>
@@ -1319,11 +1320,11 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>vaigista</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>lülita heli sisse</translation>
     </message>
 </context>
 <context>
@@ -1385,7 +1386,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Uus sõnum</translation>
     </message>
     <message>
         <source>Online</source>
@@ -1633,27 +1634,27 @@ Profiil ei sisalda vestluste ajalugu.</translation>
     </message>
     <message>
         <source>Load history</source>
-        <translation type="unfinished"></translation>
+        <translation>Laadi ajalugu</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>alates</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>kuni</translation>
     </message>
     <message>
         <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
+        <translation>(umbes 100 sõnumit on laetud)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuupäeva valiku aken</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished"></translation>
+        <translation>Vali kuupäev</translation>
     </message>
 </context>
 <context>
@@ -2473,27 +2474,27 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Tume</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Tumesinine</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Tumedast oliivikarva</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation type="unfinished"></translation>
+        <translation>Tumepunane</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Tumelilla</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Profiili automaatne laadimine ebaõnnestus.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2518,7 +2519,7 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>blokeeritud</translation>
     </message>
 </context>
 <context>
@@ -2576,11 +2577,11 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksti ei õnnestunud leida.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Alusta</translation>
     </message>
 </context>
 <context>
@@ -2591,39 +2592,39 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alusta otsingut:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation type="unfinished"></translation>
+        <translation>lõpust</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>algusest</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation type="unfinished"></translation>
+        <translation>pärast kuupäeva</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation type="unfinished"></translation>
+        <translation>enne kuupäeva</translation>
     </message>
     <message>
         <source>00.00.0000</source>
-        <translation type="unfinished"></translation>
+        <translation>00.00.0000</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Tõstutundlik</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Üksnes täielikud sõnad</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasuta regulaaravaldisi</translation>
     </message>
 </context>
 <context>
@@ -2854,25 +2855,25 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Use colored nicknames in chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasuta vestlustes värvilisi hüüdnimesid</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Näita teavitust, kui vestlusaken pole sõnumi saabumisel aktiivne.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Teavita</translation>
     </message>
     <message>
         <source>Onlys notify about new messages in groupchats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grupivestlusesse saabuvast uuest sõnumist teavita vaid siis, kui mind mainitakse.</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupivestluses teavita vaid siis, kui mind mainitakse</translation>
     </message>
     <message>
         <source>Play sound</source>
@@ -2884,11 +2885,11 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasuta teavitamiseks töölauakeskkonna teavitusmootorit</translation>
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Peida sõnumi saatja ja sisu</translation>
     </message>
 </context>
 <context>
@@ -3087,15 +3088,15 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
     <message>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fail on saadetud</translation>
     </message>
     <message>
         <source> sent you a friend request.</source>
-        <translation type="unfinished"></translation>
+        <translation> saatis sulle sõbrakutse.</translation>
     </message>
     <message>
         <source> invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation> kutsub sind gruppi.</translation>
     </message>
 </context>
 </TS>

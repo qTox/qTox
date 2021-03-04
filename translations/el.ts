@@ -181,7 +181,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>username</source>
-        <translation>συνθηματικό χρήστη</translation>
+        <translation>όνομα χρήστη</translation>
     </message>
     <message>
         <source>status message</source>
@@ -2045,7 +2045,7 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Κατάργηση</translation>
+        <translation>Αφαίρεση</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2317,7 +2317,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation>Άκυρο</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -2380,7 +2380,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Default</source>
-        <translation>Προεπιλεγμένο</translation>
+        <translation>Προεπιλογή</translation>
     </message>
     <message>
         <source>Blue</source>
@@ -2528,7 +2528,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Κατάργηση</translation>
+        <translation>Αφαίρεση</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
@@ -2536,7 +2536,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Αφαιρέστε όλο το ιστορικό συνομιλίας με το φίλο, εάν είναι ορισμένο</translation>
+        <translation>Κατάργηση όλου του ιστορικού συνομιλίας με το φίλο, εάν είναι ορισμένο</translation>
     </message>
 </context>
 <context>
@@ -2544,7 +2544,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Κάντε κλικ και σύρετε για να επιλέξτε μια περιοχή. Πατήστε %1 για να εμφανίστε/αποκρύψτε το παραθύρο qTox ή %2 για ακύρωση.</translation>
+        <translation>Κάντε κλικ και σύρετε για να επιλέξτε μια περιοχή. Πατήστε %1 για να εμφανίστε/αποκρύψτε το παράθυρο qTox ή %2 για ακύρωση.</translation>
     </message>
     <message>
         <source>Space</source>
@@ -2698,7 +2698,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation>Ακύρωση</translation>
+        <translation>Άκυρο</translation>
     </message>
 </context>
 <context>
