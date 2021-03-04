@@ -2,6 +2,7 @@
     <qresource prefix="/translations">
         <file>ar.qm</file>
         <file>be.qm</file>
+        <file>ber.ts</file>
         <file>bg.qm</file>
         <file>cs.qm</file>
         <file>da.qm</file>
@@ -13,12 +14,14 @@
         <file>fa.qm</file>
         <file>fi.qm</file>
         <file>fr.qm</file>
+        <file>gl.ts</file>
         <file>he.qm</file>
         <file>hr.qm</file>
         <file>hu.qm</file>
         <file>it.qm</file>
         <file>ja.qm</file>
         <file>jbo.qm</file>
+        <file>kn.ts</file>
         <file>ko.qm</file>
         <file>lt.qm</file>
         <file>mk.qm</file>
@@ -30,8 +33,10 @@
         <file>pt_BR.qm</file>
         <file>ro.qm</file>
         <file>ru.qm</file>
+        <file>si.ts</file>
         <file>sk.qm</file>
         <file>sl.qm</file>
+        <file>sq.ts</file>
         <file>sr.qm</file>
         <file>sr_Latn.qm</file>
         <file>sv.qm</file>
