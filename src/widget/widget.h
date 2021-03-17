@@ -198,6 +198,8 @@ public slots:
     void refreshPeerListsLocal(const QString& username);
     void onUpdateAvailable();
     void onCoreChanged(Core& core);
+    void onNotificationActivated();
+    void onFocusChanged(QWidget* old, QWidget* now);
 
 signals:
     void friendRequestAccepted(const ToxPk& friendPk);

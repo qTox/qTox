@@ -22,68 +22,110 @@
 
 #include <src/persistence/settings.h>
 
-#include <libsnore/snore.h>
+#include <KNotifications/KNotification>
+#include <knotifications_version.h>
 
 #include <QDebug>
 #include <QThread>
+#include <QStandardPaths>
+#include <QWidget>
+#include <QFile>
+#include <QDir>
 
-DesktopNotify::DesktopNotify()
-    : notifyCore{Snore::SnoreCore::instance()}
-    , snoreIcon{":/img/icons/qtox.svg"}
+#include <fstream>
+
+namespace
 {
+    void installNotificationConfig()
+    {
+        constexpr auto filename = "qTox.notifyrc";
+        constexpr auto knotificationsDirName = "knotifications5";
+        const auto genericDataPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+        const auto configDirPath =  genericDataPath + "/" + knotificationsDirName;
+        const auto configFilePath = configDirPath + "/" + filename;
 
-    notifyCore.loadPlugins(Snore::SnorePlugin::Backend);
-    qDebug() << "primary notification backend:" << notifyCore.primaryNotificationBackend();
+        QFile configFile(configFilePath);
 
-    snoreApp = Snore::Application("qTox", snoreIcon);
+        // If we update this later we'll have to do something more intelligent
+        // like hash both files and overwrite if our hash doesn't match the one
+        // on disk
+        if (configFile.exists())
+            return;
 
-    notifyCore.registerApplication(snoreApp);
+        QDir genericDataDir(genericDataPath);
 
-    connect(&notifyCore, &Snore::SnoreCore::notificationClosed, this, &DesktopNotify::onNotificationClose);
+        genericDataDir.mkdir(knotificationsDirName);
+
+        QFile inputFile(":qTox.notifyrc");
+        inputFile.copy(configFilePath);
+    }
+} // namespace
+
+DesktopNotify::DesktopNotify(QWidget* parent)
+    : parent(parent)
+{
+    // Our mac OS installer is a dmg which as far as I can tell cannot install
+    // our config to the required location. This is because GenericDataLocation
+    // is not within the Application folder we extract to. Short of switching to
+    // a real installer I am unsure of how to get our config file to the right
+    // spot at install time.
+    //
+    // Since we have this code anyways on all platforms we just install the
+    // config file at runtime on all platforms
+    installNotificationConfig();
 }
 
 void DesktopNotify::notifyMessage(const NotificationData& notificationData)
 {
+
     const Settings& s = Settings::getInstance();
     if(!(s.getNotify() && s.getDesktopNotify())) {
         return;
     }
 
-    auto icon = notificationData.pixmap.isNull() ? snoreIcon : Snore::Icon(notificationData.pixmap);
-    auto newNotification = Snore::Notification{snoreApp, Snore::Alert(), notificationData.title, notificationData.message, icon, 0};
-    latestId = newNotification.id();
+    if (!notification) {
+        notification = new KNotification("generic", KNotification::CloseWhenWidgetActivated);
+        notification->setWidget(parent);
 
-    if (lastNotification.isValid()) {
-        // Workaround for broken updating behavior in snore. Snore increments
-        // the message count when a notification is updated. Snore also caps the
-        // number of outgoing messages at 3. This means that if we update
-        // notifications more than 3 times we do not get notifications until the
-        // user activates the notification.
-        //
-        // We work around this by closing the existing notification and replacing
-        // it with a new one. We then only process the notification close if the
-        // latest notification id is the same as the one we are closing. This allows
-        // us to continue counting how many unread messages a user has until they
-        // close the notification themselves.
-        //
-        // I've filed a bug on the snorenotify mailing list but the project seems
-        // pretty dead. I filed a ticket on March 11 2020, and as of April 5 2020
-        // the moderators have not even acknowledged the message. A previous message
-        // got a response starting with "Snorenotify isn't that well maintained any more"
-        // (see https://mail.kde.org/pipermail/snorenotify/2019-March/000004.html)
-        // so I don't have hope of this being fixed any time soon
-        notifyCore.requestCloseNotification(lastNotification, Snore::Notification::CloseReasons::Dismissed);
+#if KNOTIFICATIONS_VERSION < (5<<16|67<<8)
+        // Default action only supported on 5.67 or later
+        notification->setActions({tr("Open")});
+        connect(notification, &KNotification::action1Activated, this, &DesktopNotify::onNotificationActivated);
+#else
+        notification->setDefaultAction({tr("Open")});
+        connect(notification, &KNotification::defaultActivated, this, &DesktopNotify::onNotificationActivated);
+#endif
+        connect(notification, &KNotification::closed, this, &DesktopNotify::onNotificationClosed);
+        connect(notification, &KNotification::ignored, this, &DesktopNotify::onNotificationClosed);
     }
 
-    notifyCore.broadcastNotification(newNotification);
-    lastNotification = newNotification;
+    notification->setTitle(notificationData.title);
+    notification->setText(notificationData.message);
+
+    // NOTE: On some systems this does not seem to be displayed. On GNOME 3.38
+    // the notification displays the icon whether or not KNotifications provides
+    // the pixmap under the "image_data" item in the dbus request. According to
+    // https://developer.gnome.org/notification-spec/ image-data should be
+    // highest priority, however it is not being chosen even though it is
+    // visible in dbus-monitor
+    //
+    // NOTE2: If notificationData.pixmap isNull KNotification will send the qtox
+    // icon instead
+    notification->setPixmap(notificationData.pixmap);
+
+    notification->sendEvent();
 }
 
-void DesktopNotify::onNotificationClose(Snore::Notification notification)
+void DesktopNotify::onNotificationActivated()
 {
-    if (notification.id() == latestId) {
-        lastNotification = {};
-        emit notificationClosed();
-    }
+    notification = nullptr;
+    emit notificationActivated();
 }
+
+void DesktopNotify::onNotificationClosed()
+{
+    notification = nullptr;
+    emit notificationClosed();
+}
+
 #endif

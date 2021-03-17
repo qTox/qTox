@@ -78,14 +78,14 @@
             ]
         },
         {
-            "name": "snorenotify",
+            "name": "knotifications",
             "buildsystem": "cmake-ninja",
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://github.com/KDE/snorenotify",
-                    "tag": "v0.7.0",
-                    "commit": "9124e016f4f7615af5e8fca962994f7ed85de3cc"
+                    "url": "https://github.com/KDE/knotifications",
+                    "tag": "v5.78.0",
+                    "commit": "3d0e42a3733777aaa6399c72d8ca9e4232d60aca"
                 }
             ]
         },
@@ -146,7 +146,8 @@
             "buildsystem": "cmake-ninja",
             "config-opts": [
                 "-DSVGZ_ICON=OFF",
-                "-DSTRICT_OPTIONS=ON"
+                "-DSTRICT_OPTIONS=ON",
+                "-DDESKTOP_NOTIFICATIONS=ON"
             ],
             "sources": [
                 {

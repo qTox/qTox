@@ -181,5 +181,6 @@
         <file>img/caps_lock.svg</file>
         <file>themes/default/contentDialog/contentDialog.css</file>
         <file>themes/default/tooliconsZone/tooliconsZone.css</file>
+        <file alias="qTox.notifyrc">res/qTox.notifyrc</file>
     </qresource>
 </RCC>

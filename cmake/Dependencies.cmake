@@ -262,9 +262,9 @@ if (PLATFORM_EXTENSIONS)
 endif()
 
 if (${DESKTOP_NOTIFICATIONS})
-    # snorenotify does only provide a cmake find module
-    find_package(LibsnoreQt5 0.7.0 REQUIRED)
-    set(ALL_LIBRARIES ${ALL_LIBRARIES} Snore::Libsnore)
+    # knotifications does only provide a cmake find module
+    find_package(KF5Notifications 5.18.0 REQUIRED)
+    set(ALL_LIBRARIES ${ALL_LIBRARIES} KF5::Notifications)
 endif()
 
 add_definitions(

@@ -352,7 +352,6 @@ then
     -skip webview \
     -skip x11extras \
     -skip xmlpatterns \
-    -no-dbus \
     -no-icu \
     -no-compile-examples \
     -qt-libjpeg \
@@ -665,24 +664,76 @@ else
 fi
 
 
-# Snorenotify
+# KDE Frameworks
 
-SNORE_PREFIX_DIR="$DEP_DIR/snorenotify"
-SNORE_VERSION=0.7.0
-SNORE_HASH="2e3f5fbb80ab993f6149136cd9a14c2de66f48cabce550dead167a9448f5bed9"
-SNORE_FILENAME="v$SNORE_VERSION.tar.gz"
-if [ ! -f "$SNORE_PREFIX_DIR/done" ]
+# Be careful with bumping the version, as KDE Frameworks might require newer
+# version of Qt that we have, which would fail the build, so check this first,
+# e.g. by checking the required Qt version at a versioned tag in:
+# https://github.com/KDE/knotifications/blob/master/CMakeLists.txt
+
+KF5_VERSION=5.76.0
+
+
+# Extra CMake Modules
+
+# We can't install it from Debian repos as the version should match
+# $KF5_VERSION, otherwise other KDE Frameworks components would error in cmake.
+
+ECM_PREFIX_DIR="$DEP_DIR/extra-cmake-modules"
+ECM_VERSION=$KF5_VERSION
+ECM_HASH="dc1929ebe09011e617d79db60004bc986e858a5f429cb26190d0cffbeef07b74"
+ECM_FILENAME="v$ECM_VERSION.tar.gz"
+if [ ! -f "$ECM_PREFIX_DIR/done" ]
 then
-  rm -rf "$SNORE_PREFIX_DIR"
-  mkdir -p "$SNORE_PREFIX_DIR"
+  rm -rf "$ECM_PREFIX_DIR"
+  mkdir -p "$ECM_PREFIX_DIR"
 
-  curl $CURL_OPTIONS -O "https://github.com/KDE/snorenotify/archive/${SNORE_FILENAME}"
-  check_sha256 "$SNORE_HASH" "$SNORE_FILENAME"
-  bsdtar --no-same-owner --no-same-permissions -xf $SNORE_FILENAME
-  rm $SNORE_FILENAME
-  cd snorenotify*
+  curl $CURL_OPTIONS -O "https://github.com/KDE/extra-cmake-modules/archive/${ECM_FILENAME}"
+  check_sha256 "$ECM_HASH" "$ECM_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$ECM_FILENAME"
+  rm $ECM_FILENAME
+  cd extra-cmake-modules*
 
-  mkdir _build && cd _build
+  mkdir -p build
+  cd build
+
+  cmake -DCMAKE_INSTALL_PREFIX="$ECM_PREFIX_DIR" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_TESTING=OFF \
+        ..
+
+  make
+  make install
+  echo -n $ECM_VERSION > $ECM_PREFIX_DIR/done
+
+  cd ..
+
+  cd ..
+  rm -rf ./extra-cmake-modules*
+else
+  echo "Using cached build of Extra CMake Modules `cat $ECM_PREFIX_DIR/done`"
+fi
+
+
+# KWindowSystem
+
+KWINDOWSYSTEM_PREFIX_DIR="$DEP_DIR/kwindowsystem"
+KWINDOWSYSTEM_VERSION=$KF5_VERSION
+KWINDOWSYSTEM_HASH="54b5cf7cd0e51c7a17b13529945f3516da1cd6b544f6c2567e5958136681e3b6"
+KWINDOWSYSTEM_FILENAME="v$KWINDOWSYSTEM_VERSION.tar.gz"
+if [ ! -f "$KWINDOWSYSTEM_PREFIX_DIR/done" ]
+then
+  rm -rf "$KWINDOWSYSTEM_PREFIX_DIR"
+  mkdir -p "$KWINDOWSYSTEM_PREFIX_DIR"
+
+  curl $CURL_OPTIONS -O "https://github.com/KDE/kwindowsystem/archive/${KWINDOWSYSTEM_FILENAME}"
+  check_sha256 "$KWINDOWSYSTEM_HASH" "$KWINDOWSYSTEM_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$KWINDOWSYSTEM_FILENAME"
+  rm $KWINDOWSYSTEM_FILENAME
+  cd kwindowsystem*
+
+  mkdir build
+  cd build
 
   export PKG_CONFIG_PATH="$QT_PREFIX_DIR/lib/pkgconfig"
   export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
@@ -694,20 +745,17 @@ then
       SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
       SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
 
-      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $QT_PREFIX_DIR)
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $QT_PREFIX_DIR $ECM_PREFIX_DIR)
   " > toolchain.cmake
 
-  cmake -DCMAKE_INSTALL_PREFIX="$SNORE_PREFIX_DIR" \
+  cmake -DCMAKE_INSTALL_PREFIX="$KWINDOWSYSTEM_PREFIX_DIR" \
         -DCMAKE_BUILD_TYPE=Relase \
-        -DBUILD_daemon=OFF \
-        -DBUILD_settings=OFF \
-        -DBUILD_snoresend=OFF \
         -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
         ..
 
   make
   make install
-  echo -n $SNORE_VERSION > $SNORE_PREFIX_DIR/done
+  echo -n $KWINDOWSYSTEM_VERSION > $KWINDOWSYSTEM_PREFIX_DIR/done
 
   unset PKG_CONFIG_PATH
   unset PKG_CONFIG_LIBDIR
@@ -715,9 +763,283 @@ then
   cd ..
 
   cd ..
-  rm -rf ./snorenotify*
+  rm -rf ./kwindowsystem*
 else
-  echo "Using cached build of snorenotify `cat $SNORE_PREFIX_DIR/done`"
+  echo "Using cached build of KWindowSystem `cat $KWINDOWSYSTEM_PREFIX_DIR/done`"
+fi
+
+
+# KConfig
+
+KCONFIG_PREFIX_DIR="$DEP_DIR/kconfig"
+KCONFIG_VERSION=$KF5_VERSION
+KCONFIG_HASH="9889fe3cd269caa9a67a228b40ecb2370ec3430004c04af72e4a78c09c6536b3"
+KCONFIG_FILENAME="v$KCONFIG_VERSION.tar.gz"
+if [ ! -f "$KCONFIG_PREFIX_DIR/done" ]
+then
+  rm -rf "$KCONFIG_PREFIX_DIR"
+  mkdir -p "$KCONFIG_PREFIX_DIR"
+
+  curl $CURL_OPTIONS -O "https://github.com/KDE/kconfig/archive/${KCONFIG_FILENAME}"
+  check_sha256 "$KCONFIG_HASH" "$KCONFIG_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$KCONFIG_FILENAME"
+  rm $KCONFIG_FILENAME
+  cd kconfig*
+
+  mkdir build
+  cd build
+
+  export PKG_CONFIG_PATH="$QT_PREFIX_DIR/lib/pkgconfig"
+  export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
+
+  echo "
+      SET(CMAKE_SYSTEM_NAME Windows)
+
+      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $QT_PREFIX_DIR $ECM_PREFIX_DIR)
+  " > toolchain.cmake
+
+  cmake -DCMAKE_INSTALL_PREFIX="$KCONFIG_PREFIX_DIR" \
+        -DCMAKE_BUILD_TYPE=Relase \
+        -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
+        -DKCONFIG_USE_GUI=OFF \
+        ..
+
+  make
+  make install
+  echo -n $KCONFIG_VERSION > $KCONFIG_PREFIX_DIR/done
+
+  unset PKG_CONFIG_PATH
+  unset PKG_CONFIG_LIBDIR
+
+  cd ..
+
+  cd ..
+  rm -rf ./kconfig*
+else
+  echo "Using cached build of KConfig `cat $KCONFIG_PREFIX_DIR/done`"
+fi
+
+
+# KCoreAddons
+
+KCOREADDONS_PREFIX_DIR="$DEP_DIR/kcoreaddons"
+KCOREADDONS_VERSION=$KF5_VERSION
+KCOREADDONS_HASH="e8d398656d3b69cd9bb55ee60b4e76d24c32ed2ddab48b9561803a56664ec568"
+KCOREADDONS_FILENAME="v$KCOREADDONS_VERSION.tar.gz"
+if [ ! -f "$KCOREADDONS_PREFIX_DIR/done" ]
+then
+  rm -rf "$KCOREADDONS_PREFIX_DIR"
+  mkdir -p "$KCOREADDONS_PREFIX_DIR"
+
+  curl $CURL_OPTIONS -O "https://github.com/KDE/kcoreaddons/archive/${KCOREADDONS_FILENAME}"
+  check_sha256 "$KCOREADDONS_HASH" "$KCOREADDONS_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$KCOREADDONS_FILENAME"
+  rm $KCOREADDONS_FILENAME
+  cd kcoreaddons*
+
+  mkdir build
+  cd build
+
+  export PKG_CONFIG_PATH="$QT_PREFIX_DIR/lib/pkgconfig"
+  export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
+
+  echo "
+      SET(CMAKE_SYSTEM_NAME Windows)
+
+      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $QT_PREFIX_DIR $ECM_PREFIX_DIR)
+  " > toolchain.cmake
+
+  cmake -DCMAKE_INSTALL_PREFIX="$KCOREADDONS_PREFIX_DIR" \
+        -DCMAKE_BUILD_TYPE=Relase \
+        -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
+        -DENABLE_INOTIFY=OFF \
+        -ENABLE_PROCSTAT=OFF \
+        ..
+
+  make
+  make install
+  echo -n $KCOREADDONS_VERSION > $KCOREADDONS_PREFIX_DIR/done
+
+  unset PKG_CONFIG_PATH
+  unset PKG_CONFIG_LIBDIR
+
+  cd ..
+
+  cd ..
+  rm -rf ./kcoreaddons*
+else
+  echo "Using cached build of KCoreAddons `cat $KCOREADDONS_PREFIX_DIR/done`"
+fi
+
+
+# Phonon
+
+PHONON_PREFIX_DIR="$DEP_DIR/phonon"
+PHONON_VERSION=4.11.1
+PHONON_HASH="94e782d1499a7b264122cf09aa559d6245b869d4c33462d82dd1eb294c132e1b"
+PHONON_FILENAME="v$PHONON_VERSION.tar.gz"
+if [ ! -f "$PHONON_PREFIX_DIR/done" ]
+then
+  rm -rf "$PHONON_PREFIX_DIR"
+  mkdir -p "$PHONON_PREFIX_DIR"
+
+  curl $CURL_OPTIONS -O "https://github.com/KDE/phonon/archive/${PHONON_FILENAME}"
+  check_sha256 "$PHONON_HASH" "$PHONON_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$PHONON_FILENAME"
+  rm $PHONON_FILENAME
+  cd phonon*
+
+  mkdir build
+  cd build
+
+  export PKG_CONFIG_PATH="$QT_PREFIX_DIR/lib/pkgconfig"
+  export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
+
+  echo "
+      SET(CMAKE_SYSTEM_NAME Windows)
+
+      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $QT_PREFIX_DIR $ECM_PREFIX_DIR)
+  " > toolchain.cmake
+
+  cmake -DCMAKE_INSTALL_PREFIX="$PHONON_PREFIX_DIR" \
+        -DCMAKE_BUILD_TYPE=Relase \
+        -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
+        -DPHONON_BUILD_EXPERIMENTAL=OFF \
+        -DPHONON_BUILD_DESIGNER_PLUGIN=OFF \
+        ..
+
+  make
+  make install
+  echo -n $PHONON_VERSION > $PHONON_PREFIX_DIR/done
+
+  unset PKG_CONFIG_PATH
+  unset PKG_CONFIG_LIBDIR
+
+  cd ..
+
+  cd ..
+  rm -rf ./phonon*
+else
+  echo "Using cached build of Phonon `cat $PHONON_PREFIX_DIR/done`"
+fi
+
+
+# Phonon DirectShow backend
+
+#PHONON_DIRECTSHOW_PREFIX_DIR="$DEP_DIR/phonon-directshow"
+#PHONON_DIRECTSHOW_VERSION="95a9820140ac722fdd59a21d6d709c88a89c1dab"
+#PHONON_DIRECTSHOW_HASH="757ee13cfc16c215e4186564394bac0f22fb104184a719e41ffda2bc6b456d33"
+#PHONON_DIRECTSHOW_FILENAME="$PHONON_DIRECTSHOW_VERSION.tar.gz"
+#if [ ! -f "$PHONON_DIRECTSHOW_PREFIX_DIR/done" ]
+#then
+#  rm -rf "$PHONON_DIRECTSHOW_PREFIX_DIR"
+#  mkdir -p "$PHONON_DIRECTSHOW_PREFIX_DIR"
+#
+#  git clone "https://github.com/KDE/phonon-directshow" phonon-directshow
+#  cd phonon-directshow
+#  check_sha256_git "$PHONON_DIRECTSHOW_HASH"
+#
+#  mkdir build
+#  cd build
+#
+#  export PKG_CONFIG_PATH="$QT_PREFIX_DIR/lib/pkgconfig:$PHONON_PREFIX_DIR/lib/pkgconfig"
+#  export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
+#
+#  echo "
+#      SET(CMAKE_SYSTEM_NAME Windows)
+#
+#      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+#      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+#      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+#
+#      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $QT_PREFIX_DIR $ECM_PREFIX_DIR $PHONON_PREFIX_DIR)
+#  " > toolchain.cmake
+#
+#  cmake -DCMAKE_INSTALL_PREFIX="$PHONON_DIRECTSHOW_PREFIX_DIR" \
+#        -DCMAKE_BUILD_TYPE=Relase \
+#        -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
+#        -DPHONON_BUILD_PHONON4QT5=ON \
+#        ..
+#
+#  make
+#  make install
+#  echo -n $PHONON_DIRECTSHOW_VERSION > $PHONON_DIRECTSHOW_PREFIX_DIR/done
+#
+#  unset PKG_CONFIG_PATH
+#  unset PKG_CONFIG_LIBDIR
+#
+#  cd ..
+#
+#  cd ..
+#  rm -rf ./phonon-directshow
+#else
+#  echo "Using cached build of Phonon DirectShow `cat $PHONON_DIRECTSHOW_PREFIX_DIR/done`"
+#fi
+
+
+# KNotifications
+
+KNOTIFICATIONS_PREFIX_DIR="$DEP_DIR/knotifications"
+KNOTIFICATIONS_VERSION=$KF5_VERSION
+KNOTIFICATIONS_HASH="ac817f3215412448563d1938a52cbed65dacbaa86e0030fe43950d4a4e576a07"
+KNOTIFICATIONS_FILENAME="v$KNOTIFICATIONS_VERSION.tar.gz"
+if [ ! -f "$KNOTIFICATIONS_PREFIX_DIR/done" ]
+then
+  rm -rf "$KNOTIFICATIONS_PREFIX_DIR"
+  mkdir -p "$KNOTIFICATIONS_PREFIX_DIR"
+
+  curl $CURL_OPTIONS -O "https://github.com/KDE/knotifications/archive/${KNOTIFICATIONS_FILENAME}"
+  check_sha256 "$KNOTIFICATIONS_HASH" "$KNOTIFICATIONS_FILENAME"
+  bsdtar --no-same-owner --no-same-permissions -xf "$KNOTIFICATIONS_FILENAME"
+  rm $KNOTIFICATIONS_FILENAME
+  cd knotifications*
+
+  mkdir build
+  cd build
+
+  export PKG_CONFIG_PATH="$QT_PREFIX_DIR/lib/pkgconfig:$KWINDOWSYSTEM_PREFIX_DIR/lib/pkgconfig:$KCONFIG_PREFIX_DIR/lib/pkgconfig:$KCOREADDONS_PREFIX_DIR/lib/pkgconfig:$PHONON_PREFIX_DIR/lib/pkgconfig"
+  export PKG_CONFIG_LIBDIR="/usr/$ARCH-w64-mingw32"
+
+  echo "
+      SET(CMAKE_SYSTEM_NAME Windows)
+
+      SET(CMAKE_C_COMPILER $ARCH-w64-mingw32-gcc)
+      SET(CMAKE_CXX_COMPILER $ARCH-w64-mingw32-g++)
+      SET(CMAKE_RC_COMPILER $ARCH-w64-mingw32-windres)
+
+      SET(CMAKE_FIND_ROOT_PATH /usr/$ARCH-w64-mingw32 $QT_PREFIX_DIR $ECM_PREFIX_DIR $KWINDOWSYSTEM_PREFIX_DIR $KCONFIG_PREFIX_DIR $KCOREADDONS_PREFIX_DIR $PHONON_PREFIX_DIR)
+  " > toolchain.cmake
+
+  cmake -DCMAKE_INSTALL_PREFIX="$KNOTIFICATIONS_PREFIX_DIR" \
+        -DCMAKE_BUILD_TYPE=Relase \
+        -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake \
+        ..
+
+  make
+  make install
+  echo -n $KNOTIFICATIONS_VERSION > $KNOTIFICATIONS_PREFIX_DIR/done
+
+  unset PKG_CONFIG_PATH
+  unset PKG_CONFIG_LIBDIR
+
+  cd ..
+
+  cd ..
+  rm -rf ./knotifications*
+else
+  echo "Using cached build of KNotifications `cat $KNOTIFICATIONS_PREFIX_DIR/done`"
 fi
 
 
@@ -859,13 +1181,13 @@ diff -ruN libvpx/build/make/Makefile patched/build/make/Makefile
 +$(foreach lib,$(filter %dll,$(LIBS)),$(eval $(call so_template,$(lib))))
  $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dylib,$(LIBS)),$(eval $(call dl_template,$(lib))))
  $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dll,$(LIBS)),$(eval $(call dll_template,$(lib))))
- 
+
 diff -ruN libvpx/configure patched/configure
 --- libvpx/configure	2019-02-13 16:56:49.162860897 +0100
 +++ patched/configure	2019-02-13 16:53:03.328719607 +0100
 @@ -513,23 +513,23 @@
  }
- 
+
  process_detect() {
 -    if enabled shared; then
 +    #if enabled shared; then
@@ -940,7 +1262,7 @@ diff -ruN libvpx/libs.mk patched/libs.mk
 -$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.so.$(SO_VERSION_MAJOR)
 +$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.dll
  $(BUILD_PFX)$(LIBVPX_SO): EXPORTS_FILE = $(EXPORT_FILE)
- 
+
  libvpx.def: $(call enabled,CODEC_EXPORTS)
 EOF
 
@@ -1379,6 +1701,7 @@ make
 
 cp qtox.exe $QTOX_PREFIX_DIR
 cp $QT_PREFIX_DIR/bin/Qt5Core.dll \
+   $QT_PREFIX_DIR/bin/Qt5DBus.dll \
    $QT_PREFIX_DIR/bin/Qt5Gui.dll \
    $QT_PREFIX_DIR/bin/Qt5Network.dll \
    $QT_PREFIX_DIR/bin/Qt5Svg.dll \
@@ -1389,12 +1712,7 @@ cp -r $QT_PREFIX_DIR/plugins/imageformats \
       $QT_PREFIX_DIR/plugins/platforms \
       $QT_PREFIX_DIR/plugins/iconengines \
       $QTOX_PREFIX_DIR
-cp {$OPENSSL_PREFIX_DIR,$SQLCIPHER_PREFIX_DIR,$FFMPEG_PREFIX_DIR,$OPENAL_PREFIX_DIR,$QRENCODE_PREFIX_DIR,$EXIF_PREFIX_DIR,$OPUS_PREFIX_DIR,$SODIUM_PREFIX_DIR,$VPX_PREFIX_DIR,$TOXCORE_PREFIX_DIR}/bin/*.dll $QTOX_PREFIX_DIR
-
-cp "$SNORE_PREFIX_DIR/bin/libsnore-qt5.dll" $QTOX_PREFIX_DIR
-mkdir -p "$QTOX_PREFIX_DIR/libsnore-qt5"
-cp "$SNORE_PREFIX_DIR/lib/plugins/libsnore-qt5/libsnore_backend_windowstoast.dll" "$QTOX_PREFIX_DIR/libsnore-qt5"
-cp "$SNORE_PREFIX_DIR/bin/SnoreToast.exe" $QTOX_PREFIX_DIR
+cp {$OPENSSL_PREFIX_DIR,$SQLCIPHER_PREFIX_DIR,$FFMPEG_PREFIX_DIR,$OPENAL_PREFIX_DIR,$QRENCODE_PREFIX_DIR,$EXIF_PREFIX_DIR,$KWINDOWSYSTEM_PREFIX_DIR,$KCONFIG_PREFIX_DIR,$KCOREADDONS_PREFIX_DIR,$PHONON_PREFIX_DIR,$KNOTIFICATIONS_PREFIX_DIR,$OPUS_PREFIX_DIR,$SODIUM_PREFIX_DIR,$VPX_PREFIX_DIR,$TOXCORE_PREFIX_DIR}/bin/*.dll $QTOX_PREFIX_DIR
 
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
 cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
@@ -1409,68 +1727,6 @@ then
   export WINEARCH=win64
 fi
 winecfg
-
-# qtox.exe dll checks (32-bit on i686, 64-bit on x86_64)
-python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/qtox.exe --dll-lookup-dirs $QTOX_PREFIX_DIR ~/.wine/drive_c/windows/system32 > /tmp/$ARCH-qtox-ldd
-find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-qtox-dll-find
-# dlls loded at run time that don't showup as a link time dependency
-echo "$QTOX_PREFIX_DIR/libssl-1_1.dll
-$QTOX_PREFIX_DIR/libssl-1_1-x64.dll
-$QTOX_PREFIX_DIR/libsnore-qt5/libsnore_backend_windowstoast.dll
-$QTOX_PREFIX_DIR/iconengines/qsvgicon.dll
-$QTOX_PREFIX_DIR/imageformats/qgif.dll
-$QTOX_PREFIX_DIR/imageformats/qico.dll
-$QTOX_PREFIX_DIR/imageformats/qjpeg.dll
-$QTOX_PREFIX_DIR/imageformats/qsvg.dll
-$QTOX_PREFIX_DIR/platforms/qdirect2d.dll
-$QTOX_PREFIX_DIR/platforms/qminimal.dll
-$QTOX_PREFIX_DIR/platforms/qoffscreen.dll
-$QTOX_PREFIX_DIR/platforms/qwindows.dll" > /tmp/$ARCH-qtox-dll-whitelist
-
-
-# Check that all dlls are in place
-if grep 'not found' /tmp/$ARCH-qtox-ldd
-then
-  cat /tmp/$ARCH-qtox-ldd
-  echo "Error: Missing some dlls."
-  exit 1
-fi
-
-# Check that no extra dlls get bundled
-while IFS= read -r line
-do
-  # skip over whitelisted dlls
-  if grep "$line" /tmp/$ARCH-qtox-dll-whitelist
-  then
-    continue
-  fi
-  if ! grep "$line" /tmp/$ARCH-qtox-ldd
-  then
-    echo "Error: extra dll included: $line. If this is a mistake and the dll is actually needed (e.g. it's loaded at run-time), please add it to the whitelist."
-    exit 1
-  fi
-done < /tmp/$ARCH-qtox-dll-find
-
-
-# SnoreToast.exe dll checks (always 32-bit)
-if [[ "$ARCH" == "i686" ]]
-then
-  SNORETOAST_WINE_DLLS=/root/.wine/drive_c/windows/system32
-elif [[ "$ARCH" == "x86_64" ]]
-then
-  SNORETOAST_WINE_DLLS=/root/.wine/drive_c/windows/syswow64
-fi
-
-python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/SnoreToast.exe --dll-lookup-dirs $SNORETOAST_WINE_DLLS > /tmp/$ARCH-SnoreToast-ldd
-
-# Check that all dlls are in place
-if grep 'not found' /tmp/$ARCH-SnoreToast-ldd
-then
-  cat /tmp/$ARCH-SnoreToast-ldd
-  echo "Error: Missing some dlls."
-  exit 1
-fi
-
 
 # Run tests (only on Travis)
 set +u
@@ -1495,15 +1751,52 @@ then
   # Get debug scripts
   cp -r $MINGW_W64_DEBUG_SCRIPTS_PREFIX_DIR/bin/* "$QTOX_PREFIX_DIR/"
   cp -r $GDB_PREFIX_DIR/bin/gdb.exe "$QTOX_PREFIX_DIR/"
+fi
 
-  # Check that all dlls are in place
-  python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/gdb.exe --dll-lookup-dirs $QTOX_PREFIX_DIR ~/.wine/drive_c/windows/system32 > /tmp/$ARCH-gdb-ldd
-  if grep 'not found' /tmp/$ARCH-gdb-ldd
+# dll check
+
+find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-dlls-find
+find "$QTOX_PREFIX_DIR" -name '*.exe' > /tmp/$ARCH-exes-find
+
+# dlls loded at run time that don't showup as a link time dependency
+echo "$QTOX_PREFIX_DIR/libssl-1_1.dll
+$QTOX_PREFIX_DIR/libssl-1_1-x64.dll
+$QTOX_PREFIX_DIR/iconengines/qsvgicon.dll
+$QTOX_PREFIX_DIR/imageformats/qgif.dll
+$QTOX_PREFIX_DIR/imageformats/qico.dll
+$QTOX_PREFIX_DIR/imageformats/qjpeg.dll
+$QTOX_PREFIX_DIR/imageformats/qsvg.dll
+$QTOX_PREFIX_DIR/platforms/qdirect2d.dll
+$QTOX_PREFIX_DIR/platforms/qminimal.dll
+$QTOX_PREFIX_DIR/platforms/qoffscreen.dll
+$QTOX_PREFIX_DIR/platforms/qwindows.dll" > /tmp/$ARCH-dll-whitelist
+
+# Get all dlls reachable from exes and whitelisted dlls
+rm -f /tmp/$ARCH-dlls-reachable
+while IFS= read -r line
+do
+  if [ -f "$line" ]
   then
-    cat /tmp/$ARCH-gdb-ldd
-    echo "Error: Missing some dlls."
+    python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $line --dll-lookup-dirs $QTOX_PREFIX_DIR ~/.wine/drive_c/windows/system32 --output-format tree >> /tmp/$ARCH-dlls-reachable
+  fi
+done < <(cat /tmp/$ARCH-exes-find /tmp/$ARCH-dll-whitelist)
+
+# Check that no extra dlls get bundled
+while IFS= read -r line
+do
+  if ! grep "$line" /tmp/$ARCH-dlls-reachable
+  then
+    echo "Error: extra dll included: $line. If this is a mistake and the dll is actually needed (e.g. it's loaded at run-time), please add it to the whitelist."
     exit 1
   fi
+done < /tmp/$ARCH-dlls-find
+
+# Check that no dll is missing
+if grep 'not found' /tmp/$ARCH-dlls-reachable
+then
+  cat /tmp/$ARCH-dlls-reachable
+  echo "Error: Missing some dlls."
+  exit 1
 fi
 
 # Strip

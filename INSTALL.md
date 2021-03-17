@@ -45,7 +45,7 @@
 | [qrencode]               | >= 3.0.3    |                                                          |
 | [sqlcipher]              | >= 3.2.0    |                                                          |
 | [pkg-config]             | >= 0.28     |                                                          |
-| [snorenotify]            | >= 0.7.0    | optional dependency                                      |
+| [knotifications]         | >= 5.16.0   | optional dependency                                      |
 | [toxext]                 | >= 0.0.1    |                                                          |
 | [tox_extension_messages] | >= 0.0.1    |                                                          |
 
@@ -88,13 +88,13 @@ of spell check).
 
 Disabled if dependencies are missing during compilation.
 
-#### Snorenotify desktop notification backend
+#### KNotifications desktop notification backend
 
 Disabled by default
 
 | Name              | Version   |
 |-------------------|-----------|
-| [snorenotify]     | >= 0.7.0  |
+| [knotifications]  | >= 5.18.0 |
 
 To enable: `-DDESKTOP_NOTIFICATIONS=True`
 
@@ -781,6 +781,6 @@ Switches:
 [Qt]: https://www.qt.io/
 [toxcore]: https://github.com/TokTok/c-toxcore/
 [sonnet]: https://github.com/KDE/sonnet
-[snorenotify]: https://techbase.kde.org/Projects/Snorenotify
+[knotifications]: https://invent.kde.org/frameworks/knotifications
 [toxext]: https://github.com/toxext/toxext
 [tox_extension_messages]: https://github.com/toxext/tox_extension_messages

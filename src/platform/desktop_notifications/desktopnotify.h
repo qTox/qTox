@@ -21,32 +21,33 @@
 
 #include "src/model/notificationdata.h"
 
-#include <libsnore/snore.h>
-
 #include <QObject>
 
 #include <memory>
 #include <unordered_set>
+#include <mutex>
+
+class KNotification;
 
 class DesktopNotify : public QObject
 {
     Q_OBJECT
 public:
-    DesktopNotify();
+    DesktopNotify(QWidget* parent = nullptr);
 
 public slots:
     void notifyMessage(const NotificationData& notificationData);
 
+private slots:
+    void onNotificationActivated();
+    void onNotificationClosed();
+
 signals:
     void notificationClosed();
+    void notificationActivated();
 
-private slots:
-    void onNotificationClose(Snore::Notification notification);
 
 private:
-    Snore::SnoreCore& notifyCore;
-    Snore::Application snoreApp;
-    Snore::Icon snoreIcon;
-    Snore::Notification lastNotification;
-    uint latestId;
+    QWidget* parent = nullptr;
+    KNotification* notification = nullptr;
 };
