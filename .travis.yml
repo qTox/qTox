@@ -47,12 +47,12 @@ jobs:
       env: JOB=build-ubuntu-16-04
       addons:
         apt:
-          packages: 
+          packages:
             - lcov
       script: "./.travis/$JOB.sh"
       after_success:
         # Create lcov report
-        - lcov --directory _debug --capture --output-file coverage.info
+        - lcov --directory _build --capture --output-file coverage.info
         # Filter out system headers and test sources
         - lcov --remove coverage.info '/usr/*' '*/test/*' '*/*_autogen/*' --output-file coverage.info
         # Upload report to codecov.io 

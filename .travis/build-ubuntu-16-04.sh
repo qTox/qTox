@@ -198,20 +198,15 @@ build_qtox() {
     echo '*** BUILDING "FULL" VERSION ***'
     cmake -H. -B"$BUILDDIR" \
         -DUPDATE_CHECK=ON \
-        -DSTRICT_OPTIONS=ON
+        -DSTRICT_OPTIONS=ON \
+        -DCODE_COVERAGE=ON
     bdir
 }
 
 test_qtox() {
-    local BUILDDIR=_debug
-
-    cmake -H. -B"$BUILDDIR" \
-        -DUPDATE_CHECK=ON \
-        -DSTRICT_OPTIONS=ON \
-        -DCODE_COVERAGE=ON
+    local BUILDDIR=_build
 
     cd $BUILDDIR
-    make -j$(nproc)
     make test
     cd -
 }
