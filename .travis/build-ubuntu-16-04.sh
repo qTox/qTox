@@ -198,7 +198,8 @@ build_qtox() {
     echo '*** BUILDING "FULL" VERSION ***'
     cmake -H. -B"$BUILDDIR" \
         -DUPDATE_CHECK=ON \
-        -DSTRICT_OPTIONS=ON
+        -DSTRICT_OPTIONS=ON \
+        -DCODE_COVERAGE=ON
     bdir
 }
 

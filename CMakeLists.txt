@@ -579,6 +579,20 @@ MESSAGE( STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS} )
 # the compiler flags for compiling C++ sources
 MESSAGE( STATUS "CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS} )
 
+# Interface library to propagate code coverage flags if enabled
+add_library(coverage_config INTERFACE)
+option(CODE_COVERAGE "Enable coverage reporting" OFF)
+if (CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+  target_compile_options(coverage_config INTERFACE -O0 -g --coverage)
+  if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
+    target_link_options(coverage_config INTERFACE --coverage)
+  else()
+    target_link_libraries(coverage_config INTERFACE --coverage)
+  endif()
+endif()
+
+link_libraries(coverage_config)
+
 add_subdirectory(util)
 add_subdirectory(audio)
 add_subdirectory(translations)
@@ -589,7 +603,8 @@ add_library(${PROJECT_NAME}_static
   ${${PROJECT_NAME}_SOURCES})
 target_link_libraries(${PROJECT_NAME}_static
   ${CMAKE_REQUIRED_LIBRARIES}
-  ${ALL_LIBRARIES})
+  ${ALL_LIBRARIES}
+  coverage_config)
 
 target_link_libraries(${PROJECT_NAME}_static util_library)
 target_link_libraries(${PROJECT_NAME}_static audio_library)
