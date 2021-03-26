@@ -1206,8 +1206,8 @@ set -u
   # GDB
 
   GDB_PREFIX_DIR="$DEP_DIR/gdb"
-  GDB_VERSION="9.2"
-  GDB_HASH="360cd7ae79b776988e89d8f9a01c985d0b1fa21c767a4295e5f88cb49175c555"
+  GDB_VERSION="10.1"
+  GDB_HASH="f82f1eceeec14a3afa2de8d9b0d3c91d5a3820e23e0a01bbb70ef9f0276b62c0"
   GDB_FILENAME="gdb-$GDB_VERSION.tar.xz"
   if [ ! -f "$GDB_PREFIX_DIR/done" ]
   then
