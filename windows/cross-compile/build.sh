@@ -1030,7 +1030,9 @@ else
   echo "Using cached build of Toxcore `cat $TOXCORE_PREFIX_DIR/done`"
 fi
 
-# toxext
+
+# ToxExt
+
 TOXEXT_PREFIX_DIR="$DEP_DIR/toxext"
 TOXEXT_VERSION=0.0.2
 TOXEXT_HASH="047093eeed396ea9b4a3f0cd0a6bc4e0e09b339e2b03ba4b676e30888fe6acde"
@@ -1082,7 +1084,9 @@ else
   echo "Using cached build of ToxExt `cat $TOXEXT_PREFIX_DIR/done`"
 fi
 
+
 # tox_extension_messages
+
 TOX_EXTENSION_MESSAGES_PREFIX_DIR="$DEP_DIR/tox_extension_messages"
 TOX_EXTENSION_MESSAGES_VERSION=0.0.2
 TOX_EXTENSION_MESSAGES_HASH="95e8cdd1de6cc7ba561620716f340e9606a06b3c2ff9c9020af4784c22fd0d7f"
@@ -1134,6 +1138,7 @@ else
   echo "Using cached build of tox_extension_messages `cat $TOX_EXTENSION_MESSAGES_PREFIX_DIR/done`"
 fi
 
+
 set +u
 if [[ -n "$TRAVIS_CI_STAGE" ]] || [[ "$BUILD_TYPE" == "debug" ]]
 then
@@ -1169,8 +1174,8 @@ set -u
   # Expat
 
   EXPAT_PREFIX_DIR="$DEP_DIR/libexpat"
-  EXPAT_VERSION="2.2.10"
-  EXPAT_HASH="5dfe538f8b5b63f03e98edac520d7d9a6a4d22e482e5c96d4d06fcc5485c25f2"
+  EXPAT_VERSION="2.3.0"
+  EXPAT_HASH="caa34f99b6e3bcea8502507eb6549a0a84510b244a748dfb287271b2d47467a9"
   EXPAT_FILENAME="expat-$EXPAT_VERSION.tar.xz"
   if [ ! -f "$EXPAT_PREFIX_DIR/done" ]
   then
