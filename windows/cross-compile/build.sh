@@ -232,9 +232,9 @@ store_apt_cache()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.1.1h
+OPENSSL_VERSION=1.1.1k
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="5c9ca8774bd7b03e5784f26ae9e9e6d749c9da2438545077e6b3d755a06595d9"
+OPENSSL_HASH="892a0875b9872acd04a9fde79b1f943075d5ea162415de3047c327df33fbaee5"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
@@ -275,10 +275,10 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=12
-QT_PATCH=9
+QT_PATCH=10
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.12/5.12.9/single/qt-everywhere-src-5.12.9.tar.xz.mirrorlist
-QT_HASH="a628186814b73e93594ee8e72f975116599f946919ae6bd86611981b739acff0"
+# hash from https://download.qt.io/archive/qt/5.12/5.12.10/single/qt-everywhere-src-5.12.10.tar.xz.mirrorlist
+QT_HASH="3e0ee1e57f5cf3eeb038d0b4b22c7eb442285c62639290756b39dc93a1d0e14f"
 QT_FILENAME="qt-everywhere-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
@@ -392,8 +392,8 @@ set -u
 # SQLCipher
 
 SQLCIPHER_PREFIX_DIR="$DEP_DIR/libsqlcipher"
-SQLCIPHER_VERSION=v4.4.0
-SQLCIPHER_HASH="0924b2ae1079717954498bda78a30de20ce2a6083076b16214a711567821d148"
+SQLCIPHER_VERSION=v4.4.3
+SQLCIPHER_HASH="b8df69b998c042ce7f8a99f07cf11f45dfebe51110ef92de95f1728358853133"
 SQLCIPHER_FILENAME="$SQLCIPHER_VERSION.tar.gz"
 if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]
 then
@@ -434,8 +434,8 @@ fi
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
-FFMPEG_VERSION=4.3.1
-FFMPEG_HASH="ad009240d46e307b4e03a213a0f49c11b650e445b1f8be0dda2a9212b34d2ffb"
+FFMPEG_VERSION=4.3.2
+FFMPEG_HASH="46e4e64f1dd0233cbc0934b9f1c0da676008cad34725113fb7f802cfa84ccddb"
 FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
@@ -791,8 +791,8 @@ fi
 # VPX
 
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
-VPX_VERSION=v1.9.0
-VPX_HASH="d279c10e4b9316bf11a570ba16c3d55791e1ad6faa4404c67422eb631782c80a"
+VPX_VERSION=v1.10.0
+VPX_HASH="85803ccbdbdd7a3b03d930187cb055f1353596969c1f92ebec2db839fa4f834a"
 VPX_FILENAME="libvpx-$VPX_VERSION.tar.gz"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then
@@ -1030,7 +1030,9 @@ else
   echo "Using cached build of Toxcore `cat $TOXCORE_PREFIX_DIR/done`"
 fi
 
-# toxext
+
+# ToxExt
+
 TOXEXT_PREFIX_DIR="$DEP_DIR/toxext"
 TOXEXT_VERSION=0.0.2
 TOXEXT_HASH="047093eeed396ea9b4a3f0cd0a6bc4e0e09b339e2b03ba4b676e30888fe6acde"
@@ -1082,7 +1084,9 @@ else
   echo "Using cached build of ToxExt `cat $TOXEXT_PREFIX_DIR/done`"
 fi
 
+
 # tox_extension_messages
+
 TOX_EXTENSION_MESSAGES_PREFIX_DIR="$DEP_DIR/tox_extension_messages"
 TOX_EXTENSION_MESSAGES_VERSION=0.0.2
 TOX_EXTENSION_MESSAGES_HASH="95e8cdd1de6cc7ba561620716f340e9606a06b3c2ff9c9020af4784c22fd0d7f"
@@ -1134,6 +1138,7 @@ else
   echo "Using cached build of tox_extension_messages `cat $TOX_EXTENSION_MESSAGES_PREFIX_DIR/done`"
 fi
 
+
 set +u
 if [[ -n "$TRAVIS_CI_STAGE" ]] || [[ "$BUILD_TYPE" == "debug" ]]
 then
@@ -1169,8 +1174,8 @@ set -u
   # Expat
 
   EXPAT_PREFIX_DIR="$DEP_DIR/libexpat"
-  EXPAT_VERSION="2.2.10"
-  EXPAT_HASH="5dfe538f8b5b63f03e98edac520d7d9a6a4d22e482e5c96d4d06fcc5485c25f2"
+  EXPAT_VERSION="2.3.0"
+  EXPAT_HASH="caa34f99b6e3bcea8502507eb6549a0a84510b244a748dfb287271b2d47467a9"
   EXPAT_FILENAME="expat-$EXPAT_VERSION.tar.xz"
   if [ ! -f "$EXPAT_PREFIX_DIR/done" ]
   then
@@ -1201,8 +1206,8 @@ set -u
   # GDB
 
   GDB_PREFIX_DIR="$DEP_DIR/gdb"
-  GDB_VERSION="9.2"
-  GDB_HASH="360cd7ae79b776988e89d8f9a01c985d0b1fa21c767a4295e5f88cb49175c555"
+  GDB_VERSION="10.1"
+  GDB_HASH="f82f1eceeec14a3afa2de8d9b0d3c91d5a3820e23e0a01bbb70ef9f0276b62c0"
   GDB_FILENAME="gdb-$GDB_VERSION.tar.xz"
   if [ ! -f "$GDB_PREFIX_DIR/done" ]
   then
@@ -1267,8 +1272,8 @@ cp "$NSISSHELLEXECASUSER_PREFIX_DIR/bin/ShellExecAsUser.dll" /usr/share/nsis/Plu
 # mingw-ldd
 
 MINGW_LDD_PREFIX_DIR="$DEP_DIR/mingw-ldd"
-MINGW_LDD_VERSION=v0.2.0
-MINGW_LDD_HASH="d4cf712da18fa822b4934144d44cd254e18c9c0ca987363503bb3b6aeb3134db"
+MINGW_LDD_VERSION=v0.2.1
+MINGW_LDD_HASH="60d34506d2f345e011b88de172ef312f37ca3ba87f3764f511061b69878ab204"
 MINGW_LDD_FILENAME="$MINGW_LDD_VERSION.tar.gz"
 if [ ! -f "$MINGW_LDD_PREFIX_DIR/done" ]
 then
