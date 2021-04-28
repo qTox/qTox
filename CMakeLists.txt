@@ -263,6 +263,10 @@ set(${PROJECT_NAME}_SOURCES
   src/model/about/aboutfriend.cpp
   src/model/about/aboutfriend.h
   src/model/about/iaboutfriend.h
+  src/model/chathistory.cpp
+  src/model/chathistory.h
+  src/model/chatlogitem.cpp
+  src/model/chatlogitem.h
   src/model/chatroom/chatroom.h
   src/model/chatroom/friendchatroom.cpp
   src/model/chatroom/friendchatroom.h
@@ -270,40 +274,34 @@ set(${PROJECT_NAME}_SOURCES
   src/model/chatroom/groupchatroom.h
   src/model/contact.cpp
   src/model/contact.h
-  src/model/chatlogitem.cpp
-  src/model/chatlogitem.h
-  src/model/exiftransform.h
+  src/model/dialogs/idialogs.h
   src/model/exiftransform.cpp
+  src/model/exiftransform.h
+  src/model/friendmessagedispatcher.cpp
+  src/model/friendmessagedispatcher.h
   src/model/friend.cpp
   src/model/friend.h
-  src/model/message.h
-  src/model/message.cpp
-  src/model/imessagedispatcher.h
-  src/model/friendmessagedispatcher.h
-  src/model/friendmessagedispatcher.cpp
-  src/model/groupmessagedispatcher.h
-  src/model/groupmessagedispatcher.cpp
-  src/model/message.h
-  src/model/message.cpp
   src/model/groupinvite.cpp
   src/model/groupinvite.h
+  src/model/groupmessagedispatcher.cpp
+  src/model/groupmessagedispatcher.h
   src/model/group.cpp
   src/model/group.h
-  src/model/status.cpp
-  src/model/status.h
+  src/model/ibootstraplistgenerator.h
+  src/model/ichatlog.h
+  src/model/imessagedispatcher.h
+  src/model/message.cpp
+  src/model/message.h
+  src/model/notificationgenerator.cpp
+  src/model/notificationgenerator.h
   src/model/profile/iprofileinfo.h
   src/model/profile/profileinfo.cpp
   src/model/profile/profileinfo.h
-  src/model/dialogs/idialogs.h
-  src/model/ichatlog.h
-  src/model/sessionchatlog.h
   src/model/sessionchatlog.cpp
-  src/model/chathistory.h
-  src/model/chathistory.cpp
+  src/model/sessionchatlog.h
+  src/model/status.cpp
+  src/model/status.h
   src/model/toxclientstandards.h
-  src/model/ibootstraplistgenerator.h
-  src/model/notificationgenerator.h
-  src/model/notificationgenerator.cpp
   src/net/bootstrapnodeupdater.cpp
   src/net/bootstrapnodeupdater.h
   src/net/avatarbroadcaster.cpp
