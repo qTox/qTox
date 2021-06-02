@@ -30,7 +30,7 @@
 
 AlSink::~AlSink()
 {
-    QMutexLocker{&killLock};
+    QMutexLocker locker{&killLock};
 
     // unsubscribe only if not already killed
     if (!killed) {
@@ -41,7 +41,7 @@ AlSink::~AlSink()
 
 void AlSink::playAudioBuffer(const int16_t* data, int samples, unsigned channels, int sampleRate) const
 {
-    QMutexLocker{&killLock};
+    QMutexLocker locker{&killLock};
 
     if (killed) {
         qCritical() << "Trying to play audio on an invalid sink";
@@ -52,7 +52,7 @@ void AlSink::playAudioBuffer(const int16_t* data, int samples, unsigned channels
 
 void AlSink::playMono16Sound(const IAudioSink::Sound& sound)
 {
-    QMutexLocker{&killLock};
+    QMutexLocker locker{&killLock};
 
     if (killed) {
         qCritical() << "Trying to play sound on an invalid sink";
@@ -63,7 +63,7 @@ void AlSink::playMono16Sound(const IAudioSink::Sound& sound)
 
 void AlSink::startLoop()
 {
-    QMutexLocker{&killLock};
+    QMutexLocker locker{&killLock};
 
     if (killed) {
         qCritical() << "Trying to start loop on an invalid sink";
@@ -74,7 +74,7 @@ void AlSink::startLoop()
 
 void AlSink::stopLoop()
 {
-    QMutexLocker{&killLock};
+    QMutexLocker locker{&killLock};
 
     if (killed) {
         qCritical() << "Trying to stop loop on an invalid sink";
@@ -106,7 +106,7 @@ AlSink::AlSink(OpenAL& al, uint sourceId)
 
 AlSink::operator bool() const
 {
-    QMutexLocker{&killLock};
+    QMutexLocker locker{&killLock};
 
     return !killed;
 }

@@ -90,7 +90,7 @@ void CoreFile::connectCallbacks(Tox &tox)
 
 void CoreFile::sendAvatarFile(uint32_t friendId, const QByteArray& data)
 {
-    QMutexLocker{coreLoopLock};
+    QMutexLocker locker{coreLoopLock};
 
     uint64_t filesize = 0;
     uint8_t *file_id = nullptr;
@@ -144,7 +144,7 @@ void CoreFile::sendAvatarFile(uint32_t friendId, const QByteArray& data)
 void CoreFile::sendFile(uint32_t friendId, QString filename, QString filePath,
                         long long filesize)
 {
-    QMutexLocker{coreLoopLock};
+    QMutexLocker locker{coreLoopLock};
 
     ToxString fileName(filename);
     Tox_Err_File_Send sendErr;
@@ -173,7 +173,7 @@ void CoreFile::sendFile(uint32_t friendId, QString filename, QString filePath,
 
 void CoreFile::pauseResumeFile(uint32_t friendId, uint32_t fileId)
 {
-    QMutexLocker{coreLoopLock};
+    QMutexLocker locker{coreLoopLock};
 
     ToxFile* file = findFile(friendId, fileId);
     if (!file) {
@@ -207,7 +207,7 @@ void CoreFile::pauseResumeFile(uint32_t friendId, uint32_t fileId)
 
 void CoreFile::cancelFileSend(uint32_t friendId, uint32_t fileId)
 {
-    QMutexLocker{coreLoopLock};
+    QMutexLocker locker{coreLoopLock};
 
     ToxFile* file = findFile(friendId, fileId);
     if (!file) {
@@ -223,7 +223,7 @@ void CoreFile::cancelFileSend(uint32_t friendId, uint32_t fileId)
 
 void CoreFile::cancelFileRecv(uint32_t friendId, uint32_t fileId)
 {
-    QMutexLocker{coreLoopLock};
+    QMutexLocker locker{coreLoopLock};
 
     ToxFile* file = findFile(friendId, fileId);
     if (!file) {
@@ -238,7 +238,7 @@ void CoreFile::cancelFileRecv(uint32_t friendId, uint32_t fileId)
 
 void CoreFile::rejectFileRecvRequest(uint32_t friendId, uint32_t fileId)
 {
-    QMutexLocker{coreLoopLock};
+    QMutexLocker locker{coreLoopLock};
 
     ToxFile* file = findFile(friendId, fileId);
     if (!file) {
@@ -253,7 +253,7 @@ void CoreFile::rejectFileRecvRequest(uint32_t friendId, uint32_t fileId)
 
 void CoreFile::acceptFileRecvRequest(uint32_t friendId, uint32_t fileId, QString path)
 {
-    QMutexLocker{coreLoopLock};
+    QMutexLocker locker{coreLoopLock};
 
     ToxFile* file = findFile(friendId, fileId);
     if (!file) {
@@ -272,7 +272,7 @@ void CoreFile::acceptFileRecvRequest(uint32_t friendId, uint32_t fileId, QString
 
 ToxFile* CoreFile::findFile(uint32_t friendId, uint32_t fileId)
 {
-    QMutexLocker{coreLoopLock};
+    QMutexLocker locker{coreLoopLock};
 
     uint64_t key = getFriendKey(friendId, fileId);
     if (fileMap.contains(key)) {
