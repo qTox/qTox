@@ -38,7 +38,11 @@
  * @brief Manages the file transfer service of toxcore
  */
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+CoreFilePtr CoreFile::makeCoreFile(Core *core, Tox *tox, QRecursiveMutex &coreLoopLock)
+#else
 CoreFilePtr CoreFile::makeCoreFile(Core *core, Tox *tox, QMutex &coreLoopLock)
+#endif
 {
     assert(core != nullptr);
     assert(tox != nullptr);
@@ -49,7 +53,11 @@ CoreFilePtr CoreFile::makeCoreFile(Core *core, Tox *tox, QMutex &coreLoopLock)
     return result;
 }
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+CoreFile::CoreFile(Tox *core, QRecursiveMutex &coreLoopLock)
+#else
 CoreFile::CoreFile(Tox *core, QMutex &coreLoopLock)
+#endif
     : tox{core}
     , coreLoopLock{&coreLoopLock}
 {

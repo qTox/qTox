@@ -132,7 +132,11 @@ private:
 protected:
     IAudioSettings& settings;
     QThread* audioThread;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    mutable QRecursiveMutex audioLock;
+#else
     mutable QMutex audioLock{QMutex::Recursive};
+#endif
     QString inDev{};
     QString outDev{};
 

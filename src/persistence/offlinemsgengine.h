@@ -36,7 +36,7 @@ class OfflineMsgEngine : public QObject
     Q_OBJECT
 public:
     using CompletionFn = std::function<void(bool)>;
-    OfflineMsgEngine();
+    OfflineMsgEngine() = default;
     void addUnsentMessage(Message const& message, CompletionFn completionCallback);
     void addSentCoreMessage(ReceiptNum receipt, Message const& message, CompletionFn completionCallback);
     void addSentExtendedMessage(ExtendedReceiptNum receipt, Message const& message, CompletionFn completionCallback);
@@ -60,7 +60,11 @@ private:
         CompletionFn completionFn;
     };
 
-    QMutex mutex;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    mutable QRecursiveMutex mutex;
+#else
+    mutable QMutex mutex{QMutex::Recursive};
+#endif
 
     template <class ReceiptT>
     class ReceiptResolver

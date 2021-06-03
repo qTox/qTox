@@ -55,5 +55,9 @@ private:
     OpenAL& audio;
     uint sourceId;
     bool killed = false;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    mutable QRecursiveMutex killLock;
+#else
     mutable QMutex killLock;
+#endif
 };

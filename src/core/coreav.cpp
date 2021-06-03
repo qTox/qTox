@@ -69,8 +69,13 @@
  * deadlock.
  */
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav, QRecursiveMutex& toxCoreLock,
+               IAudioSettings& _audioSettings, IGroupSettings& _groupSettings)
+#else
 CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav, QMutex& toxCoreLock,
                IAudioSettings& _audioSettings, IGroupSettings& _groupSettings)
+#endif
     : audio{nullptr}
     , toxav{std::move(toxav)}
     , coreavThread{new QThread{this}}
@@ -109,8 +114,13 @@ void CoreAV::connectCallbacks(ToxAV& toxav)
  * @param core pointer to the Tox instance
  * @return CoreAV instance on success, {} on failure
  */
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core, QRecursiveMutex& toxCoreLock,
+                                     IAudioSettings& audioSettings, IGroupSettings& groupSettings)
+#else
 CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core, QMutex& toxCoreLock,
                                      IAudioSettings& audioSettings, IGroupSettings& groupSettings)
+#endif
 {
     Toxav_Err_New err;
     std::unique_ptr<ToxAV, ToxAVDeleter> toxav{toxav_new(core, &err)};

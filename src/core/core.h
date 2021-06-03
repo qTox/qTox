@@ -78,7 +78,11 @@ public:
 
     CoreFile* getCoreFile() const;
     Tox* getTox() const;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    QRecursiveMutex& getCoreLoopLock() const;
+#else
     QMutex& getCoreLoopLock() const;
+#endif
 
     const CoreExt* getExt() const;
     CoreExt* getExt();
@@ -258,7 +262,11 @@ private:
     std::unique_ptr<CoreExt> ext;
     QTimer* toxTimer = nullptr;
     // recursive, since we might call our own functions
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    mutable QRecursiveMutex coreLoopLock;
+#else
     mutable QMutex coreLoopLock{QMutex::Recursive};
+#endif
 
     std::unique_ptr<QThread> coreThread;
     IBootstrapListGenerator& bootstrapNodes;

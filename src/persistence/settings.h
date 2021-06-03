@@ -706,7 +706,11 @@ private:
 
     int themeColor;
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    static QRecursiveMutex bigLock;
+#else
     static QMutex bigLock;
+#endif
     static Settings* settings;
     static const QString globalSettingsFile;
     static QThread* settingsThread;

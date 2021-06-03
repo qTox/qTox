@@ -47,7 +47,11 @@ class CoreFile : public QObject
 
 public:
     void handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    static CoreFilePtr makeCoreFile(Core* core, Tox* tox, QRecursiveMutex& coreLoopLock);
+#else
     static CoreFilePtr makeCoreFile(Core* core, Tox* tox, QMutex& coreLoopLock);
+#endif
 
     void sendFile(uint32_t friendId, QString filename, QString filePath,
                          long long filesize);
@@ -77,7 +81,11 @@ signals:
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
 private:
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    CoreFile(Tox* core, QRecursiveMutex& coreLoopLock);
+#else
     CoreFile(Tox* core, QMutex& coreLoopLock);
+#endif
 
     ToxFile* findFile(uint32_t friendId, uint32_t fileId);
     void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
@@ -106,5 +114,9 @@ private slots:
 private:
     QHash<uint64_t, ToxFile> fileMap;
     Tox* tox;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    QRecursiveMutex* coreLoopLock = nullptr;
+#else
     QMutex* coreLoopLock = nullptr;
+#endif
 };

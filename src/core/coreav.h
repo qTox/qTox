@@ -49,8 +49,13 @@ class CoreAV : public QObject
 
 public:
     using CoreAVPtr = std::unique_ptr<CoreAV>;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    static CoreAVPtr makeCoreAV(Tox* core, QRecursiveMutex& toxCoreLock,
+                                IAudioSettings& audioSettings, IGroupSettings& groupSettings);
+#else
     static CoreAVPtr makeCoreAV(Tox* core, QMutex& toxCoreLock,
                                 IAudioSettings& audioSettings, IGroupSettings& groupSettings);
+#endif
 
     void setAudio(IAudioControl& newAudio);
     IAudioControl* getAudio();
@@ -116,8 +121,13 @@ private:
         }
     };
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, QRecursiveMutex &toxCoreLock,
+           IAudioSettings& _audioSettings, IGroupSettings& _groupSettings);
+#else
     CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, QMutex &toxCoreLock,
            IAudioSettings& _audioSettings, IGroupSettings& _groupSettings);
+#endif
     void connectCallbacks(ToxAV& toxav);
 
     void process();
@@ -160,7 +170,11 @@ private:
      *        must not execute at the same time as tox_iterate()
      * @note This must be a recursive mutex as we're going to lock it in callbacks
      */
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    QRecursiveMutex& coreLock;
+#else
     QMutex& coreLock;
+#endif
 
     IAudioSettings& audioSettings;
     IGroupSettings& groupSettings;

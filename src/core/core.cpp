@@ -715,7 +715,11 @@ Tox* Core::getTox() const
     return tox.get();
 }
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+QRecursiveMutex &Core::getCoreLoopLock() const
+#else
 QMutex &Core::getCoreLoopLock() const
+#endif
 {
     return coreLoopLock;
 }

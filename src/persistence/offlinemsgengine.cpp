@@ -29,10 +29,6 @@
 #include <QCoreApplication>
 #include <chrono>
 
-OfflineMsgEngine::OfflineMsgEngine()
-    : mutex(QMutex::Recursive)
-{}
-
 /**
 * @brief Notification that the message is now delivered.
 *

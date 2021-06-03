@@ -101,7 +101,9 @@ void AlSink::kill()
 AlSink::AlSink(OpenAL& al, uint sourceId)
     : audio(al)
     , sourceId{sourceId}
+#if (QT_VERSION < QT_VERSION_CHECK(5, 14, 0))
     , killLock(QMutex::Recursive)
+#endif
 {}
 
 AlSink::operator bool() const

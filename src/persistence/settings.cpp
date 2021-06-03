@@ -57,7 +57,11 @@
 
 const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+QRecursiveMutex Settings::bigLock;
+#else
 QMutex Settings::bigLock{QMutex::Recursive};
+#endif
 QThread* Settings::settingsThread{nullptr};
 
 Settings::Settings()
