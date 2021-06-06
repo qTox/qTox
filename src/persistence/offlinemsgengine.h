@@ -24,6 +24,9 @@
 #include "src/core/core.h"
 #include "src/model/message.h"
 #include "src/persistence/db/rawdatabase.h"
+
+#include "src/util/compatiblerecursivemutex.h"
+
 #include <QDateTime>
 #include <QMap>
 #include <QMutex>
@@ -63,7 +66,7 @@ private slots:
 private:
     void checkForCompleteMessages(ReceiptNum receipt);
 
-    QMutex mutex;
+    CompatibleRecursiveMutex mutex;
     const Friend* f;
     ICoreFriendMessageSender* messageSender;
     QVector<ReceiptNum> receivedReceipts;

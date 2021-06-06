@@ -32,6 +32,7 @@
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/util/strongtype.h"
+#include "src/util/compatiblerecursivemutex.h"
 
 #include <QCoreApplication>
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))

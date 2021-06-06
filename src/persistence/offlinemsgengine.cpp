@@ -30,8 +30,7 @@
 #include <chrono>
 
 OfflineMsgEngine::OfflineMsgEngine(Friend* frnd, ICoreFriendMessageSender* messageSender)
-    : mutex(QMutex::Recursive)
-    , f(frnd)
+    : f(frnd)
     , messageSender(messageSender)
 {}
 
