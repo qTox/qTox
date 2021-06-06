@@ -33,6 +33,7 @@
 #include "src/model/ibootstraplistgenerator.h"
 #include "src/persistence/profile.h"
 #include "util/strongtype.h"
+#include "util/compatiblerecursivemutex.h"
 
 #include <QCoreApplication>
 #include <QDateTime>
@@ -715,7 +716,7 @@ Tox* Core::getTox() const
     return tox.get();
 }
 
-QMutex &Core::getCoreLoopLock() const
+CompatibleRecursiveMutex &Core::getCoreLoopLock() const
 {
     return coreLoopLock;
 }

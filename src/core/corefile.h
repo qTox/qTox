@@ -27,6 +27,8 @@
 #include "src/core/toxpk.h"
 #include "src/model/status.h"
 
+#include "util/compatiblerecursivemutex.h"
+
 #include <QHash>
 #include <QMutex>
 #include <QObject>
@@ -47,7 +49,7 @@ class CoreFile : public QObject
 
 public:
     void handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept);
-    static CoreFilePtr makeCoreFile(Core* core, Tox* tox, QMutex& coreLoopLock);
+    static CoreFilePtr makeCoreFile(Core* core, Tox* tox, CompatibleRecursiveMutex& coreLoopLock);
 
     void sendFile(uint32_t friendId, QString filename, QString filePath,
                          long long filesize);
@@ -77,7 +79,7 @@ signals:
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
 private:
-    CoreFile(Tox* core, QMutex& coreLoopLock);
+    CoreFile(Tox* core, CompatibleRecursiveMutex& coreLoopLock);
 
     ToxFile* findFile(uint32_t friendId, uint32_t fileId);
     void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
@@ -106,5 +108,5 @@ private slots:
 private:
     QHash<uint64_t, ToxFile> fileMap;
     Tox* tox;
-    QMutex* coreLoopLock = nullptr;
+    CompatibleRecursiveMutex* coreLoopLock = nullptr;
 };

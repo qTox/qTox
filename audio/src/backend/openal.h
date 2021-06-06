@@ -23,6 +23,7 @@
 #include "audio/iaudiocontrol.h"
 #include "alsink.h"
 #include "alsource.h"
+#include "util/compatiblerecursivemutex.h"
 
 #include <memory>
 #include <unordered_set>
@@ -132,7 +133,7 @@ private:
 protected:
     IAudioSettings& settings;
     QThread* audioThread;
-    mutable QMutex audioLock{QMutex::Recursive};
+    mutable CompatibleRecursiveMutex audioLock;
     QString inDev{};
     QString outDev{};
 

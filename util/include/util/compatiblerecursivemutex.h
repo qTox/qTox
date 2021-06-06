@@ -1,5 +1,5 @@
 /*
-    Copyright © 2019 by The qTox Project Contributors
+    Copyright © 2021 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -19,29 +19,18 @@
 
 #pragma once
 
-#include "audio/iaudiosource.h"
-#include "util/compatiblerecursivemutex.h"
+#include <QtGlobal>
 #include <QMutex>
-#include <QObject>
 
-class OpenAL;
-class AlSource : public IAudioSource
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+class CompatibleRecursiveMutex : public QRecursiveMutex
+{};
+#else
+class CompatibleRecursiveMutex : public QMutex
 {
-    Q_OBJECT
 public:
-    AlSource(OpenAL& al);
-    AlSource(AlSource& src) = delete;
-    AlSource& operator=(const AlSource&) = delete;
-    AlSource(AlSource&& other) = delete;
-    AlSource& operator=(AlSource&& other) = delete;
-    ~AlSource();
-
-    operator bool() const;
-
-    void kill();
-
-private:
-    OpenAL& audio;
-    bool killed = false;
-    mutable CompatibleRecursiveMutex killLock;
+    CompatibleRecursiveMutex()
+        : QMutex(QMutex::Recursive)
+    {}
 };
+#endif

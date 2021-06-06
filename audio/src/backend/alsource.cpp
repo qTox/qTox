@@ -30,7 +30,6 @@
  */
 AlSource::AlSource(OpenAL& al)
     : audio(al)
-    , killLock(QMutex::Recursive)
 {}
 
 AlSource::~AlSource()

@@ -15,6 +15,7 @@
 #   along with qTox.  If not, see <http://www.gnu.org/licenses/>
 
 set(HEADER_LIST
+    "include/util/compatiblerecursivemutex.h"
     "include/util/interface.h"
     "include/util/strongtype.h")
 

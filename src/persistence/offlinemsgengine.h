@@ -23,6 +23,9 @@
 #include "src/core/core.h"
 #include "src/model/message.h"
 #include "src/persistence/db/rawdatabase.h"
+
+#include "util/compatiblerecursivemutex.h"
+
 #include <QDateTime>
 #include <QMap>
 #include <QMutex>
@@ -36,7 +39,7 @@ class OfflineMsgEngine : public QObject
     Q_OBJECT
 public:
     using CompletionFn = std::function<void(bool)>;
-    OfflineMsgEngine();
+    OfflineMsgEngine() = default;
     void addUnsentMessage(Message const& message, CompletionFn completionCallback);
     void addSentCoreMessage(ReceiptNum receipt, Message const& message, CompletionFn completionCallback);
     void addSentExtendedMessage(ExtendedReceiptNum receipt, Message const& message, CompletionFn completionCallback);
@@ -60,7 +63,7 @@ private:
         CompletionFn completionFn;
     };
 
-    QMutex mutex;
+    CompatibleRecursiveMutex mutex;
 
     template <class ReceiptT>
     class ReceiptResolver

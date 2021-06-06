@@ -21,6 +21,7 @@
 #pragma once
 
 #include "src/core/toxcall.h"
+#include "util/compatiblerecursivemutex.h"
 
 #include <QObject>
 #include <QMutex>
@@ -49,7 +50,7 @@ class CoreAV : public QObject
 
 public:
     using CoreAVPtr = std::unique_ptr<CoreAV>;
-    static CoreAVPtr makeCoreAV(Tox* core, QMutex& toxCoreLock,
+    static CoreAVPtr makeCoreAV(Tox* core, CompatibleRecursiveMutex& toxCoreLock,
                                 IAudioSettings& audioSettings, IGroupSettings& groupSettings);
 
     void setAudio(IAudioControl& newAudio);
@@ -116,7 +117,7 @@ private:
         }
     };
 
-    CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, QMutex &toxCoreLock,
+    CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, CompatibleRecursiveMutex &toxCoreLock,
            IAudioSettings& _audioSettings, IGroupSettings& _groupSettings);
     void connectCallbacks(ToxAV& toxav);
 
@@ -160,7 +161,7 @@ private:
      *        must not execute at the same time as tox_iterate()
      * @note This must be a recursive mutex as we're going to lock it in callbacks
      */
-    QMutex& coreLock;
+    CompatibleRecursiveMutex& coreLock;
 
     IAudioSettings& audioSettings;
     IGroupSettings& groupSettings;

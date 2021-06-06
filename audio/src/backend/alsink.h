@@ -23,6 +23,7 @@
 #include <QObject>
 
 #include "util/interface.h"
+#include "util/compatiblerecursivemutex.h"
 #include "audio/iaudiosink.h"
 
 class OpenAL;
@@ -55,5 +56,5 @@ private:
     OpenAL& audio;
     uint sourceId;
     bool killed = false;
-    mutable QMutex killLock;
+    mutable CompatibleRecursiveMutex killLock;
 };

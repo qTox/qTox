@@ -101,7 +101,6 @@ void AlSink::kill()
 AlSink::AlSink(OpenAL& al, uint sourceId)
     : audio(al)
     , sourceId{sourceId}
-    , killLock(QMutex::Recursive)
 {}
 
 AlSink::operator bool() const

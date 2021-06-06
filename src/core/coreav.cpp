@@ -26,6 +26,7 @@
 #include "src/persistence/igroupsettings.h"
 #include "src/video/corevideosource.h"
 #include "src/video/videoframe.h"
+#include "util/compatiblerecursivemutex.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QThread>
@@ -69,7 +70,7 @@
  * deadlock.
  */
 
-CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav, QMutex& toxCoreLock,
+CoreAV::CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> toxav, CompatibleRecursiveMutex& toxCoreLock,
                IAudioSettings& _audioSettings, IGroupSettings& _groupSettings)
     : audio{nullptr}
     , toxav{std::move(toxav)}
@@ -109,7 +110,7 @@ void CoreAV::connectCallbacks(ToxAV& toxav)
  * @param core pointer to the Tox instance
  * @return CoreAV instance on success, {} on failure
  */
-CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core, QMutex& toxCoreLock,
+CoreAV::CoreAVPtr CoreAV::makeCoreAV(Tox* core, CompatibleRecursiveMutex& toxCoreLock,
                                      IAudioSettings& audioSettings, IGroupSettings& groupSettings)
 {
     Toxav_Err_New err;
