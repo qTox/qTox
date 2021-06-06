@@ -33,6 +33,8 @@
 #endif
 #include "src/ipc.h"
 
+#include "util/compatiblerecursivemutex.h"
+
 #include <QApplication>
 #include <QCryptographicHash>
 #include <QDebug>
@@ -57,7 +59,7 @@
 
 const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
-QMutex Settings::bigLock{QMutex::Recursive};
+CompatibleRecursiveMutex Settings::bigLock;
 QThread* Settings::settingsThread{nullptr};
 
 Settings::Settings()

@@ -25,6 +25,7 @@
 
 #include "src/model/interface.h"
 #include "src/audio/iaudiosink.h"
+#include "src/util/compatiblerecursivemutex.h"
 
 class OpenAL;
 class QMutex;
@@ -56,7 +57,7 @@ private:
     OpenAL& audio;
     uint sourceId;
     bool killed = false;
-    mutable QMutex killLock;
+    mutable CompatibleRecursiveMutex killLock;
 };
 
 #endif // ALSINK_H

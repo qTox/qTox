@@ -29,6 +29,8 @@
 #include "src/persistence/igroupsettings.h"
 #include "src/video/ivideosettings.h"
 
+#include "util/compatiblerecursivemutex.h"
+
 #include <QDateTime>
 #include <QFlags>
 #include <QFont>
@@ -703,7 +705,7 @@ private:
 
     int themeColor;
 
-    static QMutex bigLock;
+    static CompatibleRecursiveMutex bigLock;
     static Settings* settings;
     static const QString globalSettingsFile;
     static QThread* settingsThread;

@@ -32,6 +32,7 @@
 #include "toxpk.h"
 
 #include "src/util/strongtype.h"
+#include "src/util/compatiblerecursivemutex.h"
 #include "src/model/status.h"
 #include <tox/tox.h>
 
@@ -251,7 +252,7 @@ private:
     std::unique_ptr<CoreAV> av;
     QTimer* toxTimer = nullptr;
     // recursive, since we might call our own functions
-    mutable QMutex coreLoopLock{QMutex::Recursive};
+    mutable CompatibleRecursiveMutex coreLoopLock;
 
     std::unique_ptr<QThread> coreThread = nullptr;
 };

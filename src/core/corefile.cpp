@@ -25,6 +25,7 @@
 #include "src/persistence/settings.h"
 #include "src/model/status.h"
 #include "src/model/toxclientstandards.h"
+#include "util/compatiblerecursivemutex.h"
 #include <QDebug>
 #include <QDir>
 #include <QFile>
@@ -38,7 +39,7 @@
  * @brief Manages the file transfer service of toxcore
  */
 
-CoreFilePtr CoreFile::makeCoreFile(Core *core, Tox *tox, QMutex &coreLoopLock)
+CoreFilePtr CoreFile::makeCoreFile(Core *core, Tox *tox, CompatibleRecursiveMutex &coreLoopLock)
 {
     assert(core != nullptr);
     assert(tox != nullptr);
@@ -49,7 +50,7 @@ CoreFilePtr CoreFile::makeCoreFile(Core *core, Tox *tox, QMutex &coreLoopLock)
     return result;
 }
 
-CoreFile::CoreFile(Tox *core, QMutex &coreLoopLock)
+CoreFile::CoreFile(Tox *core, CompatibleRecursiveMutex &coreLoopLock)
     : tox{core}
     , coreLoopLock{&coreLoopLock}
 {
