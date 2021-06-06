@@ -41,7 +41,7 @@
 QHash<int, CircleWidget*> CircleWidget::circleList;
 
 CircleWidget::CircleWidget(const Core &_core, FriendListWidget* parent, int id)
-    : CategoryWidget(parent)
+    : CategoryWidget(isCompact(), parent)
     , id(id)
     , core{_core}
 {
