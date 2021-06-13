@@ -277,6 +277,9 @@ set(${PROJECT_NAME}_SOURCES
   src/model/dialogs/idialogs.h
   src/model/exiftransform.cpp
   src/model/exiftransform.h
+  src/model/friendlist/friendlistmanager.cpp
+  src/model/friendlist/friendlistmanager.h
+  src/model/friendlist/ifriendlistitem.h
   src/model/friendmessagedispatcher.cpp
   src/model/friendmessagedispatcher.h
   src/model/friend.cpp

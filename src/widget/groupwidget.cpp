@@ -189,6 +189,36 @@ void GroupWidget::editName()
     nameLabel->editBegin();
 }
 
+bool GroupWidget::isFriend() const
+{
+    return false;
+}
+
+bool GroupWidget::isGroup() const
+{
+    return true;
+}
+
+QString GroupWidget::getNameItem() const
+{
+    return nameLabel->fullText();
+}
+
+bool GroupWidget::isOnline() const
+{
+    return true;
+}
+
+QDateTime GroupWidget::getLastActivity() const
+{
+    return QDateTime::currentDateTime();
+}
+
+QWidget *GroupWidget::getWidget()
+{
+    return this;
+}
+
 // TODO: Remove
 Group* GroupWidget::getGroup() const
 {

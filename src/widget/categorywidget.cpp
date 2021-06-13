@@ -87,7 +87,12 @@ void CategoryWidget::setExpanded(bool isExpanded, bool save)
     }
     expanded = isExpanded;
     setMouseTracking(true);
+
+    // The listWidget will recieve a enterEvent for some reason if now visible.
+    // Using the following, we prevent that.
+    listWidget->setAttribute(Qt::WA_TransparentForMouseEvents, true);
     listWidget->setVisible(isExpanded);
+    listWidget->setAttribute(Qt::WA_TransparentForMouseEvents, false);
 
     QString pixmapPath;
     if (isExpanded)
@@ -95,11 +100,6 @@ void CategoryWidget::setExpanded(bool isExpanded, bool save)
     else
         pixmapPath = Style::getImagePath("chatArea/scrollBarRightArrow.svg");
     statusPic.setPixmap(QPixmap(pixmapPath));
-    // The listWidget will recieve a enterEvent for some reason if now visible.
-    // Using the following, we prevent that.
-    QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
-    container->hide();
-    container->show();
 
     if (save)
         onExpand();

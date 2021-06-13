@@ -19,7 +19,6 @@
 
 #include "friendlistwidget.h"
 #include "circlewidget.h"
-#include "friendlistlayout.h"
 #include "friendwidget.h"
 #include "groupwidget.h"
 #include "widget.h"
@@ -27,6 +26,7 @@
 #include "src/model/friend.h"
 #include "src/model/group.h"
 #include "src/model/status.h"
+#include "src/model/friendlist/friendlistmanager.h"
 #include "src/persistence/settings.h"
 #include "src/widget/categorywidget.h"
 
@@ -99,25 +99,19 @@ qint64 timeUntilTomorrow()
 
 FriendListWidget::FriendListWidget(const Core &_core, Widget* parent, bool groupsOnTop)
     : QWidget(parent)
-    , groupsOnTop(groupsOnTop)
     , core{_core}
 {
-    listLayout = new FriendListLayout();
+    manager = new FriendListManager(this);
+    manager->setGroupsOnTop(groupsOnTop);
+    connect(manager, &FriendListManager::itemsChanged, this, &FriendListWidget::itemsChanged);
+
+    listLayout = new QVBoxLayout;
     setLayout(listLayout);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-
-    groupLayout.getLayout()->setSpacing(0);
-    groupLayout.getLayout()->setMargin(0);
-
-    // Prevent QLayout's add child warning before setting the mode.
-    listLayout->removeItem(listLayout->getLayoutOnline());
-    listLayout->removeItem(listLayout->getLayoutOffline());
+    listLayout->setSpacing(0);
+    listLayout->setMargin(0);
 
     mode = Settings::getInstance().getFriendSortingMode();
-    sortByMode(mode);
-    if (mode != SortingMode::Name) {
-        listLayout->insertLayout(0, groupLayout.getLayout());
-    }
 
     dayTimer = new QTimer(this);
     dayTimer->setTimerType(Qt::VeryCoarseTimer);
@@ -129,22 +123,11 @@ FriendListWidget::FriendListWidget(const Core &_core, Widget* parent, bool group
 
 FriendListWidget::~FriendListWidget()
 {
-    if (activityLayout != nullptr) {
-        QLayoutItem* item;
-        while ((item = activityLayout->takeAt(0)) != nullptr) {
-            delete item->widget();
-            delete item;
+    for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i) {
+        CircleWidget* circle = CircleWidget::getFromID(i);
+        if (circle != nullptr) {
+            delete circle;
         }
-        delete activityLayout;
-    }
-
-    if (circleLayout != nullptr) {
-        QLayoutItem* item;
-        while ((item = circleLayout->getLayout()->takeAt(0)) != nullptr) {
-            delete item->widget();
-            delete item;
-        }
-        delete circleLayout;
     }
 }
 
@@ -161,47 +144,65 @@ void FriendListWidget::setMode(SortingMode mode)
 
 void FriendListWidget::sortByMode(SortingMode mode)
 {
+    manager->resetParents();
+    cleanMainLayout();
+
     if (mode == SortingMode::Name) {
-        circleLayout = new GenericChatItemLayout;
-        circleLayout->getLayout()->setSpacing(0);
-        circleLayout->getLayout()->setMargin(0);
+        manager->sortByName();
 
         for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i) {
             addCircleWidget(i);
-            CircleWidget::getFromID(i)->setVisible(false);
         }
 
-        // Only display circles once all created to avoid artifacts.
-        for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
-            CircleWidget::getFromID(i)->setVisible(true);
+        QVector<std::shared_ptr<IFriendListItem>> itemsTmp = manager->getItems();
+        QVector<IFriendListItem*> friendItems;
+        int posByName = 0; // Needed for scroll contacts
+        // Linking a friend with a circle and setting scroll position
+        for (int i = 0; i < itemsTmp.size(); ++i) {
+            if (itemsTmp[i]->isFriend()) {
+                if (itemsTmp[i]->getCircleId() >= 0) {
+                    CircleWidget* circleWgt = CircleWidget::getFromID(itemsTmp[i]->getCircleId());
+                    if (circleWgt != nullptr) {
+                        FriendWidget* frndTmp =
+                                qobject_cast<FriendWidget*>((itemsTmp[i].get())->getWidget());
+                        circleWgt->addFriendWidget(frndTmp, frndTmp->getFriend()->getStatus());
+                        continue;
+                    }
+                }
+            }
+            itemsTmp[i]->setPosForName(posByName++);
+            friendItems.push_back(itemsTmp[i].get());
+        }
 
-        int count = activityLayout ? activityLayout->count() : 0;
-        for (int i = 0; i < count; i++) {
-            QWidget* widget = activityLayout->itemAt(i)->widget();
-            CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
-            if (categoryWidget) {
-                categoryWidget->moveFriendWidgets(this);
-            } else {
-                qWarning() << "Unexpected widget";
+        // Add groups and friends without circles
+        for (int i = 0; i < friendItems.size(); ++i) {
+            listLayout->addWidget(friendItems[i]->getWidget());
+        }
+
+        manager->applyFilter();
+
+        if (!manager->needHideCircles()) {
+            //Sorts circles alphabetically and adds them to the layout
+            QVector<CircleWidget*> circles;
+            for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i) {
+                circles.push_back(CircleWidget::getFromID(i));
+            }
+
+            std::sort(circles.begin(), circles.end(),
+                        [](CircleWidget* a, CircleWidget* b) {
+                            return a->getName().toUpper() < b->getName().toUpper();
+                        });
+
+            for (int i = 0; i < circles.size(); ++i) {
+
+                QVector<std::shared_ptr<IFriendListItem>> itemsInCircle = getItemsFromCircle(circles.at(i));
+                for (int i = 0; i < itemsInCircle.size(); ++i) {
+                    itemsInCircle.at(i)->setPosForName(posByName++);
+                }
+
+                listLayout->addWidget(circles.at(i));
             }
         }
-
-        listLayout->addLayout(listLayout->getLayoutOnline());
-        listLayout->addLayout(listLayout->getLayoutOffline());
-        listLayout->addLayout(circleLayout->getLayout());
-        onGroupchatPositionChanged(groupsOnTop);
-
-        if (activityLayout != nullptr) {
-            QLayoutItem* item;
-            while ((item = activityLayout->takeAt(0)) != nullptr) {
-                delete item->widget();
-                delete item;
-            }
-            delete activityLayout;
-            activityLayout = nullptr;
-        }
-
-        reDraw();
     } else if (mode == SortingMode::Activity) {
         QLocale ql(Settings::getInstance().getTranslation());
         QDate today = QDate::currentDate();
@@ -223,6 +224,13 @@ void FriendListWidget::sortByMode(SortingMode mode)
 // clang-format on
 #undef COMMENT
 
+        manager->sortByActivity();
+        QVector<std::shared_ptr<IFriendListItem>> itemsTmp = manager->getItems();
+
+        for (int i = 0; i < itemsTmp.size(); ++i) {
+            listLayout->addWidget(itemsTmp[i]->getWidget());
+        }
+
         activityLayout = new QVBoxLayout();
         bool compact = Settings::getInstance().getCompactLayout();
         for (Time t : names.keys()) {
@@ -231,53 +239,87 @@ void FriendListWidget::sortByMode(SortingMode mode)
             activityLayout->addWidget(category);
         }
 
-        moveFriends(listLayout->getLayoutOffline());
-        moveFriends(listLayout->getLayoutOnline());
-        if (circleLayout != nullptr) {
-            moveFriends(circleLayout->getLayout());
+        manager->applyFilter();
+
+        // Insert widgets to CategoryWidget
+        for (int i = 0; i < itemsTmp.size(); ++i) {
+            if (itemsTmp[i]->isFriend()) {
+                int timeIndex = static_cast<int>(getTimeBucket(itemsTmp[i]->getLastActivity()));
+                QWidget* widget = activityLayout->itemAt(timeIndex)->widget();
+                CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
+                FriendWidget* frnd = qobject_cast<FriendWidget*>((itemsTmp[i].get())->getWidget());
+                if (!isVisible() || (isVisible() && frnd->isVisible())) {
+                    categoryWidget->addFriendWidget(frnd, frnd->getFriend()->getStatus());
+                }
+            }
         }
 
+        //Hide empty categories
         for (int i = 0; i < activityLayout->count(); ++i) {
             QWidget* widget = activityLayout->itemAt(i)->widget();
             CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
             categoryWidget->setVisible(categoryWidget->hasChatrooms());
         }
 
-        listLayout->removeItem(listLayout->getLayoutOnline());
-        listLayout->removeItem(listLayout->getLayoutOffline());
-
-        if (circleLayout != nullptr) {
-            listLayout->removeItem(circleLayout->getLayout());
-
-            QLayoutItem* item;
-            while ((item = circleLayout->getLayout()->takeAt(0)) != nullptr) {
-                delete item->widget();
-                delete item;
-            }
-            delete circleLayout;
-            circleLayout = nullptr;
-        }
-
-        listLayout->insertLayout(1, activityLayout);
-
-        reDraw();
+        listLayout->addLayout(activityLayout);
     }
 }
 
-void FriendListWidget::moveFriends(QLayout* layout)
+void FriendListWidget::cleanMainLayout()
 {
-    while (!layout->isEmpty()) {
-        QWidget* widget = layout->itemAt(0)->widget();
-        FriendWidget* friendWidget = qobject_cast<FriendWidget*>(widget);
-        CircleWidget* circleWidget = qobject_cast<CircleWidget*>(widget);
-        if (circleWidget) {
-            circleWidget->moveFriendWidgets(this);
-        } else if (friendWidget) {
-            const Friend* contact = friendWidget->getFriend();
-            auto* categoryWidget = getTimeCategoryWidget(contact);
-            categoryWidget->addFriendWidget(friendWidget, contact->getStatus());
+    QLayoutItem* itemForDel;
+    while ((itemForDel = listLayout->takeAt(0)) != nullptr) {
+        listLayout->removeWidget(itemForDel->widget());
+        QWidget* wgt = itemForDel->widget();
+        if (wgt != nullptr) {
+            wgt->setParent(nullptr);
+        }
+        else if (itemForDel->layout() != nullptr) {
+            QLayout* layout = itemForDel->layout();
+            QLayoutItem* itemTmp;
+            while ((itemTmp = layout->takeAt(0)) != nullptr) {
+                wgt = itemTmp->widget();
+                if (wgt != nullptr) {
+                    delete wgt;
+                }
+                delete itemTmp;
+            }
+        }
+        delete itemForDel;
+    }
+}
+
+QWidget* FriendListWidget::getNextWidgetForName(IFriendListItem *currentPos, bool forward) const
+{
+    int pos = currentPos->getPosForName();
+    int nextPos = forward ? pos + 1 : pos - 1;
+    if (nextPos >= manager->getItems().size()) {
+        nextPos = 0;
+    }
+    else if (nextPos < 0) {
+        nextPos = manager->getItems().size() - 1;
+    }
+
+    for (int i = 0; i < manager->getItems().size(); ++i) {
+        if (manager->getItems().at(i)->getPosForName() == nextPos) {
+            return manager->getItems().at(i)->getWidget();
         }
     }
+    return nullptr;
+}
+
+QVector<std::shared_ptr<IFriendListItem>>
+FriendListWidget::getItemsFromCircle(CircleWidget *circle) const
+{
+    QVector<std::shared_ptr<IFriendListItem>> itemsTmp = manager->getItems();
+    QVector<std::shared_ptr<IFriendListItem>> itemsInCircle;
+    for (int i = 0; i < itemsTmp.size(); ++i) {
+        int circleId = itemsTmp.at(i)->getCircleId();
+        if (CircleWidget::getFromID(circleId) == circle) {
+            itemsInCircle.push_back(itemsTmp.at(i));
+        }
+    }
+    return itemsInCircle;
 }
 
 CategoryWidget* FriendListWidget::getTimeCategoryWidget(const Friend* frd) const
@@ -295,46 +337,36 @@ FriendListWidget::SortingMode FriendListWidget::getMode() const
 
 void FriendListWidget::addGroupWidget(GroupWidget* widget)
 {
-    groupLayout.addSortedWidget(widget);
     Group* g = widget->getGroup();
     connect(g, &Group::titleChanged, [=](const QString& author, const QString& name) {
         Q_UNUSED(author)
         renameGroupWidget(widget, name);
     });
+
+    manager->addFriendItem(widget);
 }
 
-void FriendListWidget::addFriendWidget(FriendWidget* w, Status::Status s, int circleIndex)
+void FriendListWidget::addFriendWidget(FriendWidget* w)
 {
-    CircleWidget* circleWidget = CircleWidget::getFromID(circleIndex);
-    if (circleWidget == nullptr)
-        moveWidget(w, s, true);
-    else
-        circleWidget->addFriendWidget(w, s);
-    connect(w, &FriendWidget::friendWidgetRenamed, this, &FriendListWidget::onFriendWidgetRenamed);
+    manager->addFriendItem(w);
 }
 
 void FriendListWidget::removeGroupWidget(GroupWidget* w)
 {
-    groupLayout.removeSortedWidget(w);
-    w->deleteLater();
+    manager->removeFriendItem(w);
 }
 
 void FriendListWidget::removeFriendWidget(FriendWidget* w)
 {
     const Friend* contact = w->getFriend();
-
-    if (mode == SortingMode::Activity) {
-        auto* categoryWidget = getTimeCategoryWidget(contact);
-        categoryWidget->removeFriendWidget(w, contact->getStatus());
-        categoryWidget->setVisible(categoryWidget->hasChatrooms());
-    } else {
-        int id = Settings::getInstance().getFriendCircleID(contact->getPublicKey());
-        CircleWidget* circleWidget = CircleWidget::getFromID(id);
-        if (circleWidget != nullptr) {
-            circleWidget->removeFriendWidget(w, contact->getStatus());
-            emit searchCircle(*circleWidget);
-        }
+    int id = Settings::getInstance().getFriendCircleID(contact->getPublicKey());
+    CircleWidget* circleWidget = CircleWidget::getFromID(id);
+    if (circleWidget != nullptr) {
+        circleWidget->removeFriendWidget(w, contact->getStatus());
+        emit searchCircle(*circleWidget);
     }
+
+    manager->removeFriendItem(w);
 }
 
 void FriendListWidget::addCircleWidget(int id)
@@ -348,103 +380,51 @@ void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
     if (circleWidget != nullptr) {
         if (friendWidget != nullptr) {
             const Friend* f = friendWidget->getFriend();
-            ToxPk toxPk = f->getPublicKey();
-            int circleId = Settings::getInstance().getFriendCircleID(toxPk);
-            CircleWidget* circleOriginal = CircleWidget::getFromID(circleId);
-
             circleWidget->addFriendWidget(friendWidget, f->getStatus());
             circleWidget->setExpanded(true);
-
-            if (circleOriginal != nullptr)
-                emit searchCircle(*circleOriginal);
         }
-
-        emit searchCircle(*circleWidget);
 
         if (window()->isActiveWindow())
             circleWidget->editName();
     }
-    reDraw();
+
+    itemsChanged();
 }
 
 void FriendListWidget::removeCircleWidget(CircleWidget* widget)
 {
-    circleLayout->removeSortedWidget(widget);
     widget->deleteLater();
 }
 
 void FriendListWidget::searchChatrooms(const QString& searchString, bool hideOnline,
                                        bool hideOffline, bool hideGroups)
 {
-    groupLayout.search(searchString, hideGroups);
-    listLayout->searchChatrooms(searchString, hideOnline, hideOffline);
-
-    if (circleLayout != nullptr) {
-        for (int i = 0; i != circleLayout->getLayout()->count(); ++i) {
-            CircleWidget* circleWidget =
-                static_cast<CircleWidget*>(circleLayout->getLayout()->itemAt(i)->widget());
-            circleWidget->search(searchString, true, hideOnline, hideOffline);
-        }
-    } else if (activityLayout != nullptr) {
-        for (int i = 0; i != activityLayout->count(); ++i) {
-            CategoryWidget* categoryWidget =
-                static_cast<CategoryWidget*>(activityLayout->itemAt(i)->widget());
-            categoryWidget->search(searchString, true, hideOnline, hideOffline);
-            categoryWidget->setVisible(categoryWidget->hasChatrooms());
-        }
-    }
+    manager->setFilter(searchString, hideOnline, hideOffline, hideGroups);
 }
 
 void FriendListWidget::renameGroupWidget(GroupWidget* groupWidget, const QString& newName)
 {
-    groupLayout.removeSortedWidget(groupWidget);
-    groupLayout.addSortedWidget(groupWidget);
+    itemsChanged();
 }
 
 void FriendListWidget::renameCircleWidget(CircleWidget* circleWidget, const QString& newName)
 {
-    circleLayout->removeSortedWidget(circleWidget);
     circleWidget->setName(newName);
-    circleLayout->addSortedWidget(circleWidget);
-}
 
-void FriendListWidget::onFriendWidgetRenamed(FriendWidget* friendWidget)
-{
-    const Friend* contact = friendWidget->getFriend();
-    auto status = contact->getStatus();
-    if (mode == SortingMode::Activity) {
-        auto* categoryWidget = getTimeCategoryWidget(contact);
-        categoryWidget->removeFriendWidget(friendWidget, status);
-        categoryWidget->addFriendWidget(friendWidget, status);
-    } else {
-        int id = Settings::getInstance().getFriendCircleID(contact->getPublicKey());
-        CircleWidget* circleWidget = CircleWidget::getFromID(id);
-        if (circleWidget != nullptr) {
-            circleWidget->removeFriendWidget(friendWidget, status);
-            circleWidget->addFriendWidget(friendWidget, status);
-            emit searchCircle(*circleWidget);
-        } else {
-            listLayout->removeFriendWidget(friendWidget, status);
-            listLayout->addFriendWidget(friendWidget, status);
-        }
+    if (mode == SortingMode::Name) {
+        itemsChanged();
     }
 }
 
 void FriendListWidget::onGroupchatPositionChanged(bool top)
 {
-    groupsOnTop = top;
+    manager->setGroupsOnTop(top);
 
     if (mode != SortingMode::Name)
         return;
 
-    listLayout->removeItem(groupLayout.getLayout());
-
-    if (top)
-        listLayout->insertLayout(0, groupLayout.getLayout());
-    else
-        listLayout->insertLayout(1, groupLayout.getLayout());
-
-    reDraw();
+    manager->updatePositions();
+    itemsChanged();
 }
 
 void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward)
@@ -499,77 +479,27 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
         return;
     }
 
-    QLayout* currentLayout = nullptr;
-    CircleWidget* circleWidget = nullptr;
+    QWidget* wgt = nullptr;
 
     if (friendWidget != nullptr) {
-        const ToxPk& pk = friendWidget->getFriend()->getPublicKey();
-        uint32_t circleId = Settings::getInstance().getFriendCircleID(pk);
-        circleWidget = CircleWidget::getFromID(circleId);
-        if (circleWidget != nullptr) {
-            if (circleWidget->cycleContacts(friendWidget, forward)) {
-                return;
-            }
-
-            index = circleLayout->indexOfSortedWidget(circleWidget);
-            currentLayout = circleLayout->getLayout();
-        } else {
-            currentLayout = listLayout->getLayoutOnline();
-            index = listLayout->indexOfFriendWidget(friendWidget, true);
-            if (index == -1) {
-                currentLayout = listLayout->getLayoutOffline();
-                index = listLayout->indexOfFriendWidget(friendWidget, false);
-            }
-        }
-    } else {
+        wgt = getNextWidgetForName(friendWidget, forward);
+    }
+    else {
         GroupWidget* groupWidget = qobject_cast<GroupWidget*>(activeChatroomWidget);
-        if (groupWidget != nullptr) {
-            currentLayout = groupLayout.getLayout();
-            index = groupLayout.indexOfSortedWidget(groupWidget);
-        } else {
-            return;
+        wgt = getNextWidgetForName(groupWidget, forward);
+    }
+
+    FriendWidget* friendTmp = qobject_cast<FriendWidget*>(wgt);
+    if (friendTmp != nullptr) {
+        CircleWidget* circleWidget = CircleWidget::getFromID(friendTmp->getCircleId());
+        if (circleWidget != nullptr) {
+            circleWidget->setExpanded(true);
         }
     }
 
-    index += forward ? 1 : -1;
-
-    for (;;) {
-        // Bounds checking.
-        if (index < 0) {
-            currentLayout = nextLayout(currentLayout, forward);
-            index = currentLayout->count() - 1;
-            continue;
-        } else if (index >= currentLayout->count()) {
-            currentLayout = nextLayout(currentLayout, forward);
-            index = 0;
-            continue;
-        }
-
-        // Go to the actual next index.
-        if (currentLayout == listLayout->getLayoutOnline()
-            || currentLayout == listLayout->getLayoutOffline()
-            || currentLayout == groupLayout.getLayout()) {
-            GenericChatroomWidget* chatWidget =
-                qobject_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
-
-            if (chatWidget != nullptr)
-                emit chatWidget->chatroomWidgetClicked(chatWidget);
-
-            return;
-        } else if (currentLayout == circleLayout->getLayout()) {
-            circleWidget = qobject_cast<CircleWidget*>(currentLayout->itemAt(index)->widget());
-            if (circleWidget != nullptr) {
-                if (!circleWidget->cycleContacts(forward)) {
-                    // Skip empty or finished circles.
-                    index += forward ? 1 : -1;
-                    continue;
-                }
-            }
-            return;
-        } else {
-            return;
-        }
-    }
+    GenericChatroomWidget* chatWidget = qobject_cast<GenericChatroomWidget*>(wgt);
+    if (chatWidget != nullptr)
+        emit chatWidget->chatroomWidgetClicked(chatWidget);
 }
 
 void FriendListWidget::dragEnterEvent(QDragEnterEvent* event)
@@ -611,11 +541,15 @@ void FriendListWidget::dropEvent(QDropEvent* event)
 void FriendListWidget::dayTimeout()
 {
     if (mode == SortingMode::Activity) {
-        setMode(SortingMode::Name);
-        setMode(SortingMode::Activity); // Refresh all.
+        itemsChanged();
     }
 
     dayTimer->start(timeUntilTomorrow());
+}
+
+void FriendListWidget::itemsChanged()
+{
+    sortByMode(mode);
 }
 
 void FriendListWidget::moveWidget(FriendWidget* widget, Status::Status s, bool add)
@@ -629,7 +563,7 @@ void FriendListWidget::moveWidget(FriendWidget* widget, Status::Status s, bool a
             if (circleId != -1)
                 Settings::getInstance().setFriendCircleID(f->getPublicKey(), -1);
 
-            listLayout->addFriendWidget(widget, s);
+            itemsChanged();
             return;
         }
 
@@ -640,6 +574,7 @@ void FriendListWidget::moveWidget(FriendWidget* widget, Status::Status s, bool a
         categoryWidget->addFriendWidget(widget, contact->getStatus());
         categoryWidget->show();
     }
+    itemsChanged();
 }
 
 void FriendListWidget::updateActivityTime(const QDateTime& time)
@@ -655,76 +590,19 @@ void FriendListWidget::updateActivityTime(const QDateTime& time)
     categoryWidget->setVisible(categoryWidget->hasChatrooms());
 }
 
-// update widget after add/delete/hide/show
-void FriendListWidget::reDraw()
-{
-    hide();
-    show();
-    resize(QSize()); // lifehack
-}
-
 CircleWidget* FriendListWidget::createCircleWidget(int id)
 {
     if (id == -1)
         id = Settings::getInstance().addCircle();
 
-    // Stop, after it has been created. Code after this is for displaying.
-    if (mode == SortingMode::Activity)
-        return nullptr;
-
-    assert(circleLayout != nullptr);
+    if (CircleWidget::getFromID(id) != nullptr) {
+        return CircleWidget::getFromID(id);
+    }
 
     CircleWidget* circleWidget = new CircleWidget(core, this, id);
     emit connectCircleWidget(*circleWidget);
-    circleLayout->addSortedWidget(circleWidget);
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
-    circleWidget->show(); // Avoid flickering.
 
     return circleWidget;
-}
-
-QLayout* FriendListWidget::nextLayout(QLayout* layout, bool forward) const
-{
-    if (layout == groupLayout.getLayout()) {
-        if (forward) {
-            if (groupsOnTop)
-                return listLayout->getLayoutOnline();
-
-            return listLayout->getLayoutOffline();
-        } else {
-            if (groupsOnTop)
-                return circleLayout->getLayout();
-
-            return listLayout->getLayoutOnline();
-        }
-    } else if (layout == listLayout->getLayoutOnline()) {
-        if (forward) {
-            if (groupsOnTop)
-                return listLayout->getLayoutOffline();
-
-            return groupLayout.getLayout();
-        } else {
-            if (groupsOnTop)
-                return groupLayout.getLayout();
-
-            return circleLayout->getLayout();
-        }
-    } else if (layout == listLayout->getLayoutOffline()) {
-        if (forward)
-            return circleLayout->getLayout();
-        else if (groupsOnTop)
-            return listLayout->getLayoutOnline();
-
-        return groupLayout.getLayout();
-    } else if (layout == circleLayout->getLayout()) {
-        if (forward) {
-            if (groupsOnTop)
-                return groupLayout.getLayout();
-
-            return listLayout->getLayoutOnline();
-        } else
-            return listLayout->getLayoutOffline();
-    }
-    return nullptr;
 }

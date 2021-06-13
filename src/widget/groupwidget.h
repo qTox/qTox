@@ -22,17 +22,18 @@
 #include "genericchatroomwidget.h"
 
 #include "src/model/chatroom/groupchatroom.h"
+#include "src/model/friendlist/ifriendlistitem.h"
 #include "src/core/groupid.h"
 
 #include <memory>
 
-class GroupWidget final : public GenericChatroomWidget
+class GroupWidget final : public GenericChatroomWidget, public IFriendListItem
 {
     Q_OBJECT
 public:
     GroupWidget(std::shared_ptr<GroupChatroom> chatroom, bool compact);
     ~GroupWidget();
-   void setAsInactiveChatroom() final;
+    void setAsInactiveChatroom() final;
     void setAsActiveChatroom() final;
     void updateStatusLight() final;
     void resetEventFlags() final;
@@ -41,6 +42,13 @@ public:
     const Contact* getContact() const final;
     void setName(const QString& name);
     void editName();
+
+    bool isFriend() const final;
+    bool isGroup() const final;
+    QString getNameItem() const final;
+    bool isOnline() const final;
+    QDateTime getLastActivity() const final;
+    QWidget* getWidget() final;
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);

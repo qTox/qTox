@@ -36,7 +36,6 @@ public:
 
 signals:
     void renameRequested(CircleWidget* circleWidget, const QString& newName);
-    void searchCircle(CircleWidget& circletWidget);
     void newContentDialog(ContentDialog& contentDialog);
 
 protected:

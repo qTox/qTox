@@ -21,6 +21,7 @@
 
 #include "genericchatroomwidget.h"
 #include "src/core/toxpk.h"
+#include "src/model/friendlist/ifriendlistitem.h"
 
 #include <memory>
 
@@ -29,7 +30,7 @@ class QPixmap;
 class MaskablePixmapWidget;
 class CircleWidget;
 
-class FriendWidget : public GenericChatroomWidget
+class FriendWidget : public GenericChatroomWidget, public IFriendListItem
 {
     Q_OBJECT
 public:
@@ -44,7 +45,13 @@ public:
     const Friend* getFriend() const final;
     const Contact* getContact() const final;
 
-    void search(const QString& searchString, bool hide = false);
+    bool isFriend() const final;
+    bool isGroup() const final;
+    bool isOnline() const final;
+    QString getNameItem() const final;
+    QDateTime getLastActivity() const final;
+    int getCircleId() const final;
+    QWidget* getWidget() final;
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
@@ -52,8 +59,6 @@ signals:
     void copyFriendIdToClipboard(const ToxPk& friendPk);
     void contextMenuCalled(QContextMenuEvent* event);
     void friendHistoryRemoved();
-    void friendWidgetRenamed(FriendWidget* friendWidget);
-    void searchCircle(CircleWidget& circleWidget);
     void updateFriendActivity(Friend& frnd);
 
 public slots:
