@@ -22,6 +22,7 @@
 #include "ifriendlistitem.h"
 
 #include <QObject>
+#include <QVector>
 
 #include <memory>
 
