@@ -20,8 +20,6 @@
 #include "friendlistmanager.h"
 #include "src/widget/genericchatroomwidget.h"
 
-#include <QApplication>
-
 bool FriendListManager::groupsOnTop = true;
 
 FriendListManager::FriendListManager(QObject *parent) : QObject(parent)
@@ -46,8 +44,7 @@ void FriendListManager::addFriendItem(IFriendListItem *item)
     if (item->isGroup()) {
         items.push_back(IFriendItemPtr(item, [](IFriendListItem* groupItem){
                             groupItem->getWidget()->deleteLater();}));
-    }
-    else {
+    } else {
         items.push_back(IFriendItemPtr(item));
     }
 
@@ -104,8 +101,7 @@ void FriendListManager::applyFilter()
     for (IFriendItemPtr itemTmp : items) {
         if (searchString.isEmpty()) {
             itemTmp->getWidget()->setVisible(true);
-        }
-        else {
+        } else {
             QString tmp_name = itemTmp->getNameItem();
             itemTmp->getWidget()->setVisible(tmp_name.contains(searchString, Qt::CaseInsensitive));
         }
@@ -127,8 +123,7 @@ void FriendListManager::applyFilter()
 
     if (filterParams.hideOnline && filterParams.hideOffline) {
         hideCircles = true;
-    }
-    else {
+    } else {
         hideCircles = false;
     }
 }
@@ -137,8 +132,7 @@ void FriendListManager::updatePositions()
 {
     if (byName) {
         std::sort(items.begin(), items.end(), cmpByName);
-    }
-    else {
+    } else {
         std::sort(items.begin(), items.end(), cmpByActivity);
     }
 }

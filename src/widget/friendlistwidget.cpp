@@ -159,15 +159,13 @@ void FriendListWidget::sortByMode(SortingMode mode)
         int posByName = 0; // Needed for scroll contacts
         // Linking a friend with a circle and setting scroll position
         for (int i = 0; i < itemsTmp.size(); ++i) {
-            if (itemsTmp[i]->isFriend()) {
-                if (itemsTmp[i]->getCircleId() >= 0) {
-                    CircleWidget* circleWgt = CircleWidget::getFromID(itemsTmp[i]->getCircleId());
-                    if (circleWgt != nullptr) {
-                        FriendWidget* frndTmp =
-                                qobject_cast<FriendWidget*>((itemsTmp[i].get())->getWidget());
-                        circleWgt->addFriendWidget(frndTmp, frndTmp->getFriend()->getStatus());
-                        continue;
-                    }
+            if (itemsTmp[i]->isFriend() && itemsTmp[i]->getCircleId() >= 0) {
+                CircleWidget* circleWgt = CircleWidget::getFromID(itemsTmp[i]->getCircleId());
+                if (circleWgt != nullptr) {
+                    FriendWidget* frndTmp =
+                            qobject_cast<FriendWidget*>((itemsTmp[i].get())->getWidget());
+                    circleWgt->addFriendWidget(frndTmp, frndTmp->getFriend()->getStatus());
+                    continue;
                 }
             }
             itemsTmp[i]->setPosForName(posByName++);
@@ -273,8 +271,7 @@ void FriendListWidget::cleanMainLayout()
         QWidget* wgt = itemForDel->widget();
         if (wgt != nullptr) {
             wgt->setParent(nullptr);
-        }
-        else if (itemForDel->layout() != nullptr) {
+        } else if (itemForDel->layout() != nullptr) {
             QLayout* layout = itemForDel->layout();
             QLayoutItem* itemTmp;
             while ((itemTmp = layout->takeAt(0)) != nullptr) {
@@ -295,8 +292,7 @@ QWidget* FriendListWidget::getNextWidgetForName(IFriendListItem *currentPos, boo
     int nextPos = forward ? pos + 1 : pos - 1;
     if (nextPos >= manager->getItems().size()) {
         nextPos = 0;
-    }
-    else if (nextPos < 0) {
+    } else if (nextPos < 0) {
         nextPos = manager->getItems().size() - 1;
     }
 
@@ -483,8 +479,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
 
     if (friendWidget != nullptr) {
         wgt = getNextWidgetForName(friendWidget, forward);
-    }
-    else {
+    } else {
         GroupWidget* groupWidget = qobject_cast<GroupWidget*>(activeChatroomWidget);
         wgt = getNextWidgetForName(groupWidget, forward);
     }
