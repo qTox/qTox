@@ -177,6 +177,7 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
         }
     }
 
+    close(fd);
     return modes;
 }
 
