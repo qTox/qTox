@@ -56,8 +56,9 @@ cd libs/
 export PREFIX_DIR="$PWD"
 #
 cd ../ffmpeg
-wget http://ffmpeg.org/releases/ffmpeg-2.8.5.tar.bz2
-tar xf ffmpeg*
+curl -o ffmpeg.bz2 http://ffmpeg.org/releases/ffmpeg-2.8.5.tar.bz2
+tar xf ffmpeg.bz2
+rm ffmpeg.bz2
 cd ffmpeg*
 # enabled:
 # v4l2 -> webcam
