@@ -1,0 +1,121 @@
+name: test
+on: pull_request
+jobs:
+  verify-commit-format:
+    name: Verify Commit Format
+    runs-on: ubuntu-18.04
+    env:
+      GITHUB_CONTEXT: ${{ github.event.pull_request.commits_url }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # so that we can see the full commit range
+      - name: Run
+        run: ./.travis/verify-commit-format.sh
+  build-docs:
+    name: Docs
+    runs-on: ubuntu-18.04
+    env:
+      DOXYGEN_CONFIG_FILE: doxygen.conf
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run
+        run: ./.travis/build-docs.sh
+  build-gitstats:
+    name: Gitstats
+    runs-on: ubuntu-18.04
+    env:
+      GITSTATS_DIR: gitstats
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install gitstats
+        run: sudo apt-get install gitstats
+      - name: Run
+        run: ./.travis/build-gitstats.sh
+  build-qtox:
+    name: Linux
+    runs-on: ubuntu-18.04
+    env:
+      CC: gcc
+      CXX: g++
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install deps
+        run: sudo apt-get install ccache lcov
+      - name: Run
+        run: ./.travis/build-ubuntu-16-04.sh
+      - name: Debug
+        if: ${{ failure() }}
+        run: cat /home/runner/work/qTox/qTox/libsodium/config.log
+      - name: Code test coverage
+        run: |
+          # Create lcov report
+          lcov --directory _build --capture --output-file coverage.info
+          # Filter out system headers and test sources
+          lcov --remove coverage.info '/usr/*' '*/test/*' '*/*_autogen/*' --output-file coverage.info
+          # Upload report to codecov.io
+          bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
+  build-osx:
+    name: macOS
+    runs-on: macos-10.15
+    env:
+      TRAVIS: true
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: homebrew
+        run: brew upgrade && brew bundle --file ./osx/Brewfile
+      - name: Run
+        run: ./.travis/build-osx.sh
+  APPIMAGE:
+    name: AppImage
+    runs-on: ubuntu-18.04
+    env:
+      TRAVIS_TAG:
+      TRAVIS_COMMIT: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run
+        run: ./appimage/build-appimage.sh
+  FLATPAK:
+    name: Flatpak
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run
+        run: ./flatpak/build-flatpak.sh
+  win:
+    name: Windows
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [i686, x86_64]
+        type: [debug, release]
+    env:
+      BUILD__: ${{ matrix.arch }}
+      BTYPE__: ${{ matrix.type }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: cache
+          key: deps-${{ matrix.arch }}-${{ hashFiles('windows/cross-compile/build.sh') }}-${{ hashFiles('.travis/build-windows.sh') }}
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install zip tree
+      - name: Deps build stage 1
+        run: |
+          ./.travis/build-windows.sh "$BUILD__" "release" "cache/${BUILD__}" stage1
+      - name: Deps build stage 2
+        run: |
+          ./.travis/build-windows.sh "$BUILD__" "release" "cache/${BUILD__}" stage2
+          ls -al cache
+      - name: qTox build
+        run: |
+          ./.travis/build-windows.sh "$BUILD__" "$BTYPE__" "cache/${BUILD__}" stage3
+      - name: Debug info
+        run: |
+          ls -al ~/
+          tree ~/project/workspace -L 4

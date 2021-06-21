@@ -20,4 +20,6 @@
 set -eu -o pipefail
 
 # Verify commit messages
+readarray -t COMMITS <<<$(curl -s ${GITHUB_CONTEXT} | jq -r '.[0,-1].sha')
+TRAVIS_COMMIT_RANGE="${COMMITS[0]}..${COMMITS[1]}"
 bash ./verify-commit-messages.sh "$TRAVIS_COMMIT_RANGE"
