@@ -537,6 +537,17 @@ endif()
 add_definitions(-DQT_MESSAGELOGCONTEXT=1)
 
 if(AVFOUNDATION_FOUND)
+  # used for AVFoundation compile time deprecation check
+  execute_process(
+    COMMAND sw_vers -productVersion
+    OUTPUT_VARIABLE MACOS_VER
+  )
+  string(REPLACE "." ";" VERSION_LIST ${MACOS_VER})
+  list(GET VERSION_LIST 0 MACOS_VERSION_MAJOR)
+  list(GET VERSION_LIST 1 MACOS_VERSION_MINOR)
+  add_definitions(-DMACOS_VERSION_MAJOR=${MACOS_VERSION_MAJOR})
+  add_definitions(-DMACOS_VERSION_MINOR=${MACOS_VERSION_MINOR})
+
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
     src/platform/camera/avfoundation.mm
     src/platform/camera/avfoundation.h)
