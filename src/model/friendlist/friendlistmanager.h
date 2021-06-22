@@ -30,15 +30,15 @@ class FriendListManager : public QObject
 {    
     Q_OBJECT
 public:
-    using IFriendItemPtr = std::shared_ptr<IFriendListItem>;
+    using IFriendListItemPtr = std::shared_ptr<IFriendListItem>;
 
     explicit FriendListManager(QObject *parent = nullptr);
 
-    QVector<IFriendItemPtr> getItems() const;
+    QVector<IFriendListItemPtr> getItems() const;
     bool needHideCircles() const;
 
-    void addFriendItem(IFriendListItem* item);
-    void removeFriendItem(IFriendListItem* item);
+    void addFriendListItem(IFriendListItem* item);
+    void removeFriendListItem(IFriendListItem* item);
     void sortByName();
     void sortByActivity();
     void resetParents();
@@ -47,7 +47,7 @@ public:
     void applyFilter();
     void updatePositions();    
 
-    static void setGroupsOnTop(bool v);
+    void setGroupsOnTop(bool v);
 
 signals:
     void itemsChanged();
@@ -61,12 +61,12 @@ private:
     } filterParams;
 
     void removeAll(IFriendListItem*);    
-    static bool cmpByName(const IFriendItemPtr&, const IFriendItemPtr&);
-    static bool cmpByActivity(const IFriendItemPtr&, const IFriendItemPtr&);    
+    bool cmpByName(const IFriendListItemPtr&, const IFriendListItemPtr&, bool groupsOnTop);
+    bool cmpByActivity(const IFriendListItemPtr&, const IFriendListItemPtr&);
 
     bool byName = true;
     bool hideCircles = false;
-    static bool groupsOnTop;
-    QVector<IFriendItemPtr> items;
+    bool groupsOnTop;
+    QVector<IFriendListItemPtr> items;
 
 };

@@ -20,14 +20,12 @@
 #include "friendlistmanager.h"
 #include "src/widget/genericchatroomwidget.h"
 
-bool FriendListManager::groupsOnTop = true;
-
 FriendListManager::FriendListManager(QObject *parent) : QObject(parent)
 {
 
 }
 
-QVector<FriendListManager::IFriendItemPtr> FriendListManager::getItems() const
+QVector<FriendListManager::IFriendListItemPtr> FriendListManager::getItems() const
 {
     return items;
 }
@@ -37,22 +35,20 @@ bool FriendListManager::needHideCircles() const
     return hideCircles;
 }
 
-void FriendListManager::addFriendItem(IFriendListItem *item)
+void FriendListManager::addFriendListItem(IFriendListItem *item)
 {
-    removeAll(item);
-
     if (item->isGroup()) {
-        items.push_back(IFriendItemPtr(item, [](IFriendListItem* groupItem){
+        items.push_back(IFriendListItemPtr(item, [](IFriendListItem* groupItem){
                             groupItem->getWidget()->deleteLater();}));
     } else {
-        items.push_back(IFriendItemPtr(item));
+        items.push_back(IFriendListItemPtr(item));
     }
 
     updatePositions();
     emit itemsChanged();
 }
 
-void FriendListManager::removeFriendItem(IFriendListItem *item)
+void FriendListManager::removeFriendListItem(IFriendListItem *item)
 {
     removeAll(item);
     updatePositions();
@@ -98,7 +94,7 @@ void FriendListManager::applyFilter()
 {
     QString searchString = filterParams.searchString;
 
-    for (IFriendItemPtr itemTmp : items) {
+    for (IFriendListItemPtr itemTmp : items) {
         if (searchString.isEmpty()) {
             itemTmp->getWidget()->setVisible(true);
         } else {
@@ -131,9 +127,17 @@ void FriendListManager::applyFilter()
 void FriendListManager::updatePositions()
 {
     if (byName) {
-        std::sort(items.begin(), items.end(), cmpByName);
+        std::sort(items.begin(), items.end(),
+            [&](const IFriendListItemPtr &a, const IFriendListItemPtr &b) {
+                return cmpByName(a, b, groupsOnTop);
+            }
+        );
     } else {
-        std::sort(items.begin(), items.end(), cmpByActivity);
+        std::sort(items.begin(), items.end(),
+            [&](const IFriendListItemPtr &a, const IFriendListItemPtr &b) {
+                return cmpByActivity(a, b);
+            }
+        );
     }
 }
 
@@ -152,7 +156,8 @@ void FriendListManager::removeAll(IFriendListItem* item)
     }
 }
 
-bool FriendListManager::cmpByName(const IFriendItemPtr &a, const IFriendItemPtr &b)
+bool FriendListManager::cmpByName(const IFriendListItemPtr &a, const IFriendListItemPtr &b,
+                                  bool groupsOnTop)
 {
     if (a->isGroup() && !b->isGroup()) {
         if (groupsOnTop) {
@@ -179,7 +184,7 @@ bool FriendListManager::cmpByName(const IFriendItemPtr &a, const IFriendItemPtr 
     return a->getNameItem().toUpper() < b->getNameItem().toUpper();
 }
 
-bool FriendListManager::cmpByActivity(const IFriendItemPtr &a, const IFriendItemPtr &b)
+bool FriendListManager::cmpByActivity(const IFriendListItemPtr &a, const IFriendListItemPtr &b)
 {
     if (a->isGroup() || b->isGroup()) {
         if (a->isGroup() && !b->isGroup()) {

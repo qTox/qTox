@@ -41,16 +41,16 @@ public:
         return -1;
     }
 
-    int getPosForName() const
+    int getNameSortedPos() const
     {
-        return posForName;
+        return nameSortedPos;
     }
 
-    void setPosForName(int pos)
+    void setNameSortedPos(int pos)
     {
-        posForName = pos;
+        nameSortedPos = pos;
     }
 
 private:
-    int posForName = -1;
+    int nameSortedPos = -1;
 };
