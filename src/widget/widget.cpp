@@ -1178,8 +1178,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
         settings.setFriendActivity(friendPk, chatTime);
     }
 
-    contactListWidget->addFriendWidget(widget, Status::Status::Offline,
-                                       settings.getFriendCircleID(friendPk));
+    contactListWidget->addFriendWidget(widget);
 
 
     auto notifyReceivedCallback = [this, friendPk](const ToxPk& author, const Message& message) {
@@ -1218,9 +1217,6 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
         friendForm->onAvatarChanged(friendPk, avatar);
         widget->onAvatarSet(friendPk, avatar);
     }
-
-    FilterCriteria filter = getFilterCriteria();
-    widget->search(ui->searchContactText->text(), filterOffline(filter));
 }
 
 void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
@@ -1308,6 +1304,8 @@ void Widget::onFriendDisplayedNameChanged(const QString& displayed)
     if (friendWidget->isActive()) {
         GUI::setWindowTitle(displayed);
     }
+
+    contactListWidget->itemsChanged();
 }
 
 void Widget::onFriendUsernameChanged(int friendId, const QString& username)
@@ -1325,16 +1323,6 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
 
 void Widget::onFriendAliasChanged(const ToxPk& friendId, const QString& alias)
 {
-    Friend* f = qobject_cast<Friend*>(sender());
-
-    // TODO(sudden6): don't update the contact list here, make it update itself
-    FriendWidget* friendWidget = friendWidgets[friendId];
-    Status::Status status = f->getStatus();
-    contactListWidget->moveWidget(friendWidget, status);
-    FilterCriteria criteria = getFilterCriteria();
-    bool filter = status == Status::Status::Offline ? filterOffline(criteria) : filterOnline(criteria);
-    friendWidget->searchName(ui->searchContactText->text(), filter);
-
     settings.setFriendAlias(friendId, alias);
     settings.savePersonal();
 }
@@ -1779,7 +1767,6 @@ void Widget::removeFriend(Friend* f, bool fake)
     }
 
     friendWidgets.remove(friendPk);
-    delete widget;
 
     auto chatForm = chatForms[friendPk];
     chatForms.remove(friendPk);
@@ -1789,8 +1776,6 @@ void Widget::removeFriend(Friend* f, bool fake)
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
         onAddClicked();
     }
-
-    contactListWidget->reDraw();
 }
 
 void Widget::removeFriend(const ToxPk& friendId)
@@ -2032,8 +2017,7 @@ void Widget::onGroupTitleChanged(uint32_t groupnumber, const QString& author, co
     }
 
     g->setTitle(author, title);
-    FilterCriteria filter = getFilterCriteria();
-    widget->searchName(ui->searchContactText->text(), filterGroups(filter));
+    contactListWidget->itemsChanged();
 }
 
 void Widget::titleChangedByUser(const QString& title)
@@ -2092,8 +2076,6 @@ void Widget::removeGroup(Group* g, bool fake)
     }
 
     groupAlertConnections.remove(groupId);
-
-    contactListWidget->reDraw();
 }
 
 void Widget::removeGroup(const GroupId& groupId)
@@ -2183,9 +2165,6 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     connect(widget, &GroupWidget::chatroomWidgetClicked, form, &ChatForm::focusInput);
     connect(newgroup, &Group::titleChangedByUser, this, &Widget::titleChangedByUser);
     connect(core, &Core::usernameSet, newgroup, &Group::setSelfName);
-
-    FilterCriteria filter = getFilterCriteria();
-    widget->searchName(ui->searchContactText->text(), filterGroups(filter));
 
     return newgroup;
 }
@@ -2467,7 +2446,6 @@ void Widget::reloadTheme()
     ui->statusHead->setStyleSheet(statusPanelStyle);
     ui->friendList->setStyleSheet(Style::getStylesheet("friendList/friendList.css"));
     ui->statusButton->setStyleSheet(Style::getStylesheet("statusButton/statusButton.css"));
-    contactListWidget->reDraw();
 
     profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css"));
 }
@@ -2518,8 +2496,6 @@ void Widget::searchContacts()
                                        filterGroups(filter));
 
     updateFilterText();
-
-    contactListWidget->reDraw();
 }
 
 void Widget::changeDisplayMode()
@@ -2564,9 +2540,11 @@ Widget::FilterCriteria Widget::getFilterCriteria() const
 
 void Widget::searchCircle(CircleWidget& circleWidget)
 {
-    FilterCriteria filter = getFilterCriteria();
-    QString text = ui->searchContactText->text();
-    circleWidget.search(text, true, filterOnline(filter), filterOffline(filter));
+    if (contactListWidget->getMode() == FriendListWidget::SortingMode::Name) {
+        FilterCriteria filter = getFilterCriteria();
+        QString text = ui->searchContactText->text();
+        circleWidget.search(text, true, filterOnline(filter), filterOffline(filter));
+    }
 }
 
 bool Widget::groupsVisible() const
@@ -2716,12 +2694,10 @@ void Widget::refreshPeerListsLocal(const QString& username)
 
 void Widget::connectCircleWidget(CircleWidget& circleWidget)
 {
-    connect(&circleWidget, &CircleWidget::searchCircle, this, &Widget::searchCircle);
     connect(&circleWidget, &CircleWidget::newContentDialog, this, &Widget::registerContentDialog);
 }
 
 void Widget::connectFriendWidget(FriendWidget& friendWidget)
 {
-    connect(&friendWidget, &FriendWidget::searchCircle, this, &Widget::searchCircle);
     connect(&friendWidget, &FriendWidget::updateFriendActivity, this, &Widget::updateFriendActivity);
 }

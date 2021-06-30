@@ -41,7 +41,6 @@
 #include <QApplication>
 #include <QBitmap>
 #include <QContextMenuEvent>
-#include <QDebug>
 #include <QDrag>
 #include <QFileDialog>
 #include <QInputDialog>
@@ -72,8 +71,6 @@ FriendWidget::FriendWidget(std::shared_ptr<FriendChatroom> chatroom, bool compac
     connect(nameLabel, &CroppingLabel::editFinished, frnd, &Friend::setAlias);
     // update on changes of the displayed name
     connect(frnd, &Friend::displayedNameChanged, nameLabel, &CroppingLabel::setText);
-    connect(frnd, &Friend::displayedNameChanged, this,
-            [this](const QString /* &newName */) { emit friendWidgetRenamed(this); });
     connect(chatroom.get(), &FriendChatroom::activeChanged, this, &FriendWidget::setActive);
     statusMessageLabel->setTextFormat(Qt::PlainText);
 }
@@ -241,7 +238,6 @@ void FriendWidget::removeFromCircle()
 
     if (circleWidget != nullptr) {
         circleWidget->updateStatus();
-        emit searchCircle(*circleWidget);
     }
 }
 
@@ -257,7 +253,6 @@ void FriendWidget::moveToCircle(int newCircleId)
     if (newCircleWidget) {
         newCircleWidget->addFriendWidget(this, frnd->getStatus());
         newCircleWidget->setExpanded(true);
-        emit searchCircle(*newCircleWidget);
         s.savePersonal();
     } else {
         s.setFriendCircleID(pk, newCircleId);
@@ -265,7 +260,6 @@ void FriendWidget::moveToCircle(int newCircleId)
 
     if (oldCircleWidget) {
         oldCircleWidget->updateStatus();
-        emit searchCircle(*oldCircleWidget);
     }
 }
 
@@ -360,16 +354,41 @@ const Contact* FriendWidget::getContact() const
     return getFriend();
 }
 
-void FriendWidget::search(const QString& searchString, bool hide)
+bool FriendWidget::isFriend() const
+{
+    return true;
+}
+
+bool FriendWidget::isGroup() const
+{
+    return false;
+}
+
+bool FriendWidget::isOnline() const
+{
+    const auto frnd = getFriend();
+    return Status::isOnline(frnd->getStatus());
+}
+
+QString FriendWidget::getNameItem() const
+{
+    return nameLabel->fullText();
+}
+
+QDateTime FriendWidget::getLastActivity() const
 {
     const auto frnd = chatroom->getFriend();
-    searchName(searchString, hide);
-    const Settings& s = Settings::getInstance();
-    const uint32_t circleId = s.getFriendCircleID(frnd->getPublicKey());
-    CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
-    if (circleWidget) {
-        circleWidget->search(searchString);
-    }
+    return Settings::getInstance().getFriendActivity(frnd->getPublicKey());
+}
+
+QWidget *FriendWidget::getWidget()
+{
+    return this;
+}
+
+int FriendWidget::getCircleId() const
+{
+    return chatroom->getCircleId();
 }
 
 void FriendWidget::resetEventFlags()

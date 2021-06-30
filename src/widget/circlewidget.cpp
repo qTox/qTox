@@ -187,7 +187,6 @@ void CircleWidget::dropEvent(QDropEvent* event)
 
     if (circleWidget != nullptr) {
         circleWidget->updateStatus();
-        emit searchCircle(*circleWidget);
     }
 
     setContainerAttribute(Qt::WA_UnderMouse, false);
