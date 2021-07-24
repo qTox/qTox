@@ -59,7 +59,7 @@ ContentDialog::ContentDialog(const Core &core, QWidget* parent)
     , videoSurfaceSize(QSize())
     , videoCount(0)
 {
-    const Settings& s = Settings::getInstance();    
+    const Settings& s = Settings::getInstance();
 
     friendLayout->setMargin(0);
     friendLayout->setSpacing(0);
@@ -383,7 +383,7 @@ void ContentDialog::updateTitleAndStatusIcon()
         return;
     }
 
-    setWindowTitle(activeChatroomWidget->getTitle() + QStringLiteral(" - ") + username);
+    setWindowTitle(username + QStringLiteral(" - ") + activeChatroomWidget->getTitle());
 
     bool isGroupchat = activeChatroomWidget->getGroup() != nullptr;
     if (isGroupchat) {
