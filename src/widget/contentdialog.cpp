@@ -383,7 +383,7 @@ void ContentDialog::updateTitleAndStatusIcon()
         return;
     }
 
-    setWindowTitle(activeChatroomWidget->getTitle() + QStringLiteral(" - ") + username);
+    setWindowTitle(username + QStringLiteral(" — ") + activeChatroomWidget->getTitle());
 
     bool isGroupchat = activeChatroomWidget->getGroup() != nullptr;
     if (isGroupchat) {

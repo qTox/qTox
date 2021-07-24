@@ -829,8 +829,8 @@ void Widget::setWindowTitle(const QString& title)
     } else {
         QString tmp = title;
         /// <[^>]*> Regexp to remove HTML tags, in case someone used them in title
-        QMainWindow::setWindowTitle(QApplication::applicationName() + QStringLiteral(" - ")
-                                    + tmp.remove(QRegExp("<[^>]*>")));
+        QMainWindow::setWindowTitle(tmp.remove(QRegExp("<[^>]*>")) + QStringLiteral(" — ")
+                                    + QApplication::applicationName());
     }
 }
 
@@ -1877,7 +1877,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
 
         void retranslateUi()
         {
-            setWindowTitle(core->getUsername() + QStringLiteral(" - ") + Widget::fromDialogType(type));
+            setWindowTitle(core->getUsername() + QStringLiteral(" — ") + Widget::fromDialogType(type));
         }
 
         void reloadTheme() final
