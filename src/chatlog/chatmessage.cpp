@@ -28,6 +28,7 @@
 #include "content/timestamp.h"
 #include "content/broken.h"
 #include "src/widget/style.h"
+#include "src/widget/tool/identicon.h"
 
 #include <QDebug>
 #include <QCryptographicHash>
@@ -93,9 +94,12 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     QColor color = Style::getColor(Style::MainText);
     if (colorizeName) {
         QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Sha256);
-        const auto* data = hash.data();
+        float lightness = color.lightnessF();
+        // Adapt as good as possible to Light/Dark themes
+        lightness = lightness*0.5 + 0.3;
 
-        color.setHsv(data[0], 255, 196);
+        // Magic values
+        color.setHslF(Identicon::bytesToColor(hash.left(Identicon::IDENTICON_COLOR_BYTES)), 1.0, lightness);
 
         if (!isMe && textType == Text::NORMAL) {
                 textType = Text::CUSTOM;

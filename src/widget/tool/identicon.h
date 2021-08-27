@@ -27,17 +27,15 @@ class Identicon
 public:
     Identicon(const QByteArray& data);
     QImage toImage(int scaleFactor = 1);
+    static float bytesToColor(QByteArray bytes);
 
 public:
     static constexpr int IDENTICON_ROWS = 5;
-
-private:
-    float bytesToColor(QByteArray bytes);
+    static constexpr int IDENTICON_COLOR_BYTES = 6;
 
 private:
     static constexpr int COLORS = 2;
     static constexpr int ACTIVE_COLS = (IDENTICON_ROWS + 1) / 2;
-    static constexpr int IDENTICON_COLOR_BYTES = 6;
     static constexpr int HASH_MIN_LEN = ACTIVE_COLS * IDENTICON_ROWS
                                       + COLORS * IDENTICON_COLOR_BYTES;
 
