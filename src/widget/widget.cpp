@@ -2070,12 +2070,13 @@ void Widget::removeGroup(Group* g, bool fake)
         return;
     }
     groupChatForms.erase(groupChatFormIt);
+    groupAlertConnections.remove(groupId);
+
     delete g;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
         onAddClicked();
     }
 
-    groupAlertConnections.remove(groupId);
 }
 
 void Widget::removeGroup(const GroupId& groupId)
