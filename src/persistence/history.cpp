@@ -1146,7 +1146,12 @@ QDateTime History::getDateWhereFindPhrase(const ToxPk& friendPk, const QDateTime
     }
 
     if (parameter.period == PeriodSearch::AfterDate || parameter.period == PeriodSearch::BeforeDate) {
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+        date = parameter.date.startOfDay();
+#else
         date = QDateTime(parameter.date);
+#endif
     }
 
     QString period;
