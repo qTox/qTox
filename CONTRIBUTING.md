@@ -33,7 +33,7 @@ it still will be there next time you might need it. `:-)`
 
 ### Must read
 * If you aren't sure, you can ask on the
-  [**IRC channel**](https://webchat.freenode.net/?channels=qtox) or read our
+  [**IRC channel**](https://web.libera.chat/#qtox) or read our
   [**wiki**](https://github.com/qTox/qTox/wiki) first.
 * Do a quick **search**. Others might have already reported the issue.
 * Write in **English**!
