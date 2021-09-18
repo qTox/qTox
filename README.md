@@ -39,7 +39,7 @@ the encrypted peer-to-peer Tox protocol.
  **[Report bugs] |**
  **[Jenkins builds] |**
  **[Mailing list] |**
- **IRC:** [#qtox@freenode]
+ **IRC:** [#qtox@libera.chat]
 
 ---
 
@@ -119,7 +119,7 @@ idea of the general look and features.
 
 ### Organizational stuff
 
-Happens in both IRC channel [#qtox@freenode] and on [qTox-dev mailing list].
+Happens in both IRC channel [#qtox@libera.chat] and on [qTox-dev mailing list].
 If you are interested in participating, **join the channel** and **subscribe to
 the mailing list**.
 
@@ -157,7 +157,7 @@ Windows updates, managed by `tux3`:
 AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 ```
 
-[#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
+[#qtox@libera.chat]: https://web.libera.chat/#qtox
 [64 bit release]: https://github.com/qTox/qTox/releases/download/v1.17.3/setup-qtox-x86_64-release.exe
 [32 bit release]: https://github.com/qTox/qTox/releases/download/v1.17.3/setup-qtox-i686-release.exe
 [32nightly]: https://github.com/qTox/qTox-nightly-releases/releases/download/ci-master-latest/setup-qtox-i686-release.exe
