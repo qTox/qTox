@@ -260,8 +260,9 @@ Afterwards open a new terminal, change to a directory of your choice and clone
 the repository:
 
 ```bash
-cd /home/$USER/qTox
+cd /home/$USER
 git clone https://github.com/qTox/qTox.git qTox
+cd qTox
 ```
 
 The following steps assumes that you cloned the repository at
@@ -300,7 +301,6 @@ sudo apt-get install \
     libexif-dev \
     libgdk-pixbuf2.0-dev \
     libgtk2.0-dev \
-    libkdeui5 \
     libopenal-dev \
     libopus-dev \
     libqrencode-dev \
@@ -313,7 +313,7 @@ sudo apt-get install \
     libxss-dev \
     pkg-config \
     qrencode \
-    qt5-default \
+    qtbase5-dev \
     qttools5-dev \
     qttools5-dev-tools \
     yasm
