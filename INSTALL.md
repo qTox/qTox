@@ -3,10 +3,12 @@
 - [Linux](#linux)
   - [Simple install](#simple-install)
     - [Arch](#arch-easy)
+    - [Debian](#debian-easy)
     - [Fedora](#fedora-easy)
     - [Gentoo](#gentoo-easy)
     - [openSUSE](#opensuse-easy)
     - [Slackware](#slackware-easy)
+    - [Ubuntu](#ubuntu-easy)
   - [Install git](#install-git)
     - [Arch](#arch-git)
     - [Debian](#debian-git)
@@ -108,9 +110,11 @@ To enable: `-DDESKTOP_NOTIFICATIONS=True`
 Easy qTox install is provided for variety of distributions:
 
 * [Arch](#arch)
+* [Debian](#debian)
 * [Fedora](#fedora)
 * [Gentoo](#gentoo)
 * [Slackware](#slackware)
+* [Ubuntu](#ubuntu)
 
 ---
 
@@ -122,6 +126,16 @@ PKGBUILD is available in the `community` repo, to install:
 
 ```bash
 pacman -S qtox
+```
+
+<a name="debian-easy" />
+
+#### Debian
+
+qTox is available in the [Main](https://tracker.debian.org/pkg/qtox) repo, to install:
+
+```bash
+sudo apt install qtox
 ```
 
 <a name="fedora-easy" />
@@ -184,6 +198,16 @@ Most of the dependencies should be available through your package manager. You
 may either follow the directions below, or simply run `./simple_make.sh` after
 cloning this repository, which will attempt to automatically download
 dependencies followed by compilation.
+
+<a name="ubuntu-easy" />
+
+#### Ubuntu
+
+qTox is available in the [Universe](https://packages.ubuntu.com/focal/qtox) repo, to install:
+
+```bash
+sudo apt install qtox
+```
 
 ### Install git
 In order to clone the qTox repository you need Git.
