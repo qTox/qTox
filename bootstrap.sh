@@ -104,6 +104,8 @@ print_debug_output() {
 # remove not needed dirs
 remove_build_dirs() {
     rm -rf "${BASE_DIR}/${TOXCORE_DIR}"
+    rm -rf "${BASE_DIR}/${TOXEXT_DIR}"
+    rm -rf "${BASE_DIR}/${TOX_EXT_MESSAGES_DIR}"
     rm -rf "${BASE_DIR}/${SQLCIPHER_DIR}"
 }
 
