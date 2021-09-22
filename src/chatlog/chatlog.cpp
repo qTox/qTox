@@ -128,6 +128,7 @@ ChatLog::ChatLog(QWidget* parent)
     reloadTheme();
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
+    scrollToBottom();
 }
 
 ChatLog::~ChatLog()
