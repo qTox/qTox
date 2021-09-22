@@ -21,7 +21,10 @@
     - [openSUSE](#opensuse-other-deps)
     - [Slackware](#slackware-other-deps)
     - [Ubuntu](#ubuntu-other-deps)
-  - [Compile toxcore](#compile-toxcore)
+  - [Compile dependencies](#compile-dependencies)
+    - [bootstrap.sh](#bootstrap.sh)
+    - [Compile toxcore](#compile-toxcore)
+    - [Compile extensions](#compile-extensions)
   - [Compile qTox](#compile-qtox)
   - [Security hardening with AppArmor](#security-hardening-with-apparmor)
 - [BSD](#bsd)
@@ -405,9 +408,25 @@ sudo apt-get install \
     qttools5-dev
 ```
 
-### Compile toxcore
+### Compile dependencies
 
-Normally you don't want to do that, `bootstrap.sh` will do it for you.
+Toxcore and ToxExt extensions can either be built with bootstrap.sh or manually.
+
+<a name="bootstrap.sh" />
+
+#### bootstrap.sh
+
+`bootstrap.sh` will build toxcore and extensions for you, allowing you to skip
+to [compiling qTox](#compile-qtox) after running it. To use it, run
+```bash
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib64/pkgconfig"
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig"
+./bootstrap.sh
+```
+
+<a name="compile-toxcore" />
+
+#### Compile toxcore
 
 Provided that you have all required dependencies installed, you can simply run:
 
@@ -426,7 +445,9 @@ echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 sudo ldconfig
 ```
 
-### Compile extensions
+<a name="compile-extensions" />
+
+#### Compile extensions
 
 qTox uses the toxext library and some of the extensions that go with it.
 
