@@ -38,9 +38,21 @@ QString getAutostartFilePath(QString dir)
     return dir + "/qTox - " + Settings::getInstance().getCurrentProfile() + ".desktop";
 }
 
+QString currentBinPath()
+{
+    const auto env = QProcessEnvironment::systemEnvironment();
+    const auto appImageEnvKey = QStringLiteral("APPIMAGE");
+
+    if (env.contains(appImageEnvKey)) {
+        return env.value(appImageEnvKey);
+    } else {
+        return QApplication::applicationFilePath();
+    }
+}
+
 inline QString currentCommandLine()
 {
-    return "\"" + QApplication::applicationFilePath() + "\" -p \""
+    return "\"" + currentBinPath() + "\" -p \""
            + Settings::getInstance().getCurrentProfile() + "\"";
 }
 }
