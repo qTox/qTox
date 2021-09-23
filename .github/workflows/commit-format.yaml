@@ -1,0 +1,14 @@
+name: Commit Format
+on: pull_request
+jobs:
+  verify-commit-format:
+    name: Verify Commit Format
+    runs-on: ubuntu-18.04
+    env:
+      GITHUB_CONTEXT: ${{ github.event.pull_request.commits_url }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # so that we can see the full commit range
+      - name: Run
+        run: ./.travis/verify-commit-format.sh
