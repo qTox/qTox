@@ -171,12 +171,18 @@ cp /usr/lib/x86_64-linux-gnu/libjack.so* "$QTOX_APP_DIR/local/lib"
 
 # this is important , aitool automatically uses the same filename in .zsync meta file.
 # if this name does not match with the one we upload , the update always fails.
-if [ -n "$TRAVIS_TAG" ]
+
+if [ -n "${TRAVIS_TAG-}" ]
 then
-    eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-$TRAVIS_TAG.x86_64.AppImage"
+    VERSION_NAME="${TRAVIS_TAG}"
+elif [ -n "${TRAVIS_COMMIT-}" ]
+then
+    VERSION_NAME="${TRAVIS_COMMIT}"
 else
-    eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-$TRAVIS_COMMIT-x86_64.AppImage"
+    VERSION_NAME="${VERSION}"
 fi
+
+eval "$AITOOL_BIN -u \"$UPDATE_INFO\" $QTOX_APP_DIR qTox-$VERSION_NAME.x86_64.AppImage"
 
 # Chmod since everything is root:root
 chmod 755 -R "$OUTPUT_DIR"
