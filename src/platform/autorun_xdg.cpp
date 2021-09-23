@@ -38,9 +38,21 @@ QString getAutostartFilePath(QString dir)
     return dir + "/qTox - " + Settings::getInstance().getCurrentProfile() + ".desktop";
 }
 
-inline QString currentCommandLine()
+QString currentBinPath()
 {
-    return "\"" + QApplication::applicationFilePath() + "\" -p \""
+    const auto env = QProcessEnvironment::systemEnvironment();
+    const auto appImageEnvKey = QStringLiteral("APPIMAGE");
+
+    if (env.contains(appImageEnvKey)) {
+        return env.value(appImageEnvKey);
+    } else {
+        return QApplication::applicationFilePath();
+    }
+}
+
+inline QString profileRunCommand()
+{
+    return "\"" + currentBinPath() + "\" -p \""
            + Settings::getInstance().getCurrentProfile() + "\"";
 }
 }
@@ -56,7 +68,7 @@ bool Platform::setAutorun(bool on)
         desktop.write("Type=Application\n");
         desktop.write("Name=qTox\n");
         desktop.write("Exec=");
-        desktop.write(currentCommandLine().toUtf8());
+        desktop.write(profileRunCommand().toUtf8());
         desktop.write("\n");
         desktop.close();
         return true;
