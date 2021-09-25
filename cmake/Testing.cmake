@@ -56,6 +56,7 @@ auto_test(model messageprocessor "")
 auto_test(model sessionchatlog "")
 auto_test(model exiftransform "")
 auto_test(model notificationgenerator "${MOCK_SOURCES}")
+auto_test(widget filesform "")
 
 if (UNIX)
   auto_test(platform posixsignalnotifier "")

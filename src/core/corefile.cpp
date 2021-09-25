@@ -448,7 +448,6 @@ void CoreFile::onFileDataCallback(Tox* tox, uint32_t friendId, uint32_t fileId, 
         file->status = ToxFile::FINISHED;
         if (file->fileKind != TOX_FILE_KIND_AVATAR) {
             emit coreFile->fileTransferFinished(*file);
-            emit coreFile->fileUploadFinished(file->filePath);
         }
         coreFile->removeFile(friendId, fileId);
         return;
@@ -519,7 +518,6 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
             }
         } else {
             emit coreFile->fileTransferFinished(*file);
-            emit coreFile->fileDownloadFinished(file->filePath);
         }
         coreFile->removeFile(friendId, fileId);
         return;

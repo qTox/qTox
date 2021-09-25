@@ -26,6 +26,7 @@
 #include "src/widget/style.h"
 #include "src/widget/widget.h"
 #include "src/model/exiftransform.h"
+#include "util/display.h"
 
 #include <QBuffer>
 #include <QDebug>
@@ -232,18 +233,6 @@ void FileTransferWidget::paintEvent(QPaintEvent*)
 void FileTransferWidget::reloadTheme()
 {
     updateBackgroundColor(lastStatus);
-}
-
-QString FileTransferWidget::getHumanReadableSize(qint64 size)
-{
-    static const char* suffix[] = {"B", "KiB", "MiB", "GiB", "TiB"};
-    int exp = 0;
-
-    if (size > 0) {
-        exp = std::min(static_cast<int>(log(size) / log(1024)), static_cast<int>(sizeof(suffix) / sizeof(suffix[0]) - 1));
-    }
-
-    return QString().setNum(size / pow(1024, exp), 'f', exp > 1 ? 2 : 0).append(suffix[exp]);
 }
 
 void FileTransferWidget::updateWidgetColor(ToxFile const& file)
