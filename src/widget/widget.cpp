@@ -279,7 +279,8 @@ void Widget::init()
 
     Style::setThemeColor(settings.getThemeColor());
 
-    filesForm = new FilesForm();
+    CoreFile* coreFile = core->getCoreFile();
+    filesForm = new FilesForm(*coreFile);
     addFriendForm = new AddFriendForm(core->getSelfId());
     groupInviteForm = new GroupInviteForm;
 
@@ -292,7 +293,6 @@ void Widget::init()
     updateCheck->checkForUpdate();
 #endif
 
-    CoreFile* coreFile = core->getCoreFile();
     profileInfo = new ProfileInfo(core, &profile);
     profileForm = new ProfileForm(profileInfo);
 
@@ -307,8 +307,6 @@ void Widget::init()
     connect(&profile, &Profile::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
 
     connect(coreFile, &CoreFile::fileReceiveRequested, this, &Widget::onFileReceiveRequested);
-    connect(coreFile, &CoreFile::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
-    connect(coreFile, &CoreFile::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
     connect(ui->addButton, &QPushButton::clicked, this, &Widget::onAddClicked);
     connect(ui->groupButton, &QPushButton::clicked, this, &Widget::onGroupClicked);
     connect(ui->transferButton, &QPushButton::clicked, this, &Widget::onTransferClicked);
@@ -1136,6 +1134,8 @@ void Widget::dispatchFile(ToxFile file)
 
     const auto senderPk = (file.direction == ToxFile::SENDING) ? core->getSelfPublicKey() : pk;
     friendChatLogs[pk]->onFileUpdated(senderPk, file);
+
+    filesForm->onFileUpdated(file);
 }
 
 void Widget::dispatchFileWithBool(ToxFile file, bool)
