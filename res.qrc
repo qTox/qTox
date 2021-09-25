@@ -100,10 +100,13 @@
         <file>themes/dark/chatArea/typing.svg</file>
         <file>themes/dark/chatArea/error.svg</file>
         <file>themes/dark/fileTransferInstance/no.svg</file>
+        <file>themes/dark/fileTransferInstance/no_dark.svg</file>
         <file>themes/dark/fileTransferInstance/pause.svg</file>
+        <file>themes/dark/fileTransferInstance/pause_dark.svg</file>
         <file>themes/dark/fileTransferInstance/yes.svg</file>
         <file>themes/dark/fileTransferInstance/dir.svg</file>
         <file>themes/dark/fileTransferInstance/arrow_white.svg</file>
+        <file>themes/dark/fileTransferInstance/arrow_black.svg</file>
         <file>themes/dark/fileTransferInstance/browse.svg</file>
         <file>themes/dark/fileTransferInstance/filetransferWidget.css</file>
         <file>themes/dark/genericChatForm/genericChatForm.css</file>
@@ -164,10 +167,13 @@
         <file>themes/default/chatArea/typing.svg</file>
         <file>themes/default/chatArea/error.svg</file>
         <file>themes/default/fileTransferInstance/no.svg</file>
+        <file>themes/default/fileTransferInstance/no_dark.svg</file>
         <file>themes/default/fileTransferInstance/pause.svg</file>
+        <file>themes/default/fileTransferInstance/pause_dark.svg</file>
         <file>themes/default/fileTransferInstance/yes.svg</file>
         <file>themes/default/fileTransferInstance/dir.svg</file>
         <file>themes/default/fileTransferInstance/arrow_white.svg</file>
+        <file>themes/default/fileTransferInstance/arrow_black.svg</file>
         <file>themes/default/fileTransferInstance/browse.svg</file>
         <file>themes/default/fileTransferInstance/filetransferWidget.css</file>
         <file>themes/default/genericChatForm/genericChatForm.css</file>
