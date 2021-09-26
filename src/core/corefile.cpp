@@ -132,8 +132,7 @@ void CoreFile::sendAvatarFile(uint32_t friendId, const QByteArray& data)
         return;
     }
 
-    ToxFile file{fileNum, friendId, "", "", ToxFile::SENDING};
-    file.filesize = filesize;
+    ToxFile file{fileNum, friendId, "", "", filesize, ToxFile::SENDING};
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.avatarData = data;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
@@ -158,8 +157,7 @@ void CoreFile::sendFile(uint32_t friendId, QString filename, QString filePath,
     }
     qDebug() << QString("sendFile: Created file sender %1 with friend %2").arg(fileNum).arg(friendId);
 
-    ToxFile file{fileNum, friendId, fileName.getQString(), filePath, ToxFile::SENDING};
-    file.filesize = filesize;
+    ToxFile file{fileNum, friendId, fileName.getQString(), filePath, static_cast<uint64_t>(filesize), ToxFile::SENDING};
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
     tox_file_get_file_id(tox, friendId, fileNum, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
                          nullptr);
@@ -191,6 +189,7 @@ void CoreFile::pauseResumeFile(uint32_t friendId, uint32_t fileId)
 
     if (file->pauseStatus.paused()) {
         file->status = ToxFile::PAUSED;
+        file->progress.resetSpeed();
         emit fileTransferPaused(*file);
     } else {
         file->status = ToxFile::TRANSMITTING;
@@ -360,8 +359,7 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
         qDebug() << QString("Received file request %1:%2 kind %3").arg(friendId).arg(fileId).arg(kind);
     }
 
-    ToxFile file{fileId, friendId, filename.getBytes(), "", ToxFile::RECEIVING};
-    file.filesize = filesize;
+    ToxFile file{fileId, friendId, filename.getBytes(), "", filesize, ToxFile::RECEIVING};
     file.fileKind = kind;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
     tox_file_get_file_id(tox, friendId, fileId, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
@@ -390,8 +388,7 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
                     .arg(fileId);
     tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_RESUME, nullptr);
 
-    ToxFile file{fileId, friendId, "<avatar>", "", ToxFile::RECEIVING};
-    file.filesize = 0;
+    ToxFile file{fileId, friendId, "<avatar>", "", 0, ToxFile::RECEIVING};
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
     tox_file_get_file_id(tox, friendId, fileId, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
@@ -475,7 +472,7 @@ void CoreFile::onFileDataCallback(Tox* tox, uint32_t friendId, uint32_t fileId, 
             coreFile->removeFile(friendId, fileId);
             return;
         }
-        file->bytesSent += length;
+        file->progress.addSample(file->progress.getBytesSent() + length);
         file->hashGenerator->addData(reinterpret_cast<const char*>(data.get()), length);
     }
 
@@ -500,7 +497,7 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
         return;
     }
 
-    if (file->bytesSent != position) {
+    if (file->progress.getBytesSent() != position) {
         qWarning("onFileRecvChunkCallback: Received a chunk out-of-order, aborting transfer");
         if (file->fileKind != TOX_FILE_KIND_AVATAR) {
             file->status = ToxFile::CANCELED;
@@ -533,7 +530,7 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
     } else {
         file->file->write(reinterpret_cast<const char*>(data), length);
     }
-    file->bytesSent += length;
+    file->progress.addSample(file->progress.getBytesSent() + length);
     file->hashGenerator->addData(reinterpret_cast<const char*>(data), length);
 
     if (file->fileKind != TOX_FILE_KIND_AVATAR) {

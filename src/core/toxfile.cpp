@@ -34,21 +34,29 @@
  * @brief Data file (default) or avatar
  */
 
+ToxFile::ToxFile()
+    : fileKind(0)
+    , fileNum(0)
+    , friendId(0)
+    , status(INITIALIZING)
+    , direction(SENDING)
+    , progress(0)
+{}
+
 /**
  * @brief ToxFile constructor
  */
 ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QString filename, QString filePath,
-                 FileDirection Direction)
+                 uint64_t filesize, FileDirection Direction)
     : fileKind{TOX_FILE_KIND_DATA}
     , fileNum(fileNum)
     , friendId(friendId)
     , fileName{filename}
     , filePath{filePath}
     , file{new QFile(filePath)}
-    , bytesSent{0}
-    , filesize{0}
     , status{INITIALIZING}
     , direction{Direction}
+    , progress(filesize)
 {}
 
 bool ToxFile::operator==(const ToxFile& other) const
