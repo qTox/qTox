@@ -43,6 +43,7 @@ auto_test(core core "${${PROJECT_NAME}_RESOURCES}")
 auto_test(core contactid "")
 auto_test(core toxid "")
 auto_test(core toxstring "")
+auto_test(core fileprogress "")
 auto_test(chatlog textformatter "")
 auto_test(net bsu "${${PROJECT_NAME}_RESOURCES}") # needs nodes list
 auto_test(chatlog chatlinestorage "")
