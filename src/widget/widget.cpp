@@ -1126,7 +1126,8 @@ void Widget::dispatchFile(ToxFile file)
         }
 
         auto maxAutoAcceptSize = settings.getMaxAutoAcceptSize();
-        bool autoAcceptSizeCheckPassed = maxAutoAcceptSize == 0 || maxAutoAcceptSize >= file.filesize;
+        bool autoAcceptSizeCheckPassed =
+            maxAutoAcceptSize == 0 || maxAutoAcceptSize >= file.progress.getFileSize();
 
         if (!autoAcceptDir.isEmpty() && autoAcceptSizeCheckPassed) {
             acceptFileTransfer(file, autoAcceptDir);
@@ -1728,9 +1729,7 @@ void Widget::onFriendRequestReceived(const ToxPk& friendPk, const QString& messa
 void Widget::onFileReceiveRequested(const ToxFile& file)
 {
     const ToxPk& friendPk = FriendList::id2Key(file.friendId);
-    newFriendMessageAlert(friendPk,
-                          {},
-                          true, file.fileName, file.filesize);
+    newFriendMessageAlert(friendPk, {}, true, file.fileName, file.progress.getFileSize());
 }
 
 void Widget::updateFriendActivity(const Friend& frnd)

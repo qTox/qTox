@@ -20,6 +20,7 @@
 #pragma once
 
 #include "src/core/toxfilepause.h"
+#include "src/core/toxfileprogress.h"
 
 #include <QString>
 #include <memory>
@@ -50,9 +51,9 @@ struct ToxFile
         RECEIVING = 1,
     };
 
-    ToxFile() = default;
+    ToxFile();
     ToxFile(uint32_t FileNum, uint32_t FriendId, QString FileName, QString filePath,
-            FileDirection Direction);
+            uint64_t filesize, FileDirection Direction);
 
     bool operator==(const ToxFile& other) const;
     bool operator!=(const ToxFile& other) const;
@@ -66,12 +67,11 @@ struct ToxFile
     QString fileName;
     QString filePath;
     std::shared_ptr<QFile> file;
-    quint64 bytesSent;
-    quint64 filesize;
     FileStatus status;
     FileDirection direction;
     QByteArray avatarData;
     QByteArray resumeFileId;
     std::shared_ptr<QCryptographicHash> hashGenerator = std::make_shared<QCryptographicHash>(QCryptographicHash::Sha256);
     ToxFilePause pauseStatus;
+    ToxFileProgress progress;
 };

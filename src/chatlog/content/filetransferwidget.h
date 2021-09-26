@@ -23,7 +23,6 @@
 #include <QWidget>
 
 #include "src/chatlog/chatlinecontent.h"
-#include "src/chatlog/toxfileprogress.h"
 #include "src/core/toxfile.h"
 
 class CoreFile;
@@ -81,7 +80,6 @@ private:
 private:
     CoreFile& coreFile;
     Ui::FileTransferWidget* ui;
-    ToxFileProgress fileProgress;
     ToxFile fileInfo;
     QVariantAnimation* backgroundColorAnimation = nullptr;
     QVariantAnimation* buttonColorAnimation = nullptr;
@@ -90,6 +88,7 @@ private:
     QColor buttonBackgroundColor;
 
     bool active;
+    QTime lastTransmissionUpdate;
     ToxFile::FileStatus lastStatus = ToxFile::INITIALIZING;
 
 };

@@ -65,7 +65,7 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, CoreFile& _coreFile, Tox
     ui->previewButton->hide();
     ui->filenameLabel->setText(file.fileName);
     ui->progressBar->setValue(0);
-    ui->fileSizeLabel->setText(getHumanReadableSize(file.filesize));
+    ui->fileSizeLabel->setText(getHumanReadableSize(file.progress.getFileSize()));
     ui->etaLabel->setText("");
 
     backgroundColorAnimation = new QVariantAnimation(this);
@@ -321,19 +321,12 @@ void FileTransferWidget::updateFileProgress(ToxFile const& file)
 {
     switch (file.status) {
     case ToxFile::INITIALIZING:
-        break;
     case ToxFile::PAUSED:
-        fileProgress.resetSpeed();
         break;
     case ToxFile::TRANSMITTING: {
-        if (!fileProgress.needsUpdate()) {
-            break;
-        }
-
-        fileProgress.addSample(file);
-        auto speed = fileProgress.getSpeed();
-        auto progress = fileProgress.getProgress();
-        auto remainingTime = fileProgress.getTimeLeftSeconds();
+        auto speed = file.progress.getSpeed();
+        auto progress = file.progress.getProgress();
+        auto remainingTime = file.progress.getTimeLeftSeconds();
 
         ui->progressBar->setValue(static_cast<int>(progress * 100.0));
 
@@ -525,11 +518,12 @@ void FileTransferWidget::updateWidget(ToxFile const& file)
 
     fileInfo = file;
 
-    // If we repainted on every packet our gui would be *very* slow
-    bool bTransmitNeedsUpdate = fileProgress.needsUpdate();
+    bool shouldUpdateFileProgress = file.status != ToxFile::TRANSMITTING || lastTransmissionUpdate ==
+        QTime() || lastTransmissionUpdate.msecsTo(file.progress.lastSampleTime()) > 1000;
 
     updatePreview(file);
-    updateFileProgress(file);
+    if (shouldUpdateFileProgress)
+        updateFileProgress(file);
     updateWidgetText(file);
     updateWidgetColor(file);
     setupButtons(file);
@@ -537,14 +531,8 @@ void FileTransferWidget::updateWidget(ToxFile const& file)
 
     lastStatus = file.status;
 
-    // trigger repaint
-    switch (file.status) {
-    case ToxFile::TRANSMITTING:
-        if (!bTransmitNeedsUpdate) {
-            break;
-        }
-    // fallthrough
-    default:
+    if (shouldUpdateFileProgress) {
+        lastTransmissionUpdate = QTime::currentTime();
         update();
     }
 }

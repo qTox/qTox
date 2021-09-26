@@ -1009,14 +1009,19 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
         case 'F': {
             it = std::next(row.begin(), fileOffset);
             assert(!it->isNull());
-            ToxFile file;
-            file.fileKind = TOX_FILE_KIND_DATA;
-            file.resumeFileId = (*it++).toString().toUtf8();
-            file.fileName = (*it++).toString();
-            file.filePath = (*it++).toString();
-            file.filesize = (*it++).toLongLong();
-            file.direction = static_cast<ToxFile::FileDirection>((*it++).toLongLong());
-            file.status = static_cast<ToxFile::FileStatus>((*it++).toLongLong());
+            const auto fileKind = TOX_FILE_KIND_DATA;
+            const auto resumeFileId = (*it++).toString().toUtf8();
+            const auto fileName = (*it++).toString();
+            const auto filePath = (*it++).toString();
+            const auto filesize = (*it++).toLongLong();
+            const auto direction = static_cast<ToxFile::FileDirection>((*it++).toLongLong());
+            const auto status = static_cast<ToxFile::FileStatus>((*it++).toLongLong());
+
+            ToxFile file(0, 0, fileName, filePath, filesize, direction);
+            file.fileKind = fileKind;
+            file.resumeFileId = resumeFileId;
+            file.status = status;
+
             it = std::next(row.begin(), senderOffset);
             const auto senderKey = (*it++).toString();
             const auto senderName = QString::fromUtf8((*it++).toByteArray().replace('\0', ""));
