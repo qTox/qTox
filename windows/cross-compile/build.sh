@@ -38,9 +38,9 @@ readonly QTOX_SRC_DIR="/qtox"
 
 
 # Make sure we run in an expected environment
-if [ ! -f /etc/os-release ] || ! cat /etc/os-release | grep -qi 'buster'
+if [ ! -f /etc/os-release ] || ! cat /etc/os-release | grep -qi 'bullseye'
 then
-  echo "Error: This script should be run on Debian Buster."
+  echo "Error: This script should be run on Debian Bullseye."
   exit 1
 fi
 
@@ -130,12 +130,12 @@ apt-get update
 apt-get install -y --no-install-recommends \
                    autoconf \
                    automake \
-                   bsdtar \
                    build-essential \
                    ca-certificates \
                    cmake \
                    extra-cmake-modules \
                    git \
+                   libarchive-tools \
                    libtool \
                    nsis \
                    pkg-config \
@@ -739,6 +739,7 @@ then
   rm $OPUS_FILENAME
   cd opus*
 
+  LDFLAGS="-fstack-protector" \
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
                                --prefix="$OPUS_PREFIX_DIR" \
                                --enable-shared \
@@ -773,6 +774,7 @@ then
   rm "$SODIUM_FILENAME"
   cd libsodium*
 
+  LDFLAGS="-fstack-protector" \
   ./configure --host="$ARCH-w64-mingw32" \
               --prefix="$SODIUM_PREFIX_DIR" \
               --enable-shared \
@@ -1401,9 +1403,8 @@ mkdir -p "$QTOX_PREFIX_DIR/libsnore-qt5"
 cp "$SNORE_PREFIX_DIR/lib/plugins/libsnore-qt5/libsnore_backend_windowstoast.dll" "$QTOX_PREFIX_DIR/libsnore-qt5"
 cp "$SNORE_PREFIX_DIR/bin/SnoreToast.exe" $QTOX_PREFIX_DIR
 
-cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
-cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
-cp /usr/$ARCH-w64-mingw32/lib/libwinpthread-1.dll $QTOX_PREFIX_DIR
+cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/{libgcc_s_*.dll,libstdc++*.dll,libssp*.dll} $QTOX_PREFIX_DIR
+cp /usr/$ARCH-w64-mingw32/lib/libwinpthread*.dll $QTOX_PREFIX_DIR
 
 # Setup wine
 if [[ "$ARCH" == "i686" ]]
