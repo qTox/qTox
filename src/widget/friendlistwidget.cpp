@@ -101,7 +101,8 @@ FriendListWidget::FriendListWidget(const Core &_core, Widget* parent, bool group
     : QWidget(parent)
     , core{_core}
 {
-    manager = new FriendListManager(this);
+    int countContacts = core.getFriendList().size();
+    manager = new FriendListManager(countContacts, this);
     manager->setGroupsOnTop(groupsOnTop);
     connect(manager, &FriendListManager::itemsChanged, this, &FriendListWidget::itemsChanged);
 
@@ -137,15 +138,18 @@ void FriendListWidget::setMode(SortingMode mode)
     this->mode = mode;
     Settings::getInstance().setFriendSortingMode(mode);
 
-    sortByMode(mode);
+    manager->setSortRequired();
 }
 
 void FriendListWidget::sortByMode(SortingMode mode)
 {
-    cleanMainLayout();
-
     if (mode == SortingMode::Name) {
         manager->sortByName();
+        if (!manager->getPositionsChanged()) {
+            return;
+        }
+
+        cleanMainLayout();
 
         for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i) {
             addCircleWidget(i);
@@ -202,6 +206,13 @@ void FriendListWidget::sortByMode(SortingMode mode)
             }
         }
     } else if (mode == SortingMode::Activity) {
+
+        manager->sortByActivity();
+        if (!manager->getPositionsChanged()) {
+            return;
+        }
+        cleanMainLayout();
+
         QLocale ql(Settings::getInstance().getTranslation());
         QDate today = QDate::currentDate();
 #define COMMENT "Category for sorting friends by activity"
@@ -222,7 +233,6 @@ void FriendListWidget::sortByMode(SortingMode mode)
 // clang-format on
 #undef COMMENT
 
-        manager->sortByActivity();
         QVector<std::shared_ptr<IFriendListItem>> itemsTmp = manager->getItems();
 
         for (int i = 0; i < itemsTmp.size(); ++i) {
@@ -386,9 +396,9 @@ void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
 
         if (window()->isActiveWindow())
             circleWidget->editName();
-    }
 
-    itemsChanged();
+        manager->setSortRequired();
+    }
 }
 
 void FriendListWidget::removeCircleWidget(CircleWidget* widget)
@@ -412,7 +422,7 @@ void FriendListWidget::renameCircleWidget(CircleWidget* circleWidget, const QStr
     circleWidget->setName(newName);
 
     if (mode == SortingMode::Name) {
-        itemsChanged();
+        manager->setSortRequired();
     }
 }
 
@@ -423,7 +433,6 @@ void FriendListWidget::onGroupchatPositionChanged(bool top)
     if (mode != SortingMode::Name)
         return;
 
-    manager->updatePositions();
     itemsChanged();
 }
 
@@ -559,10 +568,12 @@ void FriendListWidget::moveWidget(FriendWidget* widget, Status::Status s, bool a
         CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
 
         if (circleWidget == nullptr || add) {
-            if (circleId != -1)
+            if (circleId != -1) {
                 Settings::getInstance().setFriendCircleID(f->getPublicKey(), -1);
-
-            itemsChanged();
+                manager->setSortRequired();
+            } else {
+                itemsChanged();
+            }
             return;
         }
 
