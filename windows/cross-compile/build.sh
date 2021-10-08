@@ -1205,11 +1205,46 @@ set -u
   fi
 
 
+  # GMP
+
+  GMP_PREFIX_DIR="$DEP_DIR/libgmp"
+  GMP_VERSION="6.2.1"
+  GMP_HASH="fd4829912cddd12f84181c3451cc752be224643e87fac497b69edddadc49b4f2"
+  GMP_FILENAME="gmp-$GMP_VERSION.tar.xz"
+  if [ ! -f "$GMP_PREFIX_DIR/done" ]
+  then
+    rm -rf "$GMP_PREFIX_DIR"
+    mkdir -p "$GMP_PREFIX_DIR"
+
+    curl $CURL_OPTIONS -O "http://ftp.gnu.org/gnu/gmp/$GMP_FILENAME"
+    check_sha256 "$GMP_HASH" "$GMP_FILENAME"
+    bsdtar --no-same-owner --no-same-permissions -xf $GMP_FILENAME
+    rm $GMP_FILENAME
+    cd gmp*
+
+    mkdir build
+    cd build
+    CFLAGS="-O2 -g0" ../configure --host="$ARCH-w64-mingw32" \
+                                  --prefix="$GMP_PREFIX_DIR" \
+                                  --enable-static \
+                                  --disable-shared
+    make
+    make install
+    cd ..
+    echo -n $GMP_VERSION > $GMP_PREFIX_DIR/done
+
+    cd ..
+    rm -rf ./gmp*
+  else
+    echo "Using cached build of GMP `cat $GMP_PREFIX_DIR/done`"
+  fi
+
+
   # GDB
 
   GDB_PREFIX_DIR="$DEP_DIR/gdb"
-  GDB_VERSION="10.1"
-  GDB_HASH="f82f1eceeec14a3afa2de8d9b0d3c91d5a3820e23e0a01bbb70ef9f0276b62c0"
+  GDB_VERSION="11.1"
+  GDB_HASH="cccfcc407b20d343fb320d4a9a2110776dd3165118ffd41f4b1b162340333f94"
   GDB_FILENAME="gdb-$GDB_VERSION.tar.xz"
   if [ ! -f "$GDB_PREFIX_DIR/done" ]
   then
@@ -1228,7 +1263,8 @@ set -u
                                   --prefix="$GDB_PREFIX_DIR" \
                                   --enable-static \
                                   --disable-shared \
-                                  --with-libexpat-prefix="$EXPAT_PREFIX_DIR"
+                                  --with-libexpat-prefix="$EXPAT_PREFIX_DIR" \
+                                  --with-libgmp-prefix="$GMP_PREFIX_DIR"
     make
     make install
     cd ..
