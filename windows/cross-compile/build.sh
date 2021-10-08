@@ -232,9 +232,9 @@ store_apt_cache()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.1.1k
+OPENSSL_VERSION="1.1.1l"
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="892a0875b9872acd04a9fde79b1f943075d5ea162415de3047c327df33fbaee5"
+OPENSSL_HASH="0b7a3e5e59c34827fe0c3a74b7ec8baef302b98fa80088d7f9153aa16fa76bd1"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
