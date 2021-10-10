@@ -1443,6 +1443,10 @@ cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/{libgcc_s_*.dll,libstdc++*.dll,libssp*
 cp /usr/$ARCH-w64-mingw32/lib/libwinpthread*.dll $QTOX_PREFIX_DIR
 
 # Setup wine
+# Note that SQLCipher and FFmpeg (maybe more?) seem to setup ~/.wine on their
+# own, but to the wrong bitness (always 64-bit?), when we want a matching
+# bitness here for mingw-ldd, so remove it before proceeding.
+rm -rf ~/.wine
 if [[ "$ARCH" == "i686" ]]
 then
   export WINEARCH=win32
@@ -1452,7 +1456,9 @@ then
 fi
 winecfg
 
-# qtox.exe dll checks (32-bit on i686, 64-bit on x86_64)
+# qtox.exe dll checks
+# (system32 contains 32-bit libraries on win32 prefix, but 64-bit on win64
+# prefix)
 python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/qtox.exe --dll-lookup-dirs $QTOX_PREFIX_DIR ~/.wine/drive_c/windows/system32 > /tmp/$ARCH-qtox-ldd
 find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-qtox-dll-find
 # dlls loded at run time that don't showup as a link time dependency
@@ -1494,7 +1500,9 @@ do
 done < /tmp/$ARCH-qtox-dll-find
 
 
-# SnoreToast.exe dll checks (always 32-bit)
+# SnoreToast.exe dll checks
+# (always 32-bit as SnoreToast.exe is 32-bit itself, so check system32 on win32
+# prefix but syswow64 on win64 prefix)
 if [[ "$ARCH" == "i686" ]]
 then
   SNORETOAST_WINE_DLLS=/root/.wine/drive_c/windows/system32
