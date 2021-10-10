@@ -27,6 +27,7 @@
 
 #include <bitset>
 #include <memory>
+#include <mutex>
 #include <unordered_map>
 
 struct Tox;
@@ -86,6 +87,7 @@ public:
             ToxExtPacketList* packetList,
             ToxExtensionMessages* toxExtMessages,
             uint32_t friendId,
+            std::mutex* toxext_mutex,
             PacketPassKey);
 
         // Delete copy constructor, we shouldn't be able to copy
@@ -97,16 +99,19 @@ public:
             packetList = other.packetList;
             friendId = other.friendId;
             hasBeenSent = other.hasBeenSent;
+            toxext_mutex = other.toxext_mutex;
             other.toxExtMessages = nullptr;
             other.packetList = nullptr;
             other.friendId = 0;
             other.hasBeenSent = false;
+            other.toxext_mutex = nullptr;
         }
 
         uint64_t addExtendedMessage(QString message) override;
 
         bool send() override;
     private:
+        std::mutex* toxext_mutex;
         bool hasBeenSent = false;
         // Note: non-owning pointer
         ToxExtensionMessages* toxExtMessages;
@@ -141,6 +146,7 @@ private:
 
     CoreExt(ExtensionPtr<ToxExt> toxExt);
 
+    std::mutex toxext_mutex;
     std::unordered_map<uint32_t, Status::Status> currentStatuses;
     ExtensionPtr<ToxExt> toxExt;
     ExtensionPtr<ToxExtensionMessages> toxExtMessages;
