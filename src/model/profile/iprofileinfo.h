@@ -39,7 +39,13 @@ public:
     enum class SetAvatarResult {
         OK, EmptyPath, CanNotOpen, CanNotRead, TooLarge
     };
-    virtual ~IProfileInfo() = default;
+
+    IProfileInfo() = default;
+    virtual ~IProfileInfo();
+    IProfileInfo(const IProfileInfo&) = default;
+    IProfileInfo& operator=(const IProfileInfo&) = default;
+    IProfileInfo(IProfileInfo&&) = default;
+    IProfileInfo& operator=(IProfileInfo&&) = default;
 
     virtual bool setPassword(const QString& password) = 0;
     virtual bool deletePassword() = 0;

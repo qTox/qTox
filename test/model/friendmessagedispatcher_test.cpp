@@ -40,17 +40,9 @@ public:
         , currentReceiptId(currentReceiptId)
     {}
 
-    uint64_t addExtendedMessage(QString message) override
-    {
-        this->message = message;
-        return currentReceiptId++;
-    }
+    uint64_t addExtendedMessage(QString message) override;
 
-    bool send() override
-    {
-        numSentMessages++;
-        return true;
-    }
+    bool send() override;
 
     uint64_t& numSentMessages;
     uint64_t& currentReceiptId;
@@ -58,46 +50,65 @@ public:
     QString message;
 };
 
+uint64_t MockCoreExtPacket::addExtendedMessage(QString message)
+{
+    this->message = message;
+    return currentReceiptId++;
+}
+
+bool MockCoreExtPacket::send()
+{
+    numSentMessages++;
+    return true;
+}
+
 class MockCoreExtPacketAllocator : public ICoreExtPacketAllocator
 {
 public:
-    std::unique_ptr<ICoreExtPacket> getPacket(uint32_t friendId) override
-    {
-        return std::unique_ptr<MockCoreExtPacket>(new MockCoreExtPacket(numSentMessages, currentReceiptId));
-    }
+    std::unique_ptr<ICoreExtPacket> getPacket(uint32_t friendId) override;
 
     uint64_t numSentMessages;
     uint64_t currentReceiptId;
 };
 
+std::unique_ptr<ICoreExtPacket> MockCoreExtPacketAllocator::getPacket(uint32_t friendId)
+{
+    return std::unique_ptr<MockCoreExtPacket>(new MockCoreExtPacket(numSentMessages, currentReceiptId));
+}
+
 class MockFriendMessageSender : public ICoreFriendMessageSender
 {
 public:
-    bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) override
-    {
-        if (canSend) {
-            numSentActions++;
-            receipt = receiptNum;
-            receiptNum.get() += 1;
-        }
-        return canSend;
-    }
+    bool sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt) override;
 
-    bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) override
-    {
-        if (canSend) {
-            numSentMessages++;
-            receipt = receiptNum;
-            receiptNum.get() += 1;
-        }
-        return canSend;
-    }
+    bool sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt) override;
 
     bool canSend = true;
     ReceiptNum receiptNum{0};
     size_t numSentActions = 0;
     size_t numSentMessages = 0;
 };
+
+bool MockFriendMessageSender::sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt)
+{
+    if (canSend) {
+        numSentActions++;
+        receipt = receiptNum;
+        receiptNum.get() += 1;
+    }
+    return canSend;
+}
+
+bool MockFriendMessageSender::sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt)
+{
+    if (canSend) {
+        numSentMessages++;
+        receipt = receiptNum;
+        receiptNum.get() += 1;
+    }
+    return canSend;
+}
+
 class TestFriendMessageDispatcher : public QObject
 {
     Q_OBJECT

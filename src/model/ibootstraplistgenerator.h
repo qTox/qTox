@@ -25,6 +25,12 @@ class DhtServer;
 class IBootstrapListGenerator
 {
 public:
-    virtual ~IBootstrapListGenerator() = default;
+    IBootstrapListGenerator() = default;
+    virtual ~IBootstrapListGenerator();
+    IBootstrapListGenerator(const IBootstrapListGenerator&) = default;
+    IBootstrapListGenerator& operator=(const IBootstrapListGenerator&) = default;
+    IBootstrapListGenerator(IBootstrapListGenerator&&) = default;
+    IBootstrapListGenerator& operator=(IBootstrapListGenerator&&) = default;
+
     virtual QList<DhtServer> getBootstrapnodes() = 0;
 };

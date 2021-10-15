@@ -162,6 +162,8 @@ NotificationGenerator::NotificationGenerator(
     , profile(profile)
 {}
 
+NotificationGenerator::~NotificationGenerator() = default;
+
 NotificationData NotificationGenerator::friendMessageNotification(const Friend* f, const QString& message)
 {
     friendNotifications[f]++;
