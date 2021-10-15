@@ -1,5 +1,5 @@
 /*
-    Copyright © 2020 by The qTox Project Contributors
+    Copyright © 2021 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,20 +17,6 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "iprofileinfo.h"
 
-#include <QList>
-class DhtServer;
-
-class IBootstrapListGenerator
-{
-public:
-    IBootstrapListGenerator() = default;
-    virtual ~IBootstrapListGenerator();
-    IBootstrapListGenerator(const IBootstrapListGenerator&) = default;
-    IBootstrapListGenerator& operator=(const IBootstrapListGenerator&) = default;
-    IBootstrapListGenerator(IBootstrapListGenerator&&) = default;
-    IBootstrapListGenerator& operator=(IBootstrapListGenerator&&) = default;
-
-    virtual QList<DhtServer> getBootstrapnodes() = 0;
-};
+IProfileInfo::~IProfileInfo() = default;

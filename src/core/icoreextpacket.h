@@ -36,8 +36,12 @@
 class ICoreExtPacket
 {
 public:
-    virtual ~ICoreExtPacket() = default;
-
+    ICoreExtPacket() = default;
+    virtual ~ICoreExtPacket();
+    ICoreExtPacket(const ICoreExtPacket&) = default;
+    ICoreExtPacket& operator=(const ICoreExtPacket&) = default;
+    ICoreExtPacket(ICoreExtPacket&&) = default;
+    ICoreExtPacket& operator=(ICoreExtPacket&&) = default;
     /**
      * @brief Adds message to packet
      * @return Extended message receipt, UINT64_MAX on failure
@@ -59,7 +63,7 @@ public:
 class ICoreExtPacketAllocator
 {
 public:
-    virtual ~ICoreExtPacketAllocator() = default;
+    virtual ~ICoreExtPacketAllocator();
 
     /**
      * @brief Gets a new packet builder for friend with core friend id friendId

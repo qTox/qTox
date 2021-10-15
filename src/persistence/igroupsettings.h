@@ -24,7 +24,13 @@
 class IGroupSettings
 {
 public:
-    virtual ~IGroupSettings() = default;
+    IGroupSettings() = default;
+    virtual ~IGroupSettings();
+    IGroupSettings(const IGroupSettings&) = default;
+    IGroupSettings& operator=(const IGroupSettings&) = default;
+    IGroupSettings(IGroupSettings&&) = default;
+    IGroupSettings& operator=(IGroupSettings&&) = default;
+
     virtual QStringList getBlackList() const = 0;
     virtual void setBlackList(const QStringList& blist) = 0;
 };

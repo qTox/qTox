@@ -103,6 +103,8 @@ QString getToolTipDisplayingImage(const QPixmap& image)
 
 } // namespace
 
+ImagePreviewButton::~ImagePreviewButton() = default;
+
 void ImagePreviewButton::initialize(const QPixmap& image)
 {
     auto desiredSize = qMin(width(), height()); // Assume widget is a square
