@@ -28,9 +28,11 @@
 class ContactId
 {
 public:
-    virtual ~ContactId() = default;
-    ContactId& operator=(const ContactId& other) = default;
-    ContactId& operator=(ContactId&& other) = default;
+    virtual ~ContactId();
+    ContactId(const ContactId&) = default;
+    ContactId& operator=(const ContactId&) = default;
+    ContactId(ContactId&&) = default;
+    ContactId& operator=(ContactId&&) = default;
     bool operator==(const ContactId& other) const;
     bool operator!=(const ContactId& other) const;
     bool operator<(const ContactId& other) const;

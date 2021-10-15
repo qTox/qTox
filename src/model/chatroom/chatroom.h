@@ -24,5 +24,12 @@
 class Chatroom
 {
 public:
+    Chatroom() = default;
+    virtual ~Chatroom();
+    Chatroom(const Chatroom&) = default;
+    Chatroom& operator=(const Chatroom&) = default;
+    Chatroom(Chatroom&&) = default;
+    Chatroom& operator=(Chatroom&&) = default;
+
     virtual Contact* getContact() = 0;
 };

@@ -24,7 +24,13 @@
 class ICoreGroupMessageSender
 {
 public:
-    virtual ~ICoreGroupMessageSender() = default;
+    ICoreGroupMessageSender() = default;
+    virtual ~ICoreGroupMessageSender();
+    ICoreGroupMessageSender(const ICoreGroupMessageSender&) = default;
+    ICoreGroupMessageSender& operator=(const ICoreGroupMessageSender&) = default;
+    ICoreGroupMessageSender(ICoreGroupMessageSender&&) = default;
+    ICoreGroupMessageSender& operator=(ICoreGroupMessageSender&&) = default;
+
     virtual void sendGroupAction(int groupId, const QString& message) = 0;
     virtual void sendGroupMessage(int groupId, const QString& message) = 0;
 };

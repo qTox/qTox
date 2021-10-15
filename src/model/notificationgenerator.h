@@ -39,6 +39,11 @@ public:
         // currently mockable so we allow profile to be nullptr for unit
         // testing
         Profile* profile);
+    virtual ~NotificationGenerator();
+    NotificationGenerator(const NotificationGenerator&) = default;
+    NotificationGenerator& operator=(const NotificationGenerator&) = default;
+    NotificationGenerator(NotificationGenerator&&) = default;
+    NotificationGenerator& operator=(NotificationGenerator&&) = default;
 
     NotificationData friendMessageNotification(const Friend* f, const QString& message);
     NotificationData groupMessageNotification(const Group* g, const ToxPk& sender, const QString& message);

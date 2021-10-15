@@ -1,5 +1,5 @@
 /*
-    Copyright © 2019 by The qTox Project Contributors
+    Copyright © 2021 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,23 +17,6 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "chatroom.h"
 
-#include "idialogs.h"
-
-class GroupId;
-class ToxPk;
-
-class IDialogsManager
-{
-public:
-    IDialogsManager() = default;
-    virtual ~IDialogsManager();
-    IDialogsManager(const IDialogsManager&) = default;
-    IDialogsManager& operator=(const IDialogsManager&) = default;
-    IDialogsManager(IDialogsManager&&) = default;
-    IDialogsManager& operator=(IDialogsManager&&) = default;
-    
-    virtual IDialogs* getFriendDialogs(const ToxPk& friendPk) const = 0;
-    virtual IDialogs* getGroupDialogs(const GroupId& groupId) const = 0;
-};
+Chatroom::~Chatroom() = default;

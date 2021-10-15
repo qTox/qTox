@@ -36,36 +36,44 @@
 class MockGroupMessageSender : public ICoreGroupMessageSender
 {
 public:
-    void sendGroupAction(int groupId, const QString& action) override
-    {
-        numSentActions++;
-    }
+    void sendGroupAction(int groupId, const QString& action) override;
 
-    void sendGroupMessage(int groupId, const QString& message) override
-    {
-        numSentMessages++;
-    }
+    void sendGroupMessage(int groupId, const QString& message) override;
 
     size_t numSentActions = 0;
     size_t numSentMessages = 0;
 };
 
+void MockGroupMessageSender::sendGroupAction(int groupId, const QString& action)
+{
+    numSentActions++;
+}
+
+void MockGroupMessageSender::sendGroupMessage(int groupId, const QString& message)
+{
+    numSentMessages++;
+}
+
 class MockGroupSettings : public IGroupSettings
 {
 public:
-    QStringList getBlackList() const override
-    {
-        return blacklist;
-    }
+    QStringList getBlackList() const override;
 
-    void setBlackList(const QStringList& blist) override
-    {
-        blacklist = blist;
-    }
+    void setBlackList(const QStringList& blist) override;
 
 private:
     QStringList blacklist;
 };
+
+QStringList MockGroupSettings::getBlackList() const
+{
+    return blacklist;
+}
+
+void MockGroupSettings::setBlackList(const QStringList& blist)
+{
+    blacklist = blist;
+}
 
 class TestGroupMessageDispatcher : public QObject
 {

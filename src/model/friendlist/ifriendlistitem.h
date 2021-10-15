@@ -26,8 +26,12 @@ class QWidget;
 class IFriendListItem
 {
 public:
-
-    virtual ~IFriendListItem() = default;
+    IFriendListItem() = default;
+    virtual ~IFriendListItem();
+    IFriendListItem(const IFriendListItem&) = default;
+    IFriendListItem& operator=(const IFriendListItem&) = default;
+    IFriendListItem(IFriendListItem&&) = default;
+    IFriendListItem& operator=(IFriendListItem&&) = default;
 
     virtual bool isFriend() const = 0;
     virtual bool isGroup() const = 0;
