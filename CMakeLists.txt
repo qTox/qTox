@@ -92,6 +92,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 
 # Hardening flags (ASLR, warnings, etc)
 set(POSITION_INDEPENDENT_CODE True)
+
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG(-Wweak-vtables COMPILER_SUPPORTS_WARNING_WEAK_VTABLES)
+if(COMPILER_SUPPORTS_WARNING_WEAK_VTABLES)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wweak-vtables")
+endif()
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-overflow")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-aliasing")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wold-style-cast")
@@ -232,7 +239,18 @@ set(${PROJECT_NAME}_SOURCES
   src/core/core.h
   src/core/dhtserver.cpp
   src/core/dhtserver.h
+  src/core/icoreextpacket.cpp
+  src/core/icoreextpacket.h
+  src/core/icoresettings.cpp
   src/core/icoresettings.h
+  src/core/icorefriendmessagesender.cpp
+  src/core/icorefriendmessagesender.h
+  src/core/icoregroupmessagesender.cpp
+  src/core/icoregroupmessagesender.h
+  src/core/icoregroupquery.cpp
+  src/core/icoregroupquery.h
+  src/core/icoreidhandler.cpp
+  src/core/icoreidhandler.h
   src/core/toxcall.cpp
   src/core/toxcall.h
   src/core/toxencrypt.cpp
@@ -262,11 +280,13 @@ set(${PROJECT_NAME}_SOURCES
   src/ipc.h
   src/model/about/aboutfriend.cpp
   src/model/about/aboutfriend.h
+  src/model/about/iaboutfriend.cpp
   src/model/about/iaboutfriend.h
   src/model/chathistory.cpp
   src/model/chathistory.h
   src/model/chatlogitem.cpp
   src/model/chatlogitem.h
+  src/model/chatroom/chatroom.cpp
   src/model/chatroom/chatroom.h
   src/model/chatroom/friendchatroom.cpp
   src/model/chatroom/friendchatroom.h
@@ -274,11 +294,15 @@ set(${PROJECT_NAME}_SOURCES
   src/model/chatroom/groupchatroom.h
   src/model/contact.cpp
   src/model/contact.h
+  src/model/dialogs/idialogs.cpp
   src/model/dialogs/idialogs.h
+  src/model/dialogs/idialogsmanager.h
+  src/model/dialogs/idialogsmanager.cpp
   src/model/exiftransform.cpp
   src/model/exiftransform.h
   src/model/friendlist/friendlistmanager.cpp
   src/model/friendlist/friendlistmanager.h
+  src/model/friendlist/ifriendlistitem.cpp
   src/model/friendlist/ifriendlistitem.h
   src/model/friendmessagedispatcher.cpp
   src/model/friendmessagedispatcher.h
@@ -290,6 +314,7 @@ set(${PROJECT_NAME}_SOURCES
   src/model/groupmessagedispatcher.h
   src/model/group.cpp
   src/model/group.h
+  src/model/ibootstraplistgenerator.cpp
   src/model/ibootstraplistgenerator.h
   src/model/ichatlog.h
   src/model/imessagedispatcher.h
@@ -297,6 +322,7 @@ set(${PROJECT_NAME}_SOURCES
   src/model/message.h
   src/model/notificationgenerator.cpp
   src/model/notificationgenerator.h
+  src/model/profile/iprofileinfo.cpp
   src/model/profile/iprofileinfo.h
   src/model/profile/profileinfo.cpp
   src/model/profile/profileinfo.h
@@ -317,7 +343,12 @@ set(${PROJECT_NAME}_SOURCES
   src/persistence/db/rawdatabase.h
   src/persistence/history.cpp
   src/persistence/history.h
+  src/persistence/ifriendsettings.cpp
   src/persistence/ifriendsettings.h
+  src/persistence/igroupsettings.cpp
+  src/persistence/igroupsettings.h
+  src/persistence/inotificationsettings.cpp
+  src/persistence/inotificationsettings.h
   src/persistence/offlinemsgengine.cpp
   src/persistence/offlinemsgengine.h
   src/persistence/paths.cpp
@@ -342,6 +373,7 @@ set(${PROJECT_NAME}_SOURCES
   src/video/camerasource.h
   src/video/corevideosource.cpp
   src/video/corevideosource.h
+  src/video/ivideosettings.cpp
   src/video/ivideosettings.h
   src/video/netcamview.cpp
   src/video/netcamview.h

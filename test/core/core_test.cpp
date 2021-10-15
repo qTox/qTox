@@ -77,10 +77,12 @@ private:
 
 class MockNodeListGenerator : public IBootstrapListGenerator
 {
-    QList<DhtServer> getBootstrapnodes() {
-        return BootstrapNodeUpdater::loadDefaultBootstrapNodes();
-    }
+    QList<DhtServer> getBootstrapnodes();
 };
+
+QList<DhtServer> MockNodeListGenerator::getBootstrapnodes() {
+    return BootstrapNodeUpdater::loadDefaultBootstrapNodes();
+}
 
 class TestCore : public QObject
 {

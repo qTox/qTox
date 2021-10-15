@@ -29,6 +29,13 @@
 class MockGroupQuery : public ICoreGroupQuery
 {
 public:
+    MockGroupQuery() = default;
+    virtual ~MockGroupQuery();
+    MockGroupQuery(const MockGroupQuery&) = default;
+    MockGroupQuery& operator=(const MockGroupQuery&) = default;
+    MockGroupQuery(MockGroupQuery&&) = default;
+    MockGroupQuery& operator=(MockGroupQuery&&) = default;
+
     GroupId getGroupPersistentId(uint32_t groupNumber) const override
     {
         return GroupId(0);

@@ -25,7 +25,12 @@
 
 class IAudioSettings {
 public:
-    virtual ~IAudioSettings() = default;
+    IAudioSettings() = default;
+    virtual ~IAudioSettings();
+    IAudioSettings(const IAudioSettings&) = default;
+    IAudioSettings& operator=(const IAudioSettings&) = default;
+    IAudioSettings(IAudioSettings&&) = default;
+    IAudioSettings& operator=(IAudioSettings&&) = default;
 
     virtual QString getInDev() const = 0;
     virtual void setInDev(const QString& deviceSpecifier) = 0;

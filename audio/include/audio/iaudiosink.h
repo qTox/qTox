@@ -96,7 +96,13 @@ public:
         return {};
     }
 
-    virtual ~IAudioSink() = default;
+    IAudioSink() = default;
+    virtual ~IAudioSink();
+    IAudioSink(const IAudioSink&) = default;
+    IAudioSink& operator=(const IAudioSink&) = default;
+    IAudioSink(IAudioSink&&) = default;
+    IAudioSink& operator=(IAudioSink&&) = default;
+
     virtual void playAudioBuffer(const int16_t* data, int samples, unsigned channels,
                                  int sampleRate) const = 0;
     virtual void playMono16Sound(const Sound& sound) = 0;

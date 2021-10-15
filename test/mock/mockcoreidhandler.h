@@ -26,6 +26,13 @@
 class MockCoreIdHandler : public ICoreIdHandler
 {
 public:
+    MockCoreIdHandler() = default;
+    virtual ~MockCoreIdHandler();
+    MockCoreIdHandler(const MockCoreIdHandler&) = default;
+    MockCoreIdHandler& operator=(const MockCoreIdHandler&) = default;
+    MockCoreIdHandler(MockCoreIdHandler&&) = default;
+    MockCoreIdHandler& operator=(MockCoreIdHandler&&) = default;
+
     ToxId getSelfId() const override
     {
         std::terminate();
