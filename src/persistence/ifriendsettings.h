@@ -38,7 +38,7 @@ public:
     };
     Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall)
 
-    virtual ~IFriendSettings() = default;
+    virtual ~IFriendSettings();
 
     virtual QString getContactNote(const ToxPk& pk) const = 0;
     virtual void setContactNote(const ToxPk& pk, const QString& note) = 0;

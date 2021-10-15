@@ -26,7 +26,7 @@ class ICoreIdHandler
 {
 
 public:
-    virtual ~ICoreIdHandler() = default;
+    virtual ~ICoreIdHandler();
     virtual ToxId getSelfId() const = 0;
     virtual ToxPk getSelfPublicKey() const = 0;
     virtual QString getUsername() const = 0;

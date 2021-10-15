@@ -28,7 +28,7 @@
 class ContactId
 {
 public:
-    virtual ~ContactId() = default;
+    virtual ~ContactId();
     ContactId& operator=(const ContactId& other) = default;
     ContactId& operator=(ContactId&& other) = default;
     bool operator==(const ContactId& other) const;

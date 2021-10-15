@@ -31,7 +31,7 @@
 class ICoreGroupQuery
 {
 public:
-    virtual ~ICoreGroupQuery() = default;
+    virtual ~ICoreGroupQuery();
     virtual GroupId getGroupPersistentId(uint32_t groupNumber) const = 0;
     virtual uint32_t getGroupNumberPeers(int groupId) const = 0;
     virtual QString getGroupPeerName(int groupId, int peerId) const = 0;

@@ -27,7 +27,7 @@ class ToxPk;
 class IDialogsManager
 {
 public:
-    virtual ~IDialogsManager() = default;
+    virtual ~IDialogsManager();
     virtual IDialogs* getFriendDialogs(const ToxPk& friendPk) const = 0;
     virtual IDialogs* getGroupDialogs(const GroupId& groupId) const = 0;
 };

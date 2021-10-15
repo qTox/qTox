@@ -1,5 +1,5 @@
 /*
-    Copyright © 2021 by The qTox Project Contributors
+    Copyright © 2019 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,40 +17,6 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "icoreidhandler.h"
 
-#include <QDate>
-
-class QWidget;
-
-class IFriendListItem
-{
-public:
-
-    virtual ~IFriendListItem();
-
-    virtual bool isFriend() const = 0;
-    virtual bool isGroup() const = 0;
-    virtual bool isOnline() const = 0;
-    virtual QString getNameItem() const = 0;
-    virtual QDateTime getLastActivity() const = 0;
-    virtual QWidget* getWidget() = 0;
-
-    virtual int getCircleId() const
-    {
-        return -1;
-    }
-
-    int getNameSortedPos() const
-    {
-        return nameSortedPos;
-    }
-
-    void setNameSortedPos(int pos)
-    {
-        nameSortedPos = pos;
-    }
-
-private:
-    int nameSortedPos = -1;
-};
+ICoreIdHandler::~ICoreIdHandler() = default;

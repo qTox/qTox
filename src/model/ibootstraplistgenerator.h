@@ -25,6 +25,6 @@ class DhtServer;
 class IBootstrapListGenerator
 {
 public:
-    virtual ~IBootstrapListGenerator() = default;
+    virtual ~IBootstrapListGenerator();
     virtual QList<DhtServer> getBootstrapnodes() = 0;
 };

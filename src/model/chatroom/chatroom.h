@@ -24,5 +24,6 @@
 class Chatroom
 {
 public:
+    virtual ~Chatroom();
     virtual Contact* getContact() = 0;
 };

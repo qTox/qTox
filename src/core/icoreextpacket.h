@@ -36,7 +36,7 @@
 class ICoreExtPacket
 {
 public:
-    virtual ~ICoreExtPacket() = default;
+    virtual ~ICoreExtPacket();
 
     /**
      * @brief Adds message to packet
@@ -59,7 +59,7 @@ public:
 class ICoreExtPacketAllocator
 {
 public:
-    virtual ~ICoreExtPacketAllocator() = default;
+    virtual ~ICoreExtPacketAllocator();
 
     /**
      * @brief Gets a new packet builder for friend with core friend id friendId

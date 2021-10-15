@@ -30,6 +30,7 @@ ContactId::ContactId()
     : id()
 {
 }
+ContactId::~ContactId() = default;
 
 /**
  * @brief Constructs a ContactId from bytes.

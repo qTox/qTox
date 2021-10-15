@@ -48,7 +48,8 @@ public:
     };
 
     ChatMessage();
-
+    ~ChatMessage();
+    
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage,
                                               MessageType type, bool isMe, MessageState state,
                                               const QDateTime& date, bool colorizeName = false);
