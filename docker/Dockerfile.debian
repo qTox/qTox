@@ -53,7 +53,7 @@ RUN apt-get update && \
 RUN git clone https://github.com/toktok/c-toxcore.git /toxcore
 WORKDIR /toxcore
 RUN git checkout v0.2.12 && \
-        cmake . && \
+        cmake . -DBOOTSTRAP_DAEMON=OFF && \
         cmake --build . && \
         make install && \
         echo '/usr/local/lib/' >> /etc/ld.so.conf.d/locallib.conf && \
