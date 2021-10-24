@@ -209,6 +209,32 @@ ChatLogIdx firstItemAfterDate(QDate date, const IChatLog& chatLog)
         return chatLog.getNextIdx();
     }
 }
+
+/**
+ * @return Chat message message type (info/warning) for the given system message
+ * @param[in] systemMessage
+ */
+ChatMessage::SystemMessageType getChatMessageType(const SystemMessage& systemMessage)
+{
+    switch (systemMessage.messageType) {
+    case SystemMessageType::fileSendFailed:
+    case SystemMessageType::messageSendFailed:
+    case SystemMessageType::unexpectedCallEnd:
+        return ChatMessage::ERROR;
+    case SystemMessageType::userJoinedGroup:
+    case SystemMessageType::userLeftGroup:
+    case SystemMessageType::peerNameChanged:
+    case SystemMessageType::peerStateChange:
+    case SystemMessageType::titleChanged:
+    case SystemMessageType::cleared:
+    case SystemMessageType::outgoingCall:
+    case SystemMessageType::incomingCall:
+    case SystemMessageType::callEnd:
+        return ChatMessage::INFO;
+    }
+
+    return ChatMessage::INFO;
+}
 } // namespace
 
 GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, IChatLog& chatLog,
@@ -407,7 +433,42 @@ QDateTime GenericChatForm::getLatestTime() const
     if (chatLog.getFirstIdx() == chatLog.getNextIdx())
         return QDateTime();
 
-    return chatLog.at(chatLog.getNextIdx() - 1).getTimestamp();
+    const auto shouldUseTimestamp = [this] (ChatLogIdx idx) {
+        if (chatLog.at(idx).getContentType() != ChatLogItem::ContentType::systemMessage) {
+            return true;
+        }
+
+        const auto& message = chatLog.at(idx).getContentAsSystemMessage();
+        switch (message.messageType) {
+            case SystemMessageType::incomingCall:
+            case SystemMessageType::outgoingCall:
+            case SystemMessageType::callEnd:
+            case SystemMessageType::unexpectedCallEnd:
+                return true;
+            case SystemMessageType::cleared:
+            case SystemMessageType::titleChanged:
+            case SystemMessageType::peerStateChange:
+            case SystemMessageType::peerNameChanged:
+            case SystemMessageType::userLeftGroup:
+            case SystemMessageType::userJoinedGroup:
+            case SystemMessageType::fileSendFailed:
+            case SystemMessageType::messageSendFailed:
+                return false;
+        }
+
+        qWarning("Unexpected system message type %d", static_cast<int>(message.messageType));
+        return false;
+    };
+
+    ChatLogIdx idx = chatLog.getNextIdx();
+    while (idx > chatLog.getFirstIdx()) {
+        idx = idx - 1;
+        if (shouldUseTimestamp(idx)) {
+            return chatLog.at(idx).getTimestamp();
+        }
+    }
+
+    return QDateTime();
 }
 
 void GenericChatForm::reloadTheme()
@@ -591,10 +652,14 @@ void GenericChatForm::setColorizedNames(bool enable)
     colorizeNames = enable;
 }
 
-void GenericChatForm::addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
-                                           const QDateTime& datetime)
+void GenericChatForm::addSystemInfoMessage(const QDateTime& datetime, SystemMessageType messageType,
+                                           SystemMessage::Args messageArgs)
 {
-    insertChatMessage(ChatMessage::createChatInfoMessage(message, type, datetime));
+    SystemMessage systemMessage;
+    systemMessage.messageType = static_cast<SystemMessageType>(messageType);
+    systemMessage.timestamp = datetime;
+    systemMessage.args = std::move(messageArgs);
+    chatLog.addSystemMessage(systemMessage);
 }
 
 void GenericChatForm::addSystemDateMessage(const QDate& date)
@@ -759,7 +824,7 @@ void GenericChatForm::clearChatArea(bool confirm, bool inform)
     chatWidget->clear();
 
     if (inform)
-        addSystemInfoMessage(tr("Cleared"), ChatMessage::INFO, QDateTime::currentDateTime());
+        addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::cleared, {});
 
     messages.clear();
 }
@@ -1068,6 +1133,17 @@ void GenericChatForm::renderItem(const ChatLogItem& item, bool hideName, bool co
     case ChatLogItem::ContentType::fileTransfer: {
         const auto& file = item.getContentAsFile();
         renderFile(item.getDisplayName(), file.file, isSelf, item.getTimestamp(), chatMessage);
+        break;
+    }
+    case ChatLogItem::ContentType::systemMessage: {
+        const auto& systemMessage = item.getContentAsSystemMessage();
+
+        auto chatMessageType = getChatMessageType(systemMessage);
+        chatMessage = ChatMessage::createChatInfoMessage(systemMessage.toString(), chatMessageType,
+                                                         QDateTime::currentDateTime());
+        // Ignore caller's decision to hide the name. We show the icon in the
+        // slot of the sender's name so we always want it visible
+        hideName = false;
         break;
     }
     }
