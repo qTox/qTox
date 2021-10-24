@@ -124,8 +124,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/toxext/toxext",
-                    "tag": "v0.0.2",
-                    "commit": "0280357a0dded4dd46d0ff29f52875687136472d"
+                    "tag": "v0.0.3",
+                    "commit": "e34f91bc92bc1799c133bd1602ef5748a4eb4459"
                 }
             ]
         },
@@ -136,8 +136,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/toxext/tox_extension_messages",
-                    "tag": "v0.0.2",
-                    "commit": "f1f4539cf1aeed0bcc0ad476fbae74cb5bd0cf66"
+                    "tag": "v0.0.3",
+                    "commit": "3def0e36f63a3537b8fda87e12f870665d90dfcc"
                 }
             ]
         },

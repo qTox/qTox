@@ -480,7 +480,7 @@ You will likely have to compile these yourself
 ```bash
 git clone https://github.com/toxext/toxext.git toxext
 cd toxext
-git checkout v0.0.2
+git checkout v0.0.3
 cmake .
 make -j$(nproc)
 sudo make install
@@ -489,7 +489,7 @@ sudo make install
 ```bash
 git clone https://github.com/toxext/tox_extension_messages.git tox_extension_messages
 cd tox_extension_messages
-git checkout v0.0.2
+git checkout v0.0.3
 cmake .
 make -j$(nproc)
 sudo make install
