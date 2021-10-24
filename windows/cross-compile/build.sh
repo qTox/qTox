@@ -2,7 +2,7 @@
 
 # MIT License
 #
-# Copyright (c) 2017-2020 Maxim Biro <nurupo.contributions@gmail.com>
+# Copyright (c) 2017-2021 Maxim Biro <nurupo.contributions@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -38,9 +38,9 @@ readonly QTOX_SRC_DIR="/qtox"
 
 
 # Make sure we run in an expected environment
-if [ ! -f /etc/os-release ] || ! cat /etc/os-release | grep -qi 'buster'
+if [ ! -f /etc/os-release ] || ! cat /etc/os-release | grep -qi 'bullseye'
 then
-  echo "Error: This script should be run on Debian Buster."
+  echo "Error: This script should be run on Debian Bullseye."
   exit 1
 fi
 
@@ -130,12 +130,12 @@ apt-get update
 apt-get install -y --no-install-recommends \
                    autoconf \
                    automake \
-                   bsdtar \
                    build-essential \
                    ca-certificates \
                    cmake \
                    extra-cmake-modules \
                    git \
+                   libarchive-tools \
                    libtool \
                    nsis \
                    pkg-config \
@@ -232,9 +232,9 @@ store_apt_cache()
 # OpenSSL
 
 OPENSSL_PREFIX_DIR="$DEP_DIR/libopenssl"
-OPENSSL_VERSION=1.1.1k
+OPENSSL_VERSION="1.1.1l"
 # hash from https://www.openssl.org/source/
-OPENSSL_HASH="892a0875b9872acd04a9fde79b1f943075d5ea162415de3047c327df33fbaee5"
+OPENSSL_HASH="0b7a3e5e59c34827fe0c3a74b7ec8baef302b98fa80088d7f9153aa16fa76bd1"
 OPENSSL_FILENAME="openssl-$OPENSSL_VERSION.tar.gz"
 if [ ! -f "$OPENSSL_PREFIX_DIR/done" ]
 then
@@ -275,10 +275,10 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=12
-QT_PATCH=10
+QT_PATCH=11
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.12/5.12.10/single/qt-everywhere-src-5.12.10.tar.xz.mirrorlist
-QT_HASH="3e0ee1e57f5cf3eeb038d0b4b22c7eb442285c62639290756b39dc93a1d0e14f"
+# hash from https://download.qt.io/archive/qt/5.12/5.12.11/single/qt-everywhere-src-5.12.11.tar.xz.mirrorlist
+QT_HASH="0c4cdef158c61827d70d6111423166e2c62b539eaf303f36ad1d0aa8af900b95"
 QT_FILENAME="qt-everywhere-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
@@ -634,15 +634,15 @@ fi
 # Exif
 
 EXIF_PREFIX_DIR="$DEP_DIR/libexif"
-EXIF_VERSION=0.6.22
-EXIF_HASH="5048f1c8fc509cc636c2f97f4b40c293338b6041a5652082d5ee2cf54b530c56"
+EXIF_VERSION="0.6.23"
+EXIF_HASH="a740a99920eb81ae0aa802bb46e683ce6e0cde061c210f5d5bde5b8572380431"
 EXIF_FILENAME="libexif-$EXIF_VERSION.tar.xz"
 if [ ! -f "$EXIF_PREFIX_DIR/done" ]
 then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  curl $CURL_OPTIONS -O "https://github.com/libexif/libexif/releases/download/libexif-${EXIF_VERSION//./_}-release/${EXIF_FILENAME}"
+  curl $CURL_OPTIONS -O "https://github.com/libexif/libexif/releases/download/v${EXIF_VERSION}/libexif-${EXIF_VERSION}.tar.xz"
   check_sha256 "$EXIF_HASH" "$EXIF_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $EXIF_FILENAME
   rm $EXIF_FILENAME
@@ -739,6 +739,7 @@ then
   rm $OPUS_FILENAME
   cd opus*
 
+  LDFLAGS="-fstack-protector" \
   CFLAGS="-O2 -g0" ./configure --host="$ARCH-w64-mingw32" \
                                --prefix="$OPUS_PREFIX_DIR" \
                                --enable-shared \
@@ -773,6 +774,7 @@ then
   rm "$SODIUM_FILENAME"
   cd libsodium*
 
+  LDFLAGS="-fstack-protector" \
   ./configure --host="$ARCH-w64-mingw32" \
               --prefix="$SODIUM_PREFIX_DIR" \
               --enable-shared \
@@ -1174,8 +1176,8 @@ set -u
   # Expat
 
   EXPAT_PREFIX_DIR="$DEP_DIR/libexpat"
-  EXPAT_VERSION="2.3.0"
-  EXPAT_HASH="caa34f99b6e3bcea8502507eb6549a0a84510b244a748dfb287271b2d47467a9"
+  EXPAT_VERSION="2.4.1"
+  EXPAT_HASH="cf032d0dba9b928636548e32b327a2d66b1aab63c4f4a13dd132c2d1d2f2fb6a"
   EXPAT_FILENAME="expat-$EXPAT_VERSION.tar.xz"
   if [ ! -f "$EXPAT_PREFIX_DIR/done" ]
   then
@@ -1203,11 +1205,46 @@ set -u
   fi
 
 
+  # GMP
+
+  GMP_PREFIX_DIR="$DEP_DIR/libgmp"
+  GMP_VERSION="6.2.1"
+  GMP_HASH="fd4829912cddd12f84181c3451cc752be224643e87fac497b69edddadc49b4f2"
+  GMP_FILENAME="gmp-$GMP_VERSION.tar.xz"
+  if [ ! -f "$GMP_PREFIX_DIR/done" ]
+  then
+    rm -rf "$GMP_PREFIX_DIR"
+    mkdir -p "$GMP_PREFIX_DIR"
+
+    curl $CURL_OPTIONS -O "http://ftp.gnu.org/gnu/gmp/$GMP_FILENAME"
+    check_sha256 "$GMP_HASH" "$GMP_FILENAME"
+    bsdtar --no-same-owner --no-same-permissions -xf $GMP_FILENAME
+    rm $GMP_FILENAME
+    cd gmp*
+
+    mkdir build
+    cd build
+    CFLAGS="-O2 -g0" ../configure --host="$ARCH-w64-mingw32" \
+                                  --prefix="$GMP_PREFIX_DIR" \
+                                  --enable-static \
+                                  --disable-shared
+    make
+    make install
+    cd ..
+    echo -n $GMP_VERSION > $GMP_PREFIX_DIR/done
+
+    cd ..
+    rm -rf ./gmp*
+  else
+    echo "Using cached build of GMP `cat $GMP_PREFIX_DIR/done`"
+  fi
+
+
   # GDB
 
   GDB_PREFIX_DIR="$DEP_DIR/gdb"
-  GDB_VERSION="10.1"
-  GDB_HASH="f82f1eceeec14a3afa2de8d9b0d3c91d5a3820e23e0a01bbb70ef9f0276b62c0"
+  GDB_VERSION="11.1"
+  GDB_HASH="cccfcc407b20d343fb320d4a9a2110776dd3165118ffd41f4b1b162340333f94"
   GDB_FILENAME="gdb-$GDB_VERSION.tar.xz"
   if [ ! -f "$GDB_PREFIX_DIR/done" ]
   then
@@ -1226,7 +1263,8 @@ set -u
                                   --prefix="$GDB_PREFIX_DIR" \
                                   --enable-static \
                                   --disable-shared \
-                                  --with-libexpat-prefix="$EXPAT_PREFIX_DIR"
+                                  --with-libexpat-prefix="$EXPAT_PREFIX_DIR" \
+                                  --with-libgmp-prefix="$GMP_PREFIX_DIR"
     make
     make install
     cd ..
@@ -1401,11 +1439,14 @@ mkdir -p "$QTOX_PREFIX_DIR/libsnore-qt5"
 cp "$SNORE_PREFIX_DIR/lib/plugins/libsnore-qt5/libsnore_backend_windowstoast.dll" "$QTOX_PREFIX_DIR/libsnore-qt5"
 cp "$SNORE_PREFIX_DIR/bin/SnoreToast.exe" $QTOX_PREFIX_DIR
 
-cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libgcc_s_*.dll $QTOX_PREFIX_DIR
-cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/libstdc++-6.dll $QTOX_PREFIX_DIR
-cp /usr/$ARCH-w64-mingw32/lib/libwinpthread-1.dll $QTOX_PREFIX_DIR
+cp /usr/lib/gcc/$ARCH-w64-mingw32/*-posix/{libgcc_s_*.dll,libstdc++*.dll,libssp*.dll} $QTOX_PREFIX_DIR
+cp /usr/$ARCH-w64-mingw32/lib/libwinpthread*.dll $QTOX_PREFIX_DIR
 
 # Setup wine
+# Note that SQLCipher and FFmpeg (maybe more?) seem to setup ~/.wine on their
+# own, but to the wrong bitness (always 64-bit?), when we want a matching
+# bitness here for mingw-ldd, so remove it before proceeding.
+rm -rf ~/.wine
 if [[ "$ARCH" == "i686" ]]
 then
   export WINEARCH=win32
@@ -1415,7 +1456,9 @@ then
 fi
 winecfg
 
-# qtox.exe dll checks (32-bit on i686, 64-bit on x86_64)
+# qtox.exe dll checks
+# (system32 contains 32-bit libraries on win32 prefix, but 64-bit on win64
+# prefix)
 python3 $MINGW_LDD_PREFIX_DIR/bin/mingw-ldd.py $QTOX_PREFIX_DIR/qtox.exe --dll-lookup-dirs $QTOX_PREFIX_DIR ~/.wine/drive_c/windows/system32 > /tmp/$ARCH-qtox-ldd
 find "$QTOX_PREFIX_DIR" -name '*.dll' > /tmp/$ARCH-qtox-dll-find
 # dlls loded at run time that don't showup as a link time dependency
@@ -1457,7 +1500,9 @@ do
 done < /tmp/$ARCH-qtox-dll-find
 
 
-# SnoreToast.exe dll checks (always 32-bit)
+# SnoreToast.exe dll checks
+# (always 32-bit as SnoreToast.exe is 32-bit itself, so check system32 on win32
+# prefix but syswow64 on win64 prefix)
 if [[ "$ARCH" == "i686" ]]
 then
   SNORETOAST_WINE_DLLS=/root/.wine/drive_c/windows/system32
