@@ -192,7 +192,7 @@ install() {
         git pull
     else
         fcho "Cloning ToxExt git ... "
-        git clone --branch v0.0.2 --depth=1 https://github.com/toxext/toxext "$TOX_EXT_DIR"
+        git clone --branch v0.0.3 --depth=1 https://github.com/toxext/toxext "$TOX_EXT_DIR"
     fi
     # tox_extension_messages
     if [[ -e $TOX_EXT_MESSAGES_DIR/.git/index ]]
@@ -202,7 +202,7 @@ install() {
         git pul
     else
         fcho "Cloning tox_extension_messages git ... "
-        git clone --branch v0.0.2 --depth=1 https://github.com/toxext/tox_extension_messages "$TOX_EXT_MESSAGES_DIR"
+        git clone --branch v0.0.3 --depth=1 https://github.com/toxext/tox_extension_messages "$TOX_EXT_MESSAGES_DIR"
     fi
     # qTox
     if [[ $TRAVIS = true ]]
