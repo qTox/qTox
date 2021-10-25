@@ -45,18 +45,21 @@
 
 ## پیشنیاز‌ها
 
-| نام           | نسخه     | ماژولها                                                  |
-|---------------|-------------|----------------------------------------------------------|
-| [Qt]          | >= 5.5.0    | concurrent, core, gui, network, opengl, svg, widget, xml |
-| [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                            |
-| [toxcore]     | >= 0.2.10   | core, av                                                 |
-| [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale             |
-| [CMake]       | >= 2.8.11   |                                                          |
-| [OpenAL Soft] | >= 1.16.0   |                                                          |
-| [qrencode]    | >= 3.0.3    |                                                          |
-| [sqlcipher]   | >= 3.2.0    |                                                          |
-| [pkg-config]  | >= 0.28     |                                                          |
-| [filteraudio] | >= 0.0.1    | optional dependency                                      |
+| نام |        نسخه |                  ماژولها                                                      |
+|--------------------------|-------------|----------------------------------------------------------|
+| [Qt]                     | >= 5.7.1    | concurrent, core, gui, network, opengl, svg, widget, xml |
+| [GCC]/[MinGW]            | >= 4.8      | C++11 enabled                                            |
+| [toxcore]                | >= 0.2.10   | core, av                                                 |
+| [FFmpeg]                 | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale             |
+| [CMake]                  | >= 3.7.2    |                                                          |
+| [OpenAL Soft]            | >= 1.16.0   |                                                          |
+| [qrencode]               | >= 3.0.3    |                                                          |
+| [sqlcipher]              | >= 3.2.0    |                                                          |
+| [pkg-config]             | >= 0.28     |                                                          |
+| [snorenotify]            | >= 0.7.0    | optional dependency                                      |
+| [toxext]                 | >= 0.0.3    |                                                          |
+| [tox_extension_messages] | >= 0.0.3    |                                                          |
+
 
 ## نیازمندیهای اختیاری
 
