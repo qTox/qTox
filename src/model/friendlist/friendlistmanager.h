@@ -32,10 +32,12 @@ class FriendListManager : public QObject
 public:
     using IFriendListItemPtr = std::shared_ptr<IFriendListItem>;
 
-    explicit FriendListManager(QObject *parent = nullptr);
+    explicit FriendListManager(int countContacts, QObject *parent = nullptr);
 
     QVector<IFriendListItemPtr> getItems() const;
     bool needHideCircles() const;
+    // If the contact positions have changed, need to redraw view
+    bool getPositionsChanged() const;
 
     void addFriendListItem(IFriendListItem* item);
     void removeFriendListItem(IFriendListItem* item);
@@ -45,7 +47,8 @@ public:
     void setFilter(const QString& searchString, bool hideOnline,
                    bool hideOffline, bool hideGroups);
     void applyFilter();
-    void updatePositions();    
+    void updatePositions();
+    void setSortRequired();
 
     void setGroupsOnTop(bool v);
 
@@ -67,6 +70,10 @@ private:
     bool byName = true;
     bool hideCircles = false;
     bool groupsOnTop;
+    bool positionsChanged;
+    bool needSort;
     QVector<IFriendListItemPtr> items;
+    // At startup, while the size of items is less than countContacts, the view will not be processed to improve performance
+    int countContacts;
 
 };

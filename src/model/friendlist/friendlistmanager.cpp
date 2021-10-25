@@ -20,9 +20,9 @@
 #include "friendlistmanager.h"
 #include "src/widget/genericchatroomwidget.h"
 
-FriendListManager::FriendListManager(QObject *parent) : QObject(parent)
+FriendListManager::FriendListManager(int countContacts, QObject *parent) : QObject(parent)
 {
-
+    this->countContacts = countContacts;
 }
 
 QVector<FriendListManager::IFriendListItemPtr> FriendListManager::getItems() const
@@ -35,6 +35,11 @@ bool FriendListManager::needHideCircles() const
     return hideCircles;
 }
 
+bool FriendListManager::getPositionsChanged() const
+{
+    return positionsChanged;
+}
+
 void FriendListManager::addFriendListItem(IFriendListItem *item)
 {
     if (item->isGroup()) {
@@ -44,15 +49,16 @@ void FriendListManager::addFriendListItem(IFriendListItem *item)
         items.push_back(IFriendListItemPtr(item));
     }
 
-    updatePositions();
-    emit itemsChanged();
+    if (countContacts <= items.size()) {
+        countContacts = 0;
+        setSortRequired();
+    }
 }
 
 void FriendListManager::removeFriendListItem(IFriendListItem *item)
 {
     removeAll(item);
-    updatePositions();
-    emit itemsChanged();
+    setSortRequired();
 }
 
 void FriendListManager::sortByName()
@@ -87,7 +93,7 @@ void FriendListManager::setFilter(const QString &searchString, bool hideOnline, 
     filterParams.hideOffline = hideOffline;
     filterParams.hideGroups = hideGroups;
 
-    emit itemsChanged();
+    setSortRequired();
 }
 
 void FriendListManager::applyFilter()
@@ -126,19 +132,40 @@ void FriendListManager::applyFilter()
 
 void FriendListManager::updatePositions()
 {
+    positionsChanged = true;
+
     if (byName) {
-        std::sort(items.begin(), items.end(),
-            [&](const IFriendListItemPtr &a, const IFriendListItemPtr &b) {
-                return cmpByName(a, b, groupsOnTop);
+        auto sortName = [&](const IFriendListItemPtr &a, const IFriendListItemPtr &b) {
+                            return cmpByName(a, b, groupsOnTop);
+                        };
+        if (!needSort) {
+            if (std::is_sorted(items.begin(), items.end(), sortName)) {
+                positionsChanged = false;
+                return;
             }
-        );
+        }
+        std::sort(items.begin(), items.end(),sortName);
+
     } else {
-        std::sort(items.begin(), items.end(),
-            [&](const IFriendListItemPtr &a, const IFriendListItemPtr &b) {
-                return cmpByActivity(a, b);
+        auto sortActivity = [&](const IFriendListItemPtr &a, const IFriendListItemPtr &b) {
+                                return cmpByActivity(a, b);
+                            };
+        if (!needSort) {
+            if (std::is_sorted(items.begin(), items.end(), sortActivity)) {
+                positionsChanged = false;
+                return;
             }
-        );
+        }
+        std::sort(items.begin(), items.end(), sortActivity);
     }
+
+    needSort = false;
+}
+
+void FriendListManager::setSortRequired()
+{
+    needSort = true;
+    emit itemsChanged();
 }
 
 void FriendListManager::setGroupsOnTop(bool v)
