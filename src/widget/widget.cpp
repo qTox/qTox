@@ -829,8 +829,8 @@ void Widget::setWindowTitle(const QString& title)
     } else {
         QString tmp = title;
         /// <[^>]*> Regexp to remove HTML tags, in case someone used them in title
-        QMainWindow::setWindowTitle(QApplication::applicationName() + QStringLiteral(" - ")
-                                    + tmp.remove(QRegExp("<[^>]*>")));
+        QMainWindow::setWindowTitle(tmp.remove(QRegExp("<[^>]*>")) + QStringLiteral(" - ")
+                                    + QApplication::applicationName());
     }
 }
 

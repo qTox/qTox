@@ -224,7 +224,7 @@ void GUI::_setWindowTitle(const QString& title)
     if (title.isEmpty())
         w->setWindowTitle("qTox");
     else
-        w->setWindowTitle("qTox - " + title);
+        w->setWindowTitle(title + " - qTox");
 }
 
 void GUI::_showInfo(const QString& title, const QString& msg)
