@@ -20,7 +20,7 @@
 #
 ################################################################################
 
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.7.2)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra dependencies" ON)
