@@ -163,6 +163,7 @@ rm -rf "$QTOX_APP_DIR/usr"
 
 # copy OpenSSL libs to AppImage
 # Warning: This is hard coded to debain:stretch.
+
 cp /usr/lib/x86_64-linux-gnu/libssl.so* "$QTOX_APP_DIR/local/lib/"
 cp /usr/lib/x86_64-linux-gnu/libcrypt.so* "$QTOX_APP_DIR/local/lib/"
 cp /usr/lib/x86_64-linux-gnu/libcrypto.so* "$QTOX_APP_DIR/local/lib"
