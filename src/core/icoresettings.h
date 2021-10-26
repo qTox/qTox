@@ -34,7 +34,12 @@ public:
         ptSOCKS5 = 1,
         ptHTTP = 2
     };
-    virtual ~ICoreSettings() = default;
+    ICoreSettings() = default;
+    virtual ~ICoreSettings();
+    ICoreSettings(const ICoreSettings&) = default;
+    ICoreSettings& operator=(const ICoreSettings&) = default;
+    ICoreSettings(ICoreSettings&&) = default;
+    ICoreSettings& operator=(ICoreSettings&&) = default;
 
     virtual bool getEnableIPv6() const = 0;
     virtual void setEnableIPv6(bool enable) = 0;

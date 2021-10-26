@@ -29,6 +29,11 @@ public:
     ImagePreviewButton(QWidget* parent = nullptr)
         : QPushButton(parent)
     {}
+    ~ImagePreviewButton();
+    ImagePreviewButton(const ImagePreviewButton&) = delete;
+    ImagePreviewButton& operator=(const ImagePreviewButton&) = delete;
+    ImagePreviewButton(ImagePreviewButton&&) = delete;
+    ImagePreviewButton& operator=(ImagePreviewButton&&) = delete;
 
     void setIconFromFile(const QString& filename);
     void setIconFromPixmap(const QPixmap& image);

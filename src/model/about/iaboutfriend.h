@@ -27,7 +27,13 @@
 class IAboutFriend
 {
 public:
-    virtual ~IAboutFriend() = default;
+    IAboutFriend() = default;
+    virtual ~IAboutFriend();
+    IAboutFriend(const IAboutFriend&) = default;
+    IAboutFriend& operator=(const IAboutFriend&) = default;
+    IAboutFriend(IAboutFriend&&) = default;
+    IAboutFriend& operator=(IAboutFriend&&) = default;
+
     virtual QString getName() const = 0;
     virtual QString getStatusMessage() const = 0;
     virtual ToxPk getPublicKey() const = 0;

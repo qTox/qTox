@@ -20,6 +20,8 @@ set(SOURCE_FILES
     "include/audio/iaudiosettings.h"
     "include/audio/iaudiosink.h"
     "include/audio/iaudiosource.h"
+    "src/iaudiosettings.cpp"
+    "src/iaudiosink.cpp"
     "src/audio.cpp"
     "src/backend/alsink.cpp"
     "src/backend/alsink.h"

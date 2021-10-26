@@ -48,6 +48,10 @@ public:
     };
 
     ChatMessage();
+    ~ChatMessage();
+    ChatMessage(const ChatMessage&) = default;
+    ChatMessage& operator=(const ChatMessage&) = default;
+    ChatMessage(ChatMessage&&) = default;
 
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage,
                                               MessageType type, bool isMe, MessageState state,

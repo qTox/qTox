@@ -45,6 +45,8 @@ ChatMessage::ChatMessage()
 {
 }
 
+ChatMessage::~ChatMessage() = default;
+
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
                                                 MessageType type, bool isMe, MessageState state,
                                                 const QDateTime& date, bool colorizeName)

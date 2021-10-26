@@ -24,7 +24,12 @@
 class INotificationSettings
 {
 public:
-    virtual ~INotificationSettings() = default;
+    INotificationSettings() = default;
+    virtual ~INotificationSettings();
+    INotificationSettings(const INotificationSettings&) = default;
+    INotificationSettings& operator=(const INotificationSettings&) = default;
+    INotificationSettings(INotificationSettings&&) = default;
+    INotificationSettings& operator=(INotificationSettings&&) = default;
 
     virtual bool getNotify() const = 0;
     virtual void setNotify(bool newValue) = 0;

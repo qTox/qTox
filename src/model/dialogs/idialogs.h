@@ -26,7 +26,13 @@ class ToxPk;
 class IDialogs
 {
 public:
-    virtual ~IDialogs() = default;
+    IDialogs() = default;
+    virtual ~IDialogs();
+    IDialogs(const IDialogs&) = default;
+    IDialogs& operator=(const IDialogs&) = default;
+    IDialogs(IDialogs&&) = default;
+    IDialogs& operator=(IDialogs&&) = default;
+
     virtual bool hasContact(const ContactId& contactId) const = 0;
     virtual bool isContactActive(const ContactId& contactId) const = 0;
 
