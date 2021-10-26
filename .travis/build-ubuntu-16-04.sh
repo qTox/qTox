@@ -148,7 +148,7 @@ sudo ldconfig
 cd ..
 
 # toxext
-git clone --branch v0.0.2 --depth=1 https://github.com/toxext/toxext toxext
+git clone --branch v0.0.3 --depth=1 https://github.com/toxext/toxext toxext
 cd toxext
 mkdir build
 cd build
@@ -158,7 +158,7 @@ sudo make install
 cd ../../
 
 # toxext_messages
-git clone --branch v0.0.2 --depth=1 https://github.com/toxext/tox_extension_messages tox_extension_messages
+git clone --branch v0.0.3 --depth=1 https://github.com/toxext/tox_extension_messages tox_extension_messages
 cd tox_extension_messages
 mkdir build
 cd build

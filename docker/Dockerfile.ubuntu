@@ -58,14 +58,14 @@ RUN git checkout v0.2.12 && \
 
 RUN git clone https://github.com/toxext/toxext.git /toxext
 WORKDIR /toxext
-RUN git checkout v0.0.2 && \
+RUN git checkout v0.0.3 && \
         cmake . && \
         cmake --build . -- -j $(nproc) && \
         cmake --build . --target install
 
 RUN git clone https://github.com/toxext/tox_extension_messages.git /tox_extension_messages
 WORKDIR /tox_extension_messages
-RUN git checkout v0.0.2 && \
+RUN git checkout v0.0.3 && \
         cmake . && \
         cmake --build . -- -j $(nproc) && \
         cmake --build . --target install
