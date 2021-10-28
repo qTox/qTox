@@ -173,7 +173,9 @@ libs=(
 )
 
 for lib in "${libs[@]}"; do
+    lib_file_name=$(basename "$lib")
     cp -P $(echo "$lib"*) "$LOCAL_LIB_DIR"
+    patchelf --set-rpath '$ORIGIN' "$LOCAL_LIB_DIR/$lib_file_name"
 done
 
 # this is important, aitool automatically uses the same filename in .zsync meta file.
