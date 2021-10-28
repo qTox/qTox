@@ -170,6 +170,8 @@ libs=(
 /usr/lib/x86_64-linux-gnu/libcrypto.so
 # Also bundle libjack.so* without which the AppImage does not work in Fedora Workstation
 /usr/lib/x86_64-linux-gnu/libjack.so.0
+# And libglib needed by Red Hat and derivatives to work with our old gnutls
+/lib/x86_64-linux-gnu/libglib-2.0.so.0
 )
 
 for lib in "${libs[@]}"; do
