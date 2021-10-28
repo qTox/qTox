@@ -31,6 +31,7 @@ readonly OUTPUT_DIR="/output"
 readonly BUILD_DIR="/build"
 readonly QTOX_BUILD_DIR="$BUILD_DIR"/qtox
 readonly QTOX_APP_DIR="$BUILD_DIR"/appdir
+readonly LOCAL_LIB_DIR="$QTOX_APP_DIR"/local/lib
 # "linuxdeployqt" is to long, shortened to ldqt
 readonly LDQT_BUILD_DIR="$BUILD_DIR"/ldqt
 # "appimagetool" becomes aitool
@@ -161,17 +162,22 @@ eval "$LDQT_BIN $QTOX_DESKTOP_FILE -bundle-non-qt-libs -extra-plugins=libsnore-q
 mv "$QTOX_APP_DIR"/usr/* "$QTOX_APP_DIR/"
 rm -rf "$QTOX_APP_DIR/usr"
 
-# copy OpenSSL libs to AppImage
 # Warning: This is hard coded to debain:stretch.
-cp /usr/lib/x86_64-linux-gnu/libssl.so* "$QTOX_APP_DIR/local/lib/"
-cp /usr/lib/x86_64-linux-gnu/libcrypt.so* "$QTOX_APP_DIR/local/lib/"
-cp /usr/lib/x86_64-linux-gnu/libcrypto.so* "$QTOX_APP_DIR/local/lib"
+libs=(
+# copy OpenSSL libs to AppImage
+/usr/lib/x86_64-linux-gnu/libssl.so
+/usr/lib/x86_64-linux-gnu/libcrypt.so
+/usr/lib/x86_64-linux-gnu/libcrypto.so
 # Also bundle libjack.so* without which the AppImage does not work in Fedora Workstation
-cp /usr/lib/x86_64-linux-gnu/libjack.so* "$QTOX_APP_DIR/local/lib"
+/usr/lib/x86_64-linux-gnu/libjack.so.0
+)
 
-# this is important , aitool automatically uses the same filename in .zsync meta file.
-# if this name does not match with the one we upload , the update always fails.
+for lib in "${libs[@]}"; do
+    cp -P $(echo "$lib"*) "$LOCAL_LIB_DIR"
+done
 
+# this is important, aitool automatically uses the same filename in .zsync meta file.
+# if this name does not match with the one we upload, the update always fails.
 if [ -n "${TRAVIS_TAG-}" ]
 then
     VERSION_NAME="${TRAVIS_TAG}"
