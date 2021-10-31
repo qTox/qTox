@@ -536,8 +536,6 @@ void ChatWidget::insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines)
         auto date = QDateTime(chatLog.at(idx).getTimestamp().date());
 #endif
 
-        auto insertionIdx = std::distance(chatLineStorage->begin(), insertedMessageIt);
-
         if (!chatLineStorage->contains(date)) {
             // If there is no dateline for the given date we need to insert it
             // above the line we'd like to insert.
