@@ -327,16 +327,37 @@ void Widget::init()
     connect(filterDisplayGroup, &QActionGroup::triggered, this, &Widget::changeDisplayMode);
     connect(ui->friendList, &QWidget::customContextMenuRequested, this, &Widget::friendListContextMenu);
 
-    connect(coreFile, &CoreFile::fileSendStarted, this, &Widget::dispatchFile);
-    connect(coreFile, &CoreFile::fileReceiveRequested, this, &Widget::dispatchFile);
-    connect(coreFile, &CoreFile::fileTransferAccepted, this, &Widget::dispatchFile);
-    connect(coreFile, &CoreFile::fileTransferCancelled, this, &Widget::dispatchFile);
-    connect(coreFile, &CoreFile::fileTransferFinished, this, &Widget::dispatchFile);
-    connect(coreFile, &CoreFile::fileTransferPaused, this, &Widget::dispatchFile);
-    connect(coreFile, &CoreFile::fileTransferInfo, this, &Widget::dispatchFile);
-    connect(coreFile, &CoreFile::fileTransferRemotePausedUnpaused, this, &Widget::dispatchFileWithBool);
-    connect(coreFile, &CoreFile::fileTransferBrokenUnbroken, this, &Widget::dispatchFileWithBool);
-    connect(coreFile, &CoreFile::fileSendFailed, this, &Widget::dispatchFileSendFailed);
+    // NOTE: Order of these signals as well as the use of QueuedConnection is important!
+    // Qt::AutoConnection, signals emitted from the same thread as Widget will
+    // be serviced before other signals. This is a problem when we have tight
+    // calls between file control and file info callbacks.
+    //
+    // File info callbacks are called from the core thread and will use
+    // QueuedConnection by default, our control path can easily end up on the
+    // same thread as widget. This can result in the following behavior if we
+    // are not careful
+    //
+    // * File data is received
+    // * User presses pause at the same time
+    // * Pause waits for data receive callback to complete (and emit fileTransferInfo)
+    // * Pause is executed and emits fileTransferPaused
+    // * Pause signal is handled by Qt::DirectConnection
+    // * fileTransferInfo signal is handled after by Qt::QueuedConnection
+    //
+    // This results in stale file state! In these conditions if we are not
+    // careful toxcore will think we are paused but our UI will think we are
+    // resumed, because the last signal they got was a transmitting file info
+    // signal!
+    connect(coreFile, &CoreFile::fileTransferInfo, this, &Widget::dispatchFile, Qt::QueuedConnection);
+    connect(coreFile, &CoreFile::fileSendStarted, this, &Widget::dispatchFile, Qt::QueuedConnection);
+    connect(coreFile, &CoreFile::fileReceiveRequested, this, &Widget::dispatchFile, Qt::QueuedConnection);
+    connect(coreFile, &CoreFile::fileTransferAccepted, this, &Widget::dispatchFile, Qt::QueuedConnection);
+    connect(coreFile, &CoreFile::fileTransferCancelled, this, &Widget::dispatchFile, Qt::QueuedConnection);
+    connect(coreFile, &CoreFile::fileTransferFinished, this, &Widget::dispatchFile, Qt::QueuedConnection);
+    connect(coreFile, &CoreFile::fileTransferPaused, this, &Widget::dispatchFile, Qt::QueuedConnection);
+    connect(coreFile, &CoreFile::fileTransferRemotePausedUnpaused, this, &Widget::dispatchFileWithBool, Qt::QueuedConnection);
+    connect(coreFile, &CoreFile::fileTransferBrokenUnbroken, this, &Widget::dispatchFileWithBool, Qt::QueuedConnection);
+    connect(coreFile, &CoreFile::fileSendFailed, this, &Widget::dispatchFileSendFailed, Qt::QueuedConnection);
     // NOTE: We intentionally do not connect the fileUploadFinished and fileDownloadFinished signals
     // because they are duplicates of fileTransferFinished NOTE: We don't hook up the
     // fileNameChanged signal since it is only emitted before a fileReceiveRequest. We get the
