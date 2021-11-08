@@ -24,6 +24,7 @@
     - [Slackware](#slackware-other-deps)
     - [Ubuntu](#ubuntu-other-deps)
   - [Compile dependencies](#compile-dependencies)
+    - [docker](#docker)
     - [bootstrap.sh](#bootstrap.sh)
     - [Compile toxcore](#compile-toxcore)
     - [Compile extensions](#compile-extensions)
@@ -270,178 +271,31 @@ The following steps assumes that you cloned the repository at
 corresponding parts.
 
 
+### Docker
+
+Development can be done within one of the many provided docker containers. See the available configurations in docker-compose.yml. These docker images have all the required dependencies for development already installed. Run `docker compose run --rm ubuntu_lts` and proceed to [compiling qTox](#compile-qtox). If you want to avoid compiling as root in the docker image, you can run `USER_ID=$(id -u) GROUP_ID=$(id -g) docker compose run --rm ubuntu_lts` instead.
+
+NOTE: qtox will not run in the docker container unless your x11 session allows connections from other users. If X11 is giving you issues in the docker image, try `xhost +` on your host machine
+
 <a name="other-deps" />
 
 ### GCC, Qt, FFmpeg, OpenAL Soft and qrencode
 
 <a name="arch-other-deps" />
 
-#### Arch Linux
-
-```bash
-sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg opus libvpx libsodium sqlcipher cmake
-```
-
-
-<a name="debian-other-deps" />
-
-#### Debian
-
-```bash
-sudo apt-get install \
-    automake \
-    autotools-dev \
-    build-essential \
-    check \
-    checkinstall \
-    cmake \
-    ffmpeg \
-    libavcodec-dev \
-    libavdevice-dev \
-    libexif-dev \
-    libgdk-pixbuf2.0-dev \
-    libgtk2.0-dev \
-    libopenal-dev \
-    libopus-dev \
-    libqrencode-dev \
-    libqt5opengl5-dev \
-    libqt5svg5-dev \
-    libsodium-dev \
-    libsqlcipher-dev \
-    libtool \
-    libvpx-dev \
-    libxss-dev \
-    pkg-config \
-    qrencode \
-    qtbase5-dev \
-    qttools5-dev \
-    qttools5-dev-tools \
-    yasm
-```
-
-<a name="fedora-other-deps" />
-
-#### Fedora
-
-To install FFmpeg, the [RPM Fusion](https://rpmfusion.org/) repo is required.
-
-```bash
-sudo dnf group install "Development Tools" "C Development Tools and Libraries"
-# (can also use):
-# sudo dnf install @"Development Tools" @"C Development Tools and Libraries"
-sudo dnf install \
-    autoconf \
-    automake \
-    check \
-    check-devel \
-    ffmpeg-devel \
-    gtk2-devel \
-    kf5-sonnet \
-    libexif-devel \
-    libsodium-devel \
-    libtool \
-    libvpx-devel \
-    libXScrnSaver-devel \
-    openal-soft-devel \
-    openssl-devel \
-    opus-devel \
-    qrencode-devel \
-    qt5-devel \
-    qt5-linguist \
-    qt5-qtsvg \
-    qt5-qtsvg-devel \
-    qt-creator \
-    qt-doc \
-    qtsingleapplication-qt5 \
-    sqlcipher \
-    sqlcipher-devel
-```
-
-<a name="opensuse-other-deps" />
-
-#### openSUSE
-
-```bash
-sudo zypper install \
-    libexif-devel \
-    libffmpeg-devel \
-    libopus-devel \
-    libQt5Concurrent-devel \
-    libqt5-linguist \
-    libQt5Network-devel \
-    libQt5OpenGL-devel \
-    libqt5-qtbase-common-devel \
-    libqt5-qtsvg-devel \
-    libQt5Xml-devel \
-    libsodium-devel \
-    libvpx-devel \
-    libXScrnSaver-devel \
-    openal-soft-devel \
-    patterns-openSUSE-devel_basis \
-    qrencode-devel \
-    sqlcipher-devel \
-    sonnet-devel \
-    qt5-linguist-devel \
-    libQt5Test-devel \
-    ffmpeg-4-libavcodec-devel \
-    ffmpeg-4-libavdevice-devel
-```
-
-<a name="slackware-other-deps" />
-
-#### Slackware
-
-List of all the toxcore dependencies and their SlackBuilds can be found
-here: http://slackbuilds.org/repository/14.2/network/toxcore/
-
-List of all the qTox dependencies and their SlackBuilds can be found here:
-http://slackbuilds.org/repository/14.2/network/qTox/
-
-
-<a name="ubuntu-other-deps" />
-
-#### Ubuntu:
-
-```bash
-sudo apt-get install \
-    build-essential \
-    cmake \
-    libavcodec-dev \
-    libavdevice-dev \
-    libavfilter-dev \
-    libavutil-dev \
-    libexif-dev \
-    libgdk-pixbuf2.0-dev \
-    libglib2.0-dev \
-    libgtk2.0-dev \
-    libkdeui5 \
-    libopenal-dev \
-    libopus-dev \
-    libqrencode-dev \
-    libqt5opengl5-dev \
-    libqt5svg5-dev \
-    libsodium-dev \
-    libsqlcipher-dev \
-    libswresample-dev \
-    libswscale-dev \
-    libvpx-dev \
-    libxss-dev \
-    qrencode \
-    qt5-default \
-    qttools5-dev-tools \
-    qttools5-dev
-```
+Please see buildscripts/docker/Dockerfile... for your distribution for an up to date list of commands to set up your build environment
 
 ### Compile dependencies
 
 Toxcore and ToxExt extensions can either be built with bootstrap.sh or manually.
 
+
 <a name="bootstrap.sh" />
 
 #### bootstrap.sh
-
-`bootstrap.sh` will build toxcore and extensions for you, allowing you to skip
-to [compiling qTox](#compile-qtox) after running it. To use it, run
+If you want to develop on your hostmachine, `bootstrap.sh` will build toxcore
+and extensions for you, allowing you to skip to [compiling qTox](#compile-qtox)
+after running it. To use it, run
 ```bash
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib64/pkgconfig"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig"
@@ -457,7 +311,7 @@ Provided that you have all required dependencies installed, you can simply run:
 ```bash
 git clone https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
-git checkout v0.2.13
+# Note: See buildscirpts/download/download_toxcore.sh for which version should be checked out
 cmake . -DBOOTSTRAP_DAEMON=OFF
 make -j$(nproc)
 sudo make install
@@ -475,12 +329,12 @@ sudo ldconfig
 
 qTox uses the toxext library and some of the extensions that go with it.
 
-You will likely have to compile these yourself
+You will likely have to compile these yourself.
 
 ```bash
 git clone https://github.com/toxext/toxext.git toxext
 cd toxext
-git checkout v0.0.3
+# Note: See buildscirpts/download/download_toxext.sh for which version should be checked out
 cmake .
 make -j$(nproc)
 sudo make install
@@ -489,7 +343,7 @@ sudo make install
 ```bash
 git clone https://github.com/toxext/tox_extension_messages.git tox_extension_messages
 cd tox_extension_messages
-git checkout v0.0.3
+# Note: See buildscirpts/download/download_toxext_messages.sh for which version should be checked out
 cmake .
 make -j$(nproc)
 sudo make install
@@ -827,5 +681,6 @@ Switches:
 [toxcore]: https://github.com/TokTok/c-toxcore/
 [sonnet]: https://github.com/KDE/sonnet
 [snorenotify]: https://techbase.kde.org/Projects/Snorenotify
+[sqlcipher]: https://github.com/sqlcipher/sqlcipher
 [toxext]: https://github.com/toxext/toxext
 [tox_extension_messages]: https://github.com/toxext/tox_extension_messages

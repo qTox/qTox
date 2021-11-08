@@ -1,0 +1,119 @@
+diff -ruN libvpx/build/make/configure.sh patched/build/make/configure.sh
+--- libvpx/build/make/configure.sh	2019-02-13 16:56:48.972857636 +0100
++++ patched/build/make/configure.sh	2019-02-13 16:50:37.995967583 +0100
+@@ -1426,11 +1426,13 @@
+         win32)
+           add_asflags -f win32
+           enabled debug && add_asflags -g cv8
++          add_ldflags "-Wl,-no-undefined"
+           EXE_SFX=.exe
+           ;;
+         win64)
+           add_asflags -f win64
+           enabled debug && add_asflags -g cv8
++          add_ldflags "-Wl,-no-undefined"
+           EXE_SFX=.exe
+           ;;
+         linux*|solaris*|android*)
+diff -ruN libvpx/build/make/Makefile patched/build/make/Makefile
+--- libvpx/build/make/Makefile	2019-02-13 16:56:48.972857636 +0100
++++ patched/build/make/Makefile	2019-02-13 16:50:37.995967583 +0100
+@@ -304,6 +304,7 @@
+ 	$(if $(quiet),@echo "    [LD] $$@")
+ 	$(qexec)$$(LD) -shared $$(LDFLAGS) \
+             -Wl,--no-undefined -Wl,-soname,$$(SONAME) \
++            -Wl,-out-implib,libvpx.dll.a \
+             -Wl,--version-script,$$(EXPORTS_FILE) -o $$@ \
+             $$(filter %.o,$$^) $$(extralibs)
+ endef
+@@ -388,7 +389,7 @@
+ .libs: $(LIBS)
+ 	@touch $@
+ $(foreach lib,$(filter %_g.a,$(LIBS)),$(eval $(call archive_template,$(lib))))
+-$(foreach lib,$(filter %so.$(SO_VERSION_MAJOR).$(SO_VERSION_MINOR).$(SO_VERSION_PATCH),$(LIBS)),$(eval $(call so_template,$(lib))))
++$(foreach lib,$(filter %dll,$(LIBS)),$(eval $(call so_template,$(lib))))
+ $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dylib,$(LIBS)),$(eval $(call dl_template,$(lib))))
+ $(foreach lib,$(filter %$(SO_VERSION_MAJOR).dll,$(LIBS)),$(eval $(call dll_template,$(lib))))
+ 
+diff -ruN libvpx/configure patched/configure
+--- libvpx/configure	2019-02-13 16:56:49.162860897 +0100
++++ patched/configure	2019-02-13 16:53:03.328719607 +0100
+@@ -513,23 +513,23 @@
+ }
+ 
+ process_detect() {
+-    if enabled shared; then
++    #if enabled shared; then
+         # Can only build shared libs on a subset of platforms. Doing this check
+         # here rather than at option parse time because the target auto-detect
+         # magic happens after the command line has been parsed.
+-        case "${tgt_os}" in
+-        linux|os2|solaris|darwin*|iphonesimulator*)
++    #    case "${tgt_os}" in
++    #    linux|os2|solaris|darwin*|iphonesimulator*)
+             # Supported platforms
+-            ;;
+-        *)
+-            if enabled gnu; then
+-                echo "--enable-shared is only supported on ELF; assuming this is OK"
+-            else
+-                die "--enable-shared only supported on ELF, OS/2, and Darwin for now"
+-            fi
+-            ;;
+-        esac
+-    fi
++    #        ;;
++    #    *)
++    #        if enabled gnu; then
++    #            echo "--enable-shared is only supported on ELF; assuming this is OK"
++    #        else
++    #            die "--enable-shared only supported on ELF, OS/2, and Darwin for now"
++    #        fi
++    #        ;;
++    #    esac
++    #fi
+     if [ -z "$CC" ] || enabled external_build; then
+         echo "Bypassing toolchain for environment detection."
+         enable_feature external_build
+diff -ruN libvpx/examples.mk patched/examples.mk
+--- libvpx/examples.mk	2019-02-13 16:56:49.162860897 +0100
++++ patched/examples.mk	2019-02-13 16:50:37.995967583 +0100
+@@ -315,7 +315,7 @@
+ ifneq ($(filter os2%,$(TGT_OS)),)
+ SHARED_LIB_SUF=_dll.a
+ else
+-SHARED_LIB_SUF=.so
++SHARED_LIB_SUF=.dll.a
+ endif
+ endif
+ CODEC_LIB_SUF=$(if $(CONFIG_SHARED),$(SHARED_LIB_SUF),.a)
+diff -ruN libvpx/libs.mk patched/libs.mk
+--- libvpx/libs.mk	2019-02-13 16:56:48.972857636 +0100
++++ patched/libs.mk	2019-02-13 16:50:37.995967583 +0100
+@@ -256,12 +256,12 @@
+ LIBVPX_SO_SYMLINKS      :=
+ LIBVPX_SO_IMPLIB        := libvpx_dll.a
+ else
+-LIBVPX_SO               := libvpx.so.$(SO_VERSION_MAJOR).$(SO_VERSION_MINOR).$(SO_VERSION_PATCH)
+-SHARED_LIB_SUF          := .so
++LIBVPX_SO               := libvpx.dll
++SHARED_LIB_SUF          := .dll
+ EXPORT_FILE             := libvpx.ver
+-LIBVPX_SO_SYMLINKS      := $(addprefix $(LIBSUBDIR)/, \
+-                             libvpx.so libvpx.so.$(SO_VERSION_MAJOR) \
+-                             libvpx.so.$(SO_VERSION_MAJOR).$(SO_VERSION_MINOR))
++LIBVPX_SO_SYMLINKS      :=
++
++
+ endif
+ endif
+ endif
+@@ -271,7 +271,7 @@
+                            $(if $(LIBVPX_SO_IMPLIB), $(BUILD_PFX)$(LIBVPX_SO_IMPLIB))
+ $(BUILD_PFX)$(LIBVPX_SO): $(LIBVPX_OBJS) $(EXPORT_FILE)
+ $(BUILD_PFX)$(LIBVPX_SO): extralibs += -lm
+-$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.so.$(SO_VERSION_MAJOR)
++$(BUILD_PFX)$(LIBVPX_SO): SONAME = libvpx.dll
+ $(BUILD_PFX)$(LIBVPX_SO): EXPORTS_FILE = $(EXPORT_FILE)
+ 
+ libvpx.def: $(call enabled,CODEC_EXPORTS)

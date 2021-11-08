@@ -40,6 +40,8 @@ QT_DIR="/usr/local/Cellar/qt5" # Folder name of QT install
 QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
+SCRIPT_DIR=$( cd $(dirname $0); pwd -P)
+
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 TOX_EXT_DIR="${MAIN_DIR}/toxext"
 TOX_EXT_MESSAGES_DIR="${MAIN_DIR}/tox_extension_messages"
@@ -175,35 +177,21 @@ install() {
 
     #cd $MAIN_DIR # just in case
     # Toxcore
-    if [[ -e $TOXCORE_DIR/.git/index ]]
-    then
-        fcho "Toxcore git repo already in place !"
-        cd $TOXCORE_DIR
-        git pull
-    else
-        fcho "Cloning Toxcore git ... "
-        git clone --branch v0.2.13 --depth=1 https://github.com/toktok/c-toxcore "$TOXCORE_DIR"
-    fi
-    # toxext
-    if [[ -e $TOX_EXT_DIR/.git/index ]]
-    then
-        fcho "ToxExt git repo already in place !"
-        cd $TOX_EXT_DIR
-        git pull
-    else
-        fcho "Cloning ToxExt git ... "
-        git clone --branch v0.0.3 --depth=1 https://github.com/toxext/toxext "$TOX_EXT_DIR"
-    fi
-    # tox_extension_messages
-    if [[ -e $TOX_EXT_MESSAGES_DIR/.git/index ]]
-    then
-        fcho "ToxExt git repo already in place !"
-        cd $TOX_EXT_MESSAGES_DIR
-        git pul
-    else
-        fcho "Cloning tox_extension_messages git ... "
-        git clone --branch v0.0.3 --depth=1 https://github.com/toxext/tox_extension_messages "$TOX_EXT_MESSAGES_DIR"
-    fi
+    rm -fr "${TOXCORE_DIR}"
+    mkdir -p "${TOXCORE_DIR}"
+    cd "${TOXCORE_DIR}"
+    "${SCRIPT_DIR}"/../buildscripts/download/download_toxcore.sh
+
+    rm -fr "${TOX_EXT_DIR}"
+    mkdir -p "${TOX_EXT_DIR}"
+    cd "${TOX_EXT_DIR}"
+    "${SCRIPT_DIR}"/../buildscripts/download/download_toxext.sh
+
+    rm -fr "${TOX_EXT_MESSAGES_DIR}"
+    mkdir -p "${TOX_EXT_MESSAGES_DIR}"
+    cd "${TOX_EXT_MESSAGES_DIR}"
+    "${SCRIPT_DIR}"/../buildscripts/download/download_toxext_messages.sh
+
     # qTox
     if [[ $TRAVIS = true ]]
     then

@@ -1,0 +1,50 @@
+#    Copyright © 2021 by The qTox Project Contributors
+#
+#    This program is libre software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+FROM archlinux:latest
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN pacman -Syu --noconfirm --needed \
+    base-devel \
+    cmake \
+    libsodium \
+    qt5-base \
+    qt5-tools \
+    qt5-svg \
+    ffmpeg \
+    libexif \
+    qrencode \
+    sqlcipher \
+    openal \
+    sonnet \
+    snorenotify \
+    git \
+    && \
+    rm -fr /var/cache/pacman
+
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+
+COPY download/common.sh /build/download/common.sh
+COPY download/download_toxcore.sh /build/download/download_toxcore.sh
+COPY download/download_toxext.sh /build/download/download_toxext.sh
+COPY download/download_toxext_messages.sh /build/download/download_toxext_messages.sh
+COPY build_toxcore_linux.sh /build/build_toxcore_linux.sh
+RUN mkdir -p /src/tox && \
+    cd /src/tox && \
+    /build/build_toxcore_linux.sh && \
+    rm -fr /src/tox
+
+WORKDIR /qtox

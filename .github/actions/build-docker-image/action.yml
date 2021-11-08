@@ -1,0 +1,25 @@
+name: 'Build docker image'
+inputs:
+  docker_image_name:
+    description: "Name of docker image"
+    required: True
+runs:
+  using: 'composite'
+  steps:
+    - uses: docker/setup-buildx-action@master
+    - name: Setup buildx cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          /tmp/.buildx-cache
+        key: ${{ runner.os }}-${{ inputs.docker_image_name }}-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-${{ inputs.docker_image_name }}-
+    - name: Build docker image
+      shell: bash
+      run: docker buildx bake --set *.cache-to=type=local,dest=/tmp/.buildx-cache-new,mode=max --set *.cache-from=type=local,src=/tmp/.buildx-cache -f docker-compose.yml ${{ inputs.docker_image_name }}
+    - name: Replace buildx cache
+      shell: bash
+      run: |
+        rm -fr /tmp/.buildx-cache
+        mv /tmp/.buildx-cache-new /tmp/.buildx-cache

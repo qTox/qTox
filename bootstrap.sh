@@ -47,17 +47,11 @@ readonly INSTALL_DIR=libs
 # just for convenience
 readonly BASE_DIR="${SCRIPT_DIR}/${INSTALL_DIR}"
 
-# versions of libs to checkout
-readonly TOXCORE_VERSION="v0.2.13"
-readonly TOXEXT_VERSION="v0.0.3"
-readonly TOX_EXT_MESSAGES_VERSION="v0.0.3"
-readonly SQLCIPHER_VERSION="v4.3.0"
-
 # directory names of cloned repositories
-readonly TOXCORE_DIR="libtoxcore-$TOXCORE_VERSION"
-readonly TOXEXT_DIR="toxext-$TOXEXT_VERSION"
-readonly TOX_EXT_MESSAGES_DIR="tox_ext_messages-$TOXEXT_VERSION"
-readonly SQLCIPHER_DIR="sqlcipher-$SQLCIPHER_VERSION"
+readonly TOXCORE_DIR="libtoxcore"
+readonly TOXEXT_DIR="toxext"
+readonly TOX_EXT_MESSAGES_DIR="tox_ext_messages"
+readonly SQLCIPHER_DIR="sqlcipher"
 
 # default values for user given parameters
 INSTALL_TOX=true
@@ -112,12 +106,10 @@ remove_build_dirs() {
 install_toxcore() {
     if [[ $INSTALL_TOX = "true" ]]
     then
-        git clone https://github.com/toktok/c-toxcore.git \
-            --branch $TOXCORE_VERSION \
-            --depth 1 \
-            "${BASE_DIR}/${TOXCORE_DIR}"
-
+        mkdir -p "${BASE_DIR}/${TOXCORE_DIR}"
         pushd ${BASE_DIR}/${TOXCORE_DIR}
+
+        "${SCRIPT_DIR}"/buildscripts/download/download_toxcore.sh
 
         # compile and install
         if [[ $SYSTEM_WIDE = "false" ]]
@@ -139,11 +131,10 @@ install_toxcore() {
 install_toxext() {
     if [[ $INSTALL_TOXEXT = "true" ]]
     then
-        git clone https://github.com/toxext/toxext.git \
-            --branch $TOXEXT_VERSION \
-            "${BASE_DIR}/${TOXEXT_DIR}"
-
+        mkdir -p "${BASE_DIR}/${TOXEXT_DIR}"
         pushd ${BASE_DIR}/${TOXEXT_DIR}
+
+        "${SCRIPT_DIR}"/buildscripts/download/download_toxext.sh
 
         # compile and install
         if [[ $SYSTEM_WIDE = "false" ]]
@@ -165,11 +156,10 @@ install_toxext() {
 install_tox_ext_messages() {
     if [[ $INSTALL_TOX_EXT_MESSAGES = "true" ]]
     then
-        git clone https://github.com/toxext/tox_extension_messages.git \
-            --branch $TOX_EXT_MESSAGES_VERSION \
-            "${BASE_DIR}/${TOX_EXT_MESSAGES_DIR}"
-
+        mkdir -p "${BASE_DIR}/${TOX_EXT_MESSAGES_DIR}"
         pushd ${BASE_DIR}/${TOX_EXT_MESSAGES_DIR}
+
+        "${SCRIPT_DIR}"/buildscripts/download/download_toxext_messages.sh
 
         # compile and install
         if [[ $SYSTEM_WIDE = "false" ]]
@@ -191,12 +181,11 @@ install_tox_ext_messages() {
 install_sqlcipher() {
     if [[ $INSTALL_SQLCIPHER = "true" ]]
     then
-        git clone https://github.com/sqlcipher/sqlcipher.git \
-            "${BASE_DIR}/${SQLCIPHER_DIR}" \
-            --branch $SQLCIPHER_VERSION \
-            --depth 1
-
+        mkdir -p  "${BASE_DIR}/${SQLCIPHER_DIR}"
         pushd "${BASE_DIR}/${SQLCIPHER_DIR}"
+
+        "${SCRIPT_DIR}"/download/download_sqlcipher.sh
+
         autoreconf -if
 
         if [[ $SYSTEM_WIDE = "false" ]]

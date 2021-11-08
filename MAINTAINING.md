@@ -208,9 +208,8 @@ To get translations into qTox:
 ### Before tagging
 
 - Format all code using the [`./tools/format-code.sh`] script
-- Merge the Flatpak manifest of our [Flathub repository] into
-  [`./flatpak/io.github.qtox.qTox.json`]. Keep
-  [`./flatpak/io.github.qtox.qTox.json`]'s version of "sources" for qTox.
+- Update the Flatpak manifest of our [Flathub repository] with the script in flatpak/update_flathub_descriptor_dependencies.py
+  - Make sure to check if new dependencies need to be added, add them if necessary
 - Update version number for windows/osx packages using the
   [`./tools/update-versions.sh`] script, e.g. `./tools/update-versions.sh
   1.11.0`
