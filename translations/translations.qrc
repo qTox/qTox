@@ -1,51 +1,53 @@
-<RCC>
-    <qresource prefix="/translations">
-        <file>ar.qm</file>
-        <file>be.qm</file>
-        <file>ber.ts</file>
-        <file>bg.qm</file>
-        <file>cs.qm</file>
-        <file>da.qm</file>
-        <file>de.qm</file>
-        <file>el.qm</file>
-        <file>eo.qm</file>
-        <file>es.qm</file>
-        <file>et.qm</file>
-        <file>fa.qm</file>
-        <file>fi.qm</file>
-        <file>fr.qm</file>
-        <file>gl.ts</file>
-        <file>he.qm</file>
-        <file>hr.qm</file>
-        <file>hu.qm</file>
-        <file>it.qm</file>
-        <file>ja.qm</file>
-        <file>jbo.qm</file>
-        <file>kn.ts</file>
-        <file>ko.qm</file>
-        <file>lt.qm</file>
-        <file>mk.qm</file>
-        <file>nl.qm</file>
-        <file>no_nb.qm</file>
-        <file>pl.qm</file>
-        <file>pr.qm</file>
-        <file>pt.qm</file>
-        <file>pt_BR.qm</file>
-        <file>ro.qm</file>
-        <file>ru.qm</file>
-        <file>si.ts</file>
-        <file>sk.qm</file>
-        <file>sl.qm</file>
-        <file>sq.ts</file>
-        <file>sr.qm</file>
-        <file>sr_Latn.qm</file>
-        <file>sv.qm</file>
-        <file>sw.qm</file>
-        <file>ta.qm</file>
-        <file>tr.qm</file>
-        <file>ug.qm</file>
-        <file>uk.qm</file>
-        <file>zh_CN.qm</file>
-        <file>zh_TW.qm</file>
-    </qresource>
-</RCC>
+<!DOCTYPE RCC>
+    <RCC version="1.0">
+      <qresource prefix="/translations">
+        <file alias="ar.qm">/qtox/translations/ar.qm</file>
+    <file alias="be.qm">/qtox/translations/be.qm</file>
+    <file alias="ber.qm">/qtox/translations/ber.qm</file>
+    <file alias="bg.qm">/qtox/translations/bg.qm</file>
+    <file alias="cs.qm">/qtox/translations/cs.qm</file>
+    <file alias="da.qm">/qtox/translations/da.qm</file>
+    <file alias="de.qm">/qtox/translations/de.qm</file>
+    <file alias="el.qm">/qtox/translations/el.qm</file>
+    <file alias="eo.qm">/qtox/translations/eo.qm</file>
+    <file alias="es.qm">/qtox/translations/es.qm</file>
+    <file alias="et.qm">/qtox/translations/et.qm</file>
+    <file alias="fa.qm">/qtox/translations/fa.qm</file>
+    <file alias="fi.qm">/qtox/translations/fi.qm</file>
+    <file alias="fr.qm">/qtox/translations/fr.qm</file>
+    <file alias="gl.qm">/qtox/translations/gl.qm</file>
+    <file alias="he.qm">/qtox/translations/he.qm</file>
+    <file alias="hr.qm">/qtox/translations/hr.qm</file>
+    <file alias="hu.qm">/qtox/translations/hu.qm</file>
+    <file alias="it.qm">/qtox/translations/it.qm</file>
+    <file alias="ja.qm">/qtox/translations/ja.qm</file>
+    <file alias="jbo.qm">/qtox/translations/jbo.qm</file>
+    <file alias="kn.qm">/qtox/translations/kn.qm</file>
+    <file alias="ko.qm">/qtox/translations/ko.qm</file>
+    <file alias="lt.qm">/qtox/translations/lt.qm</file>
+    <file alias="mk.qm">/qtox/translations/mk.qm</file>
+    <file alias="nl.qm">/qtox/translations/nl.qm</file>
+    <file alias="no_nb.qm">/qtox/translations/no_nb.qm</file>
+    <file alias="pl.qm">/qtox/translations/pl.qm</file>
+    <file alias="pr.qm">/qtox/translations/pr.qm</file>
+    <file alias="pt.qm">/qtox/translations/pt.qm</file>
+    <file alias="pt_BR.qm">/qtox/translations/pt_BR.qm</file>
+    <file alias="ro.qm">/qtox/translations/ro.qm</file>
+    <file alias="ru.qm">/qtox/translations/ru.qm</file>
+    <file alias="si.qm">/qtox/translations/si.qm</file>
+    <file alias="sk.qm">/qtox/translations/sk.qm</file>
+    <file alias="sl.qm">/qtox/translations/sl.qm</file>
+    <file alias="sq.qm">/qtox/translations/sq.qm</file>
+    <file alias="sr.qm">/qtox/translations/sr.qm</file>
+    <file alias="sr_Latn.qm">/qtox/translations/sr_Latn.qm</file>
+    <file alias="sv.qm">/qtox/translations/sv.qm</file>
+    <file alias="sw.qm">/qtox/translations/sw.qm</file>
+    <file alias="ta.qm">/qtox/translations/ta.qm</file>
+    <file alias="tr.qm">/qtox/translations/tr.qm</file>
+    <file alias="ug.qm">/qtox/translations/ug.qm</file>
+    <file alias="uk.qm">/qtox/translations/uk.qm</file>
+    <file alias="zh_CN.qm">/qtox/translations/zh_CN.qm</file>
+    <file alias="zh_TW.qm">/qtox/translations/zh_TW.qm</file>
+  </qresource>
+    </RCC>
+    

@@ -1,0 +1,82 @@
+x-shared-params: &shared_params
+  # Various ease of use improvements
+  cap_add:
+    - ALL
+  # Allows us to run app images from within the context of a docker image
+  devices:
+    - /dev/fuse:/dev/fuse
+  # X11 stuff
+  environment:
+    DISPLAY: $DISPLAY
+    XAUTHORITY: $XAUTHORITY
+  volumes:
+    - .:/qtox
+    - /tmp/.X11-unix:/tmp/.X11-unix
+    - ~/.Xauthority:/root/.Xauthority
+  user: ${USER_ID:-0}:${GROUP_ID:-0}
+  network_mode: host
+
+services:
+  archlinux:
+    image: qtox_archlinux:latest
+    build:
+      context: ./buildscripts
+      dockerfile: docker/Dockerfile.archlinux
+    <<: *shared_params
+  debian_old:
+    image: qtox_debian_old:latest
+    build:
+      context: ./buildscripts
+      dockerfile: docker/Dockerfile.debian_old
+    <<: *shared_params
+  debian:
+    image: qtox_debian:latest
+    build:
+      context: ./buildscripts
+      dockerfile: docker/Dockerfile.debian
+      args:
+        DEBIAN_VERSION: stable
+    <<: *shared_params
+  ubuntu_lts:
+    image: qtox_ubuntu:latest
+    build:
+      context: ./buildscripts
+      dockerfile: docker/Dockerfile.ubuntu_lts
+    <<: *shared_params
+  flatpak:
+    image: qtox_flatpak:latest
+    # Flatpak build uses pivot_root() in tcl build
+    privileged: true
+    build:
+      context: ./buildscripts
+      dockerfile: docker/Dockerfile.flatpak_builder
+    <<: *shared_params
+  centos:
+    image: qtox_centos:latest
+    build:
+      context: ./buildscripts
+      dockerfile: docker/Dockerfile.centos
+    <<: *shared_params
+  opensuse:
+    image: qtox_opensuse:latest
+    build:
+      context: ./buildscripts
+      dockerfile: docker/Dockerfile.opensuse
+    <<: *shared_params
+  windows_builder:
+    image: qtox_windows_builder:latest
+    build:
+      context: ./buildscripts
+      dockerfile: docker/Dockerfile.windows_builder
+      args:
+        WINEARCH: win64
+    <<: *shared_params
+  windows_builder.i686:
+    image: qtox_windows_builder.i686:latest
+    build:
+      context: ./buildscripts
+      dockerfile: docker/Dockerfile.windows_builder
+      args:
+        ARCH: i686
+        WINEARCH: win32
+    <<: *shared_params

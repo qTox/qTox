@@ -1,0 +1,189 @@
+FROM debian:bullseye-slim
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+ARG ARCH="x86_64"
+ARG WINEARCH
+ENV WINEARCH=${WINEARCH}
+
+RUN dpkg --add-architecture i386 && \
+    apt-get update && apt-get install -y --no-install-recommends \
+                   autoconf \
+                   automake \
+                   build-essential \
+                   ca-certificates \
+                   cmake \
+                   extra-cmake-modules \
+                   git \
+                   libarchive-tools \
+                   libtool \
+                   nsis \
+                   pkg-config \
+                   python3-pefile \
+                   tclsh \
+                   texinfo \
+                   unzip \
+                   curl \
+                   yasm \
+                   zip \
+                   g++-mingw-w64-${ARCH//_/-} \
+                   gcc-mingw-w64-${ARCH//_/-} \
+                   gdb-mingw-w64 \
+                   wine \
+                   wine32 \
+                   wine64 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN update-alternatives --set ${ARCH}-w64-mingw32-gcc /usr/bin/${ARCH}-w64-mingw32-gcc-posix && \
+  update-alternatives --set ${ARCH}-w64-mingw32-g++ /usr/bin/${ARCH}-w64-mingw32-g++-posix
+
+COPY download/common.sh /build/download/common.sh
+COPY download/download_openssl.sh /build/download/download_openssl.sh
+COPY build_openssl_windows.sh /build/build_openssl_windows.sh
+
+RUN mkdir -p /src/openssl && \
+  cd /src/openssl && \
+  /build/build_openssl_windows.sh --arch ${ARCH} && \
+  rm -fr /src/openssl
+
+env PKG_CONFIG_PATH=/windows/lib/pkgconfig
+
+COPY download/download_qt.sh /build/download/download_qt.sh
+COPY build_qt_windows.sh /build/build_qt_windows.sh
+
+RUN mkdir -p /src/qt && \
+  cd /src/qt && \
+  /build/build_qt_windows.sh --arch ${ARCH} && \
+  rm -fr /src/qt
+
+COPY download/download_sqlcipher.sh /build/download/download_sqlcipher.sh
+COPY build_sqlcipher_windows.sh /build/build_sqlcipher_windows.sh
+
+RUN mkdir -p /src/sqlcipher && \
+  cd /src/sqlcipher && \
+  /build/build_sqlcipher_windows.sh  --arch ${ARCH} && \
+  rm -fr /src/sqlcipher
+
+COPY download/download_ffmpeg.sh /build/download/download_ffmpeg.sh
+COPY build_ffmpeg_windows.sh /build/build_ffmpeg_windows.sh
+RUN mkdir -p /src/ffmpeg && \
+  cd /src/ffmpeg && \
+  /build/build_ffmpeg_windows.sh --arch ${ARCH} && \
+  rm -fr /src/ffmpeg
+
+COPY toolchain/windows-${ARCH}-toolchain.cmake /build/windows-toolchain.cmake
+
+COPY download/download_openal.sh /build/download/download_openal.sh
+COPY build_openal_windows.sh /build/build_openal_windows.sh
+COPY patches/openal-cmake-3-11.patch /build/patches/openal-cmake-3-11.patch
+
+RUN mkdir -p /src/openal && \
+  cd /src/openal && \
+  /build/build_openal_windows.sh --arch ${ARCH} && \
+  rm -fr /src/openal
+
+COPY download/download_qrencode.sh /build/download/download_qrencode.sh
+COPY build_qrencode_windows.sh /build/build_qrencode_windows.sh
+RUN mkdir -p /src/qrencode && \
+  cd /src/qrencode && \
+  /build/build_qrencode_windows.sh  --arch ${ARCH} && \
+  rm -fr /src/qrencode
+
+COPY download/download_libexif.sh /build/download/download_libexif.sh
+COPY build_libexif_windows.sh /build/build_libexif_windows.sh
+RUN mkdir -p /src/exif && \
+  cd /src/exif && \
+  /build/build_libexif_windows.sh --arch ${ARCH} && \
+  rm -fr /src/exif
+
+COPY download/download_snore.sh /build/download/download_snore.sh
+COPY build_snore_windows.sh /build/build_snore_windows.sh
+RUN mkdir -p /src/snore && \
+  cd /src/snore && \
+  /build/build_snore_windows.sh && \
+  rm -fr /src/snore
+
+COPY download/download_opus.sh /build/download/download_opus.sh
+COPY build_opus_windows.sh /build/build_opus_windows.sh
+RUN mkdir -p /src/opus && \
+  cd /src/opus && \
+  /build/build_opus_windows.sh --arch ${ARCH} && \
+  rm -fr /src/opus
+
+COPY download/download_sodium.sh /build/download/download_sodium.sh
+COPY build_sodium_windows.sh /build/build_sodium_windows.sh
+RUN mkdir -p /src/sodium && \
+  cd /src/sodium && \
+  /build/build_sodium_windows.sh --arch ${ARCH} && \
+  rm -fr /src/sodium
+
+COPY download/download_vpx.sh /build/download/download_vpx.sh
+COPY build_vpx_windows.sh /build/build_vpx_windows.sh
+COPY patches/vpx.patch /build/patches/vpx.patch
+RUN mkdir -p /src/vpx && \
+  cd /src/vpx && \
+  /build/build_vpx_windows.sh --arch ${ARCH} && \
+  rm -fr /src/vpx
+
+COPY download/download_mingw_ldd.sh /build/download/download_mingw_ldd.sh
+COPY build_mingw_ldd_windows.sh /build/build_mingw_ldd_windows.sh
+RUN mkdir -p /src/mingw_ldd && \
+  cd /src/mingw_ldd && \
+  /build/build_mingw_ldd_windows.sh && \
+  rm -fr /src/mingw_ldd
+
+COPY download/download_nsisshellexecasuser.sh /build/download/download_nsisshellexecasuser.sh
+COPY build_nsisshellexecasuser_windows.sh /build/build_nsisshellexecasuser_windows.sh
+RUN mkdir -p /src/nsisshellexecasuser && \
+  cd /src/nsisshellexecasuser && \
+  /build/build_nsisshellexecasuser_windows.sh && \
+  rm -fr /src/nsisshellexecasuser
+
+COPY download/download_toxcore.sh /build/download/download_toxcore.sh
+COPY download/download_toxext.sh /build/download/download_toxext.sh
+COPY download/download_toxext_messages.sh /build/download/download_toxext_messages.sh
+COPY build_toxcore_windows.sh /build/build_toxcore_windows.sh
+RUN mkdir -p /src/tox && \
+  cd /src/tox && \
+  /build/build_toxcore_windows.sh && \
+  rm -fr /src/tox
+
+RUN mkdir /export && \
+  cp /usr/${ARCH}-w64-mingw32/lib/libwinpthread-1.dll /export/ && \
+  cp /usr/lib/gcc/${ARCH}-w64-mingw32/10-posix/libgcc_s_*-1.dll /export && \
+  cp /usr/lib/gcc/${ARCH}-w64-mingw32/10-posix/libstdc++-6.dll /export && \
+  cp /usr/lib/gcc/${ARCH}-w64-mingw32/10-posix/libssp-0.dll /export && \
+  cp /windows/bin/Qt5Core.dll /export && \
+  cp /windows/bin/Qt5Gui.dll /export && \
+  cp /windows/bin/Qt5Network.dll /export && \
+  cp /windows/bin/Qt5Svg.dll /export && \
+  cp /windows/bin/Qt5Xml.dll /export && \
+  cp /windows/bin/Qt5Widgets.dll /export && \
+  cp /windows/bin/avcodec-*.dll /export && \
+  cp /windows/bin/avdevice-*.dll /export && \
+  cp /windows/bin/avformat-*.dll /export && \
+  cp /windows/bin/avutil-*.dll /export && \
+  cp /windows/bin/libexif-*.dll /export && \
+  cp /windows/bin/libqrencode.dll /export && \
+  cp /windows/bin/libsodium-*.dll /export && \
+  cp /windows/bin/libsqlcipher-*.dll /export && \
+  cp /windows/bin/swscale-*.dll /export && \
+  cp /windows/bin/libcrypto-*.dll /export && \
+  cp /windows/bin/libtoxcore.dll /export && \
+  cp /windows/bin/libopus-*.dll /export && \
+  cp /windows/lib/libvpx.dll /export && \
+  cp /windows/bin/libssl-*.dll /export && \
+  cp /windows/bin/libsnore-qt5.dll /export && \
+  mkdir -p /export/libsnore-qt5/ && \
+  cp /windows/plugins/libsnore-qt5/libsnore_backend_windowstoast.dll /export/libsnore-qt5/ && \
+  cp /windows/bin/SnoreToast.exe /export && \
+  cp -r /windows/plugins/iconengines /export && \
+  cp -r /windows/plugins/imageformats /export && \
+  cp -r /windows/plugins/platforms /export
+
+RUN mkdir -p /qtox
+WORKDIR /qtox
+

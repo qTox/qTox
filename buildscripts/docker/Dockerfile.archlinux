@@ -1,0 +1,35 @@
+FROM archlinux:latest
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN pacman -Syu --noconfirm --needed \
+    base-devel \
+    cmake \
+    libsodium \
+    qt5-base \
+    qt5-tools \
+    qt5-svg \
+    ffmpeg \
+    libexif \
+    qrencode \
+    sqlcipher \
+    openal \
+    sonnet \
+    snorenotify \
+    git \
+    && \
+    yes | pacman -Scc
+
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+
+COPY download/common.sh /build/download/common.sh
+COPY download/download_toxcore.sh /build/download/download_toxcore.sh
+COPY download/download_toxext.sh /build/download/download_toxext.sh
+COPY download/download_toxext_messages.sh /build/download/download_toxext_messages.sh
+COPY build_toxcore_linux.sh /build/build_toxcore_linux.sh
+RUN mkdir -p /src/tox && \
+    cd /src/tox && \
+    /build/build_toxcore_linux.sh && \
+    rm -fr /src/tox
+
+WORKDIR /qtox

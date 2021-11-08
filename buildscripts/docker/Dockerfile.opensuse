@@ -1,0 +1,40 @@
+FROM opensuse/leap:latest
+
+RUN zypper install --no-recommends -y \
+    git \
+    libexif-devel \
+    libopus-devel \
+    libQt5Concurrent-devel \
+    libqt5-linguist-devel \
+    libqt5-qtbase-common-devel \
+    libqt5-qtsvg-devel \
+    libsodium-devel \
+    libvpx-devel \
+    openal-soft-devel \
+    qrencode-devel \
+    sqlcipher-devel \
+    sonnet-devel \
+    libQt5Test-devel \
+    libQt5Network-devel \
+    libQt5OpenGL-devel \
+    libQt5Xml-devel \
+    curl \
+    tar \
+    gzip \
+    libavcodec-devel \
+    libavdevice-devel \
+    libXss-devel \
+    snorenotify-qt5-devel && \
+    zypper clean
+
+COPY download/common.sh /build/download/common.sh
+COPY download/download_toxcore.sh /build/download/download_toxcore.sh
+COPY download/download_toxext.sh /build/download/download_toxext.sh
+COPY download/download_toxext_messages.sh /build/download/download_toxext_messages.sh
+COPY build_toxcore_linux.sh /build/build_toxcore_linux.sh
+RUN mkdir -p /src/tox && \
+    cd /src/tox && \
+    /build/build_toxcore_linux.sh && \
+    rm -fr /src/tox
+
+WORKDIR /qtox

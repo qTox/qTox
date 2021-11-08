@@ -49,7 +49,9 @@ auto_test(chatlog chatlinestorage "")
 auto_test(persistence paths "")
 auto_test(persistence dbschema "")
 auto_test(persistence offlinemsgengine "")
-auto_test(persistence smileypack "${${PROJECT_NAME}_RESOURCES}") # needs emojione
+if(NOT "${SMILEYS}" STREQUAL "DISABLED")
+  auto_test(persistence smileypack "${${PROJECT_NAME}_RESOURCES}") # needs emojione
+endif()
 auto_test(model friendmessagedispatcher "")
 auto_test(model groupmessagedispatcher "${MOCK_SOURCES}")
 auto_test(model messageprocessor "")

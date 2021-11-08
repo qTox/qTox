@@ -14,25 +14,22 @@
 #   You should have received a copy of the GNU General Public License
 #   along with qTox.  If not, see <http://www.gnu.org/licenses/>
 
-FROM debian:stretch
+
+FROM debian:oldoldstable
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get -y --force-yes install \
-    automake \
-    autotools-dev \
+    apt-get -y --force-yes --no-install-recommends install \
     build-essential \
-    check \
-    checkinstall \
     cmake \
-    ffmpeg \
+    curl \
+    ca-certificates \
+    extra-cmake-modules \
     git \
     libavcodec-dev \
     libavdevice-dev \
     libexif-dev \
-    libgdk-pixbuf2.0-dev \
-    libgtk2.0-dev \
     libopenal-dev \
     libopus-dev \
     libqrencode-dev \
@@ -42,37 +39,30 @@ RUN apt-get update && \
     libsqlcipher-dev \
     libtool \
     libvpx-dev \
-    libxss-dev \
+    libkf5sonnet-dev \
     pkg-config \
-    qrencode \
+    libqrencode-dev \
     qt5-default \
-    qttools5-dev \
-    qttools5-dev-tools \
-    yasm
+    qttools5-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/toktok/c-toxcore.git /toxcore
-WORKDIR /toxcore
-RUN git checkout v0.2.12 && \
-        cmake . -DBOOTSTRAP_DAEMON=OFF && \
-        cmake --build . && \
-        make install && \
-        echo '/usr/local/lib/' >> /etc/ld.so.conf.d/locallib.conf && \
-        ldconfig
+COPY download/common.sh /build/download/common.sh
 
-RUN git clone https://github.com/toxext/toxext.git /toxext
-WORKDIR /toxext
-RUN git checkout v0.0.3 && \
-        cmake . && \
-        cmake --build . -- -j $(nproc) && \
-        cmake --build . --target install
+COPY download/download_snore.sh /build/download/download_snore.sh
+COPY build_snore_linux.sh /build/build_snore_linux.sh
+RUN mkdir -p /src/snore && \
+    cd /src/snore && \
+    /build/build_snore_linux.sh && \
+    rm -fr /src/snore
 
-RUN git clone https://github.com/toxext/tox_extension_messages.git /tox_extension_messages
-WORKDIR /tox_extension_messages
-RUN git checkout v0.0.3 && \
-        cmake . && \
-        cmake --build . -- -j $(nproc) && \
-        cmake --build . --target install
+COPY download/download_toxcore.sh /build/download/download_toxcore.sh
+COPY download/download_toxext.sh /build/download/download_toxext.sh
+COPY download/download_toxext_messages.sh /build/download/download_toxext_messages.sh
+COPY build_toxcore_linux.sh /build/build_toxcore_linux.sh
+RUN mkdir -p /src/tox && \
+    cd /src/tox && \
+    /build/build_toxcore_linux.sh && \
+    rm -fr /src/tox
 
-COPY . /qtox
 WORKDIR /qtox
-RUN cmake . && cmake --build .
