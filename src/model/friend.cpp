@@ -192,11 +192,6 @@ Status::Status Friend::getStatus() const
     return isNegotiating ? Status::Status::Negotiating : friendStatus;
 }
 
-bool Friend::useHistory() const
-{
-    return true;
-}
-
 void Friend::setExtendedMessageSupport(bool supported)
 {
     supportedExtensions[ExtensionType::messages] = supported;

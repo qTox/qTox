@@ -37,14 +37,6 @@ ChatLine::~ChatLine()
     }
 }
 
-void ChatLine::setRow(int idx)
-{
-    row = idx;
-
-    for (int c = 0; c < static_cast<int>(content.size()); ++c)
-        content[c]->setIndex(row, c);
-}
-
 void ChatLine::visibilityChanged(bool visible)
 {
     if (isVisible != visible) {
@@ -53,11 +45,6 @@ void ChatLine::visibilityChanged(bool visible)
     }
 
     isVisible = visible;
-}
-
-int ChatLine::getRow() const
-{
-    return row;
 }
 
 ChatLineContent* ChatLine::getContent(int col) const
@@ -153,6 +140,7 @@ void ChatLine::addColumn(ChatLineContent* item, ColumnFormat fmt)
 
     format.push_back(fmt);
     content.push_back(item);
+    item->setIndex(0, content.size() -1 );
 }
 
 void ChatLine::replaceContent(int col, ChatLineContent* lineContent)
@@ -261,9 +249,4 @@ bool ChatLine::lessThanBSRectTop(const ChatLine::Ptr& lhs, const qreal& rhs)
 bool ChatLine::lessThanBSRectBottom(const ChatLine::Ptr& lhs, const qreal& rhs)
 {
     return lhs->sceneBoundingRect().bottom() < rhs;
-}
-
-bool ChatLine::lessThanRowIndex(const ChatLine::Ptr& lhs, const ChatLine::Ptr& rhs)
-{
-    return lhs->getRow() < rhs->getRow();
 }

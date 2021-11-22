@@ -26,6 +26,7 @@
 #include "chatline.h"
 #include "chatmessage.h"
 #include "src/widget/style.h"
+#include "src/model/ichatlog.h"
 
 class QGraphicsScene;
 class QGraphicsRectItem;
@@ -34,32 +35,25 @@ class QTimer;
 class ChatLineContent;
 struct ToxFile;
 
-static const size_t DEF_NUM_MSG_TO_LOAD = 100;
+class ChatLineStorage;
 
-class ChatLog : public QGraphicsView
+static const size_t DEF_NUM_MSG_TO_LOAD = 100;
+class ChatWidget : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit ChatLog(QWidget* parent = nullptr);
-    virtual ~ChatLog();
+    explicit ChatWidget(IChatLog& chatLog, const Core& core, QWidget* parent = nullptr);
+    virtual ~ChatWidget();
 
-    void insertChatlineAtBottom(ChatLine::Ptr l);
-    void insertChatlineAtBottom(const QList<ChatLine::Ptr>& newLines);
-    void insertChatlineOnTop(ChatLine::Ptr l);
-    void insertChatlinesOnTop(const QList<ChatLine::Ptr>& newLines);
+    void insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines);
     void clearSelection();
     void clear();
     void copySelectedText(bool toSelectionBuffer = false) const;
-    void setBusyNotification(ChatLine::Ptr notification);
     void setTypingNotificationVisible(bool visible);
     void setTypingNotificationName(const QString& displayName);
     void scrollToLine(ChatLine::Ptr line);
     void selectAll();
     void fontChanged(const QFont& font);
-    void removeFirsts(const int num);
-    void removeLasts(const int num);
-    void setScroll(const bool scroll);
-    int getNumRemove() const;
 
     QString getSelectedText() const;
 
@@ -68,22 +62,40 @@ public:
     ChatLineContent* getContentFromGlobalPos(QPoint pos) const;
     const uint repNameAfter = 5 * 60;
 
+    void setColorizedNames(bool enable) { colorizeNames = enable; };
+    void jumpToDate(QDate date);
+    void jumpToIdx(ChatLogIdx idx);
+
 signals:
     void selectionChanged();
-    void workerTimeoutFinished();
     void firstVisibleLineChanged(const ChatLine::Ptr& prevLine, const ChatLine::Ptr& firstLine);
-    void loadHistoryLower();
-    void loadHistoryUpper();
 
+    void messageNotFoundShow(SearchDirection direction);
+    void renderFinished();
 public slots:
     void forceRelayout();
     void reloadTheme();
+
+    void startSearch(const QString& phrase, const ParameterSearch& parameter);
+    void onSearchUp(const QString& phrase, const ParameterSearch& parameter);
+    void onSearchDown(const QString& phrase, const ParameterSearch& parameter);
+    void handleSearchResult(SearchResult result, SearchDirection direction);
+    void removeSearchPhrase();
 
 private slots:
     void onSelectionTimerTimeout();
     void onWorkerTimeout();
     void onMultiClickTimeout();
 
+    void onMessageUpdated(ChatLogIdx idx);
+    void renderMessage(ChatLogIdx idx);
+    void renderMessages(ChatLogIdx begin, ChatLogIdx end);
+
+    void setRenderedWindowStart(ChatLogIdx start);
+    void setRenderedWindowEnd(ChatLogIdx end);
+
+    void onRenderFinished();
+    void onScrollValueChanged(int value);
 protected:
     QRectF calculateSceneRect() const;
     QRect getVisibleRect() const;
@@ -95,11 +107,10 @@ protected:
 
     qreal useableWidth() const;
 
-    void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
-    void checkVisibility(bool causedWheelEvent = false);
+    void checkVisibility();
     void scrollToBottom();
-    void startResizeWorker(bool stick, ChatLine::Ptr anchorLine = nullptr);
+    void startResizeWorker();
 
     void mouseDoubleClickEvent(QMouseEvent* ev) final;
     void mousePressEvent(QMouseEvent* ev) final;
@@ -108,6 +119,7 @@ protected:
     void scrollContentsBy(int dx, int dy) final;
     void resizeEvent(QResizeEvent* ev) final;
     void showEvent(QShowEvent*) final;
+    void hideEvent(QHideEvent* event) final;
     void focusInEvent(QFocusEvent* ev) final;
     void focusOutEvent(QFocusEvent* ev) final;
     void wheelEvent(QWheelEvent *event) final;
@@ -117,6 +129,8 @@ protected:
     void updateBusyNotification();
 
     ChatLine::Ptr findLineByPosY(qreal yPos) const;
+
+    void removeLines(ChatLogIdx being, ChatLogIdx end);
 
 private:
     void retranslateUi();
@@ -130,6 +144,11 @@ private:
     void moveMultiSelectionDown(int offset);
     void setTypingNotification();
 
+    void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames, ChatLine::Ptr &chatMessage);
+    void renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp, ChatLine::Ptr &chatMessage);
+    bool needsToHideName(ChatLogIdx idx, bool prevIdxRendered) const;
+    bool shouldRenderMessage(ChatLogIdx idx) const;
+    void disableSearchText();
 private:
     enum class SelectionMode
     {
@@ -149,16 +168,22 @@ private:
     QAction* selectAllAction = nullptr;
     QGraphicsScene* scene = nullptr;
     QGraphicsScene* busyScene = nullptr;
-    QVector<ChatLine::Ptr> lines;
     QList<ChatLine::Ptr> visibleLines;
     ChatLine::Ptr typingNotification;
     ChatLine::Ptr busyNotification;
 
     // selection
-    int selClickedRow = -1; // These 4 are only valid while selectionMode != None
+
+    // For the time being we store these selection indexes as ChatLine::Ptrs. In
+    // order to do multi-selection we do an O(n) search in the chatline storage
+    // to determine the index. This is inefficient but correct with the moving
+    // window of storage. If this proves to cause performance issues we can move
+    // this responsibility into ChatlineStorage and have it coordinate the
+    // shifting of indexes
+    ChatLine::Ptr selClickedRow; // These 4 are only valid while selectionMode != None
     int selClickedCol = -1;
-    int selFirstRow = -1;
-    int selLastRow = -1;
+    ChatLine::Ptr selFirstRow;
+    ChatLine::Ptr selLastRow;
     QColor selectionRectColor = Style::getColor(Style::SelectText);
     SelectionMode selectionMode = SelectionMode::None;
     QPointF clickPos;
@@ -170,10 +195,9 @@ private:
     int clickCount = 0;
     QPoint lastClickPos;
     Qt::MouseButton lastClickButton;
-    bool isScroll{true};
 
     // worker vars
-    int workerLastIndex = 0;
+    size_t workerLastIndex = 0;
     bool workerStb = false;
     ChatLine::Ptr workerAnchorLine;
 
@@ -181,6 +205,13 @@ private:
     QMargins margins = QMargins(10, 10, 10, 10);
     qreal lineSpacing = 5.0f;
 
-    int numRemove{0};
-    const int maxMessages{300};
+    IChatLog& chatLog;
+    bool colorizeNames = false;
+    SearchPos searchPos;
+    const Core& core;
+    bool scrollMonitoringEnabled = true;
+
+    std::unique_ptr<ChatLineStorage> chatLineStorage;
+
+    std::vector<std::function<void(void)>> renderCompletionFns;
 };

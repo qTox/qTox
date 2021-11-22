@@ -19,7 +19,7 @@
 
 #include "chatform.h"
 #include "src/chatlog/chatlinecontentproxy.h"
-#include "src/chatlog/chatlog.h"
+#include "src/chatlog/chatwidget.h"
 #include "src/chatlog/chatmessage.h"
 #include "src/chatlog/content/filetransferwidget.h"
 #include "src/chatlog/content/text.h"
@@ -630,14 +630,6 @@ void ChatForm::sendImageFromPreview()
         QMessageBox::warning(this,
                              tr("Failed to open temporary file", "Temporary file for screenshot"),
                              tr("qTox wasn't able to save the screenshot"));
-    }
-}
-
-void ChatForm::insertChatMessage(ChatMessage::Ptr msg)
-{
-    GenericChatForm::insertChatMessage(msg);
-    if (netcam && bodySplitter->sizes()[1] == 0) {
-        netcam->setShowMessages(true, true);
     }
 }
 

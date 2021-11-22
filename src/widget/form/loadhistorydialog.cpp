@@ -38,15 +38,11 @@ LoadHistoryDialog::LoadHistoryDialog(const IChatLog* chatLog, QWidget* parent)
             &LoadHistoryDialog::highlightDates);
 }
 
-LoadHistoryDialog::LoadHistoryDialog(Mode mode, QWidget* parent)
+LoadHistoryDialog::LoadHistoryDialog(QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::LoadHistoryDialog)
 {
     ui->setupUi(this);
-
-    if (mode == Mode::search) {
-        enableSearchMode();
-    }
 }
 
 LoadHistoryDialog::~LoadHistoryDialog()
@@ -70,21 +66,14 @@ QDateTime LoadHistoryDialog::getFromDate()
     return res;
 }
 
-LoadHistoryDialog::LoadType LoadHistoryDialog::getLoadType()
+void LoadHistoryDialog::setTitle(const QString& title)
 {
-    if (ui->loadTypeComboBox->currentIndex() == 0) {
-        return LoadType::from;
-    }
-
-    return LoadType::to;
+    setWindowTitle(title);
 }
 
-void LoadHistoryDialog::enableSearchMode()
+void LoadHistoryDialog::setInfoLabel(const QString& info)
 {
-    setWindowTitle(tr("Select date dialog"));
-    ui->fromLabel->setText(tr("Select a date"));
-    ui->loadTypeComboBox->setVisible(false);
-    ui->infoLabel->setVisible(false);
+    ui->fromLabel->setText(info);
 }
 
 void LoadHistoryDialog::highlightDates(int year, int month)

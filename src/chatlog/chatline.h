@@ -24,7 +24,7 @@
 #include <QVector>
 #include <memory>
 
-class ChatLog;
+class ChatWidget;
 class ChatLineContent;
 class QGraphicsScene;
 class QStyleOptionGraphicsItem;
@@ -84,7 +84,6 @@ public:
     void reloadTheme();
 
     int getColumnCount();
-    int getRow() const;
 
     ChatLineContent* getContent(int col) const;
     ChatLineContent* getContent(QPointF scenePos) const;
@@ -94,16 +93,14 @@ public:
     // comparators
     static bool lessThanBSRectTop(const ChatLine::Ptr& lhs, const qreal& rhs);
     static bool lessThanBSRectBottom(const ChatLine::Ptr& lhs, const qreal& rhs);
-    static bool lessThanRowIndex(const ChatLine::Ptr& lhs, const ChatLine::Ptr& rhs);
 
 protected:
-    friend class ChatLog;
+    friend class ChatWidget;
 
     QPointF mapToContent(ChatLineContent* c, QPointF pos);
 
     void addColumn(ChatLineContent* item, ColumnFormat fmt);
     void updateBBox();
-    void setRow(int idx);
     void visibilityChanged(bool visible);
 
 private:

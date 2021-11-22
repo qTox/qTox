@@ -47,13 +47,13 @@ enum class SearchDirection {
 struct ParameterSearch {
     FilterSearch filter{FilterSearch::None};
     PeriodSearch period{PeriodSearch::None};
-    QDateTime time;
+    QDate date;
     bool isUpdate{false};
 
     bool operator ==(const ParameterSearch& other) {
         return filter == other.filter &&
             period == other.period &&
-            time == other.time;
+            date == other.date;
     }
 
     bool operator !=(const ParameterSearch& other) {
