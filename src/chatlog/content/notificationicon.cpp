@@ -30,13 +30,12 @@ NotificationIcon::NotificationIcon(QSize Size)
 {
     pmap = PixmapCache::getInstance().get(Style::getImagePath("chatArea/typing.svg"), size);
 
-    updateTimer = new QTimer(this);
-    updateTimer->setInterval(1000 / 30);
-    updateTimer->setSingleShot(false);
+    // Timer for the animation, if the Widget is not redrawn, no paint events will
+    // arrive and the timer will not be restarted, so this stops automatically
+    updateTimer.setInterval(1000 / framerate);
+    updateTimer.setSingleShot(true);
 
-    updateTimer->start();
-
-    connect(updateTimer, &QTimer::timeout, this, &NotificationIcon::updateGradient);
+    connect(&updateTimer, &QTimer::timeout, this, &NotificationIcon::updateGradient);
 }
 
 QRectF NotificationIcon::boundingRect() const
@@ -54,6 +53,10 @@ void NotificationIcon::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
     painter->fillRect(QRect(0, 0, size.width(), size.height()), grad);
     painter->drawPixmap(0, 0, size.width(), size.height(), pmap);
 
+    if (!updateTimer.isActive()) {
+        updateTimer.start();
+    }
+
     Q_UNUSED(option)
     Q_UNUSED(widget)
 }
@@ -70,10 +73,12 @@ qreal NotificationIcon::getAscent() const
 
 void NotificationIcon::updateGradient()
 {
+    // Update for next frame
     alpha += 0.01;
 
-    if (alpha + dotWidth >= 1.0)
+    if (alpha + dotWidth >= 1.0) {
         alpha = 0.0;
+    }
 
     grad = QLinearGradient(QPointF(-0.5 * size.width(), 0), QPointF(3.0 / 2.0 * size.width(), 0));
     grad.setColorAt(0, Qt::lightGray);
@@ -82,6 +87,7 @@ void NotificationIcon::updateGradient()
     grad.setColorAt(qMin(1.0, alpha + dotWidth), Qt::lightGray);
     grad.setColorAt(1, Qt::lightGray);
 
-    if (scene() && isVisible())
+    if (scene() && isVisible()) {
         scene()->invalidate(sceneBoundingRect());
+    }
 }

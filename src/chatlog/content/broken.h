@@ -33,7 +33,6 @@ public:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
                        QWidget* widget) override;
     void setWidth(qreal width) override;
-    void visibilityChanged(bool visible) override;
     qreal getAscent() const override;
 
 private:

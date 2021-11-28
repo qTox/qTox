@@ -50,11 +50,6 @@ void Broken::setWidth(qreal width)
     Q_UNUSED(width)
 }
 
-void Broken::visibilityChanged(bool visible)
-{
-    Q_UNUSED(visible)
-}
-
 qreal Broken::getAscent() const
 {
     return 0.0;

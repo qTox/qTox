@@ -26,14 +26,18 @@
 #include <QTime>
 #include <QVariantAnimation>
 
+#include <math.h>
+
 Spinner::Spinner(const QString& img, QSize Size, qreal speed)
     : size(Size)
     , rotSpeed(speed)
 {
     pmap = PixmapCache::getInstance().get(img, size);
 
-    timer.setInterval(1000 / 30); // 30Hz
-    timer.setSingleShot(false);
+    // Timer for the animation, if the Widget is not redrawn, no paint events will
+    // arrive and the timer will not be restarted, so this stops automatically
+    timer.setInterval(1000 / framerate);
+    timer.setSingleShot(true);
 
     blendAnimation = new QVariantAnimation(this);
     blendAnimation->setStartValue(0.0);
@@ -56,13 +60,16 @@ void Spinner::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, Q
 {
     painter->setClipRect(boundingRect());
 
-    QTransform trans = QTransform()
-                           .rotate(QTime::currentTime().msecsSinceStartOfDay() / 1000.0 * rotSpeed)
+    QTransform trans = QTransform().rotate(curRot)
                            .translate(-size.width() / 2.0, -size.height() / 2.0);
     painter->setOpacity(alpha);
     painter->setTransform(trans, true);
     painter->setRenderHint(QPainter::SmoothPixmapTransform);
     painter->drawPixmap(0, 0, pmap);
+
+    if (!timer.isActive()) {
+        timer.start(); // update bounding rectangle for next frame
+    }
 
     Q_UNUSED(option)
     Q_UNUSED(widget)
@@ -73,14 +80,6 @@ void Spinner::setWidth(qreal width)
     Q_UNUSED(width)
 }
 
-void Spinner::visibilityChanged(bool visible)
-{
-    if (visible)
-        timer.start();
-    else
-        timer.stop();
-}
-
 qreal Spinner::getAscent() const
 {
     return 0.0;
@@ -88,6 +87,12 @@ qreal Spinner::getAscent() const
 
 void Spinner::timeout()
 {
-    if (scene())
+    // Use global time, so the animations are synced
+    float angle = QTime::currentTime().msecsSinceStartOfDay() / 1000.0f * rotSpeed;
+    // limit to the range [0.0 - 360.0]
+    curRot = remainderf(angle, 360.0f);
+
+    if (scene()) {
         scene()->invalidate(sceneBoundingRect());
+    }
 }

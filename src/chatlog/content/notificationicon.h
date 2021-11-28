@@ -23,8 +23,7 @@
 
 #include <QLinearGradient>
 #include <QPixmap>
-
-class QTimer;
+#include <QTimer>
 
 class NotificationIcon : public ChatLineContent
 {
@@ -42,10 +41,12 @@ private slots:
     void updateGradient();
 
 private:
+    static constexpr int framerate = 30; // 30Hz
+
     QSize size;
     QPixmap pmap;
     QLinearGradient grad;
-    QTimer* updateTimer = nullptr;
+    QTimer updateTimer;
 
     qreal dotWidth = 0.2;
     qreal alpha = 0.0;
