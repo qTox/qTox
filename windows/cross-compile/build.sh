@@ -638,15 +638,15 @@ fi
 # Exif
 
 EXIF_PREFIX_DIR="$DEP_DIR/libexif"
-EXIF_VERSION="0.6.23"
-EXIF_HASH="a740a99920eb81ae0aa802bb46e683ce6e0cde061c210f5d5bde5b8572380431"
-EXIF_FILENAME="libexif-$EXIF_VERSION.tar.xz"
+EXIF_VERSION="0.6.24"
+EXIF_HASH="d47564c433b733d83b6704c70477e0a4067811d184ec565258ac563d8223f6ae"
+EXIF_FILENAME="libexif-$EXIF_VERSION.tar.bz2"
 if [ ! -f "$EXIF_PREFIX_DIR/done" ]
 then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  curl $CURL_OPTIONS -O "https://github.com/libexif/libexif/releases/download/v${EXIF_VERSION}/libexif-${EXIF_VERSION}.tar.xz"
+  curl $CURL_OPTIONS -O "https://github.com/libexif/libexif/releases/download/v${EXIF_VERSION}/$EXIF_FILENAME"
   check_sha256 "$EXIF_HASH" "$EXIF_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $EXIF_FILENAME
   rm $EXIF_FILENAME
