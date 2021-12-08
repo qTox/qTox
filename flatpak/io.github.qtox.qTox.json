@@ -112,8 +112,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/toktok/c-toxcore",
-                    "tag": "v0.2.12",
-                    "commit": "9be4dbb4335bf7d893c8d00566d3276ab6dedd14"
+                    "tag": "v0.2.13",
+                    "commit": "4348b96a5b482134a9cd55cb0ef9616798b4eb3c"
                 }
             ]
         },

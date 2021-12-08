@@ -182,7 +182,7 @@ install() {
         git pull
     else
         fcho "Cloning Toxcore git ... "
-        git clone --branch v0.2.12 --depth=1 https://github.com/toktok/c-toxcore "$TOXCORE_DIR"
+        git clone --branch v0.2.13 --depth=1 https://github.com/toktok/c-toxcore "$TOXCORE_DIR"
     fi
     # toxext
     if [[ -e $TOX_EXT_DIR/.git/index ]]
