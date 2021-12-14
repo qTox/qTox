@@ -279,10 +279,10 @@ fi
 QT_PREFIX_DIR="$DEP_DIR/libqt5"
 QT_MAJOR=5
 QT_MINOR=12
-QT_PATCH=11
+QT_PATCH=12
 QT_VERSION=$QT_MAJOR.$QT_MINOR.$QT_PATCH
-# hash from https://download.qt.io/archive/qt/5.12/5.12.11/single/qt-everywhere-src-5.12.11.tar.xz.mirrorlist
-QT_HASH="0c4cdef158c61827d70d6111423166e2c62b539eaf303f36ad1d0aa8af900b95"
+# hash from https://download.qt.io/archive/qt/5.12/5.12.12/single/qt-everywhere-src-5.12.12.tar.xz.mirrorlist
+QT_HASH="1979a3233f689cb8b3e2783917f8f98f6a2e1821a70815fb737f020cd4b6ab06"
 QT_FILENAME="qt-everywhere-src-$QT_VERSION.tar.xz"
 if [ ! -f "$QT_PREFIX_DIR/done" ]
 then
@@ -396,8 +396,8 @@ set -u
 # SQLCipher
 
 SQLCIPHER_PREFIX_DIR="$DEP_DIR/libsqlcipher"
-SQLCIPHER_VERSION=v4.4.3
-SQLCIPHER_HASH="b8df69b998c042ce7f8a99f07cf11f45dfebe51110ef92de95f1728358853133"
+SQLCIPHER_VERSION=v4.5.0
+SQLCIPHER_HASH="20c46a855c47d5a0a159fdcaa8491ec7bdbaa706a734ee52bc76188b929afb14"
 SQLCIPHER_FILENAME="$SQLCIPHER_VERSION.tar.gz"
 if [ ! -f "$SQLCIPHER_PREFIX_DIR/done" ]
 then
@@ -438,8 +438,8 @@ fi
 # FFmpeg
 
 FFMPEG_PREFIX_DIR="$DEP_DIR/libffmpeg"
-FFMPEG_VERSION=4.3.2
-FFMPEG_HASH="46e4e64f1dd0233cbc0934b9f1c0da676008cad34725113fb7f802cfa84ccddb"
+FFMPEG_VERSION=4.4.1
+FFMPEG_HASH="eadbad9e9ab30b25f5520fbfde99fae4a92a1ae3c0257a8d68569a4651e30e02"
 FFMPEG_FILENAME="ffmpeg-$FFMPEG_VERSION.tar.xz"
 if [ ! -f "$FFMPEG_PREFIX_DIR/done" ]
 then
@@ -638,15 +638,15 @@ fi
 # Exif
 
 EXIF_PREFIX_DIR="$DEP_DIR/libexif"
-EXIF_VERSION="0.6.23"
-EXIF_HASH="a740a99920eb81ae0aa802bb46e683ce6e0cde061c210f5d5bde5b8572380431"
-EXIF_FILENAME="libexif-$EXIF_VERSION.tar.xz"
+EXIF_VERSION="0.6.24"
+EXIF_HASH="d47564c433b733d83b6704c70477e0a4067811d184ec565258ac563d8223f6ae"
+EXIF_FILENAME="libexif-$EXIF_VERSION.tar.bz2"
 if [ ! -f "$EXIF_PREFIX_DIR/done" ]
 then
   rm -rf "$EXIF_PREFIX_DIR"
   mkdir -p "$EXIF_PREFIX_DIR"
 
-  curl $CURL_OPTIONS -O "https://github.com/libexif/libexif/releases/download/v${EXIF_VERSION}/libexif-${EXIF_VERSION}.tar.xz"
+  curl $CURL_OPTIONS -O "https://github.com/libexif/libexif/releases/download/v${EXIF_VERSION}/$EXIF_FILENAME"
   check_sha256 "$EXIF_HASH" "$EXIF_FILENAME"
   bsdtar --no-same-owner --no-same-permissions -xf $EXIF_FILENAME
   rm $EXIF_FILENAME
@@ -797,8 +797,8 @@ fi
 # VPX
 
 VPX_PREFIX_DIR="$DEP_DIR/libvpx"
-VPX_VERSION=v1.10.0
-VPX_HASH="85803ccbdbdd7a3b03d930187cb055f1353596969c1f92ebec2db839fa4f834a"
+VPX_VERSION=v1.11.0
+VPX_HASH="965e51c91ad9851e2337aebcc0f517440c637c506f3a03948062e3d5ea129a83"
 VPX_FILENAME="libvpx-$VPX_VERSION.tar.gz"
 if [ ! -f "$VPX_PREFIX_DIR/done" ]
 then

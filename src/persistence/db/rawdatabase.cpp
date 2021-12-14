@@ -271,7 +271,8 @@ bool RawDatabase::setCipherParameters(SqlCipherParams params, const QString& dat
     const QString default4_xParams{"PRAGMA database.cipher_page_size = 4096;"
                    "PRAGMA database.kdf_iter = 256000;"
                    "PRAGMA database.cipher_hmac_algorithm = HMAC_SHA512;"
-                   "PRAGMA database.cipher_kdf_algorithm = PBKDF2_HMAC_SHA512;"};
+                   "PRAGMA database.cipher_kdf_algorithm = PBKDF2_HMAC_SHA512;"
+                   "PRAGMA database.cipher_memory_security = ON;"}; // got disabled by default in 4.5.0, so manually enable it
 
     QString defaultParams;
     switch(params) {
