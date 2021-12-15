@@ -1,3 +1,9 @@
+<a name="v1.17.4"></a>
+## v1.17.14 (2021-12-14)
+
+This release only updates dependency versions including toktok/c-toxcore to v0.2.13 to address CVE-2021-44847. No code changes.
+
+
 <a name="v1.17.3"></a>
 ## v1.17.3  (2020-11-22)
 
