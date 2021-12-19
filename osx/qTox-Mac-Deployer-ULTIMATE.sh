@@ -76,7 +76,8 @@ build_toxcore() {
     mkdir -p _build && cd _build
     fcho "Starting cmake ..."
     #Make sure the correct version of libsodium is used
-    cmake -DBOOTSTRAP_DAEMON=OFF -DLIBSODIUM_CFLAGS="-I${LS_DIR_VER}/include/" -DLIBSODIUM_LDFLAGS="L${LS_DIR_VER}/lib/" -DCMAKE_INSTALL_PREFIX="${LIB_INSTALL_PREFIX}" ..
+    cmake -DCMAKE_BUILD_TYPE=Release -DBOOTSTRAP_DAEMON=OFF -DLIBSODIUM_CFLAGS="-I${LS_DIR_VER}/include/" \
+        -DLIBSODIUM_LDFLAGS="L${LS_DIR_VER}/lib/" -DCMAKE_INSTALL_PREFIX="${LIB_INSTALL_PREFIX}" ..
     make clean &> /dev/null
     fcho "Compiling toxcore."
     make > /dev/null || exit 1
@@ -94,7 +95,8 @@ build_toxext() {
 
     mkdir _build && cd _build
     fcho "Starting cmake ..."
-    PKG_CONFIG_PATH="${LIB_INSTALL_PREFIX}"/lib/pkgconfig cmake -DCMAKE_INSTALL_PREFIX="${LIB_INSTALL_PREFIX}" ..
+    PKG_CONFIG_PATH="${LIB_INSTALL_PREFIX}"/lib/pkgconfig cmake -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="${LIB_INSTALL_PREFIX}" ..
     make clean &> /dev/null
     fcho "Compiling toxext."
     make > /dev/null || exit 1
@@ -112,7 +114,8 @@ build_tox_extension_messages() {
 
     mkdir _build && cd _build
     fcho "Starting cmake ..."
-    PKG_CONFIG_PATH="${LIB_INSTALL_PREFIX}"/lib/pkgconfig cmake -DCMAKE_INSTALL_PREFIX="${LIB_INSTALL_PREFIX}" ..
+    PKG_CONFIG_PATH="${LIB_INSTALL_PREFIX}"/lib/pkgconfig cmake -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="${LIB_INSTALL_PREFIX}" ..
     make clean &> /dev/null
     fcho "Compiling tox_extension_messages."
     make > /dev/null || exit 1
@@ -317,6 +320,7 @@ build() {
         STRICT_OPTIONS="OFF"
     fi
     cmake -H$QTOX_DIR -B. \
+        -DCMAKE_BUILD_TYPE=Release \
         -DUPDATE_CHECK=ON \
         -DSPELL_CHECK=OFF \
         -DSTRICT_OPTIONS="${STRICT_OPTIONS}" \
