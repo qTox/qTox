@@ -45,7 +45,7 @@
             "build-options": {
                 "no-debuginfo": true
             },
-            "cleanup": [ '*' ],
+            "cleanup": [ "*" ],
             "sources": [
                 {
                     "type": "archive",
