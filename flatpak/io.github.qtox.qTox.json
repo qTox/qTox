@@ -87,6 +87,7 @@
             "name": "c-toxcore",
             "buildsystem": "cmake-ninja",
             "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
                 "-DDHT_BOOTSTRAP=OFF",
                 "-DBOOTSTRAP_DAEMON=OFF",
                 "-DENABLE_STATIC=OFF"
@@ -101,6 +102,9 @@
         {
             "name": "toxext",
             "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release"
+            ],
             "sources": [
                 {
                     "type": "dir",
@@ -111,6 +115,9 @@
         {
             "name": "tox_extension_messages",
             "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release"
+            ],
             "sources": [
                 {
                     "type": "dir",
@@ -122,6 +129,7 @@
             "name": "qTox",
             "buildsystem": "cmake-ninja",
             "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
                 "-DSVGZ_ICON=OFF",
                 "-DSTRICT_OPTIONS=ON"
             ],
