@@ -69,8 +69,6 @@ signals:
     void fileTransferAccepted(ToxFile file);
     void fileTransferCancelled(ToxFile file);
     void fileTransferFinished(ToxFile file);
-    void fileUploadFinished(const QString& path);
-    void fileDownloadFinished(const QString& path);
     void fileTransferPaused(ToxFile file);
     void fileTransferInfo(ToxFile file);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);

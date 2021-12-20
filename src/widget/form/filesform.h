@@ -19,41 +19,121 @@
 
 #pragma once
 
+#include "src/core/toxfile.h"
+#include "src/core/corefile.h"
+
 #include <QLabel>
 #include <QListWidgetItem>
+#include <QHash>
 #include <QString>
 #include <QTabWidget>
 #include <QVBoxLayout>
+#include <QAbstractTableModel>
+#include <QStyledItemDelegate>
+#include <QTableView>
 
 class ContentLayout;
-class QListWidget;
+class QTableView;
+
+namespace FileTransferList
+{
+
+    enum class Column : int {
+        // NOTE: Order defines order in UI
+        fileName,
+        contact,
+        progress,
+        size,
+        speed,
+        status,
+        control,
+        invalid
+    };
+
+    Column toFileTransferListColumn(int in);
+    QString toQString(Column column);
+
+    enum class EditorAction : int {
+        pause,
+        cancel,
+        invalid,
+    };
+
+    EditorAction toEditorAction(int in);
+
+    class Model : public QAbstractTableModel
+    {
+        Q_OBJECT
+    public:
+        Model(QObject* parent = nullptr);
+        ~Model() = default;
+
+        void onFileUpdated(const ToxFile& file);
+
+        QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+        bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+
+    signals:
+        void togglePause(ToxFile file);
+        void cancel(ToxFile file);
+
+    private:
+        QHash<QByteArray /*file id*/, int /*row index*/> idToRow;
+        std::vector<ToxFile> files;
+    };
+
+    class Delegate : public QStyledItemDelegate
+    {
+    public:
+        Delegate(QWidget* parent = nullptr);
+        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+
+        bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
+    };
+
+    class View : public QTableView
+    {
+    public:
+        View(QAbstractItemModel* model, QWidget* parent = nullptr);
+        ~View();
+
+    };
+} // namespace FileTransferList
 
 class FilesForm : public QObject
 {
     Q_OBJECT
 
 public:
-    FilesForm();
+    FilesForm(CoreFile& coreFile);
     ~FilesForm();
 
     bool isShown() const;
     void show(ContentLayout* contentLayout);
 
 public slots:
-    void onFileDownloadComplete(const QString& path);
-    void onFileUploadComplete(const QString& path);
+    void onFileUpdated(const ToxFile& file);
 
 private slots:
-    void onFileActivated(QListWidgetItem* item);
+    void onSentFileActivated(const QModelIndex& item);
+    void onReceivedFileActivated(const QModelIndex& item);
 
 private:
+    struct FileInfo
+    {
+        QListWidgetItem* item = nullptr;
+        ToxFile file;
+    };
+
     void retranslateUi();
 
-private:
     QWidget* head;
-    QIcon doneIcon;
     QLabel headLabel;
     QVBoxLayout headLayout;
     QTabWidget main;
-    QListWidget *sent, *recvd;
+    QTableView *sent, *recvd;
+    FileTransferList::Model *sentModel, *recvdModel;
 };

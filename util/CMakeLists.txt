@@ -14,13 +14,15 @@
 #   You should have received a copy of the GNU General Public License
 #   along with qTox.  If not, see <http://www.gnu.org/licenses/>
 
-set(HEADER_LIST
+
+add_library(util_library STATIC
     "include/util/compatiblerecursivemutex.h"
     "include/util/interface.h"
-    "include/util/strongtype.h")
-
-add_library(util_library STATIC ${HEADER_LIST})
+    "include/util/strongtype.h"
+    "include/util/display.h"
+    "src/display.cpp")
 
 # We need this directory, and users of our library will need it too
 target_include_directories(util_library PUBLIC include/)
+target_link_libraries(util_library PRIVATE Qt5::Core)
 

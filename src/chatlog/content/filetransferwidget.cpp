@@ -26,6 +26,7 @@
 #include "src/widget/style.h"
 #include "src/widget/widget.h"
 #include "src/model/exiftransform.h"
+#include "util/display.h"
 
 #include <QBuffer>
 #include <QDebug>
@@ -65,7 +66,7 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, CoreFile& _coreFile, Tox
     ui->previewButton->hide();
     ui->filenameLabel->setText(file.fileName);
     ui->progressBar->setValue(0);
-    ui->fileSizeLabel->setText(getHumanReadableSize(file.filesize));
+    ui->fileSizeLabel->setText(getHumanReadableSize(file.progress.getFileSize()));
     ui->etaLabel->setText("");
 
     backgroundColorAnimation = new QVariantAnimation(this);
@@ -234,18 +235,6 @@ void FileTransferWidget::reloadTheme()
     updateBackgroundColor(lastStatus);
 }
 
-QString FileTransferWidget::getHumanReadableSize(qint64 size)
-{
-    static const char* suffix[] = {"B", "KiB", "MiB", "GiB", "TiB"};
-    int exp = 0;
-
-    if (size > 0) {
-        exp = std::min(static_cast<int>(log(size) / log(1024)), static_cast<int>(sizeof(suffix) / sizeof(suffix[0]) - 1));
-    }
-
-    return QString().setNum(size / pow(1024, exp), 'f', exp > 1 ? 2 : 0).append(suffix[exp]);
-}
-
 void FileTransferWidget::updateWidgetColor(ToxFile const& file)
 {
     if (lastStatus == file.status) {
@@ -321,19 +310,12 @@ void FileTransferWidget::updateFileProgress(ToxFile const& file)
 {
     switch (file.status) {
     case ToxFile::INITIALIZING:
-        break;
     case ToxFile::PAUSED:
-        fileProgress.resetSpeed();
         break;
     case ToxFile::TRANSMITTING: {
-        if (!fileProgress.needsUpdate()) {
-            break;
-        }
-
-        fileProgress.addSample(file);
-        auto speed = fileProgress.getSpeed();
-        auto progress = fileProgress.getProgress();
-        auto remainingTime = fileProgress.getTimeLeftSeconds();
+        auto speed = file.progress.getSpeed();
+        auto progress = file.progress.getProgress();
+        auto remainingTime = file.progress.getTimeLeftSeconds();
 
         ui->progressBar->setValue(static_cast<int>(progress * 100.0));
 
@@ -525,11 +507,12 @@ void FileTransferWidget::updateWidget(ToxFile const& file)
 
     fileInfo = file;
 
-    // If we repainted on every packet our gui would be *very* slow
-    bool bTransmitNeedsUpdate = fileProgress.needsUpdate();
+    bool shouldUpdateFileProgress = file.status != ToxFile::TRANSMITTING || lastTransmissionUpdate ==
+        QTime() || lastTransmissionUpdate.msecsTo(file.progress.lastSampleTime()) > 1000;
 
     updatePreview(file);
-    updateFileProgress(file);
+    if (shouldUpdateFileProgress)
+        updateFileProgress(file);
     updateWidgetText(file);
     updateWidgetColor(file);
     setupButtons(file);
@@ -537,14 +520,8 @@ void FileTransferWidget::updateWidget(ToxFile const& file)
 
     lastStatus = file.status;
 
-    // trigger repaint
-    switch (file.status) {
-    case ToxFile::TRANSMITTING:
-        if (!bTransmitNeedsUpdate) {
-            break;
-        }
-    // fallthrough
-    default:
+    if (shouldUpdateFileProgress) {
+        lastTransmissionUpdate = QTime::currentTime();
         update();
     }
 }
