@@ -69,23 +69,8 @@
             },
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://github.com/sqlcipher/sqlcipher",
-                    "tag": "v4.4.0",
-                    "commit": "4a81bea61e1da6fec222d713852830f1fd01aed2",
-                    "disable-fsckobjects" : true
-                }
-            ]
-        },
-        {
-            "name": "snorenotify",
-            "buildsystem": "cmake-ninja",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/KDE/snorenotify",
-                    "tag": "v0.7.0",
-                    "commit": "9124e016f4f7615af5e8fca962994f7ed85de3cc"
+                    "type": "dir",
+                    "path": "/src/sqlcipher"
                 }
             ]
         },
@@ -93,10 +78,8 @@
             "name": "libsodium",
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://github.com/jedisct1/libsodium",
-                    "tag": "1.0.18",
-                    "commit": "4f5e89fa84ce1d178a6765b8b46f2b6f91216677"
+                    "type": "dir",
+                    "path": "/src/libsodium"
                 }
             ]
         },
@@ -110,10 +93,8 @@
             ],
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://github.com/toktok/c-toxcore",
-                    "tag": "v0.2.13",
-                    "commit": "4348b96a5b482134a9cd55cb0ef9616798b4eb3c"
+                    "type": "dir",
+                    "path": "/src/toxcore"
                 }
             ]
         },
@@ -122,10 +103,8 @@
             "buildsystem": "cmake-ninja",
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://github.com/toxext/toxext",
-                    "tag": "v0.0.3",
-                    "commit": "e34f91bc92bc1799c133bd1602ef5748a4eb4459"
+                    "type": "dir",
+                    "path": "/src/toxext"
                 }
             ]
         },
@@ -134,10 +113,8 @@
             "buildsystem": "cmake-ninja",
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://github.com/toxext/tox_extension_messages",
-                    "tag": "v0.0.3",
-                    "commit": "3def0e36f63a3537b8fda87e12f870665d90dfcc"
+                    "type": "dir",
+                    "path": "/src/toxext_messages"
                 }
             ]
         },
@@ -151,7 +128,7 @@
             "sources": [
                 {
                     "type": "dir",
-                    "path": "/build/qtox/"
+                    "path": "/qtox/"
                 }
             ]
         }

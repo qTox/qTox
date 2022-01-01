@@ -1,0 +1,62 @@
+#    Copyright © 2021 by The qTox Project Contributors
+#
+#    This program is libre software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+FROM debian:buster
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+        apt-get -y --force-yes --no-install-recommends install \
+        curl \
+        ca-certificates \
+        elfutils \
+        # flatpak-validate-icon uses gdk-pixbuf which needs an svg loader
+        librsvg2-common \
+        flatpak \
+        flatpak-builder && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Pre-download kde flatpak environment to speed up flatpak builds
+RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && \
+    flatpak --system install flathub -y org.kde.Sdk/x86_64/5.15
+
+COPY download/common.sh /build/download/common.sh
+COPY download/download_sodium.sh /build/download/download_sodium.sh
+RUN mkdir -p /src/libsodium && \
+    cd /src/libsodium && \
+    /build/download/download_sodium.sh
+
+COPY download/download_sqlcipher.sh /build/download/download_sqlcipher.sh
+RUN mkdir -p /src/sqlcipher && \
+    cd /src/sqlcipher && \
+    /build/download/download_sqlcipher.sh
+
+COPY download/download_toxcore.sh /build/download/download_toxcore.sh
+RUN mkdir -p /src/toxcore && \
+    cd /src/toxcore && \
+    /build/download/download_toxcore.sh
+
+COPY download/download_toxext.sh /build/download/download_toxext.sh
+RUN mkdir -p /src/toxext && \
+    cd /src/toxext && \
+    /build/download/download_toxext.sh
+
+COPY download/download_toxext_messages.sh /build/download/download_toxext_messages.sh
+RUN mkdir -p /src/toxext_messages && \
+    cd /src/toxext_messages && \
+    /build/download/download_toxext_messages.sh
+
+WORKDIR /qtox

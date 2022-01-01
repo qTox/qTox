@@ -1,3 +1,4 @@
+brew "coreutils"
 brew "git"
 brew "wget"
 brew "libtool"
