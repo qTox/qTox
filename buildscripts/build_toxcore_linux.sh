@@ -17,11 +17,13 @@
 
 set -euo pipefail
 
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
 build_toxcore() {
     mkdir -p toxcore
     pushd toxcore >/dev/null || exit 1
 
-    "$(dirname "$0")"/download/download_toxcore.sh
+    "$SCRIPT_DIR"/download/download_toxcore.sh
 
     cmake . \
         -DBOOTSTRAP_DAEMON=OFF \
@@ -38,7 +40,7 @@ build_toxext() {
     mkdir -p toxext
     pushd toxext >/dev/null || exit 1
 
-    "$(dirname "$0")"/download/download_toxext.sh
+    "$SCRIPT_DIR"/download/download_toxext.sh
 
     cmake . -DCMAKE_BUILD_TYPE=Release
     cmake --build . -- -j$(nproc)
@@ -51,7 +53,7 @@ build_toxext_messages() {
     mkdir -p toxext_messages
     pushd toxext_messages > /dev/null || exit 1
 
-    "$(dirname "$0")"/download/download_toxext_messages.sh
+    "$SCRIPT_DIR"/download/download_toxext_messages.sh
 
     cmake .  -DCMAKE_BUILD_TYPE=Release
     cmake --build . -- -j$(nproc)
