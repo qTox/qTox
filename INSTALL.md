@@ -378,19 +378,6 @@ aren't listed here, and let us know what is missing `;)`
 
 ---
 
-### Building packages
-
-Alternately, qTox now has the experimental and probably-dodgy ability to package
-itself (in `.deb` form natively, and `.rpm` form with
-[alien](http://joeyh.name/code/alien/)).
-
-After installing the required dependencies, run `bootstrap.sh` and then run the
-`buildPackages.sh` script, found in the tools folder. It will automatically get
-the packages necessary for building `.deb`s, so be prepared to type your
-password for sudo.
-
----
-
 ### Security hardening with AppArmor
 
 See [AppArmor] to enable confinement for increased security.
