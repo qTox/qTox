@@ -213,8 +213,7 @@ To get translations into qTox:
 - Update version number for windows/osx packages using the
   [`./tools/update-versions.sh`] script, e.g. `./tools/update-versions.sh
   1.11.0`
-- Update toxcore version number to the latest tag using
-  [`./tools/update-toxcore-version.sh]
+- Update toxcore version number to the latest tag in [`./buildscripts/download/download_toxcore.sh]
 - Update the bootstrap nodelist at `./res/nodes.json` from https://nodes.tox.chat/json.
   This can be done by running [`./tools/update-nodes.sh`]
 - Generate changelog with `clog`.
