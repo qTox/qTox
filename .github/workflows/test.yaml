@@ -273,20 +273,19 @@ jobs:
   build-osx:
     name: macOS
     runs-on: macos-10.15
-    env:
-      TRAVIS: true
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v2
       - name: homebrew
         run: brew upgrade && brew bundle --file ./osx/Brewfile
-      - name: Run
+      - name: Install toxcore and toxext
+        run: buildscripts/build_toxcore_linux.sh
+      - name: Build qTox
         run: ./.travis/build-osx.sh
       - name: Upload dmg
         uses: actions/upload-artifact@v2
         with:
           name: qTox-${{ github.sha }}.dmg
-          path: qTox-Mac_Build/qTox.dmg
+          path: qTox.dmg
   build-docs:
     name: Docs
     runs-on: ubuntu-18.04

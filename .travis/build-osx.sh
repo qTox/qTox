@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#    Copyright © 2016-2019 by The qTox Project Contributors
+#    Copyright © 2016-2021 by The qTox Project Contributors
 #
 #    This program is libre software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,19 +20,20 @@ set -eu -o pipefail
 
 readonly BIN_NAME="qTox.dmg"
 
-# Build OSX
-build() {
-    bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i
-    bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -b
-    bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -d
-    bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -dmg
+build_qtox() {
+    cmake -DUPDATE_CHECK=ON \
+        -DSPELL_CHECK=OFF \
+        -DSTRICT_OPTIONS=ON \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_PREFIX_PATH="$(brew --prefix qt5)" .
+    make -j$(sysctl -n hw.ncpu)
+    make install
 }
 
-# check if binary was built
 check() {
     if [[ ! -s "$BIN_NAME" ]]
     then
-        echo "There's no $BIN_NAME !"
+        echo "There's no $BIN_NAME!"
         exit 1
     fi
 }
@@ -42,7 +43,7 @@ make_hash() {
 }
 
 main() {
-    build
+    build_qtox
     check
     make_hash
 }

@@ -435,54 +435,10 @@ make install clean
 
 ## OS X
 
-Supported OS X versions: >=10.8. (NOTE: only 10.13 is tested during CI)
+Supported OS X versions: >=10.13. (NOTE: only 10.13 is tested during CI)
 
 Compiling qTox on OS X for development requires 2 tools:
 [Xcode](https://developer.apple.com/xcode/) and [homebrew](https://brew.sh).
-
-### Automated Script
-
-You can now set up your OS X system to compile qTox automatically thanks to the
-script in: `./osx/qTox-Mac-Deployer-ULTIMATE.sh`
-
-This script can be run independently of the qTox repo and is all that's needed
-to build from scratch on OS X.
-
-To use this script you must launch terminal which can be found:
-`Applications > Utilities > Terminal.app`
-
-If you wish to lean more you can run `./qTox-Mac-Deployer-ULTIMATE.sh -h`
-
-Note that the script will revert any non-committed changes to qTox repository
-during the `update` phase.
-
-#### First Run / Install
-
-If you are running the script for the first time you will want to make sure your
-system is ready. To do this simply run `./qTox-Mac-Deployer-ULTIMATE.sh -i` to
-run you through the automated install set up.
-
-After running the installation setup you are now ready to build qTox from
-source, to do this simply run: `./qTox-Mac-Deployer-ULTIMATE.sh -b`
-
-If there aren't any errors then you'll find a locally working qTox application
-in your home folder under `~/qTox-Mac_Build`
-
-#### Updating
-
-If you want to update your application for testing purposes or you want to run a
-nightly build setup then run: `./qTox-Mac-Deployer-ULTIMATE.sh -u` and follow
-the prompts. (NOTE: If you know you updated the repos before running this hit Y)
-followed by `./qTox-Mac-Deployer-ULTIMATE.sh -b` to build the application once
-more. (NOTE: This will delete your previous build.)
-
-#### Deploying
-
-OS X requires an extra step to make the `qTox.app` file shareable on a system
-that doesn't have the required libraries installed already.
-
-If you want to share the build you've made with your other friends who use OS X
-then simply run: `./qTox-Mac-Deployer-ULTIMATE.sh -d`
 
 ### Manual Compiling
 #### Required Libraries
@@ -493,74 +449,41 @@ Install homebrew if you don't have it:
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-First, let's install the dependencies available via `brew`.
-
-```bash
-brew install git ffmpeg qrencode libtool automake autoconf check qt5 libvpx \
-opus sqlcipher libsodium
-```
-
-Next, install
-[toxcore](https://github.com/toktok/c-toxcore/blob/master/INSTALL.md#osx)
-
-Then, clone qTox:
+First, clone qTox.
 
 ```bash
 git clone https://github.com/qTox/qTox
+cd qTox
 ```
 
-Finally, copy all required files. Whenever you update your brew packages, you
-may skip all of the above steps and simply run the following commands:
+Then install required dependencies available via `brew`.
 
 ```bash
-cd ./git/qTox
-sudo bash bootstrap-osx.sh
+brew bundle --file osx/Brewfile
 ```
+
+Then, install [toxcore](https://github.com/toktok/c-toxcore/blob/master/INSTALL.md), [ToxExt](https://github.com/toxext/toxext), and [tox_extension_messages](https://github.com/toxext/tox_extension_messages.
+
+```bash
+buildscripts/build_toxcore_linux.sh
+```
+
+Finally, build qTox.
 
 #### Compiling
 
-You can build qTox with Qt Creator
-[seperate download](http://www.qt.io/download-open-source/#section-6) or
-manually with cmake
-
-With that; in your terminal you can compile qTox in the git dir:
-
 ```bash
-cmake .
-make
-```
-
-Or a cleaner method would be to:
-
-```bash
-cd ./git/dir/qTox
-mkdir ./build
-cd build
+mkdir -p _build
+cd _build
 cmake ..
-```
-
-#### Deploying
-
-If you compiled qTox properly you can now deploy the `qTox.app` that's created
-where you built qTox so you can distribute the package.
-
-Using your qt5 homebrew installation from the build directory:
-
-```bash
-/usr/local/Cellar/qt5/5.5.1_2/bin/macdeployqt ./qTox.app
+make -j$(sysctl -n hw.ncpu)
+make install
 ```
 
 #### Running qTox
 
-You've got 2 choices, either click on the qTox app that suddenly exists, or do
-the following:
-
-```bash
-qtox.app/Contents/MacOS/qtox
-```
-
-Enjoy the snazzy CLI output as your friends and family congratulate you on
-becoming a hacker
+`qTox.dmg` should be in your build directory. You can install qTox from the dmg
+to your Applications folder, or run qTox directly from the dmg.
 
 <a name="windows" />
 
