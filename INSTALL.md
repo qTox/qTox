@@ -25,7 +25,6 @@
     - [Ubuntu](#ubuntu-other-deps)
   - [Compile dependencies](#compile-dependencies)
     - [docker](#docker)
-    - [bootstrap.sh](#bootstrap.sh)
     - [Compile toxcore](#compile-toxcore)
     - [Compile extensions](#compile-extensions)
   - [Compile qTox](#compile-qtox)
@@ -286,21 +285,6 @@ NOTE: qtox will not run in the docker container unless your x11 session allows c
 Please see buildscripts/docker/Dockerfile... for your distribution for an up to date list of commands to set up your build environment
 
 ### Compile dependencies
-
-Toxcore and ToxExt extensions can either be built with bootstrap.sh or manually.
-
-
-<a name="bootstrap.sh" />
-
-#### bootstrap.sh
-If you want to develop on your hostmachine, `bootstrap.sh` will build toxcore
-and extensions for you, allowing you to skip to [compiling qTox](#compile-qtox)
-after running it. To use it, run
-```bash
-export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib64/pkgconfig"
-export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig"
-./bootstrap.sh
-```
 
 <a name="compile-toxcore" />
 
