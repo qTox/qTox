@@ -460,82 +460,12 @@ to your Applications folder, or run qTox directly from the dmg.
 
 ## Windows
 
+Only cross-compiling from Linux is supported and tested in CI, but building
+under MSYS should also work.
+
 ### Cross-compile from Linux
 
 See [`windows/cross-compile`](windows/cross-compile).
-
-### Native
-
-#### Qt
-
-Download the Qt online installer for Windows from
-[qt.io](https://www.qt.io/download-open-source/). While installation you have
-to assemble your Qt toolchain. Take the most recent version of Qt compiled with
-MinGW. Although the installer provides its own bundled MinGW compiler toolchain
-its recommend installing it separately because Qt is missing MSYS which is
-needed to compile and install OpenAL. Thus you can - if needed - deselect the
-tab `Tools`. The following steps assume that Qt is installed at `C:\Qt`. If you
-decided to choose another location, replace corresponding parts.
-
-#### MinGW
-
-Download the MinGW installer for Windows from
-[sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/). Make
-sure to install MSYS (a set of Unix tools for Windows). The following steps
-assume that MinGW is installed at `C:\MinGW`. If you decided to choose another
-location, replace corresponding parts. Select `mingw-developer-toolkit`,
-`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32`
-packages using MinGW Installation Manager (`mingw-get.exe`). Check that the
-version of MinGW, corresponds to the version of the QT component!
-
-#### Wget
-
-Download the Wget installer for Windows from
-http://gnuwin32.sourceforge.net/packages/wget.htm. Install them. The following
-steps assume that Wget is installed at `C:\Program Files (x86)\GnuWin32\`. If you
-decided to choose another location, replace corresponding parts.
-
-#### UnZip
-
-Download the UnZip installer for Windows from
-http://gnuwin32.sourceforge.net/packages/unzip.htm. Install it. The following
-steps assume that UnZip is installed at `C:\Program Files (x86)\GnuWin32\`. If you
-decided to choose another location, replace corresponding parts.
-
-#### Setting up Path
-
-Add MinGW/MSYS/CMake binaries to the system path to make them globally
-accessible. Open `Control Panel` -> `System and Security` -> `System` ->
-`Advanced system settings` -> `Environment Variables...` (or run `sysdm.cpl`
-select tab `Advanced system settings` -> button `Environment Variables`). In the
-second box search for the `PATH` variable and press `Edit...`. The input box
-`Variable value:` should already contain some directories. Each directory is
-separated with a semicolon. Extend the input box by adding
-`;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files (x86)\GnuWin32\bin`.
-The very first semicolon must only be added if it is missing. CMake may be added
-by installer automatically. Make sure that paths containing alternative `sh`,
-`bash` implementations such as `C:\Program Files\OpenSSH\bin` are at the end of
-`PATH` or build may fail.
-
-#### Cloning the Repository
-
-Clone the repository (https://github.com/qTox/qTox.git) with your preferred Git
-client. [SmartGit](http://www.syntevo.com/smartgit/) or
-[TorteiseGit](https://tortoisegit.org) are both very nice for this task
-(you may need to add `git.exe` to your `PATH` system variable). The
-following steps assume that you cloned the repository at `C:\qTox`. If you
-decided to choose another location, replace corresponding parts.
-
-#### Getting dependencies
-
-Run `bootstrap.bat` in the previously cloned `C:\qTox` repository. The script will
-download the other necessary dependencies, compile them and put them into their
-appropriate directories.
-
-Note that there have been detections of false positives by some anti virus software
-in the past within some of the libraries used. Please refer to the wiki page
-[problematic antiviruses](https://github.com/qTox/qTox/wiki/Problematic-antiviruses)
-for more information if you run into troubles on that front.
 
 ## Compile-time switches
 
