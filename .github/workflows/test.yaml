@@ -245,7 +245,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: setup-qtox-x86_64-${{ matrix.build_type }}.zip
-          path: install-prefix/qtox-x86_64-debug.zip
+          path: install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip
           if-no-files-found: ignore
   build-windows-i686:
     name: Windows i686
@@ -272,7 +272,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: setup-qtox-i686-${{ matrix.build_type }}.zip
-          path: install-prefix/qtox-i686-debug.zip
+          path: install-prefix/qtox-i686-${{ matrix.build_type }}.zip
           if-no-files-found: ignore
   build-osx:
     name: macOS
