@@ -1,6 +1,14 @@
-name: Test
+name: Build, test, and deploy
 on: [pull_request, push]
 jobs:
+  update-nightly-tag:
+    name: Update nightly release tag
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Move nightly tag to head for nightly release
+        run: git tag -f nightly && git push origin nightly -f
   build-flatpak-docker:
     name: Build flatpak docker
     runs-on: ubuntu-latest
@@ -189,7 +197,12 @@ jobs:
   build-appimage:
     name: Appimage
     runs-on: ubuntu-latest
-    needs: build-ubuntu-lts-docker
+    needs: [build-ubuntu-lts-docker, update-nightly-tag]
+    if: |
+      always() &&
+      needs.build-ubuntu-lts-docker.result == 'success' &&
+      (needs.update-nightly-tag.result == 'success' ||
+        needs.update-nightly-tag.result == 'skipped')
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/load-docker-image
@@ -203,10 +216,27 @@ jobs:
         with:
           name: qTox-${{ github.sha }}.x86_64.AppImage
           path: qTox-*.x86_64.AppImage
+      - name: Rename artifact for nightly upload
+        run: cp qTox-*.x86_64.AppImage qTox-nightly.x86_64.AppImage
+      - name: Upload to nightly release
+        uses: ncipollo/release-action@v1
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        with:
+          allowUpdates: true
+          tag: nightly
+          prerelease: true
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "qTox-nightly.x86_64.AppImage"
   build-flatpak:
     name: Flatpak
     runs-on: ubuntu-latest
-    needs: build-flatpak-docker
+    needs: [build-flatpak-docker, update-nightly-tag]
+    if: |
+      always() &&
+      needs.build-flatpak-docker.result == 'success' &&
+      (needs.update-nightly-tag.result == 'success' ||
+        needs.update-nightly-tag.result == 'skipped')
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/load-docker-image
@@ -220,10 +250,27 @@ jobs:
         with:
           name: qTox-${{ github.sha }}.x86_64.flatpak
           path: qtox.flatpak
+      - name: Rename artifact for nightly upload
+        run: cp qtox.flatpak qTox-nightly.flatpak
+      - name: Upload to nightly release
+        uses: ncipollo/release-action@v1
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        with:
+          allowUpdates: true
+          tag: nightly
+          prerelease: true
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "qTox-nightly.flatpak"
   build-windows:
     name: Windows
     runs-on: ubuntu-latest
-    needs: build-windows-docker
+    needs: [build-windows-docker, update-nightly-tag]
+    if: |
+      always() &&
+      needs.build-windows-docker.result == 'success' &&
+      (needs.update-nightly-tag.result == 'success' ||
+        needs.update-nightly-tag.result == 'skipped')
     strategy:
       matrix:
         build_type: [debug, release]
@@ -245,10 +292,42 @@ jobs:
         with:
           name: setup-qtox-x86_64-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip
+          if-no-files-found: ignore
+      - name: Rename zip for nightly upload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: cp install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip setup-qtox-nightly-x86_64-${{ matrix.build_type }}.zip
+      - name: Upload zip to nightly release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          tag: nightly
+          prerelease: true
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "setup-qtox-nightly-x86_64-${{ matrix.build_type }}.zip"
+      - name: Rename exe for nightly upload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.build_type == 'release'
+        run: cp package-prefix/setup-qtox.exe setup-qtox-nightly-x86_64-release.exe
+      - name: Upload exe to nightly release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.build_type == 'release'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          tag: nightly
+          prerelease: true
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "setup-qtox-nightly-x86_64-release.exe"
   build-windows-i686:
     name: Windows i686
     runs-on: ubuntu-latest
-    needs: build-windows-i686-docker
+    needs: [build-windows-i686-docker, update-nightly-tag]
+    if: |
+      always() &&
+      needs.build-windows-i686-docker.result == 'success' &&
+      (needs.update-nightly-tag.result == 'success' ||
+        needs.update-nightly-tag.result == 'skipped')
     strategy:
       matrix:
         build_type: [debug, release]
@@ -270,9 +349,44 @@ jobs:
         with:
           name: setup-qtox-i686-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-i686-${{ matrix.build_type }}.zip
+          if-no-files-found: ignore
+      - name: Rename zip for nightly upload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: cp install-prefix/qtox-i686-${{ matrix.build_type }}.zip setup-qtox-nightly-i686-${{ matrix.build_type }}.zip
+      - name: Upload zip to nightly release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          tag: nightly
+          prerelease: true
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "setup-qtox-nightly-i686-${{ matrix.build_type }}.zip"
+      - name: Rename exe for nightly upload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.build_type == 'release'
+        run: cp package-prefix/setup-qtox.exe setup-qtox-nightly-i686-release.exe
+      - name: Upload exe to nightly release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.build_type == 'release'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          tag: nightly
+          prerelease: true
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "setup-qtox-nightly-i686-release.exe"
   build-osx:
     name: macOS
     runs-on: macos-10.15
+    needs: update-nightly-tag
+    if: |
+      always() &&
+      (needs.update-nightly-tag.result == 'success' ||
+        needs.update-nightly-tag.result == 'skipped')
+    env:
+      TRAVIS: true
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v2
       - name: homebrew
@@ -286,6 +400,18 @@ jobs:
         with:
           name: qTox-${{ github.sha }}.dmg
           path: qTox.dmg
+      - name: Rename artifact for nightly upload
+        run: cp qTox.dmg qTox-nightly.dmg
+      - name: Upload to nightly release
+        uses: ncipollo/release-action@v1
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        with:
+          allowUpdates: true
+          tag: nightly
+          prerelease: true
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "qTox-nightly.dmg"
   build-docs:
     name: Docs
     runs-on: ubuntu-18.04
