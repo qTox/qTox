@@ -216,7 +216,26 @@ jobs:
         with:
           name: qTox-${{ github.sha }}.x86_64.AppImage
           path: qTox-*.x86_64.AppImage
+      - name: Get tag name for appimage release file name
+        if: contains(github.ref, 'refs/tags/v')
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      - name: Rename appimage for release upload
+        if: contains(github.ref, 'refs/tags/v')
+        run: |
+          cp qTox-*.x86_64.AppImage qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage
+          sha256sum qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage > qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage.sha256
+          cp qTox-*.x86_64.AppImage.zsync qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage.zsync
+      - name: Upload to versioned release
+        if: contains(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage,qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage.sha256,qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage.zsync"
       - name: Rename artifact for nightly upload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: cp qTox-*.x86_64.AppImage qTox-nightly.x86_64.AppImage
       - name: Upload to nightly release
         uses: ncipollo/release-action@v1
@@ -250,7 +269,25 @@ jobs:
         with:
           name: qTox-${{ github.sha }}.x86_64.flatpak
           path: qtox.flatpak
+      - name: Get tag name for flatpak release file name
+        if: contains(github.ref, 'refs/tags/v')
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      - name: Rename flatpak for release upload
+        if: contains(github.ref, 'refs/tags/v')
+        run: |
+          cp qtox.flatpak qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.flatpak
+          sha256sum qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.flatpak > qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.flatpak.sha256
+      - name: Upload to versioned release
+        if: contains(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.flatpak,qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.flatpak.sha256"
       - name: Rename artifact for nightly upload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: cp qtox.flatpak qTox-nightly.flatpak
       - name: Upload to nightly release
         uses: ncipollo/release-action@v1
@@ -293,6 +330,19 @@ jobs:
           name: setup-qtox-x86_64-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip
           if-no-files-found: ignore
+      - name: Rename exe for release upload
+        if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
+        run: |
+          cp package-prefix/setup-qtox.exe setup-qtox-x86_64-release.exe
+          sha256sum setup-qtox-x86_64-release.exe > setup-qtox-x86_64-release.exe.sha256
+      - name: Upload to versioned release
+        if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "setup-qtox-x86_64-release.exe,setup-qtox-x86_64-release.exe.sha256"
       - name: Rename zip for nightly upload
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: cp install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip setup-qtox-nightly-x86_64-${{ matrix.build_type }}.zip
@@ -350,6 +400,19 @@ jobs:
           name: setup-qtox-i686-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-i686-${{ matrix.build_type }}.zip
           if-no-files-found: ignore
+      - name: Rename exe for release upload
+        if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
+        run: |
+          cp package-prefix/setup-qtox.exe setup-qtox-i686-release.exe
+          sha256sum setup-qtox-i686-release.exe > setup-qtox-i686-release.exe.sha256
+      - name: Upload to versioned release
+        if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "setup-qtox-i686-release.exe,setup-qtox-i686-release.exe.sha256"
       - name: Rename zip for nightly upload
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: cp install-prefix/qtox-i686-${{ matrix.build_type }}.zip setup-qtox-nightly-i686-${{ matrix.build_type }}.zip
@@ -400,7 +463,19 @@ jobs:
         with:
           name: qTox-${{ github.sha }}.dmg
           path: qTox.dmg
+      - name: Create shasum for versioned release
+        if: contains(github.ref, 'refs/tags/v')
+        run: sha256sum qTox.dmg > qTox.dmg.sha256
+      - name: Upload to versioned release
+        if: contains(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "qTox.dmg,qTox.dmg.sha256"
       - name: Rename artifact for nightly upload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: cp qTox.dmg qTox-nightly.dmg
       - name: Upload to nightly release
         uses: ncipollo/release-action@v1
