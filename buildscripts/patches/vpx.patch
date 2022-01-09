@@ -1,3 +1,6 @@
+Fix VPX not supporting creation of dll
+Modified version of https://aur.archlinux.org/cgit/aur.git/tree/configure.patch?h=mingw-w64-libvpx&id=6d658aa0f4d8409fcbd0f20be2c0adcf1e81a297
+
 diff -ruN libvpx/build/make/configure.sh patched/build/make/configure.sh
 --- libvpx/build/make/configure.sh	2019-02-13 16:56:48.972857636 +0100
 +++ patched/build/make/configure.sh	2019-02-13 16:50:37.995967583 +0100

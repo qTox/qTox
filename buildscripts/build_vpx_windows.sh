@@ -41,6 +41,9 @@ fi
 
 "$(dirname "$0")"/download/download_vpx.sh
 
+# There is a bug in gcc that breaks avx512 on 64-bit Windows https://gcc.gnu.org/bugzilla/show_bug.cgi?id=54412
+# VPX fails to build due to it.
+# This is a workaround as suggested in https://stackoverflow.com/questions/43152633
 if [ "${ARCH}" == "x86_64" ]; then
     ARCH_FLAGS="-fno-asynchronous-unwind-tables"
     VPX_ARCH="x86_64-win64-gcc"

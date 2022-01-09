@@ -54,7 +54,7 @@ fi
     --openssldir=/windows/ssl \
     shared \
     $OPENSSL_ARCH \
-    --cross-compile-prefix=${ARCH}-w64-mingw32- && \
+    --cross-compile-prefix=${ARCH}-w64-mingw32-
 
 make -j $(nproc)
 make install

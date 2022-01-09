@@ -30,11 +30,13 @@
 
 set -euo pipefail
 
+RUN_TESTS=0
 
 while (( $# > 0 )); do
     case $1 in
         --src-dir) QTOX_SRC_DIR=$2; shift 2 ;;
         --arch) ARCH=$2; shift 2 ;;
+        --run-tests) RUN_TESTS=1; shift ;;
         --build-type) BUILD_TYPE=$2; shift 2;;
         *) "Unexpected argument $1"; exit 1 ;;
     esac
@@ -86,6 +88,7 @@ then
         -DDESKTOP_NOTIFICATIONS=ON \
         -DUPDATE_CHECK=ON \
         -DSTRICT_OPTIONS=ON \
+        -DTEST_CROSSCOMPILING_EMULATOR=wine \
         "$QTOX_SRC_DIR"
 elif [[ "$BUILD_TYPE" == "debug" ]]
 then
@@ -96,6 +99,7 @@ then
         -DDESKTOP_NOTIFICATIONS=ON \
         -DUPDATE_CHECK=ON \
         -DSTRICT_OPTIONS=ON \
+        -DTEST_CROSSCOMPILING_EMULATOR=wine \
         "$QTOX_SRC_DIR"
 fi
 
@@ -105,9 +109,9 @@ mkdir -p "${QTOX_PREFIX_DIR}"
 cp qtox.exe $QTOX_PREFIX_DIR
 cp -r /export/* $QTOX_PREFIX_DIR
 
-# Run tests (only on Travis)
+# Run tests
 set +u
-if [[ -n "$TRAVIS_CI_STAGE" ]]
+if [[ $RUN_TESTS -ne 0 ]]
 then
   export WINEPATH='/export;/windows/bin'
   export CTEST_OUTPUT_ON_FAILURE=1
