@@ -48,10 +48,12 @@ public:
     bool isFriend() const final;
     bool isGroup() const final;
     bool isOnline() const final;
+    bool widgetIsVisible() const final;
     QString getNameItem() const final;
     QDateTime getLastActivity() const final;
     int getCircleId() const final;
     QWidget* getWidget() final;
+    void setWidgetVisible(bool visible) final;
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
