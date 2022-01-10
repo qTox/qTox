@@ -240,13 +240,11 @@ jobs:
         with:
           name: setup-qtox-x86_64-${{ matrix.build_type }}.exe
           path: package-prefix/setup-qtox.exe
-          if-no-files-found: ignore
       - name: Upload zip
         uses: actions/upload-artifact@v2
         with:
           name: setup-qtox-x86_64-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip
-          if-no-files-found: ignore
   build-windows-i686:
     name: Windows i686
     runs-on: ubuntu-latest
@@ -267,13 +265,11 @@ jobs:
         with:
           name: setup-qtox-i686-${{ matrix.build_type }}.exe
           path: package-prefix/setup-qtox.exe
-          if-no-files-found: ignore
       - name: Upload zip
         uses: actions/upload-artifact@v2
         with:
           name: setup-qtox-i686-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-i686-${{ matrix.build_type }}.zip
-          if-no-files-found: ignore
   build-osx:
     name: macOS
     runs-on: macos-10.15
