@@ -5,6 +5,8 @@ jobs:
     name: Update nightly release tag
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    permissions:
+        contents: write
     steps:
       - uses: actions/checkout@v2
       - name: Move nightly tag to head for nightly release
@@ -203,6 +205,8 @@ jobs:
       needs.build-ubuntu-lts-docker.result == 'success' &&
       (needs.update-nightly-tag.result == 'success' ||
         needs.update-nightly-tag.result == 'skipped')
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/load-docker-image
@@ -256,6 +260,8 @@ jobs:
       needs.build-flatpak-docker.result == 'success' &&
       (needs.update-nightly-tag.result == 'success' ||
         needs.update-nightly-tag.result == 'skipped')
+    permissions:
+        contents: write
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/load-docker-image
@@ -308,6 +314,8 @@ jobs:
       needs.build-windows-docker.result == 'success' &&
       (needs.update-nightly-tag.result == 'success' ||
         needs.update-nightly-tag.result == 'skipped')
+    permissions:
+        contents: write
     strategy:
       matrix:
         build_type: [debug, release]
@@ -378,6 +386,8 @@ jobs:
       needs.build-windows-i686-docker.result == 'success' &&
       (needs.update-nightly-tag.result == 'success' ||
         needs.update-nightly-tag.result == 'skipped')
+    permissions:
+      contents: write
     strategy:
       matrix:
         build_type: [debug, release]
@@ -447,6 +457,8 @@ jobs:
       always() &&
       (needs.update-nightly-tag.result == 'success' ||
         needs.update-nightly-tag.result == 'skipped')
+    permissions:
+      contents: write
     env:
       TRAVIS: true
       TRAVIS_BUILD_DIR: ${{ github.workspace }}
