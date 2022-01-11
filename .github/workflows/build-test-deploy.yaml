@@ -348,7 +348,6 @@ jobs:
         with:
           name: setup-qtox-x86_64-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip
-          if-no-files-found: ignore
       - name: Rename exe for release upload
         if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
         run: |
@@ -420,7 +419,6 @@ jobs:
         with:
           name: setup-qtox-i686-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-i686-${{ matrix.build_type }}.zip
-          if-no-files-found: ignore
       - name: Rename exe for release upload
         if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
         run: |
