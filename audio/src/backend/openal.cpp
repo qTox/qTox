@@ -55,7 +55,7 @@ void applyGain(int16_t* buffer, uint32_t bufferSize, qreal gainFactor)
  */
 
 static const unsigned int BUFFER_COUNT = 16;
-static const uint32_t AUDIO_CHANNELS = 2;
+static const uint32_t AUDIO_CHANNELS = 1;
 constexpr qreal OpenAL::minInGain;
 constexpr qreal OpenAL::maxInGain;
 
