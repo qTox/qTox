@@ -55,11 +55,11 @@ services:
       context: ./buildscripts
       dockerfile: docker/Dockerfile.flatpak_builder
     <<: *shared_params
-  centos:
-    image: qtox_centos:latest
+  almalinux:
+    image: qtox_almalinux:latest
     build:
       context: ./buildscripts
-      dockerfile: docker/Dockerfile.centos
+      dockerfile: docker/Dockerfile.almalinux
     <<: *shared_params
   fedora:
     image: qtox_fedora:latest

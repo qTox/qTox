@@ -45,15 +45,15 @@ jobs:
         name: "Build docker image"
         with:
           docker_image_name: debian_old
-  build-centos-docker:
-    name: Build centos docker image
+  build-almalinux-docker:
+    name: Build almalinux docker image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/build-docker-image
         name: "Build docker image"
         with:
-          docker_image_name: centos
+          docker_image_name: almalinux
   build-fedora-docker:
     name: Build fedora docker image
     runs-on: ubuntu-latest
@@ -90,10 +90,10 @@ jobs:
         name: "Build docker image"
         with:
           docker_image_name: windows_builder.i686
-  build-centos:
-    name: Centos
+  build-almalinux:
+    name: Almalinux
     runs-on: ubuntu-latest
-    needs: build-centos-docker
+    needs: build-almalinux-docker
     strategy:
       matrix:
         features: [full, minimal]
@@ -103,9 +103,9 @@ jobs:
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
-          docker_image_name: centos
+          docker_image_name: almalinux
       - name: Run build
-        run: docker compose run --rm centos ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker compose run --rm almalinux ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-fedora:
     name: Fedora
     runs-on: ubuntu-latest

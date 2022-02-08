@@ -13,12 +13,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-FROM centos:latest
+FROM almalinux:latest
 
 RUN dnf --nodocs -y install dnf-plugins-core && \
 	dnf config-manager --set-enabled powertools && \
+	dnf --nodocs -y install https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %almalinux).noarch.rpm && \
 	dnf --nodocs -y install epel-release && \
-	dnf --nodocs -y install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm &&  \
 	dnf --nodocs -y install \
 		cmake \
 		make \
