@@ -191,6 +191,7 @@ RUN mkdir /export && \
   cp /windows/bin/libtoxcore.dll /export && \
   cp /windows/bin/libopus-*.dll /export && \
   cp /windows/lib/libvpx.dll /export && \
+  cp /windows/bin/OpenAL32.dll /export && \
   cp /windows/bin/libssl-*.dll /export && \
   cp /windows/bin/libsnore-qt5.dll /export && \
   mkdir -p /export/libsnore-qt5/ && \

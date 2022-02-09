@@ -219,3 +219,11 @@ then
   echo "Error: Missing some dlls."
   exit 1
 fi
+
+# Check that OpenAL is bundled. It is availabe from WINE, but not on Windows systems
+if grep -q '/root/.wine/drive_c/windows/system32/openal32.dll' dlls-required
+then
+  cat dlls-required
+  echo "Error: Missing OpenAL."
+  exit 1
+fi
