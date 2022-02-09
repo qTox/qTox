@@ -25,7 +25,7 @@ build_qtox() {
         -DSPELL_CHECK=OFF \
         -DSTRICT_OPTIONS=ON \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_PREFIX_PATH="$(brew --prefix qt5)" .
+        -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)" .
     make -j$(sysctl -n hw.ncpu)
     export CTEST_OUTPUT_ON_FAILURE=1
     ctest -j$(sysctl -n hw.ncpu)

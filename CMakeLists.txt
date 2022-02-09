@@ -62,7 +62,7 @@ if(APPLE)
 endif()
 
 execute_process(
-  COMMAND brew --prefix qt5
+  COMMAND brew --prefix qt@5
   OUTPUT_VARIABLE QT_PREFIX_PATH
   OUTPUT_STRIP_TRAILING_WHITESPACE)
 
