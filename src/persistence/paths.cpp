@@ -27,6 +27,7 @@
 #include <QString>
 #include <QStringBuilder>
 #include <QStringList>
+#include <QSettings>
 
 namespace {
 const QLatin1String globalSettingsFile{"qtox.ini"};
@@ -95,14 +96,16 @@ Paths* Paths::makePaths(Portable mode)
         portable = false;
         break;
     case Portable::Auto:
-        // auto detect
-        if (QFile{portableSettingsPath}.exists()) {
-            qDebug() << "Automatic portable";
-            portable = true;
-        } else {
-            qDebug() << "Automatic non-portable";
+        if (!QFile(portableSettingsPath).exists()) {
             portable = false;
+        } else {
+            QSettings ps(portableSettingsPath, QSettings::IniFormat);
+            ps.setIniCodec("UTF-8");
+            ps.beginGroup("Advanced");
+            portable = ps.value("makeToxPortable", false).toBool();
+            ps.endGroup();
         }
+        qDebug()<< "Auto portable mode:" << portable;
         break;
     }
 
@@ -120,6 +123,19 @@ Paths::Paths(const QString& basePath, bool portable)
     : basePath{basePath}
     , portable{portable}
 {}
+
+/**
+ * @brief Set paths to passed portable or system wide
+ * @param newPortable
+ * @return True if portable mode changed, else false.
+ */
+bool Paths::setPortable(bool newPortable)
+{
+    auto oldVal = portable.exchange(newPortable);
+    if (oldVal != newPortable)
+        return true;
+    return false;
+}
 
 /**
  * @brief Check if qTox is running in portable mode.

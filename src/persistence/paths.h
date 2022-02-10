@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <atomic>
 
 #define PATHS_VERSION_TCS_COMPLIANT 0
 
@@ -35,6 +36,7 @@ public:
 
     static Paths* makePaths(Portable mode = Portable::Auto);
 
+    bool setPortable(bool portable);
     bool isPortable() const;
 #if PATHS_VERSION_TCS_COMPLIANT
     QString getGlobalSettingsPath() const;
@@ -58,5 +60,5 @@ private:
 
 private:
     QString basePath{};
-    const bool portable = false;
+    std::atomic_bool portable{false};
 };
