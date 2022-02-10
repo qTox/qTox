@@ -67,7 +67,7 @@ Settings::Settings()
     , useCustomDhtList{false}
     , makeToxPortable{false}
     , currentProfileId(0)
-    , paths(*Paths::makePaths(Paths::Portable::NonPortable))
+    , paths(*Paths::makePaths(Paths::Portable::Auto))
 {
     settingsThread = new QThread();
     settingsThread->setObjectName("qTox Settings");
