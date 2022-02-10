@@ -56,11 +56,10 @@ const QString sep{QDir::separator()};
  */
 void TestPaths::constructAuto()
 {
-    Paths * paths = Paths::makePaths(Paths::Portable::Auto);
+    Paths paths{Paths::Portable::Auto};
     // auto detection should succeed
-    QVERIFY(paths != nullptr);
     // the test environment should not provide a `qtox.ini`
-    QVERIFY(paths->isPortable() == false);
+    QVERIFY(paths.isPortable() == false);
 }
 
 /**
@@ -68,10 +67,9 @@ void TestPaths::constructAuto()
  */
 void TestPaths::constructPortable()
 {
-    Paths * paths = Paths::makePaths(Paths::Portable::Portable);
+    Paths paths{Paths::Portable::Portable};
     // portable construction should succeed even though qtox.ini doesn't exist
-    QVERIFY(paths != nullptr);
-    QVERIFY(paths->isPortable() == true);
+    QVERIFY(paths.isPortable() == true);
 }
 
 /**
@@ -79,11 +77,10 @@ void TestPaths::constructPortable()
  */
 void TestPaths::constructNonPortable()
 {
-    Paths * paths = Paths::makePaths(Paths::Portable::NonPortable);
+    Paths paths{Paths::Portable::NonPortable};
     // Non portable should succeed
-    QVERIFY(paths != nullptr);
     // the test environment should not provide a `qtox.ini`
-    QVERIFY(paths->isPortable() == false);
+    QVERIFY(paths.isPortable() == false);
 }
 
 /**
