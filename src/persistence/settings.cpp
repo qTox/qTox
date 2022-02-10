@@ -110,8 +110,6 @@ void Settings::loadGlobal()
 
     createSettingsDir();
 
-    makeToxPortable = Settings::isToxPortable();
-
     QDir dir(paths.getSettingsDirPath());
     QString filePath = dir.filePath(globalSettingsFile);
 
@@ -260,20 +258,6 @@ void Settings::loadGlobal()
     s.endGroup();
 
     loaded = true;
-}
-
-bool Settings::isToxPortable()
-{
-    QString localSettingsPath = qApp->applicationDirPath() + QDir::separator() + globalSettingsFile;
-    if (!QFile(localSettingsPath).exists()) {
-        return false;
-    }
-    QSettings ps(localSettingsPath, QSettings::IniFormat);
-    ps.setIniCodec("UTF-8");
-    ps.beginGroup("Advanced");
-    bool result = ps.value("makeToxPortable", false).toBool();
-    ps.endGroup();
-    return result;
 }
 
 void Settings::updateProfileData(Profile* profile, const QCommandLineParser* parser)
@@ -889,13 +873,12 @@ void Settings::setMakeToxPortable(bool newValue)
     bool changed = false;
     {
         QMutexLocker locker{&bigLock};
-
+        QFile(paths.getSettingsDirPath() + globalSettingsFile).remove()
         if (newValue != makeToxPortable) {
             QFile(paths.getSettingsDirPath() + globalSettingsFile).remove();
             makeToxPortable = newValue;
+            changed = paths.setPortable(newValue);
             saveGlobal();
-
-            changed = true;
         }
     }
     if (changed) {
