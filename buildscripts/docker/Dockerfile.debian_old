@@ -52,6 +52,7 @@ COPY download/common.sh /build/download/common.sh
 
 COPY download/download_snore.sh /build/download/download_snore.sh
 COPY build_snore_linux.sh /build/build_snore_linux.sh
+COPY patches/snore.patch /build/patches/snore.patch
 RUN mkdir -p /src/snore && \
     cd /src/snore && \
     /build/build_snore_linux.sh && \

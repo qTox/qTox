@@ -1,0 +1,26 @@
+--- src/libsnore/plugins/plugincontainer.cpp	2022-02-10 14:14:10.157272874 -0800
++++ patched/src/libsnore/plugins/plugincontainer.cpp	2022-02-10 14:14:53.371062246 -0800
+@@ -27,6 +27,7 @@
+ #include <QDir>
+ #include <QGuiApplication>
+ #include <QTime>
++#include <QLibraryInfo>
+ 
+ using namespace Snore;
+ 
+@@ -134,6 +135,7 @@
+     static QDir path;
+     if (!isLoaded) {
+         isLoaded = true;
++	QString pluginDir = QLibraryInfo::location(QLibraryInfo::PluginsPath);
+         QString appDir = qApp->applicationDirPath();
+         QStringList list;
+ #ifdef Q_OS_MAC
+@@ -152,6 +154,7 @@
+              << appDir + suffix
+              << appDir + QStringLiteral("/../lib/plugins") + suffix
+              << appDir + QStringLiteral("/../lib64/plugins") + suffix
++             << pluginDir + suffix
+              << QStringLiteral(LIBSNORE_PLUGIN_PATH);
+         foreach(const QString & p, list) {
+             path = QDir(p);
