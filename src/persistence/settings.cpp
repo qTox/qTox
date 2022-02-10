@@ -65,7 +65,6 @@ QThread* Settings::settingsThread{nullptr};
 Settings::Settings()
     : loaded(false)
     , useCustomDhtList{false}
-    , makeToxPortable{false}
     , currentProfileId(0)
 {
     settingsThread = new QThread();
@@ -159,7 +158,7 @@ void Settings::loadGlobal()
 
     s.beginGroup("Advanced");
     {
-        makeToxPortable = s.value("makeToxPortable", false).toBool();
+        paths.setPortable(s.value("makeToxPortable", false).toBool());
         enableIPv6 = s.value("enableIPv6", true).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
         enableLanDiscovery = s.value("enableLanDiscovery", true).toBool();
@@ -623,7 +622,7 @@ void Settings::saveGlobal()
 
     s.beginGroup("Advanced");
     {
-        s.setValue("makeToxPortable", makeToxPortable);
+        s.setValue("makeToxPortable", paths.isPortable());
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("forceTCP", forceTCP);
         s.setValue("enableLanDiscovery", enableLanDiscovery);
@@ -864,7 +863,7 @@ void Settings::setEnableIPv6(bool enabled)
 bool Settings::getMakeToxPortable() const
 {
     QMutexLocker locker{&bigLock};
-    return makeToxPortable;
+    return paths.isPortable();
 }
 
 void Settings::setMakeToxPortable(bool newValue)
@@ -872,15 +871,13 @@ void Settings::setMakeToxPortable(bool newValue)
     bool changed = false;
     {
         QMutexLocker locker{&bigLock};
-        if (newValue != makeToxPortable) {
-            QFile(paths.getSettingsDirPath() + globalSettingsFile).remove();
-            makeToxPortable = newValue;
-            changed = paths.setPortable(newValue);
+        auto const oldSettingsPath = paths.getSettingsDirPath() + globalSettingsFile;
+        changed = paths.setPortable(newValue);
+        if (changed) {
+            QFile(oldSettingsPath).remove();
             saveGlobal();
+            emit makeToxPortableChanged(newValue);
         }
-    }
-    if (changed) {
-        emit makeToxPortableChanged(newValue);
     }
 }
 
