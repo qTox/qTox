@@ -42,6 +42,8 @@ else
     INSTALL_PREFIX_ARGS=""
 fi
 
+patch -Np1 < "$(dirname "$0")"/patches/snore.patch
+
 cmake -DCMAKE_BUILD_TYPE=Release $INSTALL_PREFIX_ARGS \
     -DBUILD_daemon=OFF \
     -DBUILD_settings=OFF \

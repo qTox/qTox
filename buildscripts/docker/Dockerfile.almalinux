@@ -33,6 +33,7 @@ RUN dnf --nodocs -y install dnf-plugins-core && \
 		opus-devel \
 		libsodium-devel \
 		libasan \
+		patch \
 		ffmpeg-devel \
 		libexif-devel \
 		qrencode-devel \
@@ -47,8 +48,10 @@ RUN dnf --nodocs -y install dnf-plugins-core && \
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 
 COPY download/common.sh /build/download/common.sh
+
 COPY download/download_snore.sh /build/download/download_snore.sh
 COPY build_snore_linux.sh /build/build_snore_linux.sh
+COPY patches/snore.patch /build/patches/snore.patch
 RUN mkdir -p /src/snore && \
 	cd /src/snore && \
 	/build/build_snore_linux.sh && \
