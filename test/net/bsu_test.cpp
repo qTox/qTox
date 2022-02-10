@@ -48,9 +48,9 @@ TestBootstrapNodesUpdater::TestBootstrapNodesUpdater()
 void TestBootstrapNodesUpdater::testOnline()
 {
     QNetworkProxy proxy{QNetworkProxy::ProxyType::NoProxy};
-    auto paths = Paths::makePaths(Paths::Portable::NonPortable);
+    Paths paths{Paths::Portable::NonPortable};
 
-    BootstrapNodeUpdater updater{proxy, *paths};
+    BootstrapNodeUpdater updater{proxy, paths};
     QSignalSpy spy(&updater, &BootstrapNodeUpdater::availableBootstrapNodes);
 
     updater.requestBootstrapNodes();
