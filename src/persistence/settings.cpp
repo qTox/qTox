@@ -67,7 +67,6 @@ Settings::Settings()
     , useCustomDhtList{false}
     , makeToxPortable{false}
     , currentProfileId(0)
-    , paths(*Paths::makePaths(Paths::Portable::Auto))
 {
     settingsThread = new QThread();
     settingsThread->setObjectName("qTox Settings");
@@ -873,7 +872,6 @@ void Settings::setMakeToxPortable(bool newValue)
     bool changed = false;
     {
         QMutexLocker locker{&bigLock};
-        QFile(paths.getSettingsDirPath() + globalSettingsFile).remove()
         if (newValue != makeToxPortable) {
             QFile(paths.getSettingsDirPath() + globalSettingsFile).remove();
             makeToxPortable = newValue;
