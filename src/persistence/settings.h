@@ -595,7 +595,6 @@ private:
     bool showIdenticons;
     bool enableIPv6;
     QString translation;
-    bool makeToxPortable;
     bool autostartInTray;
     bool closeToTray;
     bool minimizeToTray;
