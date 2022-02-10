@@ -47,7 +47,7 @@ public:
     bool isGroup() const final;
     QString getNameItem() const final;
     bool isOnline() const final;
-    bool widgetIsVisible() const;
+    bool widgetIsVisible() const final;
     QDateTime getLastActivity() const final;
     QWidget* getWidget() final;
     void setWidgetVisible(bool visible) final;
