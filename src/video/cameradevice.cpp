@@ -31,6 +31,8 @@ extern "C" {
 #include "cameradevice.h"
 #include "src/persistence/settings.h"
 
+using AvFindInputFormatRet = decltype(av_find_input_format(""));
+
 #if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
 #define USING_V4L 1
 #else
@@ -71,8 +73,8 @@ extern "C" {
 
 QHash<QString, CameraDevice*> CameraDevice::openDevices;
 QMutex CameraDevice::openDeviceLock, CameraDevice::iformatLock;
-AVInputFormat* CameraDevice::iformat{nullptr};
-AVInputFormat* CameraDevice::idesktopFormat{nullptr};
+static AvFindInputFormatRet idesktopFormat{nullptr};
+static AvFindInputFormatRet iformat{nullptr};
 
 CameraDevice::CameraDevice(const QString& devName, AVFormatContext* context)
     : devName{devName}
@@ -92,7 +94,7 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
         goto out;
     }
 
-    AVInputFormat* format;
+    AvFindInputFormatRet format;
     if (devName.startsWith("x11grab#")) {
         devName = devName.mid(8);
         format = idesktopFormat;
