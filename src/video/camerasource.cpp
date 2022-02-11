@@ -278,7 +278,7 @@ void CameraSource::openDevice()
     }
 
     // We need to create a new CameraDevice
-    AVCodec* codec;
+    const AVCodec* codec;
     device = CameraDevice::open(deviceName, mode);
 
     if (!device) {

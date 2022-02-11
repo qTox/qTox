@@ -71,7 +71,7 @@ extern "C" {
 
 QHash<QString, CameraDevice*> CameraDevice::openDevices;
 QMutex CameraDevice::openDeviceLock, CameraDevice::iformatLock;
-AVInputFormat* CameraDevice::iformat{nullptr};
+av_const59 AVInputFormat* CameraDevice::iformat{nullptr};
 AVInputFormat* CameraDevice::idesktopFormat{nullptr};
 
 CameraDevice::CameraDevice(const QString& devName, AVFormatContext* context)
@@ -92,7 +92,7 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
         goto out;
     }
 
-    AVInputFormat* format;
+    av_const59 AVInputFormat* format;
     if (devName.startsWith("x11grab#")) {
         devName = devName.mid(8);
         format = idesktopFormat;

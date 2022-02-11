@@ -32,6 +32,12 @@ struct AVInputFormat;
 struct AVDeviceInfoList;
 struct AVDictionary;
 
+#if (LIBAVFORMAT_VERSION_MAJOR < 59)
+#define av_const59
+#else
+#define av_const59 const
+#endif
+
 class CameraDevice
 {
 public:
@@ -64,5 +70,6 @@ private:
     std::atomic_int refcount;
     static QHash<QString, CameraDevice*> openDevices;
     static QMutex openDeviceLock, iformatLock;
-    static AVInputFormat *iformat, *idesktopFormat;
+    av_const59 static AVInputFormat *iformat;
+    static AVInputFormat *idesktopFormat;
 };
