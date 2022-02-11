@@ -277,7 +277,6 @@ void CameraSource::openDevice()
     }
 
     // We need to create a new CameraDevice
-    AVCodec* codec;
     device = CameraDevice::open(deviceName, mode);
 
     if (!device) {
@@ -321,7 +320,7 @@ void CameraSource::openDevice()
     AVCodecParameters* cparams = device->context->streams[videoStreamIndex]->codecpar;
     codecId = cparams->codec_id;
 #endif
-    codec = avcodec_find_decoder(codecId);
+    const AVCodec* codec = avcodec_find_decoder(codecId);
     if (!codec) {
         qWarning() << "Codec not found";
         emit openFailed();
