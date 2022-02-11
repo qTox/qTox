@@ -64,5 +64,4 @@ private:
     std::atomic_int refcount;
     static QHash<QString, CameraDevice*> openDevices;
     static QMutex openDeviceLock, iformatLock;
-    static AVInputFormat *iformat, *idesktopFormat;
 };
