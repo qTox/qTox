@@ -42,6 +42,7 @@
 #include <QStringBuilder>
 #include <QTimer>
 
+#include <algorithm>
 #include <cassert>
 #include <chrono>
 #include <memory>
@@ -473,13 +474,21 @@ bool parseErr(Tox_Err_Conference_Delete error, int line)
     }
 }
 
+QList<DhtServer> shuffleBootstrapNodes(QList<DhtServer> bootstrapNodes)
+{
+    std::mt19937 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+    std::shuffle(bootstrapNodes.begin(), bootstrapNodes.end(), rng);
+    return bootstrapNodes;
+}
+
 } // namespace
 
-Core::Core(QThread* coreThread, IBootstrapListGenerator& _bootstrapNodes)
+Core::Core(QThread* coreThread, IBootstrapListGenerator& _bootstrapListGenerator, const ICoreSettings& _settings)
     : tox(nullptr)
     , toxTimer{new QTimer{this}}
     , coreThread(coreThread)
-    , bootstrapNodes(_bootstrapNodes)
+    , bootstrapListGenerator(_bootstrapListGenerator)
+    , settings(_settings)
 {
     assert(toxTimer);
     toxTimer->setSingleShot(true);
@@ -527,7 +536,7 @@ void Core::registerCallbacks(Tox* tox)
  * @param settings Settings specific to Core
  * @return nullptr or a Core object ready to start
  */
-ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* const settings,
+ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings& settings,
                              IBootstrapListGenerator& bootstrapNodes, ToxCoreErrors* err)
 {
     QThread* thread = new QThread();
@@ -546,7 +555,7 @@ ToxCorePtr Core::makeToxCore(const QByteArray& savedata, const ICoreSettings* co
         return {};
     }
 
-    ToxCorePtr core(new Core(thread, bootstrapNodes));
+    ToxCorePtr core(new Core(thread, bootstrapNodes, settings));
     if (core == nullptr) {
         if (err) {
             *err = ToxCoreErrors::ERROR_ALLOC;
@@ -813,31 +822,30 @@ void Core::bootstrapDht()
 {
     ASSERT_CORE_THREAD;
 
-    QList<DhtServer> bootstrapNodesList = bootstrapNodes.getBootstrapnodes();
 
-    int listSize = bootstrapNodesList.size();
-    if (!listSize) {
+    auto const shuffledBootstrapNodes = shuffleBootstrapNodes(bootstrapListGenerator.getBootstrapnodes());
+    if (shuffledBootstrapNodes.empty()) {
         qWarning() << "No bootstrap node list";
         return;
     }
 
-    int i = 0;
-    std::mt19937 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-    std::uniform_int_distribution<int> distribution(0, listSize - 1);
-    static int j = distribution(rng);
     // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
-    while (i < 2) {
-        const DhtServer& dhtServer = bootstrapNodesList[j % listSize];
-        qDebug("Connecting to bootstrap node %d", j % listSize);
-
+    auto numNewNodes = 2;
+    for (int i = 0; i < numNewNodes && i < shuffledBootstrapNodes.size(); ++i) {
+        const auto& dhtServer = shuffledBootstrapNodes.at(i);
         QByteArray address;
-        if (dhtServer.ipv4.isEmpty() && !dhtServer.ipv6.isEmpty()) {
+        if (!dhtServer.ipv4.isEmpty()) {
+            address = dhtServer.ipv4.toLatin1();
+        } else if (!dhtServer.ipv6.isEmpty() && settings.getEnableIPv6()) {
             address = dhtServer.ipv6.toLatin1();
         } else {
-            address = dhtServer.ipv4.toLatin1();
+            ++numNewNodes;
+            continue;
         }
 
-        const uint8_t* pkPtr = dhtServer.publicKey.getData();
+        ToxPk pk{dhtServer.publicKey};
+        qDebug() << "Connecting to bootstrap node" << pk.toString();
+        const uint8_t* pkPtr = pk.getData();
 
         Tox_Err_Bootstrap error;
         if (dhtServer.statusUdp) {
@@ -850,10 +858,6 @@ void Core::bootstrapDht()
             tox_add_tcp_relay(tox.get(), address.constData(), tcpPort, pkPtr, &error);
             PARSE_ERR(error);
         }
-
-        // bootstrap off every 5th node (+ a special case to avoid cycles when listSize % 5 == 0)
-        j += 5 + !(listSize % 5);
-        ++i;
     }
 }
 

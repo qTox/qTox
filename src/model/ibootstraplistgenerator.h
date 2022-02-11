@@ -32,5 +32,5 @@ public:
     IBootstrapListGenerator(IBootstrapListGenerator&&) = default;
     IBootstrapListGenerator& operator=(IBootstrapListGenerator&&) = default;
 
-    virtual QList<DhtServer> getBootstrapnodes() = 0;
+    virtual QList<DhtServer> getBootstrapnodes() const = 0;
 };

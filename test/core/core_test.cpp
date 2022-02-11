@@ -79,10 +79,10 @@ private:
 
 class MockNodeListGenerator : public IBootstrapListGenerator
 {
-    QList<DhtServer> getBootstrapnodes();
+    QList<DhtServer> getBootstrapnodes() const override;
 };
 
-QList<DhtServer> MockNodeListGenerator::getBootstrapnodes() {
+QList<DhtServer> MockNodeListGenerator::getBootstrapnodes() const {
     return BootstrapNodeUpdater::loadDefaultBootstrapNodes();
 }
 
@@ -117,7 +117,7 @@ void TestCore::startup_without_proxy()
 
     MockNodeListGenerator nodesGenerator{};
 
-    test_core = Core::makeToxCore(savedata, settings.get(), nodesGenerator, err);
+    test_core = Core::makeToxCore(savedata, *settings, nodesGenerator, err);
 
     if (test_core == nullptr) {
         QFAIL("ToxCore initialisation failed");
@@ -144,7 +144,7 @@ void TestCore::startup_with_invalid_proxy()
 
     MockNodeListGenerator nodesGenerator{};
 
-    test_core = Core::makeToxCore(savedata, settings.get(), nodesGenerator, err);
+    test_core = Core::makeToxCore(savedata, *settings, nodesGenerator, err);
 
     if (test_core != nullptr) {
         QFAIL("ToxCore initialisation passed with invalid SOCKS5 proxy address");
@@ -156,7 +156,7 @@ void TestCore::startup_with_invalid_proxy()
     settings->setProxyPort(9985);
     settings->setProxyType(MockSettings::ProxyType::ptHTTP);
 
-    test_core = Core::makeToxCore(savedata, settings.get(), nodesGenerator, err);
+    test_core = Core::makeToxCore(savedata, *settings, nodesGenerator, err);
 
     if (test_core != nullptr) {
         QFAIL("ToxCore initialisation passed with invalid HTTP proxy address");
