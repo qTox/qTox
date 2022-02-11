@@ -248,7 +248,7 @@ void Profile::initCore(const QByteArray& toxsave, Settings& s, bool isNewProfile
         new BootstrapNodeUpdater(s.getProxy(), paths));
 
     Core::ToxCoreErrors err;
-    core = Core::makeToxCore(toxsave, &s, *bootstrapNodes, &err);
+    core = Core::makeToxCore(toxsave, s, *bootstrapNodes, &err);
     if (!core) {
         switch (err) {
         case Core::ToxCoreErrors::BAD_PROXY:
