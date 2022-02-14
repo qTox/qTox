@@ -1157,6 +1157,10 @@ instead of closing entirely.</source>
         <comment>autoaccept cb tooltip</comment>
         <translation>Puteți seta acest lucru pe bază de prieten, făcând clic dreapta pe prieteni individuali.</translation>
     </message>
+    <message>
+        <source>Add a chat message when a user joins or leaves a group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

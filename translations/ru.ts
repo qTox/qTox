@@ -1153,6 +1153,10 @@ instead of closing entirely.</source>
         <comment>autoaccept cb tooltip</comment>
         <translation>Вы можете установить это для каждого друга, нажатием правой кнопки на каждом из них.</translation>
     </message>
+    <message>
+        <source>Add a chat message when a user joins or leaves a group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

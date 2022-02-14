@@ -1150,6 +1150,10 @@ jätab ta tööle teavituste alal.</translation>
         <comment>autoaccept cb tooltip</comment>
         <translation>Seda saad muuta vastavalt igale sõbrale tehes sõbral paremklõpsu.</translation>
     </message>
+    <message>
+        <source>Add a chat message when a user joins or leaves a group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

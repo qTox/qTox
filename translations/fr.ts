@@ -1149,6 +1149,10 @@ au lieu de fermer entièrement.</translation>
         <comment>autoaccept cb tooltip</comment>
         <translation>Vous pouvez définir ce paramètre pour chaque ami en faisant un clic droit sur chacun d&apos;eux.</translation>
     </message>
+    <message>
+        <source>Add a chat message when a user joins or leaves a group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

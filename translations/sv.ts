@@ -1148,6 +1148,10 @@ instead of closing entirely.</source>
         <comment>autoaccept cb tooltip</comment>
         <translation>Du kan ställa in detta per vän genom att högerklicka på enskilda vänner.</translation>
     </message>
+    <message>
+        <source>Add a chat message when a user joins or leaves a group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

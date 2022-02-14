@@ -1149,6 +1149,10 @@ invece di chiudersi completamente.</translation>
         <comment>autoaccept cb tooltip</comment>
         <translation>Puoi impostare questo su una base per amico cliccando con il tasto destro sui singoli amici.</translation>
     </message>
+    <message>
+        <source>Add a chat message when a user joins or leaves a group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

@@ -1150,6 +1150,10 @@ vietoje to, kad būtų visiškai uždarytas.</translation>
         <comment>autoaccept cb tooltip</comment>
         <translation>Galite nustatyti individualiai ant bet kurio kontakto spustelėję dešiniuoju pelės klavišu.</translation>
     </message>
+    <message>
+        <source>Add a chat message when a user joins or leaves a group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

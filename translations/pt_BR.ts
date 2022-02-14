@@ -1156,6 +1156,10 @@ ao invés de fechar.</translation>
         <comment>autoaccept cb tooltip</comment>
         <translation>Você pode definir esta configuração para cada contato clicando com o botão direito sobre eles.</translation>
     </message>
+    <message>
+        <source>Add a chat message when a user joins or leaves a group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

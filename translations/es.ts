@@ -1150,6 +1150,10 @@ en lugar de cerrarse por completo.</translation>
         <comment>autoaccept cb tooltip</comment>
         <translation>Se puede configurar de forma personalizada con clic derecho sobre el amigo.</translation>
     </message>
+    <message>
+        <source>Add a chat message when a user joins or leaves a group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

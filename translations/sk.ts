@@ -1157,6 +1157,10 @@ namiesto toho, že by sa zavrel úplne.</translation>
         <comment>autoaccept cb tooltip</comment>
         <translation>Toto môžete nastaviť na individuálnej úrovni pomocou kliknutia pravým tlačidlom na vašich jednotlivých priateľov.</translation>
     </message>
+    <message>
+        <source>Add a chat message when a user joins or leaves a group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

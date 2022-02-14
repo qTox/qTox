@@ -222,6 +222,13 @@ instead of closing entirely.</string>
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QCheckBox" name="groupJoinLeaveMessages">
+              <property name="text">
+               <string>Add a chat message when a user joins or leaves a group</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
@@ -364,6 +371,7 @@ instead of closing entirely.</string>
   <tabstop>minimizeToTray</tabstop>
   <tabstop>closeToTray</tabstop>
   <tabstop>statusChanges</tabstop>
+  <tabstop>groupJoinLeaveMessages</tabstop>
   <tabstop>autoAwaySpinBox</tabstop>
   <tabstop>autoSaveFilesDir</tabstop>
   <tabstop>autoacceptFiles</tabstop>
