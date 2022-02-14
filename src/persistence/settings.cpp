@@ -200,6 +200,7 @@ void Settings::loadGlobal()
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
+        showGroupJoinLeaveMessages = s.value("showGroupJoinLeaveMessages", true).toBool();
         spellCheckingEnabled = s.value("spellCheckingEnabled", true).toBool();
         themeColor = s.value("themeColor", 0).toInt();
         style = s.value("style", "").toString();
@@ -663,6 +664,7 @@ void Settings::saveGlobal()
         s.setValue("style", style);
         s.setValue("nameColors", nameColors);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
+        s.setValue("showGroupJoinLeaveMessages", showGroupJoinLeaveMessages);
         s.setValue("spellCheckingEnabled", spellCheckingEnabled);
     }
     s.endGroup();
@@ -1020,6 +1022,19 @@ void Settings::setStatusChangeNotificationEnabled(bool newValue)
 {
     if (setVal(statusChangeNotificationEnabled, newValue)) {
         emit statusChangeNotificationEnabledChanged(newValue);
+    }
+}
+
+bool Settings::getShowGroupJoinLeaveMessages() const
+{
+    QMutexLocker locker{&bigLock};
+    return showGroupJoinLeaveMessages;
+}
+
+void Settings::setShowGroupJoinLeaveMessages(bool newValue)
+{
+    if (setVal(showGroupJoinLeaveMessages, newValue)) {
+        emit showGroupJoinLeaveMessagesChanged(newValue);
     }
 }
 

@@ -63,8 +63,11 @@ class MockGroupSettings : public QObject, public IGroupSettings
 public:
     QStringList getBlackList() const override;
     void setBlackList(const QStringList& blist) override;
-
     SIGNAL_IMPL(MockGroupSettings, blackListChanged, QStringList const& blist)
+
+    bool getShowGroupJoinLeaveMessages() const override { return true; };
+    void setShowGroupJoinLeaveMessages(bool newValue) override {};
+    SIGNAL_IMPL(MockGroupSettings, showGroupJoinLeaveMessagesChanged, bool show)
 
 private:
     QStringList blacklist;
