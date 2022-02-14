@@ -231,13 +231,17 @@ void GroupChatForm::updateUserNames()
 
 void GroupChatForm::onUserJoined(const ToxPk& user, const QString& name)
 {
-    addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::userJoinedGroup, {name});
+    if (settings.getShowGroupJoinLeaveMessages()) {
+        addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::userJoinedGroup, {name});
+    }
     updateUserNames();
 }
 
 void GroupChatForm::onUserLeft(const ToxPk& user, const QString& name)
 {
-    addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::userLeftGroup, {name});
+    if (settings.getShowGroupJoinLeaveMessages()) {
+        addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::userLeftGroup, {name});
+    }
     updateUserNames();
 }
 
