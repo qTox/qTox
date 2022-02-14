@@ -20,6 +20,8 @@
 #ifndef IGROUP_SETTINGS_H
 #define IGROUP_SETTINGS_H
 
+#include "src/model/interface.h"
+
 #include <QStringList>
 
 class IGroupSettings
@@ -30,6 +32,8 @@ public:
     virtual void setBlackList(const QStringList& blist) = 0;
     virtual bool getGroupAlwaysNotify() const = 0;
     virtual void setGroupAlwaysNotify(bool newValue) = 0;
+
+    DECLARE_SIGNAL(blackListChanged, QStringList const& blist);
 };
 
 #endif /*IGROUP_SETTINGS_H*/

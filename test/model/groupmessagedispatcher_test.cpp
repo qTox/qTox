@@ -22,6 +22,8 @@
 #include "src/model/groupmessagedispatcher.h"
 #include "src/model/message.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/igroupsettings.h"
+#include "src/model/interface.h"
 
 #include <QObject>
 #include <QtTest/QtTest>
@@ -126,8 +128,10 @@ public:
     }
 };
 
-class MockGroupSettings : public IGroupSettings
+class MockGroupSettings : public QObject, public IGroupSettings
 {
+    Q_OBJECT
+
 public:
     QStringList getBlackList() const override
     {
@@ -145,6 +149,7 @@ public:
     }
 
     void setGroupAlwaysNotify(bool newValue) override {}
+    SIGNAL_IMPL(MockGroupSettings, blackListChanged, QStringList const& blist)
 
 private:
     QStringList blacklist;
