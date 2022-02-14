@@ -464,8 +464,11 @@ public:
 
     QStringList getBlackList() const override;
     void setBlackList(const QStringList& blist) override;
-
     SIGNAL_IMPL(Settings, blackListChanged, QStringList const& blist)
+
+    bool getShowGroupJoinLeaveMessages() const override;
+    void setShowGroupJoinLeaveMessages(bool newValue) override;
+    SIGNAL_IMPL(Settings, showGroupJoinLeaveMessagesChanged, bool show)
 
     // State
     QByteArray getWindowGeometry() const;
@@ -654,6 +657,7 @@ private:
     QString timestampFormat;
     QString dateFormat;
     bool statusChangeNotificationEnabled;
+    bool showGroupJoinLeaveMessages;
     bool spellCheckingEnabled;
 
     // Privacy

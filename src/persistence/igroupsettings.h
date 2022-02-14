@@ -33,7 +33,11 @@ public:
     virtual bool getGroupAlwaysNotify() const = 0;
     virtual void setGroupAlwaysNotify(bool newValue) = 0;
 
+    virtual bool getShowGroupJoinLeaveMessages() const = 0;
+    virtual void setShowGroupJoinLeaveMessages(bool newValue) = 0;
+
     DECLARE_SIGNAL(blackListChanged, QStringList const& blist);
+    DECLARE_SIGNAL(showGroupJoinLeaveMessagesChanged, bool show);
 };
 
 #endif /*IGROUP_SETTINGS_H*/
