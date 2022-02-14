@@ -501,7 +501,7 @@ void GenericChatForm::addSystemInfoMessage(const QDateTime& datetime, SystemMess
                                            SystemMessage::Args messageArgs)
 {
     SystemMessage systemMessage;
-    systemMessage.messageType = static_cast<SystemMessageType>(messageType);
+    systemMessage.messageType = messageType;
     systemMessage.timestamp = datetime;
     systemMessage.args = std::move(messageArgs);
     chatLog.addSystemMessage(systemMessage);
