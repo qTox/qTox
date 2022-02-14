@@ -33,13 +33,14 @@ class FlowLayout;
 class QTimer;
 class GroupId;
 class IMessageDispatcher;
-class Message;
+struct Message;
+class IGroupSettings;
 
 class GroupChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    explicit GroupChatForm(Group* chatGroup, IChatLog& chatLog, IMessageDispatcher& messageDispatcher);
+    GroupChatForm(Group* chatGroup, IChatLog& chatLog, IMessageDispatcher& messageDispatcher, IGroupSettings& _settings);
     ~GroupChatForm();
 
     void peerAudioPlaying(ToxPk peerPk);
@@ -79,6 +80,7 @@ private:
     QLabel* nusersLabel;
     TabCompleter* tabber;
     bool inCall;
+    IGroupSettings& settings;
 };
 
 #endif // GROUPCHATFORM_H
