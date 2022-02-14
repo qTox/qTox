@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "util/interface.h"
+
 #include <QStringList>
 
 class IGroupSettings
@@ -33,4 +35,6 @@ public:
 
     virtual QStringList getBlackList() const = 0;
     virtual void setBlackList(const QStringList& blist) = 0;
+
+    DECLARE_SIGNAL(blackListChanged, QStringList const& blist);
 };

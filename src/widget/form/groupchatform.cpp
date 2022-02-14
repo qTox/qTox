@@ -36,7 +36,7 @@
 #include "src/widget/style.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
-#include "src/persistence/settings.h"
+#include "src/persistence/igroupsettings.h"
 
 #include <QDragEnterEvent>
 #include <QMimeData>
@@ -82,7 +82,7 @@ QString editName(const QString& name)
  * @brief Timeout = peer stopped sending audio.
  */
 
-GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, IMessageDispatcher& messageDispatcher, Settings& _settings)
+GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, IMessageDispatcher& messageDispatcher, IGroupSettings& _settings)
     : GenericChatForm(_core, chatGroup, chatLog, messageDispatcher)
     , core{_core}
     , group(chatGroup)
@@ -131,7 +131,7 @@ GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, I
     connect(group, &Group::userLeft, this, &GroupChatForm::onUserLeft);
     connect(group, &Group::peerNameChanged, this, &GroupChatForm::onPeerNameChanged);
     connect(group, &Group::numPeersChanged, this, &GroupChatForm::updateUserCount);
-    connect(&settings, &Settings::blackListChanged, this, &GroupChatForm::updateUserNames);
+    settings.connectTo_blackListChanged(this, [this](QStringList const&) { this->updateUserNames(); });
 
     updateUserNames();
     setAcceptDrops(true);

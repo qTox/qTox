@@ -22,6 +22,8 @@
 #include "src/model/groupmessagedispatcher.h"
 #include "src/model/message.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/igroupsettings.h"
+#include "util/interface.h"
 
 #include "test/mock/mockcoreidhandler.h"
 #include "test/mock/mockgroupquery.h"
@@ -54,12 +56,15 @@ void MockGroupMessageSender::sendGroupMessage(int groupId, const QString& messag
     numSentMessages++;
 }
 
-class MockGroupSettings : public IGroupSettings
+class MockGroupSettings : public QObject, public IGroupSettings
 {
+    Q_OBJECT
+
 public:
     QStringList getBlackList() const override;
-
     void setBlackList(const QStringList& blist) override;
+
+    SIGNAL_IMPL(MockGroupSettings, blackListChanged, QStringList const& blist)
 
 private:
     QStringList blacklist;

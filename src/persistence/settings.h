@@ -231,7 +231,6 @@ signals:
     // Privacy
     void typingNotificationChanged(bool enabled);
     void dbSyncTypeChanged(Db::syncType type);
-    void blackListChanged(QStringList const& blist);
 
 public:
     bool applyCommandLineOptions(const QCommandLineParser& parser);
@@ -461,8 +460,11 @@ public:
     // Privacy
     bool getTypingNotification() const;
     void setTypingNotification(bool enabled);
+
     QStringList getBlackList() const override;
     void setBlackList(const QStringList& blist) override;
+
+    SIGNAL_IMPL(Settings, blackListChanged, QStringList const& blist)
 
     // State
     QByteArray getWindowGeometry() const;
