@@ -344,7 +344,7 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
             tox_file_get_file_id(tox, friendId, fileId, avatarHash, nullptr);
             QByteArray avatarBytes{static_cast<const char*>(static_cast<const void*>(avatarHash)),
                                    TOX_HASH_LENGTH};
-            emit core->fileAvatarOfferReceived(friendId, fileId, avatarBytes);
+            emit core->fileAvatarOfferReceived(friendId, fileId, avatarBytes, filesize);
             return;
         }
     } else {
@@ -371,7 +371,7 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
 }
 
 // TODO(sudden6): This whole method is a mess but needed to get stuff working for now
-void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept)
+void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept, uint64_t filesize)
 {
     if (!accept) {
         // If it's an avatar but we already have it cached, cancel
@@ -388,7 +388,7 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
                     .arg(fileId);
     tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_RESUME, nullptr);
 
-    ToxFile file{fileId, friendId, "<avatar>", "", 0, ToxFile::RECEIVING};
+    ToxFile file{fileId, friendId, "<avatar>", "", filesize, ToxFile::RECEIVING};
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
     tox_file_get_file_id(tox, friendId, fileId, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),

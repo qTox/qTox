@@ -48,7 +48,7 @@ class CoreFile : public QObject
     Q_OBJECT
 
 public:
-    void handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept);
+    void handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept, uint64_t filesize);
     static CoreFilePtr makeCoreFile(Core* core, Tox* tox, CompatibleRecursiveMutex& coreLoopLock);
 
     void sendFile(uint32_t friendId, QString filename, QString filePath,

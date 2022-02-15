@@ -472,11 +472,11 @@ void Profile::onSaveToxSave()
 }
 
 // TODO(sudden6): handle this better maybe?
-void Profile::onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash)
+void Profile::onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash, uint64_t filesize)
 {
     // accept if we don't have it already
     const bool accept = getAvatarHash(core->getFriendPublicKey(friendId)) != avatarHash;
-    core->getCoreFile()->handleAvatarOffer(friendId, fileId, accept);
+    core->getCoreFile()->handleAvatarOffer(friendId, fileId, accept, filesize);
 }
 
 /**
