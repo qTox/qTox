@@ -29,6 +29,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QRegularExpression>
+#include <cstdint>
+#include <qjsonarray.h>
 
 namespace NodeFields {
 const QLatin1String status_udp{"status_udp"};
@@ -38,9 +40,8 @@ const QLatin1String ipv6{"ipv6"};
 const QLatin1String public_key{"public_key"};
 const QLatin1String udp_port{"port"};
 const QLatin1String maintainer{"maintainer"};
-// TODO(sudden6): make use of this field once we differentiate between TCP nodes, and bootstrap nodes
 const QLatin1String tcp_ports{"tcp_ports"};
-const QStringList neededFields{status_udp, status_tcp, ipv4, ipv6, public_key, udp_port, maintainer};
+const QStringList neededFields{status_udp, status_tcp, ipv4, ipv6, public_key, udp_port, tcp_ports, maintainer};
 } // namespace NodeFields
 
 namespace {
@@ -63,13 +64,22 @@ void jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList)
         return;
     }
 
-    // only use nodes that provide at least UDP connection
-    if (!node[NodeFields::status_udp].toBool(false)) {
-        return;
-    }
-
     const QString public_key = node[NodeFields::public_key].toString({});
     const auto udp_port = node[NodeFields::udp_port].toInt(-1);
+    const auto status_udp = node[NodeFields::status_udp].toBool(false);
+    const auto status_tcp = node[NodeFields::status_tcp].toBool(false);
+    const QString maintainer = node[NodeFields::maintainer].toString({});
+
+    std::vector<uint16_t> tcp_ports;
+    const auto jsonTcpPorts = node[NodeFields::tcp_ports].toArray();
+    for (int i = 0; i < jsonTcpPorts.count(); ++i) {
+        const auto port = jsonTcpPorts.at(i).toInt();
+        if (port < 1 || port > std::numeric_limits<uint16_t>::max()) {
+            qDebug  () << "Invalid TCP port in nodes list:" << port;
+            return;
+        }
+        tcp_ports.emplace_back(static_cast<uint16_t>(port));
+    }
 
     // nodes.tox.chat doesn't use empty strings for empty addresses
     QString ipv6_address = node[NodeFields::ipv6].toString({});
@@ -86,6 +96,14 @@ void jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList)
         qWarning() << "Both ipv4 and ipv4 addresses are empty for" << public_key;
     }
 
+    if (status_udp && udp_port == -1) {
+        qWarning() << "UDP enabled by no UDP port for" << public_key;
+    }
+
+    if (status_tcp && tcp_ports.empty()) {
+        qWarning() << "TCP enabled but not TCP ports:" << public_key;
+    }
+
     if (udp_port < 1 || udp_port > std::numeric_limits<uint16_t>::max()) {
         qDebug() << "Invalid port in nodes list:" << udp_port;
         return;
@@ -99,7 +117,8 @@ void jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList)
 
     DhtServer server;
     server.statusUdp = true;
-    server.statusTcp = node[NodeFields::status_udp].toBool(false);
+    server.statusTcp = status_tcp;
+    server.tcpPorts = tcp_ports;
     server.userId = public_key;
     server.udpPort = udp_port_u16;
     server.maintainer = maintainer;
@@ -165,6 +184,12 @@ QByteArray serialize(QList<DhtServer> nodes)
         nodeJson.insert(NodeFields::public_key, node.userId);
         nodeJson.insert(NodeFields::udp_port, node.udpPort);
         nodeJson.insert(NodeFields::maintainer, node.maintainer);
+
+        QJsonArray tcp_ports;
+        for (size_t i = 0; i < node.tcpPorts.size(); ++i) {
+            tcp_ports.push_back(node.tcpPorts.at(i));
+        }
+        nodeJson.insert(NodeFields::tcp_ports, tcp_ports);
         jsonNodes.append(nodeJson);
     }
     QJsonObject rootObj;

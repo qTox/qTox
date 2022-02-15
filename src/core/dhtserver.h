@@ -20,6 +20,7 @@
 #pragma once
 
 #include <QString>
+#include <vector>
 
 struct DhtServer
 {
@@ -30,6 +31,7 @@ struct DhtServer
     QString maintainer;
     QString userId;
     quint16 udpPort;
+    std::vector<uint16_t> tcpPorts;
 
     bool operator==(const DhtServer& other) const;
     bool operator!=(const DhtServer& other) const;
