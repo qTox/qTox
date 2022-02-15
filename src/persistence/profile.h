@@ -22,7 +22,6 @@
 
 #include "src/core/core.h"
 #include "src/core/toxencrypt.h"
-#include "src/core/toxid.h"
 
 #include "src/net/avatarbroadcaster.h"
 
@@ -38,6 +37,7 @@
 
 class Settings;
 class QCommandLineParser;
+class ToxPk;
 
 class Profile : public QObject
 {

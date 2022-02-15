@@ -838,8 +838,7 @@ void Core::bootstrapDht()
             address = dhtServer.ipv4.toLatin1();
         }
 
-        // TODO: constucting the pk via ToxId is a workaround
-        ToxPk pk = ToxId{dhtServer.userId}.getPublicKey();
+        ToxPk pk{dhtServer.userId};
         const uint8_t* pkPtr = pk.getData();
 
         Tox_Err_Bootstrap error;

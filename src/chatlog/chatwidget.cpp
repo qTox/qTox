@@ -1404,7 +1404,7 @@ void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool coloriz
 {
     const auto& sender = item.getSender();
 
-    bool isSelf = sender == core.getSelfId().getPublicKey();
+    bool isSelf = sender == core.getSelfPublicKey();
 
     switch (item.getContentType()) {
     case ChatLogItem::ContentType::message: {
