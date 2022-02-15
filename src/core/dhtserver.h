@@ -29,7 +29,7 @@ struct DhtServer
     QString ipv6;
     QString maintainer;
     QString userId;
-    quint16 port;
+    quint16 udpPort;
 
     bool operator==(const DhtServer& other) const;
     bool operator!=(const DhtServer& other) const;
