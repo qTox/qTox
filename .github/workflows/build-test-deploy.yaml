@@ -105,7 +105,7 @@ jobs:
         with:
           docker_image_name: almalinux
       - name: Run build
-        run: docker compose run --rm almalinux ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm almalinux ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-fedora:
     name: Fedora
     runs-on: ubuntu-latest
@@ -121,7 +121,7 @@ jobs:
         with:
           docker_image_name: fedora
       - name: Run build
-        run: docker compose run --rm fedora ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm fedora ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-opensuse:
     name: Opensuse
     runs-on: ubuntu-latest
@@ -137,7 +137,7 @@ jobs:
         with:
           docker_image_name: opensuse
       - name: Run build
-        run: docker compose run --rm opensuse ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm opensuse ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-debian:
     name: Debian
     runs-on: ubuntu-latest
@@ -153,7 +153,7 @@ jobs:
         with:
           docker_image_name: debian
       - name: Run build
-        run: docker compose run --rm debian ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm debian ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-debian-old:
     name: Debian Old
     runs-on: ubuntu-latest
@@ -169,7 +169,7 @@ jobs:
         with:
           docker_image_name: debian_old
       - name: Run build
-        run: docker compose run --rm debian_old ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm debian_old ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-ubuntu:
     name: Ubuntu LTS
     runs-on: ubuntu-latest
@@ -185,12 +185,12 @@ jobs:
         with:
           docker_image_name: ubuntu_lts
       - name: Run build
-        run: docker compose run --rm ubuntu_lts ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm ubuntu_lts ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
       - name: Code coverage
         run: |
           # https://github.com/actions/runner/issues/491
           if [ "${{ matrix.build_type }}" == "Release" ] && [ "${{ matrix.features }}" == "full" ]; then
-            docker compose run --rm ubuntu_lts ./.travis/lcov.sh
+            docker-compose run --rm ubuntu_lts ./.travis/lcov.sh
             # Upload report to codecov.io
             bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
           fi
@@ -210,7 +210,7 @@ jobs:
         with:
           docker_image_name: ubuntu_lts
       - name: Run build
-        run: docker compose run --rm ubuntu_lts ./appimage/build.sh --src-dir /qtox
+        run: docker-compose run --rm ubuntu_lts ./appimage/build.sh --src-dir /qtox
       - name: Upload appimage
         uses: actions/upload-artifact@v2
         with:
@@ -263,7 +263,7 @@ jobs:
         with:
           docker_image_name: flatpak
       - name: Run build
-        run: docker compose run --rm flatpak ./flatpak/build.sh
+        run: docker-compose run --rm flatpak ./flatpak/build.sh
       - name: Upload flatpak
         uses: actions/upload-artifact@v2
         with:
@@ -318,7 +318,7 @@ jobs:
         with:
           docker_image_name: windows_builder
       - name: Run build
-        run: docker compose run --rm windows_builder ./windows/cross-compile/build.sh --arch x86_64 --build-type ${{ matrix.build_type }} --src-dir /qtox
+        run: docker-compose run --rm windows_builder ./windows/cross-compile/build.sh --arch x86_64 --build-type ${{ matrix.build_type }} --src-dir /qtox
       - name: Upload installer
         uses: actions/upload-artifact@v2
         with:
@@ -388,7 +388,7 @@ jobs:
         with:
           docker_image_name: windows_builder.i686
       - name: Run build
-        run: docker compose run --rm windows_builder.i686 ./windows/cross-compile/build.sh --arch i686 --build-type ${{ matrix.build_type }} --src-dir /qtox
+        run: docker-compose run --rm windows_builder.i686 ./windows/cross-compile/build.sh --arch i686 --build-type ${{ matrix.build_type }} --src-dir /qtox
       - name: Upload installer
         uses: actions/upload-artifact@v2
         with:
