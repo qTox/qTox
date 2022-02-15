@@ -522,7 +522,7 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
 
             if (getEnableLogging())
                 fp.activity = ps.value("activity", QDateTime()).toDateTime();
-            friendLst.insert(ToxId(fp.addr).getPublicKey().getByteArray(), fp);
+            friendLst.insert(ToxPk(fp.addr).getByteArray(), fp);
         }
         ps.endArray();
     }
@@ -1865,8 +1865,7 @@ void Settings::setCamVideoFPS(float newValue)
 QString Settings::getFriendAddress(const QString& publicKey) const
 {
     QMutexLocker locker{&bigLock};
-    // TODO: using ToxId here is a hack
-    QByteArray key = ToxId(publicKey).getPublicKey().getByteArray();
+    QByteArray key = ToxPk(publicKey).getByteArray();
     auto it = friendLst.find(key);
     if (it != friendLst.end())
         return it->addr;
@@ -1877,8 +1876,7 @@ QString Settings::getFriendAddress(const QString& publicKey) const
 void Settings::updateFriendAddress(const QString& newAddr)
 {
     QMutexLocker locker{&bigLock};
-    // TODO: using ToxId here is a hack
-    auto key = ToxId(newAddr).getPublicKey();
+    auto key = ToxPk(newAddr);
     auto& frnd = getOrInsertFriendPropRef(key);
     frnd.addr = newAddr;
 }

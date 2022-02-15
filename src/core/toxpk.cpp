@@ -17,6 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "contactid.h"
 #include "toxpk.h"
 
 #include <tox/tox.h>
@@ -57,6 +58,25 @@ ToxPk::ToxPk(const QByteArray& rawId)
     : ContactId([rawId](){
         assert(rawId.length() == TOX_PUBLIC_KEY_SIZE);
         return rawId;}())
+{
+}
+
+/**
+ * @brief Constructs a ToxPk from a QString.
+ *
+  * If the given pk isn't a valid Public Key a ToxPk with all zero bytes is created.
+ *
+ * @param pk Tox Pk string to convert to ToxPk object
+ */
+ToxPk::ToxPk(const QString& pk)
+    : ContactId([pk](){
+    if (pk.length() == PUBLIC_KEY_HEX_CHARS) {
+        return QByteArray::fromHex(pk.toLatin1());
+    } else {
+        assert(!"ToxPk constructed with invalid length string");
+        return QByteArray(); // invalid pk string
+    }
+    }())
 {
 }
 

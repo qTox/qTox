@@ -361,7 +361,7 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
         // Note that message.id is _not_ a valid conversion here since it is a
         // global id not a per-chat id like the ChatLogIdx
         auto currentIdx = nextIdx++;
-        auto sender = ToxId(message.sender).getPublicKey();
+        auto sender = ToxPk(message.sender);
         switch (message.content.getType()) {
         case HistMessageContentType::file: {
             const auto date = message.timestamp;

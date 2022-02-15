@@ -101,7 +101,7 @@ QString GenericChatForm::resolveToxPk(const ToxPk& pk)
     }
 
     for (Group* it : GroupList::getAllGroups()) {
-        QString res = it->resolveToxId(pk);
+        QString res = it->resolveToxPk(pk);
         if (!res.isEmpty()) {
             return res;
         }

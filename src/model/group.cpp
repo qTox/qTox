@@ -181,7 +181,7 @@ bool Group::getMentionedFlag() const
     return userWasMentioned;
 }
 
-QString Group::resolveToxId(const ToxPk& id) const
+QString Group::resolveToxPk(const ToxPk& id) const
 {
     auto it = peerDisplayNames.find(id);
 

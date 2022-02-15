@@ -30,5 +30,6 @@ public:
     ToxPk(const ToxPk& other);
     explicit ToxPk(const QByteArray& rawId);
     explicit ToxPk(const uint8_t* rawId);
+    explicit ToxPk(const QString& pk);
     int getSize() const override;
 };

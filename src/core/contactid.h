@@ -24,6 +24,9 @@
 #include <cstdint>
 #include <QHash>
 #include <memory>
+#include <tox/tox.h>
+
+#define PUBLIC_KEY_HEX_CHARS (2 * TOX_PUBLIC_KEY_SIZE)
 
 class ContactId
 {
