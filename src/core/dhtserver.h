@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "toxpk.h"
+
 #include <QString>
 #include <vector>
 
@@ -29,7 +31,7 @@ struct DhtServer
     QString ipv4;
     QString ipv6;
     QString maintainer;
-    QString userId;
+    ToxPk publicKey;
     quint16 udpPort;
     std::vector<uint16_t> tcpPorts;
 
