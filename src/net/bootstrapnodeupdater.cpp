@@ -20,6 +20,8 @@
 #include "bootstrapnodeupdater.h"
 
 #include "src/persistence/paths.h"
+#include "src/core/toxpk.h"
+#include "src/core/toxid.h"
 
 #include <QDirIterator>
 #include <QFile>
@@ -120,7 +122,7 @@ void jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList)
     server.statusUdp = true;
     server.statusTcp = status_tcp;
     server.tcpPorts = tcp_ports;
-    server.userId = public_key;
+    server.publicKey = ToxPk{public_key};
     server.udpPort = udp_port_u16;
     server.maintainer = maintainer;
     server.ipv4 = ipv4_address;
@@ -182,7 +184,7 @@ QByteArray serialize(QList<DhtServer> nodes)
         nodeJson.insert(NodeFields::status_tcp, node.statusTcp);
         nodeJson.insert(NodeFields::ipv4, node.ipv4);
         nodeJson.insert(NodeFields::ipv6, node.ipv6);
-        nodeJson.insert(NodeFields::public_key, node.userId);
+        nodeJson.insert(NodeFields::public_key, node.publicKey.toString());
         nodeJson.insert(NodeFields::udp_port, node.udpPort);
         nodeJson.insert(NodeFields::maintainer, node.maintainer);
 
