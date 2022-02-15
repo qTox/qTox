@@ -41,15 +41,16 @@ RUN dpkg --add-architecture i386 && \
                    texinfo \
                    unzip \
                    curl \
+                   gnupg \
                    yasm \
                    zip \
                    g++-mingw-w64-${ARCH//_/-} \
                    gcc-mingw-w64-${ARCH//_/-} \
-                   gdb-mingw-w64 \
-                   wine \
-                   wine32 \
-                   wine64 && \
-    apt-get clean && \
+                   gdb-mingw-w64
+RUN curl -L --connect-timeout 10 https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
+RUN echo "deb https://dl.winehq.org/wine-builds/debian/ bullseye main" >> /etc/apt/sources.list.d/wine.list
+RUN apt-get update && apt-get install -y --no-install-recommends wine-stable
+RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --set ${ARCH}-w64-mingw32-gcc /usr/bin/${ARCH}-w64-mingw32-gcc-posix && \
@@ -233,4 +234,3 @@ RUN mkdir -p /src/gdb && \
 
 RUN mkdir -p /qtox
 WORKDIR /qtox
-
