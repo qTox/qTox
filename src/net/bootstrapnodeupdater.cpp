@@ -36,11 +36,11 @@ const QLatin1String status_tcp{"status_tcp"};
 const QLatin1String ipv4{"ipv4"};
 const QLatin1String ipv6{"ipv6"};
 const QLatin1String public_key{"public_key"};
-const QLatin1String port{"port"};
+const QLatin1String udp_port{"port"};
 const QLatin1String maintainer{"maintainer"};
 // TODO(sudden6): make use of this field once we differentiate between TCP nodes, and bootstrap nodes
 const QLatin1String tcp_ports{"tcp_ports"};
-const QStringList neededFields{status_udp, status_tcp, ipv4, ipv6, public_key, port, maintainer};
+const QStringList neededFields{status_udp, status_tcp, ipv4, ipv6, public_key, udp_port, maintainer};
 } // namespace NodeFields
 
 namespace {
@@ -69,7 +69,7 @@ void jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList)
     }
 
     const QString public_key = node[NodeFields::public_key].toString({});
-    const int port = node[NodeFields::port].toInt(-1);
+    const auto udp_port = node[NodeFields::udp_port].toInt(-1);
 
     // nodes.tox.chat doesn't use empty strings for empty addresses
     QString ipv6_address = node[NodeFields::ipv6].toString({});
@@ -86,13 +86,11 @@ void jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList)
         qWarning() << "Both ipv4 and ipv4 addresses are empty for" << public_key;
     }
 
-    const QString maintainer = node[NodeFields::maintainer].toString({});
-
-    if (port < 1 || port > std::numeric_limits<uint16_t>::max()) {
-        qDebug() << "Invalid port in nodes list:" << port;
+    if (udp_port < 1 || udp_port > std::numeric_limits<uint16_t>::max()) {
+        qDebug() << "Invalid port in nodes list:" << udp_port;
         return;
     }
-    const quint16 port_u16 = static_cast<quint16>(port);
+    const quint16 udp_port_u16 = static_cast<quint16>(udp_port);
 
     if (!public_key.contains(ToxPkRegEx)) {
         qDebug() << "Invalid public key in nodes list" << public_key;
@@ -103,7 +101,7 @@ void jsonNodeToDhtServer(const QJsonObject& node, QList<DhtServer>& outList)
     server.statusUdp = true;
     server.statusTcp = node[NodeFields::status_udp].toBool(false);
     server.userId = public_key;
-    server.port = port_u16;
+    server.udpPort = udp_port_u16;
     server.maintainer = maintainer;
     server.ipv4 = ipv4_address;
     server.ipv6 = ipv6_address;
@@ -165,7 +163,7 @@ QByteArray serialize(QList<DhtServer> nodes)
         nodeJson.insert(NodeFields::ipv4, node.ipv4);
         nodeJson.insert(NodeFields::ipv6, node.ipv6);
         nodeJson.insert(NodeFields::public_key, node.userId);
-        nodeJson.insert(NodeFields::port, node.port);
+        nodeJson.insert(NodeFields::udp_port, node.udpPort);
         nodeJson.insert(NodeFields::maintainer, node.maintainer);
         jsonNodes.append(nodeJson);
     }
