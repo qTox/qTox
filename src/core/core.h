@@ -165,7 +165,7 @@ signals:
      * @deprecated prefer signals using ToxPk
      */
 
-    void fileAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash);
+    void fileAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash, uint64_t filesize);
 
     void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
     void friendAdded(uint32_t friendId, const ToxPk& friendPk);
