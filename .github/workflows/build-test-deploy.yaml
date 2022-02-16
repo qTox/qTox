@@ -506,6 +506,8 @@ jobs:
       DOXYGEN_CONFIG_FILE: doxygen.conf
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Run
         run: ./.travis/build-docs.sh
   build-gitstats:
