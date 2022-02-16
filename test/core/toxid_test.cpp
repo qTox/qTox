@@ -24,11 +24,11 @@
 #include <ctime>
 
 const QString corrupted =
-    QStringLiteral("C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30C8BA3AB9BEBA");
+    QStringLiteral("A369865720756105C324F27C20093F26BEEB2655F803977D5C2EB6B408B8E404AFC201CC15D2");
 const QString testToxId =
-    QStringLiteral("C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30C8BA3AB9BEB9");
-const QString publicKey =
-    QStringLiteral("C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30");
+    QStringLiteral("A369865720756105C324F27C20093F26BEEB2655F803977D5C2EB6B408B8E404AFC201CC15D1");
+const QString newNoSpam =
+    QStringLiteral("A369865720756105C324F27C20093F26BEEB2655F803977D5C2EB6B408B8E40476ECD68C1BBF");
 const QString echoToxId =
     QStringLiteral("76518406F6A9F2217E8DC487CC783C25CC16A15EB36FF32E335A235342C48A39218F515C39A6");
 
@@ -53,7 +53,7 @@ void TestToxId::toStringTest()
 void TestToxId::equalTest()
 {
     ToxId toxId1(testToxId);
-    ToxId toxId2(publicKey);
+    ToxId toxId2(newNoSpam);
     QVERIFY(toxId1 == toxId2);
     QVERIFY(!(toxId1 != toxId2));
 }
@@ -84,10 +84,8 @@ void TestToxId::copyTest()
 void TestToxId::validationTest()
 {
     QVERIFY(ToxId(testToxId).isValid());
-    QVERIFY(!ToxId(publicKey).isValid());
+    QVERIFY(ToxId(newNoSpam).isValid());
     QVERIFY(!ToxId(corrupted).isValid());
-    QString deadbeef = "DEADBEEF";
-    QVERIFY(!ToxId(deadbeef).isValid());
 }
 
 QTEST_GUILESS_MAIN(TestToxId)
