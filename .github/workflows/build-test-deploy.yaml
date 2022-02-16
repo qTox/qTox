@@ -459,9 +459,6 @@ jobs:
         needs.update-nightly-tag.result == 'skipped')
     permissions:
       contents: write
-    env:
-      TRAVIS: true
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v2
       - name: homebrew
