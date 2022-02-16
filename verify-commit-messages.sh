@@ -36,10 +36,11 @@ ARG="$1"
 echo "" # ← formatting
 
 grep_for_invalid() {
-    # we can't rely on differentiating merge and normal commits since short clones that travis does may not be able
-    # to tell if the oldest commit is a merge commit or not
-    git log --format=format:'%s' "$ARG" \
-        | grep -v -E '^((feat|fix|docs|style|refactor|perf|revert|test|chore)(\(.{,12}\))?:.{1,68})|(Merge .{1,70})$'
+    # differentiate what is allowed for commit messages and merge messages
+    git log --no-merges --format=format:'%s' "$ARG" \
+        | grep -v -E '^(feat|fix|docs|style|refactor|perf|revert|test|chore)(\(.{,12}\))?:.{1,68}$' \
+        || git log --merges --format=format:'%s' "$ARG" \
+            | grep -v -E '^Merge .{1,70}$'
 }
 
 # Conform, /OR ELSE/.
