@@ -107,7 +107,7 @@ jobs:
         with:
           docker_image_name: almalinux
       - name: Run build
-        run: docker-compose run --rm almalinux ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm almalinux ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-fedora:
     name: Fedora
     runs-on: ubuntu-latest
@@ -123,7 +123,7 @@ jobs:
         with:
           docker_image_name: fedora
       - name: Run build
-        run: docker-compose run --rm fedora ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm fedora ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-opensuse:
     name: Opensuse
     runs-on: ubuntu-latest
@@ -139,7 +139,7 @@ jobs:
         with:
           docker_image_name: opensuse
       - name: Run build
-        run: docker-compose run --rm opensuse ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm opensuse ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-debian:
     name: Debian
     runs-on: ubuntu-latest
@@ -155,7 +155,7 @@ jobs:
         with:
           docker_image_name: debian
       - name: Run build
-        run: docker-compose run --rm debian ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm debian ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-debian-old:
     name: Debian Old
     runs-on: ubuntu-latest
@@ -171,7 +171,7 @@ jobs:
         with:
           docker_image_name: debian_old
       - name: Run build
-        run: docker-compose run --rm debian_old ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm debian_old ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-ubuntu:
     name: Ubuntu LTS
     runs-on: ubuntu-latest
@@ -187,12 +187,12 @@ jobs:
         with:
           docker_image_name: ubuntu_lts
       - name: Run build
-        run: docker-compose run --rm ubuntu_lts ./.travis/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm ubuntu_lts ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
       - name: Code coverage
         run: |
           # https://github.com/actions/runner/issues/491
           if [ "${{ matrix.build_type }}" == "Release" ] && [ "${{ matrix.features }}" == "full" ]; then
-            docker-compose run --rm ubuntu_lts ./.travis/lcov.sh
+            docker-compose run --rm ubuntu_lts ./.ci-scripts/lcov.sh
             # Upload report to codecov.io
             bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
           fi
@@ -469,7 +469,7 @@ jobs:
       - name: Install toxcore and toxext
         run: buildscripts/build_toxcore_linux.sh
       - name: Build qTox
-        run: ./.travis/build-osx.sh
+        run: ./.ci-scripts/build-osx.sh
       - name: Upload dmg
         uses: actions/upload-artifact@v2
         with:
@@ -509,7 +509,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Run
-        run: ./.travis/build-docs.sh
+        run: ./.ci-scripts/build-docs.sh
   build-gitstats:
     name: Gitstats
     runs-on: ubuntu-18.04
@@ -520,9 +520,9 @@ jobs:
       - name: Install gitstats
         run: sudo apt-get install gitstats
       - name: Run
-        run: ./.travis/build-gitstats.sh
+        run: ./.ci-scripts/build-gitstats.sh
       - name: Deploy
         if: github.ref == 'refs/heads/master'
         env:
           access_key: ${{ secrets.GITSTATS_DEPLOY_KEY }}
-        run: ./.travis/deploy-gitstats.sh
+        run: ./.ci-scripts/deploy-gitstats.sh

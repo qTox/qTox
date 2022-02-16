@@ -11,4 +11,4 @@ jobs:
         with:
           fetch-depth: 0 # so that we can see the full commit range
       - name: Run
-        run: ./.travis/verify-commit-format.sh
+        run: ./.ci-scripts/verify-commit-format.sh
