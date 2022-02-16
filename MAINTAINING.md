@@ -63,7 +63,7 @@ git config --global alias.logs 'log --show-signature'
   make sure it's up to date with qTox/qTox, then e.g. `./merge-pr.sh 1234`.
 
   You don't have to use it, but then you're running into risk of breaking
-  travis build of master & other PRs, since it verifies all commit messages,
+  CI build of master & other PRs, since it verifies all commit messages,
   indlucing merge messages.
 
   Risk, that can be avoided when one doesn't type manually merge message :wink:
@@ -83,10 +83,8 @@ git config --global alias.logs 'log --show-signature'
 
 # Continous Integration
 
-qTox nightly builds can be found in [qTox-nightly-release]. Should one build
-fail, it is important to restart the whole Travis CI build and not just a
-single job. The tool managing the nightly builds deletes all build artifacts
-on any job failure, so all need to be rebuilt.
+All CI is done through GitHub actions. Nightly builds are published to
+qTox/qTox releases.
 
 # Issues
 
@@ -231,8 +229,7 @@ To get translations into qTox:
 
 - Create and GPG-sign the tar.lz and tar.gz archives using
   [`./tools/create-tarballs.sh`] script, and upload both archives plus both
-  signature files to the github release that was created by a Travis OSX
-  release job.
+  signature files to the github draft release that was created by CI.
 - Download the binaries that are part of the draft release, sign them in
   in detached and ascii armored mode, e.g. `gpg -a -b <artifact>`, and upload
   the signatures to the draft release.

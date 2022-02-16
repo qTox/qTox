@@ -10,9 +10,6 @@
 <a href="https://github.com/qTox/qTox/blob/master/LICENSE">
 <img src="https://img.shields.io/badge/license-GPLv3%2B-blue.svg" alt="GPLv3+" />
 </a>
-<a href="https://travis-ci.org/qTox/qTox">
-<img src="https://travis-ci.org/qTox/qTox.svg?branch=master" alt="Travis CI" />
-</a>
 <a href="https://hosted.weblate.org/engage/tox/?utm_source=widget">
 <img src="https://hosted.weblate.org/widgets/tox/-/svg-badge.svg"
      alt="Translate on Weblate" />
@@ -83,7 +80,6 @@ The next steps are:
 * move all toxcore abstractions into their own subproject
 * write basic tests for this Core
 * format the code base
-* rework our TravisCI setup for faster PR checks
 * rethink our Issue tracker
 
 The current state is tracked in the [Code cleanup] project.

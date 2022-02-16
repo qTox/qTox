@@ -40,11 +40,11 @@ it still will be there next time you might need it. `:-)`
 * Provide **version** information (you can find version numbers in menu
   `Settings → About`):
 ```
-OS: 
-qTox version: 
-Commit hash: 
-toxcore: 
-Qt: 
+OS:
+qTox version:
+Commit hash:
+toxcore:
+Qt:
 ```
 * Provide **steps** to reproduce the problem, it will be easier to pinpoint the
   fault.
@@ -268,7 +268,7 @@ For example:
 * `i18n` – something has been made translatable
 * `build` – change affects build system / scripts, e.g. `CMakeLists.txt`,
   `simple_make.sh`, etc.
-* `travis` – change affects Travis CI
+* `ci` – change affects CI
 * `CONTRIBUTING` – change to the contributing guidelines
 
 Since people were abusing length of the scope, it's limited to 12 characters.

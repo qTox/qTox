@@ -19,7 +19,7 @@ cd "$GITSTATS_DIR"
 COMMIT=$(cd qTox && git describe)
 
 git init --quiet
-git config user.name "Travis CI"
+git config user.name "qTox bot"
 git config user.email "qTox@users.noreply.github.com"
 
 git add .
