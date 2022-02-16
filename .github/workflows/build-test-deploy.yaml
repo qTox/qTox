@@ -519,3 +519,8 @@ jobs:
         run: sudo apt-get install gitstats
       - name: Run
         run: ./.travis/build-gitstats.sh
+      - name: Deploy
+        if: github.ref == 'refs/heads/master'
+        env:
+          access_key: ${{ secrets.GITSTATS_DEPLOY_KEY }}
+        run: ./.travis/deploy-gitstats.sh
