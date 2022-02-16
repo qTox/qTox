@@ -97,6 +97,7 @@ libs=(
 /usr/lib/x86_64-linux-gnu/libgio-2.0.so.0
 /usr/lib/x86_64-linux-gnu/libpango-1.0.so.0
 /usr/lib/x86_64-linux-gnu/libpangoft2-1.0.so.0
+/usr/lib/x86_64-linux-gnu/libpangocairo-1.0.so.0
 )
 
 for lib in "${libs[@]}"; do
