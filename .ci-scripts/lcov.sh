@@ -16,6 +16,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Create lcov report
-lcov --directory /qtox/build --capture --output-file coverage.info
+lcov --directory . --capture --output-file coverage.info
 # Filter out system headers and test sources
 lcov --remove coverage.info '/usr/*' '*/test/*' '*/*_autogen/*' --output-file coverage.info
