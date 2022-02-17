@@ -374,19 +374,6 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "setup-qtox-nightly-x86_64-${{ matrix.build_type }}.zip"
-      - name: Rename exe for nightly upload
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.build_type == 'release'
-        run: cp package-prefix/setup-qtox.exe setup-qtox-nightly-x86_64-release.exe
-      - name: Upload exe to nightly release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.build_type == 'release'
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          tag: nightly
-          prerelease: true
-          replacesArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "setup-qtox-nightly-x86_64-release.exe"
   build-windows-i686:
     name: Windows i686
     runs-on: ubuntu-latest
@@ -445,19 +432,6 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "setup-qtox-nightly-i686-${{ matrix.build_type }}.zip"
-      - name: Rename exe for nightly upload
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.build_type == 'release'
-        run: cp package-prefix/setup-qtox.exe setup-qtox-nightly-i686-release.exe
-      - name: Upload exe to nightly release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.build_type == 'release'
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          tag: nightly
-          prerelease: true
-          replacesArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "setup-qtox-nightly-i686-release.exe"
   build-osx:
     name: macOS
     runs-on: macos-10.15
