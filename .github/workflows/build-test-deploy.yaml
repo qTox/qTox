@@ -109,7 +109,7 @@ jobs:
       - name: Run build
         run: docker-compose run --rm almalinux ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   build-fedora:
-    name: Fedora
+    name: Fedora with ASAN
     runs-on: ubuntu-latest
     needs: build-fedora-docker
     strategy:
@@ -123,7 +123,7 @@ jobs:
         with:
           docker_image_name: fedora
       - name: Run build
-        run: docker-compose run --rm fedora ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+        run: docker-compose run --rm fedora ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }} --sanitize
   build-opensuse:
     name: Opensuse
     runs-on: ubuntu-latest

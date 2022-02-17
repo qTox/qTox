@@ -27,6 +27,7 @@ while (( $# > 0 )); do
     case $1 in
     --minimal) MINIMAL=1 ; shift ;;
     --full) MINIMAL=0; shift ;;
+    --sanitize) SANITIZE=1; shift ;;
     --build-type) BUILD_TYPE=$2; shift 2 ;;
     --help|-h) usage; exit 1 ;;
     *) echo "Unexpected argument $1"; usage; exit 1 ;;
@@ -45,6 +46,11 @@ if [ -z "${BUILD_TYPE+x}" ]; then
     exit 1
 fi
 
+SANITIZE_ARGS=""
+if [ ! -z ${SANITIZE+x} ]; then
+    SANITIZE_ARGS="-DASAN=ON"
+fi
+
 SRCDIR=/qtox
 export CTEST_OUTPUT_ON_FAILURE=1
 
@@ -53,14 +59,16 @@ if [ $MINIMAL -eq 1 ]; then
         -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
         -DSMILEYS=DISABLED \
         -DSTRICT_OPTIONS=ON \
-        -DSPELL_CHECK=OFF
+        -DSPELL_CHECK=OFF \
+        $SANITIZE_ARGS
 else
     cmake "$SRCDIR" \
         -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
         -DUPDATE_CHECK=ON \
         -DSTRICT_OPTIONS=ON \
         -DCODE_COVERAGE=ON \
-        -DDESKTOP_NOTIFICATIONS=ON
+        -DDESKTOP_NOTIFICATIONS=ON \
+        $SANITIZE_ARGS
 fi
 
 cmake --build . -- -j $(nproc)
