@@ -346,7 +346,7 @@ jobs:
       - name: Upload zip
         uses: actions/upload-artifact@v2
         with:
-          name: setup-qtox-x86_64-${{ matrix.build_type }}.zip
+          name: qtox-x86_64-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip
       - name: Rename exe for release upload
         if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
@@ -363,7 +363,7 @@ jobs:
           artifacts: "setup-qtox-x86_64-release.exe,setup-qtox-x86_64-release.exe.sha256"
       - name: Rename zip for nightly upload
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: cp install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip setup-qtox-nightly-x86_64-${{ matrix.build_type }}.zip
+        run: cp install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip qtox-nightly-x86_64-${{ matrix.build_type }}.zip
       - name: Upload zip to nightly release
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: ncipollo/release-action@v1
@@ -373,7 +373,7 @@ jobs:
           prerelease: true
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "setup-qtox-nightly-x86_64-${{ matrix.build_type }}.zip"
+          artifacts: "qtox-nightly-x86_64-${{ matrix.build_type }}.zip"
   build-windows-i686:
     name: Windows i686
     runs-on: ubuntu-latest
@@ -404,7 +404,7 @@ jobs:
       - name: Upload zip
         uses: actions/upload-artifact@v2
         with:
-          name: setup-qtox-i686-${{ matrix.build_type }}.zip
+          name: qtox-i686-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-i686-${{ matrix.build_type }}.zip
       - name: Rename exe for release upload
         if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
@@ -421,7 +421,7 @@ jobs:
           artifacts: "setup-qtox-i686-release.exe,setup-qtox-i686-release.exe.sha256"
       - name: Rename zip for nightly upload
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: cp install-prefix/qtox-i686-${{ matrix.build_type }}.zip setup-qtox-nightly-i686-${{ matrix.build_type }}.zip
+        run: cp install-prefix/qtox-i686-${{ matrix.build_type }}.zip qtox-nightly-i686-${{ matrix.build_type }}.zip
       - name: Upload zip to nightly release
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: ncipollo/release-action@v1
@@ -431,7 +431,7 @@ jobs:
           prerelease: true
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "setup-qtox-nightly-i686-${{ matrix.build_type }}.zip"
+          artifacts: "qtox-nightly-i686-${{ matrix.build_type }}.zip"
   build-osx:
     name: macOS
     runs-on: macos-10.15
