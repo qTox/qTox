@@ -47,6 +47,7 @@ fi
 
 SRCDIR=/qtox
 BUILDDIR=/qtox/build
+export CTEST_OUTPUT_ON_FAILURE=1
 
 rm -fr "$BUILDDIR"
 mkdir -p "$BUILDDIR"
@@ -68,7 +69,6 @@ else
 fi
 
 cmake --build . -- -j $(nproc)
-
 cmake --build . --target test
 
 echo "Checking whether files processed by CMake have been committed..."
