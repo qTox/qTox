@@ -22,13 +22,15 @@
 #include "src/core/icoresettings.h"
 #include "src/net/bootstrapnodeupdater.h"
 #include "src/model/ibootstraplistgenerator.h"
+#include "src/persistence/settings.h"
 
 #include <QtTest/QtTest>
 #include <QtGlobal>
 #include <limits>
 #include <QSignalSpy>
-#include <src/persistence/settings.h>
+
 #include <iostream>
+#include <memory>
 
 Q_DECLARE_METATYPE(QList<DhtServer>)
 
@@ -94,7 +96,7 @@ private slots:
 private:
     /* Test Variables */
     Core::ToxCoreErrors* err = nullptr;
-    MockSettings* settings;
+    std::unique_ptr<MockSettings> settings;
     QByteArray savedata{};
     ToxCorePtr test_core;
 };
@@ -106,7 +108,7 @@ namespace {
 
 void TestCore::startup_without_proxy()
 {
-    settings = new MockSettings();
+    settings = std::unique_ptr<MockSettings>(new MockSettings());
 
     // No proxy
     settings->setProxyAddr("");
@@ -115,7 +117,7 @@ void TestCore::startup_without_proxy()
 
     MockNodeListGenerator nodesGenerator{};
 
-    test_core = Core::makeToxCore(savedata, settings, nodesGenerator, err);
+    test_core = Core::makeToxCore(savedata, settings.get(), nodesGenerator, err);
 
     if (test_core == nullptr) {
         QFAIL("ToxCore initialisation failed");
@@ -133,8 +135,7 @@ void TestCore::startup_without_proxy()
 
 void TestCore::startup_with_invalid_proxy()
 {
-    settings = new MockSettings();
-
+    settings = std::unique_ptr<MockSettings>(new MockSettings());
 
     // Test invalid proxy SOCKS5
     settings->setProxyAddr("Test");
@@ -143,7 +144,7 @@ void TestCore::startup_with_invalid_proxy()
 
     MockNodeListGenerator nodesGenerator{};
 
-    test_core = Core::makeToxCore(savedata, settings, nodesGenerator, err);
+    test_core = Core::makeToxCore(savedata, settings.get(), nodesGenerator, err);
 
     if (test_core != nullptr) {
         QFAIL("ToxCore initialisation passed with invalid SOCKS5 proxy address");
@@ -155,7 +156,7 @@ void TestCore::startup_with_invalid_proxy()
     settings->setProxyPort(9985);
     settings->setProxyType(MockSettings::ProxyType::ptHTTP);
 
-    test_core = Core::makeToxCore(savedata, settings, nodesGenerator, err);
+    test_core = Core::makeToxCore(savedata, settings.get(), nodesGenerator, err);
 
     if (test_core != nullptr) {
         QFAIL("ToxCore initialisation passed with invalid HTTP proxy address");
