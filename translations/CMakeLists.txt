@@ -35,6 +35,7 @@ qt5_add_translation(translations_FILES
   hr.ts
   hu.ts
   it.ts
+  is.ts
   ja.ts
   jbo.ts
   kn.ts
@@ -60,6 +61,7 @@ qt5_add_translation(translations_FILES
   ta.ts
   tr.ts
   ug.ts
+  ur.ts
   uk.ts
   zh_CN.ts
   zh_TW.ts

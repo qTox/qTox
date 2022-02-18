@@ -56,6 +56,7 @@ static QStringList locales = {
     "he",
     "hr",
     "it",
+    "is",
     "si",
     "sq",
     "sw",
@@ -81,6 +82,7 @@ static QStringList locales = {
     "ta",
     "tr",
     "ug",
+    "ur",
     "uk",
     "zh_CN",
     "zh_TW"
