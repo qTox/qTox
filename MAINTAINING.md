@@ -161,6 +161,9 @@ require a bit more attention & regular checking whether there are new
 translations, on the other, it lessened problems that were happening with
 "manual" way of providing translations.
 
+New translable strings need to be generated into a form Weblate can consume
+using `./tools/update-translation-files.sh ALL` and commiting the result.
+
 To get translations into qTox:
 
 1. Go to `https://hosted.weblate.org/projects/tox/qtox/#repository` and lock
@@ -174,11 +177,7 @@ To get translations into qTox:
     - `translations/README.md`
     - `translations/i18n.pri`
     - `translations/translations.qrc`
-5. To update translatable strings from qTox for Weblate, run
-    `./tools/update-translation-files.sh ALL`
-6. Checkout a new branch with e.g. `git checkout -b update_weblate` and open
-   a Pull Request for it on Github.
-7. After the Pull Request has been merged, `reset` Weblate to master and
+5. After the Pull Request has been merged, `reset` Weblate to master and
    unlock it.
 
 # Releases

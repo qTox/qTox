@@ -27,7 +27,6 @@
 
 set -eu -o pipefail
 
-readonly COMMIT_MSG="chore(i18n): update translation files for Weblate"
 readonly LUPDATE_CMD="lupdate src -no-obsolete -locations none -ts"
 
 if [[ "$@" = "ALL" ]]
@@ -36,9 +35,6 @@ then
     do
         $LUPDATE_CMD "$translation"
     done
-
-    git add translations/*.ts
-    git commit -m "$COMMIT_MSG"
 else
     $LUPDATE_CMD "$@"
 fi
