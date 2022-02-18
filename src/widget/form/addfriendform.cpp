@@ -314,7 +314,7 @@ void AddFriendForm::deleteFriendRequest(const ToxId& toxId)
     const int size = Settings::getInstance().getFriendRequestSize();
     for (int i = 0; i < size; ++i) {
         Settings::Request request = Settings::getInstance().getFriendRequest(i);
-        if (toxId == ToxId(request.address)) {
+        if (toxId.getPublicKey() == ToxPk(request.address)) {
             Settings::getInstance().removeFriendRequest(i);
             return;
         }
@@ -329,7 +329,7 @@ void AddFriendForm::onFriendRequestAccepted()
     removeFriendRequestWidget(friendWidget);
     const int indexFromEnd = requestsLayout->count() - index - 1;
     const Settings::Request request = Settings::getInstance().getFriendRequest(indexFromEnd);
-    emit friendRequestAccepted(ToxId(request.address).getPublicKey());
+    emit friendRequestAccepted(ToxPk{request.address});
     Settings::getInstance().removeFriendRequest(indexFromEnd);
     Settings::getInstance().savePersonal();
 }
