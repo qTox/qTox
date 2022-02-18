@@ -438,7 +438,6 @@ bu da video görüşmelerinde sorunlara yol açabilir.</translation>
         <source>Ready to import %n contact(s), click send to confirm</source>
         <translation>
             <numerusform>%n kişiyi içe aktarmaya hazır, onaylamak için göndere tıklayın</numerusform>
-            <numerusform>%n kişiyi içe aktarmaya hazır, onaylamak için göndere tıklayın</numerusform>
         </translation>
     </message>
     <message>
@@ -612,14 +611,6 @@ bu da video görüşmelerinde sorunlara yol açabilir.</translation>
         <translation>Kötü fikir</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation>%1 arıyor</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>%1 aranıyor</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Geçici dosya açılamadı</translation>
@@ -627,10 +618,6 @@ bu da video görüşmelerinde sorunlara yol açabilir.</translation>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translation>qTox ekran görüntüsünü kaydedemedi</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>%1 ile arama sonlandı. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
@@ -643,15 +630,6 @@ bu da video görüşmelerinde sorunlara yol açabilir.</translation>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>Sıralı bir dosya göndermeye çalışıyorsunuz, bu işe yaramayacak!</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 artık %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>%1 ile arama beklenmedik şekilde sonlandı. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -732,29 +710,29 @@ geçersiz karakterler _ olarak değiştirildi.</translation>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
-    <message>
-        <source>pending</source>
-        <translation>bekliyor</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopyala</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation>Tümünü seç</translation>
-    </message>
-    <message>
-        <source>%1 is typing</source>
-        <translation>%1 yazıyor</translation>
-    </message>
-</context>
-<context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
         <translation>İletinizi buraya yazın...</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>pending</source>
+        <translation type="unfinished">bekliyor</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 yazıyor</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopyala</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">Tümünü seç</translation>
     </message>
 </context>
 <context>
@@ -1182,10 +1160,6 @@ tamamen kapanmak yerine tepsiye kapanacak.</translation>
         <translation>Sohbet günlüğünü kaydet</translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation>Temizlendi</translation>
-    </message>
-    <message>
         <source>Send message</source>
         <translation>İleti gönder</translation>
     </message>
@@ -1240,27 +1214,10 @@ tamamen kapanmak yerine tepsiye kapanacak.</translation>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 başlığı %2 olarak ayarladı</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation>%1 gruba katıldı</translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation>%1 artık %2 olarak biliniyor</translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation>%1 gruptan ayrıldı</translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation>
-            <numerusform>%n kullanıcı sohbette</numerusform>
             <numerusform>%n kullanıcı sohbette</numerusform>
         </translation>
     </message>
@@ -1326,7 +1283,6 @@ tamamen kapanmak yerine tepsiye kapanacak.</translation>
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation>
-            <numerusform>%n kullanıcı sohbette</numerusform>
             <numerusform>%n kullanıcı sohbette</numerusform>
         </translation>
     </message>
@@ -1495,32 +1451,12 @@ Sohbete başlamak için arkadaşlarınızla paylaşın.</translation>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation>Geçmişi yükle</translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation>gelen</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation>giden</translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation>(yaklaşık 100 mesaj yüklendi)</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Bir tarih seçin</translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation>Geçmişi yükle iletişim kutusu</translation>
     </message>
     <message>
-        <source>Select date dialog</source>
-        <translation>Tarihi seç iletişim kutusu</translation>
+        <source>Load history from:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1847,7 +1783,6 @@ Lütfen aynı parolayı iki kez girdiğinizden emin olun.</translation>
         <source>Unread message(s)</source>
         <translation>
             <numerusform>Okunmamış mesaj</numerusform>
-            <numerusform>Okunmamış mesajlar</numerusform>
         </translation>
     </message>
 </context>
@@ -2428,6 +2363,111 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
         <comment>contact status</comment>
         <translation>müzakere ediliyor</translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">&quot;%1&quot; dosyası gönderilemedi</translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished">%1 gruba katıldı</translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished">%1 gruptan ayrıldı</translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished">%1 artık %2 olarak biliniyor</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 başlığı %2 olarak ayarladı</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished">Temizlendi</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished">%1 ile arama beklenmedik şekilde sonlandı. %2</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished">%1 ile arama sonlandı. %2</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 artık %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished">%1 aranıyor</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished">%1 arıyor</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">İleti gönderilemedi</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">Duraklatıldı</translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished">Uzaktan duraklatıldı</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Durum</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2532,6 +2572,14 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
     <message>
         <source>Use regular expressions</source>
         <translation>Düzenli ifadeler kullan</translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Bir tarih seçin</translation>
     </message>
 </context>
 <context>
@@ -2820,10 +2868,6 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
         <translation>Adınız</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>İleti gönderilemedi</translation>
-    </message>
-    <message>
         <source>Add new circle...</source>
         <translation>Yeni çevre ekle...</translation>
     </message>
@@ -2934,10 +2978,6 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
         <translation>Profilim</translation>
     </message>
     <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>&quot;%1&quot; dosyası gönderilemedi</translation>
-    </message>
-    <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Toxcore başlatılamadı, bu iletiyi kapattıktan sonra uygulama sonlandırılacak.</translation>
     </message>
@@ -2954,13 +2994,11 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
         <source>%n new friend request(s)</source>
         <translation>
             <numerusform>%n yeni arkadaşlık isteği</numerusform>
-            <numerusform>%n yeni arkadaşlık isteği</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n new group invite(s)</source>
         <translation>
-            <numerusform>%n yeni grup daveti</numerusform>
             <numerusform>%n yeni grup daveti</numerusform>
         </translation>
     </message>

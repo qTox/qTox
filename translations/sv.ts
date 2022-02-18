@@ -601,14 +601,6 @@ vilket kan leda till problem med videosamtal.</translation>
         <translation>qTox kunde inte öppna %1</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation>%1 ringer</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>Samtal med %1 avslutades. %2</translation>
-    </message>
-    <message>
         <source>Call duration: </source>
         <translation>Samtalslängd: </translation>
     </message>
@@ -619,10 +611,6 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Bad idea</source>
         <translation>Dålig idé</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>Ringer %1</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -640,15 +628,6 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>Du försöker skicka en sekventiell fil, som inte kommer att fungera!</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 är nu %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Samtalet med %1 avbröts av okänd anledning. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -729,29 +708,29 @@ så att du kan spara filen i Windows.</translation>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
-    <message>
-        <source>Copy</source>
-        <translation>Kopiera</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation>Markera alla</translation>
-    </message>
-    <message>
-        <source>pending</source>
-        <translation>avvaktar</translation>
-    </message>
-    <message>
-        <source>%1 is typing</source>
-        <translation>%1 skriver</translation>
-    </message>
-</context>
-<context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
         <translation>Skriv ditt meddelande här...</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>pending</source>
+        <translation type="unfinished">avvaktar</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 skriver</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopiera</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">Markera alla</translation>
     </message>
 </context>
 <context>
@@ -1193,10 +1172,6 @@ instead of closing entirely.</source>
         <translation>Ta bort visade meddelanden</translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation>Borttaget</translation>
-    </message>
-    <message>
         <source>Send a screenshot</source>
         <translation>Skicka en skärmdump</translation>
     </message>
@@ -1235,22 +1210,6 @@ instead of closing entirely.</source>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 har angett titeln som %2</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation>%1 har anslutit till gruppen</translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation>%1 är nu känd som %2</translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation>%1 har lämnat gruppen</translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
@@ -1490,32 +1449,12 @@ Dela det med dina vänner för att börja chatta.</translation>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation>Läs in historik</translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation>från</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation>till</translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation>(omkring 100 meddelanden är inlästa)</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Välj ett datum</translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation>Ladda historik dialog</translation>
     </message>
     <message>
-        <source>Select date dialog</source>
-        <translation>Välj datum dialog</translation>
+        <source>Load history from:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2424,6 +2363,111 @@ ID:t innehåller NoSpam-koden (i blått) och kontrollsumman (i grått).</transla
         <comment>contact status</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Det gick inte att skicka filen &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished">%1 har anslutit till gruppen</translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished">%1 har lämnat gruppen</translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished">%1 är nu känd som %2</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 har angett titeln som %2</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished">Borttaget</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished">Samtalet med %1 avbröts av okänd anledning. %2</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished">Samtal med %1 avslutades. %2</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 är nu %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished">Ringer %1</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished">%1 ringer</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">Misslyckades att skicka meddelande</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">Pausad</translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished">Fjärrpausad</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Status</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2528,6 +2572,14 @@ ID:t innehåller NoSpam-koden (i blått) och kontrollsumman (i grått).</transla
     <message>
         <source>Use regular expressions</source>
         <translation>Använd Regular Expression</translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Välj ett datum</translation>
     </message>
 </context>
 <context>
@@ -2813,10 +2865,6 @@ ID:t innehåller NoSpam-koden (i blått) och kontrollsumman (i grått).</transla
         <translation>Upptagen</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>Misslyckades att skicka meddelande</translation>
-    </message>
-    <message>
         <source>Status</source>
         <translation>Status</translation>
     </message>
@@ -2928,10 +2976,6 @@ ID:t innehåller NoSpam-koden (i blått) och kontrollsumman (i grått).</transla
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Min profil</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Det gick inte att skicka filen &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>

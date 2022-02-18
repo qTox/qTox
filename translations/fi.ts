@@ -601,20 +601,12 @@ mikä voi johtaa ongelmiin videopuheluissa.</translation>
         <translation>qTox ei pystynyt avaamaan tiedostoa %1</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation>%1 soittaa</translation>
-    </message>
-    <message>
         <source>Unable to open</source>
         <translation>qTox ei pysty avaamaan tiedostoa</translation>
     </message>
     <message>
         <source>Bad idea</source>
         <translation>Huono ajatus</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>Soitetaan %1:lle</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -624,10 +616,6 @@ mikä voi johtaa ongelmiin videopuheluissa.</translation>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translation>Kuvakaappauksen tallennus epäonnistui</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>Puhelu %1:n kanssa päättyi. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
@@ -640,15 +628,6 @@ mikä voi johtaa ongelmiin videopuheluissa.</translation>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>Yrität lähettää peräkkäisen tiedoston, mikä ei onnistu!</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 on nyt %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Puhelu %1:n kanssa päättyi yllättäen. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -729,29 +708,29 @@ joten voit tallentaa tiedoston Windowsissa.</translation>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
-    <message>
-        <source>Copy</source>
-        <translation>Kopioi</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation>Valitse kaikki</translation>
-    </message>
-    <message>
-        <source>pending</source>
-        <translation>vireillä oleva</translation>
-    </message>
-    <message>
-        <source>%1 is typing</source>
-        <translation>%1 kirjoittaa</translation>
-    </message>
-</context>
-<context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
         <translation>Kirjoita viestisi tähän...</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>pending</source>
+        <translation type="unfinished">vireillä oleva</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 kirjoittaa</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopioi</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">Valitse kaikki</translation>
     </message>
 </context>
 <context>
@@ -1198,10 +1177,6 @@ eikä sulkeudu kokonaan.</translation>
         <translation>Tyhjennä näytetyt viestit</translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation>Tyhjennetty</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation>Lainaa valittua tekstiä</translation>
     </message>
@@ -1236,22 +1211,6 @@ eikä sulkeudu kokonaan.</translation>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 on asettanut otsikoksi %2</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation>%1 liittyi ryhmään</translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation>%1 on nykyisin nimellä %2</translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation>%1 erosi ryhmästä</translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
@@ -1491,32 +1450,12 @@ Jaa se kavereillesi aloittaaksesi keskustelut.</translation>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation>Lataa historia</translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation>henkilöltä</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation>henkilölle</translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation>(noin sata viestiä ladataan)</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Valitse päivämäärä</translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation>Lataa historianäkymä</translation>
     </message>
     <message>
-        <source>Select date dialog</source>
-        <translation>Valitse päivämääränäkymä</translation>
+        <source>Load history from:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2424,6 +2363,111 @@ Tämä ID sisältää spammin estävän koodin(joka on sinisellä), ja tarkistus
         <comment>contact status</comment>
         <translation>neuvottelee</translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Tiedoston &quot;%1&quot; lähettäminen epäonnistui</translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished">%1 liittyi ryhmään</translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished">%1 erosi ryhmästä</translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished">%1 on nykyisin nimellä %2</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 on asettanut otsikoksi %2</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished">Tyhjennetty</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished">Puhelu %1:n kanssa päättyi yllättäen. %2</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished">Puhelu %1:n kanssa päättyi. %2</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 on nyt %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished">Soitetaan %1:lle</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished">%1 soittaa</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">Viestin lähetys epäonnistui</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">Keskeytetty</translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished">Pysäytetty etäältä</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Tila</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2528,6 +2572,14 @@ Tämä ID sisältää spammin estävän koodin(joka on sinisellä), ja tarkistus
     <message>
         <source>Use regular expressions</source>
         <translation>käytä normaalia ilmaisua</translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Valitse päivämäärä</translation>
     </message>
 </context>
 <context>
@@ -2831,10 +2883,6 @@ Tämä ID sisältää spammin estävän koodin(joka on sinisellä), ja tarkistus
         <translation>Olet pyytänyt qToxia avaamaan tiedoston. Tämän tyyppiset tiedostot voivat mahdollisesti vahingoittaa konettasi. Oletko varma, että haluat avata tämän tiedoston?</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>Viestin lähetys epäonnistui</translation>
-    </message>
-    <message>
         <source>Add new circle...</source>
         <translation>Lisää uusi piiri...</translation>
     </message>
@@ -2928,10 +2976,6 @@ Tämä ID sisältää spammin estävän koodin(joka on sinisellä), ja tarkistus
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Profiilini</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Tiedoston &quot;%1&quot; lähettäminen epäonnistui</translation>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>

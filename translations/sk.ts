@@ -610,14 +610,6 @@ Rýchlosť vášho pripojenia nemusí byť vždy dostačujúca pre vyššiu kval
         <translation>Zlý nápad</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation>%1 volá</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>Volanie %1</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Nepodarilo sa otvoriť dočasný súbor</translation>
@@ -626,10 +618,6 @@ Rýchlosť vášho pripojenia nemusí byť vždy dostačujúca pre vyššiu kval
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
         <translation>qTox nebol schopný uložiť snímku obrazovky</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>Hovor s %1 skončil. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
@@ -642,15 +630,6 @@ Rýchlosť vášho pripojenia nemusí byť vždy dostačujúca pre vyššiu kval
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>Snažíte sa poslať sekvenčný súbor. To nebude fungovať!</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 je %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Hovor s %1 nečakane skončil. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -731,29 +710,29 @@ so you can save the file on Windows.</translation>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
-    <message>
-        <source>Copy</source>
-        <translation>Kopírovať</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation>Vybrať všetko</translation>
-    </message>
-    <message>
-        <source>pending</source>
-        <translation>prebieha</translation>
-    </message>
-    <message>
-        <source>%1 is typing</source>
-        <translation>%1 píše</translation>
-    </message>
-</context>
-<context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
         <translation>Sem napíšte vašu správu...</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>pending</source>
+        <translation type="unfinished">prebieha</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 píše</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopírovať</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">Vybrať všetko</translation>
     </message>
 </context>
 <context>
@@ -1206,10 +1185,6 @@ namiesto toho, že by sa zavrel úplne.</translation>
         <translation>Vyčistiť zobrazené správy</translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation>Vyčistené</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation>Citovať označený text</translation>
     </message>
@@ -1244,22 +1219,6 @@ namiesto toho, že by sa zavrel úplne.</translation>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 nastavil názov konverzácie na %2</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation>%1 sa pridal/a do skupiny</translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation>%1 je teraz známy/a ako %2</translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation>%1 opustil/a skupinu</translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
@@ -1501,32 +1460,12 @@ Zdieľajte ho s vašimi priateľmi pre začatie chatovania.</translation>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation>Načítať históriu</translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation>od</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation>komu</translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation>(načítaných je asi 100 správ)</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Zvoľte dátum</translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation>Načítať históriu dialóg</translation>
     </message>
     <message>
-        <source>Select date dialog</source>
-        <translation>Zvoľte dátum dialóg</translation>
+        <source>Load history from:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2375,111 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
         <comment>contact status</comment>
         <translation>dohováram sa</translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Nepodarilo sa odoslať súbor &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished">%1 sa pridal/a do skupiny</translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished">%1 opustil/a skupinu</translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished">%1 je teraz známy/a ako %2</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 nastavil názov konverzácie na %2</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished">Vyčistené</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished">Hovor s %1 nečakane skončil. %2</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished">Hovor s %1 skončil. %2</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 je %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished">Volanie %1</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished">%1 volá</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">Správu sa nepodarilo odoslať</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">Pozastavený</translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished">Pozastavené vzdialene</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Stav</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2540,6 +2584,14 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
     <message>
         <source>Use regular expressions</source>
         <translation>Použiť regulárne výrazy</translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Zvoľte dátum</translation>
     </message>
 </context>
 <context>
@@ -2864,10 +2916,6 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
         <translation>Vaše meno</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>Správu sa nepodarilo odoslať</translation>
-    </message>
-    <message>
         <source>Create new group...</source>
         <translation>Vytvoriť novú skupinu...</translation>
     </message>
@@ -2941,10 +2989,6 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Môj profil</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Nepodarilo sa odoslať súbor &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
