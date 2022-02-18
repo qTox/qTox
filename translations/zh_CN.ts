@@ -600,14 +600,6 @@ which may lead to problems with video calls.</source>
         <translation>qTox 无法打开 %1</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation>%1 呼叫</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>正在呼叫 %1</translation>
-    </message>
-    <message>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
@@ -619,10 +611,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translation>qTox 无法保存截图</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>与 %1 的通话结束. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
@@ -639,15 +627,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>您正在尝试发送顺序文件，这不起作用！</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 现在 %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>与 %1 的通话意外中断。%2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -728,29 +707,29 @@ so you can save the file on Windows.</source>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
-    <message>
-        <source>Copy</source>
-        <translation>复制</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation>全选</translation>
-    </message>
-    <message>
-        <source>pending</source>
-        <translation>等待</translation>
-    </message>
-    <message>
-        <source>%1 is typing</source>
-        <translation>%1 正在输入</translation>
-    </message>
-</context>
-<context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
         <translation>在这里输入将要发送的消息...</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>pending</source>
+        <translation type="unfinished">等待</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 正在输入</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">复制</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">全选</translation>
     </message>
 </context>
 <context>
@@ -1197,10 +1176,6 @@ instead of closing entirely.</source>
         <translation>清屏</translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation>已清除</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation>引用选中的文本</translation>
     </message>
@@ -1235,22 +1210,6 @@ instead of closing entirely.</source>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 已将标题设置为 %2</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation>%1 加入了群组</translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation>%1 更名为 %2</translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation>%1 离开了群</translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
@@ -1488,32 +1447,12 @@ Share it with your friends to begin chatting.</source>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation>加载历史记录</translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation>从</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation>到</translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation>（加载了大约 100 条消息）</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>选择日期</translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation>加载历史对话框</translation>
     </message>
     <message>
-        <source>Select date dialog</source>
-        <translation>选择日期对话框</translation>
+        <source>Load history from:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2420,6 +2359,111 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <comment>contact status</comment>
         <translation>协商</translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">文件“%1”发送失败</translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished">%1 加入了群组</translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished">%1 离开了群</translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished">%1 更名为 %2</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 已将标题设置为 %2</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished">已清除</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished">与 %1 的通话意外中断。%2</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished">与 %1 的通话结束. %2</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 现在 %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished">正在呼叫 %1</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished">%1 呼叫</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">消息发送失败</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">已暂停</translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished">远程暂停</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">状态</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2524,6 +2568,14 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Use regular expressions</source>
         <translation>使用正则表达式</translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">选择日期</translation>
     </message>
 </context>
 <context>
@@ -2835,10 +2887,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>登出</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>消息发送失败</translation>
-    </message>
-    <message>
         <source>Status</source>
         <translation>状态</translation>
     </message>
@@ -2924,10 +2972,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>个人资料</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>文件“%1”发送失败</translation>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>

@@ -610,14 +610,6 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
         <translation>Rea idee</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation>%1 apelează</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>Apelare %1</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Eșec la deschiderea fișierului temporar</translation>
@@ -626,10 +618,6 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
         <translation>qTox nu a reușit să salveze captura de ecran</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>Apelați cu %1 încheiat. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
@@ -642,15 +630,6 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>Încercați să trimiteți un fișier secvențial, care nu va funcționa!</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 este acum %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Apelarea cu %1 sa încheiat neașteptat. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -731,29 +710,29 @@ astfel încât să puteți salva fișierul pe Windows.</translation>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
-    <message>
-        <source>Copy</source>
-        <translation>Copiere</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation>Selectează tot</translation>
-    </message>
-    <message>
-        <source>pending</source>
-        <translation>în așteptare</translation>
-    </message>
-    <message>
-        <source>%1 is typing</source>
-        <translation>%1 scrie</translation>
-    </message>
-</context>
-<context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
         <translation>Scrieți mesajul aici...</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>pending</source>
+        <translation type="unfinished">în așteptare</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 scrie</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Copiere</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">Selectează tot</translation>
     </message>
 </context>
 <context>
@@ -1206,10 +1185,6 @@ instead of closing entirely.</source>
         <translation>Ștergeți mesajele afișate</translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation>Curățat</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation>Citați textul selectat</translation>
     </message>
@@ -1244,22 +1219,6 @@ instead of closing entirely.</source>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 a fost setat titlul la %2</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation>%1 sa alăturat grupului</translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation>%1 este acum cunoscut ca %2</translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation>%1 a părăsit grupul</translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
@@ -1501,32 +1460,12 @@ Distribuiți-l prietenilor dvs. pentru a începe să conversați.</translation>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation>Încărcați istoric</translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation>din</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation>la</translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation>(aproximativ 100 de mesaje sunt încărcate)</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Selectați o dată</translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation>Încarcă dialogul istoric</translation>
     </message>
     <message>
-        <source>Select date dialog</source>
-        <translation>Selectare dată dialog</translation>
+        <source>Load history from:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2375,111 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
         <comment>contact status</comment>
         <translation>negociere</translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Eșec la trimiterea fișierului &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished">%1 sa alăturat grupului</translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished">%1 a părăsit grupul</translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished">%1 este acum cunoscut ca %2</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 a fost setat titlul la %2</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished">Curățat</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished">Apelarea cu %1 sa încheiat neașteptat. %2</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished">Apelați cu %1 încheiat. %2</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 este acum %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished">Apelare %1</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished">%1 apelează</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">Mesajul nu a putut fi trimis</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">În pauză</translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished">Telecomandă întreruptă</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Stare</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2540,6 +2584,14 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     <message>
         <source>Use regular expressions</source>
         <translation>Utilizare expresii regulate</translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Selectați o dată</translation>
     </message>
 </context>
 <context>
@@ -2864,10 +2916,6 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
         <translation>Numele dvs</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>Mesajul nu a putut fi trimis</translation>
-    </message>
-    <message>
         <source>Create new group...</source>
         <translation>Creați un grup nou...</translation>
     </message>
@@ -2941,10 +2989,6 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Profilul meu</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Eșec la trimiterea fișierului &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>

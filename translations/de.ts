@@ -609,14 +609,6 @@ dadurch kann es zu Problemen bei Videoanrufen kommen.</translation>
         <translation>Schlechte Idee</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation>%1 ruft an</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>%1 anrufen</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Temporäre Datei konnte nicht geöffnet werden</translation>
@@ -625,10 +617,6 @@ dadurch kann es zu Problemen bei Videoanrufen kommen.</translation>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
         <translation>qTox konnte den Screenshot nicht speichern</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>Anruf mit %1 beendet. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
@@ -641,15 +629,6 @@ dadurch kann es zu Problemen bei Videoanrufen kommen.</translation>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>Du versuchst eine kontinuierliche Datei zu senden, das wird nicht funktionieren!</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 ist jetzt %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Anruf mit %1 brach unerwartet ab. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -730,29 +709,29 @@ um sie in Windows speichern zu können.</translation>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
-    <message>
-        <source>Copy</source>
-        <translation>Kopieren</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation>Alles auswählen</translation>
-    </message>
-    <message>
-        <source>pending</source>
-        <translation>Ausstehend</translation>
-    </message>
-    <message>
-        <source>%1 is typing</source>
-        <translation>%1 tippt gerade</translation>
-    </message>
-</context>
-<context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
         <translation>Hier eine Nachricht eingeben...</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>pending</source>
+        <translation type="unfinished">Ausstehend</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 tippt gerade</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopieren</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">Alles auswählen</translation>
     </message>
 </context>
 <context>
@@ -1205,10 +1184,6 @@ anstatt ganz zu schließen.</translation>
         <translation>Angezeigte Nachrichten entfernen</translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation>Gelöscht</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation>Ausgewählten Text zitieren</translation>
     </message>
@@ -1243,22 +1218,6 @@ anstatt ganz zu schließen.</translation>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 hat den Titel zu %2 geändert.</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation>%1 ist der Gruppe beigetreten</translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation>%1 heißt ab sofort %2</translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation>%1 hat die Gruppe verlassen</translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
@@ -1498,32 +1457,12 @@ Teilen Sie Ihre ID mit Ihren Freunden um mit ihnen zu chatten.</translation>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation>Lade Verlauf</translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation>von</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation>zu</translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation>(es werden ca. 100 Nachrichten geladen)</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Wähle ein Datum</translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation>Dialog Historie laden</translation>
     </message>
     <message>
-        <source>Select date dialog</source>
-        <translation>Dialog Datum auswählen</translation>
+        <source>Load history from:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2433,6 +2372,111 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
         <comment>contact status</comment>
         <translation>Verhandlungen</translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Datei „%1“ konnte nicht gesendet werden</translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished">%1 ist der Gruppe beigetreten</translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished">%1 hat die Gruppe verlassen</translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished">%1 heißt ab sofort %2</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 hat den Titel zu %2 geändert.</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished">Gelöscht</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished">Anruf mit %1 brach unerwartet ab. %2</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished">Anruf mit %1 beendet. %2</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 ist jetzt %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished">%1 anrufen</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished">%1 ruft an</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">Nachricht konnte nicht gesendet werden</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">Angehalten</translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished">Fernverbindung pausiert</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Status</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2537,6 +2581,14 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
     <message>
         <source>Use regular expressions</source>
         <translation>Reguläre Ausdrücke verwenden</translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Wähle ein Datum</translation>
     </message>
 </context>
 <context>
@@ -2861,10 +2913,6 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
         <translation>Dein Name</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>Nachricht konnte nicht gesendet werden</translation>
-    </message>
-    <message>
         <source>Create new group...</source>
         <translation>Neue Gruppe erstellen...</translation>
     </message>
@@ -2938,10 +2986,6 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Mein Profil</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Datei „%1“ konnte nicht gesendet werden</translation>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>

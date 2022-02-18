@@ -609,14 +609,6 @@ mis võib põhjustada probleeme videokõnedega.</translation>
         <translation>See on vilets mõte</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation>%1 helistab</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>Helistan kasutajale %1</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Ei suutnud avada ajutist faili</translation>
@@ -624,10 +616,6 @@ mis võib põhjustada probleeme videokõnedega.</translation>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translation>qTox ei suutnud ekraanitõmmist salvestada</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>Kõne kasutajaga %1 lõppes. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
@@ -640,15 +628,6 @@ mis võib põhjustada probleeme videokõnedega.</translation>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>Sa üritad saata järjestikfaili, kuid see ei ole võimalik!</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 on nüüd %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Kõne %1-ga lõppes ootamatult. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -729,29 +708,29 @@ ja sa saad seda faili nüüd Windowsis salvestada.</translation>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
-    <message>
-        <source>pending</source>
-        <translation>ootel</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopeeri</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation>Vali kõik</translation>
-    </message>
-    <message>
-        <source>%1 is typing</source>
-        <translation>%1 kirjutab</translation>
-    </message>
-</context>
-<context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
         <translation>Kirjuta siia oma teade...</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>pending</source>
+        <translation type="unfinished">ootel</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 kirjutab</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopeeri</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">Vali kõik</translation>
     </message>
 </context>
 <context>
@@ -1179,10 +1158,6 @@ jätab ta tööle teavituste alal.</translation>
         <translation>Salvesta vestluse logi</translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation>Eemaldatud</translation>
-    </message>
-    <message>
         <source>Send message</source>
         <translation>Saada sõnum</translation>
     </message>
@@ -1237,22 +1212,6 @@ jätab ta tööle teavituste alal.</translation>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 seadis pealkirjaks %2</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation>%1 liitus grupiga</translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation>%1 on nüüdsest tuntud kui %2</translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation>%1 lahkus grupist</translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
@@ -1492,32 +1451,12 @@ Jaga seda oma sõpradele, et nendega suhelda.</translation>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation>Laadi ajalugu</translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation>alates</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation>kuni</translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation>(umbes 100 sõnumit on laetud)</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Vali kuupäev</translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation>Laadi ajaloovaade</translation>
     </message>
     <message>
-        <source>Select date dialog</source>
-        <translation>Puupäevavaliku vaade</translation>
+        <source>Load history from:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2427,6 +2366,111 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <comment>contact status</comment>
         <translation>läbirääkimine</translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Faili &quot;%1&quot; saatmine nurjus</translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished">%1 liitus grupiga</translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished">%1 lahkus grupist</translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished">%1 on nüüdsest tuntud kui %2</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 seadis pealkirjaks %2</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished">Eemaldatud</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished">Kõne %1-ga lõppes ootamatult. %2</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished">Kõne kasutajaga %1 lõppes. %2</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 on nüüd %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished">Helistan kasutajale %1</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished">%1 helistab</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">Sõnumi saatmine luhtus</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">Pausil</translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished">Eemalt peatatud</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Olek</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2531,6 +2575,14 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <message>
         <source>Use regular expressions</source>
         <translation>Kasuta regulaaravaldisi</translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Vali kuupäev</translation>
     </message>
 </context>
 <context>
@@ -2819,10 +2871,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <translation>Sinu nimi</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>Sõnumi saatmine luhtus</translation>
-    </message>
-    <message>
         <source>Add new circle...</source>
         <translation>Lisa uus suhtlusring...</translation>
     </message>
@@ -2931,10 +2979,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Minu profiil</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Faili &quot;%1&quot; saatmine nurjus</translation>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>

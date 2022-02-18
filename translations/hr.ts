@@ -598,14 +598,6 @@ which may lead to problems with video calls.</source>
         <translation>qTox nije mogao otvoriti %1</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation>%1 zove</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>Poziv s %1 je završen. %2</translation>
-    </message>
-    <message>
         <source>Call duration: </source>
         <translation>Trajanje poziva: </translation>
     </message>
@@ -616,10 +608,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Bad idea</source>
         <translation>Loša ideja</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>Poziva se %1</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -637,15 +625,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>Pokušavaš poslati sekvencijalnu datoteku, što neće uspjeti!</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 je sada %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Poziv s %1 je neočekivano prekinut. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -725,29 +704,29 @@ so you can save the file on Windows.</source>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
+    <name>ChatTextEdit</name>
     <message>
-        <source>Copy</source>
-        <translation>Kopiraj</translation>
+        <source>Type your message here...</source>
+        <translation>Ovdje upiši svoju poruku …</translation>
     </message>
-    <message>
-        <source>Select all</source>
-        <translation>Odaberi sve</translation>
-    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation>u tijeku</translation>
+        <translation type="unfinished">u tijeku</translation>
     </message>
     <message>
         <source>%1 is typing</source>
         <translation type="unfinished">%1 tipka</translation>
     </message>
-</context>
-<context>
-    <name>ChatTextEdit</name>
     <message>
-        <source>Type your message here...</source>
-        <translation>Ovdje upiši svoju poruku …</translation>
+        <source>Copy</source>
+        <translation type="unfinished">Kopiraj</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">Odaberi sve</translation>
     </message>
 </context>
 <context>
@@ -1188,10 +1167,6 @@ instead of closing entirely.</source>
         <translation>Očisti prikazane poruke</translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation>Očišćeno</translation>
-    </message>
-    <message>
         <source>Send a screenshot</source>
         <translation>Pošalji snimku ekrana</translation>
     </message>
@@ -1230,22 +1205,6 @@ instead of closing entirely.</source>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 je promijenio/la naslov u %2</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation>%1 se pridružio(la) grupi</translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation>%1 se sada vodi pod %2</translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation>%1 je napustio/la grupu</translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
@@ -1486,31 +1445,11 @@ Share it with your friends to begin chatting.</source>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation>Učitaj povijest</translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation>od</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation>do</translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation>(učitano je ca. 100 poruka)</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Odaberi datum</translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select date dialog</source>
+        <source>Load history from:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2416,6 +2355,111 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <comment>contact status</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Neuspjelo slanje datoteke „%1”</translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished">%1 se pridružio(la) grupi</translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished">%1 je napustio/la grupu</translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished">%1 se sada vodi pod %2</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 je promijenio/la naslov u %2</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished">Očišćeno</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished">Poziv s %1 je neočekivano prekinut. %2</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished">Poziv s %1 je završen. %2</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 je sada %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished">Poziva se %1</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished">%1 zove</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">Poruka nije uspješno poslana</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">Zaustavljeno</translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Stanje</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2520,6 +2564,14 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Use regular expressions</source>
         <translation>Koristi regularne izraze</translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Odaberi datum</translation>
     </message>
 </context>
 <context>
@@ -2815,10 +2867,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Tražiš od qToxa da otvori izvršnu datoteku. Zlonamjerne izvršne datoteke mogu oštetiti podatke. Zaista želiš pokrenuti ovu datoteku?</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>Poruka nije uspješno poslana</translation>
-    </message>
-    <message>
         <source>Status</source>
         <translation>Stanje</translation>
     </message>
@@ -2920,10 +2968,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Moj profil</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Neuspjelo slanje datoteke „%1”</translation>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>

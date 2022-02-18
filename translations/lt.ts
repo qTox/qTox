@@ -610,14 +610,6 @@ dėl to gali kilti vaizdo skambučių problemų.</translation>
         <translation>Bloga mintis</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation>Skambina %1</translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation>Skambiname %1</translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Nepavyko atverti laikinojo failo</translation>
@@ -625,10 +617,6 @@ dėl to gali kilti vaizdo skambučių problemų.</translation>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translation>Nepavyko įrašyti ekrano kopijos</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
-        <translation>Pokalbis su %1 baigėsi. %2</translation>
     </message>
     <message>
         <source>Call duration: </source>
@@ -641,15 +629,6 @@ dėl to gali kilti vaizdo skambučių problemų.</translation>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
         <translation>Jūs bandote išsiųsti nuoseklųjį failą, tai suveiks!</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 dabar %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
-        <translation>Skambutis su %1 netikėtai pasibaigė. %2</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
@@ -730,29 +709,29 @@ tad dabar galite įrašyti failą Windows sistemoje.</translation>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
-    <message>
-        <source>Copy</source>
-        <translation>Kopijuoti</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation>Pažymėti viską</translation>
-    </message>
-    <message>
-        <source>pending</source>
-        <translation>dar neišsiųsta</translation>
-    </message>
-    <message>
-        <source>%1 is typing</source>
-        <translation>%1 rašo</translation>
-    </message>
-</context>
-<context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
         <translation>Įrašykite čia savo žinutę...</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>pending</source>
+        <translation type="unfinished">dar neišsiųsta</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished">%1 rašo</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopijuoti</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">Pažymėti viską</translation>
     </message>
 </context>
 <context>
@@ -1199,10 +1178,6 @@ vietoje to, kad būtų visiškai uždarytas.</translation>
         <translation>Išvalyti rodomas žinutes</translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation>Išvalyta</translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation>Cituoti pažymėtą tekstą</translation>
     </message>
@@ -1237,22 +1212,6 @@ vietoje to, kad būtų visiškai uždarytas.</translation>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 nustatė pavadinimą „%2“</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation>%1 prisijungė prie grupės</translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation>%1 dabar yra žinoma(-s) kaip %2</translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation>%1 išėjo iš grupės</translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
@@ -1494,32 +1453,12 @@ Pasidalinkite ja su draugais, kad pradėtumėte kalbėtis.</translation>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation>Įkelti žurnalą</translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation>nuo</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation>iki</translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation>(yra įkeliama apie 100 žinučių)</translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation>Pasirinkti datą</translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation>Įkelti žurnalą</translation>
     </message>
     <message>
-        <source>Select date dialog</source>
-        <translation>Datos pasirinkimo dialogas</translation>
+        <source>Load history from:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2430,6 +2369,111 @@ Pasidalinkite ja su draugais, kad pradėtumėte kalbėtis.
         <comment>contact status</comment>
         <translation>derybos</translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished">Nepavyko išsiųsti failo „%1“</translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished">%1 prisijungė prie grupės</translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished">%1 išėjo iš grupės</translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished">%1 dabar yra žinoma(-s) kaip %2</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 nustatė pavadinimą „%2“</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished">Išvalyta</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished">Skambutis su %1 netikėtai pasibaigė. %2</translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished">Pokalbis su %1 baigėsi. %2</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 dabar %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished">Skambiname %1</translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished">Skambina %1</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">Nepavyko nusiųsti žinutės</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">Pristabdyta</translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished">Kita šalis pristabdė</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Būsena</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2534,6 +2578,14 @@ Pasidalinkite ja su draugais, kad pradėtumėte kalbėtis.
     <message>
         <source>Use regular expressions</source>
         <translation>Naudoti reguliariuosius reiškinius</translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
+        <translation type="unfinished">Pasirinkti datą</translation>
     </message>
 </context>
 <context>
@@ -2894,10 +2946,6 @@ Pasidalinkite ja su draugais, kad pradėtumėte kalbėtis.
         <translation>Jūsų vardas</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation>Nepavyko nusiųsti žinutės</translation>
-    </message>
-    <message>
         <source>Groupchat #%1</source>
         <translation>Grupės pokalbis Nr. %1</translation>
     </message>
@@ -2934,10 +2982,6 @@ Pasidalinkite ja su draugais, kad pradėtumėte kalbėtis.
         <source>My profile</source>
         <comment>title of the window</comment>
         <translation>Mano profilis</translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Nepavyko išsiųsti failo „%1“</translation>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>

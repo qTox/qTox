@@ -601,14 +601,6 @@ which may lead to problems with video calls.</source>
         <translation>Dårlig idé</translation>
     </message>
     <message>
-        <source>%1 calling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation type="unfinished"></translation>
@@ -616,10 +608,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Call with %1 ended. %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -632,15 +620,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 er nu %2</translation>
-    </message>
-    <message>
-        <source>Call with %1 ended unexpectedly. %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -721,15 +700,14 @@ so you can save the file on Windows.</source>
     </message>
 </context>
 <context>
-    <name>ChatLog</name>
+    <name>ChatTextEdit</name>
     <message>
-        <source>Copy</source>
-        <translation>Kopier</translation>
+        <source>Type your message here...</source>
+        <translation type="unfinished">Skriv din besked her...</translation>
     </message>
-    <message>
-        <source>Select all</source>
-        <translation>Vælg alle</translation>
-    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
     <message>
         <source>pending</source>
         <translation type="unfinished">ventende</translation>
@@ -738,12 +716,13 @@ so you can save the file on Windows.</source>
         <source>%1 is typing</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ChatTextEdit</name>
     <message>
-        <source>Type your message here...</source>
-        <translation type="unfinished">Skriv din besked her...</translation>
+        <source>Copy</source>
+        <translation type="unfinished">Kopier</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished">Vælg alle</translation>
     </message>
 </context>
 <context>
@@ -1194,10 +1173,6 @@ instead of closing entirely.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cleared</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Quote selected text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1232,22 +1207,6 @@ instead of closing entirely.</source>
 </context>
 <context>
     <name>GroupChatForm</name>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 har sat titlen til %2</translation>
-    </message>
-    <message>
-        <source>%1 has joined the group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 is now known as %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has left the group</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
@@ -1485,31 +1444,11 @@ Share it with your friends to begin chatting.</source>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
-        <source>Load history</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>from</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(about 100 messages are loaded)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a date</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load history dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select date dialog</source>
+        <source>Load history from:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2408,6 +2347,111 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <comment>contact status</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to send file &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is now known as %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 har sat titlen til %2</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call with %1 ended unexpectedly. %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call with %1 ended. %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 er nu %2</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 calling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation type="unfinished">Meddelelse kunne ikke afsendes</translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Status</translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2511,6 +2555,14 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Use regular expressions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Date Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2836,10 +2888,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Dit navn</translation>
     </message>
     <message>
-        <source>Message failed to send</source>
-        <translation type="unfinished">Meddelelse kunne ikke afsendes</translation>
-    </message>
-    <message>
         <source>Add new circle...</source>
         <translation>Opret ny cirkel...</translation>
     </message>
@@ -2912,10 +2960,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to send file &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
