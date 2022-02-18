@@ -448,8 +448,7 @@ void Profile::startCore()
 
     core->start();
 
-    const ToxId& selfId = core->getSelfId();
-    const ToxPk& selfPk = selfId.getPublicKey();
+    const ToxPk& selfPk = core->getSelfPublicKey();
     const QByteArray data = loadAvatarData(selfPk);
     if (data.isEmpty()) {
         qDebug() << "Self avatar not found, will broadcast empty avatar to friends";

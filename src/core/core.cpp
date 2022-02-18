@@ -1279,9 +1279,9 @@ ToxPk Core::getSelfPublicKey() const
 {
     QMutexLocker ml{&coreLoopLock};
 
-    uint8_t friendId[TOX_ADDRESS_SIZE] = {0x00};
-    tox_self_get_address(tox.get(), friendId);
-    return ToxPk(friendId);
+    uint8_t selfPk[TOX_PUBLIC_KEY_SIZE] = {0x00};
+    tox_self_get_public_key(tox.get(), selfPk);
+    return ToxPk(selfPk);
 }
 
 /**
