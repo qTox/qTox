@@ -172,6 +172,15 @@ jobs:
           docker_image_name: debian_old
       - name: Run build
         run: docker-compose run --rm debian_old ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
+  translation-check:
+    name: Check for translatable strings
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install qttools5-dev
+      - name: Test for modified translatable strings
+        run: ./tools/update-translation-files.sh ALL && git diff --exit-code
   build-ubuntu:
     name: Ubuntu LTS
     runs-on: ubuntu-latest
