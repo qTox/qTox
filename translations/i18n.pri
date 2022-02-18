@@ -19,6 +19,7 @@ TRANSLATIONS = \
     translations/he.ts \
     translations/hr.ts \
     translations/hu.ts \
+    translations/is.ts \
     translations/it.ts \
     translations/ja.ts \
     translations/jbo.ts \
@@ -45,6 +46,7 @@ TRANSLATIONS = \
     translations/ta.ts \
     translations/tr.ts \
     translations/ug.ts \
+    translations/ur.ts \
     translations/uk.ts \
     translations/zh_CN.ts \
     translations/zh_TW.ts
