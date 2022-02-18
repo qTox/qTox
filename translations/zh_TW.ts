@@ -481,11 +481,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>是</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>否</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
@@ -521,7 +521,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>可攜式</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
@@ -549,7 +549,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>無</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -631,7 +631,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>複製</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
@@ -727,7 +727,7 @@ so you can save the file on Windows.</source>
     <name>ChatLog</name>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>複製</translation>
     </message>
     <message>
         <source>Select all</source>
@@ -1015,11 +1015,11 @@ so you can save the file on Windows.</source>
     </message>
     <message>
         <source>Away</source>
-        <translation type="unfinished">離開</translation>
+        <translation>離開</translation>
     </message>
     <message>
         <source>Busy</source>
-        <translation type="unfinished">忙碌</translation>
+        <translation>忙碌</translation>
     </message>
     <message>
         <source>Offline</source>
@@ -1363,7 +1363,7 @@ instead of closing entirely.</source>
     <message>
         <source>Logout</source>
         <comment>import profile button</comment>
-        <translation type="unfinished">登出</translation>
+        <translation>登出</translation>
     </message>
     <message>
         <source>Remove password</source>

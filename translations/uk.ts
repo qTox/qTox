@@ -101,7 +101,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Use slider to set the volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовуйте повзунок для налаштування гучності динаміків.</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
@@ -117,7 +117,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Грати тестовий звук коли змінюється гучність виводу звуку.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -172,7 +172,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation type="unfinished">баг-трекері</translation>
+        <translation>баг-трекери</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
@@ -201,7 +201,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">Використовуємі псевдоніми:</translation>
+        <translation>Псевдоніми, що використовуються:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
@@ -233,7 +233,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">Видалити історію (операцію відмінити неможливо!)</translation>
+        <translation type="unfinished">Видалити історію (операцію скасувати неможливо!)</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -2989,7 +2989,7 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     </message>
     <message>
         <source>Previous conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередня розмова</translation>
     </message>
 </context>
 </TS>

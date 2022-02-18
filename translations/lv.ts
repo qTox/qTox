@@ -101,7 +101,7 @@ kas var radīt video zvanu problēmas.</translation>
     </message>
     <message>
         <source>Use slider to set the volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar slīdni iestatiet skaļumu skaļrunī.</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
@@ -113,11 +113,15 @@ The higher values, the better video quality your friends may get.
 Note that with better video quality, you use more bandwidth.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iestatiet kameras izšķirtspēju.
+Jo lielāka vērtība, jo augstākā kvalitātē video varēs redzēt Jūsu draugi.
+Ņemiet vērā, jo labāka ir video kvalitāte, jo ir nepieciešams labāks interneta pieslēgums.
+Nosūtot augstas kvalitātes video, dažreiz savienojums var būt nepietiekami labs,
+kas var radīt video zvanu problēmas.</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīt skaņas izvadi atskaņojot paraugskaņu.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -269,28 +273,28 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto-accept files</source>
-        <translation type="unfinished"></translation>
+        <translation>Automātiski pieņemt failus</translation>
     </message>
     <message>
         <source>Auto-accept for this contact is disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Šajā kontaktā ir atspējota automātiskā pieņemšana</translation>
     </message>
     <message>
         <source>Auto-accept call:</source>
-        <translation type="unfinished"></translation>
+        <translation>Automātiski pieņemt zvanu:</translation>
     </message>
     <message>
         <source>Auto-accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Automātiski pieņemt grupas ielūgumus</translation>
     </message>
     <message>
         <source>You can save comments about this contact here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jūs varat saglabāt kontaktpersonas komentārus.</translation>
     </message>
     <message>
         <source>Choose an auto-accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Atlasīt automātiskās pieņemšanas mapi</translation>
     </message>
 </context>
 <context>
@@ -325,7 +329,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Currently running an untested/unstable version of qTox</source>
-        <translation type="unfinished"></translation>
+        <translation>Šobrīd tiek palaista nestabila qTox versija</translation>
     </message>
 </context>
 <context>
@@ -431,28 +435,28 @@ which may lead to problems with video calls.</source>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Gatavs importēt %n kontaktpersonu, spied sūtīt lai apstiprinātu</numerusform>
+            <numerusform>Gatavs importēt %n kontaktpersonas, spied sūtīt lai apstiprinātu</numerusform>
+            <numerusform>Gatavs importēt %n kontaktpersonas, spied sūtīt lai apstiprinātu</numerusform>
         </translation>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation>Importēt kontaktus</translation>
+        <translation>Importēt kontaktpersonas</translation>
     </message>
     <message>
         <source>Tox ID, 76 hexadecimal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID, 76 heksadecimālas rakstzīmes</translation>
     </message>
     <message>
         <source>%1 Tox ID is invalid</source>
         <comment>Tox address error</comment>
-        <translation type="unfinished"></translation>
+        <translation>Šis Tox ID %1 ir nederīgs</translation>
     </message>
     <message>
         <source>76 hexadecimal characters</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>76 heksadecimālas rakstzīmes</translation>
     </message>
 </context>
 <context>
@@ -495,15 +499,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja vien %1 tiešām zinat, ko Jūs darat, šeit %2 neko nemainat. Izmaiņas šeit var rasties problēmas ar qTox un var zaudēt datus piem. sarunas vēsture.%3</translation>
     </message>
     <message>
         <source>Changes here are applied only after restarting qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izmaiņas tiks veiktas tikai pēc qTox restartēšanas.</translation>
     </message>
     <message>
         <source>Save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt failu</translation>
     </message>
 </context>
 <context>
@@ -579,12 +583,12 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Connection settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Savienojumu iestatījumi</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., Tox over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Atspējot šo ļaus savionot Tox ar Tor. Tā var noslogot Tox tīklu, tad atspējojiet ja nepieciešams.</translation>
     </message>
 </context>
 <context>
@@ -655,7 +659,8 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on Windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederīgas rakstzīmes tiks aizvietotas ar _
+lai varētu saglabāt failus Windows operētājsistēmā.</translation>
     </message>
 </context>
 <context>
@@ -776,7 +781,7 @@ so you can save the file on Windows.</source>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupu čats %1</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -803,19 +808,19 @@ so you can save the file on Windows.</source>
     <name>ExtensionStatus</name>
     <message>
         <source>All extensions supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Visi paplašinājumi ir atbalstīti</translation>
     </message>
     <message>
         <source>No extensions supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Neviens paplašinājums ir atbalstīts</translation>
     </message>
     <message>
         <source>Not all extensions supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne visi paplašinājumi ir atbalstīti</translation>
     </message>
     <message>
         <source>Multipart Messages: </source>
-        <translation type="unfinished"></translation>
+        <translation>Vairāku daļu ziņojumi: </translation>
     </message>
 </context>
 <context>
@@ -923,7 +928,7 @@ so you can save the file on Windows.</source>
     <message>
         <source>Transferred files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nodoti faili</translation>
     </message>
 </context>
 <context>
@@ -950,7 +955,7 @@ so you can save the file on Windows.</source>
     </message>
     <message>
         <source>Older than 6 months</source>
-        <translation type="unfinished"></translation>
+        <translation>Vecāks par 6 mēnešiem</translation>
     </message>
 </context>
 <context>
@@ -1035,15 +1040,15 @@ so you can save the file on Windows.</source>
     <message>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from the friend list</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noņemt draugu</translation>
     </message>
     <message>
         <source>Blocked</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloķēts</translation>
     </message>
     <message>
         <source>Negotiating</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienošanās</translation>
     </message>
 </context>
 <context>
@@ -1066,7 +1071,7 @@ so you can save the file on Windows.</source>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>Tulkojums neizmainīsies, kamēr no jauna  neatvērsiet qTox.</translation>
+        <translation>Tulkojums neizmainīsies, kamēr no jauna neatvērsiet qTox.</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -1158,13 +1163,15 @@ so you can save the file on Windows.</source>
         <source>After pressing minimize (_) qTox will minimize to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Spiežot loga minimizēšanas pogu, qTox samazināsies rīkjoslā
+vietā uzdevumjoslā.</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will close to tray,
 instead of closing entirely.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Spiežot logu aizvēršanas pogu, qTox samazināsies rīkjoslā
+vietā pilnīgi aizveroties.</translation>
     </message>
     <message>
         <source>You can set this on a per-friend basis by right clicking individual friends.</source>
@@ -1224,11 +1231,11 @@ instead of closing entirely.</source>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished">Ielādēt tērzēšanas vēsturi ...</translation>
+        <translation>Ielādēt tērzēšanas vēsturi...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation type="unfinished">Eksportēt failā</translation>
+        <translation>Eksportēt failā</translation>
     </message>
     <message>
         <source>Are you sure that you want to clear all displayed messages?</source>
@@ -2814,11 +2821,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fails</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediģēt</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2827,7 +2834,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrēt...</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -2873,7 +2880,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Visi</translation>
     </message>
     <message>
         <source>Online</source>
@@ -2886,7 +2893,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Draugi</translation>
     </message>
     <message>
         <source>Groups</source>
@@ -2945,7 +2952,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Couldn&apos;t send friend request</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevarēja sūtīt draugam uzaicinājumu</translation>
     </message>
     <message numerus="yes">
         <source>%n new friend request(s)</source>
@@ -2966,15 +2973,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Exit</source>
         <comment>Tray action menu to exit Tox</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aizvērt</translation>
     </message>
     <message>
         <source>Change status</source>
-        <translation type="unfinished"></translation>
+        <translation>Mainīt stāvokli</translation>
     </message>
     <message>
         <source>Edit profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediģēt profilu</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2982,15 +2989,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Add contact...</source>
-        <translation type="unfinished"></translation>
+        <translation>Pievienot kontaktu...</translation>
     </message>
     <message>
         <source>Next conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Nākamā saruna</translation>
     </message>
     <message>
         <source>Previous conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Iepriekšējā saruna</translation>
     </message>
 </context>
 </TS>

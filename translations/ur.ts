@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="he" sourcelanguage="en_US">
+<TS version="2.1" language="ur" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>שמע/וידאו</translation>
+        <translation>آڈیو/ویڈیو</translation>
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>רזולוציית בררת מחדל</translation>
+        <translation>ڈیفالٹ ریزولوشن</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>נכה</translation>
+        <translation>غیر فعال</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation>בחר אזור</translation>
+        <translation>علاقہ منتخب کریں</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation>מסך %1</translation>
+        <translation>اسکرین %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">הגדרות שמע</translation>
+        <translation>آڈیو کی ترتیبات</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>לקבל</translation>
+        <translation>اضافہ</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>מכשיר השמעה</translation>
+        <translation>پلے بیک ڈیوائس</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>מכשיר לכידה</translation>
+        <translation>ڈیوائس کیپچر کریں</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>כרך</translation>
+        <translation>آواز کا حجم</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>הגדרות וידיאו</translation>
+        <translation>ویڈیو کی ترتیبات</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>מכשיר וידאו</translation>
+        <translation>ویڈیو آلہ</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -57,51 +57,55 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>اپنے کیمرے کی ریزولوشن سیٹ کریں۔
+اعلیٰ معیار میں بہتر ویڈیو کوالیٹی آپ کے دوست پا سکتے ہیں۔
+نوٹ کریں کہ اگرچہ بہتر ویڈیو معیار کے ساتھ بہتر انٹرنیٹ کنکشن کی ضرورت ہے۔
+بعض اوقات آپ کا کنکشن اتنا اچھا نہیں ہوتا کہ اعلیٰ ویڈیو کوالٹی کو سنبھال سکے،
+جو کہ ویڈیو کال کے ساتھ مسائل کا باعث بن سکتا ہے۔</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>פתרון הבעיה</translation>
+        <translation>ریزولوشن</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>סרוק מחדש מכשירים</translation>
+        <translation>آلات کو دوبارہ اسکین کریں</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation>בדיקת סאונד</translation>
+        <translation>آواز جانچیں</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation>איכות שמע</translation>
+        <translation>آڈیو کا معیار</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation>גבוה (64 kbps)</translation>
+        <translation>اعلیٰ (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation>בינוני (32 kbps)</translation>
+        <translation>درمیانی (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation>נמוך (16 kbps)</translation>
+        <translation>ادنیٰ (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation>נמוך מאוד (8 kbps)</translation>
+        <translation>انتہائی ادنیٰ (8 kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>دہلیز</translation>
     </message>
     <message>
         <source>Use slider to set the volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>اپنے اسپیکر کا والیوم سیٹ کرنے کے لیے سلائیڈر استعمال کریں۔</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>منتقل شدہ آڈیو معیار۔ اگر آپ کی بینڈوتھ (ڈیٹا) کافی زیادہ نہیں ہے یا اگر آپ بینڈوتھ کا استعمال کم کرنا چاہتے ہیں تو اس ترتیب کو کم کریں۔</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -109,11 +113,15 @@ The higher values, the better video quality your friends may get.
 Note that with better video quality, you use more bandwidth.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>اپنے کیمرے کی ریزولوشن سیٹ کریں۔
+اعلیٰ معیار میں بہتر ویڈیو کوالیٹی آپ کے دوست پا سکتے ہیں۔
+نوٹ کریں کہ اگرچہ بہتر ویڈیو معیار کے ساتھ بہتر انٹرنیٹ کنکشن کی ضرورت ہے۔
+بعض اوقات آپ کا کنکشن اتنا اچھا نہیں ہوتا کہ اعلیٰ ویڈیو کوالٹی کو سنبھال سکے،
+جو کہ ویڈیو کال کے ساتھ مسائل کا باعث بن سکتا ہے۔</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>آؤٹ پٹ والیوم کو تبدیل کرتے وقت بطور جانچ آواز چلائیں۔</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -339,10 +347,6 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add a friend</source>
         <translation type="unfinished"></translation>
     </message>
@@ -356,6 +360,10 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Reject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t add friend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -546,7 +554,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">ללא</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -977,6 +985,14 @@ so you can save the file on Windows.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>To new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Set alias...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1013,14 +1029,6 @@ so you can save the file on Windows.</source>
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To new group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invite to group &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1572,6 +1580,10 @@ Share it with your friends to begin chatting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Couldn&apos;t load profile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1595,10 +1607,6 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2213,11 +2221,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 <context>
     <name>QApplication</name>
     <message>
-        <source>LTR</source>
-        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation>LTR</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2231,6 +2234,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2296,7 +2304,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation type="unfinished">ללא</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Desktop</source>
@@ -2598,7 +2606,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">ללא</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -2840,6 +2848,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Create new group...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add new circle...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2878,10 +2890,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create new group...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
