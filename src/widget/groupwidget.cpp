@@ -209,6 +209,11 @@ bool GroupWidget::isOnline() const
     return true;
 }
 
+bool GroupWidget::widgetIsVisible() const
+{
+    return isVisible();
+}
+
 QDateTime GroupWidget::getLastActivity() const
 {
     return QDateTime::currentDateTime();
@@ -217,6 +222,11 @@ QDateTime GroupWidget::getLastActivity() const
 QWidget *GroupWidget::getWidget()
 {
     return this;
+}
+
+void GroupWidget::setWidgetVisible(bool visible)
+{
+    setVisible(visible);
 }
 
 // TODO: Remove

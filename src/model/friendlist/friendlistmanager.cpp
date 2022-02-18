@@ -42,7 +42,7 @@ bool FriendListManager::getPositionsChanged() const
 
 void FriendListManager::addFriendListItem(IFriendListItem *item)
 {
-    if (item->isGroup()) {
+    if (item->isGroup() && item->getWidget() != nullptr) {
         items.push_back(IFriendListItemPtr(item, [](IFriendListItem* groupItem){
                             groupItem->getWidget()->deleteLater();}));
     } else {
@@ -102,24 +102,24 @@ void FriendListManager::applyFilter()
 
     for (IFriendListItemPtr itemTmp : items) {
         if (searchString.isEmpty()) {
-            itemTmp->getWidget()->setVisible(true);
+            itemTmp->setWidgetVisible(true);
         } else {
             QString tmp_name = itemTmp->getNameItem();
-            itemTmp->getWidget()->setVisible(tmp_name.contains(searchString, Qt::CaseInsensitive));
+            itemTmp->setWidgetVisible(tmp_name.contains(searchString, Qt::CaseInsensitive));
         }
 
         if (filterParams.hideOnline && itemTmp->isOnline()) {
             if (itemTmp->isFriend()) {
-                itemTmp->getWidget()->setVisible(false);
+                itemTmp->setWidgetVisible(false);
             }
         }
 
         if (filterParams.hideOffline && !itemTmp->isOnline()) {
-            itemTmp->getWidget()->setVisible(false);
+            itemTmp->setWidgetVisible(false);
         }
 
         if (filterParams.hideGroups && itemTmp->isGroup()) {
-            itemTmp->getWidget()->setVisible(false);
+            itemTmp->setWidgetVisible(false);
         }
     }
 
@@ -144,7 +144,7 @@ void FriendListManager::updatePositions()
                 return;
             }
         }
-        std::sort(items.begin(), items.end(),sortName);
+        std::sort(items.begin(), items.end(), sortName);
 
     } else {
         auto sortActivity = [&](const IFriendListItemPtr &a, const IFriendListItemPtr &b) {

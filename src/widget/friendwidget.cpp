@@ -370,6 +370,11 @@ bool FriendWidget::isOnline() const
     return Status::isOnline(frnd->getStatus());
 }
 
+bool FriendWidget::widgetIsVisible() const
+{
+    return isVisible();
+}
+
 QString FriendWidget::getNameItem() const
 {
     return nameLabel->fullText();
@@ -384,6 +389,11 @@ QDateTime FriendWidget::getLastActivity() const
 QWidget *FriendWidget::getWidget()
 {
     return this;
+}
+
+void FriendWidget::setWidgetVisible(bool visible)
+{
+    setVisible(visible);
 }
 
 int FriendWidget::getCircleId() const
