@@ -17,8 +17,8 @@
 # Edit this list if translations are added
 qt5_add_translation(translations_FILES
   ar.ts
-  be.ts
   ber.ts
+  be.ts
   bg.ts
   cs.ts
   da.ts
@@ -34,8 +34,8 @@ qt5_add_translation(translations_FILES
   he.ts
   hr.ts
   hu.ts
-  it.ts
   is.ts
+  it.ts
   ja.ts
   jbo.ts
   kn.ts
@@ -46,23 +46,23 @@ qt5_add_translation(translations_FILES
   no_nb.ts
   pl.ts
   pr.ts
-  pt.ts
   pt_BR.ts
+  pt.ts
   ro.ts
   ru.ts
   si.ts
   sk.ts
   sl.ts
   sq.ts
-  sr.ts
   sr_Latn.ts
+  sr.ts
   sv.ts
   sw.ts
   ta.ts
   tr.ts
   ug.ts
-  ur.ts
   uk.ts
+  ur.ts
   zh_CN.ts
   zh_TW.ts
 )
