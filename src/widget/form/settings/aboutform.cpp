@@ -197,6 +197,7 @@ void AboutForm::reloadTheme()
 
 void AboutForm::onUnstableVersion()
 {
+    bodyUI->updateStack->hide();
     bodyUI->unstableVersion->setVisible(true);
 }
 
