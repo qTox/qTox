@@ -101,11 +101,11 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Use slider to set the volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw głośność za pomocą suwaka.</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jakość nadawanego audio. Ustaw niższą wartość&#xa0;jeśli twoje połączenie z internetem nie jest wystarczająco dobre lub jeśli chcesz ograniczyć transmisję danych.</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -113,19 +113,23 @@ The higher values, the better video quality your friends may get.
 Note that with better video quality, you use more bandwidth.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw rozdzielczość swojej kamery.
+Im większa wartość, tym lepszą jakość obrazu uzyskają twoi znajomi.
+Lepsza jakość obrazu wymaga dobrego połączenia z internetem.
+Czasem twoje połączenie może nie być wystarczająco dobre,
+co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Odtwarzaj dźwięk testowy, zmieniając głośność dźwięku wyjściowego.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw głośność swojego mikrofonu w przedziale od %1dB do %2dB za pomocą suwaka.</translation>
     </message>
     <message>
         <source>Use slider to set the activation volume for your input device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw próg aktywacji twojego mikrofonu za pomocą suwaka.</translation>
     </message>
 </context>
 <context>
@@ -160,7 +164,7 @@ which may lead to problems with video calls.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
         <translatorcomment>better translation?</translatorcomment>
-        <translation>Lista znanych problemów może zostać znaleziona na naszym %1 na Githubie. Jeśli odkryjesz błąd lub lukę bezpieczeństwa w qToxie, proszę zgłoś to wedłóg naszych artykułu %2.</translation>
+        <translation>Listę znanych problemów możesz znaleźć na naszym %1 na GitHubie. Jeśli odkryjesz błąd lub lukę bezpieczeństwa w qToxie, proszę zgłoś to według naszego artykułu %2.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
@@ -174,17 +178,17 @@ which may lead to problems with video calls.</source>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation type="unfinished">bug-trackerze</translation>
+        <translation>bug-tracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation type="unfinished">Zgłaszanie użytecznych raportów o błędach</translation>
+        <translation>Zgłaszanie użytecznych raportów o błędach</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation type="unfinished">współtwórców</translation>
+        <translation>współtwórcy</translation>
     </message>
 </context>
 <context>
@@ -259,7 +263,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">Potwierdzenie</translation>
+        <translation>Potwierdzenie</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
@@ -271,7 +275,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto-accept files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Automatycznie przyjmuj pliki</translation>
     </message>
     <message>
         <source>Auto-accept for this contact is disabled</source>
@@ -283,11 +287,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto-accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatycznie akceptuj zaproszenia do grup</translation>
     </message>
     <message>
         <source>You can save comments about this contact here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutaj możesz dodać komentarz do kontaktu.</translation>
     </message>
     <message>
         <source>Choose an auto-accept directory</source>
@@ -327,7 +331,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Currently running an untested/unstable version of qTox</source>
-        <translation type="unfinished"></translation>
+        <translation>Używasz niestabilnej wersji qTox</translation>
     </message>
 </context>
 <context>
@@ -338,7 +342,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Send friend request</source>
-        <translation>Wyślij zapytanie do znajomego</translation>
+        <translation>Wyślij zaproszenie do znajomego</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
@@ -1271,11 +1275,11 @@ instead of closing entirely.</source>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished">wycisz</translation>
+        <translation>wycisz</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished">odcisz</translation>
+        <translation>wyłącz wyciszenie</translation>
     </message>
 </context>
 <context>
@@ -2171,12 +2175,12 @@ Proszę, użyj innego obrazka.</translation>
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazwa użytkownika Tox nie może przekraczać %1 znaków.</translation>
     </message>
     <message>
         <source>Delete profile</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usuń profil</translation>
     </message>
     <message>
         <source>Remove password</source>
@@ -2186,7 +2190,7 @@ Proszę, użyj innego obrazka.</translation>
     <message>
         <source>Are you sure you want to remove your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Czy na pewno chcesz usunąć swoje hasło?</translation>
     </message>
     <message>
         <source>This ID allows other Tox users to add and contact you.

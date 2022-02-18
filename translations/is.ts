@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="he" sourcelanguage="en_US">
+<TS version="2.1" language="is" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>שמע/וידאו</translation>
+        <translation>Hljóð/Mynd</translation>
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>רזולוציית בררת מחדל</translation>
+        <translation>Sjálfgefin upplausn</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>נכה</translation>
+        <translation>Óvirkt</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation>בחר אזור</translation>
+        <translation>Velja svæði</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation>מסך %1</translation>
+        <translation>Skjár %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">הגדרות שמע</translation>
+        <translation>Hljóðstillingar</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>לקבל</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>מכשיר השמעה</translation>
+        <translation>Spilunartæki</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>מכשיר לכידה</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>כרך</translation>
+        <translation>Hljóðstyrkur</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>הגדרות וידיאו</translation>
+        <translation>Myndstillingar</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>מכשיר וידאו</translation>
+        <translation>Myndtæki</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -61,35 +61,35 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>פתרון הבעיה</translation>
+        <translation>Upplausn</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>סרוק מחדש מכשירים</translation>
+        <translation>Endurskanna tæki</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation>בדיקת סאונד</translation>
+        <translation>Prófa hljóð</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation>איכות שמע</translation>
+        <translation>Hljóðgæði</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation>גבוה (64 kbps)</translation>
+        <translation>Hátt (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation>בינוני (32 kbps)</translation>
+        <translation>Miðlungs (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation>נמוך (16 kbps)</translation>
+        <translation>Lágt (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation>נמוך מאוד (8 kbps)</translation>
+        <translation>Mjög lágt (8 kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
@@ -189,7 +189,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>notandanafn</translation>
     </message>
     <message>
         <source>status message</source>
@@ -328,7 +328,7 @@ which may lead to problems with video calls.</source>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Bæta Við Vinum</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -336,10 +336,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Send friend request</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t add friend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -356,6 +352,10 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Reject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t add friend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -546,7 +546,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">ללא</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -977,6 +977,14 @@ so you can save the file on Windows.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>To new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Set alias...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1013,14 +1021,6 @@ so you can save the file on Windows.</source>
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To new group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invite to group &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1251,9 +1251,9 @@ instead of closing entirely.</source>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 notandi í spjalli</numerusform>
+            <numerusform>%1 notendur í spjalli</numerusform>
         </translation>
     </message>
     <message>
@@ -1366,11 +1366,11 @@ instead of closing entirely.</source>
     </message>
     <message>
         <source>Remove password</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjarlægja aðgangsorð</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished"></translation>
+        <translation>Breyta aðgangsorði</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
@@ -1517,11 +1517,11 @@ Share it with your friends to begin chatting.</source>
     <name>LoginScreen</name>
     <message>
         <source>Username:</source>
-        <translation type="unfinished"></translation>
+        <translation>Notandanafn:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aðgangsorð:</translation>
     </message>
     <message>
         <source>Confirm:</source>
@@ -1529,7 +1529,7 @@ Share it with your friends to begin chatting.</source>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation type="unfinished"></translation>
+        <translation>Styrkur aðgangsorðs: %p%</translation>
     </message>
     <message>
         <source>Create Profile</source>
@@ -1553,11 +1553,11 @@ Share it with your friends to begin chatting.</source>
     </message>
     <message>
         <source>New Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nýr Aðgangur</translation>
     </message>
     <message>
         <source>Couldn&apos;t create a new profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekki tókst að búa til nýjan aðgang</translation>
     </message>
     <message>
         <source>The username must not be empty.</source>
@@ -1565,10 +1565,14 @@ Share it with your friends to begin chatting.</source>
     </message>
     <message>
         <source>The password must be at least 6 characters long.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aðgangsorðið verður að vera að minnsta kosti 6 stafir að lengd.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1591,14 +1595,10 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Wrong password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rangt aðgangsorð.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2213,11 +2213,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 <context>
     <name>QApplication</name>
     <message>
-        <source>LTR</source>
-        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation>LTR</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2231,6 +2226,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2296,7 +2296,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation type="unfinished">ללא</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Desktop</source>
@@ -2598,7 +2598,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">ללא</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -2840,6 +2840,10 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Create new group...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add new circle...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2878,10 +2882,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create new group...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
