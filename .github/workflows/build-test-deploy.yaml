@@ -6,7 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     permissions:
-        contents: write
+      contents: write
+      actions: write # due to possibly updating this file
     steps:
       - uses: actions/checkout@v2
       - name: Move nightly tag to head for nightly release
