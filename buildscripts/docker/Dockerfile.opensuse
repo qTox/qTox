@@ -25,6 +25,7 @@ RUN zypper install --no-recommends -y \
     libqt5-qtsvg-devel \
     libsodium-devel \
     libvpx-devel \
+    msgpack-devel \
     openal-soft-devel \
     qrencode-devel \
     sqlcipher-devel \

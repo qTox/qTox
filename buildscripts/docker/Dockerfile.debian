@@ -40,6 +40,7 @@ RUN apt-get update && \
     libkf5sonnet-dev \
     pkg-config \
     libqrencode-dev \
+    libmsgpack-dev \
     qttools5-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -63,4 +64,3 @@ RUN mkdir -p /src/tox && \
     rm -fr /src/tox
 
 WORKDIR /qtox
-

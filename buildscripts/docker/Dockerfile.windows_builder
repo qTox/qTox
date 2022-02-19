@@ -158,6 +158,13 @@ RUN mkdir -p /src/nsisshellexecasuser && \
   /build/build_nsisshellexecasuser_windows.sh && \
   rm -fr /src/nsisshellexecasuser
 
+COPY download/download_msgpack_c.sh /build/download/download_msgpack_c.sh
+COPY build_msgpack_c_windows.sh /build/build_msgpack_c_windows.sh
+RUN mkdir -p /src/msgpack_c && \
+  cd /src/msgpack_c && \
+  /build/build_msgpack_c_windows.sh && \
+  rm -fr /src/msgpack_c
+
 COPY download/download_toxcore.sh /build/download/download_toxcore.sh
 COPY download/download_toxext.sh /build/download/download_toxext.sh
 COPY download/download_toxext_messages.sh /build/download/download_toxext_messages.sh
