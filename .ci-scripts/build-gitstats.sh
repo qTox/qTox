@@ -27,11 +27,6 @@ set -eu -o pipefail
 
 
 make_stats() {
-    # workaround gitstats not supporting non-blocking IO correctly see
-    # https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
-    python -c 'import os,sys,fcntl;\
-               flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL);\
-               fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
     gitstats \
         -c authors_top=1000 \
         -c max_authors=100000 \
