@@ -54,17 +54,8 @@ readonly LOCAL_LIB_DIR="$QTOX_APP_DIR"/local/lib
 readonly LDQT_BIN="/usr/lib/qt5/bin/linuxdeployqt"
 
 # update information to be embeded in AppImage
-if [ "cron" == "${TRAVIS_EVENT_TYPE:-}" ]
-then
-    # update information for nightly version
-    readonly NIGHTLY_REPO_SLUG=$(echo "$CIRP_GITHUB_REPO_SLUG" | tr "/" "|")
-    readonly UPDATE_INFO="gh-releases-zsync|$NIGHTLY_REPO_SLUG|ci-master-latest|qTox-*-x86_64.AppImage.zsync"
-else
-    # update information for stable version
-    readonly UPDATE_INFO="gh-releases-zsync|qTox|qTox|latest|qTox-*.x86_64.AppImage.zsync"
-fi
-
-export VERSION=$(git -C "${QTOX_SRC_DIR}" rev-parse --short HEAD)
+readonly UPDATE_INFO="gh-releases-zsync|qTox|qTox|latest|qTox-*.x86_64.AppImage.zsync"
+export GIT_VERSION=$(git -C "${QTOX_SRC_DIR}" rev-parse --short HEAD)
 
 echo $QTOX_APP_DIR
 cmake "${QTOX_SRC_DIR}" -DDESKTOP_NOTIFICATIONS=ON -DUPDATE_CHECK=ON -DCMAKE_BUILD_TYPE=Release
@@ -106,16 +97,4 @@ for lib in "${libs[@]}"; do
     patchelf --set-rpath '$ORIGIN' "$LOCAL_LIB_DIR/$lib_file_name"
 done
 
-# this is important, aitool automatically uses the same filename in .zsync meta file.
-# if this name does not match with the one we upload, the update always fails.
-if [ -n "${TRAVIS_TAG-}" ]
-then
-    VERSION_NAME="${TRAVIS_TAG}"
-elif [ -n "${TRAVIS_COMMIT-}" ]
-then
-    VERSION_NAME="${TRAVIS_COMMIT}"
-else
-    VERSION_NAME="${VERSION}"
-fi
-
-appimagetool -u "$UPDATE_INFO" $QTOX_APP_DIR qTox-$VERSION_NAME.x86_64.AppImage
+appimagetool -u "$UPDATE_INFO" $QTOX_APP_DIR qTox-${GIT_VERSION}.x86_64.AppImage

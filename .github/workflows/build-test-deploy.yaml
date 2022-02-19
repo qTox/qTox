@@ -224,6 +224,8 @@ jobs:
         if: contains(github.ref, 'refs/tags/v')
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      # The zync file names MUST match the pattern "qTox-*.x86_64.AppImage.zsync"
+      # indefinitely for older versions to be able to update https://github.com/AppImage/AppImageSpec/blob/master/draft.md#github-releases
       - name: Rename appimage for release upload
         if: contains(github.ref, 'refs/tags/v')
         run: |
@@ -250,7 +252,7 @@ jobs:
           prerelease: true
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "qTox-nightly.x86_64.AppImage"
+          artifacts: "qTox-*.x86_64.AppImage,qTox-*.x86_64.AppImage.zsync"
   build-flatpak:
     name: Flatpak
     runs-on: ubuntu-latest
