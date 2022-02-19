@@ -330,34 +330,34 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
             tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
             emit core->friendAvatarRemoved(core->getFriendPublicKey(friendId));
             return;
-        } else {
-            if (!ToxClientStandards::IsValidAvatarSize(filesize)) {
-                qWarning() <<
-                    QString("Received avatar request from %1 with size %2.").arg(friendId).arg(filesize) +
-                    QString(" The max size allowed for avatars is %3. Cancelling transfer.").arg(ToxClientStandards::MaxAvatarSize);
-                tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
-                return;
-            }
-            static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH,
-                          "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
-            uint8_t avatarHash[TOX_FILE_ID_LENGTH];
-            tox_file_get_file_id(tox, friendId, fileId, avatarHash, nullptr);
-            QByteArray avatarBytes{static_cast<const char*>(static_cast<const void*>(avatarHash)),
-                                   TOX_HASH_LENGTH};
-            emit core->fileAvatarOfferReceived(friendId, fileId, avatarBytes, filesize);
+        }
+        if (!ToxClientStandards::IsValidAvatarSize(filesize)) {
+            qWarning() <<
+                QString("Received avatar request from %1 with size %2.").arg(friendId).arg(filesize) +
+                QString(" The max size allowed for avatars is %3. Cancelling transfer.").arg(ToxClientStandards::MaxAvatarSize);
+            tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
             return;
         }
-    } else {
-        const auto cleanFileName = CoreFile::getCleanFileName(filename.getQString());
-        if (cleanFileName != filename.getQString()) {
-            qDebug() << QStringLiteral("Cleaned filename");
-            filename = ToxString(cleanFileName);
-            emit coreFile->fileNameChanged(friendPk);
-        } else {
-            qDebug() << QStringLiteral("filename already clean");
-        }
-        qDebug() << QString("Received file request %1:%2 kind %3").arg(friendId).arg(fileId).arg(kind);
+        static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH,
+                        "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
+        uint8_t avatarHash[TOX_FILE_ID_LENGTH];
+        tox_file_get_file_id(tox, friendId, fileId, avatarHash, nullptr);
+        QByteArray avatarBytes{static_cast<const char*>(static_cast<const void*>(avatarHash)),
+                                TOX_HASH_LENGTH};
+        emit core->fileAvatarOfferReceived(friendId, fileId, avatarBytes, filesize);
+        return;
     }
+    #ifdef Q_OS_WIN
+    const auto cleanFileName = CoreFile::getCleanFileName(filename.getQString());
+    if (cleanFileName != filename.getQString()) {
+        qDebug() << QStringLiteral("Cleaned filename");
+        filename = ToxString(cleanFileName);
+        emit coreFile->fileNameChanged(friendPk);
+    } else {
+        qDebug() << QStringLiteral("filename already clean");
+    }
+    #endif
+    qDebug() << QString("Received file request %1:%2 kind %3").arg(friendId).arg(fileId).arg(kind);
 
     ToxFile file{fileId, friendId, filename.getBytes(), "", filesize, ToxFile::RECEIVING};
     file.fileKind = kind;
