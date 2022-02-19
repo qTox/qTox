@@ -14,6 +14,7 @@ brew "qrencode"
 brew "qt5"
 brew "sqlcipher"
 brew "openal-soft"
+brew "msgpack"
 # accelerate builds with ccache
 brew "ccache"
 

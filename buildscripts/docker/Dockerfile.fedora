@@ -37,6 +37,7 @@ RUN dnf --nodocs -y install dnf-plugins-core && \
         openal-soft-devel \
         kf5-sonnet-devel \
         libXScrnSaver-devel \
+        msgpack-devel \
         sqlite-devel \
         sqlcipher-devel && \
     dnf clean all
