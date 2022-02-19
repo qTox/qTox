@@ -517,6 +517,8 @@ jobs:
       GITSTATS_DIR: gitstats
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Install gitstats
         run: sudo apt-get install gitstats
       - name: Run

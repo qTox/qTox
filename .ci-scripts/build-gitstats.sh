@@ -15,7 +15,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Scripts for generating gitstats on travis
+# Scripts for generating gitstats in CI
 #
 # Downloads current git repo, and builds its stats.
 
@@ -26,11 +26,6 @@
 set -eu -o pipefail
 
 
-# need to download whole history, since travis does only a shallow clone
-get_repo() {
-    git clone https://github.com/qTox/qTox.git
-}
-
 make_stats() {
     # workaround gitstats not supporting non-blocking IO correctly see
     # https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
@@ -40,7 +35,7 @@ make_stats() {
     gitstats \
         -c authors_top=1000 \
         -c max_authors=100000 \
-        qTox \
+        . \
         "$GITSTATS_DIR"
 }
 
@@ -51,7 +46,6 @@ verify_exists() {
 
 
 main() {
-    get_repo
     make_stats
     verify_exists
 }
