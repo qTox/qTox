@@ -194,10 +194,10 @@ while IFS= read -r line
 do
   if [[ "$ARCH" == "i686" ]]
   then
-    WINE_DLL_DIR="/root/.wine/drive_c/windows/system32"
+    WINE_DLL_DIR="/opt/wine-stable/lib/wine/i386-windows"
   elif [[ "$ARCH" == "x86_64" ]]
   then
-    WINE_DLL_DIR="/root/.wine/drive_c/windows/system32 /root/.wine/drive_c/windows/syswow64"
+    WINE_DLL_DIR="/opt/wine-stable/lib/wine/i386-windows /opt/wine-stable/lib64/wine/x86_64-windows"
   fi
   python3 /usr/local/bin/mingw-ldd.py $line --dll-lookup-dirs $QTOX_PREFIX_DIR $WINE_DLL_DIR --output-format tree >> dlls-required
 done < <(cat exes runtime-dlls)
@@ -221,7 +221,7 @@ then
 fi
 
 # Check that OpenAL is bundled. It is availabe from WINE, but not on Windows systems
-if grep -q '/root/.wine/drive_c/windows/system32/openal32.dll' dlls-required
+if grep -q '/opt/wine-stable/lib/wine/i386-windows/openal32.dll' dlls-required
 then
   cat dlls-required
   echo "Error: Missing OpenAL."
