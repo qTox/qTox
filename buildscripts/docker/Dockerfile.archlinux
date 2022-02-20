@@ -30,6 +30,7 @@ RUN pacman -Syu --noconfirm --needed \
     sqlcipher \
     openal \
     sonnet \
+    msgpack-c \
     snorenotify \
     git \
     && \
