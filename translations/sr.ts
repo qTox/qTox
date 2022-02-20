@@ -723,7 +723,7 @@ so you can save the file on Windows.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Уможи</translation>
     </message>
     <message>
         <source>Select all</source>
