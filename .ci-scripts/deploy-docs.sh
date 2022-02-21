@@ -45,4 +45,6 @@ git add .
 git commit --quiet -m "Deploy to GH pages from commit: $GIT_CHASH"
 
 echo "Pushing to GH pages..."
-git push --force --quiet "https://${GH_TOKEN}@github.com/qTox/doxygen.git" master:gh-pages &> /dev/null
+chmod 600 /tmp/access_key
+echo "$access_key" > /tmp/access_key
+GIT_SSH_COMMAND="ssh -i /tmp/access_key" git push --force --quiet "git@github.com:qTox/doxygen.git" master:gh-pages

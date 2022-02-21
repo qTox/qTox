@@ -490,6 +490,11 @@ jobs:
           fetch-depth: 0
       - name: Run
         run: ./.ci-scripts/build-docs.sh
+      - name: Deploy
+        if: github.ref == 'refs/heads/master'
+        env:
+          access_key: ${{ secrets.GITSTATS_DEPLOY_KEY }}
+        run: ./.ci-scripts/deploy-docs.sh
   build-gitstats:
     name: Gitstats
     runs-on: ubuntu-latest
