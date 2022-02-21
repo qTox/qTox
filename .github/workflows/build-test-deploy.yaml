@@ -261,7 +261,7 @@ jobs:
           prerelease: true
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "qTox-*.x86_64.AppImage,qTox-*.x86_64.AppImage.zsync"
+          artifacts: "qTox-nightly.x86_64.AppImage,qTox-nightly.x86_64.AppImage.zsync"
   build-flatpak:
     name: Flatpak
     runs-on: ubuntu-latest
