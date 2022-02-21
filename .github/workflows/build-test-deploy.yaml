@@ -481,7 +481,7 @@ jobs:
           artifacts: "qTox-nightly.dmg"
   build-docs:
     name: Docs
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       DOXYGEN_CONFIG_FILE: doxygen.conf
     steps:
@@ -492,7 +492,7 @@ jobs:
         run: ./.ci-scripts/build-docs.sh
   build-gitstats:
     name: Gitstats
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       GITSTATS_DIR: gitstats
     steps:
@@ -500,7 +500,11 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install gitstats
-        run: sudo apt-get install gitstats
+        run: |
+          sudo apt-get install gnuplot
+          git clone git://github.com/hoxu/gitstats.git
+          cd gitstats
+          sudo make install
       - name: Run
         run: ./.ci-scripts/build-gitstats.sh
       - name: Deploy
