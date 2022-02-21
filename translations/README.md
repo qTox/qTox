@@ -16,6 +16,7 @@ Language | Status
 [Deutsch](https://hosted.weblate.org/engage/tox/de/) | [![Translation status](https://hosted.weblate.org/widgets/tox/de/svg-badge.svg)](https://hosted.weblate.org/engage/tox/de/?utm_source=widget)
 [Eesti](https://hosted.weblate.org/engage/tox/et/) | [![Translation status](https://hosted.weblate.org/widgets/tox/et/svg-badge.svg)](https://hosted.weblate.org/engage/tox/et/?utm_source=widget)
 [Ελληνικά](https://hosted.weblate.org/engage/tox/el/) | [![Translation status](https://hosted.weblate.org/widgets/tox/el/svg-badge.svg)](https://hosted.weblate.org/engage/tox/el/?utm_source=widget)
+[English](https://hosted.weblate.org/engage/tox/en/) | [![Translation status](https://hosted.weblate.org/widgets/tox/en/svg-badge.svg)](https://hosted.weblate.org/engage/tox/en/?utm_source=widget)
 [Español](https://hosted.weblate.org/engage/tox/es/) | [![Translation status](https://hosted.weblate.org/widgets/tox/es/svg-badge.svg)](https://hosted.weblate.org/engage/tox/es/?utm_source=widget)
 [Esperanto](https://hosted.weblate.org/engage/tox/eo/) | [![Translation status](https://hosted.weblate.org/widgets/tox/eo/svg-badge.svg)](https://hosted.weblate.org/engage/tox/eo/?utm_source=widget)
 [فارسی](https://hosted.weblate.org/engage/tox/fa/) | [![Translation status](https://hosted.weblate.org/widgets/tox/fa/svg-badge.svg)](https://hosted.weblate.org/engage/tox/fa/?utm_source=widget)

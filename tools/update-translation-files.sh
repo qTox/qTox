@@ -27,14 +27,15 @@
 
 set -eu -o pipefail
 
-readonly LUPDATE_CMD="lupdate src -no-obsolete -locations none -ts"
+readonly LUPDATE_CMD="lupdate src -no-obsolete -locations none"
 
 if [[ "$@" = "ALL" ]]
 then
     for translation in translations/*.ts
     do
-        $LUPDATE_CMD "$translation"
+        $LUPDATE_CMD -ts "$translation"
     done
+    $LUPDATE_CMD -pluralonly -ts translations/en.ts
 else
     $LUPDATE_CMD "$@"
 fi

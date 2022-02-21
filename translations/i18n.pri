@@ -9,6 +9,7 @@ TRANSLATIONS = \
     translations/da.ts \
     translations/de.ts \
     translations/el.ts \
+    translations/en.ts \
     translations/eo.ts \
     translations/es.ts \
     translations/et.ts \
