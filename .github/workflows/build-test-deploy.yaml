@@ -258,6 +258,8 @@ jobs:
         with:
           allowUpdates: true
           tag: nightly
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
           prerelease: true
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -312,6 +314,8 @@ jobs:
         with:
           allowUpdates: true
           tag: nightly
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
           prerelease: true
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -370,6 +374,8 @@ jobs:
         with:
           allowUpdates: true
           tag: nightly
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
           prerelease: true
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -428,6 +434,8 @@ jobs:
         with:
           allowUpdates: true
           tag: nightly
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
           prerelease: true
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -475,6 +483,8 @@ jobs:
         with:
           allowUpdates: true
           tag: nightly
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
           prerelease: true
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
