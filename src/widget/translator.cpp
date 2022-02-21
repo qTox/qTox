@@ -53,25 +53,23 @@ void Translator::translate(const QString& localeName)
     // Load translations
     QString locale = localeName.isEmpty() ? QLocale::system().name().section('_', 0, 0) : localeName;
 
-    if (locale != "en") {
-        if (core_translator->load(locale, ":translations/")) {
-            qDebug() << "Loaded translation" << locale;
+    if (core_translator->load(locale, ":translations/")) {
+        qDebug() << "Loaded translation" << locale;
 
-            // System menu translation
-            QString s_locale = "qt_" + locale;
-            QString location = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
-            if (app_translator->load(s_locale, location)) {
-                QApplication::installTranslator(app_translator);
-                qDebug() << "System translation loaded" << locale;
-            } else {
-                qDebug() << "System translation not loaded" << locale;
-            }
-
-            // Application translation
-            QCoreApplication::installTranslator(core_translator);
+        // System menu translation
+        QString s_locale = "qt_" + locale;
+        QString location = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+        if (app_translator->load(s_locale, location)) {
+            QApplication::installTranslator(app_translator);
+            qDebug() << "System translation loaded" << locale;
         } else {
-            qDebug() << "Error loading translation" << locale;
+            qDebug() << "System translation not loaded" << locale;
         }
+
+        // Application translation
+        QCoreApplication::installTranslator(core_translator);
+    } else {
+        qDebug() << "Error loading translation" << locale;
     }
 
     // After the language is changed from RTL to LTR, the layout direction isn't

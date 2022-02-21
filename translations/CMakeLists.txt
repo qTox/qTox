@@ -24,6 +24,7 @@ qt5_add_translation(translations_FILES
   da.ts
   de.ts
   el.ts
+  en.ts
   eo.ts
   es.ts
   et.ts
