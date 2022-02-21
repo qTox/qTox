@@ -16,7 +16,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 cd "$GITSTATS_DIR"
-COMMIT=$(cd qTox && git describe)
+COMMIT=$(git describe)
 
 git init --quiet
 git config user.name "qTox bot"
@@ -29,4 +29,4 @@ echo "Pushing to GH pages..."
 touch /tmp/access_key
 chmod 600 /tmp/access_key
 echo "$access_key" > /tmp/access_key
-GIT_SSH_COMMAND="ssh -i /tmp/access_key" git push --force --quiet "git@github.com/qTox/gitstats.git" master:gh-pages
+GIT_SSH_COMMAND="ssh -i /tmp/access_key" git push --force --quiet "git@github.com:qTox/gitstats.git" master:gh-pages
