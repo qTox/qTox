@@ -200,7 +200,7 @@ void Settings::loadGlobal()
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
-        showGroupJoinLeaveMessages = s.value("showGroupJoinLeaveMessages", true).toBool();
+        showGroupJoinLeaveMessages = s.value("showGroupJoinLeaveMessages", false).toBool();
         spellCheckingEnabled = s.value("spellCheckingEnabled", true).toBool();
         themeColor = s.value("themeColor", 0).toInt();
         style = s.value("style", "").toString();
