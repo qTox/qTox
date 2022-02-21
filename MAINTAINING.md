@@ -156,29 +156,22 @@ apply the normal rating process.
 
 # Translations from Weblate
 
-Weblate provides an easy way for people to translate qTox. On one hand, it does
-require a bit more attention & regular checking whether there are new
-translations, on the other, it lessened problems that were happening with
-"manual" way of providing translations.
+Weblate provides an easy way for people to translate qTox.
 
 New translable strings need to be generated into a form Weblate can consume
-using `./tools/update-translation-files.sh ALL` and commiting the result.
+using `./tools/update-translation-files.sh ALL` and commiting the result. This
+should be done as soon as strings are available since weblate follows our
+branch, so is checked for in CI.
 
-To get translations into qTox:
+To get translations into qTox, fast-forward merge from
+https://hosted.weblate.org/git/tox/qtox/.
 
-1. Go to `https://hosted.weblate.org/projects/tox/qtox/#repository` and lock
-   the repository for translations.
-2. Make sure you have git setup to automatically gpg sign commits.
-3. To update translated strings from Weblate, in the root of the qTox
-   repository execute the script `tools/update-weblate.sh`
-4. If a new translation language has been added, update the following files:
-    - `translations/CMakeLists.txt`
-    - `src/widget/form/settings/generalform.cpp`
-    - `translations/README.md`
-    - `translations/i18n.pri`
-    - `translations/translations.qrc`
-5. After the Pull Request has been merged, `reset` Weblate to master and
-   unlock it.
+If a new translation language has been added, update the following files:
+  - `translations/CMakeLists.txt`
+  - `src/widget/form/settings/generalform.cpp`
+  - `translations/README.md`
+  - `translations/i18n.pri`
+  - `translations/translations.qrc`
 
 # Releases
 
@@ -211,6 +204,7 @@ To get translations into qTox:
   [`./tools/update-versions.sh`] script, e.g. `./tools/update-versions.sh
   1.11.0`
 - Update toxcore version number to the latest tag in [`./buildscripts/download/download_toxcore.sh]
+- Pull in latest translations from Weblate.
 - Update the bootstrap nodelist at `./res/nodes.json` from https://nodes.tox.chat/json.
   This can be done by running [`./tools/update-nodes.sh`]
 - Generate changelog with `clog`.
@@ -259,7 +253,6 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`CONTRIBUTING.md`]: /CONTRIBUTING.md
 [`merge-pr.sh`]: /merge-pr.sh
 [`test-pr.sh`]: /test-pr.sh
-[`./tools/deweblate-translation-file.sh`]: /tools/deweblate-translation-file.sh
 [`./tools/create-tarball.sh`]: /tools/create-tarball.sh
 [`./tools/update-nodes.sh`]: /tools/update-nodes.sh
 [`./tools/update-versions.sh`]: /tools/update-versions.sh
