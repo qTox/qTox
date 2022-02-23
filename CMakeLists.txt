@@ -181,17 +181,15 @@ if(NOT SMILEYS)
   set(SMILEYS "")
 endif()
 
+set(SMILEY_RESOURCES "")
 if(NOT "${SMILEYS}" STREQUAL "DISABLED")
-  set(${PROJECT_NAME}_RESOURCES
-        ${${PROJECT_NAME}_RESOURCES}
-        smileys/emojione.qrc)
+  set(SMILEY_RESOURCES smileys/emojione.qrc)
 
   if(NOT "${SMILEYS}" STREQUAL "MIN")
-      set(${PROJECT_NAME}_RESOURCES
-            ${${PROJECT_NAME}_RESOURCES}
+      set(SMILEY_RESOURCES
+            ${SMILEY_RESOURCES}
             smileys/smileys.qrc)
   endif()
-
 endif()
 
 set(${PROJECT_NAME}_SOURCES
@@ -662,6 +660,7 @@ add_executable(${PROJECT_NAME}
   WIN32
   MACOSX_BUNDLE
   ${${PROJECT_NAME}_RESOURCES}
+  ${SMILEY_RESOURCES}
   src/main.cpp)
 target_link_libraries(${PROJECT_NAME}
   ${PROJECT_NAME}_static

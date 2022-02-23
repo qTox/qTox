@@ -51,7 +51,7 @@ auto_test(persistence paths "")
 auto_test(persistence dbschema "")
 auto_test(persistence offlinemsgengine "")
 if(NOT "${SMILEYS}" STREQUAL "DISABLED")
-  auto_test(persistence smileypack "${${PROJECT_NAME}_RESOURCES}") # needs emojione
+  auto_test(persistence smileypack "${SMILEY_RESOURCES}") # needs emojione
 endif()
 auto_test(model friendlistmanager "")
 auto_test(model friendmessagedispatcher "")
