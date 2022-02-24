@@ -503,7 +503,7 @@ jobs:
       - name: Deploy
         if: github.ref == 'refs/heads/master'
         env:
-          access_key: ${{ secrets.GITSTATS_DEPLOY_KEY }}
+          access_key: ${{ secrets.DOXYGEN_DEPLOY_KEY }}
         run: ./.ci-scripts/deploy-docs.sh
   build-gitstats:
     name: Gitstats
