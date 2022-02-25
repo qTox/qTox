@@ -28,6 +28,7 @@
 #include <QtGlobal>
 #include <limits>
 #include <QSignalSpy>
+#include <QStringLiteral>
 
 #include <iostream>
 #include <memory>
@@ -86,7 +87,7 @@ QList<DhtServer> MockNodeListGenerator::getBootstrapnodes() const {
     return BootstrapNodeUpdater::loadDefaultBootstrapNodes();
 }
 
-class TestCore : public QObject
+class TestCoreProxy : public QObject
 {
 Q_OBJECT
 private slots:
@@ -106,7 +107,7 @@ namespace {
     const int timeout = 90000; //90 seconds timeout allowed for test
 }
 
-void TestCore::startup_without_proxy()
+void TestCoreProxy::startup_without_proxy()
 {
     settings = std::unique_ptr<MockSettings>(new MockSettings());
 
@@ -133,7 +134,7 @@ void TestCore::startup_without_proxy()
     QCOMPARE(spyCore.count(), 1); // make sure the signal was emitted exactly one time
 }
 
-void TestCore::startup_with_invalid_proxy()
+void TestCoreProxy::startup_with_invalid_proxy()
 {
     settings = std::unique_ptr<MockSettings>(new MockSettings());
 
@@ -163,5 +164,7 @@ void TestCore::startup_with_invalid_proxy()
     }
 }
 
-QTEST_GUILESS_MAIN(TestCore)
+
+
+QTEST_GUILESS_MAIN(TestCoreProxy)
 #include "core_test.moc"

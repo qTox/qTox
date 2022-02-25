@@ -40,6 +40,7 @@ set(MOCK_SOURCES
 )
 
 auto_test(core core "${${PROJECT_NAME}_RESOURCES}")
+auto_test(core core_online "${${PROJECT_NAME}_RESOURCES}")
 auto_test(core contactid "")
 auto_test(core toxid "")
 auto_test(core toxstring "")
