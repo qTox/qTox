@@ -197,7 +197,7 @@ do
     WINE_DLL_DIR="/opt/wine-stable/lib/wine/i386-windows"
   elif [[ "$ARCH" == "x86_64" ]]
   then
-    WINE_DLL_DIR="/opt/wine-stable/lib/wine/i386-windows /opt/wine-stable/lib64/wine/x86_64-windows"
+    WINE_DLL_DIR="/opt/wine-stable/lib64/wine/x86_64-windows /opt/wine-stable/lib/wine/i386-windows"
   fi
   python3 /usr/local/bin/mingw-ldd.py $line --dll-lookup-dirs $QTOX_PREFIX_DIR $WINE_DLL_DIR --output-format tree >> dlls-required
 done < <(cat exes runtime-dlls)
