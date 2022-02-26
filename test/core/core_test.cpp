@@ -28,7 +28,6 @@
 #include <QtGlobal>
 #include <limits>
 #include <QSignalSpy>
-#include <QStringLiteral>
 
 #include <iostream>
 #include <memory>

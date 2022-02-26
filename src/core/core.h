@@ -251,6 +251,14 @@ private:
             tox_kill(tox);
         }
     };
+    /* Using the now commented out statements in checkConnection(), I watched how
+    * many ticks disconnects-after-initial-connect lasted. Out of roughly 15 trials,
+    * 5 disconnected; 4 were DCd for less than 20 ticks, while the 5th was ~50 ticks.
+    * So I set the tolerance here at 25, and initial DCs should be very rare now.
+    * This should be able to go to 50 or 100 without affecting legitimate disconnects'
+    * downtime, but lets be conservative for now. Edit: now ~~40~~ 30.
+    */
+    #define CORE_DISCONNECT_TOLERANCE 30
 
     using ToxPtr = std::unique_ptr<Tox, ToxDeleter>;
     ToxPtr tox;
@@ -265,4 +273,6 @@ private:
     std::unique_ptr<QThread> coreThread;
     const IBootstrapListGenerator& bootstrapListGenerator;
     const ICoreSettings& settings;
+    bool isConnected = false;
+    int tolerance = CORE_DISCONNECT_TOLERANCE;
 };
