@@ -18,21 +18,25 @@
 */
 
 #include "src/core/core.h"
-#include "src/core/toxoptions.h"
 #include "src/core/icoresettings.h"
-#include "src/net/bootstrapnodeupdater.h"
+#include "src/core/toxoptions.h"
 #include "src/model/ibootstraplistgenerator.h"
+#include "src/net/bootstrapnodeupdater.h"
 #include "src/persistence/settings.h"
 
-#include <QtTest/QtTest>
-#include <QtGlobal>
-#include <limits>
 #include <QSignalSpy>
+#include <QtGlobal>
+#include <QtTest/QtTest>
+#include <limits>
 
+#include <QTest>
 #include <iostream>
 #include <memory>
 
 Q_DECLARE_METATYPE(QList<DhtServer>)
+Q_DECLARE_METATYPE(ToxPk)
+Q_DECLARE_METATYPE(uint32_t)
+Q_DECLARE_METATYPE(Status::Status)
 
 class MockSettings : public QObject, public ICoreSettings
 {
@@ -41,6 +45,9 @@ public:
     MockSettings() {
         Q_INIT_RESOURCE(res);
         qRegisterMetaType<QList<DhtServer>>("QList<DhtServer>");
+        qRegisterMetaType<ToxPk>("ToxPk");
+        qRegisterMetaType<uint32_t>("uint32_t");
+        qRegisterMetaType<Status::Status>("Status::Status");
     }
 
     bool getEnableIPv6() const override { return false; }
@@ -79,10 +86,10 @@ private:
 
 class MockNodeListGenerator : public IBootstrapListGenerator
 {
-    QList<DhtServer> getBootstrapnodes();
+    QList<DhtServer> getBootstrapnodes() const override;
 };
 
-QList<DhtServer> MockNodeListGenerator::getBootstrapnodes() {
+QList<DhtServer> MockNodeListGenerator::getBootstrapnodes() const {
     return BootstrapNodeUpdater::loadDefaultBootstrapNodes();
 }
 
@@ -112,9 +119,9 @@ void TestCoreOnline::init()
 
     MockNodeListGenerator nodesGenerator{};
 
-    alice = Core::makeToxCore(QByteArray{}, nullptr, nodesGenerator, nullptr);
+    alice = Core::makeToxCore(QByteArray{}, *settings, nodesGenerator, nullptr);
     QVERIFY2(alice != nullptr, "alice initialization failed");
-    bob = Core::makeToxCore(QByteArray{}, nullptr, nodesGenerator, nullptr);
+    bob = Core::makeToxCore(QByteArray{}, *settings, nodesGenerator, nullptr);
     QVERIFY2(bob != nullptr, "bob initialization failed");
 
     QSignalSpy spyAliceOnline(alice.get(), &Core::connected);
@@ -123,28 +130,24 @@ void TestCoreOnline::init()
     alice->start();
     bob->start();
 
-    QTest::qSleep(60000);
-
     // Wait for both instances coming online
-    QTRY_VERIFY(spyAliceOnline.count() >= 1 && spyBobOnline.count() >= 1);
+    QTRY_VERIFY_WITH_TIMEOUT(spyAliceOnline.count() >= 1 && spyBobOnline.count() >= 1, timeout);
 
     // Make a friend request from alice to bob
-    const QLatin1Literal friendMsg{"Test Invite Message"};
+    const QLatin1String friendMsg{"Test Invite Message"};
 
     QSignalSpy spyBobFriendMsg(bob.get(), &Core::friendRequestReceived);
     QSignalSpy spyAliceFriendMsg(alice.get(), &Core::requestSent);
     alice->requestFriendship(bob->getSelfId(), friendMsg);
 
-    QTest::qSleep(30000);
-
     // Wait for both instances coming online
-    QTRY_VERIFY(spyBobFriendMsg.count() == 1 && spyBobFriendMsg.count() == 1);
+    QTRY_VERIFY_WITH_TIMEOUT(spyBobFriendMsg.count() == 1 && spyAliceFriendMsg.count() == 1, timeout);
 
     // Check for expected signal content
-    QVERIFY(spyBobFriendMsg[0][0].toByteArray() == alice->getSelfPublicKey().getByteArray());
+    QVERIFY(qvariant_cast<ToxPk>(spyBobFriendMsg[0][0]) == alice->getSelfPublicKey());
     QVERIFY(spyBobFriendMsg[0][1].toString() == friendMsg);
 
-    QVERIFY(spyAliceFriendMsg[0][0].toByteArray() == alice->getSelfPublicKey().getByteArray());
+    QVERIFY(qvariant_cast<ToxPk>(spyAliceFriendMsg[0][0]) == bob->getSelfPublicKey());
     QVERIFY(spyAliceFriendMsg[0][1].toString() == friendMsg);
 
     // Let Bob accept the friend request from Alice
@@ -172,7 +175,7 @@ void TestCoreOnline::deinit()
 void TestCoreOnline::change_name()
 {
     // Change the name of Alice to "Alice"
-    const QLatin1Literal aliceName{"Alice"};
+    const QLatin1String aliceName{"Alice"};
 
     QSignalSpy aliceSaveRequest(alice.get(), &Core::saveRequest);
     QSignalSpy aliceUsernameChanged(alice.get(), &Core::usernameSet);
