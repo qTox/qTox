@@ -94,7 +94,8 @@ QList<DhtServer> MockNodeListGenerator::getBootstrapnodes() const {
 }
 
 namespace {
-    const int timeout = 90000; //90 seconds timeout allowed for test
+    const int network_timeout = 60000; // timeout for operations happening online
+    const int local_timeout = 500; // timeout for operations happening offline
 }
 
 class TestCoreOnline : public QObject
@@ -106,6 +107,8 @@ private slots:
 
     // actual test cases
     void change_name();
+    void change_status_message();
+    void change_status();
 
 private:
     /* Test Variables */
@@ -131,7 +134,7 @@ void TestCoreOnline::init()
     bob->start();
 
     // Wait for both instances coming online
-    QTRY_VERIFY_WITH_TIMEOUT(spyAliceOnline.count() >= 1 && spyBobOnline.count() >= 1, timeout);
+    QTRY_VERIFY_WITH_TIMEOUT(spyAliceOnline.count() >= 1 && spyBobOnline.count() >= 1, network_timeout);
 
     // Make a friend request from alice to bob
     const QLatin1String friendMsg{"Test Invite Message"};
@@ -141,7 +144,7 @@ void TestCoreOnline::init()
     alice->requestFriendship(bob->getSelfId(), friendMsg);
 
     // Wait for both instances coming online
-    QTRY_VERIFY_WITH_TIMEOUT(spyBobFriendMsg.count() == 1 && spyAliceFriendMsg.count() == 1, timeout);
+    QTRY_VERIFY_WITH_TIMEOUT(spyBobFriendMsg.count() == 1 && spyAliceFriendMsg.count() == 1, network_timeout);
 
     // Check for expected signal content
     QVERIFY(qvariant_cast<ToxPk>(spyBobFriendMsg[0][0]) == alice->getSelfPublicKey());
@@ -159,7 +162,7 @@ void TestCoreOnline::init()
 
     // FIXME: Check if this is reliable even with CoreExt
     // Wait for both instances being online
-    QTRY_VERIFY_WITH_TIMEOUT(spyAliceFriendOnline.count() >= 1 && spyBobFriendOnline.count() >= 1, timeout);
+    QTRY_VERIFY_WITH_TIMEOUT(spyAliceFriendOnline.count() >= 1 && spyBobFriendOnline.count() >= 1, network_timeout);
 
     // Check for expected signal content
     QVERIFY(spyAliceFriendOnline[0][0].toInt() == static_cast<int>(Status::Status::Online));
@@ -183,13 +186,84 @@ void TestCoreOnline::change_name()
 
     alice->setUsername(aliceName);
 
-    QTRY_VERIFY_WITH_TIMEOUT(aliceSaveRequest.count() == 1, 1000);
+    QTRY_VERIFY_WITH_TIMEOUT(aliceSaveRequest.count() == 1, local_timeout);
     QTRY_VERIFY_WITH_TIMEOUT(aliceUsernameChanged.count() == 1 &&
-                             aliceUsernameChanged[0][0].toString() == aliceName
-                             , 1000);
+                             aliceUsernameChanged[0][0].toString() == aliceName,
+                             local_timeout);
 
     QTRY_VERIFY_WITH_TIMEOUT(bobUsernameChangeReceived.count() == 1 &&
-                             bobUsernameChangeReceived[0][1].toString() == aliceName, timeout);
+                             bobUsernameChangeReceived[0][1].toString() == aliceName, network_timeout);
+
+    // Setting the username again to the same value shoud NOT trigger any signals
+    alice->setUsername(aliceName);
+
+    // Need to sleep here, because QTRY_VERIFY_WITH_TIMEOUT would immideatly trigger
+    QTest::qSleep(1000);
+
+    QVERIFY(aliceSaveRequest.count() == 1);
+    QVERIFY(aliceUsernameChanged.count() == 1);
+    QVERIFY(bobUsernameChangeReceived.count() == 1);
+}
+
+void TestCoreOnline::change_status_message()
+{
+    // Change the status message of Alice
+    const QLatin1String aliceStatusMsg{"Testing a lot"};
+
+    QSignalSpy aliceSaveRequest(alice.get(), &Core::saveRequest);
+    QSignalSpy aliceStatusMsgChanged(alice.get(), &Core::usernameSet);
+    QSignalSpy bobStatusMsgChangeReceived(bob.get(), &Core::friendUsernameChanged);
+
+    alice->setStatusMessage(aliceStatusMsg);
+
+    QTRY_VERIFY_WITH_TIMEOUT(aliceSaveRequest.count() == 1, local_timeout);
+    QTRY_VERIFY_WITH_TIMEOUT(aliceStatusMsgChanged.count() == 1 &&
+                             aliceStatusMsgChanged[0][0].toString() == aliceStatusMsg,
+                             local_timeout);
+
+    QTRY_VERIFY_WITH_TIMEOUT(bobStatusMsgChangeReceived.count() == 1 &&
+                             bobStatusMsgChangeReceived[0][1].toString() == aliceStatusMsg, network_timeout);
+
+    // Setting the status message again to the same value shoud NOT trigger any signals
+    alice->setStatusMessage(aliceStatusMsg);
+
+    // Need to sleep here, because QTRY_VERIFY_WITH_TIMEOUT would immideatly trigger
+    QTest::qSleep(1000);
+
+    QVERIFY(aliceSaveRequest.count() == 1);
+    QVERIFY(aliceStatusMsgChanged.count() == 1);
+    QVERIFY(bobStatusMsgChangeReceived.count() == 1);
+}
+
+void TestCoreOnline::change_status()
+{
+    QSignalSpy aliceSaveRequest(alice.get(), &Core::saveRequest);
+    QSignalSpy aliceStatusChanged(alice.get(), &Core::statusSet);
+    QSignalSpy bobStatusChangeReceived(bob.get(), &Core::friendStatusChanged);
+
+    alice->setStatus(Status::Status::Away);
+
+    QTRY_VERIFY_WITH_TIMEOUT(aliceSaveRequest.count() == 1, local_timeout);
+    QTRY_VERIFY_WITH_TIMEOUT(aliceStatusChanged.count() == 1 &&
+                             qvariant_cast<Status::Status>(aliceStatusChanged[0][0]) == Status::Status::Away,
+                             local_timeout);
+
+    QTRY_VERIFY_WITH_TIMEOUT(bobStatusChangeReceived.count() == 1 &&
+                             qvariant_cast<Status::Status>(bobStatusChangeReceived[0][1]) == Status::Status::Away,
+                             network_timeout);
+
+    // Setting the status message again to the same value again triggers all signals
+    alice->setStatus(Status::Status::Away);
+
+    // TODO(sudden6): Emitting these again odd and should probably be changed, lets codify it for now though
+    QTRY_VERIFY_WITH_TIMEOUT(aliceSaveRequest.count() == 2, local_timeout);
+    QTRY_VERIFY_WITH_TIMEOUT(aliceStatusChanged.count() == 2 &&
+                             qvariant_cast<Status::Status>(aliceStatusChanged[1][0]) == Status::Status::Away,
+                             local_timeout);
+
+    // Toxcore will filter these, even though we set it
+    QTest::qSleep(1000);
+    QVERIFY(bobStatusChangeReceived.count() == 1);
 }
 
 QTEST_GUILESS_MAIN(TestCoreOnline)
