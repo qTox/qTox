@@ -251,7 +251,9 @@ jobs:
           artifacts: "qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage,qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage.sha256,qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage.zsync"
       - name: Rename artifact for nightly upload
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: cp qTox-*.x86_64.AppImage qTox-nightly.x86_64.AppImage
+        run: |
+          cp qTox-*.x86_64.AppImage qTox-nightly.x86_64.AppImage
+          cp qTox-*.x86_64.AppImage.zsync qTox-nightly.x86_64.AppImage.zsync
       - name: Upload to nightly release
         uses: ncipollo/release-action@v1
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
