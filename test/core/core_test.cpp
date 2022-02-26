@@ -23,6 +23,7 @@
 #include "src/net/bootstrapnodeupdater.h"
 #include "src/model/ibootstraplistgenerator.h"
 #include "src/persistence/settings.h"
+#include "test/mock/mockcoresettings.h"
 
 #include <QtTest/QtTest>
 #include <QtGlobal>
@@ -33,49 +34,6 @@
 #include <memory>
 
 Q_DECLARE_METATYPE(QList<DhtServer>)
-
-class MockSettings : public QObject, public ICoreSettings
-{
-Q_OBJECT
-public:
-    MockSettings() {
-        Q_INIT_RESOURCE(res);
-        qRegisterMetaType<QList<DhtServer>>("QList<DhtServer>");
-    }
-
-    bool getEnableIPv6() const override { return false; }
-    void setEnableIPv6(bool) override { }
-
-    bool getForceTCP() const override { return false; }
-    void setForceTCP(bool) override { }
-
-    bool getEnableLanDiscovery() const override { return false; }
-    void setEnableLanDiscovery(bool) override { }
-
-    QString getProxyAddr() const override { return Addr; }
-    void setProxyAddr(const QString &Addr) override { this->Addr = Addr; }
-
-    ProxyType getProxyType() const override { return type; }
-    void setProxyType(ProxyType type) override { this->type = type; }
-
-    quint16 getProxyPort() const override { return port; }
-    void setProxyPort(quint16 port) override { this->port = port; }
-
-    QNetworkProxy getProxy() const override { return QNetworkProxy(QNetworkProxy::ProxyType::NoProxy); }
-
-    SIGNAL_IMPL(MockSettings, enableIPv6Changed, bool enabled)
-    SIGNAL_IMPL(MockSettings, forceTCPChanged, bool enabled)
-    SIGNAL_IMPL(MockSettings, enableLanDiscoveryChanged, bool enabled)
-    SIGNAL_IMPL(MockSettings, proxyTypeChanged, ICoreSettings::ProxyType type)
-    SIGNAL_IMPL(MockSettings, proxyAddressChanged, const QString& address)
-    SIGNAL_IMPL(MockSettings, proxyPortChanged, quint16 port)
-
-private:
-    QList<DhtServer> dhtServerList;
-    QString Addr;
-    ProxyType type;
-    quint16 port;
-};
 
 class MockNodeListGenerator : public IBootstrapListGenerator
 {
