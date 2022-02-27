@@ -1,5 +1,5 @@
 /*
-    Copyright © 2022 by The qTox Project Contributors
+    Copyright © 2021 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,6 +17,6 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "test/mock/mockcoresettings.h"
+#include "mock/mockcoreidhandler.h"
 
-MockSettings::~MockSettings() = default;
+MockCoreIdHandler::~MockCoreIdHandler() = default;

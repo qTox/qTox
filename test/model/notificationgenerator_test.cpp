@@ -20,8 +20,8 @@
 
 #include "src/model/notificationgenerator.h"
 
-#include "test/mock/mockcoreidhandler.h"
-#include "test/mock/mockgroupquery.h"
+#include "mock/mockcoreidhandler.h"
+#include "mock/mockgroupquery.h"
 
 #include <QObject>
 #include <QtTest/QtTest>

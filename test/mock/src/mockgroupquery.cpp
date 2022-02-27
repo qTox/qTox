@@ -17,6 +17,6 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "mockcoreidhandler.h"
+#include "mock/mockgroupquery.h"
 
-MockCoreIdHandler::~MockCoreIdHandler() = default;
+MockGroupQuery::~MockGroupQuery() = default;
