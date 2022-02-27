@@ -22,23 +22,20 @@
 
 enable_testing()
 
-set(MOCK_SOURCES
-  test/mock/mockcoreidhandler.cpp
-  test/mock/mockgroupquery.cpp
-  test/mock/mockcoresettings.cpp
-)
-
 function(auto_test subsystem module extra_deps)
   add_executable(test_${module}
-    test/${subsystem}/${module}_test.cpp ${extra_deps} ${MOCK_SOURCES})
+    test/${subsystem}/${module}_test.cpp ${extra_deps})
   target_link_libraries(test_${module}
     ${PROJECT_NAME}_static
     ${CHECK_LIBRARIES}
-    Qt5::Test)
+    Qt5::Test
+    mock_library)
   add_test(
     NAME test_${module}
     COMMAND ${TEST_CROSSCOMPILING_EMULATOR} test_${module})
 endfunction()
+
+add_subdirectory(test/mock)
 
 auto_test(core core "${${PROJECT_NAME}_RESOURCES}")
 auto_test(core core_online "${${PROJECT_NAME}_RESOURCES}")

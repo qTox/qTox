@@ -23,7 +23,7 @@
 #include "src/model/ibootstraplistgenerator.h"
 #include "src/net/bootstrapnodeupdater.h"
 #include "src/persistence/settings.h"
-#include "test/mock/mockcoresettings.h"
+#include "mock/mockcoresettings.h"
 
 #include <QSignalSpy>
 #include <QtGlobal>

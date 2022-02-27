@@ -23,7 +23,7 @@
 #include "src/net/bootstrapnodeupdater.h"
 #include "src/model/ibootstraplistgenerator.h"
 #include "src/persistence/settings.h"
-#include "test/mock/mockcoresettings.h"
+#include "mock/mockcoresettings.h"
 
 #include <QtTest/QtTest>
 #include <QtGlobal>
