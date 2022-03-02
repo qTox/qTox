@@ -345,6 +345,7 @@ jobs:
       - name: Run build
         run: docker-compose run --rm windows_builder ./windows/cross-compile/build.sh --arch x86_64 --build-type ${{ matrix.build_type }} --run-tests --src-dir /qtox
       - name: Upload installer
+        if: matrix.build_type == 'release'
         uses: actions/upload-artifact@v2
         with:
           name: setup-qtox-x86_64-${{ matrix.build_type }}.exe
@@ -405,6 +406,7 @@ jobs:
       - name: Run build
         run: docker-compose run --rm windows_builder.i686 ./windows/cross-compile/build.sh --arch i686 --build-type ${{ matrix.build_type }} --run-tests --src-dir /qtox
       - name: Upload installer
+        if: matrix.build_type == 'release'
         uses: actions/upload-artifact@v2
         with:
           name: setup-qtox-i686-${{ matrix.build_type }}.exe
