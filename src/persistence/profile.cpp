@@ -336,9 +336,10 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
     Profile* p = new Profile(name, std::move(tmpKey), paths, settings);
 
     // Core settings are saved per profile, need to load them before starting Core
-    settings.updateProfileData(p, parser);
+    constexpr bool isNewProfile = false;
+    settings.updateProfileData(p, parser, isNewProfile);
 
-    p->initCore(toxsave, settings, /*isNewProfile*/ false);
+    p->initCore(toxsave, settings, isNewProfile);
     p->loadDatabase(password);
 
     return p;
@@ -366,9 +367,11 @@ Profile* Profile::createProfile(const QString& name, const QString& password, Se
 
     settings.createPersonal(name);
     Profile* p = new Profile(name, std::move(tmpKey), paths, settings);
-    settings.updateProfileData(p, parser);
 
-    p->initCore(QByteArray(), settings, /*isNewProfile*/ true);
+    constexpr bool isNewProfile = true;
+    settings.updateProfileData(p, parser, isNewProfile);
+
+    p->initCore(QByteArray(), settings, isNewProfile);
     p->loadDatabase(password);
     return p;
 }

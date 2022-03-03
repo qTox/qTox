@@ -155,7 +155,7 @@ public:
     void savePersonal();
 
     void loadGlobal();
-    void loadPersonal(QString profileName, const ToxEncrypt* passKey);
+    void loadPersonal(QString profileName, const ToxEncrypt* passKey, bool newProfile);
 
     void resetToDefault();
 
@@ -170,7 +170,7 @@ public slots:
     void saveGlobal();
     void sync();
     void setAutoLogin(bool state);
-    void updateProfileData(Profile* profile, const QCommandLineParser* parser);
+    void updateProfileData(Profile* profile, const QCommandLineParser* parser, bool newProfile);
 
 signals:
     // General
@@ -717,4 +717,6 @@ private:
     static const QString globalSettingsFile;
     static QThread* settingsThread;
     Paths paths;
+    int globalSettingsVersion = 0;
+    int personalSettingsVersion = 0;
 };
