@@ -20,12 +20,30 @@ set -eu -o pipefail
 
 readonly BIN_NAME="qTox.dmg"
 
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
+source "${SCRIPT_DIR}/cross_compile_detection.sh"
+
+parse_arch "--arch" "macos"
+
+if [ "$1" == "user" ]; then
+    DEPLOYMENT_TARGET=""
+    PREFIX_PATH="$(brew --prefix qt5)"
+elif [ "$1" == "dist" ]; then
+    DEPLOYMENT_TARGET="-DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOS_MINIMUM_SUPPORTED_VERSION"
+    PREFIX_PATH="$DEP_PREFIX;$(brew --prefix qt5)"
+else
+    echo "Unknown arg $1"
+    exit 1
+fi
+
 build_qtox() {
     cmake -DUPDATE_CHECK=ON \
         -DSPELL_CHECK=OFF \
         -DSTRICT_OPTIONS=ON \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_PREFIX_PATH="$(brew --prefix qt5)" .
+        "${DEPLOYMENT_TARGET}" \
+        "-DCMAKE_PREFIX_PATH=${PREFIX_PATH}" .
     make -j$(sysctl -n hw.ncpu)
     export CTEST_OUTPUT_ON_FAILURE=1
     ctest -j$(sysctl -n hw.ncpu)
