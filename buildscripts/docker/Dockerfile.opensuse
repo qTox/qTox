@@ -44,6 +44,8 @@ RUN zypper install --no-recommends -y \
     zypper clean
 
 COPY download/common.sh /build/download/common.sh
+COPY cross_compile_detection.sh /build/cross_compile_detection.sh
+
 COPY download/download_toxcore.sh /build/download/download_toxcore.sh
 COPY download/download_toxext.sh /build/download/download_toxext.sh
 COPY download/download_toxext_messages.sh /build/download/download_toxext_messages.sh
