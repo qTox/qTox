@@ -32,6 +32,9 @@ VIAddVersionKey "FileVersion" "${VERSION}"
 ##############
 #DEFINE MACROS
 ##############
+;Set the name of the uninstall log
+  !define UninstLog "uninstall.log"
+  Var UninstLog
 
 ;AddItem macro
   !macro AddItem Path
@@ -149,26 +152,6 @@ VIAddVersionKey "FileVersion" "${VERSION}"
   !macroend
   !define RestoreFiles "!insertmacro RestoreFiles"
 
-###################
-#PREPARE UNINST LOG
-###################
-  ;Set the name of the uninstall log
-    !define UninstLog "uninstall.log"
-    Var UninstLog
-
-  ;Uninstall log file missing.
-    LangString UninstLogMissing ${LANG_ENGLISH} "${UninstLog} not found!$\r$\nUninstallation cannot proceed!"
-
-  Section -openlogfile
-    CreateDirectory "$INSTDIR"
-    IfFileExists "$INSTDIR\${UninstLog}" +3
-      FileOpen $UninstLog "$INSTDIR\${UninstLog}" w
-    Goto +4
-      SetFileAttributes "$INSTDIR\${UninstLog}" NORMAL
-      FileOpen $UninstLog "$INSTDIR\${UninstLog}" a
-      FileSeek $UninstLog 0 END
-  SectionEnd
-
 ##############
 #MODERN UI
 ##############
@@ -215,6 +198,22 @@ FunctionEnd
 !insertmacro MUI_UNPAGE_FINISH
 
 !insertmacro MUI_LANGUAGE "English"
+
+###################
+#PREPARE UNINST LOG
+###################
+  ;Uninstall log file missing.
+    LangString UninstLogMissing ${LANG_ENGLISH} "${UninstLog} not found!$\r$\nUninstallation cannot proceed!"
+
+  Section -openlogfile
+    CreateDirectory "$INSTDIR"
+    IfFileExists "$INSTDIR\${UninstLog}" +3
+      FileOpen $UninstLog "$INSTDIR\${UninstLog}" w
+    Goto +4
+      SetFileAttributes "$INSTDIR\${UninstLog}" NORMAL
+      FileOpen $UninstLog "$INSTDIR\${UninstLog}" a
+      FileSeek $UninstLog 0 END
+  SectionEnd
 
 #################
 #INSTALL
