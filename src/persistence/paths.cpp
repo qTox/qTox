@@ -365,6 +365,13 @@ QString Paths::getAppCacheDirPath() const
 #endif
 }
 
+QString Paths::getExampleNodesFilePath() const
+{
+    QDir dir(getSettingsDirPath());
+    constexpr static char nodesFileName[] = "bootstrapNodes.example.json";
+    return dir.filePath(nodesFileName);
+}
+
 QString Paths::getUserNodesFilePath() const
 {
     QDir dir(getSettingsDirPath());
