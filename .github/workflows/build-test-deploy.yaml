@@ -461,7 +461,7 @@ jobs:
       - name: Install toxcore and toxext
         run: buildscripts/build_toxcore_linux.sh
       - name: Build qTox
-        run: ./.ci-scripts/build-osx.sh
+        run: buildscripts/build_osx.sh user
       - name: Upload dmg
         uses: actions/upload-artifact@v2
         with:
