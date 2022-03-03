@@ -66,8 +66,6 @@ RUN mkdir -p /src/openssl && \
   /build/build_openssl.sh --arch ${ARCH} && \
   rm -fr /src/openssl
 
-env PKG_CONFIG_PATH=/windows/lib/pkgconfig
-
 COPY download/download_qt.sh /build/download/download_qt.sh
 COPY build_qt.sh /build/build_qt.sh
 
@@ -172,7 +170,7 @@ COPY download/download_toxext_messages.sh /build/download/download_toxext_messag
 COPY build_toxcore.sh /build/build_toxcore.sh
 RUN mkdir -p /src/tox && \
   cd /src/tox && \
-  /build/build_toxcore.sh && \
+  /build/build_toxcore.sh --arch ${ARCH} && \
   rm -fr /src/tox
 
 RUN mkdir /export && \
