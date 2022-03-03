@@ -1,0 +1,12 @@
+# Depdencies for building all of qTox's depdencies from source. Needed for
+# distributable builds, but users should use Brewfile if they are just compiling
+# for their own machine.
+brew "coreutils"
+brew "git"
+brew "libtool"
+brew "cmake"
+brew "pkgconfig"
+brew "check"
+brew "yasm"
+
+brew "qt@5" # Qt sets a low compatibility version by default: https://doc.qt.io/qt-5/macos.html#target-platforms
