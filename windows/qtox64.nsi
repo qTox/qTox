@@ -206,6 +206,26 @@ FunctionEnd
   ;Uninstall log file missing.
     LangString UninstLogMissing ${LANG_ENGLISH} "${UninstLog} not found!$\r$\nUninstallation cannot proceed!"
 
+  Section "Create install directory"
+    CreateDirectory "$INSTDIR"
+    nsExec::ExecToStack 'icacls "$PROGRAMFILES64" /save "$TEMP\program-files-permissions.txt"'
+    Pop $0 # return value/error/timeout
+    Pop $1 # printed text, up to ${NSIS_MAX_STRLEN}
+    FileOpen $0 "$TEMP\program-files-permissions.txt" r
+      FileReadUTF16LE $0 $1 1024
+      FileReadUTF16LE $0 $2 1024
+    FileClose $0
+    DetailPrint "First read line is: $1"
+    DetailPrint "Second read line is: $2"
+    FileOpen $0 "$TEMP\qTox-install-file-permissions.txt" w
+      FileWriteUTF16LE  $0 "$INSTDIR"
+      FileWriteUTF16LE  $0 "$\r$\n"
+      DetailPrint "Writing to file: $2"
+      FileWriteUTF16LE  $0 "$2"
+    FileClose $0
+    nsExec::Exec 'icacls "" /restore "$TEMP\qTox-install-file-permissions.txt"'
+  SectionEnd
+
   Section -openlogfile
     CreateDirectory "$INSTDIR"
     IfFileExists "$INSTDIR\${UninstLog}" +3
