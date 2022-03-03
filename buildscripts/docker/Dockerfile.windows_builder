@@ -58,6 +58,7 @@ RUN update-alternatives --set ${ARCH}-w64-mingw32-gcc /usr/bin/${ARCH}-w64-mingw
   update-alternatives --set ${ARCH}-w64-mingw32-g++ /usr/bin/${ARCH}-w64-mingw32-g++-posix
 
 COPY download/common.sh /build/download/common.sh
+COPY build_utils.sh /build/build_utils.sh
 COPY download/download_openssl.sh /build/download/download_openssl.sh
 COPY build_openssl.sh /build/build_openssl.sh
 
