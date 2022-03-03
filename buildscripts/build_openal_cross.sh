@@ -20,7 +20,16 @@ parse_arch "$@"
 
 "${SCRIPT_DIR}/download/download_openal.sh"
 
-patch -p1 < "${SCRIPT_DIR}/patches/openal-cmake-3-11.patch"
+if [ "${ARCH}" != "macos" ]; then
+    patch -p1 < "${SCRIPT_DIR}/patches/openal-cmake-3-11.patch"
+    DDSOUND="-DDSOUND_INCLUDE_DIR=/usr/${ARCH}-w64-mingw32/include \
+    -DDSOUND_LIBRARY=/usr/${ARCH}-w64-mingw32/lib/libdsound.a \
+    "
+    MACOSX_RPATH=""
+else
+    DDSOUND=""
+    MACOSX_RPATH="-DCMAKE_MACOSX_RPATH=ON"
+fi
 
 export CFLAGS="-fPIC"
 cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
@@ -28,9 +37,9 @@ cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
     -DALSOFT_UTILS=OFF \
     -DALSOFT_EXAMPLES=OFF \
     "${CMAKE_TOOLCHAIN_FILE}" \
-    -DDSOUND_INCLUDE_DIR=/usr/${ARCH}-w64-mingw32/include \
-    -DDSOUND_LIBRARY=/usr/${ARCH}-w64-mingw32/lib/libdsound.a \
+    "${DDSOUND}" \
     "-DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOS_MINIMUM_SUPPORTED_VERSION}" \
+    "${MACOSX_RPATH}" \
     .
 
 make -j "${MAKE_JOBS}"
