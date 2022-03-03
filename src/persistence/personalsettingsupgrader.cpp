@@ -18,10 +18,34 @@
 */
 
 #include "personalsettingsupgrader.h"
+#include "settingsserializer.h"
+#include "src/core/toxpk.h"
 
 #include <QDebug>
 
+#include <tox/tox.h>
+
 #include <cassert>
+
+namespace {
+    bool version0to1(SettingsSerializer& ps)
+    {
+        ps.beginGroup("Friends");
+        {
+            int size = ps.beginReadArray("Friend");
+            for (int i = 0; i < size; i++) {
+                ps.setArrayIndex(i);
+                const auto oldFriendAddr = ps.value("addr").toString();
+                auto newFriendAddr = oldFriendAddr.left(PUBLIC_KEY_HEX_CHARS);
+                ps.setValue("addr", newFriendAddr);
+            }
+            ps.endArray();
+        }
+        ps.endGroup();
+
+        return true;
+    }
+} // namespace
 
 bool PersonalSettingsUpgrader::doUpgrade(SettingsSerializer& settingsSerializer, int fromVer, int toVer)
 {
@@ -37,7 +61,7 @@ bool PersonalSettingsUpgrader::doUpgrade(SettingsSerializer& settingsSerializer,
     }
 
     using SettingsUpgradeFn = bool (*)(SettingsSerializer&);
-    std::vector<SettingsUpgradeFn> upgradeFns = {};
+    std::vector<SettingsUpgradeFn> upgradeFns = {version0to1};
 
     assert(fromVer < static_cast<int>(upgradeFns.size()));
     assert(toVer == static_cast<int>(upgradeFns.size()));

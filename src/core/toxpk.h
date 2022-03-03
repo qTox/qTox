@@ -20,8 +20,11 @@
 #pragma once
 
 #include "src/core/contactid.h"
+#include <tox/tox.h>
 #include <QByteArray>
 #include <cstdint>
+
+#define PUBLIC_KEY_HEX_CHARS (2 * TOX_PUBLIC_KEY_SIZE)
 
 class ToxPk : public ContactId
 {
