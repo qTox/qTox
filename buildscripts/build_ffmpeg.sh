@@ -12,8 +12,8 @@ source "${SCRIPT_DIR}/cross_compile_detection.sh"
 
 usage()
 {
-    echo "Download and build ffmpeg for the windows cross compiling environment"
-    echo "Usage: $0 --arch {winx86_64|wini686}"
+    echo "Download and build ffmpeg for Windows or macOS"
+    echo "Usage: $0 --arch {winx86_64|wini686|macos}"
 }
 
 parse_arch "$@"
@@ -21,18 +21,29 @@ parse_arch "$@"
 "${SCRIPT_DIR}/download/download_ffmpeg.sh"
 
 if [ "${ARCH}" == "x86_64" ]; then
-    FFMPEG_ARCH="x86_64"
+    FFMPEG_ARCH="--arch=x86_64"
+    TARGET_OS="--target-os=mingw32"
+    CROSS_PREFIX="--cross-prefix=${ARCH}-w64-mingw32-"
+elif [ "${ARCH}" == "i686" ]; then
+    FFMPEG_ARCH="--arch=x86"
+    TARGET_OS="--target-os=mingw32"
+    CROSS_PREFIX="--cross-prefix=${ARCH}-w64-mingw32-"
 else
-    FFMPEG_ARCH="x86"
+    FFMPEG_ARCH=""
+    TARGET_OS=""
+    CROSS_PREFIX=""
 fi
 
-./configure --arch=${FFMPEG_ARCH} \
+CFLAGS="${CROSS_CFLAG}" \
+CPPFLAGS="${CROSS_CPPFLAG}" \
+LDFLAGS="${CROSS_LDFLAG}" \
+./configure ${FFMPEG_ARCH} \
           --enable-gpl \
           --enable-shared \
           --disable-static \
           "--prefix=${DEP_PREFIX}" \
-          --target-os="mingw32" \
-          --cross-prefix="${ARCH}-w64-mingw32-" \
+          ${TARGET_OS} \
+          ${CROSS_PREFIX} \
           --pkg-config="pkg-config" \
           --extra-cflags="-O2 -g0" \
           --disable-debug \
