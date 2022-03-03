@@ -23,11 +23,23 @@ parse_arch "$@"
 OPENSSL_LIBS=$(pkg-config --libs openssl)
 export OPENSSL_LIBS
 
+if [ "$ARCH" == "macos" ]; then
+    PLATFORM="-platform darwin-g++"
+    DEVICE_OPTION=""
+    export QMAKE_MAC_SDK="macosx${MACOS_MINIMUM_SUPPORTED_VERSION}"
+else
+    PLATFORM="-xplatform win32-g++"
+    DEVICE_OPTION="-device-option CROSS_COMPILE=${ARCH}-w64-mingw32-"
+fi
+
+CFLAGS="${CROSS_CFLAG}" \
+CPPFLAGS="${CROSS_CPPFLAG}" \
+LDFLAGS="${CROSS_LDFLAG}" \
 ./configure -prefix "${DEP_PREFIX}" \
     -release \
     -shared \
-    -device-option CROSS_COMPILE=${ARCH}-w64-mingw32- \
-    -xplatform win32-g++ \
+    ${DEVICE_OPTION} \
+    ${PLATFORM} \
     -openssl \
     "$(pkg-config --cflags openssl)" \
     -opensource -confirm-license \
