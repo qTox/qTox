@@ -51,6 +51,7 @@ public:
     QString getSettingsDirPath() const;
     QString getAppDataDirPath() const;
     QString getAppCacheDirPath() const;
+    QString getExampleNodesFilePath() const;
     QString getUserNodesFilePath() const;
 #endif
 

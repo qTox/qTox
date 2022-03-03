@@ -463,9 +463,10 @@ information.
 ## Bootstrap Nodes
 
 qTox uses bootstrap nodes to find its way in to the DHT. The list of nodes is
-stored in `bootstrapNodes.json` and can be found and modified if wanted at
-`~/.config/tox/` on Linux, `%APPDATA%\Roaming\tox` on Windows, and
-`~/Library/Application Support/Tox` on macOS.
+stored in `~/.config/tox/` on Linux, `%APPDATA%\Roaming\tox` on Windows, and
+`~/Library/Application Support/Tox` on macOS. `bootstrapNodes.example.json`
+stores the default list. If a new list is placed at `bootstrapNodes.json`, it
+will be used instead.
 
 ## Avoiding Censorship
 
