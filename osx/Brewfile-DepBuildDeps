@@ -1,0 +1,10 @@
+brew "coreutils"
+brew "git"
+brew "wget"
+brew "libtool"
+brew "cmake"
+brew "pkgconfig"
+brew "check"
+brew "yasm"
+
+brew "qt5"
