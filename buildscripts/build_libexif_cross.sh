@@ -20,7 +20,9 @@ parse_arch "$@"
 
 "${SCRIPT_DIR}/download/download_libexif.sh"
 
-CFLAGS="-O2 -g0" ./configure "${HOST_OPTION}" \
+CFLAGS="-O2 -g0 ${CROSS_CFLAG}" \
+LDFLAGS="${CROSS_LDFLAG}" \
+./configure "${HOST_OPTION}" \
                          "--prefix=${DEP_PREFIX}" \
                          --enable-shared \
                          --disable-static \
