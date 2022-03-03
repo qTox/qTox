@@ -43,7 +43,7 @@ else
     exit 1
 fi
 
-patch -Np1 < "$(dirname "$0")"/patches/vpx.patch
+patch -Np1 < "$(dirname "$0")"/patches/vpx-windows.patch
 
 CFLAGS=${ARCH_FLAGS} CROSS="${ARCH}-w64-mingw32-" \
     ./configure --target="${VPX_ARCH}" \
