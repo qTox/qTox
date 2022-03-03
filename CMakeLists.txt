@@ -363,6 +363,10 @@ set(${PROJECT_NAME}_SOURCES
   src/persistence/settings.h
   src/persistence/settingsserializer.cpp
   src/persistence/settingsserializer.h
+  src/persistence/globalsettingsupgrader.cpp
+  src/persistence/globalsettingsupgrader.h
+  src/persistence/personalsettingsupgrader.cpp
+  src/persistence/personalsettingsupgrader.h
   src/persistence/smileypack.cpp
   src/persistence/smileypack.h
   src/persistence/toxsave.cpp

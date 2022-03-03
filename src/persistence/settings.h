@@ -717,4 +717,6 @@ private:
     static const QString globalSettingsFile;
     static QThread* settingsThread;
     Paths paths;
+    int globalSettingsVersion = 0;
+    int personalSettingsVersion = 0;
 };
