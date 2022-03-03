@@ -379,4 +379,11 @@ QString Paths::getUserNodesFilePath() const
     return dir.filePath(nodesFileName);
 }
 
+QString Paths::getBackupUserNodesFilePath() const
+{
+    QDir dir(getSettingsDirPath());
+    constexpr static char nodesFileName[] = "bootstrapNodes.backup.json";
+    return dir.filePath(nodesFileName);
+}
+
 #endif // PATHS_VERSION_TCS_COMPLIANT

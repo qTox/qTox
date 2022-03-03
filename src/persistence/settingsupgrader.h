@@ -20,6 +20,7 @@
 #pragma once
 
 class Settings;
+
 class SettingsUpgrader
 {
 public:
