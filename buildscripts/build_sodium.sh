@@ -10,11 +10,12 @@ readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
 source "${SCRIPT_DIR}/build_utils.sh"
 
-parse_arch --dep "sodium" --supported "win32 win64" "$@"
+parse_arch --dep "sodium" --supported "win32 win64 macos" "$@"
 
 "${SCRIPT_DIR}/download/download_sodium.sh"
 
-LDFLAGS="-fstack-protector" \
+CFLAGS="${CROSS_CFLAG}" \
+LDFLAGS="${CROSS_LDFLAG} -fstack-protector" \
   ./configure "${HOST_OPTION}" \
               "--prefix=${DEP_PREFIX}" \
               --enable-shared \
