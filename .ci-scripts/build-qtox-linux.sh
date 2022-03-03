@@ -72,4 +72,4 @@ else
 fi
 
 cmake --build . -- -j $(nproc)
-cmake --build . --target test
+ctest -j$(nproc)

@@ -116,7 +116,7 @@ then
   export WINEPATH='/export;/windows/bin'
   export CTEST_OUTPUT_ON_FAILURE=1
   export PATH="$PATH:/opt/wine-stable/bin"
-  make test
+  ctest -j$(nproc)
 fi
 set -u
 
