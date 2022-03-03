@@ -39,21 +39,21 @@ VIAddVersionKey "FileVersion" "${VERSION}"
 
 ;AddItem macro
   !macro AddItem Path
-    FileWrite $UninstLog "${Path}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${Path}$\r$\n"
   !macroend
   !define AddItem "!insertmacro AddItem"
 
 ;File macro
   !macro File FileName
      IfFileExists "$OUTDIR\${FileName}" +2
-     FileWrite $UninstLog "$OUTDIR\${FileName}$\r$\n"
+     FileWriteUTF16LE $UninstLog "$OUTDIR\${FileName}$\r$\n"
      File "${FileName}"
   !macroend
   !define File "!insertmacro File"
 
 ;CreateShortcut macro
   !macro CreateShortcut FilePath FilePointer Pamameters Icon IconIndex
-    FileWrite $UninstLog "${FilePath}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${FilePath}$\r$\n"
     CreateShortcut "${FilePath}" "${FilePointer}" "${Pamameters}" "${Icon}" "${IconIndex}"
   !macroend
   !define CreateShortcut "!insertmacro CreateShortcut"
@@ -61,7 +61,7 @@ VIAddVersionKey "FileVersion" "${VERSION}"
 ;Copy files macro
   !macro CopyFiles SourcePath DestPath
     IfFileExists "${DestPath}" +2
-    FileWrite $UninstLog "${DestPath}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${DestPath}$\r$\n"
     CopyFiles "${SourcePath}" "${DestPath}"
   !macroend
   !define CopyFiles "!insertmacro CopyFiles"
@@ -69,7 +69,7 @@ VIAddVersionKey "FileVersion" "${VERSION}"
 ;Rename macro
   !macro Rename SourcePath DestPath
     IfFileExists "${DestPath}" +2
-    FileWrite $UninstLog "${DestPath}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${DestPath}$\r$\n"
     Rename "${SourcePath}" "${DestPath}"
   !macroend
   !define Rename "!insertmacro Rename"
@@ -77,41 +77,41 @@ VIAddVersionKey "FileVersion" "${VERSION}"
 ;CreateDirectory macro
   !macro CreateDirectory Path
     CreateDirectory "${Path}"
-    FileWrite $UninstLog "${Path}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${Path}$\r$\n"
   !macroend
   !define CreateDirectory "!insertmacro CreateDirectory"
 
 ;SetOutPath macro
   !macro SetOutPath Path
     SetOutPath "${Path}"
-    FileWrite $UninstLog "${Path}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${Path}$\r$\n"
   !macroend
   !define SetOutPath "!insertmacro SetOutPath"
 
 ;WriteUninstaller macro
   !macro WriteUninstaller Path
     WriteUninstaller "${Path}"
-    FileWrite $UninstLog "${Path}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${Path}$\r$\n"
   !macroend
   !define WriteUninstaller "!insertmacro WriteUninstaller"
 
 ;WriteIniStr macro
   !macro WriteIniStr IniFile SectionName EntryName NewValue
      IfFileExists "${IniFile}" +2
-     FileWrite $UninstLog "${IniFile}$\r$\n"
+     FileWriteUTF16LE $UninstLog "${IniFile}$\r$\n"
      WriteIniStr "${IniFile}" "${SectionName}" "${EntryName}" "${NewValue}"
   !macroend
 
 ;WriteRegStr macro
   !macro WriteRegStr RegRoot UnInstallPath Key Value
-     FileWrite $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
+     FileWriteUTF16LE $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
      WriteRegStr "${RegRoot}" "${UnInstallPath}" "${Key}" "${Value}"
   !macroend
   !define WriteRegStr "!insertmacro WriteRegStr"
 
 ;WriteRegDWORD macro
   !macro WriteRegDWORD RegRoot UnInstallPath Key Value
-     FileWrite $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
+     FileWriteUTF16LE $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
      WriteRegDWORD "${RegRoot}" "${UnInstallPath}" "${Key}" "${Value}"
   !macroend
   !define WriteRegDWORD "!insertmacro WriteRegDWORD"
@@ -137,9 +137,9 @@ VIAddVersionKey "FileVersion" "${VERSION}"
    IfFileExists "${BACKUP_TO}\*.*" +2
     CreateDirectory "22222"
    IfFileExists "${FILE_DIR}\${FILE}" 0 +7
-    FileWrite $UninstLog "${FILE_DIR}\${FILE}$\r$\n"
-    FileWrite $UninstLog "${BACKUP_TO}\${FILE}$\r$\n"
-    FileWrite $UninstLog "FileBackup$\r$\n"
+    FileWriteUTF16LE $UninstLog "${FILE_DIR}\${FILE}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${BACKUP_TO}\${FILE}$\r$\n"
+    FileWriteUTF16LE $UninstLog "FileBackup$\r$\n"
     Rename "${FILE_DIR}\${FILE}" "${BACKUP_TO}\${FILE}"
     SetOutPath "${FILE_DIR}"
     File "${FILE}" #After the Original file is backed up write the new file.
@@ -290,7 +290,7 @@ Section Uninstall
 
   GetLineCount:
     ClearErrors
-    FileRead $UninstLog $R0
+    FileReadUTF16LE $UninstLog $R0
     IntOp $R1 $R1 + 1
     StrCpy $R0 $R0 -2
     Push $R0
