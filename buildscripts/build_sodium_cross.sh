@@ -6,35 +6,25 @@
 
 set -euo pipefail
 
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
+source "$SCRIPT_DIR"/cross_compile_detection.sh
+
 usage()
 {
     echo "Download and build sodium for the windows cross compiling environment"
     echo "Usage: $0 --arch {x86_64|i686}"
 }
 
-ARCH=""
+parse_arch "$@"
 
-while (( $# > 0 )); do
-    case $1 in
-        --arch) ARCH=$2; shift 2 ;;
-        -h|--help) usage; exit 1 ;;
-        *) echo "Unexpected argument $1"; usage; exit 1;;
-    esac
-done
-
-if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
-    echo "Unexpected arch $ARCH"
-    usage
-    exit 1
-fi
-
-"$(dirname "$0")"/download/download_sodium.sh
+"${SCRIPT_DIR}/download/download_sodium.sh"
 
 LDFLAGS="-fstack-protector" \
-  ./configure --host="${ARCH}-w64-mingw32" \
-              --prefix=/windows \
+  ./configure "${HOST_OPTION}" \
+              "--prefix=${DEP_PREFIX}" \
               --enable-shared \
               --disable-static
 
-make -j $(nproc)
+make -j "${MAKE_JOBS}"
 make install

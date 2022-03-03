@@ -4,29 +4,21 @@
 #     Copyright (c) 2017-2021 Maxim Biro <nurupo.contributions@gmail.com>
 #     Copyright (c) 2021 by The qTox Project Contributors
 
+set -euo pipefail
+
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
+source "${SCRIPT_DIR}/cross_compile_detection.sh"
+
 usage()
 {
     echo "Download and build ffmpeg for the windows cross compiling environment"
     echo "Usage: $0 --arch {x86_64|i686}"
 }
 
-ARCH=""
+parse_arch "$@"
 
-while (( $# > 0 )); do
-    case $1 in
-        --arch) ARCH=$2; shift 2 ;;
-        -h|--help) usage; exit 1 ;;
-        *) echo "Unexpected argument $1"; usage; exit 1;;
-    esac
-done
-
-if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
-    echo "Unexpected arch $ARCH"
-    usage
-    exit 1
-fi
-
-"$(dirname "$0")"/download/download_ffmpeg.sh
+"${SCRIPT_DIR}/download/download_ffmpeg.sh"
 
 if [ "${ARCH}" == "x86_64" ]; then
     FFMPEG_ARCH="x86_64"
@@ -38,7 +30,7 @@ fi
           --enable-gpl \
           --enable-shared \
           --disable-static \
-          --prefix=/windows/ \
+          "--prefix=${DEP_PREFIX}" \
           --target-os="mingw32" \
           --cross-prefix="${ARCH}-w64-mingw32-" \
           --pkg-config="pkg-config" \
@@ -84,5 +76,5 @@ fi
           --enable-decoder=mjpeg \
           --enable-decoder=rawvideo
 
-make -j $(nproc)
+make -j "${MAKE_JOBS}"
 make install
