@@ -27,6 +27,8 @@ build_qtox() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_PREFIX_PATH="$(brew --prefix qt5)" .
     make -j$(sysctl -n hw.ncpu)
+    export CTEST_OUTPUT_ON_FAILURE=1
+    make test
     make install
 }
 
