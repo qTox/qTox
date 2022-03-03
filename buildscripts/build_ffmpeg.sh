@@ -10,23 +10,34 @@ readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
 source "${SCRIPT_DIR}/build_utils.sh"
 
-parse_arch --dep "ffmpeg" --supported "win32 win64" "$@"
+parse_arch --dep "ffmpeg" --supported "win32 win64 macos" "$@"
 
-if [ "${ARCH}" == "win64" ]; then
-    FFMPEG_ARCH="x86_64"
+if [ "${SCRIPT_ARCH}" == "win64" ]; then
+    FFMPEG_ARCH="--arch=x86_64"
+    TARGET_OS="--target-os=mingw32"
+    CROSS_PREFIX="--cross-prefix=${MINGW_ARCH}-w64-mingw32-"
+elif [ "${SCRIPT_ARCH}" == "win32" ]; then
+    FFMPEG_ARCH="--arch=x86"
+    TARGET_OS="--target-os=mingw32"
+    CROSS_PREFIX="--cross-prefix=${MINGW_ARCH}-w64-mingw32-"
 else
-    FFMPEG_ARCH="x86"
+    FFMPEG_ARCH=""
+    TARGET_OS=""
+    CROSS_PREFIX=""
 fi
 
 "${SCRIPT_DIR}/download/download_ffmpeg.sh"
 
-./configure --arch=${FFMPEG_ARCH} \
+CFLAGS="${CROSS_CFLAG}" \
+CPPFLAGS="${CROSS_CPPFLAG}" \
+LDFLAGS="${CROSS_LDFLAG}" \
+./configure ${FFMPEG_ARCH} \
           --enable-gpl \
           --enable-shared \
           --disable-static \
           "--prefix=${DEP_PREFIX}" \
-          --target-os="mingw32" \
-          "--cross-prefix=${MINGW_ARCH}-w64-mingw32-" \
+          ${TARGET_OS} \
+          ${CROSS_PREFIX} \
           --pkg-config="pkg-config" \
           --extra-cflags="-O2 -g0" \
           --disable-debug \
