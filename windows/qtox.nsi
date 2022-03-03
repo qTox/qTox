@@ -30,12 +30,14 @@ VIAddVersionKey "FileDescription" "${DESCRIPTION}"
 VIAddVersionKey "FileVersion" "${VERSION}"
 
 ##############
-#UNINSTALL LOG
+#DEFINE MACROS
 ##############
+
 ;AddItem macro
   !macro AddItem Path
     FileWrite $UninstLog "${Path}$\r$\n"
   !macroend
+  !define AddItem "!insertmacro AddItem"
 
 ;File macro
   !macro File FileName
@@ -43,12 +45,14 @@ VIAddVersionKey "FileVersion" "${VERSION}"
      FileWrite $UninstLog "$OUTDIR\${FileName}$\r$\n"
      File "${FileName}"
   !macroend
+  !define File "!insertmacro File"
 
 ;CreateShortcut macro
   !macro CreateShortcut FilePath FilePointer Pamameters Icon IconIndex
     FileWrite $UninstLog "${FilePath}$\r$\n"
     CreateShortcut "${FilePath}" "${FilePointer}" "${Pamameters}" "${Icon}" "${IconIndex}"
   !macroend
+  !define CreateShortcut "!insertmacro CreateShortcut"
 
 ;Copy files macro
   !macro CopyFiles SourcePath DestPath
@@ -56,6 +60,7 @@ VIAddVersionKey "FileVersion" "${VERSION}"
     FileWrite $UninstLog "${DestPath}$\r$\n"
     CopyFiles "${SourcePath}" "${DestPath}"
   !macroend
+  !define CopyFiles "!insertmacro CopyFiles"
 
 ;Rename macro
   !macro Rename SourcePath DestPath
@@ -63,24 +68,28 @@ VIAddVersionKey "FileVersion" "${VERSION}"
     FileWrite $UninstLog "${DestPath}$\r$\n"
     Rename "${SourcePath}" "${DestPath}"
   !macroend
+  !define Rename "!insertmacro Rename"
 
 ;CreateDirectory macro
   !macro CreateDirectory Path
     CreateDirectory "${Path}"
     FileWrite $UninstLog "${Path}$\r$\n"
   !macroend
+  !define CreateDirectory "!insertmacro CreateDirectory"
 
 ;SetOutPath macro
   !macro SetOutPath Path
     SetOutPath "${Path}"
     FileWrite $UninstLog "${Path}$\r$\n"
   !macroend
+  !define SetOutPath "!insertmacro SetOutPath"
 
 ;WriteUninstaller macro
   !macro WriteUninstaller Path
     WriteUninstaller "${Path}"
     FileWrite $UninstLog "${Path}$\r$\n"
   !macroend
+  !define WriteUninstaller "!insertmacro WriteUninstaller"
 
 ;WriteIniStr macro
   !macro WriteIniStr IniFile SectionName EntryName NewValue
@@ -94,12 +103,14 @@ VIAddVersionKey "FileVersion" "${VERSION}"
      FileWrite $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
      WriteRegStr "${RegRoot}" "${UnInstallPath}" "${Key}" "${Value}"
   !macroend
+  !define WriteRegStr "!insertmacro WriteRegStr"
 
 ;WriteRegDWORD macro
   !macro WriteRegDWORD RegRoot UnInstallPath Key Value
      FileWrite $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
      WriteRegDWORD "${RegRoot}" "${UnInstallPath}" "${Key}" "${Value}"
   !macroend
+  !define WriteRegDWORD "!insertmacro WriteRegDWORD"
 
 ;BackupFile macro
   !macro BackupFile FILE_DIR FILE BACKUP_TO
@@ -108,12 +119,14 @@ VIAddVersionKey "FileVersion" "${VERSION}"
    IfFileExists "${FILE_DIR}\${FILE}" 0 +2
     Rename "${FILE_DIR}\${FILE}" "${BACKUP_TO}\${FILE}"
   !macroend
+  !define BackupFile "!insertmacro BackupFile"
 
 ;RestoreFile macro
   !macro RestoreFile BUP_DIR FILE RESTORE_TO
    IfFileExists "${BUP_DIR}\${FILE}" 0 +2
     Rename "${BUP_DIR}\${FILE}" "${RESTORE_TO}\${FILE}"
   !macroend
+  !define RestoreFile "!insertmacro RestoreFile"
 
 ;BackupFiles macro
   !macro BackupFiles FILE_DIR FILE BACKUP_TO
@@ -127,12 +140,14 @@ VIAddVersionKey "FileVersion" "${VERSION}"
     SetOutPath "${FILE_DIR}"
     File "${FILE}" #After the Original file is backed up write the new file.
   !macroend
+  !define BackupFiles "!insertmacro BackupFiles"
 
 ;RestoreFiles macro
   !macro RestoreFiles BUP_FILE RESTORE_FILE
    IfFileExists "${BUP_FILE}" 0 +2
     CopyFiles "${BUP_FILE}" "${RESTORE_FILE}"
   !macroend
+  !define RestoreFiles "!insertmacro RestoreFiles"
 
 ###################
 #PREPARE UNINST LOG
@@ -143,48 +158,6 @@ VIAddVersionKey "FileVersion" "${VERSION}"
 
   ;Uninstall log file missing.
     LangString UninstLogMissing ${LANG_ENGLISH} "${UninstLog} not found!$\r$\nUninstallation cannot proceed!"
-
-  ;AddItem macro
-    !define AddItem "!insertmacro AddItem"
-
-  ;BackupFile macro
-    !define BackupFile "!insertmacro BackupFile"
-
-  ;BackupFiles macro
-    !define BackupFiles "!insertmacro BackupFiles"
-
-  ;Copy files macro
-    !define CopyFiles "!insertmacro CopyFiles"
-
-  ;CreateDirectory macro
-    !define CreateDirectory "!insertmacro CreateDirectory"
-
-  ;CreateShortcut macro
-    !define CreateShortcut "!insertmacro CreateShortcut"
-
-  ;File macro
-    !define File "!insertmacro File"
-
-  ;Rename macro
-    !define Rename "!insertmacro Rename"
-
-  ;RestoreFile macro
-    !define RestoreFile "!insertmacro RestoreFile"
-
-  ;RestoreFiles macro
-    !define RestoreFiles "!insertmacro RestoreFiles"
-
-  ;SetOutPath macro
-    !define SetOutPath "!insertmacro SetOutPath"
-
-  ;WriteRegDWORD macro
-    !define WriteRegDWORD "!insertmacro WriteRegDWORD"
-
-  ;WriteRegStr macro
-    !define WriteRegStr "!insertmacro WriteRegStr"
-
-  ;WriteUninstaller macro
-    !define WriteUninstaller "!insertmacro WriteUninstaller"
 
   Section -openlogfile
     CreateDirectory "$INSTDIR"
