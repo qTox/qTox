@@ -444,9 +444,9 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "qtox-nightly-i686-${{ matrix.build_type }}.zip"
-  build-osx:
-    name: macOS
-    runs-on: macos-10.15
+  build-osx-distributable:
+    name: macOS distributable
+    runs-on: macos-latest
     needs: update-nightly-tag
     if: |
       always() &&
@@ -456,12 +456,12 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v2
-      - name: homebrew
-        run: brew upgrade && brew bundle --file ./osx/Brewfile
-      - name: Install toxcore and toxext
-        run: buildscripts/build_toxcore_linux.sh
+      - name: Homebrew dependencies to build dependencies
+        run: brew upgrade && brew bundle --file ./osx/Brewfile-DepBuildDeps
+      - name: Build dependencies
+        run: buildscripts/build_osx_deps.sh
       - name: Build qTox
-        run: buildscripts/build_osx.sh user
+        run: buildscripts/build_osx.sh dist
       - name: Upload dmg
         uses: actions/upload-artifact@v2
         with:
@@ -493,6 +493,17 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "qTox-nightly.dmg"
+  build-osx-users:
+    name: macOS user
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Homebrew
+        run: brew upgrade && brew bundle --file ./osx/Brewfile
+      - name: Install toxcore and toxext
+        run: buildscripts/build_toxcore_linux.sh
+      - name: Build qTox
+        run: buildscripts/build_osx.sh user
   build-docs:
     name: Docs
     runs-on: ubuntu-latest
