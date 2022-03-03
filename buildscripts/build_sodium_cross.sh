@@ -20,7 +20,8 @@ parse_arch "$@"
 
 "${SCRIPT_DIR}/download/download_sodium.sh"
 
-LDFLAGS="-fstack-protector" \
+CFLAGS="${CROSS_CFLAG}" \
+LDFLAGS="${CROSS_LDFLAG} -fstack-protector" \
   ./configure "${HOST_OPTION}" \
               "--prefix=${DEP_PREFIX}" \
               --enable-shared \
