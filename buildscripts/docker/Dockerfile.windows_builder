@@ -58,61 +58,61 @@ RUN update-alternatives --set ${ARCH}-w64-mingw32-gcc /usr/bin/${ARCH}-w64-mingw
 
 COPY download/common.sh /build/download/common.sh
 COPY download/download_openssl.sh /build/download/download_openssl.sh
-COPY build_openssl_windows.sh /build/build_openssl_windows.sh
+COPY build_openssl.sh /build/build_openssl.sh
 
 RUN mkdir -p /src/openssl && \
   cd /src/openssl && \
-  /build/build_openssl_windows.sh --arch ${ARCH} && \
+  /build/build_openssl.sh --arch ${ARCH} && \
   rm -fr /src/openssl
 
 env PKG_CONFIG_PATH=/windows/lib/pkgconfig
 
 COPY download/download_qt.sh /build/download/download_qt.sh
-COPY build_qt_windows.sh /build/build_qt_windows.sh
+COPY build_qt.sh /build/build_qt.sh
 
 RUN mkdir -p /src/qt && \
   cd /src/qt && \
-  /build/build_qt_windows.sh --arch ${ARCH} && \
+  /build/build_qt.sh --arch ${ARCH} && \
   rm -fr /src/qt
 
 COPY download/download_sqlcipher.sh /build/download/download_sqlcipher.sh
-COPY build_sqlcipher_windows.sh /build/build_sqlcipher_windows.sh
+COPY build_sqlcipher.sh /build/build_sqlcipher.sh
 
 RUN mkdir -p /src/sqlcipher && \
   cd /src/sqlcipher && \
-  /build/build_sqlcipher_windows.sh  --arch ${ARCH} && \
+  /build/build_sqlcipher.sh  --arch ${ARCH} && \
   rm -fr /src/sqlcipher
 
 COPY download/download_ffmpeg.sh /build/download/download_ffmpeg.sh
-COPY build_ffmpeg_windows.sh /build/build_ffmpeg_windows.sh
+COPY build_ffmpeg.sh /build/build_ffmpeg.sh
 RUN mkdir -p /src/ffmpeg && \
   cd /src/ffmpeg && \
-  /build/build_ffmpeg_windows.sh --arch ${ARCH} && \
+  /build/build_ffmpeg.sh --arch ${ARCH} && \
   rm -fr /src/ffmpeg
 
 COPY toolchain/windows-${ARCH}-toolchain.cmake /build/windows-toolchain.cmake
 
 COPY download/download_openal.sh /build/download/download_openal.sh
-COPY build_openal_windows.sh /build/build_openal_windows.sh
+COPY build_openal.sh /build/build_openal.sh
 COPY patches/openal-cmake-3-11.patch /build/patches/openal-cmake-3-11.patch
 
 RUN mkdir -p /src/openal && \
   cd /src/openal && \
-  /build/build_openal_windows.sh --arch ${ARCH} && \
+  /build/build_openal.sh --arch ${ARCH} && \
   rm -fr /src/openal
 
 COPY download/download_qrencode.sh /build/download/download_qrencode.sh
-COPY build_qrencode_windows.sh /build/build_qrencode_windows.sh
+COPY build_qrencode.sh /build/build_qrencode.sh
 RUN mkdir -p /src/qrencode && \
   cd /src/qrencode && \
-  /build/build_qrencode_windows.sh  --arch ${ARCH} && \
+  /build/build_qrencode.sh  --arch ${ARCH} && \
   rm -fr /src/qrencode
 
 COPY download/download_libexif.sh /build/download/download_libexif.sh
-COPY build_libexif_windows.sh /build/build_libexif_windows.sh
+COPY build_libexif.sh /build/build_libexif.sh
 RUN mkdir -p /src/exif && \
   cd /src/exif && \
-  /build/build_libexif_windows.sh --arch ${ARCH} && \
+  /build/build_libexif.sh --arch ${ARCH} && \
   rm -fr /src/exif
 
 COPY download/download_snore.sh /build/download/download_snore.sh
@@ -123,25 +123,25 @@ RUN mkdir -p /src/snore && \
   rm -fr /src/snore
 
 COPY download/download_opus.sh /build/download/download_opus.sh
-COPY build_opus_windows.sh /build/build_opus_windows.sh
+COPY build_opus.sh /build/build_opus.sh
 RUN mkdir -p /src/opus && \
   cd /src/opus && \
-  /build/build_opus_windows.sh --arch ${ARCH} && \
+  /build/build_opus.sh --arch ${ARCH} && \
   rm -fr /src/opus
 
 COPY download/download_sodium.sh /build/download/download_sodium.sh
-COPY build_sodium_windows.sh /build/build_sodium_windows.sh
+COPY build_sodium.sh /build/build_sodium.sh
 RUN mkdir -p /src/sodium && \
   cd /src/sodium && \
-  /build/build_sodium_windows.sh --arch ${ARCH} && \
+  /build/build_sodium.sh --arch ${ARCH} && \
   rm -fr /src/sodium
 
 COPY download/download_vpx.sh /build/download/download_vpx.sh
-COPY build_vpx_windows.sh /build/build_vpx_windows.sh
+COPY build_vpx.sh /build/build_vpx.sh
 COPY patches/vpx.patch /build/patches/vpx.patch
 RUN mkdir -p /src/vpx && \
   cd /src/vpx && \
-  /build/build_vpx_windows.sh --arch ${ARCH} && \
+  /build/build_vpx.sh --arch ${ARCH} && \
   rm -fr /src/vpx
 
 COPY download/download_mingw_ldd.sh /build/download/download_mingw_ldd.sh
@@ -159,19 +159,19 @@ RUN mkdir -p /src/nsisshellexecasuser && \
   rm -fr /src/nsisshellexecasuser
 
 COPY download/download_msgpack_c.sh /build/download/download_msgpack_c.sh
-COPY build_msgpack_c_windows.sh /build/build_msgpack_c_windows.sh
+COPY build_msgpack_c.sh /build/build_msgpack_c.sh
 RUN mkdir -p /src/msgpack_c && \
   cd /src/msgpack_c && \
-  /build/build_msgpack_c_windows.sh && \
+  /build/build_msgpack_c.sh && \
   rm -fr /src/msgpack_c
 
 COPY download/download_toxcore.sh /build/download/download_toxcore.sh
 COPY download/download_toxext.sh /build/download/download_toxext.sh
 COPY download/download_toxext_messages.sh /build/download/download_toxext_messages.sh
-COPY build_toxcore_windows.sh /build/build_toxcore_windows.sh
+COPY build_toxcore.sh /build/build_toxcore.sh
 RUN mkdir -p /src/tox && \
   cd /src/tox && \
-  /build/build_toxcore_windows.sh && \
+  /build/build_toxcore.sh && \
   rm -fr /src/tox
 
 RUN mkdir /export && \
