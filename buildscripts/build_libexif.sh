@@ -12,15 +12,17 @@ source "$SCRIPT_DIR"/cross_compile_detection.sh
 
 usage()
 {
-    echo "Download and build libexif for the windows cross compiling environment"
-    echo "Usage: $0 --arch {winx86_64|wini686}"
+    echo "Download and build libexif for Windows or macOS"
+    echo "Usage: $0 --arch {winx86_64|wini686|macos}"
 }
 
 parse_arch "$@"
 
 "${SCRIPT_DIR}/download/download_libexif.sh"
 
-CFLAGS="-O2 -g0" ./configure "${HOST_OPTION}" \
+CFLAGS="-O2 -g0 ${CROSS_CFLAG}" \
+LDFLAGS="${CROSS_LDFLAG}" \
+./configure "${HOST_OPTION}" \
                          "--prefix=${DEP_PREFIX}" \
                          --enable-shared \
                          --disable-static \
