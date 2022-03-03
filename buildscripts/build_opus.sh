@@ -12,15 +12,17 @@ source "${SCRIPT_DIR}/cross_compile_detection.sh"
 
 usage()
 {
-    echo "Download and build opus for the windows cross compiling environment"
-    echo "Usage: $0 --arch {winx86_64|wini686}"
+    echo "Download and build opus for Windows or macOS"
+    echo "Usage: $0 --arch {winx86_64|wini686|macos}"
 }
 
 parse_arch "$@"
 
 "${SCRIPT_DIR}/download/download_opus.sh"
 
-LDFLAGS="-fstack-protector" CFLAGS="-O2 -g0" \
+LDFLAGS="-fstack-protector ${CROSS_LDFLAG}" \
+CFLAGS="-O2 -g0 ${CROSS_CFLAG}" \
+CPPFLAGS="${CROSS_CPPFLAG}" \
     ./configure "${HOST_OPTION}" \
                              "--prefix=${DEP_PREFIX}" \
                              --enable-shared \
