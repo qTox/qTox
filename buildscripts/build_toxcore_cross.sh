@@ -6,23 +6,29 @@
 
 set -euo pipefail
 
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
+source "${SCRIPT_DIR}/cross_compile_detection.sh"
+
+parse_arch "$@"
+
 build_toxcore() {
     TOXCORE_SRC="$(realpath toxcore)"
 
     mkdir -p "$TOXCORE_SRC"
     pushd $TOXCORE_SRC >/dev/null || exit 1
 
-    "$(dirname "$0")"/download/download_toxcore.sh
+    "${SCRIPT_DIR}/download/download_toxcore.sh"
 
-    cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
+    cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
             -DBOOTSTRAP_DAEMON=OFF \
             -DCMAKE_BUILD_TYPE=Release \
             -DENABLE_STATIC=OFF \
             -DENABLE_SHARED=ON \
-            -DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake \
+            "${CMAKE_TOOLCHAIN_FILE}" \
             .
 
-    cmake --build . -- -j$(nproc)
+    cmake --build . -- "-j${MAKE_JOBS}"
     cmake --build . --target install
 
     popd >/dev/null
@@ -34,14 +40,14 @@ build_toxext() {
     mkdir -p "$TOXEXT_SRC"
     pushd $TOXEXT_SRC >/dev/null || exit 1
 
-    "$(dirname "$0")"/download/download_toxext.sh
+    "${SCRIPT_DIR}/download/download_toxext.sh"
 
-    cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
+    cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake \
+            "${CMAKE_TOOLCHAIN_FILE}" \
             .
 
-    cmake --build . -- -j$(nproc)
+    cmake --build . -- "-j${MAKE_JOBS}"
     cmake --build . --target install
 
     popd >/dev/null
@@ -53,12 +59,13 @@ build_toxext_messages() {
     mkdir -p "$TOXEXT_MESSAGES_SRC"
     pushd $TOXEXT_MESSAGES_SRC > /dev/null || exit 1
 
-    "$(dirname "$0")"/download/download_toxext_messages.sh
+    "${SCRIPT_DIR}/download/download_toxext_messages.sh"
 
-    cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
+    cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake \
+            "${CMAKE_TOOLCHAIN_FILE}" \
             .
+    cmake --build . -- "-j${MAKE_JOBS}"
     cmake --build . --target install
 
     popd >/dev/null
