@@ -25,17 +25,30 @@ parse_arch "$@"
 # This is a workaround as suggested in https://stackoverflow.com/questions/43152633
 if [ "${ARCH}" == "x86_64" ]; then
     ARCH_FLAGS="-fno-asynchronous-unwind-tables"
-    VPX_ARCH="x86_64-win64-gcc"
+    TARGET="--target=x86_64-win64-gcc"
+    CROSS_ARG="${ARCH}-w64-mingw32-"
 elif [ "${ARCH}" == "i686" ]; then \
     ARCH_FLAGS=""
-    VPX_ARCH="x86-win32-gcc"
+    TARGET="--target=x86-win32-gcc"
+    CROSS_ARG="${ARCH}-w64-mingw32-"
+elif [ "${ARCH}" == "macos" ]; then \
+    ARCH_FLAGS=""
+    TARGET=""
+    CROSS_ARG=""
 else
     exit 1
 fi
 
-patch -Np1 < "$(dirname "$0")"/patches/vpx-windows.patch
+if [ "${ARCH}" == "macos" ]; then
+    patch -Np1 < "${SCRIPT_DIR}/patches/vpx-macos.patch"
+else
+    patch -Np1 < "${SCRIPT_DIR}/patches/vpx-windows.patch"
+fi
 
-CFLAGS=${ARCH_FLAGS} CROSS="${CROSS_ARG}" \
+CFLAGS="${ARCH_FLAGS} ${CROSS_CFLAG}" \
+CPPFLAGS="${CROSS_CPPFLAG}" \
+LDFLAGS="${CROSS_LDFLAG}" \
+CROSS="${CROSS_ARG}" \
     ./configure \
         ${TARGET} \
         "--prefix=${DEP_PREFIX}" \
@@ -49,3 +62,7 @@ CFLAGS=${ARCH_FLAGS} CROSS="${CROSS_ARG}" \
 
 make -j "${MAKE_JOBS}"
 make install
+
+if [ "${ARCH}" == "macos" ]; then
+    install_name_tool -id '@rpath/libvpx.dylib' ${DEP_PREFIX}/lib/libvpx.dylib
+fi
