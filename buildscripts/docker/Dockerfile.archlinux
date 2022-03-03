@@ -39,6 +39,7 @@ RUN pacman -Syu --noconfirm --needed \
 ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
 COPY download/common.sh /build/download/common.sh
+COPY platform_detection.sh /build/platform_detection.sh
 COPY download/download_toxcore.sh /build/download/download_toxcore.sh
 COPY download/download_toxext.sh /build/download/download_toxext.sh
 COPY download/download_toxext_messages.sh /build/download/download_toxext_messages.sh

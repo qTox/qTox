@@ -70,6 +70,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 COPY download/common.sh /build/download/common.sh
+COPY platform_detection.sh /build/platform_detection.sh
 
 COPY download/download_snore.sh /build/download/download_snore.sh
 COPY build_snore_linux.sh /build/build_snore_linux.sh
