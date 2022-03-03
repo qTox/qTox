@@ -201,6 +201,19 @@ QByteArray serialize(QList<DhtServer> nodes)
     QJsonDocument doc{rootObj};
     return doc.toJson(QJsonDocument::Indented);
 }
+
+void createExampleBootstrapNodesFile(const Paths& paths)
+{
+    // deserialize and reserialize instead of just copying to strip out any unnecessary json, making it easier for
+    // users to edit. Overwrite the file on every start to keep it up to date when our internal list updates.
+    auto buildInNodes = loadNodesFile(builtinNodesFile);
+    auto serializedNodes = serialize(buildInNodes);
+
+    QFile outFile(paths.getExampleNodesFilePath());
+    outFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    outFile.write(serializedNodes.data(), serializedNodes.size());
+    outFile.close();
+}
 } // namespace
 
 /**
@@ -211,25 +224,18 @@ BootstrapNodeUpdater::BootstrapNodeUpdater(const QNetworkProxy& proxy, Paths& _p
     : proxy{proxy}
     , paths{_paths}
     , QObject{parent}
-{}
+{
+    createExampleBootstrapNodesFile(_paths);
+}
 
 QList<DhtServer> BootstrapNodeUpdater::getBootstrapnodes() const
 {
     auto userFilePath = paths.getUserNodesFilePath();
-    if (!QFile(userFilePath).exists()) {
-        qInfo() << "Bootstrap node list not found, creating one with default nodes.";
-        // deserialize and reserialize instead of just copying to strip out any unnecessary json, making it easier for
-        // users to edit
-        auto buildInNodes = loadNodesFile(builtinNodesFile);
-        auto serializedNodes = serialize(buildInNodes);
-
-        QFile outFile(userFilePath);
-        outFile.open(QIODevice::WriteOnly | QIODevice::Text);
-        outFile.write(serializedNodes.data(), serializedNodes.size());
-        outFile.close();
+    if (QFile::exists(userFilePath)) {
+        return loadNodesFile(userFilePath);
+    } else {
+        return loadNodesFile(builtinNodesFile);
     }
-
-    return loadNodesFile(userFilePath);
 }
 
 void BootstrapNodeUpdater::requestBootstrapNodes()
