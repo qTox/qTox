@@ -14,13 +14,12 @@ parse_arch --dep "qrencode" --supported "win32 win64" "$@"
 
 "${SCRIPT_DIR}/download/download_qrencode.sh"
 
-CFLAGS="-O2 -g0" ./configure "${HOST_OPTION}" \
-                            --prefix="${DEP_PREFIX}" \
-                            --enable-shared \
-                            --disable-static \
-                            --disable-sdltest \
-                            --without-tools \
-                            --without-debug
+cmake . \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX="${DEP_PREFIX}" \
+    "${CMAKE_TOOLCHAIN_FILE}" \
+    -DWITH_TOOLS=OFF \
+    -DBUILD_SHARED_LIBS=ON
 
 make -j "${MAKE_JOBS}"
 make install
