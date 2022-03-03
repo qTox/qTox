@@ -27,7 +27,7 @@ fi
 
 "${SCRIPT_DIR}/download/download_vpx.sh"
 
-patch -Np1 < "${SCRIPT_DIR}/patches/vpx.patch"
+patch -Np1 < "${SCRIPT_DIR}/patches/vpx-windows.patch"
 
 CFLAGS=${ARCH_FLAGS} CROSS="${MINGW_ARCH}-w64-mingw32-" \
     ./configure --target="${VPX_ARCH}" \
