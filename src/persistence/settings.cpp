@@ -64,7 +64,7 @@ const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
 CompatibleRecursiveMutex Settings::bigLock;
 QThread* Settings::settingsThread{nullptr};
-static constexpr int GLOBAL_SETTINGS_VERSION = 0;
+static constexpr int GLOBAL_SETTINGS_VERSION = 1;
 static constexpr int PERSONAL_SETTINGS_VERSION = 0;
 
 Settings::Settings()

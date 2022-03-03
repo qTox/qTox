@@ -53,6 +53,7 @@ public:
     QString getAppCacheDirPath() const;
     QString getExampleNodesFilePath() const;
     QString getUserNodesFilePath() const;
+    QString getBackupUserNodesFilePath() const;
 #endif
 
 private:
