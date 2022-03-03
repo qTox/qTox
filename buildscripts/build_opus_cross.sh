@@ -20,7 +20,9 @@ parse_arch "$@"
 
 "${SCRIPT_DIR}/download/download_opus.sh"
 
-LDFLAGS="-fstack-protector" CFLAGS="-O2 -g0" \
+LDFLAGS="-fstack-protector ${CROSS_LDFLAG}" \
+CFLAGS="-O2 -g0 ${CROSS_CFLAG}" \
+CPPFLAGS="${CROSS_CPPFLAG}" \
     ./configure "${HOST_OPTION}" \
                              "--prefix=${DEP_PREFIX}" \
                              --enable-shared \
