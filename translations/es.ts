@@ -2636,6 +2636,14 @@ Este ID incluye el código NoSpam (en azul), y la suma de comprobación (en gris
         <source>Circle #%1</source>
         <translation>Círculo #%1</translation>
     </message>
+    <message>
+        <source>Failed to load personal settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ToxURIDialog</name>
