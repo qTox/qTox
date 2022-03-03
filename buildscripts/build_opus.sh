@@ -10,11 +10,12 @@ readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
 source "${SCRIPT_DIR}/build_utils.sh"
 
-parse_arch --dep "opus" --supported "win32 win64" "$@"
+parse_arch --dep "opus" --supported "win32 win64 macos" "$@"
 
 "${SCRIPT_DIR}/download/download_opus.sh"
 
-LDFLAGS="-fstack-protector" CFLAGS="-O2 -g0" \
+LDFLAGS="-fstack-protector ${CROSS_LDFLAG}" \
+CFLAGS="-O2 -g0 ${CROSS_CFLAG}" \
     ./configure "${HOST_OPTION}" \
                              "--prefix=${DEP_PREFIX}" \
                              --enable-shared \
