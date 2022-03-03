@@ -189,7 +189,7 @@ RUN mkdir /export && \
   cp /windows/bin/avformat-*.dll /export && \
   cp /windows/bin/avutil-*.dll /export && \
   cp /windows/bin/libexif-*.dll /export && \
-  cp /windows/bin/libqrencode.dll /export && \
+  cp /windows/lib/libqrencode.dll /export && \
   cp /windows/bin/libsodium-*.dll /export && \
   cp /windows/bin/libsqlcipher-*.dll /export && \
   cp /windows/bin/libmsgpackc.dll /export && \

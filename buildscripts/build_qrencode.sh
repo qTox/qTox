@@ -20,13 +20,12 @@ parse_arch "$@"
 
 "${SCRIPT_DIR}/download/download_qrencode.sh"
 
-CFLAGS="-O2 -g0" ./configure --host="${ARCH}-w64-mingw32" \
-                            --prefix=/windows \
-                            --enable-shared \
-                            --disable-static \
-                            --disable-sdltest \
-                            --without-tools \
-                            --without-debug
+cmake . \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/windows \
+    "${CMAKE_TOOLCHAIN_FILE}" \
+    -DWITH_TOOLS=OFF \
+    -DBUILD_SHARED_LIBS=ON
 
 make -j "${MAKE_JOBS}"
 make install
