@@ -32,6 +32,7 @@ build_toxcore() {
             -DENABLE_STATIC=OFF \
             -DENABLE_SHARED=ON \
             "${CMAKE_TOOLCHAIN_FILE}" \
+            "-DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOS_MINIMUM_SUPPORTED_VERSION}" \
             .
 
     cmake --build . -- "-j${MAKE_JOBS}"
@@ -51,6 +52,7 @@ build_toxext() {
     cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
             -DCMAKE_BUILD_TYPE=Release \
             "${CMAKE_TOOLCHAIN_FILE}" \
+            "-DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOS_MINIMUM_SUPPORTED_VERSION}" \
             .
 
     cmake --build . -- "-j${MAKE_JOBS}"
@@ -70,6 +72,7 @@ build_toxext_messages() {
     cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
             -DCMAKE_BUILD_TYPE=Release \
             "${CMAKE_TOOLCHAIN_FILE}" \
+            "-DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOS_MINIMUM_SUPPORTED_VERSION}" \
             .
     cmake --build . -- "-j${MAKE_JOBS}"
     cmake --build . --target install

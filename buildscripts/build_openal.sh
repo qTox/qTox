@@ -30,6 +30,7 @@ cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
     "${CMAKE_TOOLCHAIN_FILE}" \
     -DDSOUND_INCLUDE_DIR=/usr/${ARCH}-w64-mingw32/include \
     -DDSOUND_LIBRARY=/usr/${ARCH}-w64-mingw32/lib/libdsound.a \
+    "-DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOS_MINIMUM_SUPPORTED_VERSION}" \
     .
 
 make -j "${MAKE_JOBS}"
