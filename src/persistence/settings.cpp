@@ -25,6 +25,7 @@
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settingsserializer.h"
+#include "src/persistence/settingsupgrader.h"
 #include "src/persistence/smileypack.h"
 #include "src/widget/gui.h"
 #include "src/widget/style.h"
@@ -39,6 +40,7 @@
 #include <QCryptographicHash>
 #include <QDebug>
 #include <QDir>
+#include <QErrorMessage>
 #include <QFile>
 #include <QFont>
 #include <QList>
@@ -61,6 +63,7 @@ const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
 CompatibleRecursiveMutex Settings::bigLock;
 QThread* Settings::settingsThread{nullptr};
+static constexpr int SETTINGS_VERSION = 0;
 
 Settings::Settings()
     : loaded(false)
@@ -115,12 +118,28 @@ void Settings::loadGlobal()
     if (!QFile(filePath).exists()) {
         qDebug() << "No settings file found, using defaults";
         filePath = ":/conf/" + globalSettingsFile;
+        defaultSettings = true;
     }
 
     qDebug() << "Loading settings from " + filePath;
 
     QSettings s(filePath, QSettings::IniFormat);
     s.setIniCodec("UTF-8");
+
+    s.beginGroup("Version");
+    {
+        const auto defaultVersion = defaultSettings ? SETTINGS_VERSION : 0;
+        settingsVersion = s.value("settingsVersion", defaultVersion).toInt();
+    }
+    s.endGroup();
+
+    bool upgradeSuccess = SettingsUpgrader::DoUpgrade(*this, settingsVersion, SETTINGS_VERSION);
+    if (!upgradeSuccess) {
+        // Would be nice to show a GUI warning, but GUI isn't initialized yet.
+        // Trying to run without even default settings isn't sane.
+        std::terminate();
+        return;
+    }
 
     s.beginGroup("Login");
     {
@@ -707,6 +726,12 @@ void Settings::saveGlobal()
         s.setValue("camVideoFPS", camVideoFPS);
         s.setValue("screenRegion", screenRegion);
         s.setValue("screenGrabbed", screenGrabbed);
+    }
+    s.endGroup();
+
+    s.beginGroup("Version");
+    {
+        s.setValue("settingsVersion", settingsVersion);
     }
     s.endGroup();
 }
