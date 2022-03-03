@@ -33,7 +33,7 @@ else
     exit 1
 fi
 
-patch -Np1 < "$(dirname "$0")"/patches/vpx.patch
+patch -Np1 < "$(dirname "$0")"/patches/vpx-windows.patch
 
 CFLAGS=${ARCH_FLAGS} CROSS="${CROSS_ARG}" \
     ./configure \
