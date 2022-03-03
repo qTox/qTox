@@ -27,8 +27,6 @@
 
 #include <cassert>
 
-#define PUBLIC_KEY_HEX_CHARS (2 * TOX_PUBLIC_KEY_SIZE)
-
 /**
  * @class ToxPk
  * @brief This class represents a Tox Public Key, which is a part of Tox ID.
