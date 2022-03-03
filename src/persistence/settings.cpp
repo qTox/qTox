@@ -25,6 +25,8 @@
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settingsserializer.h"
+#include "src/persistence/globalsettingsupgrader.h"
+#include "src/persistence/personalsettingsupgrader.h"
 #include "src/persistence/smileypack.h"
 #include "src/widget/gui.h"
 #include "src/widget/style.h"
@@ -39,6 +41,7 @@
 #include <QCryptographicHash>
 #include <QDebug>
 #include <QDir>
+#include <QErrorMessage>
 #include <QFile>
 #include <QFont>
 #include <QList>
@@ -61,6 +64,8 @@ const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
 CompatibleRecursiveMutex Settings::bigLock;
 QThread* Settings::settingsThread{nullptr};
+static constexpr int GLOBAL_SETTINGS_VERSION = 0;
+static constexpr int PERSONAL_SETTINGS_VERSION = 0;
 
 Settings::Settings()
     : loaded(false)
@@ -112,15 +117,33 @@ void Settings::loadGlobal()
     QString filePath = dir.filePath(globalSettingsFile);
 
     // If no settings file exist -- use the default one
+    bool defaultSettings = false;
     if (!QFile(filePath).exists()) {
         qDebug() << "No settings file found, using defaults";
         filePath = ":/conf/" + globalSettingsFile;
+        defaultSettings = true;
     }
 
     qDebug() << "Loading settings from " + filePath;
 
     QSettings s(filePath, QSettings::IniFormat);
     s.setIniCodec("UTF-8");
+
+    s.beginGroup("Version");
+    {
+        const auto defaultVersion = defaultSettings ? GLOBAL_SETTINGS_VERSION : 0;
+        globalSettingsVersion = s.value("settingsVersion", defaultVersion).toInt();
+    }
+    s.endGroup();
+
+    auto upgradeSuccess = GlobalSettingsUpgrader::doUpgrade(*this, globalSettingsVersion, GLOBAL_SETTINGS_VERSION);
+    if (!upgradeSuccess) {
+        // Would be nice to show a GUI warning, but GUI isn't initialized yet.
+        // Trying to run without even default settings isn't sane.
+        std::terminate();
+        return;
+    }
+    globalSettingsVersion = GLOBAL_SETTINGS_VERSION;
 
     s.beginGroup("Login");
     {
@@ -466,15 +489,36 @@ void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey)
     QString filePath = dir.filePath(globalSettingsFile);
 
     // load from a profile specific friend data list if possible
+    bool defaultSettings = false;
     QString tmp = dir.filePath(profileName + ".ini");
-    if (QFile(tmp).exists()) // otherwise, filePath remains the global file
+    if (QFile(tmp).exists()) { // otherwise, filePath remains the global file
         filePath = tmp;
+        defaultSettings = true;
+    }
 
     qDebug() << "Loading personal settings from" << filePath;
 
     SettingsSerializer ps(filePath, passKey);
     ps.load();
     friendLst.clear();
+
+    ps.beginGroup("Version");
+    {
+        const auto defaultVersion = defaultSettings ? PERSONAL_SETTINGS_VERSION : 0;
+        personalSettingsVersion = ps.value("settingsVersion", defaultVersion).toInt();
+    }
+    ps.endGroup();
+
+    auto upgradeSuccess = PersonalSettingsUpgrader::doUpgrade(ps, personalSettingsVersion, PERSONAL_SETTINGS_VERSION);
+    if (!upgradeSuccess) {
+        GUI::showError(tr("Failed to load personal settings"),
+            tr("Unable to upgrade settings from version %1 to version %2. Cannot start qTox.")
+            .arg(personalSettingsVersion)
+            .arg(PERSONAL_SETTINGS_VERSION));
+        std::terminate();
+        return;
+    }
+    personalSettingsVersion = PERSONAL_SETTINGS_VERSION;
 
     ps.beginGroup("Privacy");
     {
@@ -709,6 +753,12 @@ void Settings::saveGlobal()
         s.setValue("screenGrabbed", screenGrabbed);
     }
     s.endGroup();
+
+    s.beginGroup("Version");
+    {
+        s.setValue("settingsVersion", globalSettingsVersion);
+    }
+    s.endGroup();
 }
 
 /**
@@ -819,6 +869,12 @@ void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
         ps.setValue("typingNotification", typingNotification);
         ps.setValue("enableLogging", enableLogging);
         ps.setValue("blackList", blackList.join('\n'));
+    }
+    ps.endGroup();
+
+    ps.beginGroup("Version");
+    {
+        ps.setValue("settingsVersion", personalSettingsVersion);
     }
     ps.endGroup();
     ps.save();
