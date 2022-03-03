@@ -1,0 +1,74 @@
+diff -ruN libvpx/build/make/configure.sh patched/build/make/configure.sh
+--- libvpx/build/make/configure.sh	2022-01-08 21:54:57.787015678 -0800
++++ patched/build/make/configure.sh	2022-01-08 21:55:09.227106767 -0800
+@@ -869,70 +869,6 @@
+       ;;
+   esac
+ 
+-  case ${toolchain} in
+-    *-darwin8-*)
+-      add_cflags  "-mmacosx-version-min=10.4"
+-      add_ldflags "-mmacosx-version-min=10.4"
+-      ;;
+-    *-darwin9-*)
+-      add_cflags  "-mmacosx-version-min=10.5"
+-      add_ldflags "-mmacosx-version-min=10.5"
+-      ;;
+-    *-darwin10-*)
+-      add_cflags  "-mmacosx-version-min=10.6"
+-      add_ldflags "-mmacosx-version-min=10.6"
+-      ;;
+-    *-darwin11-*)
+-      add_cflags  "-mmacosx-version-min=10.7"
+-      add_ldflags "-mmacosx-version-min=10.7"
+-      ;;
+-    *-darwin12-*)
+-      add_cflags  "-mmacosx-version-min=10.8"
+-      add_ldflags "-mmacosx-version-min=10.8"
+-      ;;
+-    *-darwin13-*)
+-      add_cflags  "-mmacosx-version-min=10.9"
+-      add_ldflags "-mmacosx-version-min=10.9"
+-      ;;
+-    *-darwin14-*)
+-      add_cflags  "-mmacosx-version-min=10.10"
+-      add_ldflags "-mmacosx-version-min=10.10"
+-      ;;
+-    *-darwin15-*)
+-      add_cflags  "-mmacosx-version-min=10.11"
+-      add_ldflags "-mmacosx-version-min=10.11"
+-      ;;
+-    *-darwin16-*)
+-      add_cflags  "-mmacosx-version-min=10.12"
+-      add_ldflags "-mmacosx-version-min=10.12"
+-      ;;
+-    *-darwin17-*)
+-      add_cflags  "-mmacosx-version-min=10.13"
+-      add_ldflags "-mmacosx-version-min=10.13"
+-      ;;
+-    *-darwin18-*)
+-      add_cflags  "-mmacosx-version-min=10.14"
+-      add_ldflags "-mmacosx-version-min=10.14"
+-      ;;
+-    *-darwin19-*)
+-      add_cflags  "-mmacosx-version-min=10.15"
+-      add_ldflags "-mmacosx-version-min=10.15"
+-      ;;
+-    *-darwin20-*)
+-      add_cflags  "-mmacosx-version-min=10.16 -arch ${toolchain%%-*}"
+-      add_ldflags "-mmacosx-version-min=10.16 -arch ${toolchain%%-*}"
+-      ;;
+-    *-iphonesimulator-*)
+-      add_cflags  "-miphoneos-version-min=${IOS_VERSION_MIN}"
+-      add_ldflags "-miphoneos-version-min=${IOS_VERSION_MIN}"
+-      iossim_sdk_dir="$(show_darwin_sdk_path iphonesimulator)"
+-      if [ -d "${iossim_sdk_dir}" ]; then
+-        add_cflags  "-isysroot ${iossim_sdk_dir}"
+-        add_ldflags "-isysroot ${iossim_sdk_dir}"
+-      fi
+-      ;;
+-  esac
+-
+   # Handle Solaris variants. Solaris 10 needs -lposix4
+   case ${toolchain} in
+     sparc-solaris-*)
