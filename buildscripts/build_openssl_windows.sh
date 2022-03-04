@@ -43,4 +43,4 @@ fi
     --cross-compile-prefix=${PREFIX}
 
 make -j $(nproc)
-make install
+make install_sw
