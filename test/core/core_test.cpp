@@ -28,6 +28,7 @@
 #include <QSignalSpy>
 #include <src/persistence/settings.h>
 #include <iostream>
+#include <memory>
 
 Q_DECLARE_METATYPE(QList<DhtServer>);
 
@@ -85,7 +86,7 @@ private slots:
 private:
     /* Test Variables */
     Core::ToxCoreErrors* err = nullptr;
-    MockSettings* settings;
+    std::unique_ptr<MockSettings> settings;
     QByteArray savedata{};
     ToxCorePtr test_core;
 };
@@ -97,7 +98,7 @@ namespace {
 
 void TestCore::startup_without_proxy()
 {
-    settings = new MockSettings();
+    settings = std::unique_ptr<MockSettings>(new MockSettings());
 
     // No proxy
     settings->setProxyAddr("");
@@ -122,8 +123,7 @@ void TestCore::startup_without_proxy()
 
 void TestCore::startup_with_invalid_proxy()
 {
-    settings = new MockSettings();
-
+    settings = std::unique_ptr<MockSettings>(new MockSettings());
 
     // Test invalid proxy SOCKS5
     settings->setProxyAddr("Test");
