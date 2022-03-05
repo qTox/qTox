@@ -32,7 +32,7 @@ else
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_sqlcipher.sh
+"$(dirname "$(realpath "$0")")/download/download_sqlcipher.sh"
 
 sed -i s/'if test "$TARGET_EXEEXT" = ".exe"'/'if test ".exe" = ".exe"'/g configure
 sed -i 's|exec $PWD/mksourceid manifest|exec $PWD/mksourceid.exe manifest|g' tool/mksqlite3h.tcl

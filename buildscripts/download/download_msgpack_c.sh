@@ -20,7 +20,7 @@ set -euo pipefail
 MSGPACK_VERSION=c-4.0.0
 MSGPACK_HASH=656ebe4566845e7bda9c097b625ba59ac72ddfd45df6017172d46d9ac7365aa3
 
-source "$(dirname $0)"/common.sh
+source "$(dirname "$(realpath "$0")")/common.sh"
 
 download_verify_extract_tarball \
     "https://github.com/msgpack/msgpack-c/archive/${MSGPACK_VERSION}.tar.gz" \

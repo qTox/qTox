@@ -6,13 +6,15 @@
 
 set -euo pipefail
 
+readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+
 build_toxcore() {
     TOXCORE_SRC="$(realpath toxcore)"
 
     mkdir -p "$TOXCORE_SRC"
     pushd $TOXCORE_SRC >/dev/null || exit 1
 
-    "$(dirname "$0")"/download/download_toxcore.sh
+    "${SCRIPT_DIR}/download/download_toxcore.sh"
 
     cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
             -DBOOTSTRAP_DAEMON=OFF \
@@ -34,7 +36,7 @@ build_toxext() {
     mkdir -p "$TOXEXT_SRC"
     pushd $TOXEXT_SRC >/dev/null || exit 1
 
-    "$(dirname "$0")"/download/download_toxext.sh
+    "${SCRIPT_DIR}/download/download_toxext.sh"
 
     cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
             -DCMAKE_BUILD_TYPE=Release \
@@ -53,7 +55,7 @@ build_toxext_messages() {
     mkdir -p "$TOXEXT_MESSAGES_SRC"
     pushd $TOXEXT_MESSAGES_SRC > /dev/null || exit 1
 
-    "$(dirname "$0")"/download/download_toxext_messages.sh
+    "${SCRIPT_DIR}/download/download_toxext_messages.sh"
 
     cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
             -DCMAKE_BUILD_TYPE=Release \

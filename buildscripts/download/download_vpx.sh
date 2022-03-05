@@ -20,7 +20,7 @@ set -euo pipefail
 VPX_VERSION=1.11.0
 VPX_HASH=965e51c91ad9851e2337aebcc0f517440c637c506f3a03948062e3d5ea129a83
 
-source "$(dirname "$0")"/common.sh
+source "$(dirname "$(realpath "$0")")/common.sh"
 
 download_verify_extract_tarball \
     "https://github.com/webmproject/libvpx/archive/v$VPX_VERSION.tar.gz" \

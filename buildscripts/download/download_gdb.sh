@@ -20,9 +20,8 @@ set -euo pipefail
 GDB_VERSION="11.1"
 GDB_HASH="cccfcc407b20d343fb320d4a9a2110776dd3165118ffd41f4b1b162340333f94"
 
-source "$(dirname $0)"/common.sh
+source "$(dirname "$(realpath "$0")")/common.sh"
 
 download_verify_extract_tarball \
     "http://ftp.gnu.org/gnu/gdb/gdb-${GDB_VERSION}.tar.xz" \
     ${GDB_HASH}
-

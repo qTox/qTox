@@ -32,7 +32,7 @@ else
     HOST="i686-w64-mingw32"
 fi
 
-"$(dirname $0)"/download/download_gdb.sh
+"$(dirname "$(realpath "$0")")/download/download_gdb.sh"
 
 CFLAGS="-O2 -g0" ./configure --host="${HOST}" \
                                 --prefix="/windows" \

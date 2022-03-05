@@ -6,6 +6,6 @@
 
 set -euo pipefail
 
-"$(dirname "$0")"/download/download_nsisshellexecasuser.sh
+"$(dirname $(realpath "$0"))/download/download_nsisshellexecasuser.sh"
 
 cp unicode/ShellExecAsUser.dll /usr/share/nsis/Plugins/x86-unicode

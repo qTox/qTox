@@ -20,9 +20,8 @@ set -euo pipefail
 GMP_VERSION=6.2.1
 GMP_HASH=fd4829912cddd12f84181c3451cc752be224643e87fac497b69edddadc49b4f2
 
-source "$(dirname $0)"/common.sh
+source "$(dirname "$(realpath "$0")")/common.sh"
 
 download_verify_extract_tarball \
     "http://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.xz" \
     "${GMP_HASH}"
-

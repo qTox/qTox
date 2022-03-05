@@ -28,7 +28,7 @@ if [ "$ARCH" != "win32" ] && [ "$ARCH" != "win64" ]; then
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_ffmpeg.sh
+"$(dirname "$(realpath "$0")")/download/download_ffmpeg.sh"
 
 if [ "${ARCH}" == "win64" ]; then
     FFMPEG_ARCH="x86_64"

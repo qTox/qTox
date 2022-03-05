@@ -20,7 +20,7 @@ set -euo pipefail
 SQLCIPHER_VERSION=4.5.0
 SQLCIPHER_HASH=20c46a855c47d5a0a159fdcaa8491ec7bdbaa706a734ee52bc76188b929afb14
 
-source "$(dirname "$0")"/common.sh
+source "$(dirname "$(realpath "$0")")/common.sh"
 
 download_verify_extract_tarball \
     "https://github.com/sqlcipher/sqlcipher/archive/v${SQLCIPHER_VERSION}.tar.gz" \

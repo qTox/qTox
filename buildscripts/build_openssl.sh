@@ -34,7 +34,7 @@ else
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_openssl.sh
+"$(dirname "$(realpath "$0")")/download/download_openssl.sh"
 
 ./Configure --prefix=/windows/ \
     --openssldir=/windows/ssl \

@@ -22,7 +22,7 @@ QT_MINOR=12
 QT_PATCH=12
 QT_HASH=1979a3233f689cb8b3e2783917f8f98f6a2e1821a70815fb737f020cd4b6ab06
 
-source "$(dirname "$0")"/common.sh
+source "$(dirname "$(realpath "$0")")/common.sh"
 
 download_verify_extract_tarball \
     https://download.qt.io/official_releases/qt/${QT_MAJOR}.${QT_MINOR}/${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}/single/qt-everywhere-src-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz \
