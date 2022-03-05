@@ -4,6 +4,10 @@
 #     Copyright (c) 2017-2021 Maxim Biro <nurupo.contributions@gmail.com>
 #     Copyright (c) 2021 by The qTox Project Contributors
 
+set -euo pipefail
+
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
 usage()
 {
     echo "Download and build libexif for the windows cross compiling environment"
@@ -29,7 +33,7 @@ fi
 set -euo pipefail
 
 
-"$(dirname $0)"/download/download_libexif.sh
+"${SCRIPT_DIR}/download/download_libexif.sh"
 
 CFLAGS="-O2 -g0" ./configure --host="${ARCH}-w64-mingw32" \
                          --prefix=/windows/ \

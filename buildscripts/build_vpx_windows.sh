@@ -6,6 +6,8 @@
 
 set -euo pipefail
 
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
 usage()
 {
     echo "Download and build vpx for the windows cross compiling environment"
@@ -28,7 +30,7 @@ if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_vpx.sh
+"${SCRIPT_DIR}/download/download_vpx.sh"
 
 # There is a bug in gcc that breaks avx512 on 64-bit Windows https://gcc.gnu.org/bugzilla/show_bug.cgi?id=54412
 # VPX fails to build due to it.

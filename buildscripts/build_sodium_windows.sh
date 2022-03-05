@@ -6,6 +6,8 @@
 
 set -euo pipefail
 
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
 usage()
 {
     echo "Download and build sodium for the windows cross compiling environment"
@@ -28,7 +30,7 @@ if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_sodium.sh
+"${SCRIPT_DIR}/download/download_sodium.sh"
 
 LDFLAGS="-fstack-protector" \
   ./configure --host="${ARCH}-w64-mingw32" \

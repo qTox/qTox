@@ -5,7 +5,15 @@
 
 set -euo pipefail
 
-"$(dirname "$0")"/download/download_msgpack_c.sh
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
+usage()
+{
+    echo "Download and build msgpack-c for the windows cross compiling environment"
+    echo "Usage: $0 --arch {x86_64|i686}"
+}
+
+"${SCRIPT_DIR}/download/download_msgpack_c.sh"
 
 cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
     -DCMAKE_BUILD_TYPE=Release \

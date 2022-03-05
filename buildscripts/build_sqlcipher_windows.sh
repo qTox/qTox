@@ -6,6 +6,8 @@
 
 set -euo pipefail
 
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
 usage()
 {
     echo "Download and build sqlcipher for the windows cross compiling environment"
@@ -28,7 +30,7 @@ if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_sqlcipher.sh
+"${SCRIPT_DIR}/download/download_sqlcipher.sh"
 
 sed -i s/'if test "$TARGET_EXEEXT" = ".exe"'/'if test ".exe" = ".exe"'/g configure
 sed -i 's|exec $PWD/mksourceid manifest|exec $PWD/mksourceid.exe manifest|g' tool/mksqlite3h.tcl

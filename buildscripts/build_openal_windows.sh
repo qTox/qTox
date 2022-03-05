@@ -6,6 +6,8 @@
 
 set -euo pipefail
 
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
 usage()
 {
     echo "Download and build openal for the windows cross compiling environment"
@@ -28,9 +30,10 @@ if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_openal.sh
+"${SCRIPT_DIR}/download/download_openal.sh"
 
-patch -p1 < "$(dirname "$0")"/patches/openal-cmake-3-11.patch
+patch -p1 < "${SCRIPT_DIR}/patches/openal-cmake-3-11.patch"
+
 
 export CFLAGS="-fPIC"
 cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
