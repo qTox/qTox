@@ -32,7 +32,7 @@ else
     HOST="i686-w64-mingw32"
 fi
 
-"$(dirname $0)"/download/download_gmp.sh
+"$(dirname "$(realpath "$0")")/download/download_gmp.sh"
 
 # https://gmplib.org/list-archives/gmp-discuss/2020-July/006519.html
 CC_FOR_BUILD=gcc CFLAGS="-O2 -g0" ./configure --host="${HOST}" \

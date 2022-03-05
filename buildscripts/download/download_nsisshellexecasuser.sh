@@ -19,7 +19,7 @@ set -euo pipefail
 
 NSISSHELLEXECASUSER_HASH=79bdd3e54a9ba9c30af85557b475d2322286f8726687f2e23afa772aac6049ab
 
-source "$(dirname "$0")/common.sh"
+source "$(dirname "$(realpath "$0")")/common.sh"
 
 download_file https://nsis.sourceforge.io/mediawiki/images/1/1d/ShellExecAsUserUnicodeUpdate.zip
 

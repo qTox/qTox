@@ -32,7 +32,7 @@ else
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_opus.sh
+"$(dirname "$(realpath "$0")")/download/download_opus.sh"
 
 LDFLAGS="-fstack-protector" CFLAGS="-O2 -g0" \
     ./configure --host="${HOST}" \

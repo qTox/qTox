@@ -40,7 +40,7 @@ else
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_vpx.sh
+"$(dirname "$(realpath "$0")")/download/download_vpx.sh"
 
 patch -Np1 < "$(dirname "$0")"/patches/vpx.patch
 

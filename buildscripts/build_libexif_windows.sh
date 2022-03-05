@@ -28,7 +28,7 @@ if [ "$ARCH" != "win32" ] && [ "$ARCH" != "win64" ]; then
     exit 1
 fi
 
-"$(dirname $0)"/download/download_libexif.sh
+"$(dirname "$(realpath "$0")")/download/download_libexif.sh"
 
 if [ "${ARCH}" == "win64" ]; then
     HOST="x86_64-w64-mingw32"

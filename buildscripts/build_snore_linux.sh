@@ -17,6 +17,8 @@
 
 set -euo pipefail
 
+readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+
 usage ()
 {
     echo "Build/install snore for linux"
@@ -33,7 +35,7 @@ while (( $# > 0 )); do
     esac
 done
 
-"$(dirname "$0")"/download/download_snore.sh
+"${SCRIPT_DIR}/download/download_snore.sh"
 
 # Snore needs to be installed into /usr for linuxdeployqt to find it
 if [ $SYSTEM_INSTALL -eq 1 ]; then
@@ -42,7 +44,7 @@ else
     INSTALL_PREFIX_ARGS=""
 fi
 
-patch -Np1 < "$(dirname "$0")"/patches/snore.patch
+patch -Np1 < "${SCRIPT_DIR}/patches/snore.patch"
 
 cmake -DCMAKE_BUILD_TYPE=Release $INSTALL_PREFIX_ARGS \
     -DBUILD_daemon=OFF \

@@ -20,7 +20,7 @@ set -euo pipefail
 FFMPEG_VERSION=4.4.1
 FFMPEG_HASH=eadbad9e9ab30b25f5520fbfde99fae4a92a1ae3c0257a8d68569a4651e30e02
 
-source "$(dirname $0)"/common.sh
+source "$(dirname "$(realpath "$0")")/common.sh"
 
 download_verify_extract_tarball \
     "https://www.ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.xz" \

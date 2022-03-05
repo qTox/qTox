@@ -32,7 +32,7 @@ else
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_sodium.sh
+"$(dirname "$(realpath "$0")")/download/download_sodium.sh"
 
 LDFLAGS="-fstack-protector" \
   ./configure --host="${HOST}" \

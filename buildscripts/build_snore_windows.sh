@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-"$(dirname "$0")"/download/download_snore.sh
+"$(dirname "$(realpath "$0")")/download/download_snore.sh"
 
 cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
       -DCMAKE_BUILD_TYPE=Release \

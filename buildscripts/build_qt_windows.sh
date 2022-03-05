@@ -32,7 +32,7 @@ else
     exit 1
 fi
 
-"$(dirname "$0")"/download/download_qt.sh
+"$(dirname "$(realpath "$0")")/download/download_qt.sh"
 
 OPENSSL_LIBS=$(pkg-config --libs openssl)
 export OPENSSL_LIBS
