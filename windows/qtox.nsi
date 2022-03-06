@@ -208,7 +208,7 @@ FunctionEnd
 
   Section "Create install directory"
     CreateDirectory "$INSTDIR"
-    nsExec::ExecToStack 'icacls "$PROGRAMFILES64" /save "$TEMP\program-files-permissions.txt"'
+    nsExec::ExecToStack 'icacls "$PROGRAMFILES" /save "$TEMP\program-files-permissions.txt"'
     Pop $0 # return value/error/timeout
     Pop $1 # printed text, up to ${NSIS_MAX_STRLEN}
     FileOpen $0 "$TEMP\program-files-permissions.txt" r
