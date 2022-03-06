@@ -27,14 +27,10 @@ QVector<QPair<QString, QString> > avfoundation::getDeviceList()
 {
     QVector<QPair<QString, QString> > result;
 
-#if MACOS_VERSION_MAJOR > 10 || (MACOS_VERSION_MAJOR == 10 && MACOS_VERSION_MINOR > 14)
     AVCaptureDevice* device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     id objects[] = {device};
     NSUInteger count = sizeof(objects) / sizeof(id);
     NSArray* devices = [NSArray arrayWithObjects:objects count:count];
-#else
-    NSArray* devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
-#endif
 
     for (AVCaptureDevice* device in devices) {
         result.append({ QString::fromNSString([device uniqueID]), QString::fromNSString([device localizedName]) });
