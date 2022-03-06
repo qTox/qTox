@@ -566,7 +566,7 @@ See [AppArmor] to enable confinement for increased security.
 
 ## OS X
 
-Supported OS X versions: >=10.8. (NOTE: only 10.13 is tested during CI)
+Supported OS X versions: >=10.15.
 
 Compiling qTox on OS X for development requires 2 tools:
 [Xcode](https://developer.apple.com/xcode/) and [homebrew](https://brew.sh).
