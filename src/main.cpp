@@ -92,8 +92,13 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 {
     // Silence qWarning spam due to bug in QTextBrowser (trying to open a file for base64 images)
     if (ctxt.function == QString("virtual bool QFSFileEngine::open(QIODevice::OpenMode)")
-        && msg == QString("QFSFileEngine::open: No file name specified"))
+        && msg == QString("QFSFileEngine::open: No file name specified")) {
         return;
+    }
+    if (msg.startsWith("Unable to find any suggestion for")) {
+        // Prevent sonnet's complaints from leaking user chat messages to logs
+        return;
+    }
 
     if (msg == QString("attempted to send message with network family 10 (probably IPv6) on IPv4 socket")) {
         // non-stop c-toxcore spam for IPv4 users: https://github.com/TokTok/c-toxcore/issues/1432
