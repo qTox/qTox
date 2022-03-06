@@ -1,3 +1,14 @@
+<a name="v1.17.6"></a>
+## v1.17.6 (2022-03-06)
+
+
+#### Bug Fixes
+
+* **Windows:**  Correct Program Files directory for 32-bit Windows ([47406e74](https://github.com/qTox/qTox/commit/47406e742297b167a0a6c606ddd9a20823959a06))
+* **macos:**  update deprecated AVFoundation API ([484ea7ce](https://github.com/qTox/qTox/commit/484ea7ce9be971266a890c9bb76b4e23d0c8a622))
+
+
+
 <a name="v1.17.5"></a>
 ## v1.17.5 (2022-03-05)
 
