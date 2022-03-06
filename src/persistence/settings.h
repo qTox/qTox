@@ -488,7 +488,6 @@ public:
     QByteArray getDialogSettingsGeometry() const;
     void setDialogSettingsGeometry(const QByteArray& value);
 
-    QString getFriendAddress(const QString& publicKey) const;
     void updateFriendAddress(const QString& newAddr);
 
     QString getFriendAlias(const ToxPk& id) const override;

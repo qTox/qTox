@@ -1909,17 +1909,6 @@ void Settings::setCamVideoFPS(float newValue)
     }
 }
 
-QString Settings::getFriendAddress(const QString& publicKey) const
-{
-    QMutexLocker locker{&bigLock};
-    QByteArray key = ToxPk(publicKey).getByteArray();
-    auto it = friendLst.find(key);
-    if (it != friendLst.end())
-        return it->addr;
-
-    return QString();
-}
-
 void Settings::updateFriendAddress(const QString& newAddr)
 {
     QMutexLocker locker{&bigLock};
