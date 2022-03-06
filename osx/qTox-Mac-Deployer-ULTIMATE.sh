@@ -35,10 +35,6 @@ else
     MAIN_DIR="$(dirname $(readlink -f $0))/../.."
     QTOX_DIR="${MAIN_DIR}/qTox${SUBGIT}"
 fi
-QT_DIR="/usr/local/Cellar/qt5" # Folder name of QT install
-# Figure out latest version
-QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
-QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 
