@@ -942,7 +942,6 @@ void History::addNewFileMessage(const ToxPk& friendPk, const QString& fileId,
 
     std::weak_ptr<History> weakThis = shared_from_this();
     FileDbInsertionData insertionData;
-    insertionData.friendPk = friendPk;
     insertionData.fileId = fileId;
     insertionData.fileName = fileName;
     insertionData.filePath = filePath;

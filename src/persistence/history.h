@@ -116,7 +116,6 @@ struct FileDbInsertionData
     FileDbInsertionData();
 
     RowId historyId;
-    ToxPk friendPk;
     QString fileId;
     QString fileName;
     QString filePath;
