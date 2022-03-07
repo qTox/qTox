@@ -39,6 +39,7 @@
 class Profile;
 class HistoryKeeper;
 class Settings;
+class ChatId;
 
 enum class HistMessageContentType
 {
@@ -138,9 +139,9 @@ class History : public QObject, public std::enable_shared_from_this<History>
 public:
     struct HistMessage
     {
-        HistMessage(RowId id_, MessageState state_, ExtensionSet extensionSet_, QDateTime timestamp_, ToxPk chat_, QString dispName_,
+        HistMessage(RowId id_, MessageState state_, ExtensionSet extensionSet_, QDateTime timestamp_, std::unique_ptr<ChatId> chat_, QString dispName_,
                     ToxPk sender_, QString message)
-            : chat{chat_}
+            : chat{std::move(chat_)}
             , sender{sender_}
             , dispName{dispName_}
             , timestamp{timestamp_}
@@ -150,9 +151,9 @@ public:
             , content(std::move(message))
         {}
 
-        HistMessage(RowId id_, MessageState state_, QDateTime timestamp_, ToxPk chat_, QString dispName_,
+        HistMessage(RowId id_, MessageState state_, QDateTime timestamp_, std::unique_ptr<ChatId> chat_, QString dispName_,
                     ToxPk sender_, ToxFile file)
-            : chat{chat_}
+            : chat{std::move(chat_)}
             , sender{sender_}
             , dispName{dispName_}
             , timestamp{timestamp_}
@@ -161,15 +162,39 @@ public:
             , content(std::move(file))
         {}
 
-        HistMessage(RowId id_, QDateTime timestamp_, ToxPk chat_, SystemMessage systemMessage)
-            : chat{chat_}
+        HistMessage(RowId id_, QDateTime timestamp_, std::unique_ptr<ChatId> chat_, SystemMessage systemMessage)
+            : chat{std::move(chat_)}
             , timestamp{timestamp_}
             , id{id_}
             , state(MessageState::complete)
             , content(std::move(systemMessage))
         {}
 
-        ToxPk chat;
+        HistMessage(const History::HistMessage& other)
+            : chat{other.chat->clone()}
+            , sender{other.sender}
+            , dispName{other.dispName}
+            , timestamp{other.timestamp}
+            , id{other.id}
+            , state{other.state}
+            , extensionSet{other.extensionSet}
+            , content{other.content}
+        {}
+
+        HistMessage& operator=(const HistMessage& other)
+        {
+            chat = other.chat->clone();
+            sender = other.sender;
+            dispName = other.dispName;
+            timestamp = other.timestamp;
+            id = other.id;
+            state = other.state;
+            extensionSet = other.extensionSet;
+            content = other.content;
+            return *this;
+        }
+
+        std::unique_ptr<ChatId> chat;
         ToxPk sender;
         QString dispName;
         QDateTime timestamp;
@@ -191,28 +216,28 @@ public:
 
     bool isValid();
 
-    bool historyExists(const ToxPk& friendPk);
+    bool historyExists(const ChatId& chatId);
 
     void eraseHistory();
     void removeFriendHistory(const ToxPk& friendPk);
-    void addNewMessage(const ToxPk& friendPk, const QString& message, const ToxPk& sender,
+    void addNewMessage(const ChatId& chatId, const QString& message, const ToxPk& sender,
                        const QDateTime& time, bool isDelivered, ExtensionSet extensions,
                        QString dispName, const std::function<void(RowId)>& insertIdCallback = {});
 
-    void addNewFileMessage(const ToxPk& friendPk, const QByteArray& fileId,
+    void addNewFileMessage(const ChatId& chatId, const QByteArray& fileId,
                            const QString& fileName, const QString& filePath, int64_t size,
                            const ToxPk& sender, const QDateTime& time, QString const& dispName);
 
-    void addNewSystemMessage(const ToxPk& friendPk, const SystemMessage& systemMessage);
+    void addNewSystemMessage(const ChatId& chatId, const SystemMessage& systemMessage);
 
     void setFileFinished(const QByteArray& fileId, bool success, const QString& filePath, const QByteArray& fileHash);
-    size_t getNumMessagesForFriend(const ToxPk& friendPk);
-    size_t getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date);
-    QList<HistMessage> getMessagesForFriend(const ToxPk& friendPk, size_t firstIdx, size_t lastIdx);
-    QList<HistMessage> getUndeliveredMessagesForFriend(const ToxPk& friendPk);
-    QDateTime getDateWhereFindPhrase(const ToxPk& friendPk, const QDateTime& from, QString phrase,
+    size_t getNumMessagesForChat(const ChatId& chatId);
+    size_t getNumMessagesForChatBeforeDate(const ChatId& chatId, const QDateTime& date);
+    QList<HistMessage> getMessagesForChat(const ChatId& chatId, size_t firstIdx, size_t lastIdx);
+    QList<HistMessage> getUndeliveredMessagesForChat(const ChatId& chatId);
+    QDateTime getDateWhereFindPhrase(const ChatId& chatId, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);
-    QList<DateIdx> getNumMessagesForFriendBeforeDateBoundaries(const ToxPk& friendPk,
+    QList<DateIdx> getNumMessagesForChatBeforeDateBoundaries(const ChatId& chatId,
                                                                const QDate& from, size_t maxNum);
 
     void markAsDelivered(RowId messageId);
@@ -226,7 +251,7 @@ private slots:
 
 private:
     QVector<RawDatabase::Query>
-    generateNewFileTransferQueries(const ToxPk& friendPk, const ToxPk& sender, const QDateTime& time,
+    generateNewFileTransferQueries(const ChatId& chatId, const ToxPk& sender, const QDateTime& time,
                                    const QString& dispName, const FileDbInsertionData& insertionData);
     bool historyAccessBlocked();
     static RawDatabase::Query generateFileFinished(RowId fileId, bool success,
