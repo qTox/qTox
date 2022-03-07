@@ -17,8 +17,8 @@
 
 set -euo pipefail
 
-TOXCORE_VERSION=0.2.16
-TOXCORE_HASH=653aa42654b607f0940cecfac873e9ce55605119a90d1dc454d1090ff6ca29c0
+TOXCORE_VERSION=0.2.17
+TOXCORE_HASH=d9cdf5d690fe8e217dcaba5b988fb943bbe7bda919a2fde6d9506df047e5f4cb
 
 source "$(dirname "$0")"/common.sh
 
