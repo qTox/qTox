@@ -22,6 +22,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG ARCH
 ARG WINEARCH
 ENV WINEARCH=${WINEARCH}
+ARG SCRIPT_ARCH=${WINEARCH}
 
 RUN dpkg --add-architecture i386 && \
     apt-get update && apt-get install -y --no-install-recommends \
@@ -62,7 +63,7 @@ COPY build_openssl_windows.sh /build/build_openssl_windows.sh
 
 RUN mkdir -p /src/openssl && \
   cd /src/openssl && \
-  /build/build_openssl_windows.sh --arch ${ARCH} && \
+  /build/build_openssl_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/openssl
 
 env PKG_CONFIG_PATH=/windows/lib/pkgconfig
@@ -72,7 +73,7 @@ COPY build_qt_windows.sh /build/build_qt_windows.sh
 
 RUN mkdir -p /src/qt && \
   cd /src/qt && \
-  /build/build_qt_windows.sh --arch ${ARCH} && \
+  /build/build_qt_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/qt
 
 COPY download/download_sqlcipher.sh /build/download/download_sqlcipher.sh
@@ -80,14 +81,14 @@ COPY build_sqlcipher_windows.sh /build/build_sqlcipher_windows.sh
 
 RUN mkdir -p /src/sqlcipher && \
   cd /src/sqlcipher && \
-  /build/build_sqlcipher_windows.sh  --arch ${ARCH} && \
+  /build/build_sqlcipher_windows.sh  --arch ${SCRIPT_ARCH} && \
   rm -fr /src/sqlcipher
 
 COPY download/download_ffmpeg.sh /build/download/download_ffmpeg.sh
 COPY build_ffmpeg_windows.sh /build/build_ffmpeg_windows.sh
 RUN mkdir -p /src/ffmpeg && \
   cd /src/ffmpeg && \
-  /build/build_ffmpeg_windows.sh --arch ${ARCH} && \
+  /build/build_ffmpeg_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/ffmpeg
 
 COPY toolchain/windows-${ARCH}-toolchain.cmake /build/windows-toolchain.cmake
@@ -98,21 +99,21 @@ COPY patches/openal-cmake-3-11.patch /build/patches/openal-cmake-3-11.patch
 
 RUN mkdir -p /src/openal && \
   cd /src/openal && \
-  /build/build_openal_windows.sh --arch ${ARCH} && \
+  /build/build_openal_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/openal
 
 COPY download/download_qrencode.sh /build/download/download_qrencode.sh
 COPY build_qrencode_windows.sh /build/build_qrencode_windows.sh
 RUN mkdir -p /src/qrencode && \
   cd /src/qrencode && \
-  /build/build_qrencode_windows.sh  --arch ${ARCH} && \
+  /build/build_qrencode_windows.sh  --arch ${SCRIPT_ARCH} && \
   rm -fr /src/qrencode
 
 COPY download/download_libexif.sh /build/download/download_libexif.sh
 COPY build_libexif_windows.sh /build/build_libexif_windows.sh
 RUN mkdir -p /src/exif && \
   cd /src/exif && \
-  /build/build_libexif_windows.sh --arch ${ARCH} && \
+  /build/build_libexif_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/exif
 
 COPY download/download_snore.sh /build/download/download_snore.sh
@@ -126,14 +127,14 @@ COPY download/download_opus.sh /build/download/download_opus.sh
 COPY build_opus_windows.sh /build/build_opus_windows.sh
 RUN mkdir -p /src/opus && \
   cd /src/opus && \
-  /build/build_opus_windows.sh --arch ${ARCH} && \
+  /build/build_opus_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/opus
 
 COPY download/download_sodium.sh /build/download/download_sodium.sh
 COPY build_sodium_windows.sh /build/build_sodium_windows.sh
 RUN mkdir -p /src/sodium && \
   cd /src/sodium && \
-  /build/build_sodium_windows.sh --arch ${ARCH} && \
+  /build/build_sodium_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/sodium
 
 COPY download/download_vpx.sh /build/download/download_vpx.sh
@@ -141,7 +142,7 @@ COPY build_vpx_windows.sh /build/build_vpx_windows.sh
 COPY patches/vpx.patch /build/patches/vpx.patch
 RUN mkdir -p /src/vpx && \
   cd /src/vpx && \
-  /build/build_vpx_windows.sh --arch ${ARCH} && \
+  /build/build_vpx_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/vpx
 
 COPY download/download_mingw_ldd.sh /build/download/download_mingw_ldd.sh

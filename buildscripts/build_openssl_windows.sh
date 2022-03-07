@@ -9,7 +9,7 @@ set -euo pipefail
 usage()
 {
     echo "Download and build openssl for the windows cross compiling environment"
-    echo "Usage: $0 --arch {x86_64|i686}"
+    echo "Usage: $0 --arch {win64|win32}"
 }
 
 ARCH=""
@@ -22,28 +22,25 @@ while (( $# > 0 )); do
     esac
 done
 
-if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
-    echo "Unexpected arch $ARCH"
+if [[ "$ARCH" == "win64" ]]; then
+    OPENSSL_ARCH="mingw64"
+    PREFIX="x86_64-w64-mingw32-"
+elif [[ "$ARCH" == "win32" ]]; then
+    OPENSSL_ARCH="mingw"
+    PREFIX="i686-w64-mingw32-"
+else
+    echo "Invalid architecture"
     usage
     exit 1
 fi
 
 "$(dirname "$0")"/download/download_openssl.sh
 
-if [[ "$ARCH" == "x86_64" ]]; then
-    OPENSSL_ARCH="mingw64"
-elif [[ "$ARCH" == "i686" ]]; then
-    OPENSSL_ARCH="mingw"
-else
-    echo "Invalid architecture"
-    exit 1
-fi
-
 ./Configure --prefix=/windows/ \
     --openssldir=/windows/ssl \
     shared \
     $OPENSSL_ARCH \
-    --cross-compile-prefix=${ARCH}-w64-mingw32-
+    --cross-compile-prefix=${PREFIX}
 
 make -j $(nproc)
 make install

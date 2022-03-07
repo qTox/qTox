@@ -9,7 +9,7 @@ set -euo pipefail
 usage()
 {
     echo "Download and build qt for the windows cross compiling environment"
-    echo "Usage: $0 --arch {x86_64|i686}"
+    echo "Usage: $0 --arch {win64|win32}"
 }
 
 ARCH=""
@@ -22,7 +22,11 @@ while (( $# > 0 )); do
     esac
 done
 
-if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
+if [[ "$ARCH" == "win64" ]]; then
+    CROSS="x86_64-w64-mingw32-"
+elif [[ "$ARCH" == "win32" ]]; then
+    CROSS="i686-w64-mingw32-"
+else
     echo "Unexpected arch $ARCH"
     usage
     exit 1
@@ -36,7 +40,7 @@ export OPENSSL_LIBS
 ./configure -prefix /windows/ \
     -release \
     -shared \
-    -device-option CROSS_COMPILE=${ARCH}-w64-mingw32- \
+    -device-option CROSS_COMPILE=${CROSS} \
     -xplatform win32-g++ \
     -openssl \
     "$(pkg-config --cflags openssl)" \

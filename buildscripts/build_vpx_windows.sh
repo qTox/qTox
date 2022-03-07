@@ -9,7 +9,7 @@ set -euo pipefail
 usage()
 {
     echo "Download and build vpx for the windows cross compiling environment"
-    echo "Usage: $0 --arch {x86_64|i686}"
+    echo "Usage: $0 --arch {win64|win32}"
 }
 
 ARCH=""
@@ -22,7 +22,19 @@ while (( $# > 0 )); do
     esac
 done
 
-if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
+
+if [[ "$ARCH" == "win64" ]]; then
+# There is a bug in gcc that breaks avx512 on 64-bit Windows https://gcc.gnu.org/bugzilla/show_bug.cgi?id=54412
+# VPX fails to build due to it.
+# This is a workaround as suggested in https://stackoverflow.com/questions/43152633
+    ARCH_FLAGS="-fno-asynchronous-unwind-tables"
+    VPX_ARCH="x86_64-win64-gcc"
+    CROSS="x86_64-w64-mingw32-"
+elif [[ "$ARCH" == "win32" ]]; then
+    ARCH_FLAGS=""
+    VPX_ARCH="x86-win32-gcc"
+    CROSS="i686-w64-mingw32-"
+else
     echo "Unexpected arch $ARCH"
     usage
     exit 1
@@ -30,22 +42,9 @@ fi
 
 "$(dirname "$0")"/download/download_vpx.sh
 
-# There is a bug in gcc that breaks avx512 on 64-bit Windows https://gcc.gnu.org/bugzilla/show_bug.cgi?id=54412
-# VPX fails to build due to it.
-# This is a workaround as suggested in https://stackoverflow.com/questions/43152633
-if [ "${ARCH}" == "x86_64" ]; then
-    ARCH_FLAGS="-fno-asynchronous-unwind-tables"
-    VPX_ARCH="x86_64-win64-gcc"
-elif [ "${ARCH}" == "i686" ]; then \
-    ARCH_FLAGS=""
-    VPX_ARCH="x86-win32-gcc"
-else
-    exit 1
-fi
-
 patch -Np1 < "$(dirname "$0")"/patches/vpx.patch
 
-CFLAGS=${ARCH_FLAGS} CROSS="${ARCH}-w64-mingw32-" \
+CFLAGS=${ARCH_FLAGS} CROSS="${CROSS}" \
     ./configure --target="${VPX_ARCH}" \
         --prefix=/windows/ \
         --enable-shared \

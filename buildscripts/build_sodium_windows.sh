@@ -9,7 +9,7 @@ set -euo pipefail
 usage()
 {
     echo "Download and build sodium for the windows cross compiling environment"
-    echo "Usage: $0 --arch {x86_64|i686}"
+    echo "Usage: $0 --arch {win64|win32}"
 }
 
 ARCH=""
@@ -22,7 +22,11 @@ while (( $# > 0 )); do
     esac
 done
 
-if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
+if [[ "$ARCH" == "win64" ]]; then
+    HOST="x86_64-w64-mingw32"
+elif [[ "$ARCH" == "win32" ]]; then
+    HOST="i686-w64-mingw32"
+else
     echo "Unexpected arch $ARCH"
     usage
     exit 1
@@ -31,7 +35,7 @@ fi
 "$(dirname "$0")"/download/download_sodium.sh
 
 LDFLAGS="-fstack-protector" \
-  ./configure --host="${ARCH}-w64-mingw32" \
+  ./configure --host="${HOST}" \
               --prefix=/windows \
               --enable-shared \
               --disable-static

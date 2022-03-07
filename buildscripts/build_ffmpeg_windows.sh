@@ -7,7 +7,7 @@
 usage()
 {
     echo "Download and build ffmpeg for the windows cross compiling environment"
-    echo "Usage: $0 --arch {x86_64|i686}"
+    echo "Usage: $0 --arch {win64|win32}"
 }
 
 ARCH=""
@@ -20,7 +20,7 @@ while (( $# > 0 )); do
     esac
 done
 
-if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
+if [ "$ARCH" != "win32" ] && [ "$ARCH" != "win64" ]; then
     echo "Unexpected arch $ARCH"
     usage
     exit 1
@@ -28,10 +28,12 @@ fi
 
 "$(dirname "$0")"/download/download_ffmpeg.sh
 
-if [ "${ARCH}" == "x86_64" ]; then
+if [ "${ARCH}" == "win64" ]; then
     FFMPEG_ARCH="x86_64"
+    CROSS_PREFIX="x86_64-w64-mingw32-"
 else
     FFMPEG_ARCH="x86"
+    CROSS_PREFIX="i686-w64-mingw32-"
 fi
 
 ./configure --arch=${FFMPEG_ARCH} \
@@ -40,7 +42,7 @@ fi
           --disable-static \
           --prefix=/windows/ \
           --target-os="mingw32" \
-          --cross-prefix="${ARCH}-w64-mingw32-" \
+          --cross-prefix="${CROSS_PREFIX}" \
           --pkg-config="pkg-config" \
           --extra-cflags="-O2 -g0" \
           --disable-debug \

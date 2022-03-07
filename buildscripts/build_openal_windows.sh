@@ -9,7 +9,7 @@ set -euo pipefail
 usage()
 {
     echo "Download and build openal for the windows cross compiling environment"
-    echo "Usage: $0 --arch {x86_64|i686}"
+    echo "Usage: $0 --arch {win64|win32}"
 }
 
 ARCH=""
@@ -22,7 +22,7 @@ while (( $# > 0 )); do
     esac
 done
 
-if [ "$ARCH" != "i686" ] && [ "$ARCH" != "x86_64" ]; then
+if [ "$ARCH" != "win32" ] && [ "$ARCH" != "win64" ]; then
     echo "Unexpected arch $ARCH"
     usage
     exit 1
@@ -32,14 +32,20 @@ fi
 
 patch -p1 < "$(dirname "$0")"/patches/openal-cmake-3-11.patch
 
+if [ "${ARCH}" == "win64" ]; then
+    MINGW_DIR="x86_64-w64-mingw32"
+else
+    MINGW_DIR="x86-w64-mingw32"
+fi
+
 export CFLAGS="-fPIC"
 cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
     -DCMAKE_BUILD_TYPE=Release \
     -DALSOFT_UTILS=OFF \
     -DALSOFT_EXAMPLES=OFF \
     -DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake \
-    -DDSOUND_INCLUDE_DIR=/usr/${ARCH}-w64-mingw32/include \
-    -DDSOUND_LIBRARY=/usr/${ARCH}-w64-mingw32/lib/libdsound.a \
+    -DDSOUND_INCLUDE_DIR="/usr/${MINGW_DIR}/include" \
+    -DDSOUND_LIBRARY="/usr/${MINGW_DIR}/lib/libdsound.a" \
     .
 
 make -j $(nproc)
