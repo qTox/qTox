@@ -1778,7 +1778,7 @@ void Widget::removeFriend(Friend* f, bool fake)
         }
 
         if (ask.removeHistory()) {
-            profile.getHistory()->removeFriendHistory(f->getPublicKey());
+            profile.getHistory()->removeChatHistory(f->getPublicKey());
         }
     }
 
