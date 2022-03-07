@@ -5,14 +5,22 @@
 
 set -euo pipefail
 
-"$(dirname "$(realpath "$0")")/download/download_msgpack_c.sh"
+readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
+source "${SCRIPT_DIR}/platform_detection.sh"
+
+DEP_NAME="msgpack-c"
+parse_arch "$@"
+
+"${SCRIPT_DIR}/download/download_msgpack_c.sh"
+
+cmake .\
+    "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake \
+    "${CMAKE_TOOLCHAIN_FILE}" \
     -DMSGPACK_BUILD_EXAMPLES=OFF \
     -DMSGPACK_BUILD_TESTS=OFF \
     .
 
-make -j $(nproc)
+make -j "${MAKE_JOBS}"
 make install

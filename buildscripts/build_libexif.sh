@@ -6,42 +6,21 @@
 
 set -euo pipefail
 
-usage()
-{
-    echo "Download and build libexif for the windows cross compiling environment"
-    echo "Usage: $0 --arch {win64|win32}"
-}
+readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-ARCH=""
+source "${SCRIPT_DIR}/platform_detection.sh"
 
-while (( $# > 0 )); do
-    case $1 in
-        --arch) ARCH=$2; shift 2 ;;
-        -h|--help) usage; exit 1 ;;
-        *) echo "Unexpected argument $1"; usage; exit 1;;
-    esac
-done
+DEP_NAME="libexif"
+parse_arch "$@"
 
-if [ "$ARCH" != "win32" ] && [ "$ARCH" != "win64" ]; then
-    echo "Unexpected arch $ARCH"
-    usage
-    exit 1
-fi
+"${SCRIPT_DIR}/download/download_libexif.sh"
 
-"$(dirname "$(realpath "$0")")/download/download_libexif.sh"
-
-if [ "${ARCH}" == "win64" ]; then
-    HOST="x86_64-w64-mingw32"
-else
-    HOST="i686-w64-mingw32"
-fi
-
-CFLAGS="-O2 -g0" ./configure --host="${HOST}" \
-                         --prefix=/windows/ \
+CFLAGS="-O2 -g0" ./configure "${HOST_OPTION}" \
+                         "--prefix=${DEP_PREFIX}" \
                          --enable-shared \
                          --disable-static \
                          --disable-docs \
                          --disable-nls
 
-make -j $(nproc)
+make -j "${MAKE_JOBS}"
 make install

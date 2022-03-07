@@ -6,41 +6,26 @@
 
 set -euo pipefail
 
-usage()
-{
-    echo "Download and build openssl for the windows cross compiling environment"
-    echo "Usage: $0 --arch {win64|win32}"
-}
+readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-ARCH=""
+source "${SCRIPT_DIR}/platform_detection.sh"
 
-while (( $# > 0 )); do
-    case $1 in
-        --arch) ARCH=$2; shift 2 ;;
-        -h|--help) usage; exit 1 ;;
-        *) echo "Unexpected argument $1"; usage; exit 1;;
-    esac
-done
+DEP_NAME="openssl"
+parse_arch "$@"
 
-if [[ "$ARCH" == "win64" ]]; then
+if [[ "$SCRIPT_ARCH" == "win64" ]]; then
     OPENSSL_ARCH="mingw64"
-    PREFIX="x86_64-w64-mingw32-"
-elif [[ "$ARCH" == "win32" ]]; then
-    OPENSSL_ARCH="mingw"
-    PREFIX="i686-w64-mingw32-"
 else
-    echo "Invalid architecture"
-    usage
-    exit 1
+    OPENSSL_ARCH="mingw"
 fi
 
-"$(dirname "$(realpath "$0")")/download/download_openssl.sh"
+"${SCRIPT_DIR}/download/download_openssl.sh"
 
-./Configure --prefix=/windows/ \
-    --openssldir=/windows/ssl \
+./Configure "--prefix=${DEP_PREFIX}" \
+    "--openssldir=${DEP_PREFIX}/ssl" \
     shared \
     $OPENSSL_ARCH \
-    --cross-compile-prefix=${PREFIX}
+    --cross-compile-prefix=${CROSS_PREFIX}
 
-make -j $(nproc)
+make -j "${MAKE_JOBS}"
 make install_sw
