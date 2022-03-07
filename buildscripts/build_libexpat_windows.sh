@@ -4,13 +4,13 @@
 #     Copyright (c) 2017-2021 Maxim Biro <nurupo.contributions@gmail.com>
 #     Copyright (c) 2021 by The qTox Project Contributors
 
+set -euo pipefail
+
 usage()
 {
     echo "Download and build libexpat for windows"
     echo "Usage: $0 --arch {win64|win32}"
 }
-
-set -euo pipefail
 
 while (( $# > 0 )); do
     case $1 in

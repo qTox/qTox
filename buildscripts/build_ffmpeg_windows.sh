@@ -4,6 +4,8 @@
 #     Copyright (c) 2017-2021 Maxim Biro <nurupo.contributions@gmail.com>
 #     Copyright (c) 2021 by The qTox Project Contributors
 
+set -euo pipefail
+
 usage()
 {
     echo "Download and build ffmpeg for the windows cross compiling environment"
