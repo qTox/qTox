@@ -56,8 +56,12 @@ then
   exit 1
 fi
 
-if [[ "$ARCH" != "i686" ]] && [[ "$ARCH" != "x86_64" ]]
+if [[ "$ARCH" == "i686" ]]
 then
+  ARCH=wini686
+elif [[ "$ARCH" == "x86_64" ]]
+  ARCH=winx86_64
+else
   echo "Error: Incorrect architecture was specified. Please specify either 'i686' or 'x86_64', case sensitive, as the first argument to the script."
   exit 1
 fi

@@ -16,9 +16,17 @@ parse_arch()
     esac
     done
 
-    if [ "$ARCH" == "i686" ] || [ "$ARCH" == "x86_64" ]; then
+    if [ "$ARCH" == "wini686" ]; then
         DEP_PREFIX='/windows/'
-        HOST_OPTION="--host=${ARCH}-w64-mingw32"
+        HOST_OPTION="--host=i686-w64-mingw32"
+        CROSS_LDFLAG=''
+        CROSS_CFLAG=''
+        CROSS_CPPFLAG=''
+        MAKE_JOBS="$(nproc)"
+        CMAKE_TOOLCHAIN_FILE="-DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake"
+    else if [ "$ARCH" == "winx86_64" ]; then
+        DEP_PREFIX='/windows/'
+        HOST_OPTION="--host=x86_64-w64-mingw32"
         CROSS_LDFLAG=''
         CROSS_CFLAG=''
         CROSS_CPPFLAG=''

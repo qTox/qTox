@@ -7,7 +7,7 @@
 usage()
 {
     echo "Download and build libexpat for windows"
-    echo "Usage: $0 --arch {x86_64|i686}"
+    echo "Usage: $0 --arch {winx86_64|wini686}"
 }
 
 set -euo pipefail

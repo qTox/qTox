@@ -13,7 +13,7 @@ source "${SCRIPT_DIR}/cross_compile_detection.sh"
 usage()
 {
     echo "Download and build ffmpeg for the windows cross compiling environment"
-    echo "Usage: $0 --arch {x86_64|i686}"
+    echo "Usage: $0 --arch {winx86_64|wini686}"
 }
 
 parse_arch "$@"
