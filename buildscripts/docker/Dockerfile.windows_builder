@@ -67,8 +67,6 @@ RUN mkdir -p /src/openssl && \
   /build/build_openssl.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/openssl
 
-env PKG_CONFIG_PATH=/windows/lib/pkgconfig
-
 COPY download/download_qt.sh /build/download/download_qt.sh
 COPY build_qt_windows.sh /build/build_qt_windows.sh
 

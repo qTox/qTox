@@ -6,41 +6,21 @@
 
 set -euo pipefail
 
-usage()
-{
-    echo "Download and build qt for the windows cross compiling environment"
-    echo "Usage: $0 --arch {win64|win32}"
-}
+readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-ARCH=""
+source "${SCRIPT_DIR}/build_utils.sh"
 
-while (( $# > 0 )); do
-    case $1 in
-        --arch) ARCH=$2; shift 2 ;;
-        -h|--help) usage; exit 1 ;;
-        *) echo "Unexpected argument $1"; usage; exit 1;;
-    esac
-done
+parse_arch --dep "qt" --supported "win32 win64" "$@"
 
-if [[ "$ARCH" == "win64" ]]; then
-    CROSS="x86_64-w64-mingw32-"
-elif [[ "$ARCH" == "win32" ]]; then
-    CROSS="i686-w64-mingw32-"
-else
-    echo "Unexpected arch $ARCH"
-    usage
-    exit 1
-fi
-
-"$(dirname "$(realpath "$0")")/download/download_qt.sh"
+"${SCRIPT_DIR}/download/download_qt.sh"
 
 OPENSSL_LIBS=$(pkg-config --libs openssl)
 export OPENSSL_LIBS
 
-./configure -prefix /windows/ \
+./configure -prefix "${DEP_PREFIX}" \
     -release \
     -shared \
-    -device-option CROSS_COMPILE=${CROSS} \
+    -device-option "CROSS_COMPILE=${MINGW_ARCH}-w64-mingw32-" \
     -xplatform win32-g++ \
     -openssl \
     "$(pkg-config --cflags openssl)" \
@@ -94,5 +74,5 @@ export OPENSSL_LIBS
     -qt-pcre \
     -opengl desktop
 
-make -j $(nproc)
+make -j "${MAKE_JOBS}"
 make install

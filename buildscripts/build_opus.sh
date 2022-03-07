@@ -6,41 +6,21 @@
 
 set -euo pipefail
 
-usage()
-{
-    echo "Download and build opus for the windows cross compiling environment"
-    echo "Usage: $0 --arch {win64|win32}"
-}
+readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-ARCH=""
+source "${SCRIPT_DIR}/build_utils.sh"
 
-while (( $# > 0 )); do
-    case $1 in
-        --arch) ARCH=$2; shift 2 ;;
-        -h|--help) usage; exit 1 ;;
-        *) echo "Unexpected argument $1"; usage; exit 1;;
-    esac
-done
+parse_arch --dep "opus" --supported "win32 win64" "$@"
 
-if [[ "$ARCH" == "win64" ]]; then
-    HOST="x86_64-w64-mingw32"
-elif [[ "$ARCH" == "win32" ]]; then
-    HOST="i686-w64-mingw32"
-else
-    echo "Unexpected arch $ARCH"
-    usage
-    exit 1
-fi
-
-"$(dirname "$(realpath "$0")")/download/download_opus.sh"
+"${SCRIPT_DIR}/download/download_opus.sh"
 
 LDFLAGS="-fstack-protector" CFLAGS="-O2 -g0" \
-    ./configure --host="${HOST}" \
-                             --prefix=/windows/ \
+    ./configure "${HOST_OPTION}" \
+                             "--prefix=${DEP_PREFIX}" \
                              --enable-shared \
                              --disable-static \
                              --disable-extra-programs \
                              --disable-doc
 
-make -j $(nproc)
+make -j "${MAKE_JOBS}"
 make install

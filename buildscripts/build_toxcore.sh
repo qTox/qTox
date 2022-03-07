@@ -8,6 +8,10 @@ set -euo pipefail
 
 readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
+source "${SCRIPT_DIR}/build_utils.sh"
+
+parse_arch --dep "toxcore and toxext extensions" --supported "win32 win64" "$@"
+
 build_toxcore() {
     TOXCORE_SRC="$(realpath toxcore)"
 
@@ -16,15 +20,15 @@ build_toxcore() {
 
     "${SCRIPT_DIR}/download/download_toxcore.sh"
 
-    cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
+    cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
             -DBOOTSTRAP_DAEMON=OFF \
             -DCMAKE_BUILD_TYPE=Release \
             -DENABLE_STATIC=OFF \
             -DENABLE_SHARED=ON \
-            -DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake \
+            "${CMAKE_TOOLCHAIN_FILE}" \
             .
 
-    cmake --build . -- -j$(nproc)
+    cmake --build . -- "-j${MAKE_JOBS}"
     cmake --build . --target install
 
     popd >/dev/null
@@ -38,12 +42,12 @@ build_toxext() {
 
     "${SCRIPT_DIR}/download/download_toxext.sh"
 
-    cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
+    cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake \
+            "${CMAKE_TOOLCHAIN_FILE}" \
             .
 
-    cmake --build . -- -j$(nproc)
+    cmake --build . -- "-j${MAKE_JOBS}"
     cmake --build . --target install
 
     popd >/dev/null
@@ -57,10 +61,11 @@ build_toxext_messages() {
 
     "${SCRIPT_DIR}/download/download_toxext_messages.sh"
 
-    cmake -DCMAKE_INSTALL_PREFIX=/windows/ \
+    cmake "-DCMAKE_INSTALL_PREFIX=${DEP_PREFIX}" \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake \
+            "${CMAKE_TOOLCHAIN_FILE}" \
             .
+    cmake --build . -- "-j${MAKE_JOBS}"
     cmake --build . --target install
 
     popd >/dev/null

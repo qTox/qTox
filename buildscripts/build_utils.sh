@@ -12,7 +12,18 @@ usage()
     # doesn't include --dep argument, since that comes from the build script
     # itself.
     echo "Download and build $DEP_NAME for the Windows cross compiling environment"
-    echo "Usage: $0 --arch {win64|win32}"
+    echo "Usage: $0 --arch {$1}"
+}
+
+assert_supported()
+{
+    for supported in $2; do
+        if [ "$1" == "$supported" ]; then
+            return
+        fi
+    done
+    usage "$2"
+    exit 1
 }
 
 parse_arch()
@@ -21,10 +32,13 @@ parse_arch()
     case $1 in
         --arch) SCRIPT_ARCH=$2; shift 2 ;;
         --dep) DEP_NAME=$2; shift 2 ;;
+        --supported) SUPPORTED=$2; shift 2 ;;
         -h|--help) usage; exit 1 ;;
         *) echo "Unexpected argument $1"; usage; exit 1;;
     esac
     done
+
+    assert_supported "${SCRIPT_ARCH}" "${SUPPORTED}"
 
     if [ "${SCRIPT_ARCH}" == "win32" ] || [ "${SCRIPT_ARCH}" == "win64" ]; then
         if [ "${SCRIPT_ARCH}" == "win32" ]; then

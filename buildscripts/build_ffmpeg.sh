@@ -6,45 +6,27 @@
 
 set -euo pipefail
 
-usage()
-{
-    echo "Download and build ffmpeg for the windows cross compiling environment"
-    echo "Usage: $0 --arch {win64|win32}"
-}
+readonly SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-ARCH=""
+source "${SCRIPT_DIR}/build_utils.sh"
 
-while (( $# > 0 )); do
-    case $1 in
-        --arch) ARCH=$2; shift 2 ;;
-        -h|--help) usage; exit 1 ;;
-        *) echo "Unexpected argument $1"; usage; exit 1;;
-    esac
-done
-
-if [ "$ARCH" != "win32" ] && [ "$ARCH" != "win64" ]; then
-    echo "Unexpected arch $ARCH"
-    usage
-    exit 1
-fi
-
-"$(dirname "$(realpath "$0")")/download/download_ffmpeg.sh"
+parse_arch --dep "ffmpeg" --supported "win32 win64" "$@"
 
 if [ "${ARCH}" == "win64" ]; then
     FFMPEG_ARCH="x86_64"
-    CROSS_PREFIX="x86_64-w64-mingw32-"
 else
     FFMPEG_ARCH="x86"
-    CROSS_PREFIX="i686-w64-mingw32-"
 fi
+
+"${SCRIPT_DIR}/download/download_ffmpeg.sh"
 
 ./configure --arch=${FFMPEG_ARCH} \
           --enable-gpl \
           --enable-shared \
           --disable-static \
-          --prefix=/windows/ \
+          "--prefix=${DEP_PREFIX}" \
           --target-os="mingw32" \
-          --cross-prefix="${CROSS_PREFIX}" \
+          "--cross-prefix=${MINGW_ARCH}-w64-mingw32-" \
           --pkg-config="pkg-config" \
           --extra-cflags="-O2 -g0" \
           --disable-debug \
@@ -88,5 +70,5 @@ fi
           --enable-decoder=mjpeg \
           --enable-decoder=rawvideo
 
-make -j $(nproc)
+make -j "${MAKE_JOBS}"
 make install
