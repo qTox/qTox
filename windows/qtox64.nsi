@@ -1,3 +1,4 @@
+Unicode True
 ###################
 #META
 ###################
@@ -30,76 +31,90 @@ VIAddVersionKey "FileDescription" "${DESCRIPTION}"
 VIAddVersionKey "FileVersion" "${VERSION}"
 
 ##############
-#UNINSTALL LOG
+#DEFINE MACROS
 ##############
+;Set the name of the uninstall log
+  !define UninstLog "uninstall.log"
+  Var UninstLog
+
 ;AddItem macro
   !macro AddItem Path
-    FileWrite $UninstLog "${Path}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${Path}$\r$\n"
   !macroend
+  !define AddItem "!insertmacro AddItem"
 
 ;File macro
   !macro File FileName
      IfFileExists "$OUTDIR\${FileName}" +2
-     FileWrite $UninstLog "$OUTDIR\${FileName}$\r$\n"
+     FileWriteUTF16LE $UninstLog "$OUTDIR\${FileName}$\r$\n"
      File "${FileName}"
   !macroend
+  !define File "!insertmacro File"
 
 ;CreateShortcut macro
   !macro CreateShortcut FilePath FilePointer Pamameters Icon IconIndex
-    FileWrite $UninstLog "${FilePath}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${FilePath}$\r$\n"
     CreateShortcut "${FilePath}" "${FilePointer}" "${Pamameters}" "${Icon}" "${IconIndex}"
   !macroend
+  !define CreateShortcut "!insertmacro CreateShortcut"
 
 ;Copy files macro
   !macro CopyFiles SourcePath DestPath
     IfFileExists "${DestPath}" +2
-    FileWrite $UninstLog "${DestPath}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${DestPath}$\r$\n"
     CopyFiles "${SourcePath}" "${DestPath}"
   !macroend
+  !define CopyFiles "!insertmacro CopyFiles"
 
 ;Rename macro
   !macro Rename SourcePath DestPath
     IfFileExists "${DestPath}" +2
-    FileWrite $UninstLog "${DestPath}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${DestPath}$\r$\n"
     Rename "${SourcePath}" "${DestPath}"
   !macroend
+  !define Rename "!insertmacro Rename"
 
 ;CreateDirectory macro
   !macro CreateDirectory Path
     CreateDirectory "${Path}"
-    FileWrite $UninstLog "${Path}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${Path}$\r$\n"
   !macroend
+  !define CreateDirectory "!insertmacro CreateDirectory"
 
 ;SetOutPath macro
   !macro SetOutPath Path
     SetOutPath "${Path}"
-    FileWrite $UninstLog "${Path}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${Path}$\r$\n"
   !macroend
+  !define SetOutPath "!insertmacro SetOutPath"
 
 ;WriteUninstaller macro
   !macro WriteUninstaller Path
     WriteUninstaller "${Path}"
-    FileWrite $UninstLog "${Path}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${Path}$\r$\n"
   !macroend
+  !define WriteUninstaller "!insertmacro WriteUninstaller"
 
 ;WriteIniStr macro
   !macro WriteIniStr IniFile SectionName EntryName NewValue
      IfFileExists "${IniFile}" +2
-     FileWrite $UninstLog "${IniFile}$\r$\n"
+     FileWriteUTF16LE $UninstLog "${IniFile}$\r$\n"
      WriteIniStr "${IniFile}" "${SectionName}" "${EntryName}" "${NewValue}"
   !macroend
 
 ;WriteRegStr macro
   !macro WriteRegStr RegRoot UnInstallPath Key Value
-     FileWrite $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
+     FileWriteUTF16LE $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
      WriteRegStr "${RegRoot}" "${UnInstallPath}" "${Key}" "${Value}"
   !macroend
+  !define WriteRegStr "!insertmacro WriteRegStr"
 
 ;WriteRegDWORD macro
   !macro WriteRegDWORD RegRoot UnInstallPath Key Value
-     FileWrite $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
+     FileWriteUTF16LE $UninstLog "${RegRoot} ${UnInstallPath}$\r$\n"
      WriteRegDWORD "${RegRoot}" "${UnInstallPath}" "${Key}" "${Value}"
   !macroend
+  !define WriteRegDWORD "!insertmacro WriteRegDWORD"
 
 ;BackupFile macro
   !macro BackupFile FILE_DIR FILE BACKUP_TO
@@ -108,93 +123,35 @@ VIAddVersionKey "FileVersion" "${VERSION}"
    IfFileExists "${FILE_DIR}\${FILE}" 0 +2
     Rename "${FILE_DIR}\${FILE}" "${BACKUP_TO}\${FILE}"
   !macroend
+  !define BackupFile "!insertmacro BackupFile"
 
 ;RestoreFile macro
   !macro RestoreFile BUP_DIR FILE RESTORE_TO
    IfFileExists "${BUP_DIR}\${FILE}" 0 +2
     Rename "${BUP_DIR}\${FILE}" "${RESTORE_TO}\${FILE}"
   !macroend
+  !define RestoreFile "!insertmacro RestoreFile"
 
 ;BackupFiles macro
   !macro BackupFiles FILE_DIR FILE BACKUP_TO
    IfFileExists "${BACKUP_TO}\*.*" +2
     CreateDirectory "22222"
    IfFileExists "${FILE_DIR}\${FILE}" 0 +7
-    FileWrite $UninstLog "${FILE_DIR}\${FILE}$\r$\n"
-    FileWrite $UninstLog "${BACKUP_TO}\${FILE}$\r$\n"
-    FileWrite $UninstLog "FileBackup$\r$\n"
+    FileWriteUTF16LE $UninstLog "${FILE_DIR}\${FILE}$\r$\n"
+    FileWriteUTF16LE $UninstLog "${BACKUP_TO}\${FILE}$\r$\n"
+    FileWriteUTF16LE $UninstLog "FileBackup$\r$\n"
     Rename "${FILE_DIR}\${FILE}" "${BACKUP_TO}\${FILE}"
     SetOutPath "${FILE_DIR}"
     File "${FILE}" #After the Original file is backed up write the new file.
   !macroend
+  !define BackupFiles "!insertmacro BackupFiles"
 
 ;RestoreFiles macro
   !macro RestoreFiles BUP_FILE RESTORE_FILE
    IfFileExists "${BUP_FILE}" 0 +2
     CopyFiles "${BUP_FILE}" "${RESTORE_FILE}"
   !macroend
-
-###################
-#PREPARE UNINST LOG
-###################
-  ;Set the name of the uninstall log
-    !define UninstLog "uninstall.log"
-    Var UninstLog
-
-  ;Uninstall log file missing.
-    LangString UninstLogMissing ${LANG_ENGLISH} "${UninstLog} not found!$\r$\nUninstallation cannot proceed!"
-
-  ;AddItem macro
-    !define AddItem "!insertmacro AddItem"
-
-  ;BackupFile macro
-    !define BackupFile "!insertmacro BackupFile"
-
-  ;BackupFiles macro
-    !define BackupFiles "!insertmacro BackupFiles"
-
-  ;Copy files macro
-    !define CopyFiles "!insertmacro CopyFiles"
-
-  ;CreateDirectory macro
-    !define CreateDirectory "!insertmacro CreateDirectory"
-
-  ;CreateShortcut macro
-    !define CreateShortcut "!insertmacro CreateShortcut"
-
-  ;File macro
-    !define File "!insertmacro File"
-
-  ;Rename macro
-    !define Rename "!insertmacro Rename"
-
-  ;RestoreFile macro
-    !define RestoreFile "!insertmacro RestoreFile"
-
-  ;RestoreFiles macro
-    !define RestoreFiles "!insertmacro RestoreFiles"
-
-  ;SetOutPath macro
-    !define SetOutPath "!insertmacro SetOutPath"
-
-  ;WriteRegDWORD macro
-    !define WriteRegDWORD "!insertmacro WriteRegDWORD"
-
-  ;WriteRegStr macro
-    !define WriteRegStr "!insertmacro WriteRegStr"
-
-  ;WriteUninstaller macro
-    !define WriteUninstaller "!insertmacro WriteUninstaller"
-
-  Section -openlogfile
-    CreateDirectory "$INSTDIR"
-    IfFileExists "$INSTDIR\${UninstLog}" +3
-      FileOpen $UninstLog "$INSTDIR\${UninstLog}" w
-    Goto +4
-      SetFileAttributes "$INSTDIR\${UninstLog}" NORMAL
-      FileOpen $UninstLog "$INSTDIR\${UninstLog}" a
-      FileSeek $UninstLog 0 END
-  SectionEnd
+  !define RestoreFiles "!insertmacro RestoreFiles"
 
 ##############
 #MODERN UI
@@ -243,6 +200,42 @@ FunctionEnd
 
 !insertmacro MUI_LANGUAGE "English"
 
+###################
+#PREPARE UNINST LOG
+###################
+  ;Uninstall log file missing.
+    LangString UninstLogMissing ${LANG_ENGLISH} "${UninstLog} not found!$\r$\nUninstallation cannot proceed!"
+
+  Section "Create install directory"
+    CreateDirectory "$INSTDIR"
+    nsExec::ExecToStack 'icacls "$PROGRAMFILES64" /save "$TEMP\program-files-permissions.txt"'
+    Pop $0 # return value/error/timeout
+    Pop $1 # printed text, up to ${NSIS_MAX_STRLEN}
+    FileOpen $0 "$TEMP\program-files-permissions.txt" r
+      FileReadUTF16LE $0 $1 1024
+      FileReadUTF16LE $0 $2 1024
+    FileClose $0
+    DetailPrint "First read line is: $1"
+    DetailPrint "Second read line is: $2"
+    FileOpen $0 "$TEMP\qTox-install-file-permissions.txt" w
+      FileWriteUTF16LE  $0 "$INSTDIR"
+      FileWriteUTF16LE  $0 "$\r$\n"
+      DetailPrint "Writing to file: $2"
+      FileWriteUTF16LE  $0 "$2"
+    FileClose $0
+    nsExec::Exec 'icacls "" /restore "$TEMP\qTox-install-file-permissions.txt"'
+  SectionEnd
+
+  Section -openlogfile
+    CreateDirectory "$INSTDIR"
+    IfFileExists "$INSTDIR\${UninstLog}" +3
+      FileOpen $UninstLog "$INSTDIR\${UninstLog}" w
+    Goto +4
+      SetFileAttributes "$INSTDIR\${UninstLog}" NORMAL
+      FileOpen $UninstLog "$INSTDIR\${UninstLog}" a
+      FileSeek $UninstLog 0 END
+  SectionEnd
+
 #################
 #INSTALL
 #################
@@ -286,7 +279,7 @@ Section "Install"
   ${WriteRegStr} "${REG_ROOT}" "${REG_APP_PATH}" "" "$INSTDIR\${MAIN_APP_EXE}"
   ${WriteRegStr} "${REG_ROOT}" "${REG_APP_PATH}" "Path" "$INSTDIR\bin\"
   ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayName" "qTox"
-  ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayVersion" "1.17.4"
+  ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayVersion" "1.17.5"
   ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "Publisher" "The qTox Project"
   ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "UninstallString" "$INSTDIR\uninstall.exe"
   ${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "URLInfoAbout" "https://qtox.github.io"
