@@ -30,7 +30,6 @@
 
 #include "src/core/extension.h"
 #include "src/core/toxfile.h"
-#include "src/core/toxpk.h"
 #include "src/model/brokenmessagereason.h"
 #include "src/model/systemmessage.h"
 #include "src/persistence/db/rawdatabase.h"
@@ -39,6 +38,8 @@
 class Profile;
 class HistoryKeeper;
 class Settings;
+class ChatId;
+class ToxPk;
 
 enum class HistMessageContentType
 {
@@ -191,28 +192,28 @@ public:
 
     bool isValid();
 
-    bool historyExists(const ToxPk& friendPk);
+    bool historyExists(const ChatId& chatId);
 
     void eraseHistory();
-    void removeFriendHistory(const ToxPk& friendPk);
-    void addNewMessage(const ToxPk& friendPk, const QString& message, const ToxPk& sender,
+    void removeChatHistory(const ChatId& chatId);
+    void addNewMessage(const ChatId& chatId, const QString& message, const ToxPk& sender,
                        const QDateTime& time, bool isDelivered, ExtensionSet extensions,
                        QString dispName, const std::function<void(RowId)>& insertIdCallback = {});
 
-    void addNewFileMessage(const ToxPk& friendPk, const QByteArray& fileId,
+    void addNewFileMessage(const ChatId& chatId, const QByteArray& fileId,
                            const QString& fileName, const QString& filePath, int64_t size,
                            const ToxPk& sender, const QDateTime& time, QString const& dispName);
 
-    void addNewSystemMessage(const ToxPk& friendPk, const SystemMessage& systemMessage);
+    void addNewSystemMessage(const ChatId& chatId, const SystemMessage& systemMessage);
 
     void setFileFinished(const QByteArray& fileId, bool success, const QString& filePath, const QByteArray& fileHash);
-    size_t getNumMessagesForFriend(const ToxPk& friendPk);
-    size_t getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date);
-    QList<HistMessage> getMessagesForFriend(const ToxPk& friendPk, size_t firstIdx, size_t lastIdx);
-    QList<HistMessage> getUndeliveredMessagesForFriend(const ToxPk& friendPk);
-    QDateTime getDateWhereFindPhrase(const ToxPk& friendPk, const QDateTime& from, QString phrase,
+    size_t getNumMessagesForChat(const ChatId& chatId);
+    size_t getNumMessagesForChatBeforeDate(const ChatId& chatId, const QDateTime& date);
+    QList<HistMessage> getMessagesForChat(const ChatId& chatId, size_t firstIdx, size_t lastIdx);
+    QList<HistMessage> getUndeliveredMessagesForChat(const ChatId& chatId);
+    QDateTime getDateWhereFindPhrase(const ChatId& chatId, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);
-    QList<DateIdx> getNumMessagesForFriendBeforeDateBoundaries(const ToxPk& friendPk,
+    QList<DateIdx> getNumMessagesForChatBeforeDateBoundaries(const ChatId& chatId,
                                                                const QDate& from, size_t maxNum);
 
     void markAsDelivered(RowId messageId);
@@ -226,7 +227,7 @@ private slots:
 
 private:
     QVector<RawDatabase::Query>
-    generateNewFileTransferQueries(const ToxPk& friendPk, const ToxPk& sender, const QDateTime& time,
+    generateNewFileTransferQueries(const ChatId& chatId, const ToxPk& sender, const QDateTime& time,
                                    const QString& dispName, const FileDbInsertionData& insertionData);
     bool historyAccessBlocked();
     static RawDatabase::Query generateFileFinished(RowId fileId, bool success,
