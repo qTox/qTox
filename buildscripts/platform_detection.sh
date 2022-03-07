@@ -6,6 +6,8 @@
 
 set -euo pipefail
 
+MACOS_MINIMUM_SUPPORTED_VERSION=10.15
+
 parse_arch()
 {
     while (( $# > 0 )); do
@@ -16,7 +18,16 @@ parse_arch()
     esac
     done
 
-    if [ "$ARCH" == "wini686" ]; then
+    if [ "$ARCH" == "macos" ]; then
+        DEP_PREFIX="$(realpath $(dirname $(realpath ${BASH_SOURCE[0]}))/../local-deps)"
+        mkdir -p $DEP_PREFIX
+        HOST_OPTION=''
+        CROSS_LDFLAG="-mmacosx-version-min=$MACOS_MINIMUM_SUPPORTED_VERSION"
+        CROSS_CFLAG="-mmacosx-version-min=$MACOS_MINIMUM_SUPPORTED_VERSION"
+        CROSS_CPPFLAG="-mmacosx-version-min=$MACOS_MINIMUM_SUPPORTED_VERSION"
+        MAKE_JOBS="$(sysctl -n hw.ncpu)"
+        CMAKE_TOOLCHAIN_FILE=""
+    elif [ "$ARCH" == "wini686" ]; then
         DEP_PREFIX='/windows/'
         HOST_OPTION="--host=i686-w64-mingw32"
         CROSS_LDFLAG=''
@@ -24,7 +35,7 @@ parse_arch()
         CROSS_CPPFLAG=''
         MAKE_JOBS="$(nproc)"
         CMAKE_TOOLCHAIN_FILE="-DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake"
-    else if [ "$ARCH" == "winx86_64" ]; then
+    elif [ "$ARCH" == "winx86_64" ]; then
         DEP_PREFIX='/windows/'
         HOST_OPTION="--host=x86_64-w64-mingw32"
         CROSS_LDFLAG=''
