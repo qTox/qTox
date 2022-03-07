@@ -19,6 +19,7 @@
 
 #include "chathistory.h"
 #include "src/persistence/settings.h"
+#include "src/core/chatid.h"
 #include "src/widget/form/chatform.h"
 
 namespace {
@@ -160,7 +161,7 @@ SearchResult ChatHistory::searchBackward(SearchPos startIdx, const QString& phra
         history->getDateWhereFindPhrase(f.getPublicKey(), earliestMessageDate, phrase,
                                         parameter);
 
-    auto loadIdx = history->getNumMessagesForFriendBeforeDate(f.getPublicKey(), dateWherePhraseFound);
+    auto loadIdx = history->getNumMessagesForChatBeforeDate(f.getPublicKey(), dateWherePhraseFound);
     loadHistoryIntoSessionChatLog(ChatLogIdx(loadIdx));
 
     // Reset search pos to the message we just loaded to avoid a double search
@@ -187,7 +188,7 @@ std::vector<IChatLog::DateChatLogIdxPair> ChatHistory::getDateIdxs(const QDate& 
                                                                    size_t maxDates) const
 {
     if (canUseHistory()) {
-        auto counts = history->getNumMessagesForFriendBeforeDateBoundaries(f.getPublicKey(),
+        auto counts = history->getNumMessagesForChatBeforeDateBoundaries(f.getPublicKey(),
                                                                            startDate, maxDates);
 
         std::vector<IChatLog::DateChatLogIdxPair> ret;
@@ -352,7 +353,7 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
     // We know that both history and us have a start index of 0 so the type
     // conversion should be safe
     assert(getFirstIdx() == ChatLogIdx(0));
-    auto messages = history->getMessagesForFriend(f.getPublicKey(), start.get(), end.get());
+    auto messages = history->getMessagesForChat(f.getPublicKey(), start.get(), end.get());
 
     assert(messages.size() == static_cast<int>(end.get() - start.get()));
     ChatLogIdx nextIdx = start;
@@ -423,7 +424,7 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
  */
 void ChatHistory::dispatchUnsentMessages(IMessageDispatcher& messageDispatcher)
 {
-    auto unsentMessages = history->getUndeliveredMessagesForFriend(f.getPublicKey());
+    auto unsentMessages = history->getUndeliveredMessagesForChat(f.getPublicKey());
 
     auto requiredExtensions = std::accumulate(
         unsentMessages.begin(), unsentMessages.end(),
@@ -519,7 +520,7 @@ bool ChatHistory::canUseHistory() const
 ChatLogIdx ChatHistory::getInitialChatLogIdx() const
 {
     if (canUseHistory()) {
-        return ChatLogIdx(history->getNumMessagesForFriend(f.getPublicKey()));
+        return ChatLogIdx(history->getNumMessagesForChat(f.getPublicKey()));
     }
     return ChatLogIdx(0);
 }
