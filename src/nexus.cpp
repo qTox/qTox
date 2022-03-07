@@ -107,7 +107,7 @@ void Nexus::start()
     qRegisterMetaType<ToxPk>("ToxPk");
     qRegisterMetaType<ToxId>("ToxId");
     qRegisterMetaType<ToxPk>("GroupId");
-    qRegisterMetaType<ToxPk>("ContactId");
+    qRegisterMetaType<ToxPk>("ChatId");
     qRegisterMetaType<GroupInvite>("GroupInvite");
     qRegisterMetaType<ReceiptNum>("ReceiptNum");
     qRegisterMetaType<RowId>("RowId");

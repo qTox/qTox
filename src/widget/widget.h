@@ -192,8 +192,8 @@ public slots:
     void onGroupPeerAudioPlaying(int groupnumber, ToxPk peerPk);
     void onGroupSendFailed(uint32_t groupnumber);
     void onFriendTypingChanged(uint32_t friendnumber, bool isTyping);
-    void nextContact();
-    void previousContact();
+    void nextChat();
+    void previousChat();
     void onFriendDialogShown(const Friend* f);
     void onGroupDialogShown(Group* g);
     void toggleFullscreen();
@@ -268,8 +268,8 @@ private:
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
     void saveSplitterGeometry();
-    void cycleContacts(bool forward);
-    void searchContacts();
+    void cycleChats(bool forward);
+    void searchChats();
     void changeDisplayMode();
     void updateFilterText();
     FilterCriteria getFilterCriteria() const;
@@ -322,7 +322,7 @@ private:
     FilesForm* filesForm;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
-    FriendListWidget* contactListWidget;
+    FriendListWidget* chatListWidget;
     MaskablePixmapWidget* profilePicture;
     bool notify(QObject* receiver, QEvent* event);
     bool autoAwayActive = false;

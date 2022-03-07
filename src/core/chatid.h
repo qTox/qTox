@@ -25,17 +25,17 @@
 #include <QHash>
 #include <memory>
 
-class ContactId
+class ChatId
 {
 public:
-    virtual ~ContactId();
-    ContactId(const ContactId&) = default;
-    ContactId& operator=(const ContactId&) = default;
-    ContactId(ContactId&&) = default;
-    ContactId& operator=(ContactId&&) = default;
-    bool operator==(const ContactId& other) const;
-    bool operator!=(const ContactId& other) const;
-    bool operator<(const ContactId& other) const;
+    virtual ~ChatId();
+    ChatId(const ChatId&) = default;
+    ChatId& operator=(const ChatId&) = default;
+    ChatId(ChatId&&) = default;
+    ChatId& operator=(ChatId&&) = default;
+    bool operator==(const ChatId& other) const;
+    bool operator!=(const ChatId& other) const;
+    bool operator<(const ChatId& other) const;
     QString toString() const;
     QByteArray getByteArray() const;
     const uint8_t* getData() const;
@@ -43,14 +43,14 @@ public:
     virtual int getSize() const = 0;
 
 protected:
-    ContactId();
-    explicit ContactId(const QByteArray& rawId);
+    ChatId();
+    explicit ChatId(const QByteArray& rawId);
     QByteArray id;
 };
 
-inline uint qHash(const ContactId& id)
+inline uint qHash(const ChatId& id)
 {
     return qHash(id.getByteArray());
 }
 
-using ContactIdPtr = std::shared_ptr<const ContactId>;
+using ChatIdPtr = std::shared_ptr<const ChatId>;

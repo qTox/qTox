@@ -33,7 +33,7 @@
  * @brief The default constructor. Creates an empty Tox group ID.
  */
 GroupId::GroupId()
-    : ContactId()
+    : ChatId()
 {
 }
 
@@ -43,7 +43,7 @@ GroupId::GroupId()
  *              GroupId::size, else the GroupId will be empty.
  */
 GroupId::GroupId(const QByteArray& rawId)
-    : ContactId([rawId](){
+    : ChatId([rawId](){
         assert(rawId.length() == size);
         return rawId;}())
 {
@@ -55,7 +55,7 @@ GroupId::GroupId(const QByteArray& rawId)
  * GroupId::size from the specified buffer.
  */
 GroupId::GroupId(const uint8_t* rawId)
-    : ContactId(QByteArray(reinterpret_cast<const char*>(rawId), size))
+    : ChatId(QByteArray(reinterpret_cast<const char*>(rawId), size))
 {
 }
 

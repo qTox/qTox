@@ -136,7 +136,7 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot, Setting
 
 } // namespace
 
-GenericChatForm::GenericChatForm(const Core& core_, const Contact* contact, IChatLog& chatLog_,
+GenericChatForm::GenericChatForm(const Core& core_, const Chat* chat, IChatLog& chatLog_,
                                  IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache,
                                  SmileyPack& smileyPack_, Settings& settings_, QWidget* parent_)
     : QWidget(parent_, Qt::Window)
@@ -273,7 +273,7 @@ GenericChatForm::GenericChatForm(const Core& core_, const Contact* contact, ICha
     Translator::registerHandler(std::bind(&GenericChatForm::retranslateUi, this), this);
 
     // update header on name/title change
-    connect(contact, &Contact::displayedNameChanged, this, &GenericChatForm::setName);
+    connect(chat, &Chat::displayedNameChanged, this, &GenericChatForm::setName);
 
 }
 

@@ -50,7 +50,7 @@ public:
     FriendChatroom(Friend* frnd_, IDialogsManager* dialogsManager_, Core& core_,
         Settings& settings_);
 
-    Contact* getContact() override;
+    Chat* getChat() override;
 
 public slots:
 

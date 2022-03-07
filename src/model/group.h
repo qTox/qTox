@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "contact.h"
+#include "chat.h"
 
-#include "src/core/contactid.h"
+#include "src/core/chatid.h"
 #include "src/core/groupid.h"
 #include "src/core/icoregroupquery.h"
 #include "src/core/icoreidhandler.h"
@@ -31,7 +31,7 @@
 #include <QObject>
 #include <QStringList>
 
-class Group : public Contact
+class Group : public Chat
 {
     Q_OBJECT
 public:

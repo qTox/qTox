@@ -21,71 +21,71 @@
 #include <QString>
 #include <cstdint>
 #include <QHash>
-#include "src/core/contactid.h"
+#include "src/core/chatid.h"
 
 /**
  * @brief The default constructor. Creates an empty id.
  */
-ContactId::ContactId()
+ChatId::ChatId()
     : id()
 {
 }
-ContactId::~ContactId() = default;
+ChatId::~ChatId() = default;
 
 /**
- * @brief Constructs a ContactId from bytes.
- * @param rawId The bytes to construct the ContactId from.
+ * @brief Constructs a ChatId from bytes.
+ * @param rawId The bytes to construct the ChatId from.
  */
-ContactId::ContactId(const QByteArray& rawId)
+ChatId::ChatId(const QByteArray& rawId)
 {
     id = QByteArray(rawId);
 }
 
 /**
- * @brief Compares the equality of the ContactId.
- * @param other ContactId to compare.
- * @return True if both ContactId are equal, false otherwise.
+ * @brief Compares the equality of the ChatId.
+ * @param other ChatId to compare.
+ * @return True if both ChatId are equal, false otherwise.
  */
-bool ContactId::operator==(const ContactId& other) const
+bool ChatId::operator==(const ChatId& other) const
 {
     return id == other.id;
 }
 
 /**
- * @brief Compares the inequality of the ContactId.
- * @param other ContactId to compare.
- * @return True if both ContactIds are not equal, false otherwise.
+ * @brief Compares the inequality of the ChatId.
+ * @param other ChatId to compare.
+ * @return True if both ChatIds are not equal, false otherwise.
  */
-bool ContactId::operator!=(const ContactId& other) const
+bool ChatId::operator!=(const ChatId& other) const
 {
     return id != other.id;
 }
 
 /**
- * @brief Compares two ContactIds
- * @param other ContactId to compare.
- * @return True if this ContactIds is less than the other ContactId, false otherwise.
+ * @brief Compares two ChatIds
+ * @param other ChatId to compare.
+ * @return True if this ChatIds is less than the other ChatId, false otherwise.
  */
-bool ContactId::operator<(const ContactId& other) const
+bool ChatId::operator<(const ChatId& other) const
 {
     return id < other.id;
 }
 
 /**
- * @brief Converts the ContactId to a uppercase hex string.
+ * @brief Converts the ChatId to a uppercase hex string.
  * @return QString containing the hex representation of the id
  */
-QString ContactId::toString() const
+QString ChatId::toString() const
 {
     return id.toHex().toUpper();
 }
 
 /**
  * @brief Returns a pointer to the raw id data.
- * @return Pointer to the raw id data, which is exactly `ContactId::getPkSize()`
- *         bytes long. Returns a nullptr if the ContactId is empty.
+ * @return Pointer to the raw id data, which is exactly `ChatId::getPkSize()`
+ *         bytes long. Returns a nullptr if the ChatId is empty.
  */
-const uint8_t* ContactId::getData() const
+const uint8_t* ChatId::getData() const
 {
     if (id.isEmpty()) {
         return nullptr;
@@ -98,16 +98,16 @@ const uint8_t* ContactId::getData() const
  * @brief Get a copy of the id
  * @return Copied id bytes
  */
-QByteArray ContactId::getByteArray() const
+QByteArray ChatId::getByteArray() const
 {
     return QByteArray(id); // TODO: Is a copy really necessary?
 }
 
 /**
- * @brief Checks if the ContactId contains a id.
+ * @brief Checks if the ChatId contains a id.
  * @return True if there is a id, False otherwise.
  */
-bool ContactId::isEmpty() const
+bool ChatId::isEmpty() const
 {
     return id.isEmpty();
 }

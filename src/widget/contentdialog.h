@@ -62,19 +62,19 @@ public:
     void ensureSplitterVisible();
     void updateTitleAndStatusIcon();
 
-    void cycleContacts(bool forward, bool loop = true);
+    void cycleChats(bool forward, bool loop = true);
     void onVideoShow(QSize size);
     void onVideoHide();
 
     void addFriendWidget(FriendWidget* widget, Status::Status status);
     bool isActiveWidget(GenericChatroomWidget* widget);
 
-    bool hasContact(const ContactId& contactId) const override;
-    bool isContactActive(const ContactId& contactId) const override;
+    bool hasChat(const ChatId& chatId) const override;
+    bool isChatActive(const ChatId& chatId) const override;
 
-    void focusContact(const ContactId& friendPk);
+    void focusChat(const ChatId& friendPk);
     void updateFriendStatus(const ToxPk& friendPk, Status::Status status);
-    void updateContactStatusLight(const ContactId& contactId);
+    void updateChatStatusLight(const ChatId& chatId);
 
     void setStatusMessage(const ToxPk& friendPk, const QString& message);
 
@@ -89,8 +89,8 @@ signals:
 
 public slots:
     void reorderLayouts(bool newGroupOnTop);
-    void previousContact();
-    void nextContact();
+    void previousChat();
+    void nextChat();
     void setUsername(const QString& newName);
     void reloadTheme() override;
 
@@ -119,7 +119,7 @@ private:
     void saveSplitterState();
     QLayout* nextLayout(QLayout* layout, bool forward) const;
     int getCurrentLayout(QLayout*& layout);
-    void focusCommon(const ContactId& id, QHash<const ContactId&, GenericChatroomWidget*> list);
+    void focusCommon(const ChatId& id, QHash<const ChatId&, GenericChatroomWidget*> list);
 
 private:
     QList<QLayout*> layouts;
@@ -132,8 +132,8 @@ private:
     QSize videoSurfaceSize;
     int videoCount;
 
-    QHash<const ContactId&, GenericChatroomWidget*> contactWidgets;
-    QHash<const ContactId&, GenericChatForm*> contactChatForms;
+    QHash<const ChatId&, GenericChatroomWidget*> chatWidgets;
+    QHash<const ChatId&, GenericChatForm*> chatForms;
 
     QString username;
     Settings& settings;

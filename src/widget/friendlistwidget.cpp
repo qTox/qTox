@@ -442,7 +442,7 @@ void FriendListWidget::onGroupchatPositionChanged(bool top)
     itemsChanged();
 }
 
-void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward)
+void FriendListWidget::cycleChats(GenericChatroomWidget* activeChatroomWidget, bool forward)
 {
     if (!activeChatroomWidget) {
         return;
@@ -461,7 +461,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
         QWidget* widget_ = activityLayout->itemAt(index)->widget();
         CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget_);
 
-        if (categoryWidget == nullptr || categoryWidget->cycleContacts(friendWidget, forward)) {
+        if (categoryWidget == nullptr || categoryWidget->cycleChats(friendWidget, forward)) {
             return;
         }
 
@@ -481,7 +481,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
             categoryWidget = qobject_cast<CategoryWidget*>(widget);
 
             if (categoryWidget != nullptr) {
-                if (!categoryWidget->cycleContacts(forward)) {
+                if (!categoryWidget->cycleChats(forward)) {
                     // Skip empty or finished categories.
                     index += forward ? 1 : -1;
                     continue;

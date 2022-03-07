@@ -165,7 +165,7 @@ void CategoryWidget::search(const QString& searchString, bool updateAll, bool hi
     setVisible(inCategory || listLayout->hasChatrooms());
 }
 
-bool CategoryWidget::cycleContacts(bool forward)
+bool CategoryWidget::cycleChats(bool forward)
 {
     if (listLayout->friendTotalCount() == 0) {
         return false;
@@ -196,7 +196,7 @@ bool CategoryWidget::cycleContacts(bool forward)
     return false;
 }
 
-bool CategoryWidget::cycleContacts(FriendWidget* activeChatroomWidget, bool forward)
+bool CategoryWidget::cycleChats(FriendWidget* activeChatroomWidget, bool forward)
 {
     int index = -1;
     QLayout* currentLayout = nullptr;

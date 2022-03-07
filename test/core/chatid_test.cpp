@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/contactid.h"
+#include "src/core/chatid.h"
 #include "src/core/toxpk.h"
 #include "src/core/toxid.h"
 #include "src/core/groupid.h"
@@ -38,7 +38,7 @@ const QString echoStr =
     QStringLiteral("76518406F6A9F2217E8DC487CC783C25CC16A15EB36FF32E335A235342C48A39");
 const QByteArray echoPk = QByteArray::fromHex(echoStr.toLatin1());
 
-class TestContactId : public QObject
+class TestChatId : public QObject
 {
     Q_OBJECT
 private slots:
@@ -51,13 +51,13 @@ private slots:
     void hashableTest();
 };
 
-void TestContactId::toStringTest()
+void TestChatId::toStringTest()
 {
     ToxPk pk(testPk);
     QVERIFY(testStr == pk.toString());
 }
 
-void TestContactId::equalTest()
+void TestChatId::equalTest()
 {
     ToxPk pk1(testPk);
     ToxPk pk2(testPk);
@@ -67,7 +67,7 @@ void TestContactId::equalTest()
     QVERIFY(!(pk1 != pk2));
 }
 
-void TestContactId::clearTest()
+void TestChatId::clearTest()
 {
     ToxPk empty;
     ToxPk pk(testPk);
@@ -75,14 +75,14 @@ void TestContactId::clearTest()
     QVERIFY(!pk.isEmpty());
 }
 
-void TestContactId::copyTest()
+void TestChatId::copyTest()
 {
     ToxPk src(testPk);
     ToxPk copy = src;
     QVERIFY(copy == src);
 }
 
-void TestContactId::dataTest()
+void TestChatId::dataTest()
 {
     ToxPk pk(testPk);
     QVERIFY(testPk == pk.getByteArray());
@@ -91,7 +91,7 @@ void TestContactId::dataTest()
     }
 }
 
-void TestContactId::sizeTest()
+void TestChatId::sizeTest()
 {
     ToxPk pk;
     GroupId id;
@@ -99,7 +99,7 @@ void TestContactId::sizeTest()
     QVERIFY(id.getSize() == GroupId::size);
 }
 
-void TestContactId::hashableTest()
+void TestChatId::hashableTest()
 {
     ToxPk pk1{testPkArray};
     ToxPk pk2{testPk};
@@ -108,5 +108,5 @@ void TestContactId::hashableTest()
     QVERIFY(qHash(pk1) != qHash(pk3));
 }
 
-QTEST_GUILESS_MAIN(TestContactId)
-#include "contactid_test.moc"
+QTEST_GUILESS_MAIN(TestChatId)
+#include "chatid_test.moc"

@@ -235,7 +235,7 @@ Group* GroupWidget::getGroup() const
     return chatroom->getGroup();
 }
 
-const Contact* GroupWidget::getContact() const
+const Chat* GroupWidget::getChat() const
 {
     return getGroup();
 }

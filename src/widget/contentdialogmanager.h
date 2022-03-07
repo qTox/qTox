@@ -20,7 +20,7 @@
 #pragma once
 
 #include "contentdialog.h"
-#include "src/core/contactid.h"
+#include "src/core/chatid.h"
 #include "src/core/groupid.h"
 #include "src/core/toxpk.h"
 #include "src/model/dialogs/idialogsmanager.h"
@@ -35,11 +35,11 @@ class ContentDialogManager : public QObject, public IDialogsManager
     Q_OBJECT
 public:
     ContentDialog* current();
-    bool contactWidgetExists(const ContactId& groupId);
-    void focusContact(const ContactId& contactId);
+    bool chatWidgetExists(const ChatId& groupId);
+    void focusChat(const ChatId& chatId);
     void updateFriendStatus(const ToxPk& friendPk);
     void updateGroupStatus(const GroupId& friendPk);
-    bool isContactActive(const ContactId& contactId);
+    bool isChatActive(const ChatId& chatId);
     ContentDialog* getFriendDialog(const ToxPk& friendPk) const;
     ContentDialog* getGroupDialog(const GroupId& friendPk) const;
 
@@ -60,12 +60,12 @@ private slots:
     void onDialogActivate();
 
 private:
-    ContentDialog* focusDialog(const ContactId& id,
-                               const QHash<const ContactId&, ContentDialog*>& list);
+    ContentDialog* focusDialog(const ChatId& id,
+                               const QHash<const ChatId&, ContentDialog*>& list);
 
     ContentDialog* currentDialog = nullptr;
 
-    QHash<const ContactId&, ContentDialog*> contactDialogs;
+    QHash<const ChatId&, ContentDialog*> chatDialogs;
 
     static ContentDialogManager* instance;
 };

@@ -351,7 +351,7 @@ const Friend* FriendWidget::getFriend() const
     return chatroom->getFriend();
 }
 
-const Contact* FriendWidget::getContact() const
+const Chat* FriendWidget::getChat() const
 {
     return getFriend();
 }

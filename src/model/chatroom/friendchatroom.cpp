@@ -55,7 +55,7 @@ Friend* FriendChatroom::getFriend()
     return frnd;
 }
 
-Contact* FriendChatroom::getContact()
+Chat* FriendChatroom::getChat()
 {
     return frnd;
 }
@@ -175,14 +175,14 @@ bool FriendChatroom::canBeRemovedFromWindow() const
 {
     const auto friendPk = frnd->getPublicKey();
     const auto dialogs = dialogsManager->getFriendDialogs(friendPk);
-    return dialogs && dialogs->hasContact(friendPk);
+    return dialogs && dialogs->hasChat(friendPk);
 }
 
 bool FriendChatroom::friendCanBeRemoved() const
 {
     const auto friendPk = frnd->getPublicKey();
     const auto dialogs = dialogsManager->getFriendDialogs(friendPk);
-    return !dialogs || !dialogs->hasContact(friendPk);
+    return !dialogs || !dialogs->hasChat(friendPk);
 }
 
 void FriendChatroom::removeFriendFromDialogs()

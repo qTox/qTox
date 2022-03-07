@@ -138,7 +138,7 @@ uint32_t Friend::getId() const
     return friendId;
 }
 
-const ContactId& Friend::getPersistentId() const
+const ChatId& Friend::getPersistentId() const
 {
     return friendPk;
 }

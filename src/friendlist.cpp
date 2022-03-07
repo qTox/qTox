@@ -20,7 +20,7 @@
 #include "friendlist.h"
 #include "src/model/friend.h"
 #include "src/persistence/settings.h"
-#include "src/core/contactid.h"
+#include "src/core/chatid.h"
 #include "src/core/toxpk.h"
 #include <QDebug>
 #include <QHash>

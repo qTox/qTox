@@ -18,10 +18,10 @@
 */
 
 
-#include "contact.h"
+#include "chat.h"
 #include <QVariant>
 
-Contact::~Contact()
+Chat::~Chat()
 {
 
 }

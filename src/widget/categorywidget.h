@@ -45,8 +45,8 @@ public:
     void updateStatus();
 
     bool hasChatrooms() const;
-    bool cycleContacts(bool forward);
-    bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
+    bool cycleChats(bool forward);
+    bool cycleChats(FriendWidget* activeChatroomWidget, bool forward);
     void search(const QString& searchString, bool updateAll = false, bool hideOnline = false,
                 bool hideOffline = false);
 

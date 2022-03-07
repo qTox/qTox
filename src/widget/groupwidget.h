@@ -41,7 +41,7 @@ public:
     void resetEventFlags() final;
     QString getStatusString() const final;
     Group* getGroup() const final;
-    const Contact* getContact() const final;
+    const Chat* getChat() const final;
     void setName(const QString& name);
     void editName();
 

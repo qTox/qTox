@@ -30,6 +30,7 @@ class Friend;
 class Group;
 class Contact;
 class Settings;
+class Chat;
 
 class GenericChatroomWidget : public GenericChatItemWidget
 {
@@ -43,7 +44,7 @@ public slots:
     virtual void updateStatusLight() = 0;
     virtual void resetEventFlags() = 0;
     virtual QString getStatusString() const = 0;
-    virtual const Contact* getContact() const = 0;
+    virtual const Chat* getChat() const = 0;
     virtual const Friend* getFriend() const
     {
         return nullptr;

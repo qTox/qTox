@@ -36,7 +36,7 @@
 class ChatFormHeader;
 class ChatWidget;
 class ChatTextEdit;
-class Contact;
+class Chat;
 class ContentLayout;
 class CroppingLabel;
 class FlyoutOverlayWidget;
@@ -71,7 +71,7 @@ class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    GenericChatForm(const Core& core_, const Contact* contact, IChatLog& chatLog_,
+    GenericChatForm(const Core& core_, const Chat* chat, IChatLog& chatLog_,
                     IMessageDispatcher& messageDispatcher_, DocumentCache&,
                     SmileyPack&, Settings&, QWidget* parent_ = nullptr);
     ~GenericChatForm() override;

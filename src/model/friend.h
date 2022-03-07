@@ -19,16 +19,16 @@
 
 #pragma once
 
-#include "contact.h"
+#include "chat.h"
 #include "src/core/core.h"
 #include "src/core/extension.h"
 #include "src/core/toxpk.h"
-#include "src/core/contactid.h"
+#include "src/core/chatid.h"
 #include "src/model/status.h"
 #include <QObject>
 #include <QString>
 
-class Friend : public Contact
+class Friend : public Chat
 {
     Q_OBJECT
 public:
@@ -49,7 +49,7 @@ public:
 
     const ToxPk& getPublicKey() const;
     uint32_t getId() const override;
-    const ContactId& getPersistentId() const override;
+    const ChatId& getPersistentId() const override;
 
     void finishNegotiation();
     void setStatus(Status::Status s);

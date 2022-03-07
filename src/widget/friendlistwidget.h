@@ -60,7 +60,7 @@ public:
     void searchChatrooms(const QString& searchString, bool hideOnline = false,
                          bool hideOffline = false, bool hideGroups = false);
 
-    void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
+    void cycleChats(GenericChatroomWidget* activeChatroomWidget, bool forward);
 
     void updateActivityTime(const QDateTime& date);
 

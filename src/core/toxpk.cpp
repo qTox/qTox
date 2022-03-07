@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "contactid.h"
+#include "chatid.h"
 #include "toxpk.h"
 
 #include <QByteArray>
@@ -34,7 +34,7 @@
  * @brief The default constructor. Creates an empty Tox key.
  */
 ToxPk::ToxPk()
-    : ContactId()
+    : ChatId()
 {
 }
 
@@ -44,7 +44,7 @@ ToxPk::ToxPk()
  *              ToxPk::size, else the ToxPk will be empty.
  */
 ToxPk::ToxPk(const QByteArray& rawId)
-    : ContactId([&rawId](){
+    : ChatId([&rawId](){
         assert(rawId.length() == size);
         return rawId;}())
 {
@@ -56,7 +56,7 @@ ToxPk::ToxPk(const QByteArray& rawId)
  * ToxPk::size from the specified buffer.
  */
 ToxPk::ToxPk(const uint8_t* rawId)
-    : ContactId(QByteArray(reinterpret_cast<const char*>(rawId), size))
+    : ChatId(QByteArray(reinterpret_cast<const char*>(rawId), size))
 {
 }
 
@@ -68,7 +68,7 @@ ToxPk::ToxPk(const uint8_t* rawId)
  * @param pk Tox Pk string to convert to ToxPk object
  */
 ToxPk::ToxPk(const QString& pk)
-    : ContactId([&pk](){
+    : ChatId([&pk](){
     if (pk.length() == numHexChars) {
         return QByteArray::fromHex(pk.toLatin1());
     } else {

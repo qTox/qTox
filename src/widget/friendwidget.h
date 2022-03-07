@@ -44,7 +44,7 @@ public:
     void resetEventFlags() final;
     QString getStatusString() const final;
     const Friend* getFriend() const final;
-    const Contact* getContact() const final;
+    const Chat* getChat() const final;
 
     bool isFriend() const final;
     bool isGroup() const final;

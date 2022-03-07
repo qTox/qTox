@@ -242,8 +242,8 @@ set(${PROJECT_NAME}_SOURCES
   src/core/toxoptions.h
   src/core/toxpk.cpp
   src/core/toxpk.h
-  src/core/contactid.cpp
-  src/core/contactid.h
+  src/core/chatid.cpp
+  src/core/chatid.h
   src/core/toxstring.cpp
   src/core/toxstring.h
   src/friendlist.cpp
@@ -266,8 +266,8 @@ set(${PROJECT_NAME}_SOURCES
   src/model/chatroom/friendchatroom.h
   src/model/chatroom/groupchatroom.cpp
   src/model/chatroom/groupchatroom.h
-  src/model/contact.cpp
-  src/model/contact.h
+  src/model/chat.cpp
+  src/model/chat.h
   src/model/dialogs/idialogs.cpp
   src/model/dialogs/idialogs.h
   src/model/dialogs/idialogsmanager.h

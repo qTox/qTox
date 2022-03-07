@@ -262,11 +262,11 @@ void Widget::init()
 
     sharedMessageProcessorParams.reset(new MessageProcessor::SharedParams(core->getMaxMessageSize(), coreExt->getMaxExtendedMessageSize()));
 
-    contactListWidget = new FriendListWidget(*core, this, settings, settings.getGroupchatPosition());
-    connect(contactListWidget, &FriendListWidget::searchCircle, this, &Widget::searchCircle);
-    connect(contactListWidget, &FriendListWidget::connectCircleWidget, this,
+    chatListWidget = new FriendListWidget(*core, this, settings, settings.getGroupchatPosition());
+    connect(chatListWidget, &FriendListWidget::searchCircle, this, &Widget::searchCircle);
+    connect(chatListWidget, &FriendListWidget::connectCircleWidget, this,
             &Widget::connectCircleWidget);
-    ui->friendList->setWidget(contactListWidget);
+    ui->friendList->setWidget(chatListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
     ui->friendList->setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -331,8 +331,8 @@ void Widget::init()
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
-    connect(ui->searchContactText, &QLineEdit::textChanged, this, &Widget::searchContacts);
-    connect(filterGroup, &QActionGroup::triggered, this, &Widget::searchContacts);
+    connect(ui->searchContactText, &QLineEdit::textChanged, this, &Widget::searchChats);
+    connect(filterGroup, &QActionGroup::triggered, this, &Widget::searchChats);
     connect(filterDisplayGroup, &QActionGroup::triggered, this, &Widget::changeDisplayMode);
     connect(ui->friendList, &QWidget::customContextMenuRequested, this, &Widget::friendListContextMenu);
 
@@ -375,10 +375,10 @@ void Widget::init()
     // keyboard shortcuts
     auto* const quitShortcut = new QShortcut(Qt::CTRL + Qt::Key_Q, this);
     connect(quitShortcut, &QShortcut::activated, qApp, &QApplication::quit);
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(previousContact()));
-    new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(nextContact()));
-    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
-    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(previousChat()));
+    new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(nextChat()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousChat()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextChat()));
     new QShortcut(Qt::Key_F11, this, SLOT(toggleFullscreen()));
 
 #ifdef Q_OS_MAC
@@ -420,9 +420,9 @@ void Widget::init()
     nextConversationAction->setShortcut(QKeySequence::SelectNextPage);
     connect(nextConversationAction, &QAction::triggered, [this]() {
         if (ContentDialogManager::getInstance()->current() == QApplication::activeWindow())
-            ContentDialogManager::getInstance()->current()->cycleContacts(true);
+            ContentDialogManager::getInstance()->current()->cycleChats(true);
         else if (QApplication::activeWindow() == this)
-            cycleContacts(true);
+            cycleChats(true);
     });
 
     previousConversationAction = new QAction(this);
@@ -430,9 +430,9 @@ void Widget::init()
     previousConversationAction->setShortcut(QKeySequence::SelectPreviousPage);
     connect(previousConversationAction, &QAction::triggered, [this] {
         if (ContentDialogManager::getInstance()->current() == QApplication::activeWindow())
-            ContentDialogManager::getInstance()->current()->cycleContacts(false);
+            ContentDialogManager::getInstance()->current()->cycleChats(false);
         else if (QApplication::activeWindow() == this)
-            cycleContacts(false);
+            cycleChats(false);
     });
 
     windowMenu->menu()->insertSeparator(frontAction);
@@ -491,9 +491,9 @@ void Widget::init()
     // settings
     connect(&settings, &Settings::showSystemTrayChanged, this, &Widget::onSetShowSystemTray);
     connect(&settings, &Settings::separateWindowChanged, this, &Widget::onSeparateWindowClicked);
-    connect(&settings, &Settings::compactLayoutChanged, contactListWidget,
+    connect(&settings, &Settings::compactLayoutChanged, chatListWidget,
             &FriendListWidget::onCompactChanged);
-    connect(&settings, &Settings::groupchatPositionChanged, contactListWidget,
+    connect(&settings, &Settings::groupchatPositionChanged, chatListWidget,
             &FriendListWidget::onGroupchatPositionChanged);
 
     connect(&GUI::getInstance(), &GUI::themeReload, this, &Widget::reloadTheme);
@@ -1213,7 +1213,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
         settings.setFriendActivity(friendPk, chatTime);
     }
 
-    contactListWidget->addFriendWidget(widget);
+    chatListWidget->addFriendWidget(widget);
 
 
     auto notifyReceivedCallback = [this, friendPk](const ToxPk& author, const Message& message) {
@@ -1297,9 +1297,9 @@ void Widget::onFriendStatusChanged(const ToxPk& friendPk, Status::Status status)
     FriendWidget* widget = friendWidgets[friendPk];
 
     if (Status::isOnline(status)) {
-        contactListWidget->moveWidget(widget, Status::Status::Online);
+        chatListWidget->moveWidget(widget, Status::Status::Online);
     } else {
-        contactListWidget->moveWidget(widget, Status::Status::Offline);
+        chatListWidget->moveWidget(widget, Status::Status::Offline);
     }
 
     widget->updateStatusLight();
@@ -1341,7 +1341,7 @@ void Widget::onFriendDisplayedNameChanged(const QString& displayed)
         GUI::setWindowTitle(displayed);
     }
 
-    contactListWidget->itemsChanged();
+    chatListWidget->itemsChanged();
 }
 
 void Widget::onFriendUsernameChanged(int friendId, const QString& username)
@@ -1389,8 +1389,8 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
         form = groupChatForms[id].data();
     }
     bool chatFormIsSet;
-    ContentDialogManager::getInstance()->focusContact(id);
-    chatFormIsSet = ContentDialogManager::getInstance()->contactWidgetExists(id);
+    ContentDialogManager::getInstance()->focusChat(id);
+    chatFormIsSet = ContentDialogManager::getInstance()->chatWidgetExists(id);
 
 
     if ((chatFormIsSet || form->isVisible()) && !newWindow) {
@@ -1585,7 +1585,7 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
 
     if (contentDialog != nullptr) {
         currentWindow = contentDialog->window();
-        hasActive = ContentDialogManager::getInstance()->isContactActive(friendId);
+        hasActive = ContentDialogManager::getInstance()->isChatActive(friendId);
     } else {
         if (settings.getSeparateWindow() && settings.getShowWindow()) {
             if (settings.getDontGroupWindows()) {
@@ -1599,7 +1599,7 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
 
             addFriendDialog(f, contentDialog);
             currentWindow = contentDialog->window();
-            hasActive = ContentDialogManager::getInstance()->isContactActive(friendId);
+            hasActive = ContentDialogManager::getInstance()->isChatActive(friendId);
         } else {
             currentWindow = window();
             FriendWidget* widget = friendWidgets[friendId];
@@ -1647,7 +1647,7 @@ bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk,
 
     if (contentDialog != nullptr) {
         currentWindow = contentDialog->window();
-        hasActive = ContentDialogManager::getInstance()->isContactActive(groupId);
+        hasActive = ContentDialogManager::getInstance()->isChatActive(groupId);
     } else {
         currentWindow = window();
         hasActive = widget == activeChatroomWidget;
@@ -1759,8 +1759,8 @@ void Widget::updateFriendActivity(const Friend& frnd)
     const auto newTime = QDateTime::currentDateTime();
     settings.setFriendActivity(pk, newTime);
     FriendWidget* widget = friendWidgets[frnd.getPublicKey()];
-    contactListWidget->moveWidget(widget, frnd.getStatus());
-    contactListWidget->updateActivityTime(oldTime); // update old category widget
+    chatListWidget->moveWidget(widget, frnd.getStatus());
+    chatListWidget->updateActivityTime(oldTime); // update old category widget
 }
 
 void Widget::removeFriend(Friend* f, bool fake)
@@ -1788,7 +1788,7 @@ void Widget::removeFriend(Friend* f, bool fake)
 
     friendAlertConnections.remove(friendPk);
 
-    contactListWidget->removeFriendWidget(widget);
+    chatListWidget->removeFriendWidget(widget);
 
     ContentDialog* lastDialog = ContentDialogManager::getInstance()->getFriendDialog(friendPk);
     if (lastDialog != nullptr) {
@@ -2057,7 +2057,7 @@ void Widget::onGroupTitleChanged(uint32_t groupnumber, const QString& author, co
     }
 
     g->setTitle(author, title);
-    contactListWidget->itemsChanged();
+    chatListWidget->itemsChanged();
 }
 
 void Widget::titleChangedByUser(const QString& title)
@@ -2101,7 +2101,7 @@ void Widget::removeGroup(Group* g, bool fake)
     if (!fake) {
         core->removeGroup(groupnumber);
     }
-    contactListWidget->removeGroupWidget(widget); // deletes widget
+    chatListWidget->removeGroupWidget(widget); // deletes widget
 
     groupWidgets.remove(groupId);
     auto groupChatFormIt = groupChatForms.find(groupId);
@@ -2191,9 +2191,9 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     groupChatrooms[groupId] = chatroom;
     groupChatForms[groupId] = QSharedPointer<GroupChatForm>(form);
 
-    contactListWidget->addGroupWidget(widget);
+    chatListWidget->addGroupWidget(widget);
     widget->updateStatusLight();
-    contactListWidget->activateWindow();
+    chatListWidget->activateWindow();
 
     connect(widget, &GroupWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &GroupWidget::newWindowOpened, this, &Widget::openNewDialog);
@@ -2426,9 +2426,9 @@ void Widget::onSplitterMoved(int pos, int index)
     saveSplitterGeometry();
 }
 
-void Widget::cycleContacts(bool forward)
+void Widget::cycleChats(bool forward)
 {
-    contactListWidget->cycleContacts(activeChatroomWidget, forward);
+    chatListWidget->cycleChats(activeChatroomWidget, forward);
 }
 
 bool Widget::filterGroups(FilterCriteria index)
@@ -2491,14 +2491,14 @@ void Widget::reloadTheme()
     profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css", settings));
 }
 
-void Widget::nextContact()
+void Widget::nextChat()
 {
-    cycleContacts(true);
+    cycleChats(true);
 }
 
-void Widget::previousContact()
+void Widget::previousChat()
 {
-    cycleContacts(false);
+    cycleChats(false);
 }
 
 // Preparing needed to set correct size of icons for GTK tray backend
@@ -2531,12 +2531,12 @@ inline QIcon Widget::prepareIcon(QString path, int w, int h)
     return QIcon(path);
 }
 
-void Widget::searchContacts()
+void Widget::searchChats()
 {
     QString searchString = ui->searchContactText->text();
     FilterCriteria filter = getFilterCriteria();
 
-    contactListWidget->searchChatrooms(searchString, filterOnline(filter), filterOffline(filter),
+    chatListWidget->searchChatrooms(searchString, filterOnline(filter), filterOffline(filter),
                                        filterGroups(filter));
 
     updateFilterText();
@@ -2547,12 +2547,12 @@ void Widget::changeDisplayMode()
     filterDisplayGroup->setEnabled(false);
 
     if (filterDisplayGroup->checkedAction() == filterDisplayActivity) {
-        contactListWidget->setMode(FriendListWidget::SortingMode::Activity);
+        chatListWidget->setMode(FriendListWidget::SortingMode::Activity);
     } else if (filterDisplayGroup->checkedAction() == filterDisplayName) {
-        contactListWidget->setMode(FriendListWidget::SortingMode::Name);
+        chatListWidget->setMode(FriendListWidget::SortingMode::Name);
     }
 
-    searchContacts();
+    searchChats();
     filterDisplayGroup->setEnabled(true);
 
     updateFilterText();
@@ -2584,7 +2584,7 @@ Widget::FilterCriteria Widget::getFilterCriteria() const
 
 void Widget::searchCircle(CircleWidget& circleWidget)
 {
-    if (contactListWidget->getMode() == FriendListWidget::SortingMode::Name) {
+    if (chatListWidget->getMode() == FriendListWidget::SortingMode::Name) {
         FilterCriteria filter = getFilterCriteria();
         QString text = ui->searchContactText->text();
         circleWidget.search(text, true, filterOnline(filter), filterOffline(filter));
@@ -2605,7 +2605,7 @@ void Widget::friendListContextMenu(const QPoint& pos)
     QAction* chosenAction = menu.exec(ui->friendList->mapToGlobal(pos));
 
     if (chosenAction == addCircleAction) {
-        contactListWidget->addCircleWidget();
+        chatListWidget->addCircleWidget();
     } else if (chosenAction == createGroupAction) {
         core->createGroup();
     }

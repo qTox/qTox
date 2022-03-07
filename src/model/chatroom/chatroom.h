@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "src/model/contact.h"
+#include "src/model/chat.h"
 
 class Chatroom
 {
@@ -31,5 +31,5 @@ public:
     Chatroom(Chatroom&&) = default;
     Chatroom& operator=(Chatroom&&) = default;
 
-    virtual Contact* getContact() = 0;
+    virtual Chat* getChat() = 0;
 };

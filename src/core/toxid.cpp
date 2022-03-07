@@ -18,7 +18,7 @@
 */
 
 
-#include "contactid.h"
+#include "chatid.h"
 #include "toxid.h"
 #include "toxpk.h"
 

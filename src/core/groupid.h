@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include "src/core/contactid.h"
+#include "src/core/chatid.h"
 #include <QByteArray>
 #include <cstdint>
 
-class GroupId : public ContactId
+class GroupId : public ChatId
 {
 public:
     static constexpr int size = 32;

@@ -35,7 +35,7 @@ GroupChatroom::GroupChatroom(Group* group_, IDialogsManager* dialogsManager_, Co
 {
 }
 
-Contact* GroupChatroom::getContact()
+Chat* GroupChatroom::getChat()
 {
     return group;
 }
@@ -84,7 +84,7 @@ bool GroupChatroom::canBeRemovedFromWindow() const
 {
     const auto groupId = group->getPersistentId();
     const auto dialogs = dialogsManager->getGroupDialogs(groupId);
-    return dialogs && dialogs->hasContact(groupId);
+    return dialogs && dialogs->hasChat(groupId);
 }
 
 void GroupChatroom::removeGroupFromDialogs()
