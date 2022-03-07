@@ -224,21 +224,21 @@ COPY download/download_gmp.sh /build/download/download_gmp.sh
 COPY build_gmp_windows.sh /build/build_gmp_windows.sh
 RUN  mkdir -p /src/gmp && \
   cd /src/gmp && \
-  /build/build_gmp_windows.sh && \
+  /build/build_gmp_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/gmp
 
 COPY download/download_libexpat.sh /build/download/download_libexpat.sh
 COPY build_libexpat_windows.sh /build/build_libexpat_windows.sh
 RUN mkdir -p /src/libexpat && \
   cd /src/libexpat && \
-  /build/build_libexpat_windows.sh && \
+  /build/build_libexpat_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/libexpat
 
 COPY download/download_gdb.sh /build/download/download_gdb.sh
 COPY build_gdb_windows.sh /build/build_gdb_windows.sh
 RUN mkdir -p /src/gdb && \
   cd /src/gdb && \
-  /build/build_gdb_windows.sh && \
+  /build/build_gdb_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/gdb && \
   cp /windows/bin/gdb.exe /debug_export/gdb.exe
 

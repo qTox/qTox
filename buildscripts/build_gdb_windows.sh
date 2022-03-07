@@ -14,19 +14,19 @@ set -euo pipefail
 
 while (( $# > 0 )); do
     case $1 in
-        --arch) SCRIPT_ARCH=$2; shift 2 ;;
+        --arch) ARCH=$2; shift 2 ;;
         -h|--help) usage; exit 1 ;;
         *) echo "Unexpected argument $1"; usage; exit 1;;
     esac
 done
 
-if [ "${SCRIPT_ARCH-x}" != "win32" ] && [ "${SCRIPT_ARCH-x}" != "win64" ]; then
+if [ "$ARCH" != "win32" ] && [ "$ARCH" != "win64" ]; then
     echo "Unexpected arch $ARCH"
     usage
     exit 1
 fi
 
-if [ "${SCRIPT_ARCH}" == "win64" ]; then
+if [ "${ARCH}" == "win64" ]; then
     HOST="x86_64-w64-mingw32"
 else
     HOST="i686-w64-mingw32"
