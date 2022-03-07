@@ -6,6 +6,8 @@
 
 set -euo pipefail
 
+MACOS_MINIMUM_SUPPORTED_VERSION=10.15
+
 usage()
 {
     # note: this is the usage from the build script's context, so the usage
@@ -42,15 +44,26 @@ parse_arch()
 
     if [ "${SCRIPT_ARCH}" == "win32" ] || [ "${SCRIPT_ARCH}" == "win64" ]; then
         if [ "${SCRIPT_ARCH}" == "win32" ]; then
-            local ARCH="i686"
+            MINGW_ARCH="i686"
         elif [ "${SCRIPT_ARCH}" == "win64" ]; then
-            local ARCH="x86_64"
+            MINGW_ARCH="x86_64"
         fi
         DEP_PREFIX='/windows/'
-        MINGW_ARCH="${ARCH}"
         HOST_OPTION="--host=${MINGW_ARCH}-w64-mingw32"
+        CROSS_LDFLAG=""
+        CROSS_CFLAG=""
+        CROSS_CPPFLAG=""
         MAKE_JOBS="$(nproc)"
         CMAKE_TOOLCHAIN_FILE="-DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake"
+    elif [ "${SCRIPT_ARCH}" == "macos" ]; then
+        DEP_PREFIX="$(realpath $(dirname $(realpath ${BASH_SOURCE[0]}))/../local-deps)"
+        mkdir -p $DEP_PREFIX
+        HOST_OPTION=''
+        CROSS_LDFLAG="-mmacosx-version-min=$MACOS_MINIMUM_SUPPORTED_VERSION"
+        CROSS_CFLAG="-mmacosx-version-min=$MACOS_MINIMUM_SUPPORTED_VERSION"
+        CROSS_CPPFLAG="-mmacosx-version-min=$MACOS_MINIMUM_SUPPORTED_VERSION"
+        MAKE_JOBS="$(sysctl -n hw.ncpu)"
+        CMAKE_TOOLCHAIN_FILE=""
     else
         echo "Unexpected arch ${SCRIPT_ARCH}"
         usage
