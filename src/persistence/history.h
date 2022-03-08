@@ -231,8 +231,6 @@ private:
     static RawDatabase::Query generateFileFinished(RowId fileId, bool success,
                                                    const QString& filePath, const QByteArray& fileHash);
 
-    int64_t getPeerId(ToxPk const& pk);
-
     std::shared_ptr<RawDatabase> db;
 
 
