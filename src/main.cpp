@@ -94,6 +94,11 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
         && msg == QString("QFSFileEngine::open: No file name specified"))
         return;
 
+    if (msg == QString("attempted to send message with network family 10 (probably IPv6) on IPv4 socket")) {
+        // non-stop c-toxcore spam for IPv4 users: https://github.com/TokTok/c-toxcore/issues/1432
+        return;
+    }
+
     QRegExp snoreFilter{QStringLiteral("Snore::Notification.*was already closed")};
     if (type == QtWarningMsg
         && msg.contains(snoreFilter))
