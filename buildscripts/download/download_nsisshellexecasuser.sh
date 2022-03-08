@@ -17,16 +17,15 @@
 
 set -euo pipefail
 
-NSISSHELLEXECASUSER_HASH=8fc19829e144716a422b15a85e718e1816fe561de379b2b5ae87ef9017490799
+NSISSHELLEXECASUSER_HASH=79bdd3e54a9ba9c30af85557b475d2322286f8726687f2e23afa772aac6049ab
 
 source "$(dirname "$0")/common.sh"
 
-# Backup: https://web.archive.org/web/20171008011417/http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
-download_file http://nsis.sourceforge.net/mediawiki/images/c/c7/ShellExecAsUser.zip
+download_file https://nsis.sourceforge.io/mediawiki/images/1/1d/ShellExecAsUserUnicodeUpdate.zip
 
-if ! check_sha256 "$NSISSHELLEXECASUSER_HASH" ShellExecAsUser.zip; then
+if ! check_sha256 "$NSISSHELLEXECASUSER_HASH" ShellExecAsUserUnicodeUpdate.zip; then
     exit 1
 fi
 
-unzip ShellExecAsUser.zip
-rm ShellExecAsUser.zip
+unzip ShellExecAsUserUnicodeUpdate.zip
+rm ShellExecAsUserUnicodeUpdate.zip
