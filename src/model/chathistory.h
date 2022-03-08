@@ -32,7 +32,7 @@ class ChatHistory : public IChatLog
 {
     Q_OBJECT
 public:
-    ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& coreIdHandler_,
+    ChatHistory(Chat& chat_, History* history_, const ICoreIdHandler& coreIdHandler_,
                 const Settings& settings_, IMessageDispatcher& messageDispatcher);
     const ChatLogItem& at(ChatLogIdx idx) const override;
     SearchResult searchForward(SearchPos startIdx, const QString& phrase,
@@ -66,7 +66,7 @@ private:
     bool canUseHistory() const;
     ChatLogIdx getInitialChatLogIdx() const;
 
-    Friend& f;
+    Chat& chat;
     History* history;
     const Settings& settings;
     const ICoreIdHandler& coreIdHandler;
