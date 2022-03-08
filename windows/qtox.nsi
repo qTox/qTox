@@ -215,8 +215,6 @@ FunctionEnd
       FileReadUTF16LE $0 $1 1024
       FileReadUTF16LE $0 $2 1024
     FileClose $0
-    DetailPrint "First read line is: $1"
-    DetailPrint "Second read line is: $2"
     FileOpen $0 "$TEMP\qTox-install-file-permissions.txt" w
       FileWriteUTF16LE  $0 "$INSTDIR"
       FileWriteUTF16LE  $0 "$\r$\n"
