@@ -71,9 +71,9 @@ bool handleActionPrefix(QString& content)
 }
 } // namespace
 
-ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& coreIdHandler_,
+ChatHistory::ChatHistory(Chat& chat_, History* history_, const ICoreIdHandler& coreIdHandler_,
                          const Settings& settings_, IMessageDispatcher& messageDispatcher)
-    : f(f_)
+    : chat(chat_)
     , history(history_)
     , settings(settings_)
     , coreIdHandler(coreIdHandler_)
@@ -158,10 +158,10 @@ SearchResult ChatHistory::searchBackward(SearchPos startIdx, const QString& phra
     // If the double disk access is real bad we can optimize this by adding
     // another function to history
     auto dateWherePhraseFound =
-        history->getDateWhereFindPhrase(f.getPublicKey(), earliestMessageDate, phrase,
+        history->getDateWhereFindPhrase(chat.getPersistentId(), earliestMessageDate, phrase,
                                         parameter);
 
-    auto loadIdx = history->getNumMessagesForChatBeforeDate(f.getPublicKey(), dateWherePhraseFound);
+    auto loadIdx = history->getNumMessagesForChatBeforeDate(chat.getPersistentId(), dateWherePhraseFound);
     loadHistoryIntoSessionChatLog(ChatLogIdx(loadIdx));
 
     // Reset search pos to the message we just loaded to avoid a double search
@@ -188,7 +188,7 @@ std::vector<IChatLog::DateChatLogIdxPair> ChatHistory::getDateIdxs(const QDate& 
                                                                    size_t maxDates) const
 {
     if (canUseHistory()) {
-        auto counts = history->getNumMessagesForChatBeforeDateBoundaries(f.getPublicKey(),
+        auto counts = history->getNumMessagesForChatBeforeDateBoundaries(chat.getPersistentId(),
                                                                            startDate, maxDates);
 
         std::vector<IChatLog::DateChatLogIdxPair> ret;
@@ -210,7 +210,7 @@ std::vector<IChatLog::DateChatLogIdxPair> ChatHistory::getDateIdxs(const QDate& 
 void ChatHistory::addSystemMessage(const SystemMessage& message)
 {
     if (canUseHistory()) {
-        history->addNewSystemMessage(f.getPublicKey(), message);
+        history->addNewSystemMessage(chat.getPersistentId(), message);
     }
 
     sessionChatLog.addSystemMessage(message);
@@ -223,13 +223,13 @@ void ChatHistory::onFileUpdated(const ToxPk& sender, const ToxFile& file)
         switch (file.status) {
         case ToxFile::INITIALIZING: {
             auto selfPk = coreIdHandler.getSelfPublicKey();
-            QString username(selfPk == sender ? coreIdHandler.getUsername() : f.getDisplayedName());
+            QString username(selfPk == sender ? coreIdHandler.getUsername() : chat.getDisplayedName(sender));
 
             // Note: There is some implcit coupling between history and the current
             // chat log. Both rely on generating a new id based on the state of
             // initializing. If this is changed in the session chat log we'll end up
             // with a different order when loading from history
-            history->addNewFileMessage(f.getPublicKey(), file.resumeFileId, file.fileName,
+            history->addNewFileMessage(chat.getPersistentId(), file.resumeFileId, file.fileName,
                                        file.filePath, file.progress.getFileSize(), sender,
                                        QDateTime::currentDateTime(), username);
             break;
@@ -266,14 +266,14 @@ void ChatHistory::onFileTransferBrokenUnbroken(const ToxPk& sender, const ToxFil
 void ChatHistory::onMessageReceived(const ToxPk& sender, const Message& message)
 {
     if (canUseHistory()) {
-        auto friendPk = f.getPublicKey();
-        auto displayName = f.getDisplayedName();
+        auto& chatId = chat.getPersistentId();
+        auto displayName = chat.getDisplayedName(sender);
         auto content = message.content;
         if (message.isAction) {
             content = ChatForm::ACTION_PREFIX + content;
         }
 
-        history->addNewMessage(friendPk, content, friendPk, message.timestamp, true, message.extensionSet, displayName);
+        history->addNewMessage(chatId, content, sender, message.timestamp, true, message.extensionSet, displayName);
     }
 
     sessionChatLog.onMessageReceived(sender, message);
@@ -283,7 +283,7 @@ void ChatHistory::onMessageSent(DispatchedMessageId id, const Message& message)
 {
     if (canUseHistory()) {
         auto selfPk = coreIdHandler.getSelfPublicKey();
-        auto friendPk = f.getPublicKey();
+        auto& chatId = chat.getPersistentId();
 
         auto content = message.content;
         if (message.isAction) {
@@ -294,7 +294,7 @@ void ChatHistory::onMessageSent(DispatchedMessageId id, const Message& message)
 
         auto onInsertion = [this, id](RowId historyId) { handleDispatchedMessage(id, historyId); };
 
-        history->addNewMessage(friendPk, content, selfPk, message.timestamp, false, message.extensionSet, username,
+        history->addNewMessage(chatId, content, selfPk, message.timestamp, false, message.extensionSet, username,
                                onInsertion);
     }
 
@@ -353,7 +353,7 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
     // We know that both history and us have a start index of 0 so the type
     // conversion should be safe
     assert(getFirstIdx() == ChatLogIdx(0));
-    auto messages = history->getMessagesForChat(f.getPublicKey(), start.get(), end.get());
+    auto messages = history->getMessagesForChat(chat.getPersistentId(), start.get(), end.get());
 
     assert(messages.size() == static_cast<int>(end.get() - start.get()));
     ChatLogIdx nextIdx = start;
@@ -424,7 +424,7 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
  */
 void ChatHistory::dispatchUnsentMessages(IMessageDispatcher& messageDispatcher)
 {
-    auto unsentMessages = history->getUndeliveredMessagesForChat(f.getPublicKey());
+    auto unsentMessages = history->getUndeliveredMessagesForChat(chat.getPersistentId());
 
     auto requiredExtensions = std::accumulate(
         unsentMessages.begin(), unsentMessages.end(),
@@ -520,7 +520,7 @@ bool ChatHistory::canUseHistory() const
 ChatLogIdx ChatHistory::getInitialChatLogIdx() const
 {
     if (canUseHistory()) {
-        return ChatLogIdx(history->getNumMessagesForChat(f.getPublicKey()));
+        return ChatLogIdx(history->getNumMessagesForChat(chat.getPersistentId()));
     }
     return ChatLogIdx(0);
 }
