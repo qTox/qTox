@@ -20,7 +20,9 @@ add_library(mock_library STATIC
     include/mock/mockgroupquery.h
     src/mockgroupquery.cpp
     include/mock/mockcoresettings.h
-    src/mockcoresettings.cpp)
+    src/mockcoresettings.cpp
+    include/mock/mockbootstraplistgenerator.h
+    src/mockbootstraplistgenerator.cpp)
 
 target_include_directories(mock_library PUBLIC include/)
 target_link_libraries(mock_library
