@@ -2157,16 +2157,14 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     auto messageDispatcher =
         std::make_shared<GroupMessageDispatcher>(*newgroup, std::move(messageProcessor), *core,
                                                  *core, settings);
-    auto groupChatLog = std::make_shared<SessionChatLog>(*core);
 
-    connect(messageDispatcher.get(), &IMessageDispatcher::messageReceived, groupChatLog.get(),
-            &SessionChatLog::onMessageReceived);
-    connect(messageDispatcher.get(), &IMessageDispatcher::messageSent, groupChatLog.get(),
-            &SessionChatLog::onMessageSent);
-    connect(messageDispatcher.get(), &IMessageDispatcher::messageComplete, groupChatLog.get(),
-            &SessionChatLog::onMessageComplete);
-    connect(messageDispatcher.get(), &IMessageDispatcher::messageBroken, groupChatLog.get(),
-            &SessionChatLog::onMessageBroken);
+
+    auto history = profile.getHistory();
+    // Note: We do not have to connect the message dispatcher signals since
+    // ChatHistory hooks them up in a very specific order
+    auto chatHistory =
+        std::make_shared<ChatHistory>(*newgroup, history, *core, settings,
+                                      *messageDispatcher);
 
     auto notifyReceivedCallback = [this, groupId](const ToxPk& author, const Message& message) {
         auto isTargeted = std::any_of(message.metadata.begin(), message.metadata.end(),
@@ -2181,12 +2179,12 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
         connect(messageDispatcher.get(), &IMessageDispatcher::messageReceived, notifyReceivedCallback);
     groupAlertConnections.insert(groupId, notifyReceivedConnection);
 
-    auto form = new GroupChatForm(*core, newgroup, *groupChatLog, *messageDispatcher,
+    auto form = new GroupChatForm(*core, newgroup, *chatHistory, *messageDispatcher,
         settings, *documentCache, *smileyPack);
     connect(&settings, &Settings::nameColorsChanged, form, &GenericChatForm::setColorizedNames);
     form->setColorizedNames(settings.getEnableGroupChatsColor());
     groupMessageDispatchers[groupId] = messageDispatcher;
-    groupChatLogs[groupId] = groupChatLog;
+    groupChatLogs[groupId] = chatHistory;
     groupWidgets[groupId] = widget;
     groupChatrooms[groupId] = chatroom;
     groupChatForms[groupId] = QSharedPointer<GroupChatForm>(form);
