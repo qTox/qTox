@@ -111,8 +111,6 @@ public:
     ToxPk getSelfPublicKey() const override;
     QPair<QByteArray, QByteArray> getKeypair() const;
 
-    void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
-
 public slots:
     void start();
 
