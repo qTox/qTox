@@ -282,6 +282,7 @@ private:
     void playNotificationSound(IAudioSink::Sound sound, bool loop = false);
     void cleanupNotificationSound();
     void acceptFileTransfer(const ToxFile &file, const QString &path);
+    void removeChatHistory(Chat& chat);
 
 private:
     Profile& profile;
