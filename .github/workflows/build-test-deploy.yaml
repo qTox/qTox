@@ -123,7 +123,7 @@ jobs:
         with:
           docker_image_name: fedora
       - name: Run build
-        run: docker-compose run --rm fedora ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }} --sanitize
+        run: docker-compose run --rm fedora ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }} --sanitize --online-tests
   build-opensuse:
     name: Opensuse
     runs-on: ubuntu-latest
@@ -501,7 +501,7 @@ jobs:
       - name: Install toxcore and toxext
         run: buildscripts/build_toxcore_linux.sh
       - name: Build qTox
-        run: ./.ci-scripts/build-osx.sh
+        run: ./.ci-scripts/build-osx.sh --run-tests
       - name: Upload dmg
         uses: actions/upload-artifact@v2
         with:
