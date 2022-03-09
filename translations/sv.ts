@@ -2482,26 +2482,26 @@ ID:t innehåller NoSpam-koden (i blått) och kontrollsumman (i grått).</transla
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Ta bort vän</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Ta också bort chatthistorik</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Ta bort</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Är du säker du vill ta bort %1 från kontaktlistan?</translation>
+        <translation type="unfinished">Ta bort vän</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Ta bort all chatthistorik med vännen om den är inställd</translation>
+        <translation type="unfinished">Ta bort all chatthistorik med vännen om den är inställd</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Ta också bort chatthistorik</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Är du säker du vill ta bort %1 från kontaktlistan?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Ta bort</translation>
     </message>
 </context>
 <context>

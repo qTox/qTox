@@ -2465,26 +2465,26 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>友達を削除</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>チャット履歴も消去</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>削除</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>%1 を連絡先リストから削除してもよろしいですか?</translation>
+        <translation type="unfinished">友達を削除</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>設定した場合、友達とのチャット履歴をすべて削除します</translation>
+        <translation type="unfinished">設定した場合、友達とのチャット履歴をすべて削除します</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">チャット履歴も消去</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">%1 を連絡先リストから削除してもよろしいですか?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">削除</translation>
     </message>
 </context>
 <context>

@@ -2482,26 +2482,26 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Supprimer ce contact</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Supprimer également l&apos;historique de discussions</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Êtes-vous sûr(e) de vouloir supprimer %1 de votre liste de contacts ?</translation>
+        <translation type="unfinished">Supprimer ce contact</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Si activé, efface tout l&apos;historique de discussions avec ce contact</translation>
+        <translation type="unfinished">Si activé, efface tout l&apos;historique de discussions avec ce contact</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Supprimer également l&apos;historique de discussions</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Êtes-vous sûr(e) de vouloir supprimer %1 de votre liste de contacts ?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Supprimer</translation>
     </message>
 </context>
 <context>

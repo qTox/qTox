@@ -2482,26 +2482,26 @@ Tämä ID sisältää spammin estävän koodin(joka on sinisellä), ja tarkistus
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Poista kontakti</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Poista myös keskusteluhistoria</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Poista</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Oletko varma, että haluat poistaa kontaktin %1 kontaktilistastasi?</translation>
+        <translation type="unfinished">Poista kontakti</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Poistaa kaiken chat-historian kontaktilta jos valittu</translation>
+        <translation type="unfinished">Poistaa kaiken chat-historian kontaktilta jos valittu</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Poista myös keskusteluhistoria</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Oletko varma, että haluat poistaa kontaktin %1 kontaktilistastasi?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Poista</translation>
     </message>
 </context>
 <context>

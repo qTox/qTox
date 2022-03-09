@@ -2485,26 +2485,26 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Eemalda sõber</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Kustuta ka vestluste ajalugu</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Eemalda</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Oled kindel, et soovid %1 oma kontaktide nimekirjast eemaldada?</translation>
+        <translation type="unfinished">Eemalda sõber</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Kui määratud, siis eemalda sõbraga seotud vestluste ajalugu</translation>
+        <translation type="unfinished">Kui määratud, siis eemalda sõbraga seotud vestluste ajalugu</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Kustuta ka vestluste ajalugu</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Oled kindel, et soovid %1 oma kontaktide nimekirjast eemaldada?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Eemalda</translation>
     </message>
 </context>
 <context>

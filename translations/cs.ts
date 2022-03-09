@@ -2486,26 +2486,26 @@ ID zahrnuje kód NoSpam (modře) a kontrolní součet (šedě).</translation>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Odebrat kontakt</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Také odstranit historii chatu</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Odstranit</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Opravdu chcete odebrat %1 ze seznamu kontaktů?</translation>
+        <translation type="unfinished">Odebrat kontakt</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Odstranit celou historii chatu u vybraného kontaktu</translation>
+        <translation type="unfinished">Odstranit celou historii chatu u vybraného kontaktu</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Také odstranit historii chatu</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Opravdu chcete odebrat %1 ze seznamu kontaktů?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Odstranit</translation>
     </message>
 </context>
 <context>

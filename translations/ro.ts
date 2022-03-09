@@ -2494,26 +2494,26 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Ștergeți prieten</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>De asemenea, eliminați istoricul discuțiilor</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Eliminați</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Sunteți sigur că vreți să eliminați %1 Din lista persoanelor de contact?</translation>
+        <translation type="unfinished">Ștergeți prieten</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Eliminați tot istoricul discuțiilor cu prietenul dacă este setat</translation>
+        <translation type="unfinished">Eliminați tot istoricul discuțiilor cu prietenul dacă este setat</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">De asemenea, eliminați istoricul discuțiilor</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Sunteți sigur că vreți să eliminați %1 Din lista persoanelor de contact?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Eliminați</translation>
     </message>
 </context>
 <context>
