@@ -264,7 +264,7 @@ void History::eraseHistory()
  * @brief Erases the chat history of one chat.
  * @param chatId Chat ID to erase.
  */
-void History::removeFriendHistory(const ToxPk& friendPk)
+void History::removeChatHistory(const ChatId& chatId)
 {
     if (!isValid()) {
         return;
@@ -276,7 +276,7 @@ void History::removeFriendHistory(const ToxPk& friendPk)
                                 "    SELECT faux_offline_pending.id FROM faux_offline_pending "
                                 "    LEFT JOIN history ON faux_offline_pending.id = history.id "
                                 "    WHERE chat_id=");
-    addChatIdSubQuery(queryString, boundParams, friendPk);
+    addChatIdSubQuery(queryString, boundParams, chatId);
     queryString += QStringLiteral(
                                 "); "
                                 "DELETE FROM broken_messages "
@@ -284,42 +284,45 @@ void History::removeFriendHistory(const ToxPk& friendPk)
                                 "    SELECT broken_messages.id FROM broken_messages "
                                 "    LEFT JOIN history ON broken_messages.id = history.id "
                                 "    WHERE chat_id=");
-    addChatIdSubQuery(queryString, boundParams, friendPk);
+    addChatIdSubQuery(queryString, boundParams, chatId);
     queryString += QStringLiteral(
                                 "); "
                                 "DELETE FROM text_messages "
                                 "WHERE id IN ("
                                 "   SELECT id from history "
                                 "   WHERE message_type = 'T' AND chat_id=");
-    addChatIdSubQuery(queryString, boundParams, friendPk);
+    addChatIdSubQuery(queryString, boundParams, chatId);
     queryString += QStringLiteral(
                                 ");"
                                 "DELETE FROM file_transfers "
                                 "WHERE id IN ( "
                                 "    SELECT id from history "
                                 "    WHERE message_type = 'F' AND chat_id=");
-    addChatIdSubQuery(queryString, boundParams, friendPk);
+    addChatIdSubQuery(queryString, boundParams, chatId);
     queryString += QStringLiteral(
                                 ");"
                                 "DELETE FROM system_messages "
                                 "WHERE id IN ( "
                                 "   SELECT id from history "
                                 "   WHERE message_type = 'S' AND chat_id=");
-    addChatIdSubQuery(queryString, boundParams, friendPk);
+    addChatIdSubQuery(queryString, boundParams, chatId);
     queryString += QStringLiteral(");"
                                 "DELETE FROM history WHERE chat_id=");
-    addChatIdSubQuery(queryString, boundParams, friendPk);
+    addChatIdSubQuery(queryString, boundParams, chatId);
     queryString += QStringLiteral("; "
                                 "DELETE FROM chats WHERE id=");
-    addChatIdSubQuery(queryString, boundParams, friendPk);
+    addChatIdSubQuery(queryString, boundParams, chatId);
+
     queryString += QStringLiteral("; "
-                                "DELETE FROM aliases WHERE owner=");
-    addAuthorIdSubQuery(queryString, boundParams, friendPk);
-    queryString += QStringLiteral("; "
-                                "DELETE FROM authors WHERE id=");
-    addAuthorIdSubQuery(queryString, boundParams, friendPk);
-    queryString += QStringLiteral("; "
-                                "VACUUM;");
+                                "DELETE FROM aliases WHERE id NOT IN ( "
+                                "   SELECT DISTINCT sender_alias FROM "
+                                "   text_messages JOIN file_transfers);");
+
+    queryString += QStringLiteral(
+                                "DELETE FROM authors WHERE id NOT IN ( "
+                                "   SELECT DISTINCT owner FROM aliases);");
+
+    queryString += QStringLiteral("VACUUM;");
 
     RawDatabase::Query query = {queryString, boundParams};
     if (!db->execNow(query)) {
