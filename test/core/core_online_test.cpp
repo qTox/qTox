@@ -28,9 +28,11 @@
 #include <QSignalSpy>
 #include <QtGlobal>
 #include <QtTest/QtTest>
-#include <limits>
-
 #include <QTest>
+#include <QtGlobal>
+
+#include <cassert>
+#include <limits>
 #include <iostream>
 #include <memory>
 
@@ -83,6 +85,8 @@ TestCoreOnline::TestCoreOnline()
     qRegisterMetaType<ToxPk>("ToxPk");
     qRegisterMetaType<uint32_t>("uint32_t");
     qRegisterMetaType<Status::Status>("Status::Status");
+    auto timeout = QString("%1").arg(very_long_timeout);
+    assert(qputenv("QTEST_FUNCTION_TIMEOUT", timeout.toLatin1()));
 }
 
 void TestCoreOnline::init()
