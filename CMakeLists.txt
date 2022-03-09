@@ -317,6 +317,8 @@ set(${PROJECT_NAME}_SOURCES
   src/persistence/db/rawdatabase.h
   src/persistence/history.cpp
   src/persistence/history.h
+  src/persistence/dbupgrader.cpp
+  src/persistence/dbupgrader.h
   src/persistence/ifriendsettings.cpp
   src/persistence/ifriendsettings.h
   src/persistence/igroupsettings.cpp

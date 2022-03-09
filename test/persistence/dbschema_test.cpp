@@ -18,9 +18,7 @@
 */
 
 #include "src/persistence/db/rawdatabase.h"
-// normally we should only test public API instead of implementation,  but there's no reason to expose db schema
-// upgrade externally, and the complexity of each version upgrade benefits from being individually testable
-#include "src/persistence/history.cpp"
+#include "src/persistence/dbupgrader.h"
 
 #include <QtTest/QtTest>
 #include <QString>
@@ -218,7 +216,7 @@ void TestDbSchema::testCreation()
 {
     QVector<RawDatabase::Query> queries;
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"testCreation.db", {}, {}}};
-    QVERIFY(createCurrentSchema(*db));
+    QVERIFY(DbUpgrader::createCurrentSchema(*db));
     verifyDb(db, schema7);
 }
 
@@ -226,12 +224,12 @@ void TestDbSchema::testIsNewDb()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"testIsNewDbTrue.db", {}, {}}};
     bool success = false;
-    bool newDb = isNewDb(db, success);
+    bool newDb = DbUpgrader::isNewDb(db, success);
     QVERIFY(success);
     QVERIFY(newDb == true);
     db = std::shared_ptr<RawDatabase>{new RawDatabase{"testIsNewDbFalse.db", {}, {}}};
     createSchemaAtVersion(db, schema0);
-    newDb = isNewDb(db, success);
+    newDb = DbUpgrader::isNewDb(db, success);
     QVERIFY(success);
     QVERIFY(newDb == false);
 }
@@ -240,7 +238,7 @@ void TestDbSchema::test0to1()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test0to1.db", {}, {}}};
     createSchemaAtVersion(db, schema0);
-    QVERIFY(dbSchema0to1(*db));
+    QVERIFY(DbUpgrader::dbSchema0to1(*db));
     verifyDb(db, schema1);
 }
 
@@ -312,7 +310,7 @@ void TestDbSchema::test1to2()
                                         ");"};
 
     QVERIFY(db->execNow(queries));
-    QVERIFY(dbSchema1to2(*db));
+    QVERIFY(DbUpgrader::dbSchema1to2(*db));
     verifyDb(db, schema2);
 
     long brokenCount = -1;
@@ -375,7 +373,7 @@ void TestDbSchema::test2to3()
                                         "    last_insert_rowid()"
                                         ");"};
     QVERIFY(db->execNow(queries));
-    QVERIFY(dbSchema2to3(*db));
+    QVERIFY(DbUpgrader::dbSchema2to3(*db));
 
     long brokenCount = -1;
     RawDatabase::Query brokenCountQuery = {"SELECT COUNT(*) FROM broken_messages;", [&](const QVector<QVariant>& row) {
@@ -405,7 +403,7 @@ void TestDbSchema::test3to4()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test3to4.db", {}, {}}};
     createSchemaAtVersion(db, schema3);
-    QVERIFY(dbSchema3to4(*db));
+    QVERIFY(DbUpgrader::dbSchema3to4(*db));
     verifyDb(db, schema4);
 }
 
@@ -413,7 +411,7 @@ void TestDbSchema::test4to5()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test4to5.db", {}, {}}};
     createSchemaAtVersion(db, schema4);
-    QVERIFY(dbSchema4to5(*db));
+    QVERIFY(DbUpgrader::dbSchema4to5(*db));
     verifyDb(db, schema5);
 }
 
@@ -421,7 +419,7 @@ void TestDbSchema::test5to6()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test5to6.db", {}, {}}};
     createSchemaAtVersion(db, schema5);
-    QVERIFY(dbSchema5to6(*db));
+    QVERIFY(DbUpgrader::dbSchema5to6(*db));
     verifyDb(db, schema6);
 }
 
@@ -432,7 +430,7 @@ void TestDbSchema::test6to7()
     db->execNow(
         "PRAGMA foreign_keys = ON;");
     createSchemaAtVersion(db, schema6);
-    QVERIFY(dbSchema6to7(*db));
+    QVERIFY(DbUpgrader::dbSchema6to7(*db));
     verifyDb(db, schema7);
 }
 
