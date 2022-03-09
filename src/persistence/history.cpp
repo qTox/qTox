@@ -271,8 +271,15 @@ void History::removeChatHistory(const ChatId& chatId)
                                 "   SELECT id from history "
                                 "   WHERE message_type = 'S' AND chat_id=%1);"
                                 "DELETE FROM history WHERE chat_id=%1; "
-                                "DELETE FROM aliases WHERE owner=%1; "
-                                "DELETE FROM peers WHERE id=%1; "
+                                "DELETE FROM aliases "
+                                "WHERE id NOT IN ( "
+                                "    SELECT DISTINCT sender_alias FROM text_messages);"
+                                "DELETE FROM peers "
+                                "WHERE id NOT IN ( "
+                                "    SELECT DISTINCT chat_id FROM history "
+                                "    UNION SELECT DISTINCT owner from aliases); "
+                                "DELETE FROM aliases WHERE owner=%1;"
+                                "DELETE FROM peers WHERE id=%1;"
                                 "VACUUM;")
                             .arg(generatePeerIdString(chatId));
 
