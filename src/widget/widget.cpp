@@ -1771,16 +1771,7 @@ void Widget::removeFriend(Friend* f, bool fake)
 {
     assert(f);
     if (!fake) {
-        RemoveChatDialog ask(this, *f);
-        ask.exec();
-
-        if (!ask.accepted()) {
-            return;
-        }
-
-        if (ask.removeHistory()) {
-            profile.getHistory()->removeChatHistory(f->getPublicKey());
-        }
+        removeChatHistory(*f);
     }
 
     const ToxPk friendPk = f->getPublicKey();
@@ -2085,6 +2076,11 @@ void Widget::onGroupPeerAudioPlaying(int groupnumber, ToxPk peerPk)
 
 void Widget::removeGroup(Group* g, bool fake)
 {
+    assert(g);
+    if (!fake) {
+        removeChatHistory(*g);
+    }
+
     const auto& groupId = g->getPersistentId();
     const auto groupnumber = g->getId();
     auto groupWidgetIt = groupWidgets.find(groupId);
@@ -2751,4 +2747,18 @@ void Widget::connectCircleWidget(CircleWidget& circleWidget)
 void Widget::connectFriendWidget(FriendWidget& friendWidget)
 {
     connect(&friendWidget, &FriendWidget::updateFriendActivity, this, &Widget::updateFriendActivity);
+}
+
+void Widget::removeChatHistory(Chat& chat)
+{
+    RemoveChatDialog ask(this, chat);
+    ask.exec();
+
+    if (!ask.accepted()) {
+        return;
+    }
+
+    if (ask.removeHistory()) {
+        profile.getHistory()->removeChatHistory(chat.getPersistentId());
+    }
 }
