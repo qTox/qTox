@@ -133,6 +133,10 @@ GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, I
     connect(group, &Group::numPeersChanged, this, &GroupChatForm::updateUserCount);
     settings.connectTo_blackListChanged(this, [this](QStringList const&) { this->updateUserNames(); });
 
+    if (settings.getShowGroupJoinLeaveMessages()) {
+        addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::selfJoinedGroup, {});
+    }
+
     updateUserNames();
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
@@ -140,6 +144,9 @@ GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, I
 
 GroupChatForm::~GroupChatForm()
 {
+    if (settings.getShowGroupJoinLeaveMessages()) {
+        addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::selfLeftGroup, {});
+    }
     Translator::unregister(this);
 }
 

@@ -133,6 +133,8 @@ ChatMessage::SystemMessageType getChatMessageType(const SystemMessage& systemMes
     case SystemMessageType::outgoingCall:
     case SystemMessageType::incomingCall:
     case SystemMessageType::callEnd:
+    case SystemMessageType::selfJoinedGroup:
+    case SystemMessageType::selfLeftGroup:
         return ChatMessage::INFO;
     }
 

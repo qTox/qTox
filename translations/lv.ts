@@ -2479,6 +2479,14 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Control</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You have joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>

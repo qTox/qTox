@@ -42,6 +42,8 @@ enum class SystemMessageType
     incomingCall,
     callEnd,
     messageSendFailed,
+    selfJoinedGroup,
+    selfLeftGroup,
 };
 
 struct SystemMessage
@@ -102,6 +104,14 @@ struct SystemMessage
             break;
         case SystemMessageType::messageSendFailed:
             translated = QObject::tr("Message failed to send");
+            break;
+        case SystemMessageType::selfJoinedGroup:
+            translated = QObject::tr("You have joined the group");
+            numArgs = 0;
+            break;
+        case SystemMessageType::selfLeftGroup:
+            translated = QObject::tr("You have left the group");
+            numArgs = 0;
             break;
         }
 
