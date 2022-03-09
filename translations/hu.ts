@@ -2479,26 +2479,26 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Partner eltávolítása</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Az előzményeket is távolítsa el</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Eltávolít</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Biztosan eltávolítja %1 partnert a partnerlistájáról?</translation>
+        <translation type="unfinished">Partner eltávolítása</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Eltávolít minden chat előzményt a partnerével, ha ez be van állítva</translation>
+        <translation type="unfinished">Eltávolít minden chat előzményt a partnerével, ha ez be van állítva</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Az előzményeket is távolítsa el</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Biztosan eltávolítja %1 partnert a partnerlistájáról?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Törlés</translation>
     </message>
 </context>
 <context>

@@ -2501,26 +2501,26 @@ Pasidalinkite ja su draugais, kad pradėtumėte kalbėtis.
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Šalinti kontaktą</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Išvalyti pokalbių žurnalą</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Pašalinti</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Ar tikrai norite pašalinti %1 iš savo kontaktų sąrašo?</translation>
+        <translation type="unfinished">Šalinti kontaktą</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Jei nustatyta, šalinti visą pokalbių su kontaktu istoriją</translation>
+        <translation type="unfinished">Jei nustatyta, šalinti visą pokalbių su kontaktu istoriją</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Išvalyti pokalbių žurnalą</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Ar tikrai norite pašalinti %1 iš savo kontaktų sąrašo?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Pašalinti</translation>
     </message>
 </context>
 <context>
