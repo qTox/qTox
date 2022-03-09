@@ -219,7 +219,7 @@ public:
     bool historyExists(const ChatId& chatId);
 
     void eraseHistory();
-    void removeFriendHistory(const ToxPk& friendPk);
+    void removeChatHistory(const ChatId& chatId);
     void addNewMessage(const ChatId& chatId, const QString& message, const ToxPk& sender,
                        const QDateTime& time, bool isDelivered, ExtensionSet extensions,
                        QString dispName, const std::function<void(RowId)>& insertIdCallback = {});
