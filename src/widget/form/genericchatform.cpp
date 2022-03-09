@@ -325,6 +325,8 @@ QDateTime GenericChatForm::getLatestTime() const
             case SystemMessageType::userJoinedGroup:
             case SystemMessageType::fileSendFailed:
             case SystemMessageType::messageSendFailed:
+            case SystemMessageType::selfJoinedGroup:
+            case SystemMessageType::selfLeftGroup:
                 return false;
         }
 

@@ -42,6 +42,8 @@ enum class SystemMessageType
     incomingCall,
     callEnd,
     messageSendFailed,
+    selfJoinedGroup,
+    selfLeftGroup,
 };
 
 struct SystemMessage
@@ -53,62 +55,36 @@ struct SystemMessage
 
     QString toString() const
     {
-        QString translated;
-        size_t numArgs = 0;
-
         switch (messageType) {
         case SystemMessageType::fileSendFailed:
-            translated = QObject::tr("Failed to send file \"%1\"");
-            numArgs = 1;
-            break;
+            return QObject::tr("Failed to send file \"%1\"").arg(args[0]);
         case SystemMessageType::userJoinedGroup:
-            translated = QObject::tr("%1 has joined the group");
-            numArgs = 1;
-            break;
+            return QObject::tr("%1 has joined the group").arg(args[0]);
         case SystemMessageType::userLeftGroup:
-            translated = QObject::tr("%1 has left the group");
-            numArgs = 1;
-            break;
+            return QObject::tr("%1 has left the group").arg(args[0]);
         case SystemMessageType::peerNameChanged:
-            translated = QObject::tr("%1 is now known as %2");
-            numArgs = 2;
-            break;
+            return QObject::tr("%1 is now known as %2").arg(args[0]).arg(args[1]);
         case SystemMessageType::titleChanged:
-            translated = QObject::tr("%1 has set the title to %2");
-            numArgs = 2;
-            break;
+            return QObject::tr("%1 has set the title to %2").arg(args[0]).arg(args[1]);
         case SystemMessageType::cleared:
-            translated = QObject::tr("Cleared");
-            break;
+            return QObject::tr("Cleared");
         case SystemMessageType::unexpectedCallEnd:
-            translated = QObject::tr("Call with %1 ended unexpectedly. %2");
-            numArgs = 2;
-            break;
+            return QObject::tr("Call with %1 ended unexpectedly. %2").arg(args[0]).arg(args[1]);
         case SystemMessageType::callEnd:
-            translated = QObject::tr("Call with %1 ended. %2");
-            numArgs = 2;
-            break;
+            return QObject::tr("Call with %1 ended. %2").arg(args[0]).arg(args[1]);
         case SystemMessageType::peerStateChange:
-            translated = QObject::tr("%1 is now %2", "e.g. \"Dubslow is now online\"");
-            numArgs = 2;
-            break;
+            return QObject::tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(args[0]).arg(args[1]);
         case SystemMessageType::outgoingCall:
-            translated = QObject::tr("Calling %1");
-            numArgs = 1;
-            break;
+            return QObject::tr("Calling %1").arg(args[0]);
         case SystemMessageType::incomingCall:
-            translated = QObject::tr("%1 calling");
-            numArgs = 1;
-            break;
+            return QObject::tr("%1 calling").arg(args[0]);
         case SystemMessageType::messageSendFailed:
-            translated = QObject::tr("Message failed to send");
-            break;
+            return QObject::tr("Message failed to send");
+        case SystemMessageType::selfJoinedGroup:
+            return QObject::tr("You have joined the group");
+        case SystemMessageType::selfLeftGroup:
+            return QObject::tr("You have left the group");
         }
-
-        for (size_t i = 0; i < numArgs; ++i) {
-            translated = translated.arg(args[i]);
-        }
-
-        return translated;
+        return {};
     }
 };

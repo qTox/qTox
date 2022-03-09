@@ -2472,6 +2472,14 @@ ID:t innehåller NoSpam-koden (i blått) och kontrollsumman (i grått).</transla
         <source>Control</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You have joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>

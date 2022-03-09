@@ -2473,6 +2473,14 @@ Este ID incluye el código NoSpam (en azul), y la suma de comprobación (en gris
         <source>Control</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You have joined the group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have left the group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
