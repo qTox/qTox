@@ -2472,26 +2472,26 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Fjern venn</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Fjern sludrehistorikk også</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Fjern</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Er du sikker på at du vil fjerne %1 fra din kontaktliste?</translation>
+        <translation type="unfinished">Fjern venn</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Fjern all samtalehistorikk mellom deg vennen din hvis valgt</translation>
+        <translation type="unfinished">Fjern all samtalehistorikk mellom deg vennen din hvis valgt</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Fjern sludrehistorikk også</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Er du sikker på at du vil fjerne %1 fra din kontaktliste?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Fjern</translation>
     </message>
 </context>
 <context>

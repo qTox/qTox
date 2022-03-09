@@ -2478,26 +2478,26 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>删除好友</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>同时删除聊天历史记录</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>删除</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>您确定想要从联系人名单中删除 %1 吗？</translation>
+        <translation type="unfinished">删除好友</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>如果设置则删除与该好友的所有聊天历史记录</translation>
+        <translation type="unfinished">如果设置则删除与该好友的所有聊天历史记录</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">同时删除聊天历史记录</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">您确定想要从联系人名单中删除 %1 吗？</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">移除</translation>
     </message>
 </context>
 <context>

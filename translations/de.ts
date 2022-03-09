@@ -2491,26 +2491,26 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Kontakt löschen</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Gesprächsverlauf ebenfalls löschen</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Löschen</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Bist du dir sicher, dass du %1 aus deiner Kontaktliste entfernen möchtest?</translation>
+        <translation type="unfinished">Freund entfernen</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Löscht den gesamten Chatverlauf mit diesem Freund, wenn aktiviert</translation>
+        <translation type="unfinished">Löscht den gesamten Chatverlauf mit diesem Freund, wenn aktiviert</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Gesprächsverlauf ebenfalls löschen</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Bist du dir sicher, dass du %1 aus deiner Kontaktliste entfernen möchtest?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Löschen</translation>
     </message>
 </context>
 <context>

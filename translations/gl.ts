@@ -2478,26 +2478,26 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Eliminar contacto</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Elimina tamén o historial de charla</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Eliminar</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Ten a certeza de que quere eliminar %1 da súa lista de contactos?</translation>
+        <translation type="unfinished">Eliminar contacto</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Se está definido, elimina todo o historial de charla co contacto</translation>
+        <translation type="unfinished">Se está definido, elimina todo o historial de charla co contacto</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Elimina tamén o historial de charla</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Ten a certeza de que quere eliminar %1 da súa lista de contactos?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Eliminar</translation>
     </message>
 </context>
 <context>

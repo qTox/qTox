@@ -2470,26 +2470,26 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Κατάργηση φίλου</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Επίσης να καταργηθεί το ιστορικό συνομιλιών</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Αφαίρεση</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Είστε βέβαιοι ότι θέλετε να καταργήσετε τον/ην %1 από τη λίστα επαφών σας;</translation>
+        <translation type="unfinished">Κατάργηση φίλου</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Κατάργηση όλου του ιστορικού συνομιλίας με το φίλο, εάν είναι ορισμένο</translation>
+        <translation type="unfinished">Κατάργηση όλου του ιστορικού συνομιλίας με το φίλο, εάν είναι ορισμένο</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Επίσης να καταργηθεί το ιστορικό συνομιλιών</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Είστε βέβαιοι ότι θέλετε να καταργήσετε τον/ην %1 από τη λίστα επαφών σας;</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Αφαίρεση</translation>
     </message>
 </context>
 <context>

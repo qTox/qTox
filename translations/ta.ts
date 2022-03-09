@@ -2472,17 +2472,17 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
         <translation type="unfinished">தோழரை நீக்கு</translation>
     </message>
     <message>
-        <source>Also remove chat history</source>
+        <source>Remove all chat history with the friend if set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove</source>
+        <source>Also remove chat history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2490,7 +2490,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove all chat history with the friend if set</source>
+        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
