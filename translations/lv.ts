@@ -2502,26 +2502,26 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Dzēst draugu</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Arī noņemt tērzēšanas vēsturi</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Dzēst</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Vai Jūs tiešām vēlaties dzēst %1 no kontaktpersonu saraksta?</translation>
+        <translation type="unfinished">Noņemt draugu</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Dzēš visu tērzēšanas vēsturi ar draugu, ja tiek iestatīts</translation>
+        <translation type="unfinished">Dzēš visu tērzēšanas vēsturi ar draugu, ja tiek iestatīts</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Arī noņemt tērzēšanas vēsturi</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Vai Jūs tiešām vēlaties dzēst %1 no kontaktpersonu saraksta?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Dzēst</translation>
     </message>
 </context>
 <context>

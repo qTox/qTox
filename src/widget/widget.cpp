@@ -79,7 +79,7 @@
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
 #include "src/widget/tool/imessageboxmanager.h"
-#include "tool/removefrienddialog.h"
+#include "tool/removechatdialog.h"
 #include "src/persistence/smileypack.h"
 
 bool toxActivateEventHandler(const QByteArray& data, void* userData)
@@ -1742,8 +1742,9 @@ void Widget::updateFriendActivity(const Friend& frnd)
 
 void Widget::removeFriend(Friend* f, bool fake)
 {
+    assert(f);
     if (!fake) {
-        RemoveFriendDialog ask(this, f);
+        RemoveChatDialog ask(this, *f);
         ask.exec();
 
         if (!ask.accepted()) {

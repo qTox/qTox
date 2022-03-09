@@ -2487,26 +2487,26 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>حذف دوست</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>همچنین سابقه گفت‌و‌گو را حذف کن</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>حذف</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>آیا برای حذف %1 از لیست مخاطبین خود اطمینان دارید؟</translation>
+        <translation type="unfinished">حذف دوست</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>در صورت وجود تمام سابقه گفت‌و‌گو با دوست را حذف کن</translation>
+        <translation type="unfinished">در صورت وجود تمام سابقه گفت‌و‌گو با دوست را حذف کن</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">همچنین سابقه گفت‌و‌گو را حذف کن</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">آیا برای حذف %1 از لیست مخاطبین خود اطمینان دارید؟</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">حذف</translation>
     </message>
 </context>
 <context>

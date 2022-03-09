@@ -2495,26 +2495,26 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Arkadaşı kaldır</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Sohbet geçmişini de sil</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Kaldır</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>%1 kişisini kişiler listenizden kaldırmak istediğinize emin misiniz?</translation>
+        <translation type="unfinished">Arkadaşı kaldır</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Ayarlıysa arkadaşla olan tüm sohbet geçmişini kaldırır</translation>
+        <translation type="unfinished">Ayarlıysa arkadaşla olan tüm sohbet geçmişini kaldırır</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Sohbet geçmişini de sil</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">%1 kişisini kişiler listenizden kaldırmak istediğinize emin misiniz?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Kaldır</translation>
     </message>
 </context>
 <context>

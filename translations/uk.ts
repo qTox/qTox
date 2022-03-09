@@ -2495,26 +2495,26 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Вилучити з друзів</translation>
+        <translation type="unfinished">Вилучити з друзів</translation>
+    </message>
+    <message>
+        <source>Remove all chat history with the friend if set</source>
+        <translation type="unfinished">Коли встановлено, видаляти усю історію спілкування з другом</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation>Також видалити історію переписки</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Видалити</translation>
+        <translation type="unfinished">Також видалити історію переписки</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
         <translation type="unfinished">Ви дійсно хочете видалити %1 з вашого списку контактів?</translation>
     </message>
     <message>
-        <source>Remove all chat history with the friend if set</source>
-        <translation>Коли встановлено, видаляти усю історію спілкування з другом</translation>
+        <source>Remove</source>
+        <translation type="unfinished">Видалити</translation>
     </message>
 </context>
 <context>

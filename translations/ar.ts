@@ -2499,26 +2499,26 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>ازالة صديق</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>ايضا حذف سجل المحادثة</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>ازالة</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>هل انت متأكد من ازالة %1 من جهات الاتصال ؟</translation>
+        <translation type="unfinished">ازالة صديق</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>ازالة تاريخ جمبيع المحادثات مع الصديق اذا وجد</translation>
+        <translation type="unfinished">ازالة تاريخ جمبيع المحادثات مع الصديق اذا وجد</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">ايضا حذف سجل المحادثة</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">هل انت متأكد من ازالة %1 من جهات الاتصال ؟</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">ازالة</translation>
     </message>
 </context>
 <context>
