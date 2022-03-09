@@ -111,6 +111,9 @@ public:
     ToxPk getSelfPublicKey() const override;
     QPair<QByteArray, QByteArray> getKeypair() const;
 
+    QByteArray getSelfDhtId() const;
+    int getSelfUdpPort() const;
+
 public slots:
     void start();
 

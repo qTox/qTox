@@ -474,6 +474,22 @@ bool parseErr(Tox_Err_Conference_Delete error, int line)
     }
 }
 
+bool parseErr(Tox_Err_Get_Port error, int line)
+{
+    switch (error) {
+    case TOX_ERR_GET_PORT_OK:
+        return true;
+
+    case TOX_ERR_GET_PORT_NOT_BOUND:
+        qCritical() << line << "Tox instance was not bound to any port.";
+        return false;
+
+    default:
+        qCritical() << line << "Unknown Tox_Err_Get_Port error code:" << error;
+        return false;
+    }
+}
+
 QList<DhtServer> shuffleBootstrapNodes(QList<DhtServer> bootstrapNodes)
 {
     std::mt19937 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
@@ -1294,6 +1310,25 @@ QPair<QByteArray, QByteArray> Core::getKeypair() const
     keypair.first = pk;
     keypair.second = sk;
     return keypair;
+}
+
+QByteArray Core::getSelfDhtId() const
+{
+    QMutexLocker ml{&coreLoopLock};
+    QByteArray dhtKey(TOX_PUBLIC_KEY_SIZE, 0x00);
+    tox_self_get_public_key(tox.get(), reinterpret_cast<uint8_t*>(dhtKey.data()));
+    return dhtKey;
+}
+
+int Core::getSelfUdpPort() const
+{
+    QMutexLocker ml{&coreLoopLock};
+    Tox_Err_Get_Port error;
+    auto port = tox_self_get_udp_port(tox.get(), &error);
+    if (!PARSE_ERR(error)) {
+        return -1;
+    }
+    return port;
 }
 
 /**
