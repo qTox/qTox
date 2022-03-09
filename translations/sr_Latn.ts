@@ -2496,26 +2496,26 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
 </context>
 <context>
-    <name>RemoveFriendDialog</name>
+    <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Ukloni prijatelja</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation>Takođe ukloni istorijat ćaskanja</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Ukloni</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Sigurno želite a uklonite „%1“ iz spiska kontakata?</translation>
+        <translation type="unfinished">Ukloni prijatelja</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Ako je zadato, uklanja ceo istorijat ćaskanja zajedno sa prijateljem</translation>
+        <translation type="unfinished">Ako je zadato, uklanja ceo istorijat ćaskanja zajedno sa prijateljem</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation type="unfinished">Takođe ukloni istorijat ćaskanja</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Sigurno želite a uklonite „%1“ iz spiska kontakata?</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Ukloni</translation>
     </message>
 </context>
 <context>
