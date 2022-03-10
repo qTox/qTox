@@ -118,6 +118,13 @@ QString Friend::getDisplayedName() const
     return userAlias;
 }
 
+QString Friend::getDisplayedName(const ToxPk& contact) const
+{
+    std::ignore = contact;
+    assert(contact != friendPk);
+    return getDisplayedName();
+}
+
 bool Friend::hasAlias() const
 {
     return !userAlias.isEmpty();
