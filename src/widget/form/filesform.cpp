@@ -274,7 +274,7 @@ namespace FileTransferList
                     return "Unknown";
                 }
 
-                return f->getDisplayedName();
+                return f->getSelfDisplayedName();
             }
             case Column::progress:
                 return files[row].progress.getProgress() * 100.0;

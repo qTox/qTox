@@ -52,7 +52,7 @@ void Friend::setName(const QString& _name)
     }
 
     // save old displayed name to be able to compare for changes
-    const auto oldDisplayed = getDisplayedName();
+    const auto oldDisplayed = getSelfDisplayedName();
     if (userName == userAlias) {
         userAlias.clear(); // Because userAlias was set on name change before (issue #5013)
                            // we clear alias if equal to old name so that name change is visible.
@@ -63,7 +63,7 @@ void Friend::setName(const QString& _name)
         emit nameChanged(friendPk, name);
     }
 
-    const auto newDisplayed = getDisplayedName();
+    const auto newDisplayed = getSelfDisplayedName();
     if (oldDisplayed != newDisplayed) {
         emit displayedNameChanged(newDisplayed);
     }
@@ -81,10 +81,10 @@ void Friend::setAlias(const QString& alias)
     emit aliasChanged(friendPk, alias);
 
     // save old displayed name to be able to compare for changes
-    const auto oldDisplayed = getDisplayedName();
+    const auto oldDisplayed = getSelfDisplayedName();
     userAlias = alias;
 
-    const auto newDisplayed = getDisplayedName();
+    const auto newDisplayed = getSelfDisplayedName();
     if (oldDisplayed != newDisplayed) {
         emit displayedNameChanged(newDisplayed);
     }
@@ -104,12 +104,12 @@ QString Friend::getStatusMessage() const
 }
 
 /**
- * @brief Friend::getDisplayedName Gets the name that should be displayed for a user
+ * @brief Friend::getSelfDisplayedName Gets the name that should be displayed for a user
  * @return a QString containing either alias, username or public key
  * @note This function and corresponding signal should be preferred over getting
  *       the name or alias directly.
  */
-QString Friend::getDisplayedName() const
+QString Friend::getSelfDisplayedName() const
 {
     if (userAlias.isEmpty()) {
         return userName;

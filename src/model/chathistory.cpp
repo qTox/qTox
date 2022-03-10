@@ -223,7 +223,7 @@ void ChatHistory::onFileUpdated(const ToxPk& sender, const ToxFile& file)
         switch (file.status) {
         case ToxFile::INITIALIZING: {
             auto selfPk = coreIdHandler.getSelfPublicKey();
-            QString username(selfPk == sender ? coreIdHandler.getUsername() : f.getDisplayedName());
+            QString username(selfPk == sender ? coreIdHandler.getUsername() : f.getSelfDisplayedName());
 
             // Note: There is some implcit coupling between history and the current
             // chat log. Both rely on generating a new id based on the state of
@@ -267,7 +267,7 @@ void ChatHistory::onMessageReceived(const ToxPk& sender, const Message& message)
 {
     if (canUseHistory()) {
         auto friendPk = f.getPublicKey();
-        auto displayName = f.getDisplayedName();
+        auto displayName = f.getSelfDisplayedName();
         auto content = message.content;
         if (message.isAction) {
             content = ChatForm::ACTION_PREFIX + content;

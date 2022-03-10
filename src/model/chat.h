@@ -30,7 +30,7 @@ public:
     virtual ~Chat() = 0;
 
     virtual void setName(const QString& name) = 0;
-    virtual QString getDisplayedName() const = 0;
+    virtual QString getSelfDisplayedName() const = 0;
     virtual uint32_t getId() const = 0;
     virtual const ChatId& getPersistentId() const = 0;
     virtual void setEventFlag(bool flag) = 0;

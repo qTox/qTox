@@ -76,7 +76,7 @@ QString Group::getName() const
     return title;
 }
 
-QString Group::getDisplayedName() const
+QString Group::getSelfDisplayedName() const
 {
     return getName();
 }

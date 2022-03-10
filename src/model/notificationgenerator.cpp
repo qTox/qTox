@@ -60,11 +60,11 @@ namespace
             //: e.g. 2 messages from Bob
             return QObject::tr("%1 message(s) from %2")
                 .arg(numNotifications[contact])
-                .arg(contact->getDisplayedName());
+                .arg(contact->getSelfDisplayedName());
         }
         else
         {
-            return contact->getDisplayedName();
+            return contact->getSelfDisplayedName();
         }
     }
 
@@ -116,11 +116,11 @@ namespace
             displayNames.reserve(numChats);
 
             for (auto it = friendNotifications.begin(); it != friendNotifications.end(); ++it) {
-                displayNames.push_back(it.key()->getDisplayedName());
+                displayNames.push_back(it.key()->getSelfDisplayedName());
             }
 
             for (auto it = groupNotifications.begin(); it != groupNotifications.end(); ++it) {
-                displayNames.push_back(it.key()->getDisplayedName());
+                displayNames.push_back(it.key()->getSelfDisplayedName());
             }
 
             assert(displayNames.size() > 0);
@@ -223,7 +223,7 @@ NotificationData NotificationGenerator::fileTransferNotification(const Friend* f
     else
     {
         //: e.g. Bob - file transfer
-        ret.title = tr("%1 - file transfer").arg(f->getDisplayedName());
+        ret.title = tr("%1 - file transfer").arg(f->getSelfDisplayedName());
         ret.message = filename + " (" + getHumanReadableSize(fileSize) + ")";
     }
 
@@ -241,7 +241,7 @@ NotificationData NotificationGenerator::groupInvitationNotification(const Friend
         return ret;
     }
 
-    ret.title = tr("%1 invites you to join a group.").arg(from->getDisplayedName());
+    ret.title = tr("%1 invites you to join a group.").arg(from->getSelfDisplayedName());
     ret.message = "";
     ret.pixmap = getSenderAvatar(profile, from->getPublicKey());
 

@@ -49,7 +49,7 @@ AboutFriend::AboutFriend(const Friend* f_, IFriendSettings* const settings_)
 
 QString AboutFriend::getName() const
 {
-    return f->getDisplayedName();
+    return f->getSelfDisplayedName();
 }
 
 QString AboutFriend::getStatusMessage() const
