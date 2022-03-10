@@ -99,7 +99,7 @@ QString GenericChatForm::resolveToxPk(const ToxPk& pk)
 {
     Friend* f = FriendList::findFriend(pk);
     if (f) {
-        return f->getDisplayedName();
+        return f->getSelfDisplayedName();
     }
 
     for (Group* it : GroupList::getAllGroups()) {

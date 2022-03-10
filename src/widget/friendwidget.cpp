@@ -69,7 +69,7 @@ FriendWidget::FriendWidget(std::shared_ptr<FriendChatroom> chatroom_, bool compa
     statusPic.setMargin(3);
 
     auto frnd = chatroom->getFriend();
-    nameLabel->setText(frnd->getDisplayedName());
+    nameLabel->setText(frnd->getSelfDisplayedName());
     // update alias when edited
     connect(nameLabel, &CroppingLabel::editFinished, frnd, &Friend::setAlias);
     // update on changes of the displayed name
@@ -453,7 +453,7 @@ void FriendWidget::mouseMoveEvent(QMouseEvent* ev)
     if (distance > QApplication::startDragDistance()) {
         QMimeData* mdata = new QMimeData;
         const Friend* frnd = getFriend();
-        mdata->setText(frnd->getDisplayedName());
+        mdata->setText(frnd->getSelfDisplayedName());
         mdata->setData("toxPk", frnd->getPublicKey().getByteArray());
 
         QDrag* drag = new QDrag(this);

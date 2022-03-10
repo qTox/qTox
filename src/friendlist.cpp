@@ -85,7 +85,7 @@ QString FriendList::decideNickname(const ToxPk& friendPk, const QString& origNam
 {
     Friend* f = FriendList::findFriend(friendPk);
     if (f != nullptr) {
-        return f->getDisplayedName();
+        return f->getSelfDisplayedName();
     } else if (!origName.isEmpty()) {
         return origName;
     } else {

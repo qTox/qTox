@@ -38,7 +38,7 @@ public:
 
     void setName(const QString& name) override;
     void setAlias(const QString& alias);
-    QString getDisplayedName() const override;
+    QString getSelfDisplayedName() const override;
     bool hasAlias() const;
     QString getUserName() const;
     void setStatusMessage(const QString& message);

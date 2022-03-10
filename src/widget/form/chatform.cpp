@@ -120,7 +120,7 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
     , settings{settings_}
     , style{style_}
 {
-    setName(f->getDisplayedName());
+    setName(f->getSelfDisplayedName());
 
     headWidget->setAvatar(QPixmap(":/img/contact_dark.svg"));
 
@@ -317,7 +317,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         return;
     }
 
-    QString displayedName = f->getDisplayedName();
+    QString displayedName = f->getSelfDisplayedName();
 
     SystemMessage systemMessage;
     systemMessage.messageType = SystemMessageType::incomingCall;
@@ -380,7 +380,7 @@ void ChatForm::showOutgoingCall(bool video)
 {
     headWidget->showOutgoingCall(video);
     addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::outgoingCall,
-                         {f->getDisplayedName()});
+                         {f->getSelfDisplayedName()});
     emit outgoingNotification();
     emit updateFriendActivity(*f);
 }
@@ -476,7 +476,7 @@ void ChatForm::onFriendStatusChanged(const ToxPk& friendPk, Status::Status statu
     if (settings.getStatusChangeNotificationEnabled()) {
         QString fStatus = Status::getTitle(status);
         addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::peerStateChange,
-                             {f->getDisplayedName(), fStatus});
+                             {f->getSelfDisplayedName(), fStatus});
     }
 }
 
@@ -518,7 +518,7 @@ std::unique_ptr<NetCamView> ChatForm::createNetcam()
         new NetCamView(f->getPublicKey(), cameraSource, settings, style, this));
     CoreAV* av = core.getAv();
     VideoSource* source = av->getVideoSourceFromCall(friendId);
-    view->show(source, f->getDisplayedName());
+    view->show(source, f->getSelfDisplayedName());
     connect(view.get(), &NetCamView::videoCallEnd, this, &ChatForm::onVideoCallTriggered);
     connect(view.get(), &NetCamView::volMuteToggle, this, &ChatForm::onVolMuteToggle);
     connect(view.get(), &NetCamView::micMuteToggle, this, &ChatForm::onMicMuteToggle);
@@ -692,7 +692,7 @@ void ChatForm::stopCounter(bool error)
         return;
     }
     QString dhms = secondsToDHMS(timeElapsed.elapsed() / 1000);
-    QString name = f->getDisplayedName();
+    QString name = f->getSelfDisplayedName();
     auto messageType = error ? SystemMessageType::unexpectedCallEnd : SystemMessageType::callEnd;
     // TODO: add notification once notifications are implemented
 
@@ -713,7 +713,7 @@ void ChatForm::onUpdateTime()
 void ChatForm::setFriendTyping(bool isTyping_)
 {
     chatWidget->setTypingNotificationVisible(isTyping_);
-    QString name = f->getDisplayedName();
+    QString name = f->getSelfDisplayedName();
     chatWidget->setTypingNotificationName(name);
 }
 

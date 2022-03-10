@@ -55,7 +55,7 @@ public:
     void setName(const QString& newTitle) override;
     void setTitle(const QString& author, const QString& newTitle);
     QString getName() const;
-    QString getDisplayedName() const override;
+    QString getSelfDisplayedName() const override;
     QString resolveToxPk(const ToxPk& id) const;
     void setSelfName(const QString& name);
     QString getSelfName() const;
