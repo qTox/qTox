@@ -24,7 +24,9 @@
 #include "src/widget/form/chatform.h"
 
 #include <QDebug>
+
 #include <memory>
+#include <cassert>
 
 Friend::Friend(uint32_t friendId_, const ToxPk& friendPk_, const QString& userAlias_, const QString& userName_)
     : userName{userName_}
@@ -116,6 +118,13 @@ QString Friend::getDisplayedName() const
     }
 
     return userAlias;
+}
+
+QString Friend::getDisplayedName(const ToxPk& contact) const
+{
+    std::ignore = contact;
+    assert(contact == friendPk);
+    return getDisplayedName();
 }
 
 bool Friend::hasAlias() const
