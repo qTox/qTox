@@ -562,7 +562,7 @@ jobs:
           fetch-depth: 0
       - name: Install gitstats
         run: |
-          sudo apt-get install gnuplot
+          sudo apt-get update && sudo apt-get install --no-install-recommends gnuplot
           git clone git://github.com/hoxu/gitstats.git
           cd gitstats
           sudo make install
