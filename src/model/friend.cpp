@@ -118,6 +118,14 @@ QString Friend::getSelfDisplayedName() const
     return userAlias;
 }
 
+QString Friend::getDisplayedName(const ToxPk& contact) const
+{
+    if (contact != friendPk) {
+        return {};
+    }
+    return getSelfDisplayedName();
+}
+
 bool Friend::hasAlias() const
 {
     return !userAlias.isEmpty();
