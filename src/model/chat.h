@@ -23,6 +23,7 @@
 #include <QObject>
 #include <QString>
 
+class ToxPk;
 class Chat : public QObject
 {
     Q_OBJECT
@@ -31,6 +32,7 @@ public:
 
     virtual void setName(const QString& name) = 0;
     virtual QString getDisplayedName() const = 0;
+    virtual QString getDisplayedName(const ToxPk& contact) const = 0;
     virtual uint32_t getId() const = 0;
     virtual const ChatId& getPersistentId() const = 0;
     virtual void setEventFlag(bool flag) = 0;

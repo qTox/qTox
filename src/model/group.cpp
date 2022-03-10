@@ -83,6 +83,11 @@ QString Group::getDisplayedName() const
     return getName();
 }
 
+QString Group::getDisplayedName(const ToxPk& contact) const
+{
+    return resolveToxPk(contact);
+}
+
 void Group::regeneratePeerList()
 {
     // NOTE: there's a bit of a race here. Core emits a signal for both groupPeerlistChanged and
