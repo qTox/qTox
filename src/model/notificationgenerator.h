@@ -32,6 +32,8 @@
 
 class NotificationGenerator : public QObject
 {
+    Q_OBJECT
+
 public:
     NotificationGenerator(
         INotificationSettings const& notificationSettings,
