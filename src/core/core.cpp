@@ -926,7 +926,7 @@ void Core::onUserStatusChanged(Tox*, uint32_t friendId, Tox_User_Status userstat
 void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection status, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
-    Status::Status friendStatus;
+    Status::Status friendStatus = Status::Status::Offline;
     switch (status)
     {
         case TOX_CONNECTION_NONE:

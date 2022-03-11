@@ -140,7 +140,7 @@ static IBaseFilter* getDevFilter(QString devName)
         LPMALLOC coMalloc = nullptr;
         IBindCtx* bindCtx = nullptr;
         LPOLESTR olestr = nullptr;
-        char* devIdString;
+        char* devIdString = nullptr;
 
         if (CoGetMalloc(1, &coMalloc) != S_OK)
             goto fail;
