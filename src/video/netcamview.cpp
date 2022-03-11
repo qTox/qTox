@@ -47,11 +47,12 @@ const int BTN_PANEL_WIDTH = 250;
 const auto BTN_STYLE_SHEET_PATH = QStringLiteral("chatForm/fullScreenButtons.css");
 }
 
-NetCamView::NetCamView(ToxPk friendPk_, QWidget* parent)
+NetCamView::NetCamView(ToxPk friendPk_, CameraSource& cameraSource_, QWidget* parent)
     : QWidget(parent)
     , selfFrame{nullptr}
     , friendPk{friendPk_}
     , e(false)
+    , cameraSource{cameraSource_}
 {
     verLayout = new QVBoxLayout(this);
     setWindowTitle(tr("Tox video"));
@@ -167,7 +168,7 @@ NetCamView::~NetCamView()
 void NetCamView::show(VideoSource* source, const QString& title)
 {
     setSource(source);
-    selfVideoSurface->setSource(&CameraSource::getInstance());
+    selfVideoSurface->setSource(&cameraSource);
 
     setTitle(title);
     QWidget::show();

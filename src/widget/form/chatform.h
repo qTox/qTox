@@ -50,7 +50,8 @@ class ChatForm : public GenericChatForm
     Q_OBJECT
 public:
     ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
-        IMessageDispatcher& messageDispatcher_, DocumentCache&, SmileyPack&);
+        IMessageDispatcher& messageDispatcher_, DocumentCache&, SmileyPack&,
+        CameraSource&);
     ~ChatForm() override;
     void setStatusMessage(const QString& newMessage);
 
@@ -141,4 +142,5 @@ private:
     bool isTyping;
     bool lastCallIsVideo;
     std::unique_ptr<NetCamView> netcam;
+    CameraSource& cameraSource;
 };

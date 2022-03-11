@@ -90,8 +90,6 @@ extern "C" {
  * @brief Remember how many times we subscribed for RAII
  */
 
-CameraSource* CameraSource::instance{nullptr};
-
 CameraSource::CameraSource()
     : deviceThread{new QThread}
     , deviceName{"none"}
@@ -121,22 +119,6 @@ CameraSource::CameraSource()
 }
 
 // clang-format on
-
-/**
- * @brief Returns the singleton instance.
- */
-CameraSource& CameraSource::getInstance()
-{
-    if (!instance)
-        instance = new CameraSource();
-    return *instance;
-}
-
-void CameraSource::destroyInstance()
-{
-    delete instance;
-    instance = nullptr;
-}
 
 /**
  * @brief Setup default device

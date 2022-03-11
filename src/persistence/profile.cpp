@@ -232,7 +232,7 @@ bool logCreateToxDataError(const CreateToxDataError& error, const QString& userN
 
 QStringList Profile::profiles;
 
-void Profile::initCore(const QByteArray& toxsave, Settings& s, bool isNewProfile)
+void Profile::initCore(const QByteArray& toxsave, Settings& s, bool isNewProfile, CameraSource& cameraSource)
 {
     if (toxsave.isEmpty() && !isNewProfile) {
         qCritical() << "Existing toxsave is empty";
@@ -265,7 +265,7 @@ void Profile::initCore(const QByteArray& toxsave, Settings& s, bool isNewProfile
         return;
     }
 
-    coreAv = CoreAV::makeCoreAV(core->getTox(), core->getCoreLoopLock(), s, s);
+    coreAv = CoreAV::makeCoreAV(core->getTox(), core->getCoreLoopLock(), s, s, cameraSource);
     if (!coreAv) {
         qDebug() << "Failed to start ToxAV";
         emit failedToStart();
@@ -311,7 +311,7 @@ Profile::Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Pat
  * @note If the profile is already in use return nullptr.
  */
 Profile* Profile::loadProfile(const QString& name, const QString& password, Settings& settings,
-                              const QCommandLineParser* parser)
+                              const QCommandLineParser* parser, CameraSource& cameraSource)
 {
     if (ProfileLocker::hasLock()) {
         qCritical() << "Tried to load profile " << name << ", but another profile is already locked!";
@@ -339,7 +339,7 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
     constexpr bool isNewProfile = false;
     settings.updateProfileData(p, parser, isNewProfile);
 
-    p->initCore(toxsave, settings, isNewProfile);
+    p->initCore(toxsave, settings, isNewProfile, cameraSource);
     p->loadDatabase(password);
 
     return p;
@@ -354,7 +354,7 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
  * @note If the profile is already in use return nullptr.
  */
 Profile* Profile::createProfile(const QString& name, const QString& password, Settings& settings,
-                                const QCommandLineParser* parser)
+                                const QCommandLineParser* parser, CameraSource& cameraSource)
 {
     CreateToxDataError error;
     Paths& paths = settings.getPaths();
@@ -371,7 +371,7 @@ Profile* Profile::createProfile(const QString& name, const QString& password, Se
     constexpr bool isNewProfile = true;
     settings.updateProfileData(p, parser, isNewProfile);
 
-    p->initCore(QByteArray(), settings, isNewProfile);
+    p->initCore(QByteArray(), settings, isNewProfile, cameraSource);
     p->loadDatabase(password);
     return p;
 }
