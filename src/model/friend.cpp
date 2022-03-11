@@ -26,17 +26,17 @@
 #include <QDebug>
 #include <memory>
 
-Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias, const QString& userName)
-    : userName{userName}
-    , userAlias{userAlias}
-    , friendPk{friendPk}
-    , friendId{friendId}
+Friend::Friend(uint32_t friendId_, const ToxPk& friendPk_, const QString& userAlias_, const QString& userName_)
+    : userName{userName_}
+    , userAlias{userAlias_}
+    , friendPk{friendPk_}
+    , friendId{friendId_}
     , hasNewEvents{false}
     , friendStatus{Status::Status::Offline}
     , isNegotiating{false}
 {
-    if (userName.isEmpty()) {
-        this->userName = friendPk.toString();
+    if (userName_.isEmpty()) {
+        userName = friendPk.toString();
     }
 }
 

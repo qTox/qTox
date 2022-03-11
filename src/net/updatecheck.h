@@ -34,7 +34,7 @@ class UpdateCheck : public QObject
     Q_OBJECT
 
 public:
-    UpdateCheck(const Settings& settings);
+    UpdateCheck(const Settings& settings_);
     void checkForUpdate();
 
 signals:

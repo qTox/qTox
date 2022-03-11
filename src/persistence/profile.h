@@ -104,7 +104,7 @@ private slots:
     void onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash, uint64_t filesize);
 
 private:
-    Profile(const QString& name, std::unique_ptr<ToxEncrypt> passkey, Paths& paths, Settings &settings_);
+    Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Paths& paths_, Settings &settings_);
     static QStringList getFilesByExt(QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);

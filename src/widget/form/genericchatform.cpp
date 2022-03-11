@@ -134,20 +134,20 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
 
 } // namespace
 
-GenericChatForm::GenericChatForm(const Core& _core, const Contact* contact, IChatLog& chatLog,
-                                 IMessageDispatcher& messageDispatcher, QWidget* parent)
-    : QWidget(parent, Qt::Window)
-    , core{_core}
+GenericChatForm::GenericChatForm(const Core& core_, const Contact* contact, IChatLog& chatLog_,
+                                 IMessageDispatcher& messageDispatcher_, QWidget* parent_)
+    : QWidget(parent_, Qt::Window)
+    , core{core_}
     , audioInputFlag(false)
     , audioOutputFlag(false)
-    , chatLog(chatLog)
-    , messageDispatcher(messageDispatcher)
+    , chatLog(chatLog_)
+    , messageDispatcher(messageDispatcher_)
 {
     curRow = 0;
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
     dateInfo = new QLabel(this);
-    chatWidget = new ChatWidget(chatLog, core, this);
+    chatWidget = new ChatWidget(chatLog_, core, this);
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);
     dateInfo->setVisible(false);
@@ -363,9 +363,9 @@ void GenericChatForm::setName(const QString& newName)
     headWidget->setName(newName);
 }
 
-void GenericChatForm::show(ContentLayout* contentLayout)
+void GenericChatForm::show(ContentLayout* contentLayout_)
 {
-    contentLayout->mainHead->layout()->addWidget(headWidget);
+    contentLayout_->mainHead->layout()->addWidget(headWidget);
     headWidget->show();
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 12, 4) && QT_VERSION > QT_VERSION_CHECK(5, 11, 0)
@@ -375,7 +375,7 @@ void GenericChatForm::show(ContentLayout* contentLayout)
     QWidget::show();
     contentLayout->mainContent->layout()->addWidget(this);
 #else
-    contentLayout->mainContent->layout()->addWidget(this);
+    contentLayout_->mainContent->layout()->addWidget(this);
     QWidget::show();
 #endif
 }
@@ -575,7 +575,7 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
         return false;
     }
 
-    if (object != this->fileButton && object != this->fileFlyout)
+    if (object != fileButton && object != fileFlyout)
         return false;
 
     if (!qobject_cast<QWidget*>(object)->isEnabled())

@@ -58,29 +58,29 @@ public:
 
     QString getProxyAddr() const override
     {
-        return Addr;
+        return addr;
     }
-    void setProxyAddr(const QString& Addr) override
+    void setProxyAddr(const QString& addr_) override
     {
-        this->Addr = Addr;
+        addr = addr_;
     }
 
     ProxyType getProxyType() const override
     {
         return type;
     }
-    void setProxyType(ProxyType type) override
+    void setProxyType(ProxyType type_) override
     {
-        this->type = type;
+        type = type_;
     }
 
     quint16 getProxyPort() const override
     {
         return port;
     }
-    void setProxyPort(quint16 port) override
+    void setProxyPort(quint16 port_) override
     {
-        this->port = port;
+        port = port_;
     }
 
     QNetworkProxy getProxy() const override
@@ -96,7 +96,7 @@ public:
     SIGNAL_IMPL(MockSettings, proxyPortChanged, quint16 port)
 
 private:
-    QString Addr;
+    QString addr;
     ProxyType type;
     quint16 port;
 };

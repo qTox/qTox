@@ -43,13 +43,13 @@
  * @param profile Pointer to Profile.
  * @note All pointers parameters shouldn't be null.
  */
-ProfileInfo::ProfileInfo(Core* core, Profile* profile)
-    : profile{profile}
-    , core{core}
+ProfileInfo::ProfileInfo(Core* core_, Profile* profile_)
+    : profile{profile_}
+    , core{core_}
 {
-    connect(core, &Core::idSet, this, &ProfileInfo::idChanged);
-    connect(core, &Core::usernameSet, this, &ProfileInfo::usernameChanged);
-    connect(core, &Core::statusMessageSet, this, &ProfileInfo::statusMessageChanged);
+    connect(core_, &Core::idSet, this, &ProfileInfo::idChanged);
+    connect(core_, &Core::usernameSet, this, &ProfileInfo::usernameChanged);
+    connect(core_, &Core::statusMessageSet, this, &ProfileInfo::statusMessageChanged);
 }
 
 /**

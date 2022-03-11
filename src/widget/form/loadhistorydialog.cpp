@@ -27,10 +27,10 @@
 #include <QDate>
 #include <QTextCharFormat>
 
-LoadHistoryDialog::LoadHistoryDialog(const IChatLog* chatLog, QWidget* parent)
+LoadHistoryDialog::LoadHistoryDialog(const IChatLog* chatLog_, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::LoadHistoryDialog)
-    , chatLog(chatLog)
+    , chatLog(chatLog_)
 {
     ui->setupUi(this);
     highlightDates(QDate::currentDate().year(), QDate::currentDate().month());

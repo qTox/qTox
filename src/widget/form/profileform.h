@@ -52,7 +52,7 @@ class ProfileForm : public QWidget
 {
     Q_OBJECT
 public:
-    ProfileForm(IProfileInfo* profileInfo, QWidget* parent = nullptr);
+    ProfileForm(IProfileInfo* profileInfo_, QWidget* parent = nullptr);
     ~ProfileForm();
     void show(ContentLayout* contentLayout);
     bool isShown() const;

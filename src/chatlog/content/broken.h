@@ -28,7 +28,7 @@ class Broken : public ChatLineContent
 {
     Q_OBJECT
 public:
-    Broken(const QString& img, QSize size);
+    Broken(const QString& img, QSize size_);
     QRectF boundingRect() const override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
                        QWidget* widget) override;

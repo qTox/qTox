@@ -54,11 +54,11 @@ enum class updateIndex
 /**
  * @brief Constructor of AboutForm.
  */
-AboutForm::AboutForm(UpdateCheck* updateCheck)
+AboutForm::AboutForm(UpdateCheck* updateCheck_)
     : GenericForm(QPixmap(":/img/settings/general.png"))
     , bodyUI(new Ui::AboutSettings)
     , progressTimer(new QTimer(this))
-    , updateCheck(updateCheck)
+    , updateCheck(updateCheck_)
 {
     bodyUI->setupUi(this);
 
@@ -67,7 +67,7 @@ AboutForm::AboutForm(UpdateCheck* updateCheck)
 #endif
     bodyUI->unstableVersion->setVisible(false);
 #if UPDATE_CHECK_ENABLED
-    connect(updateCheck, &UpdateCheck::versionIsUnstable, this, &AboutForm::onUnstableVersion);
+    connect(updateCheck_, &UpdateCheck::versionIsUnstable, this, &AboutForm::onUnstableVersion);
 #endif
 
     // block all child signals during initialization

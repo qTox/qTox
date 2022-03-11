@@ -25,9 +25,9 @@ namespace
     class IdxChatLine : public ChatLine
     {
     public:
-        explicit IdxChatLine(ChatLogIdx idx)
+        explicit IdxChatLine(ChatLogIdx idx_)
             : ChatLine()
-            , idx(idx)
+            , idx(idx_)
         {}
 
         ChatLogIdx get() { return idx; }

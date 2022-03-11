@@ -179,13 +179,13 @@ int FlowLayout::doLayout(const QRect& rect, bool testOnly) const
 }
 int FlowLayout::smartSpacing(QStyle::PixelMetric pm) const
 {
-    QObject* parent = this->parent();
-    if (!parent) {
+    QObject* parent_ = parent();
+    if (!parent_) {
         return -1;
-    } else if (parent->isWidgetType()) {
-        QWidget* pw = static_cast<QWidget*>(parent);
+    } else if (parent_->isWidgetType()) {
+        QWidget* pw = static_cast<QWidget*>(parent_);
         return pw->style()->pixelMetric(pm, nullptr, pw);
     } else {
-        return static_cast<QLayout*>(parent)->spacing();
+        return static_cast<QLayout*>(parent_)->spacing();
     }
 }

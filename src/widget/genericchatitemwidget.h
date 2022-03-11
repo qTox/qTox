@@ -35,10 +35,10 @@ public:
         FriendOnlineItem
     };
 
-    explicit GenericChatItemWidget(bool compact, QWidget* parent = nullptr);
+    explicit GenericChatItemWidget(bool compact_, QWidget* parent = nullptr);
 
     bool isCompact() const;
-    void setCompact(bool compact);
+    void setCompact(bool compact_);
 
     QString getName() const;
 

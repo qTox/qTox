@@ -157,10 +157,10 @@ namespace
 } // namespace
 
 NotificationGenerator::NotificationGenerator(
-    INotificationSettings const& notificationSettings,
-    Profile* profile)
-    : notificationSettings(notificationSettings)
-    , profile(profile)
+    INotificationSettings const& notificationSettings_,
+    Profile* profile_)
+    : notificationSettings(notificationSettings_)
+    , profile(profile_)
 {}
 
 NotificationGenerator::~NotificationGenerator() = default;

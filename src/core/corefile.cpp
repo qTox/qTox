@@ -50,9 +50,9 @@ CoreFilePtr CoreFile::makeCoreFile(Core *core, Tox *tox, CompatibleRecursiveMute
     return result;
 }
 
-CoreFile::CoreFile(Tox *core, CompatibleRecursiveMutex &coreLoopLock)
-    : tox{core}
-    , coreLoopLock{&coreLoopLock}
+CoreFile::CoreFile(Tox *core_, CompatibleRecursiveMutex &coreLoopLock_)
+    : tox{core_}
+    , coreLoopLock{&coreLoopLock_}
 {
 }
 

@@ -32,8 +32,8 @@ class SessionChatLog : public IChatLog
 {
     Q_OBJECT
 public:
-    SessionChatLog(const ICoreIdHandler& coreIdHandler);
-    SessionChatLog(ChatLogIdx initialIdx, const ICoreIdHandler& coreIdHandler);
+    SessionChatLog(const ICoreIdHandler& coreIdHandler_);
+    SessionChatLog(ChatLogIdx initialIdx, const ICoreIdHandler& coreIdHandler_);
 
     ~SessionChatLog();
     const ChatLogItem& at(ChatLogIdx idx) const override;

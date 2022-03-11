@@ -57,21 +57,21 @@ public:
     class Query
     {
     public:
-        Query(QString query, QVector<QByteArray> blobs = {},
-              const std::function<void(RowId)>& insertCallback = {})
-            : query{query.toUtf8()}
-            , blobs{blobs}
-            , insertCallback{insertCallback}
+        Query(QString query_, QVector<QByteArray> blobs_ = {},
+              const std::function<void(RowId)>& insertCallback_ = {})
+            : query{query_.toUtf8()}
+            , blobs{blobs_}
+            , insertCallback{insertCallback_}
         {
         }
-        Query(QString query, const std::function<void(RowId)>& insertCallback)
-            : query{query.toUtf8()}
-            , insertCallback{insertCallback}
+        Query(QString query_, const std::function<void(RowId)>& insertCallback_)
+            : query{query_.toUtf8()}
+            , insertCallback{insertCallback_}
         {
         }
-        Query(QString query, const std::function<void(const QVector<QVariant>&)>& rowCallback)
-            : query{query.toUtf8()}
-            , rowCallback{rowCallback}
+        Query(QString query_, const std::function<void(const QVector<QVariant>&)>& rowCallback_)
+            : query{query_.toUtf8()}
+            , rowCallback{rowCallback_}
         {
         }
         Query() = default;
@@ -97,7 +97,7 @@ public:
         p4_0 // SQLCipher 4.0 default encryption params
     };
 
-    RawDatabase(const QString& path, const QString& password, const QByteArray& salt);
+    RawDatabase(const QString& path_, const QString& password, const QByteArray& salt);
     ~RawDatabase();
     bool isOpen();
 
@@ -132,7 +132,7 @@ public slots:
     bool remove();
 
 protected slots:
-    bool open(const QString& path, const QString& hexKey = {});
+    bool open(const QString& path_, const QString& hexKey = {});
     void close();
     void process();
 

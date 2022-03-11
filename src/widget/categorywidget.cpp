@@ -38,8 +38,8 @@ void CategoryWidget::emitChatroomWidget(QLayout* layout, int index)
     }
 }
 
-CategoryWidget::CategoryWidget(bool compact, QWidget* parent)
-    : GenericChatItemWidget(compact, parent)
+CategoryWidget::CategoryWidget(bool compact_, QWidget* parent)
+    : GenericChatItemWidget(compact_, parent)
 {
     container = new QWidget(this);
     container->setObjectName("circleWidgetContainer");

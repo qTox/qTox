@@ -62,7 +62,7 @@ public:
     ~ChatFormHeader();
 
     void setName(const QString& newName);
-    void setMode(Mode mode);
+    void setMode(Mode mode_);
 
     void showOutgoingCall(bool video);
     void createCallConfirm(bool video);

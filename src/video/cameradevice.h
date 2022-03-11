@@ -50,7 +50,7 @@ public:
     static bool isScreen(const QString& devName);
 
 private:
-    CameraDevice(const QString& devName, AVFormatContext* context);
+    CameraDevice(const QString& devName_, AVFormatContext* context_);
     static CameraDevice* open(QString devName, AVDictionary** options);
     static bool getDefaultInputFormat();
     static QVector<QPair<QString, QString>> getRawDeviceListGeneric();

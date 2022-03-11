@@ -40,8 +40,8 @@ LoginScreen::LoginScreen(const QString& initialProfileName, QWidget* parent)
     ui->setupUi(this);
 
     // permanently disables maximize button https://github.com/qTox/qTox/issues/1973
-    this->setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
-    this->setFixedSize(this->size());
+    setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
+    setFixedSize(size());
 
     connect(&quitShortcut, &QShortcut::activated, this, &LoginScreen::close);
     connect(ui->newProfilePgbtn, &QPushButton::clicked, this, &LoginScreen::onNewProfilePageClicked);
@@ -60,7 +60,7 @@ LoginScreen::LoginScreen(const QString& initialProfileName, QWidget* parent)
     connect(ui->importButton, &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
     reset(initialProfileName);
-    this->setStyleSheet(Style::getStylesheet("loginScreen/loginScreen.css"));
+    setStyleSheet(Style::getStylesheet("loginScreen/loginScreen.css"));
 
     retranslateUi();
     Translator::registerHandler(std::bind(&LoginScreen::retranslateUi, this), this);

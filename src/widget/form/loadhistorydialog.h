@@ -33,7 +33,7 @@ class LoadHistoryDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit LoadHistoryDialog(const IChatLog* chatLog, QWidget* parent = nullptr);
+    explicit LoadHistoryDialog(const IChatLog* chatLog_, QWidget* parent = nullptr);
     explicit LoadHistoryDialog(QWidget* parent = nullptr);
     ~LoadHistoryDialog();
 

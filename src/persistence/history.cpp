@@ -409,9 +409,9 @@ bool dbSchema7to8(RawDatabase& db)
 }
 
 struct BadEntry {
-    BadEntry(int64_t row, QString toxId) :
-        row{row},
-        toxId{toxId} {}
+    BadEntry(int64_t row_, QString toxId_) :
+        row{row_},
+        toxId{toxId_} {}
     RowId row;
     QString toxId;
 };
@@ -447,9 +447,9 @@ RowId getValidPeerRow(RawDatabase& db, const ToxPk& friendPk)
 }
 
 struct DuplicateAlias {
-    DuplicateAlias(RowId goodAliasRow, std::vector<RowId> badAliasRows) :
-        goodAliasRow{goodAliasRow},
-        badAliasRows{badAliasRows} {}
+    DuplicateAlias(RowId goodAliasRow_, std::vector<RowId> badAliasRows_) :
+        goodAliasRow{goodAliasRow_},
+        badAliasRows{badAliasRows_} {}
     DuplicateAlias() {};
     RowId goodAliasRow{-1};
     std::vector<RowId> badAliasRows;

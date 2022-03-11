@@ -117,7 +117,7 @@ private:
     };
 
 public:
-    explicit Widget(Profile& _profile, IAudioControl& audio, QWidget* parent = nullptr);
+    explicit Widget(Profile& profile_, IAudioControl& audio_, QWidget* parent = nullptr);
     ~Widget() override;
     void init();
     void setCentralWidget(QWidget* widget, const QString& widgetName);
@@ -126,7 +126,7 @@ public:
     static Widget* getInstance(IAudioControl* audio = nullptr);
     void showUpdateDownloadProgress();
     void addFriendDialog(const Friend* frnd, ContentDialog* dialog);
-    void addGroupDialog(Group* group, ContentDialog* dialog);
+    void addGroupDialog(const Group* group, ContentDialog* dialog);
     bool newFriendMessageAlert(const ToxPk& friendId, const QString& text, bool sound = true,
                                QString filename = QString(), size_t filesize = 0);
     bool newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk, const QString& message,

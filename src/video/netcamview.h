@@ -40,7 +40,7 @@ class NetCamView : public QWidget
     Q_OBJECT
 
 public:
-    NetCamView(ToxPk friendPk, QWidget* parent = nullptr);
+    NetCamView(ToxPk friendPk_, QWidget* parent = nullptr);
     ~NetCamView();
 
     virtual void show(VideoSource* source, const QString& title);

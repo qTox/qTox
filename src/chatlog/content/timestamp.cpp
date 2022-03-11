@@ -19,10 +19,10 @@
 
 #include "timestamp.h"
 
-Timestamp::Timestamp(const QDateTime& time, const QString& format, const QFont& font)
-    : Text(time.toString(format), font, false, time.toString(format))
+Timestamp::Timestamp(const QDateTime& time_, const QString& format, const QFont& font)
+    : Text(time_.toString(format), font, false, time_.toString(format))
 {
-    this->time = time;
+    time = time_;
 }
 
 QDateTime Timestamp::getTime()

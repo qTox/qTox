@@ -84,9 +84,9 @@
  * @param password If empty, the database will be opened unencrypted.
  * Otherwise we will use toxencryptsave to derive a key and encrypt the database.
  */
-RawDatabase::RawDatabase(const QString& path, const QString& password, const QByteArray& salt)
+RawDatabase::RawDatabase(const QString& path_, const QString& password, const QByteArray& salt)
     : workerThread{new QThread}
-    , path{path}
+    , path{path_}
     , currentSalt{salt} // we need the salt later if a new password should be set
     , currentHexKey{deriveKey(password, salt)}
 {
@@ -140,25 +140,25 @@ RawDatabase::~RawDatabase()
  * @param hexKey Hex representation of the key in string.
  * @return True if success, false otherwise.
  */
-bool RawDatabase::open(const QString& path, const QString& hexKey)
+bool RawDatabase::open(const QString& path_, const QString& hexKey)
 {
     if (QThread::currentThread() != workerThread.get()) {
         bool ret;
         QMetaObject::invokeMethod(this, "open", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, ret),
-                                  Q_ARG(const QString&, path), Q_ARG(const QString&, hexKey));
+                                  Q_ARG(const QString&, path_), Q_ARG(const QString&, hexKey));
         return ret;
     }
 
-    if (!QFile::exists(path) && QFile::exists(path + ".tmp")) {
+    if (!QFile::exists(path_) && QFile::exists(path_ + ".tmp")) {
         qWarning() << "Restoring database from temporary export file! Did we crash while changing "
                       "the password or upgrading?";
-        QFile::rename(path + ".tmp", path);
+        QFile::rename(path_ + ".tmp", path_);
     }
 
-    if (sqlite3_open_v2(path.toUtf8().data(), &sqlite,
+    if (sqlite3_open_v2(path_.toUtf8().data(), &sqlite,
                         SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_NOMUTEX, nullptr)
         != SQLITE_OK) {
-        qWarning() << "Failed to open database" << path << "with error:" << sqlite3_errmsg(sqlite);
+        qWarning() << "Failed to open database" << path_ << "with error:" << sqlite3_errmsg(sqlite);
         return false;
     }
 

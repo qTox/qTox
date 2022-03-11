@@ -90,13 +90,13 @@ QReadWriteLock VideoFrame::refsLock{};
  * @param pixFmt the pixel format of the AVFrame, obtained from the AVFrame if not given.
  * @param freeSourceFrame whether to free the source frame buffers or not.
  */
-VideoFrame::VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, int pixFmt,
-                       bool freeSourceFrame)
+VideoFrame::VideoFrame(IDType sourceID_, AVFrame* sourceFrame, QRect dimensions, int pixFmt,
+                       bool freeSourceFrame_)
     : frameID(frameIDs++)
-    , sourceID(sourceID)
+    , sourceID(sourceID_)
     , sourceDimensions(dimensions)
     , sourceFrameKey(getFrameKey(dimensions.size(), pixFmt, sourceFrame->linesize[0]))
-    , freeSourceFrame(freeSourceFrame)
+    , freeSourceFrame(freeSourceFrame_)
 {
 
     // We override the pixel format in the case a deprecated one is used
@@ -140,9 +140,9 @@ VideoFrame::VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, 
     frameBuffer[sourceFrameKey] = sourceFrame;
 }
 
-VideoFrame::VideoFrame(IDType sourceID, AVFrame* sourceFrame, bool freeSourceFrame)
-    : VideoFrame(sourceID, sourceFrame, QRect{0, 0, sourceFrame->width, sourceFrame->height},
-                 sourceFrame->format, freeSourceFrame)
+VideoFrame::VideoFrame(IDType sourceID_, AVFrame* sourceFrame, bool freeSourceFrame_)
+    : VideoFrame(sourceID_, sourceFrame, QRect{0, 0, sourceFrame->width, sourceFrame->height},
+                 sourceFrame->format, freeSourceFrame_)
 {
 }
 

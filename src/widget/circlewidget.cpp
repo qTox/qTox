@@ -40,10 +40,10 @@
 
 QHash<int, CircleWidget*> CircleWidget::circleList;
 
-CircleWidget::CircleWidget(const Core &_core, FriendListWidget* parent, int id)
+CircleWidget::CircleWidget(const Core &core_, FriendListWidget* parent, int id_)
     : CategoryWidget(isCompact(), parent)
-    , id(id)
-    , core{_core}
+    , id(id_)
+    , core{core_}
 {
     setName(Settings::getInstance().getCircleName(id), false);
     circleList[id] = this;

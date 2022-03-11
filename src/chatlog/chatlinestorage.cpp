@@ -159,7 +159,7 @@ ChatLineStorage::IdxInfoMap_t::iterator ChatLineStorage::equivalentInfoIterator(
     return equivalentIt;
 }
 
-ChatLineStorage::IdxInfoMap_t::iterator ChatLineStorage::infoIteratorForIdx(ChatLogIdx idx)
+ChatLineStorage::IdxInfoMap_t::iterator ChatLineStorage::infoIteratorForIdx(ChatLogIdx idx_)
 {
     // If lower_bound proves to be expensive for appending we can try
     // special casing when idx > idxToLineMap.rbegin()->first
@@ -167,7 +167,7 @@ ChatLineStorage::IdxInfoMap_t::iterator ChatLineStorage::infoIteratorForIdx(Chat
     // If we find an exact match we return that index, otherwise we return
     // the first item after it. It's up to the caller to check if there's an
     // exact match first
-    auto it = std::lower_bound(idxInfoMap.begin(), idxInfoMap.end(), idx, [](const IdxInfoMap_t::value_type& v, ChatLogIdx idx) {
+    auto it = std::lower_bound(idxInfoMap.begin(), idxInfoMap.end(), idx_, [](const IdxInfoMap_t::value_type& v, ChatLogIdx idx) {
         return v.first < idx;
     });
 

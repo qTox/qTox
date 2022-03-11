@@ -36,7 +36,7 @@ class AboutForm : public GenericForm
 {
     Q_OBJECT
 public:
-    AboutForm(UpdateCheck* updateCheck);
+    AboutForm(UpdateCheck* updateCheck_);
     ~AboutForm();
     QString getFormName() final
     {

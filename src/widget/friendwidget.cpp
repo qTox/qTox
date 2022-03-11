@@ -56,9 +56,9 @@
  * For example, used on friend list.
  * When you click should open the chat with friend. Widget has a context menu.
  */
-FriendWidget::FriendWidget(std::shared_ptr<FriendChatroom> chatroom, bool compact)
-    : GenericChatroomWidget(compact)
-    , chatroom{chatroom}
+FriendWidget::FriendWidget(std::shared_ptr<FriendChatroom> chatroom_, bool compact_)
+    : GenericChatroomWidget(compact_)
+    , chatroom{chatroom_}
     , isDefaultAvatar{true}
 {
     avatar->setPixmap(QPixmap(":/img/contact.svg"));
@@ -296,9 +296,9 @@ void FriendWidget::setAsInactiveChatroom()
     setActive(false);
 }
 
-void FriendWidget::setActive(bool active)
+void FriendWidget::setActive(bool active_)
 {
-    GenericChatroomWidget::setActive(active);
+    GenericChatroomWidget::setActive(active_);
     if (isDefaultAvatar) {
         const auto uri =
             active ? QStringLiteral(":img/contact_dark.svg") : QStringLiteral(":img/contact.svg");

@@ -38,8 +38,8 @@ static int defaultWidth = 0;
  */
 const static int leftWidthPercent = 33;
 
-SplitterRestorer::SplitterRestorer(QSplitter* splitter)
-    : splitter{splitter}
+SplitterRestorer::SplitterRestorer(QSplitter* splitter_)
+    : splitter{splitter_}
 {
     if (defaultWidth == 0) {
         defaultWidth = QSplitter().handleWidth();

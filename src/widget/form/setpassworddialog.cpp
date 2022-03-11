@@ -25,17 +25,17 @@
 
 const double SetPasswordDialog::reasonablePasswordLength = 8.;
 
-SetPasswordDialog::SetPasswordDialog(QString body, QString extraButton, QWidget* parent)
+SetPasswordDialog::SetPasswordDialog(QString body_, QString extraButton, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::SetPasswordDialog)
-    , body(body + "\n\n")
+    , body(body_ + "\n\n")
 {
     ui->setupUi(this);
 
     connect(ui->passwordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
     connect(ui->repasswordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
 
-    ui->body->setText(body + "\n\n");
+    ui->body->setText(body_ + "\n\n");
     QPushButton* ok = ui->buttonBox->button(QDialogButtonBox::Ok);
     ok->setEnabled(false);
     ok->setText(QApplication::tr("Ok"));
@@ -45,7 +45,7 @@ SetPasswordDialog::SetPasswordDialog(QString body, QString extraButton, QWidget*
     if (!extraButton.isEmpty()) {
         QPushButton* third = new QPushButton(extraButton);
         ui->buttonBox->addButton(third, QDialogButtonBox::YesRole);
-        connect(third, &QPushButton::clicked, this, [&]() { this->done(Tertiary); });
+        connect(third, &QPushButton::clicked, this, [&]() { done(Tertiary); });
     }
 }
 

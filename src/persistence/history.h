@@ -137,33 +137,33 @@ class History : public QObject, public std::enable_shared_from_this<History>
 public:
     struct HistMessage
     {
-        HistMessage(RowId id, MessageState state, ExtensionSet extensionSet, QDateTime timestamp, QString chat, QString dispName,
-                    QString sender, QString message)
-            : chat{chat}
-            , sender{sender}
-            , dispName{dispName}
-            , timestamp{timestamp}
-            , id{id}
-            , state{state}
-            , extensionSet(extensionSet)
+        HistMessage(RowId id_, MessageState state_, ExtensionSet extensionSet_, QDateTime timestamp_, QString chat_, QString dispName_,
+                    QString sender_, QString message)
+            : chat{chat_}
+            , sender{sender_}
+            , dispName{dispName_}
+            , timestamp{timestamp_}
+            , id{id_}
+            , state{state_}
+            , extensionSet(extensionSet_)
             , content(std::move(message))
         {}
 
-        HistMessage(RowId id, MessageState state, QDateTime timestamp, QString chat, QString dispName,
-                    QString sender, ToxFile file)
-            : chat{chat}
-            , sender{sender}
-            , dispName{dispName}
-            , timestamp{timestamp}
-            , id{id}
-            , state{state}
+        HistMessage(RowId id_, MessageState state_, QDateTime timestamp_, QString chat_, QString dispName_,
+                    QString sender_, ToxFile file)
+            : chat{chat_}
+            , sender{sender_}
+            , dispName{dispName_}
+            , timestamp{timestamp_}
+            , id{id_}
+            , state{state_}
             , content(std::move(file))
         {}
 
-        HistMessage(RowId id, QDateTime timestamp, QString chat, SystemMessage systemMessage)
-            : chat{chat}
-            , timestamp{timestamp}
-            , id{id}
+        HistMessage(RowId id_, QDateTime timestamp_, QString chat_, SystemMessage systemMessage)
+            : chat{chat_}
+            , timestamp{timestamp_}
+            , id{id_}
             , state(MessageState::complete)
             , content(std::move(systemMessage))
         {}

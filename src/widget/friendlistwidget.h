@@ -85,7 +85,7 @@ private slots:
 private:
     CircleWidget* createCircleWidget(int id = -1);
     CategoryWidget* getTimeCategoryWidget(const Friend* frd) const;
-    void sortByMode(SortingMode mode);
+    void sortByMode();
     void cleanMainLayout();
     QWidget* getNextWidgetForName(IFriendListItem* currentPos, bool forward) const;
     QVector<std::shared_ptr<IFriendListItem> > getItemsFromCircle(CircleWidget* circle) const;

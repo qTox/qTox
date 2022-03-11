@@ -20,9 +20,9 @@
 #include "friendlistmanager.h"
 #include "src/widget/genericchatroomwidget.h"
 
-FriendListManager::FriendListManager(int countContacts, QObject *parent) : QObject(parent)
+FriendListManager::FriendListManager(int countContacts_, QObject *parent) : QObject(parent)
 {
-    this->countContacts = countContacts;
+    countContacts = countContacts_;
 }
 
 QVector<FriendListManager::IFriendListItemPtr> FriendListManager::getItems() const
@@ -136,7 +136,7 @@ void FriendListManager::updatePositions()
 
     if (byName) {
         auto sortName = [&](const IFriendListItemPtr &a, const IFriendListItemPtr &b) {
-                            return cmpByName(a, b, groupsOnTop);
+                            return cmpByName(a, b);
                         };
         if (!needSort) {
             if (std::is_sorted(items.begin(), items.end(), sortName)) {
@@ -183,8 +183,7 @@ void FriendListManager::removeAll(IFriendListItem* item)
     }
 }
 
-bool FriendListManager::cmpByName(const IFriendListItemPtr &a, const IFriendListItemPtr &b,
-                                  bool groupsOnTop)
+bool FriendListManager::cmpByName(const IFriendListItemPtr &a, const IFriendListItemPtr &b)
 {
     if (a->isGroup() && !b->isGroup()) {
         if (groupsOnTop) {
@@ -239,4 +238,3 @@ bool FriendListManager::cmpByActivity(const IFriendListItemPtr &a, const IFriend
 
     return a->getLastActivity() > b->getLastActivity();
 }
-

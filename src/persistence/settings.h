@@ -575,7 +575,7 @@ private:
     Settings& operator=(const Settings&) = delete;
     void savePersonal(QString profileName, const ToxEncrypt* passkey);
     friendProp& getOrInsertFriendPropRef(const ToxPk& id);
-    ICoreSettings::ProxyType fixInvalidProxyType(ICoreSettings::ProxyType proxyType);
+    static ICoreSettings::ProxyType fixInvalidProxyType(ICoreSettings::ProxyType proxyType);
 
     template <typename T>
     bool setVal(T& savedVal, T newVal);
@@ -686,8 +686,8 @@ private:
     struct friendProp
     {
         friendProp() = delete;
-        friendProp(QString addr)
-            : addr(addr)
+        friendProp(QString addr_)
+            : addr(addr_)
         {}
         QString alias = "";
         QString addr = "";

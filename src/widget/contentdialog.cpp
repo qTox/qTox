@@ -356,8 +356,8 @@ void ContentDialog::onVideoShow(QSize size)
     }
 
     videoSurfaceSize = size;
-    QSize minSize = minimumSize();
-    setMinimumSize(minSize + videoSurfaceSize);
+    QSize minSize_ = minimumSize();
+    setMinimumSize(minSize_ + videoSurfaceSize);
 }
 
 void ContentDialog::onVideoHide()
@@ -367,8 +367,8 @@ void ContentDialog::onVideoHide()
         return;
     }
 
-    QSize minSize = minimumSize();
-    setMinimumSize(minSize - videoSurfaceSize);
+    QSize minSize_ = minimumSize();
+    setMinimumSize(minSize_ - videoSurfaceSize);
     videoSurfaceSize = QSize();
 }
 

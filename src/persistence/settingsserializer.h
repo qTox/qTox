@@ -29,7 +29,7 @@
 class SettingsSerializer
 {
 public:
-    SettingsSerializer(QString filePath, const ToxEncrypt* passKey = nullptr);
+    SettingsSerializer(QString filePath_, const ToxEncrypt* passKey_ = nullptr);
 
     static bool isSerializedFormat(QString filePath);
 
@@ -69,12 +69,12 @@ private:
             , value{}
         {
         }
-        Value(qint64 group, qint64 array, int arrayIndex, QString key, QVariant value)
-            : group{group}
-            , array{array}
-            , arrayIndex{arrayIndex}
-            , key{key}
-            , value{value}
+        Value(qint64 group_, qint64 array_, int arrayIndex_, QString key_, QVariant value_)
+            : group{group_}
+            , array{array_}
+            , arrayIndex{arrayIndex_}
+            , key{key_}
+            , value{value_}
         {
         }
         qint64 group;

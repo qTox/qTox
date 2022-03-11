@@ -76,8 +76,8 @@ void MessageProcessor::SharedParams::setPublicKey(const QString& pk)
                                        QRegularExpression::CaseInsensitiveOption);
 }
 
-MessageProcessor::MessageProcessor(const MessageProcessor::SharedParams& sharedParams)
-    : sharedParams(sharedParams)
+MessageProcessor::MessageProcessor(const MessageProcessor::SharedParams& sharedParams_)
+    : sharedParams(sharedParams_)
 {}
 
 /**

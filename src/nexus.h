@@ -46,8 +46,8 @@ class Nexus : public QObject
 public:
     void start();
     void showMainGUI();
-    void setSettings(Settings* settings);
-    void setParser(QCommandLineParser* parser);
+    void setSettings(Settings* settings_);
+    void setParser(QCommandLineParser* parser_);
     static Nexus& getInstance();
     static void destroyInstance();
     static Core* getCore();

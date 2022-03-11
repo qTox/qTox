@@ -28,10 +28,10 @@
 #include "src/model/status.h"
 #include "src/persistence/settings.h"
 
-GroupChatroom::GroupChatroom(Group* group, IDialogsManager* dialogsManager, Core& _core)
-    : group{group}
-    , dialogsManager{dialogsManager}
-    , core{_core}
+GroupChatroom::GroupChatroom(Group* group_, IDialogsManager* dialogsManager_, Core& core_)
+    : group{group_}
+    , dialogsManager{dialogsManager_}
+    , core{core_}
 {
 }
 

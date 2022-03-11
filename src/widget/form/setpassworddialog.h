@@ -36,7 +36,7 @@ public:
         Accepted = QDialog::Accepted,
         Tertiary
     };
-    explicit SetPasswordDialog(QString body, QString extraButton, QWidget* parent = nullptr);
+    explicit SetPasswordDialog(QString body_, QString extraButton, QWidget* parent = nullptr);
     ~SetPasswordDialog();
     QString getPassword();
     static int getPasswordStrength(QString pass);

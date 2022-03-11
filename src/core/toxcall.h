@@ -91,7 +91,7 @@ class ToxFriendCall : public ToxCall
     Q_OBJECT
 public:
     ToxFriendCall() = delete;
-    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av, IAudioControl& audio);
+    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av_, IAudioControl& audio_);
     ToxFriendCall(ToxFriendCall&& other) = delete;
     ToxFriendCall& operator=(ToxFriendCall&& other) = delete;
     ~ToxFriendCall();
@@ -117,7 +117,7 @@ class ToxGroupCall : public ToxCall
     Q_OBJECT
 public:
     ToxGroupCall() = delete;
-    ToxGroupCall(const Group& group, CoreAV& av, IAudioControl& audio);
+    ToxGroupCall(const Group& group_, CoreAV& av_, IAudioControl& audio_);
     ToxGroupCall(ToxGroupCall&& other) = delete;
     ~ToxGroupCall();
 

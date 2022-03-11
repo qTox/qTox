@@ -40,8 +40,8 @@ struct MessageDateAdaptor
                         : invalidDateTime)
     {}
 
-    MessageDateAdaptor(const QDateTime& timestamp)
-        : timestamp(timestamp)
+    MessageDateAdaptor(const QDateTime& timestamp_)
+        : timestamp(timestamp_)
     {}
 
     const QDateTime& timestamp;
@@ -125,15 +125,15 @@ QString resolveToxPk(const ToxPk& pk)
 }
 } // namespace
 
-SessionChatLog::SessionChatLog(const ICoreIdHandler& coreIdHandler)
-    : coreIdHandler(coreIdHandler)
+SessionChatLog::SessionChatLog(const ICoreIdHandler& coreIdHandler_)
+    : coreIdHandler(coreIdHandler_)
 {}
 
 /**
  * @brief Alternate constructor that allows for an initial index to be set
  */
-SessionChatLog::SessionChatLog(ChatLogIdx initialIdx, const ICoreIdHandler& coreIdHandler)
-    : coreIdHandler(coreIdHandler)
+SessionChatLog::SessionChatLog(ChatLogIdx initialIdx, const ICoreIdHandler& coreIdHandler_)
+    : coreIdHandler(coreIdHandler_)
     , nextIdx(initialIdx)
 {}
 
@@ -325,7 +325,7 @@ void SessionChatLog::addSystemMessage(const SystemMessage& message)
 
     items.emplace(messageIdx, ChatLogItem(message));
 
-    emit this->itemUpdated(messageIdx);
+    emit itemUpdated(messageIdx);
 }
 
 void SessionChatLog::insertCompleteMessageAtIdx(ChatLogIdx idx, const ToxPk& sender, QString senderName,
@@ -387,7 +387,7 @@ void SessionChatLog::onMessageReceived(const ToxPk& sender, const Message& messa
     chatLogMessage.message = message;
     items.emplace(messageIdx, ChatLogItem(sender, resolveSenderNameFromSender(sender), chatLogMessage));
 
-    emit this->itemUpdated(messageIdx);
+    emit itemUpdated(messageIdx);
 }
 
 /**
@@ -407,7 +407,7 @@ void SessionChatLog::onMessageSent(DispatchedMessageId id, const Message& messag
 
     outgoingMessages.insert(id, messageIdx);
 
-    emit this->itemUpdated(messageIdx);
+    emit itemUpdated(messageIdx);
 }
 
 /**
@@ -433,7 +433,7 @@ void SessionChatLog::onMessageComplete(DispatchedMessageId id)
 
     messageIt->second.getContentAsMessage().state = MessageState::complete;
 
-    emit this->itemUpdated(messageIt->first);
+    emit itemUpdated(messageIt->first);
 }
 
 void SessionChatLog::onMessageBroken(DispatchedMessageId id, BrokenMessageReason)
@@ -456,7 +456,7 @@ void SessionChatLog::onMessageBroken(DispatchedMessageId id, BrokenMessageReason
     // NOTE: Reason for broken message not currently shown in UI, but it could be
     messageIt->second.getContentAsMessage().state = MessageState::broken;
 
-    emit this->itemUpdated(messageIt->first);
+    emit itemUpdated(messageIt->first);
 }
 
 /**
@@ -495,7 +495,7 @@ void SessionChatLog::onFileUpdated(const ToxPk& sender, const ToxFile& file)
         currentFileTransfers.erase(fileIt);
     }
 
-    emit this->itemUpdated(messageIdx);
+    emit itemUpdated(messageIdx);
 }
 
 void SessionChatLog::onFileTransferRemotePausedUnpaused(const ToxPk& sender, const ToxFile& file,

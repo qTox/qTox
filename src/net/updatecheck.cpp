@@ -99,8 +99,8 @@ bool isCurrentVersionStable()
 
 } // namespace
 
-UpdateCheck::UpdateCheck(const Settings& settings)
-    : settings(settings)
+UpdateCheck::UpdateCheck(const Settings& settings_)
+    : settings(settings_)
 {
     qInfo() << "qTox is running version:" << GIT_DESCRIBE;
     updateTimer.start(1000 * 60 * 60 * 24 /* 1 day */);

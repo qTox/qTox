@@ -41,10 +41,10 @@
 #include "src/widget/widget.h"
 #include "tool/croppinglabel.h"
 
-GroupWidget::GroupWidget(std::shared_ptr<GroupChatroom> chatroom, bool compact)
-    : GenericChatroomWidget(compact)
-    , groupId{chatroom->getGroup()->getPersistentId()}
-    , chatroom{chatroom}
+GroupWidget::GroupWidget(std::shared_ptr<GroupChatroom> chatroom_, bool compact_)
+    : GenericChatroomWidget(compact_)
+    , groupId{chatroom_->getGroup()->getPersistentId()}
+    , chatroom{chatroom_}
 {
     avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()));
     statusPic.setPixmap(QPixmap(Status::getIconPath(Status::Status::Online)));

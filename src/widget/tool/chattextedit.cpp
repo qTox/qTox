@@ -61,10 +61,10 @@ void ChatTextEdit::keyPressEvent(QKeyEvent* event)
         }
         return;
     }
-    if (key == Qt::Key_Up && this->toPlainText().isEmpty()) {
-        this->setPlainText(lastMessage);
-        this->setFocus();
-        this->moveCursor(QTextCursor::MoveOperation::End, QTextCursor::MoveMode::MoveAnchor);
+    if (key == Qt::Key_Up && toPlainText().isEmpty()) {
+        setPlainText(lastMessage);
+        setFocus();
+        moveCursor(QTextCursor::MoveOperation::End, QTextCursor::MoveMode::MoveAnchor);
         return;
     }
     if (event->matches(QKeySequence::Paste) && pasteIfImage(event)) {
@@ -109,4 +109,3 @@ bool ChatTextEdit::pasteIfImage(QKeyEvent* event)
     emit pasteImage(pixmap);
     return true;
 }
-

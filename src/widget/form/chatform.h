@@ -47,13 +47,13 @@ class ChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog, IMessageDispatcher& messageDispatcher);
+    ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_, IMessageDispatcher& messageDispatcher_);
     ~ChatForm() override;
     void setStatusMessage(const QString& newMessage);
 
-    void setFriendTyping(bool isTyping);
+    void setFriendTyping(bool isTyping_);
 
-    void show(ContentLayout* contentLayout) final;
+    void show(ContentLayout* contentLayout_) final;
 
     static const QString ACTION_PREFIX;
 
@@ -93,7 +93,7 @@ private slots:
     void onVolMuteToggle();
 
     void onFriendStatusChanged(const ToxPk& friendPk, Status::Status status);
-    void onFriendTypingChanged(quint32 friendId, bool isTyping);
+    void onFriendTypingChanged(quint32 friendId, bool isTyping_);
     void onFriendNameChanged(const QString& name);
     void onStatusMessage(const QString& message);
     void onUpdateTime();

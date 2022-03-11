@@ -31,7 +31,7 @@ class TabCompleter : public QObject
 {
     Q_OBJECT
 public:
-    TabCompleter(ChatTextEdit* msgEdit, Group* group);
+    TabCompleter(ChatTextEdit* msgEdit_, Group* group_);
 
 public slots:
     void complete();

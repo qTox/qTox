@@ -70,13 +70,13 @@ bool handleActionPrefix(QString& content)
 }
 } // namespace
 
-ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& coreIdHandler,
+ChatHistory::ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& coreIdHandler_,
                          const Settings& settings_, IMessageDispatcher& messageDispatcher)
     : f(f_)
     , history(history_)
     , settings(settings_)
-    , coreIdHandler(coreIdHandler)
-    , sessionChatLog(getInitialChatLogIdx(), coreIdHandler)
+    , coreIdHandler(coreIdHandler_)
+    , sessionChatLog(getInitialChatLogIdx(), coreIdHandler_)
 {
     connect(&messageDispatcher, &IMessageDispatcher::messageComplete, this,
             &ChatHistory::onMessageComplete);

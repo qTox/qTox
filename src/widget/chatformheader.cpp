@@ -179,9 +179,9 @@ void ChatFormHeader::setName(const QString& newName)
     nameLabel->setToolTip(Qt::convertFromPlainText(newName, Qt::WhiteSpaceNormal));
 }
 
-void ChatFormHeader::setMode(ChatFormHeader::Mode mode)
+void ChatFormHeader::setMode(ChatFormHeader::Mode mode_)
 {
-    this->mode = mode;
+    mode = mode_;
     if (mode == Mode::None) {
         callButton->hide();
         videoButton->hide();

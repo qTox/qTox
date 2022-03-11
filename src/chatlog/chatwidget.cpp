@@ -204,10 +204,10 @@ ChatLogIdx clampedAdd(ChatLogIdx idx, int val, IChatLog& chatLog)
 } // namespace
 
 
-ChatWidget::ChatWidget(IChatLog& chatLog, const Core& core, QWidget* parent)
+ChatWidget::ChatWidget(IChatLog& chatLog_, const Core& core_, QWidget* parent)
     : QGraphicsView(parent)
-    , chatLog(chatLog)
-    , core(core)
+    , chatLog(chatLog_)
+    , core(core_)
     , chatLineStorage(new ChatLineStorage())
 {
     // Create the scene
@@ -287,11 +287,11 @@ ChatWidget::ChatWidget(IChatLog& chatLog, const Core& core, QWidget* parent)
     Translator::registerHandler(std::bind(&ChatWidget::retranslateUi, this), this);
 
     connect(this, &ChatWidget::renderFinished, this, &ChatWidget::onRenderFinished);
-    connect(&chatLog, &IChatLog::itemUpdated, this, &ChatWidget::onMessageUpdated);
+    connect(&chatLog_, &IChatLog::itemUpdated, this, &ChatWidget::onMessageUpdated);
     connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatWidget::onScrollValueChanged);
 
-    auto firstChatLogIdx = clampedAdd(chatLog.getNextIdx(), -100, chatLog);
-    renderMessages(firstChatLogIdx, chatLog.getNextIdx());
+    auto firstChatLogIdx = clampedAdd(chatLog_.getNextIdx(), -100, chatLog_);
+    renderMessages(firstChatLogIdx, chatLog_.getNextIdx());
 }
 
 ChatWidget::~ChatWidget()
@@ -1402,7 +1402,7 @@ void ChatWidget::setTypingNotification()
 }
 
 
-void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames, ChatLine::Ptr& chatMessage)
+void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool colorizeNames_, ChatLine::Ptr& chatMessage)
 {
     const auto& sender = item.getSender();
 
@@ -1412,7 +1412,7 @@ void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool coloriz
     case ChatLogItem::ContentType::message: {
         const auto& chatLogMessage = item.getContentAsMessage();
 
-        renderMessageRaw(item.getDisplayName(), isSelf, colorizeNames, chatLogMessage, chatMessage);
+        renderMessageRaw(item.getDisplayName(), isSelf, colorizeNames_, chatLogMessage, chatMessage);
 
         break;
     }

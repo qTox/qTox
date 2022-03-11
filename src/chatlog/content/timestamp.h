@@ -29,7 +29,7 @@ class Timestamp : public Text
 {
     Q_OBJECT
 public:
-    Timestamp(const QDateTime& time, const QString& format, const QFont& font);
+    Timestamp(const QDateTime& time_, const QString& format, const QFont& font);
     QDateTime getTime();
 
 protected:

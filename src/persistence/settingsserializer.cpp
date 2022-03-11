@@ -99,9 +99,9 @@ QDataStream& readStream(QDataStream& dataStream, QByteArray& data)
     return dataStream;
 }
 
-SettingsSerializer::SettingsSerializer(QString filePath, const ToxEncrypt* passKey)
-    : path{filePath}
-    , passKey{passKey}
+SettingsSerializer::SettingsSerializer(QString filePath_, const ToxEncrypt* passKey_)
+    : path{filePath_}
+    , passKey{passKey_}
     , group{-1}
     , array{-1}
     , arrayIndex{-1}
@@ -469,9 +469,9 @@ void SettingsSerializer::readIni()
             a.size = v.value.toInt();
         } else {
             a.group = -1;
-            for (int i = 0; i < groups.size(); ++i)
-                if (groups[i] == groups[static_cast<int>(v.group)].left(slashIndex))
-                    a.group = i;
+            for (int j = 0; j < groups.size(); ++j)
+                if (groups[j] == groups[static_cast<int>(v.group)].left(slashIndex))
+                    a.group = j;
             a.name = groups[static_cast<int>(v.group)].mid(slashIndex + 1);
         }
         groupSizes[static_cast<size_t>(v.group)]--;
@@ -533,20 +533,20 @@ void SettingsSerializer::readIni()
  * @note The group must be empty.
  * @param group ID of group to remove.
  */
-void SettingsSerializer::removeGroup(int group)
+void SettingsSerializer::removeGroup(int group_)
 {
-    assert(group < groups.size());
+    assert(group_ < groups.size());
     for (Array& a : arrays) {
-        assert(a.group != group);
-        if (a.group > group)
+        assert(a.group != group_);
+        if (a.group > group_)
             a.group--;
     }
     for (Value& v : values) {
-        assert(v.group != group);
-        if (v.group > group)
+        assert(v.group != group_);
+        if (v.group > group_)
             v.group--;
     }
-    groups.removeAt(group);
+    groups.removeAt(group_);
 }
 
 void SettingsSerializer::writePackedVariant(QDataStream& stream, const QVariant& v)

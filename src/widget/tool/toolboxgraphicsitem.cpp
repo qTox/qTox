@@ -23,13 +23,13 @@
 
 ToolBoxGraphicsItem::ToolBoxGraphicsItem()
 {
-    this->opacityAnimation = new QPropertyAnimation(this, QByteArrayLiteral("opacity"), this);
+    opacityAnimation = new QPropertyAnimation(this, QByteArrayLiteral("opacity"), this);
 
-    this->opacityAnimation->setKeyValueAt(0, this->idleOpacity);
-    this->opacityAnimation->setKeyValueAt(1, this->activeOpacity);
-    this->opacityAnimation->setDuration(this->fadeTimeMs);
+    opacityAnimation->setKeyValueAt(0, idleOpacity);
+    opacityAnimation->setKeyValueAt(1, activeOpacity);
+    opacityAnimation->setDuration(fadeTimeMs);
 
-    setOpacity(this->activeOpacity);
+    setOpacity(activeOpacity);
 }
 
 ToolBoxGraphicsItem::~ToolBoxGraphicsItem()
@@ -50,8 +50,8 @@ void ToolBoxGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 
 void ToolBoxGraphicsItem::startAnimation(QAbstractAnimation::Direction direction)
 {
-    this->opacityAnimation->setDirection(direction);
-    this->opacityAnimation->start();
+    opacityAnimation->setDirection(direction);
+    opacityAnimation->start();
 }
 
 void ToolBoxGraphicsItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,

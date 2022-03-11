@@ -26,7 +26,7 @@
 class ToxFileProgress
 {
 public:
-    ToxFileProgress(uint64_t filesize, int samplePeriodMs = 4000);
+    ToxFileProgress(uint64_t filesize_, int samplePeriodMs_ = 4000);
 
     QTime lastSampleTime() const;
     bool addSample(uint64_t bytesSent, QTime now = QTime::currentTime());

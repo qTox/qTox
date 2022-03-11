@@ -46,16 +46,16 @@ ToxFile::ToxFile()
 /**
  * @brief ToxFile constructor
  */
-ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QString filename, QString filePath,
-                 uint64_t filesize, FileDirection Direction)
+ToxFile::ToxFile(uint32_t fileNum_, uint32_t friendId_, QString fileName_, QString filePath_,
+                 uint64_t filesize, FileDirection direction_)
     : fileKind{TOX_FILE_KIND_DATA}
-    , fileNum(fileNum)
-    , friendId(friendId)
-    , fileName{filename}
-    , filePath{filePath}
-    , file{new QFile(filePath)}
+    , fileNum(fileNum_)
+    , friendId(friendId_)
+    , fileName{fileName_}
+    , filePath{filePath_}
+    , file{new QFile(filePath_)}
     , status{INITIALIZING}
-    , direction{Direction}
+    , direction{direction_}
     , progress(filesize)
 {}
 

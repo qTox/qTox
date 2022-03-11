@@ -183,7 +183,7 @@ void UserInterfaceForm::on_styleBrowser_currentIndexChanged(QString style)
     else
         Settings::getInstance().setStyle(style);
 
-    this->setStyle(QStyleFactory::create(style));
+    setStyle(QStyleFactory::create(style));
     parent->setBodyHeadStyle(style);
 }
 
@@ -397,4 +397,3 @@ void UserInterfaceForm::on_notifyHide_stateChanged(int value)
 {
     Settings::getInstance().setNotifyHide(value);
 }
-

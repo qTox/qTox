@@ -97,10 +97,10 @@ static const QPair<QString, QString> CAN_NOT_CHANGE_PASSWORD = {
     "it may be corrupted or use the old password.")
 };
 
-ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
+ProfileForm::ProfileForm(IProfileInfo* profileInfo_, QWidget* parent)
     : QWidget{parent}
     , qr{nullptr}
-    , profileInfo{profileInfo}
+    , profileInfo{profileInfo_}
 {
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);
@@ -147,7 +147,7 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
 
     connect(bodyUI->toxIdLabel, &CroppingLabel::clicked, this, &ProfileForm::copyIdClicked);
     connect(toxId, &ClickableTE::clicked, this, &ProfileForm::copyIdClicked);
-    profileInfo->connectTo_idChanged(this, [=](const ToxId& id) { setToxId(id); });
+    profileInfo_->connectTo_idChanged(this, [=](const ToxId& id) { setToxId(id); });
     connect(bodyUI->userName, &QLineEdit::editingFinished, this, &ProfileForm::onUserNameEdited);
     connect(bodyUI->statusMessage, &QLineEdit::editingFinished,
             this, &ProfileForm::onStatusMessageEdited);
@@ -166,10 +166,10 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo, QWidget* parent)
     connect(bodyUI->saveQr, &QPushButton::clicked, this, &ProfileForm::onSaveQrClicked);
     connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::onCopyQrClicked);
 
-    profileInfo->connectTo_usernameChanged(
+    profileInfo_->connectTo_usernameChanged(
             this,
             [=](const QString& val) { bodyUI->userName->setText(val); });
-    profileInfo->connectTo_statusMessageChanged(
+    profileInfo_->connectTo_statusMessageChanged(
             this,
             [=](const QString& val) { bodyUI->statusMessage->setText(val); });
 

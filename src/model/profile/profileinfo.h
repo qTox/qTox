@@ -33,7 +33,7 @@ class ProfileInfo : public QObject, public IProfileInfo
 {
     Q_OBJECT
 public:
-    ProfileInfo(Core* core, Profile* profile);
+    ProfileInfo(Core* core_, Profile* profile_);
 
     bool setPassword(const QString& password) override;
     bool deletePassword() override;

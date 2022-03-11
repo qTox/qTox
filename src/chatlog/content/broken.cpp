@@ -23,9 +23,9 @@
 
 class QStyleOptionGraphicsItem;
 
-Broken::Broken(const QString& img, QSize size)
-    : pmap{PixmapCache::getInstance().get(img, size)}
-    , size{size}
+Broken::Broken(const QString& img, QSize size_)
+    : pmap{PixmapCache::getInstance().get(img, size_)}
+    , size{size_}
 {
 }
 

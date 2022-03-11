@@ -26,10 +26,10 @@
  * @brief pointer to dynamically call the constructor.
  */
 
-MaskablePixmapWidget::MaskablePixmapWidget(QWidget* parent, QSize size, QString maskName)
+MaskablePixmapWidget::MaskablePixmapWidget(QWidget* parent, QSize size, QString maskName_)
     : QLabel("", parent)
     , renderTarget(nullptr)
-    , maskName(maskName)
+    , maskName(maskName_)
     , clickable(false)
 {
     setSize(size);
@@ -40,9 +40,9 @@ MaskablePixmapWidget::~MaskablePixmapWidget()
     delete renderTarget;
 }
 
-void MaskablePixmapWidget::setClickable(bool clickable)
+void MaskablePixmapWidget::setClickable(bool clickable_)
 {
-    this->clickable = clickable;
+    clickable = clickable_;
 
     if (clickable) {
         setCursor(Qt::PointingHandCursor);

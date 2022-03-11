@@ -35,12 +35,12 @@ class MockCoreExtPacket : public ICoreExtPacket
 {
 public:
 
-    MockCoreExtPacket(uint64_t& numSentMessages, uint64_t& currentReceiptId)
-        : numSentMessages(numSentMessages)
-        , currentReceiptId(currentReceiptId)
+    MockCoreExtPacket(uint64_t& numSentMessages_, uint64_t& currentReceiptId_)
+        : numSentMessages(numSentMessages_)
+        , currentReceiptId(currentReceiptId_)
     {}
 
-    uint64_t addExtendedMessage(QString message) override;
+    uint64_t addExtendedMessage(QString message_) override;
 
     bool send() override;
 
@@ -50,9 +50,9 @@ public:
     QString message;
 };
 
-uint64_t MockCoreExtPacket::addExtendedMessage(QString message)
+uint64_t MockCoreExtPacket::addExtendedMessage(QString message_)
 {
-    this->message = message;
+    message = message_;
     return currentReceiptId++;
 }
 

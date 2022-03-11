@@ -27,12 +27,12 @@
 #include <memory>
 
 class FriendListManager : public QObject
-{    
+{
     Q_OBJECT
 public:
     using IFriendListItemPtr = std::shared_ptr<IFriendListItem>;
 
-    explicit FriendListManager(int countContacts, QObject *parent = nullptr);
+    explicit FriendListManager(int countContacts_, QObject *parent = nullptr);
 
     QVector<IFriendListItemPtr> getItems() const;
     bool needHideCircles() const;
@@ -63,8 +63,8 @@ private:
         bool hideGroups = false;
     } filterParams;
 
-    void removeAll(IFriendListItem*);    
-    bool cmpByName(const IFriendListItemPtr&, const IFriendListItemPtr&, bool groupsOnTop);
+    void removeAll(IFriendListItem*);
+    bool cmpByName(const IFriendListItemPtr&, const IFriendListItemPtr&);
     bool cmpByActivity(const IFriendListItemPtr&, const IFriendListItemPtr&);
 
     bool byName = true;

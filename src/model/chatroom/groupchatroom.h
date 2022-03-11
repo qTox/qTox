@@ -32,7 +32,7 @@ class GroupChatroom : public QObject, public Chatroom
 {
     Q_OBJECT
 public:
-    GroupChatroom(Group* group, IDialogsManager* dialogsManager, Core& _core);
+    GroupChatroom(Group* group_, IDialogsManager* dialogsManager_, Core& core_);
 
     Contact* getContact() override;
 

@@ -40,7 +40,7 @@ class GroupChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    explicit GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, IMessageDispatcher& messageDispatcher, IGroupSettings& _settings);
+    explicit GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_, IMessageDispatcher& messageDispatcher_, IGroupSettings& settings_);
     ~GroupChatForm();
 
     void peerAudioPlaying(ToxPk peerPk);

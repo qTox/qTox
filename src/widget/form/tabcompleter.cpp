@@ -37,10 +37,10 @@
 
 const QString TabCompleter::nickSuffix = QString(": ");
 
-TabCompleter::TabCompleter(ChatTextEdit* msgEdit, Group* group)
-    : QObject{msgEdit}
-    , msgEdit{msgEdit}
-    , group{group}
+TabCompleter::TabCompleter(ChatTextEdit* msgEdit_, Group* group_)
+    : QObject{msgEdit_}
+    , msgEdit{msgEdit_}
+    , group{group_}
     , enabled{false}
     , lastCompletionLength{0}
 {
@@ -141,5 +141,5 @@ bool TabCompleter::SortableString::operator<(const SortableString& other) const
                                                                               // useful feature at
                                                                               // some point
 
-    return QString::localeAwareCompare(this->contents, other.contents) < 0;
+    return QString::localeAwareCompare(contents, other.contents) < 0;
 }

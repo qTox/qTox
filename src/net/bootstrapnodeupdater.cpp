@@ -220,12 +220,12 @@ void createExampleBootstrapNodesFile(const Paths& paths)
  * @brief Fetches a list of currently online bootstrap nodes from node.tox.chat
  * @param proxy Proxy to use for the lookup, must outlive this object
  */
-BootstrapNodeUpdater::BootstrapNodeUpdater(const QNetworkProxy& proxy, Paths& _paths, QObject* parent)
-    : proxy{proxy}
-    , paths{_paths}
+BootstrapNodeUpdater::BootstrapNodeUpdater(const QNetworkProxy& proxy_, Paths& paths_, QObject* parent)
+    : proxy{proxy_}
+    , paths{paths_}
     , QObject{parent}
 {
-    createExampleBootstrapNodesFile(_paths);
+    createExampleBootstrapNodesFile(paths_);
 }
 
 QList<DhtServer> BootstrapNodeUpdater::getBootstrapnodes() const

@@ -103,7 +103,7 @@ CameraSource::CameraSource()
     , cctxOrig{nullptr}
 #endif
     , videoStreamIndex{-1}
-    , _isNone{true}
+    , isNone_{true}
     , subscriptions{0}
 {
     qRegisterMetaType<VideoMode>("VideoMode");
@@ -144,32 +144,32 @@ void CameraSource::destroyInstance()
  */
 void CameraSource::setupDefault()
 {
-    QString deviceName = CameraDevice::getDefaultDeviceName();
-    bool isScreen = CameraDevice::isScreen(deviceName);
-    VideoMode mode = VideoMode(Settings::getInstance().getScreenRegion());
+    QString deviceName_ = CameraDevice::getDefaultDeviceName();
+    bool isScreen = CameraDevice::isScreen(deviceName_);
+    VideoMode mode_ = VideoMode(Settings::getInstance().getScreenRegion());
     if (!isScreen) {
-        mode = VideoMode(Settings::getInstance().getCamVideoRes());
-        mode.FPS = Settings::getInstance().getCamVideoFPS();
+        mode_ = VideoMode(Settings::getInstance().getCamVideoRes());
+        mode_.FPS = Settings::getInstance().getCamVideoFPS();
     }
 
-    setupDevice(deviceName, mode);
+    setupDevice(deviceName_, mode_);
 }
 
 /**
  * @brief Change the device and mode.
  * @note If a device is already open, the source will seamlessly switch to the new device.
  */
-void CameraSource::setupDevice(const QString& DeviceName, const VideoMode& Mode)
+void CameraSource::setupDevice(const QString& deviceName_, const VideoMode& mode_)
 {
     if (QThread::currentThread() != deviceThread) {
-        QMetaObject::invokeMethod(this, "setupDevice", Q_ARG(const QString&, DeviceName),
-                                  Q_ARG(const VideoMode&, Mode));
+        QMetaObject::invokeMethod(this, "setupDevice", Q_ARG(const QString&, deviceName_),
+                                  Q_ARG(const VideoMode&, mode_));
         return;
     }
 
     QWriteLocker locker{&deviceMutex};
 
-    if (DeviceName == deviceName && Mode == mode) {
+    if (deviceName_ == deviceName && mode_ == mode) {
         return;
     }
 
@@ -181,18 +181,18 @@ void CameraSource::setupDevice(const QString& DeviceName, const VideoMode& Mode)
         subscriptions = subs;
     }
 
-    deviceName = DeviceName;
-    mode = Mode;
-    _isNone = (deviceName == "none");
+    deviceName = deviceName_;
+    mode = mode_;
+    isNone_ = (deviceName == "none");
 
-    if (subscriptions && !_isNone) {
+    if (subscriptions && !isNone_) {
         openDevice();
     }
 }
 
 bool CameraSource::isNone() const
 {
-    return _isNone;
+    return isNone_;
 }
 
 CameraSource::~CameraSource()
@@ -205,7 +205,7 @@ CameraSource::~CameraSource()
     deviceThread->wait();
     delete deviceThread;
 
-    if (_isNone) {
+    if (isNone_) {
         return;
     }
 

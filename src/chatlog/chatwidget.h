@@ -42,7 +42,7 @@ class ChatWidget : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit ChatWidget(IChatLog& chatLog, const Core& core, QWidget* parent = nullptr);
+    explicit ChatWidget(IChatLog& chatLog_, const Core& core_, QWidget* parent = nullptr);
     virtual ~ChatWidget();
 
     void insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines);
@@ -144,7 +144,7 @@ private:
     void moveMultiSelectionDown(int offset);
     void setTypingNotification();
 
-    void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames, ChatLine::Ptr &chatMessage);
+    void renderItem(const ChatLogItem &item, bool hideName, bool colorizeNames_, ChatLine::Ptr &chatMessage);
     void renderFile(QString displayName, ToxFile file, bool isSelf, QDateTime timestamp, ChatLine::Ptr &chatMessage);
     bool needsToHideName(ChatLogIdx idx, bool prevIdxRendered) const;
     bool shouldRenderMessage(ChatLogIdx idx) const;

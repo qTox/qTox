@@ -32,7 +32,7 @@ class CallConfirmWidget final : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CallConfirmWidget(const QWidget* anchor);
+    explicit CallConfirmWidget(const QWidget* anchor_);
 
 signals:
     void accepted();

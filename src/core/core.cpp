@@ -499,17 +499,17 @@ QList<DhtServer> shuffleBootstrapNodes(QList<DhtServer> bootstrapNodes)
 
 } // namespace
 
-Core::Core(QThread* coreThread, IBootstrapListGenerator& _bootstrapListGenerator, const ICoreSettings& _settings)
+Core::Core(QThread* coreThread_, IBootstrapListGenerator& bootstrapListGenerator_, const ICoreSettings& settings_)
     : tox(nullptr)
     , toxTimer{new QTimer{this}}
-    , coreThread(coreThread)
-    , bootstrapListGenerator(_bootstrapListGenerator)
-    , settings(_settings)
+    , coreThread(coreThread_)
+    , bootstrapListGenerator(bootstrapListGenerator_)
+    , settings(settings_)
 {
     assert(toxTimer);
     toxTimer->setSingleShot(true);
     connect(toxTimer, &QTimer::timeout, this, &Core::process);
-    connect(coreThread, &QThread::finished, toxTimer, &QTimer::stop);
+    connect(coreThread_, &QThread::finished, toxTimer, &QTimer::stop);
 }
 
 Core::~Core()

@@ -30,13 +30,13 @@
 
 static const int MAX_GROUP_TITLE_LENGTH = 128;
 
-Group::Group(int groupId, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat,
-             const QString& selfName, ICoreGroupQuery& groupQuery, ICoreIdHandler& idHandler)
-    : groupQuery(groupQuery)
-    , idHandler(idHandler)
-    , selfName{selfName}
+Group::Group(int groupId_, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat,
+             const QString& selfName_, ICoreGroupQuery& groupQuery_, ICoreIdHandler& idHandler_)
+    : groupQuery(groupQuery_)
+    , idHandler(idHandler_)
+    , selfName{selfName_}
     , title{name}
-    , toxGroupNum(groupId)
+    , toxGroupNum(groupId_)
     , groupId{persistentGroupId}
     , avGroupchat{isAvGroupchat}
 {

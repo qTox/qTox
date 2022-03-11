@@ -108,10 +108,10 @@ void SearchSettingsForm::updateStartDateLabel()
     ui->startDateLabel->setText(startDate.toString(Settings::getInstance().getDateFormat()));
 }
 
-void SearchSettingsForm::setUpdate(const bool isUpdate)
+void SearchSettingsForm::setUpdate(const bool isUpdate_)
 {
-    this->isUpdate = isUpdate;
-    emit updateSettings(isUpdate);
+    isUpdate = isUpdate_;
+    emit updateSettings(isUpdate_);
 }
 
 void SearchSettingsForm::onStartSearchSelected(const int index)

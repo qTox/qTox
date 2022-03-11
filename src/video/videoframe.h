@@ -60,9 +60,9 @@ public:
     using AtomicIDType = std::atomic_uint_fast64_t;
 
 public:
-    VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, int pixFmt,
-               bool freeSourceFrame = false);
-    VideoFrame(IDType sourceID, AVFrame* sourceFrame, bool freeSourceFrame = false);
+    VideoFrame(IDType sourceID_, AVFrame* sourceFrame, QRect dimensions, int pixFmt,
+               bool freeSourceFrame_ = false);
+    VideoFrame(IDType sourceID_, AVFrame* sourceFrame, bool freeSourceFrame_ = false);
 
     ~VideoFrame();
 

@@ -42,7 +42,7 @@ protected:
     static const int OWNERSHIP_TIMEOUT_S = 5;
 
 public:
-    IPC(uint32_t profileId);
+    IPC(uint32_t profileId_);
     ~IPC();
 
     struct IPCEvent
@@ -74,7 +74,7 @@ public:
     bool isAttached() const;
 
 public slots:
-    void setProfileId(uint32_t profileId);
+    void setProfileId(uint32_t profileId_);
 
 private:
     IPCMemory* global();

@@ -40,22 +40,22 @@ float getSizeRatio(const QSize size)
     return size.width() / static_cast<float>(size.height());
 }
 
-VideoSurface::VideoSurface(const QPixmap& avatar, QWidget* parent, bool expanding)
+VideoSurface::VideoSurface(const QPixmap& avatar_, QWidget* parent, bool expanding_)
     : QWidget{parent}
     , source{nullptr}
     , frameLock{false}
     , hasSubscribed{0}
-    , avatar{avatar}
+    , avatar{avatar_}
     , ratio{1.0f}
-    , expanding{expanding}
+    , expanding{expanding_}
 {
     recalulateBounds();
 }
 
-VideoSurface::VideoSurface(const QPixmap& avatar, VideoSource* source, QWidget* parent)
-    : VideoSurface(avatar, parent)
+VideoSurface::VideoSurface(const QPixmap& avatar_, VideoSource* source_, QWidget* parent)
+    : VideoSurface(avatar_, parent)
 {
-    setSource(source);
+    setSource(source_);
 }
 
 VideoSurface::~VideoSurface()

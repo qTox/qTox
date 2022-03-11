@@ -293,11 +293,11 @@ void Profile::initCore(const QByteArray& toxsave, Settings& s, bool isNewProfile
     avatarBroadcaster = std::unique_ptr<AvatarBroadcaster>(new AvatarBroadcaster(*core));
 }
 
-Profile::Profile(const QString& name, std::unique_ptr<ToxEncrypt> passkey, Paths& paths_, Settings& settings_)
-    : name{name}
-    , passkey{std::move(passkey)}
+Profile::Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Paths& paths_, Settings& settings_)
+    : name{name_}
+    , passkey{std::move(passkey_)}
     , isRemoved{false}
-    , encrypted{this->passkey != nullptr}
+    , encrypted{passkey != nullptr}
     , paths{paths_}
     , settings{settings_}
 {}
@@ -713,8 +713,8 @@ void Profile::onRequestSent(const ToxPk& friendPk, const QString& message)
     const QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(message);
     const ToxPk selfPk = core->getSelfPublicKey();
     const QDateTime datetime = QDateTime::currentDateTime();
-    const QString name = core->getUsername();
-    history->addNewMessage(friendPk, inviteStr, selfPk, datetime, true, ExtensionSet(), name);
+    const QString selfName = core->getUsername();
+    history->addNewMessage(friendPk, inviteStr, selfPk, datetime, true, ExtensionSet(), selfName);
 }
 
 /**

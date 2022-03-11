@@ -117,7 +117,7 @@ private:
 
     IdxInfoMap_t::iterator equivalentInfoIterator(iterator it);
 
-    IdxInfoMap_t::iterator infoIteratorForIdx(ChatLogIdx idx);
+    IdxInfoMap_t::iterator infoIteratorForIdx(ChatLogIdx idx_);
 
     iterator adjustItForDate(iterator it, QDateTime timestamp);
 

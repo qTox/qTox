@@ -50,9 +50,9 @@
  * @brief Used to correct the rounding factors on non-square rects
  */
 
-CallConfirmWidget::CallConfirmWidget(const QWidget* anchor)
+CallConfirmWidget::CallConfirmWidget(const QWidget* anchor_)
     : QWidget()
-    , anchor(anchor)
+    , anchor(anchor_)
     , rectW{120}
     , rectH{85}
     , spikeW{30}

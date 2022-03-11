@@ -68,12 +68,12 @@ class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    GenericChatForm(const Core& _core, const Contact* contact, IChatLog& chatLog,
-                    IMessageDispatcher& messageDispatcher, QWidget* parent = nullptr);
+    GenericChatForm(const Core& core_, const Contact* contact, IChatLog& chatLog_,
+                    IMessageDispatcher& messageDispatcher_, QWidget* parent_ = nullptr);
     ~GenericChatForm() override;
 
     void setName(const QString& newName);
-    virtual void show(ContentLayout* contentLayout);
+    virtual void show(ContentLayout* contentLayout_);
 
     void addSystemInfoMessage(const QDateTime& datetime, SystemMessageType messageType,
                               SystemMessage::Args messageArgs);

@@ -34,12 +34,12 @@
  * @note a value < 0 indicates an invalid value
  */
 
-VideoMode::VideoMode(int width, int height, int x, int y, float FPS)
-    : width(width)
-    , height(height)
-    , x(x)
-    , y(y)
-    , FPS(FPS)
+VideoMode::VideoMode(int width_, int height_, int x_, int y_, float FPS_)
+    : width(width_)
+    , height(height_)
+    , x(x_)
+    , y(y_)
+    , FPS(FPS_)
 {
 }
 
@@ -64,7 +64,7 @@ bool VideoMode::operator==(const VideoMode& other) const
 
 uint32_t VideoMode::norm(const VideoMode& other) const
 {
-    return qAbs(this->width - other.width) + qAbs(this->height - other.height);
+    return qAbs(width - other.width) + qAbs(height - other.height);
 }
 
 uint32_t VideoMode::tolerance() const

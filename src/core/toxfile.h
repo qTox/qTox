@@ -52,8 +52,8 @@ struct ToxFile
     };
 
     ToxFile();
-    ToxFile(uint32_t FileNum, uint32_t FriendId, QString FileName, QString filePath,
-            uint64_t filesize, FileDirection Direction);
+    ToxFile(uint32_t fileNum_, uint32_t friendId_, QString fileName_, QString filePath_,
+            uint64_t filesize, FileDirection direction);
 
     bool operator==(const ToxFile& other) const;
     bool operator!=(const ToxFile& other) const;

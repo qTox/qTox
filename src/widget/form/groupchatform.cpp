@@ -82,12 +82,12 @@ QString editName(const QString& name)
  * @brief Timeout = peer stopped sending audio.
  */
 
-GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, IMessageDispatcher& messageDispatcher, IGroupSettings& _settings)
-    : GenericChatForm(_core, chatGroup, chatLog, messageDispatcher)
-    , core{_core}
+GroupChatForm::GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_, IMessageDispatcher& messageDispatcher_, IGroupSettings& settings_)
+    : GenericChatForm(core_, chatGroup, chatLog_, messageDispatcher_)
+    , core{core_}
     , group(chatGroup)
     , inCall(false)
-    , settings(_settings)
+    , settings(settings_)
 {
     nusersLabel = new QLabel();
 
@@ -131,7 +131,7 @@ GroupChatForm::GroupChatForm(Core& _core, Group* chatGroup, IChatLog& chatLog, I
     connect(group, &Group::userLeft, this, &GroupChatForm::onUserLeft);
     connect(group, &Group::peerNameChanged, this, &GroupChatForm::onPeerNameChanged);
     connect(group, &Group::numPeersChanged, this, &GroupChatForm::updateUserCount);
-    settings.connectTo_blackListChanged(this, [this](QStringList const&) { this->updateUserNames(); });
+    settings.connectTo_blackListChanged(this, [this](QStringList const&) { updateUserNames(); });
 
     if (settings.getShowGroupJoinLeaveMessages()) {
         addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::selfJoinedGroup, {});

@@ -77,7 +77,7 @@ signals:
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
 private:
-    CoreFile(Tox* core, CompatibleRecursiveMutex& coreLoopLock);
+    CoreFile(Tox* core_, CompatibleRecursiveMutex& coreLoopLock_);
 
     ToxFile* findFile(uint32_t friendId, uint32_t fileId);
     void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);

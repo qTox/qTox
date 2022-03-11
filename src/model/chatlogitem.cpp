@@ -38,14 +38,14 @@ struct ChatLogItemDeleter
 };
 } // namespace
 
-ChatLogItem::ChatLogItem(ToxPk sender_, const QString& displayName, ChatLogFile file_)
-    : ChatLogItem(std::move(sender_), displayName, ContentType::fileTransfer,
+ChatLogItem::ChatLogItem(ToxPk sender_, const QString& displayName_, ChatLogFile file_)
+    : ChatLogItem(std::move(sender_), displayName_, ContentType::fileTransfer,
                   ContentPtr(new ChatLogFile(std::move(file_)),
                              ChatLogItemDeleter<ChatLogFile>::doDelete))
 {}
 
-ChatLogItem::ChatLogItem(ToxPk sender_, const QString& displayName, ChatLogMessage message_)
-    : ChatLogItem(sender_, displayName, ContentType::message,
+ChatLogItem::ChatLogItem(ToxPk sender_, const QString& displayName_, ChatLogMessage message_)
+    : ChatLogItem(sender_, displayName_, ContentType::message,
                   ContentPtr(new ChatLogMessage(std::move(message_)),
                              ChatLogItemDeleter<ChatLogMessage>::doDelete))
 {}

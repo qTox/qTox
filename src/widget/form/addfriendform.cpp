@@ -178,10 +178,10 @@ void AddFriendForm::setMode(Mode mode)
     tabWidget->setCurrentIndex(mode);
 }
 
-bool AddFriendForm::addFriendRequest(const QString& friendAddress, const QString& message)
+bool AddFriendForm::addFriendRequest(const QString& friendAddress, const QString& message_)
 {
-    if (Settings::getInstance().addFriendRequest(friendAddress, message)) {
-        addFriendRequestWidget(friendAddress, message);
+    if (Settings::getInstance().addFriendRequest(friendAddress, message_)) {
+        addFriendRequestWidget(friendAddress, message_);
         if (isShown()) {
             onCurrentChanged(tabWidget->currentIndex());
         }
@@ -222,8 +222,8 @@ void AddFriendForm::onSendTriggered()
     const QString id = getToxId(toxId.text());
     addFriend(id);
 
-    this->toxId.clear();
-    this->message.clear();
+    toxId.clear();
+    message.clear();
 }
 
 void AddFriendForm::onImportSendClicked()
@@ -309,12 +309,12 @@ void AddFriendForm::setIdFromClipboard()
     }
 }
 
-void AddFriendForm::deleteFriendRequest(const ToxId& toxId)
+void AddFriendForm::deleteFriendRequest(const ToxId& toxId_)
 {
     const int size = Settings::getInstance().getFriendRequestSize();
     for (int i = 0; i < size; ++i) {
         Settings::Request request = Settings::getInstance().getFriendRequest(i);
-        if (toxId.getPublicKey() == ToxPk(request.address)) {
+        if (toxId_.getPublicKey() == ToxPk(request.address)) {
             Settings::getInstance().removeFriendRequest(i);
             return;
         }
@@ -390,7 +390,7 @@ void AddFriendForm::retranslateUi()
     }
 }
 
-void AddFriendForm::addFriendRequestWidget(const QString& friendAddress, const QString& message)
+void AddFriendForm::addFriendRequestWidget(const QString& friendAddress_, const QString& message_)
 {
     QWidget* friendWidget = new QWidget(tabWidget);
     QHBoxLayout* friendLayout = new QHBoxLayout(friendWidget);
@@ -400,15 +400,15 @@ void AddFriendForm::addFriendRequestWidget(const QString& friendAddress, const Q
 
     CroppingLabel* friendLabel = new CroppingLabel(friendWidget);
     friendLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    friendLabel->setText("<b>" + friendAddress + "</b>");
+    friendLabel->setText("<b>" + friendAddress_ + "</b>");
     horLayout->addWidget(friendLabel);
 
-    QLabel* messageLabel = new QLabel(message);
+    QLabel* messageLabel_ = new QLabel(message_);
     // allow to select text, but treat links as plaintext to prevent phishing
-    messageLabel->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
-    messageLabel->setTextFormat(Qt::PlainText);
-    messageLabel->setWordWrap(true);
-    horLayout->addWidget(messageLabel, 1);
+    messageLabel_->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
+    messageLabel_->setTextFormat(Qt::PlainText);
+    messageLabel_->setWordWrap(true);
+    horLayout->addWidget(messageLabel_, 1);
 
     QPushButton* acceptButton = new QPushButton(friendWidget);
     acceptButtons.append(acceptButton);

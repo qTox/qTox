@@ -23,11 +23,11 @@
 #include "src/widget/gui.h"
 #include <QVariant>
 
-GenericChatItemWidget::GenericChatItemWidget(bool compact, QWidget* parent)
+GenericChatItemWidget::GenericChatItemWidget(bool compact_, QWidget* parent)
     : QFrame(parent)
     , compact(false)
 {
-    setProperty("compact", compact);
+    setProperty("compact", compact_);
 
     nameLabel = new CroppingLabel(this);
     nameLabel->setObjectName("name");
@@ -41,9 +41,9 @@ bool GenericChatItemWidget::isCompact() const
     return compact;
 }
 
-void GenericChatItemWidget::setCompact(bool compact)
+void GenericChatItemWidget::setCompact(bool compact_)
 {
-    this->compact = compact;
+    compact = compact_;
 }
 
 QString GenericChatItemWidget::getName() const

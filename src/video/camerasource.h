@@ -46,7 +46,7 @@ public:
     void unsubscribe() override;
 
 public slots:
-    void setupDevice(const QString& deviceName, const VideoMode& mode);
+    void setupDevice(const QString& deviceName_, const VideoMode& mode_);
 
 signals:
     void deviceOpened();
@@ -76,7 +76,7 @@ private:
     QReadWriteLock deviceMutex;
     QReadWriteLock streamMutex;
 
-    std::atomic_bool _isNone;
+    std::atomic_bool isNone_;
     std::atomic_int subscriptions;
 
     static CameraSource* instance;

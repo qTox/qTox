@@ -241,13 +241,13 @@ const QString Style::resolve(const QString& filename, const QFont& baseFont)
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         qss = file.readAll();
     } else {
-        qWarning() << "Failed to open file (using defaults):" << fullPath;
+        qWarning() << "Failed to open file:" << fullPath;
 
         fullPath = getThemePath();
-        QFile file{fullPath};
+        QFile defaultFile{fullPath};
 
-        if (file.open(QFile::ReadOnly | QFile::Text)) {
-            qss = file.readAll();
+        if (defaultFile.open(QFile::ReadOnly | QFile::Text)) {
+            qss = defaultFile.readAll();
         } else {
             qWarning() << "Failed to open default file:" << fullPath;
             return {};

@@ -35,26 +35,26 @@ ScreenGrabberChooserRectItem::ScreenGrabberChooserRectItem(QGraphicsScene* scene
     scene->addItem(this);
     setCursor(QCursor(Qt::OpenHandCursor));
 
-    this->mainRect = createHandleItem(scene);
-    this->topLeft = createHandleItem(scene);
-    this->topCenter = createHandleItem(scene);
-    this->topRight = createHandleItem(scene);
-    this->rightCenter = createHandleItem(scene);
-    this->bottomRight = createHandleItem(scene);
-    this->bottomCenter = createHandleItem(scene);
-    this->bottomLeft = createHandleItem(scene);
-    this->leftCenter = createHandleItem(scene);
+    mainRect = createHandleItem(scene);
+    topLeft = createHandleItem(scene);
+    topCenter = createHandleItem(scene);
+    topRight = createHandleItem(scene);
+    rightCenter = createHandleItem(scene);
+    bottomRight = createHandleItem(scene);
+    bottomCenter = createHandleItem(scene);
+    bottomLeft = createHandleItem(scene);
+    leftCenter = createHandleItem(scene);
 
-    this->topLeft->setCursor(QCursor(Qt::SizeFDiagCursor));
-    this->bottomRight->setCursor(QCursor(Qt::SizeFDiagCursor));
-    this->topRight->setCursor(QCursor(Qt::SizeBDiagCursor));
-    this->bottomLeft->setCursor(QCursor(Qt::SizeBDiagCursor));
-    this->leftCenter->setCursor(QCursor(Qt::SizeHorCursor));
-    this->rightCenter->setCursor(QCursor(Qt::SizeHorCursor));
-    this->topCenter->setCursor(QCursor(Qt::SizeVerCursor));
-    this->bottomCenter->setCursor(QCursor(Qt::SizeVerCursor));
+    topLeft->setCursor(QCursor(Qt::SizeFDiagCursor));
+    bottomRight->setCursor(QCursor(Qt::SizeFDiagCursor));
+    topRight->setCursor(QCursor(Qt::SizeBDiagCursor));
+    bottomLeft->setCursor(QCursor(Qt::SizeBDiagCursor));
+    leftCenter->setCursor(QCursor(Qt::SizeHorCursor));
+    rightCenter->setCursor(QCursor(Qt::SizeHorCursor));
+    topCenter->setCursor(QCursor(Qt::SizeVerCursor));
+    bottomCenter->setCursor(QCursor(Qt::SizeVerCursor));
 
-    this->mainRect->setRect(QRect());
+    mainRect->setRect(QRect());
     hideHandles();
 }
 
@@ -70,7 +70,7 @@ QRectF ScreenGrabberChooserRectItem::boundingRect() const
 
 void ScreenGrabberChooserRectItem::beginResize(QPointF mousePos)
 {
-    rectWidth = this->rectHeight = 0;
+    rectWidth = rectHeight = 0;
     mainRect->setRect(QRect());
     state = Resizing;
     startPos = mousePos;
@@ -98,42 +98,42 @@ QRect ScreenGrabberChooserRectItem::chosenRect() const
 
 void ScreenGrabberChooserRectItem::showHandles()
 {
-    this->topLeft->show();
-    this->topCenter->show();
-    this->topRight->show();
-    this->rightCenter->show();
-    this->bottomRight->show();
-    this->bottomCenter->show();
-    this->bottomLeft->show();
-    this->leftCenter->show();
+    topLeft->show();
+    topCenter->show();
+    topRight->show();
+    rightCenter->show();
+    bottomRight->show();
+    bottomCenter->show();
+    bottomLeft->show();
+    leftCenter->show();
 }
 
 void ScreenGrabberChooserRectItem::hideHandles()
 {
-    this->topLeft->hide();
-    this->topCenter->hide();
-    this->topRight->hide();
-    this->rightCenter->hide();
-    this->bottomRight->hide();
-    this->bottomCenter->hide();
-    this->bottomLeft->hide();
-    this->leftCenter->hide();
+    topLeft->hide();
+    topCenter->hide();
+    topRight->hide();
+    rightCenter->hide();
+    bottomRight->hide();
+    bottomCenter->hide();
+    bottomLeft->hide();
+    leftCenter->hide();
 }
 
 void ScreenGrabberChooserRectItem::mousePress(QGraphicsSceneMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton) {
-        this->state = Moving;
+        state = Moving;
         setCursor(QCursor(Qt::ClosedHandCursor));
     }
 }
 
 void ScreenGrabberChooserRectItem::mouseMove(QGraphicsSceneMouseEvent* event)
 {
-    if (this->state == Moving) {
+    if (state == Moving) {
         QPointF delta = event->scenePos() - event->lastScenePos();
         moveBy(delta.x(), delta.y());
-    } else if (this->state == Resizing) {
+    } else if (state == Resizing) {
         prepareGeometryChange();
         QPointF size = event->scenePos() - scenePos();
         mainRect->setRect(0, 0, size.x(), size.y());
@@ -187,12 +187,12 @@ void ScreenGrabberChooserRectItem::mousePressHandle(int x, int y, QGraphicsScene
     Q_UNUSED(y)
 
     if (event->button() == Qt::LeftButton)
-        this->state = HandleResizing;
+        state = HandleResizing;
 }
 
 void ScreenGrabberChooserRectItem::mouseMoveHandle(int x, int y, QGraphicsSceneMouseEvent* event)
 {
-    if (this->state != HandleResizing)
+    if (state != HandleResizing)
         return;
 
     QPointF delta = event->scenePos() - event->lastScenePos();
@@ -214,9 +214,9 @@ void ScreenGrabberChooserRectItem::mouseMoveHandle(int x, int y, QGraphicsSceneM
     }
 
     //
-    this->rectWidth += delta.x();
-    this->rectHeight += delta.y();
-    this->mainRect->setRect(0, 0, this->rectWidth, this->rectHeight);
+    rectWidth += delta.x();
+    rectHeight += delta.y();
+    mainRect->setRect(0, 0, rectWidth, rectHeight);
     updateHandlePositions();
     emit regionChosen(chosenRect());
 }
@@ -227,33 +227,33 @@ void ScreenGrabberChooserRectItem::mouseReleaseHandle(int x, int y, QGraphicsSce
     Q_UNUSED(y)
 
     if (event->button() == Qt::LeftButton)
-        this->state = None;
+        state = None;
 }
 
 QPoint ScreenGrabberChooserRectItem::getHandleMultiplier(QGraphicsItem* handle)
 {
-    if (handle == this->topLeft)
+    if (handle == topLeft)
         return QPoint(-1, -1);
 
-    if (handle == this->topCenter)
+    if (handle == topCenter)
         return QPoint(0, -1);
 
-    if (handle == this->topRight)
+    if (handle == topRight)
         return QPoint(1, -1);
 
-    if (handle == this->rightCenter)
+    if (handle == rightCenter)
         return QPoint(1, 0);
 
-    if (handle == this->bottomRight)
+    if (handle == bottomRight)
         return QPoint(1, 1);
 
-    if (handle == this->bottomCenter)
+    if (handle == bottomCenter)
         return QPoint(0, 1);
 
-    if (handle == this->bottomLeft)
+    if (handle == bottomLeft)
         return QPoint(-1, 1);
 
-    if (handle == this->leftCenter)
+    if (handle == leftCenter)
         return QPoint(-1, 0);
 
     return QPoint();
@@ -261,14 +261,14 @@ QPoint ScreenGrabberChooserRectItem::getHandleMultiplier(QGraphicsItem* handle)
 
 void ScreenGrabberChooserRectItem::updateHandlePositions()
 {
-    this->topLeft->setPos(-HandleSize, -HandleSize);
-    this->topCenter->setPos((this->rectWidth - HandleSize) / 2, -HandleSize);
-    this->topRight->setPos(this->rectWidth, -HandleSize);
-    this->rightCenter->setPos(this->rectWidth, (this->rectHeight - HandleSize) / 2);
-    this->bottomRight->setPos(this->rectWidth, this->rectHeight);
-    this->bottomCenter->setPos((this->rectWidth - HandleSize) / 2, this->rectHeight);
-    this->bottomLeft->setPos(-HandleSize, this->rectHeight);
-    this->leftCenter->setPos(-HandleSize, (this->rectHeight - HandleSize) / 2);
+    topLeft->setPos(-HandleSize, -HandleSize);
+    topCenter->setPos((rectWidth - HandleSize) / 2, -HandleSize);
+    topRight->setPos(rectWidth, -HandleSize);
+    rightCenter->setPos(rectWidth, (rectHeight - HandleSize) / 2);
+    bottomRight->setPos(rectWidth, rectHeight);
+    bottomCenter->setPos((rectWidth - HandleSize) / 2, rectHeight);
+    bottomLeft->setPos(-HandleSize, rectHeight);
+    leftCenter->setPos(-HandleSize, (rectHeight - HandleSize) / 2);
 }
 
 QGraphicsRectItem* ScreenGrabberChooserRectItem::createHandleItem(QGraphicsScene* scene)
@@ -286,7 +286,7 @@ QGraphicsRectItem* ScreenGrabberChooserRectItem::createHandleItem(QGraphicsScene
 
 bool ScreenGrabberChooserRectItem::sceneEventFilter(QGraphicsItem* watched, QEvent* event)
 {
-    if (watched == this->mainRect)
+    if (watched == mainRect)
         forwardMainRectEvent(event);
     else
         forwardHandleEvent(watched, event);

@@ -35,8 +35,8 @@ class Group : public Contact
 {
     Q_OBJECT
 public:
-    Group(int groupId, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat,
-          const QString& selfName, ICoreGroupQuery& groupQuery, ICoreIdHandler& idHandler);
+    Group(int groupId_, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat,
+          const QString& selfName_, ICoreGroupQuery& groupQuery_, ICoreIdHandler& idHandler_);
     bool isAvGroupchat() const;
     uint32_t getId() const override;
     const GroupId& getPersistentId() const override;

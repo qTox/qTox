@@ -72,15 +72,15 @@ void CoreExt::onLosslessPacket(uint32_t friendId, const uint8_t* data, size_t le
 }
 
 CoreExt::Packet::Packet(
-    ToxExtPacketList* packetList,
-    ToxExtensionMessages* toxExtMessages,
-    uint32_t friendId,
-    std::mutex* toxext_mutex,
+    ToxExtPacketList* packetList_,
+    ToxExtensionMessages* toxExtMessages_,
+    uint32_t friendId_,
+    std::mutex* toxext_mutex_,
     PacketPassKey)
-    : toxext_mutex(toxext_mutex)
-    , toxExtMessages(toxExtMessages)
-    , packetList(packetList)
-    , friendId(friendId)
+    : toxext_mutex(toxext_mutex_)
+    , toxExtMessages(toxExtMessages_)
+    , packetList(packetList_)
+    , friendId(friendId_)
 {
     assert(toxext_mutex != nullptr);
 }
@@ -197,4 +197,3 @@ void CoreExt::onExtendedMessageNegotiation(uint32_t friendId, bool compatible, u
 
     emit coreExt->extendedMessageSupport(friendId, compatible);
 }
-

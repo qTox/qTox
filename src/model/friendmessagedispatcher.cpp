@@ -47,7 +47,7 @@ FriendMessageDispatcher::sendMessage(bool isAction, const QString& content)
         auto onOfflineMsgComplete = getCompletionFn(messageId);
         sendProcessedMessage(message, onOfflineMsgComplete);
 
-        emit this->messageSent(messageId, message);
+        emit messageSent(messageId, message);
     }
     return std::make_pair(firstId, lastId);
 }
@@ -68,7 +68,7 @@ FriendMessageDispatcher::sendExtendedMessage(const QString& content, ExtensionSe
         auto onOfflineMsgComplete = getCompletionFn(messageId);
         sendProcessedMessage(message, onOfflineMsgComplete);
 
-        emit this->messageSent(messageId, message);
+        emit messageSent(messageId, message);
     }
     return std::make_pair(firstId, lastId);
 }
@@ -80,7 +80,7 @@ FriendMessageDispatcher::sendExtendedMessage(const QString& content, ExtensionSe
  */
 void FriendMessageDispatcher::onMessageReceived(bool isAction, const QString& content)
 {
-    emit this->messageReceived(f.getPublicKey(), processor.processIncomingCoreMessage(isAction, content));
+    emit messageReceived(f.getPublicKey(), processor.processIncomingCoreMessage(isAction, content));
 }
 
 /**
@@ -95,7 +95,7 @@ void FriendMessageDispatcher::onReceiptReceived(ReceiptNum receipt)
 void FriendMessageDispatcher::onExtMessageReceived(const QString& content)
 {
     auto message = processor.processIncomingExtMessage(content);
-    emit this->messageReceived(f.getPublicKey(), message);
+    emit messageReceived(f.getPublicKey(), message);
 }
 
 void FriendMessageDispatcher::onExtReceiptReceived(uint64_t receiptId)
@@ -191,11 +191,11 @@ OfflineMsgEngine::CompletionFn FriendMessageDispatcher::getCompletionFn(Dispatch
 {
     return [this, messageId] (bool success) {
         if (success) {
-            emit this->messageComplete(messageId);
+            emit messageComplete(messageId);
         } else {
             // For now we know the only reason we can fail after giving to the
             // offline message engine is due to a reduced extension set
-            emit this->messageBroken(messageId, BrokenMessageReason::unsupportedExtensions);
+            emit messageBroken(messageId, BrokenMessageReason::unsupportedExtensions);
         }
     };
 }

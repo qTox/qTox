@@ -162,8 +162,8 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
         logBufferMutex->lock();
         if (logBuffer) {
             // empty logBuffer to file
-            foreach (QByteArray msg, *logBuffer)
-                fwrite(msg.constData(), 1, msg.size(), logFilePtr);
+            foreach (QByteArray bufferedMsg, *logBuffer)
+                fwrite(bufferedMsg.constData(), 1, bufferedMsg.size(), logFilePtr);
 
             delete logBuffer; // no longer needed
             logBuffer = nullptr;

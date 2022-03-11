@@ -21,13 +21,13 @@
 
 #include <limits>
 
-ToxFileProgress::ToxFileProgress(uint64_t filesize, int samplePeriodMs)
-    : filesize(filesize)
-    , samplePeriodMs(samplePeriodMs)
+ToxFileProgress::ToxFileProgress(uint64_t filesize_, int samplePeriodMs_)
+    : filesize(filesize_)
+    , samplePeriodMs(samplePeriodMs_)
 {
-    if (samplePeriodMs < 0) {
+    if (samplePeriodMs_ < 0) {
         qWarning("Invalid sample rate, healing to 1000ms");
-        this->samplePeriodMs = 1000;
+        samplePeriodMs = 1000;
     }
 }
 

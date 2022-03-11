@@ -117,9 +117,9 @@ private:
         }
     };
 
-    CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox, CompatibleRecursiveMutex &toxCoreLock,
-           IAudioSettings& _audioSettings, IGroupSettings& _groupSettings);
-    void connectCallbacks(ToxAV& toxav);
+    CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox_, CompatibleRecursiveMutex &toxCoreLock,
+           IAudioSettings& audioSettings_, IGroupSettings& groupSettings_);
+    void connectCallbacks();
 
     void process();
     static void audioFrameCallback(ToxAV* toxAV, uint32_t friendNum, const int16_t* pcm,

@@ -91,7 +91,7 @@ void FlyoutOverlayWidget::animateShow()
         return;
 
     if (animation->state() != QAbstractAnimation::Running)
-        this->startPos = pos();
+        startPos = pos();
 
     startAnimation(true);
 }
@@ -99,7 +99,7 @@ void FlyoutOverlayWidget::animateShow()
 void FlyoutOverlayWidget::animateHide()
 {
     if (animation->state() != QAbstractAnimation::Running)
-        this->startPos = pos();
+        startPos = pos();
 
     startAnimation(false);
 }

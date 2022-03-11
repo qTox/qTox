@@ -130,18 +130,18 @@ FriendListWidget::~FriendListWidget()
     }
 }
 
-void FriendListWidget::setMode(SortingMode mode)
+void FriendListWidget::setMode(SortingMode mode_)
 {
-    if (this->mode == mode)
+    if (mode == mode_)
         return;
 
-    this->mode = mode;
+    mode = mode_;
     Settings::getInstance().setFriendSortingMode(mode);
 
     manager->setSortRequired();
 }
 
-void FriendListWidget::sortByMode(SortingMode mode)
+void FriendListWidget::sortByMode()
 {
     if (mode == SortingMode::Name) {
         manager->sortByName();
@@ -198,8 +198,8 @@ void FriendListWidget::sortByMode(SortingMode mode)
             for (int i = 0; i < circles.size(); ++i) {
 
                 QVector<std::shared_ptr<IFriendListItem>> itemsInCircle = getItemsFromCircle(circles.at(i));
-                for (int i = 0; i < itemsInCircle.size(); ++i) {
-                    itemsInCircle.at(i)->setNameSortedPos(posByName++);
+                for (int j = 0; j < itemsInCircle.size(); ++j) {
+                    itemsInCircle.at(j)->setNameSortedPos(posByName++);
                 }
 
                 listLayout->addWidget(circles.at(i));
@@ -452,8 +452,8 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
 
         const auto activityTime = getActiveTimeFriend(friendWidget->getFriend());
         index = static_cast<int>(getTimeBucket(activityTime));
-        QWidget* widget = activityLayout->itemAt(index)->widget();
-        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
+        QWidget* widget_ = activityLayout->itemAt(index)->widget();
+        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget_);
 
         if (categoryWidget == nullptr || categoryWidget->cycleContacts(friendWidget, forward)) {
             return;
@@ -557,7 +557,7 @@ void FriendListWidget::dayTimeout()
 
 void FriendListWidget::itemsChanged()
 {
-    sortByMode(mode);
+    sortByMode();
 }
 
 void FriendListWidget::moveWidget(FriendWidget* widget, Status::Status s, bool add)

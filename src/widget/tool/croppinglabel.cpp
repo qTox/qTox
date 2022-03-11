@@ -63,9 +63,9 @@ void CroppingLabel::editBegin()
     textEdit->selectAll();
 }
 
-void CroppingLabel::setEditable(bool editable)
+void CroppingLabel::setEditable(bool editable_)
 {
-    this->editable = editable;
+    editable = editable_;
 
     if (editable)
         setCursor(Qt::PointingHandCursor);

@@ -197,7 +197,7 @@ signals:
     void failedToRemoveFriend(uint32_t friendId);
 
 private:
-    Core(QThread* coreThread, IBootstrapListGenerator& _bootstrapNodes, const ICoreSettings& settings);
+    Core(QThread* coreThread_, IBootstrapListGenerator& bootstrapNodes_, const ICoreSettings& settings_);
 
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
                                 size_t cMessageSize, void* core);
@@ -247,9 +247,9 @@ private slots:
 private:
     struct ToxDeleter
     {
-        void operator()(Tox* tox)
+        void operator()(Tox* tox_)
         {
-            tox_kill(tox);
+            tox_kill(tox_);
         }
     };
     /* Using the now commented out statements in checkConnection(), I watched how

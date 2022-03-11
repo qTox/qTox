@@ -53,9 +53,9 @@ QRWidget::~QRWidget()
     delete image;
 }
 
-void QRWidget::setQRData(const QString& data)
+void QRWidget::setQRData(const QString& data_)
 {
-    this->data = data;
+    data = data_;
     paintImage();
 }
 

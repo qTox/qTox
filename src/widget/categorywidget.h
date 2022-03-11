@@ -33,7 +33,7 @@ class CategoryWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    explicit CategoryWidget(bool compact, QWidget* parent = nullptr);
+    explicit CategoryWidget(bool compact_, QWidget* parent = nullptr);
 
     bool isExpanded() const;
     void setExpanded(bool isExpanded, bool save = true);

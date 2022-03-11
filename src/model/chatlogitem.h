@@ -52,8 +52,8 @@ public:
         systemMessage,
     };
 
-    ChatLogItem(ToxPk sender, const QString& displayName, ChatLogFile file);
-    ChatLogItem(ToxPk sender, const QString& displayName, ChatLogMessage message);
+    ChatLogItem(ToxPk sender_, const QString& displayName_, ChatLogFile file_);
+    ChatLogItem(ToxPk sender_, const QString& displayName_, ChatLogMessage message_);
     ChatLogItem(SystemMessage message);
     const ToxPk& getSender() const;
     ContentType getContentType() const;

@@ -69,8 +69,8 @@ namespace
  * @brief Inter-process communication
  */
 
-IPC::IPC(uint32_t profileId)
-    : profileId{profileId}
+IPC::IPC(uint32_t profileId_)
+    : profileId{profileId_}
     , globalMemory{getIpcKey()}
 {
     qRegisterMetaType<IPCEventHandler>("IPCEventHandler");
@@ -237,9 +237,9 @@ bool IPC::isAttached() const
     return globalMemory.isAttached();
 }
 
-void IPC::setProfileId(uint32_t profileId)
+void IPC::setProfileId(uint32_t profileId_)
 {
-    this->profileId = profileId;
+    profileId = profileId_;
 }
 
 /**

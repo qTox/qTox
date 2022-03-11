@@ -46,7 +46,7 @@ class FriendChatroom : public QObject, public Chatroom
 {
     Q_OBJECT
 public:
-    FriendChatroom(Friend* frnd, IDialogsManager* dialogsManager, Core& _core);
+    FriendChatroom(Friend* frnd_, IDialogsManager* dialogsManager_, Core& core_);
 
     Contact* getContact() override;
 
